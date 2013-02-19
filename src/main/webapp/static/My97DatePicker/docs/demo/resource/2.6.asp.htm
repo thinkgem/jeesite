@@ -1,0 +1,71 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="日期控件 datepicker calendar 日历控件 javascript js日历控件 带时间 自定义格式 月历控件 日期时间 日期选择" />
+<title>My97日期控件 功能演示 其他功能 My97 Datepicker Demo</title>
+<link href="../../css/base.css" tppabs="http://www.my97.net/dp/css/base.css" rel="stylesheet" type="text/css" />
+<link href="demo.css" tppabs="http://www.my97.net/dp/demo/resource/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<iframe src="../../head.asp" tppabs="http://www.my97.net/dp/head.asp" scrolling="no" frameborder="0" height="100px" width="100%"></iframe>
+<script language="JavaScript" type="text/javascript" src="../../../WdatePicker.js" tppabs="http://www.my97.net/dp/My97DatePicker/WdatePicker.js"></script>
+<div class="dCenter dBody">
+  <div id="content">
+
+    <h2>二. 功能及示例<a name="m2" id="m2"></a></h2>
+<h3>6. 快速选择功能 <a name="m26" id="m26"></a></h3>
+    <p style="margin-left:20px">此功能允许指定5个最常用的日期,可以方便用户选择,如果不指定,系统将自动生成<br />
+      相关属性:<br />
+      <span class="STYLE2">qsEnabled</span> 是否启用快速选择功能,      <span class="STYLE1">注意:如果日期格式里不包含 d(天) 这个元素时,快速选择将一直显示,不收此属性控制</span><br />
+      <span class="STYLE2">quickSel</span> 快速选择数据,可以传入5个快速选择日期,日期格式同min/maxDate<br />
+      <br />
+      <span class="STYLE1">注意:<br />
+      </span>日期格式必须与 realDateFmt  realTimeFmt  相匹配<br />
+      除了使用静态的日期值以外,还可以使用动态参数(如:%y,%M分别表示当前年和月)<br />
+    </p>
+    <div style="margin-left:20px">
+      <h4>示例6-1 传入2个静态日期</h4>
+      <p>
+        <input class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日',qsEnabled:true,quickSel:['2000-1-10','2000-2-20']})"/>
+        <br />
+        &lt;input class=&quot;Wdate&quot; type=&quot;text&quot; onfocus=&quot;WdatePicker({dateFmt:'yyyy年MM月dd日',<span class="STYLE2">qsEnabled:</span><span class="STYLE1">true</span>,<span class="STYLE2">quickSel:</span><span class="STYLE1">['2000-1-10','2000-2-20']</span>})&quot;/&gt;<br />
+        <br />
+        <span class="STYLE1">注意:</span>当传入的数据不足5个时,系统将自动补全</p>
+    </div>
+    <div style="margin-left:20px">
+      <h4>示例6-2 传入2个动态日期,1个静态日期</h4>
+      <p>
+        <input type="text" class="Wdate" onFocus="WdatePicker({dateFmt:'yyyy年MM月dd日',qsEnabled:true,quickSel:['2000-10-01','%y-%M-01','%y-%M-%ld']})"/>
+        <br />
+        &lt;input type=&quot;text&quot; class=&quot;Wdate&quot; onFocus=&quot;WdatePicker({dateFmt:'yyyy年MM月dd日',<span class="STYLE2">qsEnabled:</span><span class="STYLE1">true</span>,<span class="STYLE2">quickSel:</span><span class="STYLE1">['2000-10-01','%y-%M-01','%y-%M-%ld']</span>})&quot;/&gt;<br />
+        <br />
+        <span class="STYLE1">注意:</span>当传入的数据不足5个时,系统将自动补全</p>
+    </div>
+    <h2><a href="3.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/3.asp">三. 配置说明</a><a name="m3" id="m3"></a></h2>
+    <h2><a href="999.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/999.asp">四. 如何使用</a><a name="m4" id="m4"></a></h2>
+    <br />
+    <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="dCenter dBody" style="padding-left:72px">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6343250634002651";
+/* 底部 */
+google_ad_slot = "0599809152";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript">
+</script>
+</div>
+<div id="footer" class="dCenter">&copy; 2010 <a href="mailto:smallcarrot@163.com">My97</a> All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F489957c212e14340592fb2e4921b2f1d' type='text/javascript'%3E%3C/script%3E"));
+</script>&nbsp;&nbsp;&nbsp;&nbsp;浙ICP备11060275号
+</div>
+</body>
+</html>

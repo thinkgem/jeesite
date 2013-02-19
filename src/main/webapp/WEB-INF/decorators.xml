@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views">
+
+	<excludes>
+		<pattern>/static/*</pattern>
+	</excludes>
+	
+	<decorator name="default" page="layouts/default.jsp">
+		<pattern>/a</pattern>
+		<pattern>/a/*</pattern>
+	</decorator>
+	
+	<decorator name="cms_default_basic" page="modules/cms/front/themes/basic/layouts/default.jsp" />
+	
+</decorators>

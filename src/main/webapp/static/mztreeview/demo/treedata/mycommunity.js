@@ -1,0 +1,13 @@
+var data={};
+data['9002_50201'] = 'text:\u9009\u62e9\u6211\u7684\u914d\u8272\u65b9\u6848 ; url:/Expert/member/select_mystyle.asp';
+data['9002_50202'] = 'text:\u6211\u7684\u5e16\u5b50 ; url:/Expert/member/MyForum.asp?typenum=1';
+data['9002_50203'] = 'text:\u6211\u53c2\u4e0e\u7684\u8ba8\u8bba ; url:/Expert/member/MyForum.asp?typenum=2';
+data['9002_50204'] = 'text:\u6211\u5f97\u5206\u7684\u5e16\u5b50 ; url:/Expert/member/MyForum.asp?typenum=3';
+data['9002_50213'] = 'text:\u6211\u7684\u793e\u533a\u79ef\u5206 ; url:/list/myCommunityPoint.aspx';
+data['9002_50205'] = 'text:\u6211\u7684\u4e13\u5bb6\u5206 ; url:/Expert/member/MyExpertPoint.asp';
+data['9002_50206'] = 'text:\u6211\u7684\u6536\u85cf\u5939 ; url:/MyFavorite/My_Favorite.asp';
+data['9002_502071'] = 'text:\u77ed\u6d88\u606f ; url:http://message.csdn.net/ListMessage.aspx';
+data['9002_50208'] = 'text:\u7ef4\u62a4\uff26\uff21\uff31\u5217\u8868 ; url:http://faq.csdn.net/Manage/ManageDefault.aspx';
+data['9002_50209'] = 'text:\u6211\u7684\u4fe1\u8a89\u5206\u53d8\u5316\u8bb0\u5f55 ; url:/Expert/member/ListCreditPoint.asp';
+data['9002_50210'] = 'text:\u4fee\u6539\u6211\u7684\u793e\u533a\u4fe1\u606f ; url:/Member/ModifyUserInfo.aspx';
+data['9002_50212'] = 'text:\u6211\u7684\u535a\u5ba2 ; url:http://www.csdn.net/Develop/Add_Article.asp';

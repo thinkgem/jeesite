@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder käyttöohje</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<style type="text/css">
+		body
+		{
+			margin: 0px;
+			font-family: Trebuchet, Trebuchet MS, Arial;
+		}
+		a { text-decoration: none ; }
+		a:hover { text-decoration: underline ; }
+		ul { list-style-type: none; padding-left: 20px; margin:0px; }
+		li { white-space: nowrap; padding-left:2px; padding-right:2px; }
+		.toc
+		{
+			background-color: #696969;
+			color: #f5f5f5;
+			margin: 0px;
+			font-weight: bold;
+			text-align: center;
+		}
+		.contents { padding: 10px; }
+		.active  { color: highlighttext; background-color: highlight; }
+	</style>
+	<script type="text/javascript">
+
+window.onload = function()
+{
+	for ( var i = 0 ; i < document.links.length ; i++ )
+	{
+		var link = document.links[i] ;
+		link.target = 'CKDocsMain' ;
+		link.innerHTML = '&nbsp;' + link.innerHTML + '&nbsp;' ;
+	}
+}
+
+var lastLink = null ;
+
+window.top.SetActiveTopic = function( topicUrl )
+{
+	var pageName = topicUrl.match( /(?:^|\/|\\)([^\\\/]+)$/ )[1] ;
+
+	if ( lastLink )
+		lastLink.className = '' ;
+
+	for ( var i = 0 ; i < document.links.length ; i++ )
+	{
+		var link = document.links[i] ;
+		if ( link.href.match( /(?:^|\/|\\)([^\\\/]+)$/ )[1] == pageName )
+		{
+			lastLink = link ;
+			link.className = 'active' ;
+			return ;
+		}
+	}
+}
+
+	</script>
+</head>
+<body>
+	<p class="toc">
+		&nbsp;Sisällysluettelo
+	</p>
+	<div class="contents">
+		<ul style="padding-left: 0px;">
+			<li><a href="001.html">Tervetuloa</a></li>
+			<li><a href="002.html">CKFinderin käyttöliittymä</a>
+				<ul>
+					<li><a href="003.html">Kansioruutu</a></li>
+					<li><a href="004.html">Tiedostoruutu</a></li>
+					<li><a href="005.html">Työkalurivi</a>
+						<ul>
+							<li><a href="006.html">Lataa palvelimelle</a></li>
+							<li><a href="007.html">Päivitä</a></li>
+							<li><a href="008.html">Asetukset</a></li>
+							<li><a href="009.html">Apua</a></li>
+						</ul>
+					</li>
+					<li><a href="010.html">Tilarivi</a></li>
+					<li><a href="012.html">Pikavalikko</a></li>
+				</ul>
+			</li>
+			<li><a href="013.html">Yhteensopivuus- ja järjestelmävaatimukset</a></li>
+			<li><a href="011.html">Juridisia huomautuksia</a></li>
+			<li><a href="suggestions.html">Ehdotuksia?</a></li>
+		</ul>
+	</div>
+</body>
+</html>

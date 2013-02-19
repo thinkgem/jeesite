@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>树表控件</title>
+        <link href="style/demo.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+        table,td,th {  border: 1px solid #8DB9DB; padding:5px; border-collapse: collapse; font-size:16px; }
+        </style>
+
+        <!--引用的文件 Begin-->
+        <link href="../themes/default/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+        <link href="../themes/vsStyle/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+        <script src="../../../jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="../jquery.treeTable.js" type="text/javascript"></script>
+        <!--引用的文件 End-->
+        <script type="text/javascript">
+        $(function(){
+            var option = {
+                theme:'vsStyle',
+                expandLevel : 2,
+                beforeExpand : function($treeTable, id) {
+                    //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+                    if ($('.' + id, $treeTable).length) { return; }
+                    //这里的html可以是ajax请求
+                    var html = '<tr id="8" pId="6"><td>5.1</td><td>可以是ajax请求来的内容</td></tr>'
+                             + '<tr id="9" pId="6"><td>5.2</td><td>动态的内容</td></tr>';
+
+                    $treeTable.addChilds(html);
+                },
+                onSelect : function($treeTable, id) {
+                    window.console && console.log('onSelect:' + id);
+                    
+                }
+
+            };
+            $('#treeTable1').treeTable(option);
+
+            option.theme = 'default';
+            $('#treeTable2').treeTable(option);
+        });
+        </script>
+    </head>
+    <body>
+    <div id="page">
+        <h1><span>treeTable <em>v 1.4.2</em></span></h1>
+            <fieldset>
+            <legend> 简介</legend>
+            <div class="content">       
+              <p>treeTable是跨浏览器、性能很高的jquery的树表组件，它使用非常简单，只需要引用jquery库和一个js文件，接口也很简单。</p>
+              <h3>优点</h3>
+              <ol class="love">
+                <li><strong>兼容主流浏览器</strong>: 支持IE6和IE6+, Firefox, chrome, Opera, Safari</li>
+                <li><strong>接口简洁</strong>: 在普通表格的基础上增加父子关系的自定义标签就可以</li>
+                <li><strong>组件性能高</strong>: 内部实现了只绑定了table的事件、使用了css sprite合并图片等</li>
+                <li><strong>提供两种风格</strong>: 通过参数来设置风格</li>
+              </ol>
+            </div>
+
+        </fieldset>
+        <fieldset>
+            <legend>演示</legend>
+            <table id="treeTable1" style="width:100%">
+                <tr>
+                    <td style="width:200px;">标题</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="1">
+                    <td><span controller="true">1</span></td>
+                    <td>内容</td></tr>
+                <tr id="2" pId="1">
+                    <td><span controller="true">2</span></td>
+                    <td>内容</td></tr>
+                <tr id="3" pId="2">
+                    <td>3</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="4" pId="2">
+                    <td>4</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="5" pId="4">
+                    <td>4.1</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="6" pId="1" hasChild="true">
+                    <td>5</td>
+                    <td>注意这个节点是动态加载的</td>
+                </tr>
+                <tr id="7">
+                    <td>8</td>
+                    <td>内容</td>
+                </tr>
+            </table>
+            <hr/>
+            <table id="treeTable2" style="width:100%">
+                <tr>
+                    <td style="width:200px;">标题</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="1">
+                    <td><span controller="true">1</span></td>
+                    <td>内容</td></tr>
+                <tr id="2" pId="1">
+                    <td><span controller="true">2</span></td>
+                    <td>内容</td></tr>
+                <tr id="3" pId="2">
+                    <td>3</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="4" pId="2">
+                    <td>4</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="5" pId="4">
+                    <td>4.1</td>
+                    <td>内容</td>
+                </tr>
+                <tr id="6" pId="1" hasChild="true">
+                    <td>5</td>
+                    <td>注意这个节点是动态加载的</td>
+                </tr>
+                <tr id="7">
+                    <td>8</td>
+                    <td>内容</td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>接口</legend>
+            <h3>配置参数</h3>
+            <div>
+               <ul class="love">
+                  <li><strong>theme</strong>: string {主题，有两个选项：default、vsStyle. 默认:default}</li>
+                  <li><strong>expandLevel</strong>: int {树表的展开层次. 默认:1}</li>
+                  <li><strong>column</strong>: int {可控制列的序号. 默认:0，即第一列}</li>
+                  <li><strong>onSelect</strong>: function  {拥有controller自定义属性的元素的点击事件，return false则中止展开. 默认值:
+<pre><code>function($treeTable, id) {
+      //$treeTable 当前树表的jquery对象.
+      //id 当前行的id
+    
+      //返回false，则直接退出，不会激发后面的beforeExpand和子节点的展开
+      return true;
+}</code></pre>
+</li>
+                  <li><strong>beforeExpand</strong>: {展开子节点前触发的事件, 默认值：</li>
+<pre><code>function($treeTable, id) {
+      //$treeTable 当前树表的jquery对象.
+      //id 当前行的id
+}</code></pre>
+               </ul>
+            </div>
+            <h3>属性说明</h3>
+            <div>
+               <ul class="love">
+                  <li><strong>id</strong>: string 行的id</li>
+                  <li><strong>pId</strong>: string 父行的id</li>
+                  <li><strong>controller</strong>: bool 指定某一个元素是否可以控制行的展开</li>
+                  <li><strong>hasChild</strong>: bool  指定某一个tr元素是否有孩子（动态加载需用到）</li>
+				  <li><strong>isFirstOne</strong>: bool  指定某一个tr元素是否是第一个孩子（自动生成属性，只读）</li>
+				  <li><strong>isLastOne</strong>: bool  指定某一个tr元素是否是最后一个孩子（自动生成属性，只读）</li>
+				  <li><strong>prevId</strong>: string  前一个兄弟节点的id（自动生成属性，只读）</li>
+				  <li><strong>depth</strong>: string  当前行的深度（自动生成属性，只读）</li>
+               </ul>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>使用方式</legend>
+            <h3> $("#元素id").treeTable({}) 如:</h3>
+			<p>引用的文件</p>
+            <pre><code>&lt;script src=&quot;/script/jquery.js&quot; type=&quot;text/javascript&quot;&gt; &lt;/script&gt;
+&lt;script src=&quot;/script/treeTable/jquery.treeTable.js&quot; type=&quot;text/javascript&quot;&gt; &lt;/script&gt;</code></pre>
+            <p>js代码</p>
+            <pre><code>$(function(){
+    var option = {
+        theme:'vsStyle',
+        expandLevel : 2,
+        beforeExpand : function($treeTable, id) {
+            //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+            if ($('.' + id, $treeTable).length) { return; }
+            //这里的html可以是ajax请求
+            var html = '&lt;tr id="8" pId="6"&gt;&lt;td&gt;5.1&lt;/td&gt;&lt;td&gt;可以是ajax请求来的内容&lt;/td&gt;&lt;/tr&gt;'
+                     + '&lt;tr id="9" pId="6"&gt;&lt;td&gt;5.2&lt;/td&gt;&lt;td&gt;动态的内容&lt;/td&gt;&lt;/tr&gt;';
+
+            $treeTable.addChilds(html);
+        },
+        onSelect : function($treeTable, id) {
+            window.console && console.log('onSelect:' + id);
+        }
+
+    };
+    $('#treeTable1').treeTable(option);
+});</code></pre>
+           <p>html结构</p>
+           <pre><code>&lt;table id="treeTable1" style="width:100%"&gt;
+    &lt;tr&gt;
+        &lt;td style="width:200px;"&gt;标题&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="1"&gt;
+        &lt;td&gt;&lt;span controller="true"&gt;1&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr id="2" pId="1"&gt;
+        &lt;td&gt;&lt;span controller="true"&gt;2&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr id="3" pId="2"&gt;
+        &lt;td&gt;3&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="4" pId="2"&gt;
+        &lt;td&gt;4&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="5" pId="4"&gt;
+        &lt;td&gt;4.1&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="6" pId="1" hasChild="true"&gt;
+        &lt;td&gt;5&lt;/td&gt;
+        &lt;td&gt;注意这个节点是动态加载的&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="7"&gt;
+        &lt;td&gt;8&lt;/td&gt;
+        &lt;td&gt;内容&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+      </fieldset>
+        <fieldset>
+            <legend>关于</legend>
+            <div class="content">
+                <h3>作者: benzhan(詹潮江)</h3>
+                <h3>版本变更</h3>
+                <p>1.0版本：创建基本功能。(2011-05-04)</p>
+                <p>1.1版本：(2011-05-08)</p>
+                <pre>这个版本提高了性能，做了以下改进：
+ 
+* 1、使用了Css Sprite Tools 合并了分散的图标
+* 2、使用了.id的方式来代替原来[pId=id]，这样选择孩子效率更高
+* 3、把css剥离出来，增加动态添加css，每次家在前判断是否添加过
+ 
+关于第二点，非常感谢onli同学的提醒。但我并没有直接修改我的接口，直接除去pId，而是在第一次遍历时将pId作为class名添加到节点中。这样有两个好处：
+（1）接口可读性会比较好，pId比class更容易理解。
+（2）第二点，如果直接使用class，那节点本来就有样式，这样获取到的className还要去分解空格得到pId，挺麻烦的。</pre>
+                <hr>
+                <p>1.3版本：(2011-05-09)</p>
+                <pre>这个版本扩展了事件，做了以下改进：
+ 
+* 1、增加onSelect事件，onSelect: function($treeTable, id){}
+* 2、增加beforeExpand事件，beforeExpand : function($treeTable, id){}
+ 
+动态加载节点就靠beforeExpand 事件了。</pre>
+                <p>1.4.2版本：(2011-09-03)</p>
+                <pre>这个版本修复了bug，做了以下改进：
+* 1、修复了多个tableTree不在同个页面的bug，并且可以让不同的tableTree使用不同的主题。
+* 2、增加了controller的自定义标签来控制可点击的区域。</pre>
+            </div>
+       </fieldset>
+    </div>
+    </body>
+</html>

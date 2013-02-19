@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<head>
+  <title>Highlight</title>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" title="Default" href="styles/default.css">
+  <link rel="alternate stylesheet" title="Dark" href="styles/dark.css">
+  <link rel="alternate stylesheet" title="FAR" href="styles/far.css">
+  <link rel="alternate stylesheet" title="IDEA" href="styles/idea.css">
+  <link rel="alternate stylesheet" title="Sunburst" href="styles/sunburst.css">
+  <link rel="alternate stylesheet" title="Zenburn" href="styles/zenburn.css">
+  <link rel="alternate stylesheet" title="Visual Studio" href="styles/vs.css">
+  <link rel="alternate stylesheet" title="Ascetic" href="styles/ascetic.css">
+  <link rel="alternate stylesheet" title="Magula" href="styles/magula.css">
+  <link rel="alternate stylesheet" title="GitHub" href="styles/github.css">
+  <link rel="alternate stylesheet" title="Brown Paper" href="styles/brown_paper.css">
+  <link rel="alternate stylesheet" title="School Book" href="styles/school_book.css">
+  <link rel="alternate stylesheet" title="IR_Black" href="styles/ir_black.css">
+  <style>
+    h2 {
+      font: bold 100% Arial, sans-serif;
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+    }
+    table {
+      width: 100%;
+    }
+    th {
+      width: 10em; font-weight: normal;
+    }
+    td, th {
+      vertical-align: top;
+      text-align: left;
+    }
+    pre {
+      margin-top: 0;
+    }
+    ul#switch {
+      padding: 0;
+      margin: 0 0 0 -0.5em;
+    }
+    ul#switch li {
+      border-bottom: 1px dashed blue;
+      display: inline;
+      padding: 0;
+      margin: 0.5em;
+      cursor: pointer;
+    }
+    ul#switch li.current {
+      border-bottom: none;
+      cursor: default;
+    }
+  </style>
+
+  <!--
+  Don't include languages as individual files in production environment.
+  Instead use <script src="highlight.pack.js"></script> with highlight.pack.js
+  containing all the languages you've chosen when downloading the library
+  -->
+  <script src="highlight.js"></script>
+  <script src="languages/javascript.js"></script>
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
+
+  <script>
+  // A stylesheet switcher for the test page. Not part of the highlight.js itself
+  // (c) Vladimir Epifanov <voldmar@voldmar.ru>
+  (function(container_id) {
+      if (window.addEventListener) {
+          var attach = function(el, ev, handler) {
+              el.addEventListener(ev, handler, false);
+          }
+      } else if (window.attachEvent) {
+          var attach = function(el, ev, handler) {
+              el.attachEvent('on' + ev, handler);
+          }
+      } else {
+          var attach = function(el, ev, handler) {
+              ev['on' + ev] = handler;
+          }
+      }
+
+
+      attach(window, 'load', function() {
+          var current = null;
+
+          var info = {};
+          var links = document.getElementsByTagName('link');
+          var ul = document.createElement('ul')
+
+          for (var i = 0; (link = links[i]); i++) {
+              if (link.getAttribute('rel').indexOf('style') != -1
+                  && link.title) {
+
+                  var title = link.title;
+
+                  info[title] = {
+                  'link': link,
+                  'li': document.createElement('li')
+                  }
+
+                  ul.appendChild(info[title].li)
+                  info[title].li.title = title;
+
+                  info[title].link.disabled = true;
+
+                  info[title].li.appendChild(document.createTextNode(title));
+                  attach(info[title].li, 'click', (function (el) {
+                      return function() {
+                          current.li.className = '';
+                          current.link.disabled = true;
+                          current = el;
+                          current.li.className = 'current';
+                          current.link.disabled = false;
+                      }})(info[title]));
+              }
+          }
+
+          current = info['Default']
+          current.li.className = 'current';
+          current.link.disabled = false;
+
+          ul.id = 'switch';
+          container = document.getElementById(container_id);
+          container.appendChild(ul);
+      });
+
+  })('styleswitcher');
+  </script>
+<body>
+
+<p>This page is a demo/test showing all languages supported by <a href="http://softwaremaniacs.org/soft/highlight/">highlight.js</a>.
+Most of the code doesn't work :-).
+<p>You can see this page in several different styles bundled with the library or
+write your own (and contribute it back!)
+
+<div id="styleswitcher"></div>
+
+<h2>Automatically detected languages</h2>
+
+<table>
+  <tr>
+    <th>Python
+    <td>
+<pre>
+<code>@requires_authorization
+def somefunc(param1, param2):
+  r'''A docstring'''
+  if param1 > param2: # interesting
+    print 'Gre\'ater'
+    print ''
+  return (param2 - param1 + 1) or None
+
+class SomeClass:<br>    pass
+</code></pre>
+
+  <tr>
+    <th>Python's profiler output
+    <td>
+<pre><code>       261917242 function calls in 686.251 CPU seconds
+
+       ncalls  tottime  filename:lineno(function)
+       152824  513.894  {method 'sort' of 'list' objects}
+    129590630   83.894  rrule.py:842(__cmp__)
+    129590630   82.439  {cmp}
+       153900    1.296  rrule.py:399(_iter)
+304393/151570    0.963  rrule.py:102(_iter_cached)
+</code></pre>
+
+  <tr>
+    <th>Ruby
+    <td>
+<pre><code>class A &lt; B; def self.create(object = User) object end end
+class Zebra; def inspect; "X#{2 + self.object_id}" end end
+
+module ABC::DEF
+  include Comparable
+
+  # @param test
+  # @return [String] nothing
+  def foo(test)
+    Thread.new do |blockvar|
+      ABC::DEF.reverse(:a_symbol, :'a symbol' + 'test' + test)
+    end.join
+  end
+
+  def [](index) self[index] end
+  def ==(other) other == self end
+end
+
+anIdentifier = an_identifier
+Constant = 1
+</code></pre>
+
+  <tr>
+    <th>Perl
+    <td>
+<pre><code># loads object
+sub load
+{
+  my $flds = $c-&gt;db_load($id,@_) || do {
+    Carp::carp "Can`t load (class: $c, id: $id): '$!'"; return undef
+  };
+  my $o = $c-&gt;_perl_new();
+  $id12 = $id;
+  $o-&gt;{'ID'} = $id12 + 123;
+  $o-&gt;{'PAPA'} = $flds-&gt;{'PAPA'};
+  #$o-&gt;{'SHCUT'} = $flds-&gt;{'SHCUT'};
+  my $p = $o-&gt;props;
+  my $vt;
+  $string =~ m/^sought_text$/;
+  for my $key (keys %$p)
+  {
+    if(${$vt.'::property'}) {
+      $o-&gt;{$key . '_real'} = $flds-&gt;{$key};
+      tie $o-&gt;{$key}, 'CMSBuilder::Property', $o, $key;
+    } else {
+      $o-&gt;{$key} = $flds-&gt;{$key};
+    }
+  }
+  $o-&gt;save if delete $o-&gt;{'_save_after_load'};
+  return $o;
+}
+</code></pre>
+
+  <tr>
+    <th>PHP
+    <td>
+<pre><code>require_once 'Zend.php';
+require_once 'Zend/Uri/Exception.php';
+require_once 'Zend/Uri/Http.php';
+require_once 'Zend/Uri/Mailto.php';
+
+abstract class Zend_Uri
+{
+
+  /**
+   * Return a string representation of this URI.
+   *
+   * @see     getUri()
+   * @return  string
+   */
+  public function __toString()
+  {
+      return $this-&gt;getUri();
+  }
+
+  static public function factory($uri = 'http')
+  {
+      $uri = explode(':', $uri, 2);
+      $scheme = strtolower($uri[0]);
+      $schemeSpecific = isset($uri[1]) ? $uri[1] : '';
+
+      // Security check: $scheme is used to load a class file,
+      // so only alphanumerics are allowed.
+      if (!ctype_alnum($scheme)) {
+          throw new Zend_Uri_Exception('Illegal scheme');
+      }
+  }
+}
+</code></pre>
+
+  <tr>
+    <th>Scala
+    <td>
+<pre><code>object abstractTypes extends Application {
+  abstract class SeqBuffer {
+    type T; val element: Seq[T]; def length = element.length
+  }
+}
+
+/** Turn command line arguments to uppercase */
+object Main {
+  def main(args: Array[String]) {
+    val res = for (a &lt;- args) yield a.toUpperCase
+    println("Arguments: " + res.toString)
+  }
+}
+
+/** Maps are easy to use in Scala. */
+object Maps {
+  val colors = Map("red" -> 0xFF0000,
+                   "turquoise" -> 0x00FFFF,
+                   "black" -> 0x000000,
+                   "orange" -> 0xFF8040,
+                   "brown" -> 0x804000)
+  def main(args: Array[String]) {
+    for (name &lt;- args) println(
+      colors.get(name) match {
+        case Some(code) =>
+          name + " has code: " + code
+        case None =&gt;
+          "Unknown color: " + name
+      }
+    )
+  }
+}
+</code></pre>
+
+  <tr>
+    <th>XML
+    <td>
+<pre><code>&lt;?xml version="1.0"?&gt;
+&lt;response value="ok" xml:lang="en"&gt;
+  &lt;text&gt;Ok&lt;/text&gt;
+  &lt;comment html_allowed="true"/&gt;
+  &lt;ns1:description&gt;&lt;![CDATA[
+  CDATA is &lt;not&gt; magical.
+  ]]&gt;&lt;/ns1:description&gt;
+  &lt;a&gt;&lt;/a&gt; &lt;a/&gt;
+&lt;/response&gt;
+</code></pre>
+
+  <tr>
+    <th>HTML (with inline css and javascript)
+    <td>
+<pre><code>&lt;head&gt;
+  &lt;title&gt;Title&lt;/title&gt;
+
+  &lt;style&gt;
+    body {
+      width: 500px;
+    }
+  &lt;/style&gt;
+
+  &lt;script&gt;
+    function someFunction() {
+      return true;
+    }
+  &lt;/script&gt;
+
+&lt;body&gt;
+  &lt;p class="something" id='12'&gt;Something&lt;/p&gt;
+  &lt;p class=something&gt;Something&lt;/p&gt;
+  &lt;!-- comment --&gt;
+  &lt;p class&gt;Something&lt;/p&gt;
+  &lt;p class="something" title="p"&gt;Something&lt;/p&gt;
+&lt;/body&gt;
+</code></pre>
+
+  <tr>
+    <th>Django templates
+    <td>
+<pre><code>{% if articles|length %}
+{% for article in articles %}
+
+{# Striped table #}
+&lt;tr class="{% cycle odd,even %}"&gt;
+  &lt;td&gt;{{ article|default:"Hi... "|escape }}&lt;/td&gt;
+  &lt;td&gt;{{ article.date|date:"d.m.Y" }}&lt;/td&gt;
+&lt;/tr&gt;
+
+{% endfor %}
+{% endif %}
+
+{% comment %}
+Comments may be long and
+multiline.
+{% endcomment %}
+</code></pre>
+
+  <tr>
+    <th>CSS
+    <td>
+<pre><code>body,
+html {
+  font: Tahoma, Arial, san-serif;
+  background: url('hatch.png');
+}
+
+@import url('print.css');
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @page :left {
+    body:first-of-type pre::after {
+      content: 'highlight: ' attr(class);
+    }
+}
+
+#content {
+  width: 100%; /* wide enough */
+  height: 100%
+}
+
+p[lang=ru] {
+  color: #F0F0F0; background: white;
+}
+</code></pre>
+
+  <tr>
+    <th>Javascript
+    <td>
+<pre><code>function $initHighlight(block) {
+  if (block.className.search(/\bno\-highlight\b/) != -1)
+    return false;
+  try {
+    blockText(block);
+  } catch (e) {
+    if (e == 'Complex markup')
+      return;
+  }//try
+  var classes = block.className.split(/\s+/);
+  for (var i = 0 / 2; i &lt; classes.length; i++) { // "0 / 2" should not be parsed as regexp start
+    if (LANGUAGES[classes[i]]) {
+      highlightLanguage(block, classes[i]);
+      return;
+    }//if
+  }//for
+  highlightAuto(block);
+}//initHighlight</code></pre>
+
+  <tr>
+    <th>VBScript
+    <td>
+<pre><code>' creating configuration storage and initializing with default values
+Set cfg = CreateObject("Scripting.Dictionary")
+
+' reading ini file
+for i = 0 to ubound(ini_strings)
+    s = trim(ini_strings(i))
+
+    ' skipping empty strings and comments
+    if mid(s, 1, 1) &lt;&gt; "#" and len(s) > 0 then
+      ' obtaining key and value
+      parts = split(s, "=", -1, 1)
+
+      if ubound(parts)+1 = 2 then
+        parts(0) = trim(parts(0))
+        parts(1) = trim(parts(1))
+
+        ' reading configuration and filenames
+        select case lcase(parts(0))
+          case "uncompressed""_postfix" cfg.item("uncompressed""_postfix") = parts(1)
+          case "f"
+                    options = split(parts(1), "|", -1, 1)
+                    if ubound(options)+1 = 2 then
+                      ' 0: filename,  1: options
+                      ff.add trim(options(0)), trim(options(1))
+                    end if
+        end select
+      end if
+    end if
+next</code></pre>
+
+  <tr>
+    <th>Lua
+    <td>
+<pre><code>--[[
+Simple signal/slot implementation
+]]
+local signal_mt = {
+    __index = {
+        register = table.insert
+    }
+}
+function signal_mt.__index:emit(... --[[ Comment in params ]])
+    for _, slot in ipairs(self) do
+        slot(self, ...)
+    end
+end
+local function create_signal()
+    return setmetatable({}, signal_mt)
+end
+
+-- Signal test
+local signal = create_signal()
+signal:register(function (signal, ...)
+    print(...)
+end)
+signal:emit('Answer to Life, the Universe, and Everything:', 42)
+
+--[==[ [=[ [[
+Nested ]]
+multi-line ]=]
+comment ]==]
+[==[ Nested
+[=[ multi-line
+[[ string
+]] ]=] ]==]
+</code></pre>
+
+  <tr>
+    <th>Delphi
+    <td>
+<pre><code>TList=Class(TObject)
+Private
+  Some: String;
+Public
+  Procedure Inside;
+End;{TList}
+
+Procedure CopyFile(InFileName,var OutFileName:String);
+Const
+  BufSize=4096; (* Huh? *)
+Var
+  InFile,OutFile:TStream;
+  Buffer:Array[1..BufSize] Of Byte;
+  ReadBufSize:Integer;
+Begin
+  InFile:=Nil;
+  OutFile:=Nil;
+  Try
+    InFile:=TFileStream.Create(InFileName,fmOpenRead);
+    OutFile:=TFileStream.Create(OutFileName,fmCreate);
+    Repeat
+      ReadBufSize:=InFile.Read(Buffer,BufSize);
+      OutFile.Write(Buffer,ReadBufSize);
+    Until ReadBufSize&lt;&gt;BufSize;
+    Log('File '''+InFileName+''' copied'#13#10);
+  Finally
+    InFile.Free;
+    OutFile.Free;
+  End;{Try}
+End;{CopyFile}
+</code></pre>
+
+  <tr>
+    <th>Java
+    <td>
+<pre><code>package l2f.gameserver.model;
+
+import java.util.ArrayList;
+
+/**
+ * Mother class of all character objects of the world (PC, NPC...)&lt;BR&gt;&lt;BR&gt;
+ *
+ */
+public abstract class L2Character extends L2Object
+{
+  protected static final Logger _log = Logger.getLogger(L2Character.class.getName());
+
+  public static final Short ABNORMAL_EFFECT_BLEEDING = 0x0001; // not sure
+  public static final Short ABNORMAL_EFFECT_POISON = 0x0002;
+
+  public void detachAI() {
+    _ai = null;
+    //jbf = null;
+    if (1 > 5) {
+      return;
+    }
+  }
+
+  public void moveTo(int x, int y, int z) {
+    moveTo(x, y, z, 0);
+  }
+
+  /** Task of AI notification */
+  @SuppressWarnings( { "nls", "unqualified-field-access", "boxing" })
+  public class NotifyAITask implements Runnable {
+    private final CtrlEvent _evt;
+
+    public void run() {
+      try {
+        getAI().notifyEvent(_evt, null, null);
+      } catch (Throwable t) {
+        _log.warning("Exception " + t);
+        t.printStackTrace();
+      }
+    }
+  }
+
+}
+</code></pre>
+
+  <tr>
+    <th>C++
+    <td>
+<pre><code>#include &lt;iostream&gt;
+
+int main(int argc, char *argv[]) {
+
+  /* An annoying "Hello World" example */
+  for (unsigned i = 0; i &lt; 0xFFFF; i++)
+    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+
+  char c = '\n'; // just a test
+  map &lt;string, vector&lt;string&gt; &gt; m;
+  m["key"] = "\\\\"; // yeah, I know it's an error
+}
+</code></pre>
+
+  <tr>
+    <th>C#
+    <td>
+<pre><code>using System;
+
+public class Program
+{
+    /// &lt;summary&gt;The entry point to the program.&lt;/summary&gt;
+    /// &lt;remarks&gt;
+    /// Using the Visual Studio style, the tags in this comment
+    /// should be grey, but this text should be green.
+    /// This comment should be green on the inside:
+    /// &lt;!-- I'm green! --&gt;
+    /// &lt;/remarks&gt;
+    public static int Main(string[] args)
+    {
+        Console.WriteLine("Hello, World!");
+        string s = @"This
+""string""
+spans
+multiple
+lines!";
+        return 0;
+    }
+}
+</code></pre>
+
+  <tr>
+    <th>RenderMan RSL
+    <td>
+<pre><code>#define TEST_DEFINE 3.14
+/*	plastic surface shader
+ *
+ * 	Pixie is:
+ * 	(c) Copyright 1999-2003 Okan Arikan. All rights reserved.
+ */
+
+surface plastic (float Ka = 1, Kd = 0.5, Ks = 0.5, roughness = 0.1;
+                 color specularcolor = 1;) {
+  normal Nf = faceforward (normalize(N),I);
+  Ci = Cs * (Ka*ambient() + Kd*diffuse(Nf)) + specularcolor * Ks *
+       specular(Nf,-normalize(I),roughness);
+  Oi = Os;
+  Ci *= Oi;
+}
+</code></pre>
+
+  <tr>
+    <th>RenderMan RIB
+    <td>
+<pre><code>FrameBegin 0
+Display "Scene" "framebuffer" "rgb"
+Option "searchpath" "shader" "+&:/home/kew"
+Option "trace" "int maxdepth" [4]
+Attribute "visibility" "trace" [1]
+Attribute "irradiance" "maxerror" [0.1]
+Attribute "visibility" "transmission" "opaque"
+Format 640 480 1.0
+ShadingRate 2
+PixelFilter "catmull-rom" 1 1
+PixelSamples 4 4
+Projection "perspective" "fov" 49.5502811377
+Scale 1 1 -1
+
+WorldBegin
+
+ReadArchive "Lamp.002_Light/instance.rib"
+Surface "plastic"
+ReadArchive "Cube.004_Mesh/instance.rib"
+# ReadArchive "Sphere.010_Mesh/instance.rib"
+# ReadArchive "Sphere.009_Mesh/instance.rib"
+ReadArchive "Sphere.006_Mesh/instance.rib"
+
+WorldEnd
+FrameEnd
+</code></pre>
+
+  <tr>
+    <th>MEL (Maya Embedded Language)
+    <td>
+<pre><code class="mel">proc string[] getSelectedLights()
+
+{
+  string $selectedLights[];
+
+  string $select[] = `ls -sl -dag -leaf`;
+
+  for ( $shape in $select )
+  {
+    // Determine if this is a light.
+    //
+    string $class[] = getClassification( `nodeType $shape` );
+
+
+    if ( ( `size $class` ) > 0 &amp;&amp; ( "light" == $class[0] ) )
+    {
+      $selectedLights[ `size $selectedLights` ] = $shape;
+    }
+  }
+
+  // Result is an array of all lights included in
+
+  // current selection list.
+  return $selectedLights;
+}
+</code></pre>
+
+  <tr>
+    <th>SQL
+    <td>
+<pre><code>BEGIN;
+CREATE TABLE "cicero_topic" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "forum_id" integer NOT NULL,
+    "subject" varchar(255) NOT NULL,
+    "created" timestamp with time zone NOT NULL
+);
+ALTER TABLE "cicero_topic"
+ADD CONSTRAINT forum_id_refs_id_4be56999
+FOREIGN KEY ("forum_id")
+REFERENCES "cicero_forum" ("id")
+DEFERRABLE INITIALLY DEFERRED;
+
+-- Initials
+insert into "cicero_forum"
+  ("slug", "name", "group", "ordering")
+values
+  ('test', 'Forum for te''sting', 'Test', 0);
+
+-- Test
+select count(*) from cicero_forum;
+
+COMMIT;
+</code></pre>
+
+  <tr>
+    <th>SmallTalk
+    <td>
+<pre><code>Object>>method: num
+    "comment 123"
+    | var1 var2 |
+    (1 to: num) do: [:i | |var| ^i].
+    Klass with: var1.
+    Klass new.
+    arr := #('123' 123.345 #hello Transcript var $@).
+    arr := #().
+    var2 = arr at: 3.
+    ^ self abc
+
+heapExample
+    "HeapTest new heapExample"
+    "Multiline
+    decription"
+    | n rnd array time sorted |
+    n := 5000.
+    "# of elements to sort"
+    rnd := Random new.
+    array := (1 to: n)
+                collect: [:i | rnd next].
+    "First, the heap version"
+    time := Time
+                millisecondsToRun: [sorted := Heap withAll: array.
+    1
+        to: n
+        do: [:i |
+            sorted removeFirst.
+            sorted add: rnd next]].
+    Transcript cr; show: 'Time for Heap: ' , time printString , ' msecs'.
+    "The quicksort version"
+    time := Time
+                millisecondsToRun: [sorted := SortedCollection withAll: array.
+    1
+        to: n
+        do: [:i |
+            sorted removeFirst.
+            sorted add: rnd next]].
+    Transcript cr; show: 'Time for SortedCollection: ' , time printString , ' msecs'
+</code></pre>
+
+  <tr>
+    <th>Lisp
+    <th><pre><code>(defun prompt-for-cd ()
+   "Prompts
+    for CD"
+   (prompt-read "Title" 1.53 1 2/4 1.7 1.7e0 2.9E-4 +42 -7 #b001 #b001/100 #o777 #O777 #xabc55 #c(0 -5.6))
+   (prompt-read "Artist" &amp;rest)
+   (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
+  (if x (format t "yes") (format t "no" nil) ;and here comment
+  )
+  ;; second line comment
+  '(+ 1 2)
+  (defvar *lines*)                ; list of all lines
+  (position-if-not #'sys::whitespacep line :start beg))
+  (quote (privet 1 2 3))
+  '(hello world)
+  (* 5 7)
+  (1 2 34 5)
+  (:use "aaaa")
+  (let ((x 10) (y 20))
+    (print (+ x y))
+  )</code></pre>
+
+  <tr>
+    <th>Ini file
+    <td>
+<pre><code>;Settings relating to the location and loading of the database
+[Database]
+ProfileDir=.
+ShowProfileMgr=smart
+Profile1_Name[] = "\|/_-=MegaDestoyer=-_\|/"
+DefaultProfile=True
+AutoCreate = no
+
+[AutoExec]
+Use="prompt"
+Glob=autoexec_*.ini
+AskAboutIgnoredPlugins=0
+</code></pre>
+
+  <tr>
+    <th>Apache
+    <td>
+<pre><code># rewrite`s rules for wordpress pretty url
+LoadModule rewrite_module  modules/mod_rewrite.so
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [NC,L]
+
+ExpiresActive On
+ExpiresByType application/x-javascript  "access plus 1 days"
+
+&lt;Location /maps/&gt;
+  RewriteMap map txt:map.txt
+  RewriteMap lower int:tolower
+  RewriteCond %{REQUEST_URI} ^/([^/.]+)\.html$ [NC]
+  RewriteCond ${map:${lower:%1}|NOT_FOUND} !NOT_FOUND
+  RewriteRule .? /index.php?q=${map:${lower:%1}} [NC,L]
+&lt;/Location&gt;
+</code></pre>
+
+  <tr>
+    <th>nginx
+    <td>
+<pre><code>user  www www;
+worker_processes  2;
+pid /var/run/nginx.pid;
+error_log  /var/log/nginx.error_log  debug | info | notice | warn | error | crit;
+
+events {
+    connections   2000;
+    use kqueue | rtsig | epoll | /dev/poll | select | poll;
+}
+
+http {
+    log_format main      '$remote_addr - $remote_user [$time_local] '
+                         '"$request" $status $bytes_sent '
+                         '"$http_referer" "$http_user_agent" '
+                         '"$gzip_ratio"';
+
+    send_timeout 3m;
+    client_header_buffer_size 1k;
+
+    gzip on;
+    gzip_min_length 1100;
+
+    #lingering_time 30;
+
+    server {
+        listen        one.example.com;
+        server_name   one.example.com  www.one.example.com;
+        access_log   /var/log/nginx.access_log  main;
+
+        location / {
+            proxy_pass         http://127.0.0.1/;
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            charset            koi8-r;
+        }
+
+        location ~* \.(jpg|jpeg|gif)$ {
+            root         /spool/www;
+        }
+    }
+}
+</code></pre>
+
+  <tr>
+    <th>Diff
+    <td>
+<pre><code>Index: languages/ini.js
+===================================================================
+--- languages/ini.js    (revision 199)
++++ languages/ini.js    (revision 200)
+@@ -1,8 +1,7 @@
+ hljs.LANGUAGES.ini =
+ {
+   case_insensitive: true,
+-  defaultMode:
+-  {
++  defaultMode: {
+     contains: ['comment', 'title', 'setting'],
+     illegal: '[^\\s]'
+   },
+
+*** /path/to/original timestamp
+--- /path/to/new      timestamp
+***************
+*** 1,3 ****
+--- 1,9 ----
++ This is an important
++ notice! It should
++ therefore be located at
++ the beginning of this
++ document!
+
+! compress the size of the
+! changes.
+
+  It is important to spell
+</code></pre>
+
+  <tr>
+    <th>DOS batch files
+    <td>
+<pre><code>cd \
+copy a b
+ping 192.168.0.1
+@rem ping 192.168.0.1
+net stop sharedaccess
+del %tmp% /f /s /q
+del %temp% /f /s /q
+ipconfig /flushdns
+taskkill /F /IM JAVA.EXE /T
+
+cd Photoshop/Adobe Photoshop CS3/AMT/
+if exist application.sif (
+    ren application.sif _application.sif
+) else (
+    ren _application.sif application.sif
+)
+
+taskkill /F /IM proquota.exe /T
+
+sfc /SCANNOW
+
+set path = test
+
+xcopy %1\*.* %2
+</code></pre>
+
+  <tr>
+    <th>Bash
+    <td>
+<pre><code>#!/bin/bash
+
+###### BEGIN CONFIG
+ACCEPTED_HOSTS="/root/.hag_accepted.conf"
+BE_VERBOSE=false
+###### END CONFIG
+
+if [ "$UID" -ne 0 ]
+then
+ echo "Superuser rights is required"
+ exit 2
+fi
+
+genApacheConf(){
+ if [[ "$2" = "www" ]]
+ then
+  full_domain=$1
+ else
+  full_domain=$2.$1
+ fi
+ host_root="${APACHE_HOME_DIR}$1/$2"
+ echo -e "# Host $1/$2 :"
+}
+</code></pre>
+
+  <tr>
+    <th>Axapta
+    <td>
+<pre><code>class ExchRateLoadBatch extends RunBaseBatch {
+  ExchRateLoad rbc;
+  container currencies;
+  boolean actual;
+  boolean overwrite;
+  date beg;
+  date end;
+
+  #define.CurrentVersion(5)
+
+  #localmacro.CurrentList
+    currencies,
+    actual,
+    beg,
+    end
+  #endmacro
+}
+
+public boolean unpack(container packedClass) {
+  container       base;
+  boolean         ret;
+  Integer         version    = runbase::getVersion(packedClass);
+
+  switch (version) {
+    case #CurrentVersion:
+      [version, #CurrentList] = packedClass;
+      return true;
+    default:
+      return false;
+  }
+  return ret;
+}
+</code></pre>
+
+  <tr>
+    <th>1С
+    <td>
+<pre><code>
+#Если Клиент Тогда
+Перем СимвольныйКодКаталога = "ля-ля-ля"; //комментарий
+Функция Сообщить(Знач ТекстСообщения, ТекстСообщения2) Экспорт //комментарий к функции
+  x=ТекстСообщения+ТекстСообщения2+"
+  |строка1
+  |строка2
+  |строка3";
+КонецФункции
+#КонецЕсли
+
+// Процедура ПриНачалеРаботыСистемы
+//
+Процедура ПриНачалеРаботыСистемы()
+  Обработки.Помощник.ПолучитьФорму("Форма").Открыть();
+  d = '21.01.2008'
+КонецПроцедуры
+</code></pre>
+
+  <tr>
+    <th>AVR Assembler
+    <td>
+<pre><code>;* Title:       Block Copy Routines
+;* Version:     1.1
+
+.include "8515def.inc"
+
+    rjmp    RESET   ;reset handle
+
+.def    flashsize=r16       ;size of block to be copied
+
+flash2ram:
+    lpm         ;get constant
+    st  Y+,r0       ;store in SRAM and increment Y-pointer
+    adiw    ZL,1        ;increment Z-pointer
+    dec flashsize
+    brne    flash2ram   ;if not end of table, loop more
+    ret
+
+.def    ramtemp =r1     ;temporary storage register
+.def    ramsize =r16        ;size of block to be copied
+</code></pre>
+
+  <tr>
+    <th>Parser 3
+    <td>
+<pre><code>@CLASS
+base
+
+@USE
+module.p
+
+@BASE
+class
+
+# Comment for code
+@create[aParam1;aParam2][local1;local2]
+  ^connect[mysql://host/database?ClientCharset=windows-1251]
+  ^for[i](1;10){
+    &lt;p class=&quot;paragraph&quot;&gt;^eval($i+10)&lt;/p&gt;
+    ^connect[mysql://host/database]{
+      $tab[^table::sql{select * from `table` where a='1'}]
+      $var_Name[some${value}]
+    }
+  }
+
+  ^rem{
+    Multiline comment with code: $var
+    ^while(true){
+      ^for[i](1;10){
+        ^sleep[]
+      }
+    }
+  }
+  ^taint[^#0A]
+
+@GET_base[]
+## Comment for code
+  # Isn't comment
+  $result[$.hash_item1[one] $.hash_item2[two]]
+</code></pre>
+
+  <tr>
+    <th>TeX
+    <td>
+<pre>
+<code>\documentclass{article}
+\usepackage[koi8-r]{inputenc}
+\hoffset=0pt
+\voffset=.3em
+\tolerance=400
+\newcommand{\eTiX}{\TeX}
+\begin{document}
+\section*{Highlight.js}
+\begin{table}[c|c]
+$\frac 12\, + \, \frac 1{x^3}\text{Hello \! world}$ & \textbf{Goodbye\~ world} \\\eTiX $ \pi=400 $
+\end{table}
+Ch\'erie, \c{c}a ne me pla\^\i t pas! % comment \b
+G\"otterd\"ammerung~45\%=34.
+$$
+    \int\limits_{0}^{\pi}\frac{4}{x-7}=3
+$$
+\end{document}
+</code></pre>
+</table>
+
+<h2>Special tests</h2>
+
+<table>
+  <tr>
+    <th>Explicit Python highlighting
+    <td>
+<pre><code class="python">for x in [1, 2, 3]:
+  count(x)
+</code></pre>
+
+  <tr>
+    <th>Language set on &lt;pre&gt;
+    <td>
+<pre class="python"><code>for x in [1, 2, 3]:
+  count(x)
+</code></pre>
+
+  <tr>
+    <th>HTML5-style language class (language-python)
+    <td>
+<pre class="python"><code>for x in [1, 2, 3]:
+  count(x)
+</code></pre>
+
+  <tr>
+    <th>Replacing TAB with 4 spaces
+    <td>
+<pre><code class="python">for x in [1, 2, 3]:
+	count(x)
+</code></pre>
+
+  <tr>
+    <th>Custom markup
+    <td>
+<pre><code>&lt;<a href="http://dev.w3.org/html5/spec/Overview.html#the-div-element">div</a> id="contents"&gt;
+  <del>&lt;p&gt;Hello, World!</del>
+&lt;/div&gt;
+</code></pre>
+
+  <tr>
+    <th>Custom markup + TAB replacement
+    <td>
+<pre><code class="python">for x in [1, 2, 3]:
+<span style="background:yellow">	</span>count(x)
+	if x == 3:
+	<span style="background:yellow">	</span>count(x + 1)
+</code></pre>
+
+  <tr>
+    <th>Disabled highlighting
+    <td>
+<pre><code class="no-highlight">&lt;div id="contents"&gt;
+  &lt;p&gt;Hello, World!
+&lt;/div&gt;
+</code></pre>
+
+</table>

@@ -1,0 +1,159 @@
+CKFinder Changelog
+==================
+http://ckfinder.com
+Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+
+### Version 2.3
+- Added the new Maximize plugin.
+- Multiple file selection: copying / moving / deleting / selecting multiple files is now possible.
+- When no other selection function defined, double clicking a file will now execute the View command.
+- File editor plugin was upgraded to use CodeMirror 2. C# support was added.
+- It is now possible to select a file on startup by using the config.startupPath configuration.
+- Added a new configuration option, config.sidebarWidth, to change the initial width of the sidebar (where the folders pane is located) with ease.
+- The name of the file is now displayed when hovering over a file.
+- Added a new API method, api.addFolderDropMenuOption, to add new options to the menu that opens once files are dropped into a folder.
+- Added an option for plugins to specify if a toolbar button should be disabled when basket is empty.
+- Added new translation: Catalan.
+- Updated translations: Hebrew.
+- Fixed: Thumbnails of custom sizes are now displayed correctly at the files list.
+- Fixed: Files from the right resource type will be shown at the second opening of CKFinder via CKEditor.
+- Fixed: Impossible to set height of CKFinder when using SetupCKEditor().
+- Fixed: Extension is now uneditable in the ImageResize dialog window.
+- Fixed: Hitting F5 and CTRL+R inside a CKFinder popup will not close the window.
+- Fixed: IE will not show an error on the console when opening Developer Tools when inside the popup.
+- Fixed: The "onbeforeunload" event of the host document will now be preserved.
+- Fixed: The "Resize" dialog window looks better on Webkit.
+- Fixed: The thumbnail inside the "Resize" dialog window is now limited in size.
+- Fixed: An hidden CKFinder instance will now have correct height when shown.
+- Fixed: The rememberLastFolder configuration now works when opening CKFinder as a popup.
+- Fixed: In forced IE7 compatibility mode, IE8 did not display dialogs correctly.
+- Fixed: It is now possible to use a callback for the Basket's context menu and toolbar labels, as well as custom language strings.
+- Fixed: Layout may appear broken after upload.
+- Fixed: IE 10: Compatibility with latest beta version.
+- Fixed: Thumbnails were left in the old location when files were moved.
+[Java] - Updated Thumbnailator to the latest stable version. Thumbnailator is now loaded from Maven Central Repository.
+
+### Version 2.2.2
+- Fixed: The new Chrome 20 is again causing issues with finder.popup(). The new fix should work for all future versions of Chrome.
+
+### Version 2.2.1
+- Fixed: finder.popup() does not work in Chrome 18.
+
+### Version 2.2
+Security Release: fixed filtering of unsafe characters for IIS6 web server.
+- HTML5 multiple file uploads introduced.
+- Files can now be uploaded by using the drag&drop in Firefox and Chrome.
+- Added a read-only mode (config.readOnly), which if enabled, lets the user browse the files but not upload or modify them.
+- CKFinder now supports common lightbox plugins by default when viewing files, and will use Colorbox to show images if no other lightbox plugin is loaded.
+- "Upload" button in the toolbar now remains active after a file has been uploaded if the Upload Pane is still open.
+- Improved formatting of file sizes.
+- Dialog window definition now contains a new connectorResponse property which can use raw data sent from the server inside plugins.
+- Added support for full URLs in the SetupCKEditor() method.
+- Configuration objects passed to the SetupCKEditor() method are now in fact being used.
+- Improved support for Android and iOS tablets.
+- Updated translations: Slovak; minor updates in all other localizations.
+- Fixed: Permission denied to set property Window.onbeforeunload.
+- Fixed: ckfinder_v1.js: SetupCKEditor() and SetupFCKeditor() methods are causing a JavaScript error.
+- Fixed: IE, Opera: Double clicking a file causes CKFinder to try to close the browser tab.
+- Fixed: IE, Opera: CKFinder closes the browser tab after the tab which linked to it was closed.
+- Fixed: IE, Opera: CKFinder tries to close the browser tab after pressing the F5 key (Refresh).
+- Fixed: When CKFinder is integrated with CKEditor, the URL that is sent back from the Upload tab after a successful file upload is not being encoded properly.
+- Fixed: It is impossible to view a file with a special character in its name.
+- Fixed: IE8: Selecting a file requires a double click instead of a single one.
+- Fixed High Contrast mode detection.
+- Fixed: Flash uploader is unable to deal with unexpected errors.
+[Java] - Fixed: Removing unsafe characters from file names.
+
+### Version 2.1.1
+- Sorting by file extension is now available.
+- Clear Basket button is now only active when applicable.
+- Added support for skins in custom paths (config.skin).
+- Added a new API method to destroy an instance (api.destroy()).
+- Added an option to specify additional parameters for server requests (config.connectorInfo).
+- Added new translations: Bulgarian, Croatian, Esperanto, Gujarati, Hindi, Romanian, Vietnamese, Welsh.
+- Updated translations: Brazilian Portuguese, Chinese Simplified, Czech, Dutch, Estonian, Finnish, French, German, Greek, Hebrew, Italian, Lithuanian, Norwegian Bokmål, Norwegian Nynorsk, Persian, Polish, Russian, Slovenian, Spanish, Swedish, Turkish.
+- Added Czech version of CKFinder User's Guide ("Help").
+- A callback function (config.callback) can now also be defined in the configuration file.
+- Added RTL support for skins.
+- Improved RTL support in the Flash upload component.
+- Fixed: The Flash uploader used wrong URL to send files when CKFinder had an ID attribute assigned (as a result, the upload was never marked as completed).
+- Fixed: Added protection against thumbnail caching. CKFinder was displaying an old thumbnail when a user deleted a file and then a file with the same name was uploaded.
+- Fixed: [Opera] Double clicking on a folder opens the browser's context menu.
+- Fixed: It was impossible to re-enable a disabled context menu command.
+- Fixed: config.id is now available for reading within custom configuration.
+- Fixed: [Firefox] JavaScript error when reloading the page where CKFinder is used as a popup.
+- Fixed: [IE, Chrome] Focus is lost after closing a dialog window.
+- Fixed: The startupPath option did not work.
+- Fixed: Unable to use CKFinder inside modal dialogs due to inability to properly destroy the previous instance.
+[Java] - Fixed: The config.resourceType setting was not respected.
+[Java] - Fixed: Extra content was added to larger files when they were being downloaded or edited.
+
+### Version 2.1
+- Added support for multiple uploads using the Flash component.
+- Improved rendering of thumbnails. Thumbnails are now loaded dynamically, only when the file is visible.
+  A configurable delay between requesting each thumbnail is available: config.thumbnailDelay.
+- Added support for file upload using HTML5 FormData.
+- Added an option to set the base user interface color: config.uiColor.
+- File upload requires less clicks.
+- Improved keyboard navigation and actions.
+- Compatibility with mobile devices (Android and iOS).
+- Added an option to show an arrow icon that will launch the context menu: config.showContextMenuArrow.
+- Updated translations: Brazilian Portuguese, Chinese Simplified, Dutch, Finnish, Hebrew, Italian, Polish, Spanish.
+- Added new translations: Estonian, Lithuanian, Persian, Turkish.
+- CKFinder User's Guide ("Help") rewritten and fully updated for English and Polish.
+- Improved error handling when receiving an invalid XML response from the server connector.
+- Added an option to show the OS icons in Firefox: config.useNativeIcons.
+- Added an option to specify the path to the custom server connector: config.connectorPath.
+- Fixed: The "Download" option returns an improperly encoded filename.
+- Fixed: The dialog window used during the copying/pasting operations was broken in IE7.
+- Fixed: The Folders Pane was too small in Internet Explorer 9 in compatibility mode.
+- Fixed: English text in dialog window titles was flipped when using an RTL language.
+- Fixed: View image command opens the file in the same window in Internet Explorer.
+- Fixed: Opening context menu triggers folder reload.
+- Fixed: Invalid paths in popup(s) samples.
+- Fixed: CKFinder was sometimes throwing an "Object doesn't support this property or method" error in Internet Explorer.
+- Fixed: Thumbnails were not created if a folder or file name contains a single quote character.
+- Fixed: Disable upload button for iOS.
+[Java]- Fixed: CKFinder was sometimes unable to load error messages from .jar files.
+
+### Version 2.0.2
+- Added a way to programmatically close a popup window: closePopup().
+- Added new translation: Finnish.
+- Updated syntax highlighting component used in the fileeditor plugin.
+- Fixed compatibility issues with IE9 RC.
+- Fixed: CKFinder does not scroll correctly to the uploaded file.
+- Fixed: Invalid height of the editing window in the File Editor dialog window.
+- Fixed: CKFinder.dom.element.getWindows method is not available.
+- Fixed: [Opera] Context menu does not work in the files pane.
+- Fixed: When CKFinder is opened in a popup window, after pressing the Cancel button CKFinder asks for confirmation in a wrong window.
+- Fixed: Download does not work in IE8 in a popup window.
+- Fixed: It is impossible to upload a file when CKFinder is running in a popup window.
+- Fixed: File editor does not work in a popup window.
+
+### Version 2.0.1
+- Default view settings are now configurable.
+- Minimum height for CKFinder has been set to 200px.
+- CKFINDER.version and CKFINDER.revision variables are now available.
+- Updated and added new translations: French, Hebrew, Japanese, Russian.
+- Callback function can now be defined also in the configuration file.
+- CKFinder will now remember client settings in a cookie.
+- Files are now selected automatically after upload.
+- Fixed: Permission denied error in IE 8 when using CKFinder in a popup.
+- Fixed: Upload progress bar was broken in FF 3.5+.
+- Fixed: CKFinder does not work in a frameset.
+- Fixed: RTL support in the files pane.
+- Fixed: SSL support in IE6 and Firefox 3.0.
+- Fixed: application ID was not passed to the server connector.
+- Fixed: CKFinder.setupCKEditor was not working when null was passed as the first argument.
+- Fixed: dialogs in an iframe in IE8 quirks mode are rendered incorrectly.
+- Fixed: dialogs in IE in quirks mode looked bad.
+- Fixed: right click triggered drag&drop in Safari.
+- Fixed: content was selected during resizing in Safari.
+- Fixed: dialog borders in V1 skin in IE6.
+- Fixed: "Empty folder" message disappeared after changing files view mode.
+- Fixed: context menu in Firefox on a Mac does not work.
+- Fixed: changing file extension caused issues with renaming file for the second time.
+- Fixed issue with caching thumbnails.
+
+### Version 2.0
+- First public release of 2.x version of CKFinder.

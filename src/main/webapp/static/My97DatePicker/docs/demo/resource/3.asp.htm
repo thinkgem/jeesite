@@ -1,0 +1,431 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="author" content="My97" /> 
+<meta name="keywords" content="日期控件 datepicker calendar 日历控件 javascript js日历控件 带时间 自定义格式 月历控件 日期时间 日期选择" /><title>My97日期控件 功能演示 配置说明 My97 Datepicker Demo</title>
+<link href="../../css/base.css" tppabs="http://www.my97.net/dp/css/base.css" rel="stylesheet" type="text/css" />
+<link href="demo.css" tppabs="http://www.my97.net/dp/demo/resource/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<iframe src="../../head.asp" tppabs="http://www.my97.net/dp/head.asp" scrolling="no" frameborder="0" height="100px" width="100%"></iframe>
+<script language="JavaScript" type="text/javascript" src="../../../WdatePicker.js" tppabs="http://www.my97.net/dp/My97DatePicker/WdatePicker.js"></script>
+<div class="dCenter dBody">
+  <div id="content">
+
+    <h2>三. 配置说明<a name="m3" id="m3"></a></h2>
+    <h3>1. 属性配置<a name="m31" id="m31"></a></h3>
+    <ol>
+      <li>属性表<a name="m311" id="m311"></a>
+        <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#000000">
+          <tr>
+            <th>属性</th>
+            <th>类型</th>
+            <th>默认值</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td colspan="4">静态属性:只能在WdatePicker.js中配置,一般情况下,不建议您修改静态属性的值</td>
+          </tr>
+          <tr>
+            <td align="center">$wdate</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>是否自动引入Wdate类 设置为true时,可直接在引入WdatePicker.js的页面里使用 class=&quot;Wdate&quot; <br />
+              Wdate可在skin目录下的WdatePicker.css文件中定义<br />
+              <span class="STYLE2">建议使用默认值</span></td>
+          </tr>
+          <tr>
+            <td align="center">$dpPath</td>
+            <td align="center">string</td>
+            <td align="center">''</td>
+            <td>是否显示指定程序包的绝对位置,一般情况下为空即可(程序自动创建),该属性是为防止极其少数的情况下程序创建出错而设置的<br />
+              设置方法:<br />
+              如果,程序包所在http中的地址为 http://localhost/proName/My97DatePicker/<br />
+              则 $dpPath = '/proName/My97DatePicker/';<br />
+              <span class="STYLE2">建议使用默认值</span></td>
+          </tr>
+          <tr>
+            <td align="center">$crossFrame</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>是否跨框架,一般设置为true即可,遇到跨域错误时可以将此功能关闭</td>
+          </tr>
+          <tr>
+            <td colspan="4">可配置属性:可以在WdatePicker方法是配置</td>
+          </tr>
+          <tr>
+            <td align="center">el</td>
+            <td align="center">Element 或 String</td>
+            <td align="center">null</td>
+            <td>指定一个控件或控件的ID,必须具有value或innerHTML属性(如input,textarea,span,div,p等标签都可以),用户存储日期显示值(也就是dateFmt格式化后的值)</td>
+          </tr>
+          <tr>
+            <td align="center">vel</td>
+            <td align="center">Element 或 String</td>
+            <td align="center">null</td>
+            <td>指定一个控件或控件的ID,必须具有value属性(如input),用于存储真实值(也就是realDateFmt和realTimeFmt格式化后的值)</td>
+          </tr>
+          <tr>
+            <td align="center">doubleCalendar</td>
+            <td align="center">bool</td>
+            <td align="center">false</td>
+            <td>是否是双月模式,如果该属性为true,则弹出同时显示2个月的日期框</td>
+          </tr>
+          <tr>
+            <td align="center">enableKeyboard</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>键盘控制开关</td>
+          </tr>
+          <tr>
+            <td align="center">enableInputMask</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>文本框输入启用掩码开关</td>
+          </tr>
+          <tr>
+            <td align="center">autoUpdateOnChanged</td>
+            <td align="center">bool</td>
+            <td align="center">null</td>
+            <td>在修改年月日时分秒等元素时,自动更新到el,默认是关闭的(即:需要点击确定或点击日期才更新)<br />
+              为false时 不自动更新<br />
+为true时 自动更新<br />
+为null时(默认值) 如果有日元素且不隐藏确定按钮时 为false,其他情况为true</td>
+          </tr>
+          <tr>
+            <td align="center">weekMethod</td>
+            <td align="center">string</td>
+            <td align="center">ISO8601</td>
+            <td>周算法不同的地方有一些差异<br />
+常见算法有两种<br />
+1. ISO8601:规定第一个星期四为第一周,默认值<br />
+2. MSExcel:1月1日所在的周<br />
+<br />
+相关链接:<a href="javascript:if(confirm('http://en.wikipedia.org/wiki/ISO_week_date  \n\n该文件未被 Teleport Pro 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://en.wikipedia.org/wiki/ISO_week_date'" tppabs="http://en.wikipedia.org/wiki/ISO_week_date" target="_blank">http://en.wikipedia.org/wiki/ISO_week_date</a></td>
+          </tr>
+          <tr>
+            <td align="center">position</td>
+            <td align="center">object</td>
+            <td align="center">{}</td>
+            <td> 日期选择框显示位置<br />
+              <span class="STYLE2">注意:坐标单位是px,是相对当前框架坐标(不受滚动条影响),默认情况下系统根据页面大小自动选择</span><br />
+              如:<br />
+              {left:100,top:50}表示固定坐标[100,50]<br />
+              {top:50}表示横坐标自动生成,纵坐标指定为 50<br />
+              {left:100}表示纵坐标自动生成,横坐标指定为 100<br />
+              请参考示例</td>
+          </tr>
+          <tr>
+            <td align="center">lang</td>
+            <td align="center">string</td>
+            <td align="center">'auto'</td>
+            <td>当值为'auto'时 自动根据客户端浏览器的语言自动选择语言<br />
+              当值为 其他 时 从langList中选择对应的语言 <br />
+              你可以参考<a href="#m32">语言配置</a></td>
+          </tr>
+          <tr>
+            <td align="center">skin</td>
+            <td align="center">string</td>
+            <td align="center">'default'</td>
+            <td>皮肤名称 默认自带 default和whyGreen两个皮肤<br />
+              另外如果你的css够强的话,可以自己做皮肤<br />
+              你可以参考<a href="#m33">皮肤配置</a></td>
+          </tr>
+          <tr>
+            <td align="center">dateFmt</td>
+            <td align="center">string</td>
+            <td align="center">'yyyy-MM-dd'</td>
+            <td>日期显示格式<br />
+            你可以参考<a href="2.2.asp.htm#m224" tppabs="http://www.my97.net/dp/demo/resource/2.2.asp#m224">自定义格式</a></td>
+          </tr>
+          <tr>
+            <td align="center">realDateFmt</td>
+            <td align="center">string</td>
+            <td align="center">'yyyy-MM-dd'</td>
+            <td rowspan="3">计算机可识别的,真正的日期格式<br />
+              <span class="STYLE2">无效日期设置(disabledDates),最大日期(maxDate),最小日期(minDate)以及快速日期都必须与它们相匹配<br />
+              建议使用默认值</span></td>
+          </tr>
+          <tr>
+            <td align="center">realTimeFmt</td>
+            <td align="center">string</td>
+            <td align="center">'HH:mm:ss'</td>
+          </tr>
+          <tr>
+            <td align="center">realFullFmt</td>
+            <td align="center">string</td>
+            <td align="center">'%Date %Time'</td>
+          </tr>
+          <tr>
+            <td align="center">minDate</td>
+            <td align="center">string</td>
+            <td align="center">'1900-01-01 00:00:00'</td>
+            <td>最小日期(注意要与上面的real日期相匹配)</td>
+          </tr>
+          <tr>
+            <td align="center">maxDate</td>
+            <td align="center">string</td>
+            <td align="center">'2099-12-31 23:59:59'</td>
+            <td>最大日期(注意要与上面的real日期相匹配)</td>
+          </tr>
+          <tr>
+            <td align="center">startDate</td>
+            <td align="center">string</td>
+            <td align="center">''</td>
+            <td> 起始日期,既点击日期框时显示的起始日期<br />
+              为空时,使用今天作为起始日期(默认值)<br />
+              否则使用传入的日期作为起始日期(注意要与上面的real日期相匹配)<br />
+              你可以参考<a href="2.2.asp.htm#m223" tppabs="http://www.my97.net/dp/demo/resource/2.2.asp#m223">起始日期示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">firstDayOfWeek</td>
+            <td align="center">int</td>
+            <td align="center">0</td>
+            <td>周的第一天 0表示星期日 1表示星期一</td>
+          </tr>
+          <tr>
+            <td align="center">isShowWeek</td>
+            <td align="center">bool</td>
+            <td align="center">false</td>
+            <td>是否显示周<br />
+              你可以参考<a href="2.1.asp.htm#m213" tppabs="http://www.my97.net/dp/demo/resource/2.1.asp#m213">周显示示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">highLineWeekDay</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>是否高亮显示 周六 周日</td>
+          </tr>
+          <tr>
+            <td align="center">isShowClear</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>是否显示清空按钮</td>
+          </tr>
+          <tr>
+            <td align="center">isShowToday</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>是否显示今天按钮</td>
+          </tr>
+          <tr>
+            <td align="center">isShowOthers</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>为true时,第一行空白处显示上月的日期，末行空白处显示下月的日期,否则不显示</td>
+          </tr>
+          <tr>
+            <td align="center">readOnly</td>
+            <td align="center">bool</td>
+            <td align="center">false</td>
+            <td>是否只读</td>
+          </tr>
+          <tr>
+            <td align="center">errDealMode</td>
+            <td align="center">int</td>
+            <td align="center">0</td>
+            <td>纠错模式设置 可设置3中模式 0 - 提示 1 - 自动纠错 2 - 标记</td>
+          </tr>
+          <tr>
+            <td align="center">autoPickDate</td>
+            <td align="center">bool</td>
+            <td align="center">null</td>
+            <td><a name="autopickdate" id="autopickdate"></a>为false时 点日期的时候不自动输入,而是要通过确定才能输入<br />
+              为true时 即点击日期即可返回日期值<br />
+              为null时(推荐使用) 如果有时间置为false 否则置为true</td>
+          </tr>
+          <tr>
+            <td align="center">qsEnabled</td>
+            <td align="center">bool</td>
+            <td align="center">true</td>
+            <td>是否启用快速选择功能</td>
+          </tr>
+          <tr>
+            <td align="center">autoShowQS</td>
+            <td align="center">bool</td>
+            <td align="center">false</td>
+            <td>是否默认显示快速选择</td>
+          </tr>
+          <tr>
+            <td align="center">quickSel</td>
+            <td align="center">Array</td>
+            <td align="center">null</td>
+            <td>快速选择数据,可以传入5个快速选择日期<br />
+              注意:日期格式必须与 realDateFmt  realTimeFmt realFullFmt 相匹配<br />
+              你可以参考<a href="2.6.asp.htm#m26" tppabs="http://www.my97.net/dp/demo/resource/2.6.asp#m26">快速选择示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">disabledDays</td>
+            <td align="center">Array</td>
+            <td align="center">null</td>
+            <td>可以使用此功能禁用周日至周六所对应的日期<br />
+              0至6 分别代表 周日至周六<br />
+              你可以参考<a href="2.4.asp.htm#m244" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp#m244">无效天示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">disabledDates</td>
+            <td align="center">Array</td>
+            <td align="center">null</td>
+            <td>可以使用此功能禁用所指定的一个或多个日期<br />
+            你可以参考<a href="2.4.asp.htm#m245" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp#m245">无效日期示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">opposite</td>
+            <td align="center">bool</td>
+            <td align="center">false</td>
+            <td>默认为false, 为true时,无效日期变成有效日期 <br />
+                <span class="STYLE1">注意:该属性对无效天特殊天不起作用</span><br />
+            你可以参考<a href="2.4.asp.htm#m246" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp#m246">有效日期示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">specialDates</td>
+            <td align="center">Array</td>
+            <td align="center">null</td>
+            <td>特殊日期,对指定的日期进行高亮显示<br />
+            你可以参考<a href="2.4.asp.htm#m247" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp#m247">特殊天与特殊日期示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">specialDays</td>
+            <td align="center">Array</td>
+            <td align="center">null</td>
+            <td>特殊天,使用此功能禁用周日至周六所对应的日期进行高亮显示<br />
+            0至6 分别代表 周日至周六<br />
+            你可以参考<a href="2.4.asp.htm#m247" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp#m247">特殊天与特殊日期示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">onpicking</td>
+            <td align="center">function</td>
+            <td align="center">null</td>
+            <td rowspan="4">此四个参数为事件参数<br />
+            你可以参考<a href="2.5.asp.htm#m25" tppabs="http://www.my97.net/dp/demo/resource/2.5.asp#m25">自定义事件示例</a></td>
+          </tr>
+          <tr>
+            <td align="center">onpicked</td>
+            <td align="center">function</td>
+            <td align="center">null</td>
+          </tr>
+          <tr>
+            <td align="center">onclearing</td>
+            <td align="center">function</td>
+            <td align="center">null</td>
+          </tr>
+          <tr>
+            <td align="center">oncleared</td>
+            <td align="center">function</td>
+            <td align="center">null</td>
+          </tr>
+          <tr>
+            <td align="center">ychanging ychanged <br />
+Mchanging Mchanged<br />
+dchanging dchanged<br />
+Hchanging Hchanged<br />
+mchanging mchanged<br />
+schanging schanged </td>
+            <td align="center">function</td>
+            <td align="center">null</td>
+            <td><span class="STYLE1">(4.6Beta3新增)</span><br />
+              <br />
+              y M d H m s 分别表示年月日时分秒<br />
+              changing 事件发生在属性改变之前<br />
+            changed 事件发生在属性改变之后<br />
+            <br />
+            你可以参考<a href="2.5.asp-.htm#m254" tppabs="http://www.my97.net/dp/demo/resource/2.5.asp?#m254">示例5-4-1</a></td>
+          </tr>
+          
+        </table>
+      </li>
+      <li>配置全局默认值<a name="m312" id="m312"></a>
+        <p>通过配置WdatePicker.js的属性可以避免每次调用都传入配置值,为变成带来很多方便.<br />
+        在默认情况下My97为每个属性都配置了默认值,这些默认值都可以在WdatePicker.js中修改的<br />
+        你可以根据你个人的喜好更改这些值<br />
+        <br />
+        比如你比较不喜欢默认的皮肤default 而更喜欢 whyGreen 这个皮肤,<br />
+        你可以直接在WdatePicker.js把skin值改为 whyGreen<br />
+        这样,你就<span class="STYLE2">不必每次调用控件的时候都传入</span> skin:'whyGreen' 了<br />
+        你学会了吗?</p>
+      </li>
+      <li>配置单个控件<a name="m313" id="m313"></a>
+        <p>在控件里面你可以使用 onfocus 或 onclick 事件来调用WdatePicker函数来触发日期控件<br />
+        WdatePicker({})其中{}中的内容都是只对当前实例有效,你可以任意配置属性表里有的所有属性<br />
+        你可以随意的组合这些属性,达到你的需求<br />
+        My97日期控件在这方面是做得非常灵活的.</p>
+      </li>
+	  <li>多套配置快速切换<a name="m314" id="m314"></a>
+        <p>您可以设置多个WdatePicker.js文件,如
+cn_WdatePicker.js,en_WdatePicker.js,simple_WdatePicker.js等<br />
+        在不同的页面引入不同的        WdatePicker.js 达到配置快速切换的目的.<br />
+        <span class="STYLE1">注意:文件必须以 _WdatePicker.js(大小写不限制) 为后缀,形如 &lt;yourname&gt;_WdatePicker.js</span></p>
+	  </li>
+    </ol>
+    <h3>2. 语言配置<a name="m32" id="m32"></a> </h3>
+    <ol>
+      <li>语言列表<a name="m321" id="m321"></a><p>My97DatePicker目录下有个config.js(4.8以后在WdatePicker.js中),里面有段代码: <br />
+        var <span class="STYLE1">langList</span> = <br />
+        [<br />
+{<span class="STYLE2">name:</span><span class="STYLE1">'en'</span>,		<span class="STYLE2">charset:</span><span class="STYLE1">'UTF-8'</span>},<br />
+{name:'zh-cn',	charset:'gb2312'},<br />
+{name:'zh-tw',	charset:'GBK'}<br />
+];<br />
+<br />
+这就是语言列表,每个项有name和charset两个属性.<br />
+name 表示语言的名称(必须与浏览器的语言字符串命名相同),在配置的时候,<span class="STYLE2">lang属性只能是配置列表里面已有的项,否则将自动返回第一项</span><br />
+charset 表示对应语言目录下的js文件所对应的编码格式</p>
+      </li>
+      <li>语言安装说明<a name="m322" id="m322"></a>
+        <p>分两步轻松实现:<br />
+        1 将语言文件拷贝到 lang 目录<br />
+        2 打开 config.js 配置语言列表</p>
+      </li>
+    </ol>
+    <h3>3. 皮肤配置<a name="m33" id="m33"></a></h3>
+    <ol>
+      <li>皮肤列表<a name="m331" id="m331"></a>
+      <p>My97DatePicker目录下有个config.js(4.8以后在WdatePicker.js中),里面有段代码:
+      <br />
+      var <span class="STYLE1">skinList</span> = <br />
+      [<br />
+{<span class="STYLE2">name:</span><span class="STYLE1">'default'</span>,	<span class="STYLE2">charset:</span><span class="STYLE1">'gb2312'</span>},<br />
+{name:'whyGreen',	charset:'gb2312'},<br />
+{name:'blue',		charset:'gb2312'},<br />
+{name:'simple',		charset:'gb2312'} <br />
+];<br />
+<br />
+      这就是皮肤列表,每个项有name和charset两个属性.<br />
+      name 表示皮肤的名称,在配置的时候,<span class="STYLE2">skin属性只能是配置列表里面已有的项,否则将自动返回第一项</span><br />
+      charset 表示对应皮肤目录下的css文件:datepicker.css所对应的编码格式</p>
+      </li>
+      <li>皮肤安装说明<a name="m332" id="m332"></a><p>分两步轻松实现:<br />
+1 将皮肤文件包拷贝到 skin 目录<br />
+2 打开 config.js 配置皮肤列表
+        <br />
+        <br />
+        <span class="STYLE1">注意:安装过多的皮肤会影响性能,一般只安装自己使用的皮肤,3个以下比较适宜</span></p>
+      </li>
+    </ol>
+    <h2><a href="999.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/999.asp">四. 如何使用</a><a name="m4" id="m4"></a></h2>
+    <br />
+    <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="dCenter dBody" style="padding-left:72px">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6343250634002651";
+/* 底部 */
+google_ad_slot = "0599809152";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript">
+</script>
+</div>
+<div id="footer" class="dCenter">&copy; 2010 <a href="mailto:smallcarrot@163.com">My97</a> All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F489957c212e14340592fb2e4921b2f1d' type='text/javascript'%3E%3C/script%3E"));
+</script>&nbsp;&nbsp;&nbsp;&nbsp;浙ICP备11060275号
+</div>
+</body>
+</html>

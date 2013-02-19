@@ -1,0 +1,292 @@
+CKFinder License Agreement
+Version 2.0, September 2011
+================
+http://ckfinder.com
+Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+
+This document ("Agreement") is a legal agreement between You, either an
+individual or a Legal Entity, and CKSource – Frederico Knabben ("CKSource"),
+running business activity pursuant to registration by the President of the
+Capital City of Warsaw under no. 429043, covering Your permissions to use,
+reproduce, and distribute the Software under the License terms defined hereby.
+
+1. Definitions
+
+"Agreement Name" shall mean the name used to reference this Agreement in any
+context, which is "CKFinder License Agreement 2.0".
+
+"Software" or "CKFinder" shall mean the copyrighted material owned by CKSource,
+subject to the terms of this License. The Software is publicly, uniquely,
+and in its entirety recognizable by the 'CKFinder' name ("Software Name").
+
+"Software Release" or "Release" shall mean a set of files distributed by CKSource,
+or anyone authorized to distribute it, that represents the Software. A Release is
+uniquely identified by the Software Name and a code. Such code is generally
+referenced as the Software version or revision number, or the combination of both.
+
+"Release Date" shall mean the day that CKSource started distributing a Release.
+
+"Product" shall mean a single computer program or one or more jeesites ("Program")
+(i) owned by You, or (ii) to which the owner grants You the permission to act in
+behalf of the owner for the purposes of this Agreement. A Program family or a
+group of Programs does not constitute a Product for the scope of this Agreement.
+A Program that goes in competition with the Software in the marketplace does not
+constitute a valid Product for the scope of this Agreement.
+
+"Development Server" shall mean a computer with one or more computer central
+processing units (CPU's) that operates for the exclusive purpose of software
+development or software testing.
+
+"Development Activity" shall mean the act of interacting with the Software or one
+of its Releases, in any number of Products owned or produced by You, with the
+intent of installation, customization, configuration, testing, documentation,
+or any other software development activity related to the Software.
+
+"Developer Person" shall mean an authorized person designated by You to perform
+Development Activities.
+
+"Production Website" shall mean a Product with the Software installed, which
+already had Development Activities performed, and that has been delivered to
+end-users for production usage. Maintenance activities performed on Production
+Websites, excluding software development activities related to the Software,
+are not considered Development Activities.
+
+"Hostname" shall mean a unique name by which a jeesite is reachable in a network.
+This includes, but is not limited to, a jeesite IP address. (For example, if a
+jeesite is reachable by the Internet address "http://www.example.com/", the
+Hostname is "www.example.com".)
+
+"Legal Entity" shall mean the union of the acting entity and all other entities
+that control, are controlled by, or are under common control with that entity.
+For the purposes of this definition, "control" means (i) the power, direct or
+indirect, to cause the direction or management of such entity, whether by
+contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the
+outstanding shares, or (iii) beneficial ownership of such entity.
+
+"You" (or "Your") shall mean an individual or a Legal Entity exercising
+permissions granted by the License and accepting this Agreement.
+
+2. Grant of License
+
+Subject to the terms of this Agreement, CKSource hereby grants to You, in one
+of the License Models described in Section 4, a non-exclusive, perpetual,
+irrevocable, royalty free, worldwide license ("License") to use, reproduce,
+modify, and distribute a Software Release in a collective work assembled
+with the Product.
+
+You should carefully read the following terms and conditions before using,
+installing, copying, or distributing the Software. Unless otherwise agreed in
+writing by CKSource, your use, installation, copying, or distribution of
+CKFinder indicates your acceptance of this License.
+
+3. Scope of License
+
+All rights of any kind to CKFinder which are not expressly granted in this
+Agreement are entirely and exclusively reserved to and by CKSource. CKFinder is
+protected by applicable national and international laws and treaties.
+
+You may use, install, copy, and distribute CKFinder solely as expressly provided
+in this Agreement. You may not rent, lease, loan, sublicense, reverse engineer,
+decompile, disassemble, or create derivative works based on the Software, in
+whole or in part, nor permit anyone else to do so.
+
+It is agreed that in exchange for the license set forth herein, you will pay a
+license fee ("License Fee"). The fee value will be specified by CKSource at the
+moment of the purchase.
+
+4. License Models
+
+CKFinder may be assembled with the Product and redistributed in respect of one
+and only one of the following models ("License Models") of Your choice:
+
+a) ("Website") Assembling the Software into a Product distributed as a single
+jeesite ("Site"). The Site URL ("URL") must be specified at the moment of the
+purchase. The license will not be valid for sub-domains of the specified URL.
+This license includes 5 Developer licenses that cover Development Activities
+exclusively related to the Site.
+
+b) ("Corporate Websites") Assembling the Software with any number of Sites owned
+or produced by You. Sites produced by third parties with Software produced by
+You are not included in this License Model. This license includes 10 Developer
+licenses.
+
+c) ("OEM") Assembling the Software with a single Product. The Product name must
+be specified at the moment of the purchase. This license includes 5 Developer
+licenses that cover Development Activities exclusively related to the Product.
+
+d) ("Developer") License valid for a single Developer Person to be able to
+perform Development Activities.
+
+A valid Developer license is required for every single Developer Person.
+Developer licenses cannot be shared among different Developer Persons.
+Non Development Activities on Production Websites do not require Developer
+licenses.
+
+License Fees values may differ depending on the license model.
+
+5. Unlicensed Copies
+
+If you did not pay for a license, you may use unlicensed copies of CKFinder
+for the exclusive purpose of demonstration. In this case you will be using
+CKFinder in the "demo mode". Without derogating from the forgoing, you may not
+use CKFinder in the "demo mode" for commercial purposes. CKFinder shall only be
+used for evaluation purposes and may not be used or disclosed for any other
+purposes, including without limitation, or for external distribution.
+You may not remove demo notices from the interface nor disable the ability to
+display such notices or otherwise modify CKFinder. Product support, if any,
+is not offered for CKFinder in the "demo mode".
+
+6. Agreement Acceptance
+
+This Agreement is automatically accepted by both parties as long as You are
+in possession of legal evidence ("Legal Evidence") that the acceptance has
+taken place. The Legal Evidence can be represented by (i) an agreement signed
+by You and CKSource stating the acceptance of this Agreement or (ii) a valid
+purchase invoice, or fully paid order confirmation, provided by CKSource and
+addressed to You. The Legal Evidence must precisely indicate this Agreement Name,
+the Software Name, the License Model You have chosen, and the following
+restrictive information, if applicable:
+
+a) If You have chosen the Website License Model, the Site Hostname must be
+indicated in the Legal Evidence. This Agreement will be valid for the Software
+assembled with the Site publicized under the Site Hostname only. Other Sites
+are excluded from this Agreement as long as a Legal Evidence is not produced
+for each of these Sites.
+
+b) If You have chosen the OEM License Model, the unique and well recognizable
+name of Your Product ("Product Name") must be indicated in the Legal Evidence.
+This Agreement will be valid for the Software assembled with the Product
+recognizable by the Product Name at the moment of the purchase. This Agreement
+does not lose its validity in the case the Product is renamed after the Legal
+Evidence production.
+
+Legal Evidences may define further rights and limitation terms that are not
+described in this Agreement. Any term present in the Agreement that goes in
+conflict with the Legal Evidence terms is to be deleted or amended.
+
+Legal Evidences for different combinations of License Models, Sites, and
+Products will not restrict each other and will not interfere in the rights
+granted to You by each of them.
+
+Legal Evidences for the Website or OEM License Models are not transferable
+to different Sites or Products.
+
+7. Limitation on Releases
+
+This agreement is valid for all Releases of the Software that have the Release
+Date happening before the day calculated by adding 365 days to the date the
+Legal Evidence has been made effective. CKSource has no obligation to provide
+you any Release that is not released for general distribution to other
+CKSource's licensees. Nothing in this Agreement shall be construed to obligate
+CKSource to provide additional Releases to You under any circumstances.
+
+8. Support
+
+CKSource shall provide support for Developer Persons covered by valid Developer
+licenses for the period of 365 days following the day the Legal Evidence has
+been made effective. Support shall be limited to electronic messaging access.
+
+CKSource shall keep You informed, either per CKSource readiness or by following
+your request, including changes to it, about the rules and procedures that You
+must perform to enjoy support under the terms of this Agreement. Electronic
+messaging access shall be limited to Development Activities regarding problem
+solving, bug reporting, documentation clarification, and technical guidance
+(each a "Support Request"). CKSource is not in any way obliged to perform bug
+fixing or custom development activities as a result of a Support Request.
+
+9. License Key
+
+Following a valid License purchase, a unique license key (the "License Key")
+may be provided to You, which allows for the activation of the Software.
+The License Key is subject to the restrictions set forth in this License and
+may not be disclosed or distributed in any way. The disclosure or distribution
+of the License Key shall constitute a breach of this License, the effect of
+which shall be the automatic termination and revocation of any and all the
+rights granted herein.
+
+A single License Key may be issued for Licenses under the Developer License
+Model, which shall be installed on Development Servers only and will be valid
+for the number of Developers specified during the license purchase. Further
+License Keys for the Developer License Model may be issued to you, which will
+enlarge the allowed number of Developers performing Development Activities on
+Development Servers that already have the Software installed and activated by
+any of the Developer Licenses You have purchased before.
+
+10. Source Code
+
+The original source code ("Source Code") of CKFinder may be distributed by
+CKSource alongside with the executable version of it, or as integral part of it.
+You may modify and compile the Source Code. The Source Code or its modified
+version can be copied and distributed exclusively in respect to the scope of
+this license, as defined in the "License Model" terms of this license, as long
+as a valid license has been purchased for the distribution target. CKSource
+retains all rights over the Source Code and all parts of it present in modified
+versions of it. Redistributions of the Source Code and modified versions of it
+must contain the original headers and copyright notices. Modifications to the
+Source Code must be explicitly and entirely identified in the Source Code files.
+This section of the license supersedes all modification restrictions imposed by
+other sections of it. You are not allowed to remove copyright notices nor make
+changes to license validation code present in the Source Code.
+
+11. Reservation of Rights and Ownership
+
+CKSource reserves all rights not expressly granted to You in this Agreement.
+The Software is protected by copyright and other intellectual property laws and
+treaties. CKSource owns the title, copyright, and other intellectual property
+rights in the Software. The Software is licensed, not sold. This Agreement does
+not grant you any rights to trademarks or service the Software marks.
+
+12. Termination
+
+Without prejudice to any other rights, this Agreement automatically terminates
+if you fail to comply with the terms and conditions of this Agreement. You may
+terminate this Agreement at any time without cause. In case of termination,
+in any circumstance, payments issued by You will not be reimbursed.
+
+13. Warranty
+
+CKSource warrants that it has full title and ownership to the Software and has
+the authority to grant the license hereunder. To the best of CKSource's
+knowledge the Software does not infringe upon the intellectual property rights
+of any third party and that CKSource did not receive any notice regarding any
+alleged infringement thereof.
+
+14. Disclaimer of Warranties
+
+With the exclusion of warranties explicitly mentioned in Section 12, the
+Software and its related material are provided "AS IS" and without warranty of
+any kind. CKSource expressly disclaims all other warranties, expressed or
+implied, including, but not limited to, the implied warranties of
+merchantability and fitness for a particular purpose.
+
+15. Exclusion of Incidental, Consequential and Certain Other Damages
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL CKSOURCE
+BE LIABLE FOR ANY SPECIAL, INCIDENTAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL
+DAMAGES WHATSOEVER (INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS
+OR CONFIDENTIAL OR OTHER INFORMATION, FOR BUSINESS INTERRUPTION, FOR PERSONAL
+INJURY, FOR LOSS OF PRIVACY, FOR FAILURE TO MEET ANY DUTY INCLUDING OF GOOD
+FAITH OR OF REASONABLE CARE, FOR NEGLIGENCE, AND FOR ANY OTHER PECUNIARY OR
+OTHER LOSS WHATSOEVER) ARISING OUT OF OR IN ANY WAY RELATED TO THE USE OF OR
+INABILITY TO USE THE SOFTWARE, THE PROVISION OF OR FAILURE TO PROVIDE SUPPORT
+OR OTHER SERVICES, INFORMATION, SOFTWARE, AND RELATED CONTENT THROUGH THE
+SOFTWARE OR OTHERWISE ARISING OUT OF THE USE OF THE SOFTWARE, OR OTHERWISE
+UNDER OR IN CONNECTION WITH ANY PROVISION OF THIS AGREEMENT, EVEN IN THE EVENT
+OF THE FAULT, TORT (INCLUDING NEGLIGENCE), MISREPRESENTATION, STRICT LIABILITY,
+BREACH OF CONTRACT, AND EVEN IF THE OWNER HAS BEEN ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGES.
+
+16. Limitation of Liability
+
+In no event shall CKSource's liability exceed the license fee paid, if any.
+
+17. Governing Law and Venue
+
+This Agreement shall be construed and controlled by the laws of Poland, and You
+and CKSource further consent to exclusive jurisdiction by the courts of Poland.
+
+"CKSource"
+CKSource Frederico Knabben
+By:
+Name: Frederico Knabben
+Title: CEO

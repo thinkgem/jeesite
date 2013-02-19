@@ -1,0 +1,54 @@
+.floatingAd .ad{
+	z-index: 100;
+	background: none;
+	position: absolute;
+	display: none;
+}
+.floatingAd a{
+	color:#000000; 
+	display: inline-block;
+	text-decoration: none;
+}
+.floatingAd a img{
+	border: 0;
+}
+.floatingAd .close{
+	display: none;
+}
+.floatingAd .opacity{
+	position: absolute; 
+	top: 0; 
+	width: 100%; 
+	height: 25px; 
+	background-color: #000000; 
+	opacity: 0.20; 
+	filter: alpha(opacity = 20);
+}
+.opacity1{
+	opacity: 0.90; 
+	filter: alpha(opacity = 90);
+}
+.floatingAd .text{
+	position: absolute; 
+	top: 0; 
+	width: 100%; 
+	height: 25px; 
+	color: #000000; 
+	line-height: 25px; 
+}
+.floatingAd .text .button{
+	position: relative;
+	float: right;
+	top: 5px;
+	right: 5px;
+	width: 16px;
+	height: 16px;
+	background: url("../images/close.gif") no-repeat;
+	cursor: pointer;
+}
+.floatingAd .text .title{
+	position: relative;
+	float: left;
+	font-size: 12px;
+	margin-left: 5px;
+}

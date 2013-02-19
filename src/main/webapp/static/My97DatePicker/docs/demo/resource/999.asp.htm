@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="日期控件 datepicker calendar 日历控件 javascript js日历控件 带时间 自定义格式 月历控件 日期时间 日期选择" />
+<title>My97日期控件 功能演示 常规功能 My97 Datepicker Demo</title>
+<link href="../../css/base.css" tppabs="http://www.my97.net/dp/css/base.css" rel="stylesheet" type="text/css" />
+<link href="demo.css" tppabs="http://www.my97.net/dp/demo/resource/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<iframe src="../../head.asp" tppabs="http://www.my97.net/dp/head.asp" scrolling="no" frameborder="0" height="100px" width="100%"></iframe>
+<script language="JavaScript" type="text/javascript" src="../../../WdatePicker.js" tppabs="http://www.my97.net/dp/My97DatePicker/WdatePicker.js"></script>
+<div class="dCenter dBody">
+  <div id="content">
+
+  	<h2><a href="main.asp" tppabs="http://www.my97.net/dp/demo/resource/main.asp"><strong>一. 简介</strong></a><a name="m2" id="m2"></a></h2>
+  	<h2><a href="2.1.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.1.asp"><strong>二. 功能及示例</strong></a><a name="m2" id="m2"></a></h2>
+    <h2><a href="3.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/3.asp">三. 配置说明</a><a name="m3" id="m3"></a></h2>
+    <h2>四. 如何使用<a name="m4" id="m4"></a></h2>
+    <p style="margin-left:20px">1. 在使用该日期控件的文件中加入JS库<span class="STYLE2">(仅这一个文件即可,其他文件会自动引入,请勿删除或改名)</span>, 代码如下   &lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;   src=&quot;datepicker/WdatePicker.js&quot;&gt;&lt;/script&gt;<br />
+      注:<span class="STYLE2">src=&quot;datepicker/WdatePicker.js&quot;</span> 请根据你的实际情况改变路径<br />
+      <br />
+      2. 加上主调函数 WdatePicker<br />
+      关于 WdatePicker 的用法:<span class="STYLE2"><br />
+      <br />
+      如果您是新手,对js还不是很了解的话</span><span class="STYLE1">一定要多看看这份文档</span><br />
+      基本上每一个演示的示例下面都有相关代码,并且 <span class="STYLE2">关键属性用蓝字标出</span>,<span class="STYLE1">关键值用红字标出</span> 应该很容易看明白 <br />
+      <br />
+      <span class="STYLE2">如果您有一定的水准<br />
+      </span>希望能从头到尾把功能介绍好好看一遍,这样大部分功能你都会用了<br />
+      <br />
+      <span class="STYLE2">如果您是高手</span><br />
+      建议您通读配置说明和内置函数</p>
+    <h2>五. 内置函数和属性<a name="m5" id="m5"></a></h2>
+    <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#000000">
+      <tr>
+        <th>函数名</th>
+        <th>返回值类型</th>
+        <th>作用域</th>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+      <tr>
+        <td align="center">$dp.show</td>
+        <td align="center">void</td>
+        <td align="center">全局</td>
+        <td>无</td>
+        <td>显示日期选择框</td>
+      </tr>
+      <tr>
+        <td align="center">$dp.hide</td>
+        <td align="center">void</td>
+        <td align="center">全局</td>
+        <td>无</td>
+        <td>隐藏日期选择框</td>
+      </tr>
+      <tr>
+        <td align="center">$dp.$D</td>
+        <td align="center">String</td>
+        <td align="center">全局</td>
+        <td><span class="STYLE2">id [string]:</span> 对象的ID <br />
+          <span class="STYLE2">arg [object]:</span> 日期差量,可以设置成<br />
+          {y:[值],M:[值],d:[值],H:[值],m:[值],s:[值]}<br />
+          属性 y,M,d,H,m,s 分别代表 年月日时分秒<br />
+          {M:3,d:7} 表示 3个月零7天<br />
+          {d:1,H:1} 表示1天多1小时</td>
+        <td>将id对应的日期框中的日期字符串,加上定义的日期差量,返回使用real格式化后的日期串<br />
+          <span class="STYLE2">参考 示例 4-3-2</span></td>
+      </tr>
+      <tr>
+        <td align="center">$dp.$DV</td>
+        <td align="center">String</td>
+        <td align="center">全局</td>
+        <td><span class="STYLE2">v [string]:</span> 日期字符串<br />
+          <span class="STYLE2">arg [object]:</span> 同上例的arg </td>
+        <td>将传入的日期字符串,加上定义的日期差量,返回使用real格式化后的日期串<br />
+          <span class="STYLE2">参考 示例 4-3-3</span></td>
+      </tr>
+      <tr>
+        <td colspan="5">以下函数只在事件自定义函数中有效</td>
+      </tr>
+      <tr>
+        <td align="center">$dp.cal.getP</td>
+        <td align="center">String</td>
+        <td align="center">事件function</td>
+        <td><span class="STYLE2">p [string]:</span> 属性名称 yMdHmswWD分别代表年,月,日,时,分,秒,星期(0-6),周(1-52),星期(一-六) <br />
+          <span class="STYLE2">f [string]:</span> format 格式字符串<br />
+          设置方法参考 <span class="STYLE2">1.4 自定义格式</span></td>
+        <td>返回所指定属性被格式字符串格式化后的值[单属性],在changing,picking,clearing事件中返回<span class="STYLE1">选择前</span>的值<br />
+          <span class="STYLE2">参考 示例 1-2-2</span></td>
+      </tr>
+      <tr>
+        <td align="center">$dp.cal.getDateStr</td>
+        <td align="center">String </td>
+        <td align="center">事件function</td>
+        <td><span class="STYLE2">f [string]:</span> 格式字符串,为空时使用dateFmt<br /></td>
+        <td>返回所指定属性被格式字符串格式化后的值[整个值],在changing,picking,clearing事件中返回<span class="STYLE1">选择前</span>的值</td>
+      </tr>
+      <tr>
+        <td align="center">        $dp.cal.getNewP</td>
+        <td align="center">String</td>
+        <td align="center">事件function</td>
+        <td>用法同$dp.cal.getP</td>
+        <td>返回所指定属性被格式字符串格式化后的值[单属性],在changing,picking,clearing事件中返回<span class="STYLE1">选择后</span>的值</td>
+      </tr>
+      <tr>
+        <td align="center">        $dp.cal.getNewDateStr</td>
+        <td align="center">String</td>
+        <td align="center">事件function</td>
+        <td>用法同$dp.cal.getDateStr</td>
+        <td>返回所指定属性被格式字符串格式化后的值[整个值],在changing,picking,clearing事件中返回<span class="STYLE1">选择后</span>的值</td>
+      </tr>
+    </table>
+    <br />
+    <br />
+    <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#000000">
+      <tr>
+        <th width="14%">属性名</th>
+        <th width="10%">返回值类型</th>
+        <th width="11%">作用域</th>
+        <th width="29%">参数</th>
+        <th width="36%">描述</th>
+      </tr>
+      <tr>
+        <td align="center">          $dp.cal.date</td>
+        <td align="center">object</td>
+        <td align="center">事件function</td>
+        <td>$dp.cal.date.y:返回 年<br />
+          $dp.cal.date.M:返回 月<br />
+          $dp.cal.date.d:返回 日<br />
+          $dp.cal.date.H:返回 时<br />
+          $dp.cal.date.m:返回 分<br />
+          $dp.cal.date.s:返回 秒 <br /></td>
+        <td>在changing,picking,clearing事件中返回<span class="STYLE1">选择前</span>的日期对象</td>
+      </tr>
+      <tr>
+        <td align="center">          $dp.cal.newdate</td>
+        <td align="center">object</td>
+        <td align="center">事件function</td>
+        <td>用法同$dp.cal.date</td>
+        <td>在changing,picking,clearing事件中返回<span class="STYLE1">选择后</span>的日期对象</td>
+      </tr>
+    </table>
+<h2>六. 疑难解答<a name="m6" id="m6"></a></h2>
+    <p style="margin-left:20px">任何问题,请先参考 <a href="javascript:if(confirm('http://www.my97.net/dp/support.asp  \n\n该文件未被 Teleport Pro 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.my97.net/dp/support.asp'" tppabs="http://www.my97.net/dp/support.asp" target="_top">技术支持</a> <br />
+      如果找不到答案,您可以直接在blog留言,或者通过下面的联系方式与我联系</p>
+    <h2>七. 联系My97<a name="m7" id="m7"></a></h2>
+    <p style="margin-left:20px"> * 如果您在使用过程中遇到问题,或者有更好的建议<br />
+      * 欢迎您访问<br />
+      * BLOG: <a href="javascript:if(confirm('http://my97.cnblogs.com/  \n\n该文件未被 Teleport Pro 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://my97.cnblogs.com/'" tppabs="http://my97.cnblogs.com/">http://my97.cnblogs.com</a><br />
+      * MAIL: support$my97.net($换成@)<br />
+      * 有问题在我blog留言或给我Email吧,<span class="STYLE1">最好先仔细看说明,很多问题都是因为没有仔细看说明导致的</span> </p>
+    <br />
+    <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="dCenter dBody" style="padding-left:72px">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6343250634002651";
+/* 底部 */
+google_ad_slot = "0599809152";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript">
+</script>
+</div>
+<div id="footer" class="dCenter">&copy; 2010 <a href="mailto:smallcarrot@163.com">My97</a> All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F489957c212e14340592fb2e4921b2f1d' type='text/javascript'%3E%3C/script%3E"));
+</script>&nbsp;&nbsp;&nbsp;&nbsp;浙ICP备11060275号
+</div>
+</body>
+</html>

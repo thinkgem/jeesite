@@ -1,0 +1,260 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="日期控件 datepicker calendar 日历控件 javascript js日历控件 带时间 自定义格式 月历控件 日期时间 日期选择" />
+<title>My97日期控件 功能演示 自定义事件 My97 Datepicker Demo</title>
+<link href="../../css/base.css" tppabs="http://www.my97.net/dp/css/base.css" rel="stylesheet" type="text/css" />
+<link href="demo.css" tppabs="http://www.my97.net/dp/demo/resource/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<iframe src="../../head.asp" tppabs="http://www.my97.net/dp/head.asp" scrolling="no" frameborder="0" height="100px" width="100%"></iframe>
+<script language="JavaScript" type="text/javascript" src="../../../WdatePicker.js" tppabs="http://www.my97.net/dp/My97DatePicker/WdatePicker.js"></script>
+<div class="dCenter dBody">
+  <div id="content">
+
+    <h2>二. 功能及示例<a name="m2" id="m2"></a></h2>
+<h3>5. 自定义事件<a name="m25" id="m25"></a></h3>
+    <ol>
+      <li>自定义事件
+        <a name="m251" id="m251"></a>
+        <p>如果你需要做一些附加的操作,你也不必担心,日期控件自带的自定义事件可以满足你的需求.此外,你还可以在自定义事件中调用提供的API库来做更多的运算和扩展,绝对可以通过很少的代码满足你及其个性化的需求.<br />
+          <br />
+          注意下面几个重要的指针,将对你的编程带来很多便利<br />
+          <span class="STYLE1">this: 指向文本框<br />
+          dp: 指向$dp<br />
+          dp.cal: 指向日期控件对象</span><br />
+          注意:函数原型必须使用类似 <span class="STYLE1">function(dp){} </span>的模式,这样子,在函数内部才可以使用dp</p>
+      </li>
+      <li>onpicking 和 onpicked 事件
+        <a name="m252" id="m252"></a>
+        <div>
+          <h4>示例5-2-1 onpicking事件演示</h4>
+          <p>
+            <input type="text" id="5421" onFocus="WdatePicker({onpicking:function(dp){if(!confirm('日期框原来的值为: '+dp.cal.getDateStr()+', 要用新选择的值:' + dp.cal.getNewDateStr() + '覆盖吗?')) return true;}})" class="Wdate"/>
+            <br />
+            &lt;input type=&quot;text&quot; id=&quot;5421&quot; onFocus=&quot;WdatePicker({<span class="STYLE2">onpicking:</span><span class="STYLE1">function(dp){if(!confirm('日期框原来的值为: '+dp.cal.getDateStr()+', 要用新选择的值:' + dp.cal.getNewDateStr() + '覆盖吗?')) return true;}</span>})&quot; class=&quot;Wdate&quot;/&gt;<br />
+            <br />
+            <span class="STYLE1">注意:</span>你注意到dp.cal.getDateStr和dp.cal.getNewDateStr的用法了嘛? 详见<a href="999.asp-.htm#m5" tppabs="http://www.my97.net/dp/demo/resource/999.asp?#m5">内置函数和属性</a></p>
+        </div>
+        <div>
+          <h4>示例5-2-2 使用onpicked实现日期选择联动</h4>
+          <p>选择第一个日期的时候,第二个日期选择框自动弹出<br />
+            日期从:
+            <input id="d5221" class="Wdate" type="text" onFocus="var d5222=$dp.$('d5222');WdatePicker({onpicked:function(){d5222.focus();},maxDate:'#F{$dp.$D(\'d5222\')}'})"/>
+            至
+            <input id="d5222" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d5221\')}'})"/>
+            <br />
+            <span class="STYLE1">注意:</span>下面第一个控件代码的写法<br />
+            &lt;input id=&quot;<span class="STYLE1">d5221</span>&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;var d5222=$dp.$('d5222');WdatePicker({<span class="STYLE2">onpicked:</span><span class="STYLE1">function(){d5222.focus();}</span>,maxDate:'#F{$dp.$D(\'d5222\')}'})&quot;/&gt;<br />
+至<br />
+&lt;input id=&quot;<span class="STYLE1">d5222</span>&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;WdatePicker({minDate:'#F{$dp.$D(\'d5221\')}'})&quot;/&gt;<br />
+            <br />
+            <span class="STYLE1">注意:</span>$dp.$是一个<a href="999.asp-.htm#m5" tppabs="http://www.my97.net/dp/demo/resource/999.asp?#m5">内置函数</a>,相当于document.getElementById</p>
+        </div>
+        <div>
+          <h4>示例5-2-3 将选择的值拆分到文本框 </h4>
+          <p>
+            <input type="text" id="d523_y" size="5"/>
+            年
+            <input type="text" id="d523_M" size="3"/>
+            月
+            <input type="text" id="d523_d" size="3"/>
+            日
+            <input type="text" id="d523_HH" size="3"/>
+            时
+            <input type="text" id="d523_mm" size="3"/>
+            分
+            <input type="text" id="d523_ss" size="3"/>
+            秒
+            <input type="text" id="d523"/>
+            <img onclick="WdatePicker({el:'d523',dateFmt:'yyyy-MM-dd HH:mm:ss',onpicked:pickedFunc})" src="../../../skin/datePicker.gif" tppabs="http://www.my97.net/dp/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle" style="cursor:pointer"/>
+            <script>
+			function pickedFunc(){
+				$dp.$('d523_y').value=$dp.cal.getP('y');
+				$dp.$('d523_M').value=$dp.cal.getP('M');
+				$dp.$('d523_d').value=$dp.cal.getP('d');
+				$dp.$('d523_HH').value=$dp.cal.getP('H');
+				$dp.$('d523_mm').value=$dp.cal.getP('m');
+				$dp.$('d523_ss').value=$dp.cal.getP('s');
+			}
+			</script>
+            <br />
+            &lt;input type=&quot;text&quot; id=&quot;d523_y&quot; size=&quot;5&quot;/&gt;
+            年<br />
+            &lt;input type=&quot;text&quot; id=&quot;d523_M&quot; size=&quot;3&quot;/&gt;
+            月<br />
+            &lt;input type=&quot;text&quot; id=&quot;d523_d&quot; size=&quot;3&quot;/&gt;
+            日<br />
+            &lt;input type=&quot;text&quot; id=&quot;d523_HH&quot; size=&quot;3&quot;/&gt;
+            时<br />
+            &lt;input type=&quot;text&quot; id=&quot;d523_mm&quot; size=&quot;3&quot;/&gt;
+            分<br />
+            &lt;input type=&quot;text&quot; id=&quot;d523_ss&quot; size=&quot;3&quot;/&gt;
+            秒 <br />
+            &lt;img onclick=&quot;WdatePicker({<span class="STYLE2">el:</span><span class="STYLE1">'d523'</span>,dateFmt:'yyyy-MM-dd HH:mm:ss',<span class="STYLE2">onpicked:</span><span class="STYLE1">pickedFunc</span>})&quot; src=&quot;../../../skin/datePicker.gif&quot; width=&quot;16&quot; height=&quot;22&quot; align=&quot;absmiddle&quot; style=&quot;cursor:pointer&quot;/&gt;<br />
+            <span class="STYLE1">&lt;script&gt;</span><br />
+            <span class="STYLE2">function</span> pickedFunc(){<br />
+            $dp.$('d523_y').value=$dp.cal.getP('y');<br />
+            $dp.$('d523_M').value=$dp.cal.getP('M');<br />
+            $dp.$('d523_d').value=$dp.cal.getP('d');<br />
+            $dp.$('d523_HH').value=$dp.cal.getP('H');<br />
+            $dp.$('d523_mm').value=$dp.cal.getP('m');<br />
+            $dp.$('d523_ss').value=$dp.cal.getP('s');<br />
+            }<br />
+            <span class="STYLE1">&lt;/script&gt;</span><br />
+            <br />
+            <span class="STYLE1">注意:</span>el:'d523'中,如果你不需要d523这个框,你可以把他改成hidden,但是el属性必须指定<br />
+            $dp.$和$dp.cal.getP都是<a href="999.asp-.htm#m5" tppabs="http://www.my97.net/dp/demo/resource/999.asp?#m5">内置函数</a> </p>
+        </div>
+      </li>
+      <li>onclearing 和 oncleared 事件
+        <a name="m253" id="m253"></a>
+        <div>
+          <h4>示例5-3-1 使用onclearing事件取消清空操作</h4>
+          <p>
+            <input type="text" class="Wdate" id="d531" onFocus="WdatePicker({onclearing:function(){if(!confirm('日期框的值为:'+this.value+', 确实要清空吗?'))return true;}})"/>
+            <br />
+            &lt;input type=&quot;text&quot; class=&quot;Wdate&quot; id=&quot;d531&quot; onFocus=&quot;WdatePicker({<span class="STYLE2">onclearing:</span><span class="STYLE1">function(){if(!confirm('日期框的值为:'+this.value+', 确实要清空吗?'))return true;}</span>})&quot;/&gt;<br />
+            <br />
+            <span class="STYLE1">注意:</span>当onclearing函数返回true时,系统的清空事件将被取消,<br />
+            函数体里面没有引用$dp,所以函数原型里面可以省略参数dp </p>
+        </div>
+        <div>
+          <h4>示例5-3-2 使用cal对象取得当前日期所选择的月份(使用了 dp.cal)</h4>
+          <p>
+            <input type="text" class="Wdate" id="d532" onFocus="WdatePicker({oncleared:function(dp){alert('当前日期所选择的月份为:'+dp.cal.date.M);}})"/>
+            <br />
+            &lt;input type=&quot;text&quot; class=&quot;Wdate&quot; id=&quot;d532&quot; onFocus=&quot;WdatePicker({<span class="STYLE2">oncleared:</span><span class="STYLE1">function(dp){alert('当前日期所选择的月份为:'+dp.cal.date.M);}</span>})&quot;/&gt;</p>
+        </div>
+        <div>
+          <h4>示例5-3-3 综合使用两个事件</h4>
+          <p>
+            <input type="text" class="Wdate" id="d533" onFocus="d533_focus(this)" value="2000-04-09"/>
+            <script>
+function d533_focus(element){
+var clearingFunc = function(){ if(!confirm('日期框的值为:'+this.value+', 确实要清空吗?')) return true; }
+var clearedFunc = function(){ alert('日期框已被清空'); }
+WdatePicker({el:element,onclearing:clearingFunc,oncleared:clearedFunc})
+}
+</script>
+            <br />
+            <span class="STYLE1">&lt;script&gt;</span><br />
+            <span class="STYLE2">function</span> d533_focus(element){<br />
+            var clearingFunc = function(){
+            if(!confirm('日期框的值为:'+this.value+', 确实要清空吗?')) return true;
+            }<br />
+            var clearedFunc = function(){
+            alert('日期框已被清空');
+            }<br />
+            WdatePicker({el:element,onclearing:clearingFunc,oncleared:clearedFunc})<br />
+            }<br />
+            <span class="STYLE1">&lt;/script&gt;</span><br />
+            &lt;input type=&quot;text&quot; class=&quot;Wdate&quot; id=&quot;d533&quot; onFocus=&quot;<span class="STYLE1">d533_focus(this)</span>&quot;/&gt;</p>
+        </div>
+      </li>
+      <li>年月日时分秒的 changing和changed <a name="m254" id="m254"></a> <p>年月日时分秒都有对应的changing和changed事件,分别是:<br />
+        ychanging ychanged      <br />
+        Mchanging Mchanged<br />
+        dchanging dchanged<br />
+        Hchanging Hchanged<br />
+        mchanging mchanged<br />
+        schanging schanged      <br />
+        </p>
+        <div>
+          <h4>示例5-4-1 年月日改变时弹出信息</h4>
+          <p>
+            <input type="text" class="Wdate" id="d" onFocus="WdatePicker({dchanging:cDayFunc,Mchanging:cMonthFunc,ychanging:cYearFunc,dchanged:cDayFunc,Mchanged:cMonthFunc,ychanged:cYearFunc})"/>
+            <script>
+				function cDayFunc(){
+					cFunc('d');
+				}
+				function cMonthFunc(){
+					cFunc('M');
+				}
+				function cYearFunc(){
+					cFunc('y');
+				}
+				function cFunc(who){
+					var str,p,c = $dp.cal;
+					if(who=='y'){
+						str='年份';
+						p='y';
+					}
+					else if(who=='M'){
+						str='月份';
+						p='M';
+					}
+					else if(who=='d'){
+						str='日期';
+						p='d';
+					}
+					alert(str+'发生改变了!\n$dp.cal.date.'+p+'='+c.date[p]+'\n$dp.cal.newdate.'+p+'='+c.newdate[p]);
+				}
+			</script>
+            <br />
+            &lt;input type=&quot;text&quot; class=&quot;Wdate&quot; onFocus=&quot;WdatePicker({<span class="STYLE2">dchanging:<span class="STYLE1">cDayFunc</span>, Mchanging:</span><span class="STYLE1">cMonthFunc</span>,<span class="STYLE2"> ychanging:</span><span class="STYLE1">cYearFunc</span>,<span class="STYLE2"> dchanged:<span class="STYLE1">cDayFunc</span>, Mchanged:</span><span class="STYLE1">cMonthFunc</span>, <span class="STYLE2">ychanged:</span><span class="STYLE1">cYearFunc</span>})&quot;/&gt;<br />
+            <span class="STYLE1">&lt;script&gt;</span><br />
+            <span class="STYLE2">function</span> cDayFunc(){<br />
+cFunc('d');<br />
+}<br />
+<span class="STYLE2">function</span> cMonthFunc(){<br />
+cFunc('M');<br />
+}<br />
+<span class="STYLE2">function</span> cYearFunc(){<br />
+cFunc('y');<br />
+}<br />
+<span class="STYLE2">function</span> cFunc(who){<br />
+var str,p,c = $dp.cal;<br />
+if(who=='y'){<br />
+str='年份';<br />
+p='y';<br />
+}<br />
+else if(who=='M'){<br />
+str='月份';<br />
+p='M';<br />
+}<br />
+else if(who=='d'){<br />
+str='日期';<br />
+p='d';<br />
+}<br />
+alert(str+'发生改变了!\n$dp.cal.date.'+p+'='+c.date[p]+'\n$dp.cal.newdate.'+p+'='+c.newdate[p]);<br />
+}<span class="STYLE1"><br />
+&lt;/script&gt;</span><br />
+<br />
+          这个例子用到了 $dp.cal.date 和 $dp.cal.newdate 属性,你能从这里发现他们的不同之处吗?<br />
+          下面是有关这两个属性的描述详见<a href="999.asp.htm#m5" tppabs="http://www.my97.net/dp/demo/resource/999.asp#m5">内置函数和属性</a>
+          </p>
+        </div>
+        <p><br />
+        </p>
+      </li>
+    </ol>
+    <h3><a href="2.6.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.6.asp">6. 快速选择功能</a> <a name="m26" id="m26"></a></h3>
+    <h2><a href="3.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/3.asp">三. 配置说明</a><a name="m3" id="m3"></a></h2>
+    <h2><a href="999.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/999.asp">四. 如何使用</a><a name="m4" id="m4"></a></h2>
+    <br />
+    <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="dCenter dBody" style="padding-left:72px">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6343250634002651";
+/* 底部 */
+google_ad_slot = "0599809152";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript">
+</script>
+</div>
+<div id="footer" class="dCenter">&copy; 2010 <a href="mailto:smallcarrot@163.com">My97</a> All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F489957c212e14340592fb2e4921b2f1d' type='text/javascript'%3E%3C/script%3E"));
+</script>&nbsp;&nbsp;&nbsp;&nbsp;浙ICP备11060275号
+</div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="日期控件 datepicker calendar 日历控件 javascript js日历控件 带时间 自定义格式 月历控件 日期时间 日期选择" />
+<title>My97日期控件 功能演示 常规功能 My97 Datepicker Demo</title>
+<link href="../../css/base.css" tppabs="http://www.my97.net/dp/css/base.css" rel="stylesheet" type="text/css" />
+<link href="demo.css" tppabs="http://www.my97.net/dp/demo/resource/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<iframe src="../../head.asp" tppabs="http://www.my97.net/dp/head.asp" scrolling="no" frameborder="0" height="100px" width="100%"></iframe>
+<script language="JavaScript" type="text/javascript" src="../../../WdatePicker.js" tppabs="http://www.my97.net/dp/My97DatePicker/WdatePicker.js"></script>
+<div class="dCenter dBody">
+  <div id="content">
+
+
+    <h2>二. 功能及示例<a name="m2" id="m2"></a></h2>
+    <h3>1. 常规功能<a name="m21" id="m21"></a></h3>
+    <ol>
+      <li>支持多种调用模式 <a name="m211" id="m211"></a>
+        <p>除了支持常规在input单击或获得焦点调用外,还支持使用其他的元素如:&lt;img&gt;&lt;div&gt;等触发WdatePicker函数来调用弹出日期框</p>
+        <div>
+          <h4>示例1-1-1 常规调用</h4>
+          <p>
+            <input type="text" id="d11" onClick="WdatePicker()"/>
+            <br />
+            &lt;input id=&quot;d11&quot; type=&quot;text&quot; <span class="STYLE1">onClick=&quot;WdatePicker()&quot;</span>/&gt;</p>
+        </div>
+        <div>
+          <h4>示例1-1-2 图标触发</h4>
+          <p>
+            <input id="d12" type="text"/>
+            <img src="../../../skin/datePicker.gif" tppabs="http://www.my97.net/dp/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle" style="cursor:pointer" onClick="WdatePicker({el:'d12'})" /> <br />
+            &lt;input id=&quot;<span class="STYLE1">d12</span>&quot; type=&quot;text&quot;/&gt;<br />
+            &lt;img onclick=&quot;WdatePicker({<span class="STYLE2">el:</span><span class="STYLE1">'d12'</span>})&quot;  src=&quot;../skin/datePicker.gif&quot; width=&quot;16&quot; height=&quot;22&quot; align=&quot;absmiddle&quot;&gt;<br />
+          <span class="STYLE1">注意:</span>只需要传入控件的id即可</p>
+        </div>
+      </li>
+      <li>下拉,输入,导航选择日期<a name="m212" id="m212"></a>
+        <p>年月时分秒输入框都具备以下三种特性 <br />
+          1.
+          通过导航图标选择<br />
+          <img src="pic1.jpg" tppabs="http://www.my97.net/dp/demo/resource/pic1.jpg" width="180" height="197" /><br />
+          <br />
+          2. 直接使用键盘输入数字<br />
+          <img src="pic2.jpg" tppabs="http://www.my97.net/dp/demo/resource/pic2.jpg" width="180" height="197" /><br />
+          <br />
+          3. 直接从弹出的下拉框中选择<br />
+          <img src="pic3.jpg" tppabs="http://www.my97.net/dp/demo/resource/pic3.jpg" width="180" height="197" /><br />
+          <br />
+          <span class="STYLE2">另:年份输入框有智能提示功能,当用户连续点击同一个导航按钮5次时,会自动弹出年份下拉框</span></p>
+      </li>
+      <li>支持周显示 <a name="m213" id="m213"></a>
+        <p>可以通过配置isShowWeek属性决定是否限制周,并且在返回日期的时候还可以通过自带的自定义事件和API函数返回选择的周</p>
+        <br />
+        <div>
+          <h4>示例1-2-1 周显示简单应用 </h4>
+          <p>
+            <input id="d121" type="text" onfocus="WdatePicker({isShowWeek:true})"/>
+            <br />
+            &lt;input id=&quot;d121&quot; type=&quot;text&quot; onfocus=&quot;WdatePicker({<span class="STYLE2">isShowWeek:</span><span class="STYLE1">true</span>})&quot;/&gt;<br />
+            <br />
+          <span class="STYLE1">注意:周算法参考的是ISO8601定义的方法,如果您对此有疑问,请详见:</span><a href="javascript:if(confirm('http://en.wikipedia.org/wiki/ISO_week_date  \n\n该文件未被 Teleport Pro 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://en.wikipedia.org/wiki/ISO_week_date'" tppabs="http://en.wikipedia.org/wiki/ISO_week_date" target="_blank">http://en.wikipedia.org/wiki/ISO_week_date</a><br />
+          <br />
+          周算法选择<span class="STYLE1">(4.8新增)</span><br />
+          相关属性:<span class="STYLE2">weekMethod</span><br />
+周算法不同的地方有一些差异<br />
+常见算法有两种<br />
+1. ISO8601:规定第一个星期四为第一周,默认值<br />
+2. MSExcel:1月1日所在的周</p>
+        </div>
+        <div>
+          <h4>示例1-2-2 利用onpicked事件把周赋值给另外的文本框</h4>
+          <p>
+            <input type="text" class="Wdate" id="d122" onFocus="WdatePicker({isShowWeek:true,onpicked:function(){$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}})"/>
+            &nbsp;&nbsp;
+            您选择了第
+            <input type="text" id="d122_1" size="3"/>
+            (W格式)周, 另外您可以使用WW格式:
+            <input  type="text" id="d122_2" size="3"/>
+            周 <br />
+            &lt;input type=&quot;text&quot; class=&quot;Wdate&quot; id=&quot;d122&quot; onFocus=&quot;WdatePicker({<span class="STYLE2">isShowWeek:</span><span class="STYLE1">true</span>,<span class="STYLE2">onpicked:</span><span class="STYLE1">function() {$dp.$('d122_1').value=$dp.cal.getP('W','W');$dp.$('d122_2').value=$dp.cal.getP('W','WW');}</span>})&quot;/&gt;<br />
+            <br />
+            onpicked 用法详见<a href="2.5.asp.htm#m251" tppabs="http://www.my97.net/dp/demo/resource/2.5.asp#m251">自定义事件</a><br />
+            $dp.cal.getP 用法详见<a href="999.asp.htm#m5" tppabs="http://www.my97.net/dp/demo/resource/999.asp#m5">内置函数和属性</a><br />
+          </p>
+        </div>
+      </li>
+      <li>只读开关,高亮周末功能 <a name="m214" id="m214"></a>
+        <p>设置readOnly属性 true 或 false 可指定日期框是否只读 <br />
+          设置highLineWeekDay属性 ture 或 false 可指定是否高亮周末 </p>
+      </li>
+      <li>操作按钮自定义 <a name="m215" id="m215"></a>
+        <p>清空按钮和今天按钮,可以根据需要进行自定义,它们分别对应 isShowClear 和 isShowToday 默认值都是true</p>
+        <div>
+          <h4>示例1-5 禁用清空功能</h4>
+          <p> 最好把readOnly置为true,否则即使隐藏了清空按钮,用户依然可以在输入框里把值delete掉<br />
+            <input class="Wdate" type="text" id="d15" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
+            <br />
+            &lt;input class=&quot;Wdate&quot; type=&quot;text&quot; id=&quot;d15&quot; onFocus=&quot;WdatePicker({<span class="STYLE2">isShowClear:</span><span class="STYLE1">false</span>,<span class="STYLE2">readOnly:</span><span class="STYLE1">true</span>})&quot;/&gt;</p>
+        </div>
+      </li>
+      <li>自动选择显示位置<a name="m216" id="m216"></a>
+        <p>当控件处在页面边界时,它会自动选择显示的位置,所以没有必要担心弹出框会被页面边界遮住的问题了.</p>
+      </li>
+      <li>自定义弹出位置 <a name="m217" id="m217"></a>
+        <p>当控件处在页面边界时,它会自动选择显示的位置.此外你还可以使用position参数对弹出位置做调整.</p>
+        <br />
+        <div>
+          <h4>示例1-6 通过position属性,自定义弹出位置</h4>
+          <p>使用positon属性指定,弹出日期的坐标为{left:100,top:50}<br />
+            <input class="Wdate" type="text" id="d16" onfocus="WdatePicker({position:{left:100,top:50}})"/>
+            <br />
+            &lt;input class=&quot;Wdate&quot; type=&quot;text&quot; id=&quot;d16&quot; onfocus=&quot;WdatePicker({<span class="STYLE2">position:</span><span class="STYLE1">{left:100,top:50}</span>})&quot;/&gt;<br />
+            <br />
+            position属性的详细用法详见<a href="3.asp.htm#m31" tppabs="http://www.my97.net/dp/demo/resource/3.asp#m31">属性表</a></p>
+        </div>
+      </li>
+      <li>自定义星期的第一天<span class="STYLE1">(4.6新增)</span><a name="m218" id="m218"></a>
+        <p>各个国家的习惯不同,有些喜欢以星期日作为第一天,有些以星期一作为第一天.<br />
+相关属性:<span class="STYLE2">firstDayOfWeek</span>: 可设置 0 - 6 的任意一个数字,0:星期日 1:星期一 以此类推</p>
+      <div>
+          <h4>示例1-7 以星期一作为第一天</h4>
+          <p>
+            <input class="Wdate" type="text" id="d17" onfocus="WdatePicker({firstDayOfWeek:1})"/>
+            <br />
+            &lt;input class=&quot;Wdate&quot; type=&quot;text&quot; id=&quot;d17&quot; onfocus=&quot;WdatePicker({<span class="STYLE2">firstDayOfWeek:</span><span class="STYLE1">1</span>})&quot;/&gt;<br />
+          </p>
+        </div>
+      </li>
+    </ol>
+    <h3><a href="2.2.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.2.asp">2. 特色功能</a> <a name="m22" id="m22"></a></h3>
+    <h3><a href="2.3.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.3.asp">3. 多语言和自定义皮肤</a><a name="m23" id="m23"></a></h3>
+    <h3><a href="2.4.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp">4. 日期范围限制</a><a name="m24" id="m24"></a></h3>
+    <h3><a href="2.5.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.5.asp">5. 自定义事件</a><a name="m25" id="m25"></a></h3>
+    <h3><a href="2.6.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.6.asp">6. 快速选择功能</a> <a name="m26" id="m26"></a></h3>
+    <h2><a href="3.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/3.asp">三. 配置说明</a><a name="m3" id="m3"></a></h2>
+    <h2><a href="999.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/999.asp">四. 如何使用</a><a name="m4" id="m4"></a></h2>
+    <br />
+    <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="dCenter dBody" style="padding-left:72px">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6343250634002651";
+/* 底部 */
+google_ad_slot = "0599809152";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript">
+</script>
+</div>
+<div id="footer" class="dCenter">&copy; 2010 <a href="mailto:smallcarrot@163.com">My97</a> All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F489957c212e14340592fb2e4921b2f1d' type='text/javascript'%3E%3C/script%3E"));
+</script>&nbsp;&nbsp;&nbsp;&nbsp;浙ICP备11060275号
+</div>
+</body>
+</html>

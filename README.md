@@ -1,11 +1,11 @@
 #JeeSite 企业信息管理系统基础框架
 =======
 
-##简介
+##框架简介
 
 JeeSite是一个 **开源的企业信息管理系统** 基础框架。主要定位于“企业信息管理”领域，可用作企业信息管理类系统、网站后台管理类系统等。JeeSite是非常强调开发的高效性、健壮性和安全性的。
 
-JeeSite是轻量级的，简单易学，本框架以Spring Framework为核心、Spring MVC作为模型视图控制器、Spring Data JPA + Hibernate作为数据库操作层，此组合是Java界业内最经典、最优的搭配组合。前端界面风格采用了结构简单、性能优良、页面精致的 Twitter Bootstrap作为前端展示框架。
+JeeSite是轻量级的，简单易学，本框架以Spring Framework为核心、Spring MVC作为模型视图控制器、Spring Data JPA + Hibernate作为数据库操作层，此组合是Java界业内最经典、最优的搭配组合。前端界面风格采用了结构简单、性能优良、页面精致的Twitter Bootstrap作为前端展示框架。
 
 JeeSite **已内置** 一系列企业信息管理系统的基础功能，目前包括两大模块，系统管理（SYS）模块和内容管理（CMS）模块。系统管理模块，包括企业组织架构（用户管理、部门管理、区域管理）、菜单管理、角色权限管理、字典管理等功能；内容管理模块，包括内容管理（文章、链接），栏目管理、站点管理、公共留言、文件管理、前端网站展示等功能。
 
@@ -13,15 +13,14 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 ##为何选择
 
-1. 使用Apache License 2.0协议，源代码完全开源，无商业限制。
+1. 使用 **Apache License 2.0** 协议，源代码完全开源，无商业限制。
 2. 使用目前最主流的J2EE开发框架，简单易学，学习成本低。
-3. 数据库无限制，支持MySql、Oracle、SQL Server、H2等数据库
+3. 数据库无限制，支持MySql、Oracle、SQL Server、H2等数据库。
 4. 模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
 5. 权限控制精密细致，对所有管理链接都进行权限验证，可控制到按钮。
 6. 提供基本功能模块的源代码生成器，提高开发效率及质量。
 7. 提供常用工具类封装，日志、缓存、验证、字典、组织机构等，常用标签（taglib），获取当前组织机构、字典等数据。
 8. 完全兼容目前最流行浏览器（IE6、IE7+、Firefox、Chrome）。
-
 
 ##使用技术
 
@@ -63,10 +62,34 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 5. 密码加密：登录用户密码进行SHA1散列加密，此加密方法是不可逆的。保证密文泄露后的安全问题。
 6. 强制访问：系统对所有管理端链接都进行用户身份权限验证，防止用户
 
+##快速体验
+
+1. 具备运行环境：JDK1.6、Maven3.0、MySql。
+2. 修改src\main\resources\application.properties文件中的数据库设置参数。
+3. 根据修改参数创建对应MySql数据库。
+4. 运行bin\resresh-db\refresh-db.bat脚本，导入表结构及演示数据
+5. 运行bin\jetty.bat，启动服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
+6. 最高管理员，用户名：thinkgem 密码：admin
+
 ##更多文档
 
 * [JeeSite介绍演示.docx](https://github.com/thinkgem/jeesite/raw/master/doc/JeeSite%E4%BB%8B%E7%BB%8D%E6%BC%94%E7%A4%BA.docx)
 * [JeeSite开发手册.docx](https://github.com/thinkgem/jeesite/raw/master/doc/JeeSite%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C.docx)
 
-<script src="http://s14.cnzz.com/stat.php?id=5025062&web_id=5025062" language="JavaScript"></script>
+## 交流、反馈、参与贡献？ 
 
+* QQ群：127515876
+* E-mail：thinkgem@163.com
+* Github：https://github.com/thinkgem/jeesite
+
+如果你想参与进来共同完善它或有更好的建议，请联系我吧(^_^)。
+
+## 未来开发计划
+
+* 代码生成器：自动建立表结构、生成的mvc中包括属性字段，哪些可作为查询条件等等。
+* 模块管理功能：可方便增减模块，如内容管理模块不需要，可直接启用或停用。
+* 内容管理模块：文章评论、完善内容关键字、图片模型、专题功能、会员功能。
+* 添加通用模块：通知通告功能、短信、邮件群发功能。
+* 嵌入流程引擎：使用Activit5或JBPM5流程引擎。
+* 公共工具封装：嵌入地图、生成报表、WebService
+* 移动客户端：暂定为Android客户端开发

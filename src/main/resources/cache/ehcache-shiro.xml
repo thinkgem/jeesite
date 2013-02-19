@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="shiroCache">
+
+    <diskStore path="java.io.tmpdir/jeesite/ehcache/shiro" />
+    
+	<!-- DefaultCache setting. -->
+	<defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" 
+		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+		
+    <cache name="shiro-activeSessionCache"
+           maxElementsInMemory="10000"
+           overflowToDisk="true"
+           eternal="true"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="0"
+           diskPersistent="true"
+           diskExpiryThreadIntervalSeconds="600"/>
+
+    <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
+           maxElementsInMemory="1000"
+           eternal="true"
+           overflowToDisk="true"/>
+           
+</ehcache>

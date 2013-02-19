@@ -1,0 +1,16 @@
+var data={};
+data['52_5201'] = 'text:C# ; data:roomid=5201';
+data['52_521706'] = 'text:C# builder ; data:roomid=1706';
+data['52_5209'] = 'text:J# ; data:roomid=5209';
+data['52_5202'] = 'text:ASP.NET ; data:roomid=5202';
+data['52_5203'] = 'text:.NET Framework ; data:roomid=5203';
+data['52_5204'] = 'text:Web Services ; data:roomid=5204';
+data['52_5205'] = 'text:VB.NET ; data:roomid=5205';
+data['52_5206'] = 'text:VC.NET ; data:roomid=5206';
+data['52_5210'] = 'text:Delphi.net ; data:roomid=5210';
+data['52_5211'] = 'text:\u56fe\u8868\u533a ; data:roomid=5211';
+data['52_5207'] = 'text:\u5176\u4ed6 ; data:roomid=5207';
+data['52_5212'] = 'text:.NET \u6280\u672f\u524d\u77bb ; data:roomid=5212';
+data['52_5213'] = 'text:.NET \u5206\u6790\u4e0e\u8bbe\u8ba1 ; data:roomid=5213';
+data['52_5214'] = 'text:\u7ec4\u4ef6/\u63a7\u4ef6\u5f00\u53d1 ; data:roomid=5214';
+data['52_5208'] = 'text:\u975e\u6280\u672f\u533a ; data:roomid=5208';

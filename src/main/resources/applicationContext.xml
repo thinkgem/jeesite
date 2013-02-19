@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd"
+	default-lazy-init="true">
+
+	<description>Spring Configuration</description>
+
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="com.thinkgem.jeesite">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- Jpa Entity Manager 配置 -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
+		<property name="dataSource" ref="dataSource"/>
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/> 
+		<property name="packagesToScan" value="com.thinkgem.jeesite"/>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">cache/ehcache-hibernate-local.xml</prop>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
+				<prop key="hibernate.search.default.indexBase">indexes</prop>
+				<prop key="hibernate.show_sql">true</prop>    
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="databasePlatform">
+			<bean factory-method="getDialect" class="com.thinkgem.jeesite.common.persistence.Hibernates">
+				<constructor-arg ref="dataSource"/>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Spring Data Jpa配置 -->
+ 	<jpa:repositories base-package="com.thinkgem.jeesite"  transaction-manager-ref="transactionManager"
+ 		entity-manager-factory-ref="entityManagerFactory"/>
+   
+	<!-- Jpa 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	
+	<!-- JSR303 Validator定义 -->
+ 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
+	<!-- 自定义Ehchche -->
+	<bean id="customEhcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:cache/ehcache-custom.xml" />
+	</bean>
+	
+	<!-- production/development环境 -->
+ 	<beans profile="production,development">
+ 		<context:property-placeholder ignore-unresolvable="true"
+			location="classpath*:/application.properties" />	
+		<!-- 数据源配置, 使用BoneCP数据库连接池 -->
+		<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+			<!-- 数据库驱动 -->
+			<property name="driverClass" value="${jdbc.driver}" />
+			<!-- 相应驱动的jdbcUrl,你懂的 -->
+			<property name="jdbcUrl" value="${jdbc.url}" />
+			<!-- 数据库的用户名 -->
+			<property name="username" value="${jdbc.username}" />
+			<!-- 数据库的密码 -->
+			<property name="password" value="${jdbc.password}" />
+			<!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 
+			<property name="idleConnectionTestPeriod" value="240" />-->
+			<!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 
+			<property name="idleMaxAge" value="60" />-->
+			<!-- 每个分区最大的连接数 -->
+			<property name="maxConnectionsPerPartition" value="${pool.maxconn}" />
+			<!-- 每个分区最小的连接数 -->
+			<property name="minConnectionsPerPartition" value="${pool.minconn}" />
+			<!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定-->
+			<property name="partitionCount" value="2" />
+			<!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
+			<property name="acquireIncrement" value="2" />
+			<!-- 缓存prepared statements的大小，默认值：0 -->
+			<property name="statementsCacheSize" value="0" />
+			<!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->
+			<property name="releaseHelperThreads" value="3" />
+			<!-- 其他不常用的属性：
+				connectionTestStatement：在做keep-alive的时候的SQL语句。
+				statementsCachedPerConnection：No of statements that can be cached per connection，反正源码中不推荐使用，就别用了.
+				initSQL:在每次到数据库取连接的时候执行的SQL语句，只执行一次。
+				closeConnectionWatch：如果设置为true，则会增加一个线程监控关闭连接时的情况，如果关闭时出现异常，则打出错误日志，主要用于debug。上线后记得关掉。
+				logStatementsEnabled：如果设置为true，就会打印执行的SQL语句，如果你用了其他能打印SQL语句的框架，那就不必了。
+				acquireRetryDelay：在获取连接失败后，第二次参试前的延迟时间，默认为7000毫秒。
+				acquireRetryAttempts：在获取连接失败后的重试次数，默认为5次。
+				lazyInit：如果设置为true，那么连接池不会自动创建最小连接数的链接，而是保持为空，直到有需求要获取连接。
+				transactionRecoveryEnabled：如果设置为true，则会保存该链接上的所有活动，以备下次重试的时候使用，这里指的活动是数据库操作。
+				connectionHookClassName：Connection hook class name.没看懂…
+				poolName：上面特性中说到的自定义连接池名称。
+				disableJMX：控制JMX的支持开关。
+				connectionTimeout：获取连接的时候最大的等待时间，默认值为：Long.MAX_VALUE
+			 -->
+		</bean>
+		
+		<!-- 数据源配置,使用应用服务器的数据库连接池 -->
+		<!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
+	</beans>
+	
+</beans>

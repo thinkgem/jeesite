@@ -1,0 +1,78 @@
+img{border:0}
+#preview-slider{
+	position: relative; 
+	margin:0px 8px;
+	_margin:0 0 0 8px;
+	width: 985px; 
+	_width: 982px; 
+	height: 130px;
+	overflow:hidden;
+}
+#preview-slider-line{
+	left: 0px;
+	position:absolute; 
+	bottom:0;
+	_bottom:3px;
+	width:100%; 
+	background:#333;
+	opacity: 0.5;
+  	filter: alpha(opacity=50);
+	height: 35px;
+}
+#preview-slider-holder{
+	list-style-type: none;
+	padding: 0px;
+	margin: 5px;
+	width: 100%;
+	position:relative;
+	top:-40px;
+	*top:-32px;
+}
+#preview-slider-holder li{
+	position: relative;
+	float: left;
+	display: inline-block;
+	width: 32%;
+	vertical-align: top;
+	zoom: 1; /*IE hack to trigger hasLayout*/
+	*display: inline; /*IE hack to achieve inline-block behavior*/
+	min-height: 37px;
+	margin: 0px 0 0 10px;
+	clear:none !important;
+}
+#preview-slider.preview-alternate #preview-slider-holder li{
+	width: 49%;
+}
+#preview-slider-holder li a{
+	text-decoration: none;
+	color: #FFFFFF;
+	border: 0 none;
+	font-size:14px;
+}	
+#preview-slider-holder li span{
+	position: absolute;
+	width: 72%;
+	top: 0px;
+	margin-left: 14px;
+	overflow: hidden;
+	color: #FFFFFF;
+	font-family: 'Arial';
+}
+#preview-slider-holder li span{
+	left: 65px;
+	font-size: 12px;
+}
+.preview-slider-thumbnail{
+	position: relative; 
+	float: left;	
+}
+.preview-slider-thumbnail img{
+	position:absolute;
+	border:1px solid #fff;
+}
+.preview-hide{
+	display: none;
+}
+#preview-thumbnail-im3,#preview-thumbnail-im2,#preview-thumbnail-im1{
+	position:absolute; 
+}

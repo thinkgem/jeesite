@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>My97日期控件 演示 & 文档 My97 DatePicker Demo & Doc</title>
+<script>
+window.onload = function() {
+var mainFrm = document.getElementById('mainFrm');
+var loc = location.href.toLowerCase()
+var start=loc.indexOf('?')+1;
+if(start>0){	
+	mainFrm.src = "resource/"+loc.substr(start);
+}
+else{
+	mainFrm.src = "resource/main.asp";
+}
+}
+</script>
+</head>
+<frameset rows="*" cols="242,*">
+  <frame src="resource/left.htm" tppabs="http://www.my97.net/dp/demo/resource/left.htm" id="leftFrm" />
+  <frame src="about:blank" id="mainFrm" name="mainFrm" />  
+</frameset>
+<noframes></noframes>
+</html>

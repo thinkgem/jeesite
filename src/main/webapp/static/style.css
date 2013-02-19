@@ -1,0 +1,24 @@
+/*!
+ * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ */
+html,body{scrollbar-face-color:#ffffff;scrollbar-highlight-color:#ffffff;border-bottom:white 2px solid;scrollbar-darkshadow-color:#ffffff;}
+
+/* header */
+#header{margin:10px 20px 15px 0;}
+#header h1{color: #0663A2;}
+#header h1 small{color: #0088CC;}
+
+/* footer */
+#footer{margin:15px 0 0 0;padding:15px 0 0 0;font-size:95%;text-align:center;border-top:2px solid #0663A2;}
+#footer a{color: #999;}
+
+/* frame */
+#left,#right,#openClose{float:left;}
+#openClose{width:14px;margin:0 3px;cursor:pointer;background-color:#fcfcfc;}
+.open,.close{background:url("images/openclose.png") no-repeat 4px center;}
+.open{background-position:-25px center;}
+
+/* form */
+.measure-input{background:url("images/ruler.gif") repeat-x scroll 0 13px transparent;}

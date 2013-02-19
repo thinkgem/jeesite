@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Replace Textarea by Code &mdash; CKEditor Sample</title>
+	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+	<script type="text/javascript" src="../ckeditor.js"></script>
+	<script src="sample.js" type="text/javascript"></script>
+	<link href="sample.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1 class="samples">
+		CKEditor Sample &mdash; Replace Textarea Elements Using JavaScript Code
+	</h1>
+	<div class="description">
+	<p>
+		This sample shows how to automatically replace all <code>&lt;textarea&gt;</code> elements
+		with a CKEditor instance by using a JavaScript call.
+	</p>
+	<p>
+		To replace a <code>&lt;textarea&gt;</code> element, place the following call at any point
+		after the <code>&lt;textarea&gt;</code> element or inside a <code>&lt;script&gt;</code> element located
+		in the <code>&lt;head&gt;</code> section of the page, in a <code>window.onload</code> event handler:
+	</p>
+	<pre class="samples">CKEDITOR.replace( '<em>textarea_id</em>' );</pre>
+	<p>
+		Note that <code><em>textarea_id</em></code> in the code above is the <code>id</code> attribute of
+		the <code>&lt;textarea&gt;</code> element to be replaced.
+	</p>
+	</div>
+
+	<!-- This <div> holds alert messages to be display in the sample page. -->
+	<div id="alerts">
+		<noscript>
+			<p>
+				<strong>CKEditor requires JavaScript to run</strong>. In a browser with no JavaScript
+				support, like yours, you should still see the contents (HTML data) and you should
+				be able to edit it normally, without a rich editor interface.
+			</p>
+		</noscript>
+	</div>
+	<form action="sample_posteddata.php" method="post">
+		<p>
+			<label for="editor1">
+				Editor 1:</label>
+			<textarea cols="80" id="editor1" name="editor1" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+			<script type="text/javascript">
+			//<![CDATA[
+
+				// This call can be placed at any point after the
+				// <textarea>, or inside a <head><script> in a
+				// window.onload event handler.
+
+				// Replace the <textarea id="editor"> with an CKEditor
+				// instance, using default configurations.
+				CKEDITOR.replace( 'editor1' );
+
+			//]]>
+			</script>
+		</p>
+		<p>
+			<label for="editor2">
+				Editor 2:</label>
+			<textarea cols="80" id="editor2" name="editor2" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+			<script type="text/javascript">
+			//<![CDATA[
+
+				// This call can be placed at any point after the
+				// <textarea>, or inside a <head><script> in a
+				// window.onload event handler.
+
+				// Replace the <textarea id="editor"> with an CKEditor
+				// instance, using default configurations.
+				CKEDITOR.replace( 'editor2' );
+
+			//]]>
+			</script>
+		</p>
+		<p>
+			<input type="submit" value="Submit" />
+		</p>
+	</form>
+	<div id="footer">
+		<hr />
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2012, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>

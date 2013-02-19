@@ -1,0 +1,97 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="日期控件 datepicker calendar 日历控件 javascript js日历控件 带时间 自定义格式 月历控件 日期时间 日期选择" />
+<title>My97日期控件 功能演示 语言和皮肤 My97 Datepicker Demo</title>
+<link href="../../css/base.css" tppabs="http://www.my97.net/dp/css/base.css" rel="stylesheet" type="text/css" />
+<link href="demo.css" tppabs="http://www.my97.net/dp/demo/resource/demo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<iframe src="../../head.asp" tppabs="http://www.my97.net/dp/head.asp" scrolling="no" frameborder="0" height="100px" width="100%"></iframe>
+<script language="JavaScript" type="text/javascript" src="../../../WdatePicker.js" tppabs="http://www.my97.net/dp/My97DatePicker/WdatePicker.js"></script>
+<div class="dCenter dBody">
+  <div id="content">
+
+    <h2>二. 功能及示例<a name="m2" id="m2"></a></h2>
+<h3>3. 多语言和自定义皮肤<a name="m23" id="m23"></a></h3>
+    <br />
+    <ol>
+      <li>多语言支持
+        <a name="m231" id="m231"></a>
+        <p>通过lang属性,可以为每个日期控件单独配置语言,当然也可以通过WdatePicker.js配置全局的语言<br />
+          语言列表和语言安装说明详见<a href="3.asp.htm#m32" tppabs="http://www.my97.net/dp/demo/resource/3.asp#m32">语言配置</a></p>
+        <div>
+          <h4>示例3-1 多语言示例 </h4>
+          <p>繁体中文:
+            <input name="text3" type="text" class="Wdate" id="d311" onfocus="WdatePicker({lang:'zh-tw'})"/>
+            <br />
+            &lt;input id=&quot;d311&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;WdatePicker({<span class="STYLE1">lang:</span><span class="STYLE2">'zh-tw'</span>})&quot;/&gt;</p>
+          <p> 英文:
+            <input name="text3" type="text" class="Wdate" id="d312" onfocus="WdatePicker({lang:'en'})"/>
+            <br />
+            &lt;input id=&quot;d312&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;WdatePicker({<span class="STYLE1">lang:</span><span class="STYLE2">'en'</span>})&quot;/&gt;</p>
+          <p>简体中文:
+            <input name="text3" type="text" class="Wdate" id="d313" onfocus="WdatePicker({lang:'zh-cn'})"/>
+            <br />
+            &lt;input id=&quot;d313&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;WdatePicker({<span class="STYLE1">lang:</span><span class="STYLE2">'zh-cn'</span>})&quot;/&gt;<br />
+            <br />
+            <span class="STYLE1">注意:</span>默认情况lang='auto',即根据浏览器的语言自动选择语言.<br />
+            <br />
+            <span class="STYLE1">技巧:</span>很多项目中,可能有固定的语言选项,希望可以在日期选择的属性设置中强制某种语言,即:可以通过后台代码控制语言的选择,其实这个实现起来是很容易的,My97Datepicker是支持多个配置文件共存的,你可以配置类似cn_WdatePicker.js,en_WdatePicker.js(注意命名规则,必须以WdatePicker.js结尾)等等,在这些WdatePicker.js里面设置不同的默认语言,皮肤,格式等其他可以设置的参数,然后在页面里根据你的系统变量引入不同的xx_WdatePicker.js即可<br />
+          </p>
+        </div>
+      </li>
+      <li>自定义和动态切换皮肤
+        <a name="m232" id="m232"></a>
+        <a href="javascript:if(confirm('http://www.my97.net/dp/skin.asp  \n\n该文件未被 Teleport Pro 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.my97.net/dp/skin.asp'" tppabs="http://www.my97.net/dp/skin.asp" target="_top" class="STYLE1">立刻转到皮肤中心</a>
+        <p>通过skin属性,可以为每个日期控件单独配置皮肤,当然也可以通过WdatePicker.js配置全局的皮肤<br />
+          皮肤列表和皮肤安装说明详见<a href="3.asp.htm#m33" tppabs="http://www.my97.net/dp/demo/resource/3.asp#m33">皮肤配置</a></p>
+        <div>
+          <h4>示例3-2 皮肤演示</h4>
+          <p><b>默认皮肤default</b>: skin:'default'<br />
+            <input id="d321" class="Wdate" type="text" onfocus="WdatePicker()"/>
+            <br />
+            &lt;input id=&quot;d321&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onfocus=&quot;WdatePicker()&quot;/&gt;<br />
+            <br />
+            <span class="STYLE1">注意:</span>在WdatePicker里配置了skin='default',所以此处可省略,同理,如果你把WdatePicker里的skin配置成'whyGreen'那么在不指定皮肤的情况下都使用'whyGreen'皮肤了</p>
+          <p><br />
+            <b>whyGreen皮肤</b>: skin:'whyGreen' <font color="#FF0000"><br />
+            </font>
+            <input id="d322" class="Wdate" type="text" onfocus="WdatePicker({skin:'whyGreen'})"/>
+            <br />
+            &lt;input id=&quot;d322&quot; class=&quot;Wdate&quot; type=&quot;text&quot;  onfocus=&quot;WdatePicker({<span class="STYLE2">skin:</span><span class="STYLE1">'whyGreen'</span>})&quot;/&gt;<br/><br/>
+            <span class="STYLE1">注意:</span>更多皮肤,请到<a href="javascript:if(confirm('http://www.my97.net/dp/skin.asp  \n\n该文件未被 Teleport Pro 下载，因为 它位于起始地址以设置的边界以外的域或路径中。  \n\n你想要从服务器打开它吗?'))window.location='http://www.my97.net/dp/skin.asp'" tppabs="http://www.my97.net/dp/skin.asp" target="_top">皮肤中心</a>下载</p>
+        </div>
+      </li>
+    </ol>
+    <h3><a href="2.4.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.4.asp">4. 日期范围限制</a><a name="m24" id="m24"></a></h3>
+    <h3><a href="2.5.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.5.asp">5. 自定义事件</a><a name="m25" id="m25"></a></h3>
+    <h3><a href="2.6.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/2.6.asp">6. 快速选择功能</a> <a name="m26" id="m26"></a></h3>
+    <h2><a href="3.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/3.asp">三. 配置说明</a><a name="m3" id="m3"></a></h2>
+    <h2><a href="999.asp.htm" tppabs="http://www.my97.net/dp/demo/resource/999.asp">四. 如何使用</a><a name="m4" id="m4"></a></h2>
+    <br />
+    <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="dCenter dBody" style="padding-left:72px">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6343250634002651";
+/* 底部 */
+google_ad_slot = "0599809152";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript">
+</script>
+</div>
+<div id="footer" class="dCenter">&copy; 2010 <a href="mailto:smallcarrot@163.com">My97</a> All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F489957c212e14340592fb2e4921b2f1d' type='text/javascript'%3E%3C/script%3E"));
+</script>&nbsp;&nbsp;&nbsp;&nbsp;浙ICP备11060275号
+</div>
+</body>
+</html>

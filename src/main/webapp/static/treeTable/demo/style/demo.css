@@ -1,0 +1,35 @@
+@charset "utf-8";
+html { height:100% }
+body { font:12px/1.5em "微软雅黑"; }
+#bg { display:none; width:100%; height:100%; overflow:hidden; position:fixed; top:0; left:0;z-index:10; }
+body.showBg { overflow:hidden; }
+body.showBg #bg { display:block;}
+a { color:#1E9300; }
+ul.nav { padding:0; margin:0; }
+ul.nav li { margin:5px 0; list-style:none; }
+pre { border-left:2px solid #A9EA1E; padding-left:8px; background:#FCFCFC; }
+pre code { padding:1px; color:#333; background:#EAEAEA; }
+#page { width:760px; margin:auto; }
+#page h1 { font-size:1.8em; color:#214FA3; font-weight:700; }
+#page h1 em { font-size:9px; color:#CCC;}
+#page fieldset { margin-top:10px; border:solid 1px #EBEBEB; }
+#page fieldset legend { padding:3px 20px; color:#FFF; background:#214FA3; font-size:1.4em; }
+#page li { line-height:1.8em; list-style: circle; margin:5px 0; color:#333; }
+#page fieldset, #page fieldset legend { -moz-border-radius:4px; -webkit-border-radius: 4px; border-radius:4px; }
+#page button { }
+#page .content { margin:0 20px; }
+#page .content h3 { color:#000; }
+#page .content ol, #page .content ul{ padding-left:0; margin-left:20px; }
+#page strong { color:#1E9300; margin-right:5px; }
+#page .tips { color:#666; border-bottom:1px dashed #CCC; }
+#page label { cursor:pointer; }
+#page .api { background:#FCFCFC; }
+#page .api strong { width:5em; display:inline-block; *zoom:1;*display:inline; }
+#page .api li { border-bottom:1px dashed #CCC; padding:5px 3px; margin:0; }
+#page .api li:hover { background:#EAEAEA; }
+#page .runCode { margin-right:4px; }
+#page .runCode textarea { width:100%; color:#214FA3; font-size:12px; }
+#page .runCode textarea:focus { border-color:#CCC; border-style:solid; }
+#page .runCode .btn { text-align:right; }
+#page .runCode button { cursor:pointer; }
+#page .about { margin-top:30px; border-top:1px solid #F8F8F8; color:#666; }

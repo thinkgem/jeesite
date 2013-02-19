@@ -1,0 +1,440 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+
+	<!-- 链接表 -->
+	<cms_link category_id="19" user_id="1" title="JeeSite" color="" image="" href="https://github.com/thinkgem/jeesite" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="19" user_id="1" title="ThinkGem" color="" image="" href="http://thinkgem.iteye.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="19" user_id="1" title="百度一下" color="" image="" href="http://www.baidu.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="19" user_id="1" title="谷歌搜索" color="" image="" href="http://www.google.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="20" user_id="1" title="新浪网" color="" image="" href="http://www.sina.com.cn" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="20" user_id="1" title="腾讯网" color="" image="" href="http://www.qq.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="21" user_id="1" title="淘宝网" color="" image="" href="http://www.taobao.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="21" user_id="1" title="新华网" color="" image="" href="http://www.xinhuanet.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="22" user_id="1" title="赶集网" color="" image="" href="http://www.ganji.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="22" user_id="1" title="58同城" color="" image="" href="http://www.58.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="23" user_id="1" title="视频大全" color="" image="" href="http://v.360.cn/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="23" user_id="1" title="凤凰网" color="" image="" href="http://www.ifeng.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	
+	<!-- 文章表 -->
+	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="green" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="red" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="green" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="blue" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="16" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="17" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="17" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="26" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article category_id="26" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	
+	<!-- 栏目表 -->
+	<cms_category id="1" site_id="0" parent_id="0" parent_ids="0," module="" name="顶级栏目" image="" href="" target="" desciption="" sort="0" in_menu="1" in_list="1" show_modes="0" allow_comment="0"/>
+		<cms_category id="2" site_id="1" parent_id="1" parent_ids="0,1," module="article" name="组织机构" image="" href="" target="" desciption="" sort="10" in_menu="1" in_list="1" show_modes="0" allow_comment="0"/>
+	 		<cms_category id="3" site_id="1" parent_id="2" parent_ids="0,1,2," module="article" name="网站简介" image="" href="" target="" desciption="" sort="30" in_menu="1" in_list="1" show_modes="0" allow_comment="0"/>
+	 		<cms_category id="4" site_id="1" parent_id="2" parent_ids="0,1,2," module="article" name="内部机构" image="" href="" target="" desciption="" sort="40" in_menu="1" in_list="1" show_modes="0" allow_comment="0"/>
+	 		<cms_category id="5" site_id="1" parent_id="2" parent_ids="0,1,2," module="article" name="地方机构" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="0"/>
+		<cms_category id="6" site_id="1" parent_id="1" parent_ids="0,1," module="article" name="质量检验" image="" href="" target="" desciption="" sort="20" in_menu="1" in_list="1" show_modes="1" allow_comment="1"/>
+	 		<cms_category id="7" site_id="1" parent_id="6" parent_ids="0,1,6," module="article" name="产品质量" image="" href="" target="" desciption="" sort="30" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="8" site_id="1" parent_id="6" parent_ids="0,1,6," module="article" name="技术质量" image="" href="" target="" desciption="" sort="40" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="9" site_id="1" parent_id="6" parent_ids="0,1,6," module="article" name="工程质量" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 	<cms_category id="10" site_id="1" parent_id="1" parent_ids="0,1," module="article" name="软件介绍" image="" href="" target="" desciption="" sort="20" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="11" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="网络工具" image="" href="" target="" desciption="" sort="30" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="12" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="浏览工具" image="" href="" target="" desciption="" sort="40" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="13" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="浏览辅助" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="14" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="网络优化" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="15" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="邮件处理" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="16" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="下载工具" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="17" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="搜索工具" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="2" allow_comment="1"/>
+	 	<cms_category id="18" site_id="1" parent_id="1" parent_ids="0,1," module="link" name="友情链接" image="" href="" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="19" parent_id="18" parent_ids="0,1,18," module="link" name="常用网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="20" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="门户网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="21" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="购物网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="22" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="交友社区" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="23" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="音乐视频" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 	<cms_category id="24" site_id="1" parent_id="1" parent_ids="0,1," module="" name="百度一下" image="" href="http://www.baidu.com" target="_blank" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 	<cms_category id="25" site_id="1" parent_id="1" parent_ids="0,1," module="" name="全文检索" image="" href="/search" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 	<cms_category id="26" site_id="2" parent_id="1" parent_ids="0,1," module="article" name="测试栏目" image="" href="" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 	<cms_category id="27" site_id="1" parent_id="1" parent_ids="0,1," module="" name="公共留言" image="" href="/guestbook" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 	
+	<!-- 站点配置 -->
+	<cms_site id="1" name="默认站点" title="JeeSite" desciption="JeeSite" keywords="JeeSite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='mailto:thinkgem@163.com'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite'&gt;JeeSite&lt;/a&gt; V1.0" />
+	<cms_site id="2" name="子站点测试" title="JeeSite subsite" desciption="JeeSite subsite" keywords="JeeSite subsite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='mailto:thinkgem@163.com'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite'&gt;JeeSite&lt;/a&gt; V1.0" />
+	
+	<!-- 字典表 -->
+	<sys_dict value="0" label="正常" type="del_flag" desciption="删除标记" sort="10" del_flag="0" />
+	<sys_dict value="1" label="删除" type="del_flag" desciption="删除标记" sort="20" del_flag="0" />
+	<sys_dict value="1" label="显示" type="show_hide" desciption="显示/隐藏" sort="10" del_flag="0" />
+	<sys_dict value="0" label="隐藏" type="show_hide" desciption="显示/隐藏" sort="20" del_flag="0" />
+	<sys_dict value="1" label="是" type="yes_no" desciption="是/否" sort="10" del_flag="0" />
+	<sys_dict value="0" label="否" type="yes_no" desciption="是/否" sort="20" del_flag="0" />
+	<sys_dict value="red" label="红色" type="color" desciption="颜色值" sort="10" del_flag="0" />
+	<sys_dict value="green" label="绿色" type="color" desciption="颜色值" sort="20" del_flag="0" />
+	<sys_dict value="blue" label="蓝色" type="color" desciption="颜色值" sort="30" del_flag="0" />
+	<sys_dict value="yellow" label="黄色" type="color" desciption="颜色值" sort="40" del_flag="0" />
+	<sys_dict value="orange" label="橙色" type="color" desciption="颜色值" sort="50" del_flag="0" />
+	<sys_dict value="1" label="系统管理" type="sys_user_type" desciption="用户类型" sort="10" del_flag="0" />
+	<sys_dict value="2" label="部门经理" type="sys_user_type" desciption="用户类型" sort="20" del_flag="0" />
+	<sys_dict value="3" label="普通用户" type="sys_user_type" desciption="用户类型" sort="30" del_flag="0" />
+	<sys_dict value="basic" label="基础主题" type="cms_theme" desciption="站点主题" sort="10" del_flag="0" />
+	<sys_dict value="blue" label="蓝色主题" type="cms_theme" desciption="站点主题" sort="20" del_flag="0" />
+	<sys_dict value="red" label="红色主题" type="cms_theme" desciption="站点主题" sort="30" del_flag="0" />
+	<sys_dict value="article" label="文章模型" type="cms_module" desciption="栏目模型" sort="10" del_flag="0" />
+	<sys_dict value="picture" label="图片模型" type="cms_module" desciption="栏目模型" sort="20" del_flag="1" />
+	<sys_dict value="download" label="下载模型" type="cms_module" desciption="栏目模型" sort="30" del_flag="1" />
+	<sys_dict value="link" label="链接模型" type="cms_module" desciption="栏目模型" sort="40" del_flag="0" />
+	<sys_dict value="special" label="专题模型" type="cms_module" desciption="栏目模型" sort="50" del_flag="1" />
+	<sys_dict value="0" label="默认展现方式" type="cms_show_modes" desciption="展现方式" sort="20" del_flag="0" />
+	<sys_dict value="1" label="首栏目内容列表" type="cms_show_modes" desciption="展现方式" sort="20" del_flag="0" />
+	<sys_dict value="2" label="栏目第一条内容" type="cms_show_modes" desciption="展现方式" sort="30" del_flag="0" />
+	<sys_dict value="0" label="发布" type="cms_status" desciption="内容状态" sort="10" del_flag="0" />
+	<sys_dict value="1" label="删除" type="cms_status" desciption="内容状态" sort="20" del_flag="0" />
+	<sys_dict value="2" label="审核" type="cms_status" desciption="内容状态" sort="15" del_flag="0" />
+	<sys_dict value="1" label="首页焦点图" type="cms_posid" desciption="推荐位" sort="30" del_flag="0" />
+	<sys_dict value="2" label="栏目页文章推荐" type="cms_posid" desciption="推荐位" sort="30" del_flag="0" />
+	<sys_dict value="1" label="咨询" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict value="2" label="建议" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict value="3" label="投诉" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict value="4" label="其它" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+
+	<!-- 系统区域：编号、父级编号、所有父级编号、区域编码 、区域名称、备注、删除标记（0：正常；1：删除） -->
+	<sys_area id="1" parent_id="0" parent_ids="0," code="" name="顶级区域" remarks="" />
+		<sys_area id="2" parent_id="1" parent_ids="0,1," code="370000" name="山东省分公司" remarks="" />
+			<sys_area id="4" parent_id="2" parent_ids="0,1,2," code="370531" name="济南分公司" remarks="" />
+			<sys_area id="5" parent_id="2" parent_ids="0,1,2," code="370532" name="青岛分公司" remarks="" />
+		<sys_area id="3" parent_id="1" parent_ids="0,1," code="110000" name="北京市总公司" remarks="" />
+			
+	<!-- 系统部门：编号、父级编号、所有父级编号、归属区域编号、部门编码 、部门名称、备注、删除标记（0：正常；1：删除） -->
+	<sys_office id="1" parent_id="0" parent_ids="0," area_id="1" code="" name="顶级部门" remarks="" />
+		<sys_office id="2" parent_id="1" parent_ids="0,1," area_id="1" code="0001" name="系统管理" remarks="" />
+			<sys_office id="4" parent_id="2" parent_ids="0,1," area_id="1" code="000101" name="系统管理1" remarks="" />
+			<sys_office id="5" parent_id="2" parent_ids="0,1," area_id="1" code="000102" name="系统管理2" remarks="" />
+		<sys_office id="3" parent_id="1" parent_ids="0,1," area_id="1" code="0002" name="系统维护" remarks="" />
+			<sys_office id="6" parent_id="2" parent_ids="0,1," area_id="1" code="000201" name="系统维护1" remarks="" />
+			<sys_office id="7" parent_id="2" parent_ids="0,1," area_id="1" code="000202" name="系统维护2" remarks="" />
+	
+	<!-- 系统菜单表：编号、父级编号、名称、链接 、目标、图标、排序（升序）、是否在菜单中显示（1：显示；0：不显示）、权限标识-->
+	<sys_menu id="1" parent_id="0" parent_ids="0," name="顶级菜单" href="" target="" icon="" sort="0" is_show="1" permission="" />
+		<sys_menu id="2" parent_id="1" parent_ids="0,1," name="系统设置" href="" target="" icon="" sort="990" is_show="1" permission="" />
+			<sys_menu id="3" parent_id="2" parent_ids="0,1,2," name="菜单管理" href="/sys/menu/" target="" icon="list-alt" sort="30" is_show="1" permission="" />
+				<sys_menu id="4" parent_id="3" parent_ids="0,1,2,3," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:menu:view" />
+				<sys_menu id="5" parent_id="3" parent_ids="0,1,2,3," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:menu:edit" />
+			<sys_menu id="6" parent_id="2" parent_ids="0,1,2," name="角色管理" href="/sys/role/" target="" icon="lock" sort="50" is_show="1" permission="" />
+				<sys_menu id="7" parent_id="6" parent_ids="0,1,2,6," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:role:view" />
+				<sys_menu id="8" parent_id="6" parent_ids="0,1,2,6," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:role:edit" />
+			<sys_menu id="9" parent_id="2" parent_ids="0,1,2," name="字典管理" href="/sys/dict/" target="" icon="th-list" sort="60" is_show="1" permission="" />
+				<sys_menu id="10" parent_id="9" parent_ids="0,1,2,9," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:dict:view" />
+				<sys_menu id="11" parent_id="9" parent_ids="0,1,2,9," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:dict:edit" />
+		<sys_menu id="12" parent_id="1" parent_ids="0,1," name="机构用户" href="" target="" icon="" sort="980" is_show="1" permission="" />
+			<sys_menu id="13" parent_id="12" parent_ids="0,1,12," name="区域管理" href="/sys/area/" target="" icon="th" sort="50" is_show="1" permission="" />
+				<sys_menu id="14" parent_id="13" parent_ids="0,1,12,13," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:area:view" />
+				<sys_menu id="15" parent_id="13" parent_ids="0,1,12,13," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:area:edit" />
+			<sys_menu id="16" parent_id="12" parent_ids="0,1,12," name="部门管理" href="/sys/office/" target="" icon="th-large" sort="40" is_show="1" permission="" />
+				<sys_menu id="17" parent_id="16" parent_ids="0,1,12,16," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:office:view" />
+				<sys_menu id="18" parent_id="16" parent_ids="0,1,12,16," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:office:edit" />
+			<sys_menu id="19" parent_id="12" parent_ids="0,1,12," name="用户管理" href="/sys/user/" target="" icon="user" sort="30" is_show="1" permission="" />
+				<sys_menu id="20" parent_id="19" parent_ids="0,1,12,19," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:view" />
+				<sys_menu id="21" parent_id="19" parent_ids="0,1,12,19," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:edit" />
+		<sys_menu id="22" parent_id="1" parent_ids="0,1," name="内容管理" href="" target="" icon="" sort="900" is_show="1" permission="" />
+			<sys_menu id="23" parent_id="22" parent_ids="0,1,22," name="栏目管理" href="/cms/category/" target="" icon="align-justify" sort="80" is_show="1" permission="" />
+				<sys_menu id="24" parent_id="23" parent_ids="0,1,22,23," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:category:view" />
+				<sys_menu id="25" parent_id="23" parent_ids="0,1,22,23," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:category:edit" />
+			<sys_menu id="29" parent_id="22" parent_ids="0,1,22" name="文件管理" href="/../static/ckfinder/ckfinder.html" target="" icon="folder-open" sort="90" is_show="1" permission="" />
+				<sys_menu id="30" parent_id="29" parent_ids="0,1,22,29," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:view" />
+				<sys_menu id="31" parent_id="29" parent_ids="0,1,22,29," name="上传" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:upload" />
+				<sys_menu id="32" parent_id="29" parent_ids="0,1,22,29," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:edit" />
+			<sys_menu id="36" parent_id="22" parent_ids="0,1,22," name="内容管理" href="/cms/" target="" icon="briefcase" sort="30" is_show="1" permission="cms:view" />
+				<sys_menu id="26" parent_id="36" parent_ids="0,1,22,36," name="文章模型" href="/cms/article/" target="" icon="file" sort="40" is_show="0" permission="" />
+					<sys_menu id="27" parent_id="26" parent_ids="0,1,22,36,26," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:view" />
+					<sys_menu id="28" parent_id="26" parent_ids="0,1,22,36,26," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:edit" />
+					<sys_menu id="40" parent_id="26" parent_ids="0,1,22,36,26," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:audit" />
+				<sys_menu id="33" parent_id="36" parent_ids="0,1,22,36," name="链接模型" href="/cms/link/" target="" icon="random" sort="60" is_show="0" permission="" />
+					<sys_menu id="34" parent_id="33" parent_ids="0,1,22,36,33," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:view" />
+					<sys_menu id="35" parent_id="33" parent_ids="0,1,22,36,33," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:edit" />
+					<sys_menu id="41" parent_id="33" parent_ids="0,1,22,36,33," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:audit" />
+			<sys_menu id="37" parent_id="22" parent_ids="0,1,22," name="站点设置" href="/cms/site/" target="" icon="certificate" sort="80" is_show="1" permission="" />
+				<sys_menu id="38" parent_id="37" parent_ids="0,1,22,37," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:view" />
+				<sys_menu id="39" parent_id="37" parent_ids="0,1,22,37," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:edit" />
+			<sys_menu id="42" parent_id="22" parent_ids="0,1,22," name="公共留言" href="/cms/guestbook/?status=2" target="" icon="glass" sort="80" is_show="1" permission="" />
+				<sys_menu id="43" parent_id="42" parent_ids="0,1,22,42," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:guestbook:view" />
+				<sys_menu id="44" parent_id="42" parent_ids="0,1,22,42," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:guestbook:edit" />
+			<sys_menu id="45" parent_id="22" parent_ids="0,1,22," name="评论管理" href="/cms/comment/?status=2" target="" icon="comment" sort="40" is_show="1" permission="" />
+				<sys_menu id="46" parent_id="45" parent_ids="0,1,22,45," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:comment:view" />
+				<sys_menu id="47" parent_id="45" parent_ids="0,1,22,45," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:comment:edit" />
+		<sys_menu id="48" parent_id="1" parent_ids="0,1," name="关于JeeSite" href="" target="" icon="" sort="30000" is_show="1" permission="" />
+			<sys_menu id="49" parent_id="48" parent_ids="0,1,48" name="项目首页" href="https://github.com/thinkgem/jeesite" target="_blank" icon="" sort="30" is_show="1" permission="" />
+			<sys_menu id="50" parent_id="48" parent_ids="0,1,48" name="项目维基" href="https://github.com/thinkgem/jeesite/wiki" target="_blank" icon="" sort="50" is_show="1" permission="" />
+			<sys_menu id="51" parent_id="48" parent_ids="0,1,48" name="问题反馈" href="https://github.com/thinkgem/jeesite/issues/new" target="_blank" icon="" sort="80" is_show="1" permission="" />
+			
+	<!-- 系统角色表 -->
+	<sys_role id="1" name="系统管理员" />
+	<sys_role id="2" name="普通用户" />
+	
+	<!-- 系统角色与菜单关联表 -->
+	<sys_role_menu role_id="1" menu_id="1" />
+	<sys_role_menu role_id="1" menu_id="2" />
+	<sys_role_menu role_id="1" menu_id="3" />
+	<sys_role_menu role_id="1" menu_id="4" />
+	<sys_role_menu role_id="1" menu_id="5" />
+	<sys_role_menu role_id="1" menu_id="6" />
+	<sys_role_menu role_id="1" menu_id="7" />
+	<sys_role_menu role_id="1" menu_id="8" />
+	<sys_role_menu role_id="1" menu_id="9" />
+	<sys_role_menu role_id="1" menu_id="10" />
+	<sys_role_menu role_id="1" menu_id="11" />
+	<sys_role_menu role_id="1" menu_id="12" />
+	<sys_role_menu role_id="1" menu_id="13" />
+	<sys_role_menu role_id="1" menu_id="14" />
+	<sys_role_menu role_id="1" menu_id="15" />
+	<sys_role_menu role_id="1" menu_id="16" />
+	<sys_role_menu role_id="1" menu_id="17" />
+	<sys_role_menu role_id="1" menu_id="18" />
+	<sys_role_menu role_id="1" menu_id="19" />
+	<sys_role_menu role_id="1" menu_id="20" />
+	<sys_role_menu role_id="1" menu_id="21" />
+	<sys_role_menu role_id="1" menu_id="22" />
+	<sys_role_menu role_id="1" menu_id="23" />
+	<sys_role_menu role_id="1" menu_id="24" />
+	<sys_role_menu role_id="1" menu_id="25" />
+	<sys_role_menu role_id="1" menu_id="26" />
+	<sys_role_menu role_id="1" menu_id="27" />
+	<sys_role_menu role_id="1" menu_id="28" />
+	<sys_role_menu role_id="1" menu_id="29" />
+	<sys_role_menu role_id="1" menu_id="30" />
+	<sys_role_menu role_id="1" menu_id="31" />
+	<sys_role_menu role_id="1" menu_id="32" />
+	<sys_role_menu role_id="1" menu_id="33" />
+	<sys_role_menu role_id="1" menu_id="34" />
+	<sys_role_menu role_id="1" menu_id="35" />
+	<sys_role_menu role_id="1" menu_id="36" />
+	<sys_role_menu role_id="1" menu_id="37" />
+	<sys_role_menu role_id="1" menu_id="38" />
+	<sys_role_menu role_id="1" menu_id="39" />
+	<sys_role_menu role_id="2" menu_id="1" />
+	<sys_role_menu role_id="2" menu_id="22" />
+	<sys_role_menu role_id="2" menu_id="23" />
+	<sys_role_menu role_id="2" menu_id="24" />
+	<sys_role_menu role_id="2" menu_id="25" />
+	<sys_role_menu role_id="2" menu_id="26" />
+	<sys_role_menu role_id="2" menu_id="27" />
+	<sys_role_menu role_id="2" menu_id="28" />
+	<sys_role_menu role_id="2" menu_id="29" />
+	<sys_role_menu role_id="2" menu_id="30" />
+	<sys_role_menu role_id="2" menu_id="31" />
+	<sys_role_menu role_id="2" menu_id="32" />
+	<sys_role_menu role_id="2" menu_id="33" />
+	<sys_role_menu role_id="2" menu_id="34" />
+	<sys_role_menu role_id="2" menu_id="35" />
+	<sys_role_menu role_id="2" menu_id="36" />
+	<sys_role_menu role_id="2" menu_id="37" />
+	<sys_role_menu role_id="2" menu_id="38" />
+	<sys_role_menu role_id="2" menu_id="39" />
+
+	<!-- 系统角色与菜单关联表 -->
+	<sys_role_category role_id="1" category_id="1" />
+	<sys_role_category role_id="1" category_id="2" />
+	<sys_role_category role_id="1" category_id="3" />
+	<sys_role_category role_id="1" category_id="4" />
+	<sys_role_category role_id="1" category_id="5" />
+	<sys_role_category role_id="1" category_id="6" />
+	<sys_role_category role_id="1" category_id="7" />
+	<sys_role_category role_id="1" category_id="8" />
+	<sys_role_category role_id="1" category_id="9" />
+	<sys_role_category role_id="1" category_id="10" />
+	<sys_role_category role_id="1" category_id="11" />
+	<sys_role_category role_id="1" category_id="12" />
+	<sys_role_category role_id="1" category_id="13" />
+	<sys_role_category role_id="1" category_id="14" />
+	<sys_role_category role_id="1" category_id="15" />
+	<sys_role_category role_id="1" category_id="16" />
+	<sys_role_category role_id="1" category_id="17" />
+	<sys_role_category role_id="1" category_id="18" />
+	<sys_role_category role_id="1" category_id="19" />
+	<sys_role_category role_id="1" category_id="20" />
+	<sys_role_category role_id="1" category_id="21" />
+	<sys_role_category role_id="1" category_id="22" />
+	<sys_role_category role_id="1" category_id="23" />
+	<sys_role_category role_id="1" category_id="24" />
+	<sys_role_category role_id="1" category_id="25" />
+	<sys_role_category role_id="1" category_id="26" />
+	<sys_role_category role_id="1" category_id="27" />
+	<sys_role_category role_id="1" category_id="28" />
+	<sys_role_category role_id="1" category_id="29" />
+	<sys_role_category role_id="1" category_id="30" />
+	<sys_role_category role_id="1" category_id="31" />
+	<sys_role_category role_id="1" category_id="32" />
+	<sys_role_category role_id="1" category_id="33" />
+	<sys_role_category role_id="1" category_id="34" />
+	<sys_role_category role_id="1" category_id="35" />
+	<sys_role_category role_id="1" category_id="36" />
+	<sys_role_category role_id="1" category_id="37" />
+	<sys_role_category role_id="1" category_id="38" />
+	<sys_role_category role_id="1" category_id="39" />
+	<sys_role_category role_id="2" category_id="1" />
+	<sys_role_category role_id="2" category_id="2" />
+	<sys_role_category role_id="2" category_id="3" />
+	<sys_role_category role_id="2" category_id="4" />
+	<sys_role_category role_id="2" category_id="5" />
+	<sys_role_category role_id="2" category_id="6" />
+	<sys_role_category role_id="2" category_id="7" />
+	<sys_role_category role_id="2" category_id="8" />
+	<sys_role_category role_id="2" category_id="9" />
+	<sys_role_category role_id="2" category_id="10" />
+	<sys_role_category role_id="2" category_id="11" />
+	<sys_role_category role_id="2" category_id="12" />
+	<sys_role_category role_id="2" category_id="13" />
+	<sys_role_category role_id="2" category_id="14" />
+	<sys_role_category role_id="2" category_id="15" />
+	<sys_role_category role_id="2" category_id="16" />
+	<sys_role_category role_id="2" category_id="17" />
+	<sys_role_category role_id="2" category_id="18" />
+	<sys_role_category role_id="2" category_id="19" />
+	<sys_role_category role_id="2" category_id="20" />
+	<sys_role_category role_id="2" category_id="21" />
+	<sys_role_category role_id="2" category_id="22" />
+	<sys_role_category role_id="2" category_id="23" />
+	<sys_role_category role_id="2" category_id="24" />
+	<sys_role_category role_id="2" category_id="25" />
+	<sys_role_category role_id="2" category_id="26" />
+	<sys_role_category role_id="2" category_id="27" />
+	<sys_role_category role_id="2" category_id="28" />
+	<sys_role_category role_id="2" category_id="29" />
+	<sys_role_category role_id="2" category_id="30" />
+	<sys_role_category role_id="2" category_id="31" />
+	<sys_role_category role_id="2" category_id="32" />
+	<sys_role_category role_id="2" category_id="33" />
+	<sys_role_category role_id="2" category_id="34" />
+	<sys_role_category role_id="2" category_id="35" />
+	<sys_role_category role_id="2" category_id="36" />
+	<sys_role_category role_id="2" category_id="37" />
+	<sys_role_category role_id="2" category_id="38" />
+	<sys_role_category role_id="2" category_id="39" />
+
+	<!-- 系统用户表   超级管理员   登录名：thinkgem  密码：admin -->
+	<sys_user id="1" area_id="1" office_id="1" login_name="thinkgem" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="Thinkgem" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="2" area_id="1" office_id="1" login_name="admin" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="Admin" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="3" area_id="2" office_id="2" login_name="user" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="4" area_id="3" office_id="3" login_name="user2" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="Use2" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="5" area_id="3" office_id="3" login_name="user3" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User3" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="6" area_id="3" office_id="3" login_name="user4" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User4" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="7" area_id="3" office_id="3" login_name="user5" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User5" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="8" area_id="3" office_id="3" login_name="user6" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User6" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="9" area_id="3" office_id="3" login_name="user7" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User7" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="10" area_id="3" office_id="3" login_name="user8" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User8" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="11" area_id="3" office_id="3" login_name="user9" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User9" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="12" area_id="3" office_id="3" login_name="user10" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="13" area_id="3" office_id="3" login_name="user11" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="14" area_id="3" office_id="3" login_name="user12" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	
+	<!-- 用户与角色关联表 -->
+	<sys_user_role user_id="1" role_id="1" />
+	<sys_user_role user_id="1" role_id="2" />
+	<sys_user_role user_id="2" role_id="1" />
+	<sys_user_role user_id="2" role_id="2" />
+	<sys_user_role user_id="3" role_id="2" />
+	<sys_user_role user_id="4" role_id="2" />
+	<sys_user_role user_id="5" role_id="2" />
+	<sys_user_role user_id="6" role_id="2" />
+	<sys_user_role user_id="7" role_id="2" />
+	<sys_user_role user_id="8" role_id="2" />
+	<sys_user_role user_id="9" role_id="2" />
+	<sys_user_role user_id="10" role_id="2" />
+	<sys_user_role user_id="11" role_id="2" />
+	<sys_user_role user_id="12" role_id="2" />
+	
+</dataset>

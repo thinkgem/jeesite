@@ -1,0 +1,110 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background: #5b5b5b;
+	color: #000;
+	text-align: center;
+	line-height: 1.6;
+}
+body, input, select, textarea, table {
+	font-family: "ËÎÌו",Arial, Simsun, Verdana, sans-serif;
+	font-size: 9pt;
+	color:#333;
+}
+img {
+	border: none;
+}
+a {
+	color: #4264BD;
+}
+li {
+	line-height:20px;
+}
+.dCenter {
+	width: 800px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.dBody{
+	background:url("../images/body.jpg") repeat-y top;
+}
+
+.nav {
+	list-style:none;
+	float: right;
+	margin-right: 25px;
+}
+.nav li {
+	margin-left: 20px;
+	float: left;
+}
+
+.navbar {
+	height: 0px;
+	line-height: 28px;
+	margin-bottom: 6px;
+	color: #fff;	
+	font-size: 14px;
+}
+.navbar a {
+	color: #fff;
+	text-decoration: none;
+}
+.navbar a:hover {
+	text-decoration: none;
+	color: #ccc;
+}
+
+.res-block {
+	BACKGROUND: url("../images/block/block-top.gif") no-repeat; MARGIN-BOTTOM: 15px; WIDTH: 210px; PADDING-TOP: 5px
+}
+.res-block-inner {
+	PADDING-RIGHT: 11px; PADDING-LEFT: 11px; BACKGROUND: url("../images/block/block-body.gif") repeat-y left; PADDING-BOTTOM: 6px; PADDING-TOP: 6px
+}
+.res-block-bottom {
+	BACKGROUND: url("../images/block/block-bottom.gif") no-repeat; WIDTH: 210px;height:5px;
+}
+.res-block H3 {
+	MARGIN-BOTTOM: 8px; FONT: bold 12px ËÎÌו,tahoma,arial,sans-serif; COLOR: #555
+}
+.res-block UL {
+	FONT: 12px tahoma,arial,sans-serif; MARGIN-LEFT: 15px; COLOR: #555; LIST-STYLE-TYPE: disc
+}
+.res-block UL LI {
+	MARGIN: 0px 0px 5px 3px
+}
+#footer {
+	background:url("../images/footer.jpg") no-repeat;
+	height:47px;
+	text-align:center;
+	padding-top:9px;
+	color:#CCC;
+	font-family:Arial;
+}
+#footer a {
+	color: #DDD;
+	text-decoration: none;
+}
+/*.logo {
+	float: left;
+	margin: 6px 0 0 13px;
+}
+
+#footer {
+	margin-bottom: 25px;
+	line-height: normal;
+	color: #666;
+	text-align: center;
+	clear: both;
+}
+#footer a {
+	color: #666;
+}
+#footer a{text-decoration:none;}
+#footer a:hover{text-decoration:underline;color:#333;}
+* html .mmlink{width:200px;float:right;margin-right:250px;}
+.mmlink{width:250px;float:right;margin-right:450px; }
+*/

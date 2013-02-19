@@ -1,0 +1,14 @@
+var data={};
+data['9009_50'] = 'text:VC/MFC ; url:/Expert/ForumsList.asp?typenum=1&roomid=50 ; JSData: vc.js ';
+data['9009_51'] = 'text:VB ; url:/Expert/ForumsList.asp?typenum=1&roomid=51 ; JSData: vb.js ';
+data['9009_53'] = 'text:Delphi ; url:/Expert/ForumsList.asp?typenum=1&roomid=53 ; JSData: delphi.js ';
+data['9009_55'] = 'text:C++ Builder ; url:/Expert/ForumsList.asp?typenum=1&roomid=55 ; JSData: bcb.js ';
+data['9009_56'] = 'text:C/C++ ; url:/Expert/ForumsList.asp?typenum=1&roomid=56 ; JSData: c.js ';
+data['9009_1703'] = 'text:\u6c47\u7f16\u8bed\u8a00 ; data:roomid=1703';
+data['9009_1701'] = 'text:Kylix ; data:roomid=1701';
+data['9009_1702'] = 'text:\u811a\u672c\u8bed\u8a00\uff08Perl\uff0cPython\uff09 ; data:roomid=1702';
+data['9009_1704'] = 'text:Office\u5f00\u53d1/VBA ; data:roomid=1704';
+data['9009_1705'] = 'text:\u5176\u4ed6\u5f00\u53d1\u8bed\u8a00 ; data:roomid=1705';
+data['9009_64'] = 'text:PowerTools\u63a7\u4ef6\u4e13\u533a ; url:/Expert/ForumsList.asp?typenum=1&roomid=64';
+data['64_6401'] = 'text:\u63a7\u4ef6 ; data:roomid=6401';
+data['64_6402'] = 'text:SVG ; data:roomid=6402';

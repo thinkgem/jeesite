@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<taglib>
+
+  <tlib-version>1.1.2</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>Apache Shiro</short-name>
+  <uri>http://shiro.apache.org/tagss</uri>
+  <description>Apache Shiro JSP Tag Library extends the hasAnyPermissions tag.</description>
+
+  <tag>
+    <name>hasPermission</name>
+    <tag-class>org.apache.shiro.web.tags.HasPermissionTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current Subject (user)
+      'has' (implies) the specified permission (i.e the user has the specified ability).
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>hasAnyPermissions</name>
+    <tag-class>com.thinkgem.jeesite.common.security.shiro.HasAnyPermissionsTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current user has one of the specified permissions from a
+      comma-separated list of permission names.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <name>lacksPermission</name>
+    <tag-class>org.apache.shiro.web.tags.LacksPermissionTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current Subject (user) does
+      NOT have (not imply) the specified permission (i.e. the user lacks the specified ability)
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>hasRole</name>
+    <tag-class>org.apache.shiro.web.tags.HasRoleTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current user has the specified role.</description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  <tag>
+    <name>hasAnyRoles</name>
+    <tag-class>org.apache.shiro.web.tags.HasAnyRolesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current user has one of the specified roles from a
+      comma-separated list of role names.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>lacksRole</name>
+    <tag-class>org.apache.shiro.web.tags.LacksRoleTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current user does NOT have the specified role
+      (i.e. they explicitly lack the specified role)
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>authenticated</name>
+    <tag-class>org.apache.shiro.web.tags.AuthenticatedTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current user has successfully authenticated
+      _during their current session_. It is more restrictive than the 'user' tag.
+      It is logically opposite to the 'notAuthenticated' tag.
+    </description>
+  </tag>
+
+  <tag>
+    <name>notAuthenticated</name>
+    <tag-class>org.apache.shiro.web.tags.NotAuthenticatedTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current user has NOT succesfully authenticated
+      _during their current session_. It is logically opposite to the 'authenticated' tag.
+    </description>
+  </tag>
+
+  <tag>
+    <name>user</name>
+    <tag-class>org.apache.shiro.web.tags.UserTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current Subject has a known identity, either
+      from a previous login or from 'RememberMe' services. Note that this is semantically different
+      from the 'authenticated' tag, which is more restrictive. It is logically
+      opposite to the 'guest' tag.
+    </description>
+  </tag>
+
+  <tag>
+    <name>guest</name>
+    <tag-class>org.apache.shiro.web.tags.GuestTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays body content only if the current Subject IS NOT known to the system, either
+      because they have not logged in or they have no corresponding 'RememberMe' identity. It is logically
+      opposite to the 'user' tag.
+    </description>
+  </tag>
+
+  <tag>
+    <name>principal</name>
+    <tag-class>org.apache.shiro.web.tags.PrincipalTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Displays the user's principal or a property of the user's principal.</description>
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>defaultValue</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+</taglib>

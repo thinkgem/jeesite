@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+ * CKFinder
+ * ========
+ * http://ckfinder.com
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+ *
+ * The software, this file and its contents are subject to the CKFinder
+ * License. Please read the license.txt file before using, installing, copying,
+ * modifying or distribute this file or part of its contents. The contents of
+ * this file is part of the Source Code of CKFinder.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder - Sample - Standalone</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<link href="sample.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../ckfinder.js"></script>
+</head>
+<body>
+	<h1 class="samples">
+		CKFinder - Sample - Standalone
+	</h1>
+	<div class="description">
+		CKFinder may be used in standalone mode inside any page, to create a repository
+		manager with ease. You may define a custom JavaScript function to be called when
+		an image is selected (double-clicked).</div>
+	<p style="padding-left: 30px; padding-right: 30px;">
+		<script type="text/javascript">
+
+			// This is a sample function which is called when a file is selected in CKFinder.
+			function showFileInfo( fileUrl, data, allFiles )
+			{
+				var msg = 'The last selected file is: <a href="' + fileUrl + '">' + fileUrl + '</a><br /><br />';
+				// Display additional information available in the "data" object.
+				// For example, the size of a file (in KB) is available in the data["fileSize"] variable.
+				if ( fileUrl != data['fileUrl'] )
+					msg += '<b>File url:</b> ' + data['fileUrl'] + '<br />';
+				msg += '<b>File size:</b> ' + data['fileSize'] + 'KB<br />';
+				msg += '<b>Last modified:</b> ' + data['fileDate'];
+
+				if ( allFiles.length > 1 )
+				{
+					msg += '<br /><br /><b>Selected files:</b><br /><br />';
+					msg += '<ul style="padding-left:20px">';
+					for ( var i = 0 ; i < allFiles.length ; i++ )
+					{
+						// See also allFiles[i].url
+						msg += '<li>' + allFiles[i].data['fileUrl'] + ' (' + allFiles[i].data['fileSize'] + 'KB)</li>';
+					}
+					msg += '</ul>';
+				}
+				// this = CKFinderAPI object
+				this.openMsgDialog( "Selected file", msg );
+			}
+
+			// You can use the "CKFinder" class to render CKFinder in a page:
+			var finder = new CKFinder();
+			// The path for the installation of CKFinder (default = "/ckfinder/").
+			finder.basePath = '../';
+			// The default height is 400.
+			finder.height = 600;
+			// This is a sample function which is called when a file is selected in CKFinder.
+			finder.selectActionFunction = showFileInfo;
+			finder.create();
+
+			// It can also be done in a single line, calling the "static"
+			// create( basePath, width, height, selectActionFunction ) function:
+			// CKFinder.create( '../', null, null, showFileInfo );
+
+			// The "create" function can also accept an object as the only argument.
+			// CKFinder.create( { basePath : '../', selectActionFunction : showFileInfo } );
+
+		</script>
+	</p>
+	<div id="footer">
+		<hr />
+		<p>
+			CKFinder - Ajax File Manager - <a class="samples" href="http://ckfinder.com/">http://ckfinder.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2012, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>

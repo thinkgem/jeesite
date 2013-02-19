@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CKFinder User's Guide</title>
+	<link href="../../files/other/help.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="../../files/other/help.js"></script>
+	<meta name="robots" content="noindex, nofollow" />
+</head>
+<body>
+	<h1>
+		Folders Pane</h1>
+	<p>
+		The <strong>Folders Pane</strong> contains the "tree view" of the folders that you can navigate.
+		Folders are used to organize and categorize your files.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_pane.png" width="176" height="140" alt="CKFinder Folders Pane" />&nbsp;</p>
+	<p>
+		Folders display is called "tree view" because the folders hierarchy is represented like
+		tree branches, with subfolders placed below and indented with regard to their parent items.
+		The <strong>Folders Pane</strong> uses the same graphic representation that can be found
+		in many modern operating systems.</p>
+	<h2>
+		Basic Operations</h2>
+	<h3>
+		Opening (Expanding) a Folder</h3>
+	<p>
+		In order to open a folder and expand its subfolders, click the plus icon
+		(<img src="../../files/images/002.gif" height="9" width="9" alt="" />) in front of the folder name. If the plus
+		icon is not present, the folder does not contain any subfolders.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_expand.png" width="110" height="19" alt="Collapsed CKFinder folder" />&nbsp;</p>
+	<p>
+		See the "On Request Loading" section below if you require more information about the loading
+		process in CKFinder.</p>
+	<h3>
+		Closing (Collapsing) a Folder</h3>
+	<p>
+		In order to close a folder and hide (collapse) its subfolders, click the minus icon
+		(<img src="../../files/images/003.gif" height="9" width="9" alt="" />) in front of the folder name.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_collapse.png" width="110" height="50" alt="Expanded CKFinder folder with its subfolders" />&nbsp;</p>
+	<h3>
+		Selecting a Folder</h3>
+	<p>
+		In order to select a folder and make it the "current folder" in CKFinder, click the folder
+		name or its icon. The selected folder will be highlighted with a different background
+		color.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_select.png" width="162" height="99" alt="Selected CKFinder folder" />&nbsp;</p>
+	<h2>
+		Advanced Operations</h2>
+	<p>
+		Advanced operations can be performed on a folder by using its <strong><a href="012.html">Context
+		Menu</a></strong>. Depending on the circumstances, the following options may be available:</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_menu.png" width="148" height="128" alt="Folder context menu" />&nbsp;</p>
+	<ul>
+		<li><strong>New Subfolder</strong> &ndash; creates a new subfolder in this parent folder.</li>
+		<li><strong>Rename</strong> &ndash; changes the name of the folder.</li>
+		<li><strong>Copy Files from Basket</strong> &ndash; copies the files that were placed in the
+			<strong>Basket</strong> to the selected folder.</li>
+		<li><strong>Move Files from Basket</strong> &ndash; moves the files that were placed in the
+			<strong>Basket</strong> to the selected folder.</li>
+		<li><strong>Delete</strong> &ndash; permanently removes the folder.</li>
+	</ul>
+	<p>
+		<span class="info">Note:</span> Some context menu options may be disabled (and thus
+		grayed out), depending on CKFinder settings enforced by your system administrator.</p>
+	<h3>
+		Creating Folders</h3>
+	<p>
+		In order to create a child folder inside an existing folder, choose the
+		<strong>New Subfolder</strong> option from the context menu of the parent folder.
+		Type the name of the new folder in the dialog window that will be displayed. Once
+		you give the new folder a name and close the dialog window, the folder will
+		be created.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_new.png" width="304" height="149" alt="Creating a new folder in CKFinder" />&nbsp;</p>
+	<p>
+		Not all characters can be used in folder and file names due to limitations of the
+		systems where CKFinder runs. Among the characters that cannot be used in folders and
+		files names are: <code>\</code> <code>/</code> <code>:</code>
+		<code>*</code> <code>?</code> <code>&quot;</code> <code>&lt;</code>
+		<code>&gt;</code> and <code>|</code>.</p>
+	<h3>
+		Renaming Folders</h3>
+	<p>
+		In order to rename a folder, choose the <strong>Rename</strong> option from its context menu
+		or use the <em>F2</em> keyboard shortcut. Type the new folder name in the dialog window that
+		will be displayed, overwriting the existing name. Once you enter the new folder name and
+		close the dialog window, the folder will be renamed.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_rename.png" width="304" height="149" alt="Renaming a folder in CKFinder" />&nbsp;</p>
+	<p>
+		As stated above, not all characters can be used in folder and file names due to limitations of the
+		systems where CKFinder runs. Among the characters that cannot be used in folders and
+		files names are: <code>\</code> <code>/</code> <code>:</code>
+		<code>*</code> <code>?</code> <code>&quot;</code> <code>&lt;</code>
+		<code>&gt;</code> and <code>|</code>.</p>
+	<p>
+		<span class="warning">Attention:</span> When you rename a folder, links or media insertions
+		available on other pages and pointing to files or folders inside the renamed folder
+		will be broken, and thus not available anymore. Because of that be careful when using this
+		feature.</p>
+	<h3>
+		Copying and Moving Files from Basket</h3>
+	<p>
+		The <strong>Basket</strong> is a virtual placeholder that can be
+		helpful if you want to perform batch operations on files. The copying and moving
+		operations are described in the <strong><a href="014.html">"Basket"</a></strong> section
+		of the User's Guide.</p>
+	<h3>
+		Deleting Folders</h3>
+	<p>
+		In order to delete a folder, including all its contents, choose the <strong>Delete</strong>
+		option from its context menu or use the <em>Del</em> key. A confirmation message will appear
+		to ensure that this operation is what you really intend to do. Once you confirm the deletion,
+		the folder will be removed.</p>
+	<p>
+		<span class="warning">Attention:</span> This operation cannot be undone. Once you delete the
+		folder and its contents, you will not be able to restore the removed files.</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_delete.png" width="304" height="149" alt="Deleting a folder in CKFinder" />&nbsp;</p>
+	<p>
+		<span class="warning">Attention:</span> When you delete a folder, links or media insertions
+		available on other pages and pointing to files or folders inside the deleted folder
+		will be broken, and thus not available anymore. Because of that be careful when using this
+		feature.</p>
+	<h2>
+		"On Request" Loading</h2>
+	<p>
+		The most important difference between CKFinder and the folders tree structures found in
+		desktop operating systems is that in CKFinder the folders are loaded "on request". It means
+		that the application does not load the entire folders tree structure at startup, but instead
+		loads its small subset when the folder is being expanded. This feature is present in
+		most advanced web applications like CKFinder and allows to save on bandwidth and loading time.</p>
+	<p>
+		To indicate that folders are being loaded, the <strong>Loading...</strong> label may appear when
+		you expand a folder:</p>
+	<p style="text-align: center">
+		<img src="../../files/images/CKFinder_folder_loading.png" width="143" height="113" alt="Folder loading in CKFinder" />&nbsp;</p>
+	<p>
+		The label will automatically disappear once all requested folders are loaded.</p>
+</body>
+</html>

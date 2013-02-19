@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Skins &mdash; CKEditor Sample</title>
+	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+	<script type="text/javascript" src="../ckeditor.js"></script>
+	<script src="sample.js" type="text/javascript"></script>
+	<link href="sample.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1 class="samples">
+		CKEditor Sample &mdash; Skins
+	</h1>
+	<div class="description">
+	<p>
+		This sample shows how to automatically replace <code>&lt;textarea&gt;</code> elements
+		with a CKEditor instance using a specific <a class="samples" href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.skin">skin</a>.
+	</p>
+	<p>
+		CKEditor with a specified skin (in this case, the "Office 2003" skin) is inserted with a JavaScript call using the following code:
+	</p>
+	<pre class="samples">CKEDITOR.replace( '<em>textarea_id</em>',
+	{
+		<strong>skin : 'office2003'</strong>
+	});</pre>
+	<p>
+		Note that <code><em>textarea_id</em></code> in the code above is the <code>id</code> attribute of
+		the <code>&lt;textarea&gt;</code> element to be replaced.
+	</p>
+	</div>
+
+	<!-- This <div> holds alert messages to be display in the sample page. -->
+	<div id="alerts">
+		<noscript>
+			<p>
+				<strong>CKEditor requires JavaScript to run</strong>. In a browser with no JavaScript
+				support, like yours, you should still see the contents (HTML data) and you should
+				be able to edit it normally, without a rich editor interface.
+			</p>
+		</noscript>
+	</div>
+	<form action="sample_posteddata.php" method="post">
+	<h2 class="samples">&quot;Kama&quot; skin</h2>
+	<p>The default skin used in CKEditor. No additional configuration is required.</p>
+		<p>
+			<textarea cols="80" id="editor_kama" name="editor_kama" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+			<script type="text/javascript">
+			//<![CDATA[
+
+				CKEDITOR.replace( 'editor_kama',
+					{
+						skin : 'kama'
+					});
+
+			//]]>
+			</script>
+		</p>
+	<h2 class="samples">&quot;Office 2003&quot; skin</h2>
+	<p>Use the following code to configure a CKEditor instance to use the "Office 2003" skin.</p>
+<pre class="samples">CKEDITOR.replace( '<em>textarea_id</em>',
+	{
+		<strong>skin : 'office2003'</strong>
+	});</pre>
+		<p>
+			<textarea cols="80" id="editor_office2003" name="editor_office2003" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+			<script type="text/javascript">
+			//<![CDATA[
+
+				CKEDITOR.replace( 'editor_office2003',
+					{
+						skin : 'office2003'
+					});
+
+			//]]>
+			</script>
+		</p>
+		<h2 class="samples">&quot;V2&quot; skin</h2>
+		<p>Use the following code to configure a CKEditor instance to use the "V2" skin.</p>
+<pre class="samples">CKEDITOR.replace( '<em>textarea_id</em>',
+	{
+		<strong>skin : 'v2'</strong>
+	});</pre>
+			<textarea cols="80" id="editor_v2" name="editor_v2" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+			<script type="text/javascript">
+			//<![CDATA[
+
+				CKEDITOR.replace( 'editor_v2',
+					{
+						skin : 'v2'
+					});
+
+			//]]>
+			</script>
+	</form>
+	<div id="footer">
+		<hr />
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2012, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>
