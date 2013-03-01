@@ -80,7 +80,7 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 * QQ Group：127515876
 * E-mail：thinkgem@163.com
-* Github：https://thinkgem.github.com/jeesite
+* Github：http://thinkgem.github.com/jeesite
 
 如果你想参与进来共同完善它或有更好的建议，请联系我吧(^_^)。
 
