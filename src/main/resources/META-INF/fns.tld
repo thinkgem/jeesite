@@ -38,7 +38,7 @@
     <description>获取当前用户对象</description>
     <name>getUser</name>
     <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.entity.sys.User getUser()</function-signature>
+    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUser()</function-signature>
     <example>${fns:getUser()}</example>  
   </function>
   
@@ -148,7 +148,7 @@
     <description>获取过去的天数</description>
     <name>pastDays</name>
     <function-class>com.thinkgem.jeesite.common.utils.DateUtils</function-class>
-    <function-signature>lang pastDays(java.util.Date)</function-signature>
+    <function-signature>long pastDays(java.util.Date)</function-signature>
     <example>${fns:pastDays(date)}</example>  
   </function>
   

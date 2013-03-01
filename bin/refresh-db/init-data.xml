@@ -2,7 +2,7 @@
 <dataset>
 
 	<!-- 链接表 -->
-	<cms_link category_id="19" user_id="1" title="JeeSite" color="" image="" href="https://github.com/thinkgem/jeesite" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link category_id="19" user_id="1" title="JeeSite" color="" image="" href="http://thinkgem.github.com/jeesite" remarks="" status="0" weight="0" update_date="2012-10-7"/>
 	<cms_link category_id="19" user_id="1" title="ThinkGem" color="" image="" href="http://thinkgem.iteye.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
 	<cms_link category_id="19" user_id="1" title="百度一下" color="" image="" href="http://www.baidu.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
 	<cms_link category_id="19" user_id="1" title="谷歌搜索" color="" image="" href="http://www.google.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>

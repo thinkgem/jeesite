@@ -8,7 +8,7 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
-	<url>https://github.com/thinkgem/jeesite</url>
+	<url>http://thinkgem.github.com/jeesite</url>
     
 	<!-- 项目属性 -->
 	<properties>
@@ -16,8 +16,8 @@
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
 		<hibernate.version>4.1.7.Final</hibernate.version>
-		<hibernate-search.version>4.2.0.CR1</hibernate-search.version>
-		<bonecp.version>0.7.1-rc2</bonecp.version>
+		<hibernate-search.version>4.2.0.Final</hibernate-search.version>
+		<bonecp.version>0.7.1.RELEASE</bonecp.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<shiro.version>1.2.1</shiro.version>
 		<ehcache.version>2.6.0</ehcache.version>
@@ -660,7 +660,7 @@
 					</systemProperties>
 					<useTestClasspath>true</useTestClasspath>
 					<webAppConfig>
-						<contextPath>${project.artifactId}</contextPath>
+						<contextPath>/${project.artifactId}</contextPath>
 					</webAppConfig>
 				</configuration>
 			</plugin>
