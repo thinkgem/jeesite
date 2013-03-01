@@ -64,8 +64,8 @@ public class Area extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
-	//@GenericGenerator(name = "seq_sys_area", strategy = "seq_sys_area")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
+//	@SequenceGenerator(name = "seq_sys_area", sequenceName = "seq_sys_area")
 	public Long getId() {
 		return id;
 	}

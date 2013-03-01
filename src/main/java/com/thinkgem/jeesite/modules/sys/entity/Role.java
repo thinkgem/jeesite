@@ -66,7 +66,7 @@ public class Role extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_role")
-//	@GenericGenerator(name = "seq_sys_role", strategy = "seq_sys_role")
+//	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role")
 	public Long getId() {
 		return id;
 	}

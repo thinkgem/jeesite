@@ -48,8 +48,8 @@ public class Dict extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
-	//@GenericGenerator(name = "seq_sys_dict", strategy = "seq_sys_dict")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
+//	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict")
 	public Long getId() {
 		return id;
 	}

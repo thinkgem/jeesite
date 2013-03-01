@@ -91,8 +91,8 @@ public class Article extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article")
-	//@GenericGenerator(name = "seq_cms_article", strategy = "seq_cms_article")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article")
+//	@SequenceGenerator(name = "seq_cms_article", sequenceName = "seq_cms_article")
 	public Long getId() {
 		return id;
 	}

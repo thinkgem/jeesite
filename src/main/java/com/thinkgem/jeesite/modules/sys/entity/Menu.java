@@ -73,8 +73,8 @@ public class Menu extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
-	//@GenericGenerator(name = "seq_sys_menu", strategy = "seq_sys_menu")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
+//	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
 	public Long getId() {
 		return id;
 	}

@@ -12,6 +12,7 @@
     
 	<!-- 项目属性 -->
 	<properties>
+	    
 		<!-- 依赖库的版本定义 -->
 		<spring.version>3.1.2.RELEASE</spring.version>
 		<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
@@ -31,29 +32,25 @@
 		<!-- <joda-time.version>2.1</joda-time.version> -->
 		<dozer.version>5.3.2</dozer.version>
 		<freemarker.version>2.3.19</freemarker.version>
-		
 		<!-- <junit.version>4.10</junit.version>
 		<mockito.version>1.9.0</mockito.version>
 		<powermock.version>1.4.12</powermock.version>
 		<selenium.version>2.21.0</selenium.version> -->
 		
-		<!-- <h2.version>1.3.168</h2.version> -->
-		<!-- <oracle.version>10.2.0.3</oracle.version> -->
-		<mysql.version>5.1.13</mysql.version>
-		
-		<!--<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
-		<jdbc.driver.version>${h2.version}</jdbc.driver.version>-->
+		<!-- Jdbc -->
+		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+		<jdbc.driver.version>5.1.13</jdbc.driver.version>
 		
 		<!--<jdbc.driver.groupId>com.oracle</jdbc.driver.groupId>
 		<jdbc.driver.artifactId>ojdbc14</jdbc.driver.artifactId>
-		<jdbc.driver.version>${oracle.version}</jdbc.driver.version>-->
+		<jdbc.driver.version>10.2.0.1.0</jdbc.driver.version>-->
 		
-		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-		<jdbc.driver.version>${mysql.version}</jdbc.driver.version>
+		<!--<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
+		<jdbc.driver.version>1.3.168</jdbc.driver.version>-->
 		
-		<!-- Plugin 的属性定义 -->
+		<!-- Plugin -->
 		<jetty.version>7.6.7.v20120910</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version>3.0.3</maven.version>
@@ -714,9 +711,13 @@
         				<version>1.7</version>
         				<configuration>
               				<target>
+              				    
 								<property name="sql.type" value="mysql" />
 								<property name="dbunit.datatype" value="org.dbunit.ext.mysql.MySqlDataTypeFactory" />
 								
+								<!--<property name="sql.type" value="oracle" />
+								<property name="dbunit.datatype" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" /> -->
+																
 								<property file="src/main/resources/application.properties" />
                 				<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" onerror="continue">
 									<classpath refid="maven.test.classpath" />

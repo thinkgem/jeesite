@@ -60,8 +60,8 @@ public class Comment extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_comment")
-	//@GenericGenerator(name = "seq_cms_article_comment", strategy = "seq_cms_article_comment")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_comment")
+//	@SequenceGenerator(name = "seq_cms_comment", sequenceName = "seq_cms_comment")
 	public Long getId() {
 		return id;
 	}

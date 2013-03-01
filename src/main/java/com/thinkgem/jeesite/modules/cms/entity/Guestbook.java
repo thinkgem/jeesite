@@ -63,8 +63,8 @@ public class Guestbook extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_guestbook")
-	//@GenericGenerator(name = "seq_cms_guestbook", strategy = "seq_cms_guestbook")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_guestbook")
+//	@SequenceGenerator(name = "seq_cms_guestbook", sequenceName = "seq_cms_guestbook")
 	public Long getId() {
 		return id;
 	}

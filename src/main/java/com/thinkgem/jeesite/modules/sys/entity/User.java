@@ -78,8 +78,8 @@ public class User extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
-	//@GenericGenerator(name = "seq_sys_user", strategy = "seq_sys_user")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
+//	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user")
 	public Long getId() {
 		return id;
 	}

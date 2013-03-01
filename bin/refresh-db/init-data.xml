@@ -2,126 +2,126 @@
 <dataset>
 
 	<!-- 链接表 -->
-	<cms_link category_id="19" user_id="1" title="JeeSite" color="" image="" href="http://thinkgem.github.com/jeesite" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="19" user_id="1" title="ThinkGem" color="" image="" href="http://thinkgem.iteye.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="19" user_id="1" title="百度一下" color="" image="" href="http://www.baidu.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="19" user_id="1" title="谷歌搜索" color="" image="" href="http://www.google.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="20" user_id="1" title="新浪网" color="" image="" href="http://www.sina.com.cn" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="20" user_id="1" title="腾讯网" color="" image="" href="http://www.qq.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="21" user_id="1" title="淘宝网" color="" image="" href="http://www.taobao.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="21" user_id="1" title="新华网" color="" image="" href="http://www.xinhuanet.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="22" user_id="1" title="赶集网" color="" image="" href="http://www.ganji.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="22" user_id="1" title="58同城" color="" image="" href="http://www.58.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="23" user_id="1" title="视频大全" color="" image="" href="http://v.360.cn/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
-	<cms_link category_id="23" user_id="1" title="凤凰网" color="" image="" href="http://www.ifeng.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="1" category_id="19" user_id="1" title="JeeSite" color="" image="" href="http://thinkgem.github.com/jeesite" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="2" category_id="19" user_id="1" title="ThinkGem" color="" image="" href="http://thinkgem.iteye.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="3" category_id="19" user_id="1" title="百度一下" color="" image="" href="http://www.baidu.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="4" category_id="19" user_id="1" title="谷歌搜索" color="" image="" href="http://www.google.com" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="5" category_id="20" user_id="1" title="新浪网" color="" image="" href="http://www.sina.com.cn" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="6" category_id="20" user_id="1" title="腾讯网" color="" image="" href="http://www.qq.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="7" category_id="21" user_id="1" title="淘宝网" color="" image="" href="http://www.taobao.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="8" category_id="21" user_id="1" title="新华网" color="" image="" href="http://www.xinhuanet.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="9" category_id="22" user_id="1" title="赶集网" color="" image="" href="http://www.ganji.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="10" category_id="22" user_id="1" title="58同城" color="" image="" href="http://www.58.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="11" category_id="23" user_id="1" title="视频大全" color="" image="" href="http://v.360.cn/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
+	<cms_link id="12" category_id="23" user_id="1" title="凤凰网" color="" image="" href="http://www.ifeng.com/" remarks="" status="0" weight="0" update_date="2012-10-7"/>
 	
 	<!-- 文章表 -->
-	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="green" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="red" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="green" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="blue" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="16" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="17" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="17" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="26" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
-	<cms_article category_id="26" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
-	<cms_article_data content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="1" category_id="3" user_id="1" title="文章标题标题标题标题" color="green" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="1" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="2" category_id="3" user_id="1" title="文章标题标题标题标题" color="red" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="2" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="3" category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="3" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="4" category_id="3" user_id="1" title="文章标题标题标题标题" color="green" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="4" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="5" category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="5" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="6" category_id="3" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="6" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="7" category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="7" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="8" category_id="4" user_id="1" title="文章标题标题标题标题" color="blue" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="8" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="9" category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="9" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="10" category_id="4" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="10" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="11" category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="11" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="12" category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="12" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="13" category_id="5" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="13" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="14" category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="14" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="15" category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="15" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="16" category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="16" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="17" category_id="7" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="17" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="18" category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="18" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="19" category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="19" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="20" category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="20" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="21" category_id="8" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="21" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="22" category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="22" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="23" category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="23" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="24" category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="24" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="25" category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="25" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="26" category_id="9" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="26" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="27" category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="27" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="28" category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="28" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="29" category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="29" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="30" category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="30" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="31" category_id="11" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="31" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="32" category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="32" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="33" category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="33" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="34" category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="34" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="35" category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="35" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="36" category_id="12" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="36" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="37" category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="37" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="38" category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="38" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="39" category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="39" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="40" category_id="13" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="40" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="41" category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="41" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="42" category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="42" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="43" category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="43" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="44" category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="44" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="45" category_id="14" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="45" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="46" category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="46" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="47" category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="47" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="48" category_id="15" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="48" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="49" category_id="16" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="49" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="50" category_id="17" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="50" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="51" category_id="17" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="51" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="52" category_id="26" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="52" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
+	<cms_article id="53" category_id="26" user_id="1" title="文章标题标题标题标题" color="" thumb="" keywords="关键字1,关键字2" desciption="" status="0" weight="0" hits="0" posid="" update_date="2012-10-7"/>
+	<cms_article_data id="53" content="文章内容内容内容内容" copyfrom="来源" relation="1,2,3" allow_comment="1"/>
 	
 	<!-- 栏目表 -->
 	<cms_category id="1" site_id="0" parent_id="0" parent_ids="0," module="" name="顶级栏目" image="" href="" target="" desciption="" sort="0" in_menu="1" in_list="1" show_modes="0" allow_comment="0"/>
@@ -142,7 +142,7 @@
 	 		<cms_category id="16" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="下载工具" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
 	 		<cms_category id="17" site_id="1" parent_id="10" parent_ids="0,1,10," module="article" name="搜索工具" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="2" allow_comment="1"/>
 	 	<cms_category id="18" site_id="1" parent_id="1" parent_ids="0,1," module="link" name="友情链接" image="" href="" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
-	 		<cms_category id="19" parent_id="18" parent_ids="0,1,18," module="link" name="常用网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
+	 		<cms_category id="19" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="常用网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
 	 		<cms_category id="20" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="门户网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
 	 		<cms_category id="21" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="购物网站" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
 	 		<cms_category id="22" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="交友社区" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
@@ -157,40 +157,40 @@
 	<cms_site id="2" name="子站点测试" title="JeeSite subsite" desciption="JeeSite subsite" keywords="JeeSite subsite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='mailto:thinkgem@163.com'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite'&gt;JeeSite&lt;/a&gt; V1.0" />
 	
 	<!-- 字典表 -->
-	<sys_dict value="0" label="正常" type="del_flag" desciption="删除标记" sort="10" del_flag="0" />
-	<sys_dict value="1" label="删除" type="del_flag" desciption="删除标记" sort="20" del_flag="0" />
-	<sys_dict value="1" label="显示" type="show_hide" desciption="显示/隐藏" sort="10" del_flag="0" />
-	<sys_dict value="0" label="隐藏" type="show_hide" desciption="显示/隐藏" sort="20" del_flag="0" />
-	<sys_dict value="1" label="是" type="yes_no" desciption="是/否" sort="10" del_flag="0" />
-	<sys_dict value="0" label="否" type="yes_no" desciption="是/否" sort="20" del_flag="0" />
-	<sys_dict value="red" label="红色" type="color" desciption="颜色值" sort="10" del_flag="0" />
-	<sys_dict value="green" label="绿色" type="color" desciption="颜色值" sort="20" del_flag="0" />
-	<sys_dict value="blue" label="蓝色" type="color" desciption="颜色值" sort="30" del_flag="0" />
-	<sys_dict value="yellow" label="黄色" type="color" desciption="颜色值" sort="40" del_flag="0" />
-	<sys_dict value="orange" label="橙色" type="color" desciption="颜色值" sort="50" del_flag="0" />
-	<sys_dict value="1" label="系统管理" type="sys_user_type" desciption="用户类型" sort="10" del_flag="0" />
-	<sys_dict value="2" label="部门经理" type="sys_user_type" desciption="用户类型" sort="20" del_flag="0" />
-	<sys_dict value="3" label="普通用户" type="sys_user_type" desciption="用户类型" sort="30" del_flag="0" />
-	<sys_dict value="basic" label="基础主题" type="cms_theme" desciption="站点主题" sort="10" del_flag="0" />
-	<sys_dict value="blue" label="蓝色主题" type="cms_theme" desciption="站点主题" sort="20" del_flag="0" />
-	<sys_dict value="red" label="红色主题" type="cms_theme" desciption="站点主题" sort="30" del_flag="0" />
-	<sys_dict value="article" label="文章模型" type="cms_module" desciption="栏目模型" sort="10" del_flag="0" />
-	<sys_dict value="picture" label="图片模型" type="cms_module" desciption="栏目模型" sort="20" del_flag="1" />
-	<sys_dict value="download" label="下载模型" type="cms_module" desciption="栏目模型" sort="30" del_flag="1" />
-	<sys_dict value="link" label="链接模型" type="cms_module" desciption="栏目模型" sort="40" del_flag="0" />
-	<sys_dict value="special" label="专题模型" type="cms_module" desciption="栏目模型" sort="50" del_flag="1" />
-	<sys_dict value="0" label="默认展现方式" type="cms_show_modes" desciption="展现方式" sort="20" del_flag="0" />
-	<sys_dict value="1" label="首栏目内容列表" type="cms_show_modes" desciption="展现方式" sort="20" del_flag="0" />
-	<sys_dict value="2" label="栏目第一条内容" type="cms_show_modes" desciption="展现方式" sort="30" del_flag="0" />
-	<sys_dict value="0" label="发布" type="cms_status" desciption="内容状态" sort="10" del_flag="0" />
-	<sys_dict value="1" label="删除" type="cms_status" desciption="内容状态" sort="20" del_flag="0" />
-	<sys_dict value="2" label="审核" type="cms_status" desciption="内容状态" sort="15" del_flag="0" />
-	<sys_dict value="1" label="首页焦点图" type="cms_posid" desciption="推荐位" sort="30" del_flag="0" />
-	<sys_dict value="2" label="栏目页文章推荐" type="cms_posid" desciption="推荐位" sort="30" del_flag="0" />
-	<sys_dict value="1" label="咨询" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
-	<sys_dict value="2" label="建议" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
-	<sys_dict value="3" label="投诉" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
-	<sys_dict value="4" label="其它" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict id="1" value="0" label="正常" type="del_flag" desciption="删除标记" sort="10" del_flag="0" />
+	<sys_dict id="2" value="1" label="删除" type="del_flag" desciption="删除标记" sort="20" del_flag="0" />
+	<sys_dict id="3" value="1" label="显示" type="show_hide" desciption="显示/隐藏" sort="10" del_flag="0" />
+	<sys_dict id="4" value="0" label="隐藏" type="show_hide" desciption="显示/隐藏" sort="20" del_flag="0" />
+	<sys_dict id="5" value="1" label="是" type="yes_no" desciption="是/否" sort="10" del_flag="0" />
+	<sys_dict id="6" value="0" label="否" type="yes_no" desciption="是/否" sort="20" del_flag="0" />
+	<sys_dict id="7" value="red" label="红色" type="color" desciption="颜色值" sort="10" del_flag="0" />
+	<sys_dict id="8" value="green" label="绿色" type="color" desciption="颜色值" sort="20" del_flag="0" />
+	<sys_dict id="9" value="blue" label="蓝色" type="color" desciption="颜色值" sort="30" del_flag="0" />
+	<sys_dict id="10" value="yellow" label="黄色" type="color" desciption="颜色值" sort="40" del_flag="0" />
+	<sys_dict id="11" value="orange" label="橙色" type="color" desciption="颜色值" sort="50" del_flag="0" />
+	<sys_dict id="12" value="1" label="系统管理" type="sys_user_type" desciption="用户类型" sort="10" del_flag="0" />
+	<sys_dict id="13" value="2" label="部门经理" type="sys_user_type" desciption="用户类型" sort="20" del_flag="0" />
+	<sys_dict id="14" value="3" label="普通用户" type="sys_user_type" desciption="用户类型" sort="30" del_flag="0" />
+	<sys_dict id="15" value="basic" label="基础主题" type="cms_theme" desciption="站点主题" sort="10" del_flag="0" />
+	<sys_dict id="16" value="blue" label="蓝色主题" type="cms_theme" desciption="站点主题" sort="20" del_flag="0" />
+	<sys_dict id="17" value="red" label="红色主题" type="cms_theme" desciption="站点主题" sort="30" del_flag="0" />
+	<sys_dict id="18" value="article" label="文章模型" type="cms_module" desciption="栏目模型" sort="10" del_flag="0" />
+	<sys_dict id="19" value="picture" label="图片模型" type="cms_module" desciption="栏目模型" sort="20" del_flag="1" />
+	<sys_dict id="20" value="download" label="下载模型" type="cms_module" desciption="栏目模型" sort="30" del_flag="1" />
+	<sys_dict id="21" value="link" label="链接模型" type="cms_module" desciption="栏目模型" sort="40" del_flag="0" />
+	<sys_dict id="22" value="special" label="专题模型" type="cms_module" desciption="栏目模型" sort="50" del_flag="1" />
+	<sys_dict id="23" value="0" label="默认展现方式" type="cms_show_modes" desciption="展现方式" sort="20" del_flag="0" />
+	<sys_dict id="24" value="1" label="首栏目内容列表" type="cms_show_modes" desciption="展现方式" sort="20" del_flag="0" />
+	<sys_dict id="25" value="2" label="栏目第一条内容" type="cms_show_modes" desciption="展现方式" sort="30" del_flag="0" />
+	<sys_dict id="26" value="0" label="发布" type="cms_status" desciption="内容状态" sort="10" del_flag="0" />
+	<sys_dict id="27" value="1" label="删除" type="cms_status" desciption="内容状态" sort="20" del_flag="0" />
+	<sys_dict id="28" value="2" label="审核" type="cms_status" desciption="内容状态" sort="15" del_flag="0" />
+	<sys_dict id="29" value="1" label="首页焦点图" type="cms_posid" desciption="推荐位" sort="30" del_flag="0" />
+	<sys_dict id="30" value="2" label="栏目页文章推荐" type="cms_posid" desciption="推荐位" sort="30" del_flag="0" />
+	<sys_dict id="31" value="1" label="咨询" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict id="32" value="2" label="建议" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict id="33" value="3" label="投诉" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
+	<sys_dict id="34" value="4" label="其它" type="cms_guestbook" desciption="留言板分类" sort="30" del_flag="0" />
 
 	<!-- 系统区域：编号、父级编号、所有父级编号、区域编码 、区域名称、备注、删除标记（0：正常；1：删除） -->
 	<sys_area id="1" parent_id="0" parent_ids="0," code="" name="顶级区域" remarks="" />

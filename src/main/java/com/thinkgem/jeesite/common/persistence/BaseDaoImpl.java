@@ -184,7 +184,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			ql += " order by " + page.getOrderBy();
 		}
-        Query query = createQuery(ql, parameter); 
+        Query query = createSqlQuery(ql, parameter); 
 		// set page
         if (!page.isDisabled()){
 	        query.setFirstResult(page.getFirstResult());

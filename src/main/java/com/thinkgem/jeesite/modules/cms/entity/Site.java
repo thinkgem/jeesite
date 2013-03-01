@@ -51,8 +51,8 @@ public class Site extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article")
-	//@GenericGenerator(name = "seq_cms_article", strategy = "seq_cms_article")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_site")
+//	@SequenceGenerator(name = "seq_cms_site", sequenceName = "seq_cms_site")
 	public Long getId() {
 		return id;
 	}

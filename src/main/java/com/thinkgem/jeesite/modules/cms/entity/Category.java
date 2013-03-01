@@ -91,8 +91,8 @@ public class Category extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_category")
-	//@GenericGenerator(name = "seq_cms_category", strategy = "seq_cms_category")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_category")
+//	@SequenceGenerator(name = "seq_cms_category", sequenceName = "seq_cms_category")
 	public Long getId() {
 		return id;
 	}

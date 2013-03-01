@@ -68,8 +68,8 @@ public class Link extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article")
-	//@GenericGenerator(name = "seq_cms_article", strategy = "seq_cms_article")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_link")
+//	@SequenceGenerator(name = "seq_cms_link", sequenceName = "seq_cms_link")
 	public Long getId() {
 		return id;
 	}

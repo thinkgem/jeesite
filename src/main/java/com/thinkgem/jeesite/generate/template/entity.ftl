@@ -51,7 +51,7 @@ public class ${ClassName} extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_${tableName}")
-	//@GenericGenerator(name = "seq_${tableName}", strategy = "seq_${tableName}")
+	//@SequenceGenerator(name = "seq_${tableName}", sequenceName = "seq_${tableName}")
 	public Long getId() {
 		return id;
 	}

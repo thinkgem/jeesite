@@ -65,8 +65,8 @@ public class Office extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_office")
-	//@GenericGenerator(name = "seq_sys_office", strategy = "seq_sys_office")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_office")
+//	@SequenceGenerator(name = "seq_sys_office", sequenceName = "seq_sys_office")
 	public Long getId() {
 		return id;
 	}

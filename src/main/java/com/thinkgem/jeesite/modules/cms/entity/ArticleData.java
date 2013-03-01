@@ -54,8 +54,8 @@ public class ArticleData extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
-	//@GenericGenerator(name = "seq_cms_article", strategy = "seq_cms_article")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
+//	@SequenceGenerator(name = "seq_cms_article_data", sequenceName = "seq_cms_article_data")
 	public Long getId() {
 		return id;
 	}
