@@ -26,12 +26,12 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 1、Services相关
 
-* Core Framework：Spring Framework 3.1。
+* Core Framework：Spring Framework 3.2。
 * Security Framework：Apache Shiro 1.2。
 
 2、Web相关
 
-* MVC Framework：SpringMVC 3.1。
+* MVC Framework：SpringMVC 3.2。
 * Layout Decoration：SiteMesh 2.4。
 * JavaScript Library：JQuery 1.7。
 * CSS Framework：Twitter Bootstrap 2.0.4。
@@ -40,16 +40,16 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 3、Database相关
 
-* ORM Framework：Spring-Data-JPA 1.2、Hibernate 4.1。
+* ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.1。
 * Connection Pool：BoneCP 0.7
-* Bean Validation：Hibernate Validation 4.3.0。
+* Bean Validation：Hibernate Validation 4.3。
 * Cache：Ehcache 2.6。
 
 4、Tools 相关
 
 * Commons：Apache Commons
 * JSON Mapper：Jackson 2.1
-* Bean Mapper：Dozer 5.3.2
+* Bean Mapper：Dozer 5.3
 * Full-text search：Hibernate Search 4.2（Apache Lucene 3.6）、IK Analyzer 2012_u6中文分词
 * Log Manager：Log4j 1.2
 
