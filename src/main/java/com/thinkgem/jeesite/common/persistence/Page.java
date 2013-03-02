@@ -249,7 +249,7 @@ public class Page<T> {
 					+ "下一页 &#187;</a></li>\n");
 		}
 
-		sb.append("<li class=\"disabled\"><a href=\"javascript:\" style=\"border:0;padding-top:1px;\">当前 ");
+		sb.append("<li class=\"disabled\"><a href=\"javascript:\" style=\"border:0;padding-top:1px;_padding-top:7px;\">当前 ");
 		sb.append("<input type=\"text\" value=\""+pageNo+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" ");
 		sb.append("onkeypress=\"if(window.event.keyCode==13) "+funcName+"(this.value,"+pageSize+");\"/> / ");
 		sb.append("<input type=\"text\" value=\""+pageSize+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" ");

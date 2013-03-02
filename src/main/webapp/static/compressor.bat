@@ -10,10 +10,12 @@ call compressor\compressor.bat wsize.js
 call compressor\compressor.bat bootstrap\2.0.4\css
 call compressor\compressor.bat bootstrap\2.0.4\js
 call compressor\compressor.bat jquery
-call compressor\compressor.bat jquery-validation
+call compressor\compressor.bat jquery-jbox\2.3\i18n
+call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.css
+call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.js
+call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.method.js
 call compressor\compressor.bat mztreeview\mz*
 call compressor\compressor.bat treeTable\*treeTable*
-call compressor\compressor.bat jquery-jbox\2.3\i18n
 call compressor\compressor.bat modules
 
 echo.

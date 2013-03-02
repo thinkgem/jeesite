@@ -59,7 +59,8 @@
 			if(strs[0]<550){
 				$("#main").css("height",550+"px");
 			}else{
-				$("#menuFrame, #mainFrame, #openClose").height(strs[0]-$("#header").height() - $("#footer").height() - 80);  
+				$("#menuFrame, #mainFrame, #openClose").height(strs[0]-$("#header").height() - $("#footer").height() - 80);
+				$("#openClose").height($("#openClose").height()-6);
 			}
 			if(strs[1]<980){
 				$("#main").css("width",970+"px");

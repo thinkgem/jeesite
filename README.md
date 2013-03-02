@@ -33,10 +33,10 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 * MVC Framework：SpringMVC 3.2。
 * Layout Decoration：SiteMesh 2.4。
-* JavaScript Library：JQuery 1.7。
+* JavaScript Library：JQuery 1.9。
 * CSS Framework：Twitter Bootstrap 2.0.4。
 * JavaScript/CSS Compressor：YUI Compressor 2.4。
-* Front Validation：JQuery Validation Plugin 1.9。
+* Front Validation：JQuery Validation Plugin 1.11。
 
 3、Database相关
 
