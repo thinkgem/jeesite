@@ -113,6 +113,7 @@ public class ArticleService extends BaseService {
 	
 	/**
 	 * 通过编号获取内容标题
+	 * @return new Object[]{栏目Id,文章Id,文章标题}
 	 */
 	public List<Object[]> findByIds(String ids) {
 		List<Object[]> list = Lists.newArrayList();
@@ -120,7 +121,7 @@ public class ArticleService extends BaseService {
 		if (idss.length>0){
 			List<Article> l = articleDao.findByIdIn(idss);
 			for (Article e : l){
-				list.add(new Object[]{e.getId(),StringUtils.abbreviate(e.getTitle(),20)});
+				list.add(new Object[]{e.getCategory().getId(),e.getId(),StringUtils.abbreviate(e.getTitle(),20)});
 			}
 		}
 		return list;

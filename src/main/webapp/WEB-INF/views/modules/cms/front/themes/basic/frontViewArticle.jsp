@@ -38,6 +38,10 @@
 		<div id="comment" class="hide">
 			正在加载评论...
 		</div>
+		<h5>相关文章</h5>
+		<ol><c:forEach items="${relationList}" var="relation">
+			<li style="float:left;width:230px;"><a href="${ctx}/view-${relation[0]}-${relation[1]}${urlSuffix}">${relation[2]}</a></li>
+		</c:forEach></ol>
 	</div>
 	<div style="clear:both;"></div>
 </body>

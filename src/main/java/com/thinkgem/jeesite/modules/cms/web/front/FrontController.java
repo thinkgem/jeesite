@@ -159,17 +159,22 @@ public class FrontController extends BaseController{
 			if (article==null || !Article.STATUS_RELEASE.equals(article.getStatus())){
 				return "error/404";
 			}
-			articleService.updateHitsAddOne(contentId);
-			List<Category> categoryList = categoryService.findByParentId(
-					article.getCategory().getParent().getId(), category.getSite().getId());
 			model.addAttribute("article", article);
 			model.addAttribute("category", article.getCategory());
+			// 文章阅读次数+1
+			articleService.updateHitsAddOne(contentId);
+			// 分类列表
+			List<Category> categoryList = categoryService.findByParentId(
+					article.getCategory().getParent().getId(), category.getSite().getId());
 			model.addAttribute("categoryList", categoryList);
+			// 获取推荐文章列表
+			List<Object[]> relationList = articleService.findByIds(article.getArticleData().getRelation());
+			model.addAttribute("relationList", relationList); 
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
 		}
 		return null;
 	}
-
+	
 	/**
 	 * 内容评论
 	 */

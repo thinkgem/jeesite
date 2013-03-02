@@ -145,7 +145,7 @@
 					}
 					$.getJSON("${ctx}/cms/article/findByIds",{ids:$("#articleDataRelation").val()},function(data){
 						for (var i=0; i<data.length; i++){
-							articleSelect.push([data[i][0],data[i][1]]);
+							articleSelect.push([data[i][1],data[i][2]]);
 						}
 						articleSelectRefresh();
 					});
