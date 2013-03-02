@@ -4,14 +4,12 @@
 <head>
 	<title>字典管理</title>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-		});
-		function page(i){
-			$("#pageNo").val(i);
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
 			$("#searchForm").submit();
-        	return false;
-        }
+	    	return false;
+	    }
 	</script>
 </head>
 <body>

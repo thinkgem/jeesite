@@ -23,8 +23,8 @@
 			</c:forEach></ul>
 			<div class="page">${page}</div>
 			<script type="text/javascript">
-				function page(i){
-					location="${ctx}/list-${category.id}${urlSuffix}?pageNo="+i;
+				function page(n,s){
+					location="${ctx}/list-${category.id}${urlSuffix}?pageNo="+n+"&pageSize="+s;
 				}
 			</script>
 		</c:if>

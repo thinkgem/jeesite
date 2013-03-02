@@ -31,8 +31,8 @@
 				}
 			});
 		});
-		function page(i){
-			location="${ctx}/guestbook?pageNo="+i;
+		function page(n,s){
+			location="${ctx}/guestbook?pageNo="+n+"&pageSize="+s;;
 		}
 	</script>
 </head>

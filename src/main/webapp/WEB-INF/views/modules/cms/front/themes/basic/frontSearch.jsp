@@ -35,8 +35,9 @@
 	</script>
 </head>
 <body>
-	<form:form id="inputForm" method="get" class="search">
+	<form:form id="searchForm" method="get" class="search">
 		<input type="hidden" id="pageNo" name="pageNo" value="${pageNo}"/>
+		<input type="hidden" id="pageSize" name="pageSize" value="${pageSize}"/>
 		<input type="hidden" id="t" name="t" value="${not empty t?t:'article'}"/><%--
 		<p class="sel"><c:forEach items="${fns:getDictList('cms_search')}" var="type">
 			<a href="javascript:" onclick="$('#t').val('${type.value}');$('.sel a').removeClass('act');$(this).addClass('act')" class="${(empty t && type.value eq 'article') || t eq type.value?'act':''}">${type.label}</a>
@@ -54,11 +55,12 @@
 	</c:if></dl>
 	<div class="page">${page}</div>
 	<script type="text/javascript">
-		function page(i){
-			$("#pageNo").val(i);
-			$("#inputForm").submit();
-			return false;
-		}
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
+			$("#searchForm").submit();
+        	return false;
+        }
 	</script>
 </body>
 </html>
