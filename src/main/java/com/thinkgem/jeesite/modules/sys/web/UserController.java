@@ -70,6 +70,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "save")
 	public String save(User user, String oldLoginName, String newPassword,
 			RedirectAttributes redirectAttributes) {
+		// 如果新密码为空，则不更换密码
+		if (StringUtils.isNotBlank(newPassword)) {
+			user.setPassword(SystemService.entryptPassword(newPassword));
+		}
 		if (beanValidators(redirectAttributes, user)){
 			if ("true".equals(checkLoginName(oldLoginName, user.getLoginName()))){
 				systemService.saveUser(user, newPassword);

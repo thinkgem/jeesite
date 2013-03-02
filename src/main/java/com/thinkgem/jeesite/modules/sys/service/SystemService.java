@@ -107,10 +107,6 @@ public class SystemService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void saveUser(User user, String newPassword) {
-		// 如果新密码为空，则不更换密码
-		if (StringUtils.isNotBlank(newPassword)) {
-			user.setPassword(entryptPassword(newPassword));
-		}
 		userDao.clear();
 		userDao.save(user);
 		systemRealm.clearCachedAuthorizationInfo(user.getLoginName());
