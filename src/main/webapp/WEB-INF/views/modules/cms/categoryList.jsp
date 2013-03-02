@@ -8,8 +8,9 @@
 		$(document).ready(function() {
 			$("#treeTable").treeTable({expandLevel : 5});
 		});
-		function page(i){
-			$("#pageNo").val(i);
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
 			$("#searchForm").submit();
         	return false;
         }

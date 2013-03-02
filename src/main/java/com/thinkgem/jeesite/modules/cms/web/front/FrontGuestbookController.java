@@ -40,10 +40,11 @@ public class FrontGuestbookController extends BaseController{
 	 * 留言板
 	 */
 	@RequestMapping(value = "guestbook", method=RequestMethod.GET)
-	public String guestbook(@RequestParam(required=false, defaultValue="1") Integer pageNo, Model model) {
+	public String guestbook(@RequestParam(required=false, defaultValue="1") Integer pageNo,
+			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
 		Site site = CmsUtils.getSite(1L);
 		model.addAttribute("site", site);
-		Page<Guestbook> page = new Page<Guestbook>(pageNo, 30);
+		Page<Guestbook> page = new Page<Guestbook>(pageNo, pageSize);
 		Guestbook guestbook = new Guestbook();
 		guestbook.setStatus(Guestbook.STATUS_RELEASE);
 		page = guestbookService.find(page, guestbook);

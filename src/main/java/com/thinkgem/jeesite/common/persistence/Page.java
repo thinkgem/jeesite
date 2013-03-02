@@ -70,11 +70,11 @@ public class Page<T> {
 		String no = request.getParameter("pageNo");
 		if (StringUtils.isNumeric(no)){
 			CookieUtils.setCookie(response, "pageNo", no);
-			this.pageNo = Integer.parseInt(no);
+			this.setPageNo(Integer.parseInt(no));
 		}else if (request.getParameter("repage")!=null){
 			no = CookieUtils.getCookie(request, "pageNo");
 			if (StringUtils.isNumeric(no)){
-				this.pageNo = Integer.parseInt(no);
+				this.setPageNo(Integer.parseInt(no));
 			}
 		}
 		// 获取页面大小参数（传递repage参数，来记住页码大小）
@@ -82,15 +82,15 @@ public class Page<T> {
 			String size = request.getParameter("pageSize");
 			if (StringUtils.isNumeric(size)){
 				CookieUtils.setCookie(response, "pageSize", size);
-				this.pageSize = Integer.parseInt(size);
+				this.setPageSize(Integer.parseInt(size));
 			}else if (request.getParameter("repage")!=null){
 				no = CookieUtils.getCookie(request, "pageSize");
 				if (StringUtils.isNumeric(size)){
-					this.pageSize = Integer.parseInt(size);
+					this.setPageSize(Integer.parseInt(size));
 				}
 			}
 		}else{
-			this.pageSize = pageSize;
+			this.setPageSize(pageSize);
 		}
 	}
 	
@@ -121,10 +121,10 @@ public class Page<T> {
 	 * @param list 本页数据对象列表
 	 */
 	public Page(int pageNo, int pageSize, long count, List<T> list) {
-		this.count = count;
-		this.pageNo = pageNo;
-		this.pageSize = pageSize;
-		this.list = list;
+		this.setCount(count);
+		this.setPageNo(pageNo);
+		this.setPageSize(pageSize);
+		this.setList(list);
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public class Page<T> {
 		
 		this.last = (int)(count / (this.pageSize < 1 ? 20 : this.pageSize) + first - 1);
 		
-		if (count % pageSize != 0 || this.last == 0) {
+		if (this.count % this.pageSize != 0 || this.last == 0) {
 			this.last++;
 		}
 
@@ -192,7 +192,7 @@ public class Page<T> {
 		if (pageNo == first) {// 如果是首页
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">&#171; 上一页</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+prev+");\">&#171; 上一页</a></li>\n");
+			sb.append("<li><a href=\"javascript:"+funcName+"("+prev+","+pageSize+");\">&#171; 上一页</a></li>\n");
 		}
 
 		int begin = pageNo - (length / 2);
@@ -214,7 +214,7 @@ public class Page<T> {
 		if (begin > first) {
 			int i = 0;
 			for (i = first; i < first + slider && i < begin; i++) {
-				sb.append("<li><a href=\"javascript:"+funcName+"("+i+");\">"
+				sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
 						+ (i + 1 - first) + "</a></li>\n");
 			}
 			if (i < begin) {
@@ -227,7 +227,7 @@ public class Page<T> {
 				sb.append("<li class=\"active\"><a href=\"javascript:\">" + (i + 1 - first)
 						+ "</a></li>\n");
 			} else {
-				sb.append("<li><a href=\"javascript:"+funcName+"("+i+");\">"
+				sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
 						+ (i + 1 - first) + "</a></li>\n");
 			}
 		}
@@ -238,20 +238,22 @@ public class Page<T> {
 		}
 
 		for (int i = end + 1; i <= last; i++) {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+i+");\">"
+			sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
 					+ (i + 1 - first) + "</a></li>\n");
 		}
 
 		if (pageNo == last) {
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+next+");\">"
+			sb.append("<li><a href=\"javascript:"+funcName+"("+next+","+pageSize+");\">"
 					+ "下一页 &#187;</a></li>\n");
 		}
 
-		sb.insert(0,"<ul>\n").append("</ul>\n");
+		sb.append("<li class=\"disabled\"><a href=\"javascript:\" style=\"border:0;padding-top:1px;\">每页<input type=\"text\" value=\""+
+				pageSize+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" " +
+				"onkeypress=\"if(window.event.keyCode==13) "+funcName+"("+pageNo+",this.value);\"/>条，共 " + count + " 条</a><li>\n");
 
-		sb.insert(0,"<div class=\"count\" style=\"float:right;\">共 " + count + " 条</div>");
+		sb.insert(0,"<ul>\n").append("</ul>\n");
 		
 		sb.append("<div style=\"clear:both;\"></div>");
 
@@ -313,11 +315,11 @@ public class Page<T> {
 	}
 
 	/**
-	 * 设置页面大小
+	 * 设置页面大小（最大500）
 	 * @param pageSize
 	 */
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+		this.pageSize = pageSize > 500 ? 500 : pageSize;
 	}
 
 	/**

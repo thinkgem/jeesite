@@ -72,7 +72,8 @@ public class FrontController extends BaseController{
 	 * 内容列表
 	 */
 	@RequestMapping(value = "list-{categoryId}" + URL_SUFFIX)
-	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo, Model model) {
+	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
+			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
 			Site site = CmsUtils.getSite(1L);
@@ -107,7 +108,7 @@ public class FrontController extends BaseController{
 				}
 				// 获取内容列表
 				if ("article".equals(category.getModule())){
-					Page<Article> page = new Page<Article>(pageNo, 30);
+					Page<Article> page = new Page<Article>(pageNo, pageSize);
 					page = articleService.find(page, new Article(category));
 					model.addAttribute("page", page);
 				}else if ("link".equals(category.getModule())){
@@ -242,7 +243,7 @@ public class FrontController extends BaseController{
 				articleService.createIndex();
 				model.addAttribute("message", "重建索引成功");
 			}
-			Page<Article> page = articleService.search(new Page<Article>(request, response, 10), q);
+			Page<Article> page = articleService.search(new Page<Article>(request, response), q);
 			model.addAttribute("page", page);
 		}
 		model.addAttribute("t", t);// 搜索类型

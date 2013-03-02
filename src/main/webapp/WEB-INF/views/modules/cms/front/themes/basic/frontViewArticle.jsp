@@ -14,9 +14,9 @@
 				page(1);
 			}
 		});
-		function page(i){
+		function page(n,s){
 			$.get("${ctx}/comment",{theme: '${category.site.theme}', module: '${category.module}',
-				contentId: '${article.id}', title: '${article.title}', pageNo: i, date: new Date().getTime()
+				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
 			},function(data){
 				$("#comment").html(data);
 			});
