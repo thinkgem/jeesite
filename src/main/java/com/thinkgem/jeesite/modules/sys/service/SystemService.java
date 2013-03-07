@@ -97,7 +97,7 @@ public class SystemService extends BaseService {
 			dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
 		}
 		dc.add(Restrictions.eq("delFlag", User.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code")).addOrder(Order.asc("id"));
+		dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code"));;
 		return userDao.find(page, dc);
 	}
 

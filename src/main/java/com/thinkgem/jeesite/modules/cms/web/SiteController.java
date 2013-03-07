@@ -88,7 +88,7 @@ public class SiteController extends BaseController {
 	 * @param siteId
 	 * @return
 	 */
-	@RequiresPermissions("cms:view")
+	@RequiresPermissions("cms:site:select")
 	@RequiresUser
 	@RequestMapping(value = "select")
 	public String select(Long id, boolean flag){

@@ -35,7 +35,7 @@
 				  <c:set var="firstMenu" value="true"/><c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus"><c:if test="${menu.parent.id eq 1&&menu.isShow eq 1}">
 					<li class="menu ${firstMenu?' active':''}"><a class="menu" href="${ctx}/sys/menu/tree?parentId=${menu.id}" target="menuFrame" >${menu.name}</a></li>
 				  <c:if test="${firstMenu}"><c:set var="firstMenuId" value="${menu.id}"/></c:if><c:set var="firstMenu" value="false"/></c:if></c:forEach>
-				  <shiro:hasPermission name="cms:view"><li class="dropdown">
+				  <shiro:hasPermission name="cms:site:select"><li class="dropdown">
 				    <a class="dropdown-toggle" data-toggle="dropdown" href="#">${fnc:getSite(fnc:getCurrentSiteId()).name}<b class="caret"></b></a>
 				    <ul class="dropdown-menu">
 				      <c:forEach items="${fnc:getSiteList()}" var="site"><li><a href="${ctx}/cms/site/select?id=${site.id}&flag=1">${site.name}</a></li></c:forEach>

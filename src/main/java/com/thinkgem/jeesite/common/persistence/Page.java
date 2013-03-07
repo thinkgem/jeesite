@@ -66,7 +66,7 @@ public class Page<T> {
 	 * @param pageSize 分页大小，如果传递 -1 则为不分页，返回所有数据
 	 */
 	public Page(HttpServletRequest request, HttpServletResponse response, int pageSize){
-		// 获取页码参数（传递repage参数，来记住页码）
+		// 设置页码参数（传递repage参数，来记住页码）
 		String no = request.getParameter("pageNo");
 		if (StringUtils.isNumeric(no)){
 			CookieUtils.setCookie(response, "pageNo", no);
@@ -77,7 +77,7 @@ public class Page<T> {
 				this.setPageNo(Integer.parseInt(no));
 			}
 		}
-		// 获取页面大小参数（传递repage参数，来记住页码大小）
+		// 设置页面大小参数（传递repage参数，来记住页码大小）
 		if (pageSize==-1){
 			String size = request.getParameter("pageSize");
 			if (StringUtils.isNumeric(size)){
@@ -91,6 +91,11 @@ public class Page<T> {
 			}
 		}else{
 			this.setPageSize(pageSize);
+		}
+		// 设置排序参数
+		String orderBy = request.getParameter("orderBy");
+		if (StringUtils.isNotBlank(orderBy)){
+			this.setOrderBy(orderBy);
 		}
 	}
 	

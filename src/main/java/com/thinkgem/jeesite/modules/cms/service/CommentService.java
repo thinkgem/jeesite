@@ -51,7 +51,7 @@ public class CommentService extends BaseService {
 			dc.add(Restrictions.like("title", "%"+comment.getTitle()+"%"));
 		}
 		dc.add(Restrictions.eq("status", comment.getStatus()));
-		dc.addOrder(Order.desc("createDate"));
+		dc.addOrder(Order.desc("id"));
 		return commentDao.find(page, dc);
 	}
 

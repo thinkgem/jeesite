@@ -305,9 +305,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			for (String order : StringUtils.split(page.getOrderBy(), ",")){
 				String[] o = StringUtils.split(order, " ");
-				if (o.length>=1){
+				if (o.length==1){
 					criteria.addOrder(Order.asc(o[0]));
-				}else if (o.length>=2){
+				}else if (o.length==2){
 					if ("DESC".equals(o[1].toUpperCase())){
 						criteria.addOrder(Order.desc(o[0]));
 					}else{

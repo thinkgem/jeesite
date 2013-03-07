@@ -21,7 +21,7 @@
 		<tbody>
 		<c:forEach items="${fnc:getSiteList()}" var="site">
 			<tr>
-				<td><a href="${ctx}/cms/site/select?id=${site.id}">${site.name}${fnc:getCurrentSiteId() eq site.id ? ' <font color="red">[当前站点]</font>' : ''}</a></td>
+				<td><a href="${ctx}/cms/site/select?id=${site.id}">${site.name}</a> ${fnc:getCurrentSiteId() eq site.id ? ' <font color="red">[当前站点]</font>' : ''}</td>
 				<shiro:hasPermission name="cms:view"><td>
     				<a href="${ctx}/cms/site/select?id=${site.id}">切换</a>
 				</td></shiro:hasPermission>

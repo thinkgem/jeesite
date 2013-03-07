@@ -247,7 +247,7 @@
 				<sys_menu id="36" parent_id="32" parent_ids="0,1,31,32" name="站点设置" href="/cms/site/" target="" icon="certificate" sort="40" is_show="1" permission="" />
 					<sys_menu id="37" parent_id="36" parent_ids="0,1,31,32,36," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:view" />
 					<sys_menu id="38" parent_id="36" parent_ids="0,1,31,32,36," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:edit" />
-				<sys_menu id="39" parent_id="32" parent_ids="0,1,31,32" name="切换站点" href="/cms/site/select" target="" icon="retweet" sort="50" is_show="1" permission="" />
+				<sys_menu id="39" parent_id="32" parent_ids="0,1,31,32" name="切换站点" href="/cms/site/select" target="" icon="retweet" sort="50" is_show="1" permission="cms:site:select" />
 			<sys_menu id="40" parent_id="31" parent_ids="0,1,31," name="内容管理" href="" target="" icon="" sort="500" is_show="1" permission="cms:view" />
 				<sys_menu id="41" parent_id="40" parent_ids="0,1,31,40," name="内容发布" href="/cms/" target="" icon="briefcase" sort="30" is_show="1" permission="" />
 					<sys_menu id="42" parent_id="41" parent_ids="0,1,31,40,41," name="文章模型" href="/cms/article/" target="" icon="file" sort="40" is_show="0" permission="" />
@@ -313,8 +313,28 @@
 	<sys_role_menu role_id="1" menu_id="37" />
 	<sys_role_menu role_id="1" menu_id="38" />
 	<sys_role_menu role_id="1" menu_id="39" />
+	<sys_role_menu role_id="1" menu_id="40" />
+	<sys_role_menu role_id="1" menu_id="41" />
+	<sys_role_menu role_id="1" menu_id="42" />
+	<sys_role_menu role_id="1" menu_id="43" />
+	<sys_role_menu role_id="1" menu_id="44" />
+	<sys_role_menu role_id="1" menu_id="45" />
+	<sys_role_menu role_id="1" menu_id="46" />
+	<sys_role_menu role_id="1" menu_id="47" />
+	<sys_role_menu role_id="1" menu_id="48" />
+	<sys_role_menu role_id="1" menu_id="49" />
+	<sys_role_menu role_id="1" menu_id="50" />
+	<sys_role_menu role_id="1" menu_id="51" />
+	<sys_role_menu role_id="1" menu_id="52" />
+	<sys_role_menu role_id="1" menu_id="53" />
+	<sys_role_menu role_id="1" menu_id="54" />
+	<sys_role_menu role_id="1" menu_id="55" />
+	<sys_role_menu role_id="1" menu_id="56" />
+	<sys_role_menu role_id="1" menu_id="57" />
+	<sys_role_menu role_id="1" menu_id="58" />
+	<sys_role_menu role_id="1" menu_id="59" />
 	<sys_role_menu role_id="2" menu_id="1" />
-	<sys_role_menu role_id="2" menu_id="22" />
+	<sys_role_menu role_id="2" menu_id="3" />
 	<sys_role_menu role_id="2" menu_id="23" />
 	<sys_role_menu role_id="2" menu_id="24" />
 	<sys_role_menu role_id="2" menu_id="25" />
@@ -332,6 +352,26 @@
 	<sys_role_menu role_id="2" menu_id="37" />
 	<sys_role_menu role_id="2" menu_id="38" />
 	<sys_role_menu role_id="2" menu_id="39" />
+	<sys_role_menu role_id="2" menu_id="40" />
+	<sys_role_menu role_id="2" menu_id="41" />
+	<sys_role_menu role_id="2" menu_id="42" />
+	<sys_role_menu role_id="2" menu_id="43" />
+	<sys_role_menu role_id="2" menu_id="44" />
+	<sys_role_menu role_id="2" menu_id="45" />
+	<sys_role_menu role_id="2" menu_id="46" />
+	<sys_role_menu role_id="2" menu_id="47" />
+	<sys_role_menu role_id="2" menu_id="48" />
+	<sys_role_menu role_id="2" menu_id="49" />
+	<sys_role_menu role_id="2" menu_id="50" />
+	<sys_role_menu role_id="2" menu_id="51" />
+	<sys_role_menu role_id="2" menu_id="52" />
+	<sys_role_menu role_id="2" menu_id="53" />
+	<sys_role_menu role_id="2" menu_id="54" />
+	<sys_role_menu role_id="2" menu_id="55" />
+	<sys_role_menu role_id="2" menu_id="56" />
+	<sys_role_menu role_id="2" menu_id="57" />
+	<sys_role_menu role_id="2" menu_id="58" />
+	<sys_role_menu role_id="2" menu_id="59" />
 
 	<!-- 系统角色与菜单关联表 -->
 	<sys_role_category role_id="1" category_id="1" />
@@ -361,40 +401,18 @@
 	<sys_role_category role_id="1" category_id="25" />
 	<sys_role_category role_id="1" category_id="26" />
 	<sys_role_category role_id="1" category_id="27" />
-	<sys_role_category role_id="1" category_id="28" />
-	<sys_role_category role_id="1" category_id="29" />
-	<sys_role_category role_id="1" category_id="30" />
-	<sys_role_category role_id="1" category_id="31" />
-	<sys_role_category role_id="1" category_id="32" />
-	<sys_role_category role_id="1" category_id="33" />
-	<sys_role_category role_id="1" category_id="34" />
-	<sys_role_category role_id="1" category_id="35" />
-	<sys_role_category role_id="1" category_id="36" />
-	<sys_role_category role_id="1" category_id="37" />
-	<sys_role_category role_id="1" category_id="38" />
-	<sys_role_category role_id="1" category_id="39" />
-	<sys_role_category role_id="1" category_id="40" />
-	<sys_role_category role_id="1" category_id="41" />
-	<sys_role_category role_id="1" category_id="42" />
-	<sys_role_category role_id="1" category_id="43" />
-	<sys_role_category role_id="1" category_id="44" />
-	<sys_role_category role_id="1" category_id="45" />
-	<sys_role_category role_id="1" category_id="46" />
-	<sys_role_category role_id="1" category_id="47" />
-	<sys_role_category role_id="1" category_id="48" />
-	<sys_role_category role_id="1" category_id="49" />
-	<sys_role_category role_id="1" category_id="50" />
-	<sys_role_category role_id="1" category_id="51" />
-	<sys_role_category role_id="1" category_id="52" />
-	<sys_role_category role_id="1" category_id="53" />
-	<sys_role_category role_id="1" category_id="54" />
-	<sys_role_category role_id="1" category_id="55" />
-	<sys_role_category role_id="1" category_id="56" />
-	<sys_role_category role_id="1" category_id="57" />
-	<sys_role_category role_id="1" category_id="58" />
-	<sys_role_category role_id="1" category_id="59" />
 	<sys_role_category role_id="2" category_id="1" />
 	<sys_role_category role_id="2" category_id="2" />
+	<sys_role_category role_id="2" category_id="3" />
+	<sys_role_category role_id="2" category_id="4" />
+	<sys_role_category role_id="2" category_id="5" />
+	<sys_role_category role_id="2" category_id="6" />
+	<sys_role_category role_id="2" category_id="7" />
+	<sys_role_category role_id="2" category_id="8" />
+	<sys_role_category role_id="2" category_id="9" />
+	<sys_role_category role_id="2" category_id="10" />
+	<sys_role_category role_id="2" category_id="11" />
+	<sys_role_category role_id="2" category_id="12" />
 	<sys_role_category role_id="2" category_id="13" />
 	<sys_role_category role_id="2" category_id="14" />
 	<sys_role_category role_id="2" category_id="15" />
@@ -410,38 +428,6 @@
 	<sys_role_category role_id="2" category_id="25" />
 	<sys_role_category role_id="2" category_id="26" />
 	<sys_role_category role_id="2" category_id="27" />
-	<sys_role_category role_id="2" category_id="28" />
-	<sys_role_category role_id="2" category_id="29" />
-	<sys_role_category role_id="2" category_id="30" />
-	<sys_role_category role_id="2" category_id="31" />
-	<sys_role_category role_id="2" category_id="32" />
-	<sys_role_category role_id="2" category_id="33" />
-	<sys_role_category role_id="2" category_id="34" />
-	<sys_role_category role_id="2" category_id="35" />
-	<sys_role_category role_id="2" category_id="36" />
-	<sys_role_category role_id="2" category_id="37" />
-	<sys_role_category role_id="2" category_id="38" />
-	<sys_role_category role_id="2" category_id="39" />
-	<sys_role_category role_id="2" category_id="40" />
-	<sys_role_category role_id="2" category_id="41" />
-	<sys_role_category role_id="2" category_id="42" />
-	<sys_role_category role_id="2" category_id="43" />
-	<sys_role_category role_id="2" category_id="44" />
-	<sys_role_category role_id="2" category_id="45" />
-	<sys_role_category role_id="2" category_id="46" />
-	<sys_role_category role_id="2" category_id="47" />
-	<sys_role_category role_id="2" category_id="48" />
-	<sys_role_category role_id="2" category_id="49" />
-	<sys_role_category role_id="2" category_id="50" />
-	<sys_role_category role_id="2" category_id="51" />
-	<sys_role_category role_id="2" category_id="52" />
-	<sys_role_category role_id="2" category_id="53" />
-	<sys_role_category role_id="2" category_id="54" />
-	<sys_role_category role_id="2" category_id="55" />
-	<sys_role_category role_id="2" category_id="56" />
-	<sys_role_category role_id="2" category_id="57" />
-	<sys_role_category role_id="2" category_id="58" />
-	<sys_role_category role_id="2" category_id="59" />
 
 	<!-- 系统用户表   超级管理员   登录名：thinkgem  密码：admin -->
 	<sys_user id="1" area_id="1" office_id="1" login_name="thinkgem" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="Thinkgem" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
