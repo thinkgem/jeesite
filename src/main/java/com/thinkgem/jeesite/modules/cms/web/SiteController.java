@@ -88,10 +88,16 @@ public class SiteController extends BaseController {
 	 * @param siteId
 	 * @return
 	 */
+	@RequiresPermissions("cms:view")
 	@RequiresUser
 	@RequestMapping(value = "select")
-	public String select(Long id){
-		UserUtils.putCache("siteId", id);
-		return "redirect:"+BaseController.ADMIN_PATH;
+	public String select(Long id, boolean flag){
+		if (id!=null){
+			UserUtils.putCache("siteId", id);
+		}
+		if (flag){
+			return "redirect:"+BaseController.ADMIN_PATH;
+		}
+		return "modules/cms/siteSelect";
 	}
 }

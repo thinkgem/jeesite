@@ -485,7 +485,7 @@ drop sequence SEQ_SYS_MENU;
 create sequence SEQ_SYS_MENU
 minvalue 1
 maxvalue 999999999999999999999999999
-start with 52
+start with 60
 increment by 1
 cache 20;
 

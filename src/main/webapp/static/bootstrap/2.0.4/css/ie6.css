@@ -41,15 +41,15 @@ body {background:#ffffff;background-image:none;padding:0;margin:0}
         .navbar .nav li a {float:none;line-height:19px;padding:10px 10px 11px}
         .navbar .nav li a:hover {background-color:transparent;color:#ffffff;text-decoration:none;}
 
-        .navbar .nav .active a, 
-            .navbar .nav .active a:hover {color:#ffffff;text-decoration:none;background-color:#333333;}
-        .navbar .nav .open .dropdown-toggle, 
+        .navbar .nav .active a, .nav-pills .active a, .nav-pills .active a:hover,
+            .navbar .nav .active a:hover {color:#ffffff;text-decoration:none;background-color:#0088cc;}
+        .navbar .nav .open .dropdown-toggle,
             .navbar .nav .active .dropdown-toggle,
             .navbar .nav .open.active .dropdown-toggle{background-color:transparent;}
         .navbar .nav .active .dropdown-toggle:hover {background-color:transparent;color:#ffffff}
 
-    .dropdown .dropdown-toggle {margin-bottom:1px;position:relative;top:2px;left:0px}
-	.dropdown .dropdown-toggle:hover{background-color:#eeeeee;}
+    .dropdown .dropdown-toggle {margin-bottom:1px;position:relative;top:2px;left:0px;}
+	.nav-pills a:hover,.dropdown .dropdown-toggle:hover{background-color:#eeeeee;}
 	.nav .open .dropdown-toggle, .nav .open .dropdown-toggle:hover{color:#ffffff}
 	.nav .open,.nav .open .dropdown-toggle,.nav .open .dropdown-toggle:hover{background-color:#999999;}
 	

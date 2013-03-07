@@ -8,6 +8,10 @@
 		$(document).ready(function() {
 			$("#loginForm").validate();
 		});
+		// 如果在框架中，则跳转刷新上级页面
+		if(self.frameElement.tagName=="IFRAME"){
+			parent.location.reload();
+		}
 	</script>
 </head>
 <body>

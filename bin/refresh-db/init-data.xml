@@ -210,56 +210,64 @@
 	
 	<!-- 系统菜单表：编号、父级编号、名称、链接 、目标、图标、排序（升序）、是否在菜单中显示（1：显示；0：不显示）、权限标识-->
 	<sys_menu id="1" parent_id="0" parent_ids="0," name="顶级菜单" href="" target="" icon="" sort="0" is_show="1" permission="" />
-		<sys_menu id="2" parent_id="1" parent_ids="0,1," name="系统设置" href="" target="" icon="" sort="990" is_show="1" permission="" />
-			<sys_menu id="3" parent_id="2" parent_ids="0,1,2," name="菜单管理" href="/sys/menu/" target="" icon="list-alt" sort="30" is_show="1" permission="" />
-				<sys_menu id="4" parent_id="3" parent_ids="0,1,2,3," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:menu:view" />
-				<sys_menu id="5" parent_id="3" parent_ids="0,1,2,3," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:menu:edit" />
-			<sys_menu id="6" parent_id="2" parent_ids="0,1,2," name="角色管理" href="/sys/role/" target="" icon="lock" sort="50" is_show="1" permission="" />
-				<sys_menu id="7" parent_id="6" parent_ids="0,1,2,6," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:role:view" />
-				<sys_menu id="8" parent_id="6" parent_ids="0,1,2,6," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:role:edit" />
-			<sys_menu id="9" parent_id="2" parent_ids="0,1,2," name="字典管理" href="/sys/dict/" target="" icon="th-list" sort="60" is_show="1" permission="" />
-				<sys_menu id="10" parent_id="9" parent_ids="0,1,2,9," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:dict:view" />
-				<sys_menu id="11" parent_id="9" parent_ids="0,1,2,9," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:dict:edit" />
-		<sys_menu id="12" parent_id="1" parent_ids="0,1," name="机构用户" href="" target="" icon="" sort="980" is_show="1" permission="" />
-			<sys_menu id="13" parent_id="12" parent_ids="0,1,12," name="区域管理" href="/sys/area/" target="" icon="th" sort="50" is_show="1" permission="" />
-				<sys_menu id="14" parent_id="13" parent_ids="0,1,12,13," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:area:view" />
-				<sys_menu id="15" parent_id="13" parent_ids="0,1,12,13," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:area:edit" />
-			<sys_menu id="16" parent_id="12" parent_ids="0,1,12," name="部门管理" href="/sys/office/" target="" icon="th-large" sort="40" is_show="1" permission="" />
-				<sys_menu id="17" parent_id="16" parent_ids="0,1,12,16," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:office:view" />
-				<sys_menu id="18" parent_id="16" parent_ids="0,1,12,16," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:office:edit" />
-			<sys_menu id="19" parent_id="12" parent_ids="0,1,12," name="用户管理" href="/sys/user/" target="" icon="user" sort="30" is_show="1" permission="" />
-				<sys_menu id="20" parent_id="19" parent_ids="0,1,12,19," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:view" />
-				<sys_menu id="21" parent_id="19" parent_ids="0,1,12,19," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:edit" />
-		<sys_menu id="22" parent_id="1" parent_ids="0,1," name="内容管理" href="" target="" icon="" sort="900" is_show="1" permission="" />
-			<sys_menu id="23" parent_id="22" parent_ids="0,1,22," name="栏目管理" href="/cms/category/" target="" icon="align-justify" sort="80" is_show="1" permission="" />
-				<sys_menu id="24" parent_id="23" parent_ids="0,1,22,23," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:category:view" />
-				<sys_menu id="25" parent_id="23" parent_ids="0,1,22,23," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:category:edit" />
-			<sys_menu id="29" parent_id="22" parent_ids="0,1,22" name="文件管理" href="/../static/ckfinder/ckfinder.html" target="" icon="folder-open" sort="90" is_show="1" permission="" />
-				<sys_menu id="30" parent_id="29" parent_ids="0,1,22,29," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:view" />
-				<sys_menu id="31" parent_id="29" parent_ids="0,1,22,29," name="上传" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:upload" />
-				<sys_menu id="32" parent_id="29" parent_ids="0,1,22,29," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:edit" />
-			<sys_menu id="36" parent_id="22" parent_ids="0,1,22," name="内容管理" href="/cms/" target="" icon="briefcase" sort="30" is_show="1" permission="cms:view" />
-				<sys_menu id="26" parent_id="36" parent_ids="0,1,22,36," name="文章模型" href="/cms/article/" target="" icon="file" sort="40" is_show="0" permission="" />
-					<sys_menu id="27" parent_id="26" parent_ids="0,1,22,36,26," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:view" />
-					<sys_menu id="28" parent_id="26" parent_ids="0,1,22,36,26," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:edit" />
-					<sys_menu id="40" parent_id="26" parent_ids="0,1,22,36,26," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:audit" />
-				<sys_menu id="33" parent_id="36" parent_ids="0,1,22,36," name="链接模型" href="/cms/link/" target="" icon="random" sort="60" is_show="0" permission="" />
-					<sys_menu id="34" parent_id="33" parent_ids="0,1,22,36,33," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:view" />
-					<sys_menu id="35" parent_id="33" parent_ids="0,1,22,36,33," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:edit" />
-					<sys_menu id="41" parent_id="33" parent_ids="0,1,22,36,33," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:audit" />
-			<sys_menu id="37" parent_id="22" parent_ids="0,1,22," name="站点设置" href="/cms/site/" target="" icon="certificate" sort="80" is_show="1" permission="" />
-				<sys_menu id="38" parent_id="37" parent_ids="0,1,22,37," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:view" />
-				<sys_menu id="39" parent_id="37" parent_ids="0,1,22,37," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:edit" />
-			<sys_menu id="42" parent_id="22" parent_ids="0,1,22," name="公共留言" href="/cms/guestbook/?status=2" target="" icon="glass" sort="80" is_show="1" permission="" />
-				<sys_menu id="43" parent_id="42" parent_ids="0,1,22,42," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:guestbook:view" />
-				<sys_menu id="44" parent_id="42" parent_ids="0,1,22,42," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:guestbook:edit" />
-			<sys_menu id="45" parent_id="22" parent_ids="0,1,22," name="评论管理" href="/cms/comment/?status=2" target="" icon="comment" sort="40" is_show="1" permission="" />
-				<sys_menu id="46" parent_id="45" parent_ids="0,1,22,45," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:comment:view" />
-				<sys_menu id="47" parent_id="45" parent_ids="0,1,22,45," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:comment:edit" />
-		<sys_menu id="48" parent_id="1" parent_ids="0,1," name="关于JeeSite" href="" target="" icon="" sort="30000" is_show="1" permission="" />
-			<sys_menu id="49" parent_id="48" parent_ids="0,1,48" name="项目首页" href="https://github.com/thinkgem/jeesite" target="_blank" icon="" sort="30" is_show="1" permission="" />
-			<sys_menu id="50" parent_id="48" parent_ids="0,1,48" name="项目维基" href="https://github.com/thinkgem/jeesite/wiki" target="_blank" icon="" sort="50" is_show="1" permission="" />
-			<sys_menu id="51" parent_id="48" parent_ids="0,1,48" name="问题反馈" href="https://github.com/thinkgem/jeesite/issues/new" target="_blank" icon="" sort="80" is_show="1" permission="" />
+		<sys_menu id="2" parent_id="1" parent_ids="0,1," name="系统设置" href="" target="" icon="" sort="900" is_show="1" permission="" />
+			<sys_menu id="3" parent_id="2" parent_ids="0,1,2," name="系统设置" href="" target="" icon="" sort="980" is_show="1" permission="" />
+				<sys_menu id="4" parent_id="3" parent_ids="0,1,2,3," name="菜单管理" href="/sys/menu/" target="" icon="list-alt" sort="30" is_show="1" permission="" />
+					<sys_menu id="5" parent_id="4" parent_ids="0,1,2,3,4," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:menu:view" />
+					<sys_menu id="6" parent_id="4" parent_ids="0,1,2,3,4," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:menu:edit" />
+				<sys_menu id="7" parent_id="3" parent_ids="0,1,2,3," name="角色管理" href="/sys/role/" target="" icon="lock" sort="50" is_show="1" permission="" />
+					<sys_menu id="8" parent_id="7" parent_ids="0,1,2,3,7," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:role:view" />
+					<sys_menu id="9" parent_id="7" parent_ids="0,1,2,3,7," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:role:edit" />
+				<sys_menu id="10" parent_id="3" parent_ids="0,1,2,3," name="字典管理" href="/sys/dict/" target="" icon="th-list" sort="60" is_show="1" permission="" />
+					<sys_menu id="11" parent_id="10" parent_ids="0,1,2,3,10," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:dict:view" />
+					<sys_menu id="12" parent_id="10" parent_ids="0,1,2,3,10," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:dict:edit" />
+			<sys_menu id="13" parent_id="2" parent_ids="0,1,2," name="机构用户" href="" target="" icon="" sort="970" is_show="1" permission="" />
+				<sys_menu id="14" parent_id="13" parent_ids="0,1,2,13," name="区域管理" href="/sys/area/" target="" icon="th" sort="50" is_show="1" permission="" />
+					<sys_menu id="15" parent_id="14" parent_ids="0,1,2,13,14," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:area:view" />
+					<sys_menu id="16" parent_id="14" parent_ids="0,1,2,13,14," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:area:edit" />
+				<sys_menu id="17" parent_id="13" parent_ids="0,1,2,13," name="部门管理" href="/sys/office/" target="" icon="th-large" sort="40" is_show="1" permission="" />
+					<sys_menu id="18" parent_id="17" parent_ids="0,1,2,13,17," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:office:view" />
+					<sys_menu id="19" parent_id="17" parent_ids="0,1,2,13,17," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:office:edit" />
+				<sys_menu id="20" parent_id="13" parent_ids="0,1,2,13," name="用户管理" href="/sys/user/" target="" icon="user" sort="30" is_show="1" permission="" />
+					<sys_menu id="21" parent_id="20" parent_ids="0,1,2,13,20," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:view" />
+					<sys_menu id="22" parent_id="20" parent_ids="0,1,2,13,20," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:edit" />
+			<sys_menu id="23" parent_id="2" parent_ids="0,1,2," name="关于帮助" href="" target="" icon="" sort="990" is_show="1" permission="" />
+				<sys_menu id="24" parent_id="23" parent_ids="0,1,2,23" name="项目首页" href="https://github.com/thinkgem/jeesite" target="_blank" icon="" sort="30" is_show="1" permission="" />
+				<sys_menu id="25" parent_id="23" parent_ids="0,1,2,23" name="项目维基" href="https://github.com/thinkgem/jeesite/wiki" target="_blank" icon="" sort="50" is_show="1" permission="" />
+				<sys_menu id="26" parent_id="23" parent_ids="0,1,2,23" name="问题反馈" href="https://github.com/thinkgem/jeesite/issues/new" target="_blank" icon="" sort="80" is_show="1" permission="" />
+		<sys_menu id="27" parent_id="1" parent_ids="0,1," name="我的面板" href="" target="" icon="" sort="100" is_show="1" permission="" />
+			<sys_menu id="28" parent_id="27" parent_ids="0,1,27," name="个人信息" href="" target="" icon="" sort="990" is_show="1" permission="" />
+				<sys_menu id="29" parent_id="28" parent_ids="0,1,27,28," name="个人信息" href="/sys/user/info" target="" icon="home" sort="30" is_show="1" permission="" />
+				<sys_menu id="30" parent_id="28" parent_ids="0,1,27,28," name="修改密码" href="/sys/user/modifyPwd" target="" icon="lock" sort="40" is_show="1" permission="" />
+		<sys_menu id="31" parent_id="1" parent_ids="0,1," name="内容管理" href="" target="" icon="" sort="500" is_show="1" permission="" />
+			<sys_menu id="32" parent_id="31" parent_ids="0,1,31," name="栏目设置" href="" target="" icon="" sort="990" is_show="1" permission="" />
+				<sys_menu id="33" parent_id="32" parent_ids="0,1,31,32" name="栏目管理" href="/cms/category/" target="" icon="align-justify" sort="30" is_show="1" permission="" />
+					<sys_menu id="34" parent_id="33" parent_ids="0,1,31,32,33," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:category:view" />
+					<sys_menu id="35" parent_id="33" parent_ids="0,1,31,32,33," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:category:edit" />
+				<sys_menu id="36" parent_id="32" parent_ids="0,1,31,32" name="站点设置" href="/cms/site/" target="" icon="certificate" sort="40" is_show="1" permission="" />
+					<sys_menu id="37" parent_id="36" parent_ids="0,1,31,32,36," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:view" />
+					<sys_menu id="38" parent_id="36" parent_ids="0,1,31,32,36," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:site:edit" />
+				<sys_menu id="39" parent_id="32" parent_ids="0,1,31,32" name="切换站点" href="/cms/site/select" target="" icon="retweet" sort="50" is_show="1" permission="" />
+			<sys_menu id="40" parent_id="31" parent_ids="0,1,31," name="内容管理" href="" target="" icon="" sort="500" is_show="1" permission="cms:view" />
+				<sys_menu id="41" parent_id="40" parent_ids="0,1,31,40," name="内容发布" href="/cms/" target="" icon="briefcase" sort="30" is_show="1" permission="" />
+					<sys_menu id="42" parent_id="41" parent_ids="0,1,31,40,41," name="文章模型" href="/cms/article/" target="" icon="file" sort="40" is_show="0" permission="" />
+						<sys_menu id="43" parent_id="42" parent_ids="0,1,31,40,41,42," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:view" />
+						<sys_menu id="44" parent_id="42" parent_ids="0,1,31,40,41,42," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:edit" />
+						<sys_menu id="45" parent_id="42" parent_ids="0,1,31,40,41,42," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:article:audit" />
+					<sys_menu id="46" parent_id="41" parent_ids="0,1,31,40,41," name="链接模型" href="/cms/link/" target="" icon="random" sort="60" is_show="0" permission="" />
+						<sys_menu id="47" parent_id="46" parent_ids="0,1,31,40,41,46," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:view" />
+						<sys_menu id="48" parent_id="46" parent_ids="0,1,31,40,41,46," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:edit" />
+						<sys_menu id="49" parent_id="46" parent_ids="0,1,31,40,41,46," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:link:audit" />
+				<sys_menu id="50" parent_id="40" parent_ids="0,1,31,40," name="评论管理" href="/cms/comment/?status=2" target="" icon="comment" sort="40" is_show="1" permission="" />
+					<sys_menu id="51" parent_id="50" parent_ids="0,1,31,40,50," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:comment:view" />
+					<sys_menu id="52" parent_id="50" parent_ids="0,1,31,40,50," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:comment:edit" />
+				<sys_menu id="53" parent_id="40" parent_ids="0,1,31,40," name="公共留言" href="/cms/guestbook/?status=2" target="" icon="glass" sort="80" is_show="1" permission="" />
+					<sys_menu id="54" parent_id="53" parent_ids="0,1,31,40,53," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:guestbook:view" />
+					<sys_menu id="55" parent_id="53" parent_ids="0,1,31,40,53," name="审核" href="" target="" icon="" sort="30" is_show="0" permission="cms:guestbook:edit" />
+				<sys_menu id="56" parent_id="40" parent_ids="0,1,31,40," name="文件管理" href="/../static/ckfinder/ckfinder.html" target="" icon="folder-open" sort="90" is_show="1" permission="" />
+					<sys_menu id="57" parent_id="56" parent_ids="0,1,31,40,56," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:view" />
+					<sys_menu id="58" parent_id="56" parent_ids="0,1,31,40,56," name="上传" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:upload" />
+					<sys_menu id="59" parent_id="56" parent_ids="0,1,31,40,56," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:edit" />
 			
 	<!-- 系统角色表 -->
 	<sys_role id="1" name="系统管理员" />
@@ -365,18 +373,28 @@
 	<sys_role_category role_id="1" category_id="37" />
 	<sys_role_category role_id="1" category_id="38" />
 	<sys_role_category role_id="1" category_id="39" />
+	<sys_role_category role_id="1" category_id="40" />
+	<sys_role_category role_id="1" category_id="41" />
+	<sys_role_category role_id="1" category_id="42" />
+	<sys_role_category role_id="1" category_id="43" />
+	<sys_role_category role_id="1" category_id="44" />
+	<sys_role_category role_id="1" category_id="45" />
+	<sys_role_category role_id="1" category_id="46" />
+	<sys_role_category role_id="1" category_id="47" />
+	<sys_role_category role_id="1" category_id="48" />
+	<sys_role_category role_id="1" category_id="49" />
+	<sys_role_category role_id="1" category_id="50" />
+	<sys_role_category role_id="1" category_id="51" />
+	<sys_role_category role_id="1" category_id="52" />
+	<sys_role_category role_id="1" category_id="53" />
+	<sys_role_category role_id="1" category_id="54" />
+	<sys_role_category role_id="1" category_id="55" />
+	<sys_role_category role_id="1" category_id="56" />
+	<sys_role_category role_id="1" category_id="57" />
+	<sys_role_category role_id="1" category_id="58" />
+	<sys_role_category role_id="1" category_id="59" />
 	<sys_role_category role_id="2" category_id="1" />
 	<sys_role_category role_id="2" category_id="2" />
-	<sys_role_category role_id="2" category_id="3" />
-	<sys_role_category role_id="2" category_id="4" />
-	<sys_role_category role_id="2" category_id="5" />
-	<sys_role_category role_id="2" category_id="6" />
-	<sys_role_category role_id="2" category_id="7" />
-	<sys_role_category role_id="2" category_id="8" />
-	<sys_role_category role_id="2" category_id="9" />
-	<sys_role_category role_id="2" category_id="10" />
-	<sys_role_category role_id="2" category_id="11" />
-	<sys_role_category role_id="2" category_id="12" />
 	<sys_role_category role_id="2" category_id="13" />
 	<sys_role_category role_id="2" category_id="14" />
 	<sys_role_category role_id="2" category_id="15" />
@@ -404,6 +422,26 @@
 	<sys_role_category role_id="2" category_id="37" />
 	<sys_role_category role_id="2" category_id="38" />
 	<sys_role_category role_id="2" category_id="39" />
+	<sys_role_category role_id="2" category_id="40" />
+	<sys_role_category role_id="2" category_id="41" />
+	<sys_role_category role_id="2" category_id="42" />
+	<sys_role_category role_id="2" category_id="43" />
+	<sys_role_category role_id="2" category_id="44" />
+	<sys_role_category role_id="2" category_id="45" />
+	<sys_role_category role_id="2" category_id="46" />
+	<sys_role_category role_id="2" category_id="47" />
+	<sys_role_category role_id="2" category_id="48" />
+	<sys_role_category role_id="2" category_id="49" />
+	<sys_role_category role_id="2" category_id="50" />
+	<sys_role_category role_id="2" category_id="51" />
+	<sys_role_category role_id="2" category_id="52" />
+	<sys_role_category role_id="2" category_id="53" />
+	<sys_role_category role_id="2" category_id="54" />
+	<sys_role_category role_id="2" category_id="55" />
+	<sys_role_category role_id="2" category_id="56" />
+	<sys_role_category role_id="2" category_id="57" />
+	<sys_role_category role_id="2" category_id="58" />
+	<sys_role_category role_id="2" category_id="59" />
 
 	<!-- 系统用户表   超级管理员   登录名：thinkgem  密码：admin -->
 	<sys_user id="1" area_id="1" office_id="1" login_name="thinkgem" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="Thinkgem" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />

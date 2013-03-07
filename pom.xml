@@ -76,7 +76,7 @@
 		
 		<repository>
 			<id>repo.springsource.org</id>
-			<name>repo.springsource.org-releases</name>
+			<name>SpringSource Repository</name>
 			<url>http://repo.springsource.org/libs-milestone-local</url>
 			<snapshots>
 				<enabled>false</enabled>
