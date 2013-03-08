@@ -73,8 +73,8 @@ JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、�
 
 ##更多文档
 
-* [JeeSite介绍演示.docx](https://github.com/thinkgem/jeesite/raw/master/doc/JeeSite%E4%BB%8B%E7%BB%8D%E6%BC%94%E7%A4%BA.docx)
-* [JeeSite开发手册.docx](https://github.com/thinkgem/jeesite/raw/master/doc/JeeSite%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C.docx)
+* [JeeSite介绍演示.docx](https://github.com/thinkgem/jeesite/raw/master/doc/JeeSite About.docx)
+* [JeeSite开发手册.docx](https://github.com/thinkgem/jeesite/raw/master/doc/JeeSite Developer.docx)
 
 ## 交流、反馈、参与贡献？ 
 
