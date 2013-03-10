@@ -232,7 +232,7 @@
 					<sys_menu id="21" parent_id="20" parent_ids="0,1,2,13,20," name="查看" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:view" />
 					<sys_menu id="22" parent_id="20" parent_ids="0,1,2,13,20," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="sys:user:edit" />
 			<sys_menu id="23" parent_id="2" parent_ids="0,1,2," name="关于帮助" href="" target="" icon="" sort="990" is_show="1" permission="" />
-				<sys_menu id="24" parent_id="23" parent_ids="0,1,2,23" name="项目首页" href="https://github.com/thinkgem/jeesite" target="_blank" icon="" sort="30" is_show="1" permission="" />
+				<sys_menu id="24" parent_id="23" parent_ids="0,1,2,23" name="项目首页" href="http://jeesite.com" target="_blank" icon="" sort="30" is_show="1" permission="" />
 				<sys_menu id="25" parent_id="23" parent_ids="0,1,2,23" name="项目维基" href="https://github.com/thinkgem/jeesite/wiki" target="_blank" icon="" sort="50" is_show="1" permission="" />
 				<sys_menu id="26" parent_id="23" parent_ids="0,1,2,23" name="问题反馈" href="https://github.com/thinkgem/jeesite/issues/new" target="_blank" icon="" sort="80" is_show="1" permission="" />
 		<sys_menu id="27" parent_id="1" parent_ids="0,1," name="我的面板" href="" target="" icon="" sort="100" is_show="1" permission="" />
