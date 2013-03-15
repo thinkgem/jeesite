@@ -1,6 +1,6 @@
 body{
-  background:url(../images/bg.jpg);
-  text-shadow: 1px 1px 0px white;
+  background:url(../images/bg.jpg);/*
+  text-shadow: 1px 1px 0px white;*/
   margin: 0;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 13px;
