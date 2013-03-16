@@ -18,7 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
@@ -34,7 +35,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.google.common.collect.Lists;
@@ -69,7 +70,7 @@ public class Article extends BaseEntity {
 	private Date updateDate;// 更新时间
 
 	private ArticleData articleData;	//文章副表
-
+    
 	public Article() {
 		this.status = STATUS_RELEASE;
 		this.weight = 0;
@@ -105,6 +106,7 @@ public class Article extends BaseEntity {
 	@JoinColumn(name="category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotNull
 	public Category getCategory() {
 		return category;
 	}
@@ -125,8 +127,7 @@ public class Article extends BaseEntity {
 		this.user = user;
 	}
 
-	@NotBlank
-	@Size(min=0, max=255)
+	@Length(min=1, max=255)
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getTitle() {
 		return title;
@@ -136,7 +137,7 @@ public class Article extends BaseEntity {
 		this.title = title;
 	}
 
-	@Size(min=0, max=50)
+	@Length(min=0, max=50)
 	public String getColor() {
 		return color;
 	}
@@ -145,7 +146,7 @@ public class Article extends BaseEntity {
 		this.color = color;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getThumb() {
 		return thumb;
 	}
@@ -154,7 +155,7 @@ public class Article extends BaseEntity {
 		this.thumb = thumb;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getKeywords() {
 		return keywords;
@@ -164,7 +165,7 @@ public class Article extends BaseEntity {
 		this.keywords = keywords;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getDesciption() {
 		return desciption;
@@ -174,7 +175,6 @@ public class Article extends BaseEntity {
 		this.desciption = desciption;
 	}
 
-	@Size(min=0, max=1)
 	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
 	public String getStatus() {
 		return status;
@@ -184,6 +184,7 @@ public class Article extends BaseEntity {
 		this.status = status;
 	}
 
+	@NotNull
 	public Integer getWeight() {
 		return weight;
 	}
@@ -200,7 +201,7 @@ public class Article extends BaseEntity {
 		this.hits = hits;
 	}
 
-	@Size(min=0, max=10)
+	@Length(min=0, max=10)
 	public String getPosid() {
 		return posid;
 	}
@@ -209,6 +210,7 @@ public class Article extends BaseEntity {
 		this.posid = posid;
 	}
 
+	@NotNull
 	public Date getInputDate() {
 		return inputDate;
 	}
@@ -229,6 +231,7 @@ public class Article extends BaseEntity {
 
 	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false) 
 	@IndexedEmbedded
+	@Valid
 	public ArticleData getArticleData() {
 		return articleData;
 	}

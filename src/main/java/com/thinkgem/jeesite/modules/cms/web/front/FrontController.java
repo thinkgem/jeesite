@@ -11,13 +11,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.persistence.Page;
@@ -38,7 +36,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 /**
  * 网站Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Controller
 @RequestMapping(value = BaseController.FRONT_PATH)
@@ -54,17 +52,17 @@ public class FrontController extends BaseController{
 	private CategoryService categoryService;
 	
 	@RequestMapping(value = "")
-	public String index(Model model) {
-		return index(1L, model);
+	public String index() {
+		return index(1L);
 	}
 	
 	/**
 	 * 首页
 	 */
 	@RequestMapping(value = "index-{siteId}" + URL_SUFFIX)
-	public String index(@PathVariable Long siteId, Model model) {
+	public String index(@PathVariable Long siteId) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
-		model.addAttribute("site", site);
+		addModelAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
 	}
 	
@@ -73,14 +71,14 @@ public class FrontController extends BaseController{
 	 */
 	@RequestMapping(value = "list-{categoryId}" + URL_SUFFIX)
 	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
-			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
+			@RequestParam(required=false, defaultValue="30") Integer pageSize) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
 			Site site = CmsUtils.getSite(1L);
-			model.addAttribute("site", site);
+			addModelAttribute("site", site);
 			return "error/404";
 		}
-		model.addAttribute("site", category.getSite());
+		addModelAttribute("site", category.getSite());
 		// 2：栏目第一条内容
 		if("2".equals(category.getShowModes()) && "article".equals(category.getModule())){
 			Page<Article> page = new Page<Article>(1, 1, -1);
@@ -92,9 +90,9 @@ public class FrontController extends BaseController{
 			}
 			List<Category> categoryList = categoryService.findByParentId(
 					article.getCategory().getParent().getId(), category.getSite().getId());
-			model.addAttribute("category", article.getCategory());
-			model.addAttribute("categoryList", categoryList);
-			model.addAttribute("article", article);
+			addModelAttribute("category", article.getCategory());
+			addModelAttribute("categoryList", categoryList);
+			addModelAttribute("article", article);
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
 		}else{
 			List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
@@ -110,14 +108,14 @@ public class FrontController extends BaseController{
 				if ("article".equals(category.getModule())){
 					Page<Article> page = new Page<Article>(pageNo, pageSize);
 					page = articleService.find(page, new Article(category));
-					model.addAttribute("page", page);
+					addModelAttribute("page", page);
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
 					page = linkService.find(page, new Link(category));
-					model.addAttribute("page", page);
+					addModelAttribute("page", page);
 				}
-				model.addAttribute("category", category);
-				model.addAttribute("categoryList", categoryList);
+				addModelAttribute("category", category);
+				addModelAttribute("categoryList", categoryList);
 				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontList";
 			}
 			// 有子栏目：显示子栏目列表
@@ -135,9 +133,9 @@ public class FrontController extends BaseController{
 						}
 					}
 				}
-				model.addAttribute("category", category);
-				model.addAttribute("categoryList", categoryList);
-				model.addAttribute("categoryMap", categoryMap);
+				addModelAttribute("category", category);
+				addModelAttribute("categoryList", categoryList);
+				addModelAttribute("categoryMap", categoryMap);
 				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory";
 			}
 		}
@@ -147,30 +145,30 @@ public class FrontController extends BaseController{
 	 * 显示内容
 	 */
 	@RequestMapping(value = "view-{categoryId}-{contentId}" + URL_SUFFIX)
-	public String view(@PathVariable Long categoryId, @PathVariable Long contentId, Model model) {
+	public String view(@PathVariable Long categoryId, @PathVariable Long contentId) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
 			Site site = CmsUtils.getSite(1L);
-			model.addAttribute("site", site);
+			addModelAttribute("site", site);
 			return "error/404";
 		}
-		model.addAttribute("site", category.getSite());
+		addModelAttribute("site", category.getSite());
 		if ("article".equals(category.getModule())){
 			Article article = articleService.get(contentId);
 			if (article==null || !Article.STATUS_RELEASE.equals(article.getStatus())){
 				return "error/404";
 			}
-			model.addAttribute("article", article);
-			model.addAttribute("category", article.getCategory());
+			addModelAttribute("article", article);
+			addModelAttribute("category", article.getCategory());
 			// 文章阅读次数+1
 			articleService.updateHitsAddOne(contentId);
 			// 分类列表
 			List<Category> categoryList = categoryService.findByParentId(
 					article.getCategory().getParent().getId(), category.getSite().getId());
-			model.addAttribute("categoryList", categoryList);
+			addModelAttribute("categoryList", categoryList);
 			// 获取推荐文章列表
 			List<Object[]> relationList = articleService.findByIds(article.getArticleData().getRelation());
-			model.addAttribute("relationList", relationList); 
+			addModelAttribute("relationList", relationList); 
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
 		}
 		return null;
@@ -180,15 +178,15 @@ public class FrontController extends BaseController{
 	 * 内容评论
 	 */
 	@RequestMapping(value = "comment", method=RequestMethod.GET)
-	public String comment(String theme, Comment comment, Model model) {
+	public String comment(String theme, Comment comment) {
 		Page<Comment> page = new Page<Comment>(request, response);
 		Comment c = new Comment();
 		c.setModule(comment.getModule());
 		c.setContentId(comment.getContentId());
 		c.setStatus(Comment.STATUS_RELEASE);
 		page = commentService.find(page, c);
-		model.addAttribute("page", page);
-		model.addAttribute("comment", comment);
+		addModelAttribute("page", page);
+		addModelAttribute("comment", comment);
 		return "modules/cms/front/themes/"+theme+"/frontComment";
 	}
 	
@@ -197,8 +195,7 @@ public class FrontController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "comment", method=RequestMethod.POST)
-	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) Long replyId,
-			Model model, RedirectAttributes redirectAttributes) {
+	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) Long replyId) {
 		if (StringUtils.isNotBlank(validateCode)){
 			if (ValidateCodeServlet.validate(request, validateCode)){
 				if (replyId!=null && replyId!=0){
@@ -225,9 +222,9 @@ public class FrontController extends BaseController{
 	 * 站点地图
 	 */
 	@RequestMapping(value = "map-{siteId}" + URL_SUFFIX)
-	public String map(@PathVariable Long siteId, Model model) {
+	public String map(@PathVariable Long siteId) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
-		model.addAttribute("site", site);
+		addModelAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontMap";
 	}
 	
@@ -235,19 +232,21 @@ public class FrontController extends BaseController{
 	 * 全站搜索
 	 */
 	@RequestMapping(value = "search")
-	public String search(String t, String q, Model model) {
+	public String search(String t, String q) {
 		Site site = CmsUtils.getSite(1L);
-		model.addAttribute("site", site);
+		addModelAttribute("site", site);
 		if (StringUtils.isBlank(t) || "article".equals(t)){
+			// ========= 正式环境，请注释掉cmd代码 =========
 			if ("cmd:reindex".equals(q)){
 				articleService.createIndex();
-				model.addAttribute("message", "重建索引成功");
+				addModelAttribute("message", "重建索引成功");
 			}
+			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
 			Page<Article> page = articleService.search(new Page<Article>(request, response), q);
-			model.addAttribute("page", page);
+			addModelAttribute("page", page);
 		}
-		model.addAttribute("t", t);// 搜索类型
-		model.addAttribute("q", q);// 搜索关键字
+		addModelAttribute("t", t);// 搜索类型
+		addModelAttribute("q", q);// 搜索关键字
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 	}
 	

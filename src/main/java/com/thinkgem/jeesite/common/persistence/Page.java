@@ -23,7 +23,7 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
 /**
  * 分页类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  * @param <T>
  */
 public class Page<T> {
@@ -56,7 +56,7 @@ public class Page<T> {
 	 * @param response 用于设置 Cookie，记住页码
 	 */
 	public Page(HttpServletRequest request, HttpServletResponse response){
-		this(request, response, -1);
+		this(request, response, -2);
 	}
 	
 	/**
@@ -78,19 +78,18 @@ public class Page<T> {
 			}
 		}
 		// 设置页面大小参数（传递repage参数，来记住页码大小）
-		if (pageSize==-1){
-			String size = request.getParameter("pageSize");
+		String size = request.getParameter("pageSize");
+		if (StringUtils.isNumeric(size)){
+			CookieUtils.setCookie(response, "pageSize", size);
+			this.setPageSize(Integer.parseInt(size));
+		}else if (request.getParameter("repage")!=null){
+			no = CookieUtils.getCookie(request, "pageSize");
 			if (StringUtils.isNumeric(size)){
-				CookieUtils.setCookie(response, "pageSize", size);
 				this.setPageSize(Integer.parseInt(size));
-			}else if (request.getParameter("repage")!=null){
-				no = CookieUtils.getCookie(request, "pageSize");
-				if (StringUtils.isNumeric(size)){
-					this.setPageSize(Integer.parseInt(size));
-				}
 			}
-		}else{
-			this.setPageSize(pageSize);
+		}
+		if (pageSize != -2){
+			this.pageSize = pageSize;
 		}
 		// 设置排序参数
 		String orderBy = request.getParameter("orderBy");
@@ -128,7 +127,7 @@ public class Page<T> {
 	public Page(int pageNo, int pageSize, long count, List<T> list) {
 		this.setCount(count);
 		this.setPageNo(pageNo);
-		this.setPageSize(pageSize);
+		this.pageSize = pageSize;
 		this.setList(list);
 	}
 	
@@ -270,14 +269,14 @@ public class Page<T> {
 		return sb.toString();
 	}
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		Page<String> p = new Page<String>(3, 3);
 //		System.out.println(p);
 //		System.out.println("首页："+p.getFirst());
 //		System.out.println("尾页："+p.getLast());
 //		System.out.println("上页："+p.getPrev());
 //		System.out.println("下页："+p.getNext());
-	}
+//	}
 
 	/**
 	 * 获取设置总数
@@ -327,7 +326,7 @@ public class Page<T> {
 	 * @param pageSize
 	 */
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize > 500 ? 500 : pageSize;
+		this.pageSize = pageSize < 0 ? 10 : pageSize > 500 ? 500 : pageSize;
 	}
 
 	/**
@@ -483,9 +482,9 @@ public class Page<T> {
 		if (orderBy!=null){
 			for (String order : StringUtils.split(orderBy, ",")){
 				String[] o = StringUtils.split(order, " ");
-				if (o.length>=1){
+				if (o.length==1){
 					orders.add(new Order(Direction.ASC, o[0]));
-				}else if (o.length>=2){
+				}else if (o.length==2){
 					if ("DESC".equals(o[1].toUpperCase())){
 						orders.add(new Order(Direction.DESC, o[0]));
 					}else{

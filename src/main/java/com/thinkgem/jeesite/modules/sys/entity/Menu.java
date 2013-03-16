@@ -21,7 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,7 +30,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
@@ -87,6 +87,7 @@ public class Menu extends BaseEntity {
 	@JoinColumn(name="parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotNull
 	public Menu getParent() {
 		return parent;
 	}
@@ -95,6 +96,7 @@ public class Menu extends BaseEntity {
 		this.parent = parent;
 	}
 
+	@Length(min=1, max=255)
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -103,8 +105,7 @@ public class Menu extends BaseEntity {
 		this.parentIds = parentIds;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -113,7 +114,7 @@ public class Menu extends BaseEntity {
 		this.name = name;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getHref() {
 		return href;
 	}
@@ -122,7 +123,7 @@ public class Menu extends BaseEntity {
 		this.href = href;
 	}
 
-	@Size(min=0, max=20)
+	@Length(min=0, max=20)
 	public String getTarget() {
 		return target;
 	}
@@ -131,7 +132,7 @@ public class Menu extends BaseEntity {
 		this.target = target;
 	}
 	
-	@Size(min=0, max=100)
+	@Length(min=0, max=100)
 	public String getIcon() {
 		return icon;
 	}
@@ -139,15 +140,17 @@ public class Menu extends BaseEntity {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-
+	
+	@NotNull
 	public Integer getSort() {
 		return sort;
 	}
-
+	
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-
+	
+	@Length(min=1, max=1)
 	public String getIsShow() {
 		return isShow;
 	}
@@ -156,7 +159,7 @@ public class Menu extends BaseEntity {
 		this.isShow = isShow;
 	}
 
-	@Size(min=0, max=200)
+	@Length(min=0, max=200)
 	public String getPermission() {
 		return permission;
 	}
@@ -164,7 +167,8 @@ public class Menu extends BaseEntity {
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-
+	
+	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
 	}

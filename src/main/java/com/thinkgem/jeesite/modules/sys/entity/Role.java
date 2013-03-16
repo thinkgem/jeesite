@@ -18,7 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
@@ -28,7 +27,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
@@ -75,8 +74,7 @@ public class Role extends BaseEntity {
 		this.id = id;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -84,7 +82,8 @@ public class Role extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
 	}

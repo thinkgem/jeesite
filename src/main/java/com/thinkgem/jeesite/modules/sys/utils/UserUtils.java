@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
@@ -33,7 +33,7 @@ import com.thinkgem.jeesite.modules.sys.security.SystemRealm.Principal;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 public class UserUtils implements ApplicationContextAware {
 	
 	private static UserDao userDao;
@@ -52,6 +52,13 @@ public class UserUtils implements ApplicationContextAware {
 			}
 		}
 		return user;
+	}
+	
+	public static User getUser(boolean isRefresh){
+		if (isRefresh){
+			removeCache("user");
+		}
+		return getUser();
 	}
 
 	public static List<Menu> getMenuList(){

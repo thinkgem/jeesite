@@ -21,7 +21,8 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -37,8 +38,8 @@
 		<li class="active"><a href="${ctx}/sys/user/form?id=${user.id}">用户<shiro:hasPermission name="sys:user:edit">${not empty user.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:user:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
-		<div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
 		<form:hidden path="id"/>
+		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">所属区域:</label>
 			<div class="controls">
@@ -130,6 +131,20 @@
 				<form:checkboxes path="roleIdList" items="${allRoles}" itemLabel="name" itemValue="id" htmlEscape="false" class="required" />
 			</div>
 		</div>
+		<c:if test="${not empty user.id}">
+			<div class="control-group">
+				<label class="control-label">创建时间:</label>
+				<div class="controls">
+					<label class="lbl"><fmt:formatDate value="${user.createDate}" type="both" dateStyle="full"/></label>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">最后登陆:</label>
+				<div class="controls">
+					<label class="lbl">IP: ${user.loginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.loginDate}" type="both" dateStyle="full"/></label>
+				</div>
+			</div>
+		</c:if>
 		<div class="form-actions">
 			<shiro:hasPermission name="sys:role:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

@@ -14,14 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -73,8 +73,7 @@ public class Guestbook extends BaseEntity {
 		this.id = id;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getType() {
 		return type;
 	}
@@ -83,8 +82,7 @@ public class Guestbook extends BaseEntity {
 		this.type = type;
 	}
 
-	@NotBlank
-	@Size(min=0, max=255)
+	@Length(min=1, max=255)
 	public String getContent() {
 		return content;
 	}
@@ -93,8 +91,7 @@ public class Guestbook extends BaseEntity {
 		this.content = content;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -103,8 +100,7 @@ public class Guestbook extends BaseEntity {
 		this.name = name;
 	}
 
-	@Email
-	@Size(min=0, max=100)
+	@Email @Length(min=0, max=100)
 	public String getEmail() {
 		return email;
 	}
@@ -113,7 +109,7 @@ public class Guestbook extends BaseEntity {
 		this.email = email;
 	}
 
-	@Size(min=0, max=100)
+	@Length(min=0, max=100)
 	public String getPhone() {
 		return phone;
 	}
@@ -122,7 +118,7 @@ public class Guestbook extends BaseEntity {
 		this.phone = phone;
 	}
 
-	@Size(min=0, max=100)
+	@Length(min=0, max=100)
 	public String getWorkunit() {
 		return workunit;
 	}
@@ -131,6 +127,7 @@ public class Guestbook extends BaseEntity {
 		this.workunit = workunit;
 	}
 
+	@Length(min=1, max=100)
 	public String getIp() {
 		return ip;
 	}
@@ -139,6 +136,7 @@ public class Guestbook extends BaseEntity {
 		this.ip = ip;
 	}
 
+	@NotNull
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -175,7 +173,7 @@ public class Guestbook extends BaseEntity {
 		this.reDate = reDate;
 	}
 
-	@Size(min=0, max=1)
+	@Length(min=1, max=1)
 	public String getStatus() {
 		return status;
 	}

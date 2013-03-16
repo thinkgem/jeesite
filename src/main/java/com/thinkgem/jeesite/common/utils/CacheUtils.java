@@ -10,14 +10,14 @@ import net.sf.ehcache.Element;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Cache工具类
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 public class CacheUtils implements ApplicationContextAware {
 
 	private static final String SYS_CACHE = "sysCache";

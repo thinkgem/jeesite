@@ -12,7 +12,8 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -27,9 +28,8 @@
 		<li class="active"><a href="${ctx}/sys/user/info">个人信息</a></li>
 		<li><a href="${ctx}/sys/user/modifyPwd">修改密码</a></li>
 	</ul><br/>
-	<tags:message content="${message}"/>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/info" method="post" class="form-horizontal">
-		<div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
+		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">所属区域:</label>
 			<div class="controls">
@@ -77,13 +77,13 @@
 			<div class="controls">
 				<label class="lbl">${fns:getDictLabel(user.userType, 'sys_user_type', '无')}</label>
 			</div>
-		</div><%--
+		</div>
 		<div class="control-group">
 			<label class="control-label">用户角色:</label>
 			<div class="controls">
 				<label class="lbl">${user.roleNames}</label>
 			</div>
-		</div> --%>
+		</div>
 		<div class="control-group">
 			<label class="control-label">最后登陆:</label>
 			<div class="controls">

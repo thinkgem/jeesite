@@ -59,7 +59,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 获取实体工厂管理对象
 	 */
 	@PersistenceContext
-	public EntityManager entityManager;
+	private EntityManager entityManager;
 
 	/**
 	 * 实体类类型(由构造方法自动赋值)

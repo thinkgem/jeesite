@@ -11,11 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -61,8 +60,7 @@ public class Site extends BaseEntity {
 		this.id = id;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -71,8 +69,7 @@ public class Site extends BaseEntity {
 		this.name = name;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getTitle() {
 		return title;
 	}
@@ -81,7 +78,7 @@ public class Site extends BaseEntity {
 		this.title = title;
 	}
 	
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getDesciption() {
 		return desciption;
 	}
@@ -90,7 +87,7 @@ public class Site extends BaseEntity {
 		this.desciption = desciption;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getKeywords() {
 		return keywords;
 	}
@@ -99,7 +96,7 @@ public class Site extends BaseEntity {
 		this.keywords = keywords;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=1, max=255)
 	public String getTheme() {
 		return theme;
 	}
@@ -116,6 +113,7 @@ public class Site extends BaseEntity {
 		this.copyright = copyright;
 	}
 
+	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
 	}

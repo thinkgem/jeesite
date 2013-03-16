@@ -13,6 +13,7 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
+					$("#messageBox").text("输入有误，请先更正。");
 					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
@@ -29,8 +30,8 @@
 		<li class="active"><a href="${ctx}/sys/menu/form?id=${menu.id}&parent.id=${menu.parent.id}">菜单<shiro:hasPermission name="sys:menu:edit">${not empty menu.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:menu:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="menu" action="${ctx}/sys/menu/save" method="post" class="form-horizontal">
-		<div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
 		<form:hidden path="id"/>
+		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>
 			<div class="controls">

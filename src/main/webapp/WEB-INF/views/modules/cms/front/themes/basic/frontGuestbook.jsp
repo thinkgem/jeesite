@@ -23,7 +23,7 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);

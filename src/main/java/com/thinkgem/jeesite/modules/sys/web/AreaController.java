@@ -11,12 +11,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -29,7 +27,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 区域Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Controller
 @RequestMapping(value = BaseController.ADMIN_PATH+"/sys/area")
@@ -49,50 +47,51 @@ public class AreaController extends BaseController {
 
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Area area, Model model) {
+	public String list(Area area) {
 		User user = UserUtils.getUser();
 		if(user.isAdmin()){
 			area.setId(1L);
 		}else{
 			area.setId(user.getArea().getId());
 		}
-		model.addAttribute("area", area);
+		addModelAttribute("area", area);
 		List<Area> list = Lists.newArrayList();
 		List<Area> sourcelist = areaService.findAll();
 		Area.sortList(list, sourcelist, area.getId());
-        model.addAttribute("list", list);
+        addModelAttribute("list", list);
 		return "modules/sys/areaList";
 	}
 
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "form")
-	public String form(Area area, Model model) {
+	public String form(Area area) {
 		if (area.getParent()==null||area.getParent().getId()==null){
 			area.setParent(UserUtils.getUser().getArea());
 		}
 		area.setParent(areaService.get(area.getParent().getId()));
-		model.addAttribute("area", area);
+		addModelAttribute("area", area);
 		return "modules/sys/areaForm";
 	}
 	
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "save")
-	public String save(Area area, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, area)){
-			areaService.save(area);
-			addFlashMessage(redirectAttributes, "保存区域'" + area.getName() + "'成功");
+	public String save(Area area) {
+		if (!beanValidator(area)){
+			return form(area);
 		}
+		areaService.save(area);
+		addFlashMessage("保存区域'" + area.getName() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/area/";
 	}
 	
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(Long id) {
 		if (Area.isAdmin(id)){
-			addFlashMessage(redirectAttributes, "删除区域失败, 不允许删除顶级区域或编号为空");
+			addFlashMessage("删除区域失败, 不允许删除顶级区域或编号为空");
 		}else{
 			areaService.delete(id);
-			addFlashMessage(redirectAttributes, "删除区域成功");
+			addFlashMessage("删除区域成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/area/";
 	}

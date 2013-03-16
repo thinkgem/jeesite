@@ -11,7 +11,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -24,7 +24,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Dict;
  * @author ThinkGem
  * @version 2013-03-15
  */
-@Component
+@Service
 public class DictUtils implements ApplicationContextAware {
 
 	private static DictDao dictDao;

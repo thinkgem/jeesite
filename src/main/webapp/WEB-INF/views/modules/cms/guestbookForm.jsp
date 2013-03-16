@@ -13,7 +13,8 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -29,9 +30,9 @@
 		<li class="active"><a href="${ctx}/cms/guestbook/form?id=${guestbook.id}">留言<shiro:hasPermission name="cms:guestbook:edit">${guestbook.status eq '2'?'审核':'查看'}</shiro:hasPermission><shiro:lacksPermission name="cms:guestbook:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="guestbook" action="${ctx}/cms/guestbook/save" method="post" class="form-horizontal">
-		<div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
 		<form:hidden path="id"/>
 		<form:hidden path="status"/>
+		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>
 			<div class="controls">

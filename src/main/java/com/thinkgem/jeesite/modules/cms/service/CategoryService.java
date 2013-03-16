@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -31,7 +31,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 @Transactional(readOnly = true)
 public class CategoryService extends BaseService {
 
@@ -99,6 +99,7 @@ public class CategoryService extends BaseService {
 	
 	@Transactional(readOnly = false)
 	public void save(Category category) {
+		category.setSite(new Site(Site.getCurrentSiteId()));
 		category.setParent(this.get(category.getParent().getId()));
 		String oldParentIds = category.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		category.setParentIds(category.getParent().getParentIds()+category.getParent().getId()+",");

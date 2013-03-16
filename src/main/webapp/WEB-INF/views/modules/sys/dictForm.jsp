@@ -13,7 +13,8 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -29,8 +30,8 @@
 		<li class="active"><a href="${ctx}/sys/dict/form?id=${dict.id}">字典<shiro:hasPermission name="sys:dict:edit">${not empty dict.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:dict:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="dict" action="${ctx}/sys/dict/save" method="post" class="form-horizontal">
-		<div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
 		<form:hidden path="id"/>
+		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">标签:</label>
 			<div class="controls">

@@ -10,11 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 
@@ -58,8 +58,7 @@ public class Dict extends BaseEntity {
 		this.id = id;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getLabel() {
 		return label;
 	}
@@ -68,8 +67,7 @@ public class Dict extends BaseEntity {
 		this.label = label;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getValue() {
 		return value;
 	}
@@ -78,8 +76,7 @@ public class Dict extends BaseEntity {
 		this.value = value;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getType() {
 		return type;
 	}
@@ -88,7 +85,7 @@ public class Dict extends BaseEntity {
 		this.type = type;
 	}
 
-	@Size(min=0, max=100)
+	@Length(min=0, max=100)
 	public String getDesciption() {
 		return desciption;
 	}
@@ -97,6 +94,7 @@ public class Dict extends BaseEntity {
 		this.desciption = desciption;
 	}
 
+	@NotNull
 	public Integer getSort() {
 		return sort;
 	}
@@ -104,7 +102,8 @@ public class Dict extends BaseEntity {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-
+	
+	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
 	}

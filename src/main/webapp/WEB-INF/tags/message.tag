@@ -6,5 +6,5 @@
 <c:if test="${not empty content}">
 	<c:if test="${not empty type}"><c:set var="ctype" value="${type}"/></c:if><c:if test="${empty type}"><c:set var="ctype" value="${fn:indexOf(content,'失败') eq -1?'success':'error'}"/></c:if>
 	<script type="text/javascript">top.$.jBox.tip("${content}","${ctype}",{persistent:true,opacity:0})</script>
-	<div id="message" class="alert alert-${ctype}"><button data-dismiss="alert" class="close">×</button>${content}</div> 
+	<div id="messageBox" class="alert alert-${ctype}"><button data-dismiss="alert" class="close">×</button>${content}</div> 
 </c:if>

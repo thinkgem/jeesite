@@ -12,13 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 
 /**
  * 内容管理Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Controller
 @RequestMapping(value = BaseController.ADMIN_PATH+"/cms")
@@ -29,20 +28,20 @@ public class CmsController extends BaseController {
 	
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "")
-	public String index(Category category, Model model) {
+	public String index() {
 		return "modules/cms/cmsIndex";
 	}
 	
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "tree")
-	public String tree(Category category, Model model) {
+	public String tree(Model model) {
 		model.addAttribute("categoryList", categoryService.findByUser(true));
 		return "modules/cms/cmsTree";
 	}
 	
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "none")
-	public String none(Model model) {
+	public String none() {
 		return "modules/cms/cmsNone";
 	}
 

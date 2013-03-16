@@ -26,7 +26,7 @@ import freemarker.template.Template;
 /**
  * 代码生成器
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-03-15
  */
 public class Generate {
 	
@@ -34,14 +34,16 @@ public class Generate {
 
 	public static void main(String[] args) throws Exception {
 
-		// ========== ↓↓↓↓↓↓ 执行前请修改参数，谨慎执行，以免覆盖原有模块 ====================
+		// ========== ↓↓↓↓↓↓ 执行前请修改参数，谨慎执行。↓↓↓↓↓↓ ====================
 
 		// 主要提供基本功能模块代码生成。
 		// 目录生成结构：{packageName}/{moduleName}/{dao,entity,service,web}/{subModuleName}/{className}
 		
-		String packageName = "com.examples";	// 包名，例：com.thinkgem.jeesite.modules
-		String moduleName = "ywict";			// 模块名，例：sys
-		String subModuleName = "factory";		// 子模块名（可选） 
+		// packageName 包名，这里如果更改包名，请在applicationContext.xml和srping-mvc.xml中配置base-package、packagesToScan属性，来指定多个。
+		String packageName = "com.thinkgem.jeesite.modules";
+		
+		String moduleName = "factory";			// 模块名，例：sys
+		String subModuleName = "";				// 子模块名（可选） 
 		String className = "product";			// 类名，例：user
 		String classAuthor = "ThinkGem";		// 类作者，例：ThinkGem
 		String functionName = "产品";			// 功能名，例：用户
@@ -49,7 +51,7 @@ public class Generate {
 		// 是否启用生成工具
 		Boolean isEnable = false;			
 		
-		// ========== ↑↑↑↑↑↑ 执行前请修改参数，谨慎执行，以免覆盖原有模块  ====================
+		// ========== ↑↑↑↑↑↑ 执行前请修改参数，谨慎执行。↑↑↑↑↑↑ ====================
 		
 		if (!isEnable){
 			logger.error("请启用代码生成工具，设置参数：isEnable = true");
@@ -87,9 +89,10 @@ public class Generate {
 		model.put("functionName", functionName);
 		model.put("tableName", model.get("moduleName")+(StringUtils.isNotBlank(subModuleName)
 				?"_"+StringUtils.lowerCase(subModuleName):"")+"_"+model.get("className"));
-		model.put("urlPrefix", StringUtils.substringAfterLast(model.get("packageName"),".")
-				+"/"+model.get("moduleName")+(StringUtils.isNotBlank(subModuleName)?"/"+
-				StringUtils.lowerCase(subModuleName):"")+"/"+model.get("className"));
+		model.put("urlPrefix", model.get("moduleName")+(StringUtils.isNotBlank(subModuleName)
+				?"/"+StringUtils.lowerCase(subModuleName):"")+"/"+model.get("className"));
+		model.put("viewPrefix", StringUtils.substringAfterLast(model.get("packageName"),".")
+				+"/"+model.get("urlPrefix"));
 		model.put("permissionPrefix", model.get("moduleName")+(StringUtils.isNotBlank(subModuleName)
 				?":"+StringUtils.lowerCase(subModuleName):"")+":"+model.get("className"));
 

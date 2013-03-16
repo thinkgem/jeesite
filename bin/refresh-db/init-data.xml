@@ -431,19 +431,19 @@
 
 	<!-- 系统用户表   超级管理员   登录名：thinkgem  密码：admin -->
 	<sys_user id="1" area_id="1" office_id="1" login_name="thinkgem" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="Thinkgem" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="2" area_id="1" office_id="1" login_name="admin" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="Admin" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="3" area_id="2" office_id="2" login_name="user" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="4" area_id="3" office_id="3" login_name="user2" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="Use2" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="5" area_id="3" office_id="3" login_name="user3" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User3" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="6" area_id="3" office_id="3" login_name="user4" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User4" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="7" area_id="3" office_id="3" login_name="user5" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User5" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="8" area_id="3" office_id="3" login_name="user6" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User6" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="9" area_id="3" office_id="3" login_name="user7" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User7" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="10" area_id="3" office_id="3" login_name="user8" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User8" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="11" area_id="3" office_id="3" login_name="user9" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User9" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="12" area_id="3" office_id="3" login_name="user10" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="13" area_id="3" office_id="3" login_name="user11" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
-	<sys_user id="14" area_id="3" office_id="3" login_name="user12" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="User10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="2" area_id="1" office_id="1" login_name="admin" password="02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032" name="管理员" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="3" area_id="2" office_id="2" login_name="user" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="4" area_id="3" office_id="3" login_name="user2" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户2" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="5" area_id="3" office_id="3" login_name="user3" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户3" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="6" area_id="3" office_id="3" login_name="user4" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户4" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="7" area_id="3" office_id="3" login_name="user5" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户5" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="8" area_id="3" office_id="3" login_name="user6" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户6" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="9" area_id="3" office_id="3" login_name="user7" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户7" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="10" area_id="3" office_id="3" login_name="user8" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户8" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="11" area_id="3" office_id="3" login_name="user9" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户9" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="12" area_id="3" office_id="3" login_name="user10" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户10" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="13" area_id="3" office_id="3" login_name="user11" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户11" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
+	<sys_user id="14" area_id="3" office_id="3" login_name="user12" password="c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c" name="用户12" email="thinkgem@163.com" phone="8675" mobile="8675" remarks="" />
 	
 	<!-- 用户与角色关联表 -->
 	<sys_user_role user_id="1" role_id="1" />

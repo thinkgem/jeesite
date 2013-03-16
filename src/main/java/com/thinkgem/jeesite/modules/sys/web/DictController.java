@@ -10,11 +10,9 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -24,7 +22,7 @@ import com.thinkgem.jeesite.modules.sys.service.DictService;
 /**
  * 字典Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Controller
 @RequestMapping(value = BaseController.ADMIN_PATH+"/sys/dict")
@@ -44,36 +42,37 @@ public class DictController extends BaseController {
 	
 	@RequiresPermissions("sys:dict:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Dict dict, Model model) {
+	public String list(Dict dict) {
 		List<String> typeList = dictService.findTypeList();
-		model.addAttribute("typeList", typeList);
+		addModelAttribute("typeList", typeList);
         Page<Dict> page = dictService.find(new Page<Dict>(request, response), dict); 
-        model.addAttribute("page", page);
+        addModelAttribute("page", page);
 		return "modules/sys/dictList";
 	}
 
 	@RequiresPermissions("sys:dict:view")
 	@RequestMapping(value = "form")
-	public String form(Dict dict, Model model) {
-		model.addAttribute("dict", dict);
+	public String form(Dict dict) {
+		addModelAttribute("dict", dict);
 		return "modules/sys/dictForm";
 	}
 
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "save")//@Valid 
-	public String save(Dict dict, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, dict)){
-			dictService.save(dict);
-			addFlashMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");
+	public String save(Dict dict) {
+		if (!beanValidator(dict)){
+			return form(dict);
 		}
+		dictService.save(dict);
+		addFlashMessage("保存字典'" + dict.getLabel() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/dict/?repage";
 	}
 	
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(Long id) {
 		dictService.delete(id);
-		addFlashMessage(redirectAttributes, "删除字典成功");
+		addFlashMessage("删除字典成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/dict/?repage";
 	}
 

@@ -72,9 +72,17 @@
     <name>getDictLabel</name>
     <function-class>com.thinkgem.jeesite.modules.sys.utils.DictUtils</function-class>
     <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String, java.lang.String)</function-signature>
-    <example>${fns:getDictLabel(value, label, defaultValue)}</example>  
+    <example>${fns:getDictLabel(value, type, defaultValue)}</example>  
   </function>
 
+  <function>
+    <description>获取字典值</description>
+    <name>getDictValue</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictValue(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example>${fns:getDictValue(label, type, defaultValue)}</example>  
+  </function>
+  
   <function>
     <description>获取字典对象列表</description>
     <name>getDictList</name>

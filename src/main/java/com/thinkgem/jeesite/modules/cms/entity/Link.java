@@ -14,13 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -82,6 +82,7 @@ public class Link extends BaseEntity {
 	@JoinColumn(name="category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotNull
 	public Category getCategory() {
 		return category;
 	}
@@ -102,8 +103,7 @@ public class Link extends BaseEntity {
 		this.user = user;
 	}
 
-	@NotBlank
-	@Size(min=0, max=255)
+	@Length(min=1, max=255)
 	public String getTitle() {
 		return title;
 	}
@@ -112,7 +112,7 @@ public class Link extends BaseEntity {
 		this.title = title;
 	}
 
-	@Size(min=0, max=50)
+	@Length(min=0, max=50)
 	public String getColor() {
 		return color;
 	}
@@ -121,7 +121,7 @@ public class Link extends BaseEntity {
 		this.color = color;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getImage() {
 		return image;
 	}
@@ -130,7 +130,7 @@ public class Link extends BaseEntity {
 		this.image = image;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getHref() {
 		return href;
 	}
@@ -139,7 +139,7 @@ public class Link extends BaseEntity {
 		this.href = href;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getRemarks() {
 		return remarks;
 	}
@@ -148,7 +148,7 @@ public class Link extends BaseEntity {
 		this.remarks = remarks;
 	}
 
-	@Size(min=0, max=1)
+	@Length(min=1, max=1)
 	public String getStatus() {
 		return status;
 	}
@@ -165,6 +165,7 @@ public class Link extends BaseEntity {
 		this.weight = weight;
 	}
 
+	@NotNull
 	public Date getInputDate() {
 		return inputDate;
 	}

@@ -5,6 +5,7 @@
 	
   <display-name>JeeSite</display-name>
   
+  <!-- 加载Spring配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
@@ -132,10 +133,12 @@
     <url-pattern>/servlet/validateCodeServlet</url-pattern>
   </servlet-mapping>
   
+  <!-- Session 配置 -->
   <session-config>
     <session-timeout>20</session-timeout>
   </session-config>
   
+  <!-- 错误 页面配置 -->
   <error-page>
     <exception-type>java.lang.Throwable</exception-type>
     <location>/WEB-INF/views/error/500.jsp</location>

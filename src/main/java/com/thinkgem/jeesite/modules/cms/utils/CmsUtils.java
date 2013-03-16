@@ -11,7 +11,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.cms.service.SiteService;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 public class CmsUtils implements ApplicationContextAware {
 
 	private static final String CMS_CACHE = "cmsCache";

@@ -5,16 +5,13 @@
  */
 package com.thinkgem.jeesite.modules.cms.web;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -25,7 +22,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 站点Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Controller
 @RequestMapping(value = BaseController.ADMIN_PATH+"/cms/site")
@@ -45,40 +42,38 @@ public class SiteController extends BaseController {
 	
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Site site, Model model) {
+	public String list(Site site) {
         Page<Site> page = siteService.find(new Page<Site>(request, response), site); 
-        model.addAttribute("page", page);
+        addModelAttribute("page", page);
 		return "modules/cms/siteList";
 	}
 
 	@RequiresPermissions("cms:site:view")
 	@RequestMapping(value = "form")
-	public String form(Site site, Model model) {
-		model.addAttribute("site", site);
+	public String form(Site site) {
+		addModelAttribute("site", site);
 		return "modules/cms/siteForm";
 	}
 
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "save")
-	public String save(Site site, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, site)){
-			if (site.getCopyright()!=null){
-				site.setCopyright(StringEscapeUtils.unescapeHtml4(site.getCopyright()));
-			}
-			siteService.save(site);
-			addFlashMessage(redirectAttributes, "保存站点'" + site.getName() + "'成功");
+	public String save(Site site) {
+		if (!beanValidator(site)){
+			return form(site);
 		}
+		siteService.save(site);
+		addFlashMessage("保存站点'" + site.getName() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/cms/site/?repage";
 	}
 	
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(Long id, @RequestParam(required=false) Boolean isRe) {
 		if (Site.isDefault(id)){
-			addFlashMessage(redirectAttributes, "删除站点失败, 不允许删除默认站点");
+			addFlashMessage("删除站点失败, 不允许删除默认站点");
 		}else{
 			siteService.delete(id, isRe);
-			addFlashMessage(redirectAttributes, (isRe!=null&&isRe?"恢复":"")+"删除站点成功");
+			addFlashMessage((isRe!=null&&isRe?"恢复":"")+"删除站点成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/cms/site/?repage";
 	}
