@@ -26,18 +26,40 @@
 				}else{
 					$("#orderBy").val(order+" ASC");
 				}
-				$("#searchForm").submit();
+				page();
+			});
+			$("#btnExport").click(function(){
+				top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
+					if(v=="ok"){
+						$("#searchForm").attr("action","${ctx}/sys/user/export");
+						$("#searchForm").submit();
+					}
+				},{buttonsFocus:1});
+				top.$('.jbox-body .jbox-icon').css('top','55px');
+			});
+			$("#btnImport").click(function(){
+				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
+					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
 			});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
+			$("#searchForm").attr("action","${ctx}/sys/user/");
 			$("#searchForm").submit();
 	    	return false;
 	    }
 	</script>
 </head>
 <body>
+	<div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/sys/user/import" method="post" enctype="multipart/form-data"
+			style="padding-left:20px;text-align:center;"><br/>
+			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
+			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
+			<a href="${ctx}/sys/user/import/template">下载模板</a>
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/sys/user/">用户列表</a></li>
 		<shiro:hasPermission name="sys:user:edit"><li><a href="${ctx}/sys/user/form">用户添加</a></li></shiro:hasPermission>
@@ -60,7 +82,9 @@
 				readonly="readonly" /> <a data-toggle="modal" href="#officeDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>&nbsp;&nbsp; --%>
 			<label>部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" title="部门" url="/sys/office/treeData"/>
 			<label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>
-			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="page()"/>
+			&nbsp;<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+			&nbsp;<input id="btnImport" class="btn btn-primary" type="button" value="导入"/>
 		</div>
 	</form:form>
 	<tags:message content="${message}"/>
