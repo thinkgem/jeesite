@@ -50,6 +50,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * Commons：Apache Commons
 * JSON Mapper：Jackson 2.1
 * Bean Mapper：Dozer 5.3
+* Office Tools: Apache POI 3.9
 * Full-text search：Hibernate Search 4.2（Apache Lucene 3.6）、IK Analyzer 2012_u6中文分词
 * Log Manager：Log4j 1.2
 

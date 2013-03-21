@@ -51,6 +51,10 @@ public class UserUtils implements ApplicationContextAware {
 				putCache("user", user);
 			}
 		}
+		if (user == null){
+			user = new User();
+			SecurityUtils.getSubject().logout();
+		}
 		return user;
 	}
 	

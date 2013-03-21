@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 登录Controller
@@ -46,6 +47,9 @@ public class LoginController extends BaseController{
 	@RequiresUser
 	@RequestMapping(value = "")
 	public String index() {
+		if(UserUtils.getUser().getId() == null){
+			return "redirect:" + BaseController.ADMIN_PATH + "/login";
+		}
 		return "modules/sys/sysIndex";
 	}
 }
