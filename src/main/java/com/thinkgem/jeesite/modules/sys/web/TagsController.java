@@ -5,8 +5,11 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -25,13 +28,13 @@ public class TagsController extends BaseController {
 	 */
 	@RequiresUser
 	@RequestMapping(value = "treeselect")
-	public String treeselect() {
-		addModelAttribute("url", request.getParameter("url")); 	// 树结构数据URL
-		addModelAttribute("extId", request.getParameter("extId")); // 排除的编号ID
-		addModelAttribute("parentIds", request.getParameter("parentIds"));// 父编号层次，用于默认选中节点
-		addModelAttribute("checked", request.getParameter("checked")); // 是否可复选
-		addModelAttribute("checkedIds", request.getParameter("checkedIds")); // 如果是可复选，则指定默认选中的Id
-		addModelAttribute("module", request.getParameter("module"));	// 过滤栏目模型（仅针对CMS的Category树）
+	public String treeselect(HttpServletRequest request, Model model) {
+		model.addAttribute("url", request.getParameter("url")); 	// 树结构数据URL
+		model.addAttribute("extId", request.getParameter("extId")); // 排除的编号ID
+		model.addAttribute("parentIds", request.getParameter("parentIds"));// 父编号层次，用于默认选中节点
+		model.addAttribute("checked", request.getParameter("checked")); // 是否可复选
+		model.addAttribute("checkedIds", request.getParameter("checkedIds")); // 如果是可复选，则指定默认选中的Id
+		model.addAttribute("module", request.getParameter("module"));	// 过滤栏目模型（仅针对CMS的Category树）
 		return "modules/sys/tagsTreeselect";
 	}
 	

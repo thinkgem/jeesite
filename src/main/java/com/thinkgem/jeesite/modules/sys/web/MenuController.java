@@ -7,14 +7,18 @@ package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -45,44 +49,44 @@ public class MenuController extends BaseController {
 
 	@RequiresPermissions("sys:menu:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Menu menu) {
+	public String list(Menu menu, Model model) {
 		List<Menu> list = Lists.newArrayList();
 		List<Menu> sourcelist = systemService.findAllMenu();
 		Menu.sortList(list, sourcelist, 1L);
-        addModelAttribute("list", list);
+        model.addAttribute("list", list);
 		return "modules/sys/menuList";
 	}
 
 	@RequiresPermissions("sys:menu:view")
 	@RequestMapping(value = "form")
-	public String form(Menu menu) {
+	public String form(Menu menu, Model model) {
 		if (menu.getParent()==null||menu.getParent().getId()==null){
 			menu.setParent(new Menu(1L));
 		}
 		menu.setParent(systemService.getMenu(menu.getParent().getId()));
-		addModelAttribute("menu", menu);
+		model.addAttribute("menu", menu);
 		return "modules/sys/menuForm";
 	}
 	
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "save")
-	public String save(Menu menu) {
-		if (!beanValidator(menu)){
-			return form(menu);
+	public String save(Menu menu, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, menu)){
+			return form(menu, model);
 		}
 		systemService.saveMenu(menu);
-		addFlashMessage("保存菜单'" + menu.getName() + "'成功");
+		addMessage(redirectAttributes, "保存菜单'" + menu.getName() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/menu/";
 	}
 	
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id) {
+	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (Menu.isRoot(id)){
-			addFlashMessage("删除菜单失败, 不允许删除顶级菜单或编号为空");
+			addMessage(redirectAttributes, "删除菜单失败, 不允许删除顶级菜单或编号为空");
 		}else{
 			systemService.deleteMenu(id);
-			addFlashMessage("删除菜单成功");
+			addMessage(redirectAttributes, "删除菜单成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/menu/";
 	}
@@ -96,7 +100,7 @@ public class MenuController extends BaseController {
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds) {
+	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds, HttpServletResponse response) {
 		response.setContentType("text/html; charset=UTF-8");
 		StringBuilder sb = new StringBuilder("var data={};");
 		List<Menu> list = systemService.findAllMenu();

@@ -7,15 +7,19 @@ package com.thinkgem.jeesite.modules.cms.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -45,44 +49,44 @@ public class CategoryController extends BaseController {
 
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Category category) {
+	public String list(Category category, Model model) {
 		List<Category> list = Lists.newArrayList();
 		List<Category> sourcelist = categoryService.findByUser(true);
 		Category.sortList(list, sourcelist, 1L);
-        addModelAttribute("list", list);
+        model.addAttribute("list", list);
 		return "modules/cms/categoryList";
 	}
 
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "form")
-	public String form(Category category) {
+	public String form(Category category, Model model) {
 		if (category.getParent()==null||category.getParent().getId()==null){
 			category.setParent(new Category(1L));
 		}
 		category.setParent(categoryService.get(category.getParent().getId()));
-		addModelAttribute("category", category);
+		model.addAttribute("category", category);
 		return "modules/cms/categoryForm";
 	}
 	
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "save")
-	public String save(Category category) {
-		if (!beanValidator(category)){
-			return form(category);
+	public String save(Category category, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, category)){
+			return form(category, model);
 		}
 		categoryService.save(category);
-		addFlashMessage("保存栏目'" + category.getName() + "'成功");
+		addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/cms/category/";
 	}
 	
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id) {
+	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (Category.isRoot(id)){
-			addFlashMessage("删除栏目失败, 不允许删除顶级栏目或编号为空");
+			addMessage(redirectAttributes, "删除栏目失败, 不允许删除顶级栏目或编号为空");
 		}else{
 			categoryService.delete(id);
-			addFlashMessage("删除栏目成功");
+			addMessage(redirectAttributes, "删除栏目成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/cms/category/";
 	}
@@ -90,7 +94,7 @@ public class CategoryController extends BaseController {
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public String treeData(String module, @RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds) {
+	public String treeData(String module, @RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds, HttpServletResponse response) {
 		response.setContentType("text/html; charset=UTF-8");
 		StringBuilder sb = new StringBuilder("var data={};");
 		List<Category> list = Lists.newArrayList();

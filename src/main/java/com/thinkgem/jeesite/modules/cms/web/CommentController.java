@@ -7,12 +7,17 @@ package com.thinkgem.jeesite.modules.cms.web;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -45,23 +50,23 @@ public class CommentController extends BaseController {
 	
 	@RequiresPermissions("cms:comment:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Comment comment) {
+	public String list(Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<Comment> page = commentService.find(new Page<Comment>(request, response), comment); 
-        addModelAttribute("page", page);
+        model.addAttribute("page", page);
 		return "modules/cms/commentList";
 	}
 
 	@RequiresPermissions("cms:comment:edit")
 	@RequestMapping(value = "save")
-	public String save(Comment comment) {
-		if (beanValidator(comment)){
+	public String save(Comment comment, RedirectAttributes redirectAttributes) {
+		if (beanValidator(redirectAttributes, comment)){
 			if (comment.getAuditUser() == null){
 				comment.setAuditUser(UserUtils.getUser());
 				comment.setAuditDate(new Date());
 			}
 			comment.setStatus(Comment.STATUS_RELEASE);
 			commentService.save(comment);
-			addFlashMessage(DictUtils.getDictLabel(comment.getStatus(), "cms_status", "保存")
+			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getStatus(), "cms_status", "保存")
 					+"评论'" + StringUtils.abbreviate(StringUtils.replaceHtml(comment.getContent()),20) + "'成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/cms/comment/?repage&status=2";
@@ -69,9 +74,9 @@ public class CommentController extends BaseController {
 	
 	@RequiresPermissions("cms:comment:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, @RequestParam(required=false) Boolean isRe) {
+	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		commentService.delete(id, isRe);
-		addFlashMessage((isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
+		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/cms/comment/?repage&status=2";
 	}
 

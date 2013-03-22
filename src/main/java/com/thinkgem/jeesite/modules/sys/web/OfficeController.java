@@ -7,14 +7,18 @@ package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -47,24 +51,24 @@ public class OfficeController extends BaseController {
 
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Office office) {
+	public String list(Office office, Model model) {
 		User user = UserUtils.getUser();
 		if(user.isAdmin()){
 			office.setId(1L);
 		}else{
 			office.setId(user.getOffice().getId());
 		}
-		addModelAttribute("office", office);
+		model.addAttribute("office", office);
 		List<Office> list = Lists.newArrayList();
 		List<Office> sourcelist = officeService.findAll();
 		Office.sortList(list, sourcelist, office.getId());
-        addModelAttribute("list", list);
+        model.addAttribute("list", list);
 		return "modules/sys/officeList";
 	}
 
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "form")
-	public String form(Office office) {
+	public String form(Office office, Model model) {
 		if (office.getParent()==null||office.getParent().getId()==null){
 			office.setParent(UserUtils.getUser().getOffice());
 		}
@@ -72,29 +76,29 @@ public class OfficeController extends BaseController {
 		if (office.getArea()==null){
 			office.setArea(UserUtils.getUser().getArea());
 		}
-		addModelAttribute("office", office);
+		model.addAttribute("office", office);
 		return "modules/sys/officeForm";
 	}
 	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "save")
-	public String save(Office office) {
-		if (!beanValidator(office)){
-			return form(office);
+	public String save(Office office, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, office)){
+			return form(office, model);
 		}
 		officeService.save(office);
-		addFlashMessage("保存部门'" + office.getName() + "'成功");
+		addMessage(redirectAttributes, "保存部门'" + office.getName() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/office/";
 	}
 	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id) {
+	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (Office.isRoot(id)){
-			addFlashMessage("删除部门失败, 不允许删除顶级部门或编号空");
+			addMessage(redirectAttributes, "删除部门失败, 不允许删除顶级部门或编号空");
 		}else{
 			officeService.delete(id);
-			addFlashMessage("删除部门成功");
+			addMessage(redirectAttributes, "删除部门成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/office/";
 	}
@@ -102,7 +106,7 @@ public class OfficeController extends BaseController {
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds) {
+	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds, HttpServletResponse response) {
 		response.setContentType("text/html; charset=UTF-8");
 		StringBuilder sb = new StringBuilder("var data={};");
 		User user = UserUtils.getUser();

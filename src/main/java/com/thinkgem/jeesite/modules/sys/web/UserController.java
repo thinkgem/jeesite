@@ -7,6 +7,8 @@ package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,12 +16,14 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.beanvalidator.BeanValidators;
@@ -55,74 +59,74 @@ public class UserController extends BaseController {
 	
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(User user) {
+	public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<User> page = systemService.findUser(new Page<User>(request, response), user); 
-        addModelAttribute("page", page);
+        model.addAttribute("page", page);
 		return "modules/sys/userList";
 	}
 
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "form")
-	public String form(User user) {
+	public String form(User user, Model model) {
 		if (user.getArea()==null){
 			user.setArea(UserUtils.getUser().getArea());
 		}
 		if (user.getOffice()==null){
 			user.setOffice(UserUtils.getUser().getOffice());
 		}
-		addModelAttribute("user", user);
-		addModelAttribute("allRoles", systemService.findAllRole());
+		model.addAttribute("user", user);
+		model.addAttribute("allRoles", systemService.findAllRole());
 		return "modules/sys/userForm";
 	}
 
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "save")
-	public String save(User user, String oldLoginName, String newPassword) {
+	public String save(User user, String oldLoginName, String newPassword, Model model, RedirectAttributes redirectAttributes) {
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(newPassword)) {
 			user.setPassword(SystemService.entryptPassword(newPassword));
 		}
-		if (!beanValidator(user)){
-			return form(user);
+		if (!beanValidator(model, user)){
+			return form(user, model);
 		}
 		if (!"true".equals(checkLoginName(oldLoginName, user.getLoginName()))){
-			addModelMessage("保存用户'" + user.getLoginName() + "'失败，登录名已存在");
-			return form(user);
+			addMessage(model, "保存用户'" + user.getLoginName() + "'失败，登录名已存在");
+			return form(user, model);
 		}
 		systemService.saveUser(user);
-		addFlashMessage("保存用户'" + user.getLoginName() + "'成功");
+		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
 	}
 	
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id) {
+	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (User.isAdmin(id)){
-			addFlashMessage("删除用户失败, 不允许删除超级管理员用户或编号空");
+			addMessage(redirectAttributes, "删除用户失败, 不允许删除超级管理员用户或编号空");
 		}else{
 			systemService.deleteUser(id);
-			addFlashMessage("删除用户成功");
+			addMessage(redirectAttributes, "删除用户成功");
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
 	}
 	
 	@RequiresPermissions("sys:user:view")
     @RequestMapping(value = "export", method=RequestMethod.POST)
-    public String exportFile(User user) {
+    public String exportFile(User user, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
             String fileName = "用户数据"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx"; 
     		Page<User> page = systemService.findUser(new Page<User>(request, response, -1), user); 
     		new ExportExcel("用户数据", User.class).setDataList(page.getList()).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
-			addFlashMessage("导出用户失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
     }
 
 	@RequiresPermissions("sys:user:edit")
     @RequestMapping(value = "import", method=RequestMethod.POST)
-    public String importFile(MultipartFile file) {
+    public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
 		try {
 			int successNum = 0;
 			int failureNum = 0;
@@ -154,23 +158,23 @@ public class UserController extends BaseController {
 			if (failureNum>0){
 				failureMsg.insert(0, "，失败 "+failureNum+" 条用户，导入信息如下：");
 			}
-			addFlashMessage("已成功导入 "+successNum+" 条用户"+failureMsg);
+			addMessage(redirectAttributes, "已成功导入 "+successNum+" 条用户"+failureMsg);
 		} catch (Exception e) {
-			addFlashMessage("导入用户失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
     }
 	
 	@RequiresPermissions("sys:user:view")
     @RequestMapping(value = "import/template")
-    public String importFileTemplate() {
+    public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
             String fileName = "用户数据导入模板.xlsx";
     		List<User> list = Lists.newArrayList(); list.add(UserUtils.getUser(true));
     		new ExportExcel("用户数据", User.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
-			addFlashMessage("导出用户失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
 		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
     }
@@ -189,7 +193,7 @@ public class UserController extends BaseController {
 
 	@RequiresUser
 	@RequestMapping(value = "info")
-	public String info(User user) {
+	public String info(User user, Model model) {
 		User currentUser = UserUtils.getUser(true);
 		if (StringUtils.isNotBlank(user.getName())){
 			currentUser.setEmail(user.getEmail());
@@ -198,25 +202,25 @@ public class UserController extends BaseController {
 			currentUser.setRemarks(user.getRemarks());
 			systemService.saveUser(currentUser);
 			currentUser = UserUtils.getUser(true);
-			addModelAttribute("message", "保存用户信息成功");
+			model.addAttribute("message", "保存用户信息成功");
 		}
-		addModelAttribute("user", currentUser);
+		model.addAttribute("user", currentUser);
 		return "modules/sys/userInfo";
 	}
 
 	@RequiresUser
 	@RequestMapping(value = "modifyPwd")
-	public String modifyPwd(String oldPassword, String newPassword) {
+	public String modifyPwd(String oldPassword, String newPassword, Model model) {
 		User user = UserUtils.getUser();
 		if (StringUtils.isNotBlank(oldPassword) && StringUtils.isNotBlank(newPassword)){
 			if (SystemService.validatePassword(oldPassword, user.getPassword())){
 				systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
-				addModelAttribute("message", "修改密码成功");
+				model.addAttribute("message", "修改密码成功");
 			}else{
-				addModelAttribute("message", "修改密码失败，旧密码错误");
+				model.addAttribute("message", "修改密码失败，旧密码错误");
 			}
 		}
-		addModelAttribute("user", user);
+		model.addAttribute("user", user);
 		return "modules/sys/userModifyPwd";
 	}
     
