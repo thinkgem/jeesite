@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>文章管理</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#title").focus();

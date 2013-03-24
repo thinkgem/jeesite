@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>用户管理</title>
-	<%--@include file="/WEB-INF/views/include/treeview.jsp" --%>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#loginName").focus();
@@ -43,12 +43,6 @@
 		<div class="control-group">
 			<label class="control-label">所属区域:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="area" title="区域" url="/sys/area/treeData" parentIds="${user.area.parentIds}${user.area.id}"/>
-				<div class="input-append">
-					<form:hidden id="areaId" path="area.id" class="required"/>
-					<form:input id="areaName" path="area.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#areaDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}"
 					title="区域" url="/sys/area/treeData" parentIds="${user.area.parentIds}${user.area.id}"/>
 			</div>
@@ -56,12 +50,6 @@
 		<div class="control-group">
 			<label class="control-label">所属部门:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="office" title="部门" url="/sys/office/treeData" parentIds="${user.office.parentIds}${user.office.id}"/>
-				<div class="input-append">
-					<form:hidden id="officeId" path="office.id" class="required"/>
-					<form:input id="officeName" path="office.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#officeDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
 					title="部门" url="/sys/office/treeData" parentIds="${user.office.parentIds}${user.office.id}"/>
 			</div>

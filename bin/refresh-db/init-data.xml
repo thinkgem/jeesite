@@ -153,8 +153,8 @@
 	 	<cms_category id="27" site_id="1" parent_id="1" parent_ids="0,1," module="" name="公共留言" image="" href="/guestbook" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1"/>
 	 	
 	<!-- 站点配置 -->
-	<cms_site id="1" name="默认站点" title="JeeSite" desciption="JeeSite" keywords="JeeSite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='mailto:thinkgem@163.com'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite'&gt;JeeSite&lt;/a&gt; V1.0" />
-	<cms_site id="2" name="子站点测试" title="JeeSite subsite" desciption="JeeSite subsite" keywords="JeeSite subsite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='mailto:thinkgem@163.com'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite'&gt;JeeSite&lt;/a&gt; V1.0" />
+	<cms_site id="1" name="默认站点" title="JeeSite" desciption="JeeSite" keywords="JeeSite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='http://thinkgem.iteye.com' target='_blank'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite' target='_blank'&gt;JeeSite&lt;/a&gt; V1.0" />
+	<cms_site id="2" name="子站点测试" title="JeeSite subsite" desciption="JeeSite subsite" keywords="JeeSite subsite" theme="basic" copyright="Copyright &amp;copy; 2012-2013 &lt;a href='http://thinkgem.iteye.com' target='_blank'&gt;ThinkGem&lt;/a&gt; - Powered By &lt;a href='https://github.com/thinkgem/jeesite' target='_blank'&gt;JeeSite&lt;/a&gt; V1.0" />
 	
 	<!-- 字典表 -->
 	<sys_dict id="1" value="0" label="正常" type="del_flag" desciption="删除标记" sort="10" del_flag="0" />

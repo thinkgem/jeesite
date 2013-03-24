@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>用户管理</title>
+	<meta name="decorator" content="default"/>
 	<style type="text/css">.sort{color:#0663A2;cursor:pointer;}</style>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -69,17 +70,9 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<input id="orderBy" name="orderBy" type="hidden" value="${page.orderBy}"/>
 		<div>
-			<%--<tags:treeDialog id="area" title="区域" url="/sys/area/treeData"/>
-			<form:hidden id="areaId" path="area.id" class="required"/>
-			<label>区域：</label><form:input id="areaName" path="area.name" htmlEscape="false" maxlength="50" class="input-medium"
-				readonly="readonly" /> <a data-toggle="modal" href="#areaDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>&nbsp;&nbsp;--%>
 			<label>区域：</label><tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}" title="区域" url="/sys/area/treeData"/>
 			<label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/>
 		</div><div style="margin-top:8px;">
-			<%--<tags:treeDialog id="office" title="部门" url="/sys/office/treeData"/>
-			<form:hidden id="officeId" path="office.id" class="required"/>
-			<label>部门：</label><form:input id="officeName" path="office.name" htmlEscape="false" maxlength="50" class="input-medium"
-				readonly="readonly" /> <a data-toggle="modal" href="#officeDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>&nbsp;&nbsp; --%>
 			<label>部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" title="部门" url="/sys/office/treeData"/>
 			<label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="page()"/>

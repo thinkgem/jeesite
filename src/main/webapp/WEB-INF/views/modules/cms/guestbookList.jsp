@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>留言管理</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		function page(n,s){
 			$("#pageNo").val(n);

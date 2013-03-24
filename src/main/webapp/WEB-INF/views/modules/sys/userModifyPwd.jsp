@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>修改密码</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#oldPassword").focus();

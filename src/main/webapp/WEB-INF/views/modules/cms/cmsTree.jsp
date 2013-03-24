@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>栏目列表</title>
+	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<script type="text/javascript">
 		$(document).ready(function(){

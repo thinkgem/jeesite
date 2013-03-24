@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <%@ include file="/WEB-INF/views/include/treeview.jsp"%>
+<meta name="decorator" content="default"/>
 <div id="tree" style="padding:15px 20px;"></div>
 <script type="text/javascript">
 	var tree = new MzTreeView();

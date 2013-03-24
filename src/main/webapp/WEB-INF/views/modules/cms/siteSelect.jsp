@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>站点切换</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		function page(n,s){
 			$("#pageNo").val(n);

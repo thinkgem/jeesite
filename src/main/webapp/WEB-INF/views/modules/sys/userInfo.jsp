@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>个人信息</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#inputForm").validate({

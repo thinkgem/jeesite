@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>选择文章</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("input[name=id]").each(function(){

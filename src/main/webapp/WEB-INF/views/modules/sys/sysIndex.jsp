@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>管理主页</title>
+	<meta name="decorator" content="default"/>
 	<style type="text/css">
 		.nav li{margin-top:8px;}.nav li.title{margin-top:0;}.nav li.menu,.nav li.dropdown{margin:8px 3px 0 3px}
 		.nav li.menu a{padding:5px 6px;*padding:4px 5px 3px 5px;}.nav li.dropdown a{padding:5px 6px;*padding:1px 5px 3px 5px;}
@@ -53,7 +54,7 @@
 			</div>
 		</div>
 	    <div id="footer" class="row-fluid">
-            Copyright &copy; 2012-2013 <a href="mailto:thinkgem@163.com">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite">JeeSite</a> V1.0
+            Copyright &copy; 2012-2013 <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> V1.0
 		</div>
 	</div>
 	<script type="text/javascript"> 

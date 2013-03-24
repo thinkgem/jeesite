@@ -4,6 +4,7 @@
 <html>
 <head>
 	<title>登录页</title>
+	<meta name="decorator" content="default"/>
 	<script>
 		$(document).ready(function() {
 			$("#loginForm").validate();
@@ -44,7 +45,7 @@
 			</form:form>
 		</div>
 		<div class="copyright">
-            Copyright &copy; 2012-2013 <a href="mailto:thinkgem@163.com">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite">JeeSite</a> V1.0
+            Copyright &copy; 2012-2013 <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> V1.0
         </div>
 	</div></td></tr></table>
 </body>

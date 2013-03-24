@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>文章管理</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		function viewComment(href){
 			top.$.jBox.open('iframe:'+href,'查看评论',$(top.document).width()-220,$(top.document).height()-120,{

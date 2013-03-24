@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>字典管理</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#value").focus();
