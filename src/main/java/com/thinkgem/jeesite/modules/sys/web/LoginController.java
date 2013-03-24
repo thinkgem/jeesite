@@ -30,6 +30,9 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login() {
+		if(UserUtils.getUser().getId() != null){
+			return "redirect:" + BaseController.ADMIN_PATH;
+		}
 		return "modules/sys/sysLogin";
 	}
 
