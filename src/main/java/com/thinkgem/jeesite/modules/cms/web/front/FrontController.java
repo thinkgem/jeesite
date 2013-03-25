@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -43,7 +44,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
  * @version 2013-3-15
  */
 @Controller
-@RequestMapping(value = BaseController.FRONT_PATH)
+@RequestMapping(value = Global.FRONT_PATH)
 public class FrontController extends BaseController{
 	
 	@Autowired
@@ -63,7 +64,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 首页
 	 */
-	@RequestMapping(value = "index-{siteId}" + URL_SUFFIX)
+	@RequestMapping(value = "index-{siteId}" + Global.URL_SUFFIX)
 	public String index(@PathVariable Long siteId, Model model) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
 		model.addAttribute("site", site);
@@ -73,7 +74,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 内容列表
 	 */
-	@RequestMapping(value = "list-{categoryId}" + URL_SUFFIX)
+	@RequestMapping(value = "list-{categoryId}" + Global.URL_SUFFIX)
 	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
 			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
@@ -148,7 +149,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 显示内容
 	 */
-	@RequestMapping(value = "view-{categoryId}-{contentId}" + URL_SUFFIX)
+	@RequestMapping(value = "view-{categoryId}-{contentId}" + Global.URL_SUFFIX)
 	public String view(@PathVariable Long categoryId, @PathVariable Long contentId, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
@@ -225,7 +226,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 站点地图
 	 */
-	@RequestMapping(value = "map-{siteId}" + URL_SUFFIX)
+	@RequestMapping(value = "map-{siteId}" + Global.URL_SUFFIX)
 	public String map(@PathVariable Long siteId, Model model) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
 		model.addAttribute("site", site);

@@ -12,7 +12,10 @@
 	default-lazy-init="true">
 
 	<description>Spring Configuration</description>
-
+	
+    <!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
+	
 	<!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。  -->
 	<context:component-scan base-package="com.thinkgem.jeesite"><!-- base-package 如果多个，用“,”分隔 -->
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -69,14 +72,8 @@
 		<property name="configLocation" value="classpath:cache/ehcache-custom.xml" />
 	</bean>
 	
-	<!-- 配置自动 Proxy -->
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="true" />
-	</bean>
-	
-	<!-- Production/Development环境 -->
- 	<beans profile="production,development">
- 		<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
+	<!-- Production 环境 -->
+ 	<beans profile="production">
  		
 		<!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
 		<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
@@ -121,8 +118,17 @@
 			 -->
 		</bean>
 		
-		<!-- 数据源配置,使用应用服务器的数据库连接池 -->
-		<!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
+		<!-- 数据源配置, 使用应用服务器的数据库连接池 
+		<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/jeesite" />-->
+	
+		<!-- 数据源配置, 不使用连接池 
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="${jdbc.driver}" />
+			<property name="url" value="${jdbc.url}" />
+			<property name="username" value="${jdbc.username}"/>
+			<property name="password" value="${jdbc.password}"/>
+		</bean>-->
+		
 	</beans>
 	
 </beans>

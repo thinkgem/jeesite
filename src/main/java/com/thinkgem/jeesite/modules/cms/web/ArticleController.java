@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -33,10 +34,10 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 文章Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/cms/article")
+@RequestMapping(value = Global.ADMIN_PATH+"/cms/article")
 public class ArticleController extends BaseController {
 
 	@Autowired
@@ -79,7 +80,7 @@ public class ArticleController extends BaseController {
 		articleService.save(article);
 		addMessage(redirectAttributes, "保存文章'" + StringUtils.abbreviate(article.getTitle(),20) + "'成功");
 		Long categoryId = article.getCategory()!=null?article.getCategory().getId():null;
-		return "redirect:"+BaseController.ADMIN_PATH+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
+		return "redirect:"+Global.ADMIN_PATH+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
 	}
 	
 	@RequiresPermissions("cms:article:edit")
@@ -87,7 +88,7 @@ public class ArticleController extends BaseController {
 	public String delete(Long id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		articleService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复":"")+"删除文章成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
+		return "redirect:"+Global.ADMIN_PATH+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
 	}
 
 	/**

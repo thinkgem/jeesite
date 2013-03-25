@@ -12,15 +12,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 
 /**
  * 标签Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/tags")
+@RequestMapping(value = Global.ADMIN_PATH+"/tags")
 public class TagsController extends BaseController {
 	
 	/**

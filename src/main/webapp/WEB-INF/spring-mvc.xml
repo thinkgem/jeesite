@@ -4,7 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
-
+    
+    <description>Spring MVC Configuration</description>
+    
+    <!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
+	
 	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
 	<context:component-scan base-package="com.thinkgem.jeesite"><!-- base-package 如果多个，用“,”分隔 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -38,24 +43,21 @@
 
 	<!-- 视图文件解析配置 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/"/>
-		<property name="suffix" value=".jsp"/>
+		<property name="prefix" value="${web.view.prefix}"/>
+		<property name="suffix" value="${web.view.suffix}"/>
 	</bean>
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
-	<mvc:view-controller path="/" view-name="redirect:/a"/>
+	<mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
 	
 	<!-- 支持Shiro对Controller的方法级AOP安全控制 begin-->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
 		<property name="proxyTargetClass" value="true" />
 	</bean>
-	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-    	<property name="securityManager" ref="securityManager"/>
-	</bean>
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
         <property name="exceptionMappings">  
             <props>  
-                <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>  
+                <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
             </props>  
         </property>  
     </bean>  
@@ -63,7 +65,7 @@
     
 	<!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->  
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-        <property name="maxUploadSize" value="10485760" />  
+        <property name="maxUploadSize" value="${web.maxUploadSize}" />  
     </bean>
     
 </beans>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
@@ -31,10 +32,10 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 部门Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/office")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/office")
 public class OfficeController extends BaseController {
 
 	@Autowired
@@ -88,7 +89,7 @@ public class OfficeController extends BaseController {
 		}
 		officeService.save(office);
 		addMessage(redirectAttributes, "保存部门'" + office.getName() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/office/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/office/";
 	}
 	
 	@RequiresPermissions("sys:office:edit")
@@ -100,7 +101,7 @@ public class OfficeController extends BaseController {
 			officeService.delete(id);
 			addMessage(redirectAttributes, "删除部门成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/office/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/office/";
 	}
 
 	@RequiresUser

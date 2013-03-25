@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.CookieUtils;
 
 /**
@@ -29,7 +30,7 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
 public class Page<T> {
 	
 	private int pageNo = 1; // 当前页码
-	private int pageSize = 10; // 页面大小，设置为“-1”表示不进行分页（分页无效）
+	private int pageSize = Integer.valueOf(Global.getConfig("page.pageSize")); // 页面大小，设置为“-1”表示不进行分页（分页无效）
 	
 	private long count;// 总记录数，设置为“-1”表示不查询总数
 	

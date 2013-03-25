@@ -25,30 +25,9 @@ import com.thinkgem.jeesite.common.utils.DateUtils;
 /**
  * 控制器支持类
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 public abstract class BaseController {
-	
-	/**
-	 * 设置管理端访问路径（ADMIN_PATH或FRONT_PATH可允许一个为空）
-	 * 1. 修改本类 ADMIN_PATH 常量
-	 * 2. 修改 applicationContext-shiro.xml 中的 shiroFilter
-	 * 3. 修改 decorators.xml 中的 default
-	 * 4. 修改 spring-mvc.xml 中的 mvc:view-controller
-	 */
-	public static final String ADMIN_PATH = "/a";
-	
-	/**
-	 * 设置网站前端路径（ADMIN_PATH或FRONT_PATH可允许一个为空）
-	 * 1. 修改本类 FRONT_PATH 常量
-	 * 2. 修改 spring-mvc.xml 中的 mvc:view-controller
-	 */
-	public static final String FRONT_PATH = "/f";
-
-	/**
-	 * 设置访问URL后缀
-	 */
-	public static final String URL_SUFFIX = ".html";
 	
 	/**
 	 * 验证Bean实例对象
@@ -60,7 +39,7 @@ public abstract class BaseController {
 	 * 服务端参数有效性验证
 	 * @param object 验证的实体对象
 	 * @param groups 验证组
-	 * @return 验证成功：返回true；严重失败：将错误信息添加到 flash message 中
+	 * @return 验证成功：返回true；严重失败：将错误信息添加到 message 中
 	 */
 	protected boolean beanValidator(Model model, Object object, Class<?>... groups) {
 		try{
@@ -113,6 +92,7 @@ public abstract class BaseController {
 		for (String message : messages){
 			sb.append(message+"<br/>");
 		}
+		redirectAttributes.addAttribute("message", sb.toString());
 		redirectAttributes.addFlashAttribute("message", sb.toString());
 	}
 	
@@ -142,20 +122,6 @@ public abstract class BaseController {
 				setValue(DateUtils.parseDate(text));
 			}
 		});
-	}
-	
-	/////////////////////////////////////////////////////////
-	
-	public static String getAdminPath() {
-		return ADMIN_PATH;
-	}
-
-	public static String getFrontPath() {
-		return FRONT_PATH;
-	}
-
-	public static String getUrlSuffix() {
-		return URL_SUFFIX;
 	}
 	
 }

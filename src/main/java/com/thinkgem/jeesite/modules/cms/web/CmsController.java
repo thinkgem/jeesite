@@ -11,16 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 
 /**
  * 内容管理Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/cms")
+@RequestMapping(value = Global.ADMIN_PATH+"/cms")
 public class CmsController extends BaseController {
 
 	@Autowired

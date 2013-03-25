@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.beanvalidator.BeanValidators;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
@@ -39,10 +40,10 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 用户Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/user")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/user")
 public class UserController extends BaseController {
 
 	@Autowired
@@ -95,7 +96,7 @@ public class UserController extends BaseController {
 		}
 		systemService.saveUser(user);
 		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
 	}
 	
 	@RequiresPermissions("sys:user:edit")
@@ -107,7 +108,7 @@ public class UserController extends BaseController {
 			systemService.deleteUser(id);
 			addMessage(redirectAttributes, "删除用户成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
 	}
 	
 	@RequiresPermissions("sys:user:view")
@@ -121,7 +122,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
     }
 
 	@RequiresPermissions("sys:user:edit")
@@ -162,7 +163,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
     }
 	
 	@RequiresPermissions("sys:user:view")
@@ -176,7 +177,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
     }
 
 	@ResponseBody

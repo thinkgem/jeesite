@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
@@ -29,10 +30,10 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 /**
  * 栏目Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/cms/category")
+@RequestMapping(value = Global.ADMIN_PATH+"/cms/category")
 public class CategoryController extends BaseController {
 
 	@Autowired
@@ -76,7 +77,7 @@ public class CategoryController extends BaseController {
 		}
 		categoryService.save(category);
 		addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/cms/category/";
+		return "redirect:"+Global.ADMIN_PATH+"/cms/category/";
 	}
 	
 	@RequiresPermissions("cms:category:edit")
@@ -88,7 +89,7 @@ public class CategoryController extends BaseController {
 			categoryService.delete(id);
 			addMessage(redirectAttributes, "删除栏目成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/cms/category/";
+		return "redirect:"+Global.ADMIN_PATH+"/cms/category/";
 	}
 
 	@RequiresUser

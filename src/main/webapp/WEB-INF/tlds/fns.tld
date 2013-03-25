@@ -14,23 +14,30 @@
   <function>
     <description>获取管理路径</description>
     <name>getAdminPath</name>
-    <function-class>com.thinkgem.jeesite.common.web.BaseController</function-class>
+    <function-class>com.thinkgem.jeesite.common.config.Global</function-class>
     <function-signature>java.lang.String getAdminPath()</function-signature>
     <example>${fns:getAdminPath()}</example>
   </function>
   <function>
     <description>获取网站路径</description>
     <name>getFrontPath</name>
-    <function-class>com.thinkgem.jeesite.common.web.BaseController</function-class>
+    <function-class>com.thinkgem.jeesite.common.config.Global</function-class>
     <function-signature>java.lang.String getFrontPath()</function-signature>
     <example>${fns:getFrontPath()}</example>
   </function>
   <function>
     <description>获取网站URL后缀</description>
     <name>getUrlSuffix</name>
-    <function-class>com.thinkgem.jeesite.common.web.BaseController</function-class>
+    <function-class>com.thinkgem.jeesite.common.config.Global</function-class>
     <function-signature>java.lang.String getUrlSuffix()</function-signature>
     <example>${fns:getUrlSuffix()}</example>
+  </function>
+  <function>
+    <description>获取配置</description>
+    <name>getConfig</name>
+    <function-class>com.thinkgem.jeesite.common.config.Global</function-class>
+    <function-signature>java.lang.String getConfig(java.lang.String)</function-signature>
+    <example>${fns:getConfig(key)}</example>
   </function>
   
   <!-- UserUtils -->

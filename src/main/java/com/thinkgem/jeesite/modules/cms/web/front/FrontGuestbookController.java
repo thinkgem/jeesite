@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -33,7 +34,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
  * @version 2013-3-15
  */
 @Controller
-@RequestMapping(value = BaseController.FRONT_PATH)
+@RequestMapping(value = Global.FRONT_PATH)
 public class FrontGuestbookController extends BaseController{
 	
 	@Autowired
@@ -73,7 +74,7 @@ public class FrontGuestbookController extends BaseController{
 		}else{
 			addMessage(redirectAttributes, "验证码不能为空。");
 		}
-		return "redirect:"+BaseController.FRONT_PATH+"/guestbook";
+		return "redirect:"+Global.FRONT_PATH+"/guestbook";
 	}
 	
 }

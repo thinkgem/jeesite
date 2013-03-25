@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
@@ -27,10 +28,10 @@ import com.thinkgem.jeesite.modules.sys.service.DictService;
 /**
  * 字典Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/dict")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/dict")
 public class DictController extends BaseController {
 
 	@Autowired
@@ -70,7 +71,7 @@ public class DictController extends BaseController {
 		}
 		dictService.save(dict);
 		addMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/dict/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/dict/?repage";
 	}
 	
 	@RequiresPermissions("sys:dict:edit")
@@ -78,7 +79,7 @@ public class DictController extends BaseController {
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		dictService.delete(id);
 		addMessage(redirectAttributes, "删除字典成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/dict/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/dict/?repage";
 	}
 
 }

@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 登录Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH)
+@RequestMapping(value = Global.ADMIN_PATH)
 public class LoginController extends BaseController{
 	
 	/**
@@ -31,7 +32,7 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login() {
 		if(UserUtils.getUser().getId() != null){
-			return "redirect:" + BaseController.ADMIN_PATH;
+			return "redirect:" + Global.ADMIN_PATH;
 		}
 		return "modules/sys/sysLogin";
 	}
@@ -52,7 +53,7 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "")
 	public String index() {
 		if(UserUtils.getUser().getId() == null){
-			return "redirect:" + BaseController.ADMIN_PATH + "/login";
+			return "redirect:" + Global.ADMIN_PATH + "/login";
 		}
 		return "modules/sys/sysIndex";
 	}

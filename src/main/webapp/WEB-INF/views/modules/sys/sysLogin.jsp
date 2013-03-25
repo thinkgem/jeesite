@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>登录页</title>
+	<title>${fns:getConfig('productName')} 登录</title>
 	<meta name="decorator" content="default"/>
 	<script>
 		$(document).ready(function() {
@@ -18,7 +18,7 @@
 <body>
 	<table style="width:100%;height:500px"><tr><td align="center" valign="middle">
 	<div id="header" style="width:500px;">
-		<h1>JeeSite Admin</h1><br/>
+		<h1>${fns:getConfig('productName')}</h1><br/>
 		<div class="well"><br/>
 			<form:form id="loginForm" action="${ctx}/login" method="post" class="form-horizontal">
 				<%String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME); if(error != null){%>
@@ -45,7 +45,7 @@
 			</form:form>
 		</div>
 		<div class="copyright">
-            Copyright &copy; 2012-2013 <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> V1.0
+            Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> ${fns:getConfig('version')}
         </div>
 	</div></td></tr></table>
 </body>

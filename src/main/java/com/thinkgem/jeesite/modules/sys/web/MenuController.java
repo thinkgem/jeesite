@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
@@ -29,10 +30,10 @@ import com.thinkgem.jeesite.modules.sys.service.SystemService;
 /**
  * 菜单Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/menu")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/menu")
 public class MenuController extends BaseController {
 
 	@Autowired
@@ -76,7 +77,7 @@ public class MenuController extends BaseController {
 		}
 		systemService.saveMenu(menu);
 		addMessage(redirectAttributes, "保存菜单'" + menu.getName() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/menu/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
 	}
 	
 	@RequiresPermissions("sys:menu:edit")
@@ -88,7 +89,7 @@ public class MenuController extends BaseController {
 			systemService.deleteMenu(id);
 			addMessage(redirectAttributes, "删除菜单成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/menu/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
 	}
 
 	@RequiresUser

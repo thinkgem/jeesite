@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -28,7 +29,7 @@ import ${packageName}.${moduleName}.service${subModuleName}.${ClassName}Service;
  * @version ${classVersion}
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/${urlPrefix}")
+@RequestMapping(value = Global.ADMIN_PATH+"/${urlPrefix}")
 public class ${ClassName}Controller extends BaseController {
 
 	@Autowired
@@ -70,7 +71,7 @@ public class ${ClassName}Controller extends BaseController {
 		}
 		${className}Service.save(${className});
 		addMessage(redirectAttributes, "保存${functionName}'" + ${className}.getName() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/${viewPrefix}/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/${viewPrefix}/?repage";
 	}
 	
 	@RequiresPermissions("${permissionPrefix}:edit")
@@ -78,7 +79,7 @@ public class ${ClassName}Controller extends BaseController {
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		${className}Service.delete(id);
 		addMessage(redirectAttributes, "删除${functionName}成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/${viewPrefix}/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/${viewPrefix}/?repage";
 	}
 
 }

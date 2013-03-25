@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>管理主页</title>
+	<title>${fns:getConfig('productName')}</title>
 	<meta name="decorator" content="default"/>
 	<style type="text/css">
 		.nav li{margin-top:8px;}.nav li.title{margin-top:0;}.nav li.menu,.nav li.dropdown{margin:8px 3px 0 3px}
@@ -28,7 +28,7 @@
 					&nbsp;&nbsp;&nbsp;
 				</span>
 		    	<ul class="nav nav-pills" style="margin:0;" id="menu">
-		    	  <li class="title"><h1>JeeSite Admin <small></small></h1></li>
+		    	  <li class="title"><h1>${fns:getConfig('productName')}<small></small></h1></li>
 				  <li style="width:18px;">&nbsp;</li>
 				  <c:set var="firstMenu" value="true"/><c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus"><c:if test="${menu.parent.id eq 1&&menu.isShow eq 1}">
 					<li class="menu ${firstMenu?' active':''}"><a class="menu" href="${ctx}/sys/menu/tree?parentId=${menu.id}" target="menuFrame" >${menu.name}</a></li>
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 	    <div id="footer" class="row-fluid">
-            Copyright &copy; 2012-2013 <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> V1.0
+            Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> ${fns:getConfig('version')}
 		</div>
 	</div>
 	<script type="text/javascript"> 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
@@ -31,10 +32,10 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 区域Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/area")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/area")
 public class AreaController extends BaseController {
 
 	@Autowired
@@ -85,7 +86,7 @@ public class AreaController extends BaseController {
 		}
 		areaService.save(area);
 		addMessage(redirectAttributes, "保存区域'" + area.getName() + "'成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/area/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/area/";
 	}
 	
 	@RequiresPermissions("sys:area:edit")
@@ -97,7 +98,7 @@ public class AreaController extends BaseController {
 			areaService.delete(id);
 			addMessage(redirectAttributes, "删除区域成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/area/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/area/";
 	}
 
 	@RequiresUser
