@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -16,13 +17,14 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
+import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -41,7 +43,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 @Transactional(readOnly = true)
 public class ArticleService extends BaseService {
 
@@ -96,7 +98,17 @@ public class ArticleService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void save(Article article) {
-		if (article.getUser()==null){article.setUser(UserUtils.getUser());}
+		if (article.getArticleData().getContent()!=null){
+			article.getArticleData().setContent(StringEscapeUtils.unescapeHtml4(
+					article.getArticleData().getContent()));
+		}
+		// 如果没有审核权限，则将当前内容改为待审核状态
+		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
+			article.setStatus(Article.STATUS_AUDIT);
+		}
+		if (article.getUser()==null){
+			article.setUser(UserUtils.getUser());
+		}
 		article.setUpdateDate(new Date());
 		articleDao.clear();
 		articleDao.save(article);
@@ -113,6 +125,7 @@ public class ArticleService extends BaseService {
 	
 	/**
 	 * 通过编号获取内容标题
+	 * @return new Object[]{栏目Id,文章Id,文章标题}
 	 */
 	public List<Object[]> findByIds(String ids) {
 		List<Object[]> list = Lists.newArrayList();
@@ -120,7 +133,7 @@ public class ArticleService extends BaseService {
 		if (idss.length>0){
 			List<Article> l = articleDao.findByIdIn(idss);
 			for (Article e : l){
-				list.add(new Object[]{e.getId(),StringUtils.abbreviate(e.getTitle(),20)});
+				list.add(new Object[]{e.getCategory().getId(),e.getId(),StringUtils.abbreviate(e.getTitle(),20)});
 			}
 		}
 		return list;

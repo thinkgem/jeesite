@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>用户管理</title>
-	<%--@include file="/WEB-INF/views/include/treeview.jsp" --%>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#loginName").focus();
@@ -21,7 +21,8 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -37,17 +38,11 @@
 		<li class="active"><a href="${ctx}/sys/user/form?id=${user.id}">用户<shiro:hasPermission name="sys:user:edit">${not empty user.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:user:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
-		<div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
 		<form:hidden path="id"/>
+		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">所属区域:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="area" title="区域" url="/sys/area/treeData" parentIds="${user.area.parentIds}${user.area.id}"/>
-				<div class="input-append">
-					<form:hidden id="areaId" path="area.id" class="required"/>
-					<form:input id="areaName" path="area.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#areaDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}"
 					title="区域" url="/sys/area/treeData" parentIds="${user.area.parentIds}${user.area.id}"/>
 			</div>
@@ -55,12 +50,6 @@
 		<div class="control-group">
 			<label class="control-label">所属部门:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="office" title="部门" url="/sys/office/treeData" parentIds="${user.office.parentIds}${user.office.id}"/>
-				<div class="input-append">
-					<form:hidden id="officeId" path="office.id" class="required"/>
-					<form:input id="officeName" path="office.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#officeDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
 					title="部门" url="/sys/office/treeData" parentIds="${user.office.parentIds}${user.office.id}"/>
 			</div>
@@ -130,6 +119,20 @@
 				<form:checkboxes path="roleIdList" items="${allRoles}" itemLabel="name" itemValue="id" htmlEscape="false" class="required" />
 			</div>
 		</div>
+		<c:if test="${not empty user.id}">
+			<div class="control-group">
+				<label class="control-label">创建时间:</label>
+				<div class="controls">
+					<label class="lbl"><fmt:formatDate value="${user.createDate}" type="both" dateStyle="full"/></label>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">最后登陆:</label>
+				<div class="controls">
+					<label class="lbl">IP: ${user.loginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.loginDate}" type="both" dateStyle="full"/></label>
+				</div>
+			</div>
+		</c:if>
 		<div class="form-actions">
 			<shiro:hasPermission name="sys:role:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

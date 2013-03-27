@@ -14,13 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -60,8 +60,8 @@ public class Comment extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_comment")
-	//@GenericGenerator(name = "seq_cms_article_comment", strategy = "seq_cms_article_comment")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_comment")
+//	@SequenceGenerator(name = "seq_cms_comment", sequenceName = "seq_cms_comment")
 	public Long getId() {
 		return id;
 	}
@@ -70,6 +70,7 @@ public class Comment extends BaseEntity {
 		this.id = id;
 	}
 
+	@Length(min=1, max=20)
 	public String getModule() {
 		return module;
 	}
@@ -78,6 +79,7 @@ public class Comment extends BaseEntity {
 		this.module = module;
 	}
 
+	@NotNull
 	public Long getContentId() {
 		return contentId;
 	}
@@ -86,8 +88,7 @@ public class Comment extends BaseEntity {
 		this.contentId = contentId;
 	}
 
-	@NotBlank
-	@Size(min=0, max=255)
+	@Length(min=1, max=255)
 	public String getContent() {
 		return content;
 	}
@@ -96,8 +97,7 @@ public class Comment extends BaseEntity {
 		this.content = content;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=255)
+	@Length(min=1, max=255)
 	public String getTitle() {
 		return title;
 	}
@@ -106,8 +106,7 @@ public class Comment extends BaseEntity {
 		this.title = title;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -144,6 +143,7 @@ public class Comment extends BaseEntity {
 		this.ip = ip;
 	}
 
+	@NotNull
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -152,7 +152,7 @@ public class Comment extends BaseEntity {
 		this.createDate = createDate;
 	}
 
-	@Size(min=0, max=1)
+	@Length(min=1, max=1)
 	public String getStatus() {
 		return status;
 	}

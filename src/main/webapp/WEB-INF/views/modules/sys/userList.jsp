@@ -3,15 +3,64 @@
 <html>
 <head>
 	<title>用户管理</title>
+	<meta name="decorator" content="default"/>
+	<style type="text/css">.sort{color:#0663A2;cursor:pointer;}</style>
 	<script type="text/javascript">
-		function page(i){
-			$("#pageNo").val(i);
+		$(document).ready(function() {
+			// 表格排序
+			var orderBy = $("#orderBy").val().split(" ");
+			$("#contentTable th.sort").each(function(){
+				if ($(this).hasClass(orderBy[0])){
+					orderBy[1] = orderBy[1]&&orderBy[1].toUpperCase()=="DESC"?"down":"up";
+					$(this).html($(this).html()+" <i class=\"icon icon-arrow-"+orderBy[1]+"\"></i>");
+				}
+			});
+			$("#contentTable th.sort").click(function(){
+				var order = $(this).attr("class").split(" ");
+				var sort = $("#orderBy").val().split(" ");
+				for(var i=0; i<order.length; i++){
+					if (order[i] == "sort"){order = order[i+1]; break;}
+				}
+				if (order == sort[0]){
+					sort = (sort[1]&&sort[1].toUpperCase()=="DESC"?"ASC":"DESC");
+					$("#orderBy").val(order+" DESC"!=order+" "+sort?"":order+" "+sort);
+				}else{
+					$("#orderBy").val(order+" ASC");
+				}
+				page();
+			});
+			$("#btnExport").click(function(){
+				top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
+					if(v=="ok"){
+						$("#searchForm").attr("action","${ctx}/sys/user/export");
+						$("#searchForm").submit();
+					}
+				},{buttonsFocus:1});
+				top.$('.jbox-body .jbox-icon').css('top','55px');
+			});
+			$("#btnImport").click(function(){
+				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
+					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+			});
+		});
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
+			$("#searchForm").attr("action","${ctx}/sys/user/");
 			$("#searchForm").submit();
-        	return false;
-        }
+	    	return false;
+	    }
 	</script>
 </head>
 <body>
+	<div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/sys/user/import" method="post" enctype="multipart/form-data"
+			style="padding-left:20px;text-align:center;"><br/>
+			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
+			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
+			<a href="${ctx}/sys/user/import/template">下载模板</a>
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/sys/user/">用户列表</a></li>
 		<shiro:hasPermission name="sys:user:edit"><li><a href="${ctx}/sys/user/form">用户添加</a></li></shiro:hasPermission>
@@ -19,26 +68,21 @@
 	<form:form id="searchForm" modelAttribute="user" action="${ctx}/sys/user/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+		<input id="orderBy" name="orderBy" type="hidden" value="${page.orderBy}"/>
 		<div>
-			<%--<tags:treeDialog id="area" title="区域" url="/sys/area/treeData"/>
-			<form:hidden id="areaId" path="area.id" class="required"/>
-			<label>区域：</label><form:input id="areaName" path="area.name" htmlEscape="false" maxlength="50" class="input-medium"
-				readonly="readonly" /> <a data-toggle="modal" href="#areaDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>&nbsp;&nbsp;--%>
 			<label>区域：</label><tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}" title="区域" url="/sys/area/treeData"/>
 			<label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/>
 		</div><div style="margin-top:8px;">
-			<%--<tags:treeDialog id="office" title="部门" url="/sys/office/treeData"/>
-			<form:hidden id="officeId" path="office.id" class="required"/>
-			<label>部门：</label><form:input id="officeName" path="office.name" htmlEscape="false" maxlength="50" class="input-medium"
-				readonly="readonly" /> <a data-toggle="modal" href="#officeDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>&nbsp;&nbsp; --%>
 			<label>部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" title="部门" url="/sys/office/treeData"/>
 			<label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>
-			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="page()"/>
+			&nbsp;<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+			&nbsp;<input id="btnImport" class="btn btn-primary" type="button" value="导入"/>
 		</div>
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered ">
-		<thead><tr><th>区域</th><th>部门</th><th>登录名</th><th>姓名</th><th>电话</th><th>手机</th><th>角色</th><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead><tr><th>区域</th><th>部门</th><th class="sort loginName">登录名</th><th class="sort name">姓名</th><th>电话</th><th>手机</th><th>角色</th><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="user">
 			<tr>

@@ -7,6 +7,8 @@ package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
@@ -29,10 +32,10 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 部门Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/office")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/office")
 public class OfficeController extends BaseController {
 
 	@Autowired
@@ -80,30 +83,31 @@ public class OfficeController extends BaseController {
 	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "save")
-	public String save(Office office, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, office)){
-			officeService.save(office);
-			addFlashMessage(redirectAttributes, "保存部门'" + office.getName() + "'成功");
+	public String save(Office office, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, office)){
+			return form(office, model);
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/office/";
+		officeService.save(office);
+		addMessage(redirectAttributes, "保存部门'" + office.getName() + "'成功");
+		return "redirect:"+Global.ADMIN_PATH+"/sys/office/";
 	}
 	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (Office.isRoot(id)){
-			addFlashMessage(redirectAttributes, "删除部门失败, 不允许删除顶级部门或编号空");
+			addMessage(redirectAttributes, "删除部门失败, 不允许删除顶级部门或编号空");
 		}else{
 			officeService.delete(id);
-			addFlashMessage(redirectAttributes, "删除部门成功");
+			addMessage(redirectAttributes, "删除部门成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/office/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/office/";
 	}
 
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds) {
+	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds, HttpServletResponse response) {
 		response.setContentType("text/html; charset=UTF-8");
 		StringBuilder sb = new StringBuilder("var data={};");
 		User user = UserUtils.getUser();

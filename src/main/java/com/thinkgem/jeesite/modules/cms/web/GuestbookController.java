@@ -7,6 +7,9 @@ package com.thinkgem.jeesite.modules.cms.web;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Guestbook;
@@ -26,10 +30,10 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 留言Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/cms/guestbook")
+@RequestMapping(value = Global.ADMIN_PATH+"/cms/guestbook")
 public class GuestbookController extends BaseController {
 
 	@Autowired
@@ -46,7 +50,7 @@ public class GuestbookController extends BaseController {
 	
 	@RequiresPermissions("cms:guestbook:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Guestbook guestbook, Model model) {
+	public String list(Guestbook guestbook, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<Guestbook> page = guestbookService.find(new Page<Guestbook>(request, response), guestbook); 
         model.addAttribute("page", page);
 		return "modules/cms/guestbookList";
@@ -61,27 +65,26 @@ public class GuestbookController extends BaseController {
 
 	@RequiresPermissions("cms:guestbook:edit")
 	@RequestMapping(value = "save")
-	public String save(Guestbook guestbook, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, guestbook)){
-			if (guestbook.getReUser() == null){
-				guestbook.setReUser(UserUtils.getUser());
-			}
-			if (guestbook.getReDate() == null){
-				guestbook.setReDate(new Date());
-			}
-			guestbookService.save(guestbook);
-			addFlashMessage(redirectAttributes, DictUtils.getDictLabel(guestbook.getStatus(), "cms_status", "保存")
-					+"留言'" + guestbook.getName() + "'成功");
+	public String save(Guestbook guestbook, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, guestbook)){
+			return form(guestbook, model);
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/cms/guestbook/?repage&status=2";
+		if (guestbook.getReUser() == null){
+			guestbook.setReUser(UserUtils.getUser());
+			guestbook.setReDate(new Date());
+		}
+		guestbookService.save(guestbook);
+		addMessage(redirectAttributes, DictUtils.getDictLabel(guestbook.getStatus(), "cms_status", "保存")
+				+"留言'" + guestbook.getName() + "'成功");
+		return "redirect:"+Global.ADMIN_PATH+"/cms/guestbook/?repage&status=2";
 	}
 	
 	@RequiresPermissions("cms:guestbook:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		guestbookService.delete(id, isRe);
-		addFlashMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"留言成功");
-		return "redirect:"+BaseController.ADMIN_PATH+"/cms/guestbook/?repage&status=2";
+		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"留言成功");
+		return "redirect:"+Global.ADMIN_PATH+"/cms/guestbook/?repage&status=2";
 	}
 
 }

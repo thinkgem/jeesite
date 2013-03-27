@@ -135,7 +135,7 @@ public class PropertiesLoader {
 
 		for (String location : resourcesPaths) {
 
-			logger.debug("Loading properties file from:" + location);
+//			logger.debug("Loading properties file from:" + location);
 
 			InputStream is = null;
 			try {

@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 生成随机验证码
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @SuppressWarnings("serial")
 public class ValidateCodeServlet extends HttpServlet {
@@ -101,13 +101,16 @@ public class ValidateCodeServlet extends HttpServlet {
 	}
 	
 	private Color getRandColor(int fc,int bc) { 
+		int f = fc;
+		int b = bc;
 		Random random=new Random();
-        if(fc>255) fc=255; 
-        if(bc>255) bc=255; 
-        int r=fc+random.nextInt(bc-fc); 
-        int g=fc+random.nextInt(bc-fc); 
-        int b=fc+random.nextInt(bc-fc); 
-        return new Color(r,g,b); 
+        if(f>255) {
+        	f=255; 
+        }
+        if(b>255) {
+        	b=255; 
+        }
+        return new Color(f+random.nextInt(b-f),f+random.nextInt(b-f),f+random.nextInt(b-f)); 
 	}
 	
 	private void createBackground(Graphics g) {

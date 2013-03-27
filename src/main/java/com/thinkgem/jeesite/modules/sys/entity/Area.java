@@ -19,14 +19,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
@@ -64,8 +64,8 @@ public class Area extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
-	//@GenericGenerator(name = "seq_sys_area", strategy = "seq_sys_area")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
+//	@SequenceGenerator(name = "seq_sys_area", sequenceName = "seq_sys_area")
 	public Long getId() {
 		return id;
 	}
@@ -78,6 +78,7 @@ public class Area extends BaseEntity {
 	@JoinColumn(name="parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotNull
 	public Area getParent() {
 		return parent;
 	}
@@ -86,6 +87,7 @@ public class Area extends BaseEntity {
 		this.parent = parent;
 	}
 
+	@Length(min=1, max=255)
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -94,8 +96,7 @@ public class Area extends BaseEntity {
 		this.parentIds = parentIds;
 	}
 	
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -104,7 +105,7 @@ public class Area extends BaseEntity {
 		this.name = name;
 	}
 
-	@Size(min=0, max=100)
+	@Length(min=0, max=100)
 	public String getCode() {
 		return code;
 	}
@@ -113,7 +114,7 @@ public class Area extends BaseEntity {
 		this.code = code;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getRemarks() {
 		return remarks;
 	}
@@ -121,7 +122,8 @@ public class Area extends BaseEntity {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
+	
+	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
 	}

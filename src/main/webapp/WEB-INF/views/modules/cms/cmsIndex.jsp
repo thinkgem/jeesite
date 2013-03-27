@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>内容管理</title>
+	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 </head>
 <body>
@@ -16,11 +17,11 @@
 			scrolling="yes" frameborder="no" width="100%"></iframe>
 	</div>
 	<script type="text/javascript"> 
-		var lw = "14.89%", rw = "82.80%"; // 左侧窗口展开大小
-		var lwClose = "0%", rwClose = "97.30%"; // 左侧窗口折叠大小
+		var lw = "14.89%", rw = "82%"; // 左侧窗口展开大小
+		var lwClose = "0%", rwClose = "97%"; // 左侧窗口折叠大小
 		function wSize(){
 			var strs=getWindowSize().toString().split(",");
-			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]);
+			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]-6);
 		}
 	</script>
 	<script src="${ctxStatic}/wsize.js" type="text/javascript"></script>

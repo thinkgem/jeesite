@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -38,10 +41,10 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 /**
  * 网站Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Controller
-@RequestMapping(value = BaseController.FRONT_PATH)
+@RequestMapping(value = Global.FRONT_PATH)
 public class FrontController extends BaseController{
 	
 	@Autowired
@@ -61,7 +64,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 首页
 	 */
-	@RequestMapping(value = "index-{siteId}" + URL_SUFFIX)
+	@RequestMapping(value = "index-{siteId}" + Global.URL_SUFFIX)
 	public String index(@PathVariable Long siteId, Model model) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
 		model.addAttribute("site", site);
@@ -71,8 +74,9 @@ public class FrontController extends BaseController{
 	/**
 	 * 内容列表
 	 */
-	@RequestMapping(value = "list-{categoryId}" + URL_SUFFIX)
-	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo, Model model) {
+	@RequestMapping(value = "list-{categoryId}" + Global.URL_SUFFIX)
+	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
+			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
 			Site site = CmsUtils.getSite(1L);
@@ -107,7 +111,7 @@ public class FrontController extends BaseController{
 				}
 				// 获取内容列表
 				if ("article".equals(category.getModule())){
-					Page<Article> page = new Page<Article>(pageNo, 30);
+					Page<Article> page = new Page<Article>(pageNo, pageSize);
 					page = articleService.find(page, new Article(category));
 					model.addAttribute("page", page);
 				}else if ("link".equals(category.getModule())){
@@ -145,7 +149,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 显示内容
 	 */
-	@RequestMapping(value = "view-{categoryId}-{contentId}" + URL_SUFFIX)
+	@RequestMapping(value = "view-{categoryId}-{contentId}" + Global.URL_SUFFIX)
 	public String view(@PathVariable Long categoryId, @PathVariable Long contentId, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
@@ -159,22 +163,27 @@ public class FrontController extends BaseController{
 			if (article==null || !Article.STATUS_RELEASE.equals(article.getStatus())){
 				return "error/404";
 			}
-			articleService.updateHitsAddOne(contentId);
-			List<Category> categoryList = categoryService.findByParentId(
-					article.getCategory().getParent().getId(), category.getSite().getId());
 			model.addAttribute("article", article);
 			model.addAttribute("category", article.getCategory());
+			// 文章阅读次数+1
+			articleService.updateHitsAddOne(contentId);
+			// 分类列表
+			List<Category> categoryList = categoryService.findByParentId(
+					article.getCategory().getParent().getId(), category.getSite().getId());
 			model.addAttribute("categoryList", categoryList);
+			// 获取推荐文章列表
+			List<Object[]> relationList = articleService.findByIds(article.getArticleData().getRelation());
+			model.addAttribute("relationList", relationList); 
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
 		}
 		return null;
 	}
-
+	
 	/**
 	 * 内容评论
 	 */
 	@RequestMapping(value = "comment", method=RequestMethod.GET)
-	public String comment(String theme, Comment comment, Model model) {
+	public String comment(String theme, Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<Comment> page = new Page<Comment>(request, response);
 		Comment c = new Comment();
 		c.setModule(comment.getModule());
@@ -191,8 +200,7 @@ public class FrontController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "comment", method=RequestMethod.POST)
-	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) Long replyId,
-			Model model, RedirectAttributes redirectAttributes) {
+	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) Long replyId, HttpServletRequest request) {
 		if (StringUtils.isNotBlank(validateCode)){
 			if (ValidateCodeServlet.validate(request, validateCode)){
 				if (replyId!=null && replyId!=0){
@@ -218,7 +226,7 @@ public class FrontController extends BaseController{
 	/**
 	 * 站点地图
 	 */
-	@RequestMapping(value = "map-{siteId}" + URL_SUFFIX)
+	@RequestMapping(value = "map-{siteId}" + Global.URL_SUFFIX)
 	public String map(@PathVariable Long siteId, Model model) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
 		model.addAttribute("site", site);
@@ -229,15 +237,17 @@ public class FrontController extends BaseController{
 	 * 全站搜索
 	 */
 	@RequestMapping(value = "search")
-	public String search(String t, String q, Model model) {
+	public String search(String t, String q, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Site site = CmsUtils.getSite(1L);
 		model.addAttribute("site", site);
 		if (StringUtils.isBlank(t) || "article".equals(t)){
+			// ========= 正式环境，请注释掉cmd代码 =========
 			if ("cmd:reindex".equals(q)){
 				articleService.createIndex();
 				model.addAttribute("message", "重建索引成功");
 			}
-			Page<Article> page = articleService.search(new Page<Article>(request, response, 10), q);
+			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
+			Page<Article> page = articleService.search(new Page<Article>(request, response), q);
 			model.addAttribute("page", page);
 		}
 		model.addAttribute("t", t);// 搜索类型

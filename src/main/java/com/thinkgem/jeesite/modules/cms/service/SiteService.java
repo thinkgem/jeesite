@@ -5,14 +5,14 @@
  */
 package com.thinkgem.jeesite.modules.cms.service;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 @Transactional(readOnly = true)
 public class SiteService extends BaseService {
 
@@ -46,12 +46,15 @@ public class SiteService extends BaseService {
 			dc.add(Restrictions.like("name", "%"+site.getName()+"%"));
 		}
 		dc.add(Restrictions.eq("delFlag", site.getDelFlag()));
-		dc.addOrder(Order.asc("id"));
+		//dc.addOrder(Order.asc("id"));
 		return siteDao.find(page, dc);
 	}
 
 	@Transactional(readOnly = false)
 	public void save(Site site) {
+		if (site.getCopyright()!=null){
+			site.setCopyright(StringEscapeUtils.unescapeHtml4(site.getCopyright()));
+		}
 		siteDao.save(site);
 		CmsUtils.removeCache("site_"+site.getId());
 		CmsUtils.removeCache("siteList");

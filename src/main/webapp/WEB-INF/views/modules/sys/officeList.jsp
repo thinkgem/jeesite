@@ -3,16 +3,18 @@
 <html>
 <head>
 	<title>部门管理</title>
+	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treetable.jsp" %>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#treeTable").treeTable({expandLevel : 5});
 		});
-		function page(i){
-			$("#pageNo").val(i);
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
 			$("#searchForm").submit();
-        	return false;
-        }
+	    	return false;
+	    }
 	</script>
 </head>
 <body>

@@ -3,12 +3,14 @@
 <html>
 <head>
 	<title>站点管理</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		function page(i){
-			$("#pageNo").val(i);
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
 			$("#searchForm").submit();
-        	return false;
-        }
+	    	return false;
+	    }
 	</script>
 </head>
 <body>

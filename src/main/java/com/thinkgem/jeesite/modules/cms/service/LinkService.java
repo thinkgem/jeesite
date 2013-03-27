@@ -10,13 +10,14 @@ import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -34,7 +35,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 @Transactional(readOnly = true)
 public class LinkService extends BaseService {
 
@@ -43,6 +44,7 @@ public class LinkService extends BaseService {
 	
 	@Autowired
 	private LinkDao linkDao;
+	
 	@Autowired
 	private CategoryDao categoryDao;
 	
@@ -83,7 +85,13 @@ public class LinkService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void save(Link link) {
-		if (link.getUser()==null){link.setUser(UserUtils.getUser());}
+		if (link.getUser()==null){
+			link.setUser(UserUtils.getUser());
+		}
+		// 如果没有审核权限，则将当前内容改为待审核状态
+		if (!SecurityUtils.getSubject().isPermitted("cms:link:audit")){
+			link.setStatus(Link.STATUS_AUDIT);
+		}
 		link.setUpdateDate(new Date());
 		linkDao.clear();
 		linkDao.save(link);

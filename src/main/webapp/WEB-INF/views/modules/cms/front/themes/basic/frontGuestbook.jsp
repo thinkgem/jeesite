@@ -7,9 +7,9 @@
 	<meta name="decorator" content="cms_default_${site.theme}"/>
 	<meta name="description" content="JeeSite ${site.desciption}" />
 	<meta name="keywords" content="JeeSite ${site.keywords}" />
-	<link href="${ctxStatic}/jquery-validation/1.9.0/validate.min.css" type="text/css" rel="stylesheet" />
-	<script src="${ctxStatic}/jquery-validation/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
-	<script src="${ctxStatic}/jquery-validation/1.9.0/messages_cn.min.js" type="text/javascript"></script>
+	<link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
+	<script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.method.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			<c:if test="${not empty message}">alert("${message}");</c:if>
@@ -23,7 +23,7 @@
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					if (element.is(":checkbox")){
+					if (element.is(":checkbox")||element.is(":radio")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -31,8 +31,8 @@
 				}
 			});
 		});
-		function page(i){
-			location="${ctx}/guestbook?pageNo="+i;
+		function page(n,s){
+			location="${ctx}/guestbook?pageNo="+n+"&pageSize="+s;;
 		}
 	</script>
 </head>

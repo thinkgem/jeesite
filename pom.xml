@@ -8,56 +8,51 @@
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
-	<url>https://github.com/thinkgem/jeesite</url>
+	<url>http://thinkgem.github.com/jeesite</url>
     
 	<!-- 项目属性 -->
 	<properties>
+	    
 		<!-- 依赖库的版本定义 -->
-		<spring.version>3.1.2.RELEASE</spring.version>
-		<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
-		<hibernate.version>4.1.7.Final</hibernate.version>
-		<hibernate-search.version>4.2.0.CR1</hibernate-search.version>
-		<bonecp.version>0.7.1-rc2</bonecp.version>
+		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version>
+		<hibernate.version>4.1.10.Final</hibernate.version>
+		<hibernate-search.version>4.2.0.Final</hibernate-search.version>
+		<bonecp.version>0.7.1.RELEASE</bonecp.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<shiro.version>1.2.1</shiro.version>
-		<ehcache.version>2.6.0</ehcache.version>
-		<hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
-		<jackson.version>2.1.0</jackson.version>
+		<ehcache.version>2.6.5</ehcache.version>
+		<hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
+		<jackson.version>2.1.4</jackson.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
-		<guava.version>13.0.1</guava.version>
-		<!-- <joda-time.version>2.1</joda-time.version> -->
+		<guava.version>14.0</guava.version>
 		<dozer.version>5.3.2</dozer.version>
+		<poi.version>3.9</poi.version>
 		<freemarker.version>2.3.19</freemarker.version>
+		<!-- <junit.version>4.11</junit.version>
+		<mockito.version>1.9.5</mockito.version>
+		<powermock.version>1.5</powermock.version> -->
 		
-		<!-- <junit.version>4.10</junit.version>
-		<mockito.version>1.9.0</mockito.version>
-		<powermock.version>1.4.12</powermock.version>
-		<selenium.version>2.21.0</selenium.version> -->
-		
-		<!-- <h2.version>1.3.168</h2.version> -->
-		<!-- <oracle.version>10.2.0.3</oracle.version> -->
-		<mysql.version>5.1.13</mysql.version>
-		
-		<!--<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
-		<jdbc.driver.version>${h2.version}</jdbc.driver.version>-->
+		<!-- Jdbc -->
+		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+		<jdbc.driver.version>5.1.13</jdbc.driver.version>
 		
 		<!--<jdbc.driver.groupId>com.oracle</jdbc.driver.groupId>
 		<jdbc.driver.artifactId>ojdbc14</jdbc.driver.artifactId>
-		<jdbc.driver.version>${oracle.version}</jdbc.driver.version>-->
+		<jdbc.driver.version>10.2.0.1.0</jdbc.driver.version>-->
 		
-		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-		<jdbc.driver.version>${mysql.version}</jdbc.driver.version>
+		<!--<jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
+		<jdbc.driver.version>1.3.168</jdbc.driver.version>-->
 		
-		<!-- Plugin 的属性定义 -->
-		<jetty.version>7.6.7.v20120910</jetty.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.version>3.0.3</maven.version>
+		<!-- Plugin -->
 		<jdk.version>1.6</jdk.version>
+		<jetty.version>7.6.9.v20130131</jetty.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 	</properties>
 
@@ -82,22 +77,12 @@
 		
 		<repository>
 			<id>repo.springsource.org</id>
-			<name>repo.springsource.org-releases</name>
+			<name>SpringSource Repository</name>
 			<url>http://repo.springsource.org/libs-milestone-local</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 	    </repository>
-		
-	    <!-- <repository>
-	      <id>spy</id>
-	      <name>Spy Repository</name>
-	      <layout>default</layout>
-	      <url>http://files.couchbase.com/maven2/</url>
-	      <snapshots>
-	        <enabled>false</enabled>
-	      </snapshots>
-	    </repository> -->
 		
 		<repository>
 			<id>bonecp-repo</id>
@@ -109,18 +94,6 @@
 		</repository>
 		
 	</repositories>
-	
-	<!-- 设定插件仓库 如有Nexus私服, 取消注释并指向正确的服务器地址. 
-	<pluginRepositories> 
-		<pluginRepository> 
-			<id>nexus</id>
-			<name>Team Nexus Repository</name>
-			<url>http://localhost:8081/nexus/content/groups/public</url> 
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>-->
 	
 	<!-- 依赖项定义 -->
 	<dependencies>
@@ -143,8 +116,13 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-		<groupId>org.springframework</groupId>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -158,7 +136,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+			
 		<!-- spring orm -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -202,12 +185,12 @@
 			<version>2.2.2</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>asm</groupId>
 			<artifactId>asm</artifactId>
 			<version>3.3.1</version>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency> -->
 		<!-- AOP end -->
 
 		<!-- PERSISTENCE begin -->
@@ -267,6 +250,11 @@
 		<!-- PERSISTENCE end -->
 
 		<!-- WEB begin -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -335,19 +323,6 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate-validator.version}</version>
 		</dependency>
-		
-		<!-- JSON begin -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-jaxb-annotations</artifactId>
-			<version>2.0.5</version>
-		</dependency>
-		<!-- JSON end -->
 		
 		<!-- LOGGING begin -->
 		<dependency>
@@ -425,29 +400,17 @@
 			<version>${guava.version}</version>
 		</dependency>
 		
-		<!-- joda 
+		<!-- jackson json -->
 		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>${joda-time.version}</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time-jsptags</artifactId>
-			<version>1.1.1</version>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
-		<!- - joda for hibernate - ->
-		<dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.core</artifactId>
-			<version>3.0.0.CR3</version>
-		</dependency>
-		<!- - joda for jackson - ->
-		<dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-joda</artifactId>
-            <version>2.0.4</version>
-       	</dependency>-->
 		
 		<!-- pojo copy -->
 		<dependency>
@@ -474,51 +437,24 @@
 		    <artifactId>activation</artifactId>
 		    <version>1.1.1</version>
 		</dependency>
+		
+		<!-- poi office -->
+	  	<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>${poi.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>${poi.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml-schemas</artifactId>
+		    <version>${poi.version}</version>
+		</dependency>
 		<!-- GENERAL UTILS end -->
-		
-		<!-- TEST begin 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
-		</dependency>
-		</dependency>-->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- jetty -->
-		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jsp</artifactId>
-			<version>${jetty.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		
-		<!-- dbunit -->
-		<dependency>
-			<groupId>org.dbunit</groupId>
-			<artifactId>dbunit</artifactId>
-			<version>2.4.8</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- TEST end -->
 		
 		<!-- CKFinder begin -->
 		<dependency>
@@ -560,6 +496,48 @@
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/CKFinderPlugin-ImageResize-2.3.jar</systemPath>
         </dependency>
 		<!-- CKFinder end -->
+		
+		<!-- Jetty -->
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jsp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- TEST begin -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.4.8</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- TEST end -->
+		
 	</dependencies>
 
 	<build>
@@ -611,56 +589,14 @@
 				</configuration>
 			</plugin>
 
-			<!-- enforcer插件, 设定环境与依赖的规则 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>1.1.1</version>
-				<executions>
-					<execution>
-						<id>enforce-banned-dependencies</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<requireMavenVersion>
-                  					<version>${maven.version}</version>
-                				</requireMavenVersion>
-                				<requireJavaVersion>
-                  					<version>${jdk.version}</version>
-                				</requireJavaVersion>
-								<bannedDependencies>
-									<searchTransitive>true</searchTransitive>
-									<excludes>
-										<exclude>commons-logging</exclude>
-										<exclude>aspectj:aspectj*</exclude>
-										<exclude>org.springframework:2.*</exclude>
-										<exclude>org.springframework:3.0.*</exclude>
-									</excludes>
-								</bannedDependencies>
-							</rules>
-							<fail>true</fail>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>-->
-			
 			<!-- jetty插件, 设定context path与spring profile -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
+				<version>${jetty.version}</version> 
 				<configuration>
-					<systemProperties>
-						<systemProperty>
-							<name>spring.profiles.active</name>
-							<value>development</value>
-						</systemProperty>
-					</systemProperties>
-					<useTestClasspath>true</useTestClasspath>
 					<webAppConfig>
-						<contextPath>${project.artifactId}</contextPath>
+						<contextPath>/${project.artifactId}</contextPath>
 					</webAppConfig>
 				</configuration>
 			</plugin>
@@ -714,9 +650,13 @@
         				<version>1.7</version>
         				<configuration>
               				<target>
+              				    
 								<property name="sql.type" value="mysql" />
 								<property name="dbunit.datatype" value="org.dbunit.ext.mysql.MySqlDataTypeFactory" />
 								
+								<!--<property name="sql.type" value="oracle" />
+								<property name="dbunit.datatype" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" /> -->
+																
 								<property file="src/main/resources/application.properties" />
                 				<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" onerror="continue">
 									<classpath refid="maven.test.classpath" />

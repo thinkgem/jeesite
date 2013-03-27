@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>选择文章</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("input[name=id]").each(function(){
@@ -37,8 +38,9 @@
 			});
 			return false;
 		}
-		function page(i){
-			$("#pageNo").val(i);
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
 			$("#searchForm").submit();
         	return false;
         }

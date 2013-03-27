@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -27,14 +28,15 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 角色Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/role")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/role")
 public class RoleController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
+	
 	@Autowired
 	private CategoryService categoryService;
 	
@@ -65,30 +67,31 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "save")
-	public String save(Role role, String oldName, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, role)){
-			if ("true".equals(checkName(oldName, role.getName()))){
-				systemService.saveRole(role);
-				addFlashMessage(redirectAttributes, "保存角色'" + role.getName() + "'成功");
-			}else{
-				addFlashMessage(redirectAttributes, "保存角色'" + role.getName() + "'失败, 角色名已存在");
-			}
+	public String save(Role role, Model model, String oldName, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, role)){
+			return form(model);
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/role/?repage";
+		if (!"true".equals(checkName(oldName, role.getName()))){
+			addMessage(model, "保存角色'" + role.getName() + "'失败, 角色名已存在");
+			return form(model);
+		}
+		systemService.saveRole(role);
+		addMessage(redirectAttributes, "保存角色'" + role.getName() + "'成功");
+		return "redirect:"+Global.ADMIN_PATH+"/sys/role/?repage";
 	}
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "delete")
 	public String delete(@RequestParam Long id, RedirectAttributes redirectAttributes) {
 		if (Role.isAdmin(id)){
-			addFlashMessage(redirectAttributes, "删除角色失败, 不允许内置角色或编号空");
-		}else if (UserUtils.getUser().getRoleIdList().contains(id)){
-			addFlashMessage(redirectAttributes, "删除角色失败, 不能删除当前用户所在角色");
+			addMessage(redirectAttributes, "删除角色失败, 不允许内置角色或编号空");
+		}else if (UserUtils.getUser(true).getRoleIdList().contains(id)){
+			addMessage(redirectAttributes, "删除角色失败, 不能删除当前用户所在角色");
 		}else{
 			systemService.deleteRole(id);
-			addFlashMessage(redirectAttributes, "删除角色成功");
+			addMessage(redirectAttributes, "删除角色成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/role/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/role/?repage";
 	}
 
 	@RequiresUser

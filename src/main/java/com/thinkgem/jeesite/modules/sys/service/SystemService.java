@@ -16,7 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
@@ -35,9 +35,9 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
-@Component
+@Service
 @Transactional(readOnly = true)
 public class SystemService extends BaseService {
 
@@ -97,7 +97,9 @@ public class SystemService extends BaseService {
 			dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
 		}
 		dc.add(Restrictions.eq("delFlag", User.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code")).addOrder(Order.asc("id"));
+		if (!StringUtils.isNotEmpty(page.getOrderBy())){
+			dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code"));
+		}
 		return userDao.find(page, dc);
 	}
 
@@ -106,11 +108,7 @@ public class SystemService extends BaseService {
 	}
 
 	@Transactional(readOnly = false)
-	public void saveUser(User user, String newPassword) {
-		// 如果新密码为空，则不更换密码
-		if (StringUtils.isNotBlank(newPassword)) {
-			user.setPassword(entryptPassword(newPassword));
-		}
+	public void saveUser(User user) {
 		userDao.clear();
 		userDao.save(user);
 		systemRealm.clearCachedAuthorizationInfo(user.getLoginName());

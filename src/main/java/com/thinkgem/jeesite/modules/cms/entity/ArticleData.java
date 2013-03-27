@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -21,6 +20,8 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 
@@ -54,8 +55,8 @@ public class ArticleData extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
-	//@GenericGenerator(name = "seq_cms_article", strategy = "seq_cms_article")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
+//	@SequenceGenerator(name = "seq_cms_article_data", sequenceName = "seq_cms_article_data")
 	public Long getId() {
 		return id;
 	}
@@ -64,6 +65,7 @@ public class ArticleData extends BaseEntity {
 		this.id = id;
 	}
 
+	@NotBlank
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getContent() {
 		return content;
@@ -73,7 +75,7 @@ public class ArticleData extends BaseEntity {
 		this.content = content;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getCopyfrom() {
 		return copyfrom;
 	}
@@ -82,7 +84,7 @@ public class ArticleData extends BaseEntity {
 		this.copyfrom = copyfrom;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getRelation() {
 		return relation;
 	}
@@ -91,7 +93,7 @@ public class ArticleData extends BaseEntity {
 		this.relation = relation;
 	}
 
-	@Size(min=0, max=1)
+	@Length(min=1, max=1)
 	public String getAllowComment() {
 		return allowComment;
 	}

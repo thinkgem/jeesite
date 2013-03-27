@@ -11,7 +11,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.cms.service.SiteService;
  * @author ThinkGem
  * @version 2013-01-15
  */
-@Component
+@Service
 public class CmsUtils implements ApplicationContextAware {
 
 	private static final String CMS_CACHE = "cmsCache";
@@ -131,6 +131,8 @@ public class CmsUtils implements ApplicationContextAware {
 	 * @param categoryId 分类编号
 	 * @param number 获取数目
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
+	 * 			posid	推荐位（1：首页焦点图；2：栏目页文章推荐；）
+	 * 			thumb	缩略图（1：有缩略图的文章）
 	 * @return
 	 */
 	public static List<Article> getArticleList(long siteId, long categoryId, int number, String param){
@@ -139,8 +141,8 @@ public class CmsUtils implements ApplicationContextAware {
 		if (StringUtils.isNotBlank(param)){
 			@SuppressWarnings({ "rawtypes" })
 			Map map = JsonMapper.getInstance().fromJson("{"+param+"}", Map.class);
-			if (new Integer(1).equals(map.get("posid"))){
-				article.setPosid("1");
+			if (new Integer(1).equals(map.get("posid")) || new Integer(2).equals(map.get("posid"))){
+				article.setPosid(String.valueOf(map.get("posid")));
 			}
 			if (new Integer(1).equals(map.get("thumb"))){
 				article.setThumb("1");

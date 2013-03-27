@@ -14,9 +14,9 @@
 				page(1);
 			}
 		});
-		function page(i){
+		function page(n,s){
 			$.get("${ctx}/comment",{theme: '${category.site.theme}', module: '${category.module}',
-				contentId: '${article.id}', title: '${article.title}', pageNo: i, date: new Date().getTime()
+				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
 			},function(data){
 				$("#comment").html(data);
 			});
@@ -38,6 +38,10 @@
 		<div id="comment" class="hide">
 			正在加载评论...
 		</div>
+		<h5>相关文章</h5>
+		<ol><c:forEach items="${relationList}" var="relation">
+			<li style="float:left;width:230px;"><a href="${ctx}/view-${relation[0]}-${relation[1]}${urlSuffix}">${relation[2]}</a></li>
+		</c:forEach></ol>
 	</div>
 	<div style="clear:both;"></div>
 </body>

@@ -1,3 +1,6 @@
+/**
+ * There are <a href="https://github.com/thinkgem/jeesite">JeeSite</a> code generation
+ */
 package ${packageName}.${moduleName}.dao${subModuleName};
 
 import org.springframework.data.jpa.repository.Modifying;

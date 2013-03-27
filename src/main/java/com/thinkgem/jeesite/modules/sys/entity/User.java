@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -29,18 +30,20 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.common.utils.Collections3;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
+import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 
 /**
  * 用户Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 @Entity
 @Table(name = "sys_user")
@@ -58,7 +61,7 @@ public class User extends BaseEntity {
 	private String phone;	// 电话
 	private String mobile;	// 手机
 	private String remarks;	// 备注
-	private String userType;// 备注
+	private String userType;// 用户类型
 	private Date createDate;// 创建日期
 	private String delFlag;	// 删除标记（0：正常；1：删除）
 	private String loginIp;	// 最后登陆IP
@@ -78,8 +81,9 @@ public class User extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
-	//@GenericGenerator(name = "seq_sys_user", strategy = "seq_sys_user")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
+//	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user")
+	@ExcelField(title="ID", type=1, align=2, sort=1)
 	public Long getId() {
 		return id;
 	}
@@ -92,6 +96,8 @@ public class User extends BaseEntity {
 	@JoinColumn(name="area_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotNull(message="所属区域不能为空")
+	@ExcelField(title="所属区域", align=2, sort=10)
 	public Area getArea() {
 		return area;
 	}
@@ -104,6 +110,8 @@ public class User extends BaseEntity {
 	@JoinColumn(name="office_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	@NotNull(message="所属部门不能为空")
+	@ExcelField(title="所属部门", align=2, sort=20)
 	public Office getOffice() {
 		return office;
 	}
@@ -112,8 +120,8 @@ public class User extends BaseEntity {
 		this.office = office;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
+	@ExcelField(title="登录名", align=2, sort=30)
 	public String getLoginName() {
 		return loginName;
 	}
@@ -122,7 +130,7 @@ public class User extends BaseEntity {
 		this.loginName = loginName;
 	}
 
-	@NotBlank
+	@Length(min=1, max=100)
 	public String getPassword() {
 		return password;
 	}
@@ -131,8 +139,8 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
-	@NotBlank
-	@Size(min=0, max=100)
+	@Length(min=1, max=100)
+	@ExcelField(title="姓名", align=2, sort=40)
 	public String getName() {
 		return name;
 	}
@@ -141,8 +149,8 @@ public class User extends BaseEntity {
 		this.name = name;
 	}
 
-	@Email
-	@Size(min=0, max=200)
+	@Email @Length(min=0, max=200)
+	@ExcelField(title="邮箱", align=1, sort=50)
 	public String getEmail() {
 		return email;
 	}
@@ -151,7 +159,8 @@ public class User extends BaseEntity {
 		this.email = email;
 	}
 	
-	@Size(min=0, max=200)
+	@Length(min=0, max=200)
+	@ExcelField(title="电话", align=2, sort=60)
 	public String getPhone() {
 		return phone;
 	}
@@ -160,7 +169,8 @@ public class User extends BaseEntity {
 		this.phone = phone;
 	}
 
-	@Size(min=0, max=200)
+	@Length(min=0, max=200)
+	@ExcelField(title="手机", align=2, sort=70)
 	public String getMobile() {
 		return mobile;
 	}
@@ -169,7 +179,8 @@ public class User extends BaseEntity {
 		this.mobile = mobile;
 	}
 
-	@Size(min=0, max=255)
+	@Length(min=0, max=255)
+	@ExcelField(title="备注", align=1, sort=900)
 	public String getRemarks() {
 		return remarks;
 	}
@@ -178,7 +189,8 @@ public class User extends BaseEntity {
 		this.remarks = remarks;
 	}
 	
-	@Size(min=0, max=100)
+	@Length(min=0, max=100)
+	@ExcelField(title="用户类型", align=2, sort=80, dictType="sys_user_type")
 	public String getUserType() {
 		return userType;
 	}
@@ -187,7 +199,9 @@ public class User extends BaseEntity {
 		this.userType = userType;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@ExcelField(title="创建时间", type=0, align=1, sort=90)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -196,6 +210,7 @@ public class User extends BaseEntity {
 		this.createDate = createDate;
 	}
 
+	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
 	}
@@ -204,6 +219,7 @@ public class User extends BaseEntity {
 		this.delFlag = delFlag;
 	}
 
+	@ExcelField(title="最后登录IP", type=1, align=1, sort=100)
 	public String getLoginIp() {
 		return loginIp;
 	}
@@ -213,6 +229,7 @@ public class User extends BaseEntity {
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+	@ExcelField(title="最后登录日期", type=1, align=1, sort=110)
 	public Date getLoginDate() {
 		return loginDate;
 	}
@@ -222,14 +239,15 @@ public class User extends BaseEntity {
 	}
 
 	//多对多定义
-	@ManyToMany//(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy("id")
 	@Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@JsonIgnore
+	@NotEmpty
+	@ExcelField(title="拥有角色", align=1, sort=800, fieldType=RoleListType.class)
 	public List<Role> getRoleList() {
 		return roleList;
 	}
@@ -239,7 +257,6 @@ public class User extends BaseEntity {
 	}
 
 	@Transient
-	@JsonIgnore
 	public List<Long> getRoleIdList() {
 		List<Long> roleIdList = Lists.newArrayList();
 		for (Role role : roleList) {
@@ -263,11 +280,10 @@ public class User extends BaseEntity {
 	 */
 	//非持久化属性.
 	@Transient
-	@JsonIgnore
 	public String getRoleNames() {
 		return Collections3.extractToString(roleList, "name", ", ");
 	}
-
+	
 	@Transient
 	public boolean isAdmin(){
 		return isAdmin(this.id);

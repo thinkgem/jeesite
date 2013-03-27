@@ -7,6 +7,8 @@ package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
@@ -27,10 +30,10 @@ import com.thinkgem.jeesite.modules.sys.service.SystemService;
 /**
  * 菜单Controller
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = BaseController.ADMIN_PATH+"/sys/menu")
+@RequestMapping(value = Global.ADMIN_PATH+"/sys/menu")
 public class MenuController extends BaseController {
 
 	@Autowired
@@ -68,24 +71,25 @@ public class MenuController extends BaseController {
 	
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "save")
-	public String save(Menu menu, RedirectAttributes redirectAttributes) {
-		if (beanValidators(redirectAttributes, menu)){
-			systemService.saveMenu(menu);
-			addFlashMessage(redirectAttributes, "保存菜单'" + menu.getName() + "'成功");
+	public String save(Menu menu, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, menu)){
+			return form(menu, model);
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/menu/";
+		systemService.saveMenu(menu);
+		addMessage(redirectAttributes, "保存菜单'" + menu.getName() + "'成功");
+		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
 	}
 	
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (Menu.isRoot(id)){
-			addFlashMessage(redirectAttributes, "删除菜单失败, 不允许删除顶级菜单或编号为空");
+			addMessage(redirectAttributes, "删除菜单失败, 不允许删除顶级菜单或编号为空");
 		}else{
 			systemService.deleteMenu(id);
-			addFlashMessage(redirectAttributes, "删除菜单成功");
+			addMessage(redirectAttributes, "删除菜单成功");
 		}
-		return "redirect:"+BaseController.ADMIN_PATH+"/sys/menu/";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
 	}
 
 	@RequiresUser
@@ -97,7 +101,7 @@ public class MenuController extends BaseController {
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds) {
+	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds, HttpServletResponse response) {
 		response.setContentType("text/html; charset=UTF-8");
 		StringBuilder sb = new StringBuilder("var data={};");
 		List<Menu> list = systemService.findAllMenu();

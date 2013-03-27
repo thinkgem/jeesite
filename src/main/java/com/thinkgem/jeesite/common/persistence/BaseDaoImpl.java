@@ -59,7 +59,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 获取实体工厂管理对象
 	 */
 	@PersistenceContext
-	public EntityManager entityManager;
+	private EntityManager entityManager;
 
 	/**
 	 * 实体类类型(由构造方法自动赋值)
@@ -184,7 +184,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			ql += " order by " + page.getOrderBy();
 		}
-        Query query = createQuery(ql, parameter); 
+        Query query = createSqlQuery(ql, parameter); 
 		// set page
         if (!page.isDisabled()){
 	        query.setFirstResult(page.getFirstResult());
@@ -305,9 +305,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			for (String order : StringUtils.split(page.getOrderBy(), ",")){
 				String[] o = StringUtils.split(order, " ");
-				if (o.length>=1){
+				if (o.length==1){
 					criteria.addOrder(Order.asc(o[0]));
-				}else if (o.length>=2){
+				}else if (o.length==2){
 					if ("DESC".equals(o[1].toUpperCase())){
 						criteria.addOrder(Order.desc(o[0]));
 					}else{

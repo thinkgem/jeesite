@@ -18,18 +18,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.CookieUtils;
 
 /**
  * 分页类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  * @param <T>
  */
 public class Page<T> {
 	
 	private int pageNo = 1; // 当前页码
-	private int pageSize = 10; // 页面大小，设置为“-1”表示不进行分页（分页无效）
+	private int pageSize = Integer.valueOf(Global.getConfig("page.pageSize")); // 页面大小，设置为“-1”表示不进行分页（分页无效）
 	
 	private long count;// 总记录数，设置为“-1”表示不查询总数
 	
@@ -56,7 +57,7 @@ public class Page<T> {
 	 * @param response 用于设置 Cookie，记住页码
 	 */
 	public Page(HttpServletRequest request, HttpServletResponse response){
-		this(request, response, -1);
+		this(request, response, -2);
 	}
 	
 	/**
@@ -66,31 +67,35 @@ public class Page<T> {
 	 * @param pageSize 分页大小，如果传递 -1 则为不分页，返回所有数据
 	 */
 	public Page(HttpServletRequest request, HttpServletResponse response, int pageSize){
-		// 获取页码参数（传递repage参数，来记住页码）
+		// 设置页码参数（传递repage参数，来记住页码）
 		String no = request.getParameter("pageNo");
 		if (StringUtils.isNumeric(no)){
 			CookieUtils.setCookie(response, "pageNo", no);
-			this.pageNo = Integer.parseInt(no);
+			this.setPageNo(Integer.parseInt(no));
 		}else if (request.getParameter("repage")!=null){
 			no = CookieUtils.getCookie(request, "pageNo");
 			if (StringUtils.isNumeric(no)){
-				this.pageNo = Integer.parseInt(no);
+				this.setPageNo(Integer.parseInt(no));
 			}
 		}
-		// 获取页面大小参数（传递repage参数，来记住页码大小）
-		if (pageSize==-1){
-			String size = request.getParameter("pageSize");
+		// 设置页面大小参数（传递repage参数，来记住页码大小）
+		String size = request.getParameter("pageSize");
+		if (StringUtils.isNumeric(size)){
+			CookieUtils.setCookie(response, "pageSize", size);
+			this.setPageSize(Integer.parseInt(size));
+		}else if (request.getParameter("repage")!=null){
+			no = CookieUtils.getCookie(request, "pageSize");
 			if (StringUtils.isNumeric(size)){
-				CookieUtils.setCookie(response, "pageSize", size);
-				this.pageSize = Integer.parseInt(size);
-			}else if (request.getParameter("repage")!=null){
-				no = CookieUtils.getCookie(request, "pageSize");
-				if (StringUtils.isNumeric(size)){
-					this.pageSize = Integer.parseInt(size);
-				}
+				this.setPageSize(Integer.parseInt(size));
 			}
-		}else{
+		}
+		if (pageSize != -2){
 			this.pageSize = pageSize;
+		}
+		// 设置排序参数
+		String orderBy = request.getParameter("orderBy");
+		if (StringUtils.isNotBlank(orderBy)){
+			this.setOrderBy(orderBy);
 		}
 	}
 	
@@ -121,10 +126,10 @@ public class Page<T> {
 	 * @param list 本页数据对象列表
 	 */
 	public Page(int pageNo, int pageSize, long count, List<T> list) {
-		this.count = count;
-		this.pageNo = pageNo;
+		this.setCount(count);
+		this.setPageNo(pageNo);
 		this.pageSize = pageSize;
-		this.list = list;
+		this.setList(list);
 	}
 	
 	/**
@@ -137,7 +142,7 @@ public class Page<T> {
 		
 		this.last = (int)(count / (this.pageSize < 1 ? 20 : this.pageSize) + first - 1);
 		
-		if (count % pageSize != 0 || this.last == 0) {
+		if (this.count % this.pageSize != 0 || this.last == 0) {
 			this.last++;
 		}
 
@@ -192,7 +197,7 @@ public class Page<T> {
 		if (pageNo == first) {// 如果是首页
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">&#171; 上一页</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+prev+");\">&#171; 上一页</a></li>\n");
+			sb.append("<li><a href=\"javascript:"+funcName+"("+prev+","+pageSize+");\">&#171; 上一页</a></li>\n");
 		}
 
 		int begin = pageNo - (length / 2);
@@ -214,7 +219,7 @@ public class Page<T> {
 		if (begin > first) {
 			int i = 0;
 			for (i = first; i < first + slider && i < begin; i++) {
-				sb.append("<li><a href=\"javascript:"+funcName+"("+i+");\">"
+				sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
 						+ (i + 1 - first) + "</a></li>\n");
 			}
 			if (i < begin) {
@@ -227,7 +232,7 @@ public class Page<T> {
 				sb.append("<li class=\"active\"><a href=\"javascript:\">" + (i + 1 - first)
 						+ "</a></li>\n");
 			} else {
-				sb.append("<li><a href=\"javascript:"+funcName+"("+i+");\">"
+				sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
 						+ (i + 1 - first) + "</a></li>\n");
 			}
 		}
@@ -238,20 +243,25 @@ public class Page<T> {
 		}
 
 		for (int i = end + 1; i <= last; i++) {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+i+");\">"
+			sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
 					+ (i + 1 - first) + "</a></li>\n");
 		}
 
 		if (pageNo == last) {
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+next+");\">"
+			sb.append("<li><a href=\"javascript:"+funcName+"("+next+","+pageSize+");\">"
 					+ "下一页 &#187;</a></li>\n");
 		}
 
-		sb.insert(0,"<ul>\n").append("</ul>\n");
+		sb.append("<li class=\"disabled\"><a href=\"javascript:\" style=\"border:0;padding-top:1px;_padding-top:7px;\">当前 ");
+		sb.append("<input type=\"text\" value=\""+pageNo+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" ");
+		sb.append("onkeypress=\"if(window.event.keyCode==13) "+funcName+"(this.value,"+pageSize+");\" onclick=\"this.select();\"/> / ");
+		sb.append("<input type=\"text\" value=\""+pageSize+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" ");
+		sb.append("onkeypress=\"if(window.event.keyCode==13) "+funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
+		sb.append("共 " + count + " 条</a><li>\n");
 
-		sb.insert(0,"<div class=\"count\" style=\"float:right;\">共 " + count + " 条</div>");
+		sb.insert(0,"<ul>\n").append("</ul>\n");
 		
 		sb.append("<div style=\"clear:both;\"></div>");
 
@@ -260,14 +270,14 @@ public class Page<T> {
 		return sb.toString();
 	}
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		Page<String> p = new Page<String>(3, 3);
 //		System.out.println(p);
 //		System.out.println("首页："+p.getFirst());
 //		System.out.println("尾页："+p.getLast());
 //		System.out.println("上页："+p.getPrev());
 //		System.out.println("下页："+p.getNext());
-	}
+//	}
 
 	/**
 	 * 获取设置总数
@@ -313,11 +323,11 @@ public class Page<T> {
 	}
 
 	/**
-	 * 设置页面大小
+	 * 设置页面大小（最大500）
 	 * @param pageSize
 	 */
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+		this.pageSize = pageSize < 0 ? 10 : pageSize > 500 ? 500 : pageSize;
 	}
 
 	/**
@@ -473,9 +483,9 @@ public class Page<T> {
 		if (orderBy!=null){
 			for (String order : StringUtils.split(orderBy, ",")){
 				String[] o = StringUtils.split(order, " ");
-				if (o.length>=1){
+				if (o.length==1){
 					orders.add(new Order(Direction.ASC, o[0]));
-				}else if (o.length>=2){
+				}else if (o.length==2){
 					if ("DESC".equals(o[1].toUpperCase())){
 						orders.add(new Order(Direction.DESC, o[0]));
 					}else{

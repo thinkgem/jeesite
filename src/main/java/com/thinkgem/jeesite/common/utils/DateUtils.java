@@ -13,7 +13,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 /**
  * 日期工具类, 继承org.apache.commons.lang.time.DateUtils类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-3-15
  */
 public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	
@@ -89,7 +89,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	}
 	
 	/**
-	 * 日期型字符串转化为日期 格式（"yyyy-MM-dd","yyyy/MM/dd"）
+	 * 日期型字符串转化为日期 格式（"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss" ）
 	 */
 	public static Date parseDate(String str) {
 		try {

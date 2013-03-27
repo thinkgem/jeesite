@@ -8,7 +8,7 @@ package com.thinkgem.jeesite.modules.cms.dao;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.thinkgem.jeesite.common.persistence.BaseDao;
 import com.thinkgem.jeesite.common.persistence.BaseDaoImpl;
@@ -38,7 +38,7 @@ interface SiteDaoCustom extends BaseDao<Site> {
  * DAO自定义接口实现
  * @author ThinkGem
  */
-@Component
+@Repository
 class SiteDaoImpl extends BaseDaoImpl<Site> implements SiteDaoCustom {
 
 }

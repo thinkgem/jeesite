@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.thinkgem.jeesite.common.persistence.BaseDao;
 import com.thinkgem.jeesite.common.persistence.BaseDaoImpl;
@@ -68,7 +68,7 @@ interface CategoryDaoCustom extends BaseDao<Category> {
  * DAO自定义接口实现
  * @author ThinkGem
  */
-@Component
+@Repository
 class CategoryDaoImpl extends BaseDaoImpl<Category> implements CategoryDaoCustom {
 
 }

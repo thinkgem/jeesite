@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.DateUtils;
-import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -45,7 +45,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		String uri = request.getRequestURI();
-		String uriPrefix = request.getContextPath() + BaseController.ADMIN_PATH;
+		String uriPrefix = request.getContextPath() + Global.ADMIN_PATH;
 		// 拦截所有来自管理端的POST请求
 		if ("POST".equals(request.getMethod()) && uri.length() > uriPrefix.length()){
 			User user = UserUtils.getUser();

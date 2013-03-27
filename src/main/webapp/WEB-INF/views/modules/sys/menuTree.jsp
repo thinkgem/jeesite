@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>菜单导航</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript"> 
 		$(document).ready(function() {
 			$(".accordion-heading a").click(function(){
@@ -19,20 +20,21 @@
 				$(this).parent().addClass("active");
 				$(this).children("i").addClass("icon-white");
 			});
+			$(".accordion-body a:first i").click();
 		});
 	</script>
 </head>
 <body>
-	<div class="accordion" id="menu"><c:set var="menuList" value="${fns:getMenuList()}"/><c:set var="firstMenu" value="true"/><c:forEach items="${menuList}" var="menu" varStatus="idxStatus"><c:if test="${menu.parent.id eq 1&&menu.isShow eq 1}">
+	<div class="accordion" id="menu"><c:set var="menuList" value="${fns:getMenuList()}"/><c:set var="firstMenu" value="true"/><c:forEach items="${menuList}" var="menu" varStatus="idxStatus"><c:if test="${menu.parent.id eq (not empty param.parentId?param.parentId:1)&&menu.isShow eq 1}">
 		<div class="accordion-group">
 		    <div class="accordion-heading">
 		    	<a class="accordion-toggle" data-toggle="collapse" data-parent="#menu" href="#collapse${menu.id}"><i class="icon-chevron-${firstMenu?'down':'right'}"></i>&nbsp;&nbsp;${menu.name}</a>
 		    </div>
-		    <div id="collapse${menu.id}" class="accordion-body collapse ${firstMenu?'in':''}"><c:set var="firstMenu" value="false"/>
+		    <div id="collapse${menu.id}" class="accordion-body collapse ${firstMenu?'in':''}">
 				<div class="accordion-inner">
 					<ul class="nav nav-list"><c:forEach items="${menuList}" var="menuChild"><c:if test="${menuChild.parent.id eq menu.id&&menuChild.isShow eq 1}">
 						<li><a href="${fn:indexOf(menuChild.href, '://') eq -1?ctx:''}${menuChild.href}" target="${not empty menuChild.target?menuChild.target:'mainFrame'}" ><i class="icon-${not empty menuChild.icon?menuChild.icon:'circle-arrow-right'}"></i>&nbsp;&nbsp;${menuChild.name}</a></li>
-					</c:if></c:forEach></ul>
+					<c:set var="firstMenu" value="false"/></c:if></c:forEach></ul>
 				</div>
 		    </div>
 		</div>

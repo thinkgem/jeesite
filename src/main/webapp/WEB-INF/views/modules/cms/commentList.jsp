@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>评论管理</title>
+	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		function view(href){
 			top.$.jBox.open('iframe:'+href,'查看文档',$(top.document).width()-220,$(top.document).height()-120,{
@@ -14,8 +15,9 @@
 			});
 			return false;
 		}
-		function page(i){
-			$("#pageNo").val(i);
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
 			$("#searchForm").submit();
         	return false;
         }
