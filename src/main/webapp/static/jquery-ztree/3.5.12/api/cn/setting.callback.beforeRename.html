@@ -1,0 +1,41 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId, treeNode, newName)</span><span class="path">setting.callback.</span>beforeRename</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.exedit</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>用于捕获节点编辑名称结束（Input 失去焦点 或 按下 Enter 键）之后，更新节点名称数据之前的事件回调函数，并且根据返回值确定是否允许更改名称的操作</p>
+			<p class="highlight_red">节点进入编辑名称状态后，按 ESC 键可以放弃当前修改，恢复原名称，取消编辑名称状态</p>
+			<p>默认值：null</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应 zTree 的 <b class="highlight_red">treeId</b>，便于用户操控</p>
+	<h4 class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>将要更改名称的节点 JSON 数据对象</p>
+	<h4 class="topLine"><b>newName</b><span>String</span></h4>
+	<p>修改后的新名称</p>
+	<h4 class="topLine"><b>返回值</b><span>Boolean</span></h4>
+	<p>返回值是 true / false</p>
+	<p class="highlight_red">如果返回 false，zTree 将保持名称编辑状态，无法触发 onRename 事件回调函数，并且会导致屏蔽其它事件，直到修改名称使得 beforeRename 返回 true</p>
+	<p class="highlight_red">如果返回 false，不会让 input 输入框获取焦点，避免由于警告信息而导致反复触发 beforeRename。 请在关闭提示警告信息后，利用 editName 方法让 input 重新获取焦点。</p>
+	</div>
+	<h3>setting & function 举例</h3>
+	<h4>1. 禁止修改的名称的长度小于 5</h4>
+	<pre xmlns=""><code>function zTreeBeforeRename(treeId, treeNode, newName) {
+	return newName.length > 5;
+}
+var setting = {
+	edit: {
+		enable: true
+	},
+	callback: {
+		beforeRename: zTreeBeforeRename
+	}
+};
+......</code></pre>
+</div>
+</div>

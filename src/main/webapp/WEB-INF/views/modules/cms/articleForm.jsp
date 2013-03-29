@@ -54,14 +54,8 @@
 		<div class="control-group">
 			<label class="control-label">所属栏目:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="category" title="栏目" url="/cms/category/treeData" parentIds="${article.category.parentIds}${article.category.id}" notAllowSelectRoot="true" notAllowSelectParent="true"/>
-				<div class="input-append">
-					<form:hidden id="categoryId" path="category.id" class="required"/>
-					<form:input id="categoryName" path="category.name" htmlEscape="false" maxlength="50" readonly="true"
-						/><a data-toggle="modal" href="#categoryDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" parentIds="${article.category.parentIds}${article.category.id}" notAllowSelectRoot="true" notAllowSelectParent="true"/>
+					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" notAllowSelectRoot="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">

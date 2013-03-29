@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - updateNode</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<!--  <script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>-->
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			view: {
+				selectedMulti: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"父节点1", open:true},
+			{ id:11, pId:1, name:"叶子节点1"},
+			{ id:12, pId:1, name:"叶子节点2"},
+			{ id:13, pId:1, name:"叶子节点3"},
+			{ id:2, pId:0, name:"父节点2", open:true},
+			{ id:21, pId:2, name:"叶子节点1"},
+			{ id:22, pId:2, name:"叶子节点2"},
+			{ id:23, pId:2, name:"叶子节点3"},
+			{ id:3, pId:0, name:"父节点3", open:true },
+			{ id:31, pId:3, name:"叶子节点1"},
+			{ id:32, pId:3, name:"叶子节点2"},
+			{ id:33, pId:3, name:"叶子节点3"}
+		];
+
+		var nameCount = 0, iconCount = 1, color = [0, 0, 0];
+		function updateNode(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			type = e.data.type,
+			nodes = zTree.getSelectedNodes();
+			if (nodes.length == 0) {
+				alert("请先选择一个节点");
+			}
+			for (var i=0, l=nodes.length; i<l; i++) {
+				zTree.setting.view.fontCss = {};
+				if (type == "rename") {
+					nodes[i].name = nodes[i].name.replace(/_[\d]*$/g, "") + "_" + (nameCount++);
+				} else if (type == "icon") {
+					if (iconCount > 8) {
+						nodes[i].iconSkin = null;
+						iconCount = 1;
+					} else if (nodes[i].isParent) {
+						nodes[i].iconSkin = nodes[i].iconSkin ? null : "pIcon01";
+					} else {
+						nodes[i].iconSkin = "icon0" + (iconCount++);
+					}
+				} else if (type == "color") {
+					color = [0, 0, 0];
+					var r1 = Math.round(Math.random()*3 - 0.5);
+					color[r1] = 15;
+					var r2 = Math.round(Math.random()*3 - 0.5);
+					while (r2 === r1) {
+						r2 = Math.round(Math.random()*3 - 0.5);
+					}
+					color[r2] = Math.round(Math.random()*16-0.5);
+					zTree.setting.view.fontCss["color"] = "#"+color[0].toString(16)+color[1].toString(16)+color[2].toString(16);
+				} else if (type == "font") {
+					var style = $("#" + nodes[i].tId + "_a").css("font-style") ;
+					style = (style=="italic" ? "normal" : "italic");
+					zTree.setting.view.fontCss["font-style"] = style;
+				}
+				zTree.updateNode(nodes[i]);
+			}
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			$("#rename").bind("click", {type:"rename"}, updateNode);
+			$("#changeIcon").bind("click", {type:"icon"}, updateNode);
+			$("#changeColor").bind("click", {type:"color"}, updateNode);
+			$("#changeFont").bind("click", {type:"font"}, updateNode);
+		});
+		//-->
+	</SCRIPT>
+	<style type="text/css">
+.ztree li span.button.pIcon01_ico_open{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/1_open.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.pIcon01_ico_close{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/1_close.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon01_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/2.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon02_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/3.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon03_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/4.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon04_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/5.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon05_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/6.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon06_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/7.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon07_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/8.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.icon08_ico_docu{margin-right:2px; background: url(../../../css/zTreeStyle/img/diy/9.png) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
+	</style>
+</HEAD>
+
+<BODY>
+<h1>用 zTree 方法 更新 节点数据</h1>
+<h6>[ 文件路径: core/update_fun.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、updateNode 方法操作说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 zTreeObj.updateNode 方法，详细请参见 API 文档中的相关内容</li>
+				<li><p>此 Demo 只能同时选中一个节点<br/>
+					试试看：[ <a id="rename" href="#" onclick="return false;">换名字</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="changeIcon" href="#" onclick="return false;">换图标</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="changeColor" href="#" onclick="return false;">换颜色</a> ]
+					&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="changeFont" href="#" onclick="return false;">斜体</a> ]</p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、setting 配置信息说明</h2>
+				<ul class="list">
+				<li>不需要对 setting 进行特殊设置</li>
+				<li class="highlight_red">配合 setting.view.fontCss 可以修改节点文字样式</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">zTreeObj.updateNode 方法的 API 文档中有详细说明</li>
+				</ul>
+			</li>
+			<li class="title"><h2>4、其他说明</h2>
+				<ul class="list">
+				<li>此 Demo 是针对 核心 js 包 core 制作的，因此不包括 checkbox 的更新操作</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

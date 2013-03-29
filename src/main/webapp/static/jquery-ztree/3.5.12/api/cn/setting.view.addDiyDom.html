@@ -1,0 +1,40 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId, treeNode)</span><span class="path">setting.view.</span>addDiyDom</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 核心 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>用于在节点上固定显示用户自定义控件</p>
+			<p class="highlight_red">1. 大数据量的节点加载请注意：在 addDiyDom 中针对每个节点 查找 DOM 对象并且添加新 DOM 控件，肯定会影响初始化性能；如果不是必须使用，建议不使用此功能</p>
+			<p class="highlight_red">2. 属于高级应用，使用时请确保对 zTree 比较了解。</p>
+			<p>默认值：null</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应 zTree 的 <b class="highlight_red">treeId</b>，便于用户操控</p>
+	<h4 class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>需要显示自定义控件的节点 JSON 数据对象</p>
+	</div>
+	<h3>setting & function 举例</h3>
+	<h4>1. 设置节点后面显示一个按钮</h4>
+	<pre xmlns=""><code>var setting = {
+	view: {
+		addDiyDom: addDiyDom
+	}
+};
+function addDiyDom(treeId, treeNode) {
+	var aObj = $("#" + treeNode.tId + "_a");
+	if ($("#diyBtn_"+treeNode.id).length>0) return;
+	var editStr = "&lt;span id='diyBtn_space_" +treeNode.id+ "' &gt; &lt;/span&gt;"
+		+ "&lt;button type='button' class='diyBtn1' id='diyBtn_" + treeNode.id
+		+ "' title='"+treeNode.name+"' onfocus='this.blur();'&gt;&lt;/button&gt;";
+	aObj.append(editStr);
+	var btn = $("#diyBtn_"+treeNode.id);
+	if (btn) btn.bind("click", function(){alert("diy Button for " + treeNode.name);});
+};
+......</code></pre>
+</div>
+</div>

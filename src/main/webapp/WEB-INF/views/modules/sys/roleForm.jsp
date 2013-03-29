@@ -16,8 +16,16 @@
 					name: {remote: "角色名已存在"}
 				},
 				submitHandler: function(form){
-					$("#menuIds").val(menuTree.getChecked());
-					$("#categoryIds").val(categoryTree.getChecked());
+					var ids = [], nodes = tree.getCheckedNodes(true);
+					for(var i=0; i<nodes.length; i++) {
+						ids.push(nodes[i].id);
+					}
+					$("#menuIds").val(ids);
+					var ids2 = [], nodes2 = tree2.getCheckedNodes(true);
+					for(var i=0; i<nodes2.length; i++) {
+						ids2.push(nodes2[i].id);
+					}
+					$("#categoryIds").val(ids2);
 					loading('正在提交，请稍等...');
 					form.submit();
 				},
@@ -31,24 +39,43 @@
 					}
 				}
 			});
-			var menuData={};<c:set var="strMenuIds" value="${','}${role.menuIds}${','}" /><c:forEach items="${menuList}" var="menu"><c:set var="strMenuId" value="${','}${menu.id}${','}" />
-			menuData["${not empty menu.parent.id?menu.parent.id:'-1'}_${menu.id}"] = "text: ${not empty menu.parent.id?menu.name:'权限列表'}; checked: ${fn:contains(strMenuIds, strMenuId)}";</c:forEach>
-			var menuTree = new MzTreeView(menuData);
-			menuTree.useCheckbox=true;
-			menuTree.linkFocus = false;
-			menuTree.linkCheckbox = true;
-			menuTree.isParentCheckbox = true;
-			$("#menuTree").html(menuTree.render());
-			menuTree.expandAll("1");
-			var categoryData={};<c:set var="strCategoryIds" value="${','}${role.categoryIds}${','}" /><c:forEach items="${categoryList}" var="category"><c:set var="strCategoryId" value="${','}${category.id}${','}" />
-			categoryData["${not empty category.parent?category.parent.id:'-1'}_${category.id}"] = "text: ${not empty category.parent?category.name:'栏目列表'}; checked: ${fn:contains(strCategoryIds, strCategoryId)}";</c:forEach>
-			var categoryTree = new MzTreeView(categoryData);
-			categoryTree.useCheckbox=true;
-			categoryTree.linkFocus = false;
-			categoryTree.linkCheckbox = true;
-			categoryTree.isParentCheckbox = true;
-			$("#categoryTree").html(categoryTree.render());
-			categoryTree.expandAll("1");
+
+			var setting = {check:{enable:true,nocheckInherit:true},view:{selectedMulti:false},
+					data:{simpleData:{enable:true}},callback:{beforeClick:function(id, node){
+						tree.checkNode(node, !node.checked, true, true);
+						return false;
+					}}};
+			
+			// 用户-菜单
+			var zNodes=[
+					<c:forEach items="${menuList}" var="menu">{id:${menu.id}, pId:${not empty menu.parent.id?menu.parent.id:0}, name:"${not empty menu.parent.id?menu.name:'权限列表'}"},
+		            </c:forEach>];
+			// 初始化树结构
+			var tree = $.fn.zTree.init($("#menuTree"), setting, zNodes);
+			// 默认选择节点
+			var ids = "${role.menuIds}".split(",");
+			for(var i=0; i<ids.length; i++) {
+				var node = tree.getNodeByParam("id", ids[i]);
+				try{tree.checkNode(node, true, false);}catch(e){}
+			}
+			// 默认展开全部节点
+			tree.expandAll(true);
+			
+			// 用户-分类
+			var zNodes2=[
+					<c:forEach items="${categoryList}" var="category">{id:${category.id}, pId:${not empty category.parent?category.parent.id:0}, name:"${not empty category.parent?category.name:'栏目列表'}"},
+		            </c:forEach>];
+			// 初始化树结构
+			var tree2 = $.fn.zTree.init($("#categoryTree"), setting, zNodes2);
+			// 默认选择节点
+			var ids2 = "${role.categoryIds}".split(",");
+			for(var i=0; i<ids2.length; i++) {
+				var node = tree2.getNodeByParam("id", ids2[i]);
+				try{tree2.checkNode(node, true, false);}catch(e){}
+			}
+			// 默认展开全部节点
+			tree2.expandAll(true);
+			
 		});
 	</script>
 </head>
@@ -70,9 +97,9 @@
 		<div class="control-group">
 			<label class="control-label">授权:</label>
 			<div class="controls">
-				<div id="menuTree" style="margin-top:5px;float:left;"></div>
+				<div id="menuTree" class="ztree" style="margin-top:3px;float:left;"></div>
 				<form:hidden path="menuIds"/>
-				<div id="categoryTree" style="margin-left:100px;margin-top:5px;float:left;"></div>
+				<div id="categoryTree" class="ztree" style="margin-left:100px;margin-top:3px;float:left;"></div>
 				<form:hidden path="categoryIds"/>
 			</div>
 		</div>

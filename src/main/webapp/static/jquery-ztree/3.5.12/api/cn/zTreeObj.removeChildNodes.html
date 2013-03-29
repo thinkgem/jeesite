@@ -1,0 +1,32 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(parentNode)</span><span class="path">zTreeObj.</span>removeChildNodes</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>清空某父节点的子节点。</p>
+			<p class="highlight_red">1、清空子节点后，父节点会自动变为叶子节点，如需要父节点保持父节点状态，请设置 setting.data.keep.parent 属性。</p>
+			<p class="highlight_red">2、请勿用此方法清空根节点，如果需要清空根节点，直接初始化 zTree，并且设置初始节点为 null 即可。</p>
+			<p class="highlight_red">3、此方法不会触发任何事件回调函数。</p>
+			<p class="highlight_red">请通过 zTree 对象执行此方法。</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>parentNode</b><span>JSON</span></h4>
+	<p>需要清空子节点的父节点数据</p>
+	<p class="highlight_red">请务必保证此节点数据对象 是 zTree 内部的数据对象</p>
+	<h4 class="topLine"><b>返回值</b><span>Array(JSON)</span></h4>
+	<p>将该父节点的子节点数据返回，如果不存在则返回 null</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 清空选中的第一个节点的子节点</h4>
+	<pre xmlns=""><code>var treeObj = $.fn.zTree.getZTreeObj("tree");
+var nodes = treeObj.getSelectedNodes();
+if (nodes && nodes.length>0) {
+	treeObj.removeChildNodes(nodes[0]);
+}
+</code></pre>
+</div>
+</div>

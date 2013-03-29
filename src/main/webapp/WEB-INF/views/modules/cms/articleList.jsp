@@ -32,10 +32,6 @@
 	<form:form id="searchForm" modelAttribute="article" action="${ctx}/cms/article/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<%--<tags:treeDialog id="category" title="栏目" url="/cms/category/treeData"/>
-		<form:hidden id="categoryId" path="category.id" class="required"/>
-		<label>栏目：</label><form:input id="categoryName" path="category.name" htmlEscape="false" maxlength="50" class="input-medium" readonly="true" />
-			<a data-toggle="modal" href="#categoryDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>&nbsp;&nbsp; --%>
 		<label>栏目：</label><tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
 					title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="true"/>
 		<label>标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - left_menu for Outlook</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var curMenu = null, zTree_Menu = null;
+		var setting = {
+			view: {
+				showLine: false,
+				showIcon: false,
+				selectedMulti: false,
+				dblClickExpand: false,
+				addDiyDom: addDiyDom
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"文件夹", open:true},
+			{ id:11, pId:1, name:"收件箱"},
+			{ id:111, pId:11, name:"收件箱1"},
+			{ id:112, pId:111, name:"收件箱2"},
+			{ id:113, pId:112, name:"收件箱3"},
+			{ id:114, pId:113, name:"收件箱4"},
+			{ id:12, pId:1, name:"垃圾邮件"},
+			{ id:13, pId:1, name:"草稿"},
+			{ id:14, pId:1, name:"已发送邮件"},
+			{ id:15, pId:1, name:"已删除邮件"},
+			{ id:3, pId:0, name:"快速视图"},
+			{ id:31, pId:3, name:"文档"},
+			{ id:32, pId:3, name:"照片"}
+		];
+
+		function addDiyDom(treeId, treeNode) {
+			var spaceWidth = 5;
+			var switchObj = $("#" + treeNode.tId + "_switch"),
+			icoObj = $("#" + treeNode.tId + "_ico");
+			switchObj.remove();
+			icoObj.before(switchObj);
+
+			if (treeNode.level > 1) {
+				var spaceStr = "<span style='display: inline-block;width:" + (spaceWidth * treeNode.level)+ "px'></span>";
+				switchObj.before(spaceStr);
+			}
+		}
+
+		function beforeClick(treeId, treeNode) {
+			if (treeNode.level == 0 ) {
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				zTree.expandNode(treeNode);
+				return false;
+			}
+			return true;
+		}
+
+		$(document).ready(function(){
+			var treeObj = $("#treeDemo");
+			$.fn.zTree.init(treeObj, setting, zNodes);
+			zTree_Menu = $.fn.zTree.getZTreeObj("treeDemo");
+			curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
+			zTree_Menu.selectNode(curMenu);
+
+			treeObj.hover(function () {
+				if (!treeObj.hasClass("showIcon")) {
+					treeObj.addClass("showIcon");
+				}
+			}, function() {
+				treeObj.removeClass("showIcon");
+			});
+		});
+		//-->
+	</SCRIPT>
+	<style type="text/css">
+.ztree * {font-size: 10pt;font-family:"Microsoft Yahei",Verdana,Simsun,"Segoe UI Web Light","Segoe UI Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol","Helvetica Neue",Arial}
+.ztree li ul{ margin:0; padding:0}
+.ztree li {line-height:30px;}
+.ztree li a {width:200px;height:30px;padding-top: 0px;}
+.ztree li a:hover {text-decoration:none; background-color: #E7E7E7;}
+.ztree li a span.button.switch {visibility:hidden}
+.ztree.showIcon li a span.button.switch {visibility:visible}
+.ztree li a.curSelectedNode {background-color:#D4D4D4;border:0;height:30px;}
+.ztree li span {line-height:30px;}
+.ztree li span.button {margin-top: -7px;}
+.ztree li span.button.switch {width: 16px;height: 16px;}
+
+.ztree li a.level0 span {font-size: 150%;font-weight: bold;}
+.ztree li span.button {background-image:url("./left_menuForOutLook.png"); *background-image:url("./left_menuForOutLook.gif")}
+.ztree li span.button.switch.level0 {width: 20px; height:20px}
+.ztree li span.button.switch.level1 {width: 20px; height:20px}
+.ztree li span.button.noline_open {background-position: 0 0;}
+.ztree li span.button.noline_close {background-position: -18px 0;}
+.ztree li span.button.noline_open.level0 {background-position: 0 -18px;}
+.ztree li span.button.noline_close.level0 {background-position: -18px -18px;}
+	</style>
+ </HEAD>
+
+<BODY>
+<h1>OutLook 样式的左侧菜单</h1>
+<h6>[ 文件路径: super/left_menuForOutLook.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>实现方法说明</h2>
+				<ul class="list">
+				<li>帮朋友用 zTree 实现了一个貌似 Outlook.com 的菜单，特拿出来分享给大家</li>
+				<li class="highlight_red">1、请注意本页面源码中的 css 部分</li>
+				<li class="highlight_red">2、请查看源码中 js 的使用，特别是利用 addDiyDom 回调将 展开按钮 转移到 &lt;a&gt; 标签内</li>
+				<li class="highlight_red">3、利用添加 zTree 的 class 实现展开按钮的隐藏、显示</li>
+				<li>4、其他辅助规则，请根据实际情况自行编写</li>
+				<li>5、当前规则说明:<br/>
+				&nbsp;&nbsp;单击根节点可以展开、折叠;<br/>
+				&nbsp;&nbsp;非根节点只有点击 箭头 图标才可以展开、折叠;<br/>
+				</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

@@ -1,0 +1,29 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(checked)</span><span class="path">zTreeObj.</span>checkAllNodes</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.excheck</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>勾选 或 取消勾选 全部节点。<span class="highlight_red">[setting.check.enable = true 且 setting.check.chkStyle = "checkbox" 时有效]</span></p>
+			<p class="highlight_red">此方法不会触发 beforeCheck / onCheck 事件回调函数。</p>
+			<p class="highlight_red">请通过 zTree 对象执行此方法。</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>checked</b><span>Boolean</span></h4>
+	<p>checked = true  表示勾选全部节点</p>
+	<p>checked = false 表示全部节点取消勾选</p>
+	<p class="highlight_red">不会影响 treeNode.nochecked = true 的节点。</p>
+	<p class="highlight_red">不会影响未加载的节点。</p>
+	<h4 class="topLine"><b>返回值</b><span>无</span></h4>
+	<p>目前无任何返回值</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 勾选全部节点</h4>
+	<pre xmlns=""><code>var treeObj = $.fn.zTree.getZTreeObj("tree");
+treeObj.checkAllNodes(true);
+</code></pre>
+</div>
+</div>

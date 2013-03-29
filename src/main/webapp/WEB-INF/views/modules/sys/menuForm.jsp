@@ -36,14 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="menu" title="菜单" url="/sys/menu/treeData" extId="${menu.id}" parentIds="${menu.parentIds}"/>
-				<div class="input-append">
-					<form:hidden id="menuId" path="parent.id" class="required"/>
-					<form:input id="menuName" path="parent.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#menuDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="menu" name="parent.id" value="${menu.parent.id}" labelName="parent.name" labelValue="${menu.parent.name}"
-					title="菜单" url="/sys/menu/treeData" extId="${menu.id}" parentIds="${menu.parentIds}"/>
+					title="菜单" url="/sys/menu/treeData" extId="${menu.id}"/>
 			</div>
 		</div>
 		<div class="control-group">

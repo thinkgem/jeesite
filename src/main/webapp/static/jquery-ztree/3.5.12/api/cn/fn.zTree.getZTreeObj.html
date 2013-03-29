@@ -1,0 +1,24 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeId)</span><span class="path">$.fn.zTree.</span>getZTreeObj</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 核心 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>zTree v3.x 专门提供的根据 treeId 获取 zTree 对象的方法。 </p>
+			<p class="highlight_red">必须在初始化 zTree 以后才可以使用此方法。</p>
+			<p>有了这个方法，用户不再需要自己设定全局变量来保存 zTree 初始化后得到的对象了，而且在所有回调函数中全都会返回 treeId 属性，用户可以随时使用此方法获取需要进行操作的 zTree 对象</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>zTree 的 DOM 容器的 id</p>
+	<h4 class="topLine"><b>返回值</b><span>JSON</span></h4>
+	<p>zTree 对象，提供操作 zTree 的各种方法，对于通过 js 操作 zTree 来说必须通过此对象</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 获取 id 为 tree 的 zTree 对象</h4>
+	<pre xmlns=""><code>var treeObj = $.fn.zTree.getZTreeObj("tree");</code></pre>
+</div>
+</div>

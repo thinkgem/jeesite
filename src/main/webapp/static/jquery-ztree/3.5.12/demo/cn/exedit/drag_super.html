@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - beforeDrag / onDrag / beforeDrop / onDrop</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			edit: {
+				drag: {
+					autoExpandTrigger: true,
+					prev: dropPrev,
+					inner: dropInner,
+					next: dropNext
+				},
+				enable: true,
+				showRemoveBtn: false,
+				showRenameBtn: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeDrop: beforeDrop,
+				beforeDragOpen: beforeDragOpen,
+				onDrag: onDrag,
+				onDrop: onDrop,
+				onExpand: onExpand
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"随意拖拽 1", open:true},
+			{ id:11, pId:1, name:"随意拖拽 1-1"},
+			{ id:12, pId:1, name:"随意拖拽 1-2"},
+			{ id:121, pId:12, name:"随意拖拽 1-2-1"},
+			{ id:122, pId:12, name:"随意拖拽 1-2-2"},
+			{ id:123, pId:12, name:"随意拖拽 1-2-3"},
+			{ id:13, pId:1, name:"禁止拖拽 1-3", open:true, drag:false},
+			{ id:131, pId:13, name:"禁止拖拽 1-3-1", drag:false},
+			{ id:132, pId:13, name:"禁止拖拽 1-3-2", drag:false},
+			{ id:132, pId:13, name:"禁止拖拽 1-3-3", drag:false},
+			{ id:2, pId:0, name:"禁止子节点移走 2", open:true, childOuter:false},
+			{ id:21, pId:2, name:"我不想成为父节点 2-1", dropInner:false},
+			{ id:22, pId:2, name:"我不要成为根节点 2-2", dropRoot:false},
+			{ id:23, pId:2, name:"拖拽试试看 2-3"},
+			{ id:3, pId:0, name:"禁止子节点排序/增加 3", open:true, childOrder:false, dropInner:false},
+			{ id:31, pId:3, name:"随意拖拽 3-1"},
+			{ id:32, pId:3, name:"随意拖拽 3-2"},
+			{ id:33, pId:3, name:"随意拖拽 3-3"}
+		];
+
+		function dropPrev(treeId, nodes, targetNode) {
+			var pNode = targetNode.getParentNode();
+			if (pNode && pNode.dropInner === false) {
+				return false;
+			} else {
+				for (var i=0,l=curDragNodes.length; i<l; i++) {
+					var curPNode = curDragNodes[i].getParentNode();
+					if (curPNode && curPNode !== targetNode.getParentNode() && curPNode.childOuter === false) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		function dropInner(treeId, nodes, targetNode) {
+			if (targetNode && targetNode.dropInner === false) {
+				return false;
+			} else {
+				for (var i=0,l=curDragNodes.length; i<l; i++) {
+					if (!targetNode && curDragNodes[i].dropRoot === false) {
+						return false;
+					} else if (curDragNodes[i].parentTId && curDragNodes[i].getParentNode() !== targetNode && curDragNodes[i].getParentNode().childOuter === false) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		function dropNext(treeId, nodes, targetNode) {
+			var pNode = targetNode.getParentNode();
+			if (pNode && pNode.dropInner === false) {
+				return false;
+			} else {
+				for (var i=0,l=curDragNodes.length; i<l; i++) {
+					var curPNode = curDragNodes[i].getParentNode();
+					if (curPNode && curPNode !== targetNode.getParentNode() && curPNode.childOuter === false) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		var log, className = "dark", curDragNodes, autoExpandNode;
+		function beforeDrag(treeId, treeNodes) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeDrag ]&nbsp;&nbsp;&nbsp;&nbsp; drag: " + treeNodes.length + " nodes." );
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				if (treeNodes[i].drag === false) {
+					curDragNodes = null;
+					return false;
+				} else if (treeNodes[i].parentTId && treeNodes[i].getParentNode().childDrag === false) {
+					curDragNodes = null;
+					return false;
+				}
+			}
+			curDragNodes = treeNodes;
+			return true;
+		}
+		function beforeDragOpen(treeId, treeNode) {
+			autoExpandNode = treeNode;
+			return true;
+		}
+		function beforeDrop(treeId, treeNodes, targetNode, moveType, isCopy) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeDrop ]&nbsp;&nbsp;&nbsp;&nbsp; moveType:" + moveType);
+			showLog("target: " + (targetNode ? targetNode.name : "root") + "  -- is "+ (isCopy==null? "cancel" : isCopy ? "copy" : "move"));
+			return true;
+		}
+		function onDrag(event, treeId, treeNodes) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" onDrag ]&nbsp;&nbsp;&nbsp;&nbsp; drag: " + treeNodes.length + " nodes." );
+		}
+		function onDrop(event, treeId, treeNodes, targetNode, moveType, isCopy) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" onDrop ]&nbsp;&nbsp;&nbsp;&nbsp; moveType:" + moveType);
+			showLog("target: " + (targetNode ? targetNode.name : "root") + "  -- is "+ (isCopy==null? "cancel" : isCopy ? "copy" : "move"))
+		}
+		function onExpand(event, treeId, treeNode) {
+			if (treeNode === autoExpandNode) {
+				className = (className === "dark" ? "":"dark");
+				showLog("[ "+getTime()+" onExpand ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.name);
+			}
+		}
+
+		function showLog(str) {
+			if (!log) log = $("#log");
+			log.append("<li class='"+className+"'>"+str+"</li>");
+			if(log.children("li").length > 8) {
+				log.get(0).removeChild(log.children("li")[0]);
+			}
+		}
+		function getTime() {
+			var now= new Date(),
+			h=now.getHours(),
+			m=now.getMinutes(),
+			s=now.getSeconds(),
+			ms=now.getMilliseconds();
+			return (h+":"+m+":"+s+ " " +ms);
+		}
+
+		function setTrigger() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.setting.edit.drag.autoExpandTrigger = $("#callbackTrigger").attr("checked");
+		}
+		
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			$("#callbackTrigger").bind("change", {}, setTrigger);
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>拖拽节点高级控制</h1>
+<h6>[ 文件路径: exedit/drag_super.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、beforeDrag / onDrag<br/>&nbsp;&nbsp;beforeDrop / onDrop 事件回调函数控制</h2>
+				<ul class="list">
+				<li>此 Demo 演示合理利用配置参数实现更加灵活、更加合理的拖拽规则，操作时可以对比"基本控制"的例子</li>
+				<li>此 Demo 默认 允许复制 / 移动</li>
+				<li class="highlight_red">此 Demo 中拖拽相对位置设置为 function，可以根据节点动态设定，从而可以放弃使用 beforeDrop 回调函数，拖拽时的效果会更好</li>
+				<li><p><span class="highlight_red">在对这些灵活的配置熟悉以后，相信你能够做出更加合理的拖拽规则！</span><br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="callbackTrigger" checked /> 拖拽节点时自动展开父节点是否触发 callback<br/>
+					drag / drop log:<br/>
+					<ul id="log" class="log"></ul></p></li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、setting 配置信息说明</h2>
+				<ul class="list">
+				<li>同 "拖拽 节点 基本控制"</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li>同 "拖拽 节点 基本控制"</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

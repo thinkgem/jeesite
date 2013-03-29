@@ -1,0 +1,24 @@
+<div class="apiDetail">
+<div>
+	<h2><span>String</span><span class="path">treeNode.</span>click</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 核心 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>最简单的 click 事件操作。相当于 onclick="..." 的内容。 如果操作较复杂，请使用 onClick 事件回调函数。</p>
+			<p class="highlight_red">由于 IE 对于 onclick 和 click事件共存时的处理与其他浏览器不同，所以请不要利用此参数控制是否允许跳转的操作（例如：treeNode.click = "return false;"）。如有类似需求，请不要使用 url 属性设置网址，同时利用 onClick 回调函数控制跳转。</p>
+			<p>默认值：无</p>
+		</div>
+	</div>
+	<h3>String 格式说明</h3>
+	<div class="desc">
+	<p>标准 javascript 语法， 例如：alert("test"); 等</p>
+	</div>
+	<h3>treeNode 举例</h3>
+	<h4>1. 设置某节点点击时，弹出信息框</h4>
+	<pre xmlns=""><code>var nodes = [
+	{ "id":1, "name":"Google CN", "url":"http://g.cn", "click":"alert('test');"},
+	......
+]</code></pre>
+</div>
+</div>

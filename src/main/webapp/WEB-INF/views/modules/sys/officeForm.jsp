@@ -36,27 +36,15 @@
 		<div class="control-group">
 			<label class="control-label">上级部门:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="office" title="部门" url="/sys/office/treeData" extId="${office.id}" parentIds="${office.parentIds}"/>
-				<div class="input-append">
-					<form:hidden id="officeId" path="parent.id" class="required"/>
-					<form:input id="officeName" path="parent.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#officeDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a> 
-                </div>--%>
                 <tags:treeselect id="office" name="parent.id" value="${office.parent.id}" labelName="parent.name" labelValue="${office.parent.name}"
-					title="部门" url="/sys/office/treeData" extId="${office.id}" parentIds="${office.parentIds}"/>
+					title="部门" url="/sys/office/treeData" extId="${office.id}"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">归属区域:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="area" title="区域" url="/sys/area/treeData" parentIds="${office.area.parentIds}${office.area.id}"/>
-				<div class="input-append">
-					<form:hidden id="areaId" path="area.id" class="required"/>
-					<form:input id="areaName" path="area.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#areaDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a> 
-                </div>--%>
                 <tags:treeselect id="area" name="area.id" value="${office.area.id}" labelName="area.name" labelValue="${office.area.name}"
-					title="区域" url="/sys/area/treeData" parentIds="${office.area.parentIds}${office.area.id}"/>
+					title="区域" url="/sys/area/treeData"/>
 			</div>
 		</div>
 		<div class="control-group">

@@ -6,6 +6,7 @@
 package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,8 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
-import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
@@ -101,20 +103,20 @@ public class MenuController extends BaseController {
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public String treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) String checkedIds, HttpServletResponse response) {
-		response.setContentType("text/html; charset=UTF-8");
-		StringBuilder sb = new StringBuilder("var data={};");
+	public String treeData(@RequestParam(required=false) Long extId, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		List<Map<String, Object>> mapList = Lists.newArrayList();
 		List<Menu> list = systemService.findAllMenu();
 		for (int i=0; i<list.size(); i++){
 			Menu e = list.get(i);
 			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
-				sb.append("data['"+(e.getParent()!=null?e.getParent().getId():"-1")+"_"+e.getId()+"']='text: "+e.getName());
-				if (StringUtils.isNotBlank(checkedIds)){
-					sb.append("; checked: ").append(checkedIds.indexOf(","+e.getId()+",")==-1?"false":"true");
-				}
-				sb.append("';\n");
+				Map<String, Object> map = Maps.newHashMap();
+				map.put("id", e.getId());
+				map.put("pId", e.getParent()!=null?e.getParent().getId():0);
+				map.put("name", e.getName());
+				mapList.add(map);
 			}
 		}
-		return sb.toString();
+		return JsonMapper.getInstance().toJson(mapList);
 	}
 }

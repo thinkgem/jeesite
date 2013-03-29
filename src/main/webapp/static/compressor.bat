@@ -14,7 +14,7 @@ call compressor\compressor.bat jquery-jbox\2.3\i18n
 call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.css
 call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.js
 call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.method.js
-call compressor\compressor.bat mztreeview\mz*
+call compressor\compressor.bat jquery-ztree\3.5.12\css\zTreeStyle\zTreeStyle.css
 call compressor\compressor.bat treeTable\*treeTable*
 call compressor\compressor.bat modules
 

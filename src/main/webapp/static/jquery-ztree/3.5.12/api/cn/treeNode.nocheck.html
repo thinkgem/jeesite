@@ -1,0 +1,26 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Boolean</span><span class="path">treeNode.</span>nocheck</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.excheck</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>1、设置节点是否隐藏 checkbox / radio <span class="highlight_red">[setting.check.enable = true 时有效]</span></p>
+			<p class="highlight_red">2、为了解决部分朋友生成 json 数据出现的兼容问题, 支持 "false","true" 字符串格式的数据</p>
+			<p>默认值：false</p>
+		</div>
+	</div>
+	<h3>Boolean 格式说明</h3>
+	<div class="desc">
+	<p class="highlight_red">true 表示此节点不显示 checkbox / radio，不影响勾选的关联关系，不影响父节点的半选状态。</p>
+	<p class="highlight_red">false 表示节点具有正常的勾选功能</p>
+	</div>
+	<h3>treeNode 举例</h3>
+	<h4>1. 不显示某个节点的 checkbox / radio </h4>
+	<pre xmlns=""><code>var nodes = [
+	{ "id":1, "name":"test1", "nocheck":true},
+	{ "id":2, "name":"test2"},
+	{ "id":3, "name":"test3"}
+]</code></pre>
+</div>
+</div>

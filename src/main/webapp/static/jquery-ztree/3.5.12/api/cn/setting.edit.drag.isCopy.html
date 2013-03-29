@@ -1,0 +1,32 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Boolean</span><span class="path">setting.edit.drag.</span>isCopy</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.exedit</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>拖拽时, 设置是否允许复制节点。<span class="highlight_red">[setting.edit.enable = true 时生效]</span></p>
+			<p>默认值：true</p>
+		</div>
+	</div>
+	<h3>规则说明</h3>
+	<div class="desc">
+	<p>1、isCopy = true; isMove = true 时，拖拽节点按下 Ctrl 键表示 copy; 否则为 move</p>
+	<p>2、isCopy = true; isMove = false 时，所有拖拽操作都是 copy</p>
+	<p>3、isCopy = false; isMove = true 时，所有拖拽操作都是 move</p>
+	<p>4、isCopy = false; isMove = false 时，禁止拖拽操作</p>
+	</div>
+	<h3>setting 举例</h3>
+	<h4>1. 设置所有拖拽操作都是 copy</h4>
+	<pre xmlns=""><code>var setting = {
+	edit: {
+		enable: true,
+		drag: {
+			isCopy: true,
+			isMove: false
+		}
+	}
+};
+......</code></pre>
+</div>
+</div>

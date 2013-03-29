@@ -1,0 +1,38 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Boolean</span><span class="path">setting.edit.</span>enable</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.exedit</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>设置 zTree 是否处于编辑状态</p>
+			<p class="highlight_red">请在初始化之前设置，初始化后需要改变编辑状态请使用 zTreeObj.setEditable() 方法</p>
+			<p>默认值: false</p>
+		</div>
+	</div>
+	<h3>Boolean 格式说明</h3>
+	<div class="desc">
+	<p> true / false 分别表示 可以 / 不可以 编辑</p>
+	</div>
+	<h3>编辑状态规则说明</h3>
+	<div class="desc">
+	<p>1、点击节点时，不会打开 <span class="highlight_red">node.url</span> 指定的 URL。
+<br/>2、全面支持 编辑 与 异步加载 状态共存。
+<br/>3、可以对节点进行拖拽，且支持多棵树之间进行拖拽。
+<br/>4、支持拖拽时 复制/移动 节点。（参考: <span class="highlight_red">setting.edit.drag.isCopy / setting.edit.drag.isMove</span>）
+<br/>5、可以通过编辑按钮修改 name 属性。
+<br/>6、可以通过删除按钮删除节点。
+<br/>
+</p>
+	<p class="highlight_red">请注意大小写，不要改变</p>
+	</div>
+	<h3>setting 举例</h3>
+	<h4>1. 设置 zTree 进入编辑状态</h4>
+	<pre xmlns=""><code>var setting = {
+	edit: {
+		enable: true
+	}
+};
+......</code></pre>
+</div>
+</div>

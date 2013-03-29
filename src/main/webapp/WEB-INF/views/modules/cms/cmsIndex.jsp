@@ -4,7 +4,6 @@
 <head>
 	<title>内容管理</title>
 	<meta name="decorator" content="default"/>
-	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 </head>
 <body>
 	<div id="left">

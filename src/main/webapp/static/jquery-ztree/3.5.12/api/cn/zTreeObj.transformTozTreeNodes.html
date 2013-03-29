@@ -1,0 +1,43 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(simpleNodes)</span><span class="path">zTreeObj.</span>transformTozTreeNodes</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 核心 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>将简单 Array 格式数据转换为 zTree 使用的标准 JSON 嵌套数据格式。</p>
+			<p class="highlight_red">使用此方法，请务必设置节点唯一标识属性名称 setting.data.simpleData.idKey 和 父节点唯一标识属性名称 setting.data.simpleData.pIdKey，并且让数据满足父子关系。</p>
+			<p class="highlight_red">请通过 zTree 对象执行此方法。</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>simpleNodes</b><span>Array(JSON) / JSON</span></h4>
+	<p>需要被转换的简单 Array 格式数据 或 某个单独的数据对象</p>
+	<h4 class="topLine"><b>返回值</b><span>Array(JSON)</span></h4>
+	<p>zTree 使用的标准数据，子节点都存在于父节点数据的 children 属性中</p>
+	<p class="highlight_red">如果 simpleNodes 是一个 JSON 对象，则被简单封装成长度为 1 的数组。</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 将简单 Array 格式转换为zTree使用的标准格式</h4>
+	<pre xmlns=""><code>var setting = {
+	data: {
+		simpleData: {
+			enable: true,
+			idKey: "id",
+			pIdKey: "pId",
+			rootPId: 0,
+		}
+	}
+};
+var simpleNodes = [
+    {"id":1, "pId":0, "name":"test1"},
+    {"id":11, "pId":1, "name":"test11"},
+    {"id":12, "pId":1, "name":"test12"},
+    {"id":111, "pId":11, "name":"test111"}
+];
+var treeObj = $.fn.zTree.getZTreeObj("tree");
+var nodes = treeObj.transformTozTreeNodes(simpleNodes);
+</code></pre>
+</div>
+</div>

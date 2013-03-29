@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>${fns:getConfig('productName')}</title>
+	<%@include file="/WEB-INF/views/include/dialog.jsp" %>
 	<meta name="decorator" content="default"/>
 	<style type="text/css">
 		.nav li{margin-top:8px;}.nav li.title{margin-top:0;}.nav li.menu,.nav li.dropdown{margin:8px 3px 0 3px}

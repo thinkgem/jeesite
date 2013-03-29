@@ -1,0 +1,29 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(treeNode)</span><span class="path">zTreeObj.</span>hideNode</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.exhide</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>隐藏某个节点。</p>
+			<p class="highlight_red">1、此功能不支持 exedit 扩展，因此不要在编辑状态时使用隐藏节点的方法。</p>
+			<p class="highlight_red">2、隐藏/显示节点，会影响节点的 isFirstNode 和 isLastNode 属性。</p>
+			<p class="highlight_red">3、请通过 zTree 对象执行此方法。</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>treeNode</b><span>JSON</span></h4>
+	<p>指定被隐藏的节点 JSON 数据</p>
+	<p class="highlight_red">请务必保证此节点数据对象 是 zTree 内部的数据对象</p>
+	<h4 class="topLine"><b>返回值</b><span>无</span></h4>
+	<p>目前无任何返回值</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 隐藏根节点第一个节点</h4>
+	<pre xmlns=""><code>var treeObj = $.fn.zTree.getZTreeObj("tree");
+var nodes = treeObj.getNodes();
+treeObj.hideNode(nodes[0]);
+</code></pre>
+</div>
+</div>

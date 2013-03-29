@@ -1,0 +1,43 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function(filter, isSingle, parentNode, invokeParam)</span><span class="path">zTreeObj.</span>getNodesByFilter</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 核心 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>根据自定义规则搜索节点数据 JSON 对象集合 或 单个节点数据</p>
+			<p class="highlight_red">可自定义复杂的搜索规则</p>
+			<p class="highlight_red">请通过 zTree 对象执行此方法。</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>filter</b><span>Function</span></h4>
+	<p>自定义过滤器函数 function filter(node) {...}</p>
+	<p>filter 参数：node (节点数据 JSON)</p>
+	<p>filter 返回值：boolean (true 表示符合搜索条件；false 表示不符合搜索条件)</p>
+	<h4 class="topLine"><b>isSingle</b><span>Boolean</span></h4>
+	<p>isSingle = true 表示只查找单个节点</p>
+	<p>isSingle = false 表示查找节点集合</p>
+	<p class="highlight_red">忽略此参数，表示查找节点集合</p>
+	<h4 class="topLine"><b>parentNode</b><span>JSON</span></h4>
+	<p>可以指定在某个父节点下的子节点中搜索</p>
+	<p class="highlight_red">忽略此参数，表示在全部节点中搜索</p>
+	<h4 class="topLine"><b>invokeParam</b><span>任意类型</span></h4>
+	<p>用户自定义的数据对象，用于 filter 中进行计算</p>
+	<h4 class="topLine"><b>返回值</b><span>Array(JSON) / JSON</span></h4>
+	<p>isSingle = true 返回 第一个找到的节点数据 JSON，无结果时返回 null</p>
+	<p>isSingle = false 返回 节点数据集合 Array(JSON)，无结果时返回 [ ]</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 查找 level = 2 & name 中包含 "test" 的节点数据</h4>
+	<pre xmlns=""><code>function filter(node) {
+    return (node.level == 2 && node.name.indexOf("test")>-1);
+}
+......
+var treeObj = $.fn.zTree.getZTreeObj("tree");
+var node = treeObj.getNodesByFilter(filter, true); // 仅查找一个节点
+var nodes = treeObj.getNodesByFilter(filter); // 查找节点集合
+</code></pre>
+</div>
+</div>

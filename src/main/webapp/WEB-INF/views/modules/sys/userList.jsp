@@ -4,6 +4,7 @@
 <head>
 	<title>用户管理</title>
 	<meta name="decorator" content="default"/>
+	<%@include file="/WEB-INF/views/include/dialog.jsp" %>
 	<style type="text/css">.sort{color:#0663A2;cursor:pointer;}</style>
 	<script type="text/javascript">
 		$(document).ready(function() {

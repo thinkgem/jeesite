@@ -44,14 +44,14 @@
 			<label class="control-label">所属区域:</label>
 			<div class="controls">
                 <tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}"
-					title="区域" url="/sys/area/treeData" parentIds="${user.area.parentIds}${user.area.id}"/>
+					title="区域" url="/sys/area/treeData"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">所属部门:</label>
 			<div class="controls">
                 <tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
-					title="部门" url="/sys/office/treeData" parentIds="${user.office.parentIds}${user.office.id}"/>
+					title="部门" url="/sys/office/treeData"/>
 			</div>
 		</div>
 		<div class="control-group">

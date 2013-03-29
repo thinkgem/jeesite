@@ -42,7 +42,7 @@
 			<label class="control-label">所属栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
-					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" parentIds="${link.category.parentIds}${link.category.id}" notAllowSelectRoot="true" notAllowSelectParent="true"/>
+					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">

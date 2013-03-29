@@ -190,4 +190,25 @@ public class JsonMapper {
 	public ObjectMapper getMapper() {
 		return mapper;
 	}
+	
+//	/**
+//	 * 测试
+//	 */
+//	public static void main(String[] args) {
+//		List<Map<String, Object>> list = Lists.newArrayList();
+//		Map<String, Object> map = Maps.newHashMap();
+//		map.put("id", 1);
+//		map.put("pId", -1);
+//		map.put("name", "根节点");
+//		list.add(map);
+//		map = Maps.newHashMap();
+//		map.put("id", 2);
+//		map.put("pId", 1);
+//		map.put("name", "你好");
+//		map.put("open", true);
+//		list.add(map);
+//		String json = JsonMapper.getInstance().toJson(list);
+//		System.out.println(json);
+//	}
+	
 }

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - async for All</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<!--<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>-->
+	<SCRIPT type="text/javascript">
+		<!--
+		var demoMsg = {
+			async:"正在进行异步加载，请等一会儿再点击...",
+			expandAllOver: "全部展开完毕",
+			asyncAllOver: "后台异步加载完毕",
+			asyncAll: "已经异步加载完毕，不再重新加载",
+			expandAll: "已经异步加载完毕，使用 expandAll 方法"
+		}
+		var setting = {
+			async: {
+				enable: true,
+				url:"../asyncData/getNodes.php",
+				autoParam:["id", "name=n", "level=lv"],
+				otherParam:{"otherParam":"zTreeAsyncTest"},
+				dataFilter: filter,
+				type: "get"
+			},
+			callback: {
+				beforeAsync: beforeAsync,
+				onAsyncSuccess: onAsyncSuccess,
+				onAsyncError: onAsyncError
+			}
+		};
+
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes) return null;
+			for (var i=0, l=childNodes.length; i<l; i++) {
+				childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			}
+			return childNodes;
+		}
+
+		function beforeAsync() {
+			curAsyncCount++;
+		}
+		
+		function onAsyncSuccess(event, treeId, treeNode, msg) {
+			curAsyncCount--;
+			if (curStatus == "expand") {
+				expandNodes(treeNode.children);
+			} else if (curStatus == "async") {
+				asyncNodes(treeNode.children);
+			}
+
+			if (curAsyncCount <= 0) {
+				if (curStatus != "init" && curStatus != "") {
+					$("#demoMsg").text((curStatus == "expand") ? demoMsg.expandAllOver : demoMsg.asyncAllOver);
+					asyncForAll = true;
+				}
+				curStatus = "";
+			}
+		}
+
+		function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+			curAsyncCount--;
+
+			if (curAsyncCount <= 0) {
+				curStatus = "";
+				if (treeNode!=null) asyncForAll = true;
+			}
+		}
+
+		var curStatus = "init", curAsyncCount = 0, asyncForAll = false,
+		goAsync = false;
+		function expandAll() {
+			if (!check()) {
+				return;
+			}
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			if (asyncForAll) {
+				$("#demoMsg").text(demoMsg.expandAll);
+				zTree.expandAll(true);
+			} else {
+				expandNodes(zTree.getNodes());
+				if (!goAsync) {
+					$("#demoMsg").text(demoMsg.expandAll);
+					curStatus = "";
+				}
+			}
+		}
+		function expandNodes(nodes) {
+			if (!nodes) return;
+			curStatus = "expand";
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			for (var i=0, l=nodes.length; i<l; i++) {
+				zTree.expandNode(nodes[i], true, false, false);
+				if (nodes[i].isParent && nodes[i].zAsync) {
+					expandNodes(nodes[i].children);
+				} else {
+					goAsync = true;
+				}
+			}
+		}
+
+		function asyncAll() {
+			if (!check()) {
+				return;
+			}
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			if (asyncForAll) {
+				$("#demoMsg").text(demoMsg.asyncAll);
+			} else {
+				asyncNodes(zTree.getNodes());
+				if (!goAsync) {
+					$("#demoMsg").text(demoMsg.asyncAll);
+					curStatus = "";
+				}
+			}
+		}
+		function asyncNodes(nodes) {
+			if (!nodes) return;
+			curStatus = "async";
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			for (var i=0, l=nodes.length; i<l; i++) {
+				if (nodes[i].isParent && nodes[i].zAsync) {
+					asyncNodes(nodes[i].children);
+				} else {
+					goAsync = true;
+					zTree.reAsyncChildNodes(nodes[i], "refresh", true);
+				}
+			}
+		}
+
+		function reset() {
+			if (!check()) {
+				return;
+			}
+			asyncForAll = false;
+			goAsync = false;
+			$("#demoMsg").text("");
+			$.fn.zTree.init($("#treeDemo"), setting);
+		}
+
+		function check() {
+			if (curAsyncCount > 0) {
+				$("#demoMsg").text(demoMsg.async);
+				return false;
+			}
+			return true;
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting);
+			$("#expandAllBtn").bind("click", expandAll);
+			$("#asyncAllBtn").bind("click", asyncAll);
+			$("#resetBtn").bind("click", reset);
+		});
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>异步加载模式下全部展开</h1>
+<h6>[ 文件路径: super/asyncForAll.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>实现方法说明</h2>
+				<ul class="list">
+				<li>利用 onAsyncSuccess / onAsyncError 回调函数 和 reAsyncChildNodes 或 expandNode 方法可以实现全部功能。</li>
+				<li class="highlight_red">如果父节点数量很大，请注意利用延时进行控制，避免异步进程过多。</li>
+				<li class="highlight_red">建议：演示时请利用调试工具查看 network 的 ajax 加载过程。</li>
+				<li>演示操作
+					<br/><br/>
+				[ <a id="expandAllBtn" href="#" onclick="return false;">全部展开</a> ] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				[ <a id="asyncAllBtn" href="#" onclick="return false;">后台自动全部加载</a> ]<br/><br/>
+				[ <a id="resetBtn" href="#" onclick="return false;">Reset zTree</a> ]<br/><br/>
+				<p class="highlight_red" id="demoMsg"></p>
+				</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

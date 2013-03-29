@@ -5,14 +5,23 @@
 	<title>栏目列表</title>
 	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
+	<style type="text/css">
+		.ztree li span.button.level0, .ztree li a.level0 {display:none;}
+		.ztree li ul.level0 {padding:0;background:none;}
+	</style>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			var categoryData={};<c:forEach items="${categoryList}" var="category">
-			categoryData["${not empty category.parent?category.parent.id:'-1'}_${category.id}"] = "text: ${not empty category.parent?category.name:'栏目列表'}; url:${ctx}/cms/${not empty category.module?category.module:'none'}/?category.id=${category.id}; target:cmsMainFrame";</c:forEach>
-			var categoryTree = new MzTreeView(categoryData);
-			categoryTree.showRoot=false;
-			$("#categoryTree").html(categoryTree.render());
-			categoryTree.expandAll("1");
+			var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}}};
+			var zNodes=[
+		            <c:forEach items="${categoryList}" var="category">{id:${category.id}, pId:${not empty category.parent?category.parent.id:0}, name:"${not empty category.parent?category.name:category.name}", url:"${ctx}/cms/${not empty category.module?category.module:'none'}/?category.id=${category.id}", target:"cmsMainFrame"},
+		            </c:forEach>];
+			// 初始化树结构
+			var tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+			// 默认展开一级节点
+			var nodes = tree.getNodesByParam("level", 1);
+			for(var i=0; i<nodes.length; i++) {
+				tree.expandNode(nodes[i], true, false, false);
+			}
 		});
 	</script>
 </head>
@@ -23,7 +32,7 @@
 	    </div>
 	    <div class="accordion-body ">
 			<div class="accordion-inner">
-				<div id="categoryTree" style="margin-top:5px;"></div>
+				<div id="tree" class="ztree" style="margin-top:5px;*margin:-5px 0 0 -5px;_margin:0 0 0 -5px;"></div>
 			</div>
 	    </div>
 	</div>

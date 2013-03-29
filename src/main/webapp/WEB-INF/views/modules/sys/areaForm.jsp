@@ -36,14 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">上级区域:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="area" title="区域" url="/sys/area/treeData" extId="${area.id}" parentIds="${area.parentIds}"/>
-				<div class="input-append">
-					<form:hidden id="areaId" path="parent.id" class="required"/>
-					<form:input id="areaName" path="parent.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#areaDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-				</div> --%>
 				<tags:treeselect id="area" name="parent.id" value="${area.parent.id}" labelName="parent.name" labelValue="${area.parent.name}"
-					title="区域" url="/sys/area/treeData" extId="${area.id}" parentIds="${area.parentIds}"/>
+					title="区域" url="/sys/area/treeData" extId="${area.id}"/>
 			</div>
 		</div>
 		<div class="control-group">

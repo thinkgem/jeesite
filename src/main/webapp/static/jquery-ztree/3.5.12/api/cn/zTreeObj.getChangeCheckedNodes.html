@@ -1,0 +1,24 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Function()</span><span class="path">zTreeObj.</span>getChangeCheckedNodes</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.excheck</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>获取输入框勾选状态被改变的节点集合（与原始数据 checkedOld 对比）。<span class="highlight_red">[setting.check.enable = true 时有效]</span></p>
+			<p class="highlight_red">请通过 zTree 对象执行此方法。</p>
+		</div>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>返回值</b><span>Array(JSON)</span></h4>
+	<p>返回全部勾选状态被改变的节点集合 Array</p>
+	<p class="highlight_red">如果需要获取每次操作后全部被改变勾选状态的节点数据，请在每次勾选操作后，遍历所有被改变勾选状态的节点数据，让其 checkedOld = checked 就可以了。</p>
+	</div>
+	<h3>function 举例</h3>
+	<h4>1. 获取当前勾选状态被改变的节点集合</h4>
+	<pre xmlns=""><code>var treeObj = $.fn.zTree.getZTreeObj("tree");
+var nodes = treeObj.getChangeCheckedNodes();
+</code></pre>
+</div>
+</div>

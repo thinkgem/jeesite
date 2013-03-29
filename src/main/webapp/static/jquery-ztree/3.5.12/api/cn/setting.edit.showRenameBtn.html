@@ -1,0 +1,51 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Boolean / Function(treeId, treeNode)</span><span class="path">setting.edit.</span>showRenameBtn</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.exedit</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>设置是否显示编辑名称按钮。<span class="highlight_red">[setting.edit.enable = true 时生效]</span></p>
+			<p>当点击某节点的编辑名称按钮时：</p>
+			<p>1、进入节点编辑名称状态。</p>
+			<p>2、编辑名称完毕（Input 失去焦点 或 按下 Enter 键），会触发 <span class="highlight_red">setting.callback.beforeRename</span> 回调函数，用户可根据自己的规则判定是否允许修改名称。</p>
+			<p>3、如果 beforeRename 返回 false，则继续保持编辑名称状态，直到名称符合规则位置 （按下 ESC 键可取消编辑名称状态，恢复原名称）。</p>
+			<p>4、如果未设置 beforeRename 或 beforeRename 返回 true，则结束节点编辑名称状态，更新节点名称，并触发 <span class="highlight_red">setting.callback.onRename</span> 回调函数。</p>
+			<p>默认值：true</p>
+		</div>
+	</div>
+	<h3>Boolean 格式说明</h3>
+	<div class="desc">
+	<p> true / false 分别表示 显示 / 隐藏 编辑名称按钮</p>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应 zTree 的 <b class="highlight_red">treeId</b>，便于用户操控</p>
+	<h4 class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>需要设置是否显示编辑名称按钮的节点 JSON 数据对象</p>
+	<h4 class="topLine"><b>返回值</b><span>Boolean</span></h4>
+	<p>返回值同 Boolean 格式的数据</p>
+	</div>
+	<h3>setting & function 举例</h3>
+	<h4>1. 不显示编辑名称按钮</h4>
+	<pre xmlns=""><code>var setting = {
+	edit: {
+		enable: true,
+		showRenameBtn: false
+	}
+};
+......</code></pre>
+	<h4>2. 设置所有的父节点不显示编辑名称按钮</h4>
+	<pre xmlns=""><code>function setRenameBtn(treeId, treeNode) {
+	return !treeNode.isParent;
+}
+var setting = {
+	edit: {
+		enable: true,
+		showRenameBtn: setRenameBtn
+	}
+};
+......</code></pre>
+</div>
+</div>

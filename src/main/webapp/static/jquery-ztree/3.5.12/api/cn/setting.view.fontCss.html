@@ -1,0 +1,42 @@
+<div class="apiDetail">
+<div>
+	<h2><span>JSON / Function(treeId, treeNode)</span><span class="path">setting.view.</span>fontCss</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.core</span> 核心 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>个性化文字样式，只针对 zTree 在节点上显示的&lt;A&gt;对象。</p>
+			<p>默认值：{}</p>
+		</div>
+	</div>
+	<h3>JSON 格式说明</h3>
+	<div class="desc">
+	<p>JSON 格式为 JQuery css方法中的 JSON 对象格式，例如：<span class="highlight_red">{color:"#ff0011", background:"blue"}</span></p>
+	</div>
+	<h3>Function 参数说明</h3>
+	<div class="desc">
+	<h4><b>treeId</b><span>String</span></h4>
+	<p>对应 zTree 的 <b class="highlight_red">treeId</b>，便于用户操控</p>
+	<h4 class="topLine"><b>treeNode</b><span>JSON</span></h4>
+	<p>需要设置自定义样式的节点 JSON 数据对象</p>
+	<h4 class="topLine"><b>返回值</b><span>JSON</span></h4>
+	<p>返回值同 JSON 格式的数据，例如：<span class="highlight_red">{color:"#ff0011", background:"blue"}</span></p>
+	</div>
+	<h3>setting & function 举例</h3>
+	<h4>1. 不修改CSS，设置全部节点 name 显示为红色</h4>
+	<pre xmlns=""><code>var setting = {
+	view: {
+		fontCss : {color:"red"}
+	}
+};</code></pre>
+	<h4>2. 设置 level=0 的节点 name 显示为红色</h4>
+	<pre xmlns=""><code>function setFontCss(treeId, treeNode) {
+	return treeNode.level == 0 ? {color:"red"} : {};
+};
+var setting = {
+	view: {
+		fontCss: setFontCss
+	}
+};</code></pre>
+</div>
+</div>

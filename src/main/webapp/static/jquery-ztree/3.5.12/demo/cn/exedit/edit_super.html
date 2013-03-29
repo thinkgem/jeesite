@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - beforeEditName / beforeRemove / onRemove / beforeRename / onRename</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="../../../css/demo.css" type="text/css">
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck-3.5.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit-3.5.js"></script>
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			view: {
+				addHoverDom: addHoverDom,
+				removeHoverDom: removeHoverDom,
+				selectedMulti: false
+			},
+			edit: {
+				enable: true,
+				editNameSelectAll: true,
+				showRemoveBtn: showRemoveBtn,
+				showRenameBtn: showRenameBtn
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeDrag: beforeDrag,
+				beforeEditName: beforeEditName,
+				beforeRemove: beforeRemove,
+				beforeRename: beforeRename,
+				onRemove: onRemove,
+				onRename: onRename
+			}
+		};
+
+		var zNodes =[
+			{ id:1, pId:0, name:"父节点 1", open:true},
+			{ id:11, pId:1, name:"叶子节点 1-1"},
+			{ id:12, pId:1, name:"叶子节点 1-2"},
+			{ id:13, pId:1, name:"叶子节点 1-3"},
+			{ id:2, pId:0, name:"父节点 2", open:true},
+			{ id:21, pId:2, name:"叶子节点 2-1"},
+			{ id:22, pId:2, name:"叶子节点 2-2"},
+			{ id:23, pId:2, name:"叶子节点 2-3"},
+			{ id:3, pId:0, name:"父节点 3", open:true},
+			{ id:31, pId:3, name:"叶子节点 3-1"},
+			{ id:32, pId:3, name:"叶子节点 3-2"},
+			{ id:33, pId:3, name:"叶子节点 3-3"}
+		];
+		var log, className = "dark";
+		function beforeDrag(treeId, treeNodes) {
+			return false;
+		}
+		function beforeEditName(treeId, treeNode) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.selectNode(treeNode);
+			return confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？");
+		}
+		function beforeRemove(treeId, treeNode) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.selectNode(treeNode);
+			return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+		}
+		function onRemove(e, treeId, treeNode) {
+			showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+		}
+		function beforeRename(treeId, treeNode, newName) {
+			className = (className === "dark" ? "":"dark");
+			showLog("[ "+getTime()+" beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+			if (newName.length == 0) {
+				alert("节点名称不能为空.");
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				setTimeout(function(){zTree.editName(treeNode)}, 10);
+				return false;
+			}
+			return true;
+		}
+		function onRename(e, treeId, treeNode) {
+			showLog("[ "+getTime()+" onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+		}
+		function showRemoveBtn(treeId, treeNode) {
+			return !treeNode.isFirstNode;
+		}
+		function showRenameBtn(treeId, treeNode) {
+			return !treeNode.isLastNode;
+		}
+		function showLog(str) {
+			if (!log) log = $("#log");
+			log.append("<li class='"+className+"'>"+str+"</li>");
+			if(log.children("li").length > 8) {
+				log.get(0).removeChild(log.children("li")[0]);
+			}
+		}
+		function getTime() {
+			var now= new Date(),
+			h=now.getHours(),
+			m=now.getMinutes(),
+			s=now.getSeconds(),
+			ms=now.getMilliseconds();
+			return (h+":"+m+":"+s+ " " +ms);
+		}
+
+		var newCount = 1;
+		function addHoverDom(treeId, treeNode) {
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.id).length>0) return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.id
+				+ "' title='add node' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			var btn = $("#addBtn_"+treeNode.id);
+			if (btn) btn.bind("click", function(){
+				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+				zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+				return false;
+			});
+		};
+		function removeHoverDom(treeId, treeNode) {
+			$("#addBtn_"+treeNode.id).unbind().remove();
+		};
+		function selectAll() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.setting.edit.editNameSelectAll =  $("#selectAll").attr("checked");
+		}
+		
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			$("#selectAll").bind("click", selectAll);
+		});
+		//-->
+	</SCRIPT>
+	<style type="text/css">
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+	</style>
+</HEAD>
+
+<BODY>
+<h1>高级 增 / 删 / 改 节点</h1>
+<h6>[ 文件路径: exedit/edit_super.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+	<div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、beforeEditName<br/>&nbsp;&nbsp;beforeRemove / onRemove<br/>&nbsp;&nbsp;beforeRename / onRename 事件回调函数控制</h2>
+				<ul class="list">
+				<li>此 Demo 演示合理利用自定义控件、事件回调函数配合以增强用户体验，操作时可以对比"基本 增 / 删 / 改 节点"的 Demo</li>
+				<li>此 Demo 实现增加节点按钮</li>
+				<li>此 Demo 实现删除节点时进行确认</li>
+				<li>此 Demo 利用 showRenameBtn 对 isLastNode = true 的节点不显示编辑按钮 </li>
+				<li>此 Demo 利用 showRemoveBtn 对 isFirstNode = true 的节点不显示删除按钮 </li>
+				<li class="highlight_red">可以利用 beforeEditName 触发自定义的编辑操作</li>
+				<li><p><span class="highlight_red">在对这些灵活的配置熟悉以后，相信你能够做出更加合理的编辑界面！</span><br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="selectAll" checked /> 编辑名称时是否全选 text<br/>
+					remove / rename log:<br/>
+					<ul id="log" class="log"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、setting 配置信息说明</h2>
+				<ul class="list">
+				<li>同 "基本 增 / 删 / 改 节点"</li>
+				</ul>
+			</li>
+			<li class="title"><h2>3、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li>同 "基本 增 / 删 / 改 节点"</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</BODY>
+</HTML>

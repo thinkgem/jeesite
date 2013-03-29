@@ -1,0 +1,28 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Boolean</span><span class="path">treeNode.</span>chkDisabled</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.excheck</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>1、设置节点的 checkbox / radio 是否禁用 <span class="highlight_red">[setting.check.enable = true 时有效]</span></p>
+			<p class="highlight_red">2、为了解决部分朋友生成 json 数据出现的兼容问题, 支持 "false","true" 字符串格式的数据</p>
+			<p class="highlight_red">3、请勿对已加载的节点修改此属性，禁止 或 取消禁止 请使用 setChkDisabled() 方法</p>
+			<p class="highlight_red">4、初始化时，如果需要子孙节点继承父节点的 chkDisabled 属性，请设置 setting.check.chkDisabledInherit 属性</p>
+			<p>默认值：false</p>
+		</div>
+	</div>
+	<h3>Boolean 格式说明</h3>
+	<div class="desc">
+	<p class="highlight_red">true 表示此节点的 checkbox / radio 被禁用。</p>
+	<p class="highlight_red">false 表示此节点的 checkbox / radio 可以使用。</p>
+	</div>
+	<h3>treeNode 举例</h3>
+	<h4>1. 禁用节点 checkbox / radio </h4>
+	<pre xmlns=""><code>var nodes = [
+	{ "id":1, "name":"test1", "checked":true, "chkDisabled":true},
+	{ "id":2, "name":"test2", "chkDisabled":true},
+	{ "id":3, "name":"test3"}
+]</code></pre>
+</div>
+</div>

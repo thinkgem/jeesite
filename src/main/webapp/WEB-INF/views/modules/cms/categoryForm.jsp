@@ -36,14 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">上级栏目:</label>
 			<div class="controls">
-				<%--<tags:treeDialog id="category" title="栏目" url="/cms/category/treeData" extId="${category.id}" parentIds="${category.parentIds}"/>
-				<div class="input-append">
-					<form:hidden id="categoryId" path="parent.id" class="required"/>
-					<form:input id="categoryName" path="parent.name" htmlEscape="false" maxlength="50" readonly="true" 
-						/><a data-toggle="modal" href="#categoryDialog" data-keyboard="true" data-backdrop="true" class="btn">选择</a>
-                </div> --%>
                 <tags:treeselect id="category" name="parent.id" value="${category.parent.id}" labelName="parent.name" labelValue="${category.parent.name}"
-					title="栏目" url="/cms/category/treeData" extId="${category.id}" parentIds="${category.parentIds}"/>
+					title="栏目" url="/cms/category/treeData" extId="${category.id}"/>
 			</div>
 		</div>
 		<div class="control-group">

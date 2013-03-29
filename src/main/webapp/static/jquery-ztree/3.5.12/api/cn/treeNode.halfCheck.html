@@ -1,0 +1,29 @@
+<div class="apiDetail">
+<div>
+	<h2><span>Boolean</span><span class="path">treeNode.</span>halfCheck</h2>
+	<h3>概述<span class="h3_info">[ 依赖 <span class="highlight_green">jquery.ztree.excheck</span> 扩展 js ]</span></h3>
+	<div class="desc">
+		<p></p>
+		<div class="longdesc">
+			<p>强制节点的 checkBox / radio 的 半勾选状态。<span class="highlight_red">[setting.check.enable = true & treeNode.nocheck = false 时有效]</span></p>
+			<p class="highlight_red">1、强制为半勾选状态后，不再进行自动计算半勾选状态</p>
+			<p class="highlight_red">2、设置 treeNode.halfCheck = false 或 null 才能恢复自动计算半勾选状态</p>
+			<p class="highlight_red">3、为了解决部分朋友生成 json 数据出现的兼容问题, 支持 "false","true" 字符串格式的数据</p>
+			<p>默认值：false</p>
+		</div>
+	</div>
+	<h3>Boolean 格式说明</h3>
+	<div class="desc">
+	<p>true 表示节点的输入框 强行设置为半勾选</p>
+	<p>false 表示节点的输入框 根据 zTree 的规则自动计算半勾选状态</p>
+	</div>
+	<h3>treeNode 举例</h3>
+	<h4>1. 初始化的数据设置 默认为半勾选状态</h4>
+	<pre xmlns=""><code>var nodes = [
+{ "id":1, "name":"test1", isParent:true, checked:true, halfCheck:true },
+{ "id":2, "name":"test2", isParent:true, checked:false, halfCheck:true },
+{ "id":3, "name":"test3", isParent:true, checked:true },
+{ "id":4, "name":"test4", isParent:true, checked:false }
+]</code></pre>
+</div>
+</div>
