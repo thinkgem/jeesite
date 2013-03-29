@@ -664,6 +664,8 @@
 								</sql>
 								
 								<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />
+								<!--oracle-->
+								<!--<dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" schema="${jdbc.username}">-->
 								<dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}">
 									<dbconfig>
 										<property name="datatypeFactory" value="${dbunit.datatype}" />
