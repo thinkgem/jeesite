@@ -39,7 +39,7 @@ public class Generate {
 		// 主要提供基本功能模块代码生成。
 		// 目录生成结构：{packageName}/{moduleName}/{dao,entity,service,web}/{subModuleName}/{className}
 		
-		// packageName 包名，这里如果更改包名，请在applicationContext.xml和srping-mvc.xml中配置base-package、packagesToScan属性，来指定多个。
+		// packageName 包名，这里如果更改包名，请在applicationContext.xml和srping-mvc.xml中配置base-package、packagesToScan属性，来指定多个（共4处需要修改）。
 		String packageName = "com.thinkgem.jeesite.modules";
 		
 		String moduleName = "factory";			// 模块名，例：sys

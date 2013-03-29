@@ -79,9 +79,9 @@
 		<div class="control-group">
 			<label class="control-label">权重:</label>
 			<div class="controls">
-				<form:input path="weight" htmlEscape="false" maxlength="200" class="input-mini required digits"/>&nbsp;
+				<form:input path="weight" htmlEscape="false" maxlength="200" class="input-mini required digits"/>&nbsp;<span>
 				<input id="weightTop" type="checkbox" onclick="$('#weight').val(this.checked?'999':'0')"><label for="weightTop">置顶</label>
-				<span class="help-inline">数值越大排序越靠前。</span>
+				</span><span class="help-inline">数值越大排序越靠前。</span>
 			</div>
 		</div>
 		<div class="control-group">

@@ -34,11 +34,7 @@
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
 		<property name="dataSource" ref="dataSource"/>
 		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/> 
-		<property name="packagesToScan">
-		    <list><!-- packagesToScan 如果多个，请在加一个value -->
-		        <value>com.thinkgem.jeesite</value>
-		    </list>
-		</property>
+		<property name="packagesToScan" value="com.thinkgem.jeesite"/><!-- 如果多个，用“,”分隔 -->
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
