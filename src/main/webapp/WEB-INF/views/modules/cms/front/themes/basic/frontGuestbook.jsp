@@ -99,9 +99,7 @@
 			<div class="control-group">
 				<label class="control-label">验证码:</label>
 				<div class="controls">
-					<input type="text" name="validateCode" maxlength="5" class="txt required" style="font-weight:bold;width:45px;"/>
-					<img class="validateCode" src="${pageContext.request.contextPath}/servlet/validateCodeServlet" style="vertical-align:middle;"/>
-					<a href="javascript:" onclick="$('.validateCode').attr('src','${pageContext.request.contextPath}/servlet/validateCodeServlet?'+new Date().getTime());">看不清</a>
+					<tags:validateCode name="validateCode" />
 				</div>
 			</div>
 			<div class="form-actions">

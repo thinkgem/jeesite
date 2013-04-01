@@ -16,7 +16,7 @@
 	<secureImageUploads>true</secureImageUploads>
 	<htmlExtensions>html,htm,xml,js</htmlExtensions>
 	<hideFolders>
-		<folder>.svn</folder>
+		<folder>.*</folder>
 		<folder>CVS</folder>
 	</hideFolders>
 	<hideFiles>

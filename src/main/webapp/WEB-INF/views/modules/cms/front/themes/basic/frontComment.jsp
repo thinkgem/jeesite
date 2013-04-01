@@ -38,7 +38,7 @@
 	}
 	function comment(id){
 		if ($("#commentForm"+id).html()==""){
-			$(".reValidateCode").click();
+			$(".validateCodeRefresh").click();
 			$(".commentForm").hide(500,function(){$(this).html("");});
 			$("#commentForm"+id).html($("#commentFormTpl").html()).show(500);
 			$("#commentForm"+id+" input[name='replyId']").val(id);
@@ -81,11 +81,8 @@
 			<label class="control-label">姓名:</label>
 			<div class="controls">
 				<input type="text" name="name" maxlength="11" class="txt required" style="width:100px;" value="匿名"/>
-				<label>验证码:</label>
-				<input type="text" name="validateCode" maxlength="5" class="txt required" style="font-weight:bold;width:45px;"/>
-				<img class="validateCode" src="${pageContext.request.contextPath}/servlet/validateCodeServlet" style="vertical-align:middle;"/>
-				<a class="reValidateCode" href="javascript:" onclick="$('.validateCode').attr('src','${pageContext.request.contextPath}/servlet/validateCodeServlet?'+new Date().getTime());">看不清</a>
-				<input class="btn" type="submit" value="提 交"/>&nbsp;
+				<label class="mid">验证码:</label><tags:validateCode name="validateCode" />
+				<input class="btn mid" type="submit" value="提 交"/>&nbsp;
 			</div>
 		</div>
 		<div class="alert alert-error messageBox" style="display:none">输入有误，请先更正。</div>
