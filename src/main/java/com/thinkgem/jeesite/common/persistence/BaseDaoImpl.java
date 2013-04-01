@@ -6,6 +6,8 @@
 package com.thinkgem.jeesite.common.persistence;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +37,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -337,11 +340,30 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @param detachedCriteria
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public long count(DetachedCriteria detachedCriteria) {
-		long count = ((Number) detachedCriteria.setProjection(Projections.rowCount())
-				.getExecutableCriteria(getSession()).uniqueResult()).longValue();
-		detachedCriteria.setProjection(null);
-		return count;
+		Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
+		long totalCount = 0;
+		try {
+			// Get orders
+			Field field = CriteriaImpl.class.getDeclaredField("orderEntries");
+			field.setAccessible(true);
+			List orderEntrys = (List)field.get(criteria);
+			// Remove orders
+			field.set(criteria, new ArrayList());
+			// Get count
+			criteria.setProjection(Projections.rowCount());
+			totalCount = Long.valueOf(criteria.uniqueResult().toString());
+			// Clean count
+			criteria.setProjection(null);
+			// Restore orders
+			field.set(criteria, orderEntrys);
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return totalCount;
 	}
 
 	/**
