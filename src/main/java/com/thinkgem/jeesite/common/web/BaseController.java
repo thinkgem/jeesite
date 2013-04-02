@@ -92,7 +92,6 @@ public abstract class BaseController {
 		for (String message : messages){
 			sb.append(message+"<br/>");
 		}
-		redirectAttributes.addAttribute("message", sb.toString());
 		redirectAttributes.addFlashAttribute("message", sb.toString());
 	}
 	

@@ -210,14 +210,35 @@ public class ImportExcel {
 		return val;
 	}
 	
-	public <E> List<E> getDataList(Class<E> cls) throws InstantiationException, IllegalAccessException{
+	/**
+	 * 获取导入数据列表
+	 * @param cls 导入对象类型
+	 * @param groups 导入分组
+	 */
+	public <E> List<E> getDataList(Class<E> cls, int... groups) throws InstantiationException, IllegalAccessException{
 		List<Object[]> annotationList = Lists.newArrayList();
 		// Get annotation field 
 		Field[] fs = cls.getDeclaredFields();
 		for (Field f : fs){
 			ExcelField ef = f.getAnnotation(ExcelField.class);
 			if (ef != null && (ef.type()==0 || ef.type()==2)){
-				annotationList.add(new Object[]{ef, f});
+				if (groups!=null && groups.length>0){
+					boolean inGroup = false;
+					for (int g : groups){
+						if (inGroup){
+							break;
+						}
+						for (int efg : ef.groups()){
+							if (g == efg){
+								inGroup = true;
+								annotationList.add(new Object[]{ef, f});
+								break;
+							}
+						}
+					}
+				}else{
+					annotationList.add(new Object[]{ef, f});
+				}
 			}
 		}
 		// Get annotation method
@@ -225,7 +246,23 @@ public class ImportExcel {
 		for (Method m : ms){
 			ExcelField ef = m.getAnnotation(ExcelField.class);
 			if (ef != null && (ef.type()==0 || ef.type()==2)){
-				annotationList.add(new Object[]{ef, m});
+				if (groups!=null && groups.length>0){
+					boolean inGroup = false;
+					for (int g : groups){
+						if (inGroup){
+							break;
+						}
+						for (int efg : ef.groups()){
+							if (g == efg){
+								inGroup = true;
+								annotationList.add(new Object[]{ef, m});
+								break;
+							}
+						}
+					}
+				}else{
+					annotationList.add(new Object[]{ef, m});
+				}
 			}
 		}
 		// Field sorting
@@ -269,9 +306,9 @@ public class ImportExcel {
 						if (valType == String.class){
 							val = String.valueOf(val.toString());
 						}else if (valType == Integer.class){
-							val = Integer.valueOf(val.toString());
+							val = Double.valueOf(val.toString()).intValue();
 						}else if (valType == Long.class){
-							val = Long.valueOf(val.toString());
+							val = Double.valueOf(val.toString()).longValue();
 						}else if (valType == Double.class){
 							val = Double.valueOf(val.toString());
 						}else if (valType == Float.class){

@@ -175,7 +175,7 @@ public class UserController extends BaseController {
     		new ExportExcel("用户数据", User.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
-			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
+			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
 		}
 		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
     }

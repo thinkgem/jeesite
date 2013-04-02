@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -31,6 +32,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +81,6 @@ public class ExportExcel {
 	 * 构造函数
 	 * @param title 表格标题，传“空值”，表示无标题
 	 * @param cls 实体对象，通过annotation.ExportField获取标题
-	 * @param headers 表头数组
 	 */
 	public ExportExcel(String title, Class<?> cls){
 		this(title, cls, 1);
@@ -88,16 +90,32 @@ public class ExportExcel {
 	 * 构造函数
 	 * @param title 表格标题，传“空值”，表示无标题
 	 * @param cls 实体对象，通过annotation.ExportField获取标题
-	 * @param type 导出类型（1:导出数据；2：导入模板）
-	 * @param headers 表头数组
+	 * @param type 导出类型（1:导出数据；2：导出模板）
+	 * @param groups 导入分组
 	 */
-	public ExportExcel(String title, Class<?> cls, int type){
+	public ExportExcel(String title, Class<?> cls, int type, int... groups){
 		// Get annotation field 
 		Field[] fs = cls.getDeclaredFields();
 		for (Field f : fs){
 			ExcelField ef = f.getAnnotation(ExcelField.class);
 			if (ef != null && (ef.type()==0 || ef.type()==type)){
-				annotationList.add(new Object[]{ef, f});
+				if (groups!=null && groups.length>0){
+					boolean inGroup = false;
+					for (int g : groups){
+						if (inGroup){
+							break;
+						}
+						for (int efg : ef.groups()){
+							if (g == efg){
+								inGroup = true;
+								annotationList.add(new Object[]{ef, f});
+								break;
+							}
+						}
+					}
+				}else{
+					annotationList.add(new Object[]{ef, f});
+				}
 			}
 		}
 		// Get annotation method
@@ -105,7 +123,23 @@ public class ExportExcel {
 		for (Method m : ms){
 			ExcelField ef = m.getAnnotation(ExcelField.class);
 			if (ef != null && (ef.type()==0 || ef.type()==type)){
-				annotationList.add(new Object[]{ef, m});
+				if (groups!=null && groups.length>0){
+					boolean inGroup = false;
+					for (int g : groups){
+						if (inGroup){
+							break;
+						}
+						for (int efg : ef.groups()){
+							if (g == efg){
+								inGroup = true;
+								annotationList.add(new Object[]{ef, m});
+								break;
+							}
+						}
+					}
+				}else{
+					annotationList.add(new Object[]{ef, m});
+				}
 			}
 		}
 		// Field sorting
@@ -118,7 +152,15 @@ public class ExportExcel {
 		// Initialize
 		List<String> headerList = Lists.newArrayList();
 		for (Object[] os : annotationList){
-			headerList.add(((ExcelField)os[0]).title());
+			String t = ((ExcelField)os[0]).title();
+			// 如果是导出模板，则去掉注释
+			if (type==1){
+				String[] ss = StringUtils.split(t, "**", 2);
+				if (ss.length==2){
+					t = ss[0];
+				}
+			}
+			headerList.add(t);
 		}
 		initialize(title, headerList);
 	}
@@ -169,7 +211,16 @@ public class ExportExcel {
 		for (int i = 0; i < headerList.size(); i++) {
 			Cell cell = headerRow.createCell(i);
 			cell.setCellStyle(styles.get("header"));
-			cell.setCellValue(headerList.get(i));
+			String[] ss = StringUtils.split(headerList.get(i), "**", 2);
+			if (ss.length==2){
+				cell.setCellValue(ss[0]);
+				Comment comment = this.sheet.createDrawingPatriarch().createCellComment(
+						new XSSFClientAnchor(0, 0, 0, 0, (short) 3, 3, (short) 5, 6));
+				comment.setString(new XSSFRichTextString(ss[1]));
+				cell.setCellComment(comment);
+			}else{
+				cell.setCellValue(headerList.get(i));
+			}
 			sheet.autoSizeColumn(i);
 		}
 		for (int i = 0; i < headerList.size(); i++) {  

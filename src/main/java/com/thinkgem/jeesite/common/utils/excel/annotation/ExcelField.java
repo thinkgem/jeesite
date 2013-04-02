@@ -25,7 +25,7 @@ public @interface ExcelField {
 	String value() default "";
 	
 	/**
-	 * 导出字段标题
+	 * 导出字段标题（需要添加批注请用“**”分隔，标题**批注，仅对导出模板有效）
 	 */
 	String title();
 	
@@ -54,4 +54,8 @@ public @interface ExcelField {
 	 */
 	Class<?> fieldType() default Class.class;
 	
+	/**
+	 * 字段归属组（根据分组导出导入）
+	 */
+	int[] groups() default {};
 }
