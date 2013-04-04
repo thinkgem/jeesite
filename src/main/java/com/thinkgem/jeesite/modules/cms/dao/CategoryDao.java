@@ -49,9 +49,10 @@ public interface CategoryDao extends CategoryDaoCustom, CrudRepository<Category,
 	@Query("from Category where delFlag='" + Category.DEL_FLAG_NORMAL + "' and parent.id=?1 and inMenu=?2 order by site.id, sort")
 	public List<Category> findByParentId(Long parentId, String isMenu);
 	
-	@Query("select distinct m from Category m, Role r, User u where m in elements (r.categoryList) and r in elements (u.roleList)" +
-			" and m.delFlag='" + Category.DEL_FLAG_NORMAL + "' and r.delFlag='" + Role.DEL_FLAG_NORMAL + 
-			"' and u.delFlag='" + User.DEL_FLAG_NORMAL + "' and u.id=?1 order by m.site.id, m.sort")
+	@Query("select distinct c from Category c, Role r, User u where c in elements (r.categoryList) and r in elements (u.roleList)" +
+			" and c.delFlag='" + Category.DEL_FLAG_NORMAL + "' and r.delFlag='" + Role.DEL_FLAG_NORMAL + 
+			"' and u.delFlag='" + User.DEL_FLAG_NORMAL + "' and u.id=?1 or (c.user.id=?1 and c.delFlag='" + Category.DEL_FLAG_NORMAL +
+			"') order by c.site.id, c.sort")
 	public List<Category> findByUserId(Long userId);
 	
 }

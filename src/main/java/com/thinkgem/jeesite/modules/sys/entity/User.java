@@ -239,11 +239,10 @@ public class User extends BaseEntity {
 	}
 
 	//多对多定义
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy("id")
-	@Fetch(FetchMode.SUBSELECT)
+	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotEmpty

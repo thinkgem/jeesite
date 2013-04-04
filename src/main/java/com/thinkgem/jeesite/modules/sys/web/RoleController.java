@@ -23,7 +23,6 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 角色Controller
@@ -85,8 +84,8 @@ public class RoleController extends BaseController {
 	public String delete(@RequestParam Long id, RedirectAttributes redirectAttributes) {
 		if (Role.isAdmin(id)){
 			addMessage(redirectAttributes, "删除角色失败, 不允许内置角色或编号空");
-		}else if (UserUtils.getUser(true).getRoleIdList().contains(id)){
-			addMessage(redirectAttributes, "删除角色失败, 不能删除当前用户所在角色");
+//		}else if (UserUtils.getUser().getRoleIdList().contains(id)){
+//			addMessage(redirectAttributes, "删除角色失败, 不能删除当前用户所在角色");
 		}else{
 			systemService.deleteRole(id);
 			addMessage(redirectAttributes, "删除角色成功");

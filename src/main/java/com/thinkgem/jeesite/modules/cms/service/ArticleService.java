@@ -106,7 +106,7 @@ public class ArticleService extends BaseService {
 		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
 			article.setStatus(Article.STATUS_AUDIT);
 		}
-		if (article.getUser()==null){
+		if (article.getId()==null){
 			article.setUser(UserUtils.getUser());
 		}
 		article.setUpdateDate(new Date());

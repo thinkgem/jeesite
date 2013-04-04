@@ -171,7 +171,7 @@ public class UserController extends BaseController {
     public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
             String fileName = "用户数据导入模板.xlsx";
-    		List<User> list = Lists.newArrayList(); list.add(UserUtils.getUser(true));
+    		List<User> list = Lists.newArrayList(); list.add(UserUtils.getUser());
     		new ExportExcel("用户数据", User.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
@@ -195,14 +195,14 @@ public class UserController extends BaseController {
 	@RequiresUser
 	@RequestMapping(value = "info")
 	public String info(User user, Model model) {
-		User currentUser = UserUtils.getUser(true);
+		User currentUser = UserUtils.getUser();
 		if (StringUtils.isNotBlank(user.getName())){
 			currentUser.setEmail(user.getEmail());
 			currentUser.setPhone(user.getPhone());
 			currentUser.setMobile(user.getMobile());
 			currentUser.setRemarks(user.getRemarks());
 			systemService.saveUser(currentUser);
-			currentUser = UserUtils.getUser(true);
+			currentUser = UserUtils.getUser();
 			model.addAttribute("message", "保存用户信息成功");
 		}
 		model.addAttribute("user", currentUser);

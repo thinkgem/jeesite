@@ -35,6 +35,7 @@ import org.hibernate.validator.constraints.Length;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 栏目Entity
@@ -63,11 +64,11 @@ public class Category extends BaseEntity {
 	private String inList; 		// 是否在分类页中显示列表（1：显示；0：不显示）
 	private String showModes; 	// 展现方式（0:有子栏目显示栏目列表，无子栏目显示内容列表;1：首栏目内容列表；2：栏目第一条内容）
 	private String allowComment;// 是否允许评论
+	private User user;		// 创建者
 	private String delFlag; 	// 删除标记（0：正常；1：删除）
 	
-	private List<Category> childList = Lists.newArrayList();
-	
-	private List<Role> roleList = Lists.newArrayList(); //角色列表
+	private List<Category> childList = Lists.newArrayList(); 	// 拥有子分类列表
+	private List<Role> roleList = Lists.newArrayList(); 		// 拥有角色列表
 
 	public Category(){
 		this.sort = 30;
@@ -243,6 +244,18 @@ public class Category extends BaseEntity {
 		this.allowComment = allowComment;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	@Length(min=1, max=1)
 	public String getDelFlag() {
 		return delFlag;
@@ -269,8 +282,7 @@ public class Category extends BaseEntity {
 	@JoinTable(name = "sys_role_category", joinColumns = { @JoinColumn(name = "category_id") },
 		inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy("id")
-	@Fetch(FetchMode.SUBSELECT)
+	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Role> getRoleList() {

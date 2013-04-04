@@ -56,6 +56,7 @@ public class Menu extends BaseEntity {
 	private Integer sort; 	// 排序
 	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
 	private String permission; // 权限标识
+	private User user;		// 创建者
 	private String delFlag; // 删除标记（0：正常；1：删除）
 	
 	private List<Menu> childList = Lists.newArrayList();// 拥有子菜单列表
@@ -167,6 +168,18 @@ public class Menu extends BaseEntity {
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
+
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	@Length(min=1, max=1)
 	public String getDelFlag() {
@@ -193,8 +206,7 @@ public class Menu extends BaseEntity {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "sys_role_menu", joinColumns = { @JoinColumn(name = "menu_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy("id")
-	@Fetch(FetchMode.SUBSELECT)
+	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Role> getRoleList() {

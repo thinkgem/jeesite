@@ -172,6 +172,9 @@ public class SystemService extends BaseService {
 	
 	@Transactional(readOnly = false)
 	public void saveRole(Role role) {
+		if (role.getId()==null){
+			role.setUser(UserUtils.getUser());
+		}
 		roleDao.save(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
 	}
@@ -197,6 +200,9 @@ public class SystemService extends BaseService {
 		menu.setParent(this.getMenu(menu.getParent().getId()));
 		String oldParentIds = menu.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		menu.setParentIds(menu.getParent().getParentIds()+menu.getParent().getId()+",");
+		if (menu.getId()==null){
+			menu.setUser(UserUtils.getUser());
+		}
 		menuDao.clear();
 		menuDao.save(menu);
 		// 更新子节点 parentIds

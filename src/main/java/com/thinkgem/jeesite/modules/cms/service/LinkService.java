@@ -85,7 +85,7 @@ public class LinkService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void save(Link link) {
-		if (link.getUser()==null){
+		if (link.getId()==null){
 			link.setUser(UserUtils.getUser());
 		}
 		// 如果没有审核权限，则将当前内容改为待审核状态

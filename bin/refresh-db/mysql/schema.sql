@@ -119,6 +119,7 @@ create table cms_category (
     in_list char(1) default '1' comment '是否在分类页中显示列表（1：显示；0：不显示）',
 	show_modes char(1) default '0' comment '展现方式（0:有子栏目显示栏目列表，无子栏目显示内容列表;1：首栏目内容列表；2：栏目第一条内容）',
 	allow_comment char(1) comment '是否允许评论',
+	user_id bigint not null comment '创建者',
 	del_flag char(1) default '0' comment '删除标记（0：正常；1：删除）',
 	primary key (id),
 	key (parent_id),
@@ -126,6 +127,7 @@ create table cms_category (
 	key (module),
 	key (name),
 	key (sort),
+	key (user_id),
 	key (del_flag)
 ) engine=innodb comment '内容管理栏目表';
 
@@ -228,10 +230,12 @@ create table sys_menu (
     sort int not null comment '排序（升序）',
     is_show char(1) not null comment '是否在菜单中显示（1：显示；0：不显示）',
     permission varchar(200) not null comment '权限标识',
+	user_id bigint not null comment '创建者',
     del_flag char(1) default '0' comment '删除标记（0：正常；1：删除）',
     primary key (id),
 	key (parent_id),
 	key (parent_ids),
+	key (user_id),
 	key (del_flag)
 ) engine=innodb comment '系统菜单表';
 
@@ -240,8 +244,10 @@ drop table if exists sys_role;
 create table sys_role (
     id bigint not null auto_increment comment '编号',
     name varchar(100) not null comment '名称',
+	user_id bigint not null comment '创建者',
     del_flag char(1) default '0' comment '删除标记（0：正常；1：删除）',
     primary key (id),
+	key (user_id),
 	key (del_flag)
 ) engine=innodb comment '系统角色表';
 

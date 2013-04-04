@@ -103,7 +103,9 @@ public class CategoryService extends BaseService {
 		category.setParent(this.get(category.getParent().getId()));
 		String oldParentIds = category.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		category.setParentIds(category.getParent().getParentIds()+category.getParent().getId()+",");
-		if (category.getDelFlag()==null){ category.setDelFlag(Category.DEL_FLAG_NORMAL);}
+		if (category.getId()==null){
+			category.setUser(UserUtils.getUser());
+		}
 		categoryDao.clear();
 		categoryDao.save(category);
 		// 更新子节点 parentIds

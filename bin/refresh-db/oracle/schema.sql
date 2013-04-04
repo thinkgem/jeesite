@@ -72,11 +72,13 @@ create table CMS_CATEGORY
   IN_LIST       VARCHAR2(1),
   SHOW_MODES    VARCHAR2(1),
   ALLOW_COMMENT VARCHAR2(1),
+  USER_ID     	NUMBER(20) not null,
   DEL_FLAG      CHAR(1) default 0
 );
 alter table CMS_CATEGORY
   add constraint CMS_CATEGORY_PRIMARYKEY primary key (ID)
   using index ;
+create index CMS_CATEGORY_USER_ID on CMS_CATEGORY (USER_ID);
 create index CMS_CATEGORY_DEL_FLAG on CMS_CATEGORY (DEL_FLAG);
 create index CMS_CATEGORY_MODULE on CMS_CATEGORY (MODULE);
 create index CMS_CATEGORY_NAME on CMS_CATEGORY (NAME);
@@ -248,11 +250,13 @@ create table SYS_MENU
   SORT       NUMBER(11) not null,
   IS_SHOW    VARCHAR2(1) not null,
   PERMISSION VARCHAR2(200),
+  USER_ID    NUMBER(20) not null,
   DEL_FLAG   CHAR(1) default 0
 );
 alter table SYS_MENU
   add constraint SYS_MENU_PRIMARYKEY primary key (ID)
   using index ;
+create index SYS_MENU_USER_ID on SYS_MENU (USER_ID);
 create index SYS_MENU_DEL_FLAG on SYS_MENU (DEL_FLAG);
 create index SYS_MENU_PARENT_ID on SYS_MENU (PARENT_ID);
 create index SYS_MENU_PARENT_IDS on SYS_MENU (PARENT_IDS);
@@ -289,11 +293,13 @@ create table SYS_ROLE
 (
   ID       NUMBER(20) not null,
   NAME     VARCHAR2(100) not null,
+  USER_ID     NUMBER(20) not null,
   DEL_FLAG CHAR(1) default 0
 );
 alter table SYS_ROLE
   add constraint SYS_ROLE_PRIMARYKEY primary key (ID)
   using index ;
+create index SYS_ROLE_USER_ID on SYS_ROLE (USER_ID);
 create index SYS_ROLE_DEL_FLAG on SYS_ROLE (DEL_FLAG);
 
 -- prompt
