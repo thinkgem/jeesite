@@ -36,7 +36,7 @@
 	    <div class="accordion-heading">
 	    	<a class="accordion-toggle">栏目列表</a>
 	    </div>
-	    <div class="accordion-body ">
+	    <div class="accordion-body">
 			<div class="accordion-inner">
 				<div id="tree" class="ztree"></div>
 			</div>

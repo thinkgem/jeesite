@@ -8,7 +8,6 @@ package com.thinkgem.jeesite.modules.sys.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.DateUtils;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -47,7 +47,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 		String uri = request.getRequestURI();
 		String uriPrefix = request.getContextPath() + Global.ADMIN_PATH;
 		// 拦截所有来自管理端的POST请求
-		if ("POST".equals(request.getMethod()) && uri.length() > uriPrefix.length()){
+		if ("POST".equals(request.getMethod()) && StringUtils.startsWith(uri, uriPrefix)){
 			User user = UserUtils.getUser();
 			if (user!=null){
 				StringBuilder sb = new StringBuilder();
@@ -55,7 +55,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
 				int index = 0;
 				for (Object param : request.getParameterMap().keySet()){ 
 					sb.append((index++==0?"?":"&")+param+"=");
-					sb.append(StringUtils.abbreviate(request.getParameter((String)param),100));
+					sb.append(StringUtils.abbr(request.getParameter((String)param),100));
 				}
 				sb.append("; userId: " + user.getId());
 				sb.append("; userName: " + user.getName());

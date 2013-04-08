@@ -23,6 +23,6 @@
 			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]-6);
 		}
 	</script>
-	<script src="${ctxStatic}/wsize.js" type="text/javascript"></script>
+	<script src="${ctxStatic}/common/wsize.min.js" type="text/javascript"></script>
 </body>
 </html>

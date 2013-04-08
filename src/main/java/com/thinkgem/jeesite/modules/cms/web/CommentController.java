@@ -68,7 +68,7 @@ public class CommentController extends BaseController {
 			comment.setStatus(Comment.STATUS_RELEASE);
 			commentService.save(comment);
 			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getStatus(), "cms_status", "保存")
-					+"评论'" + StringUtils.abbreviate(StringUtils.replaceHtml(comment.getContent()),20) + "'成功");
+					+"评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()),50) + "'成功");
 		}
 		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&status=2";
 	}

@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Link;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
@@ -78,7 +78,7 @@ public class LinkController extends BaseController {
 			return form(link, model);
 		}
 		linkService.save(link);
-		addMessage(redirectAttributes, "保存链接'" + StringUtils.abbreviate(link.getTitle(),20) + "'成功");
+		addMessage(redirectAttributes, "保存链接'" + StringUtils.abbr(link.getTitle(),50) + "'成功");
 		return "redirect:"+Global.ADMIN_PATH+"/cms/link/?repage&category.id="+link.getCategory().getId();
 	}
 	

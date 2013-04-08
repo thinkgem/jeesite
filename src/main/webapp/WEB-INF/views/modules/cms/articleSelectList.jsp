@@ -61,9 +61,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="article">
 			<tr>
-				<td style="text-align:center;"><input type="checkbox" name="id" value="${article.id}" title="${fns:abbreviate(article.title,20)}" /></td>
+				<td style="text-align:center;"><input type="checkbox" name="id" value="${article.id}" title="${fns:abbr(article.title,40)}" /></td>
 				<td><a href="javascript:" onclick="$('#categoryId').val('${article.category.id}');$('#categoryName').val('${article.category.name}');$('#searchForm').submit();return false;">${article.category.name}</a></td>
-				<td><a href="${ctx}/cms/article/form?id=${article.id}" title="${article.title}" onclick="return view(this.href);">${fns:abbreviate(article.title,20)}</a></td>
+				<td><a href="${ctx}/cms/article/form?id=${article.id}" title="${article.title}" onclick="return view(this.href);">${fns:abbr(article.title,40)}</a></td>
 				<td>${article.weight}</td>
 				<td>${article.hits}</td>
 				<td>${article.user.name}</td>

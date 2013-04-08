@@ -148,7 +148,7 @@
 	 		<cms_category id="22" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="交友社区" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
 	 		<cms_category id="23" site_id="1" parent_id="18" parent_ids="0,1,18," module="link" name="音乐视频" image="" href="" target="" desciption="" sort="50" in_menu="1" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
 	 	<cms_category id="24" site_id="1" parent_id="1" parent_ids="0,1," module="" name="百度一下" image="" href="http://www.baidu.com" target="_blank" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
-	 	<cms_category id="25" site_id="1" parent_id="1" parent_ids="0,1," module="" name="全文检索" image="" href="/search" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
+	 	<cms_category id="25" site_id="1" parent_id="1" parent_ids="0,1," module="" name="全文检索" image="" href="/search" target="" desciption="" sort="90" in_menu="0" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
 	 	<cms_category id="26" site_id="2" parent_id="1" parent_ids="0,1," module="article" name="测试栏目" image="" href="" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
 	 	<cms_category id="27" site_id="1" parent_id="1" parent_ids="0,1," module="" name="公共留言" image="" href="/guestbook" target="" desciption="" sort="90" in_menu="1" in_list="1" show_modes="0" allow_comment="1" user_id="1" />
 	 	
@@ -168,6 +168,11 @@
 	<sys_dict id="9" value="blue" label="蓝色" type="color" desciption="颜色值" sort="30" del_flag="0" />
 	<sys_dict id="10" value="yellow" label="黄色" type="color" desciption="颜色值" sort="40" del_flag="0" />
 	<sys_dict id="11" value="orange" label="橙色" type="color" desciption="颜色值" sort="50" del_flag="0" />
+	<sys_dict id="35" value="default" label="默认主题" type="theme" desciption="主题方案" sort="10" del_flag="0" />
+	<sys_dict id="36" value="cerulean" label="天蓝主题" type="theme" desciption="主题方案" sort="20" del_flag="0" />
+	<sys_dict id="37" value="readable" label="橙色主题" type="theme" desciption="主题方案" sort="30" del_flag="0" />
+	<sys_dict id="38" value="united" label="红色主题" type="theme" desciption="主题方案" sort="40" del_flag="0" />
+	<sys_dict id="39" value="cosmo" label="Win8主题" type="theme" desciption="主题方案" sort="50" del_flag="0" />
 	<sys_dict id="12" value="1" label="系统管理" type="sys_user_type" desciption="用户类型" sort="10" del_flag="0" />
 	<sys_dict id="13" value="2" label="部门经理" type="sys_user_type" desciption="用户类型" sort="20" del_flag="0" />
 	<sys_dict id="14" value="3" label="普通用户" type="sys_user_type" desciption="用户类型" sort="30" del_flag="0" />

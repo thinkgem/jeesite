@@ -73,6 +73,14 @@
     <example>${fns:getOfficeList()}</example>  
   </function>
   
+  <function>
+    <description>获取当前用户缓存</description>
+    <name>getCache</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
+    <function-signature>java.lang.Object getCache(java.lang.String)</function-signature>
+    <example>${fns:getCache('name')}</example>  
+  </function>
+	
   <!-- DictUtils -->
   <function>
     <description>获取字典标签</description>
@@ -137,11 +145,25 @@
     <example>${fns:substringAfterLast(str,separator)}</example>  
   </function>
   <function>
-    <description>缩写字符串，超过最大宽度用“...”表示</description>
-    <name>abbreviate</name>
+    <description>判断字符串是否以某某开头</description>
+    <name>startsWith</name>
     <function-class>org.apache.commons.lang3.StringUtils</function-class>
-    <function-signature>java.lang.String abbreviate(java.lang.String, int)</function-signature>
-    <example>${fns:abbreviate(str,maxWidth)}</example>  
+    <function-signature>boolean startsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
+    <example>${fns:startsWith(str,prefix)}</example> 
+  </function>
+  <function>
+    <description>判断字符串是否以某某结尾</description>
+    <name>endsWith</name>
+    <function-class>org.apache.commons.lang3.StringUtils</function-class>
+    <function-signature>boolean endsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
+    <example>${fns:endsWith(str,suffix)}</example> 
+  </function>
+  <function>
+    <description>缩写字符串，超过最大宽度用“...”表示</description>
+    <name>abbr</name>
+    <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
+    <function-signature>java.lang.String abbr(java.lang.String, int)</function-signature>
+    <example>${fns:abbr(str,length)}</example>  
   </function>
   <function>
     <description>替换掉HTML标签</description>

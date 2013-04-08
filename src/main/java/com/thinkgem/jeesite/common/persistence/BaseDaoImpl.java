@@ -476,7 +476,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		Analyzer analyzer = new IKAnalyzer();
 		Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlight\">", "</span>");   
 		Highlighter highlighter = new Highlighter(formatter, new QueryScorer(query)); 
-		highlighter.setTextFragmenter(new SimpleFragmenter(100)); 
+		highlighter.setTextFragmenter(new SimpleFragmenter(130)); 
 		for(T entity : list){ 
 			try {
 				for (String field : fields){
@@ -486,7 +486,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 						Reflections.invokeSetter(entity, fields[0], desciption);
 						break;
 					}
-					Reflections.invokeSetter(entity, fields[0], StringUtils.abbreviate(text, 100));
+					Reflections.invokeSetter(entity, fields[0], StringUtils.abbr(text, 130));
 				}
 				//Reflections.invokeSetter(entity, fields[1], "sdfkjsdlkfjklsdjf");
 			} catch (IOException e) {

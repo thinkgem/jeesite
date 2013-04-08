@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
 import com.thinkgem.jeesite.modules.cms.dao.LinkDao;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
@@ -111,7 +111,7 @@ public class LinkService extends BaseService {
 		if (idss.length>0){
 			List<Link> l = linkDao.findByIdIn(idss);
 			for (Link e : l){
-				list.add(new Object[]{e.getId(),StringUtils.abbreviate(e.getTitle(),20)});
+				list.add(new Object[]{e.getId(),StringUtils.abbr(e.getTitle(),50)});
 			}
 		}
 		return list;

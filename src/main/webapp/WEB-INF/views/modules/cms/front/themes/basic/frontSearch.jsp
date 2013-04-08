@@ -35,7 +35,7 @@
 	</script>
 </head>
 <body>
-	<form:form id="searchForm" method="get" class="search">
+	<form:form id="searchForm" method="get" class="search form-search">
 		<input type="hidden" id="pageNo" name="pageNo" value="${pageNo}"/>
 		<input type="hidden" id="pageSize" name="pageSize" value="${pageSize}"/>
 		<input type="hidden" id="t" name="t" value="${not empty t?t:'article'}"/><%--
@@ -46,14 +46,14 @@
 		<input type="submit" value="搜  索" class="btn"/>
 	</form:form>
 	<dl class="search"><c:forEach items="${page.list}" var="article">
-		<dt><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" class="title" target="_blank">${fns:abbreviate(article.title,80)}</a></dt>
+		<dt><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" class="title" target="_blank">${fns:abbr(article.title,80)}</a></dt>
 		<dd>${article.desciption}<span class="info"><br/>${article.keywords} [<fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>]</span><br/>
 	</c:forEach>
 	<c:if test="${fn:length(page.list) eq 0}">
 		<dt><c:if test="${empty q}">请键入要查找的关键字。</c:if><c:if test="${not empty q}">抱歉，没有找到与“${q}”相关内容。</c:if><br/><br/>建议：</dt>
 		<dd><ul><li>检查输入是否正确；</li><li>简化输入词；</li><li>尝试其他相关词，如同义、近义词等。</li></ul></dd>
 	</c:if></dl>
-	<div class="page">${page}</div>
+	<div class="pagination">${page}</div>
 	<script type="text/javascript">
 		function page(n,s){
 			$("#pageNo").val(n);

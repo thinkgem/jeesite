@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,7 +89,6 @@ public class SiteController extends BaseController {
 	 * @return
 	 */
 	@RequiresPermissions("cms:site:select")
-	@RequiresUser
 	@RequestMapping(value = "select")
 	public String select(Long id, boolean flag){
 		if (id!=null){

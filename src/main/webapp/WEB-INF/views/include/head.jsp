@@ -10,9 +10,9 @@
 <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
 <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.method.min.js" type="text/javascript"></script>
-<link href="${ctxStatic}/bootstrap/2.0.4/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<script src="${ctxStatic}/bootstrap/2.0.4/js/bootstrap.min.js" type="text/javascript"></script>
-<!--[if IE 6]><link href="${ctxStatic}/bootstrap/2.0.4/css/ie6.min.css" rel="stylesheet">
-<script src="${ctxStatic}/bootstrap/2.0.4/js/ie6.min.js" type="text/javascript"></script><![endif]-->
-<script src="${ctxStatic}/common.min.js" type="text/javascript"></script>
-<link href="${ctxStatic}/style.min.css" type="text/css" rel="stylesheet" />
+<link href="${ctxStatic}/bootstrap/2.3.1/css_${ctxTheme}/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+<!--[if lte IE 6]><link href="${ctxStatic}/bootstrap/bsie/css/bootstrap-ie6.min.css" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
+<link href="${ctxStatic}/common/jeesite.min.css" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/common/jeesite.min.js" type="text/javascript"></script>

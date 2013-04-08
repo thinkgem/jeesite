@@ -45,7 +45,7 @@ public class DictService extends BaseService {
 	public Page<Dict> find(Page<Dict> page, Dict dict) {
 		DetachedCriteria dc = dictDao.createDetachedCriteria();
 		if (StringUtils.isNotEmpty(dict.getType())){
-			dc.add(Restrictions.like("type", "%"+dict.getType()+"%"));
+			dc.add(Restrictions.eq("type", dict.getType()));
 		}
 		if (StringUtils.isNotEmpty(dict.getDesciption())){
 			dc.add(Restrictions.like("desciption", "%"+dict.getDesciption()+"%"));

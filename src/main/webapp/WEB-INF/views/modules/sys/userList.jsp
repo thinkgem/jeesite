@@ -71,10 +71,10 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<input id="orderBy" name="orderBy" type="hidden" value="${page.orderBy}"/>
 		<div>
-			<label>区域：</label><tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}" title="区域" url="/sys/area/treeData"/>
+			<label>区域：</label><tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}" title="区域" url="/sys/area/treeData" cssClass="input-small"/>
 			<label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/>
 		</div><div style="margin-top:8px;">
-			<label>部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" title="部门" url="/sys/office/treeData"/>
+			<label>部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" title="部门" url="/sys/office/treeData" cssClass="input-small"/>
 			<label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="page()"/>
 			&nbsp;<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>

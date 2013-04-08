@@ -133,7 +133,7 @@ public class ArticleService extends BaseService {
 		if (idss.length>0){
 			List<Article> l = articleDao.findByIdIn(idss);
 			for (Article e : l){
-				list.add(new Object[]{e.getCategory().getId(),e.getId(),StringUtils.abbreviate(e.getTitle(),20)});
+				list.add(new Object[]{e.getCategory().getId(),e.getId(),StringUtils.abbr(e.getTitle(),50)});
 			}
 		}
 		return list;

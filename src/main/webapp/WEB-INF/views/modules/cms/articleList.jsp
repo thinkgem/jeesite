@@ -33,10 +33,10 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label>栏目：</label><tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-					title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="true"/>
+					title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="true" cssClass="input-small"/>
 		<label>标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
-		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" class="input-medium"/>
+		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered ">
@@ -45,7 +45,7 @@
 		<c:forEach items="${page.list}" var="article">
 			<tr>
 				<td><a href="javascript:" onclick="$('#categoryId').val('${article.category.id}');$('#categoryName').val('${article.category.name}');$('#searchForm').submit();return false;">${article.category.name}</a></td>
-				<td><a href="${ctx}/cms/article/form?id=${article.id}" title="${article.title}">${fns:abbreviate(article.title,20)}</a></td>
+				<td><a href="${ctx}/cms/article/form?id=${article.id}" title="${article.title}">${fns:abbr(article.title,40)}</a></td>
 				<td>${article.weight}</td>
 				<td>${article.hits}</td>
 				<td>${article.user.name}</td>

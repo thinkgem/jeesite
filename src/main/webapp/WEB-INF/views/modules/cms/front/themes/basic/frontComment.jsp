@@ -62,11 +62,11 @@
 		<li>暂时还没有人评论！</li>
 	</c:if>
 </ul>
-<div class="page">${page}</div>
+<div class="pagination">${page}</div>
 <h5>我要评论</h5>
 <div id="commentForm0"></div>
 <div id="commentFormTpl" class="hide">
-	<form:form action="${ctx}/comment" method="post" class="form">
+	<form:form action="${ctx}/comment" method="post" class="form-horizontal">
 		<input type="hidden" name="module" value="${comment.module}"/>
 		<input type="hidden" name="contentId" value="${comment.contentId}"/>
 		<input type="hidden" name="title" value="${comment.title}"/>

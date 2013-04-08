@@ -30,6 +30,9 @@
 					}
 				}
 			});
+			$("#main_nav li").each(function(){
+				$(this).toggleClass("active", $(this).text().indexOf('公共留言')>=0);
+			});
 		});
 		function page(n,s){
 			location="${ctx}/guestbook?pageNo="+n+"&pageSize="+s;;
@@ -52,31 +55,31 @@
 				<li>暂时还没有人留言！</li>
 			</c:if>
 		</ul>
-		<div class="page">${page}</div>
+		<div class="pagination">${page}</div>
 		<h4>我要留言</h4>
-		<form:form id="inputForm" action="" method="post" class="form">
+		<form:form id="inputForm" action="" method="post" class="form-horizontal">
 			<div class="control-group">
 				<label class="control-label">名称:</label>
 				<div class="controls">
-					<input type="text" name="name" maxlength="11" class="txt required" style="width:300px;"/>
+					<input type="text" name="name" maxlength="11" class="required" style="width:300px;"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">邮箱:</label>
 				<div class="controls">
-					<input type="text" name="email" maxlength="50" class="txt required email" style="width:300px;"/>
+					<input type="text" name="email" maxlength="50" class="required email" style="width:300px;"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">电话:</label>
 				<div class="controls">
-					<input type="text" name="phone" maxlength="50" class="txt required phone" style="width:300px;"/>
+					<input type="text" name="phone" maxlength="50" class="required phone" style="width:300px;"/>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">单位:</label>
 				<div class="controls">
-					<input type="text" name="workunit" maxlength="50" class="txt required" style="width:300px;"/>
+					<input type="text" name="workunit" maxlength="50" class="required" style="width:300px;"/>
 				</div>
 			</div>
 			<div class="control-group">
@@ -93,7 +96,7 @@
 			<div class="control-group">
 				<label class="control-label">留言内容:</label>
 				<div class="controls">
-					<textarea name="content" rows="4" maxlength="200" class="txt required" style="width:400px;"></textarea>
+					<textarea name="content" rows="4" maxlength="200" class="required" style="width:400px;"></textarea>
 				</div>
 			</div>
 			<div class="control-group">

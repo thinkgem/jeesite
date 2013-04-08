@@ -78,7 +78,7 @@ public abstract class BaseController {
 	protected void addMessage(Model model, String... messages) {
 		StringBuilder sb = new StringBuilder();
 		for (String message : messages){
-			sb.append(message+"<br/>");
+			sb.append(message).append(messages.length>1?"<br/>":"");
 		}
 		model.addAttribute("message", sb.toString());
 	}
@@ -90,7 +90,7 @@ public abstract class BaseController {
 	protected void addMessage(RedirectAttributes redirectAttributes, String... messages) {
 		StringBuilder sb = new StringBuilder();
 		for (String message : messages){
-			sb.append(message+"<br/>");
+			sb.append(message).append(messages.length>1?"<br/>":"");
 		}
 		redirectAttributes.addFlashAttribute("message", sb.toString());
 	}

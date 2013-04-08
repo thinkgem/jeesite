@@ -13,10 +13,12 @@
 <%@ attribute name="notAllowSelectParent" type="java.lang.Boolean" required="false" description="不允许选择父节点"%>
 <%@ attribute name="module" type="java.lang.String" required="false" description="过滤栏目模型（只显示指定模型，仅针对CMS的Category树）"%>
 <%@ attribute name="selectScopeModule" type="java.lang.Boolean" required="false" description="选择范围内的模型（控制不能选择公共模型，不能选择本栏目外的模型）（仅针对CMS的Category树）"%>
+<%@ attribute name="cssClass" type="java.lang.String" required="false" description="css样式"%>
+<%@ attribute name="cssStyle" type="java.lang.String" required="false" description="css样式"%>
 <div class="input-append">
-	<input id="${id}Id" name="${name}" class="required" type="hidden" value="${value}"/>
+	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"/>
 	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"
-		class="input-medium" /><a id="${id}Button" href="javascript:" class="btn">选择</a>&nbsp;&nbsp;
+		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn">选择</a>&nbsp;&nbsp;
 </div>
 <script type="text/javascript">
 	$("#${id}Button").click(function(){

@@ -24,25 +24,36 @@
 	</script>
 </head>
 <body>
-	<div style="float:left;*margin-top:20px;width:20%;">
+	<div class="row">
+	   <div class="span2">
 	  	<h4>栏目列表</h4>
 		<ol><c:forEach items="${categoryList}" var="category">
 			<li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a></li>
 		</c:forEach></ol>
-	</div>
-	<div style="float:left;*margin-top:20px;margin-left:20px;width:75%;">
-		<h3 style="color: #DF0037;font-size:22px;text-align:center;border-bottom:1px solid #ddd;padding-bottom:15px;margin:25px 0;">${article.title}</h3>
-		<c:if test="${not empty article.desciption}"><p>摘要：${article.desciption}  </p></c:if>
-		<p>${article.articleData.content}</p>
-		<div style="border-top:1px solid #ddd;padding:10px;margin:25px 0;">发布者：${article.user.name} &nbsp; 点击数：${article.hits} &nbsp; 发布时间：<fmt:formatDate value="${article.inputDate}" pattern="yyyy-MM-dd HH:mm:ss"/> &nbsp; 更新时间：<fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
-		<div id="comment" class="hide">
-			正在加载评论...
-		</div>
-		<h5>相关文章</h5>
-		<ol><c:forEach items="${relationList}" var="relation">
-			<li style="float:left;width:230px;"><a href="${ctx}/view-${relation[0]}-${relation[1]}${urlSuffix}">${relation[2]}</a></li>
-		</c:forEach></ol>
-	</div>
-	<div style="clear:both;"></div>
+	   </div>
+	   <div class="span10">
+	     <div class="row">
+	       <div class="span10">
+			<h3 style="color:#555555;font-size:20px;text-align:center;border-bottom:1px solid #ddd;padding-bottom:15px;margin:25px 0;">${article.title}</h3>
+			<c:if test="${not empty article.desciption}"><div>摘要：${article.desciption}</div></c:if>
+			<div>${article.articleData.content}</div>
+			<div style="border-top:1px solid #ddd;padding:10px;margin:25px 0;">发布者：${article.user.name} &nbsp; 点击数：${article.hits} &nbsp; 发布时间：<fmt:formatDate value="${article.inputDate}" pattern="yyyy-MM-dd HH:mm:ss"/> &nbsp; 更新时间：<fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
+  	       </div>
+  	     </div>
+	     <div class="row">
+			<div id="comment" class="hide span10">
+				正在加载评论...
+			</div>
+	     </div>
+	     <div class="row">
+	       <div class="span10">
+			<h5>相关文章</h5>
+			<ol><c:forEach items="${relationList}" var="relation">
+				<li style="float:left;width:230px;"><a href="${ctx}/view-${relation[0]}-${relation[1]}${urlSuffix}">${fns:abbr(relation[2],30)}</a></li>
+			</c:forEach></ol>
+	  	  </div>
+  	    </div>
+  	  </div>
+   </div>
 </body>
 </html>

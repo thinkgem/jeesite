@@ -5,6 +5,7 @@
  */
 package com.thinkgem.jeesite.common.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,17 +14,47 @@ import java.util.regex.Pattern;
  * @author ThinkGem
  * @version 2013-01-15
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils{
-	
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
+
 	/**
 	 * 替换掉HTML标签
 	 */
-	public static String replaceHtml(String html){ 
-        String regEx = "<.+?>";
-        Pattern p = Pattern.compile(regEx); 
-        Matcher m = p.matcher(html); 
-        String s = m.replaceAll(""); 
-        return s; 
-    }
-	
+	public static String replaceHtml(String html) {
+		String regEx = "<.+?>";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(html);
+		String s = m.replaceAll("");
+		return s;
+	}
+
+	/**
+	 * 缩略字符串（不区分中英文字符）
+	 * @param str 目标字符串
+	 * @param length 截取长度
+	 * @return
+	 */
+	public static String abbr(String str, int length) {
+		if (str == null) {
+			return "";
+		}
+		try {
+			StringBuilder sb = new StringBuilder();
+			int currentLength = 0;
+			for (char c : str.toCharArray()) {
+				currentLength += String.valueOf(c).getBytes("GBK").length;
+				if (currentLength <= length - 3) {
+					sb.append(c);
+				} else {
+					sb.append("...");
+					break;
+				}
+			}
+			return sb.toString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return "";
+
+	}
+
 }

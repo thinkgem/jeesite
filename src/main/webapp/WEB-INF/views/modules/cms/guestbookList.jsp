@@ -24,7 +24,7 @@
 		<label>分类：</label><form:select id="type" path="type" class="input-medium"><form:option value="" label=""/><form:options items="${fns:getDictList('cms_guestbook')}" itemValue="value" itemLabel="label" htmlEscape="false"/></form:select>
 		<label>内容 ：</label><form:input path="content" htmlEscape="false" maxlength="50" class="input-medium"/>
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
-		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" class="input-medium"/>
+		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered ">
@@ -33,11 +33,11 @@
 		<c:forEach items="${page.list}" var="guestbook">
 			<tr>
 				<td>${fns:getDictLabel(guestbook.type, 'cms_guestbook', '无分类')}</td>
-				<td><a href="${ctx}/cms/guestbook/form?id=${guestbook.id}">${fns:abbreviate(guestbook.content,20)}</a></td>
+				<td><a href="${ctx}/cms/guestbook/form?id=${guestbook.id}">${fns:abbr(guestbook.content,40)}</a></td>
 				<td>${guestbook.name}</td>
 				<td><fmt:formatDate value="${guestbook.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>${guestbook.reUser.name}</td>
-				<td>${fns:abbreviate(guestbook.reContent,20)}</td>
+				<td>${fns:abbr(guestbook.reContent,40)}</td>
 				<td><fmt:formatDate value="${guestbook.reDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<shiro:hasPermission name="cms:guestbook:edit"><td>
 					<c:if test="${guestbook.status ne '2'}"><a href="${ctx}/cms/guestbook/delete?id=${guestbook.id}${guestbook.status ne 0?'&isRe=true':''}" 

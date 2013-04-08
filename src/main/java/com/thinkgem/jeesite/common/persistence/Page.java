@@ -254,11 +254,11 @@ public class Page<T> {
 					+ "下一页 &#187;</a></li>\n");
 		}
 
-		sb.append("<li class=\"disabled\"><a href=\"javascript:\" style=\"border:0;padding-top:1px;_padding-top:7px;\">当前 ");
-		sb.append("<input type=\"text\" value=\""+pageNo+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" ");
-		sb.append("onkeypress=\"if(window.event.keyCode==13) "+funcName+"(this.value,"+pageSize+");\" onclick=\"this.select();\"/> / ");
-		sb.append("<input type=\"text\" value=\""+pageSize+"\" style=\"width:30px;padding:0;margin:0 2px 3px 2px;text-align:center;\" ");
-		sb.append("onkeypress=\"if(window.event.keyCode==13) "+funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
+		sb.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 ");
+		sb.append("<input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+		sb.append(funcName+"(this.value,"+pageSize+");\" onclick=\"this.select();\"/> / ");
+		sb.append("<input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+		sb.append(funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
 		sb.append("共 " + count + " 条</a><li>\n");
 
 		sb.insert(0,"<ul>\n").append("</ul>\n");

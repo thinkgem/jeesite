@@ -66,7 +66,11 @@ public class DictUtils implements ApplicationContextAware {
 			}
 			CacheUtils.put("dictMap", dictMap);
 		}
-		return dictMap.get(type);
+		List<Dict> dictList = Lists.newArrayList();
+		if (dictList != null){
+			dictList = dictMap.get(type);
+		}
+		return dictList;
 	}
 	
 	@Override

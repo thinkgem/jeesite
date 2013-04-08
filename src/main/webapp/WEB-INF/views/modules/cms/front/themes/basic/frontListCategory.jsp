@@ -9,19 +9,21 @@
 	<meta name="keywords" content="${category.keywords}" />
 </head>
 <body>
-	<div style="float:left;*margin-top:20px;width:20%;">
-		<h4>栏目列表</h4>
-		<ol><c:forEach items="${categoryList}" var="category">
+	<div class="row">
+	   <div class="span2">
+	   	 <h4>栏目列表</h4>
+		 <ol><c:forEach items="${categoryList}" var="category">
 			<li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a></li>
-		</c:forEach></ol>
-	</div>
-	<div style="float:left;margin-left:20px;width:75%;">
-		<c:forEach items="${categoryMap}" var="map" varStatus="status">
-			<div style="float:left;*margin-top:20px;margin-left:20px;width:450px;">
-				<h4>${map.key.name} <small><a href="${ctx}/list-${map.key.id}${urlSuffix}">更多>></a></small></h4>
+		 </c:forEach></ol>
+	   </div>
+	   <div class="span10">
+	   	  <c:forEach items="${categoryMap}" var="map" varStatus="status">
+	   	  ${status.index % 2 eq 0 ? '<div class="row">':''}
+			 <div class="span5">
+				<h4><small><a href="${ctx}/list-${map.key.id}${urlSuffix}" class="pull-right">更多&gt;&gt;</a></small>${map.key.name}</h4>
 				<c:if test="${map.key.module eq 'article'}">
 					<ul><c:forEach items="${map.value}" var="article">
-						<li><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbreviate(article.title,20)}</a> <span>[<fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd"/>]</span></li>
+						<li><span class="pull-right"><fmt:formatDate value="${article.updateDate}" pattern="yyyy.MM.dd"/></span><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,40)}</a></li>
 					</c:forEach></ul>
 				</c:if>
 				<c:if test="${map.key.module eq 'link'}">
@@ -29,10 +31,10 @@
 						<li><a href="${link.href}" target="_blank" style="color:${link.color}"><c:out value="${link.title}" /></a></li>
 					</c:forEach></ul>
 				</c:if>
-			</div>
-			<c:if test="${status.index % 2 ne 0}"><div style="clear:both;"></div></c:if>
-		</c:forEach>
+			 </div>
+		  ${status.index % 2 ne 0 ? '</div>':''}
+		  </c:forEach>
+	   </div>
 	</div>
-	<div style="clear:both;"></div>
 </body>
 </html>

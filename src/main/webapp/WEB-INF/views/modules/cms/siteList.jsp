@@ -23,7 +23,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label>名称：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
-		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class="input-medium"/>
+		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered ">
@@ -31,10 +31,10 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="site">
 			<tr>
-				<td><a href="${ctx}/cms/site/form?id=${site.id}" title="${site.name}">${fns:abbreviate(site.name,20)}</a></td>
-				<td>${fns:abbreviate(site.title,20)}</td>
-				<td>${fns:abbreviate(site.desciption,20)}</td>
-				<td>${fns:abbreviate(site.keywords,20)}</td>
+				<td><a href="${ctx}/cms/site/form?id=${site.id}" title="${site.name}">${fns:abbr(site.name,40)}</a></td>
+				<td>${fns:abbr(site.title,40)}</td>
+				<td>${fns:abbr(site.desciption,40)}</td>
+				<td>${fns:abbr(site.keywords,40)}</td>
 				<td>${site.theme}</td>
 				<shiro:hasPermission name="cms:site:edit"><td>
     				<a href="${ctx}/cms/site/form?id=${site.id}">修改</a>

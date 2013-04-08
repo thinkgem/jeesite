@@ -479,7 +479,7 @@ drop sequence SEQ_SYS_DICT;
 create sequence SEQ_SYS_DICT
 minvalue 1
 maxvalue 999999999999999999999999999
-start with 35
+start with 40
 increment by 1
 cache 20;
 
