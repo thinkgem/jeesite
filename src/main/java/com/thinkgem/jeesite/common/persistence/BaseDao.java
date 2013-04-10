@@ -32,12 +32,17 @@ public interface BaseDao<T> {
 	public EntityManager getEntityManager();
 	
 	/**
-	 * 获取 SESSION
+	 * 获取 Session
 	 */
 	public Session getSession();
 	
 	/**
-	 * 清除緩存
+	 * 强制与数据库同步
+	 */
+	public void flush();
+
+	/**
+	 * 清除缓存数据
 	 */
 	public void clear();
 	

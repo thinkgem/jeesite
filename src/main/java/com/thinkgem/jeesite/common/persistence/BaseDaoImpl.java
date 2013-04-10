@@ -84,18 +84,26 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	/**
-	 * 获取 SESSION
+	 * 获取 Session
 	 */
 	public Session getSession(){  
 	  return (Session) getEntityManager().getDelegate();
 	}
 
 	/**
-	 * 清除緩存
+	 * 强制与数据库同步
 	 */
-	public void clear(){  
+	public void flush(){
+		getSession().flush();
+	}
+
+	/**
+	 * 清除缓存数据
+	 */
+	public void clear(){ 
 		getSession().clear();
 	}
+	
 	// -------------- QL Query --------------
 
 	/**
