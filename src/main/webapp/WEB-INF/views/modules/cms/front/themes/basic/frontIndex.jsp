@@ -11,7 +11,7 @@
 <body>
     <div class="hero-unit" style="padding-bottom:35px;margin:10px 0;">
       <c:set var="article" value="${fnc:getArticle(2)}"/>
-      <h1>${fns:abbr(article.title,13)}</h1><p></p>
+      <h1>${fns:abbr(article.title,28)}</h1><p></p>
       <p>${fns:abbr(fns:replaceHtml(article.articleData.content),260)}</p>
       <p><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" class="btn btn-primary btn-large">&nbsp;&nbsp;&nbsp;查看详情 &raquo;&nbsp;&nbsp;&nbsp;</a></p>
     </div>

@@ -13,11 +13,11 @@
 	<div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="${ctx}">JeeSite Web</a>
+          <a class="brand" href="${ctx}/index-${site.id}${fns:getUrlSuffix()}" title="${site.title}">${fns:abbr(site.title,18)}</a>
           <div class="nav-collapse">
             <ul id="main_nav" class="nav">
              	<li class="${empty category.id?'active':''}"><a href="${ctx}/index-${site.id}${fns:getUrlSuffix()}"><span>首  页</span></a></li>
-				<c:forEach items="${fnc:getMainNavList(site.id)}" var="category">
+				<c:forEach items="${fnc:getMainNavList(site.id)}" var="category" varStatus="status"><c:if test="${status.index lt 6}">
 					<c:choose>
 		    			<c:when test="${not empty category.href}">
 			    			<c:choose>
@@ -28,7 +28,7 @@
 		    			<c:otherwise><c:set var="url" value="${ctx}/list-${category.id}${fns:getUrlSuffix()}"/></c:otherwise>
 		    		</c:choose>
 		    		<li class="${requestScope.category.id eq category.id||fn:indexOf(requestScope.category.parentIds,category.id) ge 1?'active':''}"><a href="${url}" target="${category.target}"><span>${category.name}</span></a></li>
-		    	</c:forEach>
+		    	</c:if></c:forEach>
             </ul>
             <form class="navbar-search pull-right" action="${ctx}/search" method="get">
               	<input type="text" name="q" maxlength="20" class="search-query span2" placeholder="全站搜索..." value="${q}">
