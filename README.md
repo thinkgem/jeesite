@@ -65,6 +65,10 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ##快速体验
 
+### **地址体验（感谢刘杰提供）：** <http://demo.jeesite.com:1234/jeesite>
+
+### 快速运行
+
 1. 具备运行环境：JDK1.6、Maven3.0、MySql。
 2. 修改src\main\resources\application.properties文件中的数据库设置参数。
 3. 根据修改参数创建对应MySql数据库。
