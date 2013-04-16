@@ -48,7 +48,6 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.thinkgem.jeesite.common.utils.Reflections;
 import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.cms.entity.Article;
 
 /**
  * DAO支持类实现
@@ -401,7 +400,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 */
 	public void createIndex(){
 		try {
-			getFullTextSession().createIndexer(Article.class).startAndWait();
+			getFullTextSession().createIndexer(entityClass).startAndWait();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
