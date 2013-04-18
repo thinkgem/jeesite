@@ -5,9 +5,10 @@
 	<title>菜单管理</title>
 	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treetable.jsp" %>
+	<style type="text/css">.table td i{margin:0 2px;}</style>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#treeTable").treeTable({expandLevel : 5});
+			$("#treeTable").treeTable({expandLevel : 3});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -27,7 +28,7 @@
 		<tr><th>名称</th><th>链接</th><th>排序</th><th>可见</th><th>权限标识</th><shiro:hasPermission name="sys:menu:edit"><th>操作</th></shiro:hasPermission></tr>
 		<c:forEach items="${list}" var="menu">
 			<tr id="${menu.id}" pId="${menu.parent.id ne 1?menu.parent.id:'0'}">
-				<td><a href="${ctx}/sys/menu/form?id=${menu.id}">${menu.name}</a></td>
+				<td><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i><a href="${ctx}/sys/menu/form?id=${menu.id}">${menu.name}</a></td>
 				<td>${menu.href}</td>
 				<td>${menu.sort}</td>
 				<td>${menu.isShow eq 1?'显示':'隐藏'}</td>

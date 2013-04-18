@@ -1,6 +1,6 @@
 .tree_table .default_node, .tree_table .default_active_node {width:16px;height:16px;border: medium none; margin: 0; padding: 0;display: inline-block;}
 .tree_table .default_active_node {cursor: pointer;}
-.tree_table .default_open, .tree_table .default_last_open{background:url(./allbgs.gif) no-repeat 0px 0px;width:16px;}
-.tree_table .default_shut, .tree_table .default_last_shut{background:url(./allbgs.gif) no-repeat -16px 0px;width:16px;}
-.tree_table .default_hover_open, .tree_table .default_hover_last_open{background:url(./allbgs.gif) no-repeat -32px 0px;width:16px;}
-.tree_table .default_hover_shut, .tree_table .default_hover_last_shut{background:url(./allbgs.gif) no-repeat -48px 0px;width:16px;}
+.tree_table .default_open, .tree_table .default_last_open{background:url(./allbgs.gif) no-repeat 0px 1px;width:16px;}
+.tree_table .default_shut, .tree_table .default_last_shut{background:url(./allbgs.gif) no-repeat -16px 1px;width:16px;}
+.tree_table .default_hover_open, .tree_table .default_hover_last_open{background:url(./allbgs.gif) no-repeat -32px 1px;width:16px;}
+.tree_table .default_hover_shut, .tree_table .default_hover_last_shut{background:url(./allbgs.gif) no-repeat -48px 1px;width:16px;}

@@ -148,7 +148,7 @@
 						articleSelectRefresh();
 					});
 					$("#relationButton").click(function(){
-						top.$.jBox.open("iframe:${ctx}/cms/article/selectList?pageSize=8", "添加相关",$(top.document).width()-220,$(top.document).height()-120,{
+						top.$.jBox.open("iframe:${ctx}/cms/article/selectList?pageSize=8", "添加相关",$(top.document).width()-220,$(top.document).height()-180,{
 							buttons:{"确定":true}, loaded:function(h){
 								$(".jbox-content", top.document).css("overflow-y","hidden");
 							}

@@ -61,7 +61,7 @@
 		<div class="control-group">
 			<label class="control-label">图标:</label>
 			<div class="controls">
-				<form:input path="icon" htmlEscape="false" maxlength="50"/>
+				<tags:iconselect id="icon" name="icon" value="${menu.icon}"></tags:iconselect>
 			</div>
 		</div>
 		<div class="control-group">

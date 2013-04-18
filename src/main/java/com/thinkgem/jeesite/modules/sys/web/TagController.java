@@ -38,4 +38,14 @@ public class TagController extends BaseController {
 		return "modules/sys/tagTreeselect";
 	}
 	
+	/**
+	 * 图标选择标签（iconselect.tag）
+	 */
+	@RequiresUser
+	@RequestMapping(value = "iconselect")
+	public String iconselect(HttpServletRequest request, Model model) {
+		model.addAttribute("value", request.getParameter("value"));
+		return "modules/sys/tagIconselect";
+	}
+	
 }
