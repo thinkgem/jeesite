@@ -35,7 +35,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-4-19
  */
 @Service
 @Transactional(readOnly = true)
@@ -98,7 +98,7 @@ public class SystemService extends BaseService {
 		}
 		dc.add(Restrictions.eq("delFlag", User.DEL_FLAG_NORMAL));
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
-			dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code"));
+			dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
 		}
 		return userDao.find(page, dc);
 	}

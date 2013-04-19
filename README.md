@@ -41,7 +41,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 3、Database相关
 
 * ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.1。
-* Connection Pool：BoneCP 0.7
+* Connection Pool：Alibaba Druid 0.2。
 * Bean Validation：Hibernate Validation 4.3。
 * Cache：Ehcache 2.6。
 
@@ -65,16 +65,16 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ##快速体验
 
-### **地址体验（感谢刘杰提供）：** <http://demo.jeesite.com:1234/jeesite>
+### **在线体验（感谢刘杰提供）：** <http://demo.jeesite.com:1234/jeesite>
 
-### 快速运行
+### 本地体验
 
-1. 具备运行环境：JDK1.6、Maven3.0、MySql。
+1. 具备运行环境：JDK1.6、Maven3.0、MySql5。
 2. 修改src\main\resources\application.properties文件中的数据库设置参数。
 3. 根据修改参数创建对应MySql数据库。
-4. 运行bin\resresh-db\refresh-db.bat脚本，导入表结构及演示数据
-5. 运行bin\jetty.bat，启动服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
-6. 最高管理员，用户名：thinkgem 密码：admin
+4. 运行bin\resresh-db\refresh-db.bat脚本，即可导入表结构及演示数据
+5. 运行bin\jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
+6. 最高管理员账号，用户名：thinkgem 密码：admin
 
 ##更多文档
 

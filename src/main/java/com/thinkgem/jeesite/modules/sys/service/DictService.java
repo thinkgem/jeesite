@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Dict;
 /**
  * 字典Service
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-04-19
  */
 @Service
 @Transactional(readOnly = true)
@@ -51,7 +51,7 @@ public class DictService extends BaseService {
 			dc.add(Restrictions.like("desciption", "%"+dict.getDesciption()+"%"));
 		}
 		dc.add(Restrictions.eq("delFlag", Dict.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.asc("type")).addOrder(Order.asc("sort"));
+		dc.addOrder(Order.asc("type")).addOrder(Order.asc("sort")).addOrder(Order.desc("id"));
 		return dictDao.find(page, dc);
 	}
 	

@@ -84,6 +84,20 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   
+  <!-- DruidStatView -->
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    <init-param>
+      <param-name>allow</param-name>
+      <param-value>127.0.0.1</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>DruidStatView</servlet-name>
+      <url-pattern>/druid/*</url-pattern>
+  </servlet-mapping>
+  
   <!-- CKFinder -->
   <servlet>
     <servlet-name>CKFinderConnectorServlet</servlet-name>
