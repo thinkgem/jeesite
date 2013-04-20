@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<html>
+<!DOCTYPE html>
+<html style="overflow-x:hidden;overflow-y:auto;">
 <head>
     <title>图标选择</title>
-	<meta name="decorator" content="default"/>
+	<%@include file="/WEB-INF/views/include/head.jsp" %>
     <style type="text/css">
 		.the-icons {padding:25px 10px 15px;list-style:none;}
 		.the-icons li {float:left;width:22%;line-height:25px;margin:2px 5px;cursor:pointer;}

@@ -207,11 +207,11 @@
 	<!-- 系统部门：编号、父级编号、所有父级编号、归属区域编号、部门编码 、部门名称、备注、删除标记（0：正常；1：删除） -->
 	<sys_office id="1" parent_id="0" parent_ids="0," area_id="1" code="" name="顶级部门" remarks="" />
 		<sys_office id="2" parent_id="1" parent_ids="0,1," area_id="1" code="0001" name="系统管理" remarks="" />
-			<sys_office id="4" parent_id="2" parent_ids="0,1," area_id="1" code="000101" name="系统管理1" remarks="" />
-			<sys_office id="5" parent_id="2" parent_ids="0,1," area_id="1" code="000102" name="系统管理2" remarks="" />
+			<sys_office id="4" parent_id="2" parent_ids="0,1,2," area_id="1" code="000101" name="系统管理1" remarks="" />
+			<sys_office id="5" parent_id="2" parent_ids="0,1,2," area_id="1" code="000102" name="系统管理2" remarks="" />
 		<sys_office id="3" parent_id="1" parent_ids="0,1," area_id="1" code="0002" name="系统维护" remarks="" />
-			<sys_office id="6" parent_id="2" parent_ids="0,1," area_id="1" code="000201" name="系统维护1" remarks="" />
-			<sys_office id="7" parent_id="2" parent_ids="0,1," area_id="1" code="000202" name="系统维护2" remarks="" />
+			<sys_office id="6" parent_id="3" parent_ids="0,1,3," area_id="1" code="000201" name="系统维护1" remarks="" />
+			<sys_office id="7" parent_id="3" parent_ids="0,1,3," area_id="1" code="000202" name="系统维护2" remarks="" />
 	
 	<!-- 系统菜单表：编号、父级编号、名称、链接 、目标、图标、排序（升序）、是否在菜单中显示（1：显示；0：不显示）、权限标识-->
 	<sys_menu id="1" parent_id="0" parent_ids="0," name="顶级菜单" href="" target="" icon="" sort="0" is_show="1" permission="" user_id="1" />
