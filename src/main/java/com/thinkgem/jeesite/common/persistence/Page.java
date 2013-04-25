@@ -24,7 +24,7 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
 /**
  * 分页类
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-3-25
  * @param <T>
  */
 public class Page<T> {
@@ -327,7 +327,7 @@ public class Page<T> {
 	 * @param pageSize
 	 */
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize < 0 ? 10 : pageSize > 500 ? 500 : pageSize;
+		this.pageSize = pageSize <= 0 ? 10 : pageSize > 500 ? 500 : pageSize;
 	}
 
 	/**
