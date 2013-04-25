@@ -44,9 +44,9 @@ import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
 /**
- * 导出Excel文件（导出“XLSX”格式，支持大数据量导出）
+ * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
  * @author ThinkGem
- * @version 2013-03-10
+ * @version 2013-04-21
  */
 public class ExportExcel {
 	
@@ -261,6 +261,21 @@ public class ExportExcel {
 		
 		style = wb.createCellStyle();
 		style.cloneStyleFrom(styles.get("data"));
+		style.setAlignment(CellStyle.ALIGN_LEFT);
+		styles.put("data1", style);
+
+		style = wb.createCellStyle();
+		style.cloneStyleFrom(styles.get("data"));
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		styles.put("data2", style);
+
+		style = wb.createCellStyle();
+		style.cloneStyleFrom(styles.get("data"));
+		style.setAlignment(CellStyle.ALIGN_RIGHT);
+		styles.put("data3", style);
+		
+		style = wb.createCellStyle();
+		style.cloneStyleFrom(styles.get("data"));
 //		style.setWrapText(true);
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		style.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
@@ -304,15 +319,7 @@ public class ExportExcel {
 	 */
 	public Cell addCell(Row row, int column, Object val, int align, Class<?> fieldType){
 		Cell cell = row.createCell(column);
-		CellStyle style = wb.createCellStyle();
-		style.cloneStyleFrom(styles.get("data"));
-		if (align == 1){
-			style.setAlignment(CellStyle.ALIGN_LEFT);
-		}else if (align == 2){
-			style.setAlignment(CellStyle.ALIGN_CENTER);
-		}else if (align == 3){
-			style.setAlignment(CellStyle.ALIGN_RIGHT);
-		}
+		CellStyle style = styles.get("data"+(align>=1&&align<=3?align:""));
 		try {
 			if (val == null){
 				cell.setCellValue("");
@@ -441,10 +448,10 @@ public class ExportExcel {
 //		}
 //		
 //		List<List<String>> dataList = Lists.newArrayList();
-//		for (int i = 1; i <=5000; i++) {
+//		for (int i = 1; i <=1000000; i++) {
 //			dataList.add(dataRowList);
 //		}
-//	    
+//
 //		ExportExcel ee = new ExportExcel("表格标题", headerList);
 //		
 //		for (int i = 0; i < dataList.size(); i++) {
@@ -457,6 +464,8 @@ public class ExportExcel {
 //		ee.writeFile("target/export.xlsx");
 //
 //		ee.dispose();
+//		
+//		log.debug("Export success.");
 //		
 //	}
 
