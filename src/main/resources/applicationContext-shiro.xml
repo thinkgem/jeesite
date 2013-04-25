@@ -13,7 +13,7 @@
 	<!-- 定义 Shiro 主要业务对象 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="systemRealm" />
-		<property name="cacheManager" ref="shiroCacheManager" />
+		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
 	<!-- 项目自定义的 Realm （depend-on用来表示一个Bean的实例化依靠另一个Bean先实例化）。-->
@@ -37,8 +37,8 @@
 	</bean>
 
 	<!-- 用户授权信息Cache, 采用EhCache -->
-	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-		<property name="cacheManagerConfigFile" value="classpath:cache/ehcache-shiro.xml"/>
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:cache/ehcache.xml"/>
 	</bean>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->

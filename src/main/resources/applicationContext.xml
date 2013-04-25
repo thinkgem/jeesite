@@ -63,11 +63,6 @@
 	<!-- 配置 JSR303 Bean Validator 定义 -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
-	<!-- 自定义 Ehchche -->
-	<bean id="customEhcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:cache/ehcache-custom.xml" />
-	</bean>
-	
 	<!-- Production 环境 -->
  	<beans profile="production">
  		

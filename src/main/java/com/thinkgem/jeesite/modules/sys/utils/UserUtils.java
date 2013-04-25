@@ -9,15 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
-import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
@@ -31,7 +27,7 @@ import com.thinkgem.jeesite.modules.sys.security.SystemRealm.Principal;
 /**
  * 用户工具类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-4-21
  */
 @Service
 public class UserUtils implements ApplicationContextAware {
@@ -40,7 +36,6 @@ public class UserUtils implements ApplicationContextAware {
 	private static MenuDao menuDao;
 	private static AreaDao areaDao;
 	private static OfficeDao officeDao;
-	private static CategoryDao categoryDao;
 	
 	public static User getUser(){
 		User user = (User)getCache("user");
@@ -110,40 +105,12 @@ public class UserUtils implements ApplicationContextAware {
 		return officeList;
 	}
 	
-	public static List<Category> getCategoryList(){
-		@SuppressWarnings("unchecked")
-		List<Category> categoryList = (List<Category>)getCache("categoryList");
-		if (categoryList == null){
-			User user = getUser();
-			if (user.isAdmin()){
-				categoryList = categoryDao.findAllList();
-			}else{
-				categoryList = categoryDao.findByUserId(user.getId());
-			}
-			putCache("categoryList", categoryList);
-		}
-		return categoryList;
-	}
-	
-	public static List<Category> getCategoryListByModule(String module){
-		List<Category> list = Lists.newArrayList();
-		if (StringUtils.isNotBlank(module)){
-			for (Category category : getCategoryList()){
-				if (module.equals(category.getModule()) || "".equals(category.getModule())){
-					list.add(category);
-				}
-			}
-		}
-		return list;
-	}
-	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext){
 		userDao = (UserDao)applicationContext.getBean("userDao");
 		menuDao = (MenuDao)applicationContext.getBean("menuDao");
 		areaDao = (AreaDao)applicationContext.getBean("areaDao");
 		officeDao = (OfficeDao)applicationContext.getBean("officeDao");
-		categoryDao = (CategoryDao)applicationContext.getBean("categoryDao");
 	}
 	
 	// ============== User Cache ==============

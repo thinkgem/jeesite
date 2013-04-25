@@ -24,7 +24,6 @@
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="1000" />
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.menuList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="1000" />
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.userList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="1000" />
-	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.categoryList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="1000" />
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="10000" />
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User.roleList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="10000" />

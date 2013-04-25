@@ -24,12 +24,13 @@ import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 栏目Service
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-4-21
  */
 @Service
 @Transactional(readOnly = true)
@@ -45,32 +46,35 @@ public class CategoryService extends BaseService {
 		return categoryDao.findOne(id);
 	}
 	
-	public List<Category> findByUser(boolean isCurrentSite){
-		List<Category> list = UserUtils.getCategoryList();
+	@SuppressWarnings("unchecked")
+	public List<Category> findByUser(boolean isCurrentSite, String module){
+		List<Category> list = (List<Category>)UserUtils.getCache("categoryList");
+		if (list == null){
+			User user = UserUtils.getUser();
+			if (user.isAdmin()){
+				list = categoryDao.findAllList();
+			}else{
+				list = categoryDao.findByUserId(user.getId());
+			}
+			UserUtils.putCache("categoryList", list);
+		}
 		if (isCurrentSite){
 			List<Category> categoryList = Lists.newArrayList(); 
 			for (Category e : list){
 				if (Category.isRoot(e.getId()) || (e.getSite()!=null && e.getSite().getId() !=null 
 						&& e.getSite().getId().longValue() == Site.getCurrentSiteId())){
-					categoryList.add(e);
+					if (StringUtils.isNotEmpty(module)){
+						if (module.equals(e.getModule()) || "".equals(e.getModule())){
+							categoryList.add(e);
+						}
+					}else{
+						categoryList.add(e);
+					}
 				}
 			}
 			return categoryList;
-		}else{
-			return list;
 		}
-	}
-
-	public List<Category> findByUserAndModule(String module){
-		List<Category> categoryList = Lists.newArrayList(); 
-		List<Category> list = UserUtils.getCategoryListByModule(module);
-		for (Category e : list){
-			if (Category.isRoot(e.getId()) || (e.getSite()!=null && e.getSite().getId() !=null 
-					&& e.getSite().getId().longValue() == Site.getCurrentSiteId())){
-				categoryList.add(e);
-			}
-		}
-		return categoryList;
+		return list;
 	}
 
 	public List<Category> findByParentId(Long parentId, Long siteId){

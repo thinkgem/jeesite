@@ -55,9 +55,6 @@
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.userList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="1000">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
 	</cache>
-	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.categoryList" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="1000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
-	</cache>
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User" maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="10000">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />

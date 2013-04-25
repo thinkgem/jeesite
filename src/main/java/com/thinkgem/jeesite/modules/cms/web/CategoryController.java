@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 /**
  * 栏目Controller
  * @author ThinkGem
- * @version 2013-3-23
+ * @version 2013-4-21
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/cms/category")
@@ -55,7 +54,7 @@ public class CategoryController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(Category category, Model model) {
 		List<Category> list = Lists.newArrayList();
-		List<Category> sourcelist = categoryService.findByUser(true);
+		List<Category> sourcelist = categoryService.findByUser(true, null);
 		Category.sortList(list, sourcelist, 1L);
         model.addAttribute("list", list);
 		return "modules/cms/categoryList";
@@ -101,12 +100,7 @@ public class CategoryController extends BaseController {
 	public String treeData(String module, @RequestParam(required=false) Long extId, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<Category> list = Lists.newArrayList();
-		if (StringUtils.isNotBlank(module)){
-			list = categoryService.findByUserAndModule(module);
-		}else{
-			list = categoryService.findByUser(true);
-		}
+		List<Category> list = categoryService.findByUser(true, module);
 		for (int i=0; i<list.size(); i++){
 			Category e = list.get(i);
 			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){

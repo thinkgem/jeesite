@@ -5,9 +5,11 @@
  */
 package com.thinkgem.jeesite.common.utils;
 
+import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,14 @@ import org.springframework.stereotype.Service;
 /**
  * Cache工具类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-4-23
  */
 @Service
 public class CacheUtils implements ApplicationContextAware {
 
 	private static final String SYS_CACHE = "sysCache";
 	
-	private static CacheManager customEhcacheManager;
+	private static CacheManager cacheManager;
 
 	public static Object get(String key) {
 		return get(SYS_CACHE, key);
@@ -37,22 +39,38 @@ public class CacheUtils implements ApplicationContextAware {
 	}
 	
 	public static Object get(String cacheName, String key) {
-		Element element = customEhcacheManager.getCache(cacheName).get(key);
+		Element element = getCache(cacheName).get(key);
 		return element==null?null:element.getObjectValue();
 	}
 
 	public static void put(String cacheName, String key, Object value) {
 		Element element = new Element(key, value);
-		customEhcacheManager.getCache(cacheName).put(element);
+		getCache(cacheName).put(element);
 	}
 
 	public static void remove(String cacheName, String key) {
-		customEhcacheManager.getCache(cacheName).remove(key);
+		getCache(cacheName).remove(key);
+	}
+	
+	/**
+	 * 获得一个Cache，没有则创建一个。
+	 * @param cacheName
+	 * @return
+	 */
+	private static Cache getCache(String cacheName){
+		Cache cache = cacheManager.getCache(cacheName);
+		if (cache == null){
+			cacheManager.addCache(cacheName);
+			cache = cacheManager.getCache(cacheName);
+			cache.getCacheConfiguration().setEternal(true);
+		}
+		return cache;
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext){
-		customEhcacheManager = (CacheManager)applicationContext.getBean("customEhcacheManager");
+		EhCacheManager ehCacheManager = (EhCacheManager)applicationContext.getBean("cacheManager");
+		cacheManager = ehCacheManager.getCacheManager();
 	}
 	
 }

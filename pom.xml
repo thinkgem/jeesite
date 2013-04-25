@@ -557,7 +557,7 @@
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>
-					<downloadSources>true</downloadSources>
+					<downloadSources>false</downloadSources>
 					<downloadJavadocs>false</downloadJavadocs>
 					<wtpversion>2.0</wtpversion>
 					<!-- 增加设置项目encoding的文件 -->

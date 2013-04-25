@@ -27,7 +27,7 @@ import com.thinkgem.jeesite.modules.sys.service.SystemService;
 /**
  * 角色Controller
  * @author ThinkGem
- * @version 2013-3-23
+ * @version 2013-4-21
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/sys/role")
@@ -60,7 +60,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Model model) {
 		model.addAttribute("menuList", systemService.findAllMenu());
-		model.addAttribute("categoryList", categoryService.findByUser(false));
+		model.addAttribute("categoryList", categoryService.findByUser(false, null));
 		return "modules/sys/roleForm";
 	}
 	

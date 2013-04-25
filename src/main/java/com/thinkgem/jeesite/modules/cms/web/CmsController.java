@@ -18,7 +18,7 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 /**
  * 内容管理Controller
  * @author ThinkGem
- * @version 2013-3-23
+ * @version 2013-4-21
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/cms")
@@ -36,7 +36,7 @@ public class CmsController extends BaseController {
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "tree")
 	public String tree(Model model) {
-		model.addAttribute("categoryList", categoryService.findByUser(true));
+		model.addAttribute("categoryList", categoryService.findByUser(true, null));
 		return "modules/cms/cmsTree";
 	}
 	
