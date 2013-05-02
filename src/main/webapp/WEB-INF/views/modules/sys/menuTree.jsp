@@ -33,7 +33,7 @@
 		    <div id="collapse${menu.id}" class="accordion-body collapse ${firstMenu?'in':''}">
 				<div class="accordion-inner">
 					<ul class="nav nav-list"><c:forEach items="${menuList}" var="menuChild"><c:if test="${menuChild.parent.id eq menu.id&&menuChild.isShow eq 1}">
-						<li><a href="${fn:indexOf(menuChild.href, '://') eq -1?ctx:''}${menuChild.href}" target="${not empty menuChild.target?menuChild.target:'mainFrame'}" ><i class="icon-${not empty menuChild.icon?menuChild.icon:'circle-arrow-right'}"></i>&nbsp;&nbsp;${menuChild.name}</a></li>
+						<li><a href="${fn:indexOf(menuChild.href, '://') eq -1?ctx:''}${not empty menuChild.href?menuChild.href:'/404'}" target="${not empty menuChild.target?menuChild.target:'mainFrame'}" ><i class="icon-${not empty menuChild.icon?menuChild.icon:'circle-arrow-right'}"></i>&nbsp;&nbsp;${menuChild.name}</a></li>
 					<c:set var="firstMenu" value="false"/></c:if></c:forEach></ul>
 				</div>
 		    </div>

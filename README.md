@@ -40,9 +40,9 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 3、Database相关
 
-* ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.1。
+* ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.2。
 * Connection Pool：Alibaba Druid 0.2。
-* Bean Validation：Hibernate Validation 4.3。
+* Bean Validation：Hibernate Validation 5.0。
 * Cache：Ehcache 2.6。
 
 4、Tools 相关

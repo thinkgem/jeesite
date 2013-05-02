@@ -177,8 +177,8 @@
 	<sys_dict id="13" value="2" label="部门经理" type="sys_user_type" desciption="用户类型" sort="20" del_flag="0" />
 	<sys_dict id="14" value="3" label="普通用户" type="sys_user_type" desciption="用户类型" sort="30" del_flag="0" />
 	<sys_dict id="15" value="basic" label="基础主题" type="cms_theme" desciption="站点主题" sort="10" del_flag="0" />
-	<sys_dict id="16" value="blue" label="蓝色主题" type="cms_theme" desciption="站点主题" sort="20" del_flag="0" />
-	<sys_dict id="17" value="red" label="红色主题" type="cms_theme" desciption="站点主题" sort="30" del_flag="0" />
+	<sys_dict id="16" value="blue" label="蓝色主题" type="cms_theme" desciption="站点主题" sort="20" del_flag="1" />
+	<sys_dict id="17" value="red" label="红色主题" type="cms_theme" desciption="站点主题" sort="30" del_flag="1" />
 	<sys_dict id="18" value="article" label="文章模型" type="cms_module" desciption="栏目模型" sort="10" del_flag="0" />
 	<sys_dict id="19" value="picture" label="图片模型" type="cms_module" desciption="栏目模型" sort="20" del_flag="1" />
 	<sys_dict id="20" value="download" label="下载模型" type="cms_module" desciption="栏目模型" sort="30" del_flag="1" />
