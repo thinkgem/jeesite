@@ -10,10 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.UnavailableSecurityManagerException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
@@ -116,8 +119,12 @@ public class UserUtils implements ApplicationContextAware {
 	// ============== User Cache ==============
 	
 	public static Object getCache(String key) {
+		return getCache(key, null);
+	}
+	
+	public static Object getCache(String key, Object defaultValue) {
 		Object obj = getCacheMap().get(key);
-		return obj==null?null:obj;
+		return obj==defaultValue?defaultValue:obj;
 	}
 
 	public static void putCache(String key, Object value) {
@@ -129,7 +136,13 @@ public class UserUtils implements ApplicationContextAware {
 	}
 	
 	private static Map<String, Object> getCacheMap(){
-		Principal principal = (Principal)SecurityUtils.getSubject().getPrincipal();
-		return principal!=null?principal.getCacheMap():new HashMap<String, Object>();
+		Map<String, Object> map = Maps.newHashMap();
+		try{
+			Subject subject = SecurityUtils.getSubject();
+			Principal principal = (Principal)subject.getPrincipal();
+			return principal!=null?principal.getCacheMap():map;
+		}catch (UnavailableSecurityManagerException e) {
+			return map;
+		}
 	}
 }

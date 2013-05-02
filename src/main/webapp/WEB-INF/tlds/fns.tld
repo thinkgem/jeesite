@@ -77,8 +77,8 @@
     <description>获取当前用户缓存</description>
     <name>getCache</name>
     <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
-    <function-signature>java.lang.Object getCache(java.lang.String)</function-signature>
-    <example>${fns:getCache('name')}</example>  
+    <function-signature>java.lang.Object getCache(java.lang.String, java.lang.Object)</function-signature>
+    <example>${fns:getCache(cacheName, defaultValue)}</example>  
   </function>
 	
   <!-- DictUtils -->
