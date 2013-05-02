@@ -16,13 +16,12 @@
 		<!-- 依赖库的版本定义 -->
 		<spring.version>3.2.2.RELEASE</spring.version>
 		<spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version>
-		<hibernate.version>4.1.10.Final</hibernate.version>
-		<hibernate-search.version>4.2.0.Final</hibernate-search.version>
+		<hibernate.version>4.2.0.Final</hibernate.version>
 		<druid.version>0.2.16</druid.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<shiro.version>1.2.1</shiro.version>
 		<ehcache.version>2.6.5</ehcache.version>
-		<hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
+		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<jackson.version>2.1.4</jackson.version>
 		<slf4j.version>1.7.2</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -48,7 +47,7 @@
 		
 		<!-- Plugin -->
 		<jdk.version>1.6</jdk.version>
-		<jetty.version>7.6.9.v20130131</jetty.version>
+		<jetty.version>7.6.10.v20130312</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
 	</properties>
@@ -213,12 +212,10 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
-		<!-- hibernate search -->
 		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-search</artifactId>
-		    <version>${hibernate-search.version}</version>
+		    <version>${hibernate.version}</version>
 		</dependency>
         <!-- 中文分词 -->
 		<dependency>
@@ -499,28 +496,19 @@
 		
 		<!-- TEST begin -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>1.9.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.dbunit</groupId>
 			<artifactId>dbunit</artifactId>
 			<version>2.4.8</version>
-			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- TEST end -->
 		

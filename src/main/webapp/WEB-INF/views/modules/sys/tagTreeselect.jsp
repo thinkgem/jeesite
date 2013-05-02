@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html style="overflow-x:hidden;overflow-y:auto;">
 <head>
-	<title>栏目列表</title>
+	<title>数据选择</title>
 	<%@include file="/WEB-INF/views/include/head.jsp" %>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<script type="text/javascript">

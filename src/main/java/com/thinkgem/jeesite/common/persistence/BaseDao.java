@@ -71,7 +71,7 @@ public interface BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-	public int update(String sqlString, Object... parameter);
+	public int update(String qlString, Object... parameter);
 	
 	/**
 	 * 创建 QL 查询对象
@@ -81,7 +81,7 @@ public interface BaseDao<T> {
 	 */
 	public Query createQuery(String qlString, Object... parameter);
 	
-	// -------------- QL Query --------------
+	// -------------- SQL Query --------------
 
     /**
 	 * SQL 分页查询
@@ -90,7 +90,7 @@ public interface BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-    public Page<T> findBySql(Page<T> page, String qlString, Object... parameter);
+    public Page<T> findBySql(Page<T> page, String sqlString, Object... parameter);
 
 	/**
 	 * SQL 查询

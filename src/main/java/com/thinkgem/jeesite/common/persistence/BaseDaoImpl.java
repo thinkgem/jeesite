@@ -150,12 +150,12 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     
 	/**
 	 * QL 更新
-	 * @param sqlString
+	 * @param qlString
 	 * @param parameter
 	 * @return
 	 */
-	public int update(String sqlString, Object... parameter){
-		return createQuery(sqlString, parameter).executeUpdate();
+	public int update(String qlString, Object... parameter){
+		return createQuery(qlString, parameter).executeUpdate();
 	}
 	
 	/**
@@ -175,22 +175,22 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     /**
 	 * SQL 分页查询
 	 * @param page
-	 * @param qlString
+	 * @param sqlString
 	 * @param parameter
 	 * @return
 	 */
     @SuppressWarnings("unchecked")
-	public Page<T> findBySql(Page<T> page, String qlString, Object... parameter){
+	public Page<T> findBySql(Page<T> page, String sqlString, Object... parameter){
 		// get count
     	if (!page.isDisabled() && !page.isNotCount()){
-	        String countQlString = "select count(*)" + removeSelect(removeOrders(qlString));  
+	        String countQlString = "select count(*)" + removeSelect(removeOrders(sqlString));  
 	        page.setCount((Long)createSqlQuery(countQlString, parameter).getSingleResult());
 			if (page.getCount() < 1) {
 				return page;
 			}
     	}
     	// order by
-    	String ql = qlString;
+    	String ql = sqlString;
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			ql += " order by " + page.getOrderBy();
 		}
