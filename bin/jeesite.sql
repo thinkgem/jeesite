@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50610
 File Encoding         : 65001
 
-Date: 2013-05-10 15:00:12
+Date: 2013-05-10 15:41:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1025,16 +1025,16 @@ INSERT INTO `cms_site` VALUES ('2', '子站点测试', 'JeeSite Subsite', 'JeeSi
 DROP TABLE IF EXISTS `oa_leave`;
 CREATE TABLE `oa_leave` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `process_instance_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `leave_type` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `reason` varchar(2000) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `apply_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `reality_start_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `reality_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `create_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `process_instance_id` varchar(64) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `end_time` timestamp NULL DEFAULT NULL,
+  `leave_type` varchar(20) DEFAULT NULL,
+  `reason` varchar(2000) DEFAULT NULL,
+  `apply_time` timestamp NULL DEFAULT NULL,
+  `reality_start_time` timestamp NULL DEFAULT NULL,
+  `reality_end_time` timestamp NULL DEFAULT NULL,
+  `create_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
@@ -1044,7 +1044,7 @@ CREATE TABLE `oa_leave` (
 INSERT INTO `oa_leave` VALUES ('1', '201', '2', '2013-05-10 11:39:52', '2013-05-10 11:39:52', '公休', '爱爱爱', '2013-05-10 11:39:52', '2013-05-10 12:18:00', '2013-05-25 12:18:00', '2013-05-10 11:39:52');
 INSERT INTO `oa_leave` VALUES ('2', '401', '2', '2013-05-10 14:07:19', '2013-05-10 14:07:13', '公休', '大秦网', '2013-05-10 14:07:13', '2013-05-10 14:06:00', '2013-05-10 14:06:00', '2013-05-10 14:07:19');
 INSERT INTO `oa_leave` VALUES ('3', '425', '2', '2013-05-10 14:23:10', '2013-05-10 14:22:56', '婚假', '婚假', '2013-05-10 14:22:56', '2013-05-10 14:22:56', '2013-05-10 14:22:56', '2013-05-10 14:23:10');
-INSERT INTO `oa_leave` VALUES ('4', '444', '2', '2013-05-10 06:28:21', '2013-05-10 06:28:16', 'null', '2525', '2013-05-10 14:28:16', '2013-05-10 14:28:16', '2013-05-10 14:28:16', '2013-05-10 14:28:21');
+INSERT INTO `oa_leave` VALUES ('4', '444', '2', '2013-05-10 15:12:22', '2013-05-10 06:28:16', '婚假', '2525', '2013-05-10 14:28:16', '2013-05-10 14:28:16', '2013-05-10 14:28:16', '2013-05-10 15:12:22');
 
 -- ----------------------------
 -- Table structure for `sys_area`
@@ -1577,7 +1577,7 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', '1', '1', 'thinkgem', '348b421b2de94c46835881fdb595112f378bd4811bdf2e2dc5aa822a', 'Thinkgem', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', '0:0:0:0:0:0:0:1', '2013-05-10 13:38:48');
-INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032', '管理员', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', '168.192.1.254', '2013-05-10 14:59:29');
+INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032', '管理员', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', '168.192.1.254', '2013-05-10 15:31:07');
 INSERT INTO `sys_user` VALUES ('3', '2', '2', 'user', 'c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c', '用户', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', null, null);
 INSERT INTO `sys_user` VALUES ('4', '3', '3', 'user2', 'c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c', '用户2', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', null, null);
 INSERT INTO `sys_user` VALUES ('5', '3', '3', 'user3', 'c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c', '用户3', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', null, null);
