@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 20mysql
+Source Server         : localmysql
 Source Server Version : 50610
-Source Host           : 117.40.139.3:3316
+Source Host           : localhost:3306
 Source Database       : jeesite
 
 Target Server Type    : MYSQL
 Target Server Version : 50610
 File Encoding         : 65001
 
-Date: 2013-05-10 13:41:48
+Date: 2013-05-10 15:00:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,7 +51,7 @@ CREATE TABLE `act_ge_property` (
 -- ----------------------------
 -- Records of act_ge_property
 -- ----------------------------
-INSERT INTO `act_ge_property` VALUES ('next.dbid', '401', '5');
+INSERT INTO `act_ge_property` VALUES ('next.dbid', '501', '6');
 INSERT INTO `act_ge_property` VALUES ('schema.history', 'create(5.12)', '1');
 INSERT INTO `act_ge_property` VALUES ('schema.version', '5.12', '1');
 
@@ -90,6 +90,25 @@ INSERT INTO `act_hi_actinst` VALUES ('304', 'leave:1:4', '201', '201', 'hrAudit'
 INSERT INTO `act_hi_actinst` VALUES ('309', 'leave:1:4', '201', '201', 'exclusivegateway6', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 12:18:12', '2013-05-10 12:18:12', '0');
 INSERT INTO `act_hi_actinst` VALUES ('310', 'leave:1:4', '201', '201', 'reportBack', '311', null, '销假', 'userTask', '2', '2013-05-10 12:18:12', '2013-05-10 12:18:19', '7557');
 INSERT INTO `act_hi_actinst` VALUES ('316', 'leave:1:4', '201', '201', 'endevent1', null, null, 'End', 'endEvent', null, '2013-05-10 12:18:19', '2013-05-10 12:18:19', '0');
+INSERT INTO `act_hi_actinst` VALUES ('405', 'leave:1:4', '401', '401', 'startevent1', null, null, 'Start', 'startEvent', null, '2013-05-10 14:07:16', '2013-05-10 14:07:16', '147');
+INSERT INTO `act_hi_actinst` VALUES ('406', 'leave:1:4', '401', '401', 'deptLeaderAudit', '407', null, '部门领导审批', 'userTask', '2', '2013-05-10 14:07:16', '2013-05-10 14:07:54', '38354');
+INSERT INTO `act_hi_actinst` VALUES ('411', 'leave:1:4', '401', '401', 'exclusivegateway5', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 14:07:54', '2013-05-10 14:07:54', '1');
+INSERT INTO `act_hi_actinst` VALUES ('412', 'leave:1:4', '401', '401', 'hrAudit', '413', null, '人事审批', 'userTask', '2', '2013-05-10 14:07:54', '2013-05-10 14:08:07', '13919');
+INSERT INTO `act_hi_actinst` VALUES ('417', 'leave:1:4', '401', '401', 'exclusivegateway6', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 14:08:07', '2013-05-10 14:08:07', '0');
+INSERT INTO `act_hi_actinst` VALUES ('418', 'leave:1:4', '401', '401', 'reportBack', '419', null, '销假', 'userTask', '2', '2013-05-10 14:08:07', '2013-05-10 14:08:25', '18211');
+INSERT INTO `act_hi_actinst` VALUES ('424', 'leave:1:4', '401', '401', 'endevent1', null, null, 'End', 'endEvent', null, '2013-05-10 14:08:25', '2013-05-10 14:08:25', '0');
+INSERT INTO `act_hi_actinst` VALUES ('429', 'leave:1:4', '425', '425', 'startevent1', null, null, 'Start', 'startEvent', null, '2013-05-10 14:22:57', '2013-05-10 14:22:57', '1');
+INSERT INTO `act_hi_actinst` VALUES ('430', 'leave:1:4', '425', '425', 'deptLeaderAudit', '431', null, '部门领导审批', 'userTask', '2', '2013-05-10 14:22:57', '2013-05-10 14:27:16', '259639');
+INSERT INTO `act_hi_actinst` VALUES ('435', 'leave:1:4', '425', '425', 'exclusivegateway5', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 14:27:16', '2013-05-10 14:27:16', '0');
+INSERT INTO `act_hi_actinst` VALUES ('436', 'leave:1:4', '425', '425', 'hrAudit', '437', null, '人事审批', 'userTask', '2', '2013-05-10 14:27:16', '2013-05-10 14:27:27', '11391');
+INSERT INTO `act_hi_actinst` VALUES ('441', 'leave:1:4', '425', '425', 'exclusivegateway6', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 14:27:27', '2013-05-10 14:27:27', '0');
+INSERT INTO `act_hi_actinst` VALUES ('442', 'leave:1:4', '425', '425', 'reportBack', '443', null, '销假', 'userTask', '2', '2013-05-10 14:27:27', null, null);
+INSERT INTO `act_hi_actinst` VALUES ('448', 'leave:1:4', '444', '444', 'startevent1', null, null, 'Start', 'startEvent', null, '2013-05-10 14:28:16', '2013-05-10 14:28:16', '0');
+INSERT INTO `act_hi_actinst` VALUES ('449', 'leave:1:4', '444', '444', 'deptLeaderAudit', '450', null, '部门领导审批', 'userTask', '2', '2013-05-10 14:28:16', '2013-05-10 14:52:59', '1483550');
+INSERT INTO `act_hi_actinst` VALUES ('456', 'leave:1:4', '444', '444', 'exclusivegateway5', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 14:52:59', '2013-05-10 14:52:59', '0');
+INSERT INTO `act_hi_actinst` VALUES ('457', 'leave:1:4', '444', '444', 'modifyApply', '458', null, '调整申请', 'userTask', '2', '2013-05-10 14:52:59', '2013-05-10 14:53:16', '17590');
+INSERT INTO `act_hi_actinst` VALUES ('469', 'leave:1:4', '444', '444', 'exclusivegateway7', null, null, 'Exclusive Gateway', 'exclusiveGateway', null, '2013-05-10 14:53:16', '2013-05-10 14:53:16', '0');
+INSERT INTO `act_hi_actinst` VALUES ('470', 'leave:1:4', '444', '444', 'deptLeaderAudit', '471', null, '部门领导审批', 'userTask', '2', '2013-05-10 14:53:16', null, null);
 
 -- ----------------------------
 -- Table structure for `act_hi_attachment`
@@ -170,6 +189,22 @@ INSERT INTO `act_hi_detail` VALUES ('302', 'VariableUpdate', '201', '201', null,
 INSERT INTO `act_hi_detail` VALUES ('308', 'VariableUpdate', '201', '201', null, '304', 'hrPass', 'boolean', '0', '2013-05-10 12:18:12', null, null, '1', null, null);
 INSERT INTO `act_hi_detail` VALUES ('313', 'VariableUpdate', '201', '201', null, '310', 'realityEndTime', 'date', '0', '2013-05-10 12:18:19', null, null, '1369455480000', null, null);
 INSERT INTO `act_hi_detail` VALUES ('315', 'VariableUpdate', '201', '201', null, '310', 'realityStartTime', 'date', '0', '2013-05-10 12:18:19', null, null, '1368159480000', null, null);
+INSERT INTO `act_hi_detail` VALUES ('403', 'VariableUpdate', '401', '401', null, null, 'applyUserId', 'string', '0', '2013-05-10 14:07:16', null, null, null, '2', null);
+INSERT INTO `act_hi_detail` VALUES ('410', 'VariableUpdate', '401', '401', null, '406', 'deptLeaderPass', 'boolean', '0', '2013-05-10 14:07:54', null, null, '1', null, null);
+INSERT INTO `act_hi_detail` VALUES ('416', 'VariableUpdate', '401', '401', null, '412', 'hrPass', 'boolean', '0', '2013-05-10 14:08:07', null, null, '1', null, null);
+INSERT INTO `act_hi_detail` VALUES ('421', 'VariableUpdate', '401', '401', null, '418', 'realityEndTime', 'date', '0', '2013-05-10 14:08:24', null, null, '1368165960000', null, null);
+INSERT INTO `act_hi_detail` VALUES ('423', 'VariableUpdate', '401', '401', null, '418', 'realityStartTime', 'date', '0', '2013-05-10 14:08:24', null, null, '1368165960000', null, null);
+INSERT INTO `act_hi_detail` VALUES ('427', 'VariableUpdate', '425', '425', null, null, 'applyUserId', 'string', '0', '2013-05-10 14:22:57', null, null, null, '2', null);
+INSERT INTO `act_hi_detail` VALUES ('434', 'VariableUpdate', '425', '425', null, '430', 'deptLeaderPass', 'boolean', '0', '2013-05-10 14:27:16', null, null, '1', null, null);
+INSERT INTO `act_hi_detail` VALUES ('440', 'VariableUpdate', '425', '425', null, '436', 'hrPass', 'boolean', '0', '2013-05-10 14:27:27', null, null, '1', null, null);
+INSERT INTO `act_hi_detail` VALUES ('446', 'VariableUpdate', '444', '444', null, null, 'applyUserId', 'string', '0', '2013-05-10 14:28:16', null, null, null, '2', null);
+INSERT INTO `act_hi_detail` VALUES ('453', 'VariableUpdate', '444', '444', null, '449', 'leaderBackReason', 'string', '0', '2013-05-10 14:52:59', null, null, null, 'wwww', null);
+INSERT INTO `act_hi_detail` VALUES ('455', 'VariableUpdate', '444', '444', null, '449', 'deptLeaderPass', 'boolean', '0', '2013-05-10 14:52:59', null, null, '0', null, null);
+INSERT INTO `act_hi_detail` VALUES ('460', 'VariableUpdate', '444', '444', null, '457', 'startTime', 'date', '0', '2013-05-10 14:53:16', null, null, '1368138501000', null, null);
+INSERT INTO `act_hi_detail` VALUES ('462', 'VariableUpdate', '444', '444', null, '457', 'reason', 'string', '0', '2013-05-10 14:53:16', null, null, null, '2525', null);
+INSERT INTO `act_hi_detail` VALUES ('464', 'VariableUpdate', '444', '444', null, '457', 'reApply', 'boolean', '0', '2013-05-10 14:53:16', null, null, '1', null, null);
+INSERT INTO `act_hi_detail` VALUES ('466', 'VariableUpdate', '444', '444', null, '457', 'endTime', 'date', '0', '2013-05-10 14:53:16', null, null, '1368138496000', null, null);
+INSERT INTO `act_hi_detail` VALUES ('468', 'VariableUpdate', '444', '444', null, '457', 'leaveType', 'string', '0', '2013-05-10 14:53:16', null, null, null, 'null', null);
 
 -- ----------------------------
 -- Table structure for `act_hi_procinst`
@@ -199,6 +234,9 @@ CREATE TABLE `act_hi_procinst` (
 -- Records of act_hi_procinst
 -- ----------------------------
 INSERT INTO `act_hi_procinst` VALUES ('201', '201', '1', 'leave:1:4', '2013-05-10 11:49:20', '2013-05-10 12:18:19', '1739559', '2', 'startevent1', 'endevent1', null, null);
+INSERT INTO `act_hi_procinst` VALUES ('401', '401', '2', 'leave:1:4', '2013-05-10 14:07:16', '2013-05-10 14:08:25', '69212', '2', 'startevent1', 'endevent1', null, null);
+INSERT INTO `act_hi_procinst` VALUES ('425', '425', '3', 'leave:1:4', '2013-05-10 14:22:57', null, null, '2', 'startevent1', null, null, null);
+INSERT INTO `act_hi_procinst` VALUES ('444', '444', '4', 'leave:1:4', '2013-05-10 14:28:16', null, null, '2', 'startevent1', null, null, null);
 
 -- ----------------------------
 -- Table structure for `act_hi_taskinst`
@@ -232,6 +270,15 @@ CREATE TABLE `act_hi_taskinst` (
 INSERT INTO `act_hi_taskinst` VALUES ('207', 'leave:1:4', 'deptLeaderAudit', '201', '201', '部门领导审批', null, null, null, '2', '2013-05-10 11:49:20', '2013-05-10 11:59:38', '2013-05-10 12:18:07', '1727440', 'completed', '50', null, null);
 INSERT INTO `act_hi_taskinst` VALUES ('305', 'leave:1:4', 'hrAudit', '201', '201', '人事审批', null, null, null, '2', '2013-05-10 12:18:07', '2013-05-10 12:18:10', '2013-05-10 12:18:12', '5477', 'completed', '50', null, null);
 INSERT INTO `act_hi_taskinst` VALUES ('311', 'leave:1:4', 'reportBack', '201', '201', '销假', null, null, null, '2', '2013-05-10 12:18:12', null, '2013-05-10 12:18:19', '7554', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('407', 'leave:1:4', 'deptLeaderAudit', '401', '401', '部门领导审批', null, null, null, '2', '2013-05-10 14:07:16', '2013-05-10 14:07:43', '2013-05-10 14:07:54', '38311', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('413', 'leave:1:4', 'hrAudit', '401', '401', '人事审批', null, null, null, '2', '2013-05-10 14:07:54', '2013-05-10 14:08:03', '2013-05-10 14:08:07', '13918', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('419', 'leave:1:4', 'reportBack', '401', '401', '销假', null, null, null, '2', '2013-05-10 14:08:07', null, '2013-05-10 14:08:25', '18208', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('431', 'leave:1:4', 'deptLeaderAudit', '425', '425', '部门领导审批', null, null, null, '2', '2013-05-10 14:22:57', '2013-05-10 14:24:24', '2013-05-10 14:27:16', '259616', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('437', 'leave:1:4', 'hrAudit', '425', '425', '人事审批', null, null, null, '2', '2013-05-10 14:27:16', '2013-05-10 14:27:22', '2013-05-10 14:27:27', '11390', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('443', 'leave:1:4', 'reportBack', '425', '425', '销假', null, null, null, '2', '2013-05-10 14:27:27', null, null, null, null, '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('450', 'leave:1:4', 'deptLeaderAudit', '444', '444', '部门领导审批', null, null, null, '2', '2013-05-10 14:28:16', '2013-05-10 14:29:24', '2013-05-10 14:52:59', '1483516', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('458', 'leave:1:4', 'modifyApply', '444', '444', '调整申请', null, null, null, '2', '2013-05-10 14:52:59', null, '2013-05-10 14:53:16', '17589', 'completed', '50', null, null);
+INSERT INTO `act_hi_taskinst` VALUES ('471', 'leave:1:4', 'deptLeaderAudit', '444', '444', '部门领导审批', null, null, null, '2', '2013-05-10 14:53:16', '2013-05-10 14:53:30', null, null, null, '50', null, null);
 
 -- ----------------------------
 -- Table structure for `act_hi_varinst`
@@ -263,6 +310,22 @@ INSERT INTO `act_hi_varinst` VALUES ('301', '201', '201', null, 'deptLeaderPass'
 INSERT INTO `act_hi_varinst` VALUES ('307', '201', '201', null, 'hrPass', 'boolean', '0', null, null, '1', null, null);
 INSERT INTO `act_hi_varinst` VALUES ('312', '201', '201', null, 'realityEndTime', 'date', '0', null, null, '1369455480000', null, null);
 INSERT INTO `act_hi_varinst` VALUES ('314', '201', '201', null, 'realityStartTime', 'date', '0', null, null, '1368159480000', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('402', '401', '401', null, 'applyUserId', 'string', '0', null, null, null, '2', null);
+INSERT INTO `act_hi_varinst` VALUES ('409', '401', '401', null, 'deptLeaderPass', 'boolean', '0', null, null, '1', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('415', '401', '401', null, 'hrPass', 'boolean', '0', null, null, '1', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('420', '401', '401', null, 'realityEndTime', 'date', '0', null, null, '1368165960000', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('422', '401', '401', null, 'realityStartTime', 'date', '0', null, null, '1368165960000', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('426', '425', '425', null, 'applyUserId', 'string', '0', null, null, null, '2', null);
+INSERT INTO `act_hi_varinst` VALUES ('433', '425', '425', null, 'deptLeaderPass', 'boolean', '0', null, null, '1', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('439', '425', '425', null, 'hrPass', 'boolean', '0', null, null, '1', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('445', '444', '444', null, 'applyUserId', 'string', '0', null, null, null, '2', null);
+INSERT INTO `act_hi_varinst` VALUES ('452', '444', '444', null, 'leaderBackReason', 'string', '0', null, null, null, 'wwww', null);
+INSERT INTO `act_hi_varinst` VALUES ('454', '444', '444', null, 'deptLeaderPass', 'boolean', '0', null, null, '0', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('459', '444', '444', null, 'startTime', 'date', '0', null, null, '1368138501000', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('461', '444', '444', null, 'reason', 'string', '0', null, null, null, '2525', null);
+INSERT INTO `act_hi_varinst` VALUES ('463', '444', '444', null, 'reApply', 'boolean', '0', null, null, '1', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('465', '444', '444', null, 'endTime', 'date', '0', null, null, '1368138496000', null, null);
+INSERT INTO `act_hi_varinst` VALUES ('467', '444', '444', null, 'leaveType', 'string', '0', null, null, null, 'null', null);
 
 -- ----------------------------
 -- Table structure for `act_id_group`
@@ -279,7 +342,7 @@ CREATE TABLE `act_id_group` (
 -- ----------------------------
 -- Records of act_id_group
 -- ----------------------------
-INSERT INTO `act_id_group` VALUES ('admin', '2', '系统管理员', 'assignment');
+INSERT INTO `act_id_group` VALUES ('admin', '3', '系统管理员', 'assignment');
 INSERT INTO `act_id_group` VALUES ('deptLeader', '1', '部门领导', 'assignment');
 INSERT INTO `act_id_group` VALUES ('hr', '1', '人事', 'assignment');
 INSERT INTO `act_id_group` VALUES ('user', '1', '普通用户', 'assignment');
@@ -416,7 +479,7 @@ CREATE TABLE `act_re_procdef` (
 -- ----------------------------
 -- Records of act_re_procdef
 -- ----------------------------
-INSERT INTO `act_re_procdef` VALUES ('leave:1:4', '1', 'http://www.kafeitu.me/demo/activiti/leave', '请假流程', 'leave', '1', '1', 'leave.bpmn20.xml', 'leave.png', '请假流程演示', '0', '1');
+INSERT INTO `act_re_procdef` VALUES ('leave:1:4', '5', 'http://www.kafeitu.me/demo/activiti/leave', '请假流程', 'leave', '1', '1', 'leave.bpmn20.xml', 'leave.png', '请假流程演示', '0', '1');
 
 -- ----------------------------
 -- Table structure for `act_ru_event_subscr`
@@ -476,6 +539,8 @@ CREATE TABLE `act_ru_execution` (
 -- ----------------------------
 -- Records of act_ru_execution
 -- ----------------------------
+INSERT INTO `act_ru_execution` VALUES ('425', '3', '425', '3', null, 'leave:1:4', null, 'reportBack', '1', '0', '1', '0', '1', '2');
+INSERT INTO `act_ru_execution` VALUES ('444', '3', '444', '4', null, 'leave:1:4', null, 'deptLeaderAudit', '1', '0', '1', '0', '1', '2');
 
 -- ----------------------------
 -- Table structure for `act_ru_identitylink`
@@ -504,6 +569,9 @@ CREATE TABLE `act_ru_identitylink` (
 -- ----------------------------
 -- Records of act_ru_identitylink
 -- ----------------------------
+INSERT INTO `act_ru_identitylink` VALUES ('428', '1', null, 'starter', '2', null, '425', null);
+INSERT INTO `act_ru_identitylink` VALUES ('447', '1', null, 'starter', '2', null, '444', null);
+INSERT INTO `act_ru_identitylink` VALUES ('472', '1', 'deptLeader', 'candidate', null, '471', null, null);
 
 -- ----------------------------
 -- Table structure for `act_ru_job`
@@ -569,6 +637,8 @@ CREATE TABLE `act_ru_task` (
 -- ----------------------------
 -- Records of act_ru_task
 -- ----------------------------
+INSERT INTO `act_ru_task` VALUES ('443', '1', '425', '425', 'leave:1:4', '销假', null, null, 'reportBack', null, '2', null, '50', '2013-05-10 14:27:27', null, '1');
+INSERT INTO `act_ru_task` VALUES ('471', '2', '444', '444', 'leave:1:4', '部门领导审批', null, null, 'deptLeaderAudit', null, '2', null, '50', '2013-05-10 14:53:16', null, '1');
 
 -- ----------------------------
 -- Table structure for `act_ru_variable`
@@ -600,6 +670,17 @@ CREATE TABLE `act_ru_variable` (
 -- ----------------------------
 -- Records of act_ru_variable
 -- ----------------------------
+INSERT INTO `act_ru_variable` VALUES ('426', '1', 'string', 'applyUserId', '425', '425', null, null, null, null, '2', null);
+INSERT INTO `act_ru_variable` VALUES ('433', '1', 'boolean', 'deptLeaderPass', '425', '425', null, null, null, '1', null, null);
+INSERT INTO `act_ru_variable` VALUES ('439', '1', 'boolean', 'hrPass', '425', '425', null, null, null, '1', null, null);
+INSERT INTO `act_ru_variable` VALUES ('445', '1', 'string', 'applyUserId', '444', '444', null, null, null, null, '2', null);
+INSERT INTO `act_ru_variable` VALUES ('452', '1', 'string', 'leaderBackReason', '444', '444', null, null, null, null, 'wwww', null);
+INSERT INTO `act_ru_variable` VALUES ('454', '1', 'boolean', 'deptLeaderPass', '444', '444', null, null, null, '0', null, null);
+INSERT INTO `act_ru_variable` VALUES ('459', '1', 'date', 'startTime', '444', '444', null, null, null, '1368138501000', null, null);
+INSERT INTO `act_ru_variable` VALUES ('461', '1', 'string', 'reason', '444', '444', null, null, null, null, '2525', null);
+INSERT INTO `act_ru_variable` VALUES ('463', '1', 'boolean', 'reApply', '444', '444', null, null, null, '1', null, null);
+INSERT INTO `act_ru_variable` VALUES ('465', '1', 'date', 'endTime', '444', '444', null, null, null, '1368138496000', null, null);
+INSERT INTO `act_ru_variable` VALUES ('467', '1', 'string', 'leaveType', '444', '444', null, null, null, null, 'null', null);
 
 -- ----------------------------
 -- Table structure for `cms_article`
@@ -634,10 +715,10 @@ CREATE TABLE `cms_article` (
 -- Records of cms_article
 -- ----------------------------
 INSERT INTO `cms_article` VALUES ('1', '3', '1', '文章标题标题标题标题', 'green', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
-INSERT INTO `cms_article` VALUES ('2', '3', '1', '文章标题标题标题标题', 'red', '', '关键字1,关键字2', '', '0', '0', '1', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
+INSERT INTO `cms_article` VALUES ('2', '3', '1', '文章标题标题标题标题', 'red', '', '关键字1,关键字2', '', '0', '0', '2', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('3', '3', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('4', '3', '1', '文章标题标题标题标题', 'green', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
-INSERT INTO `cms_article` VALUES ('5', '3', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
+INSERT INTO `cms_article` VALUES ('5', '3', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '1', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('6', '3', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('7', '4', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('8', '4', '1', '文章标题标题标题标题', 'blue', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
@@ -672,7 +753,7 @@ INSERT INTO `cms_article` VALUES ('36', '12', '1', '文章标题标题标题标�
 INSERT INTO `cms_article` VALUES ('37', '13', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('38', '13', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('39', '13', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
-INSERT INTO `cms_article` VALUES ('40', '13', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
+INSERT INTO `cms_article` VALUES ('40', '13', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '1', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('41', '14', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('42', '14', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('43', '14', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
@@ -683,7 +764,7 @@ INSERT INTO `cms_article` VALUES ('47', '15', '1', '文章标题标题标题标�
 INSERT INTO `cms_article` VALUES ('48', '15', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('49', '16', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('50', '17', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
-INSERT INTO `cms_article` VALUES ('51', '17', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
+INSERT INTO `cms_article` VALUES ('51', '17', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '1', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('52', '26', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 INSERT INTO `cms_article` VALUES ('53', '26', '1', '文章标题标题标题标题', '', '', '关键字1,关键字2', '', '0', '0', '0', '', '2013-05-10 09:20:55', '2012-10-07 00:00:00');
 
@@ -955,12 +1036,15 @@ CREATE TABLE `oa_leave` (
   `reality_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `create_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of oa_leave
 -- ----------------------------
 INSERT INTO `oa_leave` VALUES ('1', '201', '2', '2013-05-10 11:39:52', '2013-05-10 11:39:52', '公休', '爱爱爱', '2013-05-10 11:39:52', '2013-05-10 12:18:00', '2013-05-25 12:18:00', '2013-05-10 11:39:52');
+INSERT INTO `oa_leave` VALUES ('2', '401', '2', '2013-05-10 14:07:19', '2013-05-10 14:07:13', '公休', '大秦网', '2013-05-10 14:07:13', '2013-05-10 14:06:00', '2013-05-10 14:06:00', '2013-05-10 14:07:19');
+INSERT INTO `oa_leave` VALUES ('3', '425', '2', '2013-05-10 14:23:10', '2013-05-10 14:22:56', '婚假', '婚假', '2013-05-10 14:22:56', '2013-05-10 14:22:56', '2013-05-10 14:22:56', '2013-05-10 14:23:10');
+INSERT INTO `oa_leave` VALUES ('4', '444', '2', '2013-05-10 06:28:21', '2013-05-10 06:28:16', 'null', '2525', '2013-05-10 14:28:16', '2013-05-10 14:28:16', '2013-05-10 14:28:16', '2013-05-10 14:28:21');
 
 -- ----------------------------
 -- Table structure for `sys_area`
@@ -1141,7 +1225,7 @@ INSERT INTO `sys_menu` VALUES ('56', '40', '0,1,31,40,', '文件管理', '/../st
 INSERT INTO `sys_menu` VALUES ('57', '56', '0,1,31,40,56,', '查看', '', '', '', '30', '0', 'cms:ckfinder:view', '1', '0');
 INSERT INTO `sys_menu` VALUES ('58', '56', '0,1,31,40,56,', '上传', '', '', '', '30', '0', 'cms:ckfinder:upload', '1', '0');
 INSERT INTO `sys_menu` VALUES ('59', '56', '0,1,31,40,56,', '修改', '', '', '', '30', '0', 'cms:ckfinder:edit', '1', '0');
-INSERT INTO `sys_menu` VALUES ('60', '1', '0,1,', '在线办公', '', '', '', '100', '1', '', '1', '0');
+INSERT INTO `sys_menu` VALUES ('60', '1', '0,1,', '在线办公', '', '', '', '300', '1', '', '1', '0');
 INSERT INTO `sys_menu` VALUES ('61', '60', '0,1,60,', '个人办公', '', '', '', '600', '1', '', '1', '0');
 INSERT INTO `sys_menu` VALUES ('62', '61', '0,1,60,61,', '请假办理', '/oa/leave', '', 'leaf', '30', '1', '', '1', '0');
 INSERT INTO `sys_menu` VALUES ('63', '62', '0,1,60,61,62,', '查看', '', '', '', '30', '0', 'oa:leave:view', '1', '0');
@@ -1167,7 +1251,7 @@ CREATE TABLE `sys_office` (
   KEY `parent_id` (`parent_id`),
   KEY `parent_ids` (`parent_ids`),
   KEY `del_flag` (`del_flag`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='系统部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='系统部门表';
 
 -- ----------------------------
 -- Records of sys_office
@@ -1179,6 +1263,8 @@ INSERT INTO `sys_office` VALUES ('4', '2', '0,1,2,', '1', '000101', '系统管�
 INSERT INTO `sys_office` VALUES ('5', '2', '0,1,2,', '1', '000102', '系统管理2', '', '0');
 INSERT INTO `sys_office` VALUES ('6', '3', '0,1,3,', '1', '000201', '系统维护1', '', '0');
 INSERT INTO `sys_office` VALUES ('7', '3', '0,1,3,', '1', '000202', '系统维护2', '', '0');
+INSERT INTO `sys_office` VALUES ('8', '4', '0,1,2,4,', '1', '1123', '常去', '', '0');
+INSERT INTO `sys_office` VALUES ('9', '2', '0,1,2,', '1', '1123', '1123', '', '0');
 
 -- ----------------------------
 -- Table structure for `sys_role`
@@ -1349,6 +1435,9 @@ INSERT INTO `sys_role_menu` VALUES ('1', '61');
 INSERT INTO `sys_role_menu` VALUES ('1', '62');
 INSERT INTO `sys_role_menu` VALUES ('1', '63');
 INSERT INTO `sys_role_menu` VALUES ('1', '64');
+INSERT INTO `sys_role_menu` VALUES ('1', '65');
+INSERT INTO `sys_role_menu` VALUES ('1', '66');
+INSERT INTO `sys_role_menu` VALUES ('1', '67');
 INSERT INTO `sys_role_menu` VALUES ('2', '1');
 INSERT INTO `sys_role_menu` VALUES ('2', '3');
 INSERT INTO `sys_role_menu` VALUES ('2', '23');
@@ -1488,7 +1577,7 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', '1', '1', 'thinkgem', '348b421b2de94c46835881fdb595112f378bd4811bdf2e2dc5aa822a', 'Thinkgem', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', '0:0:0:0:0:0:0:1', '2013-05-10 13:38:48');
-INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032', '管理员', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', '0:0:0:0:0:0:0:1', '2013-05-10 13:40:10');
+INSERT INTO `sys_user` VALUES ('2', '1', '1', 'admin', '02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032', '管理员', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', '168.192.1.254', '2013-05-10 14:59:29');
 INSERT INTO `sys_user` VALUES ('3', '2', '2', 'user', 'c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c', '用户', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', null, null);
 INSERT INTO `sys_user` VALUES ('4', '3', '3', 'user2', 'c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c', '用户2', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', null, null);
 INSERT INTO `sys_user` VALUES ('5', '3', '3', 'user3', 'c483879feb6704d4780ad0d259cca93ffc173b02c48084f8b186a53c', '用户3', 'thinkgem@163.com', '8675', '8675', '', '', '2013-05-10 09:20:56', '0', null, null);
