@@ -95,6 +95,18 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">英文名:</label>
+			<div class="controls">
+				<form:input path="enname" htmlEscape="false" maxlength="50" class="required"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">类型:</label>
+			<div class="controls">
+				<form:input path="roleType" htmlEscape="false" maxlength="50" class="required"/>
+			</div>
+		</div>								
+		<div class="control-group">
 			<label class="control-label">授权:</label>
 			<div class="controls">
 				<div id="menuTree" class="ztree" style="margin-top:3px;float:left;"></div>

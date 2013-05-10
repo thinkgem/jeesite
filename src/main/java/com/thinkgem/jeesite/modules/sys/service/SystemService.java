@@ -6,9 +6,14 @@
 package com.thinkgem.jeesite.modules.sys.service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -56,6 +61,8 @@ public class SystemService extends BaseService {
 	private MenuDao menuDao;
 	@Autowired
 	private SystemRealm systemRealm;
+	@Autowired
+	private IdentityService identityService;
 	
 	//-- User Service --//
 	
@@ -112,11 +119,14 @@ public class SystemService extends BaseService {
 		userDao.clear();
 		userDao.save(user);
 		systemRealm.clearCachedAuthorizationInfo(user.getLoginName());
+		
+		saveActivitiUser(user);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteUser(Long id) {
 		userDao.deleteById(id);
+		deleteActivitiUser(userDao.findOne(id));
 	}
 	
 	@Transactional(readOnly = false)
@@ -177,12 +187,15 @@ public class SystemService extends BaseService {
 		}
 		roleDao.save(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		//同步到Activiti
+		saveActivitiGroup(role);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteRole(Long id) {
 		roleDao.deleteById(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		deleteActivitiGroup(roleDao.findOne(id));
 	}
 
 	//-- Menu Service --//
@@ -219,5 +232,102 @@ public class SystemService extends BaseService {
 		menuDao.deleteById(id, "%,"+id+",%");
 		systemRealm.clearAllCachedAuthorizationInfo();
 	}
+	
+
+	//同步所有系统用户到Activiti
+	 public void synActivitiIndetity()  {
+	        // 清空工作流用户、角色以及关系
+		 	List<org.activiti.engine.identity.User> userList = identityService.createUserQuery().list();
+		 	List<Group> groupList = identityService.createGroupQuery().list();
+		 	for(Group group:groupList) {
+		 		identityService.deleteGroup(group.getId());
+		 	}
+		 	for(org.activiti.engine.identity.User user:userList) {
+		 		identityService.deleteUser(user.getId());
+		 	}
+	        // 复制角色数据
+		 	Iterator<Role> roles = roleDao.findAll().iterator();
+		 	while(roles.hasNext()) {
+		 		Role role = roles.next();
+		 		String groupId = role.getEnname();
+	            Group group = identityService.newGroup(groupId);
+	            group.setName(role.getName());
+	            group.setType(role.getRoleType());
+	            identityService.saveGroup(group);
+		 	}
+		 	Iterator<User> users = userDao.findAll().iterator();
+		 	while(users.hasNext()) {
+		 		saveActivitiUser(users.next());
+		 	}
+	  }
+	 
+
+		private void saveActivitiGroup(Role role) {
+			String groupId = role.getEnname();
+			Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+			if (group == null) {
+				group = identityService.newGroup(groupId);
+			}
+			group.setName(role.getName());
+			group.setType(role.getRoleType());
+			identityService.saveGroup(group);
+		}
+
+		public void deleteActivitiGroup(Role role) {
+			if(role!=null) {
+				String groupId = role.getEnname();
+				identityService.deleteGroup(groupId);
+			}
+		}
+
+		/**
+		 * 使用系统用户对象属性设置到Activiti User对象中
+		 * 
+		 * @param user
+		 *            系统用户对象
+		 * @param activitiUser
+		 *            Activiti User
+		 */
+		private void saveActivitiUser(User user) {
+			String userId = ObjectUtils.toString(user.getId());
+			org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+			// 是新增用户
+			if (activitiUser == null) {
+				activitiUser = identityService.newUser(userId);
+			} else {
+				List<Group> activitiGroups = identityService.createGroupQuery().groupMember(userId).list();
+				for (Group group : activitiGroups) {
+					logger.debug("delete group from activit: {}",ToStringBuilder.reflectionToString(group));
+					identityService.deleteMembership(userId, group.getId());
+				}
+			}
+			activitiUser.setFirstName(user.getName());
+			activitiUser.setLastName(StringUtils.EMPTY);
+			activitiUser.setPassword(StringUtils.EMPTY);
+			activitiUser.setEmail(user.getEmail());
+			identityService.saveUser(activitiUser);
+			// 同步用户角色关联数据
+			for (Long roleId : user.getRoleIdList()) {
+				 Role role = roleDao.findOne(roleId);
+		            //查询activiti中是否有该权限
+				 	Group group= identityService.createGroupQuery().groupId(role.getEnname()).singleResult();
+		            //不存在该权限，新增
+		            if(group ==null) {
+				 		String groupId = role.getEnname();
+			            group = identityService.newGroup(groupId);
+			            group.setName(role.getName());
+			            group.setType(role.getRoleType());
+			            identityService.saveGroup(group);
+		            }
+				identityService.createMembership(userId, roleDao.findOne(roleId).getEnname());
+			}
+		}
+
+		private void deleteActivitiUser(User user) {
+			if(user!=null) {
+				String userId = ObjectUtils.toString(user.getId());
+				identityService.deleteUser(userId);
+			}
+		}
 	
 }

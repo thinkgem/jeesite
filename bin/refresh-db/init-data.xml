@@ -275,8 +275,8 @@
 					<sys_menu id="59" parent_id="56" parent_ids="0,1,31,40,56," name="修改" href="" target="" icon="" sort="30" is_show="0" permission="cms:ckfinder:edit" user_id="1" />
 			
 	<!-- 系统角色表 -->
-	<sys_role id="1" name="系统管理员" user_id="1" />
-	<sys_role id="2" name="普通用户" user_id="1" />
+	<sys_role id="1" name="系统管理员" user_id="1" enname="admin" role_type="assignment"/>
+	<sys_role id="2" name="普通用户" user_id="1"  enname="user" role_type="assignment"/>
 	
 	<!-- 系统角色与菜单关联表 -->
 	<sys_role_menu role_id="1" menu_id="1" />

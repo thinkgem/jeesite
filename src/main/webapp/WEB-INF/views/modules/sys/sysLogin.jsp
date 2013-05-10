@@ -35,9 +35,9 @@
 		<%String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);%>
 		<div id="messageBox" class="alert alert-error <%=error==null?"hide":""%>"><button data-dismiss="alert" class="close">×</button>登录失败, 请重试.</div>
         <label class="input-label" for="username">登录名</label>
-        <input type="text" id="username" name="username" class="input-block-level required" value="${username}">
+        <input type="text" id="username" name="username" class="input-block-level required" value="admin">
         <label class="input-label" for="password">密码</label>
-        <input type="password" id="password" name="password" class="input-block-level required">
+        <input type="password" id="password" name="password" value="admin" class="input-block-level required">
         <input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
         <label for="rememberMe" title="下次不需要再登录"><input type="checkbox" id="rememberMe" name="rememberMe"/> 记住我（公共场所慎用）</label>
         <div id="theme" class="dropdown">

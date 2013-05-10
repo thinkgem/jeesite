@@ -1,58 +1,58 @@
--- ÄÚÈİ¹ÜÀíÁôÑÔ±¾±í
+-- å†…å®¹ç®¡ç†ç•™è¨€æœ¬è¡¨
 drop table if exists cms_guestbook;
 create table cms_guestbook (
-	id bigint not null auto_increment comment '±àºÅ',
-	type varchar(100) not null comment 'ÁôÑÔ·ÖÀà£¨×ÉÑ¯¡¢½¨Òé¡¢Í¶Ëß¡¢ÆäËü£©',
-	content varchar(255) not null comment 'ÁôÑÔÄÚÈİ',
-	name varchar(100) not null comment 'ĞÕÃû',
-	email varchar(100) not null comment 'ÓÊÏä',
-	phone varchar(100) not null comment 'µç»°',
-	workunit varchar(100) not null comment 'µ¥Î»',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	type varchar(100) not null comment 'ç•™è¨€åˆ†ç±»ï¼ˆå’¨è¯¢ã€å»ºè®®ã€æŠ•è¯‰ã€å…¶å®ƒï¼‰',
+	content varchar(255) not null comment 'ç•™è¨€å†…å®¹',
+	name varchar(100) not null comment 'å§“å',
+	email varchar(100) not null comment 'é‚®ç®±',
+	phone varchar(100) not null comment 'ç”µè¯',
+	workunit varchar(100) not null comment 'å•ä½',
 	ip varchar(100) not null comment 'IP',
-	create_date timestamp default now() comment 'ÁôÑÔÊ±¼ä',
-	re_user_id bigint comment '»Ø¸´ÈË',
-	re_date timestamp null comment '»Ø¸´Ê±¼ä',
-	re_content varchar(100) comment '»Ø¸´ÄÚÈİ',
-	status char(1) default '0' comment '×´Ì¬£¨0£º·¢²¼£»1£º×÷·Ï£»2£ºÉóºË£»£©',
+	create_date timestamp default now() comment 'ç•™è¨€æ—¶é—´',
+	re_user_id bigint comment 'å›å¤äºº',
+	re_date timestamp null comment 'å›å¤æ—¶é—´',
+	re_content varchar(100) comment 'å›å¤å†…å®¹',
+	status char(1) default '0' comment 'çŠ¶æ€ï¼ˆ0ï¼šå‘å¸ƒï¼›1ï¼šä½œåºŸï¼›2ï¼šå®¡æ ¸ï¼›ï¼‰',
 	primary key (id),
 	key (status)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÁôÑÔ±¾±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†ç•™è¨€æœ¬è¡¨';
 
--- ÄÚÈİ¹ÜÀíÄÚÈİÆÀÂÛ±í
+-- å†…å®¹ç®¡ç†å†…å®¹è¯„è®ºè¡¨
 drop table if exists cms_comment;
 create table cms_comment (
-	id bigint not null auto_increment comment '±àºÅ',
-	module varchar(20) not null comment 'ÄÚÈİÄ£ĞÍ£¨article£ºÎÄÕÂ£»picture£ºÍ¼Æ¬£»download£ºÏÂÔØ£©',
-	content_id bigint not null comment '¹éÊô·ÖÀàÄÚÈİµÄ±àºÅ£¨Article.id¡¢Photo.id¡¢Download.id£©',
-	title varchar(255) comment '¹éÊô·ÖÀàÄÚÈİµÄ±êÌâ£¨Article.title¡¢Photo.title¡¢Download.title£©',
-	content varchar(255) comment 'ÆÀÂÛÄÚÈİ',
-	name varchar(100) comment 'ÆÀÂÛĞÕÃû',
-	ip varchar(100) comment 'ÆÀÂÛIP',
-	create_date timestamp default now() comment 'ÆÀÂÛÊ±¼ä',
-	audit_user_id bigint comment 'ÉóºËÈË',
-	audit_date timestamp null comment 'ÉóºËÊ±¼ä',
-	status char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£º·¢²¼£»1£º×÷·Ï£»2£ºÉóºË£»£©',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	module varchar(20) not null comment 'å†…å®¹æ¨¡å‹ï¼ˆarticleï¼šæ–‡ç« ï¼›pictureï¼šå›¾ç‰‡ï¼›downloadï¼šä¸‹è½½ï¼‰',
+	content_id bigint not null comment 'å½’å±åˆ†ç±»å†…å®¹çš„ç¼–å·ï¼ˆArticle.idã€Photo.idã€Download.idï¼‰',
+	title varchar(255) comment 'å½’å±åˆ†ç±»å†…å®¹çš„æ ‡é¢˜ï¼ˆArticle.titleã€Photo.titleã€Download.titleï¼‰',
+	content varchar(255) comment 'è¯„è®ºå†…å®¹',
+	name varchar(100) comment 'è¯„è®ºå§“å',
+	ip varchar(100) comment 'è¯„è®ºIP',
+	create_date timestamp default now() comment 'è¯„è®ºæ—¶é—´',
+	audit_user_id bigint comment 'å®¡æ ¸äºº',
+	audit_date timestamp null comment 'å®¡æ ¸æ—¶é—´',
+	status char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šå‘å¸ƒï¼›1ï¼šä½œåºŸï¼›2ï¼šå®¡æ ¸ï¼›ï¼‰',
 	primary key (id),
 	key (module),
 	key (content_id),
 	key (status)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÄÚÈİÆÀÂÛ±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†å†…å®¹è¯„è®ºè¡¨';
 
--- ÄÚÈİ¹ÜÀíÁ´½ÓÄ£ĞÍ±í
+-- å†…å®¹ç®¡ç†é“¾æ¥æ¨¡å‹è¡¨
 drop table if exists cms_link;
 create table cms_link (
-	id bigint not null auto_increment comment '±àºÅ',
-	category_id bigint not null comment '·ÖÀà±àºÅ',
-	user_id bigint not null comment '·¢²¼Õß',
-	title varchar(255) not null comment 'Á´½ÓÃû³Æ',
-	color varchar(50) default '' comment '±êÌâÑÕÉ«£¨red£ººìÉ«£»green£ºÂÌÉ«£»blue£ºÀ¶É«£»yellow£º»ÆÉ«£»orange£º³ÈÉ«£©',
-	image varchar(255) default '' comment 'Èç¹ûÉÏ´«ÁËÍ¼Æ¬£¬ÔòÏÔÊ¾ÎªÍ¼Æ¬Á´½Ó',
-	href varchar(255) default '' comment 'Á´½ÓµØÖ·',
-	remarks varchar(255) default '' comment '±¸×¢',
-	status char(1) default '' comment '×´Ì¬£¨0£º·¢²¼£»1£º×÷·Ï£»2£ºÉóºË£»£©',
-	weight int default 0 comment 'È¨ÖØ£¬Ô½´óÔ½¿¿Ç°',
-	input_date timestamp default now() comment 'Â¼ÈëÊ±¼ä',
-	update_date timestamp comment '¸üĞÂÊ±¼ä',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	category_id bigint not null comment 'åˆ†ç±»ç¼–å·',
+	user_id bigint not null comment 'å‘å¸ƒè€…',
+	title varchar(255) not null comment 'é“¾æ¥åç§°',
+	color varchar(50) default '' comment 'æ ‡é¢˜é¢œè‰²ï¼ˆredï¼šçº¢è‰²ï¼›greenï¼šç»¿è‰²ï¼›blueï¼šè“è‰²ï¼›yellowï¼šé»„è‰²ï¼›orangeï¼šæ©™è‰²ï¼‰',
+	image varchar(255) default '' comment 'å¦‚æœä¸Šä¼ äº†å›¾ç‰‡ï¼Œåˆ™æ˜¾ç¤ºä¸ºå›¾ç‰‡é“¾æ¥',
+	href varchar(255) default '' comment 'é“¾æ¥åœ°å€',
+	remarks varchar(255) default '' comment 'å¤‡æ³¨',
+	status char(1) default '' comment 'çŠ¶æ€ï¼ˆ0ï¼šå‘å¸ƒï¼›1ï¼šä½œåºŸï¼›2ï¼šå®¡æ ¸ï¼›ï¼‰',
+	weight int default 0 comment 'æƒé‡ï¼Œè¶Šå¤§è¶Šé å‰',
+	input_date timestamp default now() comment 'å½•å…¥æ—¶é—´',
+	update_date timestamp comment 'æ›´æ–°æ—¶é—´',
 	primary key (id),
 	key (user_id),
 	key (title),
@@ -60,25 +60,25 @@ create table cms_link (
 	key (weight),
 	key (input_date),
 	key (update_date)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÁ´½ÓÄ£ĞÍ±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†é“¾æ¥æ¨¡å‹è¡¨';
 
--- ÄÚÈİ¹ÜÀíÎÄÕÂÄ£ĞÍ±í
+-- å†…å®¹ç®¡ç†æ–‡ç« æ¨¡å‹è¡¨
 drop table if exists cms_article;
 create table cms_article (
-	id bigint not null auto_increment comment '±àºÅ',
-	category_id bigint not null comment '·ÖÀà±àºÅ',
-	user_id bigint not null comment '·¢²¼Õß',
-	title varchar(255) not null comment '±êÌâ',
-	color varchar(50) default '' comment '±êÌâÑÕÉ«£¨red£ººìÉ«£»green£ºÂÌÉ«£»blue£ºÀ¶É«£»yellow£º»ÆÉ«£»orange£º³ÈÉ«£©',
-	thumb varchar(255) default '' comment 'ËõÂÔÍ¼',
-	keywords varchar(255) default '' comment '¹Ø¼ü×Ö',
-	desciption varchar(255) default '' comment 'ÃèÊö¡¢ÕªÒª',
-	status char(1) default '' comment '×´Ì¬£¨0£º·¢²¼£»1£º×÷·Ï£»2£ºÉóºË£»£©',
-	weight int default 0 comment 'È¨ÖØ£¬Ô½´óÔ½¿¿Ç°',
-    hits int default 0 comment 'µã»÷Êı',
-    posid varchar(10) comment 'ÍÆ¼öÎ»£¬¶àÑ¡£¨1£ºÊ×Ò³½¹µãÍ¼£»2£ºÀ¸Ä¿Ò³ÎÄÕÂÍÆ¼ö£»£©',
-	input_date timestamp default now() comment 'Â¼ÈëÊ±¼ä',
-	update_date timestamp comment '¸üĞÂÊ±¼ä',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	category_id bigint not null comment 'åˆ†ç±»ç¼–å·',
+	user_id bigint not null comment 'å‘å¸ƒè€…',
+	title varchar(255) not null comment 'æ ‡é¢˜',
+	color varchar(50) default '' comment 'æ ‡é¢˜é¢œè‰²ï¼ˆredï¼šçº¢è‰²ï¼›greenï¼šç»¿è‰²ï¼›blueï¼šè“è‰²ï¼›yellowï¼šé»„è‰²ï¼›orangeï¼šæ©™è‰²ï¼‰',
+	thumb varchar(255) default '' comment 'ç¼©ç•¥å›¾',
+	keywords varchar(255) default '' comment 'å…³é”®å­—',
+	desciption varchar(255) default '' comment 'æè¿°ã€æ‘˜è¦',
+	status char(1) default '' comment 'çŠ¶æ€ï¼ˆ0ï¼šå‘å¸ƒï¼›1ï¼šä½œåºŸï¼›2ï¼šå®¡æ ¸ï¼›ï¼‰',
+	weight int default 0 comment 'æƒé‡ï¼Œè¶Šå¤§è¶Šé å‰',
+    hits int default 0 comment 'ç‚¹å‡»æ•°',
+    posid varchar(10) comment 'æ¨èä½ï¼Œå¤šé€‰ï¼ˆ1ï¼šé¦–é¡µç„¦ç‚¹å›¾ï¼›2ï¼šæ ç›®é¡µæ–‡ç« æ¨èï¼›ï¼‰',
+	input_date timestamp default now() comment 'å½•å…¥æ—¶é—´',
+	update_date timestamp comment 'æ›´æ–°æ—¶é—´',
 	primary key (id),
 	key (user_id),
 	key (title),
@@ -87,40 +87,40 @@ create table cms_article (
 	key (weight),
 	key (input_date),
 	key (update_date)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÎÄÕÂÄ£ĞÍ±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†æ–‡ç« æ¨¡å‹è¡¨';
 
--- ÄÚÈİ¹ÜÀíÎÄÕÂÄ£ĞÍ¸±±í
+-- å†…å®¹ç®¡ç†æ–‡ç« æ¨¡å‹å‰¯è¡¨
 drop table if exists cms_article_data;
 create table cms_article_data (
-	id bigint not null auto_increment comment '±àºÅ',
-	content mediumtext comment 'ÄÚÈİ',
-	copyfrom varchar(255) comment 'À´Ô´',
-	relation varchar(255) comment 'Ïà¹ØÎÄÕÂ',
-	allow_comment char(1) comment 'ÊÇ·ñÔÊĞíÆÀÂÛ',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	content mediumtext comment 'å†…å®¹',
+	copyfrom varchar(255) comment 'æ¥æº',
+	relation varchar(255) comment 'ç›¸å…³æ–‡ç« ',
+	allow_comment char(1) comment 'æ˜¯å¦å…è®¸è¯„è®º',
 	primary key (id)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÎÄÕÂÄ£ĞÍ±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†æ–‡ç« æ¨¡å‹è¡¨';
 
--- ÄÚÈİ¹ÜÀíÀ¸Ä¿±í
+-- å†…å®¹ç®¡ç†æ ç›®è¡¨
 drop table if exists cms_category;
 create table cms_category (
-	id bigint not null auto_increment comment '±àºÅ',
-    site_id bigint default '1' comment 'Õ¾µã±àºÅ',
-    parent_id bigint not null comment '¸¸¼¶±àºÅ',
-	parent_ids varchar(255) not null comment 'ËùÓĞ¸¸¼¶±àºÅ',
-	module varchar(20) not null comment 'À¸Ä¿Ä£¿é£¨article£ºÎÄÕÂ£»picture£ºÍ¼Æ¬£»download£ºÏÂÔØ£»link£ºÁ´½Ó£»special£º×¨Ìâ£©',
-	name varchar(100) not null comment 'À¸Ä¿Ãû³Æ',
-	image varchar(255) default '' comment 'À¸Ä¿Í¼Æ¬',
-    href varchar(255) not null comment 'Á´½Ó',
-    target varchar(20) not null comment 'Ä¿±ê£¨ _blank¡¢_self¡¢_parent¡¢_top£©',
-	desciption varchar(255) default '' comment 'ÃèÊö£¬ÌîĞ´ÓĞÖúÓÚËÑË÷ÒıÇæÓÅ»¯',
-    keywords varchar(255) default '' comment '¹Ø¼ü×Ö£¬ÌîĞ´ÓĞÖúÓÚËÑË÷ÒıÇæÓÅ»¯',
-    sort int default 30 comment 'ÅÅĞò£¨ÉıĞò£©',
-    in_menu char(1) default '1' comment 'ÊÇ·ñÔÚµ¼º½ÖĞÏÔÊ¾£¨1£ºÏÔÊ¾£»0£º²»ÏÔÊ¾£©',
-    in_list char(1) default '1' comment 'ÊÇ·ñÔÚ·ÖÀàÒ³ÖĞÏÔÊ¾ÁĞ±í£¨1£ºÏÔÊ¾£»0£º²»ÏÔÊ¾£©',
-	show_modes char(1) default '0' comment 'Õ¹ÏÖ·½Ê½£¨0:ÓĞ×ÓÀ¸Ä¿ÏÔÊ¾À¸Ä¿ÁĞ±í£¬ÎŞ×ÓÀ¸Ä¿ÏÔÊ¾ÄÚÈİÁĞ±í;1£ºÊ×À¸Ä¿ÄÚÈİÁĞ±í£»2£ºÀ¸Ä¿µÚÒ»ÌõÄÚÈİ£©',
-	allow_comment char(1) comment 'ÊÇ·ñÔÊĞíÆÀÂÛ',
-	user_id bigint not null comment '´´½¨Õß',
-	del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+	id bigint not null auto_increment comment 'ç¼–å·',
+    site_id bigint default '1' comment 'ç«™ç‚¹ç¼–å·',
+    parent_id bigint not null comment 'çˆ¶çº§ç¼–å·',
+	parent_ids varchar(255) not null comment 'æ‰€æœ‰çˆ¶çº§ç¼–å·',
+	module varchar(20) not null comment 'æ ç›®æ¨¡å—ï¼ˆarticleï¼šæ–‡ç« ï¼›pictureï¼šå›¾ç‰‡ï¼›downloadï¼šä¸‹è½½ï¼›linkï¼šé“¾æ¥ï¼›specialï¼šä¸“é¢˜ï¼‰',
+	name varchar(100) not null comment 'æ ç›®åç§°',
+	image varchar(255) default '' comment 'æ ç›®å›¾ç‰‡',
+    href varchar(255) not null comment 'é“¾æ¥',
+    target varchar(20) not null comment 'ç›®æ ‡ï¼ˆ _blankã€_selfã€_parentã€_topï¼‰',
+	desciption varchar(255) default '' comment 'æè¿°ï¼Œå¡«å†™æœ‰åŠ©äºæœç´¢å¼•æ“ä¼˜åŒ–',
+    keywords varchar(255) default '' comment 'å…³é”®å­—ï¼Œå¡«å†™æœ‰åŠ©äºæœç´¢å¼•æ“ä¼˜åŒ–',
+    sort int default 30 comment 'æ’åºï¼ˆå‡åºï¼‰',
+    in_menu char(1) default '1' comment 'æ˜¯å¦åœ¨å¯¼èˆªä¸­æ˜¾ç¤ºï¼ˆ1ï¼šæ˜¾ç¤ºï¼›0ï¼šä¸æ˜¾ç¤ºï¼‰',
+    in_list char(1) default '1' comment 'æ˜¯å¦åœ¨åˆ†ç±»é¡µä¸­æ˜¾ç¤ºåˆ—è¡¨ï¼ˆ1ï¼šæ˜¾ç¤ºï¼›0ï¼šä¸æ˜¾ç¤ºï¼‰',
+	show_modes char(1) default '0' comment 'å±•ç°æ–¹å¼ï¼ˆ0:æœ‰å­æ ç›®æ˜¾ç¤ºæ ç›®åˆ—è¡¨ï¼Œæ— å­æ ç›®æ˜¾ç¤ºå†…å®¹åˆ—è¡¨;1ï¼šé¦–æ ç›®å†…å®¹åˆ—è¡¨ï¼›2ï¼šæ ç›®ç¬¬ä¸€æ¡å†…å®¹ï¼‰',
+	allow_comment char(1) comment 'æ˜¯å¦å…è®¸è¯„è®º',
+	user_id bigint not null comment 'åˆ›å»ºè€…',
+	del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
 	primary key (id),
 	key (parent_id),
 	key (parent_ids),
@@ -129,173 +129,191 @@ create table cms_category (
 	key (sort),
 	key (user_id),
 	key (del_flag)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÀ¸Ä¿±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†æ ç›®è¡¨';
 
--- ÄÚÈİ¹ÜÀíÕ¾µãÅäÖÃ±í
+-- å†…å®¹ç®¡ç†ç«™ç‚¹é…ç½®è¡¨
 drop table if exists cms_site;
 create table cms_site (
-	id bigint not null auto_increment comment '±àºÅ',
-	name varchar(100) not null comment 'Õ¾µãÃû³Æ',
-	title varchar(100) not null comment 'Õ¾µã±êÌâ',
-	desciption varchar(255) default '' comment 'ÃèÊö£¬ÌîĞ´ÓĞÖúÓÚËÑË÷ÒıÇæÓÅ»¯',
-    keywords varchar(255) default '' comment '¹Ø¼ü×Ö£¬ÌîĞ´ÓĞÖúÓÚËÑË÷ÒıÇæÓÅ»¯',
-    theme varchar(255) default 'default' comment 'Ö÷Ìâ',
-    copyright mediumtext comment '°æÈ¨ĞÅÏ¢',
-	del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	name varchar(100) not null comment 'ç«™ç‚¹åç§°',
+	title varchar(100) not null comment 'ç«™ç‚¹æ ‡é¢˜',
+	desciption varchar(255) default '' comment 'æè¿°ï¼Œå¡«å†™æœ‰åŠ©äºæœç´¢å¼•æ“ä¼˜åŒ–',
+    keywords varchar(255) default '' comment 'å…³é”®å­—ï¼Œå¡«å†™æœ‰åŠ©äºæœç´¢å¼•æ“ä¼˜åŒ–',
+    theme varchar(255) default 'default' comment 'ä¸»é¢˜',
+    copyright mediumtext comment 'ç‰ˆæƒä¿¡æ¯',
+	del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
 	primary key (id),
 	key (del_flag)
-) engine=innodb comment 'ÄÚÈİ¹ÜÀíÕ¾µãÅäÖÃ±í';
+) engine=innodb comment 'å†…å®¹ç®¡ç†ç«™ç‚¹é…ç½®è¡¨';
 
--- ÏµÍ³ÉÏ´«ÎÄ¼ş±í
+-- ç³»ç»Ÿä¸Šä¼ æ–‡ä»¶è¡¨
 --drop table if exists sys_attachment;
 --create table sys_attachment (
---	id bigint not null auto_increment comment '±àºÅ',
---	area_id bigint not null comment '¹éÊôÇøÓò',
---	office_id bigint not null comment '¹éÊô²¿ÃÅ',
---	user_id bigint not null comment 'ÉÏ´«Õß',
---	name varchar(255) not null comment 'ÎÄ¼şÃû',
---	file_name varchar(255) not null comment 'ÉÏ´«ºóµÄÎÄ¼şÃû',
---	file_ext varchar(16) not null comment 'À©Õ¹Ãû',
---	file_type varchar(100) not null comment 'ÎÄ¼şÀàĞÍ',
---	file_size bigint not null comment 'ÎÄ¼ş´óĞ¡',
---	file_path varchar(255) not null comment '´æ·ÅÂ·¾¶£¨/files/year/month/area_office_user/£©',
---	create_date timestamp default now() comment 'ÉÏ´«Ê±¼ä',
---	del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+--	id bigint not null auto_increment comment 'ç¼–å·',
+--	area_id bigint not null comment 'å½’å±åŒºåŸŸ',
+--	office_id bigint not null comment 'å½’å±éƒ¨é—¨',
+--	user_id bigint not null comment 'ä¸Šä¼ è€…',
+--	name varchar(255) not null comment 'æ–‡ä»¶å',
+--	file_name varchar(255) not null comment 'ä¸Šä¼ åçš„æ–‡ä»¶å',
+--	file_ext varchar(16) not null comment 'æ‰©å±•å',
+--	file_type varchar(100) not null comment 'æ–‡ä»¶ç±»å‹',
+--	file_size bigint not null comment 'æ–‡ä»¶å¤§å°',
+--	file_path varchar(255) not null comment 'å­˜æ”¾è·¯å¾„ï¼ˆ/files/year/month/area_office_user/ï¼‰',
+--	create_date timestamp default now() comment 'ä¸Šä¼ æ—¶é—´',
+--	del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
 --	primary key (id),
 --	key (area_id),
 --	key (office_id),
 --	key (user_id),
 --	key (del_flag)
---) engine=innodb comment 'ÏµÍ³ÉÏ´«ÎÄ¼ş±í';
+--) engine=innodb comment 'ç³»ç»Ÿä¸Šä¼ æ–‡ä»¶è¡¨';
 
--- ÏµÍ³×Öµä±í
+-- ç³»ç»Ÿå­—å…¸è¡¨
 drop table if exists sys_dict;
 create table sys_dict (
-	id bigint not null auto_increment comment '±àºÅ',
-	label varchar(100) not null comment '±êÇ©',
-	value varchar(100) not null comment '¼üÖµ',
-	type varchar(100) not null comment 'ÀàĞÍ',
-	desciption varchar(100) not null comment 'ÃèÊö',
-    sort int not null comment 'ÅÅĞò£¨ÉıĞò£©',
-	del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	label varchar(100) not null comment 'æ ‡ç­¾',
+	value varchar(100) not null comment 'é”®å€¼',
+	type varchar(100) not null comment 'ç±»å‹',
+	desciption varchar(100) not null comment 'æè¿°',
+    sort int not null comment 'æ’åºï¼ˆå‡åºï¼‰',
+	del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
 	primary key (id),
 	key (value),
 	key (label),
 	key (del_flag)
-) engine=innodb comment 'ÏµÍ³×Öµä±í';
+) engine=innodb comment 'ç³»ç»Ÿå­—å…¸è¡¨';
 
--- ÏµÍ³ÇøÓò±í
+-- ç³»ç»ŸåŒºåŸŸè¡¨
 drop table if exists sys_area;
 create table sys_area (
-	id bigint not null auto_increment comment '±àºÅ',
-	parent_id bigint not null comment '¸¸¼¶±àºÅ',
-	parent_ids varchar(255) not null comment 'ËùÓĞ¸¸¼¶±àºÅ',
-	code varchar(100) comment 'ÇøÓò±àÂë',
-	name varchar(100) comment 'ÇøÓòÃû³Æ',
-	remarks varchar(255) comment '±¸×¢',
-	del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	parent_id bigint not null comment 'çˆ¶çº§ç¼–å·',
+	parent_ids varchar(255) not null comment 'æ‰€æœ‰çˆ¶çº§ç¼–å·',
+	code varchar(100) comment 'åŒºåŸŸç¼–ç ',
+	name varchar(100) comment 'åŒºåŸŸåç§°',
+	remarks varchar(255) comment 'å¤‡æ³¨',
+	del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
 	primary key (id),
 	key (parent_id),
 	key (parent_ids),
 	key (del_flag)
-) engine=innodb comment 'ÏµÍ³ÇøÓò±í';
+) engine=innodb comment 'ç³»ç»ŸåŒºåŸŸè¡¨';
 
--- ÏµÍ³²¿ÃÅ±í
+-- ç³»ç»Ÿéƒ¨é—¨è¡¨
 drop table if exists sys_office;
 create table sys_office (
-	id bigint not null auto_increment comment '±àºÅ',
-	parent_id bigint not null comment '¸¸¼¶±àºÅ',
-	parent_ids varchar(255) not null comment 'ËùÓĞ¸¸¼¶±àºÅ',
-	area_id bigint not null comment '¹éÊôÇøÓò',
-	code varchar(100) comment 'ÇøÓò±àÂë',
-	name varchar(100) not null comment '²¿ÃÅÃû³Æ',
-	remarks varchar(255) comment '±¸×¢',
-	del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+	id bigint not null auto_increment comment 'ç¼–å·',
+	parent_id bigint not null comment 'çˆ¶çº§ç¼–å·',
+	parent_ids varchar(255) not null comment 'æ‰€æœ‰çˆ¶çº§ç¼–å·',
+	area_id bigint not null comment 'å½’å±åŒºåŸŸ',
+	code varchar(100) comment 'åŒºåŸŸç¼–ç ',
+	name varchar(100) not null comment 'éƒ¨é—¨åç§°',
+	remarks varchar(255) comment 'å¤‡æ³¨',
+	del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
 	primary key (id),
 	key (parent_id),
 	key (parent_ids),
 	key (del_flag)
-) engine=innodb comment 'ÏµÍ³²¿ÃÅ±í';
+) engine=innodb comment 'ç³»ç»Ÿéƒ¨é—¨è¡¨';
 
--- ÏµÍ³²Ëµ¥±í
+-- ç³»ç»Ÿèœå•è¡¨
 drop table if exists sys_menu;
 create table sys_menu (
-    id bigint not null auto_increment comment '±àºÅ',
-    parent_id bigint not null comment '¸¸¼¶±àºÅ',
-	parent_ids varchar(255) not null comment 'ËùÓĞ¸¸¼¶±àºÅ',
-    name varchar(100) not null comment '²Ëµ¥Ãû³Æ',
-    href varchar(255) not null comment 'Á´½Ó',
-    target varchar(20) not null comment 'Ä¿±ê£¨mainFrame¡¢ _blank¡¢_self¡¢_parent¡¢_top£©',
-    icon varchar(100) not null comment 'Í¼±ê',
-    sort int not null comment 'ÅÅĞò£¨ÉıĞò£©',
-    is_show char(1) not null comment 'ÊÇ·ñÔÚ²Ëµ¥ÖĞÏÔÊ¾£¨1£ºÏÔÊ¾£»0£º²»ÏÔÊ¾£©',
-    permission varchar(200) not null comment 'È¨ÏŞ±êÊ¶',
-	user_id bigint not null comment '´´½¨Õß',
-    del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+    id bigint not null auto_increment comment 'ç¼–å·',
+    parent_id bigint not null comment 'çˆ¶çº§ç¼–å·',
+	parent_ids varchar(255) not null comment 'æ‰€æœ‰çˆ¶çº§ç¼–å·',
+    name varchar(100) not null comment 'èœå•åç§°',
+    href varchar(255) not null comment 'é“¾æ¥',
+    target varchar(20) not null comment 'ç›®æ ‡ï¼ˆmainFrameã€ _blankã€_selfã€_parentã€_topï¼‰',
+    icon varchar(100) not null comment 'å›¾æ ‡',
+    sort int not null comment 'æ’åºï¼ˆå‡åºï¼‰',
+    is_show char(1) not null comment 'æ˜¯å¦åœ¨èœå•ä¸­æ˜¾ç¤ºï¼ˆ1ï¼šæ˜¾ç¤ºï¼›0ï¼šä¸æ˜¾ç¤ºï¼‰',
+    permission varchar(200) not null comment 'æƒé™æ ‡è¯†',
+	user_id bigint not null comment 'åˆ›å»ºè€…',
+    del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
     primary key (id),
 	key (parent_id),
 	key (parent_ids),
 	key (user_id),
 	key (del_flag)
-) engine=innodb comment 'ÏµÍ³²Ëµ¥±í';
+) engine=innodb comment 'ç³»ç»Ÿèœå•è¡¨';
 
--- ÏµÍ³½ÇÉ«±í
+-- ç³»ç»Ÿè§’è‰²è¡¨
 drop table if exists sys_role;
 create table sys_role (
-    id bigint not null auto_increment comment '±àºÅ',
-    name varchar(100) not null comment 'Ãû³Æ',
-	user_id bigint not null comment '´´½¨Õß',
-    del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
+    id bigint not null auto_increment comment 'ç¼–å·',
+    name varchar(100) not null comment 'åç§°',
+	user_id bigint not null comment 'åˆ›å»ºè€…',
+    del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
+    enname varchar(255) not null comment 'è‹±æ–‡åç§°',
+    role_type varchar(255) not null comment 'è§’è‰²ç±»å‹',
     primary key (id),
 	key (user_id),
 	key (del_flag)
-) engine=innodb comment 'ÏµÍ³½ÇÉ«±í';
+) engine=innodb comment 'ç³»ç»Ÿè§’è‰²è¡¨';
 
--- ÏµÍ³½ÇÉ«Óë²Ëµ¥¹ØÁª±í
+-- ç³»ç»Ÿè§’è‰²ä¸èœå•å…³è”è¡¨
 drop table if exists sys_role_menu;
 create table sys_role_menu (
-    role_id bigint not null comment '½ÇÉ«±àºÅ',
-    menu_id bigint not null comment '²Ëµ¥±àºÅ',
+    role_id bigint not null comment 'è§’è‰²ç¼–å·',
+    menu_id bigint not null comment 'èœå•ç¼–å·',
 	primary key (role_id,menu_id)
-) engine=innodb comment 'ÏµÍ³½ÇÉ«Óë²Ëµ¥¹ØÁª±í';
+) engine=innodb comment 'ç³»ç»Ÿè§’è‰²ä¸èœå•å…³è”è¡¨';
 
--- ÏµÍ³½ÇÉ«Óë²Ëµ¥¹ØÁª±í
+-- ç³»ç»Ÿè§’è‰²ä¸èœå•å…³è”è¡¨
 drop table if exists sys_role_category;
 create table sys_role_category (
-  role_id bigint(20) not null comment '½ÇÉ«±àºÅ',
-  category_id bigint(20) not null comment 'ÄÚÈİ·ÖÀà±àºÅ',
+  role_id bigint(20) not null comment 'è§’è‰²ç¼–å·',
+  category_id bigint(20) not null comment 'å†…å®¹åˆ†ç±»ç¼–å·',
   primary key (role_id,category_id)
-) engine=innodb comment 'ÏµÍ³½ÇÉ«ÓëÄÚÈİ·ÖÀà¹ØÁª±í';
+) engine=innodb comment 'ç³»ç»Ÿè§’è‰²ä¸å†…å®¹åˆ†ç±»å…³è”è¡¨';
 
--- ÏµÍ³ÓÃ»§±í
+-- ç³»ç»Ÿç”¨æˆ·è¡¨
 drop table if exists sys_user;
 create table sys_user (
-    id bigint not null auto_increment comment '±àºÅ',
-    area_id bigint not null comment 'ÇøÓò±àºÅ',
-    office_id bigint not null comment '²¿ÃÅ±àºÅ',
-    login_name varchar(100) not null comment 'µÇÂ¼Ãû',
-    password varchar(100) comment 'ÃÜÂë',
-    name varchar(100) comment 'ĞÕÃû',
-    email varchar(200) comment 'ÓÊÏä',
-    phone varchar(200) comment 'µç»°',
-    mobile varchar(200) comment 'ÊÖ»ú',
-    remarks varchar(255) default '' comment '±¸×¢',
-    user_type varchar(100) default '' comment 'ÓÃ»§ÀàĞÍ',
-    create_date timestamp default now() comment '´´½¨Ê±¼ä',
-    del_flag char(1) default '0' comment 'É¾³ı±ê¼Ç£¨0£ºÕı³££»1£ºÉ¾³ı£©',
-    login_ip varchar(100) comment '×îºóµÇÂ½IP',
-    login_date datetime comment '×îºóµÇÂ½Ê±¼ä',
+    id bigint not null auto_increment comment 'ç¼–å·',
+    area_id bigint not null comment 'åŒºåŸŸç¼–å·',
+    office_id bigint not null comment 'éƒ¨é—¨ç¼–å·',
+    login_name varchar(100) not null comment 'ç™»å½•å',
+    password varchar(100) comment 'å¯†ç ',
+    name varchar(100) comment 'å§“å',
+    email varchar(200) comment 'é‚®ç®±',
+    phone varchar(200) comment 'ç”µè¯',
+    mobile varchar(200) comment 'æ‰‹æœº',
+    remarks varchar(255) default '' comment 'å¤‡æ³¨',
+    user_type varchar(100) default '' comment 'ç”¨æˆ·ç±»å‹',
+    create_date timestamp default now() comment 'åˆ›å»ºæ—¶é—´',
+    del_flag char(1) default '0' comment 'åˆ é™¤æ ‡è®°ï¼ˆ0ï¼šæ­£å¸¸ï¼›1ï¼šåˆ é™¤ï¼‰',
+    login_ip varchar(100) comment 'æœ€åç™»é™†IP',
+    login_date datetime comment 'æœ€åç™»é™†æ—¶é—´',
     primary key (id),
 	key (area_id),
 	key (office_id),
 	key (login_name),
 	key (del_flag)
-) engine=innodb comment 'ÏµÍ³ÓÃ»§±í';
+) engine=innodb comment 'ç³»ç»Ÿç”¨æˆ·è¡¨';
 
--- ÏµÍ³ÓÃ»§Óë½ÇÉ«¹ØÁª±í
+-- ç³»ç»Ÿç”¨æˆ·ä¸è§’è‰²å…³è”è¡¨
 drop table if exists sys_user_role;
 create table sys_user_role (
-    user_id bigint not null comment 'ÓÃ»§±àºÅ',
-    role_id bigint not null comment '½ÇÉ«±àºÅ',
+    user_id bigint not null comment 'ç”¨æˆ·ç¼–å·',
+    role_id bigint not null comment 'è§’è‰²ç¼–å·',
 	primary key (user_id,role_id)
-) engine=innodb comment 'ÏµÍ³ÓÃ»§Óë½ÇÉ«¹ØÁª±í';
+) engine=innodb comment 'ç³»ç»Ÿç”¨æˆ·ä¸è§’è‰²å…³è”è¡¨';
+
+drop table if exists oa_leave;
+create table oa_leave (
+  id bigint(20) not null auto_increment,
+  process_instance_id varchar(64) collate utf8_bin default null,
+  user_id bigint(20) not null,
+  start_time timestamp not null default current_timestamp on update current_timestamp,
+  end_time timestamp not null default '0000-00-00 00:00:00',
+  leave_type varchar(20) collate utf8_bin default null,
+  reason varchar(2000) collate utf8_bin default null,
+  apply_time timestamp not null default '0000-00-00 00:00:00',
+  reality_start_time timestamp not null default '0000-00-00 00:00:00',
+  reality_end_time timestamp not null default '0000-00-00 00:00:00',
+  create_date timestamp not null default '0000-00-00 00:00:00' on update current_timestamp,
+  primary key (id)
+) engine=innodb;

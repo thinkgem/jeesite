@@ -34,6 +34,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.common.utils.Collections3;
@@ -91,7 +92,7 @@ public class User extends BaseEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="area_id")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -105,7 +106,7 @@ public class User extends BaseEntity {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="office_id")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -237,7 +238,7 @@ public class User extends BaseEntity {
 	public void setLoginDate(Date loginDate) {
 		this.loginDate = loginDate;
 	}
-
+	@JsonIgnore
 	//多对多定义
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
@@ -254,7 +255,7 @@ public class User extends BaseEntity {
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
-
+	@JsonIgnore
 	@Transient
 	public List<Long> getRoleIdList() {
 		List<Long> roleIdList = Lists.newArrayList();

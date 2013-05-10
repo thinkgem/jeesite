@@ -21,6 +21,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 6. 提供基本功能模块的源代码生成器，提高开发效率及质量。
 7. 提供常用工具类封装，日志、缓存、验证、字典、组织机构等，常用标签（taglib），获取当前组织机构、字典等数据。
 8. 完全兼容目前最流行浏览器（IE6、IE7+、Firefox、Chrome）。
+9.集成工作流Activiti5
 
 ##使用技术
 
@@ -28,7 +29,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * Core Framework：Spring Framework 3.2。
 * Security Framework：Apache Shiro 1.2。
-
+*工作流：Activiti5
 2、Web相关
 
 * MVC Framework：SpringMVC 3.2。

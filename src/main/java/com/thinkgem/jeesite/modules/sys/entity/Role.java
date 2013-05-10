@@ -47,6 +47,8 @@ public class Role extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	private Long id;	 // 编号
 	private String name; // 角色名称
+	private String enname;//英文名称
+	private String roleType;//权限类型
 	private User user;		// 创建者
 	private String delFlag; // 删除标记（0：正常；1：删除）
 
@@ -85,6 +87,24 @@ public class Role extends BaseEntity {
 		this.name = name;
 	}
 
+	@Length(min=1, max=100)
+	public String getEnname() {
+		return enname;
+	}
+
+	public void setEnname(String enname) {
+		this.enname = enname;
+	}
+	
+	@Length(min=1, max=100)
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
