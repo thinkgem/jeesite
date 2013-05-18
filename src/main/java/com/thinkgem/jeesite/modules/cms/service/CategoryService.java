@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 栏目Service
  * @author ThinkGem
- * @version 2013-4-21
+ * @version 2013-5-15
  */
 @Service
 @Transactional(readOnly = true)
@@ -48,16 +48,19 @@ public class CategoryService extends BaseService {
 	
 	@SuppressWarnings("unchecked")
 	public List<Category> findByUser(boolean isCurrentSite, String module){
+		
 		List<Category> list = (List<Category>)UserUtils.getCache("categoryList");
 		if (list == null){
 			User user = UserUtils.getUser();
-			if (user.isAdmin()){
-				list = categoryDao.findAllList();
-			}else{
-				list = categoryDao.findByUserId(user.getId());
-			}
+			DetachedCriteria dc = categoryDao.createDetachedCriteria();
+			dc.createAlias("office", "office").createAlias("user", "user");
+			dc.add(dataScopeFilter(user, "office", "user"));
+			dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
+			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
+			list = categoryDao.find(dc);
 			UserUtils.putCache("categoryList", list);
 		}
+		
 		if (isCurrentSite){
 			List<Category> categoryList = Lists.newArrayList(); 
 			for (Category e : list){

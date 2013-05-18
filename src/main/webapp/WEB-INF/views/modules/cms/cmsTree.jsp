@@ -6,7 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<style type="text/css">
-		.ztree {margin-top:5px;*margin:-5px 0 5px -2px;_position:relative;_margin:0;_top:-10px;}
+		.ztree {margin-top:5px;*margin:-5px 0 5px -2px;_position:relative;_margin:0;_top:-10px;overflow:hidden;}
 		.ztree li span.button.level0, .ztree li a.level0 {display:none;height:0;}
 		.ztree li ul.level0 {padding:0;background:none;}
 	</style>

@@ -32,27 +32,25 @@
 					}else{
 						nodes = tree.getSelectedNodes();
 					}
-					for(var i=0; i<nodes.length; i++) {
-						if ("${checked}" == "true" && nodes[i].isParent){
+					for(var i=0; i<nodes.length; i++) {//<c:if test="${checked}">
+						if (nodes[i].isParent){
 							continue; // 如果为复选框选择，则过滤掉父节点
-						}
-						if ("${notAllowSelectRoot}" == "true" && nodes[i].level == 0){
+						}//</c:if><c:if test="${notAllowSelectRoot}">
+						if (nodes[i].level == 0){
 							top.$.jBox.tip("不能选择根节点（"+nodes[i].name+"）请重新选择。");
 							return false;
-						}
-						if ("${notAllowSelectParent}" == "true" && nodes[i].isParent){
+						}//</c:if><c:if test="${notAllowSelectParent}">
+						if (nodes[i].isParent){
 							top.$.jBox.tip("不能选择父节点（"+nodes[i].name+"）请重新选择。");
 							return false;
-						}
-						if ("${module}" != "" && "${selectScopeModule}" == "true"){
-							if (nodes[i].module == ""){
-								top.$.jBox.tip("不能选择公共模型（"+nodes[i].name+"）请重新选择。");
-								return false;
-							}else if (nodes[i].module != "${module}"){
-								top.$.jBox.tip("不能选择当前栏目以外的栏目模型，请重新选择。");
-								return false;
-							}
-						}
+						}//</c:if><c:if test="${not empty module && selectScopeModule}">
+						if (nodes[i].module == ""){
+							top.$.jBox.tip("不能选择公共模型（"+nodes[i].name+"）请重新选择。");
+							return false;
+						}else if (nodes[i].module != "${module}"){
+							top.$.jBox.tip("不能选择当前栏目以外的栏目模型，请重新选择。");
+							return false;
+						}//</c:if>
 						ids.push(nodes[i].id);
 						names.push(nodes[i].name);
 					}

@@ -28,7 +28,7 @@
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form:form>
 	<tags:message content="${r"${message}"}"/>
-	<table id="contentTable" class="table table-striped table-bordered ">
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>名称</th><th>备注</th><shiro:hasPermission name="${permissionPrefix}:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${r"${page.list}"}" var="${className}">

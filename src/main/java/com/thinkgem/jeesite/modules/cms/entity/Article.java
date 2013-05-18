@@ -45,7 +45,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 /**
  * 文章Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_article")
@@ -61,7 +61,7 @@ public class Article extends BaseEntity {
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
 	private String thumb;	// 缩略图
 	private String keywords;// 关键字
-	private String desciption;// 描述、摘要
+	private String description;// 描述、摘要
 	private String status;	// 状态状态（0：发布；1：删除；2：审核；）
 	private Integer weight;	// 权重，越大越靠前
 	private Integer hits;	// 点击数
@@ -105,7 +105,6 @@ public class Article extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Category getCategory() {
 		return category;
@@ -118,7 +117,6 @@ public class Article extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {
 		return user;
 	}
@@ -167,12 +165,12 @@ public class Article extends BaseEntity {
 
 	@Length(min=0, max=255)
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
-	public String getDesciption() {
-		return desciption;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)

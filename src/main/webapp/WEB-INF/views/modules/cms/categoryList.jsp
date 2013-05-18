@@ -24,10 +24,11 @@
 	</ul>
 	<tags:message content="${message}"/>
 	<table id="treeTable" class="table table-striped table-bordered table-condensed">
-		<tr><th>栏目名称</th><th>栏目模型</th><th>排序</th><th title="是否在导航中显示该栏目">导航菜单</th><th title="是否在分类页中显示该栏目的文章列表">栏目列表</th><th>展现方式</th><shiro:hasPermission name="cms:category:edit"><th>操作</th></shiro:hasPermission></tr>
+		<tr><th>栏目名称</th><th>归属机构</th><th>栏目模型</th><th>排序</th><th title="是否在导航中显示该栏目">导航菜单</th><th title="是否在分类页中显示该栏目的文章列表">栏目列表</th><th>展现方式</th><shiro:hasPermission name="cms:category:edit"><th>操作</th></shiro:hasPermission></tr>
 		<c:forEach items="${list}" var="category">
 			<tr id="${category.id}" pId="${category.parent.id ne 1?category.parent.id:'0'}">
 				<td><a href="${ctx}/cms/category/form?id=${category.id}">${category.name}</a></td>
+				<td>${category.office.name}</td>
 				<td>${fns:getDictLabel(category.module, 'cms_module', '公共模型')}</td>
 				<td>${category.sort}</td>
 				<td>${fns:getDictLabel(category.inMenu, 'show_hide', '隐藏')}</td>

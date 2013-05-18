@@ -20,14 +20,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 角色Controller
  * @author ThinkGem
- * @version 2013-4-21
+ * @version 2013-5-15
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/sys/role")
@@ -36,8 +37,11 @@ public class RoleController extends BaseController {
 	@Autowired
 	private SystemService systemService;
 	
+//	@Autowired
+//	private CategoryService categoryService;
+
 	@Autowired
-	private CategoryService categoryService;
+	private OfficeService officeService;
 	
 	@ModelAttribute("role")
 	public Role get(@RequestParam(required=false) Long id) {
@@ -58,9 +62,14 @@ public class RoleController extends BaseController {
 
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = "form")
-	public String form(Model model) {
+	public String form(Role role, Model model) {
+		if (role.getOffice()==null){
+			role.setOffice(UserUtils.getUser().getOffice());
+		}
+		model.addAttribute("role", role);
 		model.addAttribute("menuList", systemService.findAllMenu());
-		model.addAttribute("categoryList", categoryService.findByUser(false, null));
+//		model.addAttribute("categoryList", categoryService.findByUser(false, null));
+		model.addAttribute("officeList", officeService.findAll());
 		return "modules/sys/roleForm";
 	}
 	
@@ -68,11 +77,11 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "save")
 	public String save(Role role, Model model, String oldName, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, role)){
-			return form(model);
+			return form(role, model);
 		}
 		if (!"true".equals(checkName(oldName, role.getName()))){
 			addMessage(model, "保存角色'" + role.getName() + "'失败, 角色名已存在");
-			return form(model);
+			return form(role, model);
 		}
 		systemService.saveRole(role);
 		addMessage(redirectAttributes, "保存角色'" + role.getName() + "'成功");

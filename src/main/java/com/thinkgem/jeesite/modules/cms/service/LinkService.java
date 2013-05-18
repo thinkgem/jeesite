@@ -25,6 +25,7 @@ import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
 import com.thinkgem.jeesite.modules.cms.dao.LinkDao;
+import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Link;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
@@ -77,6 +78,8 @@ public class LinkService extends BaseService {
 		if (link.getUser()!=null && link.getUser().getId()>0){
 			dc.add(Restrictions.eq("user.id", link.getUser().getId()));
 		}
+		dc.createAlias("category.office", "categoryOffice").createAlias("user", "user");
+		dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "user"));
 		dc.add(Restrictions.eq("status", link.getStatus()));
 		dc.addOrder(Order.desc("weight"));
 		dc.addOrder(Order.desc("updateDate"));
@@ -91,6 +94,13 @@ public class LinkService extends BaseService {
 		// 如果没有审核权限，则将当前内容改为待审核状态
 		if (!SecurityUtils.getSubject().isPermitted("cms:link:audit")){
 			link.setStatus(Link.STATUS_AUDIT);
+		}
+		// 如果栏目不需要审核，则将该内容设为发布状态
+		if (link.getCategory()!=null&&link.getCategory().getId()!=null){
+			Category category = categoryDao.findOne(link.getCategory().getId());
+			if (!Article.YES.equals(category.getIsAudit())){
+				link.setStatus(Article.STATUS_RELEASE);
+			}
 		}
 		link.setUpdateDate(new Date());
 		linkDao.clear();

@@ -28,7 +28,7 @@
 		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered ">
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>栏目</th><th>名称</th><th>权重</th><th>发布者</th><th>更新时间</th><shiro:hasPermission name="cms:link:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="link">

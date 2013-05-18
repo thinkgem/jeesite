@@ -27,7 +27,7 @@
 		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered ">
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>留言分类</th><th>留言内容</th><th>留言人</th><th>留言时间</th><th>回复人</th><th>回复内容</th><th>回复时间</th><shiro:hasPermission name="cms:guestbook:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="guestbook">

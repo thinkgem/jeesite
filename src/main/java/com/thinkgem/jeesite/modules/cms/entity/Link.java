@@ -28,7 +28,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 /**
  * 链接Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_link")
@@ -81,7 +81,6 @@ public class Link extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Category getCategory() {
 		return category;
@@ -94,7 +93,6 @@ public class Link extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getUser() {
 		return user;
 	}

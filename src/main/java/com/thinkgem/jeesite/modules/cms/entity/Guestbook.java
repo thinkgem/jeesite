@@ -29,7 +29,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 /**
  * 留言Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_guestbook")
@@ -148,7 +148,6 @@ public class Guestbook extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="re_user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getReUser() {
 		return reUser;
 	}

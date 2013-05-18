@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
@@ -32,6 +32,8 @@ import org.apache.lucene.search.highlight.SimpleFragmenter;
 import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.util.Version;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
@@ -44,6 +46,8 @@ import org.hibernate.search.Search;
 import org.hibernate.search.filter.impl.CachingWrapperFilter;
 import org.hibernate.search.query.DatabaseRetrievalMethod;
 import org.hibernate.search.query.ObjectLookupMethod;
+import org.hibernate.transform.ResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.thinkgem.jeesite.common.utils.Reflections;
@@ -52,7 +56,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 /**
  * DAO支持类实现
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  * @param <T>
  */
 public class BaseDaoImpl<T> implements BaseDao<T> {
@@ -113,11 +117,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @return
 	 */
     @SuppressWarnings("unchecked")
-	public Page<T> find(Page<T> page, String qlString, Object... parameter){
+	public <E> Page<E> find(Page<E> page, String qlString, Object... parameter){
 		// get count
     	if (!page.isDisabled() && !page.isNotCount()){
-	        String countQlString = "select count(*)" + removeSelect(removeOrders(qlString));  
-	        page.setCount((Long)createQuery(countQlString, parameter).getSingleResult());
+	        String countQlString = "select count(*) " + removeSelect(removeOrders(qlString));  
+	        page.setCount(Long.valueOf(createQuery(countQlString, parameter).uniqueResult().toString()));
 			if (page.getCount() < 1) {
 				return page;
 			}
@@ -133,7 +137,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	        query.setFirstResult(page.getFirstResult());
 	        query.setMaxResults(page.getMaxResults()); 
         }
-        page.setList(query.getResultList());
+        page.setList(query.list());
 		return page;
     }
     
@@ -144,10 +148,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> find(String qlString, Object... parameter){
-		return createQuery(qlString, parameter).getResultList();
+	public <E> List<E> find(String qlString, Object... parameter){
+		Query query = createQuery(qlString, parameter);
+		return query.list();
 	}
-    
+
 	/**
 	 * QL 更新
 	 * @param qlString
@@ -165,12 +170,12 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @return
 	 */
 	public Query createQuery(String qlString, Object... parameter){
-		Query query = getEntityManager().createQuery(qlString);
+		Query query = getSession().createQuery(qlString);
 		setParameter(query, parameter);
 		return query;
 	}
 	
-	// -------------- QL Query --------------
+	// -------------- SQL Query --------------
 
     /**
 	 * SQL 分页查询
@@ -179,40 +184,66 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
+	public <E> Page<E> findBySql(Page<E> page, String sqlString, Object... parameter){
+    	return findBySql(page, sqlString, null, parameter);
+    }
+    
+    /**
+	 * SQL 分页查询
+	 * @param page
+	 * @param sqlString
+	 * @param resultClass
+	 * @param parameter
+	 * @return
+	 */
     @SuppressWarnings("unchecked")
-	public Page<T> findBySql(Page<T> page, String sqlString, Object... parameter){
+	public <E> Page<E> findBySql(Page<E> page, String sqlString, Class<?> resultClass, Object... parameter){
 		// get count
     	if (!page.isDisabled() && !page.isNotCount()){
-	        String countQlString = "select count(*)" + removeSelect(removeOrders(sqlString));  
-	        page.setCount((Long)createSqlQuery(countQlString, parameter).getSingleResult());
+	        String countQlString = "select count(*) " + removeSelect(removeOrders(sqlString));  
+	        page.setCount(Long.valueOf(createSqlQuery(countQlString, parameter).uniqueResult().toString()));
 			if (page.getCount() < 1) {
 				return page;
 			}
     	}
     	// order by
-    	String ql = sqlString;
+    	String sql = sqlString;
 		if (StringUtils.isNotBlank(page.getOrderBy())){
-			ql += " order by " + page.getOrderBy();
+			sql += " order by " + page.getOrderBy();
 		}
-        Query query = createSqlQuery(ql, parameter); 
+        SQLQuery query = createSqlQuery(sql, parameter); 
 		// set page
         if (!page.isDisabled()){
 	        query.setFirstResult(page.getFirstResult());
 	        query.setMaxResults(page.getMaxResults()); 
         }
-        page.setList(query.getResultList());
+        setResultTransformer(query, resultClass);
+        page.setList(query.list());
 		return page;
     }
-
+	
 	/**
 	 * SQL 查询
 	 * @param sqlString
 	 * @param parameter
 	 * @return
 	 */
+	public <E> List<E> findBySql(String sqlString, Object... parameter){
+		return findBySql(sqlString, null, parameter);
+	}
+	
+	/**
+	 * SQL 查询
+	 * @param sqlString
+	 * @param resultClass
+	 * @param parameter
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
-	public List<T> findBySql(String sqlString, Object... parameter){
-		return createSqlQuery(sqlString, parameter).getResultList();
+	public <E> List<E> findBySql(String sqlString, Class<?> resultClass, Object... parameter){
+		SQLQuery query = createSqlQuery(sqlString, parameter);
+		setResultTransformer(query, resultClass);
+		return query.list();
 	}
 	
 	/**
@@ -231,14 +262,31 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-	public Query createSqlQuery(String sqlString, Object... parameter){
-		Query query = getEntityManager().createNativeQuery(sqlString, entityClass);
+	public SQLQuery createSqlQuery(String sqlString, Object... parameter){
+		SQLQuery query = getSession().createSQLQuery(sqlString);
 		setParameter(query, parameter);
 		return query;
 	}
 	
 	// -------------- Query Tools --------------
 
+	/**
+	 * 设置查询结果类型
+	 * @param query
+	 * @param resultClass
+	 */
+	private void setResultTransformer(SQLQuery query, Class<?> resultClass){
+		if (resultClass != null){
+			if (resultClass == Map.class){
+				query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+			}else if (resultClass == List.class){
+				query.setResultTransformer(Transformers.TO_LIST);
+			}else{
+				query.addEntity(resultClass);
+			}
+		}
+	}
+	
 	/**
 	 * 设置查询参数
 	 * @param query
@@ -289,14 +337,27 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		return find(page, createDetachedCriteria());
 	}
 	
+
 	/**
 	 * 使用检索标准对象分页查询
-	 * @param detachedCriteria
 	 * @param page
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria) {
+		return find(page, detachedCriteria, Criteria.DISTINCT_ROOT_ENTITY);
+	}
+	
+	/**
+	 * 使用检索标准对象分页查询
+	 * @param page
+	 * @param detachedCriteria
+	 * @param resultTransformer
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria) {
+	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria, ResultTransformer resultTransformer) {
 		// get count
 		if (!page.isDisabled() && !page.isNotCount()){
 			page.setCount(count(detachedCriteria));
@@ -305,7 +366,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 			}
 		}
 		Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
-		criteria.setResultTransformer(Criteria.ROOT_ENTITY);
+		criteria.setResultTransformer(resultTransformer);
 		// set page
 		if (!page.isDisabled()){
 	        criteria.setFirstResult(page.getFirstResult());
@@ -335,10 +396,20 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @param detachedCriteria
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<T> find(DetachedCriteria detachedCriteria) {
+		return find(detachedCriteria, Criteria.DISTINCT_ROOT_ENTITY);
+	}
+	
+	/**
+	 * 使用检索标准对象查询
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> find(DetachedCriteria detachedCriteria, ResultTransformer resultTransformer) {
 		Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
-		criteria.setResultTransformer(Criteria.ROOT_ENTITY);
+		criteria.setResultTransformer(resultTransformer);
 		return criteria.list(); 
 	}
 	
@@ -488,9 +559,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 			try {
 				for (String field : fields){
 					String text = StringUtils.replaceHtml((String)Reflections.invokeGetter(entity, field));
-					String desciption = highlighter.getBestFragment(analyzer,field, text);
-					if(desciption!=null){
-						Reflections.invokeSetter(entity, fields[0], desciption);
+					String description = highlighter.getBestFragment(analyzer,field, text);
+					if(description!=null){
+						Reflections.invokeSetter(entity, fields[0], description);
 						break;
 					}
 					Reflections.invokeSetter(entity, fields[0], StringUtils.abbr(text, 130));

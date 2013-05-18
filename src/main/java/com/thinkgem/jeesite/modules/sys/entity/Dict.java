@@ -21,7 +21,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 /**
  * 字典Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "sys_dict")
@@ -30,10 +30,10 @@ public class Dict extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
-	private String label;	// 值
-	private String value;	// 键
+	private String label;	// 标签名
+	private String value;	// 数据值
 	private String type;	// 类型
-	private String desciption;// 描述
+	private String description;// 描述
 	private Integer sort;	// 排序
 	private String delFlag;	// 删除标记（0：正常；1：删除）
 
@@ -86,12 +86,12 @@ public class Dict extends BaseEntity {
 	}
 
 	@Length(min=0, max=100)
-	public String getDesciption() {
-		return desciption;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@NotNull

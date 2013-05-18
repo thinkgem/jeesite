@@ -34,7 +34,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 /**
  * 区域Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "sys_area")
@@ -45,10 +45,11 @@ public class Area extends BaseEntity {
 	private Long id;		// 编号
 	private Area parent;	// 父级编号
 	private String parentIds; // 所有父级编号
-	private String name; 	// 区域名称
 	private String code; 	// 区域编码
+	private String name; 	// 区域名称
+	private String type; 	// 区域类型（1：国家；2：省份、直辖市；3：地市；4：区县）
 	private String remarks; // 备注
-	private String delFlag; // 删除标记（0：正常；1：删除）
+	private String delFlag; // 删除标记（0：正常；1：删除） trash
 	
 	private List<Office> officeList = Lists.newArrayList(); // 部门列表
 	private List<Area> childList = Lists.newArrayList();	// 拥有子区域列表
@@ -77,7 +78,6 @@ public class Area extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Area getParent() {
 		return parent;
@@ -103,6 +103,15 @@ public class Area extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Length(min=1, max=1)
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Length(min=0, max=100)

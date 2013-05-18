@@ -41,17 +41,17 @@
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">所属区域:</label>
+			<label class="control-label">归属公司:</label>
 			<div class="controls">
-                <tags:treeselect id="area" name="area.id" value="${user.area.id}" labelName="area.name" labelValue="${user.area.name}"
-					title="区域" url="/sys/area/treeData"/>
+                <tags:treeselect id="area" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
+					title="区域" url="/sys/office/treeData?type=1"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">所属部门:</label>
+			<label class="control-label">归属部门:</label>
 			<div class="controls">
                 <tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
-					title="部门" url="/sys/office/treeData"/>
+					title="部门" url="/sys/office/treeData?type=2"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -59,6 +59,12 @@
 			<div class="controls">
 				<input id="oldLoginName" name="oldLoginName" type="hidden" value="${user.loginName}">
 				<form:input path="loginName" htmlEscape="false" maxlength="50" class="required userName"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">工号:</label>
+			<div class="controls">
+				<form:input path="no" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -116,7 +122,7 @@
 		<div class="control-group">
 			<label class="control-label">用户角色:</label>
 			<div class="controls">
-				<form:checkboxes path="roleIdList" items="${allRoles}" itemLabel="name" itemValue="id" htmlEscape="false" class="required" />
+				<form:checkboxes path="roleIdList" items="${allRoles}" itemLabel="name" itemValue="id" htmlEscape="false" class="required"/>
 			</div>
 		</div>
 		<c:if test="${not empty user.id}">
@@ -134,7 +140,7 @@
 			</div>
 		</c:if>
 		<div class="form-actions">
-			<shiro:hasPermission name="sys:role:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="sys:user:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

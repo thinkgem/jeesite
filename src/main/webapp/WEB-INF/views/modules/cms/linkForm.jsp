@@ -11,7 +11,7 @@
 				submitHandler: function(form){
 					if ($("#categoryId").val()==""){
 						$("#categoryName").focus();
-						top.$.jBox.tip('请选择所属栏目','warning');
+						top.$.jBox.tip('请选择归属栏目','warning');
 					}else{
 						loading('正在提交，请稍等...');
 						form.submit();
@@ -39,7 +39,7 @@
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">所属栏目:</label>
+			<label class="control-label">归属栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
 					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="true" notAllowSelectParent="true"/>

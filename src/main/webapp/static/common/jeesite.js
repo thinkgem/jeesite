@@ -31,6 +31,7 @@ function windowOpen(url, name, width, height){
 
 // 显示加载框
 function loading(mess){
+	top.$.jBox.tip.mess = null;
 	top.$.jBox.tip(mess,'loading',{opacity:0});
 }
 

@@ -242,7 +242,8 @@ public class ExportExcel {
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 		Font titleFont = wb.createFont();
-		titleFont.setFontHeightInPoints((short) 18);
+		titleFont.setFontName("Arial");
+		titleFont.setFontHeightInPoints((short) 16);
 		titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		style.setFont(titleFont);
 		styles.put("title", style);
@@ -257,6 +258,10 @@ public class ExportExcel {
 		style.setTopBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
 		style.setBorderBottom(CellStyle.BORDER_THIN);
 		style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+		Font dataFont = wb.createFont();
+		dataFont.setFontName("Arial");
+		dataFont.setFontHeightInPoints((short) 10);
+		style.setFont(dataFont);
 		styles.put("data", style);
 		
 		style = wb.createCellStyle();
@@ -281,7 +286,9 @@ public class ExportExcel {
 		style.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
 		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		Font headerFont = wb.createFont();
-		headerFont.setFontHeightInPoints((short) 11);
+		headerFont.setFontName("Arial");
+		headerFont.setFontHeightInPoints((short) 10);
+		headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		headerFont.setColor(IndexedColors.WHITE.getIndex());
 		style.setFont(headerFont);
 		styles.put("header", style);

@@ -54,7 +54,7 @@
 		<div class="control-group">
 			<label class="control-label">描述:</label>
 			<div class="controls">
-				<form:input path="desciption" htmlEscape="false" maxlength="50" class="required"/>
+				<form:input path="description" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">

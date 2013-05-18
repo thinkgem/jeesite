@@ -5,18 +5,21 @@
  */
 package com.thinkgem.jeesite.modules.sys.utils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.subject.Subject;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
+import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
@@ -30,10 +33,10 @@ import com.thinkgem.jeesite.modules.sys.security.SystemRealm.Principal;
 /**
  * 用户工具类
  * @author ThinkGem
- * @version 2013-4-21
+ * @version 2013-5-15
  */
 @Service
-public class UserUtils implements ApplicationContextAware {
+public class UserUtils extends BaseService implements ApplicationContextAware {
 	
 	private static UserDao userDao;
 	private static MenuDao menuDao;
@@ -82,12 +85,12 @@ public class UserUtils implements ApplicationContextAware {
 		@SuppressWarnings("unchecked")
 		List<Area> areaList = (List<Area>)getCache("areaList");
 		if (areaList == null){
-			User user = getUser();
-			if (user.isAdmin()){
+//			User user = getUser();
+//			if (user.isAdmin()){
 				areaList = areaDao.findAllList();
-			}else{
-				areaList = areaDao.findAllChild(user.getArea().getId(), "%,"+user.getArea().getId()+",%");
-			}
+//			}else{
+//				areaList = areaDao.findAllChild(user.getArea().getId(), "%,"+user.getArea().getId()+",%");
+//			}
 			putCache("areaList", areaList);
 		}
 		return areaList;
@@ -98,11 +101,16 @@ public class UserUtils implements ApplicationContextAware {
 		List<Office> officeList = (List<Office>)getCache("officeList");
 		if (officeList == null){
 			User user = getUser();
-			if (user.isAdmin()){
-				officeList = officeDao.findAllList();
-			}else{
-				officeList = officeDao.findAllChild(user.getOffice().getId(), "%,"+user.getOffice().getId()+",%");
-			}
+//			if (user.isAdmin()){
+//				officeList = officeDao.findAllList();
+//			}else{
+//				officeList = officeDao.findAllChild(user.getOffice().getId(), "%,"+user.getOffice().getId()+",%");
+//			}
+			DetachedCriteria dc = officeDao.createDetachedCriteria();
+			dc.add(dataScopeFilter(user, dc.getAlias(), ""));
+			dc.add(Restrictions.eq("delFlag", Office.DEL_FLAG_NORMAL));
+			dc.addOrder(Order.asc("code"));
+			officeList = officeDao.find(dc);
 			putCache("officeList", officeList);
 		}
 		return officeList;
@@ -124,7 +132,7 @@ public class UserUtils implements ApplicationContextAware {
 	
 	public static Object getCache(String key, Object defaultValue) {
 		Object obj = getCacheMap().get(key);
-		return obj==defaultValue?defaultValue:obj;
+		return obj==null?defaultValue:obj;
 	}
 
 	public static void putCache(String key, Object value) {

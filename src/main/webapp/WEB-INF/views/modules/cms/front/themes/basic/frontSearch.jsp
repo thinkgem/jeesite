@@ -5,7 +5,7 @@
 <head>
 	<title>全站搜索</title>
 	<meta name="decorator" content="cms_default_${site.theme}"/>
-	<meta name="description" content="${site.desciption}" />
+	<meta name="description" content="${site.description}" />
 	<meta name="keywords" content="${site.keywords}" />
 	<script src="${ctxStatic}/jquery/jquery.highlight.min.js" type="text/javascript"></script>
 	<style type="text/css">
@@ -47,7 +47,7 @@
 	</form:form>
 	<dl class="search"><c:forEach items="${page.list}" var="article">
 		<dt><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" class="title" target="_blank">${fns:abbr(article.title,80)}</a></dt>
-		<dd>${article.desciption}<span class="info"><br/>${article.keywords} [<fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>]</span><br/>
+		<dd>${article.description}<span class="info"><br/>${article.keywords} [<fmt:formatDate value="${article.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>]</span><br/>
 	</c:forEach>
 	<c:if test="${fn:length(page.list) eq 0}">
 		<dt><c:if test="${empty q}">请键入要查找的关键字。</c:if><c:if test="${not empty q}">抱歉，没有找到与“${q}”相关内容。</c:if><br/><br/>建议：</dt>

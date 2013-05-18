@@ -28,7 +28,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 /**
  * 评论Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_comment")
@@ -118,7 +118,6 @@ public class Comment extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="audit_user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public User getAuditUser() {
 		return auditUser;
 	}

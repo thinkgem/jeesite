@@ -19,9 +19,9 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
- * 部门Service
+ * 机构Service
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Service
 @Transactional(readOnly = true)

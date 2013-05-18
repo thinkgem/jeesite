@@ -22,7 +22,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 站点Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_site")
@@ -33,7 +33,7 @@ public class Site extends BaseEntity {
 	private Long id;		// 编号
 	private String name;	// 站点名称
 	private String title;	// 站点标题
-	private String desciption;// 描述，填写有助于搜索引擎优化
+	private String description;// 描述，填写有助于搜索引擎优化
 	private String keywords;// 关键字，填写有助于搜索引擎优化
 	private String theme;	// 主题
 	private String copyright;// 版权信息
@@ -79,12 +79,12 @@ public class Site extends BaseEntity {
 	}
 	
 	@Length(min=0, max=255)
-	public String getDesciption() {
-		return desciption;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Length(min=0, max=255)

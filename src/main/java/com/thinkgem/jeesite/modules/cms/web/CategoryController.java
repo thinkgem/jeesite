@@ -28,6 +28,9 @@ import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 栏目Controller
@@ -40,6 +43,9 @@ public class CategoryController extends BaseController {
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private OfficeService officeService;
 	
 	@ModelAttribute("category")
 	public Category get(@RequestParam(required=false) Long id) {
@@ -63,6 +69,12 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "form")
 	public String form(Category category, Model model) {
+		User user = UserUtils.getUser();
+		if (category.getOffice()==null || category.getOffice().getId()==null){
+			category.setOffice(user.getOffice());
+		}
+		category.setOffice(officeService.get(category.getOffice().getId()));
+		model.addAttribute("office", category.getOffice());
 		if (category.getParent()==null||category.getParent().getId()==null){
 			category.setParent(new Category(1L));
 		}

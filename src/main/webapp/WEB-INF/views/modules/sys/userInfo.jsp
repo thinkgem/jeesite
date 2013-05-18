@@ -32,13 +32,13 @@
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/info" method="post" class="form-horizontal">
 		<tags:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">所属区域:</label>
+			<label class="control-label">归属公司:</label>
 			<div class="controls">
-				<label class="lbl">${user.area.name}</label>
+				<label class="lbl">${user.company.name}</label>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">所属部门:</label>
+			<label class="control-label">归属部门:</label>
 			<div class="controls">
 				<label class="lbl">${user.office.name}</label>
 			</div>

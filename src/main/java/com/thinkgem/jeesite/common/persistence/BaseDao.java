@@ -8,20 +8,21 @@ package com.thinkgem.jeesite.common.persistence;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.search.FullTextSession;
+import org.hibernate.transform.ResultTransformer;
 
 /**
  * DAO支持接口
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  * @param <T>
  */
 public interface BaseDao<T> {
@@ -55,7 +56,7 @@ public interface BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-    public Page<T> find(Page<T> page, String qlString, Object... parameter);
+    public <E> Page<E> find(Page<E> page, String qlString, Object... parameter);
     
     /**
 	 * QL 查询
@@ -63,7 +64,7 @@ public interface BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-	public List<T> find(String qlString, Object... parameter);
+	public <E> List<E> find(String qlString, Object... parameter);
     
 	/**
 	 * QL 更新
@@ -90,7 +91,17 @@ public interface BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-    public Page<T> findBySql(Page<T> page, String sqlString, Object... parameter);
+    public <E> Page<E> findBySql(Page<E> page, String sqlString, Object... parameter);
+    
+    /**
+	 * SQL 分页查询
+	 * @param page
+	 * @param qlString
+	 * @param resultClass
+	 * @param parameter
+	 * @return
+	 */
+    public <E> Page<E> findBySql(Page<E> page, String sqlString, Class<?> resultClass, Object... parameter);
 
 	/**
 	 * SQL 查询
@@ -98,7 +109,16 @@ public interface BaseDao<T> {
 	 * @param parameter
 	 * @return
 	 */
-	public List<T> findBySql(String sqlString, Object... parameter);
+	public <E> List<E> findBySql(String sqlString, Object... parameter);
+	
+	/**
+	 * SQL 查询
+	 * @param sqlString
+	 * @param resultClass
+	 * @param parameter
+	 * @return
+	 */
+	public <E> List<E> findBySql(String sqlString, Class<?> resultClass, Object... parameter);
 	
 	/**
 	 * SQL 更新
@@ -127,11 +147,20 @@ public interface BaseDao<T> {
 	
 	/**
 	 * 使用检索标准对象分页查询
-	 * @param detachedCriteria
 	 * @param page
+	 * @param detachedCriteria
 	 * @return
 	 */
 	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria);
+	
+	/**
+	 * 使用检索标准对象分页查询
+	 * @param page
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria, ResultTransformer resultTransformer);
 
 	/**
 	 * 使用检索标准对象查询
@@ -139,6 +168,14 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	public List<T> find(DetachedCriteria detachedCriteria);
+	
+	/**
+	 * 使用检索标准对象查询
+	 * @param detachedCriteria
+	 * @param resultTransformer
+	 * @return
+	 */
+	public List<T> find(DetachedCriteria detachedCriteria, ResultTransformer resultTransformer);
 	
 	/**
 	 * 使用检索标准对象查询记录数

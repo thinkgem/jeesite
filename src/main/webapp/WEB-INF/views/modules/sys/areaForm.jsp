@@ -41,15 +41,23 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">名称:</label>
+			<label class="control-label">区域名称:</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">编码:</label>
+			<label class="control-label">区域编码:</label>
 			<div class="controls">
 				<form:input path="code" htmlEscape="false" maxlength="50"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">区域类型:</label>
+			<div class="controls">
+				<form:select path="type">
+					<form:options items="${fns:getDictList('sys_area_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group">

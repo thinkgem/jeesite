@@ -34,6 +34,13 @@
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
+			<label class="control-label">归属机构:</label>
+			<div class="controls">
+                <tags:treeselect id="office" name="office.id" value="${category.office.id}" labelName="office.name" labelValue="${category.office.name}"
+					title="机构" url="/sys/office/treeData"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">上级栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="parent.id" value="${category.parent.id}" labelName="parent.name" labelValue="${category.parent.name}"
@@ -66,19 +73,20 @@
 			<label class="control-label">链接:</label>
 			<div class="controls">
 				<form:input path="href" htmlEscape="false" maxlength="200"/>
+				<span class="help-inline">栏目超链接地址，优先级“高”</span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">目标:</label>
 			<div class="controls">
 				<form:input path="target" htmlEscape="false" maxlength="200"/>
-				<span class="help-inline">在新窗口，打开请填写“_blank”</span>
+				<span class="help-inline">栏目超链接打开的目标窗口，新窗口打开，请填写：“_blank”</span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">描述:</label>
 			<div class="controls">
-				<form:textarea path="desciption" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>
+				<form:textarea path="description" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -92,6 +100,7 @@
 			<label class="control-label">排序:</label>
 			<div class="controls">
 				<form:input path="sort" htmlEscape="false" maxlength="11" class="required digits"/>
+				<span class="help-inline">栏目的排列次序</span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -122,6 +131,12 @@
 			<label class="control-label">是否允许评论:</label>
 			<div class="controls">
 				<form:radiobuttons path="allowComment" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">是否需要审核:</label>
+			<div class="controls">
+				<form:radiobuttons path="isAudit" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</div>
 		</div>
 		<div class="form-actions">

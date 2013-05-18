@@ -11,7 +11,7 @@
 				submitHandler: function(form){
 					if ($("#categoryId").val()==""){
 						$("#categoryName").focus();
-						top.$.jBox.tip('请选择所属栏目','warning');
+						top.$.jBox.tip('请选择归属栏目','warning');
 					}else if (CKEDITOR.instances.content.getData()==""){
 						top.$.jBox.tip('请填写正文','warning');
 					}else{
@@ -52,7 +52,7 @@
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">所属栏目:</label>
+			<label class="control-label">归属栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
 					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" notAllowSelectRoot="true" notAllowSelectParent="true"/>
@@ -87,7 +87,7 @@
 		<div class="control-group">
 			<label class="control-label">摘要:</label>
 			<div class="controls">
-				<form:textarea path="desciption" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>
+				<form:textarea path="description" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>
 			</div>
 		</div>
 		<div class="control-group">

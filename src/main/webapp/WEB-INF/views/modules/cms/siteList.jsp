@@ -26,14 +26,14 @@
 		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered ">
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>名称</th><th>标题</th><th>描述</th><th>关键字</th><th>主题</th><shiro:hasPermission name="cms:site:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="site">
 			<tr>
 				<td><a href="${ctx}/cms/site/form?id=${site.id}" title="${site.name}">${fns:abbr(site.name,40)}</a></td>
 				<td>${fns:abbr(site.title,40)}</td>
-				<td>${fns:abbr(site.desciption,40)}</td>
+				<td>${fns:abbr(site.description,40)}</td>
 				<td>${fns:abbr(site.keywords,40)}</td>
 				<td>${site.theme}</td>
 				<shiro:hasPermission name="cms:site:edit"><td>

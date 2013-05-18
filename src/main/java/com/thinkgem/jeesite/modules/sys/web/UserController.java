@@ -40,7 +40,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 用户Controller
  * @author ThinkGem
- * @version 2013-3-23
+ * @version 2013-5-15
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/sys/user")
@@ -69,8 +69,11 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "form")
 	public String form(User user, Model model) {
-		if (user.getArea()==null){
-			user.setArea(UserUtils.getUser().getArea());
+//		if (user.getArea()==null){
+//			user.setArea(UserUtils.getUser().getArea());
+//		}
+		if (user.getCompany()==null){
+			user.setCompany(UserUtils.getUser().getCompany());
 		}
 		if (user.getOffice()==null){
 			user.setOffice(UserUtils.getUser().getOffice());
@@ -103,7 +106,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		if (User.isAdmin(id)){
-			addMessage(redirectAttributes, "删除用户失败, 不允许删除超级管理员用户或编号空");
+			addMessage(redirectAttributes, "删除用户失败, 不允许删除超级管理员用户");
 		}else{
 			systemService.deleteUser(id);
 			addMessage(redirectAttributes, "删除用户成功");

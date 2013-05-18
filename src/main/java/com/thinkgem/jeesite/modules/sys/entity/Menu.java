@@ -38,7 +38,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 /**
  * 菜单Entity
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Entity
 @Table(name = "sys_menu")
@@ -56,7 +56,7 @@ public class Menu extends BaseEntity {
 	private Integer sort; 	// 排序
 	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
 	private String permission; // 权限标识
-	private User user;		// 创建者
+//	private User user;		// 创建者
 	private String delFlag; // 删除标记（0：正常；1：删除）
 	
 	private List<Menu> childList = Lists.newArrayList();// 拥有子菜单列表
@@ -87,7 +87,6 @@ public class Menu extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@NotNull
 	public Menu getParent() {
 		return parent;
@@ -169,17 +168,16 @@ public class Menu extends BaseEntity {
 		this.permission = permission;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	@ManyToOne
+//	@JoinColumn(name="user_id")
+//	@NotFound(action = NotFoundAction.IGNORE)
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 	
 	@Length(min=1, max=1)
 	public String getDelFlag() {

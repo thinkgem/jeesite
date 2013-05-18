@@ -5,7 +5,7 @@
 <head>
 	<title>首页</title>
 	<meta name="decorator" content="cms_default_${site.theme}"/>
-	<meta name="description" content="JeeSite ${site.desciption}" />
+	<meta name="description" content="JeeSite ${site.description}" />
 	<meta name="keywords" content="JeeSite ${site.keywords}" />
 	<link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
 	<script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>

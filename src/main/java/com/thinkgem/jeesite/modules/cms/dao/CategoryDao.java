@@ -18,13 +18,11 @@ import org.springframework.stereotype.Repository;
 import com.thinkgem.jeesite.common.persistence.BaseDao;
 import com.thinkgem.jeesite.common.persistence.BaseDaoImpl;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
-import com.thinkgem.jeesite.modules.sys.entity.Role;
-import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 栏目DAO接口
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 public interface CategoryDao extends CategoryDaoCustom, CrudRepository<Category, Long> {
 
@@ -34,8 +32,8 @@ public interface CategoryDao extends CategoryDaoCustom, CrudRepository<Category,
 	
 	public List<Category> findByParentIdsLike(String parentIds);
 
-	@Query("from Category where delFlag='" + Category.DEL_FLAG_NORMAL + "' order by site.id, sort")
-	public List<Category> findAllList();
+//	@Query("from Category where delFlag='" + Category.DEL_FLAG_NORMAL + "' order by site.id, sort")
+//	public List<Category> findAllList();
 
 	@Query("from Category where delFlag='" + Category.DEL_FLAG_NORMAL + "' and (module='' or module=?1) order by site.id, sort")
 	public List<Category> findByModule(String module);
@@ -49,11 +47,11 @@ public interface CategoryDao extends CategoryDaoCustom, CrudRepository<Category,
 	@Query("from Category where delFlag='" + Category.DEL_FLAG_NORMAL + "' and parent.id=?1 and inMenu=?2 order by site.id, sort")
 	public List<Category> findByParentId(Long parentId, String isMenu);
 	
-	@Query("select distinct c from Category c, Role r, User u where c in elements (r.categoryList) and r in elements (u.roleList)" +
-			" and c.delFlag='" + Category.DEL_FLAG_NORMAL + "' and r.delFlag='" + Role.DEL_FLAG_NORMAL + 
-			"' and u.delFlag='" + User.DEL_FLAG_NORMAL + "' and u.id=?1 or (c.user.id=?1 and c.delFlag='" + Category.DEL_FLAG_NORMAL +
-			"') order by c.site.id, c.sort")
-	public List<Category> findByUserId(Long userId);
+//	@Query("select distinct c from Category c, Role r, User u where c in elements (r.categoryList) and r in elements (u.roleList)" +
+//			" and c.delFlag='" + Category.DEL_FLAG_NORMAL + "' and r.delFlag='" + Role.DEL_FLAG_NORMAL + 
+//			"' and u.delFlag='" + User.DEL_FLAG_NORMAL + "' and u.id=?1 or (c.user.id=?1 and c.delFlag='" + Category.DEL_FLAG_NORMAL +
+//			"') order by c.site.id, c.sort")
+//	public List<Category> findByUserId(Long userId);
 	
 }
 

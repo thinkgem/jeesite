@@ -5,18 +5,18 @@
  */
 
 // 主框架窗口大小调整
-$("#left").width(lw);$("#right").width(rw);
+$("#left").width(leftWidth);
 $("#openClose").click(function(){
 	if($(this).hasClass("close")){
 		$(this).removeClass("close");
 		$(this).addClass("open");
-		$("#left").animate({width:lwClose,opacity:"hide"});
-		$("#right").animate({width:rwClose});
+		$("#left").animate({width:0,opacity:"hide"});
+		$("#right").animate({width:$("#content").width()-$("#openClose").width()-9});
 	}else{
 		$(this).addClass("close");
 		$(this).removeClass("open");
-		$("#left").animate({width:lw,opacity:"show"});
-		$("#right").animate({width:rw});
+		$("#left").animate({width:leftWidth,opacity:"show"});
+		$("#right").animate({width:$("#content").width()-$("#openClose").width()-leftWidth-9});
 	}
 });
 if(!Array.prototype.map)
@@ -35,15 +35,7 @@ var getWindowSize = function(){
 		document.compatMode === "CSS1Compat" && document.documentElement[ "client" + name ] || document.body[ "client" + name ];
 	});
 };
-window.onload = function (){
-	if(!+"\v1" && !document.querySelector) { // for IE6 IE7
-	  document.body.onresize = resize;
-	} else { 
-	  window.onresize = resize;
-	}
-	function resize() {
-		wSize();
-		return false;
-	}
-};
+$(window).resize(function(){
+	wSize();
+});
 wSize(); // 在主窗体中定义，设置调整目标

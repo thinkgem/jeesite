@@ -5,7 +5,7 @@
 <head>
 	<title>首页</title>
 	<meta name="decorator" content="cms_default_${site.theme}"/>
-	<meta name="description" content="JeeSite ${site.desciption}" />
+	<meta name="description" content="JeeSite ${site.description}" />
 	<meta name="keywords" content="JeeSite ${site.keywords}" />
 </head>
 <body>

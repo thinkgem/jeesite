@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
  * @author ThinkGem
- * @version 2013-4-19
+ * @version 2013-5-15
  */
 @Service
 @Transactional(readOnly = true)
@@ -66,20 +67,31 @@ public class SystemService extends BaseService {
 	public Page<User> findUser(Page<User> page, User user) {
 		DetachedCriteria dc = userDao.createDetachedCriteria();
 		User currentUser = UserUtils.getUser();
-		if (!currentUser.isAdmin()){
-			if (user.getArea()==null || user.getArea().getId()==null){
-				user.setArea(currentUser.getArea());
-			}
-			if (user.getOffice()==null || user.getOffice().getId()==null){
-				user.setOffice(currentUser.getOffice());
-			}
-		}
-		dc.createAlias("area", "area");
-		if (user.getArea()!=null && user.getArea().getId()!=null){
+//		if (!currentUser.isAdmin()){
+//			if (user.getArea()==null || user.getArea().getId()==null){
+//				user.setArea(currentUser.getArea());
+//			}
+//			if (user.getCompany()==null || user.getCompany().getId()==null){
+//				user.setCompany(currentUser.getCompany());
+//			}
+//			if (user.getOffice()==null || user.getOffice().getId()==null){
+//				user.setOffice(currentUser.getOffice());
+//			}
+//		}
+//		dc.createAlias("area", "area");
+//		if (user.getArea()!=null && user.getArea().getId()!=null){
+//			dc.add(Restrictions.or(
+//					Restrictions.eq("area.id", user.getArea().getId()),
+//					Restrictions.eq("area.parent.id", user.getArea().getId()),
+//					Restrictions.like("area.parentIds", "%,"+user.getArea().getId()+",%")
+//					));
+//		}
+		dc.createAlias("company", "company");
+		if (user.getCompany()!=null && user.getCompany().getId()!=null){
 			dc.add(Restrictions.or(
-					Restrictions.eq("area.id", user.getArea().getId()),
-					Restrictions.eq("area.parent.id", user.getArea().getId()),
-					Restrictions.like("area.parentIds", "%,"+user.getArea().getId()+",%")
+					Restrictions.eq("company.id", user.getCompany().getId()),
+					Restrictions.eq("company.parent.id", user.getCompany().getId()),
+					Restrictions.like("company.parentIds", "%,"+user.getCompany().getId()+",%")
 					));
 		}
 		dc.createAlias("office", "office");
@@ -90,6 +102,8 @@ public class SystemService extends BaseService {
 					Restrictions.like("office.parentIds", "%,"+user.getOffice().getId()+",%")
 					));
 		}
+		dc.add(dataScopeFilter(currentUser, "office", ""));
+		//System.out.println(dataScopeFilterString(currentUser, "office", ""));
 		if (StringUtils.isNotEmpty(user.getLoginName())){
 			dc.add(Restrictions.like("loginName", "%"+user.getLoginName()+"%"));
 		}
@@ -98,7 +112,7 @@ public class SystemService extends BaseService {
 		}
 		dc.add(Restrictions.eq("delFlag", User.DEL_FLAG_NORMAL));
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
-			dc.addOrder(Order.asc("area.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
+			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
 		}
 		return userDao.find(page, dc);
 	}
@@ -162,19 +176,27 @@ public class SystemService extends BaseService {
 	}
 	
 	public List<Role> findAllRole(){
-		User currentUser = UserUtils.getUser();
-		if (!currentUser.isAdmin()){
-			return roleDao.findByUserId(currentUser.getId());
-		}else{
-			return roleDao.findAllList();
-		}
+		User user = UserUtils.getUser();
+//		if (!user.isAdmin()){
+//			return roleDao.findByUserId(user.getId());
+//		}else{
+//			return roleDao.findAllList();
+//		}
+		DetachedCriteria dc = roleDao.createDetachedCriteria();
+		dc.createAlias("office", "office");
+		dc.createAlias("userList", "userList", JoinType.LEFT_OUTER_JOIN);
+		dc.add(dataScopeFilter(user, "office", "userList"));
+		dc.add(Restrictions.eq("delFlag", Role.DEL_FLAG_NORMAL));
+		dc.addOrder(Order.asc("office.code")).addOrder(Order.asc("name"));
+		return roleDao.find(dc);
 	}
 	
 	@Transactional(readOnly = false)
 	public void saveRole(Role role) {
-		if (role.getId()==null){
-			role.setUser(UserUtils.getUser());
-		}
+//		if (role.getId()==null){
+//			role.setUser(UserUtils.getUser());
+//		}
+		roleDao.clear();
 		roleDao.save(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
 	}
@@ -192,7 +214,7 @@ public class SystemService extends BaseService {
 	}
 
 	public List<Menu> findAllMenu(){
-		return UserUtils.getMenuList();
+		return menuDao.findAllList();//UserUtils.getMenuList();
 	}
 	
 	@Transactional(readOnly = false)
@@ -200,9 +222,9 @@ public class SystemService extends BaseService {
 		menu.setParent(this.getMenu(menu.getParent().getId()));
 		String oldParentIds = menu.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		menu.setParentIds(menu.getParent().getParentIds()+menu.getParent().getId()+",");
-		if (menu.getId()==null){
-			menu.setUser(UserUtils.getUser());
-		}
+//		if (menu.getId()==null){
+//			menu.setUser(UserUtils.getUser());
+//		}
 		menuDao.clear();
 		menuDao.save(menu);
 		// 更新子节点 parentIds

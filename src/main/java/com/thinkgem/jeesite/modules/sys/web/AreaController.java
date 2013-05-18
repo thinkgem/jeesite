@@ -27,14 +27,13 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
-import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.AreaService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 区域Controller
  * @author ThinkGem
- * @version 2013-3-23
+ * @version 2013-5-15
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/sys/area")
@@ -55,12 +54,12 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Area area, Model model) {
-		User user = UserUtils.getUser();
-		if(user.isAdmin()){
+//		User user = UserUtils.getUser();
+//		if(user.isAdmin()){
 			area.setId(1L);
-		}else{
-			area.setId(user.getArea().getId());
-		}
+//		}else{
+//			area.setId(user.getArea().getId());
+//		}
 		model.addAttribute("area", area);
 		List<Area> list = Lists.newArrayList();
 		List<Area> sourcelist = areaService.findAll();
@@ -73,7 +72,7 @@ public class AreaController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Area area, Model model) {
 		if (area.getParent()==null||area.getParent().getId()==null){
-			area.setParent(UserUtils.getUser().getArea());
+			area.setParent(UserUtils.getUser().getOffice().getArea());
 		}
 		area.setParent(areaService.get(area.getParent().getId()));
 		model.addAttribute("area", area);
@@ -109,14 +108,15 @@ public class AreaController extends BaseController {
 	public String treeData(@RequestParam(required=false) Long extId, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-		User user = UserUtils.getUser();
+//		User user = UserUtils.getUser();
 		List<Area> list = areaService.findAll();
 		for (int i=0; i<list.size(); i++){
 			Area e = list.get(i);
 			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
-				map.put("pId", !user.isAdmin()&&e.getId().equals(user.getArea().getId())?0:e.getParent()!=null?e.getParent().getId():0);
+//				map.put("pId", !user.isAdmin()&&e.getId().equals(user.getArea().getId())?0:e.getParent()!=null?e.getParent().getId():0);
+				map.put("pId", e.getParent()!=null?e.getParent().getId():0);
 				map.put("name", e.getName());
 				mapList.add(map);
 			}

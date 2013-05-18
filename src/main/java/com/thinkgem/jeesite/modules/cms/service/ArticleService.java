@@ -41,7 +41,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 文章Service
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-15
  */
 @Service
 @Transactional(readOnly = true)
@@ -90,6 +90,8 @@ public class ArticleService extends BaseService {
 		if (article.getUser()!=null && article.getUser().getId()>0){
 			dc.add(Restrictions.eq("user.id", article.getUser().getId()));
 		}
+		dc.createAlias("category.office", "categoryOffice").createAlias("user", "user");
+		dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "user"));
 		dc.add(Restrictions.eq("status", article.getStatus()));
 		dc.addOrder(Order.desc("weight"));
 		dc.addOrder(Order.desc("updateDate"));
@@ -105,6 +107,13 @@ public class ArticleService extends BaseService {
 		// 如果没有审核权限，则将当前内容改为待审核状态
 		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
 			article.setStatus(Article.STATUS_AUDIT);
+		}
+		// 如果栏目不需要审核，则将该内容设为发布状态
+		if (article.getCategory()!=null&&article.getCategory().getId()!=null){
+			Category category = categoryDao.findOne(article.getCategory().getId());
+			if (!Article.YES.equals(category.getIsAudit())){
+				article.setStatus(Article.STATUS_RELEASE);
+			}
 		}
 		if (article.getId()==null){
 			article.setUser(UserUtils.getUser());
@@ -160,7 +169,7 @@ public class ArticleService extends BaseService {
 	public Page<Article> search(Page<Article> page, String q){
 		
 		// 设置查询条件
-		BooleanQuery query = articleDao.getFullTextQuery(q, "title","keywords","desciption","articleData.content");
+		BooleanQuery query = articleDao.getFullTextQuery(q, "title","keywords","description","articleData.content");
 		// 设置过滤条件
 		BooleanQuery queryFilter = articleDao.getFullTextQuery(new BooleanClause(
 				new TermQuery(new Term("status", Article.STATUS_RELEASE)), Occur.MUST));
@@ -169,7 +178,7 @@ public class ArticleService extends BaseService {
 		// 全文检索
 		articleDao.search(page, query, queryFilter, sort);
 		// 关键字高亮
-		articleDao.keywordsHighlight(query, page.getList(), "desciption","articleData.content");
+		articleDao.keywordsHighlight(query, page.getList(), "description","articleData.content");
 		
 		return page;
 	}

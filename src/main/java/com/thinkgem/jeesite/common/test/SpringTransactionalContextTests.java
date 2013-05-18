@@ -7,6 +7,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
+/**
+ * Spring 单元测试基类
+ * @author ThinkGem
+ * @version 2013-05-15
+ */
 @ActiveProfiles("production")
 @ContextConfiguration(locations = {"/applicationContext.xml", "/applicationContext-shiro.xml"})
 public class SpringTransactionalContextTests extends AbstractTransactionalJUnit4SpringContextTests {

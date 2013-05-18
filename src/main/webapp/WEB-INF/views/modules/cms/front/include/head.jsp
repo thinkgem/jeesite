@@ -15,5 +15,5 @@
 	<script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
 	<link href="${ctxStatic}/common/jeesite.min.css" type="text/css" rel="stylesheet" />
 </c:if>
-<link href="${ctxStaticFront}/themes/${site.theme}/style.min.css" type="text/css" rel="stylesheet" />
-<script src="${ctxStaticFront}/themes/${site.theme}/script.min.js" type="text/javascript"></script>
+<link href="${ctxStaticTheme}/style.min.css" type="text/css" rel="stylesheet" />
+<script src="${ctxStaticTheme}/script.min.js" type="text/javascript"></script>

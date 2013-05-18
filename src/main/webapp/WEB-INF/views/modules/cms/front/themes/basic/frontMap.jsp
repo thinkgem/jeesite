@@ -5,7 +5,7 @@
 <head>
 	<title>站点地图</title>
 	<meta name="decorator" content="cms_default_${site.theme}"/>
-	<meta name="description" content="${site.desciption}" />
+	<meta name="description" content="${site.description}" />
 	<meta name="keywords" content="${site.keywords}" />
 	<style type="text/css">
 		dl.map{border:1px solid #efefef;border-top:0;margin:10px 8px 8px;}
