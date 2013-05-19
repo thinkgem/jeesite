@@ -13,32 +13,35 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
+import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.Encodes;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import com.thinkgem.jeesite.modules.sys.web.LoginController;
 
 /**
  * 系统安全认证实现类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-01-19
  */
-public class SystemRealm extends AuthorizingRealm {
+public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 	private SystemService systemService;
 
@@ -48,6 +51,16 @@ public class SystemRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+		
+		if (LoginController.isValidateCodeLogin(token.getUsername(), false, false)){
+			// 判断验证码
+			Session session = SecurityUtils.getSubject().getSession();
+			String code = (String)session.getAttribute(ValidateCodeServlet.VALIDATE_CODE);
+			if (token.getCaptcha() == null || !token.getCaptcha().toUpperCase().equals(code)){
+				throw new CaptchaException("验证码错误.");
+			}
+		}
+
 		User user = systemService.getUserByLoginName(token.getUsername());
 		if (user != null) {
 			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));

@@ -16,7 +16,7 @@
 			<li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a></li>
 		 </c:forEach></ol>
 		 <h4>推荐阅读</h4>
-		 <ol><c:forEach items="${fnc:getArticleList(site.id, category.id, 8, 'posid:0')}" var="article">
+		 <ol><c:forEach items="${fnc:getArticleList(site.id, category.id, 8, 'posid:2')}" var="article">
 		 	<li><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,18)}</a></li>
 		 </c:forEach></ol>
 	   </div>

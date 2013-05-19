@@ -14,7 +14,7 @@ import com.ckfinder.connector.ServletContextFactory;
 import com.ckfinder.connector.configuration.Configuration;
 import com.ckfinder.connector.data.AccessControlLevel;
 import com.ckfinder.connector.utils.AccessControlUtil;
-import com.thinkgem.jeesite.modules.sys.security.SystemRealm.Principal;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**
  * CKFinder配置

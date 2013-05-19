@@ -28,7 +28,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.security.SystemRealm.Principal;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**
  * 用户工具类

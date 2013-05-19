@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.sys.dao.UserDao;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.security.SystemRealm;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -56,7 +56,7 @@ public class SystemService extends BaseService {
 	@Autowired
 	private MenuDao menuDao;
 	@Autowired
-	private SystemRealm systemRealm;
+	private SystemAuthorizingRealm systemRealm;
 	
 	//-- User Service --//
 	

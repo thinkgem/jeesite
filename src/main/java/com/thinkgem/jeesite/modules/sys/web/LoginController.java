@@ -5,6 +5,8 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.CookieUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -39,7 +44,7 @@ public class LoginController extends BaseController{
 		if(UserUtils.getUser().getId() != null){
 			return "redirect:" + Global.ADMIN_PATH;
 		}
-		model.addAttribute("theme", getTheme(request, response));
+		model.addAttribute("theme", getThemeInCookie(request, response));
 		return "modules/sys/sysLogin";
 	}
 
@@ -47,9 +52,10 @@ public class LoginController extends BaseController{
 	 * 登录失败，真正登录的POST请求由Filter完成
 	 */
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, HttpServletRequest request, HttpServletResponse response, Model model) {
-		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
-		model.addAttribute("theme", getTheme(request, response));
+	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, HttpServletRequest request, HttpServletResponse response, Model model) {
+		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
+		model.addAttribute("theme", getThemeInCookie(request, response));
+		model.addAttribute("isValidateCodeLogin", isValidateCodeLogin(username, true, false));
 		return "modules/sys/sysLogin";
 	}
 
@@ -59,18 +65,21 @@ public class LoginController extends BaseController{
 	@RequiresUser
 	@RequestMapping(value = "")
 	public String index(HttpServletRequest request, HttpServletResponse response) {
-		if(UserUtils.getUser().getId() == null){
+		User user = UserUtils.getUser();
+		if(user.getId() == null){
 			return "redirect:" + Global.ADMIN_PATH + "/login";
 		}
 		// 登录成功后将主题名称保存到用户缓存中
-		UserUtils.putCache("theme", getTheme(request, response));
+		UserUtils.putCache("theme", getThemeInCookie(request, response));
+		// 验证码计算器清零
+		isValidateCodeLogin(user.getLoginName(), false, true);
 		return "modules/sys/sysIndex";
 	}
 	
 	/**
 	 * 获取主题方案
 	 */
-	private String getTheme(HttpServletRequest request, HttpServletResponse response){
+	public static String getThemeInCookie(HttpServletRequest request, HttpServletResponse response){
 		String theme = request.getParameter("theme");
 		if (StringUtils.isNotBlank(theme)){
 			CookieUtils.setCookie(response, "theme", theme);
@@ -78,5 +87,33 @@ public class LoginController extends BaseController{
 			theme = CookieUtils.getCookie(request, "theme");
 		}
 		return StringUtils.isNotBlank(theme)?theme:"default";
+	}
+	
+	/**
+	 * 是否是验证码登录
+	 * @param useruame 用户名
+	 * @param isFail 计数加1
+	 * @param clean 计数清零
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static boolean isValidateCodeLogin(String useruame, boolean isFail, boolean clean){
+		Map<String, Integer> loginFailMap = (Map<String, Integer>)CacheUtils.get("loginFailMap");
+		if (loginFailMap==null){
+			loginFailMap = Maps.newHashMap();
+			CacheUtils.put("loginFailMap", loginFailMap);
+		}
+		Integer loginFailNum = loginFailMap.get(useruame);
+		if (loginFailNum==null){
+			loginFailNum = 0;
+		}
+		if (isFail){
+			loginFailNum++;
+			loginFailMap.put(useruame, loginFailNum);
+		}
+		if (clean){
+			loginFailMap.remove(useruame);
+		}
+		return loginFailNum >= 3;
 	}
 }

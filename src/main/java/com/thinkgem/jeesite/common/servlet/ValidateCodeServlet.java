@@ -25,10 +25,12 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 生成随机验证码
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-5-19
  */
 @SuppressWarnings("serial")
 public class ValidateCodeServlet extends HttpServlet {
+	
+	public static final String VALIDATE_CODE = "validateCode";
 	
 	private int w = 70;
 	private int h = 26;
@@ -42,13 +44,13 @@ public class ValidateCodeServlet extends HttpServlet {
 	}
 	
 	public static boolean validate(HttpServletRequest request, String validateCode){
-		String code = (String)request.getSession().getAttribute("validateCode");
+		String code = (String)request.getSession().getAttribute(VALIDATE_CODE);
 		return validateCode.toUpperCase().equals(code); 
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String validateCode = request.getParameter("validateCode"); // AJAX验证，成功返回true
+		String validateCode = request.getParameter(VALIDATE_CODE); // AJAX验证，成功返回true
 		if (StringUtils.isNotBlank(validateCode)){
 			response.getOutputStream().print(validate(request, validateCode)?"true":"false");
 		}else{
@@ -91,7 +93,7 @@ public class ValidateCodeServlet extends HttpServlet {
 		 * 生成字符
 		 */
 		String s = createCharacter(g);
-		request.getSession().setAttribute("validateCode", s);
+		request.getSession().setAttribute(VALIDATE_CODE, s);
 
 		g.dispose();
 		OutputStream out = response.getOutputStream();
