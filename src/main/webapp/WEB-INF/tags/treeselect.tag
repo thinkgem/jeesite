@@ -1,10 +1,10 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <%@ attribute name="id" type="java.lang.String" required="true" description="编号"%>
-<%@ attribute name="name" type="java.lang.String" required="true" description="输入框名称"%>
-<%@ attribute name="value" type="java.lang.String" required="true" description="输入框值"%>
-<%@ attribute name="labelName" type="java.lang.String" required="true" description="输入框名称"%>
-<%@ attribute name="labelValue" type="java.lang.String" required="true" description="输入框值"%>
+<%@ attribute name="name" type="java.lang.String" required="true" description="隐藏域名称（ID）"%>
+<%@ attribute name="value" type="java.lang.String" required="true" description="隐藏域值（ID）"%>
+<%@ attribute name="labelName" type="java.lang.String" required="true" description="输入框名称（Name）"%>
+<%@ attribute name="labelValue" type="java.lang.String" required="true" description="输入框值（Name）"%>
 <%@ attribute name="title" type="java.lang.String" required="true" description="选择框标题"%>
 <%@ attribute name="url" type="java.lang.String" required="true" description="树结构数据地址"%>
 <%@ attribute name="checked" type="java.lang.Boolean" required="false" description="是否显示复选框"%>
@@ -13,6 +13,7 @@
 <%@ attribute name="notAllowSelectParent" type="java.lang.Boolean" required="false" description="不允许选择父节点"%>
 <%@ attribute name="module" type="java.lang.String" required="false" description="过滤栏目模型（只显示指定模型，仅针对CMS的Category树）"%>
 <%@ attribute name="selectScopeModule" type="java.lang.Boolean" required="false" description="选择范围内的模型（控制不能选择公共模型，不能选择本栏目外的模型）（仅针对CMS的Category树）"%>
+<%@ attribute name="allowClear" type="java.lang.Boolean" required="false" description="是否允许清楚"%>
 <%@ attribute name="cssClass" type="java.lang.String" required="false" description="css样式"%>
 <%@ attribute name="cssStyle" type="java.lang.String" required="false" description="css样式"%>
 <div class="input-append">
@@ -23,7 +24,7 @@
 <script type="text/javascript">
 	$("#${id}Button").click(function(){
 		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
-			buttons:{"确定":"ok", "关闭":true}, submit:function(v, h, f){
+			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
 				if (v=="ok"){
 					var tree = h.find("iframe")[0].contentWindow.tree;//h.find("iframe").contents();
 					var ids = [], names = [], nodes = [];
@@ -56,7 +57,11 @@
 					}
 					$("#${id}Id").val(ids);
 					$("#${id}Name").val(names);
-				}
+				}//<c:if test="${allowClear}">
+				else if (v=="clear"){
+					$("#${id}Id").val("");
+					$("#${id}Name").val("");
+                }//</c:if>
 			}, loaded:function(h){
 				$(".jbox-content", top.document).css("overflow-y","hidden");
 			}

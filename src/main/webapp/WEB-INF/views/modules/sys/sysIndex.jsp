@@ -19,6 +19,9 @@
 			$("#menu a.menu").click(function(){
 				$("#menu li.menu").removeClass("active");
 				$(this).parent().addClass("active");
+				if(!$("#openClose").hasClass("close")){
+					$("#openClose").click();
+				}
 			});
 		});
 	</script>

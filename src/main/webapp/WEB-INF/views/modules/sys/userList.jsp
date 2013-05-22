@@ -71,10 +71,12 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<input id="orderBy" name="orderBy" type="hidden" value="${page.orderBy}"/>
 		<div>
-			<label>归属公司：</label><tags:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}" title="公司" url="/sys/office/treeData?type=1" cssClass="input-small"/>
+			<label>归属公司：</label><tags:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}" 
+				title="公司" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true"/>
 			<label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/>
 		</div><div style="margin-top:8px;">
-			<label>归属部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" title="部门" url="/sys/office/treeData?type=2" cssClass="input-small"/>
+			<label>归属部门：</label><tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" 
+				title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true"/>
 			<label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="page()"/>
 			&nbsp;<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>

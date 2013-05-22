@@ -68,7 +68,7 @@ public class ArticleService extends BaseService {
 			if (category!=null){
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
-						Restrictions.eq("category.parent.id", category.getId()),
+//						Restrictions.eq("category.parent.id", category.getId()),
 						Restrictions.like("category.parentIds", "%,"+category.getId()+",%")));
 				dc.add(Restrictions.eq("category.site.id", category.getSite().getId()));
 				article.setCategory(category);

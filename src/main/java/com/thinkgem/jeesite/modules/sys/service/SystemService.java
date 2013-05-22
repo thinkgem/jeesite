@@ -90,7 +90,7 @@ public class SystemService extends BaseService {
 		if (user.getCompany()!=null && user.getCompany().getId()!=null){
 			dc.add(Restrictions.or(
 					Restrictions.eq("company.id", user.getCompany().getId()),
-					Restrictions.eq("company.parent.id", user.getCompany().getId()),
+//					Restrictions.eq("company.parent.id", user.getCompany().getId()),
 					Restrictions.like("company.parentIds", "%,"+user.getCompany().getId()+",%")
 					));
 		}
@@ -98,7 +98,7 @@ public class SystemService extends BaseService {
 		if (user.getOffice()!=null && user.getOffice().getId()!=null){
 			dc.add(Restrictions.or(
 					Restrictions.eq("office.id", user.getOffice().getId()),
-					Restrictions.eq("office.parent.id", user.getOffice().getId()),
+//					Restrictions.eq("office.parent.id", user.getOffice().getId()),
 					Restrictions.like("office.parentIds", "%,"+user.getOffice().getId()+",%")
 					));
 		}

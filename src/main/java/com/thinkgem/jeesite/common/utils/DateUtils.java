@@ -91,9 +91,12 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	/**
 	 * 日期型字符串转化为日期 格式（"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss" ）
 	 */
-	public static Date parseDate(String str) {
+	public static Date parseDate(Object str) {
+		if (str == null){
+			return null;
+		}
 		try {
-			return parseDate(str, parsePatterns);
+			return parseDate(str.toString(), parsePatterns);
 		} catch (ParseException e) {
 			return null;
 		}

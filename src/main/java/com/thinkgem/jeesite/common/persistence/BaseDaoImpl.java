@@ -121,7 +121,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		// get count
     	if (!page.isDisabled() && !page.isNotCount()){
 	        String countQlString = "select count(*) " + removeSelect(removeOrders(qlString));  
-	        page.setCount(Long.valueOf(createQuery(countQlString, parameter).uniqueResult().toString()));
+//	        page.setCount(Long.valueOf(createQuery(countQlString, parameter).uniqueResult().toString()));
+	        Query query = createQuery(countQlString, parameter);
+	        List<Object> list = query.list();
+	        if (list.size() > 0){
+	        	page.setCount(Long.valueOf(list.get(0).toString()));
+	        }else{
+	        	page.setCount(list.size());
+	        }
 			if (page.getCount() < 1) {
 				return page;
 			}
@@ -200,8 +207,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	public <E> Page<E> findBySql(Page<E> page, String sqlString, Class<?> resultClass, Object... parameter){
 		// get count
     	if (!page.isDisabled() && !page.isNotCount()){
-	        String countQlString = "select count(*) " + removeSelect(removeOrders(sqlString));  
-	        page.setCount(Long.valueOf(createSqlQuery(countQlString, parameter).uniqueResult().toString()));
+	        String countSqlString = "select count(*) " + removeSelect(removeOrders(sqlString));  
+//	        page.setCount(Long.valueOf(createSqlQuery(countSqlString, parameter).uniqueResult().toString()));
+	        Query query = createSqlQuery(countSqlString, parameter);
+	        List<Object> list = query.list();
+	        if (list.size() > 0){
+	        	page.setCount(Long.valueOf(list.get(0).toString()));
+	        }else{
+	        	page.setCount(list.size());
+	        }
 			if (page.getCount() < 1) {
 				return page;
 			}
@@ -295,7 +309,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	private void setParameter(Query query, Object... parameter){
 		if (parameter != null){
 			for (int i=0; i<parameter.length; i++){
-				query.setParameter(i+1, parameter[i]);
+				query.setParameter(i, parameter[i]);
 			}
 		}
 	}

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-05-22
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
@@ -20,6 +20,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 替换掉HTML标签
 	 */
 	public static String replaceHtml(String html) {
+		if (isBlank(html)){
+			return "";
+		}
 		String regEx = "<.+?>";
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(html);
@@ -54,7 +57,40 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			e.printStackTrace();
 		}
 		return "";
-
 	}
-
+	
+	public static Double toDouble(Object val){
+		if (val == null){
+			return 0D;
+		}
+		try {
+			return Double.valueOf(trim(val.toString()));
+		} catch (Exception e) {
+			return 0D;
+		}
+	}
+	
+	public static Float toFloat(Object val){
+		return toDouble(val).floatValue();
+	}
+	
+	public static Long toLong(Object val){
+		return toDouble(val).longValue();
+	}
+	
+	public static Integer toInteger(Object val){
+		return toLong(val).intValue();
+	}
+	
+	public static String toString(Object val){
+		if (val == null){
+			return "";
+		}
+		try {
+			return trim(val.toString());
+		} catch (Exception e) {
+			return "";
+		}
+	}
+	
 }
