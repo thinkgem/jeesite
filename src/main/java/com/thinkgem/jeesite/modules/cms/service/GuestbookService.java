@@ -47,7 +47,7 @@ public class GuestbookService extends BaseService {
 		if (StringUtils.isNotEmpty(guestbook.getContent())){
 			dc.add(Restrictions.like("content", "%"+guestbook.getContent()+"%"));
 		}
-		dc.add(Restrictions.eq("status", guestbook.getStatus()));
+		dc.add(Restrictions.eq(Guestbook.DEL_FLAG, guestbook.getDelFlag()));
 		dc.addOrder(Order.desc("id"));
 		return guestbookDao.find(page, dc);
 	}
@@ -59,7 +59,7 @@ public class GuestbookService extends BaseService {
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id, Boolean isRe) {
-		guestbookDao.updateStatus(id, isRe!=null&&isRe?Guestbook.STATUS_AUDIT:Guestbook.STATUS_DELETE);
+		guestbookDao.updateDelFlag(id, isRe!=null&&isRe?Guestbook.DEL_FLAG_AUDIT:Guestbook.DEL_FLAG_DELETE);
 	}
 	
 }

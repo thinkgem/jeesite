@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 字典Entity
@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 @Entity
 @Table(name = "sys_dict")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Dict extends BaseEntity {
+public class Dict extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -35,10 +35,9 @@ public class Dict extends BaseEntity {
 	private String type;	// 类型
 	private String description;// 描述
 	private Integer sort;	// 排序
-	private String delFlag;	// 删除标记（0：正常；1：删除）
 
 	public Dict() {
-		this.delFlag = DEL_FLAG_NORMAL;
+		super();
 	}
 	
 	public Dict(Long id) {
@@ -47,7 +46,7 @@ public class Dict extends BaseEntity {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
 //	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict")
 	public Long getId() {
@@ -103,13 +102,4 @@ public class Dict extends BaseEntity {
 		this.sort = sort;
 	}
 	
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
-
 }

@@ -34,7 +34,7 @@
 		<form:hidden path="module"/><form:hidden path="contentId"/>
 		<label>文档标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
-		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-bordered table-condensed">
@@ -48,9 +48,9 @@
 				<td>${comment.ip}</td>
 				<td><fmt:formatDate value="${comment.createDate}" type="both"/></td>
 				<td><shiro:hasPermission name="cms:comment:edit">
-					<c:if test="${comment.status ne '2'}"><a href="${ctx}/cms/comment/delete?id=${comment.id}${comment.status ne 0?'&isRe=true':''}" 
-						onclick="return confirmx('确认要${comment.status ne 0?'恢复审核':'删除'}该审核吗？', this.href)">${comment.status ne 0?'恢复审核':'删除'}</a></c:if>
-					<c:if test="${comment.status eq '2'}"><a href="${ctx}/cms/comment/save?id=${comment.id}">审核通过</a></c:if></shiro:hasPermission>
+					<c:if test="${comment.delFlag ne '2'}"><a href="${ctx}/cms/comment/delete?id=${comment.id}${comment.delFlag ne 0?'&isRe=true':''}" 
+						onclick="return confirmx('确认要${comment.delFlag ne 0?'恢复审核':'删除'}该审核吗？', this.href)">${comment.delFlag ne 0?'恢复审核':'删除'}</a></c:if>
+					<c:if test="${comment.delFlag eq '2'}"><a href="${ctx}/cms/comment/save?id=${comment.id}">审核通过</a></c:if></shiro:hasPermission>
 				</td>
 			</tr>
 			<tr id="c_${comment.id}" style="background:#fdfdfd;display:none;"><td colspan="6">${fns:replaceHtml(comment.content)}</td></tr>

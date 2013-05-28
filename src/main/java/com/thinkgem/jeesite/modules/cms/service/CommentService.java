@@ -50,7 +50,7 @@ public class CommentService extends BaseService {
 		if (StringUtils.isNotEmpty(comment.getTitle())){
 			dc.add(Restrictions.like("title", "%"+comment.getTitle()+"%"));
 		}
-		dc.add(Restrictions.eq("status", comment.getStatus()));
+		dc.add(Restrictions.eq(Comment.DEL_FLAG, comment.getDelFlag()));
 		dc.addOrder(Order.desc("id"));
 		return commentDao.find(page, dc);
 	}
@@ -62,7 +62,7 @@ public class CommentService extends BaseService {
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id, Boolean isRe) {
-		commentDao.updateStatus(id, isRe!=null&&isRe?Comment.STATUS_AUDIT:Comment.STATUS_DELETE);
+		commentDao.updateDelFlag(id, isRe!=null&&isRe?Comment.DEL_FLAG_AUDIT:Comment.DEL_FLAG_DELETE);
 	}
 	
 }

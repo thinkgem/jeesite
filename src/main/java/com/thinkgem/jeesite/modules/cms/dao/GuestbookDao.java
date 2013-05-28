@@ -22,8 +22,8 @@ import com.thinkgem.jeesite.modules.cms.entity.Guestbook;
 public interface GuestbookDao extends GuestbookDaoCustom, CrudRepository<Guestbook, Long> {
 
 	@Modifying
-	@Query("update Guestbook set status=?2 where id = ?1")
-	public int updateStatus(Long id, String status);
+	@Query("update Guestbook set delFlag=?2 where id = ?1")
+	public int updateDelFlag(Long id, String status);
 	
 }
 

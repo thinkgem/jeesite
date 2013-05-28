@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +27,6 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Link;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
-import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 链接Controller
@@ -55,11 +52,11 @@ public class LinkController extends BaseController {
 	@RequiresPermissions("cms:link:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Link link, HttpServletRequest request, HttpServletResponse response, Model model) {
-		User user = UserUtils.getUser();
-		if (!user.isAdmin() && !SecurityUtils.getSubject().isPermitted("cms:link:audit")){
-			link.setUser(user);
-		}
-        Page<Link> page = linkService.find(new Page<Link>(request, response), link); 
+//		User user = UserUtils.getUser();
+//		if (!user.isAdmin() && !SecurityUtils.getSubject().isPermitted("cms:link:audit")){
+//			link.setUser(user);
+//		}
+        Page<Link> page = linkService.find(new Page<Link>(request, response), link, true); 
         model.addAttribute("page", page);
 		return "modules/cms/linkList";
 	}

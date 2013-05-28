@@ -16,10 +16,12 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 2. 使用目前最主流的J2EE开发框架，简单易学，学习成本低。
 3. 数据库无限制，支持MySql、Oracle、SQL Server、H2等数据库。
 4. 模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
-5. 权限控制精密细致，对所有管理链接都进行权限验证，可控制到按钮。
-6. 提供基本功能模块的源代码生成器，提高开发效率及质量。
-7. 提供常用工具类封装，日志、缓存、验证、字典、组织机构等，常用标签（taglib），获取当前组织机构、字典等数据。
-8. 完全兼容目前最流行浏览器（IE6、IE7+、Firefox、Chrome）。
+5. 操作权限控制精密细致，对所有管理链接都进行权限验证，可控制到按钮。
+6. 数据权限控制精密细致，对指定数据集权限进行过滤，七种数据权限可供选择。
+7. 提供基本功能模块的源代码生成器，提高开发效率及质量。
+8. 提供常用工具类封装，日志、缓存、验证、字典、组织机构等，常用标签（taglib），获取当前组织机构、字典等数据。
+9. 完全兼容目前最流行浏览器（IE6、IE7+、Firefox、Chrome）。
+10. 提供目前最流行的Activit流程引擎实例。
 
 ## 技术选型
 
@@ -27,20 +29,20 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * Core Framework：Spring Framework 3.2。
 * Security Framework：Apache Shiro 1.2。
-* Workflow Engine：Activit 5。
+* Workflow Engine：Activit 5.12。
 
 2、Web相关
 
 * MVC Framework：SpringMVC 3.2。
 * Layout Decoration：SiteMesh 2.4。
 * JavaScript Library：JQuery 1.9。
-* CSS Framework：Twitter Bootstrap 2.0.4。
+* CSS Framework：Twitter Bootstrap 2.3.1。
 * JavaScript/CSS Compressor：YUI Compressor 2.4。
 * Front Validation：JQuery Validation Plugin 1.11。
 
 3、Database相关
 
-* ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.2。
+* ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.1。
 * Connection Pool：Alibaba Druid 0.2。
 * Bean Validation：Hibernate Validation 5.0。
 * Cache：Ehcache 2.6。

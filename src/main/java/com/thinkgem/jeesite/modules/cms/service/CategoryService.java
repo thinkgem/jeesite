@@ -53,7 +53,7 @@ public class CategoryService extends BaseService {
 		if (list == null){
 			User user = UserUtils.getUser();
 			DetachedCriteria dc = categoryDao.createDetachedCriteria();
-			dc.createAlias("office", "office").createAlias("user", "user");
+			dc.createAlias("office", "office").createAlias("createBy", "user");
 			dc.add(dataScopeFilter(user, "office", "user"));
 			dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
@@ -97,7 +97,7 @@ public class CategoryService extends BaseService {
 		if (StringUtils.isNotBlank(category.getInMenu())){
 			dc.add(Restrictions.eq("inMenu", category.getInMenu()));
 		}
-		dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Category.DEL_FLAG, Category.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 		return categoryDao.find(page, dc);
 //		page.setSpringPage(categoryDao.findByParentId(category.getParent().getId(), page.getSpringPage()));
@@ -110,9 +110,6 @@ public class CategoryService extends BaseService {
 		category.setParent(this.get(category.getParent().getId()));
 		String oldParentIds = category.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		category.setParentIds(category.getParent().getParentIds()+category.getParent().getId()+",");
-		if (category.getId()==null){
-			category.setUser(UserUtils.getUser());
-		}
 		categoryDao.clear();
 		categoryDao.save(category);
 		// 更新子节点 parentIds

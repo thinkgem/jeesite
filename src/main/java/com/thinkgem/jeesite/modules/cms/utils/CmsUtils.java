@@ -148,7 +148,8 @@ public class CmsUtils implements ApplicationContextAware {
 				article.setThumb("1");
 			}
 		}
-		page = articleService.find(page, article);
+		article.setDelFlag(Article.DEL_FLAG_NORMAL);
+		page = articleService.find(page, article, false);
 		return page.getList();
 	}
 	
@@ -176,7 +177,8 @@ public class CmsUtils implements ApplicationContextAware {
 			@SuppressWarnings({ "unused", "rawtypes" })
 			Map map = JsonMapper.getInstance().fromJson("{"+param+"}", Map.class);
 		}
-		page = linkService.find(page, link);
+		link.setDelFlag(Link.DEL_FLAG_NORMAL);
+		page = linkService.find(page, link, false);
 		return page.getList();
 	}
 	

@@ -110,7 +110,7 @@ public class OfficeController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "treeData")
 	public List<Map<String, Object>> treeData(@RequestParam(required=false) Long extId, @RequestParam(required=false) Long type,
-			@RequestParam(required=false) Long level, HttpServletResponse response) {
+			@RequestParam(required=false) Long grade, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
 //		User user = UserUtils.getUser();
@@ -119,7 +119,7 @@ public class OfficeController extends BaseController {
 			Office e = list.get(i);
 			if ((extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1))
 					&& (type == null || (type != null && Integer.parseInt(e.getType()) <= type.intValue()))
-					&& (level == null || (level != null && Integer.parseInt(e.getLevel()) <= level.intValue()))){
+					&& (grade == null || (grade != null && Integer.parseInt(e.getGrade()) <= grade.intValue()))){
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
 //				map.put("pId", !user.isAdmin() && e.getId().equals(user.getOffice().getId())?0:e.getParent()!=null?e.getParent().getId():0);

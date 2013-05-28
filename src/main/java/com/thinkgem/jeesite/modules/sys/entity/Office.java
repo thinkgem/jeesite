@@ -29,7 +29,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 机构Entity
@@ -39,7 +39,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 @Entity
 @Table(name = "sys_office")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Office extends BaseEntity {
+public class Office extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -49,21 +49,19 @@ public class Office extends BaseEntity {
 	private String code; 	// 机构编码
 	private String name; 	// 机构名称
 	private String type; 	// 机构类型（1：公司；2：部门；3：小组）
-	private String level; 	// 机构级别（1：一级；2：二级；3：三级；4：四级）
+	private String grade; 	// 机构等级（1：一级；2：二级；3：三级；4：四级）
 	private String address; // 联系地址
 	private String zipCode; // 邮政编码
 	private String master; 	// 负责人
 	private String phone; 	// 电话
 	private String fax; 	// 传真
 	private String email; 	// 邮箱
-	private String remarks; // 备注
-	private String delFlag; // 删除标记（0：正常；1：删除）
 	
 	private List<User> userList = Lists.newArrayList();   // 拥有用户列表
 	private List<Office> childList = Lists.newArrayList();// 拥有子机构列表
 
 	public Office(){
-		this.delFlag = DEL_FLAG_NORMAL;
+		super();
 	}
 	
 	public Office(Long id){
@@ -72,7 +70,7 @@ public class Office extends BaseEntity {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_office")
 //	@SequenceGenerator(name = "seq_sys_office", sequenceName = "seq_sys_office")
 	public Long getId() {
@@ -135,12 +133,12 @@ public class Office extends BaseEntity {
 	}
 
 	@Length(min=1, max=1)
-	public String getLevel() {
-		return level;
+	public String getGrade() {
+		return grade;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	@Length(min=0, max=255)
@@ -206,24 +204,6 @@ public class Office extends BaseEntity {
 		this.code = code;
 	}
 	
-	@Length(min=0, max=255)
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-	
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
-
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="office")
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="id")

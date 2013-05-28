@@ -24,8 +24,8 @@ import com.thinkgem.jeesite.modules.cms.entity.Link;
 public interface LinkDao extends LinkDaoCustom, CrudRepository<Link, Long> {
 
 	@Modifying
-	@Query("update Link set status=?2 where id = ?1")
-	public int updateStatus(Long id, String status);
+	@Query("update Link set delFlag=?2 where id = ?1")
+	public int updateDelFlag(Long id, String status);
 	
 	public List<Link> findByIdIn(Long[] ids);
 	

@@ -5,7 +5,6 @@
  */
 package com.thinkgem.jeesite.modules.cms.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
@@ -59,7 +58,7 @@ public class ArticleService extends BaseService {
 		return articleDao.findOne(id);
 	}
 	
-	public Page<Article> find(Page<Article> page, Article article) {
+	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter) {
 		DetachedCriteria dc = articleDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
@@ -68,7 +67,6 @@ public class ArticleService extends BaseService {
 			if (category!=null){
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
-//						Restrictions.eq("category.parent.id", category.getId()),
 						Restrictions.like("category.parentIds", "%,"+category.getId()+",%")));
 				dc.add(Restrictions.eq("category.site.id", category.getSite().getId()));
 				article.setCategory(category);
@@ -87,12 +85,14 @@ public class ArticleService extends BaseService {
 		if (StringUtils.isNotEmpty(article.getThumb())&&"1".equals(article.getThumb())){
 			dc.add(Restrictions.and(Restrictions.isNotNull("thumb"),Restrictions.ne("thumb","")));
 		}
-		if (article.getUser()!=null && article.getUser().getId()>0){
-			dc.add(Restrictions.eq("user.id", article.getUser().getId()));
+		if (article.getCreateBy()!=null && article.getCreateBy().getId()>0){
+			dc.add(Restrictions.eq("createBy.id", article.getCreateBy().getId()));
 		}
-		dc.createAlias("category.office", "categoryOffice").createAlias("user", "user");
-		dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "user"));
-		dc.add(Restrictions.eq("status", article.getStatus()));
+		if (isDataScopeFilter){
+			dc.createAlias("category.office", "categoryOffice").createAlias("createBy", "createBy");
+			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
+		}
+		dc.add(Restrictions.eq(Article.DEL_FLAG, article.getDelFlag()));
 		dc.addOrder(Order.desc("weight"));
 		dc.addOrder(Order.desc("updateDate"));
 		return articleDao.find(page, dc);
@@ -106,29 +106,25 @@ public class ArticleService extends BaseService {
 		}
 		// 如果没有审核权限，则将当前内容改为待审核状态
 		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
-			article.setStatus(Article.STATUS_AUDIT);
+			article.setDelFlag(Article.DEL_FLAG_AUDIT);
 		}
 		// 如果栏目不需要审核，则将该内容设为发布状态
 		if (article.getCategory()!=null&&article.getCategory().getId()!=null){
 			Category category = categoryDao.findOne(article.getCategory().getId());
 			if (!Article.YES.equals(category.getIsAudit())){
-				article.setStatus(Article.STATUS_RELEASE);
+				article.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
 		}
-		if (article.getId()==null){
-			article.setUser(UserUtils.getUser());
-		}
-		article.setUpdateDate(new Date());
 		articleDao.clear();
 		articleDao.save(article);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id, Boolean isRe) {
-//		articleDao.updateStatus(id, isRe!=null&&isRe?Article.STATUS_RELEASE:Article.STATUS_DELETE);
+//		articleDao.updateDelFlag(id, isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
 		// 使用下面方法，以便更新索引。
 		Article article = articleDao.findOne(id);
-		article.setStatus(isRe!=null&&isRe?Article.STATUS_RELEASE:Article.STATUS_DELETE);
+		article.setDelFlag(isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
 		articleDao.save(article);
 	}
 	
@@ -172,7 +168,7 @@ public class ArticleService extends BaseService {
 		BooleanQuery query = articleDao.getFullTextQuery(q, "title","keywords","description","articleData.content");
 		// 设置过滤条件
 		BooleanQuery queryFilter = articleDao.getFullTextQuery(new BooleanClause(
-				new TermQuery(new Term("status", Article.STATUS_RELEASE)), Occur.MUST));
+				new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
 		// 设置排序
 		Sort sort = new Sort(new SortField("updateDate", SortField.DOC, true));
 		// 全文检索

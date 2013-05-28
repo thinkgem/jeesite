@@ -88,7 +88,7 @@ public class FrontController extends BaseController{
 		if("2".equals(category.getShowModes()) && "article".equals(category.getModule())){
 			Page<Article> page = new Page<Article>(1, 1, -1);
 			Article article = new Article(category);
-			page = articleService.find(page, article);
+			page = articleService.find(page, article, false);
 			if (page.getList().size()>0){
 				article = page.getList().get(0);
 				articleService.updateHitsAddOne(article.getId());
@@ -112,11 +112,11 @@ public class FrontController extends BaseController{
 				// 获取内容列表
 				if ("article".equals(category.getModule())){
 					Page<Article> page = new Page<Article>(pageNo, pageSize);
-					page = articleService.find(page, new Article(category));
+					page = articleService.find(page, new Article(category), false);
 					model.addAttribute("page", page);
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
-					page = linkService.find(page, new Link(category));
+					page = linkService.find(page, new Link(category), false);
 					model.addAttribute("page", page);
 				}
 				model.addAttribute("category", category);
@@ -131,10 +131,10 @@ public class FrontController extends BaseController{
 					if (Category.SHOW.equals(c.getInList())){
 						if ("article".equals(c.getModule())){
 							categoryMap.put(c, articleService.find(new Page<Article>(1, 5, -1),
-									new Article(c)).getList());
+									new Article(c), false).getList());
 						}else if ("link".equals(c.getModule())){
 							categoryMap.put(c, linkService.find(new Page<Link>(1, 5, -1),
-									new Link(c)).getList());
+									new Link(c), false).getList());
 						}
 					}
 				}
@@ -160,7 +160,7 @@ public class FrontController extends BaseController{
 		model.addAttribute("site", category.getSite());
 		if ("article".equals(category.getModule())){
 			Article article = articleService.get(contentId);
-			if (article==null || !Article.STATUS_RELEASE.equals(article.getStatus())){
+			if (article==null || !Article.DEL_FLAG_NORMAL.equals(article.getDelFlag())){
 				return "error/404";
 			}
 			model.addAttribute("article", article);
@@ -188,7 +188,7 @@ public class FrontController extends BaseController{
 		Comment c = new Comment();
 		c.setModule(comment.getModule());
 		c.setContentId(comment.getContentId());
-		c.setStatus(Comment.STATUS_RELEASE);
+		c.setDelFlag(Comment.DEL_FLAG_NORMAL);
 		page = commentService.find(page, c);
 		model.addAttribute("page", page);
 		model.addAttribute("comment", comment);
@@ -212,7 +212,7 @@ public class FrontController extends BaseController{
 				}
 				comment.setIp(request.getRemoteAddr());
 				comment.setCreateDate(new Date());
-				comment.setStatus(Comment.STATUS_AUDIT);
+				comment.setDelFlag(Comment.DEL_FLAG_AUDIT);
 				commentService.save(comment);
 				return "{result:1, message:'提交成功，请等待管理员审核。'}";
 			}else{

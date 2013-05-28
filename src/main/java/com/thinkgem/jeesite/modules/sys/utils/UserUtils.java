@@ -143,7 +143,7 @@ public class UserUtils extends BaseService implements ApplicationContextAware {
 		getCacheMap().remove(key);
 	}
 	
-	private static Map<String, Object> getCacheMap(){
+	public static Map<String, Object> getCacheMap(){
 		Map<String, Object> map = Maps.newHashMap();
 		try{
 			Subject subject = SecurityUtils.getSubject();
@@ -153,4 +153,5 @@ public class UserUtils extends BaseService implements ApplicationContextAware {
 			return map;
 		}
 	}
+	
 }

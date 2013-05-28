@@ -5,7 +5,6 @@
  */
 package com.thinkgem.jeesite.modules.cms.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
@@ -53,7 +52,7 @@ public class LinkService extends BaseService {
 		return linkDao.findOne(id);
 	}
 	
-	public Page<Link> find(Page<Link> page, Link link) {
+	public Page<Link> find(Page<Link> page, Link link, boolean isDataScopeFilter) {
 		DetachedCriteria dc = linkDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
@@ -62,7 +61,6 @@ public class LinkService extends BaseService {
 			if (category!=null){
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
-						Restrictions.eq("category.parent.id", category.getId()),
 						Restrictions.like("category.parentIds", "%,"+category.getId()+",%")));
 				dc.add(Restrictions.eq("category.site.id", category.getSite().getId()));
 				link.setCategory(category);
@@ -75,12 +73,14 @@ public class LinkService extends BaseService {
 		if (StringUtils.isNotEmpty(link.getTitle())){
 			dc.add(Restrictions.like("title", "%"+link.getTitle()+"%"));
 		}
-		if (link.getUser()!=null && link.getUser().getId()>0){
-			dc.add(Restrictions.eq("user.id", link.getUser().getId()));
+		if (link.getCreateBy()!=null && link.getCreateBy().getId()>0){
+			dc.add(Restrictions.eq("createBy.id", link.getCreateBy().getId()));
 		}
-		dc.createAlias("category.office", "categoryOffice").createAlias("user", "user");
-		dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "user"));
-		dc.add(Restrictions.eq("status", link.getStatus()));
+		if (isDataScopeFilter){
+			dc.createAlias("category.office", "categoryOffice").createAlias("createBy", "createBy");
+			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
+		}
+		dc.add(Restrictions.eq(Link.DEL_FLAG, link.getDelFlag()));
 		dc.addOrder(Order.desc("weight"));
 		dc.addOrder(Order.desc("updateDate"));
 		return linkDao.find(page, dc);
@@ -88,28 +88,24 @@ public class LinkService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void save(Link link) {
-		if (link.getId()==null){
-			link.setUser(UserUtils.getUser());
-		}
 		// 如果没有审核权限，则将当前内容改为待审核状态
 		if (!SecurityUtils.getSubject().isPermitted("cms:link:audit")){
-			link.setStatus(Link.STATUS_AUDIT);
+			link.setDelFlag(Link.DEL_FLAG_AUDIT);
 		}
 		// 如果栏目不需要审核，则将该内容设为发布状态
 		if (link.getCategory()!=null&&link.getCategory().getId()!=null){
 			Category category = categoryDao.findOne(link.getCategory().getId());
 			if (!Article.YES.equals(category.getIsAudit())){
-				link.setStatus(Article.STATUS_RELEASE);
+				link.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
 		}
-		link.setUpdateDate(new Date());
 		linkDao.clear();
 		linkDao.save(link);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id, Boolean isRe) {
-		linkDao.updateStatus(id, isRe!=null&&isRe?Link.STATUS_RELEASE:Link.STATUS_DELETE);
+		linkDao.updateDelFlag(id, isRe!=null&&isRe?Link.DEL_FLAG_NORMAL:Link.DEL_FLAG_DELETE);
 	}
 	
 	/**

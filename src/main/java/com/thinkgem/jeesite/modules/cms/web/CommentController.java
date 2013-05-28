@@ -65,12 +65,12 @@ public class CommentController extends BaseController {
 				comment.setAuditUser(UserUtils.getUser());
 				comment.setAuditDate(new Date());
 			}
-			comment.setStatus(Comment.STATUS_RELEASE);
+			comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
 			commentService.save(comment);
-			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getStatus(), "cms_status", "保存")
+			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
 					+"评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()),50) + "'成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&status=2";
+		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&delFlag=2";
 	}
 	
 	@RequiresPermissions("cms:comment:edit")
@@ -78,7 +78,7 @@ public class CommentController extends BaseController {
 	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		commentService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&status=2";
+		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&delFlag=2";
 	}
 
 }

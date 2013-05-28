@@ -98,6 +98,9 @@ public class UserController extends BaseController {
 			return form(user, model);
 		}
 		systemService.saveUser(user);
+		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
+			UserUtils.getCacheMap().clear(); // 清除当前用户缓存
+		}
 		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
 		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
 	}
@@ -105,7 +108,9 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
-		if (User.isAdmin(id)){
+		if (UserUtils.getUser().getId().equals(id)){
+			addMessage(redirectAttributes, "删除用户失败, 不允许删除当前用户");
+		}else if (User.isAdmin(id)){
 			addMessage(redirectAttributes, "删除用户失败, 不允许删除超级管理员用户");
 		}else{
 			systemService.deleteUser(id);
@@ -200,12 +205,12 @@ public class UserController extends BaseController {
 	public String info(User user, Model model) {
 		User currentUser = UserUtils.getUser();
 		if (StringUtils.isNotBlank(user.getName())){
+			currentUser = UserUtils.getUser(true);
 			currentUser.setEmail(user.getEmail());
 			currentUser.setPhone(user.getPhone());
 			currentUser.setMobile(user.getMobile());
 			currentUser.setRemarks(user.getRemarks());
 			systemService.saveUser(currentUser);
-			currentUser = UserUtils.getUser();
 			model.addAttribute("message", "保存用户信息成功");
 		}
 		model.addAttribute("user", currentUser);

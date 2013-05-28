@@ -24,8 +24,8 @@ import com.thinkgem.jeesite.modules.cms.entity.Article;
 public interface ArticleDao extends ArticleDaoCustom, CrudRepository<Article, Long> {
 
 	@Modifying
-	@Query("update Article set status=?2 where id = ?1")
-	public int updateStatus(Long id, String status);
+	@Query("update Article set delFlag=?2 where id = ?1")
+	public int updateDelFlag(Long id, String status);
 	
 	public List<Article> findByIdIn(Long[] ids);
 	

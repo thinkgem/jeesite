@@ -50,7 +50,7 @@ public class DictService extends BaseService {
 		if (StringUtils.isNotEmpty(dict.getDescription())){
 			dc.add(Restrictions.like("description", "%"+dict.getDescription()+"%"));
 		}
-		dc.add(Restrictions.eq("delFlag", Dict.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Dict.DEL_FLAG, Dict.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("type")).addOrder(Order.asc("sort")).addOrder(Order.desc("id"));
 		return dictDao.find(page, dc);
 	}
@@ -62,13 +62,13 @@ public class DictService extends BaseService {
 	@Transactional(readOnly = false)
 	public void save(Dict dict) {
 		dictDao.save(dict);
-		CacheUtils.remove("dictList");
+		CacheUtils.remove("dictMap");
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
 		dictDao.deleteById(id);
-		CacheUtils.remove("dictList");
+		CacheUtils.remove("dictMap");
 	}
 	
 }

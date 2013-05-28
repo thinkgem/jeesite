@@ -29,9 +29,8 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
-import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 栏目Entity
@@ -41,7 +40,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 @Entity
 @Table(name = "cms_category")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Category extends BaseEntity {
+public class Category extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -62,13 +61,11 @@ public class Category extends BaseEntity {
 	private String showModes; 	// 展现方式（0:有子栏目显示栏目列表，无子栏目显示内容列表;1：首栏目内容列表；2：栏目第一条内容）
 	private String allowComment;// 是否允许评论
 	private String isAudit;	// 是否需要审核
-	private User user;		// 创建者
-	private String delFlag; 	// 删除标记（0：正常；1：删除）
 	
 	private List<Category> childList = Lists.newArrayList(); 	// 拥有子分类列表
-//	private List<Role> roleList = Lists.newArrayList(); 		// 拥有角色列表
 
 	public Category(){
+		super();
 		this.sort = 30;
 		this.inMenu = SHOW;
 		this.inList = SHOW;
@@ -89,7 +86,7 @@ public class Category extends BaseEntity {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_category")
 //	@SequenceGenerator(name = "seq_cms_category", sequenceName = "seq_cms_category")
 	public Long getId() {
@@ -260,26 +257,6 @@ public class Category extends BaseEntity {
 		this.isAudit = isAudit;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
-
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="sort")
@@ -293,21 +270,6 @@ public class Category extends BaseEntity {
 		this.childList = childList;
 	}
 
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "sys_role_category", joinColumns = { @JoinColumn(name = "category_id") },
-//		inverseJoinColumns = { @JoinColumn(name = "role_id") })
-//	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-//	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-//	public List<Role> getRoleList() {
-//		return roleList;
-//	}
-//	
-//	public void setRoleList(List<Role> roleList) {
-//		this.roleList = roleList;
-//	}
-	
 	@Transient
 	public static void sortList(List<Category> list, List<Category> sourcelist, Long parentId){
 		for (int i=0; i<sourcelist.size(); i++){

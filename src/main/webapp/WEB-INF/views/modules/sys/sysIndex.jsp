@@ -72,7 +72,7 @@
 			</div>
 			<div id="openClose" class="close">&nbsp;</div>
 			<div id="right">
-				<iframe id="mainFrame" name="mainFrame" src="${ctx}/sys/user/info" style="overflow:visible;"
+				<iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;"
 					scrolling="yes" frameborder="no" width="100%" height="650"></iframe>
 			</div>
 		</div>

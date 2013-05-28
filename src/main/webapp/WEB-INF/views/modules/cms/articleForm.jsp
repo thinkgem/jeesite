@@ -168,23 +168,22 @@
 			<div class="controls">
 				<form:checkboxes path="posidList" items="${fns:getDictList('cms_posid')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</div>
-		</div>
+		</div><%--
 		<div class="control-group">
 			<label class="control-label">发布时间:</label>
 			<div class="controls">
 				<div class="input-append">
-					<script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-					<input id="inputDate" name="inputDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-						value="<fmt:formatDate value="${article.inputDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					<input id="createDate" name="createDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+						value="<fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				</div>
 			</div>
-		</div>
+		</div> --%>
 		<shiro:hasPermission name="cms:article:audit">
 		<div class="control-group">
 			<label class="control-label">发布状态:</label>
 			<div class="controls">
-				<form:radiobuttons path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<form:radiobuttons path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
 				<span class="help-inline"></span>
 			</div>
 		</div>

@@ -36,7 +36,6 @@
 			<label>归属机构：</label><tags:treeselect id="office" name="officeId" value="${paramMap.officeId}" labelName="officeName" labelValue="${paramMap.officeName}" 
 				title="机构" url="/sys/office/treeData" cssClass="input-small" allowClear="true"/>&nbsp;
 		</div><div style="margin-top:8px;">
-			<script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 			<label>日期范围：&nbsp;</label><input id="beginDate" name="beginDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 				value="${paramMap.beginDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			<label>&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"

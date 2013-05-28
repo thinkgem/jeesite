@@ -50,7 +50,7 @@ public class FrontGuestbookController extends BaseController{
 		model.addAttribute("site", site);
 		Page<Guestbook> page = new Page<Guestbook>(pageNo, pageSize);
 		Guestbook guestbook = new Guestbook();
-		guestbook.setStatus(Guestbook.STATUS_RELEASE);
+		guestbook.setDelFlag(Guestbook.DEL_FLAG_NORMAL);
 		page = guestbookService.find(page, guestbook);
 		model.addAttribute("page", page);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontGuestbook";
@@ -65,7 +65,7 @@ public class FrontGuestbookController extends BaseController{
 			if (ValidateCodeServlet.validate(request, validateCode)){
 				guestbook.setIp(request.getRemoteAddr());
 				guestbook.setCreateDate(new Date());
-				guestbook.setStatus(Guestbook.STATUS_AUDIT);
+				guestbook.setDelFlag(Guestbook.DEL_FLAG_AUDIT);
 				guestbookService.save(guestbook);
 				addMessage(redirectAttributes, "提交成功，请等待管理员审核。");
 			}else{

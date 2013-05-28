@@ -31,7 +31,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 角色Entity
@@ -41,20 +41,19 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 @Entity
 @Table(name = "sys_role")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Role extends BaseEntity {
+public class Role extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;	 	// 编号
 	private Office office;	// 归属机构
 	private String name; 	// 角色名称
+	private String enname;	//英文名称
+	private String roleType;//权限类型
 	private String dataScope; // 数据范围
-//	private User user;		// 创建者
-	private String delFlag; // 删除标记（0：正常；1：删除）
 
 	private List<User> userList = Lists.newArrayList(); // 拥有用户列表
 	private List<Menu> menuList = Lists.newArrayList(); // 拥有菜单列表
 	private List<Office> officeList = Lists.newArrayList(); // 按明细设置数据范围
-//	private List<Category> categoryList = Lists.newArrayList(); // 拥有内容分类列表
 
 	// 数据范围（1：所有数据；2：所在公司及以下数据；3：所在公司数据；4：所在部门及以下数据；5：所在部门数据；8：仅本人数据；9：按明细设置）
 	public static final String DATA_SCOPE_ALL = "1";
@@ -66,7 +65,7 @@ public class Role extends BaseEntity {
 	public static final String DATA_SCOPE_CUSTOM = "9";
 	
 	public Role() {
-		this.delFlag = DEL_FLAG_NORMAL;
+		super();
 		this.dataScope = DATA_SCOPE_CUSTOM;
 	}
 
@@ -77,7 +76,7 @@ public class Role extends BaseEntity {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_role")
 //	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role")
 	public Long getId() {
@@ -108,6 +107,24 @@ public class Role extends BaseEntity {
 		this.name = name;
 	}
 
+	@Length(min=1, max=100)
+	public String getEnname() {
+		return enname;
+	}
+
+	public void setEnname(String enname) {
+		this.enname = enname;
+	}
+	
+	@Length(min=1, max=100)
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
 	public String getDataScope() {
 		return dataScope;
 	}
@@ -116,26 +133,6 @@ public class Role extends BaseEntity {
 		this.dataScope = dataScope;
 	}
 
-//	@ManyToOne
-//	@JoinColumn(name="user_id")
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
-	
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
-	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
@@ -204,62 +201,6 @@ public class Role extends BaseEntity {
 			}
 		}
 	}
-	
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "sys_role_category", joinColumns = { @JoinColumn(name = "role_id") }, 
-//		inverseJoinColumns = { @JoinColumn(name = "category_id") })
-//	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-//	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-//	public List<Category> getCategoryList() {
-//		return categoryList;
-//	}
-//
-//	public void setCategoryList(List<Category> categoryList) {
-//		this.categoryList = categoryList;
-//	}
-//	
-//	@Transient
-//	public List<Long> getCategoryIdList() {
-//		List<Long> categoryIdList = Lists.newArrayList();
-//		for (Category category : categoryList) {
-//			categoryIdList.add(category.getId());
-//		}
-//		return categoryIdList;
-//	}
-//
-//	@Transient
-//	public void setCategoryIdList(List<Long> categoryIdList) {
-//		categoryList = Lists.newArrayList();
-//		for (Long categoryId : categoryIdList) {
-//			Category category = new Category();
-//			category.setId(categoryId);
-//			categoryList.add(category);
-//		}
-//	}
-//
-//	@Transient
-//	public String getCategoryIds() {
-//		List<Long> nameIdList = Lists.newArrayList();
-//		for (Category category : categoryList) {
-//			nameIdList.add(category.getId());
-//		}
-//		return StringUtils.join(nameIdList, ",");
-//	}
-//	
-//	@Transient
-//	public void setCategoryIds(String categoryIds) {
-//		categoryList = Lists.newArrayList();
-//		if (categoryIds != null){
-//			String[] ids = StringUtils.split(categoryIds, ",");
-//			for (String categoryId : ids) {
-//				Category category = new Category();
-//				category.setId(new Long(categoryId));
-//				categoryList.add(category);
-//			}
-//		}
-//	}
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_role_office", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "office_id") })

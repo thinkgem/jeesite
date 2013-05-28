@@ -21,6 +21,7 @@ import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.cms.dao.ArticleDao;
+import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
 
 /**
@@ -75,6 +76,9 @@ public class StatsService extends BaseService {
 		ps.add(beginDate);
 		ps.add(DateUtils.addDays(endDate, 1));
 
+		ql.append(" and c.delFlag = ?");
+		ps.add(Article.DEL_FLAG_NORMAL);
+		
 		ql.append(" group by c.id order by cp.sort, cp.id, c.sort, c.id");
 		List<Map<String, Object>> list = articleDao.find(ql.toString(), ps.toArray());
 		return list;

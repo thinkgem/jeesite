@@ -82,15 +82,4 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return toLong(val).intValue();
 	}
 	
-	public static String toString(Object val){
-		if (val == null){
-			return "";
-		}
-		try {
-			return trim(val.toString());
-		} catch (Exception e) {
-			return "";
-		}
-	}
-	
 }

@@ -39,16 +39,10 @@ public class ${ClassName}Service extends BaseService {
 	
 	public Page<${ClassName}> find(Page<${ClassName}> page, ${ClassName} ${className}) {
 		DetachedCriteria dc = ${className}Dao.createDetachedCriteria();
-		if (${className}.getUser()!=null && ${className}.getUser().getId()>0){
-			dc.add(Restrictions.eq("user.id", ${className}.getUser().getId()));
-		}
 		if (StringUtils.isNotEmpty(${className}.getName())){
 			dc.add(Restrictions.like("name", "%"+${className}.getName()+"%"));
 		}
-		if (StringUtils.isNotEmpty(${className}.getRemarks())){
-			dc.add(Restrictions.like("remarks", "%"+${className}.getRemarks()+"%"));
-		}
-		dc.add(Restrictions.eq("delFlag", ${ClassName}.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(${ClassName}.DEL_FLAG, ${ClassName}.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.desc("id"));
 		return ${className}Dao.find(page, dc);
 	}

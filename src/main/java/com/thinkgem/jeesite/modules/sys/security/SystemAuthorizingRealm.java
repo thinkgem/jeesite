@@ -112,7 +112,6 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	public void clearCachedAuthorizationInfo(String principal) {
 		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		clearCachedAuthorizationInfo(principals);
-		UserUtils.removeCache("user");
 	}
 
 	/**

@@ -20,8 +20,9 @@ DROP INDEX sys_office_del_flag ON sys_office;
 DROP INDEX sys_role_del_flag ON sys_role;
 DROP INDEX sys_user_office_id ON sys_user;
 DROP INDEX sys_user_login_name ON sys_user;
-DROP INDEX sys_user_del_flag ON sys_user;
 DROP INDEX sys_user_company_id ON sys_user;
+DROP INDEX sys_user_update_date ON sys_user;
+DROP INDEX sys_user_del_flag ON sys_user;
 
 
 
@@ -51,7 +52,11 @@ CREATE TABLE sys_area
 	code varchar(100) COMMENT '区域编码',
 	name varchar(100) NOT NULL COMMENT '区域名称',
 	type char(1) COMMENT '区域类型（1：国家；2：省份、直辖市；3：地市；4：区县）',
-	remarks varchar(255) COMMENT '备注',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '区域表';
@@ -65,6 +70,11 @@ CREATE TABLE sys_dict
 	type varchar(100) NOT NULL COMMENT '类型',
 	description varchar(100) NOT NULL COMMENT '描述',
 	sort int NOT NULL COMMENT '排序（升序）',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '字典表';
@@ -78,6 +88,11 @@ CREATE TABLE sys_mdict
 	name varchar(100) NOT NULL COMMENT '角色名称',
 	description varchar(100) COMMENT '描述',
 	sort int COMMENT '排序（升序）',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '区域表';
@@ -95,6 +110,11 @@ CREATE TABLE sys_menu
 	sort int NOT NULL COMMENT '排序（升序）',
 	is_show char(1) NOT NULL COMMENT '是否在菜单中显示（1：显示；0：不显示）',
 	permission varchar(200) COMMENT '权限标识',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '菜单表';
@@ -109,14 +129,18 @@ CREATE TABLE sys_office
 	code varchar(100) COMMENT '区域编码',
 	name varchar(100) NOT NULL COMMENT '机构名称',
 	type char(1) NOT NULL COMMENT '机构类型（1：公司；2：部门；3：小组）',
-	level char(1) NOT NULL COMMENT '机构级别（1：一级；2：二级；3：三级；4：四级）',
+	grade char(1) NOT NULL COMMENT '机构等级（1：一级；2：二级；3：三级；4：四级）',
 	address varchar(255) COMMENT '联系地址',
 	zip_code varchar(100) COMMENT '邮政编码',
 	master varchar(100) COMMENT '负责人',
 	phone varbinary(200) COMMENT '电话',
 	fax varchar(200) COMMENT '传真',
 	email varchar(200) COMMENT '邮箱',
-	remarks varchar(255) COMMENT '备注',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '部门表';
@@ -127,7 +151,14 @@ CREATE TABLE sys_role
 	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
 	office_id bigint COMMENT '归属机构',
 	name varchar(100) NOT NULL COMMENT '角色名称',
+	enname varchar(255) COMMENT '英文名称',
+	role_type varchar(255) COMMENT '角色类型',
 	data_scope char(1) COMMENT '数据范围（0：所有数据；1：所在公司及以下数据；2：所在公司数据；3：所在部门及以下数据；4：所在部门数据；8：仅本人数据；9：按明细设置）',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '角色表';
@@ -161,12 +192,15 @@ CREATE TABLE sys_user
 	email varchar(200) COMMENT '邮箱',
 	phone varchar(200) COMMENT '电话',
 	mobile varchar(200) COMMENT '手机',
-	remarks varchar(255) COMMENT '备注',
 	user_type char(1) COMMENT '用户类型',
-	create_date timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	login_ip varchar(100) COMMENT '最后登陆IP',
-	login_date timestamp COMMENT '最后登陆时间',
+	login_date datetime COMMENT '最后登陆时间',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	update_by bigint COMMENT '更新者',
+	update_date datetime COMMENT '更新时间',
+	remarks varchar(255) COMMENT '备注信息',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '用户表';
 
@@ -200,8 +234,9 @@ CREATE INDEX sys_office_del_flag ON sys_office (del_flag ASC);
 CREATE INDEX sys_role_del_flag ON sys_role (del_flag ASC);
 CREATE INDEX sys_user_office_id ON sys_user (office_id ASC);
 CREATE INDEX sys_user_login_name ON sys_user (login_name ASC);
-CREATE INDEX sys_user_del_flag ON sys_user (del_flag ASC);
 CREATE INDEX sys_user_company_id ON sys_user (company_id ASC);
+CREATE INDEX sys_user_update_date ON sys_user (update_date ASC);
+CREATE INDEX sys_user_del_flag ON sys_user (del_flag ASC);
 
 
 

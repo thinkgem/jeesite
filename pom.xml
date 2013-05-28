@@ -16,21 +16,26 @@
 		<!-- version setting -->
 		<spring.version>3.2.2.RELEASE</spring.version>
 		<spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version>
-		<hibernate.version>4.2.0.Final</hibernate.version>
-		<druid.version>0.2.16</druid.version>
-		<sitemesh.version>2.4.2</sitemesh.version>
-		<shiro.version>1.2.1</shiro.version>
-		<ehcache.version>2.6.5</ehcache.version>
+		<hibernate.version>4.1.12.Final</hibernate.version>
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
-		<jackson.version>2.1.4</jackson.version>
-		<slf4j.version>1.7.2</slf4j.version>
+		<hibernate-search.version>4.2.0.Final</hibernate-search.version>
+		<druid.version>0.2.19</druid.version>
+		<shiro.version>1.2.2</shiro.version>
+		<sitemesh.version>2.4.2</sitemesh.version>
+		<ehcache.version>2.6.6</ehcache.version>
+		<jackson.version>2.2.1</jackson.version>
+		<slf4j.version>1.7.5</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
-		<guava.version>14.0</guava.version>
-		<dozer.version>5.3.2</dozer.version>
+		<commons-codec.version>1.8</commons-codec.version>
+		<commons-fileupload.version>1.3</commons-fileupload.version>
+		<commons-beanutils.version>1.8.3</commons-beanutils.version>
+		<guava.version>14.0.1</guava.version>
+		<dozer.version>5.4.0</dozer.version>
 		<poi.version>3.9</poi.version>
 		<freemarker.version>2.3.19</freemarker.version>
+		<activiti.version>5.12.1</activiti.version>
 		
 		<!-- mysql driver setting -->
 		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
@@ -42,6 +47,11 @@
 		<jdbc.driver.artifactId>ojdbc14</jdbc.driver.artifactId>
 		<jdbc.driver.version>10.2.0.1.0</jdbc.driver.version> -->
 		
+		<!-- mssql driver setting
+		<jdbc.driver.groupId>net.sourceforge.jtds</jdbc.driver.groupId>
+		<jdbc.driver.artifactId>jtds</jdbc.driver.artifactId>
+		<jdbc.driver.version>1.2.4</jdbc.driver.version> -->
+	    
 		<!-- other setting -->
 		<jdk.version>1.6</jdk.version>
 		<tomcat.version>2.1</tomcat.version>
@@ -59,7 +69,7 @@
 			<name>Team Nexus Repository</name>
 			<url>http://localhost:8081/nexus/content/groups/public</url> 
 		</repository>-->
-		
+
 		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
@@ -85,6 +95,11 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		
+		<repository>
+			<id>Activiti</id>
+			<url>https://maven.alfresco.com/nexus/content/groups/public</url>
 		</repository>
 		
 		<repository> 
@@ -211,9 +226,14 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-search</artifactId>
-		    <version>${hibernate.version}</version>
+		    <version>${hibernate-search.version}</version>
 		</dependency>
         <!-- 中文分词 -->
 		<dependency>
@@ -311,12 +331,17 @@
 			<version>${shiro.version}</version>
 		</dependency>
 		<!-- SECURITY end -->
-
-		<!-- JSR303 BeanValidator -->
+		
+		<!-- Activiti -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate-validator.version}</version>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+			<version>${activiti.version}</version>
 		</dependency>
 		
 		<!-- LOGGING begin -->
@@ -374,12 +399,17 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.6</version>
+			<version>${commons-codec.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>${commons-fileupload.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.8.3</version>
+			<version>${commons-beanutils.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -425,7 +455,7 @@
 		<dependency>
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
-		    <version>1.4.5</version>
+		    <version>1.4.7</version>
 		</dependency>
 		<dependency>
 		    <groupId>javax.activation</groupId>
@@ -452,11 +482,6 @@
 		<!-- GENERAL UTILS end -->
 		
 		<!-- CKFinder begin -->
-		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.2.2</version>
-		</dependency>
 		<dependency>
 		    <groupId>net.coobird</groupId>
 		    <artifactId>thumbnailator</artifactId>
@@ -649,30 +674,42 @@
 								<!-- oracle
 								<property name="sql.type" value="oracle" />
 								<property name="dbunit.datatype" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" /> -->
-																
+								
+              				    <!-- mssql
+              				    <property name="sql.type" value="mssql" />
+								<property name="dbunit.datatype" value="org.dbunit.ext.mssql.MsSqlDataTypeFactory" /> -->
+								
 								<property file="src/main/resources/application.properties" />              				    
                 				<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" 
                 				    onerror="continue" encoding="${project.build.sourceEncoding}">
 									<classpath refid="maven.test.classpath" />
 									<transaction src="bin/refresh-db/sys/jeesite_${sql.type}.sql"/>
 									<transaction src="bin/refresh-db/cms/jeesite_${sql.type}.sql"/>
+									<transaction src="bin/refresh-db/oa/jeesite_${sql.type}.sql"/>
+									<transaction src="bin/refresh-db/activiti${activiti.version}/database/drop/activiti.${sql.type}.drop.engine.sql"/>
+									<transaction src="bin/refresh-db/activiti${activiti.version}/database/drop/activiti.${sql.type}.drop.history.sql"/>
+									<transaction src="bin/refresh-db/activiti${activiti.version}/database/drop/activiti.${sql.type}.drop.identity.sql"/>
+									<transaction src="bin/refresh-db/activiti${activiti.version}/database/create/activiti.${sql.type}.create.engine.sql"/>
+									<transaction src="bin/refresh-db/activiti${activiti.version}/database/create/activiti.${sql.type}.create.history.sql"/>
+									<transaction src="bin/refresh-db/activiti${activiti.version}/database/create/activiti.${sql.type}.create.identity.sql"/>
 								</sql>
 								
 								<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />
 								
-								<!-- mysql -->
+								<!-- mysql、mssql -->
 	                            <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}">
 	                            
 								<!-- oracle
-	                            <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" 
+	                            <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"
 	                                schema="${jdbc.username}" > -->
 									
 									<dbconfig>
 										<property name="datatypeFactory" value="${dbunit.datatype}" />
 									</dbconfig>
 									<classpath refid="maven.test.classpath" />
-									<operation type="CLEAN_INSERT" src="bin/refresh-db/sys/jeesite_data.xls" format="xls" transaction="true"/>
-									<operation type="CLEAN_INSERT" src="bin/refresh-db/cms/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="bin/refresh-db/sys/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="bin/refresh-db/cms/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="bin/refresh-db/oa/jeesite_data.xls" format="xls" transaction="true"/>
 									
 								</dbunit>
 								

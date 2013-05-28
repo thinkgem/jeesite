@@ -6,9 +6,12 @@
 package com.thinkgem.jeesite.modules.sys.service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -16,6 +19,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +28,7 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.security.Digests;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.Encodes;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
 import com.thinkgem.jeesite.modules.sys.dao.UserDao;
@@ -40,7 +45,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  */
 @Service
 @Transactional(readOnly = true)
-public class SystemService extends BaseService {
+public class SystemService extends BaseService implements InitializingBean {
 
 	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(SystemService.class);
@@ -58,6 +63,9 @@ public class SystemService extends BaseService {
 	@Autowired
 	private SystemAuthorizingRealm systemRealm;
 	
+	@Autowired
+	private IdentityService identityService;
+
 	//-- User Service --//
 	
 	public User getUser(Long id) {
@@ -67,17 +75,6 @@ public class SystemService extends BaseService {
 	public Page<User> findUser(Page<User> page, User user) {
 		DetachedCriteria dc = userDao.createDetachedCriteria();
 		User currentUser = UserUtils.getUser();
-//		if (!currentUser.isAdmin()){
-//			if (user.getArea()==null || user.getArea().getId()==null){
-//				user.setArea(currentUser.getArea());
-//			}
-//			if (user.getCompany()==null || user.getCompany().getId()==null){
-//				user.setCompany(currentUser.getCompany());
-//			}
-//			if (user.getOffice()==null || user.getOffice().getId()==null){
-//				user.setOffice(currentUser.getOffice());
-//			}
-//		}
 //		dc.createAlias("area", "area");
 //		if (user.getArea()!=null && user.getArea().getId()!=null){
 //			dc.add(Restrictions.or(
@@ -90,7 +87,6 @@ public class SystemService extends BaseService {
 		if (user.getCompany()!=null && user.getCompany().getId()!=null){
 			dc.add(Restrictions.or(
 					Restrictions.eq("company.id", user.getCompany().getId()),
-//					Restrictions.eq("company.parent.id", user.getCompany().getId()),
 					Restrictions.like("company.parentIds", "%,"+user.getCompany().getId()+",%")
 					));
 		}
@@ -98,7 +94,6 @@ public class SystemService extends BaseService {
 		if (user.getOffice()!=null && user.getOffice().getId()!=null){
 			dc.add(Restrictions.or(
 					Restrictions.eq("office.id", user.getOffice().getId()),
-//					Restrictions.eq("office.parent.id", user.getOffice().getId()),
 					Restrictions.like("office.parentIds", "%,"+user.getOffice().getId()+",%")
 					));
 		}
@@ -110,7 +105,7 @@ public class SystemService extends BaseService {
 		if (StringUtils.isNotEmpty(user.getName())){
 			dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
 		}
-		dc.add(Restrictions.eq("delFlag", User.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(User.DEL_FLAG, User.DEL_FLAG_NORMAL));
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
 			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
 		}
@@ -126,11 +121,15 @@ public class SystemService extends BaseService {
 		userDao.clear();
 		userDao.save(user);
 		systemRealm.clearCachedAuthorizationInfo(user.getLoginName());
+		// 同步到Activiti
+		saveActivitiUser(user, user.getId()==null);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteUser(Long id) {
 		userDao.deleteById(id);
+		// 同步到Activiti
+		deleteActivitiUser(userDao.findOne(id));
 	}
 	
 	@Transactional(readOnly = false)
@@ -177,34 +176,30 @@ public class SystemService extends BaseService {
 	
 	public List<Role> findAllRole(){
 		User user = UserUtils.getUser();
-//		if (!user.isAdmin()){
-//			return roleDao.findByUserId(user.getId());
-//		}else{
-//			return roleDao.findAllList();
-//		}
 		DetachedCriteria dc = roleDao.createDetachedCriteria();
 		dc.createAlias("office", "office");
 		dc.createAlias("userList", "userList", JoinType.LEFT_OUTER_JOIN);
 		dc.add(dataScopeFilter(user, "office", "userList"));
-		dc.add(Restrictions.eq("delFlag", Role.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Role.DEL_FLAG, Role.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("office.code")).addOrder(Order.asc("name"));
 		return roleDao.find(dc);
 	}
 	
 	@Transactional(readOnly = false)
 	public void saveRole(Role role) {
-//		if (role.getId()==null){
-//			role.setUser(UserUtils.getUser());
-//		}
 		roleDao.clear();
 		roleDao.save(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		// 同步到Activiti
+		saveActivitiGroup(role, role.getId()==null);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteRole(Long id) {
 		roleDao.deleteById(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		// 同步到Activiti
+		deleteActivitiGroup(roleDao.findOne(id));
 	}
 
 	//-- Menu Service --//
@@ -222,9 +217,6 @@ public class SystemService extends BaseService {
 		menu.setParent(this.getMenu(menu.getParent().getId()));
 		String oldParentIds = menu.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		menu.setParentIds(menu.getParent().getParentIds()+menu.getParent().getId()+",");
-//		if (menu.getId()==null){
-//			menu.setUser(UserUtils.getUser());
-//		}
 		menuDao.clear();
 		menuDao.save(menu);
 		// 更新子节点 parentIds
@@ -241,5 +233,99 @@ public class SystemService extends BaseService {
 		menuDao.deleteById(id, "%,"+id+",%");
 		systemRealm.clearAllCachedAuthorizationInfo();
 	}
+	
+	///////////////// Synchronized to the Activiti //////////////////
+
+	/**
+	 * 是需要同步Activiti数据，如果从未同步过，则同步数据。
+	 */
+	private static boolean isSynActivitiIndetity = true;
+	public void afterPropertiesSet() throws Exception {
+		if (isSynActivitiIndetity){
+			isSynActivitiIndetity = false;
+			List<Group> groupList = identityService.createGroupQuery().list();
+			List<org.activiti.engine.identity.User> userList = identityService.createUserQuery().list();
+			if (groupList.size() == 0 && userList.size() == 0){
+		        // 同步角色数据
+			 	Iterator<Role> roles = roleDao.findAll().iterator();
+			 	while(roles.hasNext()) {
+			 		Role role = roles.next();
+			 		saveActivitiGroup(role, true);
+			 	}
+			 	// 同步用户数据
+			 	Iterator<User> users = userDao.findAll().iterator();
+			 	while(users.hasNext()) {
+			 		saveActivitiUser(users.next(), true);
+			 	}
+			}
+		}
+	}
+	
+	private void saveActivitiGroup(Role role, boolean isNew) {
+		String groupId = role.getEnname();
+		Group group = null;
+		if (!isNew){
+			group = identityService.createGroupQuery().groupId(groupId).singleResult();
+		}
+		if (group == null) {
+			group = identityService.newGroup(groupId);
+		}
+		group.setName(role.getName());
+		group.setType(role.getRoleType());
+		identityService.saveGroup(group);
+	}
+
+	public void deleteActivitiGroup(Role role) {
+		if(role!=null) {
+			String groupId = role.getEnname();
+			identityService.deleteGroup(groupId);
+		}
+	}
+
+	private void saveActivitiUser(User user, boolean isNew) {
+		String userId = ObjectUtils.toString(user.getId());
+		org.activiti.engine.identity.User activitiUser = null;
+		if (!isNew){
+			activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+		}
+		// 是新增用户
+		if (activitiUser == null) {
+			activitiUser = identityService.newUser(userId);
+		} else {
+			List<Group> activitiGroups = identityService.createGroupQuery().groupMember(userId).list();
+			for (Group group : activitiGroups) {
+				identityService.deleteMembership(userId, group.getId());
+			}
+		}
+		activitiUser.setFirstName(user.getName());
+		activitiUser.setLastName(StringUtils.EMPTY);
+		activitiUser.setPassword(StringUtils.EMPTY);
+		activitiUser.setEmail(user.getEmail());
+		identityService.saveUser(activitiUser);
+		// 同步用户角色关联数据
+		for (Long roleId : user.getRoleIdList()) {
+			 Role role = roleDao.findOne(roleId);
+	            //查询activiti中是否有该权限
+			 	Group group= identityService.createGroupQuery().groupId(role.getEnname()).singleResult();
+	            //不存在该权限，新增
+	            if(group ==null) {
+			 		String groupId = role.getEnname();
+		            group = identityService.newGroup(groupId);
+		            group.setName(role.getName());
+		            group.setType(role.getRoleType());
+		            identityService.saveGroup(group);
+	            }
+			identityService.createMembership(userId, roleDao.findOne(roleId).getEnname());
+		}
+	}
+
+	private void deleteActivitiUser(User user) {
+		if(user!=null) {
+			String userId = ObjectUtils.toString(user.getId());
+			identityService.deleteUser(userId);
+		}
+	}
+	
+	///////////////// Synchronized to the Activiti end //////////////////
 	
 }

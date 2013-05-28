@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -46,20 +47,25 @@ public class Comment extends BaseEntity {
 	private Date createDate;// 评论时间
 	private User auditUser; // 审核人
 	private Date auditDate;	// 审核时间
-	private String status;	// 删除标记（0：发布；1：作废；2：审核；）
+	private String delFlag;	// 删除标记删除标记（0：正常；1：删除；2：审核）
 
 	public Comment() {
-		this.createDate = new Date();
-		this.status = STATUS_RELEASE;
+		super();
+		this.delFlag = DEL_FLAG_AUDIT;
 	}
 	
 	public Comment(Long id){
 		this();
 		this.id = id;
 	}
+	
+	@PrePersist
+	public void prePersist(){
+		this.createDate = new Date();
+	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_comment")
 //	@SequenceGenerator(name = "seq_cms_comment", sequenceName = "seq_cms_comment")
 	public Long getId() {
@@ -152,12 +158,12 @@ public class Comment extends BaseEntity {
 	}
 
 	@Length(min=1, max=1)
-	public String getStatus() {
-		return status;
+	public String getDelFlag() {
+		return delFlag;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }

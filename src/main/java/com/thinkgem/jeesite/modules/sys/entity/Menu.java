@@ -33,7 +33,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 菜单Entity
@@ -43,7 +43,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 @Entity
 @Table(name = "sys_menu")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends BaseEntity {
+public class Menu extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -56,15 +56,13 @@ public class Menu extends BaseEntity {
 	private Integer sort; 	// 排序
 	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
 	private String permission; // 权限标识
-//	private User user;		// 创建者
-	private String delFlag; // 删除标记（0：正常；1：删除）
 	
 	private List<Menu> childList = Lists.newArrayList();// 拥有子菜单列表
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 
 	public Menu(){
+		super();
 		this.sort = 30;
-		this.delFlag = DEL_FLAG_NORMAL;
 	}
 	
 	public Menu(Long id){
@@ -73,7 +71,7 @@ public class Menu extends BaseEntity {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
 //	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
 	public Long getId() {
@@ -166,26 +164,6 @@ public class Menu extends BaseEntity {
 
 	public void setPermission(String permission) {
 		this.permission = permission;
-	}
-
-//	@ManyToOne
-//	@JoinColumn(name="user_id")
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
-	
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
 	}
 
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")

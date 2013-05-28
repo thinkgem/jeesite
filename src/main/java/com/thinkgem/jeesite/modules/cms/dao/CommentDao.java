@@ -22,8 +22,8 @@ import com.thinkgem.jeesite.modules.cms.entity.Comment;
 public interface CommentDao extends CommentDaoCustom, CrudRepository<Comment, Long> {
 
 	@Modifying
-	@Query("update Comment set status=?2 where id = ?1")
-	public int updateStatus(Long id, String status);
+	@Query("update Comment set delFlag=?2 where id = ?1")
+	public int updateDelFlag(Long id, String status);
 	
 }
 

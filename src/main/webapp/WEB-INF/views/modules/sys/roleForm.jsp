@@ -115,6 +115,18 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">英文名称:</label>
+			<div class="controls">
+				<form:input path="enname" htmlEscape="false" maxlength="50" class="required"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">角色类型:</label>
+			<div class="controls">
+				<form:input path="roleType" htmlEscape="false" maxlength="50" class="required"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">数据范围:</label>
 			<div class="controls">
 				<form:select path="dataScope">
@@ -124,7 +136,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">授权:</label>
+			<label class="control-label">角色授权:</label>
 			<div class="controls">
 				<div id="menuTree" class="ztree" style="margin-top:3px;float:left;"></div>
 				<form:hidden path="menuIds"/>

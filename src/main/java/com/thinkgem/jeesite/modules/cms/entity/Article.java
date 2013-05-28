@@ -5,7 +5,6 @@
  */
 package com.thinkgem.jeesite.modules.cms.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,19 +27,16 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
-import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 文章Entity
@@ -51,33 +47,27 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 @Table(name = "cms_article")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed @Analyzer(impl = IKAnalyzer.class)
-public class Article extends BaseEntity {
+public class Article extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
 	private Category category;// 分类编号
-	private User user;		// 发布者
 	private String title;	// 标题
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
 	private String thumb;	// 缩略图
 	private String keywords;// 关键字
 	private String description;// 描述、摘要
-	private String status;	// 状态状态（0：发布；1：删除；2：审核；）
 	private Integer weight;	// 权重，越大越靠前
 	private Integer hits;	// 点击数
 	private String posid;	// 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
-	private Date inputDate;	// 录入时间
-	private Date updateDate;// 更新时间
 
 	private ArticleData articleData;	//文章副表
     
 	public Article() {
-		this.status = STATUS_RELEASE;
+		super();
 		this.weight = 0;
 		this.hits = 0;
 		this.posid = "";
-		this.inputDate = new Date();
-		this.updateDate = new Date();
 	}
 
 	public Article(Long id){
@@ -91,7 +81,7 @@ public class Article extends BaseEntity {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article")
 //	@SequenceGenerator(name = "seq_cms_article", sequenceName = "seq_cms_article")
 	public Long getId() {
@@ -112,17 +102,6 @@ public class Article extends BaseEntity {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@Length(min=1, max=255)
@@ -173,15 +152,6 @@ public class Article extends BaseEntity {
 		this.description = description;
 	}
 
-	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	@NotNull
 	public Integer getWeight() {
 		return weight;
@@ -206,25 +176,6 @@ public class Article extends BaseEntity {
 
 	public void setPosid(String posid) {
 		this.posid = posid;
-	}
-
-	@NotNull
-	public Date getInputDate() {
-		return inputDate;
-	}
-
-	public void setInputDate(Date inputDate) {
-		this.inputDate = inputDate;
-	}
-
-	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
-	@DateBridge(resolution = Resolution.DAY)
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
 	}
 
 	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false) 

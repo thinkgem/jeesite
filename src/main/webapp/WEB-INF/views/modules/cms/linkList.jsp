@@ -25,7 +25,7 @@
 					title="栏目" url="/cms/category/treeData" module="link" notAllowSelectRoot="true" cssClass="input-small"/>
 		<label>名称：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
-		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="status" items="${fns:getDictList('cms_status')}" itemLabel="label" itemValue="value" htmlEscape="false" />
+		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -36,11 +36,11 @@
 				<td><a href="javascript:" onclick="$('#categoryId').val('${link.category.id}');$('#categoryName').val('${link.category.name}');$('#searchForm').submit();return false;">${link.category.name}</a></td>
 				<td><a href="${ctx}/cms/link/form?id=${link.id}" title="${link.title}">${fns:abbr(link.title,40)}</a></td>
 				<td>${link.weight}</td>
-				<td>${link.user.name}</td>
+				<td>${link.createBy.name}</td>
 				<td><fmt:formatDate value="${link.updateDate}" type="both"/></td>
 				<shiro:hasPermission name="cms:link:edit"><td>
     				<a href="${ctx}/cms/link/form?id=${link.id}">修改</a>
-					<a href="${ctx}/cms/link/delete?id=${link.id}${link.status ne 0?'&isRe=true':''}&categoryId=${link.category.id}" onclick="return confirmx('确认要${link.status ne 0?'发布':'删除'}该链接吗？', this.href)" >${link.status ne 0?'发布':'删除'}</a>
+					<a href="${ctx}/cms/link/delete?id=${link.id}${link.delFlag ne 0?'&isRe=true':''}&categoryId=${link.category.id}" onclick="return confirmx('确认要${link.delFlag ne 0?'发布':'删除'}该链接吗？', this.href)" >${link.delFlag ne 0?'发布':'删除'}</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

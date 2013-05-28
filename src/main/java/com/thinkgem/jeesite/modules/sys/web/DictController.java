@@ -71,7 +71,7 @@ public class DictController extends BaseController {
 		}
 		dictService.save(dict);
 		addMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/dict/?repage";
+		return "redirect:"+Global.ADMIN_PATH+"/sys/dict/?repage&type="+dict.getType();
 	}
 	
 	@RequiresPermissions("sys:dict:edit")

@@ -70,8 +70,8 @@
 		<div class="control-group">
 			<label class="control-label">机构级别:</label>
 			<div class="controls">
-				<form:select path="level">
-					<form:options items="${fns:getDictList('sys_office_level')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<form:select path="grade">
+					<form:options items="${fns:getDictList('sys_office_grade')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</div>
 		</div>

@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -27,7 +27,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Entity
 @Table(name = "cms_site")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Site extends BaseEntity {
+public class Site extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -37,10 +37,9 @@ public class Site extends BaseEntity {
 	private String keywords;// 关键字，填写有助于搜索引擎优化
 	private String theme;	// 主题
 	private String copyright;// 版权信息
-	private String delFlag; // 删除标记（0：正常；1：删除）
 
 	public Site() {
-		this.delFlag = DEL_FLAG_NORMAL;
+		super();
 	}
 	
 	public Site(Long id){
@@ -49,7 +48,7 @@ public class Site extends BaseEntity {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_site")
 //	@SequenceGenerator(name = "seq_cms_site", sequenceName = "seq_cms_site")
 	public Long getId() {
@@ -111,15 +110,6 @@ public class Site extends BaseEntity {
 
 	public void setCopyright(String copyright) {
 		this.copyright = copyright;
-	}
-
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
 	}
 
 	/**

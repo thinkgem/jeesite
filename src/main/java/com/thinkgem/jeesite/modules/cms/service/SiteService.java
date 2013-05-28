@@ -45,7 +45,7 @@ public class SiteService extends BaseService {
 		if (StringUtils.isNotEmpty(site.getName())){
 			dc.add(Restrictions.like("name", "%"+site.getName()+"%"));
 		}
-		dc.add(Restrictions.eq("delFlag", site.getDelFlag()));
+		dc.add(Restrictions.eq(Site.DEL_FLAG, site.getDelFlag()));
 		//dc.addOrder(Order.asc("id"));
 		return siteDao.find(page, dc);
 	}

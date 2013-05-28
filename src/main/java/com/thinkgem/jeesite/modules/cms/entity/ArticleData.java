@@ -45,6 +45,7 @@ public class ArticleData extends BaseEntity {
 	private Article article;
 	
 	public ArticleData() {
+		super();
 		this.allowComment = YES;
 	}
 	
@@ -54,7 +55,7 @@ public class ArticleData extends BaseEntity {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 //	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
 //	@SequenceGenerator(name = "seq_cms_article_data", sequenceName = "seq_cms_article_data")
 	public Long getId() {
