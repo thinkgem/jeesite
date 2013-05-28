@@ -57,9 +57,9 @@
 
 <p>JeeSite是轻量级的，简单易学，本框架以Spring Framework为核心、Spring MVC作为模型视图控制器、Spring Data JPA + Hibernate作为数据库操作层，此组合是Java界业内最经典、最优的搭配组合。前端界面风格采用了结构简单、性能优良、页面精致的Twitter Bootstrap作为前端展示框架。</p>
 
-<p>JeeSite <strong>已内置</strong> 一系列企业信息管理系统的基础功能，目前包括两大模块，系统管理（SYS）模块和内容管理（CMS）模块。系统管理模块，包括企业组织架构（用户管理、部门管理、区域管理）、菜单管理、角色权限管理、字典管理等功能；内容管理模块，包括内容管理（文章、链接），栏目管理、站点管理、公共留言、文件管理、前端网站展示等功能。</p>
+<p>JeeSite <strong>已内置</strong> 一系列企业信息管理系统的基础功能，目前包括两大模块，系统管理（SYS）模块和内容管理（CMS）模块。系统管理模块，包括企业组织架构（用户管理、机构管理、区域管理）、菜单管理、角色权限管理、字典管理等功能；内容管理模块，包括内容管理（文章、链接），栏目管理、站点管理、公共留言、文件管理、前端网站展示等功能。</p>
 
-<p>JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、服务器端验证、数据字典、当前组织机构数据（用户、区域、部门）以及其它常用小工具等。另外还提供一个基于本基础框架的 <strong>代码生成器</strong> ，为你生成基本模块代码，如果你使用了JeeSite基础框架，就可以很快速开发出优秀的信息管理系统。</p>
+<p>JeeSite提供了常用工具进行封装，包括日志工具、缓存工具、服务器端验证、数据字典、当前组织机构数据（用户、机构、区域）以及其它常用小工具等。另外还提供一个基于本基础框架的 <strong>代码生成器</strong> ，为你生成基本模块代码，如果你使用了JeeSite基础框架，就可以很快速开发出优秀的信息管理系统。</p>
 
 <h2>为何选择</h2>
 
@@ -68,30 +68,33 @@
 <li>使用目前最主流的J2EE开发框架，简单易学，学习成本低。</li>
 <li>数据库无限制，支持MySql、Oracle、SQL Server、H2等数据库。</li>
 <li>模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。</li>
-<li>权限控制精密细致，对所有管理链接都进行权限验证，可控制到按钮。</li>
+<li>操作权限控制精密细致，对所有管理链接都进行权限验证，可控制到按钮。</li>
+<li>数据权限控制精密细致，对指定数据集权限进行过滤，七种数据权限可供选择。</li>
 <li>提供基本功能模块的源代码生成器，提高开发效率及质量。</li>
 <li>提供常用工具类封装，日志、缓存、验证、字典、组织机构等，常用标签（taglib），获取当前组织机构、字典等数据。</li>
 <li>完全兼容目前最流行浏览器（IE6、IE7+、Firefox、Chrome）。</li>
-</ol><h2>使用技术</h2>
+<li>提供目前最流行的Activit流程引擎实例</li>
+</ol><h2>技术选型</h2>
 
 <p>1、Services相关</p>
 
 <ul>
 <li>Core Framework：Spring Framework 3.2。</li>
 <li>Security Framework：Apache Shiro 1.2。</li>
+<li>Workflow Engine：Activit 5.12。</li>
 </ul><p>2、Web相关</p>
 
 <ul>
 <li>MVC Framework：SpringMVC 3.2。</li>
 <li>Layout Decoration：SiteMesh 2.4。</li>
 <li>JavaScript Library：JQuery 1.9。</li>
-<li>CSS Framework：Twitter Bootstrap 2.0.4。</li>
+<li>CSS Framework：Twitter Bootstrap 2.3.1。</li>
 <li>JavaScript/CSS Compressor：YUI Compressor 2.4。</li>
 <li>Front Validation：JQuery Validation Plugin 1.11。</li>
 </ul><p>3、Database相关</p>
 
 <ul>
-<li>ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.2。</li>
+<li>ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.1。</li>
 <li>Connection Pool：Alibaba Druid 0.2。</li>
 <li>Bean Validation：Hibernate Validation 5.0。</li>
 <li>Cache：Ehcache 2.6。</li>
@@ -130,13 +133,15 @@
 <ul>
 <li><a href="http://126.am/iSvCS3">JeeSite介绍演示.docx</a></li>
 <li><a href="http://126.am/M4TTj3">JeeSite开发手册.docx</a></li>
-</ul><h2>交流、反馈、参与贡献？</h2>
+</ul><h2>如何交流、反馈、参与贡献？</h2>
 
 <ul>
 <li>QQ群：127515876</li>
 <li>E-mail：<a href="mailto:thinkgem@163.com">thinkgem@163.com</a>
 </li>
 <li>Github：<a href="http://126.am/lRXKx0">https://github.com/thinkgem/jeesite</a>
+</li>
+<li>支持JeeSite：<a href="http://jeesite.com/donation.html">http://jeesite.com/donation.html</a>
 </li>
 </ul><p>如果你想参与进来共同完善它或有更好的建议，请联系我吧(^_^)。</p>
 
@@ -147,7 +152,6 @@
 <li>模块管理功能：可方便增减模块，如内容管理模块不需要，可直接启用或停用。</li>
 <li>内容管理模块：文章评论、完善内容关键字、图片模型、专题功能、会员功能。</li>
 <li>添加通用模块：公告功能、内部短消息、在线列表、短信和邮件群发功能。</li>
-<li>嵌入流程引擎：使用Activit5或JBPM5流程引擎 <a href="http://url.cn/BiuLiE" target="_blank">【投票】</a>。</li>
 <li>公共工具封装：嵌入地图、生成报表、WebService</li>
 <li>移动客户端：暂定为Android客户端开发</li>
 </ul>
