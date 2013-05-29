@@ -43,7 +43,7 @@
 		<c:forEach items="${page.list}" var="comment">
 			<tr>
 				<td><a href="javascript:" onclick="$('#c_${comment.id}').toggle()">${fns:abbr(fns:replaceHtml(comment.content),40)}</a></td>
-				<td><a href="${ctx}/cms/${comment.module}/form?id=${comment.id}" title="${comment.title}" onclick="return view(this.href);">${fns:abbr(comment.title,40)}</a></td>
+				<td><a href="${ctx}/cms/${comment.module}/form?id=${comment.contentId}" title="${comment.title}" onclick="return view(this.href);">${fns:abbr(comment.title,40)}</a></td>
 				<td>${comment.name}</td>
 				<td>${comment.ip}</td>
 				<td><fmt:formatDate value="${comment.createDate}" type="both"/></td>
