@@ -245,6 +245,7 @@ public class FrontController extends BaseController{
 			if ("cmd:reindex".equals(q)){
 				articleService.createIndex();
 				model.addAttribute("message", "重建索引成功");
+				return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 			}
 			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
 			Page<Article> page = articleService.search(new Page<Article>(request, response), q);
