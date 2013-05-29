@@ -30,7 +30,7 @@ a.btn-primary,a.btn-primary:hover,a.btn-warning,a.btn-warning:hover,a.btn-danger
 .nav,.breadcrumb {margin-bottom:10px;}
 .nav-list li a {margin-top:5px;margin-bottom:5px;_padding-top:6px;} .nav-list li a i{_margin-top:-1px;}
 .pagination .controls a{border:0;}
-.pagination .controls input{width:30px;padding:0;margin:0;text-align:center;}
+.pagination .controls input{border:0;color:#999;width:30px;padding:0;margin:-3px 0 0 0;text-align:center;}
 .modal-backdrop {background-color:#ffffff;}
 .modal-backdrop,.modal-backdrop.fade.in {opacity:0.5;filter:alpha(opacity=50);}
 .modal.tree {width:300px;margin:-250px 0 0 -180px;*margin:-200px 0 0 -150px;}

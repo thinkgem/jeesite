@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Link;
@@ -28,38 +26,16 @@ import com.thinkgem.jeesite.modules.cms.service.SiteService;
 /**
  * 内容管理工具类
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-5-29
  */
-@Service
-public class CmsUtils implements ApplicationContextAware {
+public class CmsUtils {
+	
+	private static SiteService siteService = SpringContextHolder.getBean(SiteService.class);
+	private static CategoryService categoryService = SpringContextHolder.getBean(CategoryService.class);
+	private static ArticleService articleService = SpringContextHolder.getBean(ArticleService.class);
+	private static LinkService linkService = SpringContextHolder.getBean(LinkService.class);
 
 	private static final String CMS_CACHE = "cmsCache";
-	
-	private static SiteService siteService;
-	private static CategoryService categoryService;
-	private static ArticleService articleService;
-	private static LinkService linkService;
-	
-	/**
-	 * 获得站点信息
-	 * @param id 站点编号
-	 */
-	public static Site getSite(long siteId){
-		long id = 1L;
-		if (siteId > 0){
-			id = siteId;
-		}
-		Site site = (Site)CacheUtils.get(CMS_CACHE, "site_"+id);
-		if (site==null){
-			site = siteService.get(id);
-			if (site!=null && Site.DEL_FLAG_NORMAL.equals(site.getDelFlag())){
-				CacheUtils.put(CMS_CACHE, "site_"+id, site);
-			}else{
-				site = siteService.get(1L);
-			}
-		}
-		return site;
-	}
 	
 	/**
 	 * 获得站点列表
@@ -74,6 +50,23 @@ public class CmsUtils implements ApplicationContextAware {
 			CacheUtils.put(CMS_CACHE, "siteList", siteList);
 		}
 		return siteList;
+	}
+	
+	/**
+	 * 获得站点信息
+	 * @param id 站点编号
+	 */
+	public static Site getSite(long siteId){
+		long id = 1L;
+		if (siteId > 0){
+			id = siteId;
+		}
+		for (Site site : getSiteList()){
+			if (site.getId() == id){
+				return site;
+			}
+		}
+		return new Site();
 	}
 	
 	/**
@@ -180,14 +173,6 @@ public class CmsUtils implements ApplicationContextAware {
 		link.setDelFlag(Link.DEL_FLAG_NORMAL);
 		page = linkService.find(page, link, false);
 		return page.getList();
-	}
-	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
-		siteService = (SiteService)applicationContext.getBean("siteService");
-		categoryService = (CategoryService)applicationContext.getBean("categoryService");
-		articleService = (ArticleService)applicationContext.getBean("articleService");
-		linkService = (LinkService)applicationContext.getBean("linkService");
 	}
 	
 	// ============== Cms Cache ==============

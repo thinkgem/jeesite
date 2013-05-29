@@ -8,24 +8,21 @@ package com.thinkgem.jeesite.common.utils.excel.fieldtype;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.utils.Collections3;
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 /**
  * 字段类型转换
  * @author ThinkGem
- * @version 2013-03-10
+ * @version 2013-5-29
  */
-@Service
-public class RoleListType implements ApplicationContextAware {
+public class RoleListType {
 
-	private static SystemService systemService;
+	private static SystemService systemService = SpringContextHolder.getBean(SystemService.class);
 	
 	/**
 	 * 获取对象值（导入）
@@ -55,8 +52,4 @@ public class RoleListType implements ApplicationContextAware {
 		return "";
 	}
 	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
-		systemService = (SystemService)applicationContext.getBean("systemService");
-	}
 }

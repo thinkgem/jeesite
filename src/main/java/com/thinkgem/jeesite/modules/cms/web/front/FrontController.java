@@ -41,7 +41,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 /**
  * 网站Controller
  * @author ThinkGem
- * @version 2013-3-15
+ * @version 2013-5-29
  */
 @Controller
 @RequestMapping(value = Global.FRONT_PATH)
@@ -66,7 +66,7 @@ public class FrontController extends BaseController{
 	 */
 	@RequestMapping(value = "index-{siteId}" + Global.URL_SUFFIX)
 	public String index(@PathVariable Long siteId, Model model) {
-		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
+		Site site = CmsUtils.getSite(siteId);
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
 	}

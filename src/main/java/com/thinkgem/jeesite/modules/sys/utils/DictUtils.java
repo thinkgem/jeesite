@@ -9,25 +9,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.DictDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 
 /**
  * 字典工具类
  * @author ThinkGem
- * @version 2013-03-15
+ * @version 2013-5-29
  */
-@Service
-public class DictUtils implements ApplicationContextAware {
+public class DictUtils {
+	
+	private static DictDao dictDao = SpringContextHolder.getBean(DictDao.class);
 
-	private static DictDao dictDao;
+	public static final String CACHE_DICT_MAP = "dictMap";
 	
 	public static String getDictLabel(String value, String type, String defaultValue){
 		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(value)){
@@ -53,7 +52,7 @@ public class DictUtils implements ApplicationContextAware {
 	
 	public static List<Dict> getDictList(String type){
 		@SuppressWarnings("unchecked")
-		Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>)CacheUtils.get("dictMap");
+		Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>)CacheUtils.get(CACHE_DICT_MAP);
 		if (dictMap==null){
 			dictMap = Maps.newHashMap();
 			for (Dict dict : dictDao.findAllList()){
@@ -64,7 +63,7 @@ public class DictUtils implements ApplicationContextAware {
 					dictMap.put(dict.getType(), Lists.newArrayList(dict));
 				}
 			}
-			CacheUtils.put("dictMap", dictMap);
+			CacheUtils.put(CACHE_DICT_MAP, dictMap);
 		}
 		List<Dict> dictList = Lists.newArrayList();
 		if (dictList != null){
@@ -73,8 +72,4 @@ public class DictUtils implements ApplicationContextAware {
 		return dictList;
 	}
 	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
-		dictDao = (DictDao)applicationContext.getBean("dictDao");
-	}
 }

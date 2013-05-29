@@ -6,8 +6,15 @@
 package com.thinkgem.jeesite.common.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.LocaleResolver;
 
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
@@ -17,7 +24,7 @@ import java.util.regex.Pattern;
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	/**
-	 * 替换掉HTML标签
+	 * 替换掉HTML标签方法
 	 */
 	public static String replaceHtml(String html) {
 		if (isBlank(html)){
@@ -59,6 +66,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return "";
 	}
 	
+	/**
+	 * 转换为Double类型
+	 */
 	public static Double toDouble(Object val){
 		if (val == null){
 			return 0D;
@@ -69,17 +79,36 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 			return 0D;
 		}
 	}
-	
+
+	/**
+	 * 转换为Float类型
+	 */
 	public static Float toFloat(Object val){
 		return toDouble(val).floatValue();
 	}
-	
+
+	/**
+	 * 转换为Long类型
+	 */
 	public static Long toLong(Object val){
 		return toDouble(val).longValue();
 	}
-	
+
+	/**
+	 * 转换为Integer类型
+	 */
 	public static Integer toInteger(Object val){
 		return toLong(val).intValue();
+	}
+	
+	/**
+	 * 获得i18n字符串
+	 */
+	public static String getMessage(String code, Object[] args) {
+		LocaleResolver localLocaleResolver = (LocaleResolver) SpringContextHolder.getBean(LocaleResolver.class);
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();  
+		Locale localLocale = localLocaleResolver.resolveLocale(request);
+		return SpringContextHolder.getApplicationContext().getMessage(code, args, localLocale);
 	}
 	
 }

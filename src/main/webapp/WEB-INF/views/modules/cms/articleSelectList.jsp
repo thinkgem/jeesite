@@ -66,7 +66,7 @@
 				<td><a href="${ctx}/cms/article/form?id=${article.id}" title="${article.title}" onclick="return view(this.href);">${fns:abbr(article.title,40)}</a></td>
 				<td>${article.weight}</td>
 				<td>${article.hits}</td>
-				<td>${article.user.name}</td>
+				<td>${article.createBy.name}</td>
 				<td><fmt:formatDate value="${article.updateDate}" type="both"/></td>
 			</tr>
 		</c:forEach>

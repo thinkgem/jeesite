@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 栏目Service
  * @author ThinkGem
- * @version 2013-5-15
+ * @version 2013-5-29
  */
 @Service
 @Transactional(readOnly = true)
@@ -38,6 +38,8 @@ public class CategoryService extends BaseService {
 
 	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(CategoryService.class);
+	
+	public static final String CACHE_CATEGORY_LIST = "categoryList";
 	
 	@Autowired
 	private CategoryDao categoryDao;
@@ -49,7 +51,7 @@ public class CategoryService extends BaseService {
 	@SuppressWarnings("unchecked")
 	public List<Category> findByUser(boolean isCurrentSite, String module){
 		
-		List<Category> list = (List<Category>)UserUtils.getCache("categoryList");
+		List<Category> list = (List<Category>)UserUtils.getCache(CACHE_CATEGORY_LIST);
 		if (list == null){
 			User user = UserUtils.getUser();
 			DetachedCriteria dc = categoryDao.createDetachedCriteria();
@@ -58,7 +60,7 @@ public class CategoryService extends BaseService {
 			dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 			list = categoryDao.find(dc);
-			UserUtils.putCache("categoryList", list);
+			UserUtils.putCache(CACHE_CATEGORY_LIST, list);
 		}
 		
 		if (isCurrentSite){
@@ -118,7 +120,7 @@ public class CategoryService extends BaseService {
 			e.setParentIds(e.getParentIds().replace(oldParentIds, category.getParentIds()));
 		}
 		categoryDao.save(list);
-		UserUtils.removeCache("categoryList");
+		UserUtils.removeCache(CACHE_CATEGORY_LIST);
 		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 	}
 	
@@ -127,7 +129,7 @@ public class CategoryService extends BaseService {
 		Category category = get(id);
 		if (category!=null){
 			categoryDao.deleteById(id, "%,"+id+",%");
-			UserUtils.removeCache("categoryList");
+			UserUtils.removeCache(CACHE_CATEGORY_LIST);
 			CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		}
 	}

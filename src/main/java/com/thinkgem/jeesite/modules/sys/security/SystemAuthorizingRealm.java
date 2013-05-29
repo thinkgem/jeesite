@@ -39,7 +39,7 @@ import com.thinkgem.jeesite.modules.sys.web.LoginController;
 /**
  * 系统安全认证实现类
  * @author ThinkGem
- * @version 2013-01-19
+ * @version 2013-5-29
  */
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
@@ -124,8 +124,6 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 				cache.remove(key);
 			}
 		}
-		UserUtils.removeCache("menuList");
-		UserUtils.removeCache("categoryList");
 	}
 
 	public void setSystemService(SystemService systemService) {

@@ -21,7 +21,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 机构Service
  * @author ThinkGem
- * @version 2013-05-15
+ * @version 2013-5-29
  */
 @Service
 @Transactional(readOnly = true)
@@ -54,13 +54,13 @@ public class OfficeService extends BaseService {
 			e.setParentIds(e.getParentIds().replace(oldParentIds, office.getParentIds()));
 		}
 		officeDao.save(list);
-		UserUtils.removeCache("officeList");
+		UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
 		officeDao.deleteById(id, "%,"+id+",%");
-		UserUtils.removeCache("officeList");
+		UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);
 	}
 	
 }

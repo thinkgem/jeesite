@@ -17,7 +17,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
  */
 public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	
-	private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss" };
+	private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", 
+		"yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm" };
 
 	/**
 	 * 得到当前日期字符串 格式（yyyy-MM-dd）
@@ -89,7 +90,9 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	}
 	
 	/**
-	 * 日期型字符串转化为日期 格式（"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss" ）
+	 * 日期型字符串转化为日期 格式
+	 * { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", 
+	 *   "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm" }
 	 */
 	public static Date parseDate(Object str) {
 		if (str == null){

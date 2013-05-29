@@ -10,21 +10,17 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 
 /**
  * Cache工具类
  * @author ThinkGem
- * @version 2013-4-23
+ * @version 2013-5-29
  */
-@Service
-public class CacheUtils implements ApplicationContextAware {
+public class CacheUtils {
+	
+	private static CacheManager cacheManager = ((EhCacheManager)SpringContextHolder.getBean("cacheManager")).getCacheManager();
 
 	private static final String SYS_CACHE = "sysCache";
-	
-	private static CacheManager cacheManager;
 
 	public static Object get(String key) {
 		return get(SYS_CACHE, key);
@@ -67,10 +63,5 @@ public class CacheUtils implements ApplicationContextAware {
 		return cache;
 	}
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
-		EhCacheManager ehCacheManager = (EhCacheManager)applicationContext.getBean("cacheManager");
-		cacheManager = ehCacheManager.getCacheManager();
-	}
 	
 }

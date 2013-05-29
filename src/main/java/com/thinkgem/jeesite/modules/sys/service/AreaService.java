@@ -21,7 +21,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 区域Service
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-5-29
  */
 @Service
 @Transactional(readOnly = true)
@@ -54,13 +54,13 @@ public class AreaService extends BaseService {
 			e.setParentIds(e.getParentIds().replace(oldParentIds, area.getParentIds()));
 		}
 		areaDao.save(list);
-		UserUtils.removeCache("areaList");
+		UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
 		areaDao.deleteById(id, "%,"+id+",%");
-		UserUtils.removeCache("areaList");
+		UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
 	}
 	
 }

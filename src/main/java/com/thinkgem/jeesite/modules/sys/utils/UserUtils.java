@@ -14,12 +14,10 @@ import org.apache.shiro.subject.Subject;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
@@ -33,23 +31,27 @@ import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principa
 /**
  * 用户工具类
  * @author ThinkGem
- * @version 2013-5-15
+ * @version 2013-5-29
  */
-@Service
-public class UserUtils extends BaseService implements ApplicationContextAware {
+public class UserUtils extends BaseService {
 	
-	private static UserDao userDao;
-	private static MenuDao menuDao;
-	private static AreaDao areaDao;
-	private static OfficeDao officeDao;
+	private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
+	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
+	private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
+	private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
+
+	public static final String CACHE_USER = "user";
+	public static final String CACHE_MENU_LIST = "menuList";
+	public static final String CACHE_AREA_LIST = "areaList";
+	public static final String CACHE_OFFICE_LIST = "officeList";
 	
 	public static User getUser(){
-		User user = (User)getCache("user");
+		User user = (User)getCache(CACHE_USER);
 		if (user == null){
 			Principal principal = (Principal)SecurityUtils.getSubject().getPrincipal();
 			if (principal!=null){
 				user = userDao.findByLoginName(principal.getLoginName());
-				putCache("user", user);
+				putCache(CACHE_USER, user);
 			}
 		}
 		if (user == null){
@@ -61,14 +63,14 @@ public class UserUtils extends BaseService implements ApplicationContextAware {
 	
 	public static User getUser(boolean isRefresh){
 		if (isRefresh){
-			removeCache("user");
+			removeCache(CACHE_USER);
 		}
 		return getUser();
 	}
 
 	public static List<Menu> getMenuList(){
 		@SuppressWarnings("unchecked")
-		List<Menu> menuList = (List<Menu>)getCache("menuList");
+		List<Menu> menuList = (List<Menu>)getCache(CACHE_MENU_LIST);
 		if (menuList == null){
 			User user = getUser();
 			if (user.isAdmin()){
@@ -76,14 +78,14 @@ public class UserUtils extends BaseService implements ApplicationContextAware {
 			}else{
 				menuList = menuDao.findByUserId(user.getId());
 			}
-			putCache("menuList", menuList);
+			putCache(CACHE_MENU_LIST, menuList);
 		}
 		return menuList;
 	}
 	
 	public static List<Area> getAreaList(){
 		@SuppressWarnings("unchecked")
-		List<Area> areaList = (List<Area>)getCache("areaList");
+		List<Area> areaList = (List<Area>)getCache(CACHE_AREA_LIST);
 		if (areaList == null){
 //			User user = getUser();
 //			if (user.isAdmin()){
@@ -91,14 +93,14 @@ public class UserUtils extends BaseService implements ApplicationContextAware {
 //			}else{
 //				areaList = areaDao.findAllChild(user.getArea().getId(), "%,"+user.getArea().getId()+",%");
 //			}
-			putCache("areaList", areaList);
+			putCache(CACHE_AREA_LIST, areaList);
 		}
 		return areaList;
 	}
 	
 	public static List<Office> getOfficeList(){
 		@SuppressWarnings("unchecked")
-		List<Office> officeList = (List<Office>)getCache("officeList");
+		List<Office> officeList = (List<Office>)getCache(CACHE_OFFICE_LIST);
 		if (officeList == null){
 			User user = getUser();
 //			if (user.isAdmin()){
@@ -111,17 +113,9 @@ public class UserUtils extends BaseService implements ApplicationContextAware {
 			dc.add(Restrictions.eq("delFlag", Office.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("code"));
 			officeList = officeDao.find(dc);
-			putCache("officeList", officeList);
+			putCache(CACHE_OFFICE_LIST, officeList);
 		}
 		return officeList;
-	}
-	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
-		userDao = (UserDao)applicationContext.getBean("userDao");
-		menuDao = (MenuDao)applicationContext.getBean("menuDao");
-		areaDao = (AreaDao)applicationContext.getBean("areaDao");
-		officeDao = (OfficeDao)applicationContext.getBean("officeDao");
 	}
 	
 	// ============== User Cache ==============

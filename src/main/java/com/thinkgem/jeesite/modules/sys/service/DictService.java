@@ -22,11 +22,12 @@ import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.modules.sys.dao.DictDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
+import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
 /**
  * 字典Service
  * @author ThinkGem
- * @version 2013-05-15
+ * @version 2013-5-29
  */
 @Service
 @Transactional(readOnly = true)
@@ -62,13 +63,13 @@ public class DictService extends BaseService {
 	@Transactional(readOnly = false)
 	public void save(Dict dict) {
 		dictDao.save(dict);
-		CacheUtils.remove("dictMap");
+		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(Long id) {
 		dictDao.deleteById(id);
-		CacheUtils.remove("dictMap");
+		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
 	
 }
