@@ -209,7 +209,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 
 	public List<Menu> findAllMenu(){
-		return menuDao.findAllList();//UserUtils.getMenuList();
+		return UserUtils.getMenuList();
 	}
 	
 	@Transactional(readOnly = false)

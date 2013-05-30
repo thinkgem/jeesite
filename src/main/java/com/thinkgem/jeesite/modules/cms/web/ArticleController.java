@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,6 +84,10 @@ public class ArticleController extends BaseController {
 	@RequiresPermissions("cms:article:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+		// 如果没有审核权限，则不允许删除或发布。
+		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
+			addMessage(redirectAttributes, "你没有删除或发布权限");
+		}
 		articleService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复":"")+"删除文章成功");
 		return "redirect:"+Global.ADMIN_PATH+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");

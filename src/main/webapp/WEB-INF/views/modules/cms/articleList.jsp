@@ -52,9 +52,13 @@
 				<td><fmt:formatDate value="${article.updateDate}" type="both"/></td>
 				<shiro:hasPermission name="cms:article:edit"><td>
 					<a href="${pageContext.request.contextPath}${fns:getFrontPath()}/view-${article.category.id}-${article.id}${fns:getUrlSuffix()}" target="_blank">访问</a>
-					<a href="${ctx}/cms/comment/?module=article&contentId=${article.id}&delFlag=0" onclick="return viewComment(this.href);">评论</a>
+					<shiro:hasPermission name="cms:comment:view">
+						<a href="${ctx}/cms/comment/?module=article&contentId=${article.id}&delFlag=0" onclick="return viewComment(this.href);">评论</a>
+					</shiro:hasPermission>
     				<a href="${ctx}/cms/article/form?id=${article.id}">修改</a>
+    					<shiro:hasPermission name="cms:article:audit">
 					<a href="${ctx}/cms/article/delete?id=${article.id}${article.delFlag ne 0?'&isRe=true':''}&categoryId=${article.category.id}" onclick="return confirmx('确认要${article.delFlag ne 0?'发布':'删除'}该文章吗？', this.href)" >${article.delFlag ne 0?'发布':'删除'}</a>
+					</shiro:hasPermission>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

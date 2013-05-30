@@ -50,7 +50,7 @@ public class UserUtils extends BaseService {
 		if (user == null){
 			Principal principal = (Principal)SecurityUtils.getSubject().getPrincipal();
 			if (principal!=null){
-				user = userDao.findByLoginName(principal.getLoginName());
+				user = userDao.findOne(principal.getId());
 				putCache(CACHE_USER, user);
 			}
 		}

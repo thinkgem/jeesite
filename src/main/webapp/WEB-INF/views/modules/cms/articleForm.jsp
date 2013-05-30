@@ -180,13 +180,13 @@
 			</div>
 		</div> --%>
 		<shiro:hasPermission name="cms:article:audit">
-		<div class="control-group">
-			<label class="control-label">发布状态:</label>
-			<div class="controls">
-				<form:radiobuttons path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"></span>
+			<div class="control-group">
+				<label class="control-label">发布状态:</label>
+				<div class="controls">
+					<form:radiobuttons path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+					<span class="help-inline"></span>
+				</div>
 			</div>
-		</div>
 		</shiro:hasPermission>
 		<c:if test="${not empty article.id}">
 		<div class="control-group">
