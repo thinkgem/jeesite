@@ -99,6 +99,28 @@ public class MenuController extends BaseController {
 		return "modules/sys/menuTree";
 	}
 	
+	/**
+	 * 批量修改菜单排序
+	 * @param ids
+	 * @param sorts
+	 * @param model
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequiresPermissions("sys:menu:edit")
+	@RequestMapping(value = "updateSort")
+	public String updateSort(Long[] ids, Integer[] sorts, Model model, RedirectAttributes redirectAttributes) {
+        	int len = ids.length;
+        	Menu[] menus = new Menu[len];
+        	for (int i = 0; i < len; i++) {
+        		menus[i] = systemService.getMenu(ids[i]);
+        		menus[i].setSort(sorts[i]);
+        		systemService.saveMenu(menus[i]);
+        	}
+        	addMessage(redirectAttributes, "保存菜单排序成功!");
+		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
+	}
+	
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")

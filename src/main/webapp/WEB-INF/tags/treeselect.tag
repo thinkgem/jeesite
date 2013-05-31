@@ -16,13 +16,19 @@
 <%@ attribute name="allowClear" type="java.lang.Boolean" required="false" description="是否允许清楚"%>
 <%@ attribute name="cssClass" type="java.lang.String" required="false" description="css样式"%>
 <%@ attribute name="cssStyle" type="java.lang.String" required="false" description="css样式"%>
+<%@ attribute name="disabled" type="java.lang.String" required="false" description="是否限制选择，如果限制，设置为disabled"%>
 <div class="input-append">
 	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"/>
 	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"
-		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn">选择</a>&nbsp;&nbsp;
+		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn ${disabled}">选择</a>&nbsp;&nbsp;
 </div>
 <script type="text/javascript">
-	$("#${id}Button").click(function(){
+	$("#${id}Button").click(function(){		
+		// 是否限制选择，如果限制，设置为disabled
+		if ("${disabled}" == "disabled"){
+			return true;
+		}		
+		// 正常打开	
 		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
 			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
 				if (v=="ok"){
