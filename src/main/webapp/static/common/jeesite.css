@@ -43,6 +43,6 @@ a.btn-primary,a.btn-primary:hover,a.btn-warning,a.btn-warning:hover,a.btn-danger
 .accordion-heading {float:inherit;width:100%;} .accordion-heading a:hover,.dropdown a:hover {text-decoration:none;background:none;}
 .accordion-heading .accordion-toggle {font-family:黑体;font-size:14px;_padding-top:10px;_padding-bottom:8px;}
 .accordion-heading .accordion-toggle i {_margin-top:-1px;} .accordion-inner {padding:8px 13px 3px 13px;} 
-#left,#right,#openClose {float:left;} #openClose {width:8px;margin:0 3px;cursor:pointer;}
+#left,#right,#openClose {float:left;} #openClose {width:8px;margin:0 1px;cursor:pointer;}
 #openClose,#openClose.close {background:#fdfdfd url("../images/openclose.png") no-repeat -29px center;}
 #openClose.close {background-position:1px center;}

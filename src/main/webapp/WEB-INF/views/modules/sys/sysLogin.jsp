@@ -11,7 +11,7 @@
         	-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);-moz-box-shadow:0 1px 2px rgba(0,0,0,.05);box-shadow:0 1px 2px rgba(0,0,0,.05);}
       .form-signin .checkbox{margin-bottom:10px;color:#0663a2;} .form-signin .input-label{font-size:16px;line-height:23px;color:#999;}
       .form-signin .input-block-level{font-size:16px;height:auto;margin-bottom:15px;padding:7px;*width:283px;*padding-bottom:0;_padding:7px 7px 9px 7px;}
-      .form-signin .btn.btn-large{font-size:16px;} .form-signin #theme{position:absolute;right:15px;bottom:10px;}
+      .form-signin .btn.btn-large{font-size:16px;} .form-signin #themeSwitch{position:absolute;right:15px;bottom:10px;}
       .form-signin div.validateCode {padding-bottom:15px;} .mid{vertical-align:middle;}
       .header{height:60px;padding-top:30px;} .alert{position:relative;width:300px;margin:0 auto;*padding-bottom:0px;}
       label.error{background:none;padding:2px;font-weight:normal;color:inherit;margin:0;}
@@ -56,13 +56,13 @@
         </div></c:if>
         <input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
         <label for="rememberMe" title="下次不需要再登录"><input type="checkbox" id="rememberMe" name="rememberMe"/> 记住我（公共场所慎用）</label>
-        <div id="theme" class="dropdown">
-	       	<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(theme,'theme','')}<b class="caret"></b></a>
+        <div id="themeSwitch" class="dropdown">
+	       	<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','')}<b class="caret"></b></a>
 		    <ul class="dropdown-menu">
-		      <c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="?theme=${dict.value}">${dict.label}</a></li></c:forEach>
+		      <c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="#" onclick="location='${pageContext.request.contextPath}/theme/${dict.value}?url='+location.href">${dict.label}</a></li></c:forEach>
 		    </ul>
-		    <!--[if lte IE 6]><script type="text/javascript">$('#theme').hide();</script><![endif]-->
-	    </div>
+		    <!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
+	     </div>
       </form>
       Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> ${fns:getConfig('version')}
 </body>

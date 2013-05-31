@@ -9,7 +9,7 @@
 <script src="${ctxStatic}/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="${ctxStatic}/jquery/jquery-migrate-1.1.1.min.js" type="text/javascript"></script>
 <c:if test="${site.theme eq 'basic'}">
-	<link href="${ctxStatic}/bootstrap/2.3.1/css_${cookie.theme.value eq 'cerulean'?'cerulean':'united'}/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="${ctxStatic}/bootstrap/2.3.1/css_${not empty cookie.theme.value ? cookie.theme.value:'default'}/bootstrap.min.css" type="text/css" rel="stylesheet" />
 	<script src="${ctxStatic}/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--[if lte IE 6]><link href="${ctxStatic}/bootstrap/bsie/css/bootstrap-ie6.min.css" type="text/css" rel="stylesheet" />
 	<script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->

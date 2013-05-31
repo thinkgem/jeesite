@@ -10,10 +10,10 @@
 	<sitemesh:head/>
 </head>
 <body>
-	<div class="navbar navbar-fixed-top">
+	<div class="navbar navbar-fixed-top" style="position:static;margin-bottom:10px;">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="${ctx}/index-${site.id}${fns:getUrlSuffix()}" title="${site.title}">${fns:abbr(site.title,18)}</a>
+          <a class="brand" href="${ctx}/index-${site.id}${fns:getUrlSuffix()}">${site.title}</a>
           <div class="nav-collapse">
             <ul id="main_nav" class="nav">
              	<li class="${empty category.id?'active':''}"><a href="${ctx}/index-${site.id}${fns:getUrlSuffix()}"><span>首  页</span></a></li>
@@ -29,6 +29,13 @@
 		    		</c:choose>
 		    		<li class="${requestScope.category.id eq category.id||fn:indexOf(requestScope.category.parentIds,category.id) ge 1?'active':''}"><a href="${url}" target="${category.target}"><span>${category.name}</span></a></li>
 		    	</c:if></c:forEach>
+		    	<li id="themeSwitch" class="dropdown">
+			       	<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>
+				    <ul class="dropdown-menu">
+				      <c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="#" onclick="location='${pageContext.request.contextPath}/theme/${dict.value}?url='+location.href">${dict.label}</a></li></c:forEach>
+				    </ul>
+				    <!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
+			    </li>
             </ul>
             <form class="navbar-search pull-right" action="${ctx}/search" method="get">
               	<input type="text" name="q" maxlength="20" class="search-query span2" placeholder="全站搜索..." value="${q}">

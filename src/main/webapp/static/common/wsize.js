@@ -11,7 +11,7 @@ $("#openClose").click(function(){
 		$(this).removeClass("close");
 		$(this).addClass("open");
 		$("#left").animate({width:0,opacity:"hide"});
-		$("#right").animate({width:$("#content").width()-$("#openClose").width()-9});
+		$("#right").animate({width:$("#content").width()-$("#openClose").width()-5});
 	}else{
 		$(this).addClass("close");
 		$(this).removeClass("open");

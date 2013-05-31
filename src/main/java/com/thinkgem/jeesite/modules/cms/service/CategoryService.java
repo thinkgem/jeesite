@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 栏目Service
  * @author ThinkGem
- * @version 2013-5-29
+ * @version 2013-5-31
  */
 @Service
 @Transactional(readOnly = true)
@@ -56,7 +56,7 @@ public class CategoryService extends BaseService {
 			User user = UserUtils.getUser();
 			DetachedCriteria dc = categoryDao.createDetachedCriteria();
 			dc.createAlias("office", "office").createAlias("createBy", "user");
-			dc.add(dataScopeFilter(user, "office", "user"));
+			dc.add(Restrictions.or(dataScopeFilter(user, "office", "user"), Restrictions.eq("id", 1L)));
 			dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 			list = categoryDao.find(dc);

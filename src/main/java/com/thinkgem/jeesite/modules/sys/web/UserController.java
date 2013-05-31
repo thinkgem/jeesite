@@ -41,7 +41,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 用户Controller
  * @author ThinkGem
- * @version 2013-5-15
+ * @version 2013-5-31
  */
 @Controller
 @RequestMapping(value = Global.ADMIN_PATH+"/sys/user")
@@ -102,7 +102,7 @@ public class UserController extends BaseController {
 		List<Role> roleList = Lists.newArrayList();
 		List<Long> roleIdList = user.getRoleIdList();
 		for (Role r : systemService.findAllRole()){
-			if (!roleIdList.contains(r.getId())){
+			if (roleIdList.contains(r.getId())){
 				roleList.add(r);
 			}
 		}

@@ -22,7 +22,7 @@
 		function wSize(){
 			var strs=getWindowSize().toString().split(",");
 			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]-5);
-			$("#right").width($("body").width()-$("#left").width()-$("#openClose").width()-9);
+			$("#right").width($("body").width()-$("#left").width()-$("#openClose").width()-5);
 		}
 	</script>
 	<script src="${ctxStatic}/common/wsize.min.js" type="text/javascript"></script>
