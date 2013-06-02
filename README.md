@@ -12,7 +12,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 为何选择
 
-1. 使用 **Apache License 2.0** 协议，源代码完全开源，无商业限制。
+1. 使用 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，源代码完全开源，无商业限制。
 2. 使用目前最主流的J2EE开发框架，简单易学，学习成本低。
 3. 数据库无限制，支持MySql、Oracle、SQL Server、H2等数据库。
 4. 模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
@@ -91,6 +91,16 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * 支持JeeSite：<http://jeesite.com/donation.html>
 
 如果你想参与进来共同完善它或有更好的建议，请联系我吧(^_^)。
+
+## 版权声明
+
+本软件使用 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，请严格遵照协议内容：
+
+1. 需要给代码的用户一份Apache Licence。
+2. 如果你修改了代码，需要在被修改的文件中说明。
+3. **在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。**
+4. 如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。
+3. Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售
 
 ## 未来开发计划
 
