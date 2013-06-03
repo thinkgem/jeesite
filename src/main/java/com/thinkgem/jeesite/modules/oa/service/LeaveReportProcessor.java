@@ -7,7 +7,7 @@ import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.modules.oa.dao.LeaveDao;
@@ -20,7 +20,7 @@ import com.thinkgem.jeesite.modules.oa.entity.Leave;
  *
  * @author liuj
  */
-@Component
+@Service
 @Transactional
 public class LeaveReportProcessor implements TaskListener {
 

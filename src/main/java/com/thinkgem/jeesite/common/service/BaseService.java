@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -23,6 +25,11 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
  * @version 2013-05-15
  */
 public abstract class BaseService {
+
+	/**
+	 * 日志对象
+	 */
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/**
 	 * 数据范围过滤

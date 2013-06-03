@@ -11,8 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +31,6 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 @Transactional(readOnly = true)
 public class DictService extends BaseService {
 
-	@SuppressWarnings("unused")
-	private static Logger logger = LoggerFactory.getLogger(DictService.class);
-	
 	@Autowired
 	private DictDao dictDao;
 	

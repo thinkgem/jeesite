@@ -75,7 +75,7 @@ CREATE TABLE cms_article
 	category_id number(19,0) NOT NULL,
 	title varchar2(255) NOT NULL,
 	color varchar2(50),
-	thumb varchar2(255),
+	image varchar2(255),
 	keywords varchar2(255),
 	description varchar2(255),
 	weight number(10,0) DEFAULT 0,
@@ -245,7 +245,7 @@ COMMENT ON COLUMN cms_article.id IS '编号';
 COMMENT ON COLUMN cms_article.category_id IS '栏目编号';
 COMMENT ON COLUMN cms_article.title IS '标题';
 COMMENT ON COLUMN cms_article.color IS '标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）';
-COMMENT ON COLUMN cms_article.thumb IS '缩略图';
+COMMENT ON COLUMN cms_article.image IS '文章图片';
 COMMENT ON COLUMN cms_article.keywords IS '关键字';
 COMMENT ON COLUMN cms_article.description IS '描述、摘要';
 COMMENT ON COLUMN cms_article.weight IS '权重，越大越靠前';

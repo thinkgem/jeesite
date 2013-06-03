@@ -17,8 +17,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,9 +44,6 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Service
 @Transactional(readOnly = true)
 public class SystemService extends BaseService implements InitializingBean {
-
-	@SuppressWarnings("unused")
-	private static Logger logger = LoggerFactory.getLogger(SystemService.class);
 	
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
@@ -226,12 +221,14 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		menuDao.save(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteMenu(Long id) {
 		menuDao.deleteById(id, "%,"+id+",%");
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 	}
 	
 	///////////////// Synchronized to the Activiti //////////////////

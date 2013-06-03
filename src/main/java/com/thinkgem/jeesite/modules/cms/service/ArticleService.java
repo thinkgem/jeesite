@@ -20,8 +20,6 @@ import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,9 +43,6 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Service
 @Transactional(readOnly = true)
 public class ArticleService extends BaseService {
-
-	@SuppressWarnings("unused")
-	private static Logger logger = LoggerFactory.getLogger(ArticleService.class);
 	
 	@Autowired
 	private ArticleDao articleDao;
@@ -82,8 +77,8 @@ public class ArticleService extends BaseService {
 		if (StringUtils.isNotEmpty(article.getPosid())){
 			dc.add(Restrictions.like("posid", "%,"+article.getPosid()+",%"));
 		}
-		if (StringUtils.isNotEmpty(article.getThumb())&&"1".equals(article.getThumb())){
-			dc.add(Restrictions.and(Restrictions.isNotNull("thumb"),Restrictions.ne("thumb","")));
+		if (StringUtils.isNotEmpty(article.getImage())&&Article.YES.equals(article.getImage())){
+			dc.add(Restrictions.and(Restrictions.isNotNull("image"),Restrictions.ne("image","")));
 		}
 		if (article.getCreateBy()!=null && article.getCreateBy().getId()>0){
 			dc.add(Restrictions.eq("createBy.id", article.getCreateBy().getId()));

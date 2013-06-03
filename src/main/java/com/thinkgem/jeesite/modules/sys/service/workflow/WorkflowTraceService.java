@@ -23,21 +23,18 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.modules.sys.utils.workflow.WorkflowUtils;
 
 /**
  * 工作流跟踪相关Service
- *
  * @author HenryYan
  */
-@Component
-public class WorkflowTraceService {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+@Service
+public class WorkflowTraceService extends BaseService {
 
 	@Autowired
 	protected RuntimeService runtimeService;

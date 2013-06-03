@@ -9,8 +9,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +27,6 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 @Service
 @Transactional(readOnly = true)
 public class SiteService extends BaseService {
-
-	@SuppressWarnings("unused")
-	private static Logger logger = LoggerFactory.getLogger(SiteService.class);
 	
 	@Autowired
 	private SiteDao siteDao;

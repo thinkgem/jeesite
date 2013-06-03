@@ -125,7 +125,7 @@ public class CmsUtils {
 	 * @param number 获取数目
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
 	 * 			posid	推荐位（1：首页焦点图；2：栏目页文章推荐；）
-	 * 			thumb	缩略图（1：有缩略图的文章）
+	 * 			image	文章图片（1：有文章图片的文章）
 	 * @return
 	 */
 	public static List<Article> getArticleList(long siteId, long categoryId, int number, String param){
@@ -137,8 +137,8 @@ public class CmsUtils {
 			if (new Integer(1).equals(map.get("posid")) || new Integer(2).equals(map.get("posid"))){
 				article.setPosid(String.valueOf(map.get("posid")));
 			}
-			if (new Integer(1).equals(map.get("thumb"))){
-				article.setThumb("1");
+			if (new Integer(1).equals(map.get("image"))){
+				article.setImage(Article.YES);
 			}
 		}
 		article.setDelFlag(Article.DEL_FLAG_NORMAL);

@@ -33,8 +33,8 @@
 				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
-				<prop key="hibernate.search.default.indexBase">indexes</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 			</props>
 		</property>
 	</bean>

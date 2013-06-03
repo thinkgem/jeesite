@@ -10,13 +10,13 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang3.ArrayUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+
+import com.thinkgem.jeesite.common.service.BaseService;
 
 /**
  * 工作流中流程以及流程实例相关Service
@@ -25,9 +25,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class WorkflowProcessDefinitionService {
-
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+public class WorkflowProcessDefinitionService extends BaseService {
 
 	@Autowired
 	protected RuntimeService runtimeService;

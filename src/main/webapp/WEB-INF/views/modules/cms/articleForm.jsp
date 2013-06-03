@@ -30,17 +30,6 @@
 				}
 			});
 		});
-		function viewComment(href){
-			top.$.jBox.open('iframe:'+href,'查看评论',$(top.document).width()-220,$(top.document).height()-120,{
-				buttons:{"关闭":true},
-				loaded:function(h){
-					$(".jbox-content", top.document).css("overflow-y","hidden");
-					$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
-					$("body", h.find("iframe").contents()).css("margin","10px");
-				}
-			});
-			return false;
-		}
 	</script>
 </head>
 <body>
@@ -104,10 +93,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">缩略图:</label>
+			<label class="control-label">文章图片:</label>
 			<div class="controls">
-				<form:hidden path="thumb" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<tags:ckfinder input="thumb" type="thumb" uploadPath="/cms/article" selectMultiple="false"/>
+				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+				<tags:ckfinder input="image" type="images" uploadPath="/cms/article" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -189,12 +178,25 @@
 			</div>
 		</shiro:hasPermission>
 		<c:if test="${not empty article.id}">
-		<div class="control-group">
-			<label class="control-label">查看评论:</label>
-			<div class="controls">
-				<input id="btnComment" class="btn" type="button" value="查看评论" onclick="viewComment('${ctx}/cms/comment/?module=article&contentId=${article.id}&status=0')"/>
+			<div class="control-group">
+				<label class="control-label">查看评论:</label>
+				<div class="controls">
+					<input id="btnComment" class="btn" type="button" value="查看评论" onclick="viewComment('${ctx}/cms/comment/?module=article&contentId=${article.id}&status=0')"/>
+					<script type="text/javascript">
+						function viewComment(href){
+							top.$.jBox.open('iframe:'+href,'查看评论',$(top.document).width()-220,$(top.document).height()-180,{
+								buttons:{"关闭":true},
+								loaded:function(h){
+									$(".jbox-content", top.document).css("overflow-y","hidden");
+									$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
+									$("body", h.find("iframe").contents()).css("margin","10px");
+								}
+							});
+							return false;
+						}
+					</script>
+				</div>
 			</div>
-		</div>
 		</c:if>
 		<div class="form-actions">
 			<shiro:hasPermission name="cms:article:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>

@@ -52,7 +52,7 @@ CREATE TABLE cms_article
 	category_id bigint NOT NULL COMMENT '栏目编号',
 	title varchar(255) NOT NULL COMMENT '标题',
 	color varchar(50) COMMENT '标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）',
-	thumb varchar(255) COMMENT '缩略图',
+	image varchar(255) COMMENT '文章图片',
 	keywords varchar(255) COMMENT '关键字',
 	description varchar(255) COMMENT '描述、摘要',
 	weight int DEFAULT 0 COMMENT '权重，越大越靠前',

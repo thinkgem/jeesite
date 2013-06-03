@@ -50,7 +50,7 @@ public class LoginController extends BaseController{
 	/**
 	 * 登录失败，真正登录的POST请求由Filter完成
 	 */
-	@RequestMapping(value = Global.ADMIN_PATH+"login", method = RequestMethod.POST)
+	@RequestMapping(value = Global.ADMIN_PATH+"/login", method = RequestMethod.POST)
 	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, HttpServletRequest request, HttpServletResponse response, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
 		model.addAttribute("isValidateCodeLogin", isValidateCodeLogin(username, true, false));

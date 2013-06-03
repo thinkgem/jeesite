@@ -57,7 +57,7 @@ public class Article extends DataEntity {
 	private Category category;// 分类编号
 	private String title;	// 标题
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
-	private String thumb;	// 缩略图
+	private String image;	// 文章图片
 	private String keywords;// 关键字
 	private String description;// 描述、摘要
 	private Integer weight;	// 权重，越大越靠前
@@ -127,12 +127,12 @@ public class Article extends DataEntity {
 	}
 
 	@Length(min=0, max=255)
-	public String getThumb() {
-		return thumb;
+	public String getImage() {
+		return image;
 	}
 
-	public void setThumb(String thumb) {
-		this.thumb = thumb;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Length(min=0, max=255)

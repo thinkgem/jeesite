@@ -7,7 +7,7 @@ import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.modules.oa.dao.LeaveDao;
@@ -15,20 +15,18 @@ import com.thinkgem.jeesite.modules.oa.entity.Leave;
 
 /**
  * 调整请假内容处理器
- *
  * @author liuj
  */
-@Component
+@Service
 @Transactional
 public class LeaveModifyProcessor implements TaskListener {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	LeaveDao leaveDao;
-	
+	private LeaveDao leaveDao;
 	@Autowired
-	RuntimeService runtimeService;
+	private RuntimeService runtimeService;
 
 	public void notify(DelegateTask delegateTask) {
 		String processInstanceId = delegateTask.getProcessInstanceId();

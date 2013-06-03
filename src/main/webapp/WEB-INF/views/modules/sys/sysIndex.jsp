@@ -51,13 +51,7 @@
 				 </shiro:hasPermission>
 	           </ul>
 	           <ul class="nav pull-right">
-				 <li class="dropdown">
-				    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, <shiro:principal property="name"/>&nbsp; <i class="icon-user"></i></a>
-				    <ul class="dropdown-menu">
-				      <li><a href="${ctx}/sys/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp; 个人信息</a></li>
-				      <li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame"><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
-				    </ul>
-			  	 </li><li><a href="${ctx}/logout"><i class="icon-off" title="退出登录"></i></a></li>
+				 <li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index-${fnc:getCurrentSiteId()}.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
 			  	 <li id="themeSwitch" class="dropdown">
 			       	<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>
 				    <ul class="dropdown-menu">
@@ -65,7 +59,15 @@
 				    </ul>
 				    <!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
 			     </li>
-			  	 <li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index-${fnc:getCurrentSiteId()}.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
+			  	 <li class="dropdown">
+				    <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, <shiro:principal property="name"/></a>
+				    <ul class="dropdown-menu">
+				      <li><a href="${ctx}/sys/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp; 个人信息</a></li>
+				      <li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame"><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
+				    </ul>
+			  	 </li>
+			  	 <li><a href="${ctx}/logout" title="退出登录">退出</a></li>
+			  	 <li>&nbsp;</li>
 	           </ul>
 	         </div><!--/.nav-collapse -->
 	      </div>

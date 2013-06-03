@@ -51,7 +51,7 @@ CREATE TABLE cms_article
 	category_id bigint NOT NULL,
 	title varchar(255) NOT NULL,
 	color varchar(50),
-	thumb varchar(255),
+	image varchar(255),
 	keywords varchar(255),
 	description varchar(255),
 	weight int DEFAULT 0,

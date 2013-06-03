@@ -57,8 +57,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="location='info'"/>
+			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
 		</div>
 	</form:form>
 </body>
