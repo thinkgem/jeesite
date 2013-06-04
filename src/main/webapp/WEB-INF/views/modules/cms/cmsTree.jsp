@@ -14,7 +14,7 @@
 		$(document).ready(function(){
 			var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}}};
 			var zNodes=[
-		            <c:forEach items="${categoryList}" var="category">{id:${category.id}, pId:${not empty category.parent?category.parent.id:0}, name:"${category.name}", url:"${ctx}/cms/${not empty category.module?category.module:'none'}/?category.id=${category.id}", target:"cmsMainFrame"},
+		            <c:forEach items="${categoryList}" var="category">{id:"${category.id}", pId:"${not empty category.parent?category.parent.id:0}", name:"${category.name}", url:"${ctx}/cms/${not empty category.module?category.module:'none'}/?category.id=${category.id}", target:"cmsMainFrame"},
 		            </c:forEach>];
 			// 初始化树结构
 			var tree = $.fn.zTree.init($("#tree"), setting, zNodes);
@@ -27,7 +27,7 @@
 			nodes = tree.getNodesByParam("level", 1);
 			for(var i=0; i<nodes.length; i++) {
 				tree.expandNode(nodes[i], true, true, false);
-			}
+			};
 		});
 	</script>
 </head>
