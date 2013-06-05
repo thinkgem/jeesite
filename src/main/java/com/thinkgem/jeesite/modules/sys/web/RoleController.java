@@ -7,6 +7,9 @@ package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.OfficeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -100,6 +104,36 @@ public class RoleController extends BaseController {
 			addMessage(redirectAttributes, "删除角色成功");
 		}
 		return "redirect:"+Global.ADMIN_PATH+"/sys/role/?repage";
+	}	
+	@RequiresPermissions("sys:role:edit")
+	@RequestMapping(value = "assign")
+	public String assign(Role role, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<User> users = role.getUserList();
+		model.addAttribute("users", users);
+		return "modules/sys/roleAssign";
+	}
+	
+	@RequiresPermissions("sys:role:view")
+	@RequestMapping(value = "usertorole")
+	public String selectUserToRole(Model model) {
+		model.addAttribute("officeList", officeService.findAll());
+		return "modules/sys/selectUserToRole";
+	}
+	
+	@RequiresPermissions("sys:role:edit")
+	@RequestMapping(value = "outrole")
+	public String outrole(Long userId, Long roleId, Model model) {
+		User user = systemService.getUser(userId);
+		systemService.outUserInRole(user, roleId);
+		// 清除当前用户缓存
+		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
+			UserUtils.getCacheMap().clear();
+		}
+		Role role = systemService.getRole(roleId);
+		List<User> users = role.getUserList();
+		model.addAttribute("role", role);
+		model.addAttribute("users", users);
+		return "modules/sys/roleAssign";
 	}
 
 	@RequiresUser
