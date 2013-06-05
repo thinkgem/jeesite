@@ -66,7 +66,7 @@ public class CmsUtils {
 				return site;
 			}
 		}
-		return new Site();
+		return new Site(id);
 	}
 	
 	/**

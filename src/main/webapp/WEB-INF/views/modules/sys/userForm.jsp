@@ -43,7 +43,7 @@
 		<div class="control-group">
 			<label class="control-label">归属公司:</label>
 			<div class="controls">
-                <tags:treeselect id="area" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
+                <tags:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
 					title="区域" url="/sys/office/treeData?type=1"/>
 			</div>
 		</div>
