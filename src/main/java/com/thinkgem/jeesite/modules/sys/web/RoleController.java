@@ -131,6 +131,7 @@ public class RoleController extends BaseController {
 		}
 		Role role = systemService.getRole(roleId);
 		List<User> users = role.getUserList();
+		addMessage(model, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除成功！");
 		model.addAttribute("role", role);
 		model.addAttribute("users", users);
 		return "modules/sys/roleAssign";

@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.security.Digests;
 import com.thinkgem.jeesite.common.service.BaseService;
@@ -200,16 +199,16 @@ public class SystemService extends BaseService implements InitializingBean {
 	
 	@Transactional(readOnly = false)
 	public void outUserInRole(User user, Long roleId) {
-		List<Role> roleList = Lists.newArrayList();
+		List<Role> roleList = user.getRoleList();
 		List<Long> roleIdList = user.getRoleIdList();
-		if (roleIdList.contains(roleId)){
-			roleList.remove(roleId);
+		for (Long id : roleIdList) {
+			if (id == roleId){
+				roleList.remove(roleDao.findOne(id));
+			}
 		}
 		user.setRoleList(roleList);
 		saveUser(user);
 		systemRealm.clearAllCachedAuthorizationInfo();
-		// 同步到Activiti
-		deleteActivitiGroup(roleDao.findOne(roleId));
 	}
 
 	//-- Menu Service --//
