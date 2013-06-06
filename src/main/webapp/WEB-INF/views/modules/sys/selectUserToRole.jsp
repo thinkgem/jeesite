@@ -28,29 +28,33 @@
 	             name:"${office.name}"},
 	            </c:forEach>];
 	
-		var selectedNodes =[];
-		        /*<c:forEach items="${selectedList}" var="user">
+		var selectedNodes =[
+		        <c:forEach items="${selectedList}" var="user">
 		        {id:"${user.id}",
 		         pId:"0",
 		         name:"${user.name}"},
-		        </c:forEach>];*/
+		        </c:forEach>];
 		
-		var ids = [];
+		var ids = "${selectIds}".split(",");
 		
 		//点击选择项回调
 		function treeOnClick(event, treeId, treeNode, clickFlag){
 			if("officeTree"==treeId){
 				$.get("${ctx}/sys/role/users?officeId=" + treeNode.id, function(userNodes){
-					// 初始化树结构
 					$.fn.zTree.init($("#userTree"), setting, userNodes);
 				});
 			}
 			if("userTree"==treeId){
-				if($.inArray(treeNode.id, ids)<0){
+				//alert(treeNode.id + " | " + ids);
+				//alert(typeof ids[0] + " | " +  typeof treeNode.id);
+				if($.inArray(String(treeNode.id), ids)<0){
 					selectedTree.addNodes(null, treeNode);
-					ids.push(treeNode.id);
+					ids.push(String(treeNode.id));
 				}
-			};
+			}
+			/*if("selectedTree"==treeId){
+				alert(treeNode.id);
+			}*/
 		};
 
 		//清除选中项
@@ -58,7 +62,6 @@
 			selectedNodes=null;
 			$.fn.zTree.init($("#selectedTree"), setting, selectedNodes);
 		};
-		
 	</script>
 </head>
 <body>

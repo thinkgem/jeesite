@@ -120,8 +120,8 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = "usertorole")
 	public String selectUserToRole(Role role, Model model) {
-		//model.addAttribute("selectIds", role.getUserIds());
-		//model.addAttribute("selectedList", role.getUserList());
+		model.addAttribute("selectIds", role.getUserIds());
+		model.addAttribute("selectedList", role.getUserList());
 		model.addAttribute("officeList", officeService.findAll());
 		return "modules/sys/selectUserToRole";
 	}
@@ -158,6 +158,14 @@ public class RoleController extends BaseController {
 		addMessage(model, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除成功！");
 		model.addAttribute("role", role);
 		model.addAttribute("users", users);
+		return "modules/sys/roleAssign";
+	}
+	
+	@RequiresPermissions("sys:role:edit")
+	@RequestMapping(value = "assignrole")
+	public String assignRole(Role role, String[] usrIds, Model model) {
+		
+		//addMessage(model, "用户[" + user.getName() + "]添加成功添加到角色[" + role.getName() + "]");
 		return "modules/sys/roleAssign";
 	}
 
