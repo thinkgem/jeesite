@@ -55,7 +55,6 @@ public class User extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
-//	private Area area;		// 归属区域
 	private Office company;	// 归属公司
 	private Office office;	// 归属部门
 	private String loginName;// 登录名
@@ -92,19 +91,6 @@ public class User extends DataEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-//	@ManyToOne
-//	@JoinColumn(name="area_id")
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	@NotNull(message="归属区域不能为空")
-//	@ExcelField(title="归属区域", align=2, sort=10)
-//	public Area getArea() {
-//		return area;
-//	}
-//
-//	public void setArea(Area area) {
-//		this.area = area;
-//	}
 
 	@ManyToOne
 	@JoinColumn(name="company_id")
@@ -144,6 +130,7 @@ public class User extends DataEntity {
 		this.loginName = loginName;
 	}
 
+	@JsonIgnore
 	@Length(min=1, max=100)
 	public String getPassword() {
 		return password;

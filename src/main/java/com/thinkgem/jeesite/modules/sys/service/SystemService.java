@@ -71,14 +71,6 @@ public class SystemService extends BaseService implements InitializingBean {
 	public Page<User> findUser(Page<User> page, User user) {
 		DetachedCriteria dc = userDao.createDetachedCriteria();
 		User currentUser = UserUtils.getUser();
-//		dc.createAlias("area", "area");
-//		if (user.getArea()!=null && user.getArea().getId()!=null){
-//			dc.add(Restrictions.or(
-//					Restrictions.eq("area.id", user.getArea().getId()),
-//					Restrictions.eq("area.parent.id", user.getArea().getId()),
-//					Restrictions.like("area.parentIds", "%,"+user.getArea().getId()+",%")
-//					));
-//		}
 		dc.createAlias("company", "company");
 		if (user.getCompany()!=null && user.getCompany().getId()!=null){
 			dc.add(Restrictions.or(
@@ -92,6 +84,10 @@ public class SystemService extends BaseService implements InitializingBean {
 					Restrictions.eq("office.id", user.getOffice().getId()),
 					Restrictions.like("office.parentIds", "%,"+user.getOffice().getId()+",%")
 					));
+		}
+		// 如果不是超级管理员，则不显示超级管理员用户
+		if (!currentUser.isAdmin()){
+			dc.add(Restrictions.ne("id", 1L)); 
 		}
 		dc.add(dataScopeFilter(currentUser, "office", ""));
 		//System.out.println(dataScopeFilterString(currentUser, "office", ""));
