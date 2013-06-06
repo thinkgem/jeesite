@@ -26,7 +26,7 @@
 		<a id="assignButton" href="javascript:" class="btn btn-primary">分配角色</a>
 		<script type="text/javascript">
 			$("#assignButton").click(function(){
-				top.$.jBox.open("iframe:${ctx}/sys/role/usertorole", "分配角色",$(top.document).width()-220,$(top.document).height()-180,{
+				top.$.jBox.open("iframe:${ctx}/sys/role/usertorole?id=${role.id}", "分配角色",810,$(top.document).height()-240,{
 					buttons:{"关闭":true},
 					loaded:function(h){
 						$(".jbox-content", top.document).css("overflow-y","hidden");

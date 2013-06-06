@@ -6,6 +6,7 @@
 package com.thinkgem.jeesite.modules.sys.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.OfficeService;
@@ -115,9 +119,29 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = "usertorole")
-	public String selectUserToRole(Model model) {
+	public String selectUserToRole(Role role, Model model) {
+		//model.addAttribute("selectIds", role.getUserIds());
+		//model.addAttribute("selectedList", role.getUserList());
 		model.addAttribute("officeList", officeService.findAll());
 		return "modules/sys/selectUserToRole";
+	}
+	
+	@RequiresPermissions("sys:role:view")
+	@ResponseBody
+	@RequestMapping(value = "users")
+	public List<Map<String, Object>> users(Long officeId, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		Office office = officeService.get(officeId);
+		List<User> userList = office.getUserList();
+		for (User user : userList) {
+			Map<String, Object> map = Maps.newHashMap();
+			map.put("id", user.getId());
+			map.put("pId", 0);
+			map.put("name", user.getName());
+			mapList.add(map);			
+		}
+		return mapList;
 	}
 	
 	@RequiresPermissions("sys:role:edit")
