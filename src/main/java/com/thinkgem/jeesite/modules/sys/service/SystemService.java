@@ -212,15 +212,13 @@ public class SystemService extends BaseService implements InitializingBean {
 	
 	@Transactional(readOnly = false)
 	public User assignUserToRole(Role role, Long userId) {
-		List<User> userList = role.getUserList();
-		List<Long> userIdList = role.getUserIdList();
-		if (userId == null || userIdList.contains(userId)) {
+		User user = userDao.findOne(userId);
+		List<Long> roleIds = user.getRoleIdList();
+		if (roleIds.contains(role.getId())) {
 			return null;
 		}
-		User user = userDao.findOne(userId);
-		userList.add(user);
-		role.setUserList(userList);
-		saveRole(role);
+		user.getRoleList().add(role);
+		saveUser(user);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		return user;
 	}
