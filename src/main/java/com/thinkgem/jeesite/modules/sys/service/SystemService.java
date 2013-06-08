@@ -198,17 +198,31 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	@Transactional(readOnly = false)
-	public void outUserInRole(User user, Long roleId) {
-		List<Role> roleList = user.getRoleList();
-		List<Long> roleIdList = user.getRoleIdList();
-		for (Long id : roleIdList) {
-			if (id == roleId){
-				roleList.remove(roleDao.findOne(id));
-			}
+	public void outUserInRole(Role role, Long userId) {
+		List<User> userList = role.getUserList();
+		List<Long> userIdList = role.getUserIdList();
+		if (userId != null || userIdList.contains(userId)) {
+			User user = userDao.findOne(userId);
+			userList.remove(user);
+			role.setUserList(userList);
+			saveRole(role);
+			systemRealm.clearAllCachedAuthorizationInfo();
 		}
-		user.setRoleList(roleList);
-		saveUser(user);
+	}
+	
+	@Transactional(readOnly = false)
+	public User assignUserToRole(Role role, Long userId) {
+		List<User> userList = role.getUserList();
+		List<Long> userIdList = role.getUserIdList();
+		if (userId == null || userIdList.contains(userId)) {
+			return null;
+		}
+		User user = userDao.findOne(userId);
+		userList.add(user);
+		role.setUserList(userList);
+		saveRole(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		return user;
 	}
 
 	//-- Menu Service --//
