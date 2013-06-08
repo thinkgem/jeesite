@@ -206,11 +206,6 @@ public class SystemService extends BaseService implements InitializingBean {
 		if (roleIds.contains(role.getId())) {
 			roles.remove(role);
 			saveUser(user);
-			
-			//多余！！！
-			role.getUserList().remove(user);
-			saveRole(role);
-			
 			return true;
 		}
 		return false;
@@ -224,7 +219,7 @@ public class SystemService extends BaseService implements InitializingBean {
 			return null;
 		}
 		user.getRoleList().add(role);
-		saveUser(user);
+		saveUser(user);		
 		return user;
 	}
 
