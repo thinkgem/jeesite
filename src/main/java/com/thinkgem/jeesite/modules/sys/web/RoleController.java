@@ -146,15 +146,16 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "outrole")
-	public String outrole(Long userId, Long roleId, Model model) {
+	public String outrole(Long userId, Long roleId, RedirectAttributes redirectAttributes) {
 		Role role = systemService.getRole(roleId);
 		User user = systemService.getUser(userId);
-		systemService.outUserInRole(role, userId);
-		List<User> users = role.getUserList();
-		addMessage(model, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除成功！");
-		model.addAttribute("role", role);
-		model.addAttribute("users", users);
-		return "modules/sys/roleAssign";
+		Boolean flag = systemService.outUserInRole(role, userId);
+		if (!flag) {
+			addMessage(redirectAttributes, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除失败！");
+		}else {
+			addMessage(redirectAttributes, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除成功！");
+		}
+		return "redirect:"+Global.ADMIN_PATH+"/sys/role/assign?id="+role.getId();
 	}
 	
 	@RequiresPermissions("sys:role:edit")

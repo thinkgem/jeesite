@@ -198,16 +198,22 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	@Transactional(readOnly = false)
-	public void outUserInRole(Role role, Long userId) {
-		List<User> userList = role.getUserList();
-		List<Long> userIdList = role.getUserIdList();
-		if (userId != null || userIdList.contains(userId)) {
-			User user = userDao.findOne(userId);
-			userList.remove(user);
-			role.setUserList(userList);
+	public Boolean outUserInRole(Role role, Long userId) {
+		User user = userDao.findOne(userId);
+		List<Long> roleIds = user.getRoleIdList();
+		List<Role> roles = user.getRoleList();
+		// 
+		if (roleIds.contains(role.getId())) {
+			roles.remove(role);
+			saveUser(user);
+			
+			//多余！！！
+			role.getUserList().remove(user);
 			saveRole(role);
-			systemRealm.clearAllCachedAuthorizationInfo();
+			
+			return true;
 		}
+		return false;
 	}
 	
 	@Transactional(readOnly = false)
@@ -219,7 +225,6 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		user.getRoleList().add(role);
 		saveUser(user);
-		systemRealm.clearAllCachedAuthorizationInfo();
 		return user;
 	}
 
