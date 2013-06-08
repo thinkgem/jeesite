@@ -18,7 +18,8 @@
 		</div>
 		<div class="row-fluid span8">
 			<span class="span4">角色类型: ${role.roleType}</span>
-			<span class="span4">数据范围: ${role.dataScope}</span>
+			<c:set var="dictvalue" value="${role.dataScope}" scope="page" />
+			<span class="span4">数据范围: ${fns:getDictLabel(dictvalue, 'sys_data_scope', '')}</span>
 		</div>
 	</div>
 	<tags:message content="${message}"/>
@@ -27,18 +28,38 @@
 		<script type="text/javascript">
 			$("#assignButton").click(function(){
 				top.$.jBox.open("iframe:${ctx}/sys/role/usertorole?id=${role.id}", "分配角色",810,$(top.document).height()-240,{
-					buttons:{"确定分配":"ok", "关闭":true}, submit:function(v, h, f){
-	                	var selectedTree = h.find("iframe")[0].contentWindow.selectedTree;
-		                if (v=="ok"){
-		                	// 判断当前角色是否有改变
-		                	// 无改变直接返回
-		                	// 有改变执行保存
-		                	alert(selectedTree.getNodes().length);
+					buttons:{"确定分配":"ok", "清除已选":"clear", "关闭":true}, bottomText:"通过选择部门，然后为列出的人员分配角色。",submit:function(v, h, f){
+						var pre_ids = h.find("iframe")[0].contentWindow.pre_ids;
+						var ids = h.find("iframe")[0].contentWindow.ids;
+						//nodes = selectedTree.getSelectedNodes();
+						if (v=="ok"){
+							// 删除''的元素
+							if(ids[0]==''){
+								ids.shift();
+								pre_ids.shift();
+							}
+							if(pre_ids.sort().toString() == ids.sort().toString()){
+								top.$.jBox.tip("未给角色【${role.name}】分配新成员！", 'info');
+								return false;
+							};
+
+					    	// 执行保存
+					    	var idsArr = "";
+					    	for (var i = 0; i<ids.length; i++) {
+					    		idsArr = (idsArr + ids[i]) + (((i + 1)== ids.length) ? '':',');
+					    	}
+					    	var post = document.createElement("form");
+					    	post.method="post" ; 
+					    	post.action="${ctx}/sys/role/assignrole?id=${role.id}&idsArr="+idsArr;
+							loading('正在提交，请稍等...');
+					    	post.submit();
+					    	return true;
+						} else if (v=="clear"){
+							h.find("iframe")[0].contentWindow.clearAssign();
+							return false;
 		                }
-		            }, loaded:function(h){
+					}, loaded:function(h){
 						$(".jbox-content", top.document).css("overflow-y","hidden");
-						$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
-						$("body", h.find("iframe").contents()).css("margin","10px");
 					}
 				});
 			});
