@@ -7,9 +7,6 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,7 +39,7 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 public class Leave extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id; 		// 编号
+
 	private String reason; 	// 请假原因
 	private String processInstanceId; // 流程实例编号
 	private Date startTime;	// 请假开始日期
@@ -72,18 +69,6 @@ public class Leave extends DataEntity {
 
 	public Leave(Long id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_oa_leave")
-//	@SequenceGenerator(name = "seq_oa_leave", sequenceName = "seq_oa_leave")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 

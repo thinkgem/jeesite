@@ -10,9 +10,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -45,7 +42,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Area extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+
 	private Area parent;	// 父级编号
 	private String parentIds; // 所有父级编号
 	private String code; 	// 区域编码
@@ -61,18 +58,6 @@ public class Area extends DataEntity {
 	
 	public Area(Long id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
-//	@SequenceGenerator(name = "seq_sys_area", sequenceName = "seq_sys_area")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	

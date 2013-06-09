@@ -6,9 +6,6 @@
 package com.thinkgem.jeesite.modules.cms.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -36,7 +33,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Link extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+	
 	private Category category;// 分类编号
 	private String title;	// 链接名称
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
@@ -57,18 +54,6 @@ public class Link extends DataEntity {
 	public Link(Category category){
 		this();
 		this.category = category;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_link")
-//	@SequenceGenerator(name = "seq_cms_link", sequenceName = "seq_cms_link")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	@ManyToOne

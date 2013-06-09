@@ -7,9 +7,6 @@ package com.thinkgem.jeesite.modules.cms.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -39,7 +36,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 public class ArticleData extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+
 	private String content;	// 内容
 	private String copyfrom;// 来源
 	private String relation;// 相关文章
@@ -54,18 +51,6 @@ public class ArticleData extends BaseEntity {
 	
 	public ArticleData(Long id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
-//	@SequenceGenerator(name = "seq_cms_article_data", sequenceName = "seq_cms_article_data")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 

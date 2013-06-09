@@ -6,9 +6,6 @@
 package com.thinkgem.jeesite.modules.sys.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -32,7 +29,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Dict extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+
 	private String label;	// 标签名
 	private String value;	// 数据值
 	private String type;	// 类型
@@ -45,18 +42,6 @@ public class Dict extends DataEntity {
 	
 	public Dict(Long id) {
 		this();
-		this.id = id;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
-//	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	

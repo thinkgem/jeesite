@@ -10,9 +10,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -48,7 +45,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Menu extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+
 	private Menu parent;	// 父级菜单
 	private String parentIds; // 所有父级编号
 	private String name; 	// 名称
@@ -69,18 +66,6 @@ public class Menu extends DataEntity {
 	
 	public Menu(Long id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
-//	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	

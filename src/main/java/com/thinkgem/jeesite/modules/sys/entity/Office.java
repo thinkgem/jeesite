@@ -10,9 +10,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -45,7 +42,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Office extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+
 	private Office parent;	// 父级编号
 	private String parentIds; // 所有父级编号
 	private Area area;		// 归属区域
@@ -69,18 +66,6 @@ public class Office extends DataEntity {
 	
 	public Office(Long id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_office")
-//	@SequenceGenerator(name = "seq_sys_office", sequenceName = "seq_sys_office")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	

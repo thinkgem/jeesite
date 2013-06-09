@@ -149,11 +149,15 @@ public class RoleController extends BaseController {
 	public String outrole(Long userId, Long roleId, RedirectAttributes redirectAttributes) {
 		Role role = systemService.getRole(roleId);
 		User user = systemService.getUser(userId);
-		Boolean flag = systemService.outUserInRole(role, userId);
-		if (!flag) {
-			addMessage(redirectAttributes, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除失败！");
+		if (user.equals(UserUtils.getUser())) {
+			addMessage(redirectAttributes, "无法从角色【" + role.getName() + "】中移除用户【" + user.getName() + "】自己！");
 		}else {
-			addMessage(redirectAttributes, "用户[" + user.getName() + "]从角色[" + role.getName() + "]中移除成功！");
+			Boolean flag = systemService.outUserInRole(role, userId);
+			if (!flag) {
+				addMessage(redirectAttributes, "用户【" + user.getName() + "】从角色【" + role.getName() + "】中移除失败！");
+			}else {
+				addMessage(redirectAttributes, "用户【" + user.getName() + "】从角色【" + role.getName() + "】中移除成功！");
+			}			
 		}
 		return "redirect:"+Global.ADMIN_PATH+"/sys/role/assign?id="+role.getId();
 	}
