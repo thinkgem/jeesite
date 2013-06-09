@@ -8,7 +8,6 @@ package com.thinkgem.jeesite.modules.sys.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -232,7 +231,7 @@ public class User extends DataEntity {
 		this.loginDate = loginDate;
 	}
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)

@@ -7,7 +7,6 @@ package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -137,8 +136,7 @@ public class Role extends DataEntity {
 		this.dataScope = dataScope;
 	}
 
-	@ManyToMany(cascade=CascadeType.REFRESH, fetch=FetchType.EAGER)
-	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+	@ManyToMany(mappedBy = "roleList", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
