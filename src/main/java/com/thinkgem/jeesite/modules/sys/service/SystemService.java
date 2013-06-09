@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.security.Digests;
 import com.thinkgem.jeesite.common.service.BaseService;
@@ -195,17 +194,29 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	@Transactional(readOnly = false)
-	public void outUserInRole(User user, Long roleId) {
-		List<Role> roleList = Lists.newArrayList();
-		List<Long> roleIdList = user.getRoleIdList();
-		if (roleIdList.contains(roleId)){
-			roleList.remove(roleId);
+	public Boolean outUserInRole(Role role, Long userId) {
+		User user = userDao.findOne(userId);
+		List<Long> roleIds = user.getRoleIdList();
+		List<Role> roles = user.getRoleList();
+		// 
+		if (roleIds.contains(role.getId())) {
+			roles.remove(role);
+			saveUser(user);
+			return true;
 		}
-		user.setRoleList(roleList);
-		saveUser(user);
-		systemRealm.clearAllCachedAuthorizationInfo();
-		// 同步到Activiti
-		deleteActivitiGroup(roleDao.findOne(roleId));
+		return false;
+	}
+	
+	@Transactional(readOnly = false)
+	public User assignUserToRole(Role role, Long userId) {
+		User user = userDao.findOne(userId);
+		List<Long> roleIds = user.getRoleIdList();
+		if (roleIds.contains(role.getId())) {
+			return null;
+		}
+		user.getRoleList().add(role);
+		saveUser(user);		
+		return user;
 	}
 
 	//-- Menu Service --//
