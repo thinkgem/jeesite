@@ -6,6 +6,9 @@
 package com.thinkgem.jeesite.modules.cms.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,7 +33,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 public class Site extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
-
+	private Long id;		// 编号
 	private String name;	// 站点名称
 	private String title;	// 站点标题
 	private String description;// 描述，填写有助于搜索引擎优化
@@ -44,6 +47,18 @@ public class Site extends DataEntity {
 	
 	public Site(Long id){
 		this();
+		this.id = id;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_site")
+//	@SequenceGenerator(name = "seq_cms_site", sequenceName = "seq_cms_site")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -10,6 +10,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -51,7 +54,7 @@ import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 public class User extends DataEntity {
 
 	private static final long serialVersionUID = 1L;
-
+	private Long id;		// 编号
 	private Office company;	// 归属公司
 	private Office office;	// 归属部门
 	private String loginName;// 登录名
@@ -73,6 +76,19 @@ public class User extends DataEntity {
 	
 	public User(Long id) {
 		this();
+		this.id = id;
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
+//	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user")
+	@ExcelField(title="ID", type=1, align=2, sort=1)
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 

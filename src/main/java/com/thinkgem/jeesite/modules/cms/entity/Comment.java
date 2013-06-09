@@ -8,6 +8,9 @@ package com.thinkgem.jeesite.modules.cms.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -37,7 +40,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 public class Comment extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
+	private Long id;		// 编号
 	private String module; 	// 内容模型（article：文章；picture：图片；download：下载）
 	private Long contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
 	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
@@ -62,6 +65,18 @@ public class Comment extends BaseEntity {
 	@PrePersist
 	public void prePersist(){
 		this.createDate = new Date();
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_comment")
+//	@SequenceGenerator(name = "seq_cms_comment", sequenceName = "seq_cms_comment")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Length(min=1, max=20)

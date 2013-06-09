@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -44,7 +47,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Role extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
-
+	private Long id;	 	// 编号
 	private Office office;	// 归属机构
 	private String name; 	// 角色名称
 	private String enname;	//英文名称
@@ -73,6 +76,18 @@ public class Role extends DataEntity {
 		this();
 		this.id = id;
 		this.name = name;
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_role")
+//	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	@ManyToOne

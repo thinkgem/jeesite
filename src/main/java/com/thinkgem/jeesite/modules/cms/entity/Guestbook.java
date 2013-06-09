@@ -8,6 +8,9 @@ package com.thinkgem.jeesite.modules.cms.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -38,7 +41,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 public class Guestbook extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
-
+	private Long id; 		// 编号
 	private String type; 	// 留言分类（咨询、建议、投诉、其它）
 	private String content; // 留言内容
 	private String name; 	// 姓名
@@ -64,6 +67,18 @@ public class Guestbook extends BaseEntity {
 	@PrePersist
 	public void prePersist(){
 		this.createDate = new Date();
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_guestbook")
+//	@SequenceGenerator(name = "seq_cms_guestbook", sequenceName = "seq_cms_guestbook")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Length(min=1, max=100)
