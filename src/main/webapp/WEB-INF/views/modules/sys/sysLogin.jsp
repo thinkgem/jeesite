@@ -39,31 +39,32 @@
 	</script>
 </head>
 <body>
-	  <div class="header"><%String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);%>
-	    <div id="messageBox" class="alert alert-error <%=error==null?"hide":""%>"><button data-dismiss="alert" class="close">×</button>
+	<!--[if lte IE 7]><br/><div class='alert alert-block' style="text-align:left;padding-bottom:10px;"><a class="close" data-dismiss="alert">x</a><h4>温馨提示：</h4><p>你使用的浏览器版本过低。为了获得更好的浏览体验，我们强烈建议您 <a href="http://browsehappy.com" target="_blank">升级</a> 到最新版本的IE浏览器，或者使用较新版本的 Chrome、Firefox、Safari 等。</p></div><![endif]-->
+	<div class="header"><%String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);%>
+		<div id="messageBox" class="alert alert-error <%=error==null?"hide":""%>"><button data-dismiss="alert" class="close">×</button>
 			<label id="loginError" class="error"><%=error==null?"":"com.thinkgem.jeesite.modules.sys.security.CaptchaException".equals(error)?"验证码错误, 请重试.":"用户或密码错误, 请重试." %></label>
 		</div>
-	  </div>
-      <h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
-      <form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
-        <label class="input-label" for="username">登录名</label>
-        <input type="text" id="username" name="username" class="input-block-level required" value="${username}">
-        <label class="input-label" for="password">密码</label>
-        <input type="password" id="password" name="password" class="input-block-level required">
-        <c:if test="${isValidateCodeLogin}"><div class="validateCode">
-	        <label class="input-label mid" for="validateCode">验证码</label>
-	        <tags:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
-        </div></c:if>
-        <input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
-        <label for="rememberMe" title="下次不需要再登录"><input type="checkbox" id="rememberMe" name="rememberMe"/> 记住我（公共场所慎用）</label>
-        <div id="themeSwitch" class="dropdown">
-	       	<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','默认主题')}<b class="caret"></b></a>
-		    <ul class="dropdown-menu">
-		      <c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="#" onclick="location='${pageContext.request.contextPath}/theme/${dict.value}?url='+location.href">${dict.label}</a></li></c:forEach>
-		    </ul>
-		    <!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
-	     </div>
-      </form>
-      Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="http://thinkgem.iteye.com" target="_blank">ThinkGem</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> ${fns:getConfig('version')}
+	</div>
+	<h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
+	<form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
+		<label class="input-label" for="username">登录名</label>
+		<input type="text" id="username" name="username" class="input-block-level required" value="${username}">
+		<label class="input-label" for="password">密码</label>
+		<input type="password" id="password" name="password" class="input-block-level required">
+		<c:if test="${isValidateCodeLogin}"><div class="validateCode">
+			<label class="input-label mid" for="validateCode">验证码</label>
+			<tags:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
+		</div></c:if>
+		<input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
+		<label for="rememberMe" title="下次不需要再登录"><input type="checkbox" id="rememberMe" name="rememberMe"/> 记住我（公共场所慎用）</label>
+		<div id="themeSwitch" class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','默认主题')}<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+			  <c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="#" onclick="location='${pageContext.request.contextPath}/theme/${dict.value}?url='+location.href">${dict.label}</a></li></c:forEach>
+			</ul>
+			<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
+		</div>
+	</form>
+	Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productName')}</a> - Powered By <a href="https://github.com/thinkgem/jeesite" target="_blank">JeeSite</a> ${fns:getConfig('version')}
 </body>
 </html>
