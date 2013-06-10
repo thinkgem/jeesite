@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.BaseDao;
 import com.thinkgem.jeesite.common.persistence.BaseDaoImpl;
@@ -36,7 +35,6 @@ public interface UserDao extends UserDaoCustom, CrudRepository<User, Long> {
 	public int updatePasswordById(String newPassword, Long id);
 	
 	@Modifying
-	@Transactional
 	@Query("update User set loginIp=?1, loginDate=?2 where id = ?3")
 	public int updateLoginInfo(String loginIp, Date loginDate, Long id);
 }
