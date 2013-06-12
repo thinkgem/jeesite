@@ -23,6 +23,7 @@
     	function optPriority() {
 	    	var f = getTableForm();
 	    	f.action="${ctx}/sys/menu/updateSort";
+	    	loading('正在提交，请稍等...');
 	    	f.submit();
     	}
 	</script>
