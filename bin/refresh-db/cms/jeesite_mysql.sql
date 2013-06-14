@@ -1,43 +1,12 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Indexes */
-
-DROP INDEX cms_article_create_by ON cms_article;
-DROP INDEX cms_article_title ON cms_article;
-DROP INDEX cms_article_keywords ON cms_article;
-DROP INDEX cms_article_del_flag ON cms_article;
-DROP INDEX cms_article_weight ON cms_article;
-DROP INDEX cms_article_update_date ON cms_article;
-DROP INDEX cms_article_category_id ON cms_article;
-DROP INDEX cms_category_parent_id ON cms_category;
-DROP INDEX cms_category_parent_ids ON cms_category;
-DROP INDEX cms_category_module ON cms_category;
-DROP INDEX cms_category_name ON cms_category;
-DROP INDEX cms_category_sort ON cms_category;
-DROP INDEX cms_category_del_flag ON cms_category;
-DROP INDEX cms_category_office_id ON cms_category;
-DROP INDEX cms_category_site_id ON cms_category;
-DROP INDEX cms_comment_module ON cms_comment;
-DROP INDEX cms_comment_content_id ON cms_comment;
-DROP INDEX cms_comment_status ON cms_comment;
-DROP INDEX cms_guestbook_del_flag ON cms_guestbook;
-DROP INDEX cms_link_category_id ON cms_link;
-DROP INDEX cms_link_title ON cms_link;
-DROP INDEX cms_link_del_flag ON cms_link;
-DROP INDEX cms_link_weight ON cms_link;
-DROP INDEX cms_link_create_by ON cms_link;
-DROP INDEX cms_link_update_date ON cms_link;
-DROP INDEX cms_site_del_flag ON cms_site;
-
-
-
 /* Drop Tables */
 
 DROP TABLE cms_article_data;
 DROP TABLE cms_article;
+DROP TABLE cms_comment;
 DROP TABLE cms_link;
 DROP TABLE cms_category;
-DROP TABLE cms_comment;
 DROP TABLE cms_guestbook;
 DROP TABLE cms_site;
 
@@ -56,6 +25,7 @@ CREATE TABLE cms_article
 	keywords varchar(255) COMMENT '关键字',
 	description varchar(255) COMMENT '描述、摘要',
 	weight int DEFAULT 0 COMMENT '权重，越大越靠前',
+	weight_date datetime COMMENT '权重期限，过期后将权重设置为：0',
 	hits int DEFAULT 0 COMMENT '点击数',
 	posid varchar(10) COMMENT '推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）',
 	create_by bigint COMMENT '创建者',
@@ -112,7 +82,7 @@ CREATE TABLE cms_category
 CREATE TABLE cms_comment
 (
 	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	module varchar(20) NOT NULL COMMENT '栏目模块（article：文章；picture：图片；download：下载）',
+	category_id bigint NOT NULL COMMENT '栏目编号',
 	content_id bigint NOT NULL COMMENT '栏目内容的编号（Article.id、Photo.id、Download.id）',
 	title varchar(255) COMMENT '栏目内容的标题（Article.title、Photo.title、Download.title）',
 	content varchar(255) COMMENT '评论内容',
@@ -154,6 +124,7 @@ CREATE TABLE cms_link
 	image varchar(255) COMMENT '链接图片，如果上传了图片，则显示为图片链接',
 	href varchar(255) COMMENT '链接地址',
 	weight int DEFAULT 0 COMMENT '权重，越大越靠前',
+	weight_date datetime COMMENT '权重期限，过期后将权重设置为：0',
 	create_by bigint COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
 	update_by bigint COMMENT '更新者',
@@ -201,7 +172,7 @@ CREATE INDEX cms_category_sort ON cms_category (sort ASC);
 CREATE INDEX cms_category_del_flag ON cms_category (del_flag ASC);
 CREATE INDEX cms_category_office_id ON cms_category (office_id ASC);
 CREATE INDEX cms_category_site_id ON cms_category (site_id ASC);
-CREATE INDEX cms_comment_module ON cms_comment (module ASC);
+CREATE INDEX cms_comment_category_id ON cms_comment (category_id ASC);
 CREATE INDEX cms_comment_content_id ON cms_comment (content_id ASC);
 CREATE INDEX cms_comment_status ON cms_comment (del_flag ASC);
 CREATE INDEX cms_guestbook_del_flag ON cms_guestbook (del_flag ASC);

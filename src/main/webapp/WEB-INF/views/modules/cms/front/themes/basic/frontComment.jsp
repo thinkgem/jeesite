@@ -54,7 +54,7 @@
 		<li>
 			<h6>姓名: ${comment.name} &nbsp;时间：<fmt:formatDate value="${comment.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				<a href="javascript:comment(${comment.id})">回复</a></h6>
-			<p>${comment.content}</p>
+			<div>${comment.content}</div>
 			<div id="commentForm${comment.id}" class="commentForm hide"></div>
 		</li>
 	</c:forEach>
@@ -67,7 +67,7 @@
 <div id="commentForm0"></div>
 <div id="commentFormTpl" class="hide">
 	<form:form action="${ctx}/comment" method="post" class="form-horizontal">
-		<input type="hidden" name="module" value="${comment.module}"/>
+		<input type="hidden" name="category.id" value="${comment.category.id}"/>
 		<input type="hidden" name="contentId" value="${comment.contentId}"/>
 		<input type="hidden" name="title" value="${comment.title}"/>
 		<input type="hidden" name="replyId"/>

@@ -15,7 +15,7 @@
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
 					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")){
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -37,14 +37,14 @@
 			<label class="control-label">归属机构:</label>
 			<div class="controls">
                 <tags:treeselect id="office" name="office.id" value="${category.office.id}" labelName="office.name" labelValue="${category.office.name}"
-					title="机构" url="/sys/office/treeData"/>
+					title="机构" url="/sys/office/treeData" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">上级栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="parent.id" value="${category.parent.id}" labelName="parent.name" labelValue="${category.parent.name}"
-					title="栏目" url="/cms/category/treeData" extId="${category.id}"/>
+					title="栏目" url="/cms/category/treeData" extId="${category.id}" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -66,7 +66,7 @@
 			<label class="control-label">栏目图片:</label>
 			<div class="controls">
 				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<tags:ckfinder input="image" type="thumb" uploadPath="/cms/category"/>
+				<tags:ckfinder input="image" type="images" uploadPath="/cms/category"/>
 			</div>
 		</div>
 		<div class="control-group">

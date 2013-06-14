@@ -6,11 +6,11 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		function view(href){
-			top.$.jBox.open('iframe:'+href,'查看文档',$(top.document).width()-220,$(top.document).height()-120,{
+			top.$.jBox.open('iframe:'+href,'查看文档',$(top.document).width()-220,$(top.document).height()-180,{
 				buttons:{"关闭":true},
 				loaded:function(h){
-					$(".jbox-content", top.document).css("overflow-y","hidden");
-					$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
+					//$(".jbox-content", top.document).css("overflow-y","hidden");
+					//$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
 				}
 			});
 			return false;
@@ -31,7 +31,6 @@
 	<form:form id="searchForm" modelAttribute="comment" action="${ctx}/cms/comment/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<form:hidden path="module"/><form:hidden path="contentId"/>
 		<label>文档标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
 		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" />
@@ -43,7 +42,7 @@
 		<c:forEach items="${page.list}" var="comment">
 			<tr>
 				<td><a href="javascript:" onclick="$('#c_${comment.id}').toggle()">${fns:abbr(fns:replaceHtml(comment.content),40)}</a></td>
-				<td><a href="${ctx}/cms/${comment.module}/form?id=${comment.contentId}" title="${comment.title}" onclick="return view(this.href);">${fns:abbr(comment.title,40)}</a></td>
+				<td><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/view-${comment.category.id}-${comment.contentId}${fns:getUrlSuffix()}" title="${comment.title}" onclick="return view(this.href);">${fns:abbr(comment.title,40)}</a></td>
 				<td>${comment.name}</td>
 				<td>${comment.ip}</td>
 				<td><fmt:formatDate value="${comment.createDate}" type="both"/></td>

@@ -15,12 +15,9 @@ input[disabled],select[disabled],textarea[disabled],input[readonly],select[reado
 .measure-input {background:url("../images/ruler.gif") repeat-x scroll 0 bottom transparent;}
 .input-small{width:120px;} .input-medium {width:163px;}.input-xxlarge {width:460px;}
 .help-block,.help-inline {color:#aaaaaa;} .alert {margin-bottom:10px;}
-.form-search label{margin-left:10px;}
-.form-search span label{margin-left:0;}
-.form-horizontal {margin:0 20px;}
-.form-horizontal .control-group {margin-bottom:8px;}
-.form-horizontal .control-label {padding-top:3px;}
-.form-horizontal .controls {text-align:left;}
+.form-search label{margin-left:10px;} .form-search span label{margin-left:0;}
+.form-horizontal {margin:0 20px;} .form-horizontal .control-group {margin-bottom:8px;}
+.form-horizontal .control-label {padding-top:3px;} .form-horizontal .controls {text-align:left;}
 .form-horizontal .controls .error {background-position:0 2px;}
 .collapse {*display:none;_position:static;} .collapse.in {*display:block;}
 .close {opacity:0.3;filter:alpha(opacity=30);} .close:hover {opacity:0.8;filter:alpha(opacity=80);}
@@ -29,8 +26,7 @@ a.btn-primary,a.btn-primary:hover,a.btn-warning,a.btn-warning:hover,a.btn-danger
 	a.btn-info,a.btn-info:hover,a.btn-inverse,a.btn-inverse:hover {*padding:4px 10px 3px;}
 .nav,.breadcrumb {margin-bottom:10px;}
 .nav-list li a {margin-top:5px;margin-bottom:5px;_padding-top:6px;} .nav-list li a i{_margin-top:-1px;}
-.pagination .controls a{border:0;}
-.pagination .controls input{border:0;color:#999;width:30px;padding:0;margin:-3px 0 0 0;text-align:center;}
+.pagination .controls a{border:0;} .pagination .controls input{border:0;color:#999;width:30px;padding:0;margin:-3px 0 0 0;text-align:center;}
 .modal-backdrop {background-color:#ffffff;}
 .modal-backdrop,.modal-backdrop.fade.in {opacity:0.5;filter:alpha(opacity=50);}
 .modal.tree {width:300px;margin:-250px 0 0 -180px;*margin:-200px 0 0 -150px;}

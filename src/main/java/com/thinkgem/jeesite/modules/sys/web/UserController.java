@@ -45,7 +45,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-5-31
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/user")
+@RequestMapping(value = "${adminPath}/sys/user")
 public class UserController extends BaseController {
 
 	@Autowired
@@ -71,10 +71,10 @@ public class UserController extends BaseController {
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "form")
 	public String form(User user, Model model) {
-		if (user.getCompany()==null){
+		if (user.getCompany()==null || user.getCompany().getId()==null){
 			user.setCompany(UserUtils.getUser().getCompany());
 		}
-		if (user.getOffice()==null){
+		if (user.getOffice()==null || user.getOffice().getId()==null){
 			user.setOffice(UserUtils.getUser().getOffice());
 		}
 		model.addAttribute("user", user);
@@ -115,7 +115,7 @@ public class UserController extends BaseController {
 			UserUtils.getCacheMap().clear();
 		}
 		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
 	}
 	
 	@RequiresPermissions("sys:user:edit")
@@ -129,7 +129,7 @@ public class UserController extends BaseController {
 			systemService.deleteUser(id);
 			addMessage(redirectAttributes, "删除用户成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
 	}
 	
 	@RequiresPermissions("sys:user:view")
@@ -143,7 +143,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
     }
 
 	@RequiresPermissions("sys:user:edit")
@@ -184,7 +184,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
     }
 	
 	@RequiresPermissions("sys:user:view")
@@ -198,7 +198,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/user/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
     }
 
 	@ResponseBody

@@ -38,7 +38,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-5-15 update 2013-06-08
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/role")
+@RequestMapping(value = "${adminPath}/sys/role")
 public class RoleController extends BaseController {
 
 	@Autowired
@@ -92,7 +92,7 @@ public class RoleController extends BaseController {
 		}
 		systemService.saveRole(role);
 		addMessage(redirectAttributes, "保存角色'" + role.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/role/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
 	}
 	
 	@RequiresPermissions("sys:role:edit")
@@ -106,7 +106,7 @@ public class RoleController extends BaseController {
 			systemService.deleteRole(id);
 			addMessage(redirectAttributes, "删除角色成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/role/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
 	}
 	
 	@RequiresPermissions("sys:role:edit")
@@ -159,7 +159,7 @@ public class RoleController extends BaseController {
 				addMessage(redirectAttributes, "用户【" + user.getName() + "】从角色【" + role.getName() + "】中移除成功！");
 			}			
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/role/assign?id="+role.getId();
+		return "redirect:"+Global.getAdminPath()+"/sys/role/assign?id="+role.getId();
 	}
 	
 	@RequiresPermissions("sys:role:edit")
@@ -175,7 +175,7 @@ public class RoleController extends BaseController {
 			}
 		}
 		addMessage(redirectAttributes, "已成功分配 "+newNum+" 个用户"+msg);
-		return "redirect:"+Global.ADMIN_PATH+"/sys/role/assign?id="+role.getId();
+		return "redirect:"+Global.getAdminPath()+"/sys/role/assign?id="+role.getId();
 	}
 
 	@RequiresUser

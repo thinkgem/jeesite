@@ -50,7 +50,7 @@ public class Page<T> {
 	private String orderBy = ""; // 标准查询有效， 实例： updatedate desc, name asc
 	
 	private String funcName = "page"; // 设置点击页码调用的js函数名称，默认为page，在一页有多个分页对象时使用。
-
+	
 	/**
 	 * 构造方法
 	 * @param request 传递 repage 参数，来记住页码
@@ -506,4 +506,5 @@ public class Page<T> {
 		this.count = page.getTotalElements();
 		this.list = page.getContent();
 	}
+	
 }

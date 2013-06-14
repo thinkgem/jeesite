@@ -35,7 +35,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-5-15
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/area")
+@RequestMapping(value = "${adminPath}/sys/area")
 public class AreaController extends BaseController {
 
 	@Autowired
@@ -86,7 +86,7 @@ public class AreaController extends BaseController {
 		}
 		areaService.save(area);
 		addMessage(redirectAttributes, "保存区域'" + area.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/area/";
+		return "redirect:"+Global.getAdminPath()+"/sys/area/";
 	}
 	
 	@RequiresPermissions("sys:area:edit")
@@ -98,7 +98,7 @@ public class AreaController extends BaseController {
 			areaService.delete(id);
 			addMessage(redirectAttributes, "删除区域成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/area/";
+		return "redirect:"+Global.getAdminPath()+"/sys/area/";
 	}
 
 	@RequiresUser

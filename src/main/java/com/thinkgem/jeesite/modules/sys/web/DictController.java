@@ -31,7 +31,7 @@ import com.thinkgem.jeesite.modules.sys.service.DictService;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/dict")
+@RequestMapping(value = "${adminPath}/sys/dict")
 public class DictController extends BaseController {
 
 	@Autowired
@@ -71,7 +71,7 @@ public class DictController extends BaseController {
 		}
 		dictService.save(dict);
 		addMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/dict/?repage&type="+dict.getType();
+		return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage&type="+dict.getType();
 	}
 	
 	@RequiresPermissions("sys:dict:edit")
@@ -79,7 +79,7 @@ public class DictController extends BaseController {
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		dictService.delete(id);
 		addMessage(redirectAttributes, "删除字典成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/dict/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage";
 	}
 
 }

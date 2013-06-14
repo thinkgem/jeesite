@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
@@ -44,7 +45,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
  * @version 2013-5-29
  */
 @Controller
-@RequestMapping(value = Global.FRONT_PATH)
+@RequestMapping(value = "${frontPath}")
 public class FrontController extends BaseController{
 	
 	@Autowired
@@ -56,16 +57,24 @@ public class FrontController extends BaseController{
 	@Autowired
 	private CategoryService categoryService;
 	
-	@RequestMapping(value = "")
+	/**
+	 * 网站首页
+	 */
+	@RequestMapping
 	public String index(Model model) {
-		return index(1L, model);
+		Site site = CmsUtils.getSite(Site.defaultSiteId());
+		model.addAttribute("site", site);
+		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
 	}
 	
 	/**
-	 * 首页
+	 * 网站首页
 	 */
-	@RequestMapping(value = "index-{siteId}" + Global.URL_SUFFIX)
+	@RequestMapping(value = "index-{siteId}${urlSuffix}")
 	public String index(@PathVariable Long siteId, Model model) {
+		if (siteId.longValue() == 1){
+			return "redirect:"+Global.getFrontPath();
+		}
 		Site site = CmsUtils.getSite(siteId);
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
@@ -74,18 +83,29 @@ public class FrontController extends BaseController{
 	/**
 	 * 内容列表
 	 */
-	@RequestMapping(value = "list-{categoryId}" + Global.URL_SUFFIX)
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "list-{categoryId}${urlSuffix}")
 	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
 			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
-			Site site = CmsUtils.getSite(1L);
+			Site site = CmsUtils.getSite(Site.defaultSiteId());
 			model.addAttribute("site", site);
 			return "error/404";
 		}
 		model.addAttribute("site", category.getSite());
-		// 2：栏目第一条内容
+		// 2：简介类栏目，栏目第一条内容
 		if("2".equals(category.getShowModes()) && "article".equals(category.getModule())){
+			// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
+			List<Category> categoryList = Lists.newArrayList();
+			if (category.getParent().getId() == 1L){
+				categoryList.add(category);
+			}else{
+				categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
+			}
+			model.addAttribute("category", category);
+			model.addAttribute("categoryList", categoryList);
+			// 获取文章内容
 			Page<Article> page = new Page<Article>(1, 1, -1);
 			Article article = new Article(category);
 			page = articleService.find(page, article, false);
@@ -93,10 +113,6 @@ public class FrontController extends BaseController{
 				article = page.getList().get(0);
 				articleService.updateHitsAddOne(article.getId());
 			}
-			List<Category> categoryList = categoryService.findByParentId(
-					article.getCategory().getParent().getId(), category.getSite().getId());
-			model.addAttribute("category", article.getCategory());
-			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("article", article);
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
 		}else{
@@ -107,25 +123,41 @@ public class FrontController extends BaseController{
 				if(categoryList.size()>0){
 					category = categoryList.get(0);
 				}else{
-					categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
+					// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
+					if (category.getParent().getId() == 1L){
+						categoryList.add(category);
+					}else{
+						categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
+					}
 				}
+				model.addAttribute("category", category);
+				model.addAttribute("categoryList", categoryList);
 				// 获取内容列表
 				if ("article".equals(category.getModule())){
 					Page<Article> page = new Page<Article>(pageNo, pageSize);
 					page = articleService.find(page, new Article(category), false);
 					model.addAttribute("page", page);
+					// 如果第一个子栏目为简介类栏目，则获取该栏目第一篇文章
+					if ("2".equals(category.getShowModes())){
+						Article article = new Article(category);
+						if (page.getList().size()>0){
+							article = page.getList().get(0);
+							articleService.updateHitsAddOne(article.getId());
+						}
+						model.addAttribute("article", article);
+						return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+					}
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
 					page = linkService.find(page, new Link(category), false);
 					model.addAttribute("page", page);
 				}
-				model.addAttribute("category", category);
-				model.addAttribute("categoryList", categoryList);
 				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontList";
 			}
 			// 有子栏目：显示子栏目列表
 			else{
-				@SuppressWarnings("rawtypes")
+				model.addAttribute("category", category);
+				model.addAttribute("categoryList", categoryList);
 				Map<Category, List> categoryMap = Maps.newLinkedHashMap();
 				for (Category c : categoryList){
 					if (Category.SHOW.equals(c.getInList())){
@@ -138,8 +170,6 @@ public class FrontController extends BaseController{
 						}
 					}
 				}
-				model.addAttribute("category", category);
-				model.addAttribute("categoryList", categoryList);
 				model.addAttribute("categoryMap", categoryMap);
 				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory";
 			}
@@ -149,30 +179,36 @@ public class FrontController extends BaseController{
 	/**
 	 * 显示内容
 	 */
-	@RequestMapping(value = "view-{categoryId}-{contentId}" + Global.URL_SUFFIX)
+	@RequestMapping(value = "view-{categoryId}-{contentId}${urlSuffix}")
 	public String view(@PathVariable Long categoryId, @PathVariable Long contentId, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
-			Site site = CmsUtils.getSite(1L);
+			Site site = CmsUtils.getSite(Site.defaultSiteId());
 			model.addAttribute("site", site);
 			return "error/404";
 		}
 		model.addAttribute("site", category.getSite());
 		if ("article".equals(category.getModule())){
+			// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
+			List<Category> categoryList = Lists.newArrayList();
+			if (category.getParent().getId() == 1L){
+				categoryList.add(category);
+			}else{
+				categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
+			}
+			// 获取文章内容
 			Article article = articleService.get(contentId);
 			if (article==null || !Article.DEL_FLAG_NORMAL.equals(article.getDelFlag())){
 				return "error/404";
 			}
-			model.addAttribute("article", article);
-			model.addAttribute("category", article.getCategory());
 			// 文章阅读次数+1
 			articleService.updateHitsAddOne(contentId);
-			// 分类列表
-			List<Category> categoryList = categoryService.findByParentId(
-					article.getCategory().getParent().getId(), category.getSite().getId());
-			model.addAttribute("categoryList", categoryList);
 			// 获取推荐文章列表
 			List<Object[]> relationList = articleService.findByIds(article.getArticleData().getRelation());
+			// 将数据传递到视图
+			model.addAttribute("category", article.getCategory());
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("article", article);
 			model.addAttribute("relationList", relationList); 
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
 		}
@@ -186,7 +222,7 @@ public class FrontController extends BaseController{
 	public String comment(String theme, Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<Comment> page = new Page<Comment>(request, response);
 		Comment c = new Comment();
-		c.setModule(comment.getModule());
+		c.setCategory(comment.getCategory());
 		c.setContentId(comment.getContentId());
 		c.setDelFlag(Comment.DEL_FLAG_NORMAL);
 		page = commentService.find(page, c);
@@ -226,9 +262,9 @@ public class FrontController extends BaseController{
 	/**
 	 * 站点地图
 	 */
-	@RequestMapping(value = "map-{siteId}" + Global.URL_SUFFIX)
+	@RequestMapping(value = "map-{siteId}${urlSuffix}")
 	public String map(@PathVariable Long siteId, Model model) {
-		Site site = CmsUtils.getSite(siteId!=null?siteId:1L);
+		Site site = CmsUtils.getSite(siteId!=null?siteId:Site.defaultSiteId());
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontMap";
 	}
@@ -238,7 +274,7 @@ public class FrontController extends BaseController{
 	 */
 	@RequestMapping(value = "search")
 	public String search(String t, String q, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Site site = CmsUtils.getSite(1L);
+		Site site = CmsUtils.getSite(Site.defaultSiteId());
 		model.addAttribute("site", site);
 		if (StringUtils.isBlank(t) || "article".equals(t)){
 			// ========= 正式环境，请注释掉cmd代码 =========

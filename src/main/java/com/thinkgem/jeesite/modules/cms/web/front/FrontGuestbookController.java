@@ -34,7 +34,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
  * @version 2013-3-15
  */
 @Controller
-@RequestMapping(value = Global.FRONT_PATH)
+@RequestMapping(value = "${frontPath}")
 public class FrontGuestbookController extends BaseController{
 	
 	@Autowired
@@ -46,7 +46,7 @@ public class FrontGuestbookController extends BaseController{
 	@RequestMapping(value = "guestbook", method=RequestMethod.GET)
 	public String guestbook(@RequestParam(required=false, defaultValue="1") Integer pageNo,
 			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
-		Site site = CmsUtils.getSite(1L);
+		Site site = CmsUtils.getSite(Site.defaultSiteId());
 		model.addAttribute("site", site);
 		Page<Guestbook> page = new Page<Guestbook>(pageNo, pageSize);
 		Guestbook guestbook = new Guestbook();
@@ -74,7 +74,7 @@ public class FrontGuestbookController extends BaseController{
 		}else{
 			addMessage(redirectAttributes, "验证码不能为空。");
 		}
-		return "redirect:"+Global.FRONT_PATH+"/guestbook";
+		return "redirect:"+Global.getFrontPath()+"/guestbook";
 	}
 	
 }

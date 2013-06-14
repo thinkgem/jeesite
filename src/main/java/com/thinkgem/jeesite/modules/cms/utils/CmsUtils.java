@@ -90,6 +90,15 @@ public class CmsUtils {
 	}
 	
 	/**
+	 * 获取栏目
+	 * @param id 栏目编号
+	 * @return
+	 */
+	public static Category getCategory(long categoryId){
+		return categoryService.get(categoryId);
+	}
+	
+	/**
 	 * 获得栏目列表
 	 * @param siteId 站点编号
 	 * @param parentId 分类父编号
@@ -108,6 +117,15 @@ public class CmsUtils {
 		page = categoryService.find(page, category);
 		return page.getList();
 	}
+
+	/**
+	 * 获取栏目
+	 * @param ids 栏目编号
+	 * @return
+	 */
+	public static List<Category> getCategoryListByIds(String categoryIds){
+		return categoryService.findByIds(categoryIds);
+	}
 	
 	/**
 	 * 获取文章
@@ -125,7 +143,8 @@ public class CmsUtils {
 	 * @param number 获取数目
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
 	 * 			posid	推荐位（1：首页焦点图；2：栏目页文章推荐；）
-	 * 			image	文章图片（1：有文章图片的文章）
+	 * 			image	文章图片（1：有图片的文章）
+	 *          orderBy 排序字符串
 	 * @return
 	 */
 	public static List<Article> getArticleList(long siteId, long categoryId, int number, String param){
@@ -139,6 +158,9 @@ public class CmsUtils {
 			}
 			if (new Integer(1).equals(map.get("image"))){
 				article.setImage(Article.YES);
+			}
+			if (StringUtils.isNotBlank((String)map.get("orderBy"))){
+				page.setOrderBy((String)map.get("orderBy"));
 			}
 		}
 		article.setDelFlag(Article.DEL_FLAG_NORMAL);

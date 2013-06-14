@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
  * @version 2013-05-15
  */
 public abstract class BaseService {
-
+	
 	/**
 	 * 日志对象
 	 */

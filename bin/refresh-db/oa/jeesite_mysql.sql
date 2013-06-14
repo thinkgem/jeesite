@@ -1,13 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Indexes */
-
-DROP INDEX oa_leave_create_by ON oa_leave;
-DROP INDEX oa_leave_process_instance_id ON oa_leave;
-DROP INDEX oa_leave_del_flag ON oa_leave;
-
-
-
 /* Drop Tables */
 
 DROP TABLE oa_leave;

@@ -42,7 +42,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import com.thinkgem.jeesite.modules.sys.utils.workflow.Variable;
 
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/workflow")
+@RequestMapping(value = "${adminPath}/sys/workflow")
 public class WorkflowController {
 
 
@@ -95,7 +95,7 @@ public class WorkflowController {
 	  @RequestMapping(value = "/redeploy/all")
 	  public String redeployAll() throws Exception {
 	    workflowProcessDefinitionService.deployAllFromClasspath();
-	    return "redirect:"+Global.ADMIN_PATH+"/sys/workflow/processList";
+	    return "redirect:"+Global.getAdminPath()+"/sys/workflow/processList";
 	  }
 
 	  /**
@@ -160,7 +160,7 @@ public class WorkflowController {
 	  @RequestMapping(value = "/process/delete")
 	  public String delete(@RequestParam("deploymentId") String deploymentId) {
 	    repositoryService.deleteDeployment(deploymentId, true);
-	    return "redirect:"+Global.ADMIN_PATH+"/sys/workflow/processList";
+	    return "redirect:"+Global.getAdminPath()+"/sys/workflow/processList";
 	  }
 
 	  /**
@@ -206,7 +206,7 @@ public class WorkflowController {
 	      logger.error("error on deploy process, because of file input stream", e);
 	    }
 
-	    return "redirect:"+Global.ADMIN_PATH+"/sys/workflow/processList";
+	    return "redirect:"+Global.getAdminPath()+"/sys/workflow/processList";
 	  }
 
 	  /**
@@ -278,7 +278,7 @@ public class WorkflowController {
 	      repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null);
 	      redirectAttributes.addFlashAttribute("message", "已挂起ID为[" + processDefinitionId + "]的流程定义。");
 	    }
-	    return "redirect:"+Global.ADMIN_PATH+"/sys/workflow/processList";
+	    return "redirect:"+Global.getAdminPath()+"/sys/workflow/processList";
 	  }
 	  
 		/**

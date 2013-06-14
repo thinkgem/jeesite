@@ -5,6 +5,8 @@
  */
 package com.thinkgem.jeesite.modules.cms.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,9 +42,10 @@ public class Link extends DataEntity {
 	private Category category;// 分类编号
 	private String title;	// 链接名称
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
-	private String image;	// 图片
+	private String image;	// 链接图片
 	private String href;	// 链接地址
 	private Integer weight;	// 权重，越大越靠前
+	private Date weightDate;// 权重期限，超过期限，将weight设置为0
 
 	public Link() {
 		super();
@@ -127,4 +130,12 @@ public class Link extends DataEntity {
 		this.weight = weight;
 	}
 
+	public Date getWeightDate() {
+		return weightDate;
+	}
+
+	public void setWeightDate(Date weightDate) {
+		this.weightDate = weightDate;
+	}
+	
 }

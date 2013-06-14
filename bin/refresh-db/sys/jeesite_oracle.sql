@@ -1,30 +1,4 @@
 
-/* Drop Indexes */
-
-DROP INDEX sys_area_parent_id;
-DROP INDEX sys_area_parent_ids;
-DROP INDEX sys_area_del_flag;
-DROP INDEX sys_dict_value;
-DROP INDEX sys_dict_label;
-DROP INDEX sys_dict_del_flag;
-DROP INDEX sys_mdict_parent_id;
-DROP INDEX sys_mdict_parent_ids;
-DROP INDEX sys_mdict_del_flag;
-DROP INDEX sys_menu_parent_id;
-DROP INDEX sys_menu_parent_ids;
-DROP INDEX sys_menu_del_flag;
-DROP INDEX sys_office_parent_id;
-DROP INDEX sys_office_parent_ids;
-DROP INDEX sys_office_del_flag;
-DROP INDEX sys_role_del_flag;
-DROP INDEX sys_user_office_id;
-DROP INDEX sys_user_login_name;
-DROP INDEX sys_user_company_id;
-DROP INDEX sys_user_update_date;
-DROP INDEX sys_user_del_flag;
-
-
-
 /* Drop Tables */
 
 DROP TABLE sys_role_office;
@@ -33,6 +7,7 @@ DROP TABLE sys_user;
 DROP TABLE sys_office;
 DROP TABLE sys_area;
 DROP TABLE sys_dict;
+DROP TABLE sys_log;
 DROP TABLE sys_mdict;
 DROP TABLE sys_role_menu;
 DROP TABLE sys_menu;
@@ -45,6 +20,7 @@ DROP TABLE sys_role;
 DROP SEQUENCE hibernate_sequence;
 DROP SEQUENCE seq_sys_area;
 DROP SEQUENCE seq_sys_dict;
+DROP SEQUENCE seq_sys_log;
 DROP SEQUENCE seq_sys_mdict;
 DROP SEQUENCE seq_sys_menu;
 DROP SEQUENCE seq_sys_office;
@@ -59,6 +35,7 @@ DROP SEQUENCE seq_sys_user;
 CREATE SEQUENCE hibernate_sequence INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_sys_area INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_sys_dict INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_sys_log INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_sys_mdict INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_sys_menu INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_sys_office INCREMENT BY 1 START WITH 1;
@@ -101,6 +78,22 @@ CREATE TABLE sys_dict
 	update_date timestamp,
 	remarks varchar2(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
+	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE sys_log
+(
+	id number(19,0) NOT NULL,
+	type char(1) DEFAULT '1',
+	create_by number(19,0),
+	create_date timestamp,
+	remote_addr varchar2(255),
+	user_agent varchar2(255),
+	request_uri varchar2(255),
+	method varchar2(5),
+	params clob,
+	exception clob,
 	PRIMARY KEY (id)
 );
 
@@ -158,7 +151,7 @@ CREATE TABLE sys_office
 	address varchar2(255),
 	zip_code varchar2(100),
 	master varchar2(100),
-	phone blob,
+	phone varchar2(200),
 	fax varchar2(200),
 	email varchar2(200),
 	create_by number(19,0),
@@ -247,6 +240,10 @@ CREATE INDEX sys_area_del_flag ON sys_area (del_flag);
 CREATE INDEX sys_dict_value ON sys_dict (value);
 CREATE INDEX sys_dict_label ON sys_dict (label);
 CREATE INDEX sys_dict_del_flag ON sys_dict (del_flag);
+CREATE INDEX sys_log_create_by ON sys_log (create_by);
+CREATE INDEX sys_log_request_uri ON sys_log (request_uri);
+CREATE INDEX sys_log_type ON sys_log (type);
+CREATE INDEX sys_log_create_date ON sys_log (create_date);
 CREATE INDEX sys_mdict_parent_id ON sys_mdict (parent_id);
 CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids);
 CREATE INDEX sys_mdict_del_flag ON sys_mdict (del_flag);
@@ -293,6 +290,16 @@ COMMENT ON COLUMN sys_dict.update_by IS '更新者';
 COMMENT ON COLUMN sys_dict.update_date IS '更新时间';
 COMMENT ON COLUMN sys_dict.remarks IS '备注信息';
 COMMENT ON COLUMN sys_dict.del_flag IS '删除标记（0：正常；1：删除）';
+COMMENT ON COLUMN sys_log.id IS '编号';
+COMMENT ON COLUMN sys_log.type IS '日志类型（1：接入日志；2：异常日志）';
+COMMENT ON COLUMN sys_log.create_by IS '创建者';
+COMMENT ON COLUMN sys_log.create_date IS '创建时间';
+COMMENT ON COLUMN sys_log.remote_addr IS '操作IP地址';
+COMMENT ON COLUMN sys_log.user_agent IS '用户代理';
+COMMENT ON COLUMN sys_log.request_uri IS '请求URI';
+COMMENT ON COLUMN sys_log.method IS '操作方式';
+COMMENT ON COLUMN sys_log.params IS '操作提交的数据';
+COMMENT ON COLUMN sys_log.exception IS '异常信息';
 COMMENT ON TABLE sys_mdict IS '区域表';
 COMMENT ON COLUMN sys_mdict.id IS '编号';
 COMMENT ON COLUMN sys_mdict.parent_id IS '父级编号';

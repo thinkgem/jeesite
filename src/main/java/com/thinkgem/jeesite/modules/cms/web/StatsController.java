@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.service.StatsService;
 
@@ -25,7 +24,7 @@ import com.thinkgem.jeesite.modules.cms.service.StatsService;
  * @version 2013-5-21
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/cms/stats")
+@RequestMapping(value = "${adminPath}/cms/stats")
 public class StatsController extends BaseController {
 
 	@Autowired
@@ -40,7 +39,7 @@ public class StatsController extends BaseController {
 	@RequiresPermissions("cms:stats:article")
 	@RequestMapping(value = "article")
 	public String article(@RequestParam Map<String, Object> paramMap, Model model) {
-		List<Map<String, Object>> list = statsService.article(paramMap, model);
+		List<Map<String, Object>> list = statsService.article(paramMap);
 		model.addAttribute("list", list);
 		model.addAttribute("paramMap", paramMap);
 		return "modules/cms/statsArticle";

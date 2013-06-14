@@ -27,9 +27,6 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
-import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.service.OfficeService;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 栏目Controller
@@ -37,14 +34,11 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-4-21
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/cms/category")
+@RequestMapping(value = "${adminPath}/cms/category")
 public class CategoryController extends BaseController {
 
 	@Autowired
 	private CategoryService categoryService;
-	
-	@Autowired
-	private OfficeService officeService;
 	
 	@ModelAttribute("category")
 	public Category get(@RequestParam(required=false) Long id) {
@@ -57,7 +51,7 @@ public class CategoryController extends BaseController {
 
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Category category, Model model) {
+	public String list(Model model) {
 		List<Category> list = Lists.newArrayList();
 		List<Category> sourcelist = categoryService.findByUser(true, null);
 		Category.sortList(list, sourcelist, 1L);
@@ -68,16 +62,14 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "form")
 	public String form(Category category, Model model) {
-		User user = UserUtils.getUser();
-		if (category.getOffice()==null || category.getOffice().getId()==null){
-			category.setOffice(user.getOffice());
-		}
-		category.setOffice(officeService.get(category.getOffice().getId()));
-		model.addAttribute("office", category.getOffice());
 		if (category.getParent()==null||category.getParent().getId()==null){
 			category.setParent(new Category(1L));
 		}
 		category.setParent(categoryService.get(category.getParent().getId()));
+		if (category.getOffice()==null||category.getOffice().getId()==null){
+			category.setOffice(category.getParent().getOffice());
+		}
+		model.addAttribute("office", category.getOffice());
 		model.addAttribute("category", category);
 		return "modules/cms/categoryForm";
 	}
@@ -90,7 +82,7 @@ public class CategoryController extends BaseController {
 		}
 		categoryService.save(category);
 		addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/category/";
+		return "redirect:"+Global.getAdminPath()+"/cms/category/";
 	}
 	
 	@RequiresPermissions("cms:category:edit")
@@ -102,9 +94,26 @@ public class CategoryController extends BaseController {
 			categoryService.delete(id);
 			addMessage(redirectAttributes, "删除栏目成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/cms/category/";
+		return "redirect:"+Global.getAdminPath()+"/cms/category/";
 	}
 
+	/**
+	 * 批量修改栏目排序
+	 */
+	@RequiresPermissions("cms:category:edit")
+	@RequestMapping(value = "updateSort")
+	public String updateSort(Long[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
+    	int len = ids.length;
+    	Category[] entitys = new Category[len];
+    	for (int i = 0; i < len; i++) {
+    		entitys[i] = categoryService.get(ids[i]);
+    		entitys[i].setSort(sorts[i]);
+    		categoryService.save(entitys[i]);
+    	}
+    	addMessage(redirectAttributes, "保存栏目排序成功!");
+		return "redirect:"+Global.getAdminPath()+"/cms/category/";
+	}
+	
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")

@@ -33,7 +33,7 @@
 
 	<!-- 拦截器配置 -->
 	<mvc:interceptors>
-		<bean class="com.thinkgem.jeesite.modules.sys.interceptor.GlobalInterceptor"></bean>
+		<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
 	</mvc:interceptors>
 
 	<!-- 视图文件解析配置 -->

@@ -29,7 +29,7 @@ import ${packageName}.${moduleName}.service${subModuleName}.${ClassName}Service;
  * @version ${classVersion}
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/${urlPrefix}")
+@RequestMapping(value = "${adminPath}/${urlPrefix}")
 public class ${ClassName}Controller extends BaseController {
 
 	@Autowired
@@ -71,7 +71,7 @@ public class ${ClassName}Controller extends BaseController {
 		}
 		${className}Service.save(${className});
 		addMessage(redirectAttributes, "保存${functionName}'" + ${className}.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/${viewPrefix}/?repage";
+		return "redirect:"+Global.getAdminPath()+"/${viewPrefix}/?repage";
 	}
 	
 	@RequiresPermissions("${permissionPrefix}:edit")
@@ -79,7 +79,7 @@ public class ${ClassName}Controller extends BaseController {
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
 		${className}Service.delete(id);
 		addMessage(redirectAttributes, "删除${functionName}成功");
-		return "redirect:"+Global.ADMIN_PATH+"/${viewPrefix}/?repage";
+		return "redirect:"+Global.getAdminPath()+"/${viewPrefix}/?repage";
 	}
 
 }

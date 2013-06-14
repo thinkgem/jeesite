@@ -5,10 +5,12 @@
  */
 package com.thinkgem.jeesite.modules.cms.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.cms.dao.ArticleDao;
 import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
@@ -43,7 +46,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Service
 @Transactional(readOnly = true)
 public class ArticleService extends BaseService {
-	
+
 	@Autowired
 	private ArticleDao articleDao;
 	@Autowired
@@ -54,6 +57,13 @@ public class ArticleService extends BaseService {
 	}
 	
 	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter) {
+		// 更新过期的权重，间隔为“6”个小时
+		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByArticle");
+		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null 
+				&& updateExpiredWeightDate.getTime() < new Date().getTime())){
+			articleDao.updateExpiredWeight();
+			CacheUtils.put("updateExpiredWeightDateByArticle", DateUtils.addHours(new Date(), 6));
+		}
 		DetachedCriteria dc = articleDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
@@ -88,8 +98,10 @@ public class ArticleService extends BaseService {
 			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
 		}
 		dc.add(Restrictions.eq(Article.DEL_FLAG, article.getDelFlag()));
-		dc.addOrder(Order.desc("weight"));
-		dc.addOrder(Order.desc("updateDate"));
+		if (StringUtils.isBlank(page.getOrderBy())){
+			dc.addOrder(Order.desc("weight"));
+			dc.addOrder(Order.desc("updateDate"));
+		}
 		return articleDao.find(page, dc);
 	}
 

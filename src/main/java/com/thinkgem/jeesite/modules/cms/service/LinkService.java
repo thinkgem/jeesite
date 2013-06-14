@@ -5,9 +5,11 @@
  */
 package com.thinkgem.jeesite.modules.cms.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
 import com.thinkgem.jeesite.modules.cms.dao.LinkDao;
@@ -48,6 +51,13 @@ public class LinkService extends BaseService {
 	}
 	
 	public Page<Link> find(Page<Link> page, Link link, boolean isDataScopeFilter) {
+		// 更新过期的权重，间隔为“6”个小时
+		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByLink");
+		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null 
+				&& updateExpiredWeightDate.getTime() < new Date().getTime())){
+			linkDao.updateExpiredWeight();
+			CacheUtils.put("updateExpiredWeightDateByLink", DateUtils.addHours(new Date(), 6));
+		}
 		DetachedCriteria dc = linkDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");

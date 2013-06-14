@@ -7,8 +7,8 @@
 	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
 	
-    <cache name="sysCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
-    
+	<cache name="sysCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
+	    
     <cache name="shiro-activeSessionCache" maxElementsInMemory="1000" overflowToDisk="true"
            eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
            diskPersistent="true" diskExpiryThreadIntervalSeconds="600"/>
