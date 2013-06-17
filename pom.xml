@@ -65,13 +65,13 @@
 	
 		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<repository>
-			<id>nexus</id>
+			<id>nexus-repos</id>
 			<name>Team Nexus Repository</name>
 			<url>http://localhost:8081/nexus/content/groups/public</url> 
 		</repository>-->
 
 		<repository>
-			<id>central</id>
+			<id>central-repos</id>
 			<name>Central Repository</name>
 			<url>http://repo.maven.apache.org/maven2</url>	
 			<snapshots>
@@ -80,7 +80,7 @@
 		</repository>
 		
 		<repository>
-			<id>repo.springsource.org</id>
+			<id>springsource-repos</id>
 			<name>SpringSource Repository</name>
 			<url>http://repo.springsource.org/libs-milestone-local</url>
 			<snapshots>
@@ -89,7 +89,7 @@
 	    </repository>
 		
 		<repository>
-			<id>bonecp-repo</id>
+			<id>bonecp-repos</id>
 			<name>BoneCP Repository</name>
 			<url>http://jolbox.com/bonecp/downloads/maven</url>
 			<snapshots>
@@ -98,14 +98,22 @@
 		</repository>
 		
 		<repository>
-			<id>Activiti</id>
+			<id>activiti-repos</id>
+			<name>Activiti Repository</name>
 			<url>https://maven.alfresco.com/nexus/content/groups/public</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 		
 		<repository> 
-			<id>thinkgem-repo</id> 
-			<name>ThinkGem Repository</name>
-			<url>https://raw.github.com/thinkgem/repository/master</url> 
+			<id>thinkgem-repos</id> 
+			<name>ThinkGem Repository</name><!-- 
+			<url>https://raw.github.com/thinkgem/repository/master</url>  -->
+			<url>http://git.oschina.net/thinkgem/repos/raw/master</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 		
 	</repositories>
