@@ -24,6 +24,7 @@
 	</div>
 	<tags:message content="${message}"/>
 	<div class="breadcrumb">
+		<form id="assignRoleForm" action="" method="post" class="hide"></form>
 		<a id="assignButton" href="javascript:" class="btn btn-primary">分配角色</a>
 		<script type="text/javascript">
 			$("#assignButton").click(function(){
@@ -42,17 +43,13 @@
 								top.$.jBox.tip("未给角色【${role.name}】分配新成员！", 'info');
 								return false;
 							};
-
 					    	// 执行保存
+					    	loading('正在提交，请稍等...');
 					    	var idsArr = "";
 					    	for (var i = 0; i<ids.length; i++) {
 					    		idsArr = (idsArr + ids[i]) + (((i + 1)== ids.length) ? '':',');
 					    	}
-					    	var post = document.createElement("form");
-					    	post.method="post" ; 
-					    	post.action="${ctx}/sys/role/assignrole?id=${role.id}&idsArr="+idsArr;
-							loading('正在提交，请稍等...');
-					    	post.submit();
+					    	$('#assignRoleForm').attr('action','${ctx}/sys/role/assignrole?id=${role.id}&idsArr='+idsArr).submit();
 					    	return true;
 						} else if (v=="clear"){
 							h.find("iframe")[0].contentWindow.clearAssign();
@@ -63,7 +60,7 @@
 					}
 				});
 			});
-		</script>		
+		</script>
 	</div>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>归属公司</th><th>归属部门</th><th>登录名</th><th>姓名</th><th>电话</th><th>手机</th><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
