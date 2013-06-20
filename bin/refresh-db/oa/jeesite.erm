@@ -67,7 +67,7 @@
 			<create_tablespace>false</create_tablespace>
 			<create_trigger>false</create_trigger>
 			<create_view>true</create_view>
-			<drop_index>true</drop_index>
+			<drop_index>false</drop_index>
 			<drop_sequence>true</drop_sequence>
 			<drop_table>true</drop_table>
 			<drop_tablespace>false</drop_tablespace>
@@ -108,7 +108,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>Segoe UI</font_name>
+				<font_name>微软雅黑</font_name>
 				<font_size>9</font_size>
 			<x>47</x>
 			<y>298</y>
@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-23 21:13:37</creation_date>
-			<updated_date>2013-05-27 21:38:44</updated_date>
+			<updated_date>2013-06-14 13:47:42</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>JeeSite</value>

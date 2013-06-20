@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.modules.cms.entity.Guestbook;
 @Service
 @Transactional(readOnly = true)
 public class GuestbookService extends BaseService {
-	
+
 	@Autowired
 	private GuestbookDao guestbookDao;
 	

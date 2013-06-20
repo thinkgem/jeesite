@@ -21,6 +21,14 @@
 		 </c:forEach></ol>
 	   </div>
 	   <div class="span10">
+		 <ul class="breadcrumb">
+		   <li><strong>当前位置：</strong><a href="${ctx}">首页</a> <span class="divider">/</span></li>
+		   <c:forEach items="${fnc:getCategoryListByIds(category.parentIds)}" var="category">
+		     <c:if test="${category.id ne 1}"><li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a><span class="divider">/</span></li></c:if>
+		   </c:forEach><li class="active">${category.name}</li>
+		  </ul>
+	   </div>
+	   <div class="span10">
 	   	  <c:forEach items="${categoryMap}" var="map" varStatus="status">
 	   	  ${status.index % 2 eq 0 ? '<div class="row">':''}
 			 <div class="span5">

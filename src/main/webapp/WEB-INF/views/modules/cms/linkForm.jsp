@@ -20,7 +20,7 @@
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
 					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")){
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -42,7 +42,7 @@
 			<label class="control-label">归属栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
-					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="true" notAllowSelectParent="true"/>
+					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -60,7 +60,7 @@
 			<label class="control-label">链接图片:</label>
 			<div class="controls">
 				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<tags:ckfinder input="image" type="files" uploadPath="/cms/link" selectMultiple="false"/>
+				<tags:ckfinder input="image" type="images" uploadPath="/cms/link" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -73,8 +73,14 @@
 			<label class="control-label">权重:</label>
 			<div class="controls">
 				<form:input path="weight" htmlEscape="false" maxlength="200" class="input-mini required digits"/>&nbsp;
-				<input id="weightTop" type="checkbox" onclick="$('#weight').val(this.checked?'999':'0')"><label for="weightTop">置顶</label>
-				<span class="help-inline">数值越大排序越靠前。</span>
+				<span>
+					<input id="weightTop" type="checkbox" onclick="$('#weight').val(this.checked?'999':'0')"><label for="weightTop">置顶</label>
+				</span>
+				&nbsp;过期时间：
+				<input id="weightDate" name="weightDate" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
+					value="<fmt:formatDate value="${link.weightDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+				<span class="help-inline">数值越大排序越靠前，过期时间可为空，过期后取消置顶。</span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -84,13 +90,13 @@
 			</div>
 		</div>
 		<shiro:hasPermission name="cms:article:audit">
-		<div class="control-group">
-			<label class="control-label">发布状态:</label>
-			<div class="controls">
-				<form:radiobuttons path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"></span>
+			<div class="control-group">
+				<label class="control-label">发布状态:</label>
+				<div class="controls">
+					<form:radiobuttons path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+					<span class="help-inline"></span>
+				</div>
 			</div>
-		</div>
 		</shiro:hasPermission>
 		<div class="form-actions">
 			<shiro:hasPermission name="cms:link:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>

@@ -12,7 +12,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.service.BaseService;
@@ -34,14 +33,26 @@ public class StatsService extends BaseService {
 	@Autowired
 	private ArticleDao articleDao;
 	
-	public List<Map<String, Object>> article(Map<String, Object> paramMap, Model model) {
+	public List<Map<String, Object>> article(Map<String, Object> paramMap) {
 		
 		StringBuilder ql = new StringBuilder();
 		List<Object> ps = Lists.newArrayList();
 		
 		ql.append("select new map(max(c.id) as categoryId, max(c.name) as categoryName, max(cp.id) as categoryParentId, max(cp.name) as categoryParentName,");
-		ql.append(" count(*) as cnt, sum(a.hits) as hits, max(a.updateDate) as updateDate, max(o.id) as officeId, max(o.name) as officeName) ");
-		ql.append(" from Article a join a.category c join c.office o join c.parent cp where c.site.id = ").append(Site.getCurrentSiteId());
+		ql.append("   count(*) as cnt, sum(a.hits) as hits, max(a.updateDate) as updateDate, max(o.id) as officeId, max(o.name) as officeName) ");
+		ql.append(" from Article a join a.category c join c.office o join c.parent cp where c.site.id = ");
+		ql.append(Site.getCurrentSiteId());
+		
+		Date beginDate = DateUtils.parseDate(paramMap.get("beginDate"));
+		if (beginDate == null){
+			beginDate = DateUtils.setDays(new Date(), 1);
+			paramMap.put("beginDate", DateUtils.formatDate(beginDate, "yyyy-MM-dd"));
+		}
+		Date endDate = DateUtils.parseDate(paramMap.get("endDate"));
+		if (endDate == null){
+			endDate = DateUtils.addDays(DateUtils.addMonths(beginDate, 1), -1);
+			paramMap.put("endDate", DateUtils.formatDate(endDate, "yyyy-MM-dd"));
+		}
 		
 		Long categoryId = StringUtils.toLong(paramMap.get("categoryId"));
 		if (categoryId > 0){
@@ -57,16 +68,6 @@ public class StatsService extends BaseService {
 			ps.add("%,"+officeId+",%");
 		}
 		
-		Date beginDate = DateUtils.parseDate(paramMap.get("beginDate"));
-		if (beginDate == null){
-			beginDate = DateUtils.setDays(new Date(), 1);
-			paramMap.put("beginDate", DateUtils.formatDate(beginDate, "yyyy-MM-dd"));
-		}
-		Date endDate = DateUtils.parseDate(paramMap.get("endDate"));
-		if (endDate == null){
-			endDate = DateUtils.addDays(DateUtils.addMonths(beginDate, 1), -1);
-			paramMap.put("endDate", DateUtils.formatDate(endDate, "yyyy-MM-dd"));
-		}
 		ql.append(" and a.updateDate between ? and ?");
 		ps.add(beginDate);
 		ps.add(DateUtils.addDays(endDate, 1));
@@ -74,7 +75,8 @@ public class StatsService extends BaseService {
 		ql.append(" and c.delFlag = ?");
 		ps.add(Article.DEL_FLAG_NORMAL);
 		
-		ql.append(" group by c.id order by cp.sort, cp.id, c.sort, c.id");
+		ql.append(" group by cp.sort, cp.id, c.sort, c.id");
+		ql.append(" order by cp.sort, cp.id, c.sort, c.id");
 		List<Map<String, Object>> list = articleDao.find(ql.toString(), ps.toArray());
 		return list;
 	}

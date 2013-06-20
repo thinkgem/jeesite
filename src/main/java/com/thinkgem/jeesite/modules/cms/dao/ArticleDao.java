@@ -32,6 +32,11 @@ public interface ArticleDao extends ArticleDaoCustom, CrudRepository<Article, Lo
 	@Modifying
 	@Query("update Article set hits=hits+1 where id = ?1")
 	public int updateHitsAddOne(Long id);
+	
+	@Modifying
+	@Query("update Article set weight=0 where weight > 0 and weightDate < current_timestamp()")
+	public int updateExpiredWeight();
+	
 }
 
 /**

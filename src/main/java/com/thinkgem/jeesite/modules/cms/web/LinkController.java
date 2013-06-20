@@ -25,7 +25,10 @@ import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Link;
+import com.thinkgem.jeesite.modules.cms.entity.Site;
+import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 
 /**
@@ -34,11 +37,13 @@ import com.thinkgem.jeesite.modules.cms.service.LinkService;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/cms/link")
+@RequestMapping(value = "${adminPath}/cms/link")
 public class LinkController extends BaseController {
 
 	@Autowired
 	private LinkService linkService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	@ModelAttribute
 	public Link get(@RequestParam(required=false) Long id) {
@@ -64,6 +69,13 @@ public class LinkController extends BaseController {
 	@RequiresPermissions("cms:link:view")
 	@RequestMapping(value = "form")
 	public String form(Link link, Model model) {
+		// 如果当前传参有子节点，则选择取消传参选择
+		if (link.getCategory()!=null && link.getCategory().getId()!=null){
+			List<Category> list = categoryService.findByParentId(link.getCategory().getId(), Site.getCurrentSiteId());
+			if (list.size() > 0){
+				link.setCategory(null);
+			}
+		}
 		model.addAttribute("link", link);
 		return "modules/cms/linkForm";
 	}
@@ -76,15 +88,15 @@ public class LinkController extends BaseController {
 		}
 		linkService.save(link);
 		addMessage(redirectAttributes, "保存链接'" + StringUtils.abbr(link.getTitle(),50) + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/link/?repage&category.id="+link.getCategory().getId();
+		return "redirect:"+Global.getAdminPath()+"/cms/link/?repage&category.id="+link.getCategory().getId();
 	}
 	
 	@RequiresPermissions("cms:link:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		linkService.delete(id, isRe);
-		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复":"")+"删除链接成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/link/?repage&category.id="+categoryId;
+		addMessage(redirectAttributes, (isRe!=null&&isRe?"发布":"删除")+"链接成功");
+		return "redirect:"+Global.getAdminPath()+"/cms/link/?repage&category.id="+categoryId;
 	}
 
 	/**

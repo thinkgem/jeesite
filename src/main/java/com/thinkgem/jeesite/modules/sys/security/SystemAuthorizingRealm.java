@@ -27,9 +27,12 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Service;
 
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.Encodes;
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
@@ -41,6 +44,8 @@ import com.thinkgem.jeesite.modules.sys.web.LoginController;
  * @author ThinkGem
  * @version 2013-5-29
  */
+@Service
+@DependsOn({"userDao","roleDao","menuDao"})
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 	private SystemService systemService;
@@ -61,7 +66,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			}
 		}
 
-		User user = systemService.getUserByLoginName(token.getUsername());
+		User user = getSystemService().getUserByLoginName(token.getUsername());
 		if (user != null) {
 			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
 			return new SimpleAuthenticationInfo(new Principal(user), 
@@ -77,11 +82,11 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Principal principal = (Principal) getAvailablePrincipal(principals);
-		User user = systemService.getUserByLoginName(principal.getLoginName());
+		User user = getSystemService().getUserByLoginName(principal.getLoginName());
 		if (user != null) {
 			UserUtils.putCache("user", user);
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			List<Menu> list = systemService.findAllMenu();
+			List<Menu> list = UserUtils.getMenuList();
 			for (Menu menu : list){
 				if (StringUtils.isNotBlank(menu.getPermission())){
 					// 添加基于Permission的权限信息
@@ -89,7 +94,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 				}
 			}
 			// 更新登录IP和时间
-			systemService.updateUserLoginInfo(user.getId());
+			getSystemService().updateUserLoginInfo(user.getId());
 			return info;
 		} else {
 			return null;
@@ -126,10 +131,16 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		}
 	}
 
-	public void setSystemService(SystemService systemService) {
-		this.systemService = systemService;
+	/**
+	 * 获取系统业务对象
+	 */
+	public SystemService getSystemService() {
+		if (systemService == null){
+			systemService = SpringContextHolder.getBean(SystemService.class);
+		}
+		return systemService;
 	}
-
+	
 	/**
 	 * 授权用户信息
 	 */

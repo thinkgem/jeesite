@@ -6,7 +6,9 @@
 package com.thinkgem.jeesite.modules.cms.service;
 
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.modules.cms.dao.CategoryDao;
@@ -33,7 +36,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Service
 @Transactional(readOnly = true)
 public class CategoryService extends BaseService {
-	
+
 	public static final String CACHE_CATEGORY_LIST = "categoryList";
 	
 	@Autowired
@@ -51,10 +54,34 @@ public class CategoryService extends BaseService {
 			User user = UserUtils.getUser();
 			DetachedCriteria dc = categoryDao.createDetachedCriteria();
 			dc.createAlias("office", "office").createAlias("createBy", "user");
-			dc.add(Restrictions.or(dataScopeFilter(user, "office", "user"), Restrictions.eq("id", 1L)));
+			dc.add(dataScopeFilter(user, "office", "user"));
+			dc.add(Restrictions.or(Restrictions.isNull("href"),Restrictions.eq("href", "")));
 			dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 			list = categoryDao.find(dc);
+			// 将没有父节点的节点，找到父节点
+			Set<Long> parentIdSet = Sets.newHashSet();
+			for (Category e : list){
+				if (e.getParent()!=null && e.getParent().getId()!=null){
+					boolean isExistParent = false;
+					for (Category e2 : list){
+						if (e.getParent().getId().longValue() == e2.getId().longValue()){
+							isExistParent = true;
+							break;
+						}
+					}
+					if (!isExistParent){
+						parentIdSet.add(e.getParent().getId());
+					}
+				}
+			}
+			if (parentIdSet.size() > 0){
+				dc = categoryDao.createDetachedCriteria();
+				dc.add(Restrictions.in("id", parentIdSet));
+				dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
+				dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
+				list.addAll(0, categoryDao.find(dc));
+			}
 			UserUtils.putCache(CACHE_CATEGORY_LIST, list);
 		}
 		
@@ -127,6 +154,18 @@ public class CategoryService extends BaseService {
 			UserUtils.removeCache(CACHE_CATEGORY_LIST);
 			CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		}
+	}
+	
+	/**
+	 * 通过编号获取栏目列表
+	 */
+	public List<Category> findByIds(String ids) {
+		List<Category> list = Lists.newArrayList();
+		Long[] idss = (Long[])ConvertUtils.convert(StringUtils.split(ids,","), Long.class);
+		if (idss.length>0){
+			list = categoryDao.findByIdIn(idss);
+		}
+		return list;
 	}
 	
 }

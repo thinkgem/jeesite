@@ -33,7 +33,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/cms/guestbook")
+@RequestMapping(value = "${adminPath}/cms/guestbook")
 public class GuestbookController extends BaseController {
 
 	@Autowired
@@ -76,7 +76,7 @@ public class GuestbookController extends BaseController {
 		guestbookService.save(guestbook);
 		addMessage(redirectAttributes, DictUtils.getDictLabel(guestbook.getDelFlag(), "cms_del_flag", "保存")
 				+"留言'" + guestbook.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/guestbook/?repage&status=2";
+		return "redirect:"+Global.getAdminPath()+"/cms/guestbook/?repage&status=2";
 	}
 	
 	@RequiresPermissions("cms:guestbook:edit")
@@ -84,7 +84,7 @@ public class GuestbookController extends BaseController {
 	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		guestbookService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"留言成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/guestbook/?repage&status=2";
+		return "redirect:"+Global.getAdminPath()+"/cms/guestbook/?repage&status=2";
 	}
 
 }

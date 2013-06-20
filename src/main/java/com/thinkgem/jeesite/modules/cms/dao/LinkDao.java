@@ -29,6 +29,9 @@ public interface LinkDao extends LinkDaoCustom, CrudRepository<Link, Long> {
 	
 	public List<Link> findByIdIn(Long[] ids);
 	
+	@Modifying
+	@Query("update Link set weight=0 where weight > 0 and weightDate < current_timestamp()")
+	public int updateExpiredWeight();
 }
 
 /**

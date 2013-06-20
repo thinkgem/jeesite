@@ -6,5 +6,6 @@
 	
 	<!-- CMS基础主题装饰页面 -->
 	<decorator name="cms_default_basic" page="modules/cms/front/themes/basic/layouts/default.jsp" />
+	<decorator name="cms_default_zgxj_blue" page="modules/cms/front/themes/zgxj_blue/layouts/default.jsp" />
 	
 </decorators>

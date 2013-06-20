@@ -20,14 +20,14 @@
 <div class="input-append">
 	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"/>
 	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"
-		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn ${disabled}">选择</a>&nbsp;&nbsp;
+		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn ${disabled}"><i class="icon-search"></i></a>&nbsp;&nbsp;
 </div>
 <script type="text/javascript">
-	$("#${id}Button").click(function(){		
+	$("#${id}Button").click(function(){
 		// 是否限制选择，如果限制，设置为disabled
 		if ("${disabled}" == "disabled"){
 			return true;
-		}		
+		}
 		// 正常打开	
 		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
 			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
@@ -59,7 +59,8 @@
 							return false;
 						}//</c:if>
 						ids.push(nodes[i].id);
-						names.push(nodes[i].name);
+						names.push(nodes[i].name);//<c:if test="${!checked}">
+						break; // 如果为非复选框选择，则返回第一个选择  </c:if>
 					}
 					$("#${id}Id").val(ids);
 					$("#${id}Name").val(names);

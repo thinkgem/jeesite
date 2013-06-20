@@ -34,7 +34,7 @@ import com.thinkgem.jeesite.modules.sys.service.SystemService;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/menu")
+@RequestMapping(value = "${adminPath}/sys/menu")
 public class MenuController extends BaseController {
 
 	@Autowired
@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
 
 	@RequiresPermissions("sys:menu:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Menu menu, Model model) {
+	public String list(Model model) {
 		List<Menu> list = Lists.newArrayList();
 		List<Menu> sourcelist = systemService.findAllMenu();
 		Menu.sortList(list, sourcelist, 1L);
@@ -78,7 +78,7 @@ public class MenuController extends BaseController {
 		}
 		systemService.saveMenu(menu);
 		addMessage(redirectAttributes, "保存菜单'" + menu.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
 	
 	@RequiresPermissions("sys:menu:edit")
@@ -90,7 +90,7 @@ public class MenuController extends BaseController {
 			systemService.deleteMenu(id);
 			addMessage(redirectAttributes, "删除菜单成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
 
 	@RequiresUser
@@ -101,24 +101,19 @@ public class MenuController extends BaseController {
 	
 	/**
 	 * 批量修改菜单排序
-	 * @param ids
-	 * @param sorts
-	 * @param model
-	 * @param redirectAttributes
-	 * @return
 	 */
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "updateSort")
-	public String updateSort(Long[] ids, Integer[] sorts, Model model, RedirectAttributes redirectAttributes) {
-        	int len = ids.length;
-        	Menu[] menus = new Menu[len];
-        	for (int i = 0; i < len; i++) {
-        		menus[i] = systemService.getMenu(ids[i]);
-        		menus[i].setSort(sorts[i]);
-        		systemService.saveMenu(menus[i]);
-        	}
-        	addMessage(redirectAttributes, "保存菜单排序成功!");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/menu/";
+	public String updateSort(Long[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
+    	int len = ids.length;
+    	Menu[] menus = new Menu[len];
+    	for (int i = 0; i < len; i++) {
+    		menus[i] = systemService.getMenu(ids[i]);
+    		menus[i].setSort(sorts[i]);
+    		systemService.saveMenu(menus[i]);
+    	}
+    	addMessage(redirectAttributes, "保存菜单排序成功!");
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
 	
 	@RequiresUser

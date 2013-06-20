@@ -1,12 +1,4 @@
 
-/* Drop Indexes */
-
-DROP INDEX oa_leave_create_by;
-DROP INDEX oa_leave_process_instance_id;
-DROP INDEX oa_leave_del_flag;
-
-
-
 /* Drop Tables */
 
 DROP TABLE oa_leave;

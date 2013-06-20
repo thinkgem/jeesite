@@ -15,7 +15,7 @@
 			}
 		});
 		function page(n,s){
-			$.get("${ctx}/comment",{theme: '${category.site.theme}', module: '${category.module}',
+			$.get("${ctx}/comment",{theme: '${category.site.theme}', 'category.id': '${category.id}',
 				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
 			},function(data){
 				$("#comment").html(data);
@@ -34,6 +34,14 @@
 		 <ol><c:forEach items="${fnc:getArticleList(site.id, category.id, 8, 'posid:2')}" var="article">
 		 	<li><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,18)}</a></li>
 		 </c:forEach></ol>
+	   </div>
+	   <div class="span10">
+		 <ul class="breadcrumb">
+		   <li><strong>当前位置：</strong><a href="${ctx}">首页</a> <span class="divider">/</span></li>
+		   <c:forEach items="${fnc:getCategoryListByIds(category.parentIds)}" var="category">
+		     <c:if test="${category.id ne 1}"><li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a><span class="divider">/</span></li></c:if>
+		   </c:forEach><li class="active">${category.name}</li>
+		  </ul>
 	   </div>
 	   <div class="span10">
 	     <div class="row">

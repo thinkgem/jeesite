@@ -41,7 +41,7 @@ public class Comment extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
-	private String module; 	// 内容模型（article：文章；picture：图片；download：下载）
+	private Category category;// 分类编号
 	private Long contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
 	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
 	private String content; // 评论内容
@@ -62,6 +62,11 @@ public class Comment extends BaseEntity {
 		this.id = id;
 	}
 	
+	public Comment(Category category){
+		this();
+		this.category = category;
+	}
+	
 	@PrePersist
 	public void prePersist(){
 		this.createDate = new Date();
@@ -79,13 +84,16 @@ public class Comment extends BaseEntity {
 		this.id = id;
 	}
 
-	@Length(min=1, max=20)
-	public String getModule() {
-		return module;
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	@NotFound(action = NotFoundAction.IGNORE)
+	@NotNull
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setModule(String module) {
-		this.module = module;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@NotNull

@@ -69,12 +69,14 @@ public class Category extends DataEntity {
 
 	public Category(){
 		super();
+		this.module = "article";
 		this.sort = 30;
-		this.inMenu = SHOW;
+		this.inMenu = HIDE;
 		this.inList = SHOW;
 		this.showModes = "0";
-		this.allowComment = YES;
+		this.allowComment = NO;
 		this.delFlag = DEL_FLAG_NORMAL;
+		this.isAudit = NO;
 	}
 
 	public Category(Long id){

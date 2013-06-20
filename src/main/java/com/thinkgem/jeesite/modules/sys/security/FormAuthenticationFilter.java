@@ -10,12 +10,14 @@ import javax.servlet.ServletResponse;
 
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.stereotype.Service;
 
 /**
  * 表单验证（包含验证码）过滤类
  * @author ThinkGem
  * @version 2013-5-19
  */
+@Service
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 
 	public static final String DEFAULT_CAPTCHA_PARAM = "validateCode";

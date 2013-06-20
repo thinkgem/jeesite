@@ -1,42 +1,11 @@
 
-/* Drop Indexes */
-
-DROP INDEX cms_article_create_by;
-DROP INDEX cms_article_title;
-DROP INDEX cms_article_keywords;
-DROP INDEX cms_article_del_flag;
-DROP INDEX cms_article_weight;
-DROP INDEX cms_article_update_date;
-DROP INDEX cms_article_category_id;
-DROP INDEX cms_category_parent_id;
-DROP INDEX cms_category_parent_ids;
-DROP INDEX cms_category_module;
-DROP INDEX cms_category_name;
-DROP INDEX cms_category_sort;
-DROP INDEX cms_category_del_flag;
-DROP INDEX cms_category_office_id;
-DROP INDEX cms_category_site_id;
-DROP INDEX cms_comment_module;
-DROP INDEX cms_comment_content_id;
-DROP INDEX cms_comment_status;
-DROP INDEX cms_guestbook_del_flag;
-DROP INDEX cms_link_category_id;
-DROP INDEX cms_link_title;
-DROP INDEX cms_link_del_flag;
-DROP INDEX cms_link_weight;
-DROP INDEX cms_link_create_by;
-DROP INDEX cms_link_update_date;
-DROP INDEX cms_site_del_flag;
-
-
-
 /* Drop Tables */
 
 DROP TABLE cms_article_data;
 DROP TABLE cms_article;
+DROP TABLE cms_comment;
 DROP TABLE cms_link;
 DROP TABLE cms_category;
-DROP TABLE cms_comment;
 DROP TABLE cms_guestbook;
 DROP TABLE cms_site;
 
@@ -79,6 +48,7 @@ CREATE TABLE cms_article
 	keywords varchar2(255),
 	description varchar2(255),
 	weight number(10,0) DEFAULT 0,
+	weight_date timestamp,
 	hits number(10,0) DEFAULT 0,
 	posid varchar2(10),
 	create_by number(19,0),
@@ -135,7 +105,7 @@ CREATE TABLE cms_category
 CREATE TABLE cms_comment
 (
 	id number(19,0) NOT NULL,
-	module varchar2(20) NOT NULL,
+	category_id number(19,0) NOT NULL,
 	content_id number(19,0) NOT NULL,
 	title varchar2(255),
 	content varchar2(255),
@@ -177,6 +147,7 @@ CREATE TABLE cms_link
 	image varchar2(255),
 	href varchar2(255),
 	weight number(10,0) DEFAULT 0,
+	weight_date timestamp,
 	create_by number(19,0),
 	create_date timestamp,
 	update_by number(19,0),
@@ -224,7 +195,7 @@ CREATE INDEX cms_category_sort ON cms_category (sort);
 CREATE INDEX cms_category_del_flag ON cms_category (del_flag);
 CREATE INDEX cms_category_office_id ON cms_category (office_id);
 CREATE INDEX cms_category_site_id ON cms_category (site_id);
-CREATE INDEX cms_comment_module ON cms_comment (module);
+CREATE INDEX cms_comment_category_id ON cms_comment (category_id);
 CREATE INDEX cms_comment_content_id ON cms_comment (content_id);
 CREATE INDEX cms_comment_status ON cms_comment (del_flag);
 CREATE INDEX cms_guestbook_del_flag ON cms_guestbook (del_flag);
@@ -249,6 +220,7 @@ COMMENT ON COLUMN cms_article.image IS '文章图片';
 COMMENT ON COLUMN cms_article.keywords IS '关键字';
 COMMENT ON COLUMN cms_article.description IS '描述、摘要';
 COMMENT ON COLUMN cms_article.weight IS '权重，越大越靠前';
+COMMENT ON COLUMN cms_article.weight_date IS '权重期限，过期后将权重设置为：0';
 COMMENT ON COLUMN cms_article.hits IS '点击数';
 COMMENT ON COLUMN cms_article.posid IS '推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）';
 COMMENT ON COLUMN cms_article.create_by IS '创建者';
@@ -290,7 +262,7 @@ COMMENT ON COLUMN cms_category.remarks IS '备注信息';
 COMMENT ON COLUMN cms_category.del_flag IS '删除标记（0：正常；1：删除）';
 COMMENT ON TABLE cms_comment IS '评论表';
 COMMENT ON COLUMN cms_comment.id IS '编号';
-COMMENT ON COLUMN cms_comment.module IS '栏目模块（article：文章；picture：图片；download：下载）';
+COMMENT ON COLUMN cms_comment.category_id IS '栏目编号';
 COMMENT ON COLUMN cms_comment.content_id IS '栏目内容的编号（Article.id、Photo.id、Download.id）';
 COMMENT ON COLUMN cms_comment.title IS '栏目内容的标题（Article.title、Photo.title、Download.title）';
 COMMENT ON COLUMN cms_comment.content IS '评论内容';
@@ -322,6 +294,7 @@ COMMENT ON COLUMN cms_link.color IS '标题颜色（red：红色；green：绿�
 COMMENT ON COLUMN cms_link.image IS '链接图片，如果上传了图片，则显示为图片链接';
 COMMENT ON COLUMN cms_link.href IS '链接地址';
 COMMENT ON COLUMN cms_link.weight IS '权重，越大越靠前';
+COMMENT ON COLUMN cms_link.weight_date IS '权重期限，过期后将权重设置为：0';
 COMMENT ON COLUMN cms_link.create_by IS '创建者';
 COMMENT ON COLUMN cms_link.create_date IS '创建时间';
 COMMENT ON COLUMN cms_link.update_by IS '更新者';

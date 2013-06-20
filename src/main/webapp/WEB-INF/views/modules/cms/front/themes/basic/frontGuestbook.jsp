@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>首页</title>
+	<title>留言板</title>
 	<meta name="decorator" content="cms_default_${site.theme}"/>
 	<meta name="description" content="JeeSite ${site.description}" />
 	<meta name="keywords" content="JeeSite ${site.keywords}" />
@@ -46,9 +46,9 @@
 			<c:forEach items="${page.list}" var="guestbook">
 				<li>
 					<h5>姓名: ${guestbook.name} &nbsp;时间：<fmt:formatDate value="${guestbook.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></h5>
-					<p>内容：${guestbook.content}</p>
+					<div>内容：${guestbook.content}</div>
 					<h6>回复人：${guestbook.reUser.name} 时间：<fmt:formatDate value="${guestbook.reDate}" pattern="yyyy-MM-dd HH:mm:ss"/></h6>
-					<p>回复内容：${guestbook.reContent}</p>
+					<div>回复内容：${guestbook.reContent}</div>
 				</li>
 			</c:forEach>
 			<c:if test="${fn:length(page.list) eq 0}">

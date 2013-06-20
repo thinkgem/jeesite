@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 
@@ -21,7 +20,7 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
  * @version 2013-4-21
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/cms")
+@RequestMapping(value = "${adminPath}/cms")
 public class CmsController extends BaseController {
 
 	@Autowired

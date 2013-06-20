@@ -5,6 +5,7 @@
  */
 package com.thinkgem.jeesite.modules.cms.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -61,6 +62,7 @@ public class Article extends DataEntity {
 	private String keywords;// 关键字
 	private String description;// 描述、摘要
 	private Integer weight;	// 权重，越大越靠前
+	private Date weightDate;// 权重期限，超过期限，将weight设置为0
 	private Integer hits;	// 点击数
 	private String posid;	// 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
 
@@ -162,6 +164,14 @@ public class Article extends DataEntity {
 
 	public void setWeight(Integer weight) {
 		this.weight = weight;
+	}
+
+	public Date getWeightDate() {
+		return weightDate;
+	}
+
+	public void setWeightDate(Date weightDate) {
+		this.weightDate = weightDate;
 	}
 
 	public Integer getHits() {

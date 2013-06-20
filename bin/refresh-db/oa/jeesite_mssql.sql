@@ -1,12 +1,4 @@
 
-/* Drop Indexes */
-
-DROP INDEX oa_leave_create_by;
-DROP INDEX oa_leave_process_instance_id;
-DROP INDEX oa_leave_del_flag;
-
-
-
 /* Drop Tables */
 
 DROP TABLE oa_leave;
@@ -19,11 +11,11 @@ DROP TABLE oa_leave;
 CREATE TABLE oa_leave
 (
 	id bigint NOT NULL IDENTITY ,
-	process_instance_id varchar(64),
+	process_instance_id nvarchar(64),
 	start_time datetime,
 	end_time datetime,
-	leave_type varchar(20),
-	reason varchar(255),
+	leave_type nvarchar(20),
+	reason nvarchar(255),
 	apply_time datetime,
 	reality_start_time datetime,
 	reality_end_time datetime,
@@ -31,7 +23,7 @@ CREATE TABLE oa_leave
 	create_date datetime,
 	update_by bigint,
 	update_date datetime,
-	remarks varchar(255),
+	remarks nvarchar(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (id)
 );

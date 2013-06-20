@@ -34,7 +34,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/cms/comment")
+@RequestMapping(value = "${adminPath}/cms/comment")
 public class CommentController extends BaseController {
 
 	@Autowired
@@ -70,7 +70,7 @@ public class CommentController extends BaseController {
 			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
 					+"评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()),50) + "'成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&delFlag=2";
+		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";
 	}
 	
 	@RequiresPermissions("cms:comment:edit")
@@ -78,7 +78,7 @@ public class CommentController extends BaseController {
 	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		commentService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
-		return "redirect:"+Global.ADMIN_PATH+"/cms/comment/?repage&delFlag=2";
+		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";
 	}
 
 }

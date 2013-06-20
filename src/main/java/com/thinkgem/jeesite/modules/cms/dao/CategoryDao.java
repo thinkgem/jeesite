@@ -53,6 +53,8 @@ public interface CategoryDao extends CategoryDaoCustom, CrudRepository<Category,
 //			"') order by c.site.id, c.sort")
 //	public List<Category> findByUserId(Long userId);
 	
+	public List<Category> findByIdIn(Long[] ids);
+	
 }
 
 /**

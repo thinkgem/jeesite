@@ -116,11 +116,19 @@ public class Site extends DataEntity {
 	}
 
 	/**
+	 * 获取默认站点ID
+	 */
+	@Transient
+	public static Long defaultSiteId(){
+		return 1L;
+	}
+	
+	/**
 	 * 判断是否为默认（主站）站点
 	 */
 	@Transient
 	public static boolean isDefault(Long id){
-		return id != null && id.equals(1L);
+		return id != null && id.equals(defaultSiteId());
 	}
 	
 	/**
@@ -129,7 +137,7 @@ public class Site extends DataEntity {
 	@Transient
 	public static long getCurrentSiteId(){
 		Long siteId = (Long)UserUtils.getCache("siteId");
-		return siteId!=null?siteId:1L;
+		return siteId!=null?siteId:defaultSiteId();
 	}
 	
 }

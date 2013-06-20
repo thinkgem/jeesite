@@ -27,7 +27,7 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 @Service
 @Transactional(readOnly = true)
 public class SiteService extends BaseService {
-	
+
 	@Autowired
 	private SiteDao siteDao;
 	

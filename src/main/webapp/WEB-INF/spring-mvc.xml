@@ -11,7 +11,7 @@
 	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
 	
 	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
-	<context:component-scan base-package="com.thinkgem.jeesite"><!-- base-package 如果多个，用“,”分隔 -->
+	<context:component-scan base-package="com.thinkgem.jeesite" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
@@ -33,7 +33,7 @@
 
 	<!-- 拦截器配置 -->
 	<mvc:interceptors>
-		<bean class="com.thinkgem.jeesite.modules.sys.interceptor.GlobalInterceptor"></bean>
+		<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
 	</mvc:interceptors>
 
 	<!-- 视图文件解析配置 -->

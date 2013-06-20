@@ -36,7 +36,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-5-15
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/sys/office")
+@RequestMapping(value = "${adminPath}/sys/office")
 public class OfficeController extends BaseController {
 
 	@Autowired
@@ -91,7 +91,7 @@ public class OfficeController extends BaseController {
 		}
 		officeService.save(office);
 		addMessage(redirectAttributes, "保存机构'" + office.getName() + "'成功");
-		return "redirect:"+Global.ADMIN_PATH+"/sys/office/";
+		return "redirect:"+Global.getAdminPath()+"/sys/office/";
 	}
 	
 	@RequiresPermissions("sys:office:edit")
@@ -103,7 +103,7 @@ public class OfficeController extends BaseController {
 			officeService.delete(id);
 			addMessage(redirectAttributes, "删除机构成功");
 		}
-		return "redirect:"+Global.ADMIN_PATH+"/sys/office/";
+		return "redirect:"+Global.getAdminPath()+"/sys/office/";
 	}
 
 	@RequiresUser

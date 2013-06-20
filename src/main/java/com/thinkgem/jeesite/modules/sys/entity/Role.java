@@ -136,8 +136,7 @@ public class Role extends DataEntity {
 		this.dataScope = dataScope;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+	@ManyToMany(mappedBy = "roleList", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -148,6 +147,23 @@ public class Role extends DataEntity {
 
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
+	}
+	@Transient
+	public List<Long> getUserIdList() {
+		List<Long> nameIdList = Lists.newArrayList();
+		for (User user : userList) {
+			nameIdList.add(user.getId());
+		}
+		return nameIdList;
+	}
+
+	@Transient
+	public String getUserIds() {
+		List<Long> nameIdList = Lists.newArrayList();
+		for (User user : userList) {
+			nameIdList.add(user.getId());
+		}
+		return StringUtils.join(nameIdList, ",");
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)

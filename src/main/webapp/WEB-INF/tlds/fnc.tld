@@ -44,11 +44,27 @@
   </function>
   
   <function>
+    <description>获取栏目</description>
+    <name>getCategory</name>
+    <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
+    <function-signature>com.thinkgem.jeesite.entity.cms.Category getCategory(long)</function-signature>
+    <example>${fnc:getCategory(categoryId)}</example>  
+  </function>
+  
+  <function>
     <description>获得栏目列表</description>
     <name>getCategoryList</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
     <function-signature>java.util.List getCategoryList(long, long, int, java.lang.String)</function-signature>
     <example>${fnc:getCategoryList(siteId, parentId, number, param)}</example>  
+  </function>
+  
+  <function>
+    <description>获得栏目列表</description>
+    <name>getCategoryListByIds</name>
+    <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
+    <function-signature>java.util.List getCategoryListByIds(java.lang.String)</function-signature>
+    <example>${fnc:getCategoryListByIds(categoryIds)}</example>  
   </function>
   
   <function>

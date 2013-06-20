@@ -1,31 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Indexes */
-
-DROP INDEX sys_area_parent_id ON sys_area;
-DROP INDEX sys_area_parent_ids ON sys_area;
-DROP INDEX sys_area_del_flag ON sys_area;
-DROP INDEX sys_dict_value ON sys_dict;
-DROP INDEX sys_dict_label ON sys_dict;
-DROP INDEX sys_dict_del_flag ON sys_dict;
-DROP INDEX sys_mdict_parent_id ON sys_mdict;
-DROP INDEX sys_mdict_parent_ids ON sys_mdict;
-DROP INDEX sys_mdict_del_flag ON sys_mdict;
-DROP INDEX sys_menu_parent_id ON sys_menu;
-DROP INDEX sys_menu_parent_ids ON sys_menu;
-DROP INDEX sys_menu_del_flag ON sys_menu;
-DROP INDEX sys_office_parent_id ON sys_office;
-DROP INDEX sys_office_parent_ids ON sys_office;
-DROP INDEX sys_office_del_flag ON sys_office;
-DROP INDEX sys_role_del_flag ON sys_role;
-DROP INDEX sys_user_office_id ON sys_user;
-DROP INDEX sys_user_login_name ON sys_user;
-DROP INDEX sys_user_company_id ON sys_user;
-DROP INDEX sys_user_update_date ON sys_user;
-DROP INDEX sys_user_del_flag ON sys_user;
-
-
-
 /* Drop Tables */
 
 DROP TABLE sys_role_office;
@@ -34,6 +8,7 @@ DROP TABLE sys_user;
 DROP TABLE sys_office;
 DROP TABLE sys_area;
 DROP TABLE sys_dict;
+DROP TABLE sys_log;
 DROP TABLE sys_mdict;
 DROP TABLE sys_role_menu;
 DROP TABLE sys_menu;
@@ -78,6 +53,22 @@ CREATE TABLE sys_dict
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '字典表';
+
+
+CREATE TABLE sys_log
+(
+	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+	type char(1) DEFAULT '1' COMMENT '日志类型（1：接入日志；2：异常日志）',
+	create_by bigint COMMENT '创建者',
+	create_date datetime COMMENT '创建时间',
+	remote_addr varchar(255) COMMENT '操作IP地址',
+	user_agent varchar(255) COMMENT '用户代理',
+	request_uri varchar(255) COMMENT '请求URI',
+	method varchar(5) COMMENT '操作方式',
+	params text COMMENT '操作提交的数据',
+	exception text COMMENT '异常信息',
+	PRIMARY KEY (id)
+);
 
 
 CREATE TABLE sys_mdict
@@ -133,7 +124,7 @@ CREATE TABLE sys_office
 	address varchar(255) COMMENT '联系地址',
 	zip_code varchar(100) COMMENT '邮政编码',
 	master varchar(100) COMMENT '负责人',
-	phone varbinary(200) COMMENT '电话',
+	phone varchar(200) COMMENT '电话',
 	fax varchar(200) COMMENT '传真',
 	email varchar(200) COMMENT '邮箱',
 	create_by bigint COMMENT '创建者',
@@ -222,6 +213,10 @@ CREATE INDEX sys_area_del_flag ON sys_area (del_flag ASC);
 CREATE INDEX sys_dict_value ON sys_dict (value ASC);
 CREATE INDEX sys_dict_label ON sys_dict (label ASC);
 CREATE INDEX sys_dict_del_flag ON sys_dict (del_flag ASC);
+CREATE INDEX sys_log_create_by ON sys_log (create_by ASC);
+CREATE INDEX sys_log_request_uri ON sys_log (request_uri ASC);
+CREATE INDEX sys_log_type ON sys_log (type ASC);
+CREATE INDEX sys_log_create_date ON sys_log (create_date ASC);
 CREATE INDEX sys_mdict_parent_id ON sys_mdict (parent_id ASC);
 CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids ASC);
 CREATE INDEX sys_mdict_del_flag ON sys_mdict (del_flag ASC);

@@ -70,14 +70,6 @@ public class SystemService extends BaseService implements InitializingBean {
 	public Page<User> findUser(Page<User> page, User user) {
 		DetachedCriteria dc = userDao.createDetachedCriteria();
 		User currentUser = UserUtils.getUser();
-//		dc.createAlias("area", "area");
-//		if (user.getArea()!=null && user.getArea().getId()!=null){
-//			dc.add(Restrictions.or(
-//					Restrictions.eq("area.id", user.getArea().getId()),
-//					Restrictions.eq("area.parent.id", user.getArea().getId()),
-//					Restrictions.like("area.parentIds", "%,"+user.getArea().getId()+",%")
-//					));
-//		}
 		dc.createAlias("company", "company");
 		if (user.getCompany()!=null && user.getCompany().getId()!=null){
 			dc.add(Restrictions.or(
@@ -91,6 +83,10 @@ public class SystemService extends BaseService implements InitializingBean {
 					Restrictions.eq("office.id", user.getOffice().getId()),
 					Restrictions.like("office.parentIds", "%,"+user.getOffice().getId()+",%")
 					));
+		}
+		// 如果不是超级管理员，则不显示超级管理员用户
+		if (!currentUser.isAdmin()){
+			dc.add(Restrictions.ne("id", 1L)); 
 		}
 		dc.add(dataScopeFilter(currentUser, "office", ""));
 		//System.out.println(dataScopeFilterString(currentUser, "office", ""));
@@ -115,7 +111,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public void saveUser(User user) {
 		userDao.clear();
 		userDao.save(user);
-		systemRealm.clearCachedAuthorizationInfo(user.getLoginName());
+		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
 		saveActivitiUser(user, user.getId()==null);
 	}
@@ -195,6 +191,32 @@ public class SystemService extends BaseService implements InitializingBean {
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
 		deleteActivitiGroup(roleDao.findOne(id));
+	}
+	
+	@Transactional(readOnly = false)
+	public Boolean outUserInRole(Role role, Long userId) {
+		User user = userDao.findOne(userId);
+		List<Long> roleIds = user.getRoleIdList();
+		List<Role> roles = user.getRoleList();
+		// 
+		if (roleIds.contains(role.getId())) {
+			roles.remove(role);
+			saveUser(user);
+			return true;
+		}
+		return false;
+	}
+	
+	@Transactional(readOnly = false)
+	public User assignUserToRole(Role role, Long userId) {
+		User user = userDao.findOne(userId);
+		List<Long> roleIds = user.getRoleIdList();
+		if (roleIds.contains(role.getId())) {
+			return null;
+		}
+		user.getRoleList().add(role);
+		saveUser(user);		
+		return user;
 	}
 
 	//-- Menu Service --//

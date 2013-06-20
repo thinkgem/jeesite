@@ -13,8 +13,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -30,11 +28,6 @@ import com.thinkgem.jeesite.common.utils.DateUtils;
  * @version 2013-3-23
  */
 public abstract class BaseController {
-	
-	/**
-	 * 日志对象
-	 */
-	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/**
 	 * 验证Bean实例对象

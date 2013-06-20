@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.BaseController;
 
 /**
@@ -21,7 +20,7 @@ import com.thinkgem.jeesite.common.web.BaseController;
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/tag")
+@RequestMapping(value = "${adminPath}/tag")
 public class TagController extends BaseController {
 	
 	/**

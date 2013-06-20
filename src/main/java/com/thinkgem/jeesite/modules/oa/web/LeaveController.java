@@ -42,7 +42,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-04-05
  */
 @Controller
-@RequestMapping(value = Global.ADMIN_PATH+"/oa/leave")
+@RequestMapping(value = "${adminPath}/oa/leave")
 public class LeaveController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
@@ -79,7 +79,7 @@ public class LeaveController extends BaseController {
 			logger.error("启动请假流程失败：", e);
 			addMessage(redirectAttributes, "系统内部错误！");
 		}
-		return "redirect:"+Global.ADMIN_PATH+ "/oa/leave/form";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/form";
 	}
 
 	/**

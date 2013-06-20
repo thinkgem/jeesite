@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.modules.cms.entity.Comment;
 @Service
 @Transactional(readOnly = true)
 public class CommentService extends BaseService {
-	
+
 	@Autowired
 	private CommentDao commentDao;
 	
@@ -36,9 +36,6 @@ public class CommentService extends BaseService {
 	
 	public Page<Comment> find(Page<Comment> page, Comment comment) {
 		DetachedCriteria dc = commentDao.createDetachedCriteria();
-		if (StringUtils.isNotEmpty(comment.getModule())){
-			dc.add(Restrictions.eq("module", comment.getModule()));
-		}
 		if (comment.getContentId()!=null && comment.getContentId()>0){
 			dc.add(Restrictions.eq("contentId", comment.getContentId()));
 		}

@@ -20,6 +20,14 @@
 		 	<li><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,18)}</a></li>
 		 </c:forEach></ol>
    	   </div>
+	   <div class="span10">
+		 <ul class="breadcrumb">
+		   <li><strong>当前位置：</strong><a href="${ctx}">首页</a> <span class="divider">/</span></li>
+		   <c:forEach items="${fnc:getCategoryListByIds(category.parentIds)}" var="category">
+		     <c:if test="${category.id ne 1}"><li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a><span class="divider">/</span></li></c:if>
+		   </c:forEach><li class="active">${category.name}</li>
+		  </ul>
+	   </div>
        <div class="span10">
 		  <h4>${category.name}</h4>
 		  <c:if test="${category.module eq 'article'}">

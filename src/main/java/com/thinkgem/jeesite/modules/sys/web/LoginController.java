@@ -39,10 +39,10 @@ public class LoginController extends BaseController{
 	/**
 	 * 管理登录
 	 */
-	@RequestMapping(value = Global.ADMIN_PATH+"/login", method = RequestMethod.GET)
+	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		if(UserUtils.getUser().getId() != null){
-			return "redirect:" + Global.ADMIN_PATH;
+			return "redirect:"+Global.getAdminPath();
 		}
 		return "modules/sys/sysLogin";
 	}
@@ -50,7 +50,7 @@ public class LoginController extends BaseController{
 	/**
 	 * 登录失败，真正登录的POST请求由Filter完成
 	 */
-	@RequestMapping(value = Global.ADMIN_PATH+"/login", method = RequestMethod.POST)
+	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
 	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, HttpServletRequest request, HttpServletResponse response, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
 		model.addAttribute("isValidateCodeLogin", isValidateCodeLogin(username, true, false));
@@ -61,11 +61,11 @@ public class LoginController extends BaseController{
 	 * 登录成功，进入管理首页
 	 */
 	@RequiresUser
-	@RequestMapping(value = Global.ADMIN_PATH)
+	@RequestMapping(value = "${adminPath}")
 	public String index(HttpServletRequest request, HttpServletResponse response) {
 		User user = UserUtils.getUser();
 		if(user.getId() == null){
-			return "redirect:" + Global.ADMIN_PATH + "/login";
+			return "redirect:"+Global.getAdminPath()+"/login";
 		}
 		// 验证码计算器清零
 		isValidateCodeLogin(user.getLoginName(), false, true);
