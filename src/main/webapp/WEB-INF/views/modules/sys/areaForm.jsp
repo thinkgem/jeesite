@@ -15,7 +15,7 @@
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
 					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")){
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -37,7 +37,7 @@
 			<label class="control-label">上级区域:</label>
 			<div class="controls">
 				<tags:treeselect id="area" name="parent.id" value="${area.parent.id}" labelName="parent.name" labelValue="${area.parent.name}"
-					title="区域" url="/sys/area/treeData" extId="${area.id}"/>
+					title="区域" url="/sys/area/treeData" extId="${area.id}" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
