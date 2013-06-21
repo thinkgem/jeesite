@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
  * 文件操作工具类
  * 实现文件的创建、删除、复制、压缩、解压以及目录的创建、删除、复制、压缩解压等功能
  * @author ThinkGem
- * @version 2013-01-15
+ * @version 2013-06-21
  */
-public class FileUtils {
+public class FileUtils extends org.apache.commons.io.FileUtils {
 	
 	private static Logger log = LoggerFactory.getLogger(FileUtils.class);
 
@@ -51,12 +51,12 @@ public class FileUtils {
 		File srcFile = new File(srcFileName);
 		// 判断源文件是否存在
 		if (!srcFile.exists()) {
-			log.debug("复制文件失败，源文件" + srcFileName + "不存在!");
+			log.debug("复制文件失败，源文件 " + srcFileName + " 不存在!");
 			return false;
 		}
 		// 判断源文件是否是合法的文件
 		else if (!srcFile.isFile()) {
-			log.debug("复制文件失败，" + srcFileName + "不是一个文件!");
+			log.debug("复制文件失败，" + srcFileName + " 不是一个文件!");
 			return false;
 		}
 		File descFile = new File(descFileName);
@@ -66,11 +66,11 @@ public class FileUtils {
 			if (coverlay) {
 				log.debug("目标文件已存在，准备删除!");
 				if (!FileUtils.delFile(descFileName)) {
-					log.debug("删除目标文件" + descFileName + "失败!");
+					log.debug("删除目标文件 " + descFileName + " 失败!");
 					return false;
 				}
 			} else {
-				log.debug("复制文件失败，目标文件" + descFileName + "已存在!");
+				log.debug("复制文件失败，目标文件 " + descFileName + " 已存在!");
 				return false;
 			}
 		} else {
@@ -101,7 +101,7 @@ public class FileUtils {
 				// 将读取的字节流写入到输出流
 				outs.write(buf, 0, readByte);
 			}
-			log.debug("复制单个文件" + srcFileName + "到" + descFileName
+			log.debug("复制单个文件 " + srcFileName + " 到" + descFileName
 					+ "成功!");
 			return true;
 		} catch (Exception e) {
@@ -149,12 +149,12 @@ public class FileUtils {
 		File srcDir = new File(srcDirName);
 		// 判断源目录是否存在
 		if (!srcDir.exists()) {
-			log.debug("复制目录失败，源目录" + srcDirName + "不存在!");
+			log.debug("复制目录失败，源目录 " + srcDirName + " 不存在!");
 			return false;
 		}
 		// 判断源目录是否是目录
 		else if (!srcDir.isDirectory()) {
-			log.debug("复制目录失败，" + srcDirName + "不是一个目录!");
+			log.debug("复制目录失败，" + srcDirName + " 不是一个目录!");
 			return false;
 		}
 		// 如果目标文件夹名不以文件分隔符结尾，自动添加文件分隔符
@@ -169,11 +169,11 @@ public class FileUtils {
 				// 允许覆盖目标目录
 				log.debug("目标目录已存在，准备删除!");
 				if (!FileUtils.delFile(descDirNames)) {
-					log.debug("删除目录" + descDirNames + "失败!");
+					log.debug("删除目录 " + descDirNames + " 失败!");
 					return false;
 				}
 			} else {
-				log.debug("目标目录复制失败，目标目录" + descDirNames + "已存在!");
+				log.debug("目标目录复制失败，目标目录 " + descDirNames + " 已存在!");
 				return false;
 			}
 		} else {
@@ -211,10 +211,10 @@ public class FileUtils {
 		}
 
 		if (!flag) {
-			log.debug("复制目录" + srcDirName + "到" + descDirName + "失败!");
+			log.debug("复制目录 " + srcDirName + " 到 " + descDirName + " 失败!");
 			return false;
 		}
-		log.debug("复制目录" + srcDirName + "到" + descDirName + "成功!");
+		log.debug("复制目录 " + srcDirName + " 到 " + descDirName + " 成功!");
 		return true;
 
 	}
@@ -229,7 +229,7 @@ public class FileUtils {
 	public static boolean delFile(String fileName) {
  		File file = new File(fileName);
 		if (!file.exists()) {
-			log.debug(fileName + "文件不存在!");
+			log.debug(fileName + " 文件不存在!");
 			return true;
 		} else {
 			if (file.isFile()) {
@@ -251,14 +251,14 @@ public class FileUtils {
 		File file = new File(fileName);
 		if (file.exists() && file.isFile()) {
 			if (file.delete()) {
-				log.debug("删除单个文件" + fileName + "成功!");
+				log.debug("删除单个文件 " + fileName + " 成功!");
 				return true;
 			} else {
-				log.debug("删除单个文件" + fileName + "失败!");
+				log.debug("删除单个文件 " + fileName + " 失败!");
 				return false;
 			}
 		} else {
-			log.debug(fileName + "文件不存在!");
+			log.debug(fileName + " 文件不存在!");
 			return true;
 		}
 	}
@@ -277,7 +277,7 @@ public class FileUtils {
 		}
 		File dirFile = new File(dirNames);
 		if (!dirFile.exists() || !dirFile.isDirectory()) {
-			log.debug(dirNames + "目录不存在!");
+			log.debug(dirNames + " 目录不存在!");
 			return true;
 		}
 		boolean flag = true;
@@ -309,10 +309,10 @@ public class FileUtils {
 		}
 		// 删除当前目录
 		if (dirFile.delete()) {
-			log.debug("删除目录" + dirName + "成功!");
+			log.debug("删除目录 " + dirName + " 成功!");
 			return true;
 		} else {
-			log.debug("删除目录" + dirName + "失败!");
+			log.debug("删除目录 " + dirName + " 失败!");
 			return false;
 		}
 
@@ -326,11 +326,11 @@ public class FileUtils {
 	public static boolean createFile(String descFileName) {
 		File file = new File(descFileName);
 		if (file.exists()) {
-			log.debug("文件" + descFileName + "已存在!");
+			log.debug("文件 " + descFileName + " 已存在!");
 			return false;
 		}
 		if (descFileName.endsWith(File.separator)) {
-			log.debug(descFileName + "为目录，不能创建目录!");
+			log.debug(descFileName + " 为目录，不能创建目录!");
 			return false;
 		}
 		if (!file.getParentFile().exists()) {
@@ -344,15 +344,15 @@ public class FileUtils {
 		// 创建文件
 		try {
 			if (file.createNewFile()) {
-				log.debug(descFileName + "文件创建成功!");
+				log.debug(descFileName + " 文件创建成功!");
 				return true;
 			} else {
-				log.debug(descFileName + "文件创建失败!");
+				log.debug(descFileName + " 文件创建失败!");
 				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.debug(descFileName + "文件创建失败!");
+			log.debug(descFileName + " 文件创建失败!");
 			return false;
 		}
 
@@ -370,15 +370,15 @@ public class FileUtils {
 		}
 		File descDir = new File(descDirNames);
 		if (descDir.exists()) {
-			log.debug("目录" + descDirNames + "已存在!");
+			log.debug("目录 " + descDirNames + " 已存在!");
 			return false;
 		}
 		// 创建目录
 		if (descDir.mkdirs()) {
-			log.debug("目录" + descDirNames + "创建成功!");
+			log.debug("目录 " + descDirNames + " 创建成功!");
 			return true;
 		} else {
-			log.debug("目录" + descDirNames + "创建失败!");
+			log.debug("目录 " + descDirNames + " 创建失败!");
 			return false;
 		}
 
@@ -394,12 +394,12 @@ public class FileUtils {
 			String descFileName) {
 		// 判断目录是否存在
 		if (srcDirName == null) {
-			log.debug("文件压缩失败，目录" + srcDirName + "不存在!");
+			log.debug("文件压缩失败，目录 " + srcDirName + " 不存在!");
 			return;
 		}
 		File fileDir = new File(srcDirName);
 		if (!fileDir.exists() || !fileDir.isDirectory()) {
-			log.debug("文件压缩失败，目录" + srcDirName + "不存在!");
+			log.debug("文件压缩失败，目录 " + srcDirName + " 不存在!");
 			return;
 		}
 		String dirPath = fileDir.getAbsolutePath();
@@ -419,7 +419,7 @@ public class FileUtils {
 				}
 			}
 			zouts.close();
-			log.debug(descFileName + "文件压缩成功!");
+			log.debug(descFileName + " 文件压缩成功!");
 		} catch (Exception e) {
 			log.debug("文件压缩失败：" + e.getMessage());
 			e.printStackTrace();
@@ -549,7 +549,7 @@ public class FileUtils {
 				zouts.closeEntry();
 				fin.close();
 				System.out
-						.println("添加文件" + file.getAbsolutePath() + "到zip文件中!");
+						.println("添加文件 " + file.getAbsolutePath() + " 到zip文件中!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

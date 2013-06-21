@@ -26,7 +26,7 @@ import freemarker.template.Template;
 /**
  * 代码生成器
  * @author ThinkGem
- * @version 2013-03-15
+ * @version 2013-06-21
  */
 public class Generate {
 	
@@ -64,18 +64,32 @@ public class Generate {
 			return;
 		}
 		
-		// 获取文件路径
+		// 获取文件分隔符
 		String separator = File.separator;
-		String classPath = new DefaultResourceLoader().getResource("").getFile().getPath();
-		String templatePath = classPath.replace(separator+"webapp"+separator+"WEB-INF"+separator+"classes",
-				separator+"java"+separator+"com"+separator+"thinkgem"+separator+"jeesite"+separator+"modules");
-		String javaPath = classPath.replace(separator+"webapp"+separator+"WEB-INF"+separator+"classes", 
-				separator+"java"+separator+(StringUtils.lowerCase(packageName)).replace(".", separator));
-		String viewPath = classPath.replace(separator+"classes", separator+"views");
+		
+		// 获取工程路径
+		File projectPath = new DefaultResourceLoader().getResource("").getFile();
+		while(!new File(projectPath.getPath()+separator+"src"+separator+"main").exists()){
+			projectPath = projectPath.getParentFile();
+		}
+		logger.info("Project Path: {}", projectPath);
+		
+		// 模板文件路径
+		String tplPath = StringUtils.replace(projectPath+"/src/main/java/com/thinkgem/jeesite/generate/template", "/", separator);
+		logger.info("Template Path: {}", tplPath);
+		
+		// Java文件路径
+		String javaPath = StringUtils.replaceEach(projectPath+"/src/main/java/"+StringUtils.lowerCase(packageName), 
+				new String[]{"/", "."}, new String[]{separator, separator});
+		logger.info("Java Path: {}", javaPath);
+		
+		// 视图文件路径
+		String viewPath = StringUtils.replace(projectPath+"/src/main/webapp/WEB-INF/views", "/", separator);
+		logger.info("View Path: {}", viewPath);
 		
 		// 代码模板配置
 		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(new File(templatePath.replace("modules", "generate"+separator+"template")));
+		cfg.setDirectoryForTemplateLoading(new File(tplPath));
 
 		// 定义模板变量
 		Map<String, String> model = Maps.newHashMap();
@@ -100,9 +114,9 @@ public class Generate {
 		Template template = cfg.getTemplate("entity.ftl");
 		String content = FreeMarkers.renderTemplate(template, model);
 		String filePath = javaPath+separator+model.get("moduleName")+separator+"entity"
-		+separator+StringUtils.lowerCase(subModuleName)+separator+model.get("ClassName")+".java";
+				+separator+StringUtils.lowerCase(subModuleName)+separator+model.get("ClassName")+".java";
 		writeFile(content, filePath);
-		logger.info(filePath);
+		logger.info("Entity: {}", filePath);
 		
 		// 生成 Dao
 		template = cfg.getTemplate("dao.ftl");
@@ -110,7 +124,7 @@ public class Generate {
 		filePath = javaPath+separator+model.get("moduleName")+separator+"dao"+separator
 				+StringUtils.lowerCase(subModuleName)+separator+model.get("ClassName")+"Dao.java";
 		writeFile(content, filePath);
-		logger.info(filePath);
+		logger.info("Dao: {}", filePath);
 		
 		// 生成 Service
 		template = cfg.getTemplate("service.ftl");
@@ -118,7 +132,7 @@ public class Generate {
 		filePath = javaPath+separator+model.get("moduleName")+separator+"service"+separator
 				+StringUtils.lowerCase(subModuleName)+separator+model.get("ClassName")+"Service.java";
 		writeFile(content, filePath);
-		logger.info(filePath);
+		logger.info("Service: {}", filePath);
 		
 		// 生成 Controller
 		template = cfg.getTemplate("controller.ftl");
@@ -126,7 +140,7 @@ public class Generate {
 		filePath = javaPath+separator+model.get("moduleName")+separator+"web"+separator
 				+StringUtils.lowerCase(subModuleName)+separator+model.get("ClassName")+"Controller.java";
 		writeFile(content, filePath);
-		logger.info(filePath);
+		logger.info("Controller: {}", filePath);
 		
 		// 生成 ViewForm
 		template = cfg.getTemplate("viewForm.ftl");
@@ -135,7 +149,7 @@ public class Generate {
 				+separator+model.get("moduleName")+separator+StringUtils.lowerCase(subModuleName)
 				+separator+model.get("className")+"Form.jsp";
 		writeFile(content, filePath);
-		logger.info(filePath);
+		logger.info("ViewForm: {}", filePath);
 		
 		// 生成 ViewList
 		template = cfg.getTemplate("viewList.ftl");
@@ -144,9 +158,9 @@ public class Generate {
 				+separator+model.get("moduleName")+separator+StringUtils.lowerCase(subModuleName)
 				+separator+model.get("className")+"List.jsp";
 		writeFile(content, filePath);
-		logger.info(filePath);
+		logger.info("ViewList: {}", filePath);
 		
-		logger.info("代码生成成功！");
+		logger.info("Generate Success.");
 	}
 	
 	/**
