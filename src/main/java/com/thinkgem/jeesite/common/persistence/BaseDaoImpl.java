@@ -506,10 +506,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		FullTextQuery fullTextQuery = getFullTextSession().createFullTextQuery(query, entityClass);
         
 		// 过滤无效的内容
-		fullTextQuery.setFilter(new CachingWrapperFilter(new QueryWrapperFilter(queryFilter)));
+		if (queryFilter!=null){
+			fullTextQuery.setFilter(new CachingWrapperFilter(new QueryWrapperFilter(queryFilter)));
+		}
         
-        // 按时间排序
-		fullTextQuery.setSort(sort);
+        // 设置排序
+		if (sort!=null){
+			fullTextQuery.setSort(sort);
+		}
 
 		// 定义分页
 		page.setCount(fullTextQuery.getResultSize());

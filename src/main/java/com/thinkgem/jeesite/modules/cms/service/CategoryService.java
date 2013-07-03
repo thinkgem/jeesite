@@ -55,7 +55,7 @@ public class CategoryService extends BaseService {
 			DetachedCriteria dc = categoryDao.createDetachedCriteria();
 			dc.createAlias("office", "office").createAlias("createBy", "user");
 			dc.add(dataScopeFilter(user, "office", "user"));
-			dc.add(Restrictions.or(Restrictions.isNull("href"),Restrictions.eq("href", "")));
+//			dc.add(Restrictions.or(Restrictions.isNull("href"),Restrictions.eq("href", "")));
 			dc.add(Restrictions.eq("delFlag", Category.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 			list = categoryDao.find(dc);
@@ -118,7 +118,7 @@ public class CategoryService extends BaseService {
 			dc.createAlias("parent", "parent");
 			dc.add(Restrictions.eq("parent.id", category.getParent().getId()));
 		}
-		if (StringUtils.isNotBlank(category.getInMenu())){
+		if (StringUtils.isNotBlank(category.getInMenu()) && Category.SHOW.equals(category.getInMenu())){
 			dc.add(Restrictions.eq("inMenu", category.getInMenu()));
 		}
 		dc.add(Restrictions.eq(Category.DEL_FLAG, Category.DEL_FLAG_NORMAL));
@@ -163,7 +163,15 @@ public class CategoryService extends BaseService {
 		List<Category> list = Lists.newArrayList();
 		Long[] idss = (Long[])ConvertUtils.convert(StringUtils.split(ids,","), Long.class);
 		if (idss.length>0){
-			list = categoryDao.findByIdIn(idss);
+			List<Category> l = categoryDao.findByIdIn(idss);
+			for (Long id : idss){
+				for (Category e : l){
+					if (e.getId().longValue() == id){
+						list.add(e);
+						break;
+					}
+				}
+			}
 		}
 		return list;
 	}

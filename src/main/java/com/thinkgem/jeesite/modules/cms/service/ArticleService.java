@@ -121,6 +121,8 @@ public class ArticleService extends BaseService {
 				article.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
 		}
+		article.setUpdateBy(UserUtils.getUser());
+		article.setUpdateDate(new Date());
 		articleDao.clear();
 		articleDao.save(article);
 	}
