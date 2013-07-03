@@ -38,6 +38,7 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.CommentService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 网站Controller
@@ -64,6 +65,7 @@ public class FrontController extends BaseController{
 	public String index(Model model) {
 		Site site = CmsUtils.getSite(Site.defaultSiteId());
 		model.addAttribute("site", site);
+		model.addAttribute("isIndex", true);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
 	}
 	
@@ -77,6 +79,7 @@ public class FrontController extends BaseController{
 		}
 		Site site = CmsUtils.getSite(siteId);
 		model.addAttribute("site", site);
+		model.addAttribute("isIndex", true);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
 	}
 	
@@ -273,22 +276,42 @@ public class FrontController extends BaseController{
 	 * 全站搜索
 	 */
 	@RequestMapping(value = "search")
-	public String search(String t, String q, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String search(String t, @RequestParam(required=false) String q, @RequestParam(required=false) String qand, @RequestParam(required=false) String qnot, 
+			@RequestParam(required=false) String a, HttpServletRequest request, HttpServletResponse response, Model model) {
+		long start = System.currentTimeMillis();
 		Site site = CmsUtils.getSite(Site.defaultSiteId());
 		model.addAttribute("site", site);
 		if (StringUtils.isBlank(t) || "article".equals(t)){
-			// ========= 正式环境，请注释掉cmd代码 =========
+			// ========= 执行命令（需要超级管理员权限） =========
 			if ("cmd:reindex".equals(q)){
-				articleService.createIndex();
-				model.addAttribute("message", "重建索引成功");
+				if (UserUtils.getUser().isAdmin()){
+					articleService.createIndex();
+					model.addAttribute("message", "重建索引成功，共耗时 " + (System.currentTimeMillis() - start) + "毫秒。");
+				}else{
+					model.addAttribute("message", "你没有执行权限。");
+				}
 				return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 			}
-			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
-			Page<Article> page = articleService.search(new Page<Article>(request, response), q);
+			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
+			String qStr = StringUtils.replace(StringUtils.replace(q, "，", " "), ", ", " ");
+			// 如果是高级搜索
+			if ("1".equals(a)){
+				if (StringUtils.isNotBlank(qand)){
+					qStr += " +" + StringUtils.replace(StringUtils.replace(StringUtils.replace(qand, "，", " "), ", ", " "), " ", " +"); 
+				}
+				if (StringUtils.isNotBlank(qnot)){
+					qStr += " -" + StringUtils.replace(StringUtils.replace(StringUtils.replace(qnot, "，", " "), ", ", " "), " ", " -"); 
+				}
+			}
+			System.out.println(qStr);
+			Page<Article> page = articleService.search(new Page<Article>(request, response), qStr);
+			page.setMessage("匹配结果，共耗时 " + (System.currentTimeMillis() - start) + "毫秒。");
 			model.addAttribute("page", page);
 		}
 		model.addAttribute("t", t);// 搜索类型
 		model.addAttribute("q", q);// 搜索关键字
+		model.addAttribute("qand", qand);// 包含以下全部的关键词
+		model.addAttribute("qnot", qnot);// 不包含以下关键词
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 	}
 	

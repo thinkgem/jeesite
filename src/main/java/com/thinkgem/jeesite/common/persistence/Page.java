@@ -24,7 +24,7 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
 /**
  * 分页类
  * @author ThinkGem
- * @version 2013-3-25
+ * @version 2013-7-2
  * @param <T>
  */
 public class Page<T> {
@@ -51,6 +51,8 @@ public class Page<T> {
 	
 	private String funcName = "page"; // 设置点击页码调用的js函数名称，默认为page，在一页有多个分页对象时使用。
 	
+	private String message = ""; // 设置提示消息，显示在“共n条”之后
+
 	/**
 	 * 构造方法
 	 * @param request 传递 repage 参数，来记住页码
@@ -259,7 +261,7 @@ public class Page<T> {
 		sb.append(funcName+"(this.value,"+pageSize+");\" onclick=\"this.select();\"/> / ");
 		sb.append("<input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
 		sb.append(funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
-		sb.append("共 " + count + " 条</a><li>\n");
+		sb.append("共 " + count + " 条"+(message!=null?message:"")+"</a><li>\n");
 
 		sb.insert(0,"<ul>\n").append("</ul>\n");
 		
@@ -440,6 +442,14 @@ public class Page<T> {
 	 */
 	public void setFuncName(String funcName) {
 		this.funcName = funcName;
+	}
+
+	/**
+	 * 设置提示消息，显示在“共n条”之后
+	 * @param message
+	 */
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	/**

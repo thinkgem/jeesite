@@ -16,7 +16,6 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -176,12 +175,13 @@ public class ArticleService extends BaseService {
 		// 设置过滤条件
 		BooleanQuery queryFilter = articleDao.getFullTextQuery(new BooleanClause(
 				new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
-		// 设置排序
-		Sort sort = new Sort(new SortField("updateDate", SortField.DOC, true));
+		// 设置排序（默认相识度排序）
+		Sort sort = null;//new Sort(new SortField("updateDate", SortField.DOC, true));
 		// 全文检索
 		articleDao.search(page, query, queryFilter, sort);
 		// 关键字高亮
-		articleDao.keywordsHighlight(query, page.getList(), "description","articleData.content");
+		articleDao.keywordsHighlight(query, page.getList(), 30, "title");
+		articleDao.keywordsHighlight(query, page.getList(), 130, "description","articleData.content");
 		
 		return page;
 	}

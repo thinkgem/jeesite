@@ -562,13 +562,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 设置关键字高亮
 	 * @param query 查询对象
 	 * @param list 设置高亮的内容列表
+	 * @param subLength 截取长度
 	 * @param fields 字段名
 	 */
-	public List<T> keywordsHighlight(BooleanQuery query, List<T> list, String... fields){
+	public List<T> keywordsHighlight(BooleanQuery query, List<T> list, int subLength, String... fields){
 		Analyzer analyzer = new IKAnalyzer();
 		Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlight\">", "</span>");   
 		Highlighter highlighter = new Highlighter(formatter, new QueryScorer(query)); 
-		highlighter.setTextFragmenter(new SimpleFragmenter(130)); 
+		highlighter.setTextFragmenter(new SimpleFragmenter(subLength)); 
 		for(T entity : list){ 
 			try {
 				for (String field : fields){
@@ -578,9 +579,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 						Reflections.invokeSetter(entity, fields[0], description);
 						break;
 					}
-					Reflections.invokeSetter(entity, fields[0], StringUtils.abbr(text, 130));
+					Reflections.invokeSetter(entity, fields[0], StringUtils.abbr(text, subLength*2));
 				}
-				//Reflections.invokeSetter(entity, fields[1], "sdfkjsdlkfjklsdjf");
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (InvalidTokenOffsetsException e) {
