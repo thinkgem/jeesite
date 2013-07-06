@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide-同一页面使用多个效果">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide-同一页面使用多个效果</title>
+<script type="text/javascript" src="../jquery1.42.min.js"></script><script type="text/javascript" src="../jquery.SuperSlide.2.1.js"></script>
+
+
+</head>
+
+<style type="text/css">
+	/* css 重置 */
+	*{margin:0; padding:0; list-style:none; }
+	body{ background:#fff; font:normal 12px/22px 宋体; padding:20px;  }
+	img{ border:0;  }
+	a{ text-decoration:none; color:#333;  }
+	a:hover{ color:#1974A1;  }
+	.js{width:90%; margin:10px auto 0 auto; }
+	.js p{ padding:5px 0; font-weight:bold; overflow:hidden;  }
+	.js p span{ float:right; }
+	.js p span a{ color:#f00; text-decoration:underline;   }
+	.js textarea{ height:100px;  width:98%; padding:5px; border:1px solid #ccc; border-top:2px solid #aaa;  border-left:2px solid #aaa;  }
+
+	h1{ font:normal 20px/200% "Microsoft YaHei"; _font-weight:bold; padding-bottom:10px;  }
+	h2{ font:normal 14px/200% "Microsoft YaHei"; _font-weight:bold; padding-bottom:10px; color:#c00;  }
+
+	/* 本例子css */
+
+	/* 焦点图效果 */
+	.picBtnTop{ width:500px; height:214px; border:1px solid #ccc; padding:5px;  position:relative;  overflow:hidden;  zoom:1;   }
+	.picBtnTop .hd{ width:98px;  height:214px; position:absolute; right:5px; overflow:hidden; }
+	.picBtnTop .hd ul li{ width:93px; text-align:center; padding:0 0 5px 5px;  }
+	.picBtnTop .hd ul li img{ width:85px; height:60px; border:4px solid #ddd; cursor:pointer; vertical-align:bottom; }
+	.picBtnTop .hd ul li.on{ background:url("images/icoleft.gif") no-repeat 0 28px; }
+	.picBtnTop .hd ul li.on img{ border-color:#f60;  }
+	.picBtnTop .bd{ width:400px;  height:214px; position:relative;  }
+	.picBtnTop .bd li{ position:relative; zoom:1; vertical-align:middle;}
+	.picBtnTop .bd li .pic{ position:relative; z-index:0;  }
+	.picBtnTop .bd li .pic img{ width:400px; height:214px; vertical-align:bottom; }
+	.picBtnTop .bd li .bg{ width:400px; height:30px; position:absolute; left:0; bottom:0; z-index:1;  background:#000; filter:alpha(opacity=60);opacity:0.6;    }
+	.picBtnTop .bd li .title{ width:400px; height:30px; line-height:30px; left:0; bottom:0;   position:absolute; z-index:2;  }
+	.picBtnTop .bd li .title a{ color:#fff; padding-left:15px;  }
+	#demo1,#demo2{ margin-bottom:20px;  }
+
+	/* tab选项切换效果 */
+	.slideTxtBox{ width:510px; border:1px solid #ddd; text-align:left;  }
+	.slideTxtBox .hd{ height:30px; line-height:30px; background:#f4f4f4; padding:0 20px; border-bottom:1px solid #ddd;  position:relative;  }
+	.slideTxtBox .hd ul{ float:left; position:absolute; left:20px; top:-1px; height:32px;   }
+	.slideTxtBox .hd ul li{ float:left; padding:0 15px; cursor:pointer;  }
+	.slideTxtBox .hd ul li.on{ height:30px;  background:#fff; border:1px solid #ddd; border-bottom:2px solid #fff; }
+	.slideTxtBox .bd ul{ padding:15px;  zoom:1;  }
+	.slideTxtBox .bd li{ height:24px; line-height:24px;   }
+	.slideTxtBox .bd li .date{ float:right; color:#999;  }
+
+</style>
+
+
+<body>
+
+
+<h1>下面3个示例演示了如何在同一个页面使用多个SuperSlide效果</h1>
+
+
+<h2>下面2个示例，演示如何在同一页面使用多个相同效果</h2>
+
+<!--  同一效果多次调用，你只需要各自指定一个不重复的ID，然后根据需要设置参数即可 -->
+<!-- 不同id=demo1  相同class="picBtnTop" -->
+<div id="demo1" class="picBtnTop">
+	<div class="hd">
+		<ul>
+			<li><img src="images/pic1.jpg" /></li>
+			<li><img src="images/pic2.jpg" /></li>
+			<li><img src="images/pic3.jpg" /></li>
+		</ul>
+	</div>
+	<div class="bd">
+		<ul>
+			<li>
+				<div class="bg"></div>
+				<div class="pic"><a href=""><img src="images/pic1.jpg" /></a></div>
+				<div class="title"><a href="">效果图1</a></div>
+			</li>
+			<li>
+				<div class="bg"></div>
+				<div class="pic"><a href=""><img src="images/pic2.jpg" /></a></div>
+				<div class="title"><a href="">效果图2</a></div>
+			</li>
+			<li>
+				<div class="bg"></div>
+				<div class="pic"><a href=""><img src="images/pic3.jpg" /></a></div>
+				<div class="title"><a href="">效果图3</a></div>
+			</li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+//唯一不同：jQuery("#demo1")
+jQuery("#demo1").slide({ mainCell:".bd ul",effect:"top",autoPlay:true,triggerTime:0 });</script>
+
+
+<!-- 不同id=demo2  相同class="picBtnTop" -->
+<div id="demo2" class="picBtnTop">
+	<div class="hd">
+		<ul>
+			<li><img src="images/pic1.jpg" /></li>
+			<li><img src="images/pic2.jpg" /></li>
+			<li><img src="images/pic3.jpg" /></li>
+		</ul>
+	</div>
+	<div class="bd">
+		<ul>
+			<li>
+				<div class="bg"></div>
+				<div class="pic"><a href=""><img src="images/pic1.jpg" /></a></div>
+				<div class="title"><a href="">效果图1</a></div>
+			</li>
+			<li>
+				<div class="bg"></div>
+				<div class="pic"><a href=""><img src="images/pic2.jpg" /></a></div>
+				<div class="title"><a href="">效果图2</a></div>
+			</li>
+			<li>
+				<div class="bg"></div>
+				<div class="pic"><a href=""><img src="images/pic3.jpg" /></a></div>
+				<div class="title"><a href="">效果图3</a></div>
+			</li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+//唯一不同：jQuery("#demo2")
+jQuery("#demo2").slide({ mainCell:".bd ul",effect:"top",autoPlay:true,triggerTime:0 });</script>
+
+
+<h2>下面1个示例，演示如何在同一页面使用其它效果</h2>
+<div class="slideTxtBox">
+	<div class="hd">
+		<ul><li>教育</li><li>培训</li><li>出国</li></ul>
+	</div>
+	<div class="bd">
+		<ul>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">口语：会说中文就能说英语！</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">农场摘菜不如在线学外语好玩</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学英语送ipad2,45天突破听说</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">学外语，上北外！</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">那些无法理解的荒唐事</a></li>
+		</ul>
+		<ul>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">名师教作文：３妙招巧写高分</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">耶鲁小子：教你备考SAT</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">数理化老师竟也看学习资料？</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">【推荐】名校英语方法曝光！</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012高考“考点”大曝光!!</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">涨价仍爆棚假日旅游冰火两重天</a></li>
+		</ul>
+		<ul>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">澳大利亚八大名校招生说明会</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">2012世界大学排名新鲜出炉</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">即刻预约今年最后一场教育展</a></li>
+			<li><span class="date">2011-11-11</span><a href="http://www.SuperSlide2.com" target="_blank">女友坚持警局完婚不抛弃</a></li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">jQuery(".slideTxtBox").slide();</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta property="wb:webmaster" content="125d4c886033b1d0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,jQuery万能特效,jQuery幻灯片,jQuery焦点图,jQuery Tab切换,jQuery图片滚动,jQuery无缝滚动">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - 基础效果</title>
+<script type="text/javascript" src="jquery1.42.min.js"></script>
+<link href="default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<style type="text/css">
+#content{  padding:32px 0 30px 0;    }
+</style>
+<!-- header S -->
+<div id="header" name="header">
+	<div class="headerBg"></div>
+	<span class="nav">
+		<a href="index.html">首页</a>|<a href="howToUse.html">如何使用</a>|<a href="param.html">查看参数</a>|<a href="demo.html">基础效果</a>|<a href="otherDemo.html">扩展效果</a>|<a href="downLoad.html">下载页面</a>|<a target="_blank" href="http://www.superslide2.com/blog/?cat=1">常见问题</a>|<a target="_blank" href="http://www.superslide2.com/blog/?cat=4">其它发明</a>|<a target="_blank" href="http://www.superslide2.com/blog/?page_id=12">交流反馈</a>
+	</span>
+	<div class="title">
+			<h1 tite="SuperSlide" id="logo">SuperSlide</h1><em>v2.1</em><span class="author"> -- 大话主席</span>
+	</div>
+</div>
+<!-- header E -->
+
+
+<!-- content S -->
+<div id="content" name="content">
+
+	<!-- 1 switchTab S -->
+	<div id="switchTab" class="demoBox">
+		<div name="effect1" id="effect1" class="hd"><h3><span>1. </span>标签切换 / 书签切换 / 默认效果</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/1.0-switchTab-iframe.html?" frameborder="0"></iframe>
+					<p class="botTit"><em>1.0-标签切换</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="fade">fade</option>
+										<option value="fold">fold</option>
+										<option value="left">left</option>
+										<option value="top">top</option>
+										<option value="leftLoop">leftLoop</option>
+										<option value="topLoop">topLoop</option>
+									</select>
+								</td>
+								<td class="n">自动运行<i>[autoPlay]</i>:</td>
+								<td>
+									<select name="autoPlay">
+										<option value="false">false</option>
+										<option value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="700">700</option>
+										<option value="1000">1000</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".slideTxtBox").slide({<i></i>});</span></p>
+					<p class="notice">注意：缓动效果对于fade影响不大;不同缓动效果设置适当“效果速度”，会有最佳效果。<br/></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 1 switchTab E -->
+
+	<!-- 2 focusNews S -->
+	<div id="focusNews" class="demoBox ">
+		<div name="effect2" id="effect2" class="hd"><h3><span>2. </span>焦点图 / 幻灯片</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/2.0-focus-iframe.html?&fade&true" frameborder="0"></iframe>
+					<p class="botTit"><em>2.0-焦点图/幻灯片</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="fade">fade</option>
+										<option value="fold">fold</option>
+										<option value="left">left</option>
+										<option value="top">top</option>
+										<option value="leftLoop">leftLoop</option>
+										<option value="topLoop">topLoop</option>
+									</select>
+								</td>
+								<td class="n">自动运行<i>[autoPlay]</i>:</td>
+								<td>
+									<select name="autoPlay">
+										<option value="false">false</option>
+										<option selected="selected" value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="700">700</option>
+										<option value="1000">1000</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".slideBox").slide({mainCell:".bd ul"<i></i>});</span></p>
+					<p class="notice">注意：缓动效果对于fade影响不大;不同缓动效果设置适当“效果速度”，会有最佳效果。<br/></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 2 focusNews E -->
+
+	<!-- 3 picScroll-left S -->
+	<div id="picScroll-left" class="demoBox ">
+		<div name="effect3" id="effect3" class="hd"><h3><span>3. </span>图片滚动-左</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/3.0-picScroll-left-iframe.html?&left&true&1&3" frameborder="0"></iframe>
+					<p class="botTit"><em>3.0-图片滚动-左</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="left" class="show">left</option>
+										<option value="leftLoop">leftLoop</option>
+									</select>
+								</td>
+								<td class="n">自动运行<i>[autoPlay]</i>:</td>
+								<td>
+									<select name="autoPlay">
+										<option value="false">false</option>
+										<option selected="selected" value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">滚动个数<i>[scroll]</i>:</td>
+								<td>
+									<select name="scroll">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3" selected="selected">3</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="700">700</option>
+										<option value="1000">1000</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".picScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true<i></i>});</span></p>
+					<p class="notice">注意1：不同缓动效果设置适当“效果速度”，会有最佳效果。<br/>
+						注意2：现在是全按钮开启情况，不需要按钮的时候，只要删除按钮html或者隐藏即可。
+					</p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 3 picScroll-left E -->
+
+	<!-- 4 picScroll-top S -->
+	<div id="picScroll-top" class="demoBox ">
+		<div name="effect4" id="effect4" class="hd"><h3><span>4. </span>图片滚动-上</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/4.0-picScroll-top-iframe.html?&top&true&1&3" frameborder="0"></iframe>
+					<p class="botTit"><em>4.0-图片滚动-上</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select  rel="string" name="effect">
+										<option value="top" class="show">top</option>
+										<option value="topLoop">topLoop</option>
+									</select>
+								</td>
+								<td class="n">自动运行<i>[autoPlay]</i>:</td>
+								<td>
+									<select name="autoPlay">
+										<option value="false">false</option>
+										<option selected="selected" value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">滚动个数<i>[scroll]</i>:</td>
+								<td>
+									<select name="scroll">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3" selected="selected">3</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="700">700</option>
+										<option value="1000">1000</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".picScroll-top").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true<i></i>});</span></p>
+					<p class="notice">注意1：不同缓动效果设置适当“效果速度”，会有最佳效果。<br/>
+						注意2：现在是全按钮开启情况，不需要按钮的时候，只要删除按钮html或者隐藏即可。
+					</p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 4 picScroll-top E -->
+
+	<!-- 5 picMarquee-left S -->
+	<div id="picMarquee-left" class="demoBox ">
+		<div name="effect5" id="effect5" class="hd"><h3><span>5. </span>图片无缝滚动-左</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/5.0-picMarquee-left-iframe.html?&leftMarquee&3&50&false&true&click" frameborder="0"></iframe>
+					<p class="botTit"><em>5.0-图片无缝滚动-左</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="leftMarquee" class="show">leftMarquee</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3" selected="selected">3</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">运行速度<i>[interTime]</i>:</td>
+								<td>
+									<select name="interTime">
+										<option value="50" class="show">50</option>
+										<option value="25">25</option>
+										<option value="10">10</option>
+									</select>
+								</td>
+								<td class="n">默认反方向运动<i>[opp]</i>:</td>
+								<td>
+									<select name="opp">
+										<option value="false">false</option>
+										<option value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n new" title="v2.1 新增：长按按钮10倍加速运行。">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click" selected="selected">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".picMarquee-left").slide({mainCell:".bd ul",autoPlay:true<i></i>});</span></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 5 picMarquee-left E -->
+
+	<!-- 6 picMarquee-top S -->
+	<div id="picMarquee-top" class="demoBox ">
+		<div name="effect6" id="effect6" class="hd"><h3><span>6. </span>图片无缝滚动-上</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/6.0-picMarquee-top-iframe.html?&topMarquee&3&50&false&true&click" frameborder="0"></iframe>
+					<p class="botTit"><em>6.0-图片无缝滚动-上</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="topMarquee" class="show">topMarquee</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3" selected="selected">3</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">运行速度<i>[interTime]</i>:</td>
+								<td>
+									<select name="interTime">
+										<option value="50" class="show">50</option>
+										<option value="25">25</option>
+										<option value="10">10</option>
+									</select>
+								</td>
+								<td class="n">默认反方向运动<i>[opp]</i>:</td>
+								<td>
+									<select name="opp">
+										<option value="false">false</option>
+										<option value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n new" title="v2.1 新增：长按按钮10倍加速运行。">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click" selected="selected">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".picMarquee-top").slide({mainCell:".bd ul",autoPlay:true<i></i>});</span></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 6 picMarquee-top E -->
+
+	<!-- 7 txtScroll-left S -->
+	<div id="txtScroll-left" class="demoBox ">
+		<div name="effect7" id="effect7" class="hd"><h3><span>7. </span>文字滚动-左</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/7.0-txtScroll-left-iframe.html?&left&true&2&2" frameborder="0"></iframe>
+					<p class="botTit"><em>7.0-文字滚动-左</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="left" class="show">left</option>
+										<option value="leftLoop">leftLoop</option>
+									</select>
+								</td>
+								<td class="n">自动运行<i>[autoPlay]</i>:</td>
+								<td>
+									<select name="autoPlay">
+										<option value="false">false</option>
+										<option selected="selected" value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">滚动个数<i>[scroll]</i>:</td>
+								<td>
+									<select name="scroll">
+										<option value="1">1</option>
+										<option value="2" selected="selected">2</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2" selected="selected">2</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="700">700</option>
+										<option value="1000">1000</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".txtScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true<i></i>});</span></p>
+					<p class="notice">注意1：不同缓动效果设置适当“效果速度”，会有最佳效果。<br/>
+						注意2：现在是全按钮开启情况，不需要按钮的时候，只要删除按钮html或者隐藏即可。
+					</p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 7 txtScroll-left E -->
+
+	<!-- 8 txtScroll-top S -->
+	<div id="txtScroll-top" class="demoBox ">
+		<div name="effect8" id="effect8" class="hd"><h3><span>8. </span>文字滚动-上</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/8.0-txtScroll-top-iframe.html?&top&true&1&5" frameborder="0"></iframe>
+					<p class="botTit"><em>8.0-文字滚动-上</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select  rel="string" name="effect">
+										<option value="top" class="show">top</option>
+										<option value="topLoop">topLoop</option>
+									</select>
+								</td>
+								<td class="n">自动运行<i>[autoPlay]</i>:</td>
+								<td>
+									<select name="autoPlay">
+										<option value="false">false</option>
+										<option selected="selected" value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">滚动个数<i>[scroll]</i>:</td>
+								<td>
+									<select name="scroll">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5" selected="selected">5</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="700">700</option>
+										<option value="1000">1000</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".txtScroll-top").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true<i></i>});</span></p>
+					<p class="notice">注意1：不同缓动效果设置适当“效果速度”，会有最佳效果。<br/>
+						注意2：现在是全按钮开启情况，不需要按钮的时候，只要删除按钮html或者隐藏即可。
+					</p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 8 txtScroll-top E -->
+
+	<!-- 9 txtMarquee-left S -->
+	<div id="txtMarquee-left" class="demoBox ">
+		<div name="effect9" id="effect9" class="hd"><h3><span>9. </span>文字无缝滚动-左</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/9.0-txtMarquee-left-iframe.html?&leftMarquee&3&50&false&true&click" frameborder="0"></iframe>
+					<p class="botTit"><em>9.0-文字无缝滚动-左</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="leftMarquee" class="show">leftMarquee</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="2" selected="selected">2</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">运行速度<i>[interTime]</i>:</td>
+								<td>
+									<select name="interTime">
+										<option value="50" class="show">50</option>
+										<option value="25">25</option>
+										<option value="10">10</option>
+									</select>
+								</td>
+								<td class="n">默认反方向运动<i>[opp]</i>:</td>
+								<td>
+									<select name="opp">
+										<option value="false">false</option>
+										<option value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n new" title="v2.1 新增：长按按钮10倍加速运行。">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click" selected="selected">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".txtMarquee-left").slide({mainCell:".bd ul",autoPlay:true<i></i>});</span></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 9 txtMarquee-left E -->
+
+	<!-- 10 txtMarquee-top S -->
+	<div id="txtMarquee-top" class="demoBox ">
+		<div name="effect10" id="effect10" class="hd"><h3><span>10. </span>文字无缝滚动-上</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/10.0-txtMarquee-top-iframe.html?&topMarquee&5&50&false&true&click" frameborder="0"></iframe>
+					<p class="botTit"><em>10.0-文字无缝滚动-上</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="topMarquee" class="show">topMarquee</option>
+									</select>
+								</td>
+								<td class="n">可视个数<i>[vis]</i>:</td>
+								<td>
+									<select name="vis">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5" selected="selected">5</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">运行速度<i>[interTime]</i>:</td>
+								<td>
+									<select name="interTime">
+										<option value="50" class="show">50</option>
+										<option value="25">25</option>
+										<option value="10">10</option>
+									</select>
+								</td>
+								<td class="n">默认反方向运动<i>[opp]</i>:</td>
+								<td>
+									<select name="opp">
+										<option value="false">false</option>
+										<option value="true">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效">前后按钮循环<i>[pnLoop]</i>:</td>
+								<td>
+									<select name="pnLoop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n new" title="v2.1 新增：长按按钮10倍加速运行。">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click" selected="selected">click</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移到容器层是否停止播放">停止播放<i>[mouseOverStop]</i>:</td>
+								<td>
+									<select name="mouseOverStop">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".txtMarquee-top").slide({mainCell:".bd ul",autoPlay:true<i></i>});</span></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 10 txtMarquee-top E -->
+
+
+	<!-- 11 nav S -->
+	<div id="topNav" class="demoBox ">
+		<div name="effect11" id="effect11" class="hd"><h3><span>11. </span>导航</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/11.0-nav-iframe.html?&slideDown&300&0&true&true&" frameborder="0"></iframe>
+					<p class="botTit"><em>12.0-导航</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="fade">fade</option>
+										<option value="slideDown" selected="selected">slideDown</option>
+									</select>
+								</td>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="300" selected="selected">300</option>
+										<option value="100">100</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n" title="鼠标停留多少毫秒后才触发效果">延迟触发<i>[triggerTime]</i>:</td>
+								<td>
+									<select name="triggerTime">
+										<option value="150">150</option>
+										<option value="300">300</option>
+										<option value="0" selected="selected">0</option>
+									</select>
+								</td>
+								<td class="n new"  title="v2.1 新增：默认是否执行效果">默认执行<i>[defaultPlay]</i>:</td>
+								<td>
+									<select name="defaultPlay">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new" title="v2.1 新增：鼠标移走，0.3秒后返回默认状态">返回默认<i>[returnDefault]</i>:</td>
+								<td>
+									<select name="returnDefault">
+										<option value="false">false</option>
+										<option value="true" selected="selected">true</option>
+									</select>
+								</td>
+								<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+							</tr>
+
+
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery("#nav").slide({ type:"menu", titCell:".nLi", targetCell:".sub"<i></i>});</span></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 11 nav E -->
+
+
+	<!-- 12 sideMenu S -->
+	<div id="sideMenu" class="demoBox ">
+		<div name="effect12" id="effect12" class="hd"><h3><span>12. </span>手风琴</h3></div>
+		<div class="bd">
+				<div class="iframeWrap">
+					<iframe allowTransparency="true" scrolling="no" _src="demo/iframe/12.0-sideMenu-iframe.html?&slideDown&300&mouseover&150&true&true&" frameborder="0"></iframe>
+					<p class="botTit"><em>13.0-手风琴</em></p>
+				</div>
+
+				<div class="params">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr class="tit"> <td colspan="4">常用参数(切换看看)</td> </tr>
+							<tr>
+								<td class="n">效果<i>[effect]</i>:</td>
+								<td>
+									<select rel="string" name="effect">
+										<option value="fade">fade</option>
+										<option value="slideDown" selected="selected">slideDown</option>
+									</select>
+								</td>
+								<td class="n">效果速度<i>[delayTime]</i>:</td>
+								<td>
+									<select name="delayTime">
+										<option value="500">500</option>
+										<option value="300" selected="selected">300</option>
+										<option value="100">100</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n">触发方式<i>[trigger]</i>:</td>
+								<td>
+									<select rel="string" name="trigger">
+										<option value="mouseover">mouseover</option>
+										<option value="click">click</option>
+									</select>
+								</td>
+								<td class="n" title="鼠标停留多少毫秒后才触发效果">延迟触发<i>[triggerTime]</i>:</td>
+								<td>
+									<select name="triggerTime">
+										<option value="150">150</option>
+										<option value="300">300</option>
+										<option value="0">0</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="n new"  title="v2.1 新增：默认是否执行效果">默认执行<i>[defaultPlay]</i>:</td>
+								<td>
+									<select name="defaultPlay">
+										<option value="true">true</option>
+										<option value="false">false</option>
+									</select>
+								</td>
+								<td class="n new" title="v2.1 新增：鼠标移走，0.3秒后返回默认状态">返回默认<i>[returnDefault]</i>:</td>
+								<td>
+									<select name="returnDefault">
+										<option value="false">false</option>
+										<option value="true" selected="selected">true</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+							 	<td class="n">缓动效果<i>[easing]</i>:</td>
+								<td>
+									<select rel="string" name="easing">
+										<option value="swing">swing</option>
+										<option value="easeOutCirc">easeOutCirc</option>
+										<option value="easeInQuint">easeInQuint</option>
+										<option value="easeInBack">easeInBack</option>
+										<option value="easeOutBounce">easeOutBounce</option>
+										<option value="easeOutElastic">easeOutElastic</option>
+										<option value="easing-more">更多</option>
+									</select>
+								</td>
+							</tr>
+
+
+					</table>
+					<p class="jsCode">当前调用代码：<span class="curJsCode">jQuery(".sideMen").slide({titCell:"h3", targetCell:"ul",defaultIndex:1<i></i>});</span></p>
+				</div>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- 12 sideMenu E -->
+
+	<!-- T1 others S -->
+	<div id="others" class="demoBox">
+		<div name="effectT1" id="effectT1" class="hd"><h3><span>T1. </span>其它基础效果</h3></div>
+		<div class="bd">
+
+			<ul class="demoList">
+				<li>
+						<div class="pic">
+							<img src="demo/T1.1-multipleLine.jpg" />
+						</div>
+						<h3>多行滚动基础示例</h3>
+				</li>
+				<li>
+						<div class="pic">
+							<img src="demo/T1.2-multipleColumn.jpg" />
+						</div>
+						<h3>多列滚动基础示例</h3>
+				</li>
+				<li>
+						<div class="pic">
+							<img src="demo/T1.3-targetCell.jpg" />
+						</div>
+						<h3>targetCell基础示例</h3>
+				</li>
+				<li>
+						<div class="pic">
+							<img src="demo/T1.4-SuperSlideGroup.jpg" />
+						</div>
+						<h3>SuperSlide组合应用基础示例</h3>
+				</li>
+				<li class="o">
+						<div class="pic">
+							<a href="demo/T1.5-onePage.html" target="_blank"><img src="demo/T1.5-onePage.jpg" /></a>
+						</div>
+						<h3>同一页面使用多个效果示例</h3>
+				</li>
+				<li class="new">
+						<div class="pic">
+							<img src="demo/T1.6-doubleTab.jpg" />
+						</div>
+						<h3>双重Tab（slide组合）</h3>
+						<i></i>
+				</li>
+				<li class="new">
+						<div class="pic">
+							<img src="demo/T1.7-tabMarquee.jpg" />
+						</div>
+						<h3>Tab+无缝滚动（slide组合）</h3>
+						<i></i>
+				</li>
+				<li class="new">
+						<div class="pic">
+							<img src="demo/T1.8-picFocus.jpg" />
+						</div>
+						<h3>图片导航焦点图</h3>
+						<i></i>
+				</li>
+			</ul>
+
+		</div><!-- bd E -->
+	</div>
+	<!-- T1 others E -->
+
+	<script type="text/javascript">
+		//隔行添加demoBoxEven
+		$(".demoBox").each(function(i){ if (i%2==0)$(this).addClass("demoBoxEven"); });
+		//当前调用代码初始化
+		$(".params").each(function(ind){
+			$(this).find(".curJsCode").eq(ind).html(getJsCode(ind));
+		});
+
+		//切换参数调用切换不同效果
+		$(".params select").change(function(){
+
+			 if($(this).val()=="easing-more"){ window.open("otherDemo/T2.1/easing.html"); return; }
+
+			 var srcStr="";
+			 var ind=$(".params").index( $(this).closest(".params") );
+
+			 var iframe = $(this).closest(".demoBox").find("iframe");
+			 var selects = $(this).closest(".params").find("select");
+
+			 selects.each(function(){
+				srcStr += "&"+$(this).val();
+			 });
+			 iframe.attr("src",iframe.attr("src").split('&')[0]+srcStr);
+
+			$(".curJsCode").eq(ind).html(getJsCode(ind));
+		});
+
+		//当前调用代码
+		function getJsCode( ind ){
+			var curJsCode="";
+			var $cur = $(".curJsCode").eq(ind);
+
+			$(".params").eq(ind).find("select").each(function(){
+				if( $("option",this).index( $("option:selected",this) ) !=0 || $("option",this).attr("class")=="show")
+				{
+					var tempVal = $(this).attr("rel")=="string"?('"'+$(this).val()+'"'):$(this).val();
+					curJsCode+= "," + $(this).attr("name")+":"+tempVal;
+				}
+			});
+			if(ind==0) curJsCode = curJsCode.substring(1);
+			$cur.find("i").html(curJsCode);
+			curJsCode = $cur.html();
+			return curJsCode;
+		}
+
+
+	</script>
+
+
+</div>
+<!-- content E -->
+
+	<!-- 隐藏代码盒子 S -->
+	<div id="displayBox">
+		<div class="hd"><a>X</a><h3></h3></div>
+		<div class="bd">
+			<iframe allowTransparency="true" scrolling="yse" src="" frameborder="0"></iframe>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+			$(".demoList li").hover(function(){ $(this).addClass("on") },function(){ $(this).removeClass("on") });
+			$(".demoList li").each(function(i){
+				$(this).attr("title", $("img",this).attr("src").split("/")[1] +"-"+ $("h3",this).text() )
+			});
+
+			$(".demoList li:not('.o')").click(function(){
+				$("#displayBox h3").text(  $("h3",this).text() );
+				$("#displayBox iframe").attr("src",$("img",this).attr("src").replace(".jpg",".html"));
+				$("#displayBox").show();
+			});
+
+			//当前效果代码
+			$("#displayBox .hd a").click(function(){ $("#displayBox").hide() }); //关闭隐藏盒子
+			$("#displayBox").blur( function(){ $(this).hide } );
+
+			var isIE6 = !!window.ActiveXObject&&!window.XMLHttpRequest;
+			if( isIE6 ){ $(window).scroll(function(){ $("#displayBox").css("top", $(document).scrollTop()+10) }); }
+	</script>
+
+
+<!-- 右侧导航 -->
+
+<div class="rightNav">
+	<a href="#content"><em>^</em>回到顶部</a>
+	<a href="#effect1"><em>1</em>书签切换</a>
+	<a href="#effect2"><em>2</em>幻灯片</a>
+	<a href="#effect3"><em>3</em>图片滚动-左</a>
+	<a href="#effect4"><em>4</em>图片滚动-上</a>
+	<a href="#effect5"><em>5</em>图片无缝滚动-左</a>
+	<a href="#effect6"><em>6</em>图片无缝滚动-上</a>
+	<a href="#effect7"><em>7</em>文字滚动-左</a>
+	<a href="#effect8"><em>8</em>文字滚动-上</a>
+	<a href="#effect9"><em>9</em>文字无缝滚动-左</a>
+	<a href="#effect10"><em>10</em>文字无缝滚动-上</a>
+	<a class="new" href="#effect11"><em>11</em>常用导航 [v2.1]</a>
+	<a class="new" href="#effect12"><em>12</em>手风琴 [v2.1]</a>
+	<a href="#effectT1"><em>T1</em>其它基础效果</a>
+
+</div>
+<script type="text/javascript">
+	//右侧导航
+	var btb=$(".rightNav");
+	var tempS;
+	$(".rightNav").hover(function(){
+			var thisObj = $(this);
+			tempS = setTimeout(function(){
+			thisObj.find("a").each(function(i){
+				var tA=$(this);
+				setTimeout(function(){ tA.animate({right:"0"},200);},50*i);
+			});
+		},200);
+
+	},function(){
+		if(tempS){ clearTimeout(tempS); }
+		$(this).find("a").each(function(i){
+			var tA=$(this);
+			setTimeout(function(){ tA.animate({right:"-110"},200,function(){
+			});},50*i);
+		});
+
+	});
+	var isIE6 = !!window.ActiveXObject&&!window.XMLHttpRequest;
+
+	//滚动加载
+	var scrollLoad =function(){
+		$("#content iframe[_src]").each(function(){
+				var t = $(this);
+				if( t.offset().top<= $(document).scrollTop() + $(window).height()  )
+				{
+					t.attr( "src",t.attr("_src") ).removeAttr("_src");
+				}
+		});//each E
+	}
+
+	scrollLoad();
+	$(window).scroll(function(){ 
+		if(isIE6){ btb.css("top", $(document).scrollTop()+30) }
+		scrollLoad();
+	});
+</script>
+
+
+<div id="footer">Copyright ©2011-2013 大话主席 </div>
+
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+

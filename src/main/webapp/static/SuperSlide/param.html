@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta property="wb:webmaster" content="125d4c886033b1d0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,jQuery万能特效,jQuery幻灯片,jQuery焦点图,jQuery Tab切换,jQuery图片滚动,jQuery无缝滚动">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - 查看参数</title>
+<script type="text/javascript" src="jquery1.42.min.js"></script>
+<link href="default.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<!-- header S -->
+<div id="header">
+	<div class="headerBg"></div>
+	<span class="nav">
+		<a href="index.html">首页</a>|<a href="howToUse.html">如何使用</a>|<a href="param.html">查看参数</a>|<a href="demo.html">基础效果</a>|<a href="otherDemo.html">扩展效果</a>|<a href="downLoad.html">下载页面</a>|<a target="_blank" href="http://www.superslide2.com/blog/?cat=1">常见问题</a>|<a target="_blank" href="http://www.superslide2.com/blog/?cat=4">其它发明</a>|<a target="_blank" href="http://www.superslide2.com/blog/?page_id=12">交流反馈</a>
+	</span>
+	<div class="title">
+			<h1 tite="SuperSlide" id="logo">SuperSlide</h1><em>v2.1</em><span class="author"> -- 大话主席</span>
+	</div>
+</div>
+<!-- header E -->
+
+<!-- content S -->
+<div id="content" class="paramPage">
+		<ul class="notice">
+			<li class="all on">全部参数</li><li class="need">必须理解参数[新手]</li>
+		</ul>
+
+		<table class="param" border="0" cellspacing="0" cellpadding="0">
+		  <tr class="imp">
+		    <th width="100">参数</th>
+			<th width="90">版本</th>
+		    <th width="80">默认值</th>
+			<th>说明</th>
+			<th width="40">详细</th>
+		  </tr>
+
+		  <tr>
+		    <td class="t">type</td>
+			<td class="t">2.1</td>
+			<td class="t">slide</td>
+		    <td class="intro">效果类型，可选"slide"||"menu"，引入type:"menu"专门处理菜单/导航效果</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr>
+		    <td class="t">defaultPlay</td>
+			<td class="t">2.1</td>
+			<td class="t">true</td>
+		    <td class="intro">默认是否执行效果（第一次运行是否执行效果）常用于导航/菜单</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr>
+		    <td class="t">returnDefault</td>
+			<td class="t">2.1</td>
+			<td class="t">false</td>
+		    <td class="intro">鼠标移出容器，是否返回默认状态，常用于导航/菜单</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr>
+		    <td class="t">mouseOverStop</td>
+			<td class="t">2.1</td>
+			<td class="t">true</td>
+		    <td class="intro">鼠标移到容器层（无缝滚动是mainCell）是否停止播放</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr>
+		    <td class="t">playStateCell</td>
+			<td class="t">2.1</td>
+			<td class="t">".playState"</td>
+		    <td class="intro">播放/暂停状态按钮，点击后会增加/删除"pauseState"类名用于控制样色。可参考 <a target="_blank" href="http://www.superslide2.com/otherDemo.html#effect2">[2.22-真·全屏焦点图]</a></td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr>
+		    <td class="t">switchLoad</td>
+			<td class="t">2.0 &gt; 2.1</td>
+			<td class="t">null</td>
+		    <td class="intro">内容切换加载，暂时只支持图片，必须配合后台程序使用。当为图片的时候switchLoad为图片实际路径的属性名称，例如switchLoad:"_src"<br/>
+				[v2.1] 修复当scroll>1时，switchLoad无效的bug。
+			</td>
+			<td class="t"><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.5/switchLoad.html">详解</a></td>
+		  </tr>
+		  <tr>
+		    <td class="t">easing</td>
+			<td class="t">2.0 &gt; 2.1</td>
+			<td class="t">"swing"</td>
+		    <td class="intro">缓动效果；</br>[v2.1]更改默认效果为“swing”，使效果更流畅</td>
+			<td class="t"><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.1/easing.html">所有</a></td>
+		  </tr>
+		  <tr>
+		    <td class="t">startFun</td>
+			<td class="t">2.0 &gt; 2.1</td>
+			<td class="t">null</td>
+		    <td class="intro">每次切换效果开始时执行函数，用于处理特殊情况或创建更多效果。用法 satrtFun:function(i,c){ }； 其中i为当前分页，c为总页数<br/>
+				[v2.1]增加传递参数，startFun:function( i, c, slider, titCell, mainCell, targetCell, prevCell, nextCell ){}，这样简写就方便了。</br>
+				例如 jQuery(".slideBox").slide({ startFun:function( i,c,s ){ s.show() } }); 这里的 s.show() 相当于 jQuery(".slideBox").show() 
+			</td>
+			<td class="t"><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.2/funIntro.html">详解</a></td>
+		  </tr>
+		  <tr>
+		    <td class="t">endFun</td>
+			<td class="t">2.0 &gt; 2.1</td>
+			<td class="t">null</td>
+		    <td class="intro">每次切换效果结束时执行函数，用法和startFun一致<br/>
+			</td>
+			<td class="t"><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.2/funIntro.html">详解</a></td>
+		  </tr>
+		  <tr>
+		    <td class="t">triggerTime</td>
+			<td class="t">2.0</td>
+			<td class="t">150</td>
+		    <td class="intro">毫秒，titCell触发时间，默认150毫秒延迟，以防重复执行效果。若为0即鼠标移过titCell立刻执行效果</td>
+			<td class="t"></td>
+		  </tr>
+		  <tr>
+		    <td class="t">targetCell</td>
+			<td class="t">2.0 &gt; 2.1</td>
+			<td class="t">null</td>
+		    <td class="intro">切换元素对象，处理内容切换元素非包裹状态下等情况，实现更多效果，处理更多情况，能和titCell、mainCell同时使用。只支持fade效果。<br/>
+				[v2.1] 增加支持slideDown效果。
+			</td>
+			<td class="t"><a class="link" target="_blank" href="http://www.superslide2.com/otherDemo/T2.3/targetCell.html">详解</a></td>
+		  </tr>
+		  <tr>
+		    <td class="t">pageStateCell</td>
+			<td class="t">2.0</td>
+			<td class="t">".pageState"</td>
+		    <td class="intro">分页状态对象，用于显示分页状态，例如：2/3</td>
+			<td class="t"></td>
+		  </tr>
+		  <tr>
+		    <td class="t">pnLoop</td>
+			<td class="t">2.0</td>
+			<td class="t">true</td>
+		    <td class="intro">前/后按钮是否继续循环，若为false则当翻动到最前/后页时，前/后按钮点击无效，同时增加prevStop/nextStop类名控制样色</td>
+			<td class="t"></td>
+		  </tr>
+		  <tr>
+		    <td class="t">opp</td>
+			<td class="t">2.0</td>
+			<td class="t">false</td>
+		    <td class="intro">默认反方向运动，例如 effect:"leftMarquee" 然后设置 opp:true，则效果为右滚动。常用于leftMarquee/topMarquee</td>
+			<td class="t"></td>
+		  </tr>
+		  <tr class="imp">
+		    <td class="t"><b>autoPage</b></td>
+		    <td class="t">1.2 &gt; 2.1</td>
+			<td class="t">false</td>
+		    <td class="intro">
+				[v1.2] 程序自动分页，<i>需结合titCell使用，若为true，则titCell为导航元素的包裹层对象。ps：scroll>1时，记得设置autoPage:true，否则分页错误</i>。<br/>
+				[v2.1] 支持自定义分页html，$为数字替换位置。例如autoPage:"&lt;li&gt;&lt;a&gt;$&lt;/a&gt;&lt;/li&gt;"，如果不想输出数字：autoPage:"&lt;li&gt;&lt;a&gt;&lt;/a&gt;&lt;/li&gt;"。
+			</td>
+			<td class="t"><a class="link" target="_blank" href="images/autoPage.png">图解</a></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t"><b>titCell</b></td>
+			<td class="t">1.0</td>
+			<td class="t">".hd li"</td>
+		    <td class="intro">导航元素对象（鼠标的触发元素对象）</td>
+			<td class="t"><a class="link" target="_blank" href="images/titCell_mainCell.png">图解</a></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t"><b>mainCell</b></td>
+			<td class="t">1.0</td>
+			<td class="t">".bd"</td>
+		    <td class="intro">切换元素的包裹层对象</td>
+			<td class="t"><a class="link" target="_blank" href="images/titCell_mainCell.png">图解</a></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">effect</td>
+			<td class="t">1.0 > 2.0 >2.1</td>
+			<td class="t">"fade"</td>
+		    <td class="intro">动画效果<br/>
+			[v1.0] fade：渐显； ||   top：上滚动；||   left：左滚动；||  topLoop：上循环滚动；||   leftLoop：左循环滚动；||  topMarquee：上无缝循环滚动；||   leftMarquee：左无缝循环滚动；<br/> 
+			[v2.0] fold：淡入淡出<br/> 
+			[v2.1] slideDown：下拉效果</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">autoPlay</td>
+			<td class="t">1.0</td>
+			<td class="t">false</td>
+		    <td class="intro">自动运行</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">interTime</td>
+			<td class="t">1.0</td>
+			<td class="t">2500</td>
+		    <td class="intro">毫秒；自动运行间隔。当effect为无缝滚动(topMarquee/leftMarquee)时，相当于运行速度。</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">delayTime</td>
+			<td class="t">1.0</td>
+			<td class="t">500</td>
+		    <td class="intro">毫秒；切换效果持续时间（一次切换效果执行所用的时间长度）。</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">trigger</td>
+			<td class="t">1.0</td>
+			<td class="t">"mouseover"</td>
+		    <td class="intro">titCell触发方式 || mouseover：鼠标移过触发；|| click：鼠标点击触发；</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">scroll</td>
+			<td class="t">1.0</td>
+			<td class="t">1</td>
+		    <td class="intro">每次滚动个数。</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="imp">
+		    <td class="t">vis</td>
+			<td class="t">1.0</td>
+			<td class="t">1</td>
+		    <td class="intro">visible缩写，<i>mainCell的可视范围个数，当实际内容个数少于可视个数的时候，不执行SuperSlide效果。</i></td>
+			<td class="t"><a class="link" target="_blank" href="images/vis.png">图解</a></td>
+		  </tr>
+
+		  <tr class="n">
+		    <td class="t">prevCell</td>
+			<td class="t">1.0</td>
+			<td class="t">".prev"</td>
+		    <td class="intro">前一个/页按钮对象。</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="n">
+		    <td class="t">nextCell</td>
+			<td class="t">1.0</td>
+			<td class="t">".next"</td>
+		    <td class="intro">后一个/页按钮对象。</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="n">
+		    <td class="t">defaultIndex</td>
+			<td class="t">1.0</td>
+			<td class="t">0</td>
+		    <td class="intro">默认的当前位置索引。0是第一个； defaultIndex:1 时，相当于从第2个开始执行</td>
+			<td class="t"></td>
+		  </tr>
+
+		  <tr class="n">
+		    <td class="t">titOnClassName</td>
+			<td class="t">1.0</td>
+			<td class="t">"on"</td>
+		    <td class="intro">当前titCell位置自动增加的class名称</td>
+			<td class="t"></td>
+		  </tr>
+		</table>
+
+		<script type="text/javascript">
+
+			$(".param tr").hover(function(){ $(this).addClass("on") },function(){ $(this).removeClass("on") });
+			$(".notice .need").click(function(){
+				$(this).addClass("on").siblings().removeClass("on");
+				$(".param tr:not('.imp')").hide(300);
+			});
+			$(".notice .all").click(function(){
+				$(this).addClass("on").siblings().removeClass("on");
+				$(".param tr:not('.imp')").show(300);
+			});
+
+		</script>
+
+</div>
+<!-- content E -->
+
+
+<div id="footer">Copyright ©2011-2013 大话主席 </div>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>

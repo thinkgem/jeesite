@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,图片导航焦点图">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - 图片导航焦点图</title>
+<script type="text/javascript" src="../jquery1.42.min.js"></script><script type="text/javascript" src="../jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+
+
+
+		<style type="text/css">
+		/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+		a:hover{ color:#1974A1;  }
+		.js{width:90%; margin:10px auto 0 auto; }
+		.js p{ padding:5px 0; font-weight:bold; overflow:hidden;  }
+		.js p span{ float:right; }
+		.js p span a{ color:#f00; text-decoration:underline;   }
+		.js textarea{ height:100px;  width:98%; padding:5px; border:1px solid #ccc; border-top:2px solid #aaa;  border-left:2px solid #aaa;  }
+
+		/* 本例子css */
+		.picFocus{ margin:0 auto;  width:467px; border:1px solid #ccc; padding:5px;  position:relative;  overflow:hidden;  zoom:1;   }
+		.picFocus .hd{ width:100%; padding-top:5px;  overflow:hidden; }
+		.picFocus .hd ul{ margin-right:-5px;  overflow:hidden; zoom:1; }
+		.picFocus .hd ul li{ padding-top:5px; float:left;  text-align:center;  }
+		.picFocus .hd ul li img{ width:109px; height:65px; border:2px solid #ddd; cursor:pointer; margin-right:5px;   }
+		.picFocus .hd ul li.on{ background:url("images/icoUp.gif") no-repeat center 0; }
+		.picFocus .hd ul li.on img{ border-color:#f60;  }
+		.picFocus .bd li{ vertical-align:middle; }
+		.picFocus .bd img{ width:467px; height:230px; display:block;  }
+
+		</style>
+
+		<div class="picFocus">
+			<div class="bd">
+				<ul>
+					<li><a target="_blank" href="www.SuperSlide2.com"><img src="images/pic1.jpg" /></a></li>
+					<li><a target="_blank" href="www.SuperSlide2.com"><img src="images/pic2.jpg" /></a></li>
+					<li><a target="_blank" href="www.SuperSlide2.com"><img src="images/pic3.jpg" /></a></li>
+					<li><a target="_blank" href="www.SuperSlide2.com"><img src="images/pic4.jpg" /></a></li>
+				</ul>
+			</div>
+
+			<div class="hd">
+				<ul>
+					<li><img src="images/pic1.jpg" /></li>
+					<li><img src="images/pic2.jpg" /></li>
+					<li><img src="images/pic3.jpg" /></li>
+					<li><img src="images/pic4.jpg" /></li>
+				</ul>
+			</div>
+
+		</div>
+		<script type="text/javascript">jQuery(".picFocus").slide({ mainCell:".bd ul",effect:"left",autoPlay:true });</script>
+
+
+
+	<div class="js">
+		<p>js调用：</p>
+		<textarea>jQuery(".picFocus").slide({ mainCell:".bd ul",effect:"left",autoPlay:true });</textarea>
+	</div>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+

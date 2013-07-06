@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,jQuery文字无缝滚动特效,javascript文字无缝滚动特效">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - 文字无缝滚动特效-左</title>
+<script type="text/javascript" src="../../jquery1.42.min.js"></script><script type="text/javascript" src="../../jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+
+
+
+		<style type="text/css">
+		/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+		a:hover{ color:#1974A1;  }
+
+		/* 本例子css */
+		.txtMarquee-left{ position:relative;  border:1px solid #ccc;   }
+		.txtMarquee-left .hd{ overflow:hidden;  height:30px; background:#f4f4f4; padding:0 10px;  }
+		.txtMarquee-left .hd .prev,.txtMarquee-left .hd .next{ display:block;  width:5px; height:9px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden; cursor:pointer; 			 cursor:pointer; background:url("../images/arrow.png") no-repeat;}
+		.txtMarquee-left .hd .next{ background-position:0 -50px;  }
+		.txtMarquee-left .hd .prevStop{ background-position:-60px 0; }
+		.txtMarquee-left .hd .nextStop{ background-position:-60px -50px; }
+		.txtMarquee-left .bd{ padding:10px; }
+		.txtMarquee-left .bd .tempWrap{ width:425px !important; }/* 用 !important覆盖SuperSlide自动生成的宽度，这样就可以手动控制可视宽度。 */
+		.txtMarquee-left .bd ul{ overflow:hidden; zoom:1; }
+		.txtMarquee-left .bd ul li{ margin-right:20px;  float:left; height:24px; line-height:24px;  text-align:left; _display:inline; width:auto !important;  }/* 用 width:auto !important 覆盖SuperSlide自动生成的宽度，解决文字不衔接问题 */
+
+
+		.txtMarquee-left .bd ul li span{ color:#999;  }
+		</style>
+
+		<div class="txtMarquee-left">
+			<div class="hd">
+				<a class="next"></a>
+				<a class="prev"></a>
+			</div>
+			<div class="bd">
+				<ul class="infoList">
+					<li><a href="http://www.SuperSlide2.com" target="_blank">中国打破了世界软件巨头规则</a><span>[11-11]</span></li>
+					<li><a href="http://www.SuperSlide2.com" target="_blank">施强：高端专业语言教学</a><span>[11-11]</span></li>
+					<li><a href="http://www.SuperSlide2.com" target="_blank">新加坡留学，国际双语课程</a><span>[11-11]</span></li>
+					<li><a href="http://www.SuperSlide2.com" target="_blank">高考后留学日本名校随你选</a><span>[11-11]</span></li>
+					<li><a href="http://www.SuperSlide2.com" target="_blank">教育培训行业优势资源推介</a><span>[11-11]</span></li>
+					<li><a href="http://www.SuperSlide2.com" target="_blank">女友坚持警局完婚不抛弃</a><span>[11-11]</span></li>
+				</ul>
+			</div>
+		</div>
+
+		<script id="jsID" type="text/javascript">
+		 var ary = location.href.split("&");
+		jQuery(".txtMarquee-left").slide( { mainCell:".bd ul",autoPlay:true,effect:ary[1],vis:ary[2],interTime:ary[3],opp:ary[4],pnLoop:ary[5],trigger:ary[6],mouseOverStop:ary[7]  });
+		</script>
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
