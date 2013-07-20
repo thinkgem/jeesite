@@ -1,0 +1,56 @@
+/*!
+ * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ */
+a:link,a:visited{color:#282828;text-decoration:none;}
+a:hover,a:active{color:#ff0000;text-decoration:underline;}
+a.btn.btn-primary{color:#ffffff;}
+
+body {padding-bottom:3px;font-size:14px;}
+.navbar.navbar-fixed-top{_margin-bottom:10px;}
+
+h4{border-left:3px solid #dddddd;background-color:#f5f5f5;padding:5px;margin:10px 0 5px;}
+h5{border-left:2px solid #dddddd;background-color:#f5f5f5;padding:3px;margin:10px 0 5px;}
+h6{padding:0;margin:5px 0;}
+
+footer, footer a, footer .footer_nav a, footer .copyright a{line-height:20px;font-size:12px;color:#888888;}
+footer .footer_nav, footer .copyright{margin:5px 0;}
+
+.breadcrumb{margin:10px 0 5px;padding:5px 10px;}
+
+/* form 
+.control-group {margin:10px 0;padding-bottom:10px;border-bottom:1px solid #F1F1F1;}
+.control-label{float:left;width:140px;padding-top:3px;text-align:right;}
+.controls{margin-left:160px;text-align:left;}
+.controls .mid, .controls .error{display:inline-block;vertical-align:middle;margin-bottom:10px;background-position:0 2px;}
+.form-actions{padding-left:160px;}
+.alert{margin:20px;padding:10px;}
+.alert-error{border:2px dotted #f00;color:#f00;font-weight:bold;}
+.txt,.btn{padding:4px;border:1px solid;border-color:#999 #ccc #ccc #999;background:#f9f9f9;color:#333;font-size:14px;vertical-align:middle;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
+.txt:hover, .txt:focus {border-color: #09c;background: #f5f9fd;}
+.btn {padding:5px 10px;*padding:5px 5px 2px;border-color:#ddd #999 #999 #ddd;background:#ddd;color:#000;cursor:pointer;}
+
+
+/* page
+.page {font-size:14px;font-weight:bold;margin:10px;padding-bottom:10px;*padding-bottom:0;width:750px;}
+.page p{float:left;color:#37679c;text-indent:0;padding:4px 7px;margin:-0.1em 1em 0 0;}
+.page ul{list-style:none;margin:0;padding:0;}
+.page li{list-style:none;margin:0 2px;display:block;float:left;line-height:16px;background-color:#fff;}
+.page li.disabled a,.page li.disabled a:hover{border:1px solid #eee;padding:4px 8px;color:#ccc;}
+.page li.active a{border:1px solid #9cf;padding:4px 8px;background-color:#9ce;color:#fff;}
+.page li.none{border:0;padding:4px 8px;background:none;}
+.page li a{border:1px solid #d1ecfb;padding:4px 9px;display:block;text-decoration:none;color:#37679c;}
+.page li a:hover{border:1px solid #9cf;}
+.page *{-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
+.page_small{font-size:12px;font-weight:bold;margin:3px;padding-bottom:10px;*padding-bottom:0;}
+.page_small p{float:left;color:#37679c;text-indent:0;padding:2px 5px;margin:-0.1em 1em 0 0;}
+.page_small ul{list-style:none;margin:0;padding:0;}
+.page_small li{list-style:none;margin:0 2px;display:block;float:left;line-height:16px;background-color:#fff;}
+.page_small li.disabled a,.page_small li.disabled a:hover{border:1px solid #eee;padding:2px 6px;color:#ccc;}
+.page_small li.active a{border:1px solid #9cf;padding:2px 6px;background-color:#9ce;color:#fff;}
+.page_small li.none{border:0;padding:2px 6px;background:none;}
+.page_small li a{border:1px solid #d1ecfb;padding:2px 7px;display:block;text-decoration:none;color:#37679c;}
+.page_small li a:hover{border:1px solid #9cf;}
+.page_small *{-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
+ */

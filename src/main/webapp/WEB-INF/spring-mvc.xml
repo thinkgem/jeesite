@@ -31,10 +31,19 @@
 	<!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
 	<mvc:default-servlet-handler/>
 
-	<!-- 拦截器配置 -->
-	<mvc:interceptors>
-		<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
-	</mvc:interceptors>
+    <!-- 拦截器配置 -->
+    <mvc:interceptors>
+        <bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
+    </mvc:interceptors>
+
+    <!-- 域名访问 拦截器配置 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="${web.view.index}" />
+            <mvc:mapping path="${web.view.index}/*" />
+            <bean class="com.thinkgem.jeesite.modules.cms.interceptor.DomainInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 	<!-- 视图文件解析配置 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

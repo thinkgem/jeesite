@@ -31,11 +31,12 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Site extends DataEntity {
-	
+
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
 	private String name;	// 站点名称
 	private String title;	// 站点标题
+	private String domain;	// 域名
 	private String description;// 描述，填写有助于搜索引擎优化
 	private String keywords;// 关键字，填写有助于搜索引擎优化
 	private String theme;	// 主题
@@ -79,8 +80,17 @@ public class Site extends DataEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	@Length(min=0, max=255)
+
+    @Length(min=1, max=255)
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    @Length(min=0, max=255)
 	public String getDescription() {
 		return description;
 	}

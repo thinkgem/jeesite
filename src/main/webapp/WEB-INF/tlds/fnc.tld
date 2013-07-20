@@ -23,7 +23,7 @@
     <description>获取站点</description>
     <name>getSite</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.entity.cms.Site getSite(long)</function-signature>
+    <function-signature>com.thinkgem.jeesite.modules.cms.entity.Site getSite(long)</function-signature>
     <example>${fnc:getSite(siteId)}</example>  
   </function>
   
@@ -47,7 +47,7 @@
     <description>获取栏目</description>
     <name>getCategory</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.entity.cms.Category getCategory(long)</function-signature>
+    <function-signature>com.thinkgem.jeesite.modules.cms.entity.Category getCategory(long)</function-signature>
     <example>${fnc:getCategory(categoryId)}</example>  
   </function>
   
@@ -71,7 +71,7 @@
     <description>获取文章</description>
     <name>getArticle</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.entity.cms.Article getArticle(long)</function-signature>
+    <function-signature>com.thinkgem.jeesite.modules.cms.entity.Article getArticle(long)</function-signature>
     <example>${fnc:getArticle(articleId)}</example>  
   </function>
   
@@ -87,7 +87,7 @@
     <description>获取链接</description>
     <name>getLink</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.entity.cms.Link getLink(long)</function-signature>
+    <function-signature>com.thinkgem.jeesite.modules.cms.entity.Link getLink(long)</function-signature>
     <example>${fnc:getLink(linkId)}</example>  
   </function>
   

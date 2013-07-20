@@ -8,6 +8,7 @@ package com.thinkgem.jeesite.modules.cms.utils;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
@@ -22,6 +23,10 @@ import com.thinkgem.jeesite.modules.cms.service.ArticleService;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 import com.thinkgem.jeesite.modules.cms.service.SiteService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 内容管理工具类
@@ -54,7 +59,7 @@ public class CmsUtils {
 	
 	/**
 	 * 获得站点信息
-	 * @param id 站点编号
+	 * @param siteId 站点编号
 	 */
 	public static Site getSite(long siteId){
 		long id = 1L;
@@ -75,7 +80,7 @@ public class CmsUtils {
 	 */
 	public static List<Category> getMainNavList(long siteId){
 		@SuppressWarnings("unchecked")
-		List<Category> mainNavList = (List<Category>)CacheUtils.get(CMS_CACHE, "mainNavList_"+siteId);
+ 		List<Category> mainNavList = (List<Category>)CacheUtils.get(CMS_CACHE, "mainNavList_"+siteId);
 		if (mainNavList == null){
 			Category category = new Category();
 			category.setSite(new Site(siteId));
@@ -91,7 +96,7 @@ public class CmsUtils {
 	
 	/**
 	 * 获取栏目
-	 * @param id 栏目编号
+	 * @param categoryId 栏目编号
 	 * @return
 	 */
 	public static Category getCategory(long categoryId){
@@ -120,7 +125,7 @@ public class CmsUtils {
 
 	/**
 	 * 获取栏目
-	 * @param ids 栏目编号
+	 * @param categoryIds 栏目编号
 	 * @return
 	 */
 	public static List<Category> getCategoryListByIds(String categoryIds){
@@ -129,11 +134,20 @@ public class CmsUtils {
 	
 	/**
 	 * 获取文章
-	 * @param id 文章编号
+	 * @param articleId 文章编号
 	 * @return
 	 */
-	public static Article getArticle(long articleId){
-		return articleService.get(articleId);
+	public static Article getArticle(long articleId, Long siteId){
+        if(siteId == null) {
+            return getArticle(articleId);
+        }
+        //todo siteId 作为参数关联查询，并加入 log4j 记录
+        Article a = articleService.get(articleId);
+        if(a != null && a.getCategory() != null && a.getCategory().getSite() != null && a.getCategory().getSite().getId().equals(siteId)){
+            return a;
+        }else{
+            throw new RuntimeException("跨站点调取文章失败。");
+        }
 	}
 	
 	/**
@@ -164,13 +178,13 @@ public class CmsUtils {
 			}
 		}
 		article.setDelFlag(Article.DEL_FLAG_NORMAL);
-		page = articleService.find(page, article, false);
+		page = articleService.find(page, article, false, false);
 		return page.getList();
 	}
 	
 	/**
 	 * 获取链接
-	 * @param id 文章编号
+	 * @param linkId 文章编号
 	 * @return
 	 */
 	public static Link getLink(long linkId){
@@ -210,4 +224,60 @@ public class CmsUtils {
 	public static void removeCache(String key) {
 		CacheUtils.remove(CMS_CACHE, key);
 	}
+
+
+    /**
+   	 * 站点KEY
+   	 */
+   	public static final String SITE_KEY = "front_site_key";
+
+    /**
+   	 * 设置站点
+   	 *
+   	 * @param site
+   	 */
+    public static void setSite(Site site) {
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute(SITE_KEY, site);
+    }
+
+    public static Site getSite() {
+        Session session = SecurityUtils.getSubject().getSession();
+        return (Site) session.getAttribute(SITE_KEY);
+    }
+
+    /**
+   	 * 获取文章
+   	 * @param articleId 文章编号
+   	 * @return
+   	 */
+   	public static Article getArticle(long articleId){
+        Site s = getSite();
+        //todo siteId 作为参数关联查询，并加入 log4j 记录
+        Article a = articleService.get(articleId);
+        if(a != null && a.getCategory() != null && a.getCategory().getSite() != null && a.getCategory().getSite().getId().equals(s.getId())){
+            return a;
+        }else{
+            return getErrorArticle();
+        }
+   	}
+
+    /**
+   	 * 获取文章失败 JSTL EL 友好提示
+   	 * @return
+   	 */
+   	public static Article getErrorArticle(){
+        Article a = new Article(new Category(-1L));
+        a.setId(-1L);
+        a.setTitle("调取文章失败");
+        return a;
+   	}
+
+    public static Page<Article> getErrorArticleList() {
+        Page<Article> page = new Page<Article>(1 , 1);
+        List<Article> list = Lists.newArrayList();
+        list.add(getErrorArticle());
+        page.setList(list);
+        return page;
+    }
 }
