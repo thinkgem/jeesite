@@ -140,6 +140,7 @@ CREATE TABLE cms_site
 	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
 	name varchar(100) NOT NULL COMMENT '站点名称',
 	title varchar(100) NOT NULL COMMENT '站点标题',
+	domain varchar(255) NOT NULL COMMENT '域名',
 	description varchar(255) COMMENT '描述，填写有助于搜索引擎优化',
 	keywords varchar(255) COMMENT '关键字，填写有助于搜索引擎优化',
 	theme varchar(255) DEFAULT 'default' COMMENT '主题',

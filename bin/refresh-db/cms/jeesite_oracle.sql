@@ -163,6 +163,7 @@ CREATE TABLE cms_site
 	id number(19,0) NOT NULL,
 	name varchar2(100) NOT NULL,
 	title varchar2(100) NOT NULL,
+	domain varchar2(255) NOT NULL,
 	description varchar2(255),
 	keywords varchar2(255),
 	theme varchar2(255) DEFAULT 'default',
