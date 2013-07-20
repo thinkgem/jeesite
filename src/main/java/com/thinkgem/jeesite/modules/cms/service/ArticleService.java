@@ -8,6 +8,7 @@ package com.thinkgem.jeesite.modules.cms.service;
 import java.util.Date;
 import java.util.List;
 
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -57,10 +58,12 @@ public class ArticleService extends BaseService {
 	}
 	
 	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter) {
+        return find(page, article, isDataScopeFilter, true);
+    }
+	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter, Boolean allSite) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByArticle");
-		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null 
-				&& updateExpiredWeightDate.getTime() < new Date().getTime())){
+		if (updateExpiredWeightDate == null || (updateExpiredWeightDate.getTime() < new Date().getTime())){
 			articleDao.updateExpiredWeight();
 			CacheUtils.put("updateExpiredWeightDateByArticle", DateUtils.addHours(new Date(), 6));
 		}
@@ -70,6 +73,9 @@ public class ArticleService extends BaseService {
 		if (article.getCategory()!=null && article.getCategory().getId()!=null && !Category.isRoot(article.getCategory().getId())){
 			Category category = categoryDao.findOne(article.getCategory().getId());
 			if (category!=null){
+                if(!allSite && !category.getSite().getId().equals(article.getCategory().getSite().getId())){
+                    return CmsUtils.getErrorArticleList();
+                }
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
 						Restrictions.like("category.parentIds", "%,"+category.getId()+",%")));

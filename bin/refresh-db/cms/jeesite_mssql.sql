@@ -139,6 +139,7 @@ CREATE TABLE cms_site
 	id bigint NOT NULL IDENTITY ,
 	name nvarchar(100) NOT NULL,
 	title nvarchar(100) NOT NULL,
+	domain nvarchar(255) NOT NULL,
 	description nvarchar(255),
 	keywords nvarchar(255),
 	theme nvarchar(255) DEFAULT 'default',

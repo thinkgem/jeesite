@@ -46,6 +46,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">域名:</label>
+			<div class="controls">
+				<form:input path="domain" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">描述:</label>
 			<div class="controls">
 				<form:textarea path="description" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>

@@ -60,22 +60,9 @@ public class FrontController extends BaseController{
 	/**
 	 * 网站首页
 	 */
-	@RequestMapping
+	@RequestMapping(value = {"", "index${urlSuffix}"})
 	public String index(Model model) {
-		Site site = CmsUtils.getSite(Site.defaultSiteId());
-		model.addAttribute("site", site);
-		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
-	}
-	
-	/**
-	 * 网站首页
-	 */
-	@RequestMapping(value = "index-{siteId}${urlSuffix}")
-	public String index(@PathVariable Long siteId, Model model) {
-		if (siteId.longValue() == 1){
-			return "redirect:"+Global.getFrontPath();
-		}
-		Site site = CmsUtils.getSite(siteId);
+		Site site = CmsUtils.getSite();
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
 	}
@@ -88,9 +75,7 @@ public class FrontController extends BaseController{
 	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
 			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
-		if (category==null){
-			Site site = CmsUtils.getSite(Site.defaultSiteId());
-			model.addAttribute("site", site);
+		if (category==null || !category.getSite().getId().equals(CmsUtils.getSite().getId())){
 			return "error/404";
 		}
 		model.addAttribute("site", category.getSite());
@@ -182,9 +167,7 @@ public class FrontController extends BaseController{
 	@RequestMapping(value = "view-{categoryId}-{contentId}${urlSuffix}")
 	public String view(@PathVariable Long categoryId, @PathVariable Long contentId, Model model) {
 		Category category = categoryService.get(categoryId);
-		if (category==null){
-			Site site = CmsUtils.getSite(Site.defaultSiteId());
-			model.addAttribute("site", site);
+		if (category==null || !category.getSite().getId().equals(CmsUtils.getSite().getId())){
 			return "error/404";
 		}
 		model.addAttribute("site", category.getSite());
@@ -262,9 +245,9 @@ public class FrontController extends BaseController{
 	/**
 	 * 站点地图
 	 */
-	@RequestMapping(value = "map-{siteId}${urlSuffix}")
-	public String map(@PathVariable Long siteId, Model model) {
-		Site site = CmsUtils.getSite(siteId!=null?siteId:Site.defaultSiteId());
+	@RequestMapping(value = "map${urlSuffix}")
+	public String map(Model model) {
+		Site site = CmsUtils.getSite();
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontMap";
 	}
@@ -291,5 +274,13 @@ public class FrontController extends BaseController{
 		model.addAttribute("q", q);// 搜索关键字
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 	}
+
+    /**
+   	 * 开发错误提示
+   	 */
+   	@RequestMapping(value = {"view--1--1${urlSuffix}"})
+    public String error(){
+        return "modules/cms/front/error";
+    }
 	
 }
