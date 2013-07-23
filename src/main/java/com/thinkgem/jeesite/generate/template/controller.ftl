@@ -29,7 +29,7 @@ import ${packageName}.${moduleName}.service${subModuleName}.${ClassName}Service;
  * @version ${classVersion}
  */
 @Controller
-@RequestMapping(value = "${adminPath}/${urlPrefix}")
+@RequestMapping(value = "${r"${adminPath}"}/${urlPrefix}")
 public class ${ClassName}Controller extends BaseController {
 
 	@Autowired
@@ -49,7 +49,7 @@ public class ${ClassName}Controller extends BaseController {
 	public String list(${ClassName} ${className}, HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
 		if (!user.isAdmin()){
-			${className}.setUser(user);
+			${className}.setCreateBy(user);
 		}
         Page<${ClassName}> page = ${className}Service.find(new Page<${ClassName}>(request, response), ${className}); 
         model.addAttribute("page", page);

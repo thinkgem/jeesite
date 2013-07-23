@@ -230,7 +230,8 @@ public interface BaseDao<T> {
 	 * 设置关键字高亮
 	 * @param query 查询对象
 	 * @param list 设置高亮的内容列表
+	 * @param subLength 截取长度
 	 * @param fields 字段名
 	 */
-	public List<T> keywordsHighlight(BooleanQuery query, List<T> list, String... fields);
+	public List<T> keywordsHighlight(BooleanQuery query, List<T> list, int subLength, String... fields);
 }

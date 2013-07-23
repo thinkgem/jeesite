@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,jQuery文字无缝滚动特效,javascript文字无缝滚动特效">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - 导航效果</title>
+<script type="text/javascript" src="../../jquery1.42.min.js"></script><script type="text/javascript" src="../../jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+
+		<style type="text/css">
+		/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+		a:hover{ color:#1974A1;  }
+
+
+		/* 本例子css */
+		.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+		.nav{ padding:0 20px; height:34px; line-height:34px; background:#39A4DC;  position:relative; z-index:1;  }
+		.nav a{ color:#fff;  }
+		.nav .nLi{ float:left;  position:relative; display:inline;  }
+		.nav .nLi h3{ float:left;  }
+		.nav .nLi h3 a{ display:block; padding:0 20px; font-size:14px; font-weight:bold;  }
+		.nav .sub{ display:none; width:100px; left:0; top:34px;  position:absolute; background:#4E4E4E;  line-height:26px; padding:5px 0;  }
+		.nav .sub li{ zoom:1; }
+		.nav .sub a{ display:block; padding:0 10px; }
+		.nav .sub a:hover{ background:#6d6d6d; color:#fff;  }
+		.nav .on h3 a{ background:#4E4E4E; color:#fff;   }
+		</style>
+
+
+		<ul id="nav" class="nav clearfix">
+			<li class="nLi">
+				<h3><a href="http://www.SuperSlide2.com" target="_blank">首页</a></h3>
+			</li>
+			<li class="nLi">
+					<h3><a href="http://www.SuperSlide2.com" target="_blank">新闻</a></h3>
+					<ul class="sub">
+						<li><a href="#">新闻首页</a></li>
+						<li><a href="#">新闻人物</a></li>
+						<li><a href="#">新闻电视</a></li>
+						<li><a href="#">新闻图片</a></li>
+						<li><a href="#">新闻视频</a></li>
+						<li><a href="# ">新闻专题</a></li>
+					</ul>
+			</li>
+			<li class="nLi">
+					<h3><a href="http://www.SuperSlide2.com" target="_blank">预告片</a></h3>
+					<ul class="sub">
+						<li><a href="#">新闻首页</a></li>
+						<li><a href="#">新闻人物</a></li>
+						<li><a href="#">新闻电视</a></li>
+						<li><a href="#">新闻图片</a></li>
+						<li><a href="#">新闻视频</a></li>
+						<li><a href="# ">新闻专题</a></li>
+					</ul>
+			</li>
+			<li class="nLi ">
+					<h3><a href="http://www.SuperSlide2.com" target="_blank">影评</a></h3>
+					<ul class="sub">
+						<li><a href="#">新闻首页</a></li>
+						<li><a href="#">新闻人物</a></li>
+						<li><a href="#">新闻电视</a></li>
+						<li><a href="#">新闻图片</a></li>
+						<li><a href="#">新闻视频</a></li>
+						<li><a href="# ">新闻专题</a></li>
+					</ul>
+			</li>
+			<li class="nLi">
+					<h3><a href="http://www.SuperSlide2.com" target="_blank">资料库</a></h3>
+					<ul class="sub">
+						<li><a href="#">新闻首页</a></li>
+						<li><a href="#">新闻人物</a></li>
+						<li><a href="#">新闻电视</a></li>
+						<li><a href="#">新闻图片</a></li>
+						<li><a href="#">新闻视频</a></li>
+						<li><a href="# ">新闻专题</a></li>
+					</ul>
+			</li>
+		</ul>
+
+
+		<div class="intro" style="padding:10px">
+			假设当前频道为“预告片”，</br>
+			手动或后台程序添加titOnClassName类名（默认是'on'），相当于设置参数defaultIndex:2。</br>
+			若同时设置参数returnDefault:true，则鼠标移走后返回当前频道。
+		</div>
+
+		<script id="jsID" type="text/javascript">
+			 var ary = location.href.split("&");
+			jQuery("#nav").slide({ type:"menu", titCell:".nLi", targetCell:".sub",effect:ary[1], delayTime:ary[2] , triggerTime:ary[3], defaultPlay:ary[4],returnDefault:ary[5],easing:ary[6] });
+		</script>
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+

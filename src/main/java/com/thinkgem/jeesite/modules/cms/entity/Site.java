@@ -137,7 +137,7 @@ public class Site extends DataEntity {
 	@Transient
 	public static long getCurrentSiteId(){
 		Long siteId = (Long)UserUtils.getCache("siteId");
-		return siteId!=null?siteId:defaultSiteId();
+		return siteId!=null&&siteId>0?siteId:defaultSiteId();
 	}
 	
 }

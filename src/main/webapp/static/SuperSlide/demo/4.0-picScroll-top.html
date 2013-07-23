@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,jQuery图片滚动特效,javascript图片滚动特效">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - 图片上滚动特效-上</title>
+<script type="text/javascript" src="../jquery1.42.min.js"></script><script type="text/javascript" src="../jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+
+
+
+		<style type="text/css">
+		/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+
+		/* 本例子css */
+		.picScroll-top{ margin:0 auto;  width:210px;  overflow:hidden; position:relative;  border:1px solid #ccc;   }
+		.picScroll-top .hd{ overflow:hidden;  height:30px; background:#f4f4f4; padding:0 10px;  }
+		.picScroll-top .hd .prev,.picScroll-top .hd .next{ display:block;  width:9px; height:5px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+			 cursor:pointer; background:url("images/arrow.png") 0 -100px no-repeat;}
+		.picScroll-top .hd .next{ background-position:0 -140px;  }
+		.picScroll-top .hd .prevStop{ background-position:-60px -100px;  }
+		.picScroll-top .hd .nextStop{ background-position:-60px -140px;  }
+		.picScroll-top .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px; zoom:1; }
+		.picScroll-top .hd ul li{ float:left;  width:9px; height:9px; overflow:hidden; margin-right:5px; text-indent:-999px; cursor:pointer; background:url("images/icoCircle.gif") 0 -9px no-repeat; }
+		.picScroll-top .hd ul li.on{ background-position:0 0; }
+		.picScroll-top .bd{ padding:10px;   }
+		.picScroll-top .bd ul{ overflow:hidden; zoom:1; }
+		.picScroll-top .bd ul li{ text-align:center; zoom:1; }
+		.picScroll-top .bd ul li .pic{ text-align:center; }
+		.picScroll-top .bd ul li .pic img{ width:180px; height:90px; display:block;  padding:2px; border:1px solid #ccc; }
+		.picScroll-top .bd ul li .pic a:hover img{ border-color:#999;  }
+		.picScroll-top .bd ul li .title{ line-height:24px; }
+
+		</style>
+
+		<div class="picScroll-top">
+			<div class="hd">
+				<a class="next"></a>
+				<ul></ul>
+				<a class="prev"></a>
+				<span class="pageState"></span>
+			</div>
+			<div class="bd">
+				<ul class="picList">
+					<li>
+						<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic1.jpg" /></a></div>
+						<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图1</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic2.jpg" /></a></div>
+						<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图2</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic3.jpg" /></a></div>
+						<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图3</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic4.jpg" /></a></div>
+						<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图4</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic5.jpg" /></a></div>
+						<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图5</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic6.jpg" /></a></div>
+						<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图6</a></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		 jQuery(".picScroll-top").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"top",autoPlay:true,vis:3,trigger:"click"});
+		</script>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+

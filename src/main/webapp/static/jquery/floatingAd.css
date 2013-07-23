@@ -5,12 +5,12 @@
 	display: none;
 }
 .floatingAd a{
-	color:#000000; 
+	color:#aaaaaa; 
 	display: inline-block;
 	text-decoration: none;
 }
 .floatingAd a img{
-	border: 0;
+	border:1px solid #eee;
 }
 .floatingAd .close{
 	display: none;
@@ -33,7 +33,7 @@
 	top: 0; 
 	width: 100%; 
 	height: 25px; 
-	color: #000000; 
+	color: #aaaaaa; 
 	line-height: 25px; 
 }
 .floatingAd .text .button{

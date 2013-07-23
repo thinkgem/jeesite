@@ -32,7 +32,7 @@
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
 					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")){
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -104,7 +104,7 @@
 			<label class="control-label">归属机构:</label>
 			<div class="controls">
                 <tags:treeselect id="office" name="office.id" value="${role.office.id}" labelName="office.name" labelValue="${role.office.name}"
-					title="机构" url="/sys/office/treeData"/>
+					title="机构" url="/sys/office/treeData" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">

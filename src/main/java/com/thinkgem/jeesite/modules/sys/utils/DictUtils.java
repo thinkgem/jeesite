@@ -65,9 +65,9 @@ public class DictUtils {
 			}
 			CacheUtils.put(CACHE_DICT_MAP, dictMap);
 		}
-		List<Dict> dictList = Lists.newArrayList();
-		if (dictList != null){
-			dictList = dictMap.get(type);
+		List<Dict> dictList = dictMap.get(type);
+		if (dictList == null){
+			dictList = Lists.newArrayList();
 		}
 		return dictList;
 	}

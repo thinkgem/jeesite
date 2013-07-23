@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,Tab+无缝滚动（slide组合）">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - Tab+无缝滚动（slide组合）</title>
+<script type="text/javascript" src="../jquery1.42.min.js"></script><script type="text/javascript" src="../jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+
+
+
+		<style type="text/css">
+		/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+		a:hover{ color:#1974A1;  }
+		.js{width:90%; margin:10px auto 0 auto; }
+		.js p{ padding:5px 0; font-weight:bold; overflow:hidden;  }
+		.js p span{ float:right; }
+		.js p span a{ color:#f00; text-decoration:underline;   }
+		.js textarea{ height:100px;  width:98%; padding:5px; border:1px solid #ccc; border-top:2px solid #aaa;  border-left:2px solid #aaa;  }
+
+		/* 本例子css */
+		.slideGroup{ width:510px; border:1px solid #ddd; text-align:left;  }
+		.slideGroup .parHd{ height:30px; line-height:30px; background:#f4f4f4; padding:0 20px; border-bottom:1px solid #ddd;  position:relative;  }
+		.slideGroup .parHd ul{ float:left; position:absolute; left:20px; top:-1px; height:32px;   }
+		.slideGroup .parHd ul li{ float:left; padding:0 15px; cursor:pointer;  }
+		.slideGroup .parHd ul li.on{ height:30px;  background:#fff; border:1px solid #ddd; border-bottom:2px solid #fff; }
+		.slideGroup .slideBox{ overflow:hidden; zoom:1; padding:10px 0 10px 42px; position:relative;   }
+
+		.slideGroup .sPrev,.slideGroup .sNext{ position:absolute; left:5px; top:10px; display:block; width:30px; height:94px; border:1px solid #ddd; background:url(images/icoLeft.gif) center center no-repeat #f4f4f4; }
+		.slideGroup .sNext{ left:auto; right:5px; background:url(images/icoRight.gif) center center no-repeat #f4f4f4;  }
+		.slideGroup .sPrev:hover,.slideGroup .sNext:hover{ border-color:#f60;  }
+
+		.slideGroup .parBd ul{ overflow:hidden; zoom:1;   }
+		.slideGroup .parBd ul li{ margin:0 8px; float:left; _display:inline; overflow:hidden; text-align:center;  }
+		.slideGroup .parBd ul li .pic{ text-align:center; }
+		.slideGroup .parBd ul li .pic img{ width:120px; height:90px; display:block;  padding:2px; border:1px solid #ccc; }
+		.slideGroup .parBd ul li .pic a:hover img{ border-color:#999;  }
+		.slideGroup .parBd ul li .title{ line-height:24px;   }
+
+
+		</style>
+
+
+		<div class="slideGroup" style="margin:0 auto">
+			<div class="parHd">
+				<ul><li>教育</li><li>培训</li><li>出国</li></ul>
+			</div>
+			<div class="parBd">
+
+					<div class="slideBox">
+						<a class="sPrev" href="javascript:void(0)"></a>
+						<ul>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic1.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图1.1</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic1.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图1.2</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic1.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图1.3</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic1.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图1.4</a></div>
+							</li>
+						</ul>
+						<a class="sNext" href="javascript:void(0)"></a>
+					</div><!-- slideBox End -->
+
+					<div class="slideBox">
+						<a class="sPrev" href="javascript:void(0)"></a>
+						<ul>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic2.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图2.1</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic2.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图2.2</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic2.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图2.3</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic2.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图2.4</a></div>
+							</li>
+						</ul>
+						<a class="sNext" href="javascript:void(0)"></a>
+					</div><!-- slideBox End -->
+
+					<div class="slideBox">
+						<a class="sPrev" href="javascript:void(0)"></a>
+						<ul>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic3.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图3.1</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic3.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图3.2</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic3.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图3.3</a></div>
+							</li>
+							<li>
+								<div class="pic"><a href="http://www.SuperSlide2.com" target="_blank"><img src="images/pic3.jpg" /></a></div>
+								<div class="title"><a href="http://www.SuperSlide2.com" target="_blank">效果图3.4</a></div>
+							</li>
+						</ul>
+						<a class="sNext" href="javascript:void(0)"></a>
+					</div><!-- slideBox End -->
+
+			</div><!-- parBd End -->
+		</div>
+
+		<script type="text/javascript">
+			/*
+			SuperSlide组合注意：
+			1、内外层mainCell、targetCell、prevCell、nextCell等对象不能相同，除非特殊应用；
+			2、注意书写顺序，通常先写内层js调用，再写外层js调用
+			*/
+
+			/* 内层图片无缝滚动 */
+			jQuery(".slideGroup .slideBox").slide({ mainCell:"ul",vis:3,prevCell:".sPrev",nextCell:".sNext",effect:"leftMarquee",interTime:50,autoPlay:true,trigger:"click"});
+
+			/* 外层tab切换 */
+			jQuery(".slideGroup").slide({titCell:".parHd li",mainCell:".parBd"});
+
+		</script>
+
+	<div class="js">
+		<p>SuperSlide组合注意：</br>
+			1、内外层mainCell、targetCell、prevCell、nextCell等对象不能相同，除非特殊应用；</br>
+			2、注意书写顺序，通常先写内层js调用，再写外层js调用</p>
+		<textarea>本例js调用：
+/* 内层图片无缝滚动 */
+jQuery(".slideGroup .slideBox").slide({ mainCell:"ul",vis:3,prevCell:".sPrev",nextCell:".sNext",effect:"leftMarquee",interTime:50,autoPlay:true,trigger:"click"});
+
+/* 外层tab切换 */
+jQuery(".slideGroup").slide({titCell:".parHd li",mainCell:".parBd"});
+		</textarea>
+	</div>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+

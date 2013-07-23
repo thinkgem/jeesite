@@ -9,7 +9,9 @@
 
 	<!-- DefaultCache setting. -->
 	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" 
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+		overflowToDisk="true" maxEntriesLocalDisk="100000" >
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+	</defaultCache>
 
 	<!-- Special objects setting. -->
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Dict" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">

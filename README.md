@@ -67,7 +67,11 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 快速体验
 
-### **在线体验（感谢刘杰提供）：** <http://demo.jeesite.com:1234/jeesite>
+### 在线体验
+
+体验地址（感谢刘杰提供）：<http://demo.jeesite.com:1234/jeesite>
+
+用户名：admin    密码：admin
 
 ### 本地体验
 
@@ -87,7 +91,9 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * QQ Group：127515876
 * E-mail：<mailto:thinkgem@163.com>
-* Github：<http://thinkgem.github.com/jeesite>
+* Github：<https://github.com/thinkgem/jeesite>
+* 开源中国：<http://git.oschina.net/thinkgem/jeesite>
+* 官方网址：<http://jeesite.com>  论坛：<http://bbs.jeesite.com>
 * 支持JeeSite：<http://jeesite.com/donation.html>
 
 如果你想参与进来共同完善它或有更好的建议，请联系我吧(^_^)。

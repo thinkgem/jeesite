@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-CN">
+<meta name="Keywords" content="SuperSlide,targetCell基础示例">
+<meta name="Description" content="SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。网站上常用的“焦点图/幻灯片”、“Tab标签切换”、“图片滚动”、“无缝滚动”等等只需要一个SuperSlide即可解决！还可以多个SuperSlide组合创造更多效果">
+<title>SuperSlide - targetCell基础示例</title>
+<script type="text/javascript" src="../jquery1.42.min.js"></script><script type="text/javascript" src="../jquery.SuperSlide.2.1.js"></script>
+</head>
+
+<body>
+
+		<style type="text/css">
+		/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+		.js{width:90%; margin:10px auto 0 auto; }
+		.js p{ padding:5px 0; font-weight:bold; overflow:hidden;  }
+		.js p span{ float:right; }
+		.js p span a{ color:#f00; text-decoration:underline;   }
+		.js textarea{ height:50px;  width:98%; padding:5px; border:1px solid #ccc; border-top:2px solid #aaa;  border-left:2px solid #aaa;  }
+
+
+		/* 本例子css */
+		.sideMen{ width:400px; border:1px solid #ddd;  }
+		.sideMen h3{ height:32px; line-height:32px; padding-left:10px;  border-top:1px solid #e3e3e3; background:#f4f4f4;
+			font:normal 14px/32px "Microsoft YaHei";
+		}
+		.sideMen h3 em{ float:right; display:block; width:40px; height:32px;   background:url(images/icoAdd.png) 16px 12px no-repeat; cursor:pointer; }
+		.sideMen h3 em.on{ background-position:16px -57px; }
+		.sideMen ul{ padding:8px 25px; color:#999;  }
+
+		</style>
+
+		<div class="sideMen" style="margin:0 auto">
+			<h3><em></em>书签切换系列</h3>
+			<ul>
+				<li>淘宝首页右侧公告</li>
+				<li>京东首页产品切换</li>
+				<li>苏宁易购首页品牌切换</li>
+				<li>1号店双重切换</li>
+				<li>腾讯健康频道切换</li>
+			</ul>
+			<h3><em></em>幻灯片/焦点图系列</h3>
+			<ul>
+				<li>淘宝首页焦点图</li>
+				<li>腾讯娱乐频道焦点图</li>
+				<li>腾讯电影频道焦点图</li>
+				<li>网易游戏频道焦点图</li>
+				<li>易迅首页焦点图</li>
+			</ul>
+			<h3><em></em>带按钮切换</h3>
+			<ul>
+				<li>淘宝首页今日活动</li>
+				<li>豆瓣读书频道</li>
+				<li>天猫首页品牌切换</li>
+				<li>格瓦拉首页活动进行中</li>
+				<li>腾讯博客图片滚动</li>
+			</ul>
+
+		</div><!-- sideMen End -->
+
+		<script type="text/javascript">
+			jQuery(".sideMen").slide({titCell:"h3 em",targetCell:"ul",trigger:"click"});
+		</script>
+
+	<div class="js">
+		<p>本例js调用：</p>
+		<textarea>jQuery(".sideMen").slide({titCell:"h3 em",targetCell:"ul",trigger:"click"});</textarea>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript">
+//百度统计代码
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa630f96b6a9dd549675d26373853f7f1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+

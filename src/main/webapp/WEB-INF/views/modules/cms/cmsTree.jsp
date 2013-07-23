@@ -6,9 +6,10 @@
 	<meta name="decorator" content="default"/>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<style type="text/css">
-		.ztree {margin-top:5px;*margin:-5px 0 5px -2px;_position:relative;_margin:0;_top:-10px;overflow:hidden;}<%--
+		.ztree {overflow:auto;margin:0;_margin-top:10px;padding:10px 0 0 10px;}<%--
 		.ztree li span.button.level0, .ztree li a.level0 {display:none;height:0;}
 		.ztree li ul.level0 {padding:0;background:none;}--%>
+		.accordion-inner{padding:2px;}
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -18,7 +19,7 @@
 		            </c:forEach>];
 			for(var i=0; i<zNodes.length; i++) {
 				// 移除父节点
-				if (zNodes[i].id == 1){
+				if (zNodes[i] && zNodes[i].id == 1){
 					zNodes.splice(i, 1);
 				}<%--
 				// 并将没有关联关系的父节点，改为父节点
@@ -45,7 +46,16 @@
 			for(var i=0; i<nodes.length; i++) {
 				tree.expandNode(nodes[i], true, true, false);
 			}
+			wSize();
 		});
+		$(window).resize(function(){
+			wSize();
+		});
+		function wSize(){
+			$(".ztree").width($(window).width()-16).height($(window).height()-62);
+			$(".ztree").css({"overflow":"auto","overflow-x":"auto","overflow-y":"auto"});
+			$("html,body").css({"overflow":"hidden","overflow-x":"hidden","overflow-y":"hidden"});
+		}
 	</script>
 </head>
 <body>
