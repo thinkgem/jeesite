@@ -92,6 +92,8 @@ CREATE TABLE cms_category
 	show_modes char(1) DEFAULT '0',
 	allow_comment char(1),
 	is_audit char(1),
+	custom_list_view varchar2(255),
+	custom_content_view varchar2(255),
 	create_by number(19,0),
 	create_date timestamp,
 	update_by number(19,0),
@@ -163,10 +165,13 @@ CREATE TABLE cms_site
 	id number(19,0) NOT NULL,
 	name varchar2(100) NOT NULL,
 	title varchar2(100) NOT NULL,
+	logo varchar2(255),
+	domain varchar2(255),
 	description varchar2(255),
 	keywords varchar2(255),
 	theme varchar2(255) DEFAULT 'default',
 	copyright clob,
+	custom_index_view varchar2(255),
 	create_by number(19,0),
 	create_date timestamp,
 	update_by number(19,0),
@@ -254,6 +259,8 @@ COMMENT ON COLUMN cms_category.in_list IS '是否在分类页中显示列表（1
 COMMENT ON COLUMN cms_category.show_modes IS '展现方式（0:有子栏目显示栏目列表，无子栏目显示内容列表;1：首栏目内容列表；2：栏目第一条内容）';
 COMMENT ON COLUMN cms_category.allow_comment IS '是否允许评论';
 COMMENT ON COLUMN cms_category.is_audit IS '是否需要审核';
+COMMENT ON COLUMN cms_category.custom_list_view IS '自定义列表视图';
+COMMENT ON COLUMN cms_category.custom_content_view IS '自定义内容视图';
 COMMENT ON COLUMN cms_category.create_by IS '创建者';
 COMMENT ON COLUMN cms_category.create_date IS '创建时间';
 COMMENT ON COLUMN cms_category.update_by IS '更新者';
@@ -305,10 +312,13 @@ COMMENT ON TABLE cms_site IS '站点表';
 COMMENT ON COLUMN cms_site.id IS '编号';
 COMMENT ON COLUMN cms_site.name IS '站点名称';
 COMMENT ON COLUMN cms_site.title IS '站点标题';
+COMMENT ON COLUMN cms_site.logo IS '站点Logo';
+COMMENT ON COLUMN cms_site.domain IS '站点域名';
 COMMENT ON COLUMN cms_site.description IS '描述，填写有助于搜索引擎优化';
 COMMENT ON COLUMN cms_site.keywords IS '关键字，填写有助于搜索引擎优化';
 COMMENT ON COLUMN cms_site.theme IS '主题';
 COMMENT ON COLUMN cms_site.copyright IS '版权信息';
+COMMENT ON COLUMN cms_site.custom_index_view IS '自定义站点首页视图';
 COMMENT ON COLUMN cms_site.create_by IS '创建者';
 COMMENT ON COLUMN cms_site.create_date IS '创建时间';
 COMMENT ON COLUMN cms_site.update_by IS '更新者';

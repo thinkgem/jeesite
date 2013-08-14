@@ -179,7 +179,7 @@
 				});
 			}
 			// 发送任务完成请求
-		    $.post('${ctx}/sys/workflow/complete/' + taskId, {
+		    $.post('${ctx}/oa/workflow/complete/' + taskId, {
 		        keys: keys,
 		        values: values,
 		        types: types
@@ -198,7 +198,7 @@
 			 * @param {Object} taskId
 			 */
 			function claim(taskId) {
-				$.post('${ctx}/sys/workflow/claim/' + taskId,{}, function(resp) {
+				$.post('${ctx}/oa/workflow/claim/' + taskId,{}, function(resp) {
 			        if (resp == 'success') {
 			        	top.$.jBox.tip('签收完成');
 			            location.reload();

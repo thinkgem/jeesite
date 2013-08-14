@@ -35,7 +35,6 @@ import com.thinkgem.jeesite.modules.cms.service.ArticleService;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.CommentService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
-import com.thinkgem.jeesite.modules.cms.service.VisitLogService;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 
 /**

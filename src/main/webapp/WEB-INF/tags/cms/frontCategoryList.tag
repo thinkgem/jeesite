@@ -12,11 +12,11 @@
    			</c:when>
    			<c:otherwise><c:set var="url" value="${ctx}/list-${category.id}${urlSuffix}"/></c:otherwise>
    		</c:choose>
-		<div class="btns b5 mt">
+		<li>
 			<c:choose><c:when test="${fn:length(category.name) gt 12}">
 				<a href="${url}" target="${category.target}" style="line-height:16px;padding-top:3px;">${fn:substring(category.name,0,8)}<br/>${fn:substring(category.name,8,18)}</a>
 			</c:when><c:otherwise>
 				<a href="${url}" target="${category.target}" ${fn:length(category.name) gt 10?'style="font-size:12px;"':''}>${category.name}</a>
-			</c:otherwise></c:choose></div>
+			</c:otherwise></c:choose></li>
 	<%--</c:if> --%>
 </c:forEach>
