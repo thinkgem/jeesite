@@ -59,6 +59,21 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <!-- Ehcache 页面缓存，仅缓存首页和html为后缀的页面 （需要时取消注释）
+  <filter>  
+    <filter-name>PageCacheFilter</filter-name>  
+        <filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter  
+    </filter-class>
+  </filter>
+  <filter-mapping>  
+    <filter-name>PageCacheFilter</filter-name>
+    <url-pattern>/</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>PageCacheFilter</filter-name>
+    <url-pattern>*.html</url-pattern>
+  </filter-mapping>-->
+  
   <!-- SiteMesh -->
   <filter>
     <filter-name>sitemeshFilter</filter-name>

@@ -28,6 +28,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
@@ -64,6 +68,8 @@ public class Category extends DataEntity {
 	private String showModes; 	// 展现方式（0:有子栏目显示栏目列表，无子栏目显示内容列表;1：首栏目内容列表；2：栏目第一条内容）
 	private String allowComment;// 是否允许评论
 	private String isAudit;	// 是否需要审核
+	private String customListView;		// 自定义列表视图
+	private String customContentView;	// 自定义内容视图
 	
 	private List<Category> childList = Lists.newArrayList(); 	// 拥有子分类列表
 
@@ -262,6 +268,22 @@ public class Category extends DataEntity {
 		this.isAudit = isAudit;
 	}
 
+	public String getCustomListView() {
+		return customListView;
+	}
+
+	public void setCustomListView(String customListView) {
+		this.customListView = customListView;
+	}
+
+	public String getCustomContentView() {
+		return customContentView;
+	}
+
+	public void setCustomContentView(String customContentView) {
+		this.customContentView = customContentView;
+	}
+
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="sort")
@@ -293,6 +315,13 @@ public class Category extends DataEntity {
 				}
 			}
 		}
+	}
+	
+	@Transient
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	public String getIds() {
+		return (this.getParentIds() !=null ? this.getParentIds().replaceAll(",", " ") : "") 
+				+ (this.getId() != null ? this.getId() : "");
 	}
 
 	@Transient

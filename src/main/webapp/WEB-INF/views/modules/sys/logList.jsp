@@ -47,7 +47,7 @@
 				<td><fmt:formatDate value="${log.createDate}" type="both"/></td>
 			</tr>
 			<tr>
-				<td colspan="8">用户代理: ${log.userAgent}<br/>提交参数: ${log.params}
+				<td colspan="8">用户代理: ${log.userAgent}<br/>提交参数: ${fns:escapeHtml(log.params)}
 				<c:if test="${not empty log.exception}"><br/>异常信息: <br/><%request.setAttribute("strEnter", "\n"); %>
 				${fn:replace(fns:escapeHtml(log.exception), strEnter, '<br/>')}</c:if></td>
 			</tr>

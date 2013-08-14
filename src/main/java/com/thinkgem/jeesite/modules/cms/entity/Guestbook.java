@@ -23,8 +23,17 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -38,6 +47,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 @Table(name = "cms_guestbook")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Indexed @Analyzer(impl = IKAnalyzer.class)
 public class Guestbook extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
@@ -82,6 +92,7 @@ public class Guestbook extends BaseEntity {
 	}
 
 	@Length(min=1, max=100)
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
 	public String getType() {
 		return type;
 	}
@@ -90,7 +101,8 @@ public class Guestbook extends BaseEntity {
 		this.type = type;
 	}
 
-	@Length(min=1, max=255)
+	@Length(min=1, max=2000)
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getContent() {
 		return content;
 	}
@@ -100,6 +112,7 @@ public class Guestbook extends BaseEntity {
 	}
 	
 	@Length(min=1, max=100)
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getName() {
 		return name;
 	}
@@ -145,6 +158,8 @@ public class Guestbook extends BaseEntity {
 	}
 
 	@NotNull
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
+	@DateBridge(resolution = Resolution.DAY)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -164,6 +179,7 @@ public class Guestbook extends BaseEntity {
 		this.reUser = reUser;
 	}
 
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getReContent() {
 		return reContent;
 	}
@@ -181,6 +197,7 @@ public class Guestbook extends BaseEntity {
 	}
 
 	@Length(min=1, max=1)
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
 	public String getDelFlag() {
 		return delFlag;
 	}

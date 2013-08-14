@@ -23,7 +23,7 @@
 	<context:component-scan base-package="com.thinkgem.jeesite"><!-- base-package 如果多个，用“,”分隔 -->
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
-
+	
 	<!-- 配置 JPA Entity Manager -->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
 		<property name="dataSource" ref="dataSource"/>
@@ -31,9 +31,10 @@
 		<property name="packagesToScan" value="com.thinkgem.jeesite"/><!-- 如果多个，用“,”分隔 -->
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				<prop key="net.sf.ehcache.configurationResourceName">cache/ehcache-hibernate-local.xml</prop>
 				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">${hibernate.ehcache.configFile}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
 				<prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
@@ -88,6 +89,11 @@
 	<!-- 配置 JSR303 Bean Validator 定义 -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
+	<!-- 缓存配置 -->
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:${ehcache.configFile}" />
+	</bean>
+
 	<!-- Production 环境 -->
  	<beans profile="production">
  		
@@ -102,9 +108,9 @@
 			<property name="password" value="${jdbc.password}" />
 			
 			<!-- 配置初始化大小、最小、最大 -->
-			<property name="initialSize" value="${pool.minIdle}" />
-			<property name="minIdle" value="${pool.minIdle}" /> 
-			<property name="maxActive" value="${pool.maxActive}" />
+			<property name="initialSize" value="${jdbc.pool.minIdle}" />
+			<property name="minIdle" value="${jdbc.pool.minIdle}" /> 
+			<property name="maxActive" value="${jdbc.pool.maxActive}" />
 			
 			<!-- 配置获取连接等待超时的时间 -->
 			<property name="maxWait" value="60000" />

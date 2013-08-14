@@ -139,6 +139,18 @@
 				<form:radiobuttons path="isAudit" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">自定义列表视图:</label>
+			<div class="controls">
+				<form:input path="customListView" htmlEscape="false" maxlength="200"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">自定义内容视图:</label>
+			<div class="controls">
+				<form:input path="customContentView" htmlEscape="false" maxlength="200"/>
+			</div>
+		</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="cms:category:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

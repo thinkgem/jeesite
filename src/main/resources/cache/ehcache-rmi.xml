@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+<!-- 
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=manual, socketTimeoutMillis=2000, rmiUrls=//localhost:40001/mainCache" />
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=localhost, port=40000, socketTimeoutMillis=2000"/> -->
+		
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1, multicastGroupPort=4446" />
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" />
+
+	<diskStore path="java.io.tmpdir/jeesite/ehcache/default" />
+
+	<!-- DefaultCache setting. -->
+	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+		overflowToDisk="true" maxEntriesLocalDisk="100000" >
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </defaultCache>
+	
+	<!-- Special objects setting. -->
+	<cache name="sysCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+    </cache>
+	    
+    <cache name="shiro-activeSessionCache" maxElementsInMemory="1000" overflowToDisk="true"
+           eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
+           diskPersistent="true" diskExpiryThreadIntervalSeconds="600">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+				replicateUpdatesViaCopy=false, replicateRemovals=true "/>
+    </cache>
+
+    <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
+           maxElementsInMemory="1000" eternal="true" overflowToDisk="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+				replicateUpdatesViaCopy=false, replicateRemovals=true "/>
+    </cache>
+
+	<cache name="SimplePageCachingFilter" maxElementsInMemory="1000" eternal="false" overflowToDisk="true"
+    	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+				replicateUpdatesViaCopy=false, replicateRemovals=true "/>
+    </cache>
+    
+</ehcache>

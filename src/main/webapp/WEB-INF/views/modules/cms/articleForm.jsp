@@ -50,7 +50,7 @@
 		<div class="control-group">
 			<label class="control-label">标题:</label>
 			<div class="controls">
-				<form:input path="title" htmlEscape="false" maxlength="200" class="input-xxlarge required measure-input"/>
+				<form:input path="title" htmlEscape="false" maxlength="200" class="input-xxlarge measure-input required"/>
 				&nbsp;<label>颜色:</label>
 				<form:select path="color" class="input-mini">
 					<form:option value="" label="默认"/>

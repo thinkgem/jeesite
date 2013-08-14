@@ -39,7 +39,8 @@ public class StatsService extends BaseService {
 		List<Object> ps = Lists.newArrayList();
 		
 		ql.append("select new map(max(c.id) as categoryId, max(c.name) as categoryName, max(cp.id) as categoryParentId, max(cp.name) as categoryParentName,");
-		ql.append("   count(*) as cnt, sum(a.hits) as hits, max(a.updateDate) as updateDate, max(o.id) as officeId, max(o.name) as officeName) ");
+		ql.append("   count(*) as cnt, (select count(*) from VisitLog vl where vl.category.id=c.id and vl.contentId>0 and vl.createDate between ? and ?) as hits,");
+		ql.append("   max(a.updateDate) as updateDate, max(o.id) as officeId, max(o.name) as officeName) ");
 		ql.append(" from Article a join a.category c join c.office o join c.parent cp where c.site.id = ");
 		ql.append(Site.getCurrentSiteId());
 		
@@ -53,6 +54,8 @@ public class StatsService extends BaseService {
 			endDate = DateUtils.addDays(DateUtils.addMonths(beginDate, 1), -1);
 			paramMap.put("endDate", DateUtils.formatDate(endDate, "yyyy-MM-dd"));
 		}
+		ps.add(beginDate);
+		ps.add(DateUtils.addDays(endDate, 1));
 		
 		Long categoryId = StringUtils.toLong(paramMap.get("categoryId"));
 		if (categoryId > 0){
