@@ -99,8 +99,9 @@
 		
 		<repository>
 			<id>activiti-repos</id>
-			<name>Activiti Repository</name>
-			<url>https://maven.alfresco.com/nexus/content/groups/public</url>
+			<name>Activiti Repository</name><!-- 
+			<url>https://maven.alfresco.com/nexus/content/groups/public</url>  -->
+			<url>https://app.camunda.com/nexus/content/groups/public</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
