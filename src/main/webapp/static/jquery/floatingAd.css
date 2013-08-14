@@ -3,6 +3,7 @@
 	background: none;
 	position: absolute;
 	display: none;
+	overflow: hidden;
 }
 .floatingAd a{
 	color:#aaaaaa; 

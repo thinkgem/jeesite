@@ -4,8 +4,8 @@
 	<baseURL>/userfiles/</baseURL>
 	<licenseKey></licenseKey>
 	<licenseName></licenseName>
-	<imgWidth>800</imgWidth>
-	<imgHeight>600</imgHeight>
+	<imgWidth>1024</imgWidth>
+	<imgHeight>768</imgHeight>
 	<imgQuality>80</imgQuality>
 	<uriEncoding>UTF-8</uriEncoding>
 	<forceASCII>false</forceASCII>

@@ -5,7 +5,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.editorConfig = function( config ) {
 	config.language = 'zh-cn'; config.uiColor = '#f7f5f4';
-	config.width = '99.7%'; config.height = '400px';
+	config.width = '99.7%'; 
+	if (config.height == ''){
+		config.height = '400px';
+	}
 	config.removePlugins = 'elementspath,scayt';
 	config.disableNativeSpellChecker = false;
 	config.resize_dir = 'vertical';
@@ -29,7 +32,8 @@ CKEDITOR.editorConfig = function( config ) {
 	    '/',
 	    ['Styles','Format','Font','FontSize'],
 	    ['TextColor','BGColor']
-	]; config.toolbar = 'default';
+	];
+	config.toolbar = 'default';
 	if(config.ckfinderPath){
 		config.filebrowserBrowseUrl = config.ckfinderPath+'/ckfinder.html?type=files&start=files:'+config.ckfinderUploadPath;
 		config.filebrowserImageBrowseUrl = config.ckfinderPath+'/ckfinder.html?type=images&start=images:'+config.ckfinderUploadPath;
