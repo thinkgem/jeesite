@@ -36,13 +36,13 @@
 		<div class="control-group">
 			<label class="control-label">名称:</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="11" class="required"/>
+				<form:input path="name" htmlEscape="false" maxlength="200" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">备注:</label>
 			<div class="controls">
-				<form:input path="remarks" htmlEscape="false" maxlength="50" class="required"/>
+				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>
 			</div>
 		</div>
 		<div class="form-actions">

@@ -316,6 +316,11 @@
 			<artifactId>ehcache-core</artifactId>
 			<version>${ehcache.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>net.sf.ehcache</groupId>  
+            <artifactId>ehcache-web</artifactId>  
+            <version>2.0.4</version>
+        </dependency>
 		<!-- EHCACHE end -->
 		
 		<!-- SECURITY begin -->
