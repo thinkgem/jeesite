@@ -39,7 +39,9 @@
 			<c:when test="${param.a eq '1'}">
 				<input type="hidden" id="a" name="a" value="1"/>
 				<table>
-					<tr><td>包含以下<strong>任意一个</strong>关键词</td><td><input type="text" name="q" value="${q}" class="txt"/> <input type="submit" value="搜  索" class="btn"/></td></tr>
+					<tr><td>包含以下<strong>任意一个</strong>关键词</td><td><input type="text" name="q" value="${q}" class="txt"/>
+						<input type="submit" value="搜  索" class="btn"/>
+						<input type="submit" value="普通搜索" class="btn" onclick="$('#a').val('0')"/></td></tr>
 					<tr><td>包含以下<strong>全部</strong>的关键词</td><td><input type="text" name="qand" value="${qand}" class="txt"/></td></tr>
 					<tr><td><strong>不包含</strong>以下关键词</td><td><input type="text" name="qnot" value="${qnot}" class="txt"/></td></tr>
 					<tr><td>检索结果每页显示的条数</td><td>
@@ -58,9 +60,11 @@
 					</td></tr>
 				</table>
 			</c:when><c:otherwise>
+				<input type="hidden" id="a" name="a" value="0"/>
 				<input type="hidden" id="pageSize" name="pageSize" value="${page.pageSize}"/>
 				<input type="text" name="q" value="${q}" class="txt"/>
 				<input type="submit" value="搜  索" class="btn"/>
+				<input type="submit" value="高级搜索" class="btn" onclick="$('#a').val('1')"/>
 			</c:otherwise>
 		</c:choose>
 	</form:form>
