@@ -8,6 +8,8 @@
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
 	
 	<cache name="sysCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
+	
+	<cache name="cmsCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
 	    
     <cache name="shiro-activeSessionCache" maxElementsInMemory="1000" overflowToDisk="true"
            eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"

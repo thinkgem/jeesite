@@ -23,6 +23,10 @@
 	<cache name="sysCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
     </cache>
+    
+	<cache name="cmsCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+    </cache>
 	    
     <cache name="shiro-activeSessionCache" maxElementsInMemory="1000" overflowToDisk="true"
            eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
