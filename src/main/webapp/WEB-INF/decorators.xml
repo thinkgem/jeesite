@@ -3,10 +3,11 @@
 	
 	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->
 	<decorator name="default" page="layouts/default.jsp" />
-	
+	<decorator name="panel" page="layouts/panel.jsp" />
+
 	<!-- CMS基础主题装饰页面 -->
 	<decorator name="cms_default_basic" page="modules/cms/front/themes/basic/layouts/default.jsp" />
 	<decorator name="cms_default_b.com" page="modules/cms/front/themes/b.com/layouts/default.jsp" />
-	<decorator name="cms_default_zgxj_blue" page="modules/cms/front/themes/zgxj_blue/layouts/default.jsp" />
-	
+	<decorator name="cms_default_jeesite" page="modules/cms/front/themes/jeesite/layouts/default.jsp" />
+
 </decorators>

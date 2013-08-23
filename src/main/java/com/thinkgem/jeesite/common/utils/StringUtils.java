@@ -49,6 +49,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		}
 		try {
 			StringBuilder sb = new StringBuilder();
+            str = str.replaceAll("<[^>]+>", "");
 			int currentLength = 0;
 			for (char c : str.toCharArray()) {
 				currentLength += String.valueOf(c).getBytes("GBK").length;

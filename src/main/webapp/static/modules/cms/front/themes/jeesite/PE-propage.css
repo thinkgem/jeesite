@@ -1,0 +1,140 @@
+/*
+	Css for PEL,	ver 1.1
+	CopyRight By Dongyi Network Technology CO.,Ltd Design Center
+	产品栏目 样式定义
+*/
+#content,.mainContent {border:none;}
+
+/* 产品首页 */
+	.proHome{background:#edf5f7; padding:30px 0 30px 30px; overflow:hidden;}
+	.proHome h2{font:bold 60px/100% "Aparajita", "Book Antiqua", Palatino, serif; color:#666; padding:0; margin:0;}
+	.proHomeGuide{margin-right:30px;}
+	.proHomeGuide dt{font:bold 14px/150% "微软雅黑";}
+	.proHomeGuide dd{font:normal 14px/180% "宋体"; color:#666;}
+	.proHomeGuide dd span{text-decoration:underline; color:#09F;}
+	
+	.proHomeList dl{float:left; width:250px; border:#ccc solid 1px; padding:10px 20px; margin-right:20px; margin-top:20px; background:#fff url(images/pro_listbg.gif) no-repeat;}
+	.proHomeList dl.proA{background-position:1px 1px;}
+	.proHomeList dl.proB{background-position:-299px 1px;}
+	.proHomeList dl.proC{background-position:-598px 0px; clear:right;}
+	.proHomeList dl.proD{background-position:1px -449px; clear:left;}
+	.proHomeList dl.proE{background-position:-299px -449px;}
+	.proHomeList dl.proF{background-position:-599px -449px;}
+	.proHomeList dt{font:bold 18px/30px "微软雅黑","黑体"; height:30px; overflow:hidden;}
+	.proHomeList dd{font:normal 12px/22px Tahoma,"宋体"; color:#666; text-indent:2em; height:90px; }
+	.proHomeList dd.proListcon{border-top:#ccc dotted 1px; padding-top:10px; text-indent:0em; margin-top:10px; line-height:24px; height:auto; overflow:hidden;}
+	.proHomeList dd.proListcon h4{}
+	.proHomeList dd.proListcon ul{height:265px; overflow-y:auto;}
+	.proHomeList a{color:#0066cc; text-decoration:underline;}
+	.proHomeList a:hover{color:#F30;}
+	
+	.proC dd{height:auto;}
+	.proC dd.proListcon ul{height:245px;}
+	
+	.proContent{background:url(images/pro_sidebg.gif) left top repeat-y; overflow:hidden;}
+/*  侧栏 */
+	.sideBar{ width:185px; float:left; overflow:hidden; position:relative; background:#f0f0f0;    }
+
+/* 侧栏菜单 */
+	#sideMenu{}
+	#sideMenu h3{background:url(images/pro_name.gif) no-repeat; height:46px; text-indent:-999em;}
+	#sideMenu .hd{ height:auto!important; text-align:center; color:#fff;  background:url("images/icons.gif") 0 -232px no-repeat; 	font:normal normal 22px/40px "黑体";  }
+	#sideMenu .bd{padding:0; }
+	#sideMenu .bd a{ display:block; line-height:28px; padding-left:36px; padding-right:15px; overflow:hidden; font-size:12px; background:url("images/pro_sideNav.gif") 0 0px no-repeat;   }
+	#sideMenu .bd a:hover{ text-decoration:none; background-position:0 -56px; color:#c00;}
+	#sideMenu .on a{ background-position:0 bottom; color:#f60; }
+
+/* 侧栏通用Box */
+	.sideBox{ border:1px solid #c3d4e2;  }
+	.sideBox .hd{ height:30px;padding-left:10px;  line-height:30px; background:url("images/icons.gif") 0 -352px no-repeat; border-bottom:1px solid #c3d4e2;   }
+	.sideBox .hd .titName{ font-size:14px; font-weight:bold; color:#3366cc; }
+	.sideBox .bd{ padding:8px;  }
+	.sideBox .bd li{ line-height:24px; height:24px; overflow:hidden;   }
+
+	#billBoard{ position:relative; }
+	#billBoard .hd ul{ position:absolute; height:22px;  right:0px; width:100px; top:10px; overflow:hidden; }
+	#billBoard .hd ul a{ display:block; float:left; width:30px; height:20px; line-height:20px; text-align:center; overflow:hidden; cursor:pointer;  }
+	#billBoard .hd ul li{float:left;display:inline;margin:0 4px;  }
+	#billBoard .hd ul li a.on,
+	#billBoard .hd ul li a:hover{ height:20px; text-decoration:none; line-height:20px;  background:#fff; border:1px solid #c3d4e2;  font-weight:bold; color:#333;border-bottom:1px solid #fff; }
+	#billBoard .bd{padding:10px 0 10px 10px; background:url("images/bg_BillBoard_con.gif") 13px 18px no-repeat; }
+	#billBoard .bd .txtList {display:none; padding-left:24px; padding-top:2px; height:250px; overflow:hidden; }
+	#billBoard .bd .txtList li{ height:23px; line-height:23px;padding:0;   }
+
+/* 主要内容 mainContent */
+	.mainContent{ width:785px; float:right; overflow:hidden; position:relative;   }
+	.mainConIn{ padding:35px 20px 0 20px; zoom:1; background:url("images/bg_mainIn.jpg") no-repeat top; min-height:500px; _height:500px; _overflow:visible; }
+	.focusNewsWrap{ overflow:hidden; zoom:1;}
+	.focusNewsWrap #focusNews{ float:left;  width:262px; overflow:hidden;  padding:4px; border:1px solid #ccc;  background:#fff;    }
+	.focusNewsWrap .m-headNews{ float:right;  width:388px; overflow:hidden;   }
+	.currentNodeName{ padding-bottom:20px; padding-left:40px;  color:#f60;  font:normal normal 24px/100% "微软雅黑","黑体"; _font-weight:bold;	background:url("images/icons.gif") 12px -422px no-repeat;	}
+
+/* 产品页内容定义*/
+	.proSideIAA{text-align:center;}
+	
+	.mainProTit{background:url(images/pro_titbg.gif) 0 0 repeat-x; height:42px;}
+	.mainProTit span{background:url(images/pro_ico.gif) -165px 7px no-repeat; padding-left:30px; font:bold 18px/42px "微软雅黑"; color:#cc0000;}
+	
+	.mainProCon{border:#d6d6d6 solid 1px; height:auto!important; height:400px; min-height:400px; padding:30px;}
+	
+	.proGSfont{float:right; width:500px;}
+	.proGSfont p{font:14px/180% "宋体"; text-indent:2em; padding:5px 0;}
+	.proGSpic{float:left;}
+	.proGSlink{ margin-top:15px; padding-top:10px; border-top:#ccc dotted 1px;}
+	.proGSlink li a{text-decoration:underline; font:normal 12px/28px Tahoma; color:#33F;}
+	.proGSlink li a:hover{color:#000;}
+	
+	.proTabclass{margin-top:20px;}
+	.tabTits{height:29px; clear:both; overflow:hidden; background:url(images/pro_tabline.gif) left bottom no-repeat; padding-left:40px;}
+	.tabTits li{float:left; width:91px; height:29px; margin-right:5px; color:#999; background:url(images/pro_tab.gif) left bottom no-repeat; text-align:center; line-height:29px; cursor:pointer;}
+	.tabTits li.current{width:91px; background-position:left top; cursor:auto; font-weight:bold; color:#006699;}
+	
+	.tabConts{padding:10px;}
+	.tabContsIn{display:none; height:auto; overflow:hidden;}
+	.tabContsIn h3{font:bold 16px/36px "微软雅黑"; color:#333; background:url(images/pro_introh3bg.gif) 0 0 repeat-x;  margin-top:30px;}
+	.tabContsIn h3 span{display:block; padding-left:30px; background:url(images/pro_ico.gif) -165px -28px no-repeat;}
+	.tabContsIn p{padding:10px; font:normal 14px/26px Tahoma;}
+	.tabContsIn .line{border-bottom:#ccc dotted 1px;}
+	
+	.proConlist{padding-top:10px; padding-bottom:20px;}
+	.proConlist li{font:12px/26px "宋体"; color:#777; list-style:circle; margin-left:20px;}
+	
+	.proCompic{text-align:center; padding:20px;}
+	.proCompic h4{font-weight:bold;}
+	
+	.proContext{padding:0 0px; margin-top:20px; height:auto; overflow:hidden;}
+	.proContext dt{font: bold 14px/36px "宋体"; color:#444; border-bottom:#999 dotted 1px;}
+	.proContext dd{font:normal 12px/26px "宋体"; color:#666;}
+	
+	.proformlist{float:left; width:45%; padding-right:10px;}
+	
+	.proContpic{width:100px; float:left; padding-right:20px; background:#fff; margin-top:10px;}
+	
+	.proNeed{font:normal 12px/26px Tahoma; background:url(images/pro_needTitlebg.gif) repeat-x;}
+	.proNeed h4{ font:bold 18px/70px "微软雅黑"; color:#fff; height:70px; text-indent:2em;  background:url(images/pro_needTitle.gif) right top no-repeat;}
+	.proNeed h4 span{color:#ff9900;}
+	
+	.proNeed th{font-weight:bold; text-indent:2em;color:#fff; height:34px;  background:url(images/pro_needTitle.gif) right bottom repeat-x;}
+	.proNeed th.formtTitle{text-align:right; text-indent:0; padding-right:25px;border-right:#717d81 solid 1px;  }
+	
+	.proNeed  td{border-bottom:#ccc solid 1px; height:30px; text-indent:2em;}
+	.proNeed  td.formtTitle{text-align:right; width:80px; padding-right:25px; border-right:#ccc solid 1px; text-indent:0; color:#336699;}
+
+
+/* 文章子列表页 */
+	#articleList{}
+	#articleList .txtList{}
+	#articleList .txtList{ text-align:left; padding:10px 20px; font-size:14px; }
+	#articleList .txtList li{ margin-top:0px; height:26px; padding-top:6px;  overflow:hidden; border-bottom:1px dotted #d8d8d8; }
+
+
+/*-- 分页 --*/
+
+	.page{ clear:both; text-align:center; margin:10px 0 0 0;height:60px;  }
+	.pager{text-align:center; }
+	.pager a,.pager span{display:inline-block;margin-right:3px; height:20px; line-height:20px; }
+	.pager a,.pager a:active  {display:inline-block;border:1px solid #c5c5c5; color:#1485ff; padding:0 6px;}
+	.pager a:hover {border:1px solid #389bf2; text-decoration:none; color:#3366cc;}
+	.pager span.current {background:#0490EA; border:1px solid #1172D4; color:#fff; font-weight:bold; padding:0 6px; }
+	.pager span.disabled {border:1px solid #c5c5c5;  padding:0 6px; color:#c0c0c0;}
+

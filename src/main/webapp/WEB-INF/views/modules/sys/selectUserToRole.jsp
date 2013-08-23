@@ -59,47 +59,17 @@
 					selectedTree.addNodes(null, treeNode);
 					ids.push(String(treeNode.id));
 				}
-			};
-		};
-		
-		function okAssign(){
-			// 删除''的元素
-			if(ids[0]==''){
-				ids.shift();
-				pre_ids.shift();
 			}
-			if(pre_ids.sort().toString() == ids.sort().toString()){
-				top.$.jBox.tip("未给角色【${role.name}】分配新成员！", 'info');
-				return;
-			};
-			
-			// 要修改的地方！！！
-			var submit = function (v, h, f) {
-			    if (v == 'ok'){
-			    	// 执行保存
-			    	var idsArr = "";
-			    	for (var i = 0; i<ids.length; i++) {
-			    		idsArr = (idsArr + ids[i]) + (((i + 1)== ids.length) ? '':',');
-			    	}
-			    	var postForm = document.createElement("form");
-			    	postForm.method="post" ; 
-			    	postForm.action="${ctx}/sys/role/assignrole?id=${role.id}&idsArr="+idsArr;
-			    	postForm.submit();
-			    	return true;
-			    } else if (v == 'cancel'){
-			    	// 取消
-			    	top.$.jBox.tip("取消分配操作！", 'info');
-			    };
-			};
-			
-			var tips="新增【"+ (ids.length-pre_ids.length) +"个】用户到角色【${role.name}】？";
-			if(ids.length==0){
-				tips="确定清空角色【${role.name}】下的所有人员？";
+			if("selectedTree"==treeId){
+                if($.inArray(String(treeNode.id), pre_ids)<0){
+                    selectedTree.removeNode(treeNode);
+                    ids.splice($.inArray(String(treeNode.id), ids), 1);
+                }else{
+                    top.$.jBox.tip("只能删除新添加人员！", 'info');
+                }
 			}
-			
-			top.$.jBox.confirm(tips, "分配确认", submit);
-		};
-		
+		}
+				
 		function clearAssign(){
 			var submit = function (v, h, f) {
 			    if (v == 'ok'){
@@ -121,7 +91,7 @@
 			};
 			tips="确定清除角色【${role.name}】下的已选人员？";
 			top.$.jBox.confirm(tips, "清除确认", submit);
-		};
+		}
 	</script>
 </head>
 <body>

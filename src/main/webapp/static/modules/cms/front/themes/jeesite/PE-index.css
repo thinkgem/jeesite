@@ -1,0 +1,126 @@
+/*
+	Css for PEL,	ver 1.1
+	CopyRight By Dongyi Network Technology CO.,Ltd Design Center
+	首页 样式定义
+*/
+
+/*----------
+	首页内容样式 
+----------*/
+	.homeSigning{border:#d7d7d7 solid 1px; background:url("images/navi_bg.gif") 0 -121px repeat-x; height:41px; line-height:41px; padding:0 15px; overflow:hidden;}
+	.homeSigning .annStati{text-align:right; color:#999;}
+	.homeSigning .annStati strong{font:bold 14px/41px Tahoma; color:#c00;}
+	.homeSigning .annStati a{text-decoration:underline; color:#333; display:inline-block; padding:0 2px;}
+	.homeSigning .annStati a:hover{color:#F30;}
+	
+	/* annCon签约信息 */
+	.homeSigning .ann{overflow:hidden; width:600px;  height:30px; float:left;  background:url("images/icons.gif") 0 -180px no-repeat; padding-left:30px; margin-top:5px;}
+	#annCon {overflow:hidden;  }
+	.annConIn{ width:5000px; overflow:hidden;  }
+	.annConIn ul{float:left; }
+	.annConIn ul li{padding-left:20px; background:url("images/icons.gif") no-repeat 5px -97px ; height:30px; line-height:30px; }
+	.annConIn ul li .date{ color:#666; }
+	.annConIn a{color:#333;}
+	.annConIn a:hover{color:#f30;}
+
+/* 三列内容 */
+.homeConbox{background:url("images/navi_bg.gif") 0 -163px repeat-x;  padding:10px; height:280px; overflow:hidden; padding-top:15px;}
+
+/*----------
+	indNews资讯
+----------*/
+#indNews {float:left; width:340px; margin-right:20px;}
+#indNews h3{font:bold 18px/38px "微软雅黑"; color:#006699;  background:url("images/icons.gif") 80px -118px no-repeat;}
+	/* 	indNews */
+	
+	#indNews .bd {}
+	#indNews .picTxt li {zoom:1;}
+	.picTxt .p1 .hPic a {width:128px;height:90px;  }
+	#indNews .more{color:#06c;  font:normal 12px/18px Tahoma; display:block;text-decoration:underline;}
+	#indNews .more:hover{color:#C00;}
+	
+	/*	列表样式 */
+	#indNews .infoList{}
+	#indNews .infoList li{height:auto; line-height:22px; padding-bottom:9px; padding-top:px; padding-left:0; position:relative; }
+	#indNews .infoList li a{color:#333;}
+	#indNews .infoList .datetime{display:block; font: 11px/11px Tahoma; color:#ccc;}
+	/*#indNews .infoList li img{position:absolute; left:60px; top:0px;}
+
+	
+	#indNews .tempWrap{width:340px!important;}
+	#indNews .tempWrap .bd{width:680px!important;}
+	#indNews .tempWrap .bd ul{width:680px!important;}
+	*/
+	
+/*----------
+	indCase案例
+----------*/
+	/*  */
+	#indCase{float:left; width:335px; margin-right:20px;}
+	#indCase h3{font:bold 18px/38px "微软雅黑"; color:#006699;  background:url("images/icons.gif") 80px -118px no-repeat;}
+	#indCase .slideTxtBox{height:230px;}
+	#indCase a.more{color:#06c; font:normal 12px/18px Tahoma; display:block; padding-top:10px; text-decoration:underline;}
+	#indCase a.more:hover{color:#C00;}
+	/*	列表样式 */
+	#indCase .bd li{}
+	#indCase .bd .datetime{display:block; font: 10px/14px Tahoma; color:#06C;}
+	#indCase .bd li.intro{height:auto; float:none;width:auto; overflow:hidden; line-height:24px; font-size:12px; color:#333; margin-top:2px; border-bottom:#ddd solid 1px; margin-bottom:5px; padding-bottom:5px;}
+	#indCase .bd li.mingDan{color:#888; line-height:26px;}
+	#indCase .bd li a img{margin-right:10px; display:block;width:130px;height:45px;padding:1px;border:#ccc solid 1px;}
+	#indCase .bd li a:hover img{border-color:#F30;}
+	
+/*----------
+	inndWeibo微博
+----------*/
+	/*  */
+	#indWeibo{float:left; width:240px; border:#ccc solid 1px;  margin-top:10px;}
+	#indWeibo .slideTxtBox{padding:6px 10px;}
+	#indWeibo .slideTxtBox .hd { height:50px; line-height:20px; border-bottom:#ccc solid 1px;} 
+	#indWeibo .slideTxtBox .hd ul { float:left;height:50px;line-height:20px;  overflow:hidden; border-left:none} 
+	#indWeibo .slideTxtBox .hd ul li{margin-top:30px; border-left:#ccc solid 1px;}
+	#indWeibo .slideTxtBox .hd ul li.indWeiboTit{width:110px; height:50px; background:url("images/indWeibo.gif") -5px 10px no-repeat; text-indent:-999em; border:none; margin:0;}
+
+	.weiboAtt li{ background:url("images/indWeibo.gif") no-repeat; height:88px; padding-left:70px;}
+	.weiboAtt li h4{font: bold 14px/24px "微软雅黑"; color:#666;}
+	.weiboAtt li p{font:normal 10px/16px tahoma; color:#999; margin-bottom:10px;}
+	.weiboAtt li.sina{background-position:left -55px;}
+	.weiboAtt li.qq{background-position:left -140px;}
+	/*.weiboAtt li.sina span{color:#C00;}
+	.weiboAtt li.qq span{color:#039;}*/
+	.blogList li{margin-left:10px; padding-bottom:10px;}
+	.blogList .datetime{font:normal 10px/10px Tahoma; color:#ccc; display:block;}
+	.blogList a{background:url(images/pro_ico.gif) -177px -36px no-repeat; display:block; text-indent: 1em;}
+
+
+/*----------
+	文本切换盒子 - 公用类
+----------*/
+.slideTxtBox { padding-top:10px;} 
+.slideTxtBox .hd { height:20px; line-height:20px; border-bottom:#ccc solid 1px;} 
+.slideTxtBox .hd ul { float:left;height:20px;line-height:20px; border-left:#ccc solid 1px; overflow:hidden;} 
+.slideTxtBox .hd ul li { float:left;background:#f3f3f3;padding:0 15px; height:20px; line-height:20px; overflow:hidden; text-align:center;border-right:#d7d7d7 solid 1px;  border-top:#d7d7d7 solid 1px; } 
+.slideTxtBox .hd ul li.on { cursor:pointer;background:#fff; border-right:#ccc solid 1px; border-top:#ccc solid 1px;} 
+.slideTxtBox .hd ul li a {color:#666; text-decoration:none;}
+.slideTxtBox .hd ul li.on a {color:#000;  }
+.slideTxtBox .bd {} 
+.slideTxtBox .bd ul {} 
+.slideTxtBox .tempWrap {margin:10px 0;} 
+
+/*----------
+	多个左滚动 - 公用类
+----------*/
+.leftLoop{ overflow:hidden; position:relative;} 
+.leftLoop .hd { overflow:hidden;  height:30px;background:url("img/bottom.png") no-repeat -1px -270px;padding:0 15px;margin-left:5px; } 
+.leftLoop .hd .prev,.leftLoop .hd .next{ display:block;  width:10px; height:14px;display:inline-block;margin:2px 8px; float:right;overflow:hidden;cursor:pointer; background:url("img/bottom.png") no-repeat -281px -56px;} 
+.leftLoop .hd .next{ background:url("img/bottom.png") no-repeat -316px -56px;margin:2px 0; } 
+.leftLoop .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:5px;  } 
+.leftLoop .hd ul li{ _display:inline; float:left;  width:7px; height:7px; overflow:hidden;margin-right:10px; text-indent:-999px; cursor:pointer;background:url("img/bottom.png") no-repeat -308px -40px; } 
+.leftLoop .hd ul li.on {background:url("img/bottom.png") no-repeat -284px -40px;}
+.leftLoop .bd {padding:10px 0;} 
+.leftLoop .bd ul{ overflow:hidden; zoom:1; } 
+.leftLoop .bd ul li {margin:5px; text-align:center; float:left;_display:inline;width:132px;height:117px;border:1px solid #efefef;background:#fff;position:relative; } 
+.leftLoop .bd ul li span {background:url("img/libg.png") no-repeat right bottom;display:inline-block; width:146px;height:11px;position:absolute;bottom:-12px;_bottom:-13px;right:0px;}
+.leftLoop .bd ul li a {height:86px;}
+.leftLoop .bd ul li a img {height:86px;width:124px;margin:3px 0;}
+.leftLoop .bd .tempWrap {width:715px !important;}
+

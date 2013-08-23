@@ -15,7 +15,7 @@
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
 					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")){
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
 						error.insertAfter(element);
@@ -49,6 +49,7 @@
 			<label class="control-label">域名:</label>
 			<div class="controls">
 				<form:input path="domain" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
+                <span class="help-inline">例如：jeesite.com，不要加 http://</span>
 			</div>
 		</div>
 		<div class="control-group">

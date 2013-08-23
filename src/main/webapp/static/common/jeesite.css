@@ -18,7 +18,7 @@ input[disabled],select[disabled],textarea[disabled],input[readonly],select[reado
 .form-search label{margin-left:10px;} .form-search span label{margin-left:0;}
 .form-horizontal {margin:0 20px;} .form-horizontal .control-group {margin-bottom:8px;}
 .form-horizontal .control-label {padding-top:3px;} .form-horizontal .controls {text-align:left;}
-.form-horizontal .controls .error {background-position:0 2px;}
+.form-horizontal .controls label.error {background-position:0 2px;}
 .collapse {*display:none;_position:static;} .collapse.in {*display:block;}
 .close {opacity:0.3;filter:alpha(opacity=30);} .close:hover {opacity:0.8;filter:alpha(opacity=80);}
 a.btn {*padding:4px 10px 4px;*border:1px solid #cccccc;}

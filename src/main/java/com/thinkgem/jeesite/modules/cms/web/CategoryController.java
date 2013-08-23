@@ -10,6 +10,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.modules.cms.entity.Site;
+import com.thinkgem.jeesite.modules.cms.service.FileTplService;
+import com.thinkgem.jeesite.modules.cms.service.SiteService;
+import com.thinkgem.jeesite.modules.cms.utils.CoreUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +43,10 @@ public class CategoryController extends BaseController {
 
 	@Autowired
 	private CategoryService categoryService;
+    @Autowired
+   	private FileTplService fileTplService;
+    @Autowired
+   	private SiteService siteService;
 	
 	@ModelAttribute("category")
 	public Category get(@RequestParam(required=false) Long id) {
@@ -69,6 +77,8 @@ public class CategoryController extends BaseController {
 		if (category.getOffice()==null||category.getOffice().getId()==null){
 			category.setOffice(category.getParent().getOffice());
 		}
+        model.addAttribute("contentViewList",getTplContent(Global.getConfig("tplDefault.Article")));
+        model.addAttribute("listViewList",getTplContent(Global.getConfig("tplDefault.Category")));
 		model.addAttribute("office", category.getOffice());
 		model.addAttribute("category", category);
 		return "modules/cms/categoryForm";
@@ -134,4 +144,10 @@ public class CategoryController extends BaseController {
 		}
 		return mapList;
 	}
+
+    private List<String> getTplContent(String prefix) {
+   		List<String> tplList = fileTplService.getNameListByPrefix(siteService.get(Site.getCurrentSiteId()).getSolutionPath());
+   		tplList = CoreUtils.tplTrim(tplList, prefix, "");
+   		return tplList;
+   	}
 }

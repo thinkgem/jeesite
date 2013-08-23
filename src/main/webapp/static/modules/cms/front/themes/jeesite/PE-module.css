@@ -1,0 +1,66 @@
+﻿/*
+	Css for PEL,	ver 1.1
+	CopyRight By Dongyi Network Technology CO.,Ltd Design Center
+	通用列表 样式定义
+*/
+
+/* ======== 公共类 定义开始 ======== */
+
+/* 通用盒子模型 */
+.box{ overflow:hidden; }
+.box .hd{}
+.box .hd .more{ float:right; margin-right:10px; color:#999; font-weight:normal; font-size:12px; }
+.box .hd h3{ font-weight:bold; padding-left:12px; font-size:14px; color:#134699; }
+.box .hd h3 a{ color:#134699;  }
+.box .bd{ padding:8px;  }
+.bd .date { float:right; color:#999;  }
+
+
+/* 通用信息列表 */
+.infoList { text-align:left; }
+.infoList li { height:25px; line-height:25px; overflow:hidden;padding-left:10px; }
+  
+/* 通用带图片信息列表_普通式 
+.picList li{ text-align:center;margin:; }
+.picList li .pic a{ display:block; padding:2px; border:1px solid #ddd; background:#fff;  }
+.picList li .pic a:hover{ border-color:#ccc }
+.picList li .pic a img{ width:70px; height:30px; display:block;}*/
+
+/* 通用带图片信息列表_带图片列表 */
+.picTxt li {overflow:hidden; zoom:1;}
+.picTxt .p1 .hPic {margin-right:10px;float:left; }
+.picTxt .p1 .hPic a {border:1px solid #e7e7e7;width:104px;height:76px; display:inline-block; }
+.picTxt .p1 .hPic a:hover {border:1px solid #f60;background:#eee;} 
+.picTxt .p1 .hPic img {padding:2px;}
+.picTxt .p1 .hTxt h4 {height:25px;line-height:25px;color:#f60;}
+.picTxt .p1 .hTxt h4 a {color:#333;font-size:14px; }
+.picTxt .p1 .hTxt span {line-height:24px;color:#666; }
+.picTxt .p2 {height:25px;line-height:25px;background:url("img/shareA.gif") no-repeat left -114px;padding-left:10px; }
+
+/* 内容带图片的信息列表_普通式 */
+.infoPictxt {}
+.infoPictxt li {zoom:1;overflow:hidden;padding:15px 0; border-bottom:1px dashed #a7c0df; }
+.infoPictxt li .pic {float:left;}
+.infoPictxt li .pic img {width:160px;height:110px;border:1px solid #ddd;padding:2px; }
+.infoPictxt li .pictit {float:right;width:70%; }
+.infoPictxt li .pictit .tit a {font-size:14px;font-weight:bold;color:#333; }
+.infoPictxt li .pictit .txt {line-height:24px;color:#666;}
+.infoPictxt li .pictit .txt a {color:#f60; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

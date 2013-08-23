@@ -24,14 +24,14 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 /**
  * 站点Entity
  * @author ThinkGem
- * @version 2013-05-15
+ * @version 2013-07-30
  */
 @Entity
 @Table(name = "cms_site")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Site extends DataEntity {
-
+	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
 	private String name;	// 站点名称
@@ -81,16 +81,16 @@ public class Site extends DataEntity {
 		this.title = title;
 	}
 
-    @Length(min=1, max=255)
-    public String getDomain() {
-        return domain;
-    }
+	@Length(min=1, max=255)
+	public String getDomain() {
+		return domain;
+	}
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 
-    @Length(min=0, max=255)
+	@Length(min=0, max=255)
 	public String getDescription() {
 		return description;
 	}
@@ -147,7 +147,32 @@ public class Site extends DataEntity {
 	@Transient
 	public static long getCurrentSiteId(){
 		Long siteId = (Long)UserUtils.getCache("siteId");
-		return siteId!=null?siteId:defaultSiteId();
+		return siteId!=null&&siteId>0?siteId:defaultSiteId();
 	}
+
+    /**
+   	 * 模板路径
+   	 */
+   	public static final String TPL_BASE = "/WEB-INF/views/modules/cms/front/themes";
+
+    /**
+   	 * 获得模板路径。如：/WEB-INF/views/modules/cms/front/themes
+   	 *
+   	 * @return
+   	 */
+    @Transient
+   	public String getTplPath() {
+   		return TPL_BASE;
+   	}
+
+   	/**
+   	 * 获得模板方案路径。如：/WEB-INF/views/modules/cms/front/themes/jeesite
+   	 *
+   	 * @return
+   	 */
+    @Transient
+   	public String getSolutionPath() {
+   		return TPL_BASE + "/" + getTheme();
+   	}
 	
 }

@@ -10,6 +10,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.modules.cms.service.FileTplService;
+import com.thinkgem.jeesite.modules.cms.service.SiteService;
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import com.thinkgem.jeesite.modules.cms.utils.CoreUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +49,10 @@ public class ArticleController extends BaseController {
 	private ArticleService articleService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private SiteService siteService;
+    @Autowired
+   	private FileTplService fileTplService;
 	
 	@ModelAttribute
 	public Article get(@RequestParam(required=false) Long id) {
@@ -73,6 +81,7 @@ public class ArticleController extends BaseController {
 				article.setCategory(null);
 			}
 		}
+        model.addAttribute("contentViewList",getTplContent());
 		model.addAttribute("article", article);
 		return "modules/cms/articleForm";
 	}
@@ -121,4 +130,10 @@ public class ArticleController extends BaseController {
 		List<Object[]> list = articleService.findByIds(ids);
 		return JsonMapper.nonDefaultMapper().toJson(list);
 	}
+
+    private List<String> getTplContent() {
+   		List<String> tplList = fileTplService.getNameListByPrefix(siteService.get(Site.getCurrentSiteId()).getSolutionPath());
+   		tplList = CoreUtils.tplTrim(tplList, Global.getConfig("tplDefault.Article"), "");
+   		return tplList;
+   	}
 }

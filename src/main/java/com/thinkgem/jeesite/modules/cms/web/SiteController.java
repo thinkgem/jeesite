@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.CookieUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
 import com.thinkgem.jeesite.modules.cms.service.SiteService;
@@ -90,9 +91,11 @@ public class SiteController extends BaseController {
 	 */
 	@RequiresPermissions("cms:site:select")
 	@RequestMapping(value = "select")
-	public String select(Long id, boolean flag){
+	public String select(Long id, boolean flag, HttpServletResponse response){
 		if (id!=null){
 			UserUtils.putCache("siteId", id);
+			// 保存到Cookie中，下次登录后自动切换到该站点
+			CookieUtils.setCookie(response, "siteId", id.toString());
 		}
 		if (flag){
 			return "redirect:"+Global.getAdminPath();

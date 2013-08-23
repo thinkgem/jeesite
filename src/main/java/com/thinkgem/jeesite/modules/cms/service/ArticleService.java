@@ -8,6 +8,7 @@ package com.thinkgem.jeesite.modules.cms.service;
 import java.util.Date;
 import java.util.List;
 
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -17,7 +18,6 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -58,12 +58,13 @@ public class ArticleService extends BaseService {
 	}
 	
 	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter) {
-        return find(page, article, isDataScopeFilter, true);
-    }
+		return find(page, article, isDataScopeFilter, true);
+	}
 	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter, Boolean allSite) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByArticle");
-		if (updateExpiredWeightDate == null || (updateExpiredWeightDate.getTime() < new Date().getTime())){
+		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null 
+				&& updateExpiredWeightDate.getTime() < new Date().getTime())){
 			articleDao.updateExpiredWeight();
 			CacheUtils.put("updateExpiredWeightDateByArticle", DateUtils.addHours(new Date(), 6));
 		}
@@ -73,9 +74,9 @@ public class ArticleService extends BaseService {
 		if (article.getCategory()!=null && article.getCategory().getId()!=null && !Category.isRoot(article.getCategory().getId())){
 			Category category = categoryDao.findOne(article.getCategory().getId());
 			if (category!=null){
-                if(!allSite && !category.getSite().getId().equals(article.getCategory().getSite().getId())){
-                    return CmsUtils.getErrorArticleList();
-                }
+				if(!allSite && !category.getSite().getId().equals(article.getCategory().getSite().getId())){
+					return CmsUtils.getErrorArticleList();
+				}
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
 						Restrictions.like("category.parentIds", "%,"+category.getId()+",%")));
@@ -113,6 +114,10 @@ public class ArticleService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void save(Article article) {
+        article.setTitle(StringEscapeUtils.unescapeHtml4(article.getTitle()));
+		if (StringUtils.isNotBlank(article.getViewConfig())){
+			article.setViewConfig(StringEscapeUtils.unescapeHtml4(article.getViewConfig()));
+		}
 		if (article.getArticleData().getContent()!=null){
 			article.getArticleData().setContent(StringEscapeUtils.unescapeHtml4(
 					article.getArticleData().getContent()));
@@ -128,6 +133,8 @@ public class ArticleService extends BaseService {
 				article.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
 		}
+		article.setUpdateBy(UserUtils.getUser());
+		article.setUpdateDate(new Date());
 		articleDao.clear();
 		articleDao.save(article);
 	}
@@ -182,12 +189,13 @@ public class ArticleService extends BaseService {
 		// 设置过滤条件
 		BooleanQuery queryFilter = articleDao.getFullTextQuery(new BooleanClause(
 				new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
-		// 设置排序
-		Sort sort = new Sort(new SortField("updateDate", SortField.DOC, true));
+		// 设置排序（默认相识度排序）
+		Sort sort = null;//new Sort(new SortField("updateDate", SortField.DOC, true));
 		// 全文检索
 		articleDao.search(page, query, queryFilter, sort);
 		// 关键字高亮
-		articleDao.keywordsHighlight(query, page.getList(), "description","articleData.content");
+		articleDao.keywordsHighlight(query, page.getList(), 30, "title");
+		articleDao.keywordsHighlight(query, page.getList(), 130, "description","articleData.content");
 		
 		return page;
 	}

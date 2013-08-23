@@ -69,7 +69,6 @@ public class ArticleData extends BaseEntity {
 		this.id = id;
 	}
 
-	@NotBlank
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getContent() {
 		return content;

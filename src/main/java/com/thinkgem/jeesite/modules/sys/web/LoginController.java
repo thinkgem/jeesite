@@ -41,7 +41,9 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
-		if(UserUtils.getUser().getId() != null){
+		User user = UserUtils.getUser();
+		// 如果已经登录，则跳转到管理首页
+		if(user.getId() != null){
 			return "redirect:"+Global.getAdminPath();
 		}
 		return "modules/sys/sysLogin";
@@ -52,6 +54,11 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
 	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		// 如果已经登录，则跳转到管理首页
+		if(user.getId() != null){
+			return "redirect:"+Global.getAdminPath();
+		}
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
 		model.addAttribute("isValidateCodeLogin", isValidateCodeLogin(username, true, false));
 		return "modules/sys/sysLogin";
@@ -64,11 +71,14 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "${adminPath}")
 	public String index(HttpServletRequest request, HttpServletResponse response) {
 		User user = UserUtils.getUser();
+		// 未登录，则跳转到登录页
 		if(user.getId() == null){
 			return "redirect:"+Global.getAdminPath()+"/login";
 		}
-		// 验证码计算器清零
+		// 登录成功后，验证码计算器清零
 		isValidateCodeLogin(user.getLoginName(), false, true);
+		// 登录成功后，获取上次登录的当前站点ID
+		UserUtils.putCache("siteId", StringUtils.toLong(CookieUtils.getCookie(request, "siteId")));
 		return "modules/sys/sysIndex";
 	}
 	

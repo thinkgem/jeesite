@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><sitemesh:title default="欢迎光临"/> - ${site.title}</title>
+	<title><sitemesh:title default="欢迎光临"/> - ${site.title} - Powered By JeeSite</title>
 	<%@include file="/WEB-INF/views/modules/cms/front/include/head.jsp" %>
 	<sitemesh:head/>
 </head>

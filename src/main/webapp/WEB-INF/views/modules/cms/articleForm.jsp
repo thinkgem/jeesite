@@ -6,13 +6,17 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
+            if($("#link").val()){
+                $('#linkBody').show();
+                $('#url').attr("checked", true);
+            }
 			$("#title").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					if ($("#categoryId").val()==""){
 						$("#categoryName").focus();
 						top.$.jBox.tip('请选择归属栏目','warning');
-					}else if (CKEDITOR.instances.content.getData()==""){
+					}else if (CKEDITOR.instances.content.getData()=="" && $("#link").val()==""){
 						top.$.jBox.tip('请填写正文','warning');
 					}else{
 						loading('正在提交，请稍等...');
@@ -44,18 +48,28 @@
 			<label class="control-label">归属栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>
+					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
+                <span>
+                    <input id="url" type="checkbox" onclick="if(this.checked){$('#linkBody').show()}else{$('#linkBody').hide()}$('#link').val()"><label for="url">外部链接</label>
+                </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">标题:</label>
 			<div class="controls">
-				<form:input path="title" htmlEscape="false" maxlength="200" class="input-xxlarge required measure-input"/>
+				<form:input path="title" htmlEscape="true" maxlength="200" class="input-xxlarge required measure-input"/>
 				&nbsp;<label>颜色:</label>
 				<form:select path="color" class="input-mini">
 					<form:option value="" label="默认"/>
 					<form:options items="${fns:getDictList('color')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 				</form:select>
+			</div>
+		</div>
+		<div id="linkBody" class="control-group" style="display:none">
+			<label class="control-label">外部链接:</label>
+			<div class="controls">
+				<form:input path="link" htmlEscape="false" maxlength="200" class="input-xlarge"/>
+				<span class="help-inline">绝对或相对地址。</span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -101,7 +115,7 @@
 		<div class="control-group">
 			<label class="control-label">文章图片:</label>
 			<div class="controls">
-				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+                <input type="hidden" id="image" name="image" value="${article.imageSrc}" />
 				<tags:ckfinder input="image" type="images" uploadPath="/cms/article" selectMultiple="false"/>
 			</div>
 		</div>
@@ -172,6 +186,19 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</div>
 		</div>
+        <shiro:hasPermission name="cms:article:privilege">
+		<div class="control-group">
+			<label class="control-label">自定义内容视图:</label>
+			<div class="controls">
+                <form:select path="customContentView">
+                    <form:option value="" label="默认视图"/>
+                    <form:options items="${contentViewList}" htmlEscape="false"/>
+                </form:select>
+                <form:input path="viewConfig" htmlEscape="true"/>
+                <span class="help-inline">视图参数例如:{count:2}</span>
+			</div>
+		</div>
+        </shiro:hasPermission>
 		<shiro:hasPermission name="cms:article:audit">
 			<div class="control-group">
 				<label class="control-label">发布状态:</label>

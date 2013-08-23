@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
@@ -53,6 +54,9 @@ public class Category extends DataEntity {
 	private String parentIds;// 所有父级编号
 	private String module; 	// 栏目模型（article：文章；picture：图片；download：下载；link：链接；special：专题）
 	private String name; 	// 栏目名称
+	private String customListView; 	// 自定义列表视图
+	private String customContentView; 	// 自定义内容视图
+    private String viewConfig;	// 视图参数
 	private String image; 	// 栏目图片
 	private String href; 	// 链接
 	private String target; 	// 目标（ _blank、_self、_parent、_top）
@@ -162,6 +166,30 @@ public class Category extends DataEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+    public String getCustomListView() {
+        return customListView;
+    }
+
+    public void setCustomListView(String customListView) {
+        this.customListView = customListView;
+    }
+
+    public String getCustomContentView() {
+        return customContentView;
+    }
+
+    public void setCustomContentView(String customContentView) {
+        this.customContentView = customContentView;
+    }
+
+    public String getViewConfig() {
+        return viewConfig;
+    }
+
+    public void setViewConfig(String viewConfig) {
+        this.viewConfig = viewConfig;
+    }
 
 	@Length(min=0, max=255)
 	public String getImage() {
@@ -304,4 +332,9 @@ public class Category extends DataEntity {
 	public static boolean isRoot(Long id){
 		return id != null && id.equals(1L);
 	}
+
+    @Transient
+   	public String getUrl() {
+        return CmsUtils.getUrlDynamic(this);
+   	}
 }

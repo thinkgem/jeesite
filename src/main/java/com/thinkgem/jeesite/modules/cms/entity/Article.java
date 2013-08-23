@@ -21,6 +21,8 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -57,6 +59,7 @@ public class Article extends DataEntity {
 	private Long id;		// 编号
 	private Category category;// 分类编号
 	private String title;	// 标题
+	private String link;	// 外部链接
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
 	private String image;	// 文章图片
 	private String keywords;// 关键字
@@ -65,6 +68,8 @@ public class Article extends DataEntity {
 	private Date weightDate;// 权重期限，超过期限，将weight设置为0
 	private Integer hits;	// 点击数
 	private String posid;	// 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
+	private String customContentView;	// 自定义内容视图
+	private String viewConfig;	// 视图参数
 
 	private ArticleData articleData;	//文章副表
     
@@ -119,7 +124,16 @@ public class Article extends DataEntity {
 		this.title = title;
 	}
 
-	@Length(min=0, max=50)
+    @Length(min=0, max=255)
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    @Length(min=0, max=50)
 	public String getColor() {
 		return color;
 	}
@@ -134,7 +148,7 @@ public class Article extends DataEntity {
 	}
 
 	public void setImage(String image) {
-		this.image = image;
+		this.image = CmsUtils.formatImageSrcToDb(image);
 	}
 
 	@Length(min=0, max=255)
@@ -191,7 +205,23 @@ public class Article extends DataEntity {
 		this.posid = posid;
 	}
 
-	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false) 
+    public String getCustomContentView() {
+        return customContentView;
+    }
+
+    public void setCustomContentView(String customContentView) {
+        this.customContentView = customContentView;
+    }
+
+    public String getViewConfig() {
+        return viewConfig;
+    }
+
+    public void setViewConfig(String viewConfig) {
+        this.viewConfig = viewConfig;
+    }
+
+    @OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
 	@IndexedEmbedded
 	@Valid
 	public ArticleData getArticleData() {
@@ -217,6 +247,16 @@ public class Article extends DataEntity {
 	public void setPosidList(List<Long> list) {
 		posid = ","+StringUtils.join(list, ",")+",";
 	}
+
+   	@Transient
+   	public String getUrl() {
+        return CmsUtils.getUrlDynamic(this);
+   	}
+
+   	@Transient
+   	public String getImageSrc() {
+        return CmsUtils.formatImageSrcToWeb(this.image);
+   	}
 	
 }
 

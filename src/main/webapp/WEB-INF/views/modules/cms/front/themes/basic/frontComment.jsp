@@ -28,7 +28,7 @@
 			},
 			errorContainer: form + " .messageBox",
 			errorPlacement: function(error, element) {
-				if (element.is(":checkbox")||element.is(":radio")){
+				if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 					error.appendTo(element.parent().parent());
 				} else {
 					error.insertAfter(element);
@@ -65,7 +65,7 @@
 <div class="pagination">${page}</div>
 <h5>我要评论</h5>
 <div id="commentForm0"></div>
-<div id="commentFormTpl" class="hide">
+<script id="commentFormTpl" type="text/javascript"><!--/*-->
 	<form:form action="${ctx}/comment" method="post" class="form-horizontal">
 		<input type="hidden" name="category.id" value="${comment.category.id}"/>
 		<input type="hidden" name="contentId" value="${comment.contentId}"/>
@@ -86,5 +86,5 @@
 			</div>
 		</div>
 		<div class="alert alert-error messageBox" style="display:none">输入有误，请先更正。</div>
-	</form:form>
-</div>
+	</form:form><!--*/-->
+</script>

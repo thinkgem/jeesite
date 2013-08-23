@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.web.ServletContextRealPathResolver;
 import org.apache.commons.lang.StringUtils;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
@@ -33,15 +35,16 @@ import javax.servlet.http.HttpServletRequest;
  * @author ThinkGem
  * @version 2013-5-29
  */
-public class CmsUtils {
+public class CmsUtils{
 	
 	private static SiteService siteService = SpringContextHolder.getBean(SiteService.class);
 	private static CategoryService categoryService = SpringContextHolder.getBean(CategoryService.class);
 	private static ArticleService articleService = SpringContextHolder.getBean(ArticleService.class);
 	private static LinkService linkService = SpringContextHolder.getBean(LinkService.class);
+	private static ServletContextRealPathResolver servletContextRealPathResolver = SpringContextHolder.getBean(ServletContextRealPathResolver.class);
 
 	private static final String CMS_CACHE = "cmsCache";
-	
+
 	/**
 	 * 获得站点列表
 	 */
@@ -73,6 +76,35 @@ public class CmsUtils {
 		}
 		return new Site(id);
 	}
+
+    /**
+   	 * 获得站点Domain 包含端口信息
+   	 */
+   	public static String getSiteDomainRoot(HttpServletRequest request){
+        Site site = getSite(Site.getCurrentSiteId());
+        StringBuilder url = new StringBuilder();
+        url.append(request.getScheme()).append("://").append(site.getDomain());
+        if (request.getServerPort() != 80) {
+            url.append(":").append(request.getServerPort());
+        }
+        if(!StringUtils.isBlank(request.getContextPath())){
+            url.append(request.getContextPath());
+        }
+		return url.toString();
+	}
+
+    /**
+   	 * 获得站点Domain 包含端口信息 不包含contextPath
+   	 */
+   	public static String getSiteDomain(HttpServletRequest request){
+        Site site = getSite(Site.getCurrentSiteId());
+        StringBuilder url = new StringBuilder();
+        url.append(request.getScheme()).append("://").append(site.getDomain());
+        if (request.getServerPort() != 80) {
+            url.append(":").append(request.getServerPort());
+        }
+		return url.toString();
+	}
 	
 	/**
 	 * 获得主导航列表
@@ -80,7 +112,7 @@ public class CmsUtils {
 	 */
 	public static List<Category> getMainNavList(long siteId){
 		@SuppressWarnings("unchecked")
- 		List<Category> mainNavList = (List<Category>)CacheUtils.get(CMS_CACHE, "mainNavList_"+siteId);
+		List<Category> mainNavList = (List<Category>)CacheUtils.get(CMS_CACHE, "mainNavList_"+siteId);
 		if (mainNavList == null){
 			Category category = new Category();
 			category.setSite(new Site(siteId));
@@ -135,6 +167,7 @@ public class CmsUtils {
 	/**
 	 * 获取文章
 	 * @param articleId 文章编号
+	 * @param siteId 站点编号
 	 * @return
 	 */
 	public static Article getArticle(long articleId, Long siteId){
@@ -225,59 +258,120 @@ public class CmsUtils {
 		CacheUtils.remove(CMS_CACHE, key);
 	}
 
+	/**
+	 * 站点KEY
+	 */
+	public static final String SITE_KEY = "front_site_key";
+
+	/**
+	 * 设置站点
+	 *
+	 * @param site
+	 */
+	public static void setSite(Site site) {
+		Session session = SecurityUtils.getSubject().getSession();
+		session.setAttribute(SITE_KEY, site);
+	}
+
+	public static Site getSite() {
+		Session session = SecurityUtils.getSubject().getSession();
+		return (Site) session.getAttribute(SITE_KEY);
+	}
+
+	/**
+	 * 获取文章
+	 * @param articleId 文章编号
+	 * @return
+	 */
+	public static Article getArticle(long articleId){
+		Site s = getSite();
+		//todo siteId 作为参数关联查询，并加入 log4j 记录
+		Article a = articleService.get(articleId);
+		if(a != null && a.getCategory() != null && a.getCategory().getSite() != null && a.getCategory().getSite().getId().equals(s.getId())){
+			return a;
+		}else{
+			return getErrorArticle();
+		}
+	}
+
+	/**
+	 * 获取文章失败 JSTL EL 友好提示
+	 * @return
+	 */
+	public static Article getErrorArticle(){
+		Article a = new Article(new Category(-1L));
+		a.setId(-1L);
+		a.setTitle("调取文章失败");
+		return a;
+	}
+
+	public static Page<Article> getErrorArticleList() {
+		Page<Article> page = new Page<Article>(1 , 1);
+		List<Article> list = Lists.newArrayList();
+		list.add(getErrorArticle());
+		page.setList(list);
+		return page;
+	}
 
     /**
-   	 * 站点KEY
+     * 获得文章动态URL地址
+   	 * @param article
+   	 * @return url
    	 */
-   	public static final String SITE_KEY = "front_site_key";
-
-    /**
-   	 * 设置站点
-   	 *
-   	 * @param site
-   	 */
-    public static void setSite(Site site) {
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute(SITE_KEY, site);
-    }
-
-    public static Site getSite() {
-        Session session = SecurityUtils.getSubject().getSession();
-        return (Site) session.getAttribute(SITE_KEY);
-    }
-
-    /**
-   	 * 获取文章
-   	 * @param articleId 文章编号
-   	 * @return
-   	 */
-   	public static Article getArticle(long articleId){
-        Site s = getSite();
-        //todo siteId 作为参数关联查询，并加入 log4j 记录
-        Article a = articleService.get(articleId);
-        if(a != null && a.getCategory() != null && a.getCategory().getSite() != null && a.getCategory().getSite().getId().equals(s.getId())){
-            return a;
-        }else{
-            return getErrorArticle();
+    public static String getUrlDynamic(Article article) {
+        if(StringUtils.isNotBlank(article.getLink())){
+            return article.getLink();
         }
-   	}
+        StringBuilder str = new StringBuilder();
+        str.append(servletContextRealPathResolver.getContextPath()).append(Global.getFrontPath());
+        str.append("/view-").append(article.getCategory().getId()).append("-").append(article.getId()).append(Global.getUrlSuffix());
+        return str.toString();
+    }
 
     /**
-   	 * 获取文章失败 JSTL EL 友好提示
-   	 * @return
+     * 获得栏目动态URL地址
+   	 * @param article
+   	 * @return url
    	 */
-   	public static Article getErrorArticle(){
-        Article a = new Article(new Category(-1L));
-        a.setId(-1L);
-        a.setTitle("调取文章失败");
-        return a;
-   	}
+    public static String getUrlDynamic(Category category) {
+        if(StringUtils.isNotBlank(category.getHref())){
+            if(!category.getHref().contains("://")){
+                return servletContextRealPathResolver.getContextPath()+category.getHref();
+            }else{
+                return category.getHref();
+            }
+        }
+        StringBuilder str = new StringBuilder();
+        str.append(servletContextRealPathResolver.getContextPath()).append(Global.getFrontPath());
+        str.append("/list-").append(category.getId()).append(Global.getUrlSuffix());
+        return str.toString();
+    }
 
-    public static Page<Article> getErrorArticleList() {
-        Page<Article> page = new Page<Article>(1 , 1);
-        List<Article> list = Lists.newArrayList();
-        list.add(getErrorArticle());
-        page.setList(list);
-        return page;
+    /**
+     * 从图片地址中去除ContextPath地址
+   	 * @param src
+   	 * @return src
+   	 */
+    public static String formatImageSrcToDb(String src) {
+        if(StringUtils.isBlank(src)) return src;
+        if(src.startsWith(servletContextRealPathResolver.getContextPath()+"/userfiles")){
+            return src.substring(servletContextRealPathResolver.getContextPath().length());
+        }else{
+            return src;
+        }
+    }
+
+    /**
+     * 从图片地址中加入ContextPath地址
+   	 * @param src
+   	 * @return src
+   	 */
+    public static String formatImageSrcToWeb(String src) {
+        if(StringUtils.isBlank(src)) return src;
+        if(src.startsWith(servletContextRealPathResolver.getContextPath()+"/userfiles")){
+            return src;
+        }else{
+            return servletContextRealPathResolver.getContextPath()+src;
+        }
     }
 }

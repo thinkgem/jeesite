@@ -26,15 +26,31 @@
     <function-signature>com.thinkgem.jeesite.modules.cms.entity.Site getSite(long)</function-signature>
     <example>${fnc:getSite(siteId)}</example>  
   </function>
-  
+
+  <function>
+    <description>获取站点DoMain(包含端口)</description>
+    <name>getSiteDomainRoot</name>
+    <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
+    <function-signature>java.lang.String getSiteDomainRoot(javax.servlet.http.HttpServletRequest)</function-signature>
+    <example>${fnc:getSiteDomainRoot(request)}</example>
+  </function>
+
+  <function>
+    <description>获取站点DoMain(包含端口不包含contextPath)</description>
+    <name>getSiteDomain</name>
+    <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
+    <function-signature>java.lang.String getSiteDomain(javax.servlet.http.HttpServletRequest)</function-signature>
+    <example>${fnc:getSiteDomain(request)}</example>
+  </function>
+
   <function>
     <description>获取站点列表</description>
     <name>getSiteList</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
     <function-signature>java.util.List getSiteList()</function-signature>
-    <example>${fnc:getSiteList()}</example>  
+    <example>${fnc:getSiteList()}</example>
   </function>
-  
+
   <function>
     <description>获取主导航列表</description>
     <name>getMainNavList</name>

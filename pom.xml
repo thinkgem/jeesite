@@ -19,7 +19,7 @@
 		<hibernate.version>4.1.12.Final</hibernate.version>
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<hibernate-search.version>4.2.0.Final</hibernate-search.version>
-		<druid.version>0.2.9</druid.version>
+		<druid.version>0.2.24</druid.version>
 		<shiro.version>1.2.2</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<ehcache.version>2.6.6</ehcache.version>

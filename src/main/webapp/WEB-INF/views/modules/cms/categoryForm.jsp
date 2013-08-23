@@ -62,6 +62,27 @@
 				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
 		</div>
+        <div class="control-group">
+            <label class="control-label">自定义列表视图:</label>
+            <div class="controls">
+                <form:select path="customListView">
+                    <form:option value="" label="默认视图"/>
+                    <form:options items="${listViewList}" htmlEscape="false"/>
+                </form:select>
+                <form:input path="viewConfig" htmlEscape="true"/>
+                <span class="help-inline">视图参数例如:{count:2}</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">自定义内容视图:</label>
+            <div class="controls">
+                <form:select path="customContentView">
+                    <form:option value="" label="默认视图"/>
+                    <form:options items="${contentViewList}" htmlEscape="false"/>
+                </form:select>
+                <span class="help-inline">请确定您知道栏目模版的使用方法</span>
+            </div>
+        </div>
 		<div class="control-group">
 			<label class="control-label">栏目图片:</label>
 			<div class="controls">

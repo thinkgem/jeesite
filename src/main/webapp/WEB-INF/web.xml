@@ -149,7 +149,7 @@
   
   <!-- Session 配置 -->
   <session-config>
-    <session-timeout>20</session-timeout>
+    <session-timeout>180</session-timeout>
   </session-config>
   
   <!-- 错误 页面配置 -->

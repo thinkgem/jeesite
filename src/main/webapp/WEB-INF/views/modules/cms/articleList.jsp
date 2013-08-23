@@ -33,7 +33,7 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label>栏目：</label><tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-					title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="true" cssClass="input-small"/>
+					title="栏目" url="/cms/category/treeData" module="article" notAllowSelectRoot="false" cssClass="input-small"/>
 		<label>标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
 		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
@@ -51,7 +51,7 @@
 				<td>${article.createBy.name}</td>
 				<td><fmt:formatDate value="${article.updateDate}" type="both"/></td>
 				<shiro:hasPermission name="cms:article:edit"><td>
-					<a href="${pageContext.request.contextPath}${fns:getFrontPath()}/view-${article.category.id}-${article.id}${fns:getUrlSuffix()}" target="_blank">访问</a>
+					<a href="${fnc:getSiteDomain(pageContext.request)}${article.url}" target="_blank">访问</a>
 					<shiro:hasPermission name="cms:comment:view">
 						<a href="${ctx}/cms/comment/?module=article&contentId=${article.id}&delFlag=0" onclick="return viewComment(this.href);">评论</a>
 					</shiro:hasPermission>

@@ -5,39 +5,28 @@
  */
 package com.thinkgem.jeesite.modules.cms.web.front;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.cms.entity.Article;
-import com.thinkgem.jeesite.modules.cms.entity.Category;
-import com.thinkgem.jeesite.modules.cms.entity.Comment;
-import com.thinkgem.jeesite.modules.cms.entity.Link;
-import com.thinkgem.jeesite.modules.cms.entity.Site;
-import com.thinkgem.jeesite.modules.cms.service.ArticleService;
-import com.thinkgem.jeesite.modules.cms.service.CategoryService;
-import com.thinkgem.jeesite.modules.cms.service.CommentService;
-import com.thinkgem.jeesite.modules.cms.service.LinkService;
+import com.thinkgem.jeesite.modules.cms.entity.*;
+import com.thinkgem.jeesite.modules.cms.service.*;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 网站Controller
@@ -99,7 +88,9 @@ public class FrontController extends BaseController{
 				articleService.updateHitsAddOne(article.getId());
 			}
 			model.addAttribute("article", article);
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+            setTplModelAttribute(model, category.getViewConfig());
+            setTplModelAttribute(model, article.getViewConfig());
+			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 		}else{
 			List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
 			// 展现方式为1 、无子栏目或公共模型，显示栏目内容列表
@@ -130,14 +121,14 @@ public class FrontController extends BaseController{
 							articleService.updateHitsAddOne(article.getId());
 						}
 						model.addAttribute("article", article);
-						return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+						return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 					}
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
 					page = linkService.find(page, new Link(category), false);
 					model.addAttribute("page", page);
 				}
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontList";
+				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+ (StringUtils.isBlank(category.getCustomContentView()) ? "frontList" : category.getCustomContentView());
 			}
 			// 有子栏目：显示子栏目列表
 			else{
@@ -156,7 +147,8 @@ public class FrontController extends BaseController{
 					}
 				}
 				model.addAttribute("categoryMap", categoryMap);
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory";
+                setTplModelAttribute(model, category.getViewConfig());
+				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+ (StringUtils.isBlank(category.getCustomContentView()) ? "frontListCategory" : category.getCustomContentView());
 			}
 		}
 	}
@@ -192,8 +184,10 @@ public class FrontController extends BaseController{
 			model.addAttribute("category", article.getCategory());
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("article", article);
-			model.addAttribute("relationList", relationList); 
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+			model.addAttribute("relationList", relationList);
+            setTplModelAttribute(model, article.getCategory().getViewConfig());
+            setTplModelAttribute(model, article.getViewConfig());
+			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 		}
 		return null;
 	}
@@ -256,22 +250,42 @@ public class FrontController extends BaseController{
 	 * 全站搜索
 	 */
 	@RequestMapping(value = "search")
-	public String search(String t, String q, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String search(String t, @RequestParam(required=false) String q, @RequestParam(required=false) String qand, @RequestParam(required=false) String qnot, 
+			@RequestParam(required=false) String a, HttpServletRequest request, HttpServletResponse response, Model model) {
+		long start = System.currentTimeMillis();
 		Site site = CmsUtils.getSite(Site.defaultSiteId());
 		model.addAttribute("site", site);
 		if (StringUtils.isBlank(t) || "article".equals(t)){
-			// ========= 正式环境，请注释掉cmd代码 =========
+			// ========= 执行命令（需要超级管理员权限） =========
 			if ("cmd:reindex".equals(q)){
-				articleService.createIndex();
-				model.addAttribute("message", "重建索引成功");
+				if (UserUtils.getUser().isAdmin()){
+					articleService.createIndex();
+					model.addAttribute("message", "重建索引成功，共耗时 " + (System.currentTimeMillis() - start) + "毫秒。");
+				}else{
+					model.addAttribute("message", "你没有执行权限。");
+				}
 				return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 			}
-			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
-			Page<Article> page = articleService.search(new Page<Article>(request, response), q);
+			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
+			String qStr = StringUtils.replace(StringUtils.replace(q, "，", " "), ", ", " ");
+			// 如果是高级搜索
+			if ("1".equals(a)){
+				if (StringUtils.isNotBlank(qand)){
+					qStr += " +" + StringUtils.replace(StringUtils.replace(StringUtils.replace(qand, "，", " "), ", ", " "), " ", " +"); 
+				}
+				if (StringUtils.isNotBlank(qnot)){
+					qStr += " -" + StringUtils.replace(StringUtils.replace(StringUtils.replace(qnot, "，", " "), ", ", " "), " ", " -"); 
+				}
+			}
+			System.out.println(qStr);
+			Page<Article> page = articleService.search(new Page<Article>(request, response), qStr);
+			page.setMessage("匹配结果，共耗时 " + (System.currentTimeMillis() - start) + "毫秒。");
 			model.addAttribute("page", page);
 		}
 		model.addAttribute("t", t);// 搜索类型
 		model.addAttribute("q", q);// 搜索关键字
+		model.addAttribute("qand", qand);// 包含以下全部的关键词
+		model.addAttribute("qnot", qnot);// 不包含以下关键词
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 	}
 
@@ -282,5 +296,19 @@ public class FrontController extends BaseController{
     public String error(){
         return "modules/cms/front/error";
     }
-	
+
+    private String getTpl(Article article){
+        return StringUtils.isBlank(article.getCustomContentView()) ?
+                StringUtils.isBlank(article.getCategory().getCustomContentView()) ? Global.getConfig("tplDefault.Article") : article.getCategory().getCustomContentView()
+                : article.getCustomContentView();
+    }
+
+    private void setTplModelAttribute(Model model, String param){
+        if(StringUtils.isNotBlank(param)){
+            Map map = JsonMapper.getInstance().fromJson(param, Map.class);
+            for(Object o : map.keySet()){
+                model.addAttribute("viewConfig_"+o.toString(), map.get(o));
+            }
+        }
+    }
 }
