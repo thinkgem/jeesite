@@ -117,7 +117,7 @@ public class LeaveController extends BaseController {
 	@RequestMapping(value = "detail/{id}")
 	@ResponseBody
 	public String getLeave(@PathVariable("id") Long id) {
-		Leave leave = leaveService.findOne(id);
+		Leave leave = leaveService.get(id);
 		return JsonMapper.getInstance().toJson(leave);
 	}
 
@@ -130,7 +130,7 @@ public class LeaveController extends BaseController {
 	@RequestMapping(value = "detail-with-vars/{id}/{taskId}")
 	@ResponseBody
 	public String getLeaveWithVars(@PathVariable("id") Long id, @PathVariable("taskId") String taskId) {
-		Leave leave = leaveService.findOne(id);
+		Leave leave = leaveService.get(id);
 		Map<String, Object> variables = taskService.getVariables(taskId);
 		leave.setVariables(variables);
 		return JsonMapper.getInstance().toJson(leave);

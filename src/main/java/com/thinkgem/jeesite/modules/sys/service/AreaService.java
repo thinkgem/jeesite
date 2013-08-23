@@ -29,7 +29,7 @@ public class AreaService extends BaseService {
 	private AreaDao areaDao;
 	
 	public Area get(Long id) {
-		return areaDao.findOne(id);
+		return areaDao.get(id);
 	}
 	
 	public List<Area> findAll(){

@@ -32,7 +32,7 @@ public class SiteService extends BaseService {
 	private SiteDao siteDao;
 	
 	public Site get(Long id) {
-		return siteDao.findOne(id);
+		return siteDao.get(id);
 	}
 	
 	public Page<Site> find(Page<Site> page, Site site) {
@@ -40,7 +40,7 @@ public class SiteService extends BaseService {
 		if (StringUtils.isNotEmpty(site.getName())){
 			dc.add(Restrictions.like("name", "%"+site.getName()+"%"));
 		}
-		dc.add(Restrictions.eq(Site.DEL_FLAG, site.getDelFlag()));
+		dc.add(Restrictions.eq(Site.FIELD_DEL_FLAG, site.getDelFlag()));
 		//dc.addOrder(Order.asc("id"));
 		return siteDao.find(page, dc);
 	}

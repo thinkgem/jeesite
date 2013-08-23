@@ -19,6 +19,7 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.modules.sys.dao.DictDao;
+import com.thinkgem.jeesite.modules.sys.dao.MyBatisDictDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
@@ -34,11 +35,18 @@ public class DictService extends BaseService {
 	@Autowired
 	private DictDao dictDao;
 	
+//	@Autowired
+//	private MyBatisDictDao myBatisDictDao;
+	
 	public Dict get(Long id) {
-		return dictDao.findOne(id);
+//		Dict dict = myBatisDictDao.get(id);
+//		System.out.println(dict);
+		return dictDao.get(id);
 	}
 	
 	public Page<Dict> find(Page<Dict> page, Dict dict) {
+//		List<Dict> list = myBatisDictDao.findAll();
+//		System.out.println(list);
 		DetachedCriteria dc = dictDao.createDetachedCriteria();
 		if (StringUtils.isNotEmpty(dict.getType())){
 			dc.add(Restrictions.eq("type", dict.getType()));
@@ -46,7 +54,7 @@ public class DictService extends BaseService {
 		if (StringUtils.isNotEmpty(dict.getDescription())){
 			dc.add(Restrictions.like("description", "%"+dict.getDescription()+"%"));
 		}
-		dc.add(Restrictions.eq(Dict.DEL_FLAG, Dict.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Dict.FIELD_DEL_FLAG, Dict.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("type")).addOrder(Order.asc("sort")).addOrder(Order.desc("id"));
 		return dictDao.find(page, dc);
 	}

@@ -5,17 +5,21 @@
  */
 package com.thinkgem.jeesite.modules.sys.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-import com.thinkgem.jeesite.common.persistence.BaseDao;
-import com.thinkgem.jeesite.modules.sys.entity.Log;
+import com.thinkgem.jeesite.common.persistence.MyBatisRepository;
+import com.thinkgem.jeesite.modules.sys.entity.Dict;
 
 /**
- * 日志DAO接口
+ * MyBatis字典DAO接口
  * @author ThinkGem
  * @version 2013-8-23
  */
-@Repository
-public class LogDao extends BaseDao<Log> {
-
+@MyBatisRepository
+public interface MyBatisDictDao {
+	
+    Dict get(Long id);
+    
+    List<Dict> findAll();
+    
 }

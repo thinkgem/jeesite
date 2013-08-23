@@ -60,8 +60,8 @@ public class LeaveService extends BaseService {
 	 * @param id
 	 */
 	@SuppressWarnings("unchecked")
-	public Leave findOne(Long id) {
-		Leave leave= leaveDao.findOne(id);
+	public Leave get(Long id) {
+		Leave leave= leaveDao.get(id);
 		Map<String,Object> variables=null;
 		HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
 		if(historicProcessInstance!=null) {
@@ -116,7 +116,7 @@ public class LeaveService extends BaseService {
 			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).active()
 					.singleResult();
 			String businessKey = processInstance.getBusinessKey();
-			Leave leave = leaveDao.findOne(new Long(businessKey));
+			Leave leave = leaveDao.get(new Long(businessKey));
 			leave.setTask(task);
 			leave.setProcessInstance(processInstance);
 			leave.setProcessDefinition(repositoryService.createProcessDefinitionQuery().processDefinitionId((processInstance.getProcessDefinitionId())).singleResult());

@@ -53,9 +53,10 @@ public class ArticleService extends BaseService {
 	private CategoryDao categoryDao;
 	
 	public Article get(Long id) {
-		return articleDao.findOne(id);
+		return articleDao.get(id);
 	}
 	
+	@Transactional(readOnly = false)
 	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByArticle");
@@ -68,7 +69,7 @@ public class ArticleService extends BaseService {
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
 		if (article.getCategory()!=null && article.getCategory().getId()!=null && !Category.isRoot(article.getCategory().getId())){
-			Category category = categoryDao.findOne(article.getCategory().getId());
+			Category category = categoryDao.get(article.getCategory().getId());
 			if (category!=null){
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
@@ -97,7 +98,7 @@ public class ArticleService extends BaseService {
 			dc.createAlias("category.office", "categoryOffice").createAlias("createBy", "createBy");
 			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
 		}
-		dc.add(Restrictions.eq(Article.DEL_FLAG, article.getDelFlag()));
+		dc.add(Restrictions.eq(Article.FIELD_DEL_FLAG, article.getDelFlag()));
 		if (StringUtils.isBlank(page.getOrderBy())){
 			dc.addOrder(Order.desc("weight"));
 			dc.addOrder(Order.desc("updateDate"));
@@ -117,7 +118,7 @@ public class ArticleService extends BaseService {
 		}
 		// 如果栏目不需要审核，则将该内容设为发布状态
 		if (article.getCategory()!=null&&article.getCategory().getId()!=null){
-			Category category = categoryDao.findOne(article.getCategory().getId());
+			Category category = categoryDao.get(article.getCategory().getId());
 			if (!Article.YES.equals(category.getIsAudit())){
 				article.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
@@ -132,7 +133,7 @@ public class ArticleService extends BaseService {
 	public void delete(Long id, Boolean isRe) {
 //		articleDao.updateDelFlag(id, isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
 		// 使用下面方法，以便更新索引。
-		Article article = articleDao.findOne(id);
+		Article article = articleDao.get(id);
 		article.setDelFlag(isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
 		articleDao.save(article);
 	}
@@ -179,7 +180,7 @@ public class ArticleService extends BaseService {
 		// 设置过滤条件
 		List<BooleanClause> bcList = Lists.newArrayList();
 
-		bcList.add(new BooleanClause(new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
+		bcList.add(new BooleanClause(new TermQuery(new Term(Article.FIELD_DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
 		if (StringUtils.isNotBlank(categoryId)){
 			bcList.add(new BooleanClause(new TermQuery(new Term("category.ids", categoryId)), Occur.MUST));
 		}

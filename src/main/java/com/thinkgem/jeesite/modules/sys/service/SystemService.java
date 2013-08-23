@@ -64,7 +64,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	//-- User Service --//
 	
 	public User getUser(Long id) {
-		return userDao.findOne(id);
+		return userDao.get(id);
 	}
 	
 	public Page<User> findUser(Page<User> page, User user) {
@@ -96,7 +96,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		if (StringUtils.isNotEmpty(user.getName())){
 			dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
 		}
-		dc.add(Restrictions.eq(User.DEL_FLAG, User.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(User.FIELD_DEL_FLAG, User.DEL_FLAG_NORMAL));
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
 			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
 		}
@@ -120,7 +120,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public void deleteUser(Long id) {
 		userDao.deleteById(id);
 		// 同步到Activiti
-		deleteActivitiUser(userDao.findOne(id));
+		deleteActivitiUser(userDao.get(id));
 	}
 	
 	@Transactional(readOnly = false)
@@ -158,7 +158,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	//-- Role Service --//
 	
 	public Role getRole(Long id) {
-		return roleDao.findOne(id);
+		return roleDao.get(id);
 	}
 
 	public Role findRoleByName(String name) {
@@ -171,7 +171,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		dc.createAlias("office", "office");
 		dc.createAlias("userList", "userList", JoinType.LEFT_OUTER_JOIN);
 		dc.add(dataScopeFilter(user, "office", "userList"));
-		dc.add(Restrictions.eq(Role.DEL_FLAG, Role.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Role.FIELD_DEL_FLAG, Role.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("office.code")).addOrder(Order.asc("name"));
 		return roleDao.find(dc);
 	}
@@ -190,12 +190,12 @@ public class SystemService extends BaseService implements InitializingBean {
 		roleDao.deleteById(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
-		deleteActivitiGroup(roleDao.findOne(id));
+		deleteActivitiGroup(roleDao.get(id));
 	}
 	
 	@Transactional(readOnly = false)
 	public Boolean outUserInRole(Role role, Long userId) {
-		User user = userDao.findOne(userId);
+		User user = userDao.get(userId);
 		List<Long> roleIds = user.getRoleIdList();
 		List<Role> roles = user.getRoleList();
 		// 
@@ -209,7 +209,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	
 	@Transactional(readOnly = false)
 	public User assignUserToRole(Role role, Long userId) {
-		User user = userDao.findOne(userId);
+		User user = userDao.get(userId);
 		List<Long> roleIds = user.getRoleIdList();
 		if (roleIds.contains(role.getId())) {
 			return null;
@@ -222,7 +222,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	//-- Menu Service --//
 	
 	public Menu getMenu(Long id) {
-		return menuDao.findOne(id);
+		return menuDao.get(id);
 	}
 
 	public List<Menu> findAllMenu(){
@@ -323,7 +323,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		identityService.saveUser(activitiUser);
 		// 同步用户角色关联数据
 		for (Long roleId : user.getRoleIdList()) {
-			Role role = roleDao.findOne(roleId);
+			Role role = roleDao.get(roleId);
             //查询activiti中是否有该权限
 		 	Group group= identityService.createGroupQuery().groupId(role.getEnname()).singleResult();
             //不存在该权限，新增
@@ -334,7 +334,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	            group.setType(role.getRoleType());
 	            identityService.saveGroup(group);
             }
-			identityService.createMembership(userId, roleDao.findOne(roleId).getEnname());
+			identityService.createMembership(userId, roleDao.get(roleId).getEnname());
 		}
 	}
 

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.thinkgem.jeesite</groupId>
-	<artifactId>jeesite</artifactId>
+	<artifactId>jeesite_plus</artifactId>
 	<version>1.0.4</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
@@ -14,11 +14,13 @@
 	<properties>
 	    
 		<!-- version setting -->
-		<spring.version>3.2.2.RELEASE</spring.version>
-		<spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version>
+		<spring.version>3.2.2.RELEASE</spring.version><!-- 
+		<spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version> -->
 		<hibernate.version>4.1.12.Final</hibernate.version>
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<hibernate-search.version>4.2.0.Final</hibernate-search.version>
+		<mybatis.version>3.1.1</mybatis.version>
+		<mybatis-spring.version>1.1.1</mybatis-spring.version>        
 		<druid.version>0.2.19</druid.version>
 		<shiro.version>1.2.2</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
@@ -178,7 +180,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
-		<!-- spring data jpa -->
+		<!-- spring data jpa
 		<dependency>
 	    	<groupId>org.springframework.data</groupId>
 	    	<artifactId>spring-data-jpa</artifactId>
@@ -189,7 +191,7 @@
 					<artifactId>junit-dep</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> -->
 		<!-- SPRING end -->
 		
 		<!-- AOP begin -->
@@ -218,7 +220,7 @@
 		<!-- AOP end -->
 
 		<!-- PERSISTENCE begin -->
-		<!-- hibernate -->
+		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -244,6 +246,18 @@
 		    <artifactId>hibernate-search</artifactId>
 		    <version>${hibernate-search.version}</version>
 		</dependency>
+        <!-- MyBatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+		
         <!-- 中文分词 -->
 		<dependency>
             <groupId>org.wltea</groupId>
@@ -493,6 +507,9 @@
 		    <artifactId>poi-ooxml-schemas</artifactId>
 		    <version>${poi.version}</version>
 		</dependency>
+		<!-- image util -->
+		
+		
 		<!-- GENERAL UTILS end -->
 		
 		<!-- CKFinder begin -->

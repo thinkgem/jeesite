@@ -38,7 +38,7 @@ public class LeaveReportProcessor implements TaskListener {
 	public void notify(DelegateTask delegateTask) {
 		String processInstanceId = delegateTask.getProcessInstanceId();
 		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-		Leave leave = leaveDao.findOne(new Long(processInstance.getBusinessKey()));
+		Leave leave = leaveDao.get(new Long(processInstance.getBusinessKey()));
 		
 		Object realityStartTime = delegateTask.getVariable("realityStartTime");
 		leave.setRealityStartTime((Date) realityStartTime);

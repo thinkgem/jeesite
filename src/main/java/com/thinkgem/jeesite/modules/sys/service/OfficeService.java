@@ -29,7 +29,7 @@ public class OfficeService extends BaseService {
 	private OfficeDao officeDao;
 	
 	public Office get(Long id) {
-		return officeDao.findOne(id);
+		return officeDao.get(id);
 	}
 	
 	public List<Office> findAll(){

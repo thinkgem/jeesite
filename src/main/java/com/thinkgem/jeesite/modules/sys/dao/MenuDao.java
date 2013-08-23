@@ -7,53 +7,32 @@ package com.thinkgem.jeesite.modules.sys.dao;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.thinkgem.jeesite.common.persistence.BaseDao;
-import com.thinkgem.jeesite.common.persistence.BaseDaoImpl;
+import com.thinkgem.jeesite.common.persistence.Parameter;
+import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
-import com.thinkgem.jeesite.modules.sys.entity.Role;
-import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 菜单DAO接口
  * @author ThinkGem
- * @version 2013-05-15
- */
-public interface MenuDao extends MenuDaoCustom, CrudRepository<Menu, Long> {
-
-	@Modifying
-	@Query("update Menu set delFlag='" + Menu.DEL_FLAG_DELETE + "' where id = ?1 or parentIds like ?2")
-	public int deleteById(Long id, String likeParentIds);
-	
-	public List<Menu> findByParentIdsLike(String parentIds);
-
-	@Query("from Menu where delFlag='" + Menu.DEL_FLAG_NORMAL + "' order by sort")
-	public List<Menu> findAllList();
-	
-	@Query("select distinct m from Menu m, Role r, User u where m in elements (r.menuList) and r in elements (u.roleList)" +
-			" and m.delFlag='" + Menu.DEL_FLAG_NORMAL + "' and r.delFlag='" + Role.DEL_FLAG_NORMAL + 
-			"' and u.delFlag='" + User.DEL_FLAG_NORMAL + "' and u.id=?1" + // or (m.user.id=?1  and m.delFlag='" + Menu.DEL_FLAG_NORMAL + "')" + 
-			" order by m.sort")
-	public List<Menu> findByUserId(Long userId);
-}
-
-/**
- * DAO自定义接口
- * @author ThinkGem
- */
-interface MenuDaoCustom extends BaseDao<Menu> {
-
-}
-
-/**
- * DAO自定义接口实现
- * @author ThinkGem
+ * @version 2013-8-23
  */
 @Repository
-class MenuDaoImpl extends BaseDaoImpl<Menu> implements MenuDaoCustom {
+public class MenuDao extends BaseDao<Menu> {
+	
+	public List<Menu> findByParentIdsLike(String parentIds){
+		return find("from Menu where parentIds like :p1", new Parameter(parentIds));
+	}
 
+	public List<Menu> findAllList(){
+		return find("from Menu where delFlag=:p1 order by sort", new Parameter(Dict.DEL_FLAG_NORMAL));
+	}
+	
+	public List<Menu> findByUserId(Long userId){
+		return find("select distinct m from Menu m, Role r, User u where m in elements (r.menuList) and r in elements (u.roleList)" +
+				" and m.delFlag=:p1 and r.delFlag=:p1 and u.delFlag=:p1 and u.id=:p2" + // or (m.user.id=:p2  and m.delFlag=:p1)" + 
+				" order by m.sort", new Parameter(Menu.DEL_FLAG_NORMAL, userId));
+	}
 }

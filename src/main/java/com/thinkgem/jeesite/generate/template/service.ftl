@@ -29,7 +29,7 @@ public class ${ClassName}Service extends BaseService {
 	private ${ClassName}Dao ${className}Dao;
 	
 	public ${ClassName} get(Long id) {
-		return ${className}Dao.findOne(id);
+		return ${className}Dao.get(id);
 	}
 	
 	public Page<${ClassName}> find(Page<${ClassName}> page, ${ClassName} ${className}) {

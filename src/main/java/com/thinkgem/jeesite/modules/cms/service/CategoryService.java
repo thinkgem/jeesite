@@ -43,7 +43,7 @@ public class CategoryService extends BaseService {
 	private CategoryDao categoryDao;
 	
 	public Category get(Long id) {
-		return categoryDao.findOne(id);
+		return categoryDao.get(id);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -121,7 +121,7 @@ public class CategoryService extends BaseService {
 		if (StringUtils.isNotBlank(category.getInMenu()) && Category.SHOW.equals(category.getInMenu())){
 			dc.add(Restrictions.eq("inMenu", category.getInMenu()));
 		}
-		dc.add(Restrictions.eq(Category.DEL_FLAG, Category.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Category.FIELD_DEL_FLAG, Category.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 		return categoryDao.find(page, dc);
 //		page.setSpringPage(categoryDao.findByParentId(category.getParent().getId(), page.getSpringPage()));
