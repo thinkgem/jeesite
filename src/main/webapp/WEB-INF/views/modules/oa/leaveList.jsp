@@ -45,6 +45,7 @@
 			<th>创建时间</th>
 			<th>请假原因</th>
 			<th>当前节点</th>
+			<th>操作</th>
 		</tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="leave">
@@ -58,9 +59,11 @@
 				<td>${leave.reason}</td>
 				<c:if test="${not empty task}">
 					<td>${task.name}</td>
+					<td><a target="_blank" href="${ctx}/oa/workflow/processMap?procDefId=${leave.processDefinition.id}&proInstId=${leave.processInstanceId}">跟踪</a></td>
 				</c:if>
 				<c:if test="${empty task}">
 					<td>已结束</td>
+					<td>&nbsp;</td>
 				</c:if>
 			</tr>
 		</c:forEach>

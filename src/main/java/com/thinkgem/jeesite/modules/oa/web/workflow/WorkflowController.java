@@ -15,6 +15,10 @@ import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -26,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +55,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 public class WorkflowController {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	protected WorkflowProcessDefinitionService workflowProcessDefinitionService;
 	@Autowired
@@ -63,9 +68,10 @@ public class WorkflowController {
 	protected WorkflowTraceService traceService;
 
 	protected static Map<String, ProcessDefinition> PROCESS_DEFINITION_CACHE = new HashMap<String, ProcessDefinition>();
-	
+
 	/**
 	 * 流程定义列表
+	 * 
 	 * @return
 	 */
 	@RequiresPermissions("oa:workflow:edit")
@@ -78,7 +84,8 @@ public class WorkflowController {
 		 */
 		List<Object[]> objects = new ArrayList<Object[]>();
 
-		List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery().list();
+		List<ProcessDefinition> processDefinitionList = repositoryService
+				.createProcessDefinitionQuery().list();
 		for (ProcessDefinition processDefinition : processDefinitionList) {
 			String deploymentId = processDefinition.getDeploymentId();
 			Deployment deployment = repositoryService.createDeploymentQuery()
@@ -107,16 +114,21 @@ public class WorkflowController {
 	/**
 	 * 读取资源，通过部署ID
 	 * 
-	 * @param deploymentId 流程部署的ID
-	 * @param resourceName 资源名称(foo.xml|foo.png)
+	 * @param deploymentId
+	 *            流程部署的ID
+	 * @param resourceName
+	 *            资源名称(foo.xml|foo.png)
 	 * @param response
 	 * @throws Exception
 	 */
 	@RequiresPermissions("oa:workflow:edit")
 	@RequestMapping(value = "/resource/deployment")
-	public void loadByDeployment(@RequestParam("deploymentId") String deploymentId, @RequestParam("resourceName") String resourceName,
+	public void loadByDeployment(
+			@RequestParam("deploymentId") String deploymentId,
+			@RequestParam("resourceName") String resourceName,
 			HttpServletResponse response) throws Exception {
-		InputStream resourceAsStream = repositoryService.getResourceAsStream(deploymentId, resourceName);
+		InputStream resourceAsStream = repositoryService.getResourceAsStream(
+				deploymentId, resourceName);
 		byte[] b = new byte[1024];
 		int len = -1;
 		while ((len = resourceAsStream.read(b, 0, 1024)) != -1) {
@@ -127,20 +139,27 @@ public class WorkflowController {
 	/**
 	 * 读取资源，通过流程ID
 	 * 
-	 * @param resourceType 资源类型(xml|image)
-	 * @param processInstanceId 流程实例ID
+	 * @param resourceType
+	 *            资源类型(xml|image)
+	 * @param processInstanceId
+	 *            流程实例ID
 	 * @param response
 	 * @throws Exception
 	 */
 	@RequiresPermissions("oa:workflow:edit")
 	@RequestMapping(value = "/resource/process-instance")
-	public void loadByProcessInstance(@RequestParam("type") String resourceType, @RequestParam("pid") String processInstanceId,
+	public void loadByProcessInstance(
+			@RequestParam("type") String resourceType,
+			@RequestParam("pid") String processInstanceId,
 			HttpServletResponse response) throws Exception {
 		InputStream resourceAsStream = null;
-		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+		ProcessInstance processInstance = runtimeService
+				.createProcessInstanceQuery()
 				.processInstanceId(processInstanceId).singleResult();
-		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
+		ProcessDefinition processDefinition = repositoryService
+				.createProcessDefinitionQuery()
+				.processDefinitionId(processInstance.getProcessDefinitionId())
+				.singleResult();
 
 		String resourceName = "";
 		if (resourceType.equals("image")) {
@@ -160,7 +179,8 @@ public class WorkflowController {
 	/**
 	 * 删除部署的流程，级联删除流程实例
 	 * 
-	 * @param deploymentId 流程部署ID
+	 * @param deploymentId
+	 *            流程部署ID
 	 */
 	@RequiresPermissions("oa:workflow:edit")
 	@RequestMapping(value = "/process/delete")
@@ -179,14 +199,17 @@ public class WorkflowController {
 	@RequiresPermissions("oa:workflow:edit")
 	@RequestMapping(value = "/process/trace")
 	@ResponseBody
-	public List<Map<String, Object>> traceProcess(@RequestParam("pid") String processInstanceId) throws Exception {
-		List<Map<String, Object>> activityInfos = traceService.traceProcess(processInstanceId);
+	public List<Map<String, Object>> traceProcess(
+			@RequestParam("pid") String processInstanceId) throws Exception {
+		List<Map<String, Object>> activityInfos = traceService
+				.traceProcess(processInstanceId);
 		return activityInfos;
 	}
 
 	@RequiresPermissions("oa:workflow:edit")
 	@RequestMapping(value = "/deploy")
-	public String deploy(@RequestParam(value = "file", required = false) MultipartFile file) {
+	public String deploy(
+			@RequestParam(value = "file", required = false) MultipartFile file) {
 
 		String fileName = file.getOriginalFilename();
 
@@ -196,24 +219,30 @@ public class WorkflowController {
 			String extension = FilenameUtils.getExtension(fileName);
 			if (extension.equals("zip") || extension.equals("bar")) {
 				ZipInputStream zip = new ZipInputStream(fileInputStream);
-				repositoryService.createDeployment().addZipInputStream(zip).deploy();
+				repositoryService.createDeployment().addZipInputStream(zip)
+						.deploy();
 			} else if (extension.equals("png")) {
-				repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
+				repositoryService.createDeployment()
+						.addInputStream(fileName, fileInputStream).deploy();
 			} else if (fileName.indexOf("bpmn20.xml") != -1) {
-				repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
+				repositoryService.createDeployment()
+						.addInputStream(fileName, fileInputStream).deploy();
 			} else if (extension.equals("bpmn")) {
 				/*
 				 * bpmn扩展名特殊处理，转换为bpmn20.xml
 				 */
 				String baseName = FilenameUtils.getBaseName(fileName);
-				repositoryService.createDeployment().addInputStream(baseName + ".bpmn20.xml",
+				repositoryService
+						.createDeployment()
+						.addInputStream(baseName + ".bpmn20.xml",
 								fileInputStream).deploy();
 			} else {
 				throw new ActivitiException("no support file type of "
 						+ extension);
 			}
 		} catch (Exception e) {
-			logger.error("error on deploy process, because of file input stream", e);
+			logger.error(
+					"error on deploy process, because of file input stream", e);
 		}
 
 		return "redirect:" + Global.getAdminPath() + "/oa/workflow/processList";
@@ -304,16 +333,17 @@ public class WorkflowController {
 			redirectAttributes.addFlashAttribute("message", "已挂起ID为["
 					+ processDefinitionId + "]的流程定义。");
 		}
-		return "redirect:" + Global.getAdminPath()
-				+ "/oa/workflow/processList";
+		return "redirect:" + Global.getAdminPath() + "/oa/workflow/processList";
 	}
 
 	/**
 	 * 完成任务
+	 * 
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "complete/{id}", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "complete/{id}", method = { RequestMethod.POST,
+			RequestMethod.GET })
 	@ResponseBody
 	public String complete(@PathVariable("id") String taskId, Variable var) {
 		try {
@@ -337,6 +367,69 @@ public class WorkflowController {
 		String userId = ObjectUtils.toString(UserUtils.getUser().getId());
 		taskService.claim(taskId, userId);
 		return "success";
+	}
+
+	/**
+	 * 显示流程图
+	 */
+	@RequestMapping(value = "processPic")
+	public void processPic(String procDefId, HttpServletResponse response) throws Exception {
+		ProcessDefinition procDef = repositoryService
+				.createProcessDefinitionQuery().processDefinitionId(procDefId)
+				.singleResult();
+		String diagramResourceName = procDef.getDiagramResourceName();
+		InputStream imageStream = repositoryService.getResourceAsStream(
+				procDef.getDeploymentId(), diagramResourceName);
+		byte[] b = new byte[1024];
+		int len = -1;
+		while ((len = imageStream.read(b, 0, 1024)) != -1) {
+			response.getOutputStream().write(b, 0, len);
+		}
+	}
+	
+	/**
+	 * 获取跟踪信息
+	 */
+	@RequestMapping(value = "processMap")
+	public String processMap(String procDefId, String proInstId, Model model)
+			throws Exception {
+		List<ActivityImpl> actImpls = new ArrayList<ActivityImpl>();
+		ProcessDefinition processDefinition = repositoryService
+				.createProcessDefinitionQuery().processDefinitionId(procDefId)
+				.singleResult();
+		ProcessDefinitionImpl pdImpl = (ProcessDefinitionImpl) processDefinition;
+		String processDefinitionId = pdImpl.getId();// 流程标识
+		ProcessDefinitionEntity def = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+				.getDeployedProcessDefinition(processDefinitionId);
+		List<ActivityImpl> activitiList = def.getActivities();// 获得当前任务的所有节点
+		List<String> activeActivityIds = runtimeService.getActiveActivityIds(proInstId);
+		for (String activeId : activeActivityIds) {
+			for (ActivityImpl activityImpl : activitiList) {
+				String id = activityImpl.getId();
+				if (activityImpl.isScope()) {
+					if (activityImpl.getActivities().size() > 1) {
+						List<ActivityImpl> subAcList = activityImpl
+								.getActivities();
+						for (ActivityImpl subActImpl : subAcList) {
+							String subid = subActImpl.getId();
+							System.out.println("subImpl:" + subid);
+							if (activeId.equals(subid)) {// 获得执行到那个节点
+								actImpls.add(subActImpl);
+								break;
+							}
+						}
+					}
+				}
+				if (activeId.equals(id)) {// 获得执行到那个节点
+					actImpls.add(activityImpl);
+					System.out.println(id);
+				}
+			}
+		}
+		model.addAttribute("procDefId", procDefId);
+		model.addAttribute("proInstId", proInstId);
+		model.addAttribute("actImpls", actImpls);
+		return "modules/oa/workflow/processMap";
 	}
 
 }

@@ -8,6 +8,8 @@ package com.thinkgem.jeesite.common.persistence;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +17,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
@@ -220,6 +226,43 @@ public class BaseDao<T> {
 	 * @param entity
 	 */
 	public void save(T entity){
+		try {
+			// 获取实体编号
+			Object id = null;
+			for (Method method : entity.getClass().getMethods()){
+				Id idAnn = method.getAnnotation(Id.class);
+				if (idAnn != null){
+					id = method.invoke(entity);
+					break;
+				}
+			}
+			// 插入前执行方法
+			if (id == null){
+				for (Method method : entity.getClass().getMethods()){
+					PrePersist pp = method.getAnnotation(PrePersist.class);
+					if (pp != null){
+						method.invoke(entity);
+						break;
+					}
+				}
+			}
+			// 更新前执行方法
+			else{
+				for (Method method : entity.getClass().getMethods()){
+					PreUpdate pu = method.getAnnotation(PreUpdate.class);
+					if (pu != null){
+						method.invoke(entity);
+						break;
+					}
+				}
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 		getSession().saveOrUpdate(entity);
 	}
 	
@@ -228,7 +271,9 @@ public class BaseDao<T> {
 	 * @param entityList
 	 */
 	public void save(List<T> entityList){
-		getSession().saveOrUpdate(entityList);
+		for (T entity : entityList){
+			save(entity);
+		}
 	}
 
 	/**

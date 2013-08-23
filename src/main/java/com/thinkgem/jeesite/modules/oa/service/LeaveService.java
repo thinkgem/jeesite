@@ -77,6 +77,7 @@ public class LeaveService extends BaseService {
 	 * 启动流程
 	 * @param entity
 	 */
+	@Transactional(readOnly = false)
 	public ProcessInstance save(Leave entity, Map<String, Object> variables) {
 		leaveDao.save(entity);
 		logger.debug("save entity: {}", entity);
@@ -99,7 +100,6 @@ public class LeaveService extends BaseService {
 	 * @param userId 用户ID
 	 * @return
 	 */
-	@Transactional(readOnly = true)
 	public List<Leave> findTodoTasks(String userId) {
 		List<Leave> results = new ArrayList<Leave>();
 		List<Task> tasks = new ArrayList<Task>();
