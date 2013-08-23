@@ -122,6 +122,9 @@ public class CategoryService extends BaseService {
 		if (StringUtils.isNotBlank(category.getInMenu()) && Category.SHOW.equals(category.getInMenu())){
 			dc.add(Restrictions.eq("inMenu", category.getInMenu()));
 		}
+		if (StringUtils.isNotBlank(category.getInList()) && Category.SHOW.equals(category.getInList())){
+			dc.add(Restrictions.eq("inList", category.getInList()));
+		}
 		dc.add(Restrictions.eq(Category.DEL_FLAG, Category.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 		return categoryDao.find(page, dc);

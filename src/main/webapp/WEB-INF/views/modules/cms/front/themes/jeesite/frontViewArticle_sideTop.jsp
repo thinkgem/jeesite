@@ -29,7 +29,7 @@
                 <h2 class="tit">${article.title}</h2>
 
                 <div class="contArticle_author">
-                    <span>发布时间：<fmt:formatDate value="${article.createDate}" pattern="yyyy年MM月dd日"/></span><span><a href="#">1</a>/<a href="#">2</a></span><span class="hits">${article.hits}</span>
+                    <span>发布时间：<fmt:formatDate value="${article.createDate}" pattern="yyyy年MM月dd日"/></span><span class="hits">${article.hits}</span>
                 </div>
                 <!-- 正文 -->
                 <div class="contArticle_text">
@@ -55,7 +55,16 @@
         </div>
     </div>
     <!-- mainContent E-->
-    <page:applyDecorator name="panel" page="layouts/include/sideBar.jsp" />
+
+    <!-- sideBar S-->
+    <div class="sideBar">
+        <page:applyDecorator name="panel" page="layouts/include/sideBarBanner.jsp"/>
+        <page:applyDecorator name="panel" page="layouts/include/sideSecondList.jsp"/>
+    </div>
+    <!-- sideBar E-->
+    <script type="text/javascript" language="javascript">
+        HeightFix(".sideBar", ".mainContent", "0");
+    </script>
 </div>
 <div class="clearbox blank"></div>
 </body>

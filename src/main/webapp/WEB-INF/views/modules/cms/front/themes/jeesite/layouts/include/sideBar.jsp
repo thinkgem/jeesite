@@ -17,7 +17,7 @@
             <li id="Tr04" class="FirNav"><span>公司信息</span></li>
             <li class="SubNav" style="display:block">
                 <a href="" title="公司介绍">公司介绍</a>
-                <a href="" title="公司动态">公司动态</a>
+                <a href="${ctx}/list-42${urlSuffix}" title="公司动态">公司动态</a>
                 <a href="" title="公司环境">公司环境</a>
                 <a href="/PowerEasy/213.html" title="发展历程">发展历程</a>
                 <a href="/PowerEasy/1180.html" title="组织架构">组织架构</a>

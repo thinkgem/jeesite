@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +89,7 @@ public class FrontController extends BaseController{
 				articleService.updateHitsAddOne(article.getId());
 			}
 			model.addAttribute("article", article);
-            setTplModelAttribute(model, category.getViewConfig());
+            setTplModelAttribute(model, category);
             setTplModelAttribute(model, article.getViewConfig());
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 		}else{
@@ -128,7 +129,7 @@ public class FrontController extends BaseController{
 					page = linkService.find(page, new Link(category), false);
 					model.addAttribute("page", page);
 				}
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+ (StringUtils.isBlank(category.getCustomContentView()) ? "frontList" : category.getCustomContentView());
+				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+ (StringUtils.isBlank(category.getCustomListView()) ? "frontList" : category.getCustomListView());
 			}
 			// 有子栏目：显示子栏目列表
 			else{
@@ -147,8 +148,8 @@ public class FrontController extends BaseController{
 					}
 				}
 				model.addAttribute("categoryMap", categoryMap);
-                setTplModelAttribute(model, category.getViewConfig());
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+ (StringUtils.isBlank(category.getCustomContentView()) ? "frontListCategory" : category.getCustomContentView());
+                setTplModelAttribute(model, category);
+				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+ (StringUtils.isBlank(category.getCustomListView()) ? "frontListCategory" : category.getCustomListView());
 			}
 		}
 	}
@@ -185,7 +186,7 @@ public class FrontController extends BaseController{
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("article", article);
 			model.addAttribute("relationList", relationList);
-            setTplModelAttribute(model, article.getCategory().getViewConfig());
+            setTplModelAttribute(model, article.getCategory());
             setTplModelAttribute(model, article.getViewConfig());
 			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 		}
@@ -298,9 +299,24 @@ public class FrontController extends BaseController{
     }
 
     private String getTpl(Article article){
-        return StringUtils.isBlank(article.getCustomContentView()) ?
-                StringUtils.isBlank(article.getCategory().getCustomContentView()) ? Global.getConfig("tplDefault.Article") : article.getCategory().getCustomContentView()
-                : article.getCustomContentView();
+        if(StringUtils.isBlank(article.getCustomContentView())){
+            String view = null;
+            Category c = article.getCategory();
+            boolean goon = true;
+            do{
+                if(StringUtils.isNotBlank(c.getCustomContentView())){
+                    view = c.getCustomContentView();
+                    goon = false;
+                }else if(c.getParent().isRoot()){
+                    goon = false;
+                }else{
+                    c = c.getParent();
+                }
+            }while(goon);
+            return StringUtils.isBlank(view) ? Global.getConfig("tplDefault.Article") : view;
+        }else{
+            return article.getCustomContentView();
+        }
     }
 
     private void setTplModelAttribute(Model model, String param){
@@ -309,6 +325,23 @@ public class FrontController extends BaseController{
             for(Object o : map.keySet()){
                 model.addAttribute("viewConfig_"+o.toString(), map.get(o));
             }
+        }
+    }
+
+    private void setTplModelAttribute(Model model, Category category){
+        List<Category> categoryList = Lists.newArrayList();
+        Category c = category;
+        boolean goon = true;
+        do{
+            if(c.getParent().isRoot()){
+                goon = false;
+            }
+            categoryList.add(c);
+            c = c.getParent();
+        }while(goon);
+        Collections.reverse(categoryList);
+        for(Category ca : categoryList){
+            setTplModelAttribute(model, ca.getViewConfig());
         }
     }
 }

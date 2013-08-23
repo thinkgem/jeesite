@@ -11,6 +11,7 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.web.ServletContextRealPathResolver;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
@@ -134,7 +135,7 @@ public class CmsUtils{
 	public static Category getCategory(long categoryId){
 		return categoryService.get(categoryId);
 	}
-	
+
 	/**
 	 * 获得栏目列表
 	 * @param siteId 站点编号
@@ -147,6 +148,7 @@ public class CmsUtils{
 		Category category = new Category();
 		category.setSite(new Site(siteId));
 		category.setParent(new Category(parentId));
+        category.setInList(Category.SHOW);
 		if (StringUtils.isNotBlank(param)){
 			@SuppressWarnings({ "unused", "rawtypes" })
 			Map map = JsonMapper.getInstance().fromJson("{"+param+"}", Map.class);
@@ -154,6 +156,27 @@ public class CmsUtils{
 		page = categoryService.find(page, category);
 		return page.getList();
 	}
+
+    /**
+   	 * 获得二级栏目列表
+   	 * @param siteId 站点编号
+   	 * @param category 分类
+   	 * @param number 获取数目
+   	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
+   	 */
+   	public static List<Category> getCategoryList(long siteId, Category category, int number, String param){
+        if(!category.isRoot()){
+            if(!category.getParent().isRoot()){
+                Long[] ids = (Long[]) ConvertUtils.convert(StringUtils.split(category.getParentIds(), ","), Long.class);
+                if(ids.length >= 3){
+                    return getCategoryList(siteId, ids[2], number, param);
+                }
+            }else{
+                return getCategoryList(siteId, category.getId(), number, param);
+            }
+        }
+        return null;
+    }
 
 	/**
 	 * 获取栏目
@@ -330,7 +353,7 @@ public class CmsUtils{
 
     /**
      * 获得栏目动态URL地址
-   	 * @param article
+   	 * @param category
    	 * @return url
    	 */
     public static String getUrlDynamic(Category category) {
@@ -354,7 +377,7 @@ public class CmsUtils{
    	 */
     public static String formatImageSrcToDb(String src) {
         if(StringUtils.isBlank(src)) return src;
-        if(src.startsWith(servletContextRealPathResolver.getContextPath()+"/userfiles")){
+        if(src.startsWith(servletContextRealPathResolver.getContextPath() + "/userfiles")){
             return src.substring(servletContextRealPathResolver.getContextPath().length());
         }else{
             return src;
@@ -368,7 +391,7 @@ public class CmsUtils{
    	 */
     public static String formatImageSrcToWeb(String src) {
         if(StringUtils.isBlank(src)) return src;
-        if(src.startsWith(servletContextRealPathResolver.getContextPath()+"/userfiles")){
+        if(src.startsWith(servletContextRealPathResolver.getContextPath() + "/userfiles")){
             return src;
         }else{
             return servletContextRealPathResolver.getContextPath()+src;

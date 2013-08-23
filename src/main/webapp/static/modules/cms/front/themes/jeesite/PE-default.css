@@ -221,10 +221,10 @@
 	
 	/*-- 分页 --*/
 	.page{ clear:both; text-align:center; margin:15px 0; }
-	.pager{text-align:center; }
-	.pager a,.pager span{display:inline-block;margin-right:3px; height:20px; line-height:20px;font:normal 11px/20px Tahoma,Mingliu; }
-	.pager a,.pager a:active  {display:inline-block;border:1px solid #c5c5c5; color:#1485ff; padding:0 6px;}
-	.pager a:hover {border:1px solid #389bf2; text-decoration:none; color:#3366cc;}
-	.pager span.current {background:#0490EA; border:1px solid #1172D4; color:#fff; font-weight:bold; padding:0 6px; }
-	.pager span.disabled {border:1px solid #c5c5c5;  padding:0 6px; color:#c0c0c0;}
-	.pager input{width:20px; height:20px; border:#ccc solid 1px;font:normal 11px/20px Tahoma,Mingliu; text-align:center; box-shadow: 0 0 3px #999; }
+	.page ul li{display:inline;}
+	.page ul li a{display:inline-block;margin-right:3px; height:20px; line-height:20px;font:normal 11px/20px Tahoma,Mingliu; }
+	.page ul li a,.page ul li a:active  {display:inline-block;border:1px solid #c5c5c5; color:#1485ff; padding:0 6px;}
+	.page ul li a:hover {border:1px solid #389bf2; text-decoration:none; color:#3366cc;}
+	.page ul li.active a {background:#0490EA; border:1px solid #1172D4; color:#fff; font-weight:bold; padding:0 6px; }
+	.page span.disabled {border:1px solid #c5c5c5;  padding:0 6px; color:#c0c0c0;}
+	.page ul li a input{width:20px; height:20px; border:#ccc solid 1px; border-width: 0 1px; font:normal 11px/20px Tahoma,Mingliu; text-align:center; box-shadow: 0 0 3px #999; }

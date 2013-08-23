@@ -74,6 +74,14 @@
     <function-signature>java.util.List getCategoryList(long, long, int, java.lang.String)</function-signature>
     <example>${fnc:getCategoryList(siteId, parentId, number, param)}</example>  
   </function>
+
+  <function>
+    <description>获得二级栏目列表</description>
+    <name>getSecondCategoryList</name>
+    <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
+    <function-signature>java.util.List getCategoryList(long, com.thinkgem.jeesite.modules.cms.entity.Category, int, java.lang.String)</function-signature>
+    <example>${fnc:getCategoryList(siteId, parentId, number, param)}</example>
+  </function>
   
   <function>
     <description>获得栏目列表</description>

@@ -32,7 +32,7 @@
                             <ul>
                                 <c:if test="${map.key.module eq 'article'}">
                                     <c:forEach items="${map.value}" var="article">
-                                        <li><a href="${article.url}" target="_blank">${fns:abbr(article.title,25)}</a>
+                                        <li><a href="${article.url}" target="_blank">${fns:abbr(article.title,50)}</a>
                                         </li>
                                     </c:forEach>
                                 </c:if>
@@ -58,19 +58,12 @@
     <!-- sideBar S-->
     <div class="sideBar">
         <page:applyDecorator name="panel" page="layouts/include/sideBarBanner.jsp"/>
-        <div class="sideBarList">
-            <h3>${category.name}分类列表</h3>
-            <ul class="txtList">
-                <c:forEach items="${categoryMap}" var="map">
-                    <li><a href="${map.key.url}">${map.key.name}</a></li>
-                </c:forEach>
-            </ul>
-        </div>
+        <page:applyDecorator name="panel" page="layouts/include/sideSecondList.jsp"/>
     </div>
+    <!-- sideBar E-->
     <script type="text/javascript" language="javascript">
         HeightFix(".sideBar", ".mainContent", "0");
     </script>
-    <!-- sideBar E-->
 </div>
 <div class="clearbox blank"></div>
 </body>
