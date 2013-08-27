@@ -50,6 +50,8 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category extends DataEntity {
 
+    public static final String DEFAULT_TEMPLATE = "frontList";
+
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
 	private Site site;		// 归属站点

@@ -142,13 +142,21 @@
 		<div class="control-group">
 			<label class="control-label">自定义列表视图:</label>
 			<div class="controls">
-				<form:input path="customListView" htmlEscape="false" maxlength="200"/>
+                <form:select path="customListView">
+                    <form:option value="" label="默认视图"/>
+                    <form:options items="${listViewList}" htmlEscape="false"/>
+                </form:select>
+                <span class="help-inline">自定义列表视图名称必须以"${category_DEFAULT_TEMPLATE}"开始</span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">自定义内容视图:</label>
 			<div class="controls">
-				<form:input path="customContentView" htmlEscape="false" maxlength="200"/>
+                <form:select path="customContentView">
+                    <form:option value="" label="默认视图"/>
+                    <form:options items="${contentViewList}" htmlEscape="false"/>
+                </form:select>
+                <span class="help-inline">自定义内容视图名称必须以"${article_DEFAULT_TEMPLATE}"开始</span>
 			</div>
 		</div>
 		<div class="form-actions">

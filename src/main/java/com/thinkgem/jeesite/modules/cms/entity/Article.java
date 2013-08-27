@@ -53,6 +53,8 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed @Analyzer(impl = IKAnalyzer.class)
 public class Article extends DataEntity {
+
+    public static final String DEFAULT_TEMPLATE = "frontViewArticle";
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
