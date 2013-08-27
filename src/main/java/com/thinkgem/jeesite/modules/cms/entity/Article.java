@@ -146,7 +146,7 @@ public class Article extends DataEntity {
 	}
 
 	public void setImage(String image) {
-		this.image = image;
+        this.image = CmsUtils.formatImageSrcToDb(image);
 	}
 
 	@Length(min=0, max=255)
