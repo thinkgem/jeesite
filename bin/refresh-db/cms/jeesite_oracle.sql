@@ -43,6 +43,7 @@ CREATE TABLE cms_article
 	id number(19,0) NOT NULL,
 	category_id number(19,0) NOT NULL,
 	title varchar2(255) NOT NULL,
+	link varchar2(255),
 	color varchar2(50),
 	image varchar2(255),
 	keywords varchar2(255),

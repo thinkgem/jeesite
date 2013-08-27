@@ -20,6 +20,7 @@ CREATE TABLE cms_article
 	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
 	category_id bigint NOT NULL COMMENT '栏目编号',
 	title varchar(255) NOT NULL COMMENT '标题',
+	link varchar(255) COMMENT '外部链接',
 	color varchar(50) COMMENT '标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）',
 	image varchar(255) COMMENT '文章图片',
 	keywords varchar(255) COMMENT '关键字',

@@ -19,6 +19,7 @@ CREATE TABLE cms_article
 	id bigint NOT NULL IDENTITY ,
 	category_id bigint NOT NULL,
 	title nvarchar(255) NOT NULL,
+	link nvarchar(255),
 	color nvarchar(50),
 	image nvarchar(255),
 	keywords nvarchar(255),

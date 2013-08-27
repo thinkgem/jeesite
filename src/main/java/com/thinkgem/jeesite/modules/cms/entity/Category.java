@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
@@ -333,4 +334,9 @@ public class Category extends DataEntity {
 	public static boolean isRoot(Long id){
 		return id != null && id.equals(1L);
 	}
+
+    @Transient
+   	public String getUrl() {
+        return CmsUtils.getUrlDynamic(this);
+   	}
 }
