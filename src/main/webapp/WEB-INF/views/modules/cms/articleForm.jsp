@@ -115,7 +115,7 @@
 		<div class="control-group">
 			<label class="control-label">文章图片:</label>
 			<div class="controls">
-				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+                <input type="hidden" id="image" name="image" value="${article.imageSrc}" />
 				<tags:ckfinder input="image" type="images" uploadPath="/cms/article" selectMultiple="false"/>
 			</div>
 		</div>
