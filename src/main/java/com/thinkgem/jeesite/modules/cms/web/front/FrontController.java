@@ -324,8 +324,10 @@ public class FrontController extends BaseController{
     private void setTplModelAttribute(Model model, String param){
         if(StringUtils.isNotBlank(param)){
             Map map = JsonMapper.getInstance().fromJson(param, Map.class);
-            for(Object o : map.keySet()){
-                model.addAttribute("viewConfig_"+o.toString(), map.get(o));
+            if(map != null){
+                for(Object o : map.keySet()){
+                    model.addAttribute("viewConfig_"+o.toString(), map.get(o));
+                }
             }
         }
     }
