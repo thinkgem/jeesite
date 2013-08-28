@@ -57,6 +57,8 @@ CREATE TABLE cms_article
 	update_by number(19,0),
 	update_date timestamp,
 	remarks varchar2(255),
+	custom_content_view varchar2(255),
+	view_config clob,
 	del_flag char(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (id)
 );
@@ -95,6 +97,7 @@ CREATE TABLE cms_category
 	is_audit char(1),
 	custom_list_view varchar2(255),
 	custom_content_view varchar2(255),
+	view_config clob,
 	create_by number(19,0),
 	create_date timestamp,
 	update_by number(19,0),

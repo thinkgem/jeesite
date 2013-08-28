@@ -73,6 +73,7 @@ public class Category extends DataEntity {
 	private String isAudit;	// 是否需要审核
 	private String customListView;		// 自定义列表视图
 	private String customContentView;	// 自定义内容视图
+    private String viewConfig;	// 视图参数
 	
 	private List<Category> childList = Lists.newArrayList(); 	// 拥有子分类列表
 
@@ -286,6 +287,14 @@ public class Category extends DataEntity {
 	public void setCustomContentView(String customContentView) {
 		this.customContentView = customContentView;
 	}
+
+    public String getViewConfig() {
+        return viewConfig;
+    }
+
+    public void setViewConfig(String viewConfig) {
+        this.viewConfig = viewConfig;
+    }
 
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")

@@ -33,6 +33,8 @@ CREATE TABLE cms_article
 	update_by bigint,
 	update_date datetime,
 	remarks nvarchar(255),
+	custom_content_view nvarchar(255),
+	view_config text,
 	del_flag char(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (id)
 );
@@ -71,6 +73,7 @@ CREATE TABLE cms_category
 	is_audit char(1),
 	custom_list_view nvarchar(255),
 	custom_content_view nvarchar(255),
+	view_config text,
 	create_by bigint,
 	create_date datetime,
 	update_by bigint,

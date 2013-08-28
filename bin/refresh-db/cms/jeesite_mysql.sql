@@ -34,6 +34,8 @@ CREATE TABLE cms_article
 	update_by bigint COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
+	custom_content_view varchar(255) DEFAULT NULL COMMENT '自定义内容视图',
+	view_config text COMMENT '视图参数',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
 ) COMMENT = '文章表';
@@ -72,6 +74,7 @@ CREATE TABLE cms_category
 	is_audit char(1) COMMENT '是否需要审核',
 	custom_list_view varchar(255) COMMENT '自定义列表视图',
 	custom_content_view varchar(255) COMMENT '自定义内容视图',
+	view_config text COMMENT '视图参数',
 	create_by bigint COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
 	update_by bigint COMMENT '更新者',

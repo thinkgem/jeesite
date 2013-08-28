@@ -159,6 +159,13 @@
                 <span class="help-inline">自定义内容视图名称必须以"${article_DEFAULT_TEMPLATE}"开始</span>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">自定义视图参数:</label>
+			<div class="controls">
+                <form:input path="viewConfig" htmlEscape="true"/>
+                <span class="help-inline">视图参数例如: {count:2, title_show:"yes"}</span>
+			</div>
+		</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="cms:category:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

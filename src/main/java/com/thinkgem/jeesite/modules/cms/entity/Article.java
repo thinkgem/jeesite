@@ -69,6 +69,8 @@ public class Article extends DataEntity {
 	private Date weightDate;// 权重期限，超过期限，将weight设置为0
 	private Integer hits;	// 点击数
 	private String posid;	// 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
+    private String customContentView;	// 自定义内容视图
+   	private String viewConfig;	// 视图参数
 
 	private ArticleData articleData;	//文章副表
     
@@ -204,6 +206,22 @@ public class Article extends DataEntity {
 	public void setPosid(String posid) {
 		this.posid = posid;
 	}
+
+    public String getCustomContentView() {
+        return customContentView;
+    }
+
+    public void setCustomContentView(String customContentView) {
+        this.customContentView = customContentView;
+    }
+
+    public String getViewConfig() {
+        return viewConfig;
+    }
+
+    public void setViewConfig(String viewConfig) {
+        this.viewConfig = viewConfig;
+    }
 
 	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
 	@Valid
