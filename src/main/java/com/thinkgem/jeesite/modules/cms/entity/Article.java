@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -50,7 +51,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "cms_article")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Indexed @Analyzer(impl = IKAnalyzer.class)
+//@Indexed @Analyzer(impl = IKAnalyzer.class)
 public class Article extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
@@ -192,7 +193,9 @@ public class Article extends DataEntity {
 		this.posid = posid;
 	}
 
-	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
+//	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	@Valid
 	@IndexedEmbedded
 	public ArticleData getArticleData() {

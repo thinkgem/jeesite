@@ -17,7 +17,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +42,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  */
 @Service
 @Transactional(readOnly = true)
-public class SystemService extends BaseService implements InitializingBean {
+public class SystemService extends BaseService {
 	
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
@@ -112,7 +111,9 @@ public class SystemService extends BaseService implements InitializingBean {
 		userDao.clear();
 		userDao.save(user);
 		systemRealm.clearAllCachedAuthorizationInfo();
-		// 同步到Activiti
+		// 如果从未同步过，则与Activiti同步
+		synActivitiIndetity();
+		// 将当前用户同步到Activiti
 		saveActivitiUser(user, user.getId()==null);
 	}
 
@@ -166,14 +167,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	public List<Role> findAllRole(){
-		User user = UserUtils.getUser();
-		DetachedCriteria dc = roleDao.createDetachedCriteria();
-		dc.createAlias("office", "office");
-		dc.createAlias("userList", "userList", JoinType.LEFT_OUTER_JOIN);
-		dc.add(dataScopeFilter(user, "office", "userList"));
-		dc.add(Restrictions.eq(Role.FIELD_DEL_FLAG, Role.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.asc("office.code")).addOrder(Order.asc("name"));
-		return roleDao.find(dc);
+		return UserUtils.getRoleList();
 	}
 	
 	@Transactional(readOnly = false)
@@ -183,6 +177,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
 		saveActivitiGroup(role, role.getId()==null);
+		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 	}
 
 	@Transactional(readOnly = false)
@@ -191,6 +186,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
 		deleteActivitiGroup(roleDao.get(id));
+		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 	}
 	
 	@Transactional(readOnly = false)
@@ -259,7 +255,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * 是需要同步Activiti数据，如果从未同步过，则同步数据。
 	 */
 	private static boolean isSynActivitiIndetity = true;
-	public void afterPropertiesSet() throws Exception {
+	public void synActivitiIndetity() {
 		if (isSynActivitiIndetity){
 			isSynActivitiIndetity = false;
 			List<Group> groupList = identityService.createGroupQuery().list();

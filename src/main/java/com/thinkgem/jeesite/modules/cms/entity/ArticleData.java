@@ -106,8 +106,10 @@ public class ArticleData extends BaseEntity {
 		this.allowComment = allowComment;
 	}
 
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE},optional=false)  
-	@PrimaryKeyJoinColumn  
+//	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE},optional=false)  
+//	@PrimaryKeyJoinColumn
+	@OneToOne(mappedBy="articleData",cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	public Article getArticle() {
 		return article;
 	}

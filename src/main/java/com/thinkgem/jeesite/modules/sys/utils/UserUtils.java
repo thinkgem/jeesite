@@ -10,10 +10,12 @@ import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
+import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.subject.Subject;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.service.BaseService;
@@ -21,10 +23,12 @@ import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
+import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
 import com.thinkgem.jeesite.modules.sys.dao.UserDao;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
@@ -34,13 +38,15 @@ import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principa
  * @version 2013-5-29
  */
 public class UserUtils extends BaseService {
-	
+
 	private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
+	private static RoleDao roleDao = SpringContextHolder.getBean(RoleDao.class);
 	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
 	private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
 	private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
 
 	public static final String CACHE_USER = "user";
+	public static final String CACHE_ROLE_LIST = "roleList";
 	public static final String CACHE_MENU_LIST = "menuList";
 	public static final String CACHE_AREA_LIST = "areaList";
 	public static final String CACHE_OFFICE_LIST = "officeList";
@@ -48,15 +54,29 @@ public class UserUtils extends BaseService {
 	public static User getUser(){
 		User user = (User)getCache(CACHE_USER);
 		if (user == null){
-			Principal principal = (Principal)SecurityUtils.getSubject().getPrincipal();
-			if (principal!=null){
-				user = userDao.get(principal.getId());
-				putCache(CACHE_USER, user);
+			try{
+				Subject subject = SecurityUtils.getSubject();
+				Principal principal = (Principal)subject.getPrincipal();
+				if (principal!=null){
+					user = userDao.get(principal.getId());
+//					Hibernate.initialize(user.getRoleList());
+					putCache(CACHE_USER, user);
+				}
+			}catch (UnavailableSecurityManagerException e) {
+				
+			}catch (InvalidSessionException e){
+				
 			}
 		}
 		if (user == null){
 			user = new User();
-			SecurityUtils.getSubject().logout();
+			try{
+				SecurityUtils.getSubject().logout();
+			}catch (UnavailableSecurityManagerException e) {
+				
+			}catch (InvalidSessionException e){
+				
+			}
 		}
 		return user;
 	}
@@ -68,6 +88,23 @@ public class UserUtils extends BaseService {
 		return getUser();
 	}
 
+	public static List<Role> getRoleList(){
+		@SuppressWarnings("unchecked")
+		List<Role> list = (List<Role>)getCache(CACHE_ROLE_LIST);
+		if (list == null){
+			User user = getUser();
+			DetachedCriteria dc = roleDao.createDetachedCriteria();
+			dc.createAlias("office", "office");
+			dc.createAlias("userList", "userList", JoinType.LEFT_OUTER_JOIN);
+			dc.add(dataScopeFilter(user, "office", "userList"));
+			dc.add(Restrictions.eq(Role.FIELD_DEL_FLAG, Role.DEL_FLAG_NORMAL));
+			dc.addOrder(Order.asc("office.code")).addOrder(Order.asc("name"));
+			list = roleDao.find(dc);
+			putCache(CACHE_ROLE_LIST, list);
+		}
+		return list;
+	}
+	
 	public static List<Menu> getMenuList(){
 		@SuppressWarnings("unchecked")
 		List<Menu> menuList = (List<Menu>)getCache(CACHE_MENU_LIST);
@@ -144,8 +181,11 @@ public class UserUtils extends BaseService {
 			Principal principal = (Principal)subject.getPrincipal();
 			return principal!=null?principal.getCacheMap():map;
 		}catch (UnavailableSecurityManagerException e) {
-			return map;
+			
+		}catch (InvalidSessionException e){
+			
 		}
+		return map;
 	}
 	
 }

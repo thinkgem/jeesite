@@ -35,7 +35,7 @@ CREATE TABLE cms_article
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '文章表';
+) ENGINE=InnoDB COMMENT = '文章表';
 
 
 CREATE TABLE cms_article_data
@@ -46,7 +46,7 @@ CREATE TABLE cms_article_data
 	relation varchar(255) COMMENT '相关文章',
 	allow_comment char(1) COMMENT '是否允许评论',
 	PRIMARY KEY (id)
-) COMMENT = '文章详表';
+) ENGINE=InnoDB COMMENT = '文章详表';
 
 
 CREATE TABLE cms_category
@@ -78,7 +78,7 @@ CREATE TABLE cms_category
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '栏目表';
+) ENGINE=InnoDB COMMENT = '栏目表';
 
 
 CREATE TABLE cms_comment
@@ -95,7 +95,7 @@ CREATE TABLE cms_comment
 	audit_date datetime COMMENT '审核时间',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '评论表';
+) ENGINE=InnoDB COMMENT = '评论表';
 
 
 CREATE TABLE cms_guestbook
@@ -114,7 +114,7 @@ CREATE TABLE cms_guestbook
 	re_content varchar(100) COMMENT '回复内容',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '留言板';
+) ENGINE=InnoDB COMMENT = '留言板';
 
 
 CREATE TABLE cms_link
@@ -134,7 +134,7 @@ CREATE TABLE cms_link
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '友情链接';
+) ENGINE=InnoDB COMMENT = '友情链接';
 
 
 CREATE TABLE cms_site
@@ -156,7 +156,7 @@ CREATE TABLE cms_site
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '站点表';
+) ENGINE=InnoDB COMMENT = '站点表';
 
 
 

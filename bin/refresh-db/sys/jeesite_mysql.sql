@@ -34,7 +34,7 @@ CREATE TABLE sys_area
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '区域表';
+) ENGINE=InnoDB COMMENT = '区域表';
 
 
 CREATE TABLE sys_dict
@@ -52,7 +52,7 @@ CREATE TABLE sys_dict
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '字典表';
+) ENGINE=InnoDB COMMENT = '字典表';
 
 
 CREATE TABLE sys_log
@@ -86,7 +86,7 @@ CREATE TABLE sys_mdict
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '区域表';
+) ENGINE=InnoDB COMMENT = '区域表';
 
 
 CREATE TABLE sys_menu
@@ -108,7 +108,7 @@ CREATE TABLE sys_menu
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '菜单表';
+) ENGINE=InnoDB COMMENT = '菜单表';
 
 
 CREATE TABLE sys_office
@@ -134,7 +134,7 @@ CREATE TABLE sys_office
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '部门表';
+) ENGINE=InnoDB COMMENT = '部门表';
 
 
 CREATE TABLE sys_role
@@ -152,7 +152,7 @@ CREATE TABLE sys_role
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '角色表';
+) ENGINE=InnoDB COMMENT = '角色表';
 
 
 CREATE TABLE sys_role_menu
@@ -160,7 +160,7 @@ CREATE TABLE sys_role_menu
 	role_id bigint NOT NULL COMMENT '角色编号',
 	menu_id bigint NOT NULL COMMENT '菜单编号',
 	PRIMARY KEY (role_id, menu_id)
-) COMMENT = '角色-菜单';
+) ENGINE=InnoDB COMMENT = '角色-菜单';
 
 
 CREATE TABLE sys_role_office
@@ -168,7 +168,7 @@ CREATE TABLE sys_role_office
 	role_id bigint NOT NULL COMMENT '角色编号',
 	office_id bigint NOT NULL COMMENT '机构编号',
 	PRIMARY KEY (role_id, office_id)
-) COMMENT = '角色-机构';
+) ENGINE=InnoDB COMMENT = '角色-机构';
 
 
 CREATE TABLE sys_user
@@ -193,7 +193,7 @@ CREATE TABLE sys_user
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-) COMMENT = '用户表';
+) ENGINE=InnoDB COMMENT = '用户表';
 
 
 CREATE TABLE sys_user_role
@@ -201,7 +201,7 @@ CREATE TABLE sys_user_role
 	user_id bigint NOT NULL COMMENT '用户编号',
 	role_id bigint NOT NULL COMMENT '角色编号',
 	PRIMARY KEY (user_id, role_id)
-) COMMENT = '用户-角色';
+) ENGINE=InnoDB COMMENT = '用户-角色';
 
 
 

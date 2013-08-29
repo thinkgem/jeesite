@@ -27,7 +27,7 @@ CREATE TABLE oa_leave
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
 	PRIMARY KEY (id)
-);
+) ENGINE=InnoDB ;
 
 
 

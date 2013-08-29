@@ -30,7 +30,7 @@ public class AreaDao extends BaseDao<Area> {
 	}
 	
 	public List<Area> findAllChild(Long parentId, String likeParentIds){
-		return find("from Area where delFlag=:p1 and (id=p2 or parent.id=:p2 or parentIds like :p3) order by code", 
+		return find("from Area where delFlag=:p1 and (id=:p2 or parent.id=:p2 or parentIds like :p3) order by code", 
 				new Parameter(Area.DEL_FLAG_NORMAL, parentId, likeParentIds));
 	}
 }
