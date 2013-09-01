@@ -180,7 +180,7 @@ public class User extends DataEntity {
 		this.phone = phone;
 	}
 
-	@Length(min=0, max=200)
+    @Length(min=0, max=200)
 	@ExcelField(title="手机", align=2, sort=70)
 	public String getMobile() {
 		return mobile;

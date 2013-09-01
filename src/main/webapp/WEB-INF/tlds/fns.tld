@@ -166,6 +166,13 @@
     <example>${fns:abbr(str,length)}</example>  
   </function>
   <function>
+    <description>替换掉HTML标签后缩写字符串，超过最大宽度用“...”表示</description>
+    <name>rabbr</name>
+    <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
+    <function-signature>java.lang.String rabbr(java.lang.String, int)</function-signature>
+    <example>${fns:rabbr(str,length)}</example>
+  </function>
+  <function>
     <description>替换掉HTML标签</description>
     <name>replaceHtml</name>
     <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>

@@ -32,7 +32,7 @@ public class StatsController extends BaseController {
 	
 	/**
 	 * 文章信息量
-	 * @param map
+	 * @param paramMap
 	 * @param model
 	 * @return
 	 */
