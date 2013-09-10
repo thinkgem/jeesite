@@ -36,6 +36,8 @@ public @interface ExcelField {
 
 	/**
 	 * 导出字段对齐方式（0：自动；1：靠左；2：居中；3：靠右）
+	 * 
+	 * 备注：Integer/Long类型设置居右对齐（align=3）
 	 */
 	int align() default 0;
 	
