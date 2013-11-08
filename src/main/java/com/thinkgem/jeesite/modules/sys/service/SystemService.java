@@ -323,17 +323,17 @@ public class SystemService extends BaseService implements InitializingBean {
 		identityService.saveUser(activitiUser);
 		// 同步用户角色关联数据
 		for (Long roleId : user.getRoleIdList()) {
-			 Role role = roleDao.findOne(roleId);
-	            //查询activiti中是否有该权限
-			 	Group group= identityService.createGroupQuery().groupId(role.getEnname()).singleResult();
-	            //不存在该权限，新增
-	            if(group ==null) {
-			 		String groupId = role.getEnname();
-		            group = identityService.newGroup(groupId);
-		            group.setName(role.getName());
-		            group.setType(role.getRoleType());
-		            identityService.saveGroup(group);
-	            }
+			Role role = roleDao.findOne(roleId);
+            //查询activiti中是否有该权限
+		 	Group group= identityService.createGroupQuery().groupId(role.getEnname()).singleResult();
+            //不存在该权限，新增
+            if(group ==null) {
+		 		String groupId = role.getEnname();
+	            group = identityService.newGroup(groupId);
+	            group.setName(role.getName());
+	            group.setType(role.getRoleType());
+	            identityService.saveGroup(group);
+            }
 			identityService.createMembership(userId, roleDao.findOne(roleId).getEnname());
 		}
 	}

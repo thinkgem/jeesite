@@ -96,7 +96,7 @@
     <name>getLinkList</name>
     <function-class>com.thinkgem.jeesite.modules.cms.utils.CmsUtils</function-class>
     <function-signature>java.util.List getLinkList(long, long, int, java.lang.String)</function-signature>
-    <example>${fnc:getArticleList(siteId, categoryId, number, param)}</example>  
+    <example>${fnc:getLinkList(siteId, categoryId, number, param)}</example>  
   </function>
   
 </taglib>

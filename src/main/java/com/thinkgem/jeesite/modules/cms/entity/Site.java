@@ -36,10 +36,12 @@ public class Site extends DataEntity {
 	private Long id;		// 编号
 	private String name;	// 站点名称
 	private String title;	// 站点标题
+	private String logo;	// 站点logo
 	private String description;// 描述，填写有助于搜索引擎优化
 	private String keywords;// 关键字，填写有助于搜索引擎优化
 	private String theme;	// 主题
 	private String copyright;// 版权信息
+	private String customIndexView;// 自定义首页视图文件
 
 	public Site() {
 		super();
@@ -80,6 +82,14 @@ public class Site extends DataEntity {
 		this.title = title;
 	}
 	
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 	@Length(min=0, max=255)
 	public String getDescription() {
 		return description;
@@ -113,6 +123,14 @@ public class Site extends DataEntity {
 
 	public void setCopyright(String copyright) {
 		this.copyright = copyright;
+	}
+
+	public String getCustomIndexView() {
+		return customIndexView;
+	}
+
+	public void setCustomIndexView(String customIndexView) {
+		this.customIndexView = customIndexView;
 	}
 
 	/**

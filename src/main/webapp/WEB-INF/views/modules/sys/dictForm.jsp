@@ -34,15 +34,15 @@
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">标签:</label>
-			<div class="controls">
-				<form:input path="label" htmlEscape="false" maxlength="50" class="required"/>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">键值:</label>
 			<div class="controls">
 				<form:input path="value" htmlEscape="false" maxlength="50" class="required"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">标签:</label>
+			<div class="controls">
+				<form:input path="label" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">

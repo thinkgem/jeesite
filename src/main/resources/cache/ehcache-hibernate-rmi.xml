@@ -1,68 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache updateCheck="false" name="hibernateCache">
+<!--  
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=manual, socketTimeoutMillis=2000, rmiUrls=//localhost:40001/hibernateCache" />
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=localhost, port=40000, socketTimeoutMillis=2000"/>-->
 
 	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-		properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1,multicastGroupPort=4446" />
+		properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1, multicastGroupPort=4446" />
 	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" />
-
+	
 	<diskStore path="java.io.tmpdir/jeesite/ehcache/hibernate" />
 
 	<!-- DefaultCache setting. -->
 	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" 
 		overflowToDisk="true" maxEntriesLocalDisk="100000" >
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
-	</defaultCache>
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+    </defaultCache>
 
 	<!-- Special objects setting. -->
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Dict" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Area" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Area.childList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Area.officeList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Office" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Office.childList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Office.userList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Menu" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Menu.childList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Menu.roleList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.menuList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.Role.userList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	<cache name="com.thinkgem.jeesite.modules.sys.entity.User.roleList" maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true" maxEntriesLocalDisk="100000">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
 	</cache>
 	
 </ehcache>

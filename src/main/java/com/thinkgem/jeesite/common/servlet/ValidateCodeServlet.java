@@ -120,7 +120,7 @@ public class ValidateCodeServlet extends HttpServlet {
 		g.setColor(getRandColor(220,250)); 
 		g.fillRect(0, 0, w, h);
 		// 加入干扰线条
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 8; i++) {
 			g.setColor(getRandColor(40,150));
 			Random random = new Random();
 			int x = random.nextInt(w);
@@ -132,9 +132,9 @@ public class ValidateCodeServlet extends HttpServlet {
 	}
 
 	private String createCharacter(Graphics g) {
-		char[] codeSeq = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+		char[] codeSeq = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
 				'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-				'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+				'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '8', '9' };
 		String[] fontTypes = {"\u5b8b\u4f53","\u65b0\u5b8b\u4f53","\u9ed1\u4f53","\u6977\u4f53","\u96b6\u4e66"}; 
 		Random random = new Random();
 		StringBuilder s = new StringBuilder();

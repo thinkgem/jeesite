@@ -105,8 +105,8 @@ public class Generate {
 				?"_"+StringUtils.lowerCase(subModuleName):"")+"_"+model.get("className"));
 		model.put("urlPrefix", model.get("moduleName")+(StringUtils.isNotBlank(subModuleName)
 				?"/"+StringUtils.lowerCase(subModuleName):"")+"/"+model.get("className"));
-		model.put("viewPrefix", StringUtils.substringAfterLast(model.get("packageName"),".")
-				+"/"+model.get("urlPrefix"));
+		model.put("viewPrefix", //StringUtils.substringAfterLast(model.get("packageName"),".")+"/"+
+				model.get("urlPrefix"));
 		model.put("permissionPrefix", model.get("moduleName")+(StringUtils.isNotBlank(subModuleName)
 				?":"+StringUtils.lowerCase(subModuleName):"")+":"+model.get("className"));
 
