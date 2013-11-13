@@ -5,7 +5,7 @@
 	
 	<groupId>com.thinkgem.jeesite</groupId>
 	<artifactId>jeesite</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
 	<url>http://thinkgem.github.com/jeesite</url>
@@ -99,8 +99,9 @@
 		
 		<repository>
 			<id>activiti-repos</id>
-			<name>Activiti Repository</name>
-			<url>https://maven.alfresco.com/nexus/content/groups/public</url>
+			<name>Activiti Repository</name><!-- 
+			<url>https://maven.alfresco.com/nexus/content/groups/public</url>  -->
+			<url>https://app.camunda.com/nexus/content/groups/public</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
@@ -315,6 +316,11 @@
 			<artifactId>ehcache-core</artifactId>
 			<version>${ehcache.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>net.sf.ehcache</groupId>  
+            <artifactId>ehcache-web</artifactId>  
+            <version>2.0.4</version>
+        </dependency>
 		<!-- EHCACHE end -->
 		
 		<!-- SECURITY begin -->

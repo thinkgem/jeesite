@@ -3,18 +3,16 @@
  */
 package ${packageName}.${moduleName}.service${subModuleName};
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import ${packageName}.${moduleName}.entity${subModuleName}.${ClassName};
 import ${packageName}.${moduleName}.dao${subModuleName}.${ClassName}Dao;
 
@@ -27,9 +25,6 @@ import ${packageName}.${moduleName}.dao${subModuleName}.${ClassName}Dao;
 @Transactional(readOnly = true)
 public class ${ClassName}Service extends BaseService {
 
-	@SuppressWarnings("unused")
-	private static Logger logger = LoggerFactory.getLogger(${ClassName}Service.class);
-	
 	@Autowired
 	private ${ClassName}Dao ${className}Dao;
 	

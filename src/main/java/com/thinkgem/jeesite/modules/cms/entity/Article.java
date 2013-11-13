@@ -101,6 +101,7 @@ public class Article extends DataEntity {
 	@JoinColumn(name="category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
+	@IndexedEmbedded
 	public Category getCategory() {
 		return category;
 	}
@@ -191,9 +192,9 @@ public class Article extends DataEntity {
 		this.posid = posid;
 	}
 
-	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false) 
-	@IndexedEmbedded
+	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
 	@Valid
+	@IndexedEmbedded
 	public ArticleData getArticleData() {
 		return articleData;
 	}

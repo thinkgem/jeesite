@@ -83,6 +83,10 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "save")
 	public String save(Role role, Model model, String oldName, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
+		}
 		if (!beanValidator(model, role)){
 			return form(role, model);
 		}
@@ -98,6 +102,10 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "delete")
 	public String delete(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
+		}
 		if (Role.isAdmin(id)){
 			addMessage(redirectAttributes, "删除角色失败, 不允许内置角色或编号空");
 //		}else if (UserUtils.getUser().getRoleIdList().contains(id)){
@@ -147,6 +155,10 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "outrole")
 	public String outrole(Long userId, Long roleId, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sys/role/assign?id="+roleId;
+		}
 		Role role = systemService.getRole(roleId);
 		User user = systemService.getUser(userId);
 		if (user.equals(UserUtils.getUser())) {
@@ -165,6 +177,10 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "assignrole")
 	public String assignRole(Role role, Long[] idsArr, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sys/role/assign?id="+role.getId();
+		}
 		StringBuilder msg = new StringBuilder();
 		int newNum = 0;
 		for (int i = 0; i < idsArr.length; i++) {

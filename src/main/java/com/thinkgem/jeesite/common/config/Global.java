@@ -5,6 +5,9 @@
  */
 package com.thinkgem.jeesite.common.config;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.utils.PropertiesLoader;
 
 /**
@@ -15,30 +18,56 @@ import com.thinkgem.jeesite.common.utils.PropertiesLoader;
 public class Global {
 	
 	/**
+	 * 保存全局属性值
+	 */
+	private static Map<String, String> map = Maps.newHashMap();
+	
+	/**
 	 * 属性文件加载对象
 	 */
-	private static PropertiesLoader propertiesLoader;
+	private static PropertiesLoader propertiesLoader = new PropertiesLoader("application.properties");
 	
 	/**
 	 * 获取配置
 	 */
 	public static String getConfig(String key) {
-		if (propertiesLoader == null){
-			propertiesLoader = new PropertiesLoader("application.properties");
+		String value = map.get(key);
+		if (value == null){
+			value = propertiesLoader.getProperty(key);
+			map.put(key, value);
 		}
-		return propertiesLoader.getProperty(key);
+		return value;
 	}
 
 	/////////////////////////////////////////////////////////
 	
+	/**
+	 * 获取管理端根路径
+	 */
 	public static String getAdminPath() {
 		return getConfig("adminPath");
 	}
+	
+	/**
+	 * 获取前端根路径
+	 */
 	public static String getFrontPath() {
 		return getConfig("frontPath");
 	}
+	
+	/**
+	 * 获取URL后缀
+	 */
 	public static String getUrlSuffix() {
 		return getConfig("urlSuffix");
+	}
+	
+	/**
+	 * 是否是演示模式，演示模式下不能修改用户、角色、密码、菜单、授权
+	 */
+	public static Boolean isDemoMode() {
+		String dm = getConfig("demoMode");
+		return "true".equals(dm) || "1".equals(dm);
 	}
 	
 }

@@ -11,22 +11,19 @@
 <body>
 	<div class="row">
 	   <div class="span2">
-	  	 <h4>栏目列表</h4>
-		 <ol><c:forEach items="${categoryList}" var="category">
-			<li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a></li>
-		 </c:forEach></ol>
+	   	 <h4>栏目列表</h4>
+		 <ol>
+		 	<cms:frontCategoryList categoryList="${categoryList}"/>
+		 </ol>
 		 <h4>推荐阅读</h4>
-		 <ol><c:forEach items="${fnc:getArticleList(site.id, category.id, 8, 'posid:2')}" var="article">
-		 	<li><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,18)}</a></li>
-		 </c:forEach></ol>
-   	   </div>
+		 <ol>
+		 	<cms:frontArticleHitsTop category="${category}"/>
+		 </ol>
+	   </div>
 	   <div class="span10">
 		 <ul class="breadcrumb">
-		   <li><strong>当前位置：</strong><a href="${ctx}">首页</a> <span class="divider">/</span></li>
-		   <c:forEach items="${fnc:getCategoryListByIds(category.parentIds)}" var="category">
-		     <c:if test="${category.id ne 1}"><li><a href="${ctx}/list-${category.id}${urlSuffix}">${category.name}</a><span class="divider">/</span></li></c:if>
-		   </c:forEach><li class="active">${category.name}</li>
-		  </ul>
+		    <cms:frontCurrentPosition category="${category}"/>
+		 </ul>
 	   </div>
        <div class="span10">
 		  <h4>${category.name}</h4>

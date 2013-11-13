@@ -77,6 +77,10 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "save")
 	public String save(Category category, Model model, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/cms/category/";
+		}
 		if (!beanValidator(model, category)){
 			return form(category, model);
 		}
@@ -88,6 +92,10 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/cms/category/";
+		}
 		if (Category.isRoot(id)){
 			addMessage(redirectAttributes, "删除栏目失败, 不允许删除顶级栏目或编号为空");
 		}else{

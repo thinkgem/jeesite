@@ -7,7 +7,6 @@ package com.thinkgem.jeesite.modules.cms.web.front;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
@@ -38,7 +36,6 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.CommentService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 网站Controller
@@ -78,18 +75,23 @@ public class FrontController extends BaseController{
 			return "redirect:"+Global.getFrontPath();
 		}
 		Site site = CmsUtils.getSite(siteId);
-		model.addAttribute("site", site);
-		model.addAttribute("isIndex", true);
-		return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex";
+		// 子站有独立页面，则显示独立页面
+		if (StringUtils.isNotBlank(site.getCustomIndexView())){
+			model.addAttribute("site", site);
+			model.addAttribute("isIndex", true);
+			return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex"+site.getCustomIndexView();
+		}
+		// 否则显示子站第一个栏目
+		Long firstCategoryId = CmsUtils.getMainNavList(siteId).get(0).getId();
+		return "redirect:"+Global.getFrontPath()+"/list-"+firstCategoryId+Global.getUrlSuffix();
 	}
 	
 	/**
 	 * 内容列表
 	 */
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "list-{categoryId}${urlSuffix}")
 	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
-			@RequestParam(required=false, defaultValue="30") Integer pageSize, Model model) {
+			@RequestParam(required=false, defaultValue="15") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
 			Site site = CmsUtils.getSite(Site.defaultSiteId());
@@ -117,7 +119,11 @@ public class FrontController extends BaseController{
 				articleService.updateHitsAddOne(article.getId());
 			}
 			model.addAttribute("article", article);
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+			String view = "/frontViewArticle";
+			if (StringUtils.isNotBlank(category.getCustomContentView())){
+				view += category.getCustomContentView();
+			}
+			return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 		}else{
 			List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
 			// 展现方式为1 、无子栏目或公共模型，显示栏目内容列表
@@ -148,35 +154,53 @@ public class FrontController extends BaseController{
 							articleService.updateHitsAddOne(article.getId());
 						}
 						model.addAttribute("article", article);
-						return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+						String view = "/frontViewArticle";
+						if (StringUtils.isNotBlank(category.getCustomContentView())){
+							view += category.getCustomContentView();
+						}
+						return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 					}
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
 					page = linkService.find(page, new Link(category), false);
 					model.addAttribute("page", page);
 				}
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontList";
+				String view = "/frontList";
+				if (StringUtils.isNotBlank(category.getCustomListView())){
+					view += "Category"+category.getCustomListView();
+				}
+				return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 			}
 			// 有子栏目：显示子栏目列表
 			else{
 				model.addAttribute("category", category);
 				model.addAttribute("categoryList", categoryList);
-				Map<Category, List> categoryMap = Maps.newLinkedHashMap();
-				for (Category c : categoryList){
-					if (Category.SHOW.equals(c.getInList())){
-						if ("article".equals(c.getModule())){
-							categoryMap.put(c, articleService.find(new Page<Article>(1, 5, -1),
-									new Article(c), false).getList());
-						}else if ("link".equals(c.getModule())){
-							categoryMap.put(c, linkService.find(new Page<Link>(1, 5, -1),
-									new Link(c), false).getList());
-						}
-					}
+				String view = "/frontListCategory";
+				if (StringUtils.isNotBlank(category.getCustomListView())){
+					view += category.getCustomListView();
 				}
-				model.addAttribute("categoryMap", categoryMap);
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory";
+				return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 			}
 		}
+	}
+
+	/**
+	 * 内容列表（通过url自定义视图）
+	 */
+	@RequestMapping(value = "listc-{categoryId}-{customView}${urlSuffix}")
+	public String listCustom(@PathVariable Long categoryId, @PathVariable String customView, @RequestParam(required=false, defaultValue="1") Integer pageNo,
+			@RequestParam(required=false, defaultValue="15") Integer pageSize, Model model) {
+		Category category = categoryService.get(categoryId);
+		if (category==null){
+			Site site = CmsUtils.getSite(Site.defaultSiteId());
+			model.addAttribute("site", site);
+			return "error/404";
+		}
+		model.addAttribute("site", category.getSite());
+		List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
+		model.addAttribute("category", category);
+		model.addAttribute("categoryList", categoryList);
+		return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory"+customView;
 	}
 
 	/**
@@ -213,9 +237,13 @@ public class FrontController extends BaseController{
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("article", article);
 			model.addAttribute("relationList", relationList); 
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontViewArticle";
+			String view = "/frontViewArticle";
+			if (StringUtils.isNotBlank(category.getCustomContentView())){
+				view = category.getCustomContentView();
+			}
+			return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 		}
-		return null;
+		return "error/404";
 	}
 	
 	/**
@@ -253,7 +281,7 @@ public class FrontController extends BaseController{
 				comment.setCreateDate(new Date());
 				comment.setDelFlag(Comment.DEL_FLAG_AUDIT);
 				commentService.save(comment);
-				return "{result:1, message:'提交成功，请等待管理员审核。'}";
+				return "{result:1, message:'提交成功。'}";
 			}else{
 				return "{result:2, message:'验证码不正确。'}";
 			}
@@ -270,49 +298,6 @@ public class FrontController extends BaseController{
 		Site site = CmsUtils.getSite(siteId!=null?siteId:Site.defaultSiteId());
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontMap";
-	}
-	
-	/**
-	 * 全站搜索
-	 */
-	@RequestMapping(value = "search")
-	public String search(String t, @RequestParam(required=false) String q, @RequestParam(required=false) String qand, @RequestParam(required=false) String qnot, 
-			@RequestParam(required=false) String a, HttpServletRequest request, HttpServletResponse response, Model model) {
-		long start = System.currentTimeMillis();
-		Site site = CmsUtils.getSite(Site.defaultSiteId());
-		model.addAttribute("site", site);
-		if (StringUtils.isBlank(t) || "article".equals(t)){
-			// ========= 执行命令（需要超级管理员权限） =========
-			if ("cmd:reindex".equals(q)){
-				if (UserUtils.getUser().isAdmin()){
-					articleService.createIndex();
-					model.addAttribute("message", "重建索引成功，共耗时 " + (System.currentTimeMillis() - start) + "毫秒。");
-				}else{
-					model.addAttribute("message", "你没有执行权限。");
-				}
-				return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
-			}
-			// ========= ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ ==========
-			String qStr = StringUtils.replace(StringUtils.replace(q, "，", " "), ", ", " ");
-			// 如果是高级搜索
-			if ("1".equals(a)){
-				if (StringUtils.isNotBlank(qand)){
-					qStr += " +" + StringUtils.replace(StringUtils.replace(StringUtils.replace(qand, "，", " "), ", ", " "), " ", " +"); 
-				}
-				if (StringUtils.isNotBlank(qnot)){
-					qStr += " -" + StringUtils.replace(StringUtils.replace(StringUtils.replace(qnot, "，", " "), ", ", " "), " ", " -"); 
-				}
-			}
-			System.out.println(qStr);
-			Page<Article> page = articleService.search(new Page<Article>(request, response), qStr);
-			page.setMessage("匹配结果，共耗时 " + (System.currentTimeMillis() - start) + "毫秒。");
-			model.addAttribute("page", page);
-		}
-		model.addAttribute("t", t);// 搜索类型
-		model.addAttribute("q", q);// 搜索关键字
-		model.addAttribute("qand", qand);// 包含以下全部的关键词
-		model.addAttribute("qnot", qnot);// 不包含以下关键词
-		return "modules/cms/front/themes/"+site.getTheme()+"/frontSearch";
 	}
 	
 }

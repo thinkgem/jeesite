@@ -1,10 +1,10 @@
-package com.thinkgem.jeesite.modules.sys.utils.workflow;
+package com.thinkgem.jeesite.modules.oa.utils.workflow;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ * 流程工具
  *
  * @author HenryYan
  */

@@ -64,6 +64,10 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "save")
 	public String save(Site site, Model model, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/cms/site/?repage";
+		}
 		if (!beanValidator(model, site)){
 			return form(site, model);
 		}
@@ -75,6 +79,10 @@ public class SiteController extends BaseController {
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/cms/site/?repage";
+		}
 		if (Site.isDefault(id)){
 			addMessage(redirectAttributes, "删除站点失败, 不允许删除默认站点");
 		}else{

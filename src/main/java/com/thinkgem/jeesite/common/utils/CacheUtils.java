@@ -9,8 +9,6 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
-import org.apache.shiro.cache.ehcache.EhCacheManager;
-
 /**
  * Cache工具类
  * @author ThinkGem
@@ -18,7 +16,7 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
  */
 public class CacheUtils {
 	
-	private static CacheManager cacheManager = ((EhCacheManager)SpringContextHolder.getBean("cacheManager")).getCacheManager();
+	private static CacheManager cacheManager = ((CacheManager)SpringContextHolder.getBean("cacheManager"));
 
 	private static final String SYS_CACHE = "sysCache";
 
@@ -63,5 +61,8 @@ public class CacheUtils {
 		return cache;
 	}
 
+	public static CacheManager getCacheManager() {
+		return cacheManager;
+	}
 	
 }

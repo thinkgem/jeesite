@@ -56,7 +56,7 @@
 <body>
 	<div id="importBox" class="hide">
 		<form id="importForm" action="${ctx}/sys/user/import" method="post" enctype="multipart/form-data"
-			style="padding-left:20px;text-align:center;"><br/>
+			style="padding-left:20px;text-align:center;" class="form-search" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
 			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
 			<a href="${ctx}/sys/user/import/template">下载模板</a>

@@ -10,12 +10,6 @@
     <!-- 加载配置属性文件 -->
 	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
 	
-	<!-- 定义 Shiro 主要业务对象 -->
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm" ref="systemAuthorizingRealm" />
-		<property name="cacheManager" ref="cacheManager" />
-	</bean>
-
 	<!-- 安全认证过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -29,16 +23,34 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/static/** = anon
+				/userfiles/** = anon
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
 				${adminPath}/** = user
 		 	</value>
 		</property>
 	</bean>
+	
+	<!-- 定义 Shiro 主要业务对象 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- <property name="sessionManager" ref="sessionManager" /> -->
+		<property name="realm" ref="systemAuthorizingRealm" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	<!-- 
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">  
+	    <property name="globalSessionTimeout" value="3600000" /> 
+	    <property name="sessionDAO" ref="sessionDAO"/>
+	</bean>
 
+	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean> -->
+	
 	<!-- 用户授权信息Cache, 采用EhCache -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-		<property name="cacheManagerConfigFile" value="classpath:cache/ehcache.xml"/>
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="cacheManager"/>
 	</bean>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->

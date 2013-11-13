@@ -17,6 +17,7 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TermRangeQuery;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -170,13 +171,28 @@ public class ArticleService extends BaseService {
 	/**
 	 * 全文检索
 	 */
-	public Page<Article> search(Page<Article> page, String q){
+	public Page<Article> search(Page<Article> page, String q, String categoryId, String beginDate, String endDate){
 		
 		// 设置查询条件
 		BooleanQuery query = articleDao.getFullTextQuery(q, "title","keywords","description","articleData.content");
+		
 		// 设置过滤条件
-		BooleanQuery queryFilter = articleDao.getFullTextQuery(new BooleanClause(
-				new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
+		List<BooleanClause> bcList = Lists.newArrayList();
+
+		bcList.add(new BooleanClause(new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
+		if (StringUtils.isNotBlank(categoryId)){
+			bcList.add(new BooleanClause(new TermQuery(new Term("category.ids", categoryId)), Occur.MUST));
+		}
+		
+		if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {   
+			bcList.add(new BooleanClause(new TermRangeQuery("updateDate", beginDate.replaceAll("-", ""),
+					endDate.replaceAll("-", ""), true, true), Occur.MUST));
+		}   
+		
+		BooleanQuery queryFilter = articleDao.getFullTextQuery((BooleanClause[])bcList.toArray(new BooleanClause[bcList.size()]));
+
+//		System.out.println(queryFilter);
+		
 		// 设置排序（默认相识度排序）
 		Sort sort = null;//new Sort(new SortField("updateDate", SortField.DOC, true));
 		// 全文检索
