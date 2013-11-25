@@ -29,7 +29,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_dict")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Dict extends DataEntity {
+public class Dict extends DataEntity<Dict> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

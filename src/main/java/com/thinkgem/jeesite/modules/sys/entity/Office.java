@@ -7,14 +7,12 @@ package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -45,7 +43,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_office")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Office extends DataEntity {
+public class Office extends DataEntity<Office> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -210,7 +208,6 @@ public class Office extends DataEntity {
 		this.code = code;
 	}
 	
-//	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="office")
 	@OneToMany(mappedBy = "office", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="id") @Fetch(FetchMode.SUBSELECT)
@@ -224,7 +221,6 @@ public class Office extends DataEntity {
 		this.userList = userList;
 	}
 
-//	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="code") @Fetch(FetchMode.SUBSELECT)

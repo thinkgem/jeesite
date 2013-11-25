@@ -37,7 +37,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-05-28
  */
 @MappedSuperclass
-public abstract class DataEntity extends BaseEntity implements Serializable {
+public abstract class DataEntity<T> extends BaseEntity<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

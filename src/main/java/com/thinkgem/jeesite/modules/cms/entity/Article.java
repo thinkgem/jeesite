@@ -51,8 +51,8 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "cms_article")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-//@Indexed @Analyzer(impl = IKAnalyzer.class)
-public class Article extends DataEntity {
+@Indexed @Analyzer(impl = IKAnalyzer.class)
+public class Article extends DataEntity<Article> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

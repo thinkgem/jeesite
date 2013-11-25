@@ -44,7 +44,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_role")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Role extends DataEntity {
+public class Role extends DataEntity<Role> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;	 	// 编号

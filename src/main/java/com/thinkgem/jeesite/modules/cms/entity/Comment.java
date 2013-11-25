@@ -37,7 +37,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 @Table(name = "cms_comment")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Comment extends BaseEntity {
+public class Comment extends BaseEntity<Category> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

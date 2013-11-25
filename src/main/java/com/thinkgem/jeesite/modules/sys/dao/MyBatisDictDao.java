@@ -7,7 +7,7 @@ package com.thinkgem.jeesite.modules.sys.dao;
 
 import java.util.List;
 
-import com.thinkgem.jeesite.common.persistence.MyBatisRepository;
+import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 
 /**
@@ -15,11 +15,11 @@ import com.thinkgem.jeesite.modules.sys.entity.Dict;
  * @author ThinkGem
  * @version 2013-8-23
  */
-@MyBatisRepository
+@MyBatisDao
 public interface MyBatisDictDao {
 	
     Dict get(Long id);
     
-    List<Dict> findAll();
+    List<Dict> find(Dict dict);
     
 }

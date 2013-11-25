@@ -48,7 +48,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed @Analyzer(impl = IKAnalyzer.class)
-public class Guestbook extends BaseEntity {
+public class Guestbook extends BaseEntity<Category> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id; 		// 编号

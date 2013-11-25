@@ -13,17 +13,21 @@
 	<description>Spring Configuration</description>
 	
     <!-- 加载配置属性文件 -->
-	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/jeesite.properties" />
 	
  	<!-- MyBatis begin -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:/mappings/**/*.xml"/>
+        <property name="typeAliasesPackage" value="com.thinkgem.jeesite"/>
+        <property name="typeAliasesSuperType" value="com.thinkgem.jeesite.common.persistence.BaseEntity"/>
+        <property name="mapperLocations" value="classpath:/mappings/${mybatis.dbType}/**/*.xml"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
     </bean>
     <!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
         <property name="basePackage" value="com.thinkgem.jeesite"/>
-        <property name="annotationClass" value="com.thinkgem.jeesite.common.persistence.MyBatisRepository"/>
+        <property name="annotationClass" value="com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao"/>
     </bean>
     <!-- MyBatis end -->
 	

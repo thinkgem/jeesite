@@ -39,7 +39,7 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 @Table(name = "oa_leave")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Leave extends DataEntity {
+public class Leave extends DataEntity<Leave> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id; 		// 编号

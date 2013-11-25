@@ -51,7 +51,7 @@ import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 @Table(name = "sys_user")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User extends DataEntity {
+public class User extends DataEntity<User> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

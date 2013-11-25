@@ -36,7 +36,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 @Table(name = "cms_article_data")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ArticleData extends BaseEntity {
+public class ArticleData extends BaseEntity<ArticleData> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

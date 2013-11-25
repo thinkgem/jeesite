@@ -35,7 +35,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "cms_link")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Link extends DataEntity {
+public class Link extends DataEntity<Category> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

@@ -7,7 +7,6 @@ package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,7 +44,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_menu")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends DataEntity {
+public class Menu extends DataEntity<Menu> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
@@ -168,7 +167,6 @@ public class Menu extends DataEntity {
 		this.permission = permission;
 	}
 
-//	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="sort") @Fetch(FetchMode.SUBSELECT)

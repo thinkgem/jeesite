@@ -47,7 +47,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 @Table(name = "cms_category")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Category extends DataEntity {
+public class Category extends DataEntity<Category> {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

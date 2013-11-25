@@ -47,7 +47,11 @@ public class Page<T> {
 	private String funcName = "page"; // 设置点击页码调用的js函数名称，默认为page，在一页有多个分页对象时使用。
 	
 	private String message = ""; // 设置提示消息，显示在“共n条”之后
-
+	
+	public Page() {
+		this.pageSize = -1;
+	}
+	
 	/**
 	 * 构造方法
 	 * @param request 传递 repage 参数，来记住页码

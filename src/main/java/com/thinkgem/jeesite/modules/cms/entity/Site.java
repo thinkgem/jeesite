@@ -30,7 +30,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Table(name = "cms_site")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Site extends DataEntity {
+public class Site extends DataEntity<Category> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号

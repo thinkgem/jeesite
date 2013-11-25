@@ -69,9 +69,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ### 在线体验
 
-体验地址1（感谢"刘杰"提供）：<http://demo.jeesite.com:1234/jeesite> 
-
-体验地址2（感谢"手拉手产品开源组件网"提供）：<http://www.javahih.com/jeesite> 
+体验地址（感谢"Global Thinks"提供）：<http://www.99sijia.com/a> 
 
 用户名：thinkgem 或 admin    密码：admin
 
