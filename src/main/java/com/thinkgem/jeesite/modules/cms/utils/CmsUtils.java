@@ -54,7 +54,7 @@ public class CmsUtils {
 	
 	/**
 	 * 获得站点信息
-	 * @param id 站点编号
+	 * @param siteId 站点编号
 	 */
 	public static Site getSite(long siteId){
 		long id = 1L;
@@ -91,7 +91,7 @@ public class CmsUtils {
 	
 	/**
 	 * 获取栏目
-	 * @param id 栏目编号
+	 * @param categoryId 栏目编号
 	 * @return
 	 */
 	public static Category getCategory(long categoryId){
@@ -120,7 +120,7 @@ public class CmsUtils {
 
 	/**
 	 * 获取栏目
-	 * @param ids 栏目编号
+	 * @param categoryIds 栏目编号
 	 * @return
 	 */
 	public static List<Category> getCategoryListByIds(String categoryIds){
@@ -129,7 +129,7 @@ public class CmsUtils {
 	
 	/**
 	 * 获取文章
-	 * @param id 文章编号
+	 * @param articleId 文章编号
 	 * @return
 	 */
 	public static Article getArticle(long articleId){
@@ -170,7 +170,7 @@ public class CmsUtils {
 	
 	/**
 	 * 获取链接
-	 * @param id 文章编号
+	 * @param linkId 链接编号
 	 * @return
 	 */
 	public static Link getLink(long linkId){

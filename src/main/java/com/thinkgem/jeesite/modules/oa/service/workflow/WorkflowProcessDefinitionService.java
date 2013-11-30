@@ -104,7 +104,6 @@ public class WorkflowProcessDefinitionService extends BaseService {
 	 * 部署单个流程定义
 	 * @param resourceLoader	{@link ResourceLoader}
 	 * @param processKey		模块名称
-	 * @param subModule			流程定义名称
 	 * @throws IOException		找不到zip文件时
 	 */
 	private void deploySingleProcess(ResourceLoader resourceLoader, String processKey) throws IOException {
@@ -132,7 +131,7 @@ public class WorkflowProcessDefinitionService extends BaseService {
 	}
 
 	/**
-	 * 重新部署所有流程定义，调用：{@link #deployFromClasspath()}完成功能
+	 * 重新部署所有流程定义，调用：{@link #deployAllFromClasspath()}完成功能
 	 * @throws Exception
 	 * @see #deployFromClasspath
 	 */

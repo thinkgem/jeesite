@@ -27,7 +27,7 @@ public class MenuDao extends BaseDao<Menu> {
 	}
 
 	public List<Menu> findAllList(){
-		return find("from Menu where delFlag=:p1 order by sort", new Parameter(Dict.DEL_FLAG_NORMAL));
+		return find("from Menu where delFlag=:p1 order by sort", new Parameter(Menu.DEL_FLAG_NORMAL));
 	}
 	
 	public List<Menu> findByUserId(Long userId){
