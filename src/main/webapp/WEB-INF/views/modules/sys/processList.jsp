@@ -40,18 +40,18 @@
 					<td>${process.name }</td>
 					<td>${process.key }</td>
 					<td>${process.version }</td>
-					<td><a target="_blank" href='${ctx }/oa/workflow/resource/deployment?deploymentId=${process.deploymentId}&resourceName=${process.resourceName }'>${process.resourceName }</a></td>
-					<td><a target="_blank" href='${ctx }/oa/workflow/resource/deployment?deploymentId=${process.deploymentId}&resourceName=${process.diagramResourceName }'>${process.diagramResourceName }</a></td>
+					<td><a target="_blank" href='${ctx }/sys/workflow/resource/deployment?deploymentId=${process.deploymentId}&resourceName=${process.resourceName }'>${process.resourceName }</a></td>
+					<td><a target="_blank" href='${ctx }/sys/workflow/resource/deployment?deploymentId=${process.deploymentId}&resourceName=${process.diagramResourceName }'>${process.diagramResourceName }</a></td>
 					<td>${deployment.deploymentTime }</td>
 					<td>${isSuspended} | 
 						<c:if test="${isSuspended }">
-							<a href="${ctx }/oa/workflow/processdefinition/update/active/${process.id}">激活</a>
+							<a href="${ctx }/sys/workflow/processdefinition/update/active/${process.id}">激活</a>
 						</c:if>
 						<c:if test="${!isSuspended }">
-							<a href="${ctx }/oa/workflow/processdefinition/update/suspend/${process.id}">挂起</a>
+							<a href="${ctx }/sys/workflow/processdefinition/update/suspend/${process.id}">挂起</a>
 						</c:if>
 					</td>
-					<td><a href='${ctx }/oa/workflow/process/delete?deploymentId=${process.deploymentId}'>删除</a></td>
+					<td><a href='${ctx }/sys/workflow/process/delete?deploymentId=${process.deploymentId}'>删除</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

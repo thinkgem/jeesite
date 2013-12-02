@@ -41,6 +41,16 @@ public abstract class BaseEntity<T> implements Serializable {
 	 * 自定义SQL（SQL标识，SQL内容）
 	 */
 	protected Map<String, String> sqlMap;
+
+	/**
+	 *从页面搜索还是从菜单搜索（用于非页面搜索时设置默认搜索条件）
+	 */
+	private boolean searchFromPage;
+
+	/**
+	 *用于搜索多个ID的时候设置搜索条件
+	 */
+	private String ids;
 	
 	@JsonIgnore
 	@XmlTransient
@@ -84,6 +94,27 @@ public abstract class BaseEntity<T> implements Serializable {
 	public void setSqlMap(Map<String, String> sqlMap) {
 		this.sqlMap = sqlMap;
 	}
+	
+	@Transient
+	public boolean isSearchFromPage() {
+		return searchFromPage;
+	}
+
+	@Transient
+	public void setSearchFromPage(boolean searchFromPage) {
+		this.searchFromPage = searchFromPage;
+	}
+
+	@Transient
+	public String getIds() {
+		return ids;
+	}
+
+	@Transient
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
 	
 	// 显示/隐藏
 	public static final String SHOW = "1";

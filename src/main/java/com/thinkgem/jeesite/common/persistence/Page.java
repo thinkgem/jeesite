@@ -477,6 +477,14 @@ public class Page<T> {
 		}
 		return firstResult;
 	}
+	
+	public int getLastResult(){
+		int lastResult = getFirstResult()+getMaxResults();
+		if(lastResult>getCount()) {
+			lastResult =(int) getCount();
+		}
+		return lastResult;
+	}
 	/**
 	 * 获取 Hibernate MaxResults
 	 */

@@ -115,21 +115,6 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">英文名称:</label>
-			<div class="controls">
-				<form:input path="enname" htmlEscape="false" maxlength="50" class="required"/>
-				<span class="help-inline">工作流用户组ID</span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">角色类型:</label>
-			<div class="controls">
-				<form:input path="roleType" htmlEscape="false" maxlength="50" class="required"/>
-				<span class="help-inline" title="activiti有3种预定义的组类型：security-role、assignment、user 如果使用Activiti Explorer，需要security-role才能看到manage页签，需要assignment才能claim任务">
-					工作流组用户组类型（security-role：管理员、assignment：可进行任务分配、user：普通用户）</span>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">数据范围:</label>
 			<div class="controls">
 				<form:select path="dataScope">

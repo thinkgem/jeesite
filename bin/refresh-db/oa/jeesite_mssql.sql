@@ -19,6 +19,7 @@ CREATE TABLE oa_leave
 	apply_time datetime,
 	reality_start_time datetime,
 	reality_end_time datetime,
+	process_status nvarchar(50),
 	create_by bigint,
 	create_date datetime,
 	update_by bigint,

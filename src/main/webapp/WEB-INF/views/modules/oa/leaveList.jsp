@@ -49,22 +49,17 @@
 		</tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="leave">
-			<c:set var="task" value="${leave.task }" />
-			<c:set var="pi" value="${leave.processInstance }" />
-			<c:set var="hpi" value="${leave.historicProcessInstance }" />
 			<tr>
-				<td>${leave.id}</td>
+				<td><a href="${ctx}/oa/leave/detail?id=${leave.id}">${leave.id}</a></td>
 				<td>${leave.createBy.name}</td>
 				<td>${leave.createDate}</td>
 				<td>${leave.reason}</td>
-				<c:if test="${not empty task}">
-					<td>${task.name}</td>
-					<td><a target="_blank" href="${ctx}/oa/workflow/processMap?procDefId=${leave.processDefinition.id}&proInstId=${leave.processInstanceId}">跟踪</a></td>
-				</c:if>
-				<c:if test="${empty task}">
-					<td>已结束</td>
-					<td>&nbsp;</td>
-				</c:if>
+				<td>${leave.processStatus}</td>
+				<td>
+					<c:if test="${leave.processStatus ne '已完成' }">
+						<a target="_blank" href="${ctx}/sys/workflow/processMap?processInstanceId=${leave.processInstanceId}">跟踪</a>
+					</c:if>
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>

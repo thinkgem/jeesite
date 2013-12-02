@@ -117,5 +117,18 @@ public abstract class BaseService {
 		ql.append(")");
 		return ql.toString();
 	}
-	
+
+	protected List<Long> getIdList(String ids) {
+		List<Long> idList = Lists.newArrayList();
+		if(StringUtils.isNotBlank(ids)) {
+			ids = ids.trim().replace("　", ",").replace(" ", ",").replace("，", ",");
+			String[] arrId = ids.split(",");
+			for(String id:arrId) {
+				if(id.matches("\\d*")) {
+					idList.add(Long.valueOf(id));
+				}
+			}
+		}
+		return idList;
+	}
 }

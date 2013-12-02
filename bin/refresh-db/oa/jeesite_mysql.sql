@@ -20,6 +20,7 @@ CREATE TABLE oa_leave
 	apply_time datetime COMMENT '申请时间',
 	reality_start_time datetime COMMENT '实际开始时间',
 	reality_end_time datetime COMMENT '实际结束时间',
+	process_status varchar(50) COMMENT '流程状态',
 	create_by bigint COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
 	update_by bigint COMMENT '更新者',

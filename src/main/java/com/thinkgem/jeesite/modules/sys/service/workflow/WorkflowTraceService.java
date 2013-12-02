@@ -1,4 +1,4 @@
-package com.thinkgem.jeesite.modules.oa.service.workflow;
+package com.thinkgem.jeesite.modules.sys.service.workflow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thinkgem.jeesite.common.service.BaseService;
-import com.thinkgem.jeesite.modules.oa.utils.workflow.WorkflowUtils;
+import com.thinkgem.jeesite.common.workflow.WorkflowUtils;
 
 /**
  * 工作流跟踪相关Service

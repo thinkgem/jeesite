@@ -33,6 +33,7 @@ CREATE TABLE oa_leave
 	apply_time timestamp,
 	reality_start_time timestamp,
 	reality_end_time timestamp,
+	process_status varchar2(50),
 	create_by number(19,0),
 	create_date timestamp,
 	update_by number(19,0),

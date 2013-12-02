@@ -4,7 +4,6 @@
 package com.thinkgem.jeesite.modules.oa.entity;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
@@ -27,7 +22,6 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
-import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
 /**
@@ -50,21 +44,11 @@ public class Leave extends DataEntity<Leave> {
 	private Date realityStartTime;	// 实际开始时间
 	private Date realityEndTime;	// 实际结束时间
 	private String leaveType;	// 假种
+	private String processStatus; //流程状态
 	
-	private String ids;
-	private Date createDateStart;
-	private Date createDateEnd;
-
-	//-- 临时属性 --//
-	// 流程任务
-	private Task task;
-	private Map<String, Object> variables;
-	// 运行中的流程实例
-	private ProcessInstance processInstance;
-	// 历史的流程实例
-	private HistoricProcessInstance historicProcessInstance;
-	// 流程定义
-	private ProcessDefinition processDefinition;
+	private boolean pass;
+	private boolean audit;
+	private String auditRemarks; 
 
 	public Leave() {
 		super();
@@ -77,8 +61,6 @@ public class Leave extends DataEntity<Leave> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_oa_leave")
-//	@SequenceGenerator(name = "seq_oa_leave", sequenceName = "seq_oa_leave")
 	public Long getId() {
 		return id;
 	}
@@ -157,87 +139,45 @@ public class Leave extends DataEntity<Leave> {
 		this.realityEndTime = realityEndTime;
 	}
 	
+	public String getProcessStatus() {
+		return processStatus;
+	}
+
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
+
 	@Transient
-	public User getUser() {
-		return createBy;
+	public boolean isPass() {
+		return pass;
+	}
+
+	@Transient
+	public void setPass(boolean pass) {
+		this.pass = pass;
+	}
+
+	@Transient
+	public String getAuditRemarks() {
+		return auditRemarks;
+	}
+
+	@Transient
+	public void setAuditRemarks(String auditRemarks) {
+		this.auditRemarks = auditRemarks;
+	}
+
+	@Transient
+	public boolean isAudit() {
+		return audit;
+	}
+
+	@Transient
+	public void setAudit(boolean audit) {
+		this.audit = audit;
 	}
 	
-	public void setUser(User user) {
-		this.createBy = user;
-	}
-
-	@Transient
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
-	}
-
-	@Transient
-	public Map<String, Object> getVariables() {
-		return variables;
-	}
-
-	public void setVariables(Map<String, Object> variables) {
-		this.variables = variables;
-	}
-
-	@Transient
-	public ProcessInstance getProcessInstance() {
-		return processInstance;
-	}
-
-	public void setProcessInstance(ProcessInstance processInstance) {
-		this.processInstance = processInstance;
-	}
-
-	@Transient
-	public HistoricProcessInstance getHistoricProcessInstance() {
-		return historicProcessInstance;
-	}
-
-	public void setHistoricProcessInstance(HistoricProcessInstance historicProcessInstance) {
-		this.historicProcessInstance = historicProcessInstance;
-	}
-
-	@Transient
-	public ProcessDefinition getProcessDefinition() {
-		return processDefinition;
-	}
-
-	public void setProcessDefinition(ProcessDefinition processDefinition) {
-		this.processDefinition = processDefinition;
-	}
-
-	@Transient
-	public String getIds() {
-		return ids;
-	}
-
-	public void setIds(String ids) {
-		this.ids = ids;
-	}
-
-	@Transient
-	public Date getCreateDateStart() {
-		return createDateStart;
-	}
-
-	public void setCreateDateStart(Date createDateStart) {
-		this.createDateStart = createDateStart;
-	}
-
-	@Transient
-	public Date getCreateDateEnd() {
-		return createDateEnd;
-	}
-
-	public void setCreateDateEnd(Date createDateEnd) {
-		this.createDateEnd = createDateEnd;
-	}
-
+	
 }
 
 

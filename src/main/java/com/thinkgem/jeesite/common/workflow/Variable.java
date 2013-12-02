@@ -1,4 +1,4 @@
-package com.thinkgem.jeesite.modules.oa.utils.workflow;
+package com.thinkgem.jeesite.common.workflow;
 
 import java.util.HashMap;
 import java.util.Map;

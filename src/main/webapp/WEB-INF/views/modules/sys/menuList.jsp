@@ -50,6 +50,9 @@
 		</table>
 		<shiro:hasPermission name="sys:menu:edit"><div class="form-actions pagination-left">
 			<input id="btnSubmit" class="btn btn-primary" type="button" value="保存排序" onclick="updateSort();"/>
+			<div class="pull-right">
+				<a class="btn btn-warning" href="${ctx}/sys/menu/synToActiviti" onclick="return confirmx('确认要同步所有系统权限数据到工作流？', this.href)">同步工作流权限</a>
+			</div>
 		</div></shiro:hasPermission>
 	 </form>
 </body>
