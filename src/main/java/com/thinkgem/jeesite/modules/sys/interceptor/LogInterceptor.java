@@ -22,6 +22,9 @@ import com.thinkgem.jeesite.modules.sys.entity.Log;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
+import eu.bitwalker.useragentutils.DeviceType;
+import eu.bitwalker.useragentutils.UserAgent;
+
 /**
  * 系统拦截器
  * @author ThinkGem
@@ -40,6 +43,13 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, 
 			ModelAndView modelAndView) throws Exception {
+		if(modelAndView!=null) {
+			String viewName = modelAndView.getViewName();
+			UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent")); 
+			if(viewName.startsWith("modules/") && DeviceType.MOBILE.equals(userAgent.getOperatingSystem().getDeviceType())){
+				modelAndView.setViewName(viewName.replaceFirst("modules", "mobile"));
+			}
+		}
 	}
 
 	@Override
