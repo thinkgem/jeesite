@@ -46,6 +46,11 @@
 		        <property name="supportedMediaTypes" value="application/xml"></property>
 			</bean>
 		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<bean class="com.thinkgem.jeesite.common.web.SecureModelAttributeMethodArgumentResolver">
+				<constructor-arg value="false"/>
+			</bean>
+		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 	
     <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
