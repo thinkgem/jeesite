@@ -29,7 +29,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * Core Framework：Spring Framework 3.2。
 * Security Framework：Apache Shiro 1.2。
-* Workflow Engine：Activit 5.12。
+* Workflow Engine：Activit 5.14。
 
 2、Web相关
 
