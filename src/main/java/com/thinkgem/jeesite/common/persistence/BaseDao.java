@@ -366,7 +366,7 @@ public class BaseDao<T> {
 	 * SQL 分页查询
 	 * @param page
 	 * @param sqlString
-	 * @param parameter
+	 * @param resultClass
 	 * @return
 	 */
 	public <E> Page<E> findBySql(Page<E> page, String sqlString, Class<?> resultClass){
@@ -512,7 +512,7 @@ public class BaseDao<T> {
 	
     /** 
      * 去除qlString的select子句。 
-     * @param hql 
+     * @param qlString
      * @return 
      */  
     private String removeSelect(String qlString){  
@@ -522,7 +522,7 @@ public class BaseDao<T> {
       
     /** 
      * 去除hql的orderBy子句。 
-     * @param hql 
+     * @param qlString
      * @return 
      */  
     private String removeOrders(String qlString) {  
@@ -552,7 +552,6 @@ public class BaseDao<T> {
 	 * 使用检索标准对象分页查询
 	 * @param page
 	 * @param detachedCriteria
-	 * @param resultTransformer
 	 * @return
 	 */
 	public Page<T> find(Page<T> page, DetachedCriteria detachedCriteria) {

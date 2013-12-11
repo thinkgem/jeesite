@@ -6,6 +6,7 @@
 package com.thinkgem.jeesite.modules.sys.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,11 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
  */
 @Repository
 public class UserDao extends BaseDao<User> {
+	
+	public List<User> findAllList() {
+		return find("from User where delFlag=:p1 order by id", new Parameter(User.DEL_FLAG_NORMAL));
+	}
+	
 	
 	public User findByLoginName(String loginName){
 		return get("from User where loginName = :p1 and delFlag = :p2", new Parameter(loginName, User.DEL_FLAG_NORMAL));

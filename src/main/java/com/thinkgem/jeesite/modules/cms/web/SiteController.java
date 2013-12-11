@@ -94,7 +94,7 @@ public class SiteController extends BaseController {
 	
 	/**
 	 * 选择站点
-	 * @param siteId
+	 * @param id
 	 * @return
 	 */
 	@RequiresPermissions("cms:site:select")

@@ -8,6 +8,7 @@ package com.thinkgem.jeesite.modules.sys.utils;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -153,6 +154,15 @@ public class UserUtils extends BaseService {
 			putCache(CACHE_OFFICE_LIST, officeList);
 		}
 		return officeList;
+	}
+	
+
+	public static User getUserById(String id){
+		if(StringUtils.isNotBlank(id)) {
+			return userDao.get(Long.valueOf(id));
+		} else {
+			return null;
+		}
 	}
 	
 	// ============== User Cache ==============

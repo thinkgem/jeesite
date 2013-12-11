@@ -48,6 +48,13 @@
     <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUser()</function-signature>
     <example>${fns:getUser()}</example>  
   </function>
+  <function>
+    <description>根据ID获得用户对象</description>
+    <name>getUserById</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
+    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
+    <example>${fns:getUserById(id)}</example>  
+  </function>
   
   <function>
     <description>获取当前用户的菜单对象列表</description>

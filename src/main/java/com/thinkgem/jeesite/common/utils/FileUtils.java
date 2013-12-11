@@ -559,7 +559,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 获取待压缩文件在ZIP文件中entry的名字，即相对于跟目录的相对路径名
-	 * @param dirPat 目录名
+	 * @param dirPath 目录名
 	 * @param file entry文件名
 	 * @return
 	 */

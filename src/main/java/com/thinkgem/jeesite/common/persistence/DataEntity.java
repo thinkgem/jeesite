@@ -15,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -28,6 +29,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -48,6 +50,11 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	protected Date updateDate;// 更新日期
 	protected String delFlag; // 删除标记（0：正常；1：删除；2：审核）
 
+	protected Date createDateStart;
+	protected Date createDateEnd;
+	protected Date updateDateStart;
+	protected Date updateDateEnd;
+	
 	public DataEntity() {
 		super();
 		this.delFlag = DEL_FLAG_NORMAL;
@@ -135,4 +142,43 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 		this.delFlag = delFlag;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Transient
+	public Date getCreateDateStart() {
+		return DateUtils.getDateStart(createDateStart);
+	}
+
+	public void setCreateDateStart(Date createDateStart) {
+		this.createDateStart = createDateStart;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Transient
+	public Date getCreateDateEnd() {
+		return DateUtils.getDateEnd(createDateEnd);
+	}
+
+	public void setCreateDateEnd(Date createDateEnd) {
+		this.createDateEnd = createDateEnd;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Transient
+	public Date getUpdateDateStart() {
+		return DateUtils.getDateStart(updateDateStart);
+	}
+
+	public void setUpdateDateStart(Date updateDateStart) {
+		this.updateDateStart = updateDateStart;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Transient
+	public Date getUpdateDateEnd() {
+		return DateUtils.getDateEnd(updateDateEnd);
+	}
+
+	public void setUpdateDateEnd(Date updateDateEnd) {
+		this.updateDateEnd = updateDateEnd;
+	}
 }

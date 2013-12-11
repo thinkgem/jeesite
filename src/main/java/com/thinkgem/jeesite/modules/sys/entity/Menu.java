@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
@@ -56,6 +57,7 @@ public class Menu extends DataEntity<Menu> {
 	private String icon; 	// 图标
 	private Integer sort; 	// 排序
 	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
+	private String isActiviti; 	// 是否同步到工作流（1：同步；0：不同步）
 	private String permission; // 权限标识
 	
 	private List<Menu> childList = Lists.newArrayList();// 拥有子菜单列表
@@ -158,6 +160,15 @@ public class Menu extends DataEntity<Menu> {
 		this.isShow = isShow;
 	}
 
+	@Length(min=1, max=1)
+	public String getIsActiviti() {
+		return isActiviti;
+	}
+
+	public void setIsActiviti(String isActiviti) {
+		this.isActiviti = isActiviti;
+	}
+
 	@Length(min=0, max=200)
 	public String getPermission() {
 		return permission;
@@ -222,4 +233,15 @@ public class Menu extends DataEntity<Menu> {
 	public static boolean isRoot(Long id){
 		return id != null && id.equals(1L);
 	}
+	
+	@Transient
+	public String getActivitiGroupId() {
+		return ObjectUtils.toString(getPermission());
+	}
+
+	@Transient
+	public String getActivitiGroupName() {
+		return ObjectUtils.toString(getId());
+	}
+
 }

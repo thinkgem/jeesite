@@ -153,9 +153,17 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+		  <id>bitwalker.user-agent-utils.mvn.repo</id>
+		  <url>https://raw.github.com/HaraldWalker/user-agent-utils/mvn-repo/</url>
+		  <!-- use snapshot version -->
+		  <snapshots>
+		     <enabled>true</enabled>
+		      <updatePolicy>always</updatePolicy>
+		   </snapshots>
+		</repository>
 		
-	</repositories>
-	
+	</repositories>	
 	<pluginRepositories> 
 	
 		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
@@ -175,6 +183,28 @@
 	
 	<!-- 依赖项定义 -->
 	<dependencies>
+		<!-- ERMaster begin -->
+		<dependency>
+		    <groupId>org.eclipse</groupId>
+		    <artifactId>swt</artifactId>
+		    <version>3.3.0-v3346</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>draw2d</artifactId>
+			<version>3.2.100-v20070529</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>jface</artifactId>
+			<version>3.3.0-I20070606-0010</version>
+		</dependency>
+		<!-- ERMaster end -->
+		<dependency>
+		   <groupId>bitwalker</groupId>
+		   <artifactId>UserAgentUtils</artifactId>
+		   <version>1.9</version>
+		</dependency>
 	
 		<!-- SPRING begin -->
 		<dependency>

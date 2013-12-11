@@ -50,8 +50,6 @@ public class Role extends DataEntity<Role> {
 	private Long id;	 	// 编号
 	private Office office;	// 归属机构
 	private String name; 	// 角色名称
-	private String enname;	//英文名称
-	private String roleType;//权限类型
 	private String dataScope; // 数据范围
 
 	private List<User> userList = Lists.newArrayList(); // 拥有用户列表
@@ -108,24 +106,6 @@ public class Role extends DataEntity<Role> {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Length(min=1, max=100)
-	public String getEnname() {
-		return enname;
-	}
-
-	public void setEnname(String enname) {
-		this.enname = enname;
-	}
-	
-	@Length(min=1, max=100)
-	public String getRoleType() {
-		return roleType;
-	}
-
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
 	}
 
 	public String getDataScope() {

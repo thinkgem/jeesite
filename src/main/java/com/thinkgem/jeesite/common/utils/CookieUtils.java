@@ -34,7 +34,6 @@ public class CookieUtils {
 	 * @param name 名称
 	 * @param value 值
 	 * @param maxAge 生存时间（单位秒）
-	 * @param uri 路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
 		Cookie cookie = new Cookie(name, null);

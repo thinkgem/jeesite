@@ -33,7 +33,6 @@ public abstract class BaseService {
 	
 	/**
 	 * 数据范围过滤
-	 * @param dc Hibernate标准查询对象
 	 * @param user 当前用户对象，通过“UserUtils.getUser()”获取
 	 * @param officeAlias 机构表别名，例如：dc.createAlias("office", "office");
 	 * @param userAlias 用户表别名，传递空，忽略此参数
@@ -118,5 +117,18 @@ public abstract class BaseService {
 		ql.append(")");
 		return ql.toString();
 	}
-	
+
+	protected List<Long> getIdList(String ids) {
+		List<Long> idList = Lists.newArrayList();
+		if(StringUtils.isNotBlank(ids)) {
+			ids = ids.trim().replace("　", ",").replace(" ", ",").replace("，", ",");
+			String[] arrId = ids.split(",");
+			for(String id:arrId) {
+				if(id.matches("\\d*")) {
+					idList.add(Long.valueOf(id));
+				}
+			}
+		}
+		return idList;
+	}
 }

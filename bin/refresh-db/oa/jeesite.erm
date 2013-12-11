@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-23 21:13:37</creation_date>
-			<updated_date>2013-06-14 13:47:42</updated_date>
+			<updated_date>2013-11-30 15:42:46</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>JeeSite</value>
@@ -165,6 +165,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>申请时间</description>
 			<logical_name>申请时间</logical_name>
@@ -178,6 +179,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>创建者</description>
 			<logical_name>创建者</logical_name>
@@ -191,6 +193,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>创建时间</description>
 			<logical_name>创建时间</logical_name>
@@ -204,6 +207,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>删除标记（0：正常；1：删除）</description>
 			<logical_name>删除标记</logical_name>
@@ -217,6 +221,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>结束时间</description>
 			<logical_name>结束时间</logical_name>
@@ -230,6 +235,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>编号</description>
 			<logical_name>编号</logical_name>
@@ -243,6 +249,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>请假类型</description>
 			<logical_name>请假类型</logical_name>
@@ -256,6 +263,7 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>流程实例编号</description>
 			<logical_name>流程实例编号</logical_name>
@@ -264,16 +272,17 @@
 		</word>
 		<word>
 			<id>8</id>
-			<length>null</length>
+			<length>50</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
-			<description>实际结束时间</description>
-			<logical_name>实际结束时间</logical_name>
-			<physical_name>reality_end_time</physical_name>
-			<type>datetime</type>
+			<description>流程状态</description>
+			<logical_name>流程状态</logical_name>
+			<physical_name>process_status</physical_name>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>9</id>
@@ -282,24 +291,26 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
+			<args></args>
+			<description>实际结束时间</description>
+			<logical_name>实际结束时间</logical_name>
+			<physical_name>reality_end_time</physical_name>
+			<type>datetime</type>
+		</word>
+		<word>
+			<id>10</id>
+			<length>null</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>实际开始时间</description>
 			<logical_name>实际开始时间</logical_name>
 			<physical_name>reality_start_time</physical_name>
 			<type>datetime</type>
-		</word>
-		<word>
-			<id>10</id>
-			<length>255</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<args></args>
-			<description>请假理由</description>
-			<logical_name>请假理由</logical_name>
-			<physical_name>reason</physical_name>
-			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>11</id>
@@ -308,24 +319,26 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
+			<args></args>
+			<description>请假理由</description>
+			<logical_name>请假理由</logical_name>
+			<physical_name>reason</physical_name>
+			<type>varchar(n)</type>
+		</word>
+		<word>
+			<id>12</id>
+			<length>255</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>备注信息</description>
 			<logical_name>备注信息</logical_name>
 			<physical_name>remarks</physical_name>
 			<type>varchar(n)</type>
-		</word>
-		<word>
-			<id>12</id>
-			<length>null</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<args></args>
-			<description>开始时间</description>
-			<logical_name>开始时间</logical_name>
-			<physical_name>start_time</physical_name>
-			<type>datetime</type>
 		</word>
 		<word>
 			<id>13</id>
@@ -334,11 +347,12 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
-			<description>更新者</description>
-			<logical_name>更新者</logical_name>
-			<physical_name>update_by</physical_name>
-			<type>bigint</type>
+			<description>开始时间</description>
+			<logical_name>开始时间</logical_name>
+			<physical_name>start_time</physical_name>
+			<type>datetime</type>
 		</word>
 		<word>
 			<id>14</id>
@@ -347,6 +361,21 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
+			<binary>false</binary>
+			<args></args>
+			<description>更新者</description>
+			<logical_name>更新者</logical_name>
+			<physical_name>update_by</physical_name>
+			<type>bigint</type>
+		</word>
+		<word>
+			<id>15</id>
+			<length>null</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<binary>false</binary>
 			<args></args>
 			<description>更新时间</description>
 			<logical_name>更新时间</logical_name>
@@ -404,6 +433,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -436,6 +466,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -444,7 +475,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>12</word_id>
+					<word_id>13</word_id>
 					<id>8</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -468,6 +499,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -500,6 +532,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -532,6 +565,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -540,7 +574,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>10</word_id>
+					<word_id>11</word_id>
 					<id>11</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -564,6 +598,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -596,6 +631,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -604,7 +640,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>9</word_id>
+					<word_id>10</word_id>
 					<id>13</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -628,6 +664,7 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -636,7 +673,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>8</word_id>
+					<word_id>9</word_id>
 					<id>14</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -660,6 +697,40 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
+					<word_id>8</word_id>
+					<id>15</id>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>varchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>false</foreign_key>
+					<not_null>false</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -751,6 +822,7 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
+							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -783,6 +855,7 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
+							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -791,7 +864,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>13</word_id>
+						<word_id>14</word_id>
 						<id>2</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -815,6 +888,7 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
+							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -823,7 +897,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>14</word_id>
+						<word_id>15</word_id>
 						<id>3</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -847,6 +921,7 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
+							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -855,7 +930,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>11</word_id>
+						<word_id>12</word_id>
 						<id>4</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -879,6 +954,7 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
+							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -911,6 +987,7 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
+							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -932,6 +1009,7 @@
 			<max_value></max_value>
 			<start>1</start>
 			<cache></cache>
+			<nocache>false</nocache>
 			<cycle>false</cycle>
 			<order>false</order>
 			<description></description>
@@ -946,6 +1024,7 @@
 			<max_value></max_value>
 			<start>1</start>
 			<cache></cache>
+			<nocache>false</nocache>
 			<cycle>false</cycle>
 			<order>false</order>
 			<description></description>
