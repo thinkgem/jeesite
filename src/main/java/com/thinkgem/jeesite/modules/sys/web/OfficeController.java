@@ -77,7 +77,7 @@ public class OfficeController extends BaseController {
 		}
 		office.setParent(officeService.get(office.getParent().getId()));
 		if (office.getArea()==null){
-			office.setArea(user.getOffice().getArea());
+			office.setArea(office.getParent().getArea());
 		}
 		model.addAttribute("office", office);
 		return "modules/sys/officeForm";

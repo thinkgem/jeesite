@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
@@ -49,6 +50,8 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category extends DataEntity<Category> {
 
+    public static final String DEFAULT_TEMPLATE = "frontList";
+
 	private static final long serialVersionUID = 1L;
 	private Long id;		// 编号
 	private Site site;		// 归属站点
@@ -70,6 +73,7 @@ public class Category extends DataEntity<Category> {
 	private String isAudit;	// 是否需要审核
 	private String customListView;		// 自定义列表视图
 	private String customContentView;	// 自定义内容视图
+    private String viewConfig;	// 视图参数
 	
 	private List<Category> childList = Lists.newArrayList(); 	// 拥有子分类列表
 
@@ -284,6 +288,14 @@ public class Category extends DataEntity<Category> {
 		this.customContentView = customContentView;
 	}
 
+    public String getViewConfig() {
+        return viewConfig;
+    }
+
+    public void setViewConfig(String viewConfig) {
+        this.viewConfig = viewConfig;
+    }
+
 	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
 	@OrderBy(value="sort")
@@ -333,4 +345,9 @@ public class Category extends DataEntity<Category> {
 	public static boolean isRoot(Long id){
 		return id != null && id.equals(1L);
 	}
+
+    @Transient
+   	public String getUrl() {
+        return CmsUtils.getUrlDynamic(this);
+   	}
 }

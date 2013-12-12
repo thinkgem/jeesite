@@ -59,16 +59,16 @@
 					selectedTree.addNodes(null, treeNode);
 					ids.push(String(treeNode.id));
 				}
-			};
-			if("selectedTree"==treeId){
-				if($.inArray(String(treeNode.id), pre_ids)<0){
-					selectedTree.removeNode(treeNode);
-					ids.splice($.inArray(String(treeNode.id), ids), 1);
-				}else{
-					top.$.jBox.tip("角色原有成员不能清除！", 'info');
-				}
 			}
-		};
+            if("selectedTree"==treeId){
+                if($.inArray(String(treeNode.id), pre_ids)<0){
+                    selectedTree.removeNode(treeNode);
+                    ids.splice($.inArray(String(treeNode.id), ids), 1);
+                }else{
+                    top.$.jBox.tip("只能删除新添加人员！", 'info');
+                }
+            }
+		}
 				
 		function clearAssign(){
 			var submit = function (v, h, f) {

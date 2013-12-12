@@ -17,19 +17,22 @@
 <%@ attribute name="cssClass" type="java.lang.String" required="false" description="css样式"%>
 <%@ attribute name="cssStyle" type="java.lang.String" required="false" description="css样式"%>
 <%@ attribute name="disabled" type="java.lang.String" required="false" description="是否限制选择，如果限制，设置为disabled"%>
+<%@ attribute name="nodesLevel" type="java.lang.String" required="false" description="菜单展开层数"%>
+<%@ attribute name="nameLevel" type="java.lang.String" required="false" description="返回名称关联级别"%>
 <div class="input-append">
-	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"/>
-	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"
-		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn ${disabled}" style="_padding-top:6px;">&nbsp;<i class="icon-search"></i>&nbsp;</a>&nbsp;&nbsp;
+	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"${disabled eq 'true' ? ' disabled=\"disabled\"' : ''}/>
+	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"${disabled eq "true"? " disabled=\"disabled\"":""}"
+		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn${disabled eq 'true' ? ' disabled' : ''}"><i class="icon-search"></i></a>&nbsp;&nbsp;
 </div>
 <script type="text/javascript">
 	$("#${id}Button").click(function(){
 		// 是否限制选择，如果限制，设置为disabled
-		if ("${disabled}" == "disabled"){
+		if ($("#${id}Id").attr("disabled")){
 			return true;
 		}
+        var nameLevel = ${nameLevel eq null ? "1":nameLevel};
 		// 正常打开	
-		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
+		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&nodesLevel=${nodesLevel}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
 			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
 				if (v=="ok"){
 					var tree = h.find("iframe")[0].contentWindow.tree;//h.find("iframe").contents();
@@ -59,7 +62,15 @@
 							return false;
 						}//</c:if>
 						ids.push(nodes[i].id);
-						names.push(nodes[i].name);//<c:if test="${!checked}">
+                        var t_node = nodes[i];
+                        var t_name = "";
+                        var name_l = 0;
+                        do{
+                            name_l++;
+                            t_name = t_node.name + " " + t_name;
+                            t_node = t_node.getParentNode();
+                        }while(name_l < nameLevel);
+						names.push(t_name);//<c:if test="${!checked}">
 						break; // 如果为非复选框选择，则返回第一个选择  </c:if>
 					}
 					$("#${id}Id").val(ids);

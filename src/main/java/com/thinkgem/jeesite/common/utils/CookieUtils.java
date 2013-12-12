@@ -37,7 +37,11 @@ public class CookieUtils {
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
 		Cookie cookie = new Cookie(name, null);
-		cookie.setPath("/");
+        if(StringUtils.isNotBlank(SpringContextHolder.getApplicationContext().getApplicationName())){
+            cookie.setPath(SpringContextHolder.getApplicationContext().getApplicationName());
+        }else{
+            cookie.setPath("/");
+        }
 		cookie.setMaxAge(maxAge);
 		try {
 			cookie.setValue(URLEncoder.encode(value, "utf-8"));

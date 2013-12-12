@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -130,12 +131,15 @@ public class CategoryService extends BaseService {
 	
 	@Transactional(readOnly = false)
 	public void save(Category category) {
-
 		category.setSite(new Site(Site.getCurrentSiteId()));
 		category.setParent(this.get(category.getParent().getId()));
 		String oldParentIds = category.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
 		category.setParentIds(category.getParent().getParentIds()+category.getParent().getId()+",");
-		categoryDao.clear();		categoryDao.save(category);
+        if (StringUtils.isNotBlank(category.getViewConfig())){
+            category.setViewConfig(StringEscapeUtils.unescapeHtml4(category.getViewConfig()));
+        }
+		categoryDao.clear();
+        categoryDao.save(category);
 		// 更新子节点 parentIds
 		List<Category> list = categoryDao.findByParentIdsLike("%,"+category.getId()+",%");
 		for (Category e : list){

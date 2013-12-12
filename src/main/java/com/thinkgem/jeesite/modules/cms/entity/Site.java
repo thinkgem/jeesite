@@ -157,5 +157,20 @@ public class Site extends DataEntity<Category> {
 		Long siteId = (Long)UserUtils.getCache("siteId");
 		return siteId!=null&&siteId>0?siteId:defaultSiteId();
 	}
+
+    /**
+   	 * 模板路径
+   	 */
+   	public static final String TPL_BASE = "/WEB-INF/views/modules/cms/front/themes";
+
+    /**
+   	 * 获得模板方案路径。如：/WEB-INF/views/modules/cms/front/themes/jeesite
+   	 *
+   	 * @return
+   	 */
+    @Transient
+   	public String getSolutionPath() {
+   		return TPL_BASE + "/" + getTheme();
+   	}
 	
 }

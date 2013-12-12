@@ -5,12 +5,15 @@
  */
 package com.thinkgem.jeesite.modules.cms.web.front;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -119,11 +122,9 @@ public class FrontController extends BaseController{
 				articleService.updateHitsAddOne(article.getId());
 			}
 			model.addAttribute("article", article);
-			String view = "/frontViewArticle";
-			if (StringUtils.isNotBlank(category.getCustomContentView())){
-				view += category.getCustomContentView();
-			}
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
+            setTplModelAttribute(model, category);
+            setTplModelAttribute(model, article.getViewConfig());
+			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 		}else{
 			List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
 			// 展现方式为1 、无子栏目或公共模型，显示栏目内容列表
@@ -154,11 +155,9 @@ public class FrontController extends BaseController{
 							articleService.updateHitsAddOne(article.getId());
 						}
 						model.addAttribute("article", article);
-						String view = "/frontViewArticle";
-						if (StringUtils.isNotBlank(category.getCustomContentView())){
-							view += category.getCustomContentView();
-						}
-						return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
+                        setTplModelAttribute(model, category);
+                        setTplModelAttribute(model, article.getViewConfig());
+						return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 					}
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
@@ -167,8 +166,9 @@ public class FrontController extends BaseController{
 				}
 				String view = "/frontList";
 				if (StringUtils.isNotBlank(category.getCustomListView())){
-					view += "Category"+category.getCustomListView();
+					view = "/"+category.getCustomListView();
 				}
+                setTplModelAttribute(model, category);
 				return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 			}
 			// 有子栏目：显示子栏目列表
@@ -177,8 +177,9 @@ public class FrontController extends BaseController{
 				model.addAttribute("categoryList", categoryList);
 				String view = "/frontListCategory";
 				if (StringUtils.isNotBlank(category.getCustomListView())){
-					view += category.getCustomListView();
+					view = "/"+category.getCustomListView();
 				}
+                setTplModelAttribute(model, category);
 				return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 			}
 		}
@@ -200,6 +201,7 @@ public class FrontController extends BaseController{
 		List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
 		model.addAttribute("category", category);
 		model.addAttribute("categoryList", categoryList);
+        setTplModelAttribute(model, category);
 		return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory"+customView;
 	}
 
@@ -237,11 +239,9 @@ public class FrontController extends BaseController{
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("article", article);
 			model.addAttribute("relationList", relationList); 
-			String view = "/frontViewArticle";
-			if (StringUtils.isNotBlank(category.getCustomContentView())){
-				view = category.getCustomContentView();
-			}
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
+            setTplModelAttribute(model, article.getCategory());
+            setTplModelAttribute(model, article.getViewConfig());
+			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
 		}
 		return "error/404";
 	}
@@ -299,5 +299,54 @@ public class FrontController extends BaseController{
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontMap";
 	}
+
+    private String getTpl(Article article){
+        if(StringUtils.isBlank(article.getCustomContentView())){
+            String view = null;
+            Category c = article.getCategory();
+            boolean goon = true;
+            do{
+                if(StringUtils.isNotBlank(c.getCustomContentView())){
+                    view = c.getCustomContentView();
+                    goon = false;
+                }else if(c.getParent().isRoot()){
+                    goon = false;
+                }else{
+                    c = c.getParent();
+                }
+            }while(goon);
+            return StringUtils.isBlank(view) ? Article.DEFAULT_TEMPLATE : view;
+        }else{
+            return article.getCustomContentView();
+        }
+    }
+
+    private void setTplModelAttribute(Model model, String param){
+        if(StringUtils.isNotBlank(param)){
+            Map map = JsonMapper.getInstance().fromJson(param, Map.class);
+            if(map != null){
+                for(Object o : map.keySet()){
+                    model.addAttribute("viewConfig_"+o.toString(), map.get(o));
+                }
+            }
+        }
+    }
+
+    private void setTplModelAttribute(Model model, Category category){
+        List<Category> categoryList = Lists.newArrayList();
+        Category c = category;
+        boolean goon = true;
+        do{
+            if(c.getParent().isRoot()){
+                goon = false;
+            }
+            categoryList.add(c);
+            c = c.getParent();
+        }while(goon);
+        Collections.reverse(categoryList);
+        for(Category ca : categoryList){
+            setTplModelAttribute(model, ca.getViewConfig());
+        }
+    }
 	
 }

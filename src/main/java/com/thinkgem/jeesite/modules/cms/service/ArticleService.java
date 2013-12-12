@@ -125,6 +125,9 @@ public class ArticleService extends BaseService {
 		}
 		article.setUpdateBy(UserUtils.getUser());
 		article.setUpdateDate(new Date());
+        if (StringUtils.isNotBlank(article.getViewConfig())){
+            article.setViewConfig(StringEscapeUtils.unescapeHtml4(article.getViewConfig()));
+        }
 		articleDao.clear();
 		articleDao.save(article);
 	}

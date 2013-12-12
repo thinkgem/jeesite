@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.thinkgem.jeesite</groupId>
-	<artifactId>jeesite</artifactId>
+	<artifactId>jeesite_plus</artifactId>
 	<version>1.1.0</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
@@ -803,9 +803,9 @@
 	</build>
 	
 	<profiles>
-		<!-- 刷新开发环境数据库 -->			
+		<!-- 初始化数据库 -->			
 		<profile>
-			<id>refresh-db</id>
+			<id>init-db</id>
 			<dependencies>
 				<dependency>
 					<groupId>org.dbunit</groupId>
@@ -840,15 +840,15 @@
                 				<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" 
                 				    onerror="continue" encoding="${project.build.sourceEncoding}">
 									<classpath refid="maven.test.classpath" />
-									<transaction src="bin/refresh-db/sys/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="bin/refresh-db/cms/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="bin/refresh-db/oa/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="bin/refresh-db/act/drop/activiti.${mybatis.dbType}.drop.engine.sql"/>
-									<transaction src="bin/refresh-db/act/drop/activiti.${mybatis.dbType}.drop.history.sql"/>
-									<transaction src="bin/refresh-db/act/drop/activiti.${mybatis.dbType}.drop.identity.sql"/>
-									<transaction src="bin/refresh-db/act/create/activiti.${mybatis.dbType}.create.engine.sql"/>
-									<transaction src="bin/refresh-db/act/create/activiti.${mybatis.dbType}.create.history.sql"/>
-									<transaction src="bin/refresh-db/act/create/activiti.${mybatis.dbType}.create.identity.sql"/>
+									<transaction src="db/sys/jeesite_${mybatis.dbType}.sql"/>
+									<transaction src="db/cms/jeesite_${mybatis.dbType}.sql"/>
+									<transaction src="db/oa/jeesite_${mybatis.dbType}.sql"/>
+									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.engine.sql"/>
+									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.history.sql"/>
+									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.identity.sql"/>
+									<transaction src="db/act/create/activiti.${mybatis.dbType}.create.engine.sql"/>
+									<transaction src="db/act/create/activiti.${mybatis.dbType}.create.history.sql"/>
+									<transaction src="db/act/create/activiti.${mybatis.dbType}.create.identity.sql"/>
 								</sql>
 								
 								<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />
@@ -864,9 +864,9 @@
 										<property name="datatypeFactory" value="${dbunit.datatype}" />
 									</dbconfig>
 									<classpath refid="maven.test.classpath" />
-									<operation type="INSERT" src="bin/refresh-db/sys/jeesite_data.xls" format="xls" transaction="true"/>
-									<operation type="INSERT" src="bin/refresh-db/cms/jeesite_data.xls" format="xls" transaction="true"/>
-									<operation type="INSERT" src="bin/refresh-db/oa/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="db/sys/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="db/cms/jeesite_data.xls" format="xls" transaction="true"/>
+									<operation type="INSERT" src="db/oa/jeesite_data.xls" format="xls" transaction="true"/>
 									
 								</dbunit>
 								
