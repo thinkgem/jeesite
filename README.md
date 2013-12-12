@@ -43,7 +43,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 3、Database相关
 
 * ORM Framework：Hibernate 4.1 + MyBatis 3.1。
-* Connection Pool：Alibaba Druid 0.2。
+* Connection Pool：Alibaba Druid 1.0。
 * Bean Validation：Hibernate Validation 5.0。
 * Cache：Ehcache 2.6。
 
@@ -67,19 +67,11 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 快速体验
 
-### 在线体验
-
-体验地址（感谢"Global Thinks"提供）：<http://www.99sijia.com/a> 
-
-用户名：thinkgem 或 admin    密码：admin
-
-### 本地体验
-
 1. 具备运行环境：JDK1.6、Maven3.0、MySql5。
-2. 修改src\main\resources\application.properties文件中的数据库设置参数。
+2. 修改src\main\resources\jeesite.properties文件中的数据库设置参数。
 3. 根据修改参数创建对应MySql数据库（数据库编码：UTF-8）。
-4. 运行bin\resresh-db\refresh-db.bat脚本，即可导入表结构及演示数据
-5. 运行bin\jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
+4. 运行db\init-db.bat脚本，即可导入表结构及演示数据
+5. 运行bin\run-jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
 6. 最高管理员账号，用户名：thinkgem 密码：admin
 
 ## 更多文档
@@ -89,7 +81,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 如何交流、反馈、参与贡献？
 
-* QQ Group：127515876
+* QQ Group：127515876(已满)   209330483
 * E-mail：<mailto:thinkgem@163.com>
 * Github：<https://github.com/thinkgem/jeesite>
 * 开源中国：<http://git.oschina.net/thinkgem/jeesite>
