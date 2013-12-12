@@ -20,7 +20,7 @@
 <%@ attribute name="nodesLevel" type="java.lang.String" required="false" description="菜单展开层数"%>
 <%@ attribute name="nameLevel" type="java.lang.String" required="false" description="返回名称关联级别"%>
 <div class="input-append">
-	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"${disabled eq 'true' ? ' disabled=\"disabled\"' : ''}/>
+	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"${disabled eq 'true' ? ' disabled=\'disabled\'' : ''}/>
 	<input id="${id}Name" name="${labelName}" readonly="readonly" type="text" value="${labelValue}" maxlength="50"${disabled eq "true"? " disabled=\"disabled\"":""}"
 		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn${disabled eq 'true' ? ' disabled' : ''}"><i class="icon-search"></i></a>&nbsp;&nbsp;
 </div>
@@ -30,7 +30,7 @@
 		if ($("#${id}Id").attr("disabled")){
 			return true;
 		}
-        var nameLevel = ${nameLevel eq null ? "1":nameLevel};
+        var nameLevel = ${nameLevel eq null ? "1" : nameLevel};
 		// 正常打开	
 		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&nodesLevel=${nodesLevel}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
 			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
