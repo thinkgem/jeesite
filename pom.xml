@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.thinkgem.jeesite</groupId>
-	<artifactId>jeesite_plus</artifactId>
-	<version>1.0.4</version>
+	<artifactId>jeesite</artifactId>
+	<version>1.1.0</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
 	<url>http://thinkgem.github.com/jeesite</url>
