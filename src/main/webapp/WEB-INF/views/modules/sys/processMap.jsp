@@ -15,7 +15,7 @@
 	.actImpl{position:absolute;border:2px solid red;-moz-border-radius:12px;-webkit-border-radius:12px;-khtml-border-radius:12px;border-radius:12px;}
 </style>
 </head>
-<body>
+<body style="width:1000px;height:600px;">
 	<div>
 		<img src="${ctx}/sys/workflow/processPic?procDefId=${procDefId}" class="procPic" />
 		<c:forEach items="${actImpls}" var="a">

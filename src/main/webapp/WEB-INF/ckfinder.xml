@@ -14,7 +14,7 @@
 	<checkDoubleExtension>true</checkDoubleExtension>
 	<checkSizeAfterScaling>true</checkSizeAfterScaling>
 	<secureImageUploads>true</secureImageUploads>
-	<htmlExtensions>html,htm,xml,js</htmlExtensions>
+	<htmlExtensions>html,htm,xml,js,erm</htmlExtensions>
 	<hideFolders>
 		<folder>.*</folder>
 		<folder>CVS</folder>
@@ -28,7 +28,7 @@
 			<url>%BASE_URL%files/</url>
 			<directory>%BASE_DIR%files</directory>
 			<maxSize>5M</maxSize>
-			<allowedExtensions>7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip</allowedExtensions>
+			<allowedExtensions>7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip,erm</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
 		<type name="images">

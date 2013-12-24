@@ -200,11 +200,24 @@
 			<artifactId>jface</artifactId>
 			<version>3.3.0-I20070606-0010</version>
 		</dependency>
+		<dependency>
+            <groupId>org.insightech.er</groupId>
+            <artifactId>ERMaster</artifactId>
+            <version>20121127-2328</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/org.insightech.er_1.0.0.v20121127-2328.jar</systemPath>
+        </dependency>
 		<!-- ERMaster end -->
 		<dependency>
 		   <groupId>bitwalker</groupId>
 		   <artifactId>UserAgentUtils</artifactId>
 		   <version>1.9</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.zeroturnaround</groupId>
+		    <artifactId>zt-zip</artifactId>
+		    <version>1.6</version>
+		    <type>jar</type>
 		</dependency>
 	
 		<!-- SPRING begin -->
@@ -856,6 +869,7 @@
 									<transaction src="db/sys/jeesite_${mybatis.dbType}.sql"/>
 									<transaction src="db/cms/jeesite_${mybatis.dbType}.sql"/>
 									<transaction src="db/oa/jeesite_${mybatis.dbType}.sql"/>
+									<transaction src="db/prj/jeesite_${mybatis.dbType}.sql"/>
 									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.engine.sql"/>
 									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.history.sql"/>
 									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.identity.sql"/>

@@ -22,6 +22,22 @@ import org.springframework.web.servlet.LocaleResolver;
  * @version 2013-05-22
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
+	
+	public static String lowerFirst(String str){
+		if(StringUtils.isBlank(str)) {
+			return "";
+		} else {
+			return str.substring(0,1).toLowerCase() + str.substring(1);
+		}
+	}
+	
+	public static String upperFirst(String str){
+		if(StringUtils.isBlank(str)) {
+			return "";
+		} else {
+			return str.substring(0,1).toUpperCase() + str.substring(1);
+		}
+	}
 
 	/**
 	 * 替换掉HTML标签方法
@@ -75,6 +91,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	public static String rabbr(String str, int length) {
         return abbr(replaceHtml(str), length);
 	}
+		
 	
 	/**
 	 * 转换为Double类型

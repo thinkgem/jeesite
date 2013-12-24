@@ -22,18 +22,12 @@
 	<form:form id="searchForm" modelAttribute="leave" action="${ctx}/oa/leave/list/task" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<div>
-			<label>请假编号：&nbsp;</label><form:input path="ids" htmlEscape="false" maxlength="50" class="input-medium" placeholder="多个用逗号或空格隔开"/>
-		</div>
-		<div style="margin-top:8px;">
-			<label>创建时间：</label>
-			<input id="createDateStart"  name="createDateStart"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:163px;"
-				value="<fmt:formatDate value="${leave.createDateStart}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
-				　--　
-			<input id="createDateEnd" name="createDateEnd" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:163px;"
-				value="<fmt:formatDate value="${leave.createDateEnd}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
+		<div>			
+			<label>请假编号：</label><form:input path="ids" htmlEscape="false" maxlength="50" class="input-small" placeholder="逗号或空格隔开"/>
+			<label>创建开始：</label>
+			<input id="createDateStart"  name="createDateStart"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"  value="<fmt:formatDate value="${leave.createDateStart}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
+			<label>创建结束：</label>
+			<input id="createDateEnd" name="createDateEnd" type="text" readonly="readonly" maxlength="20" class="input-small Wdate" value="<fmt:formatDate value="${leave.createDateEnd}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
 			&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>
 	</form:form>

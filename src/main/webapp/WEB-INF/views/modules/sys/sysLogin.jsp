@@ -6,6 +6,9 @@
 	<title>${fns:getConfig('productName')} 登录</title>
 	<meta name="decorator" content="default"/>
     <link rel="stylesheet" href="${ctxStatic}/common/typica-login.css">
+	<style type="text/css">
+		.control-group{border-bottom:0px;}
+	</style>
     <script src="${ctxStatic}/common/backstretch.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {

@@ -5,12 +5,15 @@
  */
 package com.thinkgem.jeesite.common.utils;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.io.DefaultResourceLoader;
 
 /**
  * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicaitonContext.
@@ -32,6 +35,27 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 		assertContextInjected();
 		return applicationContext;
 	}
+	
+	public static String getRootRealPath(){
+		String rootRealPath ="";
+		try {
+			rootRealPath=getApplicationContext().getResource("").getFile().getAbsolutePath();
+		} catch (IOException e) {
+			logger.warn("获取系统根目录失败");
+		}
+		return rootRealPath;
+	}
+	
+	public static String getResourceRootRealPath(){
+		String rootRealPath ="";
+		try {
+			rootRealPath=new DefaultResourceLoader().getResource("").getFile().getAbsolutePath();
+		} catch (IOException e) {
+			logger.warn("获取资源根目录失败");
+		}
+		return rootRealPath;
+	}
+	
 
 	/**
 	 * 从静态变量applicationContext中取得Bean, 自动转型为所赋值对象的类型.

@@ -21,8 +21,8 @@
 	<form:form id="searchForm" modelAttribute="dict" action="${ctx}/sys/dict/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<label>类型：</label><form:select id="type" path="type" class="input-medium"><form:option value="" label=""/><form:options items="${typeList}" htmlEscape="false"/></form:select>
-		&nbsp;&nbsp;<label>描述 ：</label><form:input path="description" htmlEscape="false" maxlength="50" class="input-medium"/>
+		<label>类型：</label><form:select id="type" path="type" class="input-small"><form:option value="" label=""/><form:options items="${typeList}" htmlEscape="false"/></form:select>
+		&nbsp;&nbsp;<label>描述 ：</label><form:input path="description" htmlEscape="false" maxlength="50" class="input-small"/>
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form:form>
 	<tags:message content="${message}"/>

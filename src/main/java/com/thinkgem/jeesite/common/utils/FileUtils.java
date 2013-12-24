@@ -5,14 +5,17 @@
  */
 package com.thinkgem.jeesite.common.utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
@@ -576,6 +579,35 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		int index = filePath.indexOf(dirPaths);
 
 		return filePath.substring(index + dirPaths.length());
+	}
+	
+	public static String getAbsolutePath(String urlPath) {
+		if(StringUtils.isBlank(urlPath)) {
+			return "";
+		} else {
+			return SpringContextHolder.getRootRealPath() + urlPath.substring(urlPath.indexOf("/", 1), urlPath.length());
+		}
+	}
+	
+	/**
+	 * 将内容写入文件
+	 * @param content
+	 * @param filePath
+	 */
+	public static void writeFile(String content, String filePath) {
+		try {
+			if (FileUtils.createFile(filePath)){
+				FileWriter fileWriter = new FileWriter(filePath, true);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				bufferedWriter.write(content);
+				bufferedWriter.close();
+				fileWriter.close();
+			}else{
+				log.info("生成失败，文件已存在！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
