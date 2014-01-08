@@ -20,7 +20,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="com.thinkgem.jeesite"/>
         <property name="typeAliasesSuperType" value="com.thinkgem.jeesite.common.persistence.BaseEntity"/>
-        <property name="mapperLocations" value="classpath:/mappings/${mybatis.dbType}/**/*.xml"/>
+        <property name="mapperLocations" value="classpath:/mappings/${jdbc.type}/**/*.xml"/>
 		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
     </bean>
     <!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->

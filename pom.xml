@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.thinkgem.jeesite</groupId>
-	<artifactId>jeesite_plus</artifactId>
+	<artifactId>jeesite</artifactId>
 	<version>1.1.0</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
@@ -866,16 +866,16 @@
                 				<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" 
                 				    onerror="continue" encoding="${project.build.sourceEncoding}">
 									<classpath refid="maven.test.classpath" />
-									<transaction src="db/sys/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="db/cms/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="db/oa/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="db/prj/jeesite_${mybatis.dbType}.sql"/>
-									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.engine.sql"/>
-									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.history.sql"/>
-									<transaction src="db/act/drop/activiti.${mybatis.dbType}.drop.identity.sql"/>
-									<transaction src="db/act/create/activiti.${mybatis.dbType}.create.engine.sql"/>
-									<transaction src="db/act/create/activiti.${mybatis.dbType}.create.history.sql"/>
-									<transaction src="db/act/create/activiti.${mybatis.dbType}.create.identity.sql"/>
+									<transaction src="db/sys/jeesite_${jdbc.type}.sql"/>
+									<transaction src="db/cms/jeesite_${jdbc.type}.sql"/>
+									<transaction src="db/oa/jeesite_${jdbc.type}.sql"/>
+									<transaction src="db/prj/jeesite_${jdbc.type}.sql"/>
+									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.engine.sql"/>
+									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.history.sql"/>
+									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.identity.sql"/>
+									<transaction src="db/act/create/activiti.${jdbc.type}.create.engine.sql"/>
+									<transaction src="db/act/create/activiti.${jdbc.type}.create.history.sql"/>
+									<transaction src="db/act/create/activiti.${jdbc.type}.create.identity.sql"/>
 								</sql>
 								
 								<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />

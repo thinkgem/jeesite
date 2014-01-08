@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.LocaleResolver;
@@ -66,7 +67,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		try {
 			StringBuilder sb = new StringBuilder();
 			int currentLength = 0;
-			for (char c : str.toCharArray()) {
+			for (char c : replaceHtml(StringEscapeUtils.unescapeHtml4(str)).toCharArray()) {
 				currentLength += String.valueOf(c).getBytes("GBK").length;
 				if (currentLength <= length - 3) {
 					sb.append(c);
