@@ -3,16 +3,13 @@ package com.thinkgem.jeesite.modules.prj.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 
 /**
@@ -21,9 +18,8 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
  */
 @Entity
 @Table(name="prj_project")
-public class Project extends DataEntity<Project> {
+public class Project extends IdEntity<Project> {
 	private static final long serialVersionUID = 1L;
-	private Long id;
 	private String name;
 	private String rootPackage;
 	private String ermPath;
@@ -31,17 +27,6 @@ public class Project extends DataEntity<Project> {
 	private String templateType;
 
 	public Project() {
-	}
-
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {

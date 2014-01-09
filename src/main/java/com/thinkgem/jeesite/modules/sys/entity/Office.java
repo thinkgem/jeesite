@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,7 +29,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 机构Entity
@@ -43,10 +40,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_office")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Office extends DataEntity<Office> {
+public class Office extends IdEntity<Office> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Office parent;	// 父级编号
 	private String parentIds; // 所有父级编号
 	private Area area;		// 归属区域
@@ -68,20 +64,8 @@ public class Office extends DataEntity<Office> {
 		super();
 	}
 	
-	public Office(Long id){
+	public Office(String id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_office")
-//	@SequenceGenerator(name = "seq_sys_office", sequenceName = "seq_sys_office")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -235,7 +219,7 @@ public class Office extends DataEntity<Office> {
 	}
 
 	@Transient
-	public static void sortList(List<Office> list, List<Office> sourcelist, Long parentId){
+	public static void sortList(List<Office> list, List<Office> sourcelist, String parentId){
 		for (int i=0; i<sourcelist.size(); i++){
 			Office e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
@@ -260,8 +244,8 @@ public class Office extends DataEntity<Office> {
 	}
 	
 	@Transient
-	public static boolean isRoot(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isRoot(String id){
+		return id != null && id.equals("1");
 	}
 	
 }

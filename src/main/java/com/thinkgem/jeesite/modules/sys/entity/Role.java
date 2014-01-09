@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -33,7 +30,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 角色Entity
@@ -44,10 +41,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_role")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Role extends DataEntity<Role> {
+public class Role extends IdEntity<Role> {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id;	 	// 编号
 	private Office office;	// 归属机构
 	private String name; 	// 角色名称
 	private String dataScope; // 数据范围
@@ -70,22 +66,10 @@ public class Role extends DataEntity<Role> {
 		this.dataScope = DATA_SCOPE_CUSTOM;
 	}
 
-	public Role(Long id, String name) {
+	public Role(String id, String name) {
 		this();
 		this.id = id;
 		this.name = name;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_role")
-//	@SequenceGenerator(name = "seq_sys_role", sequenceName = "seq_sys_role")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 	
 	@ManyToOne
@@ -128,9 +112,10 @@ public class Role extends DataEntity<Role> {
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
+	
 	@Transient
-	public List<Long> getUserIdList() {
-		List<Long> nameIdList = Lists.newArrayList();
+	public List<String> getUserIdList() {
+		List<String> nameIdList = Lists.newArrayList();
 		for (User user : userList) {
 			nameIdList.add(user.getId());
 		}
@@ -139,7 +124,7 @@ public class Role extends DataEntity<Role> {
 
 	@Transient
 	public String getUserIds() {
-		List<Long> nameIdList = Lists.newArrayList();
+		List<String> nameIdList = Lists.newArrayList();
 		for (User user : userList) {
 			nameIdList.add(user.getId());
 		}
@@ -161,8 +146,8 @@ public class Role extends DataEntity<Role> {
 	}
 
 	@Transient
-	public List<Long> getMenuIdList() {
-		List<Long> menuIdList = Lists.newArrayList();
+	public List<String> getMenuIdList() {
+		List<String> menuIdList = Lists.newArrayList();
 		for (Menu menu : menuList) {
 			menuIdList.add(menu.getId());
 		}
@@ -170,9 +155,9 @@ public class Role extends DataEntity<Role> {
 	}
 
 	@Transient
-	public void setMenuIdList(List<Long> menuIdList) {
+	public void setMenuIdList(List<String> menuIdList) {
 		menuList = Lists.newArrayList();
-		for (Long menuId : menuIdList) {
+		for (String menuId : menuIdList) {
 			Menu menu = new Menu();
 			menu.setId(menuId);
 			menuList.add(menu);
@@ -181,7 +166,7 @@ public class Role extends DataEntity<Role> {
 
 	@Transient
 	public String getMenuIds() {
-		List<Long> nameIdList = Lists.newArrayList();
+		List<String> nameIdList = Lists.newArrayList();
 		for (Menu menu : menuList) {
 			nameIdList.add(menu.getId());
 		}
@@ -195,7 +180,7 @@ public class Role extends DataEntity<Role> {
 			String[] ids = StringUtils.split(menuIds, ",");
 			for (String menuId : ids) {
 				Menu menu = new Menu();
-				menu.setId(new Long(menuId));
+				menu.setId(menuId);
 				menuList.add(menu);
 			}
 		}
@@ -217,8 +202,8 @@ public class Role extends DataEntity<Role> {
 
 
 	@Transient
-	public List<Long> getOfficeIdList() {
-		List<Long> officeIdList = Lists.newArrayList();
+	public List<String> getOfficeIdList() {
+		List<String> officeIdList = Lists.newArrayList();
 		for (Office office : officeList) {
 			officeIdList.add(office.getId());
 		}
@@ -226,9 +211,9 @@ public class Role extends DataEntity<Role> {
 	}
 
 	@Transient
-	public void setOfficeIdList(List<Long> officeIdList) {
+	public void setOfficeIdList(List<String> officeIdList) {
 		officeList = Lists.newArrayList();
-		for (Long officeId : officeIdList) {
+		for (String officeId : officeIdList) {
 			Office office = new Office();
 			office.setId(officeId);
 			officeList.add(office);
@@ -237,7 +222,7 @@ public class Role extends DataEntity<Role> {
 
 	@Transient
 	public String getOfficeIds() {
-		List<Long> nameIdList = Lists.newArrayList();
+		List<String> nameIdList = Lists.newArrayList();
 		for (Office office : officeList) {
 			nameIdList.add(office.getId());
 		}
@@ -251,7 +236,7 @@ public class Role extends DataEntity<Role> {
 			String[] ids = StringUtils.split(officeIds, ",");
 			for (String officeId : ids) {
 				Office office = new Office();
-				office.setId(new Long(officeId));
+				office.setId(officeId);
 				officeList.add(office);
 			}
 		}
@@ -289,8 +274,8 @@ public class Role extends DataEntity<Role> {
 	}
 	
 	@Transient
-	public static boolean isAdmin(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isAdmin(String id){
+		return id != null && id.equals("1");
 	}
 	
 //	@Transient

@@ -85,7 +85,7 @@ public class LoginController extends BaseController{
 		// 登录成功后，验证码计算器清零
 		isValidateCodeLogin(user.getLoginName(), false, true);
 		// 登录成功后，获取上次登录的当前站点ID
-		UserUtils.putCache("siteId", StringUtils.toLong(CookieUtils.getCookie(request, "siteId")));
+		UserUtils.putCache("siteId", CookieUtils.getCookie(request, "siteId"));
 		return "modules/sys/sysIndex";
 	}
 	

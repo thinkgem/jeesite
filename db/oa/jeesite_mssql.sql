@@ -10,21 +10,21 @@ DROP TABLE oa_leave;
 
 CREATE TABLE oa_leave
 (
-	id bigint NOT NULL IDENTITY ,
-	process_instance_id nvarchar(64),
+	id varchar(64) NOT NULL,
+	process_instance_id varchar(64),
 	start_time datetime,
 	end_time datetime,
-	leave_type nvarchar(20),
-	reason nvarchar(255),
+	leave_type varchar(20),
+	reason varchar(255),
 	apply_time datetime,
 	reality_start_time datetime,
 	reality_end_time datetime,
-	process_status nvarchar(50),
-	create_by bigint,
+	process_status varchar(50),
+	create_by varchar(64),
 	create_date datetime,
-	update_by bigint,
+	update_by varchar(64),
 	update_date datetime,
-	remarks nvarchar(255),
+	remarks varchar(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
 	PRIMARY KEY (id)
 );

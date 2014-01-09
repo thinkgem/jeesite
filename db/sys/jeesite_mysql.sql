@@ -21,45 +21,45 @@ DROP TABLE sys_role;
 
 CREATE TABLE sys_area
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	parent_id bigint NOT NULL COMMENT '父级编号',
-	parent_ids varchar(255) NOT NULL COMMENT '所有父级编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
 	code varchar(100) COMMENT '区域编码',
 	name varchar(100) NOT NULL COMMENT '区域名称',
-	type char(1) COMMENT '区域类型（1：国家；2：省份、直辖市；3：地市；4：区县）',
-	create_by bigint COMMENT '创建者',
+	type char(1) COMMENT '区域类型',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
+	parent_id varchar(64) NOT NULL COMMENT '父级编号',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '区域表';
+) COMMENT = '区域表';
 
 
 CREATE TABLE sys_dict
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+	id varchar(64) NOT NULL COMMENT '编号',
 	label varchar(100) NOT NULL COMMENT '标签名',
 	value varchar(100) NOT NULL COMMENT '数据值',
 	type varchar(100) NOT NULL COMMENT '类型',
 	description varchar(100) NOT NULL COMMENT '描述',
 	sort int NOT NULL COMMENT '排序（升序）',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '字典表';
+) COMMENT = '字典表';
 
 
 CREATE TABLE sys_log
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	type char(1) DEFAULT '1' COMMENT '日志类型（1：接入日志；2：异常日志）',
-	create_by bigint COMMENT '创建者',
+	id varchar(64) NOT NULL COMMENT '编号',
+	type char(1) DEFAULT '1' COMMENT '日志类型',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
 	remote_addr varchar(255) COMMENT '操作IP地址',
 	user_agent varchar(255) COMMENT '用户代理',
@@ -68,113 +68,113 @@ CREATE TABLE sys_log
 	params text COMMENT '操作提交的数据',
 	exception text COMMENT '异常信息',
 	PRIMARY KEY (id)
-);
+) COMMENT = '日志表';
 
 
 CREATE TABLE sys_mdict
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	parent_id bigint NOT NULL COMMENT '父级编号',
-	parent_ids varchar(255) NOT NULL COMMENT '所有父级编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
 	name varchar(100) NOT NULL COMMENT '角色名称',
 	description varchar(100) COMMENT '描述',
 	sort int COMMENT '排序（升序）',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
+	parent_id varchar(64) NOT NULL COMMENT '父级编号',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '区域表';
+) COMMENT = '多级字典表';
 
 
 CREATE TABLE sys_menu
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	parent_id bigint NOT NULL COMMENT '父级编号',
-	parent_ids varchar(255) NOT NULL COMMENT '所有父级编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	parent_id varchar(64) NOT NULL COMMENT '父级编号',
+	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
 	name varchar(100) NOT NULL COMMENT '菜单名称',
 	href varchar(255) COMMENT '链接',
-	target varchar(20) COMMENT '目标（mainFrame、 _blank、_self、_parent、_top）',
+	target varchar(20) COMMENT '目标',
 	icon varchar(100) COMMENT '图标',
 	sort int NOT NULL COMMENT '排序（升序）',
-	is_show char(1) NOT NULL COMMENT '是否在菜单中显示（1：显示；0：不显示）',
-	is_activiti char(1) NOT NULL COMMENT '是否同步到工作流（1：同步；0：不同步）',
+	is_show char(1) NOT NULL COMMENT '是否在菜单中显示',
+	is_activiti char(1) COMMENT '是否同步工作流',
 	permission varchar(200) COMMENT '权限标识',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '菜单表';
+) COMMENT = '菜单表';
 
 
 CREATE TABLE sys_office
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	parent_id bigint NOT NULL COMMENT '父级编号',
-	parent_ids varchar(255) NOT NULL COMMENT '所有父级编号',
-	area_id bigint NOT NULL COMMENT '归属区域',
+	id varchar(64) NOT NULL COMMENT '编号',
+	parent_id varchar(64) NOT NULL COMMENT '父级编号',
+	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
+	area_id varchar(64) NOT NULL COMMENT '归属区域',
 	code varchar(100) COMMENT '区域编码',
 	name varchar(100) NOT NULL COMMENT '机构名称',
-	type char(1) NOT NULL COMMENT '机构类型（1：公司；2：部门；3：小组）',
-	grade char(1) NOT NULL COMMENT '机构等级（1：一级；2：二级；3：三级；4：四级）',
+	type char(1) NOT NULL COMMENT '机构类型',
+	grade char(1) NOT NULL COMMENT '机构等级',
 	address varchar(255) COMMENT '联系地址',
 	zip_code varchar(100) COMMENT '邮政编码',
 	master varchar(100) COMMENT '负责人',
 	phone varchar(200) COMMENT '电话',
 	fax varchar(200) COMMENT '传真',
 	email varchar(200) COMMENT '邮箱',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '部门表';
+) COMMENT = '机构表';
 
 
 CREATE TABLE sys_role
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	office_id bigint COMMENT '归属机构',
+	id varchar(64) NOT NULL COMMENT '编号',
+	office_id varchar(64) COMMENT '归属机构',
 	name varchar(100) NOT NULL COMMENT '角色名称',
-	data_scope char(1) COMMENT '数据范围（0：所有数据；1：所在公司及以下数据；2：所在公司数据；3：所在部门及以下数据；4：所在部门数据；8：仅本人数据；9：按明细设置）',
-	create_by bigint COMMENT '创建者',
+	data_scope char(1) COMMENT '数据范围',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '角色表';
+) COMMENT = '角色表';
 
 
 CREATE TABLE sys_role_menu
 (
-	role_id bigint NOT NULL COMMENT '角色编号',
-	menu_id bigint NOT NULL COMMENT '菜单编号',
+	role_id varchar(64) NOT NULL COMMENT '角色编号',
+	menu_id varchar(64) NOT NULL COMMENT '菜单编号',
 	PRIMARY KEY (role_id, menu_id)
-) ENGINE=InnoDB COMMENT = '角色-菜单';
+) COMMENT = '角色-菜单';
 
 
 CREATE TABLE sys_role_office
 (
-	role_id bigint NOT NULL COMMENT '角色编号',
-	office_id bigint NOT NULL COMMENT '机构编号',
+	role_id varchar(64) NOT NULL COMMENT '角色编号',
+	office_id varchar(64) NOT NULL COMMENT '机构编号',
 	PRIMARY KEY (role_id, office_id)
-) ENGINE=InnoDB COMMENT = '角色-机构';
+) COMMENT = '角色-机构';
 
 
 CREATE TABLE sys_user
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	company_id bigint NOT NULL COMMENT '归属公司',
-	office_id bigint NOT NULL COMMENT '归属部门',
+	id varchar(64) NOT NULL COMMENT '编号',
+	company_id varchar(64) NOT NULL COMMENT '归属公司',
+	office_id varchar(64) NOT NULL COMMENT '归属部门',
 	login_name varchar(100) NOT NULL COMMENT '登录名',
 	password varchar(100) NOT NULL COMMENT '密码',
 	no varchar(100) COMMENT '工号',
@@ -185,52 +185,52 @@ CREATE TABLE sys_user
 	user_type char(1) COMMENT '用户类型',
 	login_ip varchar(100) COMMENT '最后登陆IP',
 	login_date datetime COMMENT '最后登陆时间',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB COMMENT = '用户表';
+) COMMENT = '用户表';
 
 
 CREATE TABLE sys_user_role
 (
-	user_id bigint NOT NULL COMMENT '用户编号',
-	role_id bigint NOT NULL COMMENT '角色编号',
+	user_id varchar(64) NOT NULL COMMENT '用户编号',
+	role_id varchar(64) NOT NULL COMMENT '角色编号',
 	PRIMARY KEY (user_id, role_id)
-) ENGINE=InnoDB COMMENT = '用户-角色';
+) COMMENT = '用户-角色';
 
 
 
 /* Create Indexes */
 
-CREATE INDEX sys_area_parent_id ON sys_area (parent_id ASC);
-CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids ASC);
-CREATE INDEX sys_area_del_flag ON sys_area (del_flag ASC);
+CREATE INDEX sys_area_parent_id ON sys_area ();
+CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids ASC, parent_ids ASC);
+CREATE INDEX sys_area_del_flag ON sys_area ();
 CREATE INDEX sys_dict_value ON sys_dict (value ASC);
 CREATE INDEX sys_dict_label ON sys_dict (label ASC);
-CREATE INDEX sys_dict_del_flag ON sys_dict (del_flag ASC);
+CREATE INDEX sys_dict_del_flag ON sys_dict ();
 CREATE INDEX sys_log_create_by ON sys_log (create_by ASC);
 CREATE INDEX sys_log_request_uri ON sys_log (request_uri ASC);
 CREATE INDEX sys_log_type ON sys_log (type ASC);
 CREATE INDEX sys_log_create_date ON sys_log (create_date ASC);
-CREATE INDEX sys_mdict_parent_id ON sys_mdict (parent_id ASC);
-CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids ASC);
-CREATE INDEX sys_mdict_del_flag ON sys_mdict (del_flag ASC);
-CREATE INDEX sys_menu_parent_id ON sys_menu (parent_id ASC);
-CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids ASC);
-CREATE INDEX sys_menu_del_flag ON sys_menu (del_flag ASC);
-CREATE INDEX sys_office_parent_id ON sys_office (parent_id ASC);
-CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids ASC);
-CREATE INDEX sys_office_del_flag ON sys_office (del_flag ASC);
-CREATE INDEX sys_role_del_flag ON sys_role (del_flag ASC);
+CREATE INDEX sys_mdict_parent_id ON sys_mdict ();
+CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids ASC, parent_ids ASC);
+CREATE INDEX sys_mdict_del_flag ON sys_mdict ();
+CREATE INDEX sys_menu_parent_id ON sys_menu ();
+CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids ASC, parent_ids ASC);
+CREATE INDEX sys_menu_del_flag ON sys_menu ();
+CREATE INDEX sys_office_parent_id ON sys_office ();
+CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids ASC, parent_ids ASC);
+CREATE INDEX sys_office_del_flag ON sys_office ();
+CREATE INDEX sys_role_del_flag ON sys_role ();
 CREATE INDEX sys_user_office_id ON sys_user (office_id ASC);
 CREATE INDEX sys_user_login_name ON sys_user (login_name ASC);
 CREATE INDEX sys_user_company_id ON sys_user (company_id ASC);
-CREATE INDEX sys_user_update_date ON sys_user (update_date ASC);
-CREATE INDEX sys_user_del_flag ON sys_user (del_flag ASC);
+CREATE INDEX sys_user_update_date ON sys_user ();
+CREATE INDEX sys_user_del_flag ON sys_user ();
 
 
 

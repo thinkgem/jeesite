@@ -46,7 +46,7 @@ public class LinkService extends BaseService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public Link get(Long id) {
+	public Link get(String id) {
 		return linkDao.get(id);
 	}
 	
@@ -62,7 +62,7 @@ public class LinkService extends BaseService {
 		DetachedCriteria dc = linkDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
-		if (link.getCategory()!=null && link.getCategory().getId()!=null && !Category.isRoot(link.getCategory().getId())){
+		if (link.getCategory()!=null && StringUtils.isNotBlank(link.getCategory().getId()) && !Category.isRoot(link.getCategory().getId())){
 			Category category = categoryDao.get(link.getCategory().getId());
 			if (category!=null){
 				dc.add(Restrictions.or(
@@ -79,7 +79,7 @@ public class LinkService extends BaseService {
 		if (StringUtils.isNotEmpty(link.getTitle())){
 			dc.add(Restrictions.like("title", "%"+link.getTitle()+"%"));
 		}
-		if (link.getCreateBy()!=null && link.getCreateBy().getId()>0){
+		if (link.getCreateBy()!=null && StringUtils.isNotBlank(link.getCreateBy().getId())){
 			dc.add(Restrictions.eq("createBy.id", link.getCreateBy().getId()));
 		}
 		if (isDataScopeFilter){
@@ -99,7 +99,7 @@ public class LinkService extends BaseService {
 			link.setDelFlag(Link.DEL_FLAG_AUDIT);
 		}
 		// 如果栏目不需要审核，则将该内容设为发布状态
-		if (link.getCategory()!=null&&link.getCategory().getId()!=null){
+		if (link.getCategory()!=null&&StringUtils.isNotBlank(link.getCategory().getId())){
 			Category category = categoryDao.get(link.getCategory().getId());
 			if (!Article.YES.equals(category.getIsAudit())){
 				link.setDelFlag(Article.DEL_FLAG_NORMAL);
@@ -110,7 +110,7 @@ public class LinkService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 		linkDao.updateDelFlag(id, isRe!=null&&isRe?Link.DEL_FLAG_NORMAL:Link.DEL_FLAG_DELETE);
 	}
 	

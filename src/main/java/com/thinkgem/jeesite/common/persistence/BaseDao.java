@@ -205,8 +205,8 @@ public class BaseDao<T> {
 	 * @param qlString
 	 * @return
 	 */
-	public T get(String qlString){
-		return get(qlString, null);
+	public T getByHql(String qlString){
+		return getByHql(qlString, null);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class BaseDao<T> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public T get(String qlString, Parameter parameter){
+	public T getByHql(String qlString, Parameter parameter){
 		Query query = createQuery(qlString, parameter);
 		return (T)query.uniqueResult();
 	}
@@ -237,7 +237,7 @@ public class BaseDao<T> {
 				}
 			}
 			// 插入前执行方法
-			if (id == null){
+			if (StringUtils.isBlank((String)id)){
 				for (Method method : entity.getClass().getMethods()){
 					PrePersist pp = method.getAnnotation(PrePersist.class);
 					if (pp != null){
@@ -300,7 +300,7 @@ public class BaseDao<T> {
 	 * @param id
 	 * @return
 	 */
-	public int deleteById(Long id){
+	public int deleteById(Serializable id){
 		return update("update "+entityClass.getSimpleName()+" set delFlag='" + BaseEntity.DEL_FLAG_DELETE + "' where id = :p1", 
 				new Parameter(id));
 	}
@@ -311,8 +311,8 @@ public class BaseDao<T> {
 	 * @param likeParentIds
 	 * @return
 	 */
-	public int deleteById(Long id, String likeParentIds){
-		return update("update "+entityClass.getSimpleName()+" set delFlag='" + BaseEntity.DEL_FLAG_DELETE + "' where id = :p1 or parentIds like :p2",
+	public int deleteById(Serializable id, String likeParentIds){
+		return update("update "+entityClass.getSimpleName()+" set delFlag = '" + BaseEntity.DEL_FLAG_DELETE + "' where id = :p1 or parentIds like :p2",
 				new Parameter(id, likeParentIds));
 	}
 	
@@ -322,9 +322,9 @@ public class BaseDao<T> {
 	 * @param delFlag
 	 * @return
 	 */
-	public int updateDelFlag(Long id, String delFlag){
-		return update("update "+entityClass.getSimpleName()+" set delFlag=:p2 where id = :p1", 
-				new Parameter("id, delFlag", id, delFlag));
+	public int updateDelFlag(Serializable id, String delFlag){
+		return update("update "+entityClass.getSimpleName()+" set delFlag = :p2 where id = :p1", 
+				new Parameter(id, delFlag));
 	}
 	
 	/**

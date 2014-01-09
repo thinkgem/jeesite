@@ -52,7 +52,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>D:\GitHub\jeesite\bin\refresh-db\oa\jeesite_mysql.sql</ddl_output>
+			<ddl_output>D:\GitHub\jeesite_plus\db\oa\jeesite_mysql.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -62,21 +62,21 @@
 			<create_comment>true</create_comment>
 			<create_foreignKey>false</create_foreignKey>
 			<create_index>true</create_index>
-			<create_sequence>true</create_sequence>
+			<create_sequence>false</create_sequence>
 			<create_table>true</create_table>
 			<create_tablespace>false</create_tablespace>
 			<create_trigger>false</create_trigger>
 			<create_view>true</create_view>
 			<drop_index>false</drop_index>
-			<drop_sequence>true</drop_sequence>
+			<drop_sequence>false</drop_sequence>
 			<drop_table>true</drop_table>
 			<drop_tablespace>false</drop_tablespace>
 			<drop_trigger>false</drop_trigger>
 			<drop_view>true</drop_view>
 			<inline_column_comment>false</inline_column_comment>
 			<inline_table_comment>false</inline_table_comment>
-			<comment_value_description>true</comment_value_description>
-			<comment_value_logical_name>false</comment_value_logical_name>
+			<comment_value_description>false</comment_value_description>
+			<comment_value_logical_name>true</comment_value_logical_name>
 			<comment_value_logical_name_description>false</comment_value_logical_name_description>
 			<comment_replace_line_feed>false</comment_replace_line_feed>
 			<comment_replace_string></comment_replace_string>
@@ -108,7 +108,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>微软雅黑</font_name>
+				<font_name>Microsoft YaHei UI</font_name>
 				<font_size>9</font_size>
 			<x>47</x>
 			<y>298</y>
@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-23 21:13:37</creation_date>
-			<updated_date>2013-11-30 15:42:46</updated_date>
+			<updated_date>2014-01-09 09:49:42</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>JeeSite</value>
@@ -165,7 +165,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>申请时间</description>
 			<logical_name>申请时间</logical_name>
@@ -174,17 +173,16 @@
 		</word>
 		<word>
 			<id>1</id>
-			<length>null</length>
+			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>创建者</description>
 			<logical_name>创建者</logical_name>
 			<physical_name>create_by</physical_name>
-			<type>bigint</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>2</id>
@@ -193,7 +191,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>创建时间</description>
 			<logical_name>创建时间</logical_name>
@@ -207,7 +204,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>删除标记（0：正常；1：删除）</description>
 			<logical_name>删除标记</logical_name>
@@ -221,7 +217,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>结束时间</description>
 			<logical_name>结束时间</logical_name>
@@ -230,17 +225,16 @@
 		</word>
 		<word>
 			<id>5</id>
-			<length>null</length>
+			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>编号</description>
 			<logical_name>编号</logical_name>
 			<physical_name>id</physical_name>
-			<type>bigint</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>6</id>
@@ -249,7 +243,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>请假类型</description>
 			<logical_name>请假类型</logical_name>
@@ -263,7 +256,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>流程实例编号</description>
 			<logical_name>流程实例编号</logical_name>
@@ -277,7 +269,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>流程状态</description>
 			<logical_name>流程状态</logical_name>
@@ -291,7 +282,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>实际结束时间</description>
 			<logical_name>实际结束时间</logical_name>
@@ -305,7 +295,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>实际开始时间</description>
 			<logical_name>实际开始时间</logical_name>
@@ -319,7 +308,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>请假理由</description>
 			<logical_name>请假理由</logical_name>
@@ -333,7 +321,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>备注信息</description>
 			<logical_name>备注信息</logical_name>
@@ -347,7 +334,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>开始时间</description>
 			<logical_name>开始时间</logical_name>
@@ -356,17 +342,16 @@
 		</word>
 		<word>
 			<id>14</id>
-			<length>null</length>
+			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>更新者</description>
 			<logical_name>更新者</logical_name>
 			<physical_name>update_by</physical_name>
-			<type>bigint</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>15</id>
@@ -375,7 +360,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<binary>false</binary>
 			<args></args>
 			<description>更新时间</description>
 			<logical_name>更新时间</logical_name>
@@ -415,10 +399,10 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>bigint</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
-					<auto_increment>true</auto_increment>
+					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
@@ -433,7 +417,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -466,7 +449,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -499,7 +481,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -532,7 +513,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -565,7 +545,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -598,7 +577,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -631,7 +609,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -664,7 +641,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -697,7 +673,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -730,7 +705,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -804,7 +778,7 @@
 						<unique_key_name></unique_key_name>
 						<logical_name></logical_name>
 						<physical_name></physical_name>
-						<type>bigint</type>
+						<type>varchar(n)</type>
 						<constraint></constraint>
 						<default_value></default_value>
 						<auto_increment>false</auto_increment>
@@ -822,7 +796,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -855,7 +828,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -870,7 +842,7 @@
 						<unique_key_name></unique_key_name>
 						<logical_name></logical_name>
 						<physical_name></physical_name>
-						<type>bigint</type>
+						<type>varchar(n)</type>
 						<constraint></constraint>
 						<default_value></default_value>
 						<auto_increment>false</auto_increment>
@@ -888,7 +860,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -921,7 +892,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -954,7 +924,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -987,7 +956,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -1001,44 +969,8 @@
 	<test_data_list>
 	</test_data_list>
 	<sequence_set>
-		<sequence>
-			<name>seq_oa_leave</name>
-			<schema></schema>
-			<increment>1</increment>
-			<min_value></min_value>
-			<max_value></max_value>
-			<start>1</start>
-			<cache></cache>
-			<nocache>false</nocache>
-			<cycle>false</cycle>
-			<order>false</order>
-			<description></description>
-			<data_type></data_type>
-			<decimal_size>0</decimal_size>
-		</sequence>
-		<sequence>
-			<name>SEQ_oa_leave_id</name>
-			<schema></schema>
-			<increment>1</increment>
-			<min_value></min_value>
-			<max_value></max_value>
-			<start>1</start>
-			<cache></cache>
-			<nocache>false</nocache>
-			<cycle>false</cycle>
-			<order>false</order>
-			<description></description>
-			<data_type></data_type>
-			<decimal_size>0</decimal_size>
-		</sequence>
 	</sequence_set>
 	<trigger_set>
-		<trigger>
-			<name>TRI_oa_leave_id</name>
-			<schema></schema>
-			<sql>BEFORE INSERT ON oa_leave&#x0D;&#x0A;FOR EACH ROW&#x0D;&#x0A;BEGIN&#x0D;&#x0A;&#x09;SELECT SEQ_oa_leave_id.nextval&#x0D;&#x0A;&#x09;INTO :new.id&#x0D;&#x0A;&#x09;FROM dual;&#x0D;&#x0A;END</sql>
-			<description></description>
-		</trigger>
 	</trigger_set>
 	<change_tracking_list>
 	</change_tracking_list>

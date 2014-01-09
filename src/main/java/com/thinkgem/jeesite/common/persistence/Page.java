@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.CookieUtils;
 
@@ -47,7 +48,7 @@ public class Page<T> {
 	private String funcName = "page"; // 设置点击页码调用的js函数名称，默认为page，在一页有多个分页对象时使用。
 	
 	private String message = ""; // 设置提示消息，显示在“共n条”之后
-	
+
 	public Page() {
 		this.pageSize = -1;
 	}
@@ -60,14 +61,14 @@ public class Page<T> {
 	public Page(HttpServletRequest request, HttpServletResponse response){
 		this(request, response, -2);
 	}
-	
+
 	/**
 	 * 构造方法
 	 * @param request 传递 repage 参数，来记住页码
 	 * @param response 用于设置 Cookie，记住页码
-	 * @param pageSize 分页大小，如果传递 -1 则为不分页，返回所有数据
+	 * @param defaultPageSize 默认分页大小，如果传递 -1 则为不分页，返回所有数据
 	 */
-	public Page(HttpServletRequest request, HttpServletResponse response, int pageSize){
+	public Page(HttpServletRequest request, HttpServletResponse response, int defaultPageSize){
 		// 设置页码参数（传递repage参数，来记住页码）
 		String no = request.getParameter("pageNo");
 		if (StringUtils.isNumeric(no)){
@@ -89,9 +90,8 @@ public class Page<T> {
 			if (StringUtils.isNumeric(size)){
 				this.setPageSize(Integer.parseInt(size));
 			}
-		}
-		if (pageSize != -2){
-			this.pageSize = pageSize;
+		}else if (defaultPageSize != -2){
+			this.pageSize = defaultPageSize;
 		}
 		// 设置排序参数
 		String orderBy = request.getParameter("orderBy");
@@ -198,7 +198,7 @@ public class Page<T> {
 		if (pageNo == first) {// 如果是首页
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">&#171; 上一页</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+prev+","+pageSize+");\">&#171; 上一页</a></li>\n");
+			sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+prev+","+pageSize+");\">&#171; 上一页</a></li>\n");
 		}
 
 		int begin = pageNo - (length / 2);
@@ -220,7 +220,7 @@ public class Page<T> {
 		if (begin > first) {
 			int i = 0;
 			for (i = first; i < first + slider && i < begin; i++) {
-				sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
+				sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+pageSize+");\">"
 						+ (i + 1 - first) + "</a></li>\n");
 			}
 			if (i < begin) {
@@ -233,7 +233,7 @@ public class Page<T> {
 				sb.append("<li class=\"active\"><a href=\"javascript:\">" + (i + 1 - first)
 						+ "</a></li>\n");
 			} else {
-				sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
+				sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+pageSize+");\">"
 						+ (i + 1 - first) + "</a></li>\n");
 			}
 		}
@@ -244,14 +244,14 @@ public class Page<T> {
 		}
 
 		for (int i = end + 1; i <= last; i++) {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+i+","+pageSize+");\">"
+			sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+pageSize+");\">"
 					+ (i + 1 - first) + "</a></li>\n");
 		}
 
 		if (pageNo == last) {
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:"+funcName+"("+next+","+pageSize+");\">"
+			sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+next+","+pageSize+");\">"
 					+ "下一页 &#187;</a></li>\n");
 		}
 
@@ -269,6 +269,14 @@ public class Page<T> {
 //		sb.insert(0,"<div class=\"page\">\n").append("</div>\n");
 		
 		return sb.toString();
+	}
+	
+	/**
+	 * 获取分页HTML代码
+	 * @return
+	 */
+	public String getHtml(){
+		return toString();
 	}
 	
 //	public static void main(String[] args) {
@@ -328,13 +336,14 @@ public class Page<T> {
 	 * @param pageSize
 	 */
 	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize <= 0 ? 10 : pageSize > 500 ? 500 : pageSize;
+		this.pageSize = pageSize <= 0 ? 10 : pageSize;// > 500 ? 500 : pageSize;
 	}
 
 	/**
 	 * 首页索引
 	 * @return
 	 */
+	@JsonIgnore
 	public int getFirst() {
 		return first;
 	}
@@ -343,6 +352,7 @@ public class Page<T> {
 	 * 尾页索引
 	 * @return
 	 */
+	@JsonIgnore
 	public int getLast() {
 		return last;
 	}
@@ -351,6 +361,7 @@ public class Page<T> {
 	 * 获取页面总数
 	 * @return getLast();
 	 */
+	@JsonIgnore
 	public int getTotalPage() {
 		return getLast();
 	}
@@ -359,6 +370,7 @@ public class Page<T> {
 	 * 是否为第一页
 	 * @return
 	 */
+	@JsonIgnore
 	public boolean isFirstPage() {
 		return firstPage;
 	}
@@ -367,6 +379,7 @@ public class Page<T> {
 	 * 是否为最后一页
 	 * @return
 	 */
+	@JsonIgnore
 	public boolean isLastPage() {
 		return lastPage;
 	}
@@ -375,6 +388,7 @@ public class Page<T> {
 	 * 上一页索引值
 	 * @return
 	 */
+	@JsonIgnore
 	public int getPrev() {
 		if (isFirstPage()) {
 			return pageNo;
@@ -387,6 +401,7 @@ public class Page<T> {
 	 * 下一页索引值
 	 * @return
 	 */
+	@JsonIgnore
 	public int getNext() {
 		if (isLastPage()) {
 			return pageNo;
@@ -407,14 +422,16 @@ public class Page<T> {
 	 * 设置本页数据对象列表
 	 * @param list
 	 */
-	public void setList(List<T> list) {
+	public Page<T> setList(List<T> list) {
 		this.list = list;
+		return this;
 	}
 
 	/**
 	 * 获取查询排序字符串
 	 * @return
 	 */
+	@JsonIgnore
 	public String getOrderBy() {
 		return orderBy;
 	}
@@ -431,6 +448,7 @@ public class Page<T> {
 	 * function ${page.funcName}(pageNo){location="${ctx}/list-${category.id}${urlSuffix}?pageNo="+i;}
 	 * @return
 	 */
+	@JsonIgnore
 	public String getFuncName() {
 		return funcName;
 	}
@@ -455,6 +473,7 @@ public class Page<T> {
 	 * 分页是否有效
 	 * @return this.pageSize==-1
 	 */
+	@JsonIgnore
 	public boolean isDisabled() {
 		return this.pageSize==-1;
 	}
@@ -463,6 +482,7 @@ public class Page<T> {
 	 * 是否进行总数统计
 	 * @return this.count==-1
 	 */
+	@JsonIgnore
 	public boolean isNotCount() {
 		return this.count==-1;
 	}

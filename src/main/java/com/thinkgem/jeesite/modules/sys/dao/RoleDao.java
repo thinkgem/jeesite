@@ -20,7 +20,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Role;
 public class RoleDao extends BaseDao<Role> {
 
 	public Role findByName(String name){
-		return get("from Role where delFlag = :p1 and name = :p2", new Parameter(Role.DEL_FLAG_NORMAL, name));
+		return getByHql("from Role where delFlag = :p1 and name = :p2", new Parameter(Role.DEL_FLAG_NORMAL, name));
 	}
 
 //	@Query("from Role where delFlag='" + Role.DEL_FLAG_NORMAL + "' order by name")

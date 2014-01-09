@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.search.annotations.Analyze;
@@ -63,7 +64,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	@PrePersist
 	public void prePersist(){
 		User user = UserUtils.getUser();
-		if (user.getId() != null){
+		if (StringUtils.isNotBlank(user.getId())){
 			this.updateBy = user;
 			this.createBy = user;
 		}
@@ -74,7 +75,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	@PreUpdate
 	public void preUpdate(){
 		User user = UserUtils.getUser();
-		if (user.getId() != null){
+		if (StringUtils.isNotBlank(user.getId())){
 			this.updateBy = user;
 		}
 		this.updateDate = new Date();

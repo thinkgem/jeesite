@@ -159,7 +159,7 @@ public class UserUtils extends BaseService {
 
 	public static User getUserById(String id){
 		if(StringUtils.isNotBlank(id)) {
-			return userDao.get(Long.valueOf(id));
+			return userDao.get(id);
 		} else {
 			return null;
 		}

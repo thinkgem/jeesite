@@ -17,8 +17,8 @@ DROP TABLE cms_site;
 
 CREATE TABLE cms_article
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	category_id bigint NOT NULL COMMENT '栏目编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	category_id varchar(64) NOT NULL COMMENT '栏目编号',
 	title varchar(255) NOT NULL COMMENT '标题',
 	link varchar(255) COMMENT '文章链接',
 	color varchar(50) COMMENT '标题颜色',
@@ -31,9 +31,9 @@ CREATE TABLE cms_article
 	posid varchar(10) COMMENT '推荐位，多选',
 	custom_content_view varchar(255) COMMENT '自定义内容视图',
 	view_config text COMMENT '视图配置',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
@@ -43,7 +43,7 @@ CREATE TABLE cms_article
 
 CREATE TABLE cms_article_data
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+	id varchar(64) NOT NULL COMMENT '编号',
 	content text COMMENT '文章内容',
 	copyfrom varchar(255) COMMENT '文章来源',
 	relation varchar(255) COMMENT '相关文章',
@@ -54,11 +54,11 @@ CREATE TABLE cms_article_data
 
 CREATE TABLE cms_category
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	site_id bigint DEFAULT 1 COMMENT '站点编号',
-	office_id bigint COMMENT '归属机构',
-	parent_id bigint NOT NULL COMMENT '父级编号',
-	parent_ids varchar(255) NOT NULL COMMENT '所有父级编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	site_id varchar(64) DEFAULT '1' COMMENT '站点编号',
+	office_id varchar(64) COMMENT '归属机构',
+	parent_id varchar(64) NOT NULL COMMENT '父级编号',
+	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
 	module varchar(20) COMMENT '栏目模块',
 	name varchar(100) NOT NULL COMMENT '栏目名称',
 	image varchar(255) COMMENT '栏目图片',
@@ -74,9 +74,9 @@ CREATE TABLE cms_category
 	is_audit char(1) COMMENT '是否需要审核',
 	custom_list_view varchar(255) COMMENT '自定义列表视图',
 	custom_content_view varchar(255) COMMENT '自定义内容视图',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
@@ -87,15 +87,15 @@ CREATE TABLE cms_category
 
 CREATE TABLE cms_comment
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	category_id bigint NOT NULL COMMENT '栏目编号',
-	content_id bigint NOT NULL COMMENT '栏目内容的编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	category_id varchar(64) NOT NULL COMMENT '栏目编号',
+	content_id varchar(64) NOT NULL COMMENT '栏目内容的编号',
 	title varchar(255) COMMENT '栏目内容的标题',
 	content varchar(255) COMMENT '评论内容',
 	name varchar(100) COMMENT '评论姓名',
 	ip varchar(100) COMMENT '评论IP',
 	create_date datetime NOT NULL COMMENT '评论时间',
-	audit_user_id bigint COMMENT '审核人',
+	audit_user_id varchar(64) COMMENT '审核人',
 	audit_date datetime COMMENT '审核时间',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
@@ -104,7 +104,7 @@ CREATE TABLE cms_comment
 
 CREATE TABLE cms_guestbook
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+	id varchar(64) NOT NULL COMMENT '编号',
 	type char(1) NOT NULL COMMENT '留言分类',
 	content varchar(255) NOT NULL COMMENT '留言内容',
 	name varchar(100) NOT NULL COMMENT '姓名',
@@ -113,7 +113,7 @@ CREATE TABLE cms_guestbook
 	workunit varchar(100) NOT NULL COMMENT '单位',
 	ip varchar(100) NOT NULL COMMENT 'IP',
 	create_date datetime NOT NULL COMMENT '留言时间',
-	re_user_id bigint COMMENT '回复人',
+	re_user_id varchar(64) COMMENT '回复人',
 	re_date datetime COMMENT '回复时间',
 	re_content varchar(100) COMMENT '回复内容',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
@@ -123,17 +123,17 @@ CREATE TABLE cms_guestbook
 
 CREATE TABLE cms_link
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-	category_id bigint NOT NULL COMMENT '栏目编号',
+	id varchar(64) NOT NULL COMMENT '编号',
+	category_id varchar(64) NOT NULL COMMENT '栏目编号',
 	title varchar(255) NOT NULL COMMENT '链接名称',
 	color varchar(50) COMMENT '标题颜色',
 	image varchar(255) COMMENT '链接图片',
 	href varchar(255) COMMENT '链接地址',
 	weight int DEFAULT 0 COMMENT '权重，越大越靠前',
 	weight_date datetime COMMENT '权重期限',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
@@ -143,7 +143,7 @@ CREATE TABLE cms_link
 
 CREATE TABLE cms_site
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+	id varchar(64) NOT NULL COMMENT '编号',
 	name varchar(100) NOT NULL COMMENT '站点名称',
 	title varchar(100) NOT NULL COMMENT '站点标题',
 	logo varchar(255) COMMENT '站点Logo',
@@ -153,9 +153,9 @@ CREATE TABLE cms_site
 	theme varchar(255) DEFAULT 'default' COMMENT '主题',
 	copyright text COMMENT '版权信息',
 	custom_index_view varchar(255) COMMENT '自定义站点首页视图',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',

@@ -40,7 +40,7 @@ public class GuestbookService extends BaseService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 	
-	public Guestbook get(Long id) {
+	public Guestbook get(String id) {
 		return guestbookDao.get(id);
 	}
 	
@@ -63,7 +63,7 @@ public class GuestbookService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 		guestbookDao.updateDelFlag(id, isRe!=null&&isRe?Guestbook.DEL_FLAG_AUDIT:Guestbook.DEL_FLAG_DELETE);
 	}
 	

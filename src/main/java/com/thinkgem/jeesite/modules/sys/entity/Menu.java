@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -34,7 +31,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 菜单Entity
@@ -45,10 +42,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_menu")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends DataEntity<Menu> {
+public class Menu extends IdEntity<Menu> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Menu parent;	// 父级菜单
 	private String parentIds; // 所有父级编号
 	private String name; 	// 名称
@@ -68,20 +64,8 @@ public class Menu extends DataEntity<Menu> {
 		this.sort = 30;
 	}
 	
-	public Menu(Long id){
+	public Menu(String id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
-//	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -205,7 +189,7 @@ public class Menu extends DataEntity<Menu> {
 	}
 	
 	@Transient
-	public static void sortList(List<Menu> list, List<Menu> sourcelist, Long parentId){
+	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId){
 		for (int i=0; i<sourcelist.size(); i++){
 			Menu e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
@@ -230,8 +214,8 @@ public class Menu extends DataEntity<Menu> {
 	}
 	
 	@Transient
-	public static boolean isRoot(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isRoot(String id){
+		return id != null && id.equals("1");
 	}
 	
 	@Transient

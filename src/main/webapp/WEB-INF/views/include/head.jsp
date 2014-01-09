@@ -10,8 +10,8 @@
 <script src="${ctxStatic}/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
 <!--[if lte IE 6]><link href="${ctxStatic}/bootstrap/bsie/css/bootstrap-ie6.min.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
- <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
- <!--[if lt IE 9]> <script src="${ctxStatic}/common/html5.js"></script><![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]> <script src="${ctxStatic}/common/html5.js"></script><![endif]-->
 <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 <script src="${ctxStatic}/common/mustache.min.js" type="text/javascript"></script>
 <script src="${ctxStatic}/list/list.min.js" type="text/javascript"></script>
@@ -24,5 +24,4 @@
 <script src="${ctxStatic}/fancyBox/source/jquery.fancybox.js" type="text/javascript"></script>
 <link href="${ctxStatic}/common/jeesite.min.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/common/jeesite.min.js" type="text/javascript"></script>
-<!-- Le favicon -->
 <link rel="shortcut icon" href="${ctxStatic}/favicon.ico">

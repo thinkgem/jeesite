@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -51,8 +52,8 @@ public class RoleController extends BaseController {
 	private OfficeService officeService;
 	
 	@ModelAttribute("role")
-	public Role get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Role get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return systemService.getRole(id);
 		}else{
 			return new Role();
@@ -101,7 +102,7 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "delete")
-	public String delete(@RequestParam Long id, RedirectAttributes redirectAttributes) {
+	public String delete(@RequestParam String id, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
@@ -137,7 +138,7 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:view")
 	@ResponseBody
 	@RequestMapping(value = "users")
-	public List<Map<String, Object>> users(Long officeId, HttpServletResponse response) {
+	public List<Map<String, Object>> users(String officeId, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
 		Office office = officeService.get(officeId);
@@ -154,7 +155,7 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "outrole")
-	public String outrole(Long userId, Long roleId, RedirectAttributes redirectAttributes) {
+	public String outrole(String userId, String roleId, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/role/assign?id="+roleId;
@@ -176,7 +177,7 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "assignrole")
-	public String assignRole(Role role, Long[] idsArr, RedirectAttributes redirectAttributes) {
+	public String assignRole(Role role, String[] idsArr, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/role/assign?id="+role.getId();

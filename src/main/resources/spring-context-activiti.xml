@@ -22,6 +22,8 @@
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jobExecutorActivate" value="false" />
 		<property name="history" value="full" />
+		<!-- UUID作为主键生成策略 -->
+		<property name="idGenerator" ref="idGen" />
 		<!-- 自动部署 -->
 		<property name="deploymentResources">
 			<list>

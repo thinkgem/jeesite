@@ -8,8 +8,6 @@ package com.thinkgem.jeesite.modules.cms.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +24,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
@@ -40,9 +39,9 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 public class Comment extends BaseEntity<Category> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+	private String id;		// 编号
 	private Category category;// 分类编号
-	private Long contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
+	private String contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
 	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
 	private String content; // 评论内容
 	private String name; 	// 评论姓名
@@ -57,7 +56,7 @@ public class Comment extends BaseEntity<Category> {
 		this.delFlag = DEL_FLAG_AUDIT;
 	}
 	
-	public Comment(Long id){
+	public Comment(String id){
 		this();
 		this.id = id;
 	}
@@ -69,18 +68,16 @@ public class Comment extends BaseEntity<Category> {
 	
 	@PrePersist
 	public void prePersist(){
+		this.id = IdGen.uuid();
 		this.createDate = new Date();
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_comment")
-//	@SequenceGenerator(name = "seq_cms_comment", sequenceName = "seq_cms_comment")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -97,11 +94,11 @@ public class Comment extends BaseEntity<Category> {
 	}
 
 	@NotNull
-	public Long getContentId() {
+	public String getContentId() {
 		return contentId;
 	}
 
-	public void setContentId(Long contentId) {
+	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
 

@@ -10,12 +10,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -40,7 +38,7 @@ import org.hibernate.validator.constraints.Length;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 文章Entity
@@ -52,12 +50,11 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed @Analyzer(impl = IKAnalyzer.class)
-public class Article extends DataEntity {
+public class Article extends IdEntity<Article> {
 
     public static final String DEFAULT_TEMPLATE = "frontViewArticle";
 	
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Category category;// 分类编号
 	private String title;	// 标题
     private String link;	// 外部链接
@@ -81,7 +78,7 @@ public class Article extends DataEntity {
 		this.posid = "";
 	}
 
-	public Article(Long id){
+	public Article(String id){
 		this();
 		this.id = id;
 	}
@@ -91,18 +88,12 @@ public class Article extends DataEntity {
 		this.category = category;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article")
-//	@SequenceGenerator(name = "seq_cms_article", sequenceName = "seq_cms_article")
-	public Long getId() {
-		return id;
+	@PrePersist
+	public void prePersist(){
+		super.prePersist();
+		articleData.setId(this.id);
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	@NotFound(action = NotFoundAction.IGNORE)

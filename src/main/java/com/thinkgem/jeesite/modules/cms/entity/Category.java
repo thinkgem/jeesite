@@ -10,9 +10,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -36,7 +33,7 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 
 /**
@@ -48,12 +45,11 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 @Table(name = "cms_category")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Category extends DataEntity<Category> {
+public class Category extends IdEntity<Category> {
 
     public static final String DEFAULT_TEMPLATE = "frontList";
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Site site;		// 归属站点
 	private Office office;	// 归属部门
 	private Category parent;// 父级菜单
@@ -89,27 +85,15 @@ public class Category extends DataEntity<Category> {
 		this.isAudit = NO;
 	}
 
-	public Category(Long id){
+	public Category(String id){
 		this();
 		this.id = id;
 	}
 	
-	public Category(Long id, Site site){
+	public Category(String id, Site site){
 		this();
 		this.id = id;
 		this.setSite(site);
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_category")
-//	@SequenceGenerator(name = "seq_cms_category", sequenceName = "seq_cms_category")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -310,7 +294,7 @@ public class Category extends DataEntity<Category> {
 	}
 
 	@Transient
-	public static void sortList(List<Category> list, List<Category> sourcelist, Long parentId){
+	public static void sortList(List<Category> list, List<Category> sourcelist, String parentId){
 		for (int i=0; i<sourcelist.size(); i++){
 			Category e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
@@ -342,7 +326,7 @@ public class Category extends DataEntity<Category> {
 	}
 	
 	@Transient
-	public static boolean isRoot(Long id){
+	public static boolean isRoot(String id){
 		return id != null && id.equals(1L);
 	}
 

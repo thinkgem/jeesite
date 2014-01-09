@@ -8,7 +8,6 @@ package com.thinkgem.jeesite.modules.cms.service;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -43,7 +42,7 @@ public class CategoryService extends BaseService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public Category get(Long id) {
+	public Category get(String id) {
 		return categoryDao.get(id);
 	}
 	
@@ -61,12 +60,12 @@ public class CategoryService extends BaseService {
 			dc.addOrder(Order.asc("site.id")).addOrder(Order.asc("sort"));
 			list = categoryDao.find(dc);
 			// 将没有父节点的节点，找到父节点
-			Set<Long> parentIdSet = Sets.newHashSet();
+			Set<String> parentIdSet = Sets.newHashSet();
 			for (Category e : list){
-				if (e.getParent()!=null && e.getParent().getId()!=null){
+				if (e.getParent()!=null && StringUtils.isNotBlank(e.getParent().getId())){
 					boolean isExistParent = false;
 					for (Category e2 : list){
-						if (e.getParent().getId().longValue() == e2.getId().longValue()){
+						if (e.getParent().getId().equals(e2.getId())){
 							isExistParent = true;
 							break;
 						}
@@ -90,7 +89,7 @@ public class CategoryService extends BaseService {
 			List<Category> categoryList = Lists.newArrayList(); 
 			for (Category e : list){
 				if (Category.isRoot(e.getId()) || (e.getSite()!=null && e.getSite().getId() !=null 
-						&& e.getSite().getId().longValue() == Site.getCurrentSiteId())){
+						&& e.getSite().getId().equals(Site.getCurrentSiteId()))){
 					if (StringUtils.isNotEmpty(module)){
 						if (module.equals(e.getModule()) || "".equals(e.getModule())){
 							categoryList.add(e);
@@ -105,17 +104,17 @@ public class CategoryService extends BaseService {
 		return list;
 	}
 
-	public List<Category> findByParentId(Long parentId, Long siteId){
-		return categoryDao.findByParentId(parentId, siteId);
+	public List<Category> findByParentId(String parentId, String siteId){
+		return categoryDao.findByParentIdAndSiteId(parentId, siteId);
 	}
 	
 	public Page<Category> find(Page<Category> page, Category category) {
 		DetachedCriteria dc = categoryDao.createDetachedCriteria();
-		if (category.getSite()!=null && category.getSite().getId()!=null){
+		if (category.getSite()!=null && StringUtils.isNotBlank(category.getSite().getId())){
 			dc.createAlias("site", "site");
 			dc.add(Restrictions.eq("site.id", category.getSite().getId()));
 		}
-		if (category.getParent()!=null && category.getParent().getId()!=null && category.getParent().getId() > 0){
+		if (category.getParent()!=null && StringUtils.isNotBlank(category.getParent().getId())){
 			dc.createAlias("parent", "parent");
 			dc.add(Restrictions.eq("parent.id", category.getParent().getId()));
 		}
@@ -151,7 +150,7 @@ public class CategoryService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		Category category = get(id);
 		if (category!=null){
 			categoryDao.deleteById(id, "%,"+id+",%");
@@ -165,12 +164,12 @@ public class CategoryService extends BaseService {
 	 */
 	public List<Category> findByIds(String ids) {
 		List<Category> list = Lists.newArrayList();
-		Long[] idss = (Long[])ConvertUtils.convert(StringUtils.split(ids,","), Long.class);
+		String[] idss = StringUtils.split(ids,",");
 		if (idss.length>0){
 			List<Category> l = categoryDao.findByIdIn(idss);
-			for (Long id : idss){
+			for (String id : idss){
 				for (Category e : l){
-					if (e.getId().longValue() == id){
+					if (e.getId().equals(id)){
 						list.add(e);
 						break;
 					}

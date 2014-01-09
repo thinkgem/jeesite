@@ -8,9 +8,6 @@ package com.thinkgem.jeesite.modules.cms.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,7 +21,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 链接Entity
@@ -35,10 +32,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "cms_link")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Link extends DataEntity<Category> {
+public class Link extends IdEntity<Category> {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Category category;// 分类编号
 	private String title;	// 链接名称
 	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
@@ -52,7 +48,7 @@ public class Link extends DataEntity<Category> {
 		this.weight = 0;
 	}
 	
-	public Link(Long id){
+	public Link(String id){
 		this();
 		this.id = id;
 	}
@@ -60,18 +56,6 @@ public class Link extends DataEntity<Category> {
 	public Link(Category category){
 		this();
 		this.category = category;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_link")
-//	@SequenceGenerator(name = "seq_cms_link", sequenceName = "seq_cms_link")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	@ManyToOne

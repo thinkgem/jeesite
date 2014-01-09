@@ -10,11 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.thinkgem.jeesite.modules.cms.entity.Article;
-import com.thinkgem.jeesite.modules.cms.entity.Site;
-import com.thinkgem.jeesite.modules.cms.service.FileTplService;
-import com.thinkgem.jeesite.modules.cms.service.SiteService;
-import com.thinkgem.jeesite.modules.cms.utils.TplUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +24,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
+import com.thinkgem.jeesite.modules.cms.entity.Site;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
+import com.thinkgem.jeesite.modules.cms.service.FileTplService;
+import com.thinkgem.jeesite.modules.cms.service.SiteService;
+import com.thinkgem.jeesite.modules.cms.utils.TplUtils;
 
 /**
  * 栏目Controller
@@ -50,8 +51,8 @@ public class CategoryController extends BaseController {
    	private SiteService siteService;
 	
 	@ModelAttribute("category")
-	public Category get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Category get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return categoryService.get(id);
 		}else{
 			return new Category();
@@ -63,7 +64,7 @@ public class CategoryController extends BaseController {
 	public String list(Model model) {
 		List<Category> list = Lists.newArrayList();
 		List<Category> sourcelist = categoryService.findByUser(true, null);
-		Category.sortList(list, sourcelist, 1L);
+		Category.sortList(list, sourcelist, "1");
         model.addAttribute("list", list);
 		return "modules/cms/categoryList";
 	}
@@ -72,7 +73,7 @@ public class CategoryController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Category category, Model model) {
 		if (category.getParent()==null||category.getParent().getId()==null){
-			category.setParent(new Category(1L));
+			category.setParent(new Category("1"));
 		}
 		category.setParent(categoryService.get(category.getParent().getId()));
 		if (category.getOffice()==null||category.getOffice().getId()==null){
@@ -104,7 +105,7 @@ public class CategoryController extends BaseController {
 	
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/cms/category/";
@@ -123,7 +124,7 @@ public class CategoryController extends BaseController {
 	 */
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "updateSort")
-	public String updateSort(Long[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
+	public String updateSort(String[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
     	int len = ids.length;
     	Category[] entitys = new Category[len];
     	for (int i = 0; i < len; i++) {

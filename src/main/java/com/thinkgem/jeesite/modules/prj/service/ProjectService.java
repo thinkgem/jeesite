@@ -54,7 +54,7 @@ public class ProjectService extends BaseService {
 	private ProjectDao projectDao;
 	
 	
-	public Project get(Long id) {
+	public Project get(String id) {
 		return projectDao.get(id);
 	}
 	
@@ -251,7 +251,7 @@ public class ProjectService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		projectDao.deleteById(id);
 	}
 	

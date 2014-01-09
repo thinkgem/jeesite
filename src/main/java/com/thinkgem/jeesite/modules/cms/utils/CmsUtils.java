@@ -60,13 +60,13 @@ public class CmsUtils {
 	 * 获得站点信息
 	 * @param siteId 站点编号
 	 */
-	public static Site getSite(long siteId){
-		long id = 1L;
-		if (siteId > 0){
+	public static Site getSite(String siteId){
+		String id = "1";
+		if (StringUtils.isNotBlank(siteId)){
 			id = siteId;
 		}
 		for (Site site : getSiteList()){
-			if (site.getId() == id){
+			if (site.getId().equals(id)){
 				return site;
 			}
 		}
@@ -77,13 +77,13 @@ public class CmsUtils {
 	 * 获得主导航列表
 	 * @param siteId 站点编号
 	 */
-	public static List<Category> getMainNavList(long siteId){
+	public static List<Category> getMainNavList(String siteId){
 		@SuppressWarnings("unchecked")
 		List<Category> mainNavList = (List<Category>)CacheUtils.get(CMS_CACHE, "mainNavList_"+siteId);
 		if (mainNavList == null){
 			Category category = new Category();
 			category.setSite(new Site(siteId));
-			category.setParent(new Category(1L));
+			category.setParent(new Category("1"));
 			category.setInMenu(Category.SHOW);
 			Page<Category> page = new Page<Category>(1, -1);
 			page = categoryService.find(page, category);
@@ -98,7 +98,7 @@ public class CmsUtils {
 	 * @param categoryId 栏目编号
 	 * @return
 	 */
-	public static Category getCategory(long categoryId){
+	public static Category getCategory(String categoryId){
 		return categoryService.get(categoryId);
 	}
 	
@@ -109,7 +109,7 @@ public class CmsUtils {
 	 * @param number 获取数目
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
 	 */
-	public static List<Category> getCategoryList(long siteId, long parentId, int number, String param){
+	public static List<Category> getCategoryList(String siteId, String parentId, int number, String param){
 		Page<Category> page = new Page<Category>(1, number, -1);
 		Category category = new Category();
 		category.setSite(new Site(siteId));
@@ -136,7 +136,7 @@ public class CmsUtils {
 	 * @param articleId 文章编号
 	 * @return
 	 */
-	public static Article getArticle(long articleId){
+	public static Article getArticle(String articleId){
 		return articleService.get(articleId);
 	}
 	
@@ -151,7 +151,7 @@ public class CmsUtils {
 	 *          orderBy 排序字符串
 	 * @return
 	 */
-	public static List<Article> getArticleList(long siteId, long categoryId, int number, String param){
+	public static List<Article> getArticleList(String siteId, String categoryId, int number, String param){
 		Page<Article> page = new Page<Article>(1, number, -1);
 		Article article = new Article(new Category(categoryId, new Site(siteId)));
 		if (StringUtils.isNotBlank(param)){
@@ -177,7 +177,7 @@ public class CmsUtils {
 	 * @param linkId 文章编号
 	 * @return
 	 */
-	public static Link getLink(long linkId){
+	public static Link getLink(String linkId){
 		return linkService.get(linkId);
 	}
 	
@@ -189,7 +189,7 @@ public class CmsUtils {
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
 	 * @return
 	 */
-	public static List<Link> getLinkList(long siteId, long categoryId, int number, String param){
+	public static List<Link> getLinkList(String siteId, String categoryId, int number, String param){
 		Page<Link> page = new Page<Link>(1, number, -1);
 		Link link = new Link(new Category(categoryId, new Site(siteId)));
 		if (StringUtils.isNotBlank(param)){

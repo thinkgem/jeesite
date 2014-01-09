@@ -9,10 +9,9 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +26,7 @@ import org.hibernate.annotations.NotFoundAction;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.utils.IdGen;
 
 /**
  * 日志Entity
@@ -40,7 +40,7 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 public class Log extends BaseEntity<Area> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;			// 日志编号
+	private String id;			// 日志编号
 	private String type; 		// 日志类型（1：接入日志；2：错误日志）
 	private User createBy;		// 创建者
 	private Date createDate;	// 日志创建时间
@@ -58,20 +58,22 @@ public class Log extends BaseEntity<Area> {
 		super();
 	}
 	
-	public Log(Long id){
+	public Log(String id){
 		this();
 		this.id = id;
 	}
+
+	@PrePersist
+	public void prePersist(){
+		this.id = IdGen.uuid();
+	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_log")
-//	@SequenceGenerator(name = "seq_sys_log", sequenceName = "seq_sys_log")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

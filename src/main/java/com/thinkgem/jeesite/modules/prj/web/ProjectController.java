@@ -6,7 +6,6 @@ package com.thinkgem.jeesite.modules.prj.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.prj.entity.Project;
 import com.thinkgem.jeesite.modules.prj.service.ProjectService;
@@ -39,8 +39,8 @@ public class ProjectController extends BaseController {
 	private ProjectService projectService;
 	
 	@ModelAttribute
-	public Project get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Project get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return projectService.get(id);
 		}else{
 			return new Project();
@@ -98,7 +98,7 @@ public class ProjectController extends BaseController {
 	
 	@RequiresPermissions("prj:project:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		projectService.delete(id);
 		addMessage(redirectAttributes, "删除项目成功");
 		return "redirect:"+Global.getAdminPath()+"/prj/project/?repage";

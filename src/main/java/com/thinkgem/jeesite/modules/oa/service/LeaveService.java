@@ -58,7 +58,7 @@ public class LeaveService extends BaseService {
 	
 	private String processDefinitionKey = "leave";
 	
-	public Leave get(Long id) {
+	public Leave get(String id) {
 		return  leaveDao.get(id);
 	}
 
@@ -210,7 +210,7 @@ public class LeaveService extends BaseService {
 	
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		leaveDao.deleteById(id);
 	}
 }

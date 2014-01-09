@@ -6,7 +6,6 @@ package com.thinkgem.jeesite.modules.prj.dao;
 import org.springframework.stereotype.Repository;
 
 import com.thinkgem.jeesite.common.persistence.BaseDao;
-import com.thinkgem.jeesite.common.persistence.Parameter;
 import com.thinkgem.jeesite.modules.prj.entity.Project;
 
 /**

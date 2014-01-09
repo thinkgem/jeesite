@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,7 +29,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 区域Entity
@@ -43,10 +40,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_area")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Area extends DataEntity<Area> {
+public class Area extends IdEntity<Area> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Area parent;	// 父级编号
 	private String parentIds; // 所有父级编号
 	private String code; 	// 区域编码
@@ -60,20 +56,8 @@ public class Area extends DataEntity<Area> {
 		super();
 	}
 	
-	public Area(Long id){
+	public Area(String id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
-//	@SequenceGenerator(name = "seq_sys_area", sequenceName = "seq_sys_area")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -152,7 +136,7 @@ public class Area extends DataEntity<Area> {
 	}
 
 	@Transient
-	public static void sortList(List<Area> list, List<Area> sourcelist, Long parentId){
+	public static void sortList(List<Area> list, List<Area> sourcelist, String parentId){
 		for (int i=0; i<sourcelist.size(); i++){
 			Area e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
@@ -177,7 +161,7 @@ public class Area extends DataEntity<Area> {
 	}
 	
 	@Transient
-	public static boolean isAdmin(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isAdmin(String id){
+		return id != null && id.equals("1");
 	}
 }

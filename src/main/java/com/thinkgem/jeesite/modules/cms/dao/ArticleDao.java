@@ -21,11 +21,11 @@ import com.thinkgem.jeesite.modules.cms.entity.Article;
 @Repository
 public class ArticleDao extends BaseDao<Article> {
 	
-	public List<Article> findByIdIn(Long[] ids){
+	public List<Article> findByIdIn(String[] ids){
 		return find("from Article where id in (:p1)", new Parameter(new Object[]{ids}));
 	}
 	
-	public int updateHitsAddOne(Long id){
+	public int updateHitsAddOne(String id){
 		return update("update Article set hits=hits+1 where id = :p1", new Parameter(id));
 	}
 	

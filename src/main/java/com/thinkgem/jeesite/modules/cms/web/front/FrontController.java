@@ -73,8 +73,8 @@ public class FrontController extends BaseController{
 	 * 网站首页
 	 */
 	@RequestMapping(value = "index-{siteId}${urlSuffix}")
-	public String index(@PathVariable Long siteId, Model model) {
-		if (siteId.longValue() == 1){
+	public String index(@PathVariable String siteId, Model model) {
+		if (siteId.equals("1")){
 			return "redirect:"+Global.getFrontPath();
 		}
 		Site site = CmsUtils.getSite(siteId);
@@ -85,7 +85,7 @@ public class FrontController extends BaseController{
 			return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex"+site.getCustomIndexView();
 		}
 		// 否则显示子站第一个栏目
-		Long firstCategoryId = CmsUtils.getMainNavList(siteId).get(0).getId();
+		String firstCategoryId = CmsUtils.getMainNavList(siteId).get(0).getId();
 		return "redirect:"+Global.getFrontPath()+"/list-"+firstCategoryId+Global.getUrlSuffix();
 	}
 	
@@ -93,7 +93,7 @@ public class FrontController extends BaseController{
 	 * 内容列表
 	 */
 	@RequestMapping(value = "list-{categoryId}${urlSuffix}")
-	public String list(@PathVariable Long categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
+	public String list(@PathVariable String categoryId, @RequestParam(required=false, defaultValue="1") Integer pageNo,
 			@RequestParam(required=false, defaultValue="15") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
@@ -106,7 +106,7 @@ public class FrontController extends BaseController{
 		if("2".equals(category.getShowModes()) && "article".equals(category.getModule())){
 			// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
 			List<Category> categoryList = Lists.newArrayList();
-			if (category.getParent().getId() == 1L){
+			if (category.getParent().getId().equals("1")){
 				categoryList.add(category);
 			}else{
 				categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
@@ -134,7 +134,7 @@ public class FrontController extends BaseController{
 					category = categoryList.get(0);
 				}else{
 					// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
-					if (category.getParent().getId() == 1L){
+					if (category.getParent().getId().equals("1")){
 						categoryList.add(category);
 					}else{
 						categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
@@ -189,7 +189,7 @@ public class FrontController extends BaseController{
 	 * 内容列表（通过url自定义视图）
 	 */
 	@RequestMapping(value = "listc-{categoryId}-{customView}${urlSuffix}")
-	public String listCustom(@PathVariable Long categoryId, @PathVariable String customView, @RequestParam(required=false, defaultValue="1") Integer pageNo,
+	public String listCustom(@PathVariable String categoryId, @PathVariable String customView, @RequestParam(required=false, defaultValue="1") Integer pageNo,
 			@RequestParam(required=false, defaultValue="15") Integer pageSize, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
@@ -209,7 +209,7 @@ public class FrontController extends BaseController{
 	 * 显示内容
 	 */
 	@RequestMapping(value = "view-{categoryId}-{contentId}${urlSuffix}")
-	public String view(@PathVariable Long categoryId, @PathVariable Long contentId, Model model) {
+	public String view(@PathVariable String categoryId, @PathVariable String contentId, Model model) {
 		Category category = categoryService.get(categoryId);
 		if (category==null){
 			Site site = CmsUtils.getSite(Site.defaultSiteId());
@@ -220,7 +220,7 @@ public class FrontController extends BaseController{
 		if ("article".equals(category.getModule())){
 			// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
 			List<Category> categoryList = Lists.newArrayList();
-			if (category.getParent().getId() == 1L){
+			if (category.getParent().getId().equals("1")){
 				categoryList.add(category);
 			}else{
 				categoryList = categoryService.findByParentId(category.getParent().getId(), category.getSite().getId());
@@ -267,10 +267,10 @@ public class FrontController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "comment", method=RequestMethod.POST)
-	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) Long replyId, HttpServletRequest request) {
+	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) String replyId, HttpServletRequest request) {
 		if (StringUtils.isNotBlank(validateCode)){
 			if (ValidateCodeServlet.validate(request, validateCode)){
-				if (replyId!=null && replyId!=0){
+				if (StringUtils.isNotBlank(replyId)){
 					Comment replyComment = commentService.get(replyId);
 					if (replyComment != null){
 						comment.setContent("<div class=\"reply\">"+replyComment.getName()+":<br/>"
@@ -294,7 +294,7 @@ public class FrontController extends BaseController{
 	 * 站点地图
 	 */
 	@RequestMapping(value = "map-{siteId}${urlSuffix}")
-	public String map(@PathVariable Long siteId, Model model) {
+	public String map(@PathVariable String siteId, Model model) {
 		Site site = CmsUtils.getSite(siteId!=null?siteId:Site.defaultSiteId());
 		model.addAttribute("site", site);
 		return "modules/cms/front/themes/"+site.getTheme()+"/frontMap";
@@ -309,7 +309,7 @@ public class FrontController extends BaseController{
                 if(StringUtils.isNotBlank(c.getCustomContentView())){
                     view = c.getCustomContentView();
                     goon = false;
-                }else if(c.getParent().isRoot()){
+                }else if(c.getParent() == null || c.getParent().isRoot()){
                     goon = false;
                 }else{
                     c = c.getParent();
@@ -323,7 +323,8 @@ public class FrontController extends BaseController{
 
     private void setTplModelAttribute(Model model, String param){
         if(StringUtils.isNotBlank(param)){
-            Map map = JsonMapper.getInstance().fromJson(param, Map.class);
+            @SuppressWarnings("rawtypes")
+			Map map = JsonMapper.getInstance().fromJson(param, Map.class);
             if(map != null){
                 for(Object o : map.keySet()){
                     model.addAttribute("viewConfig_"+o.toString(), map.get(o));
@@ -337,7 +338,7 @@ public class FrontController extends BaseController{
         Category c = category;
         boolean goon = true;
         do{
-            if(c.getParent().isRoot()){
+            if(c.getParent() == null || c.getParent().isRoot()){
                 goon = false;
             }
             categoryList.add(c);

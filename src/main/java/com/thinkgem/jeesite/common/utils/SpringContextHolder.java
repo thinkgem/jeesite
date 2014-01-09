@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.stereotype.Service;
 
 /**
  * 以静态变量保存Spring ApplicationContext, 可在任何代码任何地方任何时候取出ApplicaitonContext.
@@ -21,7 +23,8 @@ import org.springframework.core.io.DefaultResourceLoader;
  * @author Zaric
  * @date 2013-5-29 下午1:25:40
  */
-//@Service
+@Service
+@Lazy(false)
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
 
 	private static ApplicationContext applicationContext = null;
@@ -78,8 +81,9 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	 * 清除SpringContextHolder中的ApplicationContext为Null.
 	 */
 	public static void clearHolder() {
-		logger.debug("清除SpringContextHolder中的ApplicationContext:"
-				+ applicationContext);
+		if (logger.isDebugEnabled()){
+			logger.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
+		}
 		applicationContext = null;
 	}
 
@@ -91,7 +95,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 //		logger.debug("注入ApplicationContext到SpringContextHolder:{}", applicationContext);
 
 		if (SpringContextHolder.applicationContext != null) {
-			logger.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringContextHolder.applicationContext);
+			logger.info("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:" + SpringContextHolder.applicationContext);
 		}
 
 		SpringContextHolder.applicationContext = applicationContext; // NOSONAR

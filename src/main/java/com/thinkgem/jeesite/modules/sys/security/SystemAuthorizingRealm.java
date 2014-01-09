@@ -150,7 +150,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 		private static final long serialVersionUID = 1L;
 		
-		private Long id;
+		private String id;
 		private String loginName;
 		private String name;
 		private Map<String, Object> cacheMap;
@@ -161,7 +161,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			this.name = user.getName();
 		}
 
-		public Long getId() {
+		public String getId() {
 			return id;
 		}
 

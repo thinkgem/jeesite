@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>D:\prj.sql</ddl_output>
+			<ddl_output>D:\GitHub\jeesite_plus\db\prj\jeesite_mysql.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -49,23 +49,23 @@
 			<use_logical_name_as_sheet>false</use_logical_name_as_sheet>
 			<open_after_saved>false</open_after_saved>
 			<create_comment>true</create_comment>
-			<create_foreignKey>true</create_foreignKey>
+			<create_foreignKey>false</create_foreignKey>
 			<create_index>true</create_index>
-			<create_sequence>true</create_sequence>
+			<create_sequence>false</create_sequence>
 			<create_table>true</create_table>
-			<create_tablespace>true</create_tablespace>
-			<create_trigger>true</create_trigger>
+			<create_tablespace>false</create_tablespace>
+			<create_trigger>false</create_trigger>
 			<create_view>true</create_view>
 			<drop_index>true</drop_index>
-			<drop_sequence>true</drop_sequence>
+			<drop_sequence>false</drop_sequence>
 			<drop_table>true</drop_table>
-			<drop_tablespace>true</drop_tablespace>
-			<drop_trigger>true</drop_trigger>
+			<drop_tablespace>false</drop_tablespace>
+			<drop_trigger>false</drop_trigger>
 			<drop_view>true</drop_view>
-			<inline_column_comment>true</inline_column_comment>
-			<inline_table_comment>true</inline_table_comment>
-			<comment_value_description>true</comment_value_description>
-			<comment_value_logical_name>false</comment_value_logical_name>
+			<inline_column_comment>false</inline_column_comment>
+			<inline_table_comment>false</inline_table_comment>
+			<comment_value_description>false</comment_value_description>
+			<comment_value_logical_name>true</comment_value_logical_name>
 			<comment_value_logical_name_description>false</comment_value_logical_name_description>
 			<comment_replace_line_feed>false</comment_replace_line_feed>
 			<comment_replace_string></comment_replace_string>
@@ -97,7 +97,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>微软雅黑</font_name>
+				<font_name>Microsoft YaHei UI</font_name>
 				<font_size>9</font_size>
 			<x>50</x>
 			<y>50</y>
@@ -110,7 +110,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-12-04 16:25:32</creation_date>
-			<updated_date>2013-12-09 13:46:20</updated_date>
+			<updated_date>2014-01-09 09:48:08</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -149,18 +149,16 @@
 	<dictionary>
 		<word>
 			<id>0</id>
-			<length>null</length>
+			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>创建者</description>
 			<logical_name>创建者</logical_name>
 			<physical_name>create_by</physical_name>
-			<type>bigint</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>1</id>
@@ -169,8 +167,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>创建时间</description>
 			<logical_name>创建时间</logical_name>
@@ -184,8 +180,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>删除标志</description>
 			<logical_name>删除标志</logical_name>
@@ -199,8 +193,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>数据文件路径</description>
 			<logical_name>数据文件路径</logical_name>
@@ -209,18 +201,16 @@
 		</word>
 		<word>
 			<id>4</id>
-			<length>null</length>
+			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>编号</description>
 			<logical_name>编号</logical_name>
 			<physical_name>id</physical_name>
-			<type>bigint</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>5</id>
@@ -229,8 +219,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>名称</description>
 			<logical_name>名称</logical_name>
@@ -244,8 +232,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>备注信息</description>
 			<logical_name>备注信息</logical_name>
@@ -259,8 +245,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>例如：com.thinkgem.jeesite</description>
 			<logical_name>包名</logical_name>
@@ -269,18 +253,16 @@
 		</word>
 		<word>
 			<id>8</id>
-			<length>null</length>
+			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>更新者</description>
 			<logical_name>更新者</logical_name>
 			<physical_name>update_by</physical_name>
-			<type>bigint</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>9</id>
@@ -289,8 +271,6 @@
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
 			<args></args>
 			<description>更新时间</description>
 			<logical_name>更新时间</logical_name>
@@ -330,10 +310,10 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>bigint</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
-					<auto_increment>true</auto_increment>
+					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
@@ -348,7 +328,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -381,7 +360,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -414,7 +392,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -447,7 +424,6 @@
 						<max_value></max_value>
 						<start></start>
 						<cache></cache>
-						<nocache>false</nocache>
 						<cycle>false</cycle>
 						<order>false</order>
 						<description></description>
@@ -482,7 +458,7 @@
 						<unique_key_name></unique_key_name>
 						<logical_name></logical_name>
 						<physical_name></physical_name>
-						<type>bigint</type>
+						<type>varchar(n)</type>
 						<constraint></constraint>
 						<default_value></default_value>
 						<auto_increment>false</auto_increment>
@@ -500,7 +476,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -533,7 +508,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -548,7 +522,7 @@
 						<unique_key_name></unique_key_name>
 						<logical_name></logical_name>
 						<physical_name></physical_name>
-						<type>bigint</type>
+						<type>varchar(n)</type>
 						<constraint></constraint>
 						<default_value></default_value>
 						<auto_increment>false</auto_increment>
@@ -566,7 +540,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -599,7 +572,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -632,7 +604,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>
@@ -665,7 +636,6 @@
 							<max_value></max_value>
 							<start></start>
 							<cache></cache>
-							<nocache>false</nocache>
 							<cycle>false</cycle>
 							<order>false</order>
 							<description></description>

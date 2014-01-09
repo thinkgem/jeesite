@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.workflow.WorkflowUtils;
 import com.thinkgem.jeesite.modules.oa.entity.Leave;
@@ -35,8 +34,6 @@ import com.thinkgem.jeesite.modules.oa.service.LeaveService;
 @RequestMapping(value = "${adminPath}/oa/leave")
 public class LeaveController extends BaseController {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
 	@Autowired
 	protected LeaveService leaveService;
 
@@ -48,8 +45,8 @@ public class LeaveController extends BaseController {
 	
 	
 	@ModelAttribute
-	public Leave get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Leave get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return leaveService.get(id);
 		}else{
 			return new Leave();
@@ -83,7 +80,7 @@ public class LeaveController extends BaseController {
 
 	@RequiresPermissions("oa:leave:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		leaveService.delete(id);
 		addMessage(redirectAttributes, "删除请假成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/leave/";

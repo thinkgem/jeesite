@@ -11,7 +11,7 @@ DROP TABLE oa_leave;
 
 CREATE TABLE oa_leave
 (
-	id bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+	id varchar(64) NOT NULL COMMENT '编号',
 	process_instance_id varchar(64) COMMENT '流程实例编号',
 	start_time datetime COMMENT '开始时间',
 	end_time datetime COMMENT '结束时间',
@@ -21,14 +21,14 @@ CREATE TABLE oa_leave
 	reality_start_time datetime COMMENT '实际开始时间',
 	reality_end_time datetime COMMENT '实际结束时间',
 	process_status varchar(50) COMMENT '流程状态',
-	create_by bigint COMMENT '创建者',
+	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
-	update_by bigint COMMENT '更新者',
+	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
-	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记（0：正常；1：删除）',
+	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
 	PRIMARY KEY (id)
-) ENGINE=InnoDB ;
+) COMMENT = '请假流程表';
 
 
 

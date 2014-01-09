@@ -6,9 +6,6 @@
 package com.thinkgem.jeesite.modules.sys.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 字典Entity
@@ -29,10 +26,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_dict")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Dict extends DataEntity<Dict> {
+public class Dict extends IdEntity<Dict> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private String label;	// 标签名
 	private String value;	// 数据值
 	private String type;	// 类型
@@ -43,23 +39,11 @@ public class Dict extends DataEntity<Dict> {
 		super();
 	}
 	
-	public Dict(Long id) {
+	public Dict(String id) {
 		this();
 		this.id = id;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_dict")
-//	@SequenceGenerator(name = "seq_sys_dict", sequenceName = "seq_sys_dict")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	@Length(min=1, max=100)
 	public String getLabel() {
 		return label;

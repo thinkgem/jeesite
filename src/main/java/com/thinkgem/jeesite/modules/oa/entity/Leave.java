@@ -6,9 +6,6 @@ package com.thinkgem.jeesite.modules.oa.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
 /**
@@ -33,10 +30,9 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 @Table(name = "oa_leave")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Leave extends DataEntity<Leave> {
+public class Leave extends IdEntity<Leave> {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id; 		// 编号
 	private String reason; 	// 请假原因
 	private String processInstanceId; // 流程实例编号
 	private Date startTime;	// 请假开始日期
@@ -54,21 +50,11 @@ public class Leave extends DataEntity<Leave> {
 		super();
 	}
 
-	public Leave(Long id){
+	public Leave(String id){
 		this();
 		this.id = id;
 	}
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getLeaveType() {
 		return leaveType;
 	}

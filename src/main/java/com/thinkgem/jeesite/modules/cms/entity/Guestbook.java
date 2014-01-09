@@ -8,8 +8,6 @@ package com.thinkgem.jeesite.modules.cms.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,6 +34,7 @@ import org.hibernate.validator.constraints.Length;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.thinkgem.jeesite.common.persistence.BaseEntity;
+import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
@@ -51,7 +50,7 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 public class Guestbook extends BaseEntity<Category> {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id; 		// 编号
+	private String id; 		// 编号
 	private String type; 	// 留言分类（咨询、建议、投诉、其它）
 	private String content; // 留言内容
 	private String name; 	// 姓名
@@ -69,25 +68,23 @@ public class Guestbook extends BaseEntity<Category> {
 		this.delFlag = DEL_FLAG_AUDIT;
 	}
 
-	public Guestbook(Long id){
+	public Guestbook(String id){
 		this();
 		this.id = id;
 	}
 	
 	@PrePersist
 	public void prePersist(){
+		this.id = IdGen.uuid();
 		this.createDate = new Date();
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_guestbook")
-//	@SequenceGenerator(name = "seq_cms_guestbook", sequenceName = "seq_cms_guestbook")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

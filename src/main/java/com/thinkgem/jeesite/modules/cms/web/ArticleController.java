@@ -30,7 +30,6 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Article;
-import com.thinkgem.jeesite.modules.cms.entity.ArticleData;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
 import com.thinkgem.jeesite.modules.cms.service.ArticleService;
@@ -55,8 +54,8 @@ public class ArticleController extends BaseController {
    	private SiteService siteService;
 	
 	@ModelAttribute
-	public Article get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Article get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return articleService.get(id);
 		}else{
 			return new Article();
@@ -83,7 +82,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Article article, Model model) {
 		// 如果当前传参有子节点，则选择取消传参选择
-		if (article.getCategory()!=null && article.getCategory().getId()!=null){
+		if (article.getCategory()!=null && StringUtils.isNotBlank(article.getCategory().getId())){
 			List<Category> list = categoryService.findByParentId(article.getCategory().getId(), Site.getCurrentSiteId());
 			if (list.size() > 0){
 				article.setCategory(null);
@@ -103,13 +102,13 @@ public class ArticleController extends BaseController {
 		}
 		articleService.save(article);
 		addMessage(redirectAttributes, "保存文章'" + StringUtils.abbr(article.getTitle(),50) + "'成功");
-		Long categoryId = article.getCategory()!=null?article.getCategory().getId():null;
+		String categoryId = article.getCategory()!=null?article.getCategory().getId():null;
 		return "redirect:"+Global.getAdminPath()+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
 	}
 	
 	@RequiresPermissions("cms:article:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		// 如果没有审核权限，则不允许删除或发布。
 		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
 			addMessage(redirectAttributes, "你没有删除或发布权限");

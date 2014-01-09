@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Guestbook;
 import com.thinkgem.jeesite.modules.cms.service.GuestbookService;
@@ -40,8 +41,8 @@ public class GuestbookController extends BaseController {
 	private GuestbookService guestbookService;
 	
 	@ModelAttribute
-	public Guestbook get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Guestbook get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return guestbookService.get(id);
 		}else{
 			return new Guestbook();
@@ -81,7 +82,7 @@ public class GuestbookController extends BaseController {
 	
 	@RequiresPermissions("cms:guestbook:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		guestbookService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"留言成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/guestbook/?repage&status=2";

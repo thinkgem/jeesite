@@ -18,7 +18,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Dict;
 @MyBatisDao
 public interface MyBatisDictDao {
 	
-    Dict get(Long id);
+    Dict get(String id);
     
     List<Dict> find(Dict dict);
     
