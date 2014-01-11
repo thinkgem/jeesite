@@ -5,6 +5,8 @@
  */
 package com.thinkgem.jeesite.common.web;
 
+import java.io.File;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +16,7 @@ import com.ckfinder.connector.ServletContextFactory;
 import com.ckfinder.connector.configuration.Configuration;
 import com.ckfinder.connector.data.AccessControlLevel;
 import com.ckfinder.connector.utils.AccessControlUtil;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**
@@ -22,6 +25,8 @@ import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principa
  * @version 2013-01-15
  */
 public class CKFinderConfig extends Configuration {
+
+	public static final String CK_BASH_URL = "/userfiles/";
 
 	public CKFinderConfig(ServletConfig servletConfig) {
         super(servletConfig);  
@@ -48,9 +53,10 @@ public class CKFinderConfig extends Configuration {
 //		}
 		AccessControlUtil.getInstance(this).loadACLConfig();
 		try {
-			Principal principal = (Principal)SecurityUtils.getSubject().getPrincipal();
-			this.baseURL = ServletContextFactory.getServletContext().getContextPath()+"/userfiles/"+
-					(principal!=null?principal.getId():0)+"/";
+			Principal principal = (Principal) SecurityUtils.getSubject().getPrincipal();
+			long parentDir = principal != null ? principal.getId() : 0;
+			this.baseURL = ServletContextFactory.getServletContext().getContextPath() + CK_BASH_URL + parentDir + "/";
+			this.baseDir = Global.getCkBaseDir() + parentDir + File.separator;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

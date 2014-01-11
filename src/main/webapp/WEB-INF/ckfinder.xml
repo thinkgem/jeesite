@@ -1,5 +1,6 @@
 <config>
 	<enabled>true</enabled>
+	<!-- 以下两项停用 -->
 	<baseDir></baseDir>
 	<baseURL>/userfiles/</baseURL>
 	<licenseKey></licenseKey>

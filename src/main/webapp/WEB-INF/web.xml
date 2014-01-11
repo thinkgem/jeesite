@@ -116,7 +116,7 @@
   <!-- CKFinder -->
   <servlet>
     <servlet-name>CKFinderConnectorServlet</servlet-name>
-    <servlet-class>com.thinkgem.jeesite.common.web.CKFinderConnectorServlet</servlet-class>
+    <servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
     <init-param>
       <param-name>XMLConfig</param-name>
       <param-value>/WEB-INF/ckfinder.xml</param-value>
@@ -151,6 +151,16 @@
     <filter-name>FileUploadFilter</filter-name>
     <url-pattern>/static/ckfinder/core/connector/java/connector.java</url-pattern>
   </filter-mapping>
+  
+  <!-- 查看CKFinder的图片 -->
+  <servlet>
+  	<servlet-name>cKFinderFilesServlet</servlet-name>
+  	<servlet-class>com.thinkgem.jeesite.common.servlet.CKFinderFilesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>cKFinderFilesServlet</servlet-name>
+  	<url-pattern>/userfiles/*</url-pattern>
+  </servlet-mapping>
   
   <!-- 随机验证码 -->
   <servlet>
