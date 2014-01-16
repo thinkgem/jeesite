@@ -33,8 +33,8 @@
 	           <ul id="menu" class="nav">
 				 <c:set var="firstMenu" value="true"/>
 				 <c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
-					<c:if test="${menu.parent.id eq 1&&menu.isShow eq 1}">
-						<li class="menu ${firstMenu?' active':''}"><a class="menu" href="${ctx}/sys/menu/tree?parentId=${menu.id}" target="menuFrame" >${menu.name}</a></li>
+					<c:if test="${menu.parent.id eq 1 && menu.isShow eq 1}">
+						<li class="menu ${firstMenu ? ' active' : ''}"><a class="menu" href="${ctx}/sys/menu/tree?parentId=${menu.id}" target="menuFrame" >${menu.name}</a></li>
 						<c:if test="${firstMenu}">
 							<c:set var="firstMenuId" value="${menu.id}"/>
 						</c:if>

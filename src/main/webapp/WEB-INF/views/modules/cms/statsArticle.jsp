@@ -34,13 +34,12 @@
 			<label>归属栏目：</label><tags:treeselect id="category" name="categoryId" value="${paramMap.categoryId}" labelName="categoryName" labelValue="${paramMap.categoryName}"
 				title="栏目" url="/cms/category/treeData" module="article" cssClass="input-small" allowClear="true"/>
 			<label>归属机构：</label><tags:treeselect id="office" name="officeId" value="${paramMap.officeId}" labelName="officeName" labelValue="${paramMap.officeName}" 
-				title="机构" url="/sys/office/treeData" cssClass="input-small" allowClear="true"/>&nbsp;
-		</div><div style="margin-top:8px;">
-			<label>日期范围：&nbsp;</label><input id="beginDate" name="beginDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+				title="机构" url="/sys/office/treeData" cssClass="input-small" allowClear="true"/>
+			<label>开始日期：</label><input id="beginDate" name="beginDate" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 				value="${paramMap.beginDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-			<label>&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+			<label>结束日期：</label><input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 				value="${paramMap.endDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>&nbsp;&nbsp;
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
+			<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>
 	</form:form>
 	<tags:message content="${message}"/>

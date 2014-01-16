@@ -40,8 +40,8 @@ public class GuestbookService extends BaseService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 	
-	public Guestbook get(Long id) {
-		return guestbookDao.findOne(id);
+	public Guestbook get(String id) {
+		return guestbookDao.get(id);
 	}
 	
 	public Page<Guestbook> find(Page<Guestbook> page, Guestbook guestbook) {
@@ -52,7 +52,7 @@ public class GuestbookService extends BaseService {
 		if (StringUtils.isNotEmpty(guestbook.getContent())){
 			dc.add(Restrictions.like("content", "%"+guestbook.getContent()+"%"));
 		}
-		dc.add(Restrictions.eq(Guestbook.DEL_FLAG, guestbook.getDelFlag()));
+		dc.add(Restrictions.eq(Guestbook.FIELD_DEL_FLAG, guestbook.getDelFlag()));
 		dc.addOrder(Order.desc("id"));
 		return guestbookDao.find(page, dc);
 	}
@@ -63,7 +63,7 @@ public class GuestbookService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 		guestbookDao.updateDelFlag(id, isRe!=null&&isRe?Guestbook.DEL_FLAG_AUDIT:Guestbook.DEL_FLAG_DELETE);
 	}
 	
@@ -85,7 +85,7 @@ public class GuestbookService extends BaseService {
 		// 设置过滤条件
 		List<BooleanClause> bcList = Lists.newArrayList();
 
-		bcList.add(new BooleanClause(new TermQuery(new Term(Guestbook.DEL_FLAG, Guestbook.DEL_FLAG_NORMAL)), Occur.MUST));
+		bcList.add(new BooleanClause(new TermQuery(new Term(Guestbook.FIELD_DEL_FLAG, Guestbook.DEL_FLAG_NORMAL)), Occur.MUST));
 		
 		if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {   
 			bcList.add(new BooleanClause(new TermRangeQuery("createDate", beginDate.replaceAll("-", ""),

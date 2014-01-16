@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.MyBatisDictDao">
+    
+    <!-- 调用见 DictService.get 方法 -->
+	<select id="get" resultType="Dict">
+		select * from sys_dict where id=#{id}
+	</select>
+	
+	<!-- 调用见 DictService.find 方法 -->
+	<select id="find" resultType="Dict">
+		select * from sys_dict a
+		<where>
+			<if test="type != null and type != ''">
+				and a.type = #{type}
+			</if>
+			<if test="description != null and description != ''">
+				and a.description like '%${description}%'
+			</if>
+			and a.del_flag = '0'
+		</where>
+		order by type, sort, id desc
+	</select>
+	
+</mapper>

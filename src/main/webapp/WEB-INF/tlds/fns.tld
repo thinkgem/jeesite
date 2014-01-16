@@ -48,6 +48,13 @@
     <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUser()</function-signature>
     <example>${fns:getUser()}</example>  
   </function>
+  <function>
+    <description>根据ID获得用户对象</description>
+    <name>getUserById</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
+    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
+    <example>${fns:getUserById(id)}</example>  
+  </function>
   
   <function>
     <description>获取当前用户的菜单对象列表</description>
@@ -164,6 +171,13 @@
     <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
     <function-signature>java.lang.String abbr(java.lang.String, int)</function-signature>
     <example>${fns:abbr(str,length)}</example>  
+  </function>
+  <function>
+    <description>替换掉HTML标签后缩写字符串，超过最大宽度用“...”表示</description>
+    <name>rabbr</name>
+    <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
+    <function-signature>java.lang.String rabbr(java.lang.String, int)</function-signature>
+    <example>${fns:rabbr(str,length)}</example>
   </function>
   <function>
     <description>替换掉HTML标签</description>

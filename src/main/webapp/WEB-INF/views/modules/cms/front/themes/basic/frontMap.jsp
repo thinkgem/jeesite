@@ -17,30 +17,30 @@
 	</style>
 </head>
 <body>
-	<dl class="map"><c:forEach items="${fnc:getMainNavList(site.id)}" var="category">
+	<dl class="map"><c:forEach items="${fnc:getMainNavList(site.id)}" var="tpl">
 		<dt>
 			<c:choose>
-    			<c:when test="${not empty category.href}">
+    			<c:when test="${not empty tpl.href}">
 	    			<c:choose>
-		    			<c:when test="${fn:indexOf(category.href, '://') eq -1}"><c:set var="url" value="${ctx}${category.href}"/></c:when>
-		    			<c:otherwise><c:set var="url" value="${category.href}"/></c:otherwise>
+		    			<c:when test="${fn:indexOf(tpl.href, '://') eq -1}"><c:set var="url" value="${ctx}${tpl.href}"/></c:when>
+		    			<c:otherwise><c:set var="url" value="${tpl.href}"/></c:otherwise>
 		    		</c:choose>
     			</c:when>
-    			<c:otherwise><c:set var="url" value="${ctx}/list-${category.id}${urlSuffix}"/></c:otherwise>
+    			<c:otherwise><c:set var="url" value="${ctx}/list-${tpl.id}${urlSuffix}"/></c:otherwise>
     		</c:choose>
-    		<a href="${url}" target="_blank">${category.name}</a>
+    		<a href="${url}" target="_blank">${tpl.name}</a>
 		<dd>
-			<c:forEach items="${fnc:getCategoryList(site.id, category.id, -1, '')}" var="category">
+			<c:forEach items="${fnc:getCategoryList(site.id, tpl.id, -1, '')}" var="category">
 				<c:choose>
-	    			<c:when test="${not empty category.href}">
+	    			<c:when test="${not empty tpl.href}">
 		    			<c:choose>
-			    			<c:when test="${fn:indexOf(category.href, '://') eq -1}"><c:set var="url" value="${ctx}${category.href}"/></c:when>
-			    			<c:otherwise><c:set var="url" value="${category.href}"/></c:otherwise>
+			    			<c:when test="${fn:indexOf(tpl.href, '://') eq -1}"><c:set var="url" value="${ctx}${tpl.href}"/></c:when>
+			    			<c:otherwise><c:set var="url" value="${tpl.href}"/></c:otherwise>
 			    		</c:choose>
 	    			</c:when>
-	    			<c:otherwise><c:set var="url" value="${ctx}/list-${category.id}${urlSuffix}"/></c:otherwise>
+	    			<c:otherwise><c:set var="url" value="${ctx}/list-${tpl.id}${urlSuffix}"/></c:otherwise>
 	    		</c:choose>
-	    		<span><a href="${url}" target="_blank">${category.name}</a></span>
+	    		<span><a href="${url}" target="_blank">${tpl.name}</a></span>
 			</c:forEach>
 		</dd>
 	</c:forEach></dl>

@@ -46,10 +46,11 @@ public class LinkService extends BaseService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public Link get(Long id) {
-		return linkDao.findOne(id);
+	public Link get(String id) {
+		return linkDao.get(id);
 	}
 	
+	@Transactional(readOnly = false)
 	public Page<Link> find(Page<Link> page, Link link, boolean isDataScopeFilter) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByLink");
@@ -61,8 +62,8 @@ public class LinkService extends BaseService {
 		DetachedCriteria dc = linkDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
-		if (link.getCategory()!=null && link.getCategory().getId()!=null && !Category.isRoot(link.getCategory().getId())){
-			Category category = categoryDao.findOne(link.getCategory().getId());
+		if (link.getCategory()!=null && StringUtils.isNotBlank(link.getCategory().getId()) && !Category.isRoot(link.getCategory().getId())){
+			Category category = categoryDao.get(link.getCategory().getId());
 			if (category!=null){
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
@@ -78,14 +79,14 @@ public class LinkService extends BaseService {
 		if (StringUtils.isNotEmpty(link.getTitle())){
 			dc.add(Restrictions.like("title", "%"+link.getTitle()+"%"));
 		}
-		if (link.getCreateBy()!=null && link.getCreateBy().getId()>0){
+		if (link.getCreateBy()!=null && StringUtils.isNotBlank(link.getCreateBy().getId())){
 			dc.add(Restrictions.eq("createBy.id", link.getCreateBy().getId()));
 		}
 		if (isDataScopeFilter){
 			dc.createAlias("category.office", "categoryOffice").createAlias("createBy", "createBy");
 			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
 		}
-		dc.add(Restrictions.eq(Link.DEL_FLAG, link.getDelFlag()));
+		dc.add(Restrictions.eq(Link.FIELD_DEL_FLAG, link.getDelFlag()));
 		dc.addOrder(Order.desc("weight"));
 		dc.addOrder(Order.desc("updateDate"));
 		return linkDao.find(page, dc);
@@ -98,8 +99,8 @@ public class LinkService extends BaseService {
 			link.setDelFlag(Link.DEL_FLAG_AUDIT);
 		}
 		// 如果栏目不需要审核，则将该内容设为发布状态
-		if (link.getCategory()!=null&&link.getCategory().getId()!=null){
-			Category category = categoryDao.findOne(link.getCategory().getId());
+		if (link.getCategory()!=null&&StringUtils.isNotBlank(link.getCategory().getId())){
+			Category category = categoryDao.get(link.getCategory().getId());
 			if (!Article.YES.equals(category.getIsAudit())){
 				link.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
@@ -109,7 +110,7 @@ public class LinkService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 		linkDao.updateDelFlag(id, isRe!=null&&isRe?Link.DEL_FLAG_NORMAL:Link.DEL_FLAG_DELETE);
 	}
 	

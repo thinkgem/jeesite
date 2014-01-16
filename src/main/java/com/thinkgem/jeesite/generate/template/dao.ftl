@@ -3,13 +3,10 @@
  */
 package ${packageName}.${moduleName}.dao${subModuleName};
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.thinkgem.jeesite.common.persistence.BaseDao;
-import com.thinkgem.jeesite.common.persistence.BaseDaoImpl;
+import com.thinkgem.jeesite.common.persistence.Parameter;
 import ${packageName}.${moduleName}.entity${subModuleName}.${ClassName};
 
 /**
@@ -17,27 +14,7 @@ import ${packageName}.${moduleName}.entity${subModuleName}.${ClassName};
  * @author ${classAuthor}
  * @version ${classVersion}
  */
-public interface ${ClassName}Dao extends ${ClassName}DaoCustom, CrudRepository<${ClassName}, Long> {
-
-	@Modifying
-	@Query("update ${ClassName} set delFlag='" + ${ClassName}.DEL_FLAG_DELETE + "' where id = ?1")
-	public int deleteById(Long id);
+@Repository
+public class ${ClassName}Dao extends BaseDao<${ClassName}> {
 	
-}
-
-/**
- * DAO自定义接口
- * @author ${classAuthor}
- */
-interface ${ClassName}DaoCustom extends BaseDao<${ClassName}> {
-
-}
-
-/**
- * DAO自定义接口实现
- * @author ${classAuthor}
- */
-@Component
-class ${ClassName}DaoImpl extends BaseDaoImpl<${ClassName}> implements ${ClassName}DaoCustom {
-
 }

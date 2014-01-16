@@ -41,8 +41,8 @@ public class CommentController extends BaseController {
 	private CommentService commentService;
 	
 	@ModelAttribute
-	public Comment get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Comment get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return commentService.get(id);
 		}else{
 			return new Comment();
@@ -75,7 +75,7 @@ public class CommentController extends BaseController {
 	
 	@RequiresPermissions("cms:comment:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		commentService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";

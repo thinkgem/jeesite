@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	default-lazy-init="true">
+
+	<description>Shiro Configuration</description>
+
+    <!-- 加载配置属性文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/jeesite.properties" />
+	
+	<!-- 安全认证过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="${adminPath}/login" />
+		<property name="successUrl" value="${adminPath}" />
+		<property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </map>
+        </property>
+		<property name="filterChainDefinitions">
+			<value>
+				/static/** = anon
+				/userfiles/** = anon
+				${adminPath}/login = authc
+				${adminPath}/logout = logout
+				${adminPath}/** = user
+		 	</value>
+		</property>
+	</bean>
+	
+	<!-- 定义 Shiro 主要业务对象 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- <property name="sessionManager" ref="sessionManager" /> -->
+		<property name="realm" ref="systemAuthorizingRealm" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	<!-- 
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">  
+	    <property name="globalSessionTimeout" value="3600000" /> 
+	    <property name="sessionDAO" ref="sessionDAO"/>
+	</bean>
+
+	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean> -->
+	
+	<!-- 用户授权信息Cache, 采用EhCache -->
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="cacheManager"/>
+	</bean>
+	
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+	<!-- AOP式方法级权限检查  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager"/>
+	</bean>
+	
+</beans>

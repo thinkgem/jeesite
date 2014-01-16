@@ -31,8 +31,8 @@ public class SiteService extends BaseService {
 	@Autowired
 	private SiteDao siteDao;
 	
-	public Site get(Long id) {
-		return siteDao.findOne(id);
+	public Site get(String id) {
+		return siteDao.get(id);
 	}
 	
 	public Page<Site> find(Page<Site> page, Site site) {
@@ -40,7 +40,7 @@ public class SiteService extends BaseService {
 		if (StringUtils.isNotEmpty(site.getName())){
 			dc.add(Restrictions.like("name", "%"+site.getName()+"%"));
 		}
-		dc.add(Restrictions.eq(Site.DEL_FLAG, site.getDelFlag()));
+		dc.add(Restrictions.eq(Site.FIELD_DEL_FLAG, site.getDelFlag()));
 		//dc.addOrder(Order.asc("id"));
 		return siteDao.find(page, dc);
 	}
@@ -56,7 +56,7 @@ public class SiteService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 		siteDao.updateDelFlag(id, isRe!=null&&isRe?Site.DEL_FLAG_NORMAL:Site.DEL_FLAG_DELETE);
 		CmsUtils.removeCache("site_"+id);
 		CmsUtils.removeCache("siteList");

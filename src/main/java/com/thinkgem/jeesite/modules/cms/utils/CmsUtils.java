@@ -8,6 +8,7 @@ package com.thinkgem.jeesite.modules.cms.utils;
 import java.util.List;
 import java.util.Map;
 
+import com.thinkgem.jeesite.common.config.Global;
 import org.apache.commons.lang.StringUtils;
 
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
@@ -23,6 +24,8 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
 import com.thinkgem.jeesite.modules.cms.service.SiteService;
 
+import javax.servlet.ServletContext;
+
 /**
  * 内容管理工具类
  * @author ThinkGem
@@ -34,6 +37,7 @@ public class CmsUtils {
 	private static CategoryService categoryService = SpringContextHolder.getBean(CategoryService.class);
 	private static ArticleService articleService = SpringContextHolder.getBean(ArticleService.class);
 	private static LinkService linkService = SpringContextHolder.getBean(LinkService.class);
+    private static ServletContext context = SpringContextHolder.getBean(ServletContext.class);
 
 	private static final String CMS_CACHE = "cmsCache";
 	
@@ -54,15 +58,15 @@ public class CmsUtils {
 	
 	/**
 	 * 获得站点信息
-	 * @param id 站点编号
+	 * @param siteId 站点编号
 	 */
-	public static Site getSite(long siteId){
-		long id = 1L;
-		if (siteId > 0){
+	public static Site getSite(String siteId){
+		String id = "1";
+		if (StringUtils.isNotBlank(siteId)){
 			id = siteId;
 		}
 		for (Site site : getSiteList()){
-			if (site.getId() == id){
+			if (site.getId().equals(id)){
 				return site;
 			}
 		}
@@ -73,13 +77,13 @@ public class CmsUtils {
 	 * 获得主导航列表
 	 * @param siteId 站点编号
 	 */
-	public static List<Category> getMainNavList(long siteId){
+	public static List<Category> getMainNavList(String siteId){
 		@SuppressWarnings("unchecked")
 		List<Category> mainNavList = (List<Category>)CacheUtils.get(CMS_CACHE, "mainNavList_"+siteId);
 		if (mainNavList == null){
 			Category category = new Category();
 			category.setSite(new Site(siteId));
-			category.setParent(new Category(1L));
+			category.setParent(new Category("1"));
 			category.setInMenu(Category.SHOW);
 			Page<Category> page = new Page<Category>(1, -1);
 			page = categoryService.find(page, category);
@@ -91,10 +95,10 @@ public class CmsUtils {
 	
 	/**
 	 * 获取栏目
-	 * @param id 栏目编号
+	 * @param categoryId 栏目编号
 	 * @return
 	 */
-	public static Category getCategory(long categoryId){
+	public static Category getCategory(String categoryId){
 		return categoryService.get(categoryId);
 	}
 	
@@ -105,7 +109,7 @@ public class CmsUtils {
 	 * @param number 获取数目
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
 	 */
-	public static List<Category> getCategoryList(long siteId, long parentId, int number, String param){
+	public static List<Category> getCategoryList(String siteId, String parentId, int number, String param){
 		Page<Category> page = new Page<Category>(1, number, -1);
 		Category category = new Category();
 		category.setSite(new Site(siteId));
@@ -120,7 +124,7 @@ public class CmsUtils {
 
 	/**
 	 * 获取栏目
-	 * @param ids 栏目编号
+	 * @param categoryIds 栏目编号
 	 * @return
 	 */
 	public static List<Category> getCategoryListByIds(String categoryIds){
@@ -129,10 +133,10 @@ public class CmsUtils {
 	
 	/**
 	 * 获取文章
-	 * @param id 文章编号
+	 * @param articleId 文章编号
 	 * @return
 	 */
-	public static Article getArticle(long articleId){
+	public static Article getArticle(String articleId){
 		return articleService.get(articleId);
 	}
 	
@@ -147,7 +151,7 @@ public class CmsUtils {
 	 *          orderBy 排序字符串
 	 * @return
 	 */
-	public static List<Article> getArticleList(long siteId, long categoryId, int number, String param){
+	public static List<Article> getArticleList(String siteId, String categoryId, int number, String param){
 		Page<Article> page = new Page<Article>(1, number, -1);
 		Article article = new Article(new Category(categoryId, new Site(siteId)));
 		if (StringUtils.isNotBlank(param)){
@@ -170,10 +174,10 @@ public class CmsUtils {
 	
 	/**
 	 * 获取链接
-	 * @param id 文章编号
+	 * @param linkId 文章编号
 	 * @return
 	 */
-	public static Link getLink(long linkId){
+	public static Link getLink(String linkId){
 		return linkService.get(linkId);
 	}
 	
@@ -185,7 +189,7 @@ public class CmsUtils {
 	 * @param param  预留参数，例： key1:'value1', key2:'value2' ...
 	 * @return
 	 */
-	public static List<Link> getLinkList(long siteId, long categoryId, int number, String param){
+	public static List<Link> getLinkList(String siteId, String categoryId, int number, String param){
 		Page<Link> page = new Page<Link>(1, number, -1);
 		Link link = new Link(new Category(categoryId, new Site(siteId)));
 		if (StringUtils.isNotBlank(param)){
@@ -210,4 +214,66 @@ public class CmsUtils {
 	public static void removeCache(String key) {
 		CacheUtils.remove(CMS_CACHE, key);
 	}
+
+    /**
+     * 获得文章动态URL地址
+   	 * @param article
+   	 * @return url
+   	 */
+    public static String getUrlDynamic(Article article) {
+        if(StringUtils.isNotBlank(article.getLink())){
+            return article.getLink();
+        }
+        StringBuilder str = new StringBuilder();
+        str.append(context.getContextPath()).append(Global.getFrontPath());
+        str.append("/view-").append(article.getCategory().getId()).append("-").append(article.getId()).append(Global.getUrlSuffix());
+        return str.toString();
+    }
+
+    /**
+     * 获得栏目动态URL地址
+   	 * @param category
+   	 * @return url
+   	 */
+    public static String getUrlDynamic(Category category) {
+        if(StringUtils.isNotBlank(category.getHref())){
+            if(!category.getHref().contains("://")){
+                return context.getContextPath()+Global.getFrontPath()+category.getHref();
+            }else{
+                return category.getHref();
+            }
+        }
+        StringBuilder str = new StringBuilder();
+        str.append(context.getContextPath()).append(Global.getFrontPath());
+        str.append("/list-").append(category.getId()).append(Global.getUrlSuffix());
+        return str.toString();
+    }
+
+    /**
+     * 从图片地址中去除ContextPath地址
+   	 * @param src
+   	 * @return src
+   	 */
+    public static String formatImageSrcToDb(String src) {
+        if(StringUtils.isBlank(src)) return src;
+        if(src.startsWith(context.getContextPath() + "/userfiles")){
+            return src.substring(context.getContextPath().length());
+        }else{
+            return src;
+        }
+    }
+
+    /**
+     * 从图片地址中加入ContextPath地址
+   	 * @param src
+   	 * @return src
+   	 */
+    public static String formatImageSrcToWeb(String src) {
+        if(StringUtils.isBlank(src)) return src;
+        if(src.startsWith(context.getContextPath() + "/userfiles")){
+            return src;
+        }else{
+            return context.getContextPath()+src;
+        }
+    }
 }

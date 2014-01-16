@@ -90,7 +90,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			for (Menu menu : list){
 				if (StringUtils.isNotBlank(menu.getPermission())){
 					// 添加基于Permission的权限信息
-					info.addStringPermission(menu.getPermission());
+					for (String permission : StringUtils.split(menu.getPermission(),",")){
+						info.addStringPermission(permission);
+					}
 				}
 			}
 			// 更新登录IP和时间
@@ -148,7 +150,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 		private static final long serialVersionUID = 1L;
 		
-		private Long id;
+		private String id;
 		private String loginName;
 		private String name;
 		private Map<String, Object> cacheMap;
@@ -159,7 +161,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			this.name = user.getName();
 		}
 
-		public Long getId() {
+		public String getId() {
 			return id;
 		}
 
