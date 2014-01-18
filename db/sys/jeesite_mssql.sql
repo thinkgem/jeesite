@@ -21,6 +21,7 @@ DROP TABLE sys_role;
 CREATE TABLE sys_area
 (
 	id varchar(64) NOT NULL,
+	parent_id varchar(64) NOT NULL,
 	parent_ids varchar(2000) NOT NULL,
 	code varchar(100),
 	name varchar(100) NOT NULL,
@@ -31,7 +32,6 @@ CREATE TABLE sys_area
 	update_date datetime,
 	remarks varchar(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
-	parent_id varchar(64) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -73,6 +73,7 @@ CREATE TABLE sys_log
 CREATE TABLE sys_mdict
 (
 	id varchar(64) NOT NULL,
+	parent_id varchar(64) NOT NULL,
 	parent_ids varchar(2000) NOT NULL,
 	name varchar(100) NOT NULL,
 	description varchar(100),
@@ -83,7 +84,6 @@ CREATE TABLE sys_mdict
 	update_date datetime,
 	remarks varchar(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
-	parent_id varchar(64) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -205,31 +205,31 @@ CREATE TABLE sys_user_role
 
 /* Create Indexes */
 
-CREATE INDEX sys_area_parent_id ON sys_area ();
-CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids, parent_ids);
-CREATE INDEX sys_area_del_flag ON sys_area ();
+CREATE INDEX sys_area_parent_id ON sys_area (parent_id);
+CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids);
+CREATE INDEX sys_area_del_flag ON sys_area (del_flag);
 CREATE INDEX sys_dict_value ON sys_dict (value);
 CREATE INDEX sys_dict_label ON sys_dict (label);
-CREATE INDEX sys_dict_del_flag ON sys_dict ();
+CREATE INDEX sys_dict_del_flag ON sys_dict (del_flag);
 CREATE INDEX sys_log_create_by ON sys_log (create_by);
 CREATE INDEX sys_log_request_uri ON sys_log (request_uri);
 CREATE INDEX sys_log_type ON sys_log (type);
 CREATE INDEX sys_log_create_date ON sys_log (create_date);
-CREATE INDEX sys_mdict_parent_id ON sys_mdict ();
-CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids, parent_ids);
-CREATE INDEX sys_mdict_del_flag ON sys_mdict ();
-CREATE INDEX sys_menu_parent_id ON sys_menu ();
-CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids, parent_ids);
-CREATE INDEX sys_menu_del_flag ON sys_menu ();
-CREATE INDEX sys_office_parent_id ON sys_office ();
-CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids, parent_ids);
-CREATE INDEX sys_office_del_flag ON sys_office ();
-CREATE INDEX sys_role_del_flag ON sys_role ();
+CREATE INDEX sys_mdict_parent_id ON sys_mdict (parent_id);
+CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids);
+CREATE INDEX sys_mdict_del_flag ON sys_mdict (del_flag);
+CREATE INDEX sys_menu_parent_id ON sys_menu (parent_id);
+CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids);
+CREATE INDEX sys_menu_del_flag ON sys_menu (del_flag);
+CREATE INDEX sys_office_parent_id ON sys_office (parent_id);
+CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids);
+CREATE INDEX sys_office_del_flag ON sys_office (del_flag);
+CREATE INDEX sys_role_del_flag ON sys_role (del_flag);
 CREATE INDEX sys_user_office_id ON sys_user (office_id);
 CREATE INDEX sys_user_login_name ON sys_user (login_name);
 CREATE INDEX sys_user_company_id ON sys_user (company_id);
-CREATE INDEX sys_user_update_date ON sys_user ();
-CREATE INDEX sys_user_del_flag ON sys_user ();
+CREATE INDEX sys_user_update_date ON sys_user (update_date);
+CREATE INDEX sys_user_del_flag ON sys_user (del_flag);
 
 
 

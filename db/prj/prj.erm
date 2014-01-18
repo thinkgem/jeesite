@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>D:\GitHub\jeesite_plus\db\prj\jeesite_mysql.sql</ddl_output>
+			<ddl_output>D:\GitHub\jeesite\db\prj\jeesite_mysql.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -110,7 +110,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-12-04 16:25:32</creation_date>
-			<updated_date>2014-01-09 09:48:08</updated_date>
+			<updated_date>2014-01-18 20:13:58</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -434,6 +434,19 @@
 				<column_group>0</column_group>
 			</columns>
 			<indexes>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>prj_project_id</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>6</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
 			</indexes>
 			<complex_unique_key_list>
 			</complex_unique_key_list>

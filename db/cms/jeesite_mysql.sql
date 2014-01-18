@@ -173,6 +173,8 @@ CREATE INDEX cms_article_del_flag ON cms_article (del_flag ASC);
 CREATE INDEX cms_article_weight ON cms_article (weight ASC);
 CREATE INDEX cms_article_update_date ON cms_article (update_date ASC);
 CREATE INDEX cms_article_category_id ON cms_article (category_id ASC);
+CREATE INDEX cms_article_id ON cms_article (id ASC);
+CREATE INDEX cms_article_data_id ON cms_article_data (id ASC);
 CREATE INDEX cms_category_parent_id ON cms_category (parent_id ASC);
 CREATE INDEX cms_category_parent_ids ON cms_category (parent_ids ASC);
 CREATE INDEX cms_category_module ON cms_category (module ASC);
@@ -181,17 +183,22 @@ CREATE INDEX cms_category_sort ON cms_category (sort ASC);
 CREATE INDEX cms_category_del_flag ON cms_category (del_flag ASC);
 CREATE INDEX cms_category_office_id ON cms_category (office_id ASC);
 CREATE INDEX cms_category_site_id ON cms_category (site_id ASC);
+CREATE INDEX cms_category_id ON cms_category (id ASC);
 CREATE INDEX cms_comment_category_id ON cms_comment (category_id ASC);
 CREATE INDEX cms_comment_content_id ON cms_comment (content_id ASC);
 CREATE INDEX cms_comment_status ON cms_comment (del_flag ASC);
+CREATE INDEX cms_comment_id ON cms_comment (id ASC);
 CREATE INDEX cms_guestbook_del_flag ON cms_guestbook (del_flag ASC);
+CREATE INDEX cms_site_id ON cms_guestbook (id ASC);
 CREATE INDEX cms_link_category_id ON cms_link (category_id ASC);
 CREATE INDEX cms_link_title ON cms_link (title ASC);
 CREATE INDEX cms_link_del_flag ON cms_link (del_flag ASC);
 CREATE INDEX cms_link_weight ON cms_link (weight ASC);
 CREATE INDEX cms_link_create_by ON cms_link (create_by ASC);
 CREATE INDEX cms_link_update_date ON cms_link (update_date ASC);
+CREATE INDEX cms_link_id ON cms_link (id ASC);
 CREATE INDEX cms_site_del_flag ON cms_site (del_flag ASC);
+CREATE INDEX cms_site_id ON cms_site (id ASC);
 
 
 

@@ -21,6 +21,7 @@ DROP TABLE sys_role;
 CREATE TABLE sys_area
 (
 	id varchar2(64) NOT NULL,
+	parent_id varchar2(64) NOT NULL,
 	parent_ids varchar2(2000) NOT NULL,
 	code varchar2(100),
 	name varchar2(100) NOT NULL,
@@ -31,7 +32,6 @@ CREATE TABLE sys_area
 	update_date timestamp,
 	remarks varchar2(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
-	parent_id varchar2(64) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -73,6 +73,7 @@ CREATE TABLE sys_log
 CREATE TABLE sys_mdict
 (
 	id varchar2(64) NOT NULL,
+	parent_id varchar2(64) NOT NULL,
 	parent_ids varchar2(2000) NOT NULL,
 	name varchar2(100) NOT NULL,
 	description varchar2(100),
@@ -83,7 +84,6 @@ CREATE TABLE sys_mdict
 	update_date timestamp,
 	remarks varchar2(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
-	parent_id varchar2(64) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -205,31 +205,31 @@ CREATE TABLE sys_user_role
 
 /* Create Indexes */
 
-CREATE INDEX sys_area_parent_id ON sys_area ();
-CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids, parent_ids);
-CREATE INDEX sys_area_del_flag ON sys_area ();
+CREATE INDEX sys_area_parent_id ON sys_area (parent_id);
+CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids);
+CREATE INDEX sys_area_del_flag ON sys_area (del_flag);
 CREATE INDEX sys_dict_value ON sys_dict (value);
 CREATE INDEX sys_dict_label ON sys_dict (label);
-CREATE INDEX sys_dict_del_flag ON sys_dict ();
+CREATE INDEX sys_dict_del_flag ON sys_dict (del_flag);
 CREATE INDEX sys_log_create_by ON sys_log (create_by);
 CREATE INDEX sys_log_request_uri ON sys_log (request_uri);
 CREATE INDEX sys_log_type ON sys_log (type);
 CREATE INDEX sys_log_create_date ON sys_log (create_date);
-CREATE INDEX sys_mdict_parent_id ON sys_mdict ();
-CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids, parent_ids);
-CREATE INDEX sys_mdict_del_flag ON sys_mdict ();
-CREATE INDEX sys_menu_parent_id ON sys_menu ();
-CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids, parent_ids);
-CREATE INDEX sys_menu_del_flag ON sys_menu ();
-CREATE INDEX sys_office_parent_id ON sys_office ();
-CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids, parent_ids);
-CREATE INDEX sys_office_del_flag ON sys_office ();
-CREATE INDEX sys_role_del_flag ON sys_role ();
+CREATE INDEX sys_mdict_parent_id ON sys_mdict (parent_id);
+CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids);
+CREATE INDEX sys_mdict_del_flag ON sys_mdict (del_flag);
+CREATE INDEX sys_menu_parent_id ON sys_menu (parent_id);
+CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids);
+CREATE INDEX sys_menu_del_flag ON sys_menu (del_flag);
+CREATE INDEX sys_office_parent_id ON sys_office (parent_id);
+CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids);
+CREATE INDEX sys_office_del_flag ON sys_office (del_flag);
+CREATE INDEX sys_role_del_flag ON sys_role (del_flag);
 CREATE INDEX sys_user_office_id ON sys_user (office_id);
 CREATE INDEX sys_user_login_name ON sys_user (login_name);
 CREATE INDEX sys_user_company_id ON sys_user (company_id);
-CREATE INDEX sys_user_update_date ON sys_user ();
-CREATE INDEX sys_user_del_flag ON sys_user ();
+CREATE INDEX sys_user_update_date ON sys_user (update_date);
+CREATE INDEX sys_user_del_flag ON sys_user (del_flag);
 
 
 
@@ -237,6 +237,7 @@ CREATE INDEX sys_user_del_flag ON sys_user ();
 
 COMMENT ON TABLE sys_area IS '区域表';
 COMMENT ON COLUMN sys_area.id IS '编号';
+COMMENT ON COLUMN sys_area.parent_id IS '父级编号';
 COMMENT ON COLUMN sys_area.parent_ids IS '所有父级编号';
 COMMENT ON COLUMN sys_area.code IS '区域编码';
 COMMENT ON COLUMN sys_area.name IS '区域名称';
@@ -247,7 +248,6 @@ COMMENT ON COLUMN sys_area.update_by IS '更新者';
 COMMENT ON COLUMN sys_area.update_date IS '更新时间';
 COMMENT ON COLUMN sys_area.remarks IS '备注信息';
 COMMENT ON COLUMN sys_area.del_flag IS '删除标记';
-COMMENT ON COLUMN sys_area.parent_id IS '父级编号';
 COMMENT ON TABLE sys_dict IS '字典表';
 COMMENT ON COLUMN sys_dict.id IS '编号';
 COMMENT ON COLUMN sys_dict.label IS '标签名';
@@ -274,6 +274,7 @@ COMMENT ON COLUMN sys_log.params IS '操作提交的数据';
 COMMENT ON COLUMN sys_log.exception IS '异常信息';
 COMMENT ON TABLE sys_mdict IS '多级字典表';
 COMMENT ON COLUMN sys_mdict.id IS '编号';
+COMMENT ON COLUMN sys_mdict.parent_id IS '父级编号';
 COMMENT ON COLUMN sys_mdict.parent_ids IS '所有父级编号';
 COMMENT ON COLUMN sys_mdict.name IS '角色名称';
 COMMENT ON COLUMN sys_mdict.description IS '描述';
@@ -284,7 +285,6 @@ COMMENT ON COLUMN sys_mdict.update_by IS '更新者';
 COMMENT ON COLUMN sys_mdict.update_date IS '更新时间';
 COMMENT ON COLUMN sys_mdict.remarks IS '备注信息';
 COMMENT ON COLUMN sys_mdict.del_flag IS '删除标记';
-COMMENT ON COLUMN sys_mdict.parent_id IS '父级编号';
 COMMENT ON TABLE sys_menu IS '菜单表';
 COMMENT ON COLUMN sys_menu.id IS '编号';
 COMMENT ON COLUMN sys_menu.parent_id IS '父级编号';

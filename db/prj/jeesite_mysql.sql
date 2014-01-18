@@ -1,5 +1,11 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
+/* Drop Indexes */
+
+DROP INDEX prj_project_id ON prj_project;
+
+
+
 /* Drop Tables */
 
 DROP TABLE prj_project;
@@ -23,6 +29,12 @@ CREATE TABLE prj_project
 	del_flag char(1) NOT NULL COMMENT '删除标志',
 	PRIMARY KEY (id)
 ) COMMENT = '项目';
+
+
+
+/* Create Indexes */
+
+CREATE INDEX prj_project_id ON prj_project (id ASC);
 
 
 

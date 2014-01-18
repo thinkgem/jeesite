@@ -1,4 +1,10 @@
 
+/* Drop Indexes */
+
+DROP INDEX prj_project_id;
+
+
+
 /* Drop Tables */
 
 DROP TABLE prj_project;
@@ -22,6 +28,12 @@ CREATE TABLE prj_project
 	del_flag char(1) NOT NULL,
 	PRIMARY KEY (id)
 );
+
+
+
+/* Create Indexes */
+
+CREATE INDEX prj_project_id ON prj_project (id);
 
 
 

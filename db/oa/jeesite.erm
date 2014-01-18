@@ -52,7 +52,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<category_name_to_export>All</category_name_to_export>
-			<ddl_output>D:\GitHub\jeesite_plus\db\oa\jeesite_mysql.sql</ddl_output>
+			<ddl_output>D:\GitHub\jeesite\db\oa\jeesite_mysql.sql</ddl_output>
 			<excel_output></excel_output>
 			<excel_template></excel_template>
 			<image_output></image_output>
@@ -121,7 +121,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2013-04-23 21:13:37</creation_date>
-			<updated_date>2014-01-09 09:49:42</updated_date>
+			<updated_date>2014-01-18 20:13:21</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value>JeeSite</value>
@@ -750,6 +750,19 @@
 					<columns>
 						<column>
 							<id>5</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>oa_leave_id</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>6</id>
 							<desc>false</desc>
 						</column>
 					</columns>

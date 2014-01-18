@@ -36,6 +36,7 @@ CREATE TABLE oa_leave
 CREATE INDEX oa_leave_create_by ON oa_leave (create_by);
 CREATE INDEX oa_leave_process_instance_id ON oa_leave (process_instance_id);
 CREATE INDEX oa_leave_del_flag ON oa_leave (del_flag);
+CREATE INDEX oa_leave_id ON oa_leave (id);
 
 
 
