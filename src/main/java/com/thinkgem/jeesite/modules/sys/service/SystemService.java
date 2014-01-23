@@ -86,7 +86,7 @@ public class SystemService extends BaseService  {
 		}
 		// 如果不是超级管理员，则不显示超级管理员用户
 		if (!currentUser.isAdmin()){
-			dc.add(Restrictions.ne("id", 1L)); 
+			dc.add(Restrictions.ne("id", "1")); 
 		}
 		dc.add(dataScopeFilter(currentUser, "office", ""));
 		//System.out.println(dataScopeFilterString(currentUser, "office", ""));

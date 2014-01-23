@@ -327,7 +327,7 @@ public class Category extends IdEntity<Category> {
 	
 	@Transient
 	public static boolean isRoot(String id){
-		return id != null && id.equals(1L);
+		return id != null && id.equals("1");
 	}
 
     @Transient
