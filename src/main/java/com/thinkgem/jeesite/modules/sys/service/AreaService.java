@@ -28,8 +28,8 @@ public class AreaService extends BaseService {
 	@Autowired
 	private AreaDao areaDao;
 	
-	public Area get(Long id) {
-		return areaDao.findOne(id);
+	public Area get(String id) {
+		return areaDao.get(id);
 	}
 	
 	public List<Area> findAll(){
@@ -53,7 +53,7 @@ public class AreaService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		areaDao.deleteById(id, "%,"+id+",%");
 		UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
 	}

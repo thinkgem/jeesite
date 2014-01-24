@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.CookieUtils;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
 import com.thinkgem.jeesite.modules.cms.service.SiteService;
@@ -38,8 +39,8 @@ public class SiteController extends BaseController {
 	private SiteService siteService;
 	
 	@ModelAttribute
-	public Site get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Site get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return siteService.get(id);
 		}else{
 			return new Site();
@@ -78,7 +79,7 @@ public class SiteController extends BaseController {
 	
 	@RequiresPermissions("cms:site:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/cms/site/?repage";
@@ -94,16 +95,16 @@ public class SiteController extends BaseController {
 	
 	/**
 	 * 选择站点
-	 * @param siteId
+	 * @param id
 	 * @return
 	 */
 	@RequiresPermissions("cms:site:select")
 	@RequestMapping(value = "select")
-	public String select(Long id, boolean flag, HttpServletResponse response){
+	public String select(String id, boolean flag, HttpServletResponse response){
 		if (id!=null){
 			UserUtils.putCache("siteId", id);
 			// 保存到Cookie中，下次登录后自动切换到该站点
-			CookieUtils.setCookie(response, "siteId", id.toString());
+			CookieUtils.setCookie(response, "siteId", id);
 		}
 		if (flag){
 			return "redirect:"+Global.getAdminPath();

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.modules.sys.service.AreaService;
@@ -42,8 +43,8 @@ public class AreaController extends BaseController {
 	private AreaService areaService;
 	
 	@ModelAttribute("area")
-	public Area get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Area get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return areaService.get(id);
 		}else{
 			return new Area();
@@ -55,7 +56,7 @@ public class AreaController extends BaseController {
 	public String list(Area area, Model model) {
 //		User user = UserUtils.getUser();
 //		if(user.isAdmin()){
-			area.setId(1L);
+			area.setId("1");
 //		}else{
 //			area.setId(user.getArea().getId());
 //		}
@@ -95,7 +96,7 @@ public class AreaController extends BaseController {
 	
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/area";
@@ -112,7 +113,7 @@ public class AreaController extends BaseController {
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) Long extId, HttpServletResponse response) {
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
 //		User user = UserUtils.getUser();

@@ -52,8 +52,8 @@ public class UserController extends BaseController {
 	private SystemService systemService;
 	
 	@ModelAttribute
-	public User get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public User get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return systemService.getUser(id);
 		}else{
 			return new User();
@@ -90,8 +90,8 @@ public class UserController extends BaseController {
 			return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
 		}
 		// 修正引用赋值问题，不知道为何，Company和Office引用的一个实例地址，修改了一个，另外一个跟着修改。
-		user.setCompany(new Office(StringUtils.toLong(request.getParameter("company.id"))));
-		user.setOffice(new Office(StringUtils.toLong(request.getParameter("office.id"))));
+		user.setCompany(new Office(request.getParameter("company.id")));
+		user.setOffice(new Office(request.getParameter("office.id")));
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(newPassword)) {
 			user.setPassword(SystemService.entryptPassword(newPassword));
@@ -105,7 +105,7 @@ public class UserController extends BaseController {
 		}
 		// 角色数据有效性验证，过滤不在授权内的角色
 		List<Role> roleList = Lists.newArrayList();
-		List<Long> roleIdList = user.getRoleIdList();
+		List<String> roleIdList = user.getRoleIdList();
 		for (Role r : systemService.findAllRole()){
 			if (roleIdList.contains(r.getId())){
 				roleList.add(r);
@@ -124,7 +124,7 @@ public class UserController extends BaseController {
 	
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";

@@ -23,16 +23,8 @@
             <ul id="main_nav" class="nav nav-pills">
              	<li class="${isIndex?'active':''}"><a href="${ctx}/index-1${fns:getUrlSuffix()}"><span>${site.id eq 1?'首　 页':'返回主站'}</span></a></li>
 				<c:forEach items="${fnc:getMainNavList(site.id)}" var="category" varStatus="status"><c:if test="${status.index lt 6}">
-					<c:choose>
-		    			<c:when test="${not empty category.href}">
-			    			<c:choose>
-				    			<c:when test="${fn:indexOf(category.href, '://') eq -1}"><c:set var="url" value="${ctx}${category.href}"/></c:when>
-				    			<c:otherwise><c:set var="url" value="${category.href}"/></c:otherwise>
-				    		</c:choose>
-		    			</c:when>
-		    			<c:otherwise><c:set var="url" value="${ctx}/list-${category.id}${fns:getUrlSuffix()}"/></c:otherwise>
-		    		</c:choose><c:set var="menuCategoryId" value=",${category.id},"/>
-		    		<li class="${requestScope.category.id eq category.id||fn:indexOf(requestScope.category.parentIds,menuCategoryId) ge 1?'active':''}"><a href="${url}" target="${category.target}"><span>${category.name}</span></a></li>
+                    <c:set var="menuCategoryId" value=",${category.id},"/>
+		    		<li class="${requestScope.category.id eq category.id||fn:indexOf(requestScope.category.parentIds,menuCategoryId) ge 1?'active':''}"><a href="${category.url}" target="${category.target}"><span>${category.name}</span></a></li>
 		    	</c:if></c:forEach>
 			    <li id="siteSwitch" class="dropdown">
 			       	<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="站点"><i class="icon-retweet"></i></a>

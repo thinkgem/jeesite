@@ -10,9 +10,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -37,7 +34,7 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 import com.thinkgem.jeesite.common.utils.Collections3;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
@@ -51,10 +48,9 @@ import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 @Table(name = "sys_user")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User extends DataEntity {
+public class User extends IdEntity<User> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Office company;	// 归属公司
 	private Office office;	// 归属部门
 	private String loginName;// 登录名
@@ -74,24 +70,11 @@ public class User extends DataEntity {
 		super();
 	}
 	
-	public User(Long id) {
+	public User(String id) {
 		this();
 		this.id = id;
 	}
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_user")
-//	@SequenceGenerator(name = "seq_sys_user", sequenceName = "seq_sys_user")
-	@ExcelField(title="ID", type=1, align=2, sort=1)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	@NotFound(action = NotFoundAction.IGNORE)
@@ -180,7 +163,7 @@ public class User extends DataEntity {
 		this.phone = phone;
 	}
 
-	@Length(min=0, max=200)
+    @Length(min=0, max=200)
 	@ExcelField(title="手机", align=2, sort=70)
 	public String getMobile() {
 		return mobile;
@@ -249,8 +232,8 @@ public class User extends DataEntity {
 
 	@Transient
 	@JsonIgnore
-	public List<Long> getRoleIdList() {
-		List<Long> roleIdList = Lists.newArrayList();
+	public List<String> getRoleIdList() {
+		List<String> roleIdList = Lists.newArrayList();
 		for (Role role : roleList) {
 			roleIdList.add(role.getId());
 		}
@@ -258,9 +241,9 @@ public class User extends DataEntity {
 	}
 
 	@Transient
-	public void setRoleIdList(List<Long> roleIdList) {
+	public void setRoleIdList(List<String> roleIdList) {
 		roleList = Lists.newArrayList();
-		for (Long roleId : roleIdList) {
+		for (String roleId : roleIdList) {
 			Role role = new Role();
 			role.setId(roleId);
 			roleList.add(role);
@@ -281,8 +264,8 @@ public class User extends DataEntity {
 	}
 	
 	@Transient
-	public static boolean isAdmin(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isAdmin(String id){
+		return id != null && id.equals("1");
 	}
 	
 //	@Override

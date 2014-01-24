@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.LocaleResolver;
@@ -22,6 +23,22 @@ import org.springframework.web.servlet.LocaleResolver;
  * @version 2013-05-22
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
+	
+	public static String lowerFirst(String str){
+		if(StringUtils.isBlank(str)) {
+			return "";
+		} else {
+			return str.substring(0,1).toLowerCase() + str.substring(1);
+		}
+	}
+	
+	public static String upperFirst(String str){
+		if(StringUtils.isBlank(str)) {
+			return "";
+		} else {
+			return str.substring(0,1).toUpperCase() + str.substring(1);
+		}
+	}
 
 	/**
 	 * 替换掉HTML标签方法
@@ -50,7 +67,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		try {
 			StringBuilder sb = new StringBuilder();
 			int currentLength = 0;
-			for (char c : str.toCharArray()) {
+			for (char c : replaceHtml(StringEscapeUtils.unescapeHtml4(str)).toCharArray()) {
 				currentLength += String.valueOf(c).getBytes("GBK").length;
 				if (currentLength <= length - 3) {
 					sb.append(c);
@@ -65,6 +82,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		}
 		return "";
 	}
+
+	/**
+	 * 缩略字符串（替换html）
+	 * @param str 目标字符串
+	 * @param length 截取长度
+	 * @return
+	 */
+	public static String rabbr(String str, int length) {
+        return abbr(replaceHtml(str), length);
+	}
+		
 	
 	/**
 	 * 转换为Double类型
@@ -105,7 +133,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 获得i18n字符串
 	 */
 	public static String getMessage(String code, Object[] args) {
-		LocaleResolver localLocaleResolver = (LocaleResolver) SpringContextHolder.getBean(LocaleResolver.class);
+		LocaleResolver localLocaleResolver = SpringContextHolder.getBean(LocaleResolver.class);
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();  
 		Locale localLocale = localLocaleResolver.resolveLocale(request);
 		return SpringContextHolder.getApplicationContext().getMessage(code, args, localLocale);

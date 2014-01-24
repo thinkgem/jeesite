@@ -48,7 +48,7 @@
 			
 			// 用户-菜单
 			var zNodes=[
-					<c:forEach items="${menuList}" var="menu">{id:${menu.id}, pId:${not empty menu.parent.id?menu.parent.id:0}, name:"${not empty menu.parent.id?menu.name:'权限列表'}"},
+					<c:forEach items="${menuList}" var="menu">{id:'${menu.id}', pId:'${not empty menu.parent.id?menu.parent.id:0}', name:"${not empty menu.parent.id?menu.name:'权限列表'}"},
 		            </c:forEach>];
 			// 初始化树结构
 			var tree = $.fn.zTree.init($("#menuTree"), setting, zNodes);
@@ -63,7 +63,7 @@
 			
 			// 用户-机构
 			var zNodes2=[
-					<c:forEach items="${officeList}" var="office">{id:${office.id}, pId:${not empty office.parent?office.parent.id:0}, name:"${office.name}"},
+					<c:forEach items="${officeList}" var="office">{id:'${office.id}', pId:'${not empty office.parent?office.parent.id:0}', name:"${office.name}"},
 		            </c:forEach>];
 			// 初始化树结构
 			var tree2 = $.fn.zTree.init($("#officeTree"), setting, zNodes2);
@@ -112,21 +112,6 @@
 			<div class="controls">
 				<input id="oldName" name="oldName" type="hidden" value="${role.name}">
 				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">英文名称:</label>
-			<div class="controls">
-				<form:input path="enname" htmlEscape="false" maxlength="50" class="required"/>
-				<span class="help-inline">工作流用户组ID</span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">角色类型:</label>
-			<div class="controls">
-				<form:input path="roleType" htmlEscape="false" maxlength="50" class="required"/>
-				<span class="help-inline" title="activiti有3种预定义的组类型：security-role、assignment、user 如果使用Activiti Explorer，需要security-role才能看到manage页签，需要assignment才能claim任务">
-					工作流组用户组类型（security-role：管理员、assignment：可进行任务分配、user：普通用户）</span>
 			</div>
 		</div>
 		<div class="control-group">

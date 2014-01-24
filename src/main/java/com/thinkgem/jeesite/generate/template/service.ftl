@@ -29,7 +29,7 @@ public class ${ClassName}Service extends BaseService {
 	private ${ClassName}Dao ${className}Dao;
 	
 	public ${ClassName} get(Long id) {
-		return ${className}Dao.findOne(id);
+		return ${className}Dao.get(id);
 	}
 	
 	public Page<${ClassName}> find(Page<${ClassName}> page, ${ClassName} ${className}) {
@@ -37,7 +37,7 @@ public class ${ClassName}Service extends BaseService {
 		if (StringUtils.isNotEmpty(${className}.getName())){
 			dc.add(Restrictions.like("name", "%"+${className}.getName()+"%"));
 		}
-		dc.add(Restrictions.eq(${ClassName}.DEL_FLAG, ${ClassName}.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(${ClassName}.FIELD_DEL_FLAG, ${ClassName}.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.desc("id"));
 		return ${className}Dao.find(page, dc);
 	}

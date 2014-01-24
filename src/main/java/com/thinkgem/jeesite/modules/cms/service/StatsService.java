@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
+import com.thinkgem.jeesite.common.persistence.Parameter;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -36,7 +36,7 @@ public class StatsService extends BaseService {
 	public List<Map<String, Object>> article(Map<String, Object> paramMap) {
 		
 		StringBuilder ql = new StringBuilder();
-		List<Object> ps = Lists.newArrayList();
+		Parameter pm = new Parameter();
 		
 		ql.append("select new map(max(c.id) as categoryId, max(c.name) as categoryName, max(cp.id) as categoryParentId, max(cp.name) as categoryParentName,");
 		ql.append("   count(*) as cnt, sum(a.hits) as hits, max(a.updateDate) as updateDate, max(o.id) as officeId, max(o.name) as officeName) ");
@@ -56,28 +56,28 @@ public class StatsService extends BaseService {
 		
 		Long categoryId = StringUtils.toLong(paramMap.get("categoryId"));
 		if (categoryId > 0){
-			ql.append(" and (c.id = ? or c.parentIds like ?)");
-			ps.add(categoryId);
-			ps.add("%,"+categoryId+",%");
+			ql.append(" and (c.id = :id or c.parentIds like :parentIds)");
+			pm.put("id", categoryId);
+			pm.put("parentIds", "%,"+categoryId+",%");
 		}
 		
 		Long officeId = StringUtils.toLong(paramMap.get("officeId"));
 		if (officeId > 0){
-			ql.append(" and (o.id = ? or o.parentIds like ?)");
-			ps.add(officeId);
-			ps.add("%,"+officeId+",%");
+			ql.append(" and (o.id = :officeId or o.parentIds like :officeParentIds)");
+			pm.put("officeId", officeId);
+			pm.put("officeParentIds", "%,"+officeId+",%");
 		}
 		
-		ql.append(" and a.updateDate between ? and ?");
-		ps.add(beginDate);
-		ps.add(DateUtils.addDays(endDate, 1));
+		ql.append(" and a.updateDate between :beginDate and :endDate");
+		pm.put("beginDate", beginDate);
+		pm.put("endDate", DateUtils.addDays(endDate, 1));
 
-		ql.append(" and c.delFlag = ?");
-		ps.add(Article.DEL_FLAG_NORMAL);
+		ql.append(" and c.delFlag = :delFlag");
+		pm.put("delFlag", Article.DEL_FLAG_NORMAL);
 		
 		ql.append(" group by cp.sort, cp.id, c.sort, c.id");
 		ql.append(" order by cp.sort, cp.id, c.sort, c.id");
-		List<Map<String, Object>> list = articleDao.find(ql.toString(), ps.toArray());
+		List<Map<String, Object>> list = articleDao.find(ql.toString(), pm);
 		return list;
 	}
 

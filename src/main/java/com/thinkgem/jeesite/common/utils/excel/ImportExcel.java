@@ -304,7 +304,12 @@ public class ImportExcel {
 					//log.debug("Import value type: ["+i+","+column+"] " + valType);
 					try {
 						if (valType == String.class){
-							val = String.valueOf(val.toString());
+							String s = String.valueOf(val.toString());
+							if(StringUtils.endsWith(s, ".0")){
+								val = StringUtils.substringBefore(s, ".0");
+							}else{
+								val = String.valueOf(val.toString());
+							}
 						}else if (valType == Integer.class){
 							val = Double.valueOf(val.toString()).intValue();
 						}else if (valType == Long.class){

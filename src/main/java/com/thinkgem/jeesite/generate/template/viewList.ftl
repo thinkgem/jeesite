@@ -24,7 +24,7 @@
 	<form:form id="searchForm" modelAttribute="${className}" action="${r"${ctx}"}/${urlPrefix}/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${r"${page.pageNo}"}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${r"${page.pageSize}"}"/>
-		<label>名称 ：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/>
+		<label>名称 ：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-small"/>
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form:form>
 	<tags:message content="${r"${message}"}"/>

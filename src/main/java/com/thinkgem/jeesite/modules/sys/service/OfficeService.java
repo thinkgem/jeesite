@@ -28,8 +28,8 @@ public class OfficeService extends BaseService {
 	@Autowired
 	private OfficeDao officeDao;
 	
-	public Office get(Long id) {
-		return officeDao.findOne(id);
+	public Office get(String id) {
+		return officeDao.get(id);
 	}
 	
 	public List<Office> findAll(){
@@ -53,7 +53,7 @@ public class OfficeService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		officeDao.deleteById(id, "%,"+id+",%");
 		UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);
 	}

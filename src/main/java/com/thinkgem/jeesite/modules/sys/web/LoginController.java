@@ -5,6 +5,13 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +85,7 @@ public class LoginController extends BaseController{
 		// 登录成功后，验证码计算器清零
 		isValidateCodeLogin(user.getLoginName(), false, true);
 		// 登录成功后，获取上次登录的当前站点ID
-		UserUtils.putCache("siteId", StringUtils.toLong(CookieUtils.getCookie(request, "siteId")));
+		UserUtils.putCache("siteId", CookieUtils.getCookie(request, "siteId"));
 		return "modules/sys/sysIndex";
 	}
 	
@@ -121,5 +128,31 @@ public class LoginController extends BaseController{
 			loginFailMap.remove(useruame);
 		}
 		return loginFailNum >= 3;
+	}
+	
+
+	@RequestMapping("${adminPath}/download")
+	public String download(@RequestParam String filePath,HttpServletResponse response) {
+		File file = new File(filePath);
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream(filePath);
+			response.reset();
+			response.setContentType("application/octet-stream;charset=UTF-8");
+			response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+			OutputStream outputStream = new BufferedOutputStream(
+					response.getOutputStream());
+			byte data[] = new byte[1024];
+			while (inputStream.read(data, 0, 1024) >= 0) {
+				outputStream.write(data);
+			}
+			outputStream.flush();
+			outputStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

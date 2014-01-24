@@ -46,8 +46,8 @@ public class LinkController extends BaseController {
 	private CategoryService categoryService;
 	
 	@ModelAttribute
-	public Link get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Link get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return linkService.get(id);
 		}else{
 			return new Link();
@@ -70,7 +70,7 @@ public class LinkController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Link link, Model model) {
 		// 如果当前传参有子节点，则选择取消传参选择
-		if (link.getCategory()!=null && link.getCategory().getId()!=null){
+		if (link.getCategory()!=null && StringUtils.isNotBlank(link.getCategory().getId())){
 			List<Category> list = categoryService.findByParentId(link.getCategory().getId(), Site.getCurrentSiteId());
 			if (list.size() > 0){
 				link.setCategory(null);
@@ -93,7 +93,7 @@ public class LinkController extends BaseController {
 	
 	@RequiresPermissions("cms:link:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		linkService.delete(id, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"发布":"删除")+"链接成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/link/?repage&category.id="+categoryId;

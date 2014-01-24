@@ -35,8 +35,8 @@ public class LogService extends BaseService {
 	@Autowired
 	private LogDao logDao;
 	
-	public Log get(Long id) {
-		return logDao.findOne(id);
+	public Log get(String id) {
+		return logDao.get(id);
 	}
 	
 	public Page<Log> find(Page<Log> page, Map<String, Object> paramMap) {
