@@ -103,6 +103,11 @@ public class SystemService extends BaseService  {
 		return userDao.find(page, dc);
 	}
 
+	//取用户的数据范围
+	public String getDataScope(User user){
+		return dataScopeFilterString(user, "office", "");
+	}
+	
 	public User getUserByLoginName(String loginName) {
 		return userDao.findByLoginName(loginName);
 	}
