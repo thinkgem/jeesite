@@ -300,6 +300,14 @@ public class SystemService extends BaseService  {
 			List<User> userList = roleDao.get(role.getId()).getUserList();
 			if(!Collections3.isEmpty(userList)) {
 			 	for(User user:userList) {
+			 		String userId = ObjectUtils.toString(user.getId());
+					org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+					// 是新增用户
+					if (activitiUser == null) {
+						activitiUser = identityService.newUser(userId);
+						identityService.saveUser(activitiUser);
+					} 
+					// 同步用户角色关联数据
 			 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
 			 		merge(user, menuList);
 			 	}
