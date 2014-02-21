@@ -83,10 +83,12 @@ public class UserController extends BaseController {
 		User currentUser = UserUtils.getUser();
 		if (!currentUser.isAdmin()){
 			String dataScope = systemService.getDataScope(currentUser);
-			System.out.println(dataScope);
-			String AuthorizedOfficeId = dataScope.substring(dataScope.indexOf("office.id=")+10, dataScope.indexOf(" or"));
-			if(!AuthorizedOfficeId.equalsIgnoreCase(officeId)){
-				return "error/403";
+			//System.out.println(dataScope);
+			if(dataScope.indexOf("office.id=")!=-1){
+				String AuthorizedOfficeId = dataScope.substring(dataScope.indexOf("office.id=")+10, dataScope.indexOf(" or"));
+				if(!AuthorizedOfficeId.equalsIgnoreCase(officeId)){
+					return "error/403";
+				}
 			}
 		}
 		
