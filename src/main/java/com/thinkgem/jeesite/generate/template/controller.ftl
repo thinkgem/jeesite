@@ -36,7 +36,7 @@ public class ${ClassName}Controller extends BaseController {
 	private ${ClassName}Service ${className}Service;
 	
 	@ModelAttribute
-	public ${ClassName} get(@RequestParam(required=false) Long id) {
+	public ${ClassName} get(@RequestParam(required=false) String id) {
 		if (id != null){
 			return ${className}Service.get(id);
 		}else{
@@ -76,7 +76,7 @@ public class ${ClassName}Controller extends BaseController {
 	
 	@RequiresPermissions("${permissionPrefix}:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		${className}Service.delete(id);
 		addMessage(redirectAttributes, "删除${functionName}成功");
 		return "redirect:"+Global.getAdminPath()+"/${viewPrefix}/?repage";
