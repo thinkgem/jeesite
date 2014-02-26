@@ -41,7 +41,7 @@ public class ${ClassName} extends DataEntity {
 		super();
 	}
 
-	public ${ClassName}(Long id){
+	public ${ClassName}(String id){
 		this();
 		this.id = id;
 	}
