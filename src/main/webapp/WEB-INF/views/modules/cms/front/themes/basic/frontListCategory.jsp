@@ -28,7 +28,7 @@
 	   <div class="span10">
 	      <c:set var="index" value="1"/>
 		  <c:forEach items="${categoryList}" var="tpl">
-			<c:if test="${tpl.inList eq 1 && tpl.module ne ''}">
+			<c:if test="${tpl.inList eq '1' && tpl.module ne ''}">
 				<c:set var="index" value="${index+1}"/>
 				${index % 2 eq 0 ? '<div class="row">':''}
 		    	<div class="span5">

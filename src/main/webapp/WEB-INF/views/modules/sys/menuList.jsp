@@ -38,7 +38,7 @@
 							${menu.sort}
 						</shiro:lacksPermission>
 					</td>
-					<td>${menu.isShow eq 1?'显示':'隐藏'}</td>
+					<td>${menu.isShow eq '1'?'显示':'隐藏'}</td>
 					<td>${menu.permission}</td>
 					<shiro:hasPermission name="sys:menu:edit"><td>
 						<a href="${ctx}/sys/menu/form?id=${menu.id}">修改</a>
