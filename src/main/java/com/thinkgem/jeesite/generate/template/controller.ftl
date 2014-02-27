@@ -37,7 +37,7 @@ public class ${ClassName}Controller extends BaseController {
 	
 	@ModelAttribute
 	public ${ClassName} get(@RequestParam(required=false) String id) {
-		if (id != null){
+		if (StringUtils.isNotBlank(id)){
 			return ${className}Service.get(id);
 		}else{
 			return new ${ClassName}();
