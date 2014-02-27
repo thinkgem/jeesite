@@ -77,6 +77,21 @@ public class UserController extends BaseController {
 		if (user.getOffice()==null || user.getOffice().getId()==null){
 			user.setOffice(UserUtils.getUser().getOffice());
 		}
+		
+		//判断显示的用户是否在授权范围内
+		String officeId = user.getOffice().getId();
+		User currentUser = UserUtils.getUser();
+		if (!currentUser.isAdmin()){
+			String dataScope = systemService.getDataScope(currentUser);
+			//System.out.println(dataScope);
+			if(dataScope.indexOf("office.id=")!=-1){
+				String AuthorizedOfficeId = dataScope.substring(dataScope.indexOf("office.id=")+10, dataScope.indexOf(" or"));
+				if(!AuthorizedOfficeId.equalsIgnoreCase(officeId)){
+					return "error/403";
+				}
+			}
+		}
+		
 		model.addAttribute("user", user);
 		model.addAttribute("allRoles", systemService.findAllRole());
 		return "modules/sys/userForm";

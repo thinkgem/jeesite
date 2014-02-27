@@ -53,7 +53,7 @@
 				<td>
 					<a href="${pageContext.request.contextPath}${fns:getFrontPath()}/view-${article.category.id}-${article.id}${fns:getUrlSuffix()}" target="_blank">访问</a>
 					<shiro:hasPermission name="cms:article:edit">
-						<c:if test="${article.category.allowComment eq 1}"><shiro:hasPermission name="cms:comment:view">
+						<c:if test="${article.category.allowComment eq '1'}"><shiro:hasPermission name="cms:comment:view">
 							<a href="${ctx}/cms/comment/?module=article&contentId=${article.id}&delFlag=2" onclick="return viewComment(this.href);">评论</a>
 						</shiro:hasPermission></c:if>
 	    				<a href="${ctx}/cms/article/form?id=${article.id}">修改</a>
