@@ -27,7 +27,7 @@
 		<table id="treeTable" class="table table-striped table-bordered table-condensed">
 			<tr><th>名称</th><th>链接</th><th style="text-align:center;">排序</th><th>可见</th><th>权限标识</th><shiro:hasPermission name="sys:menu:edit"><th>操作</th></shiro:hasPermission></tr>
 			<c:forEach items="${list}" var="menu">
-				<tr id="${menu.id}" pId="${menu.parent.id ne 1?menu.parent.id:'0'}">
+				<tr id="${menu.id}" pId="${menu.parent.id ne '1' ? menu.parent.id : '0'}">
 					<td><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i><a href="${ctx}/sys/menu/form?id=${menu.id}">${menu.name}</a></td>
 					<td>${menu.href}</td>
 					<td style="text-align:center;">
