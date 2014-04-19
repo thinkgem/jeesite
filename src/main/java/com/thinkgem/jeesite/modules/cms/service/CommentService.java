@@ -30,19 +30,19 @@ public class CommentService extends BaseService {
 	@Autowired
 	private CommentDao commentDao;
 	
-	public Comment get(Long id) {
-		return commentDao.findOne(id);
+	public Comment get(String id) {
+		return commentDao.get(id);
 	}
 	
 	public Page<Comment> find(Page<Comment> page, Comment comment) {
 		DetachedCriteria dc = commentDao.createDetachedCriteria();
-		if (comment.getContentId()!=null && comment.getContentId()>0){
+		if (StringUtils.isNotBlank(comment.getContentId())){
 			dc.add(Restrictions.eq("contentId", comment.getContentId()));
 		}
 		if (StringUtils.isNotEmpty(comment.getTitle())){
 			dc.add(Restrictions.like("title", "%"+comment.getTitle()+"%"));
 		}
-		dc.add(Restrictions.eq(Comment.DEL_FLAG, comment.getDelFlag()));
+		dc.add(Restrictions.eq(Comment.FIELD_DEL_FLAG, comment.getDelFlag()));
 		dc.addOrder(Order.desc("id"));
 		return commentDao.find(page, dc);
 	}
@@ -53,7 +53,7 @@ public class CommentService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 		commentDao.updateDelFlag(id, isRe!=null&&isRe?Comment.DEL_FLAG_AUDIT:Comment.DEL_FLAG_DELETE);
 	}
 	

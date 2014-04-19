@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +39,8 @@ public class DictController extends BaseController {
 	private DictService dictService;
 	
 	@ModelAttribute
-	public Dict get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Dict get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return dictService.get(id);
 		}else{
 			return new Dict();
@@ -65,7 +66,7 @@ public class DictController extends BaseController {
 
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "save")//@Valid 
-	public String save(Dict dict, Model model, RedirectAttributes redirectAttributes) {
+	public String save(Dict dict, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage&type="+dict.getType();
@@ -80,7 +81,7 @@ public class DictController extends BaseController {
 	
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage";

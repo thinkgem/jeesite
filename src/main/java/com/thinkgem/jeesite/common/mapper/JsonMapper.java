@@ -3,23 +3,35 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
+/**
+ * Copyright (c) 2005-2012 springside.org.cn
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ */
 package com.thinkgem.jeesite.common.mapper;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
@@ -29,44 +41,58 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
  * @author calvin
  * @version 2013-01-15
  */
-public class JsonMapper {
+public class JsonMapper extends ObjectMapper {
+
+	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
 
-	private ObjectMapper mapper;
+	private static JsonMapper mapper;
 
 	public JsonMapper() {
-		this(null);
+		this(Include.NON_EMPTY);
 	}
 
 	public JsonMapper(Include include) {
-		mapper = new ObjectMapper();
-		//设置输出时包含属性的风格
+		// 设置输出时包含属性的风格
 		if (include != null) {
-			mapper.setSerializationInclusion(include);
+			this.setSerializationInclusion(include);
 		}
-		//设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
-		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		// 允许单引号、允许不带引号的字段名称
+		this.enableSimple();
+		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
+		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        // 空值处理为空串
+		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
+			@Override
+			public void serialize(Object value, JsonGenerator jgen,
+					SerializerProvider provider) throws IOException,
+					JsonProcessingException {
+				jgen.writeString("");
+			}
+        });
 	}
 
 	/**
 	 * 创建只输出非Null且非Empty(如List.isEmpty)的属性到Json字符串的Mapper,建议在外部接口中使用.
 	 */
-	public static JsonMapper nonEmptyMapper() {
-		return new JsonMapper(Include.NON_EMPTY);
+	public static JsonMapper getInstance() {
+		if (mapper == null){
+			mapper = new JsonMapper().enableSimple();
+		}
+		return mapper;
 	}
 
 	/**
 	 * 创建只输出初始值被改变的属性到Json字符串的Mapper, 最节约的存储方式，建议在内部接口中使用。
 	 */
 	public static JsonMapper nonDefaultMapper() {
-		return new JsonMapper(Include.NON_DEFAULT);
+		if (mapper == null){
+			mapper = new JsonMapper(Include.NON_DEFAULT);
+		}
+		return mapper;
 	}
 	
-	public static JsonMapper getInstance() {
-		return new JsonMapper(Include.NON_DEFAULT).enableSimple();
-	}
-
 	/**
 	 * Object可以是POJO，也可以是Collection或数组。
 	 * 如果对象为Null, 返回"null".
@@ -75,7 +101,7 @@ public class JsonMapper {
 	public String toJson(Object object) {
 
 		try {
-			return mapper.writeValueAsString(object);
+			return this.writeValueAsString(object);
 		} catch (IOException e) {
 			logger.warn("write to json string error:" + object, e);
 			return null;
@@ -95,9 +121,8 @@ public class JsonMapper {
 		if (StringUtils.isEmpty(jsonString)) {
 			return null;
 		}
-
 		try {
-			return mapper.readValue(jsonString, clazz);
+			return this.readValue(jsonString, clazz);
 		} catch (IOException e) {
 			logger.warn("parse json string error:" + jsonString, e);
 			return null;
@@ -113,9 +138,8 @@ public class JsonMapper {
 		if (StringUtils.isEmpty(jsonString)) {
 			return null;
 		}
-
 		try {
-			return (T) mapper.readValue(jsonString, javaType);
+			return (T) this.readValue(jsonString, javaType);
 		} catch (IOException e) {
 			logger.warn("parse json string error:" + jsonString, e);
 			return null;
@@ -128,7 +152,7 @@ public class JsonMapper {
 	 * HashMap<String,MyBean>, 则调用(HashMap.class,String.class, MyBean.class)
 	 */
 	public JavaType createCollectionType(Class<?> collectionClass, Class<?>... elementClasses) {
-		return mapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
+		return this.getTypeFactory().constructParametricType(collectionClass, elementClasses);
 	}
 
 	/**
@@ -137,7 +161,7 @@ public class JsonMapper {
 	@SuppressWarnings("unchecked")
 	public <T> T update(String jsonString, T object) {
 		try {
-			return (T) mapper.readerForUpdating(object).readValue(jsonString);
+			return (T) this.readerForUpdating(object).readValue(jsonString);
 		} catch (JsonProcessingException e) {
 			logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
 		} catch (IOException e) {
@@ -159,8 +183,8 @@ public class JsonMapper {
 	 * 注意本函數一定要在Mapper創建後, 所有的讀寫動作之前調用.
 	 */
 	public JsonMapper enableEnumUseToString() {
-		mapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-		mapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+		this.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
+		this.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
 		return this;
 	}
 
@@ -170,7 +194,7 @@ public class JsonMapper {
 	 */
 	public JsonMapper enableJaxbAnnotation() {
 		JaxbAnnotationModule module = new JaxbAnnotationModule();
-		mapper.registerModule(module);
+		this.registerModule(module);
 		return this;
 	}
 
@@ -179,8 +203,8 @@ public class JsonMapper {
 	 * 允许不带引号的字段名称
 	 */
 	public JsonMapper enableSimple() {
-		mapper.configure(Feature.ALLOW_SINGLE_QUOTES, true);
-		mapper.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+		this.configure(Feature.ALLOW_SINGLE_QUOTES, true);
+		this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		return this;
 	}
 	
@@ -188,27 +212,36 @@ public class JsonMapper {
 	 * 取出Mapper做进一步的设置或使用其他序列化API.
 	 */
 	public ObjectMapper getMapper() {
-		return mapper;
+		return this;
 	}
 	
-//	/**
-//	 * 测试
-//	 */
-//	public static void main(String[] args) {
-//		List<Map<String, Object>> list = Lists.newArrayList();
-//		Map<String, Object> map = Maps.newHashMap();
-//		map.put("id", 1);
-//		map.put("pId", -1);
-//		map.put("name", "根节点");
-//		list.add(map);
-//		map = Maps.newHashMap();
-//		map.put("id", 2);
-//		map.put("pId", 1);
-//		map.put("name", "你好");
-//		map.put("open", true);
-//		list.add(map);
-//		String json = JsonMapper.getInstance().toJson(list);
-//		System.out.println(json);
-//	}
+	/**
+	 * 转换为JSON字符串
+	 * @param object
+	 * @return
+	 */
+	public static String toJsonString(Object object){
+		return JsonMapper.getInstance().toJson(object);
+	}
+	
+	/**
+	 * 测试
+	 */
+	public static void main(String[] args) {
+		List<Map<String, Object>> list = Lists.newArrayList();
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("id", 1);
+		map.put("pId", -1);
+		map.put("name", "根节点");
+		list.add(map);
+		map = Maps.newHashMap();
+		map.put("id", 2);
+		map.put("pId", 1);
+		map.put("name", "你好");
+		map.put("open", true);
+		list.add(map);
+		String json = JsonMapper.getInstance().toJson(list);
+		System.out.println(json);
+	}
 	
 }

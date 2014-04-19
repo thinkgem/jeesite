@@ -7,8 +7,6 @@ package com.thinkgem.jeesite.modules.cms.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -36,10 +34,10 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 @Table(name = "cms_article_data")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ArticleData extends BaseEntity {
+public class ArticleData extends BaseEntity<ArticleData> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
+	private String id;		// 编号
 	private String content;	// 内容
 	private String copyfrom;// 来源
 	private String relation;// 相关文章
@@ -52,20 +50,17 @@ public class ArticleData extends BaseEntity {
 		this.allowComment = YES;
 	}
 	
-	public ArticleData(Long id){
+	public ArticleData(String id){
 		this();
 		this.id = id;
 	}
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_article_data")
-//	@SequenceGenerator(name = "seq_cms_article_data", sequenceName = "seq_cms_article_data")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -107,7 +102,8 @@ public class ArticleData extends BaseEntity {
 	}
 
 	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE},optional=false)  
-	@PrimaryKeyJoinColumn  
+//	@OneToOne(mappedBy="articleData",cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	public Article getArticle() {
 		return article;
 	}

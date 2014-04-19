@@ -34,14 +34,14 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 public class ${ClassName} extends DataEntity {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id; 		// 编号
+	private String id; 		// 编号
 	private String name; 	// 名称
 
 	public ${ClassName}() {
 		super();
 	}
 
-	public ${ClassName}(Long id){
+	public ${ClassName}(String id){
 		this();
 		this.id = id;
 	}
@@ -50,11 +50,11 @@ public class ${ClassName} extends DataEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_${tableName}")
 	//@SequenceGenerator(name = "seq_${tableName}", sequenceName = "seq_${tableName}")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

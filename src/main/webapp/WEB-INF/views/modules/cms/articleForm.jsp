@@ -6,18 +6,22 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
+            if($("#link").val()){
+                $('#linkBody').show();
+                $('#url').attr("checked", true);
+            }
 			$("#title").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
-					if ($("#categoryId").val()==""){
-						$("#categoryName").focus();
-						top.$.jBox.tip('请选择归属栏目','warning');
-					}else if (CKEDITOR.instances.content.getData()==""){
-						top.$.jBox.tip('请填写正文','warning');
-					}else{
-						loading('正在提交，请稍等...');
-						form.submit();
-					}
+                    if ($("#categoryId").val()==""){
+                        $("#categoryName").focus();
+                        top.$.jBox.tip('请选择归属栏目','warning');
+                    }else if (CKEDITOR.instances.content.getData()=="" && $("#link").val().trim()==""){
+                        top.$.jBox.tip('请填写正文','warning');
+                    }else{
+                        loading('正在提交，请稍等...');
+                        form.submit();
+                    }
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
@@ -44,7 +48,10 @@
 			<label class="control-label">归属栏目:</label>
 			<div class="controls">
                 <tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>
+					title="栏目" url="/cms/category/treeData" module="article" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
+                <span>
+                    <input id="url" type="checkbox" onclick="if(this.checked){$('#linkBody').show()}else{$('#linkBody').hide()}$('#link').val()"><label for="url">外部链接</label>
+                </span>
 			</div>
 		</div>
 		<div class="control-group">
@@ -58,6 +65,13 @@
 				</form:select>
 			</div>
 		</div>
+        <div id="linkBody" class="control-group" style="display:none">
+            <label class="control-label">外部链接:</label>
+            <div class="controls">
+                <form:input path="link" htmlEscape="false" maxlength="200" class="input-xlarge"/>
+                <span class="help-inline">绝对或相对地址。</span>
+            </div>
+        </div>
 		<div class="control-group">
 			<label class="control-label">关键字:</label>
 			<div class="controls">
@@ -86,6 +100,13 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">缩略图:</label>
+			<div class="controls">
+                <input type="hidden" id="image" name="image" value="${article.imageSrc}" />
+				<tags:ckfinder input="image" type="thumb" uploadPath="/cms/article" selectMultiple="false"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">正文:</label>
 			<div class="controls">
 				<form:textarea id="content" htmlEscape="true" path="articleData.content" rows="4" maxlength="200" class="input-xxlarge"/>
@@ -96,13 +117,6 @@
 			<label class="control-label">来源:</label>
 			<div class="controls">
 				<form:input path="articleData.copyfrom" htmlEscape="false" maxlength="200" class="input-xlarge"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">文章图片:</label>
-			<div class="controls">
-				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<tags:ckfinder input="image" type="images" uploadPath="/cms/article" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -180,6 +194,25 @@
 					<span class="help-inline"></span>
 				</div>
 			</div>
+		</shiro:hasPermission>
+		<shiro:hasPermission name="cms:category:edit">
+            <div class="control-group">
+                <label class="control-label">自定义内容视图:</label>
+                <div class="controls">
+                      <form:select path="customContentView">
+                          <form:option value="" label="默认视图"/>
+                          <form:options items="${contentViewList}" htmlEscape="false"/>
+                      </form:select>
+                      <span class="help-inline">自定义内容视图名称必须以"${article_DEFAULT_TEMPLATE}"开始</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">自定义视图参数:</label>
+                <div class="controls">
+                      <form:input path="viewConfig" htmlEscape="true"/>
+                      <span class="help-inline">视图参数例如: {count:2, title_show:"yes"}</span>
+                </div>
+            </div>
 		</shiro:hasPermission>
 		<c:if test="${not empty article.id}">
 			<div class="control-group">

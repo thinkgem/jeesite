@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
@@ -41,8 +42,8 @@ public class MenuController extends BaseController {
 	private SystemService systemService;
 	
 	@ModelAttribute("menu")
-	public Menu get(@RequestParam(required=false) Long id) {
-		if (id != null){
+	public Menu get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return systemService.getMenu(id);
 		}else{
 			return new Menu();
@@ -54,7 +55,7 @@ public class MenuController extends BaseController {
 	public String list(Model model) {
 		List<Menu> list = Lists.newArrayList();
 		List<Menu> sourcelist = systemService.findAllMenu();
-		Menu.sortList(list, sourcelist, 1L);
+		Menu.sortList(list, sourcelist, "1");
         model.addAttribute("list", list);
 		return "modules/sys/menuList";
 	}
@@ -63,7 +64,7 @@ public class MenuController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Menu menu, Model model) {
 		if (menu.getParent()==null||menu.getParent().getId()==null){
-			menu.setParent(new Menu(1L));
+			menu.setParent(new Menu("1"));
 		}
 		menu.setParent(systemService.getMenu(menu.getParent().getId()));
 		model.addAttribute("menu", menu);
@@ -87,7 +88,7 @@ public class MenuController extends BaseController {
 	
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "delete")
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(String id, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/menu/";
@@ -108,11 +109,27 @@ public class MenuController extends BaseController {
 	}
 	
 	/**
+	 * 同步工作流权限数据
+	 */
+	@RequiresPermissions("sys:menu:edit")
+	@RequestMapping(value = "synToActiviti")
+	public String synToActiviti(RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sys/menu/";
+		}
+		systemService.synToActiviti();
+    	addMessage(redirectAttributes, "同步工作流权限数据成功!");
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
+	}
+	
+	
+	/**
 	 * 批量修改菜单排序
 	 */
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "updateSort")
-	public String updateSort(Long[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
+	public String updateSort(String[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/menu/";

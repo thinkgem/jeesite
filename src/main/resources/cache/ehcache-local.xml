@@ -4,21 +4,21 @@
 	<diskStore path="java.io.tmpdir/jeesite/ehcache/default" />
 
 	<!-- DefaultCache setting. -->
-	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
 	
-	<cache name="sysCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
+	<cache name="sysCache" maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
 	
-	<cache name="cmsCache" maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
+	<cache name="cmsCache" maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
 	    
-    <cache name="shiro-activeSessionCache" maxElementsInMemory="1000" overflowToDisk="true"
+    <cache name="shiro-activeSessionCache" maxElementsInMemory="100" overflowToDisk="true"
            eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
            diskPersistent="true" diskExpiryThreadIntervalSeconds="600"/>
 
     <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
-           maxElementsInMemory="1000" eternal="true" overflowToDisk="true"/>
+           maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
     
-    <cache name="SimplePageCachingFilter" maxElementsInMemory="1000" eternal="false" overflowToDisk="true"
+    <cache name="SimplePageCachingFilter" maxElementsInMemory="100" eternal="false" overflowToDisk="true"
     	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/>
     	
 </ehcache>

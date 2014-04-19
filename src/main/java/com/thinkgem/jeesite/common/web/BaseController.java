@@ -80,7 +80,7 @@ public abstract class BaseController {
 	
 	/**
 	 * 添加Model消息
-	 * @param message
+	 * @param messages 消息
 	 */
 	protected void addMessage(Model model, String... messages) {
 		StringBuilder sb = new StringBuilder();
@@ -92,7 +92,7 @@ public abstract class BaseController {
 	
 	/**
 	 * 添加Flash消息
-	 * @param message
+     * @param messages 消息
 	 */
 	protected void addMessage(RedirectAttributes redirectAttributes, String... messages) {
 		StringBuilder sb = new StringBuilder();

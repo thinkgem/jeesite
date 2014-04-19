@@ -6,6 +6,7 @@
 package com.thinkgem.jeesite.common.utils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -45,6 +46,13 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 			formatDate = DateFormatUtils.format(date, "yyyy-MM-dd");
 		}
 		return formatDate;
+	}
+	
+	/**
+	 * 得到日期时间字符串，转换格式（yyyy-MM-dd HH:mm:ss）
+	 */
+	public static String formatDateTime(Date date) {
+		return formatDate(date, "yyyy-MM-dd HH:mm:ss");
 	}
 
 	/**
@@ -113,6 +121,33 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	public static long pastDays(Date date) {
 		long t = new Date().getTime()-date.getTime();
 		return t/(24*60*60*1000);
+	}
+	
+    
+	public static Date getDateStart(Date date) {
+		if(date==null) {
+			return null;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			date= sdf.parse(formatDate(date, "yyyy-MM-dd")+" 00:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+	
+	public static Date getDateEnd(Date date) {
+		if(date==null) {
+			return null;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			date= sdf.parse(formatDate(date, "yyyy-MM-dd") +" 23:59:59");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 	
 	/**

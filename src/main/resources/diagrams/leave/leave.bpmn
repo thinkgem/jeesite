@@ -3,20 +3,12 @@
   <process id="leave" name="请假流程" isExecutable="true">
     <documentation>请假流程演示</documentation>
     <startEvent id="startevent1" name="Start" activiti:initiator="applyUserId"></startEvent>
-    <userTask id="deptLeaderAudit" name="部门领导审批" activiti:candidateGroups="deptLeader"></userTask>
+    <userTask id="deptLeaderAudit" name="部门领导审批" activiti:candidateGroups="oa:leave:deptLeaderAudit"></userTask>
     <exclusiveGateway id="exclusivegateway5" name="Exclusive Gateway"></exclusiveGateway>
-    <userTask id="modifyApply" name="调整申请" activiti:assignee="${applyUserId}">
-      <extensionElements>
-        <activiti:taskListener event="complete" delegateExpression="${leaveModifyProcessor}"></activiti:taskListener>
-      </extensionElements>
-    </userTask>
-    <userTask id="hrAudit" name="人事审批" activiti:candidateGroups="hr"></userTask>
+    <userTask id="modifyApply" name="调整申请" activiti:assignee="${applyUserId}"></userTask>
+    <userTask id="hrAudit" name="人事审批" activiti:candidateGroups="oa:leave:hrAudit"></userTask>
     <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
-    <userTask id="reportBack" name="销假" activiti:assignee="${applyUserId}">
-      <extensionElements>
-        <activiti:taskListener event="complete" delegateExpression="${leaveReportProcessor}"></activiti:taskListener>
-      </extensionElements>
-    </userTask>
+    <userTask id="reportBack" name="销假" activiti:assignee="${applyUserId}"></userTask>
     <endEvent id="endevent1" name="End"></endEvent>
     <exclusiveGateway id="exclusivegateway7" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow2" sourceRef="startevent1" targetRef="deptLeaderAudit"></sequenceFlow>

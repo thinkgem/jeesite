@@ -29,7 +29,7 @@
 		  <h4>${category.name}</h4>
 		  <c:if test="${category.module eq 'article'}">
 			<ul><c:forEach items="${page.list}" var="article">
-				<li><span class="pull-right"><fmt:formatDate value="${article.updateDate}" pattern="yyyy.MM.dd"/></span><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,96)}</a></li>
+				<li><span class="pull-right"><fmt:formatDate value="${article.updateDate}" pattern="yyyy.MM.dd"/></span><a href="${article.url}" style="color:${article.color}">${fns:abbr(article.title,96)}</a></li>
 			</c:forEach></ul>
 			<div class="pagination">${page}</div>
 			<script type="text/javascript">

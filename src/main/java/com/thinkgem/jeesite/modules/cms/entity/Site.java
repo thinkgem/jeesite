@@ -6,19 +6,17 @@
 package com.thinkgem.jeesite.modules.cms.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -30,10 +28,9 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Table(name = "cms_site")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Site extends DataEntity {
+public class Site extends IdEntity<Category> {
 	
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private String name;	// 站点名称
 	private String title;	// 站点标题
 	private String logo;	// 站点logo
@@ -47,20 +44,8 @@ public class Site extends DataEntity {
 		super();
 	}
 	
-	public Site(Long id){
+	public Site(String id){
 		this();
-		this.id = id;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cms_site")
-//	@SequenceGenerator(name = "seq_cms_site", sequenceName = "seq_cms_site")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -137,15 +122,15 @@ public class Site extends DataEntity {
 	 * 获取默认站点ID
 	 */
 	@Transient
-	public static Long defaultSiteId(){
-		return 1L;
+	public static String defaultSiteId(){
+		return "1";
 	}
 	
 	/**
 	 * 判断是否为默认（主站）站点
 	 */
 	@Transient
-	public static boolean isDefault(Long id){
+	public static boolean isDefault(String id){
 		return id != null && id.equals(defaultSiteId());
 	}
 	
@@ -153,9 +138,24 @@ public class Site extends DataEntity {
 	 * 获取当前编辑的站点编号
 	 */
 	@Transient
-	public static long getCurrentSiteId(){
-		Long siteId = (Long)UserUtils.getCache("siteId");
-		return siteId!=null&&siteId>0?siteId:defaultSiteId();
+	public static String getCurrentSiteId(){
+		String siteId = (String)UserUtils.getCache("siteId");
+		return StringUtils.isNotBlank(siteId)?siteId:defaultSiteId();
 	}
+
+    /**
+   	 * 模板路径
+   	 */
+   	public static final String TPL_BASE = "/WEB-INF/views/modules/cms/front/themes";
+
+    /**
+   	 * 获得模板方案路径。如：/WEB-INF/views/modules/cms/front/themes/jeesite
+   	 *
+   	 * @return
+   	 */
+    @Transient
+   	public String getSolutionPath() {
+   		return TPL_BASE + "/" + getTheme();
+   	}
 	
 }

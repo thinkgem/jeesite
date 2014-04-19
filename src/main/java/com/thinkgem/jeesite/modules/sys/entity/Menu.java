@@ -7,12 +7,8 @@ package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -22,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
@@ -34,7 +31,7 @@ import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 菜单Entity
@@ -45,10 +42,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_menu")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends DataEntity {
+public class Menu extends IdEntity<Menu> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Menu parent;	// 父级菜单
 	private String parentIds; // 所有父级编号
 	private String name; 	// 名称
@@ -57,6 +53,7 @@ public class Menu extends DataEntity {
 	private String icon; 	// 图标
 	private Integer sort; 	// 排序
 	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
+	private String isActiviti; 	// 是否同步到工作流（1：同步；0：不同步）
 	private String permission; // 权限标识
 	
 	private List<Menu> childList = Lists.newArrayList();// 拥有子菜单列表
@@ -67,20 +64,8 @@ public class Menu extends DataEntity {
 		this.sort = 30;
 	}
 	
-	public Menu(Long id){
+	public Menu(String id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_menu")
-//	@SequenceGenerator(name = "seq_sys_menu", sequenceName = "seq_sys_menu")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -159,6 +144,15 @@ public class Menu extends DataEntity {
 		this.isShow = isShow;
 	}
 
+	@Length(min=1, max=1)
+	public String getIsActiviti() {
+		return isActiviti;
+	}
+
+	public void setIsActiviti(String isActiviti) {
+		this.isActiviti = isActiviti;
+	}
+
 	@Length(min=0, max=200)
 	public String getPermission() {
 		return permission;
@@ -168,9 +162,9 @@ public class Menu extends DataEntity {
 		this.permission = permission;
 	}
 
-	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
+	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy(value="sort")
+	@OrderBy(value="sort") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Menu> getChildList() {
@@ -195,7 +189,7 @@ public class Menu extends DataEntity {
 	}
 	
 	@Transient
-	public static void sortList(List<Menu> list, List<Menu> sourcelist, Long parentId){
+	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId){
 		for (int i=0; i<sourcelist.size(); i++){
 			Menu e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
@@ -220,7 +214,18 @@ public class Menu extends DataEntity {
 	}
 	
 	@Transient
-	public static boolean isRoot(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isRoot(String id){
+		return id != null && id.equals("1");
 	}
+	
+	@Transient
+	public String getActivitiGroupId() {
+		return ObjectUtils.toString(getPermission());
+	}
+
+	@Transient
+	public String getActivitiGroupName() {
+		return ObjectUtils.toString(getId());
+	}
+
 }

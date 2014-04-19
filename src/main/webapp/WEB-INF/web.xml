@@ -5,12 +5,33 @@
 	
   <display-name>JeeSite</display-name>
   
+  <!-- 激活Tomcat的defaultServlet来处理静态文件 -->
+  <servlet-mapping>
+	<servlet-name>default</servlet-name>
+	<url-pattern>*.jpg</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>default</servlet-name>
+	<url-pattern>*.gif</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>default</servlet-name>
+	<url-pattern>*.png</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>default</servlet-name>
+	<url-pattern>*.js</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>default</servlet-name>
+	<url-pattern>*.css</url-pattern>
+  </servlet-mapping>
+  
   <!-- 加载Spring配置文件 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-		classpath*:/applicationContext.xml
-		classpath*:/applicationContext-shiro.xml
+		classpath*:/spring-context*.xml
 	</param-value>
   </context-param>
   <context-param>
@@ -37,11 +58,11 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter>
-    <filter-name>openEntityManagerInViewFilter</filter-name>
-    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+    <filter-name>openSessionInViewFilter</filter-name>
+    <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>openEntityManagerInViewFilter</filter-name>
+    <filter-name>openSessionInViewFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
@@ -83,14 +104,14 @@
     <filter-name>sitemeshFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
+    
   <!-- Spring MVC -->
   <servlet>
     <servlet-name>springServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/spring-mvc.xml</param-value>
+      <param-value>classpath*:/spring-mvc*.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -116,6 +137,7 @@
   <!-- CKFinder -->
   <servlet>
     <servlet-name>CKFinderConnectorServlet</servlet-name>
+    <!--<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>-->
     <servlet-class>com.thinkgem.jeesite.common.web.CKFinderConnectorServlet</servlet-class>
     <init-param>
       <param-name>XMLConfig</param-name>
@@ -151,6 +173,16 @@
     <filter-name>FileUploadFilter</filter-name>
     <url-pattern>/static/ckfinder/core/connector/java/connector.java</url-pattern>
   </filter-mapping>
+  
+  <!-- 查看CKFinder的图片 
+  <servlet>
+  	<servlet-name>cKFinderFilesServlet</servlet-name>
+  	<servlet-class>com.thinkgem.jeesite.common.servlet.CKFinderFilesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>cKFinderFilesServlet</servlet-name>
+  	<url-pattern>/userfiles/*</url-pattern>
+  </servlet-mapping>-->
   
   <!-- 随机验证码 -->
   <servlet>

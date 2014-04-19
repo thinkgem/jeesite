@@ -7,6 +7,8 @@ package com.thinkgem.jeesite.common.config;
 
 import java.util.Map;
 
+import org.springframework.util.Assert;
+
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.utils.PropertiesLoader;
 
@@ -25,7 +27,7 @@ public class Global {
 	/**
 	 * 属性文件加载对象
 	 */
-	private static PropertiesLoader propertiesLoader = new PropertiesLoader("application.properties");
+	private static PropertiesLoader propertiesLoader = new PropertiesLoader("jeesite.properties");
 	
 	/**
 	 * 获取配置
@@ -68,6 +70,19 @@ public class Global {
 	public static Boolean isDemoMode() {
 		String dm = getConfig("demoMode");
 		return "true".equals(dm) || "1".equals(dm);
+	}
+
+	/**
+	 * 获取CKFinder上传文件的根目录
+	 * @return
+	 */
+	public static String getCkBaseDir() {
+		String dir = getConfig("userfiles.basedir");
+		Assert.hasText(dir, "配置文件里没有配置userfiles.basedir属性");
+		if(!dir.endsWith("/")) {
+			dir += "/";
+		}
+		return dir;
 	}
 	
 }

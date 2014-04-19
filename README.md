@@ -4,7 +4,7 @@
 
 JeeSite 是一个 **开源的企业信息管理系统** 基础框架。主要定位于“企业信息管理”领域，可用作企业信息管理类系统、网站后台管理类系统等。JeeSite是非常强调开发的高效性、健壮性和安全性的。
 
-JeeSite 是轻量级的，简单易学，本框架以Spring Framework为核心、Spring MVC作为模型视图控制器、Spring Data JPA + Hibernate作为数据库操作层，此组合是Java界业内最经典、最优的搭配组合。前端界面风格采用了结构简单、性能优良、页面精致的Twitter Bootstrap作为前端展示框架。
+JeeSite 是轻量级的，简单易学，本框架以Spring Framework为核心、Spring MVC作为模型视图控制器、Hibernate作为数据库操作层，此组合是Java界业内最经典、最优的搭配组合。前端界面风格采用了结构简单、性能优良、页面精致的Twitter Bootstrap作为前端展示框架。
 
 JeeSite 已内置一系列企业信息管理系统的基础功能，目前包括三大模块，系统管理（SYS）模块、内容管理（CMS）模块和在线办公（OA）模块。 **系统管理模块** ，包括企业组织架构（用户管理、机构管理、区域管理）、菜单管理、角色权限管理、字典管理等功能； **内容管理模块** ，包括内容管理（文章、链接），栏目管理、站点管理、公共留言、文件管理、前端网站展示等功能； **在线办公模块** ，提供简单的请假流程实例。
 
@@ -29,7 +29,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * Core Framework：Spring Framework 3.2。
 * Security Framework：Apache Shiro 1.2。
-* Workflow Engine：Activit 5.12。
+* Workflow Engine：Activit 5.14。
 
 2、Web相关
 
@@ -42,8 +42,8 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 3、Database相关
 
-* ORM Framework：Spring-Data-JPA 1.3、Hibernate 4.1。
-* Connection Pool：Alibaba Druid 0.2。
+* ORM Framework：Hibernate 4.1 + MyBatis 3.1。
+* Connection Pool：Alibaba Druid 1.0。
 * Bean Validation：Hibernate Validation 5.0。
 * Cache：Ehcache 2.6。
 
@@ -67,21 +67,11 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 快速体验
 
-### 在线体验
-
-体验地址1（感谢刘杰提供）：<http://demo.jeesite.com:1234/jeesite> 
-
-体验地址2（感谢devnote提供）：<http://www.devnote.cn/jeesite/a> 
-
-用户名：thinkgem 或 admin    密码：admin
-
-### 本地体验
-
 1. 具备运行环境：JDK1.6、Maven3.0、MySql5。
-2. 修改src\main\resources\application.properties文件中的数据库设置参数。
+2. 修改src\main\resources\jeesite.properties文件中的数据库设置参数。
 3. 根据修改参数创建对应MySql数据库（数据库编码：UTF-8）。
-4. 运行bin\resresh-db\refresh-db.bat脚本，即可导入表结构及演示数据
-5. 运行bin\jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
+4. 运行db\init-db.bat脚本，即可导入表结构及演示数据
+5. 运行bin\run-jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
 6. 最高管理员账号，用户名：thinkgem 密码：admin
 
 ## 更多文档
@@ -91,7 +81,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 如何交流、反馈、参与贡献？
 
-* QQ Group：127515876
+* QQ Group：127515876(已满)   209330483
 * E-mail：<mailto:thinkgem@163.com>
 * Github：<https://github.com/thinkgem/jeesite>
 * 开源中国：<http://git.oschina.net/thinkgem/jeesite>

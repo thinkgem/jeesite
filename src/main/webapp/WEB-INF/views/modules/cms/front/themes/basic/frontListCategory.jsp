@@ -27,19 +27,19 @@
 	   </div>
 	   <div class="span10">
 	      <c:set var="index" value="1"/>
-		  <c:forEach items="${categoryList}" var="category">
-			<c:if test="${category.inList eq 1 && category.module ne ''}">
+		  <c:forEach items="${categoryList}" var="tpl">
+			<c:if test="${tpl.inList eq '1' && tpl.module ne ''}">
 				<c:set var="index" value="${index+1}"/>
 				${index % 2 eq 0 ? '<div class="row">':''}
 		    	<div class="span5">
-		    		<h4><small><a href="${ctx}/list-${category.id}${urlSuffix}" class="pull-right">更多&gt;&gt;</a></small>${category.name}</h4>
-					<c:if test="${category.module eq 'article'}">
-		    			<ul><c:forEach items="${fnc:getArticleList(site.id, category.id, 5, '')}" var="article">
+		    		<h4><small><a href="${ctx}/list-${tpl.id}${urlSuffix}" class="pull-right">更多&gt;&gt;</a></small>${tpl.name}</h4>
+					<c:if test="${tpl.module eq 'article'}">
+		    			<ul><c:forEach items="${fnc:getArticleList(site.id, tpl.id, 5, '')}" var="article">
 							<li><span class="pull-right"><fmt:formatDate value="${article.updateDate}" pattern="yyyy.MM.dd"/></span><a href="${ctx}/view-${article.category.id}-${article.id}${urlSuffix}" style="color:${article.color}">${fns:abbr(article.title,40)}</a></li>
 						</c:forEach></ul>
 					</c:if>
-					<c:if test="${category.module eq 'link'}">
-		    			<ul><c:forEach items="${fnc:getLinkList(site.id, category.id, 5, '')}" var="link">
+					<c:if test="${tpl.module eq 'link'}">
+		    			<ul><c:forEach items="${fnc:getLinkList(site.id, tpl.id, 5, '')}" var="link">
 							<li><span class="pull-right"><fmt:formatDate value="${link.updateDate}" pattern="yyyy.MM.dd"/></span><a target="_blank" href="${link.href}" style="color:${link.color}">${fns:abbr(link.title,40)}</a></li>
 						</c:forEach></ul>
 					</c:if>

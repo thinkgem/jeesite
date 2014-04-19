@@ -6,8 +6,8 @@
 package com.thinkgem.jeesite.modules.sys.service;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -16,15 +16,15 @@ import org.apache.shiro.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.security.Digests;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.Collections3;
 import com.thinkgem.jeesite.common.utils.Encodes;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
@@ -43,7 +43,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  */
 @Service
 @Transactional(readOnly = true)
-public class SystemService extends BaseService implements InitializingBean {
+public class SystemService extends BaseService  {
 	
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
@@ -63,22 +63,22 @@ public class SystemService extends BaseService implements InitializingBean {
 
 	//-- User Service --//
 	
-	public User getUser(Long id) {
-		return userDao.findOne(id);
+	public User getUser(String id) {
+		return userDao.get(id);
 	}
 	
 	public Page<User> findUser(Page<User> page, User user) {
 		DetachedCriteria dc = userDao.createDetachedCriteria();
 		User currentUser = UserUtils.getUser();
 		dc.createAlias("company", "company");
-		if (user.getCompany()!=null && user.getCompany().getId()!=null){
+		if (user.getCompany()!=null && StringUtils.isNotBlank(user.getCompany().getId())){
 			dc.add(Restrictions.or(
 					Restrictions.eq("company.id", user.getCompany().getId()),
 					Restrictions.like("company.parentIds", "%,"+user.getCompany().getId()+",%")
 					));
 		}
 		dc.createAlias("office", "office");
-		if (user.getOffice()!=null && user.getOffice().getId()!=null){
+		if (user.getOffice()!=null && StringUtils.isNotBlank(user.getOffice().getId())){
 			dc.add(Restrictions.or(
 					Restrictions.eq("office.id", user.getOffice().getId()),
 					Restrictions.like("office.parentIds", "%,"+user.getOffice().getId()+",%")
@@ -86,7 +86,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		// 如果不是超级管理员，则不显示超级管理员用户
 		if (!currentUser.isAdmin()){
-			dc.add(Restrictions.ne("id", 1L)); 
+			dc.add(Restrictions.ne("id", "1")); 
 		}
 		dc.add(dataScopeFilter(currentUser, "office", ""));
 		//System.out.println(dataScopeFilterString(currentUser, "office", ""));
@@ -96,13 +96,18 @@ public class SystemService extends BaseService implements InitializingBean {
 		if (StringUtils.isNotEmpty(user.getName())){
 			dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
 		}
-		dc.add(Restrictions.eq(User.DEL_FLAG, User.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(User.FIELD_DEL_FLAG, User.DEL_FLAG_NORMAL));
 		if (!StringUtils.isNotEmpty(page.getOrderBy())){
-			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("id"));
+			dc.addOrder(Order.asc("company.code")).addOrder(Order.asc("office.code")).addOrder(Order.desc("name"));
 		}
 		return userDao.find(page, dc);
 	}
 
+	//取用户的数据范围
+	public String getDataScope(User user){
+		return dataScopeFilterString(user, "office", "");
+	}
+	
 	public User getUserByLoginName(String loginName) {
 		return userDao.findByLoginName(loginName);
 	}
@@ -113,24 +118,24 @@ public class SystemService extends BaseService implements InitializingBean {
 		userDao.save(user);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
-		saveActivitiUser(user, user.getId()==null);
+		saveActiviti(user);
 	}
 
 	@Transactional(readOnly = false)
-	public void deleteUser(Long id) {
+	public void deleteUser(String id) {
 		userDao.deleteById(id);
 		// 同步到Activiti
-		deleteActivitiUser(userDao.findOne(id));
+		deleteActiviti(userDao.get(id));
 	}
 	
 	@Transactional(readOnly = false)
-	public void updatePasswordById(Long id, String loginName, String newPassword) {
+	public void updatePasswordById(String id, String loginName, String newPassword) {
 		userDao.updatePasswordById(entryptPassword(newPassword), id);
 		systemRealm.clearCachedAuthorizationInfo(loginName);
 	}
 	
 	@Transactional(readOnly = false)
-	public void updateUserLoginInfo(Long id) {
+	public void updateUserLoginInfo(String id) {
 		userDao.updateLoginInfo(SecurityUtils.getSubject().getSession().getHost(), new Date(), id);
 	}
 	
@@ -157,8 +162,8 @@ public class SystemService extends BaseService implements InitializingBean {
 	
 	//-- Role Service --//
 	
-	public Role getRole(Long id) {
-		return roleDao.findOne(id);
+	public Role getRole(String id) {
+		return roleDao.get(id);
 	}
 
 	public Role findRoleByName(String name) {
@@ -166,14 +171,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	public List<Role> findAllRole(){
-		User user = UserUtils.getUser();
-		DetachedCriteria dc = roleDao.createDetachedCriteria();
-		dc.createAlias("office", "office");
-		dc.createAlias("userList", "userList", JoinType.LEFT_OUTER_JOIN);
-		dc.add(dataScopeFilter(user, "office", "userList"));
-		dc.add(Restrictions.eq(Role.DEL_FLAG, Role.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.asc("office.code")).addOrder(Order.asc("name"));
-		return roleDao.find(dc);
+		return UserUtils.getRoleList();
 	}
 	
 	@Transactional(readOnly = false)
@@ -182,21 +180,23 @@ public class SystemService extends BaseService implements InitializingBean {
 		roleDao.save(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
-		saveActivitiGroup(role, role.getId()==null);
+		saveActiviti(role);
+		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 	}
 
 	@Transactional(readOnly = false)
-	public void deleteRole(Long id) {
+	public void deleteRole(String id) {
 		roleDao.deleteById(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		// 同步到Activiti
-		deleteActivitiGroup(roleDao.findOne(id));
+		deleteActiviti(roleDao.get(id));
+		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 	}
 	
 	@Transactional(readOnly = false)
-	public Boolean outUserInRole(Role role, Long userId) {
-		User user = userDao.findOne(userId);
-		List<Long> roleIds = user.getRoleIdList();
+	public Boolean outUserInRole(Role role, String userId) {
+		User user = userDao.get(userId);
+		List<String> roleIds = user.getRoleIdList();
 		List<Role> roles = user.getRoleList();
 		// 
 		if (roleIds.contains(role.getId())) {
@@ -208,9 +208,9 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	@Transactional(readOnly = false)
-	public User assignUserToRole(Role role, Long userId) {
-		User user = userDao.findOne(userId);
-		List<Long> roleIds = user.getRoleIdList();
+	public User assignUserToRole(Role role, String userId) {
+		User user = userDao.get(userId);
+		List<String> roleIds = user.getRoleIdList();
 		if (roleIds.contains(role.getId())) {
 			return null;
 		}
@@ -221,8 +221,8 @@ public class SystemService extends BaseService implements InitializingBean {
 
 	//-- Menu Service --//
 	
-	public Menu getMenu(Long id) {
-		return menuDao.findOne(id);
+	public Menu getMenu(String id) {
+		return menuDao.get(id);
 	}
 
 	public List<Menu> findAllMenu(){
@@ -244,107 +244,181 @@ public class SystemService extends BaseService implements InitializingBean {
 		menuDao.save(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+		saveActiviti(menu);
 	}
 
 	@Transactional(readOnly = false)
-	public void deleteMenu(Long id) {
+	public void deleteMenu(String id) {
 		menuDao.deleteById(id, "%,"+id+",%");
 		systemRealm.clearAllCachedAuthorizationInfo();
 		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+		deleteActiviti(id);
 	}
-	
+
 	///////////////// Synchronized to the Activiti //////////////////
 
 	/**
-	 * 是需要同步Activiti数据，如果从未同步过，则同步数据。
+	 * 手工同步所有Activiti数据
 	 */
-	private static boolean isSynActivitiIndetity = true;
-	public void afterPropertiesSet() throws Exception {
-		if (isSynActivitiIndetity){
-			isSynActivitiIndetity = false;
-			List<Group> groupList = identityService.createGroupQuery().list();
-			List<org.activiti.engine.identity.User> userList = identityService.createUserQuery().list();
-			if (groupList.size() == 0 && userList.size() == 0){
-		        // 同步角色数据
-			 	Iterator<Role> roles = roleDao.findAll().iterator();
-			 	while(roles.hasNext()) {
-			 		Role role = roles.next();
-			 		saveActivitiGroup(role, true);
-			 	}
-			 	// 同步用户数据
-			 	Iterator<User> users = userDao.findAll().iterator();
-			 	while(users.hasNext()) {
-			 		saveActivitiUser(users.next(), true);
+	@Transactional(readOnly = false)
+	public void synToActiviti()  {
+		menuDao.updateBySql("delete from ACT_ID_MEMBERSHIP",null);
+		menuDao.updateBySql("delete from ACT_ID_GROUP", null);
+		menuDao.updateBySql("delete from ACT_ID_USER", null);
+		
+		List<Group> activitiGroupList = identityService.createGroupQuery().list();
+		List<org.activiti.engine.identity.User> activitiUserList = identityService.createUserQuery().list();
+		if (activitiGroupList.size() == 0 &&activitiUserList.size() == 0){
+		 	//同步时候添加所有用户，所有组，以及关联关系，之后增删改用户，增删改角色时不需要判断用户，组是否存在。
+		 	List<User> userList = userDao.findAllList();
+		 	for(User user:userList){
+		 		org.activiti.engine.identity.User activitiUesr = identityService.newUser(ObjectUtils.toString(user.getId()));
+		 		identityService.saveUser(activitiUesr);
+		 	}
+		 	for(Menu menu:menuDao.findAllActivitiList()){
+		 		if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
+			 		Group group = identityService.newGroup(menu.getActivitiGroupId());
+			 		identityService.saveGroup(group);
+		 		}
+		 	}
+		 	//创建关联关系
+		 	for(User user:userList) {
+		 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+		 		if(!Collections3.isEmpty(menuList)){
+		 			for(Menu menu:menuList) {
+		 				if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
+		 					identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+		 				}
+		 			}
+		 		}
+		 	}
+		}
+	}
+	
+	private void saveActiviti(Role role) {
+		if(role!=null) {
+			List<User> userList = roleDao.get(role.getId()).getUserList();
+			if(!Collections3.isEmpty(userList)) {
+			 	for(User user:userList) {
+			 		String userId = ObjectUtils.toString(user.getId());
+					org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+					// 是新增用户
+					if (activitiUser == null) {
+						activitiUser = identityService.newUser(userId);
+						identityService.saveUser(activitiUser);
+					} 
+					// 同步用户角色关联数据
+			 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+			 		merge(user, menuList);
 			 	}
 			}
 		}
 	}
 	
-	private void saveActivitiGroup(Role role, boolean isNew) {
-		String groupId = role.getEnname();
-		Group group = null;
-		if (!isNew){
-			group = identityService.createGroupQuery().groupId(groupId).singleResult();
-		}
-		if (group == null) {
-			group = identityService.newGroup(groupId);
-		}
-		group.setName(role.getName());
-		group.setType(role.getRoleType());
-		identityService.saveGroup(group);
-	}
 
-	public void deleteActivitiGroup(Role role) {
+	private void deleteActiviti(Role role) {
 		if(role!=null) {
-			String groupId = role.getEnname();
-			identityService.deleteGroup(groupId);
-		}
-	}
-
-	private void saveActivitiUser(User user, boolean isNew) {
-		String userId = ObjectUtils.toString(user.getId());
-		org.activiti.engine.identity.User activitiUser = null;
-		if (!isNew){
-			activitiUser = identityService.createUserQuery().userId(userId).singleResult();
-		}
-		// 是新增用户
-		if (activitiUser == null) {
-			activitiUser = identityService.newUser(userId);
-		} else {
-			List<Group> activitiGroups = identityService.createGroupQuery().groupMember(userId).list();
-			for (Group group : activitiGroups) {
-				identityService.deleteMembership(userId, group.getId());
+			List<User> userList = roleDao.get(role.getId()).getUserList();
+			if(!Collections3.isEmpty(userList)) {
+			 	for(User user:userList) {
+			 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+			 		merge(user, menuList);
+			 	}
 			}
 		}
-		activitiUser.setFirstName(user.getName());
-		activitiUser.setLastName(StringUtils.EMPTY);
-		activitiUser.setPassword(StringUtils.EMPTY);
-		activitiUser.setEmail(user.getEmail());
-		identityService.saveUser(activitiUser);
-		// 同步用户角色关联数据
-		for (Long roleId : user.getRoleIdList()) {
-			Role role = roleDao.findOne(roleId);
-            //查询activiti中是否有该权限
-		 	Group group= identityService.createGroupQuery().groupId(role.getEnname()).singleResult();
-            //不存在该权限，新增
-            if(group ==null) {
-		 		String groupId = role.getEnname();
-	            group = identityService.newGroup(groupId);
-	            group.setName(role.getName());
-	            group.setType(role.getRoleType());
-	            identityService.saveGroup(group);
-            }
-			identityService.createMembership(userId, roleDao.findOne(roleId).getEnname());
+	}
+
+	private void saveActiviti(User user) {
+		if(user!=null) {
+			String userId = ObjectUtils.toString(user.getId());
+			org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+			// 是新增用户
+			if (activitiUser == null) {
+				activitiUser = identityService.newUser(userId);
+				identityService.saveUser(activitiUser);
+			} 
+			// 同步用户角色关联数据
+	 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+	 		merge(user, menuList);
 		}
 	}
 
-	private void deleteActivitiUser(User user) {
+	private void deleteActiviti(User user) {
 		if(user!=null) {
 			String userId = ObjectUtils.toString(user.getId());
 			identityService.deleteUser(userId);
 		}
 	}
+
+	private void saveActiviti(Menu menu) {
+		if(menu!=null){
+			Group group = identityService.createGroupQuery().groupId(menu.getActivitiGroupId()).singleResult();
+			if(group!=null) {
+				identityService.deleteGroup(group.getId());
+			}
+			if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(menu.getActivitiGroupId())){
+				group = identityService.newGroup(menu.getActivitiGroupId());
+				group.setName(menu.getActivitiGroupName());
+				identityService.saveGroup(group);
+				List<Role> roleList = menuDao.get(menu.getId()).getRoleList();
+				if(!Collections3.isEmpty(roleList)) {
+					for(Role role:roleList) {
+						List<User> userList = role.getUserList();
+						if(!Collections3.isEmpty(userList)) {
+							for(User user:userList) {
+								identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	private void deleteActiviti(String id) {
+		if(id!=null) {
+			Menu menu = menuDao.get(id);
+			if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(menu.getActivitiGroupId())){
+				identityService.deleteGroup(menu.getActivitiGroupId());
+			}
+			if(menu!=null) {
+				List<Menu> menuList = menuDao.findByParentIdsLike("%,"+menu.getId()+",%");
+				for(Menu m:menuList) {
+					if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(m.getActivitiGroupId())){
+						identityService.deleteGroup(m.getActivitiGroupId());
+					}
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void merge(User user,List<Menu> menuList) {
+		String userId = ObjectUtils.toString(user.getId());
+		List<Group> activitiGroupList = identityService.createGroupQuery().groupMember(userId).list();
+		if(Collections3.isEmpty(menuList)) {
+			for(Group group:activitiGroupList) {
+				identityService.deleteMembership(userId, group.getId());
+			}
+		} else {
+			Map<String,String> groupMap =Maps.newHashMap();
+			for(Menu menu:menuList) {
+				groupMap.put(menu.getActivitiGroupId(), menu.getActivitiGroupName());
+			}
+			Map<String,String> activitiGroupMap = Collections3.extractToMap(activitiGroupList, "id", "name");
+			for(String groupId:activitiGroupMap.keySet()) {
+				if(StringUtils.isNotBlank(groupId) && !groupMap.containsKey(groupId)) {
+					identityService.deleteMembership(userId, groupId);
+				}
+			}
+			for(String groupId:groupMap.keySet()) {
+				if(StringUtils.isNotBlank(groupId) && !activitiGroupMap.containsKey(groupId)) {
+					identityService.createMembership(userId, groupId);
+				}
+			}
+		}
+	}
 	
 	///////////////// Synchronized to the Activiti end //////////////////
+	
 	
 }

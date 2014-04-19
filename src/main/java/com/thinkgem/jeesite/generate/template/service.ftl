@@ -28,8 +28,8 @@ public class ${ClassName}Service extends BaseService {
 	@Autowired
 	private ${ClassName}Dao ${className}Dao;
 	
-	public ${ClassName} get(Long id) {
-		return ${className}Dao.findOne(id);
+	public ${ClassName} get(String id) {
+		return ${className}Dao.get(id);
 	}
 	
 	public Page<${ClassName}> find(Page<${ClassName}> page, ${ClassName} ${className}) {
@@ -37,7 +37,7 @@ public class ${ClassName}Service extends BaseService {
 		if (StringUtils.isNotEmpty(${className}.getName())){
 			dc.add(Restrictions.like("name", "%"+${className}.getName()+"%"));
 		}
-		dc.add(Restrictions.eq(${ClassName}.DEL_FLAG, ${ClassName}.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(${ClassName}.FIELD_DEL_FLAG, ${ClassName}.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.desc("id"));
 		return ${className}Dao.find(page, dc);
 	}
@@ -48,7 +48,7 @@ public class ${ClassName}Service extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		${className}Dao.deleteById(id);
 	}
 	

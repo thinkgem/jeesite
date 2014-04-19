@@ -6,6 +6,8 @@
 .war
 .zip
 .rar
+.idea
+*.iml
 .settings/*
 /indexes/*
 /target/*

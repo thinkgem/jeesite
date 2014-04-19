@@ -7,12 +7,8 @@ package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,13 +21,15 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 区域Entity
@@ -42,10 +40,9 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 @Table(name = "sys_area")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Area extends DataEntity {
+public class Area extends IdEntity<Area> {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;		// 编号
 	private Area parent;	// 父级编号
 	private String parentIds; // 所有父级编号
 	private String code; 	// 区域编码
@@ -59,20 +56,8 @@ public class Area extends DataEntity {
 		super();
 	}
 	
-	public Area(Long id){
+	public Area(String id){
 		this();
-		this.id = id;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sys_area")
-//	@SequenceGenerator(name = "seq_sys_area", sequenceName = "seq_sys_area")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -124,9 +109,9 @@ public class Area extends DataEntity {
 		this.code = code;
 	}
 
-	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="area")
+	@OneToMany(mappedBy = "area", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy(value="code")
+	@OrderBy(value="code") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Office> getOfficeList() {
@@ -137,9 +122,9 @@ public class Area extends DataEntity {
 		this.officeList = officeList;
 	}
 
-	@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},fetch=FetchType.LAZY,mappedBy="parent")
+	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
 	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy(value="code")
+	@OrderBy(value="code") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Area> getChildList() {
@@ -151,7 +136,7 @@ public class Area extends DataEntity {
 	}
 
 	@Transient
-	public static void sortList(List<Area> list, List<Area> sourcelist, Long parentId){
+	public static void sortList(List<Area> list, List<Area> sourcelist, String parentId){
 		for (int i=0; i<sourcelist.size(); i++){
 			Area e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
@@ -176,7 +161,7 @@ public class Area extends DataEntity {
 	}
 	
 	@Transient
-	public static boolean isAdmin(Long id){
-		return id != null && id.equals(1L);
+	public static boolean isAdmin(String id){
+		return id != null && id.equals("1");
 	}
 }

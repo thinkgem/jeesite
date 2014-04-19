@@ -52,8 +52,8 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label>栏目：</label><tags:treeselect id="category" name="category.id" value="${article.category.id}" labelName="category.name" labelValue="${article.category.name}"
-					title="栏目" url="/cms/category/treeData" module="article"/>
-		<label>标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>&nbsp;
+					title="栏目" url="/cms/category/treeData" module="article" cssClass="input-small"/>
+		<label>标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-small"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
 	</form:form>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">

@@ -59,7 +59,7 @@
 		<div class="control-group">
 			<label class="control-label">请假原因：</label>
 			<div class="controls">
-				<form:textarea path="reason" class="required" rows="5" maxlength="20"/>
+				<form:textarea path="reason" class="required" rows="5" maxlength="255"/>
 			</div>
 		</div>
 		<div class="form-actions">

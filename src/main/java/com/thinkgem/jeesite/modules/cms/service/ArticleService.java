@@ -8,7 +8,6 @@ package com.thinkgem.jeesite.modules.cms.service;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.lucene.index.Term;
@@ -52,10 +51,11 @@ public class ArticleService extends BaseService {
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	public Article get(Long id) {
-		return articleDao.findOne(id);
+	public Article get(String id) {
+		return articleDao.get(id);
 	}
 	
+	@Transactional(readOnly = false)
 	public Page<Article> find(Page<Article> page, Article article, boolean isDataScopeFilter) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByArticle");
@@ -67,8 +67,8 @@ public class ArticleService extends BaseService {
 		DetachedCriteria dc = articleDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
-		if (article.getCategory()!=null && article.getCategory().getId()!=null && !Category.isRoot(article.getCategory().getId())){
-			Category category = categoryDao.findOne(article.getCategory().getId());
+		if (article.getCategory()!=null && StringUtils.isNotBlank(article.getCategory().getId()) && !Category.isRoot(article.getCategory().getId())){
+			Category category = categoryDao.get(article.getCategory().getId());
 			if (category!=null){
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
@@ -90,14 +90,14 @@ public class ArticleService extends BaseService {
 		if (StringUtils.isNotEmpty(article.getImage())&&Article.YES.equals(article.getImage())){
 			dc.add(Restrictions.and(Restrictions.isNotNull("image"),Restrictions.ne("image","")));
 		}
-		if (article.getCreateBy()!=null && article.getCreateBy().getId()>0){
+		if (article.getCreateBy()!=null && StringUtils.isNotBlank(article.getCreateBy().getId())){
 			dc.add(Restrictions.eq("createBy.id", article.getCreateBy().getId()));
 		}
 		if (isDataScopeFilter){
 			dc.createAlias("category.office", "categoryOffice").createAlias("createBy", "createBy");
 			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
 		}
-		dc.add(Restrictions.eq(Article.DEL_FLAG, article.getDelFlag()));
+		dc.add(Restrictions.eq(Article.FIELD_DEL_FLAG, article.getDelFlag()));
 		if (StringUtils.isBlank(page.getOrderBy())){
 			dc.addOrder(Order.desc("weight"));
 			dc.addOrder(Order.desc("updateDate"));
@@ -116,23 +116,26 @@ public class ArticleService extends BaseService {
 			article.setDelFlag(Article.DEL_FLAG_AUDIT);
 		}
 		// 如果栏目不需要审核，则将该内容设为发布状态
-		if (article.getCategory()!=null&&article.getCategory().getId()!=null){
-			Category category = categoryDao.findOne(article.getCategory().getId());
+		if (article.getCategory()!=null&&StringUtils.isNotBlank(article.getCategory().getId())){
+			Category category = categoryDao.get(article.getCategory().getId());
 			if (!Article.YES.equals(category.getIsAudit())){
 				article.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
 		}
 		article.setUpdateBy(UserUtils.getUser());
 		article.setUpdateDate(new Date());
+        if (StringUtils.isNotBlank(article.getViewConfig())){
+            article.setViewConfig(StringEscapeUtils.unescapeHtml4(article.getViewConfig()));
+        }
 		articleDao.clear();
 		articleDao.save(article);
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id, Boolean isRe) {
+	public void delete(String id, Boolean isRe) {
 //		articleDao.updateDelFlag(id, isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
 		// 使用下面方法，以便更新索引。
-		Article article = articleDao.findOne(id);
+		Article article = articleDao.get(id);
 		article.setDelFlag(isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
 		articleDao.save(article);
 	}
@@ -143,7 +146,7 @@ public class ArticleService extends BaseService {
 	 */
 	public List<Object[]> findByIds(String ids) {
 		List<Object[]> list = Lists.newArrayList();
-		Long[] idss = (Long[])ConvertUtils.convert(StringUtils.split(ids,","), Long.class);
+		String[] idss = StringUtils.split(ids,",");
 		if (idss.length>0){
 			List<Article> l = articleDao.findByIdIn(idss);
 			for (Article e : l){
@@ -157,7 +160,7 @@ public class ArticleService extends BaseService {
 	 * 点击数加一
 	 */
 	@Transactional(readOnly = false)
-	public void updateHitsAddOne(Long id) {
+	public void updateHitsAddOne(String id) {
 		articleDao.updateHitsAddOne(id);
 	}
 	
@@ -179,7 +182,7 @@ public class ArticleService extends BaseService {
 		// 设置过滤条件
 		List<BooleanClause> bcList = Lists.newArrayList();
 
-		bcList.add(new BooleanClause(new TermQuery(new Term(Article.DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
+		bcList.add(new BooleanClause(new TermQuery(new Term(Article.FIELD_DEL_FLAG, Article.DEL_FLAG_NORMAL)), Occur.MUST));
 		if (StringUtils.isNotBlank(categoryId)){
 			bcList.add(new BooleanClause(new TermQuery(new Term("category.ids", categoryId)), Occur.MUST));
 		}

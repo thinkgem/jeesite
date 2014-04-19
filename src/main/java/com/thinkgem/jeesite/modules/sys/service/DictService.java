@@ -19,6 +19,7 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.modules.sys.dao.DictDao;
+import com.thinkgem.jeesite.modules.sys.dao.MyBatisDictDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
@@ -34,11 +35,23 @@ public class DictService extends BaseService {
 	@Autowired
 	private DictDao dictDao;
 	
-	public Dict get(Long id) {
-		return dictDao.findOne(id);
+	@Autowired
+	@SuppressWarnings("unused")
+	private MyBatisDictDao myBatisDictDao;
+	
+	public Dict get(String id) {
+		// MyBatis 查询
+//		return myBatisDictDao.get(id);
+		// Hibernate 查询
+		return dictDao.get(id);
 	}
 	
 	public Page<Dict> find(Page<Dict> page, Dict dict) {
+		// MyBatis 查询
+//		dict.setPage(page);
+//		page.setList(myBatisDictDao.find(dict));
+//		return page;
+		// Hibernate 查询
 		DetachedCriteria dc = dictDao.createDetachedCriteria();
 		if (StringUtils.isNotEmpty(dict.getType())){
 			dc.add(Restrictions.eq("type", dict.getType()));
@@ -46,7 +59,7 @@ public class DictService extends BaseService {
 		if (StringUtils.isNotEmpty(dict.getDescription())){
 			dc.add(Restrictions.like("description", "%"+dict.getDescription()+"%"));
 		}
-		dc.add(Restrictions.eq(Dict.DEL_FLAG, Dict.DEL_FLAG_NORMAL));
+		dc.add(Restrictions.eq(Dict.FIELD_DEL_FLAG, Dict.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("type")).addOrder(Order.asc("sort")).addOrder(Order.desc("id"));
 		return dictDao.find(page, dc);
 	}
@@ -62,7 +75,7 @@ public class DictService extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		dictDao.deleteById(id);
 		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
