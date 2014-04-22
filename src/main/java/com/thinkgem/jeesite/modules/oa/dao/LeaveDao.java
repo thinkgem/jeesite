@@ -17,7 +17,7 @@ import com.thinkgem.jeesite.modules.oa.entity.Leave;
 @Repository
 public class LeaveDao extends BaseDao<Leave> {
 	
-	public int updateProcessInstanceId(Long id,String processInstanceId){
+	public int updateProcessInstanceId(String id,String processInstanceId){
 		return update("update Leave set processInstanceId=:p1 where id = :p2", new Parameter(processInstanceId, id));
 	}
 	
