@@ -28,7 +28,7 @@ public class ${ClassName}Service extends BaseService {
 	@Autowired
 	private ${ClassName}Dao ${className}Dao;
 	
-	public ${ClassName} get(Long id) {
+	public ${ClassName} get(String id) {
 		return ${className}Dao.get(id);
 	}
 	
@@ -48,7 +48,7 @@ public class ${ClassName}Service extends BaseService {
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(Long id) {
+	public void delete(String id) {
 		${className}Dao.deleteById(id);
 	}
 	

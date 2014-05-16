@@ -108,7 +108,7 @@ public class ArticleController extends BaseController {
 	
 	@RequiresPermissions("cms:article:edit")
 	@RequestMapping(value = "delete")
-	public String delete(String id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, String categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		// 如果没有审核权限，则不允许删除或发布。
 		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
 			addMessage(redirectAttributes, "你没有删除或发布权限");

@@ -1,6 +1,7 @@
 @echo off
 echo [INFO] Package jar.
 
+%~d0
 cd %~dp0
 cd ..
 

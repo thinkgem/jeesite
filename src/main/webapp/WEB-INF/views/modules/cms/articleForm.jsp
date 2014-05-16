@@ -100,6 +100,13 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">缩略图:</label>
+			<div class="controls">
+                <input type="hidden" id="image" name="image" value="${article.imageSrc}" />
+				<tags:ckfinder input="image" type="thumb" uploadPath="/cms/article" selectMultiple="false"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">正文:</label>
 			<div class="controls">
 				<form:textarea id="content" htmlEscape="true" path="articleData.content" rows="4" maxlength="200" class="input-xxlarge"/>
@@ -110,13 +117,6 @@
 			<label class="control-label">来源:</label>
 			<div class="controls">
 				<form:input path="articleData.copyfrom" htmlEscape="false" maxlength="200" class="input-xlarge"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">文章图片:</label>
-			<div class="controls">
-                <input type="hidden" id="image" name="image" value="${article.imageSrc}" />
-				<tags:ckfinder input="image" type="images" uploadPath="/cms/article" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">

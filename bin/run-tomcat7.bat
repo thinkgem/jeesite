@@ -1,6 +1,7 @@
 @echo off
 echo [INFO] Use maven tomcat7-plugin run the project.
 
+%~d0
 cd %~dp0
 cd ..
 
