@@ -903,6 +903,29 @@
 				</plugins>
 			</build>
 		</profile>
+		
+		<!-- 生成自定义代码 -->
+		<profile>
+			<id>code-gen</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<configuration>
+							<target>
+								<echo message="Code Generate" />
+								<java classname="com.thinkgem.jeesite.generate.Generate">
+									<classpath refid="maven.runtime.classpath"/>
+								</java>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
 	</profiles>
 	
 	<!-- 开发者信息 -->
