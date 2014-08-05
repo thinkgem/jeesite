@@ -80,7 +80,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 1. 具备运行环境：JDK1.6、Maven3.0、MySql5。
 2. 修改src\main\resources\application.properties文件中的数据库设置参数。
 3. 根据修改参数创建对应MySql数据库（数据库编码：UTF-8）。
-4. 运行bin\resresh-db\refresh-db.bat脚本，即可导入表结构及演示数据
+4. 运行bin\resresh-db\refresh-db.bat脚本，即可导入表结构及演示数据(linux操作系统：在控制台中切换至项目根目录，运行命令：mvn antrun:run -Prefresh-db)
 5. 运行bin\jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
 6. 最高管理员账号，用户名：thinkgem 密码：admin
 
