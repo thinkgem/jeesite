@@ -179,18 +179,18 @@ public class SystemService extends BaseService  {
 		roleDao.clear();
 		roleDao.save(role);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 		// 同步到Activiti
 		saveActiviti(role);
-		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteRole(String id) {
 		roleDao.deleteById(id);
 		systemRealm.clearAllCachedAuthorizationInfo();
+		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 		// 同步到Activiti
 		deleteActiviti(roleDao.get(id));
-		UserUtils.removeCache(UserUtils.CACHE_ROLE_LIST);
 	}
 	
 	@Transactional(readOnly = false)
@@ -244,6 +244,7 @@ public class SystemService extends BaseService  {
 		menuDao.save(list);
 		systemRealm.clearAllCachedAuthorizationInfo();
 		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+		// 同步到Activiti
 		saveActiviti(menu);
 	}
 
@@ -252,6 +253,7 @@ public class SystemService extends BaseService  {
 		menuDao.deleteById(id, "%,"+id+",%");
 		systemRealm.clearAllCachedAuthorizationInfo();
 		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
+		// 同步到Activiti
 		deleteActiviti(id);
 	}
 
@@ -262,159 +264,191 @@ public class SystemService extends BaseService  {
 	 */
 	@Transactional(readOnly = false)
 	public void synToActiviti()  {
-		menuDao.updateBySql("delete from ACT_ID_MEMBERSHIP",null);
-		menuDao.updateBySql("delete from ACT_ID_GROUP", null);
-		menuDao.updateBySql("delete from ACT_ID_USER", null);
-		
-		List<Group> activitiGroupList = identityService.createGroupQuery().list();
-		List<org.activiti.engine.identity.User> activitiUserList = identityService.createUserQuery().list();
-		if (activitiGroupList.size() == 0 &&activitiUserList.size() == 0){
-		 	//同步时候添加所有用户，所有组，以及关联关系，之后增删改用户，增删改角色时不需要判断用户，组是否存在。
-		 	List<User> userList = userDao.findAllList();
-		 	for(User user:userList){
-		 		org.activiti.engine.identity.User activitiUesr = identityService.newUser(ObjectUtils.toString(user.getId()));
-		 		identityService.saveUser(activitiUesr);
-		 	}
-		 	for(Menu menu:menuDao.findAllActivitiList()){
-		 		if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
-			 		Group group = identityService.newGroup(menu.getActivitiGroupId());
-			 		identityService.saveGroup(group);
-		 		}
-		 	}
-		 	//创建关联关系
-		 	for(User user:userList) {
-		 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
-		 		if(!Collections3.isEmpty(menuList)){
-		 			for(Menu menu:menuList) {
-		 				if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
-		 					identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
-		 				}
-		 			}
-		 		}
-		 	}
+		try{
+			menuDao.updateBySql("delete from ACT_ID_MEMBERSHIP",null);
+			menuDao.updateBySql("delete from ACT_ID_GROUP", null);
+			menuDao.updateBySql("delete from ACT_ID_USER", null);
+			
+			List<Group> activitiGroupList = identityService.createGroupQuery().list();
+			List<org.activiti.engine.identity.User> activitiUserList = identityService.createUserQuery().list();
+			if (activitiGroupList.size() == 0 &&activitiUserList.size() == 0){
+			 	//同步时候添加所有用户，所有组，以及关联关系，之后增删改用户，增删改角色时不需要判断用户，组是否存在。
+			 	List<User> userList = userDao.findAllList();
+			 	for(User user:userList){
+			 		org.activiti.engine.identity.User activitiUesr = identityService.newUser(ObjectUtils.toString(user.getId()));
+			 		identityService.saveUser(activitiUesr);
+			 	}
+			 	for(Menu menu:menuDao.findAllActivitiList()){
+			 		if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
+				 		Group group = identityService.newGroup(menu.getActivitiGroupId());
+				 		identityService.saveGroup(group);
+			 		}
+			 	}
+			 	//创建关联关系
+			 	for(User user:userList) {
+			 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+			 		if(!Collections3.isEmpty(menuList)){
+			 			for(Menu menu:menuList) {
+			 				if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
+			 					identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+			 				}
+			 			}
+			 		}
+			 	}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 	private void saveActiviti(Role role) {
-		if(role!=null) {
-			List<User> userList = roleDao.get(role.getId()).getUserList();
-			if(!Collections3.isEmpty(userList)) {
-			 	for(User user:userList) {
-			 		String userId = ObjectUtils.toString(user.getId());
-					org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
-					// 是新增用户
-					if (activitiUser == null) {
-						activitiUser = identityService.newUser(userId);
-						identityService.saveUser(activitiUser);
-					} 
-					// 同步用户角色关联数据
-			 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
-			 		merge(user, menuList);
-			 	}
+		try{
+			if(role!=null) {
+				List<User> userList = roleDao.get(role.getId()).getUserList();
+				if(!Collections3.isEmpty(userList)) {
+				 	for(User user:userList) {
+				 		String userId = ObjectUtils.toString(user.getId());
+						org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+						// 是新增用户
+						if (activitiUser == null) {
+							activitiUser = identityService.newUser(userId);
+							identityService.saveUser(activitiUser);
+						} 
+						// 同步用户角色关联数据
+				 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+				 		merge(user, menuList);
+				 	}
+				}
 			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 
 	private void deleteActiviti(Role role) {
-		if(role!=null) {
-			List<User> userList = roleDao.get(role.getId()).getUserList();
-			if(!Collections3.isEmpty(userList)) {
-			 	for(User user:userList) {
-			 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
-			 		merge(user, menuList);
-			 	}
+		try{
+			if(role!=null) {
+				List<User> userList = roleDao.get(role.getId()).getUserList();
+				if(!Collections3.isEmpty(userList)) {
+				 	for(User user:userList) {
+				 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+				 		merge(user, menuList);
+				 	}
+				}
 			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	private void saveActiviti(User user) {
-		if(user!=null) {
-			String userId = ObjectUtils.toString(user.getId());
-			org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
-			// 是新增用户
-			if (activitiUser == null) {
-				activitiUser = identityService.newUser(userId);
-				identityService.saveUser(activitiUser);
-			} 
-			// 同步用户角色关联数据
-	 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
-	 		merge(user, menuList);
+		try{
+			if(user!=null) {
+				String userId = ObjectUtils.toString(user.getId());
+				org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
+				// 是新增用户
+				if (activitiUser == null) {
+					activitiUser = identityService.newUser(userId);
+					identityService.saveUser(activitiUser);
+				} 
+				// 同步用户角色关联数据
+		 		List<Menu> menuList = menuDao.findAllActivitiList(user.getId());
+		 		merge(user, menuList);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	private void deleteActiviti(User user) {
-		if(user!=null) {
-			String userId = ObjectUtils.toString(user.getId());
-			identityService.deleteUser(userId);
+		try{
+			if(user!=null) {
+				String userId = ObjectUtils.toString(user.getId());
+				identityService.deleteUser(userId);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	private void saveActiviti(Menu menu) {
-		if(menu!=null){
-			Group group = identityService.createGroupQuery().groupId(menu.getActivitiGroupId()).singleResult();
-			if(group!=null) {
-				identityService.deleteGroup(group.getId());
-			}
-			if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(menu.getActivitiGroupId())){
-				group = identityService.newGroup(menu.getActivitiGroupId());
-				group.setName(menu.getActivitiGroupName());
-				identityService.saveGroup(group);
-				List<Role> roleList = menuDao.get(menu.getId()).getRoleList();
-				if(!Collections3.isEmpty(roleList)) {
-					for(Role role:roleList) {
-						List<User> userList = role.getUserList();
-						if(!Collections3.isEmpty(userList)) {
-							for(User user:userList) {
-								identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+		try{
+			if(menu!=null){
+				Group group = identityService.createGroupQuery().groupId(menu.getActivitiGroupId()).singleResult();
+				if(group!=null) {
+					identityService.deleteGroup(group.getId());
+				}
+				if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(menu.getActivitiGroupId())){
+					group = identityService.newGroup(menu.getActivitiGroupId());
+					group.setName(menu.getActivitiGroupName());
+					identityService.saveGroup(group);
+					List<Role> roleList = menuDao.get(menu.getId()).getRoleList();
+					if(!Collections3.isEmpty(roleList)) {
+						for(Role role:roleList) {
+							List<User> userList = role.getUserList();
+							if(!Collections3.isEmpty(userList)) {
+								for(User user:userList) {
+									identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+								}
 							}
 						}
 					}
 				}
 			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	private void deleteActiviti(String id) {
-		if(id!=null) {
-			Menu menu = menuDao.get(id);
-			if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(menu.getActivitiGroupId())){
-				identityService.deleteGroup(menu.getActivitiGroupId());
-			}
-			if(menu!=null) {
-				List<Menu> menuList = menuDao.findByParentIdsLike("%,"+menu.getId()+",%");
-				for(Menu m:menuList) {
-					if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(m.getActivitiGroupId())){
-						identityService.deleteGroup(m.getActivitiGroupId());
+		try{
+			if(id!=null) {
+				Menu menu = menuDao.get(id);
+				if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(menu.getActivitiGroupId())){
+					identityService.deleteGroup(menu.getActivitiGroupId());
+				}
+				if(menu!=null) {
+					List<Menu> menuList = menuDao.findByParentIdsLike("%,"+menu.getId()+",%");
+					for(Menu m:menuList) {
+						if(Menu.YES.equals(menu.getIsActiviti()) && StringUtils.isNotBlank(m.getActivitiGroupId())){
+							identityService.deleteGroup(m.getActivitiGroupId());
+						}
 					}
 				}
 			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void merge(User user,List<Menu> menuList) {
-		String userId = ObjectUtils.toString(user.getId());
-		List<Group> activitiGroupList = identityService.createGroupQuery().groupMember(userId).list();
-		if(Collections3.isEmpty(menuList)) {
-			for(Group group:activitiGroupList) {
-				identityService.deleteMembership(userId, group.getId());
-			}
-		} else {
-			Map<String,String> groupMap =Maps.newHashMap();
-			for(Menu menu:menuList) {
-				groupMap.put(menu.getActivitiGroupId(), menu.getActivitiGroupName());
-			}
-			Map<String,String> activitiGroupMap = Collections3.extractToMap(activitiGroupList, "id", "name");
-			for(String groupId:activitiGroupMap.keySet()) {
-				if(StringUtils.isNotBlank(groupId) && !groupMap.containsKey(groupId)) {
-					identityService.deleteMembership(userId, groupId);
+		try{
+			String userId = ObjectUtils.toString(user.getId());
+			List<Group> activitiGroupList = identityService.createGroupQuery().groupMember(userId).list();
+			if(Collections3.isEmpty(menuList)) {
+				for(Group group:activitiGroupList) {
+					identityService.deleteMembership(userId, group.getId());
+				}
+			} else {
+				Map<String,String> groupMap =Maps.newHashMap();
+				for(Menu menu:menuList) {
+					groupMap.put(menu.getActivitiGroupId(), menu.getActivitiGroupName());
+				}
+				Map<String,String> activitiGroupMap = Collections3.extractToMap(activitiGroupList, "id", "name");
+				for(String groupId:activitiGroupMap.keySet()) {
+					if(StringUtils.isNotBlank(groupId) && !groupMap.containsKey(groupId)) {
+						identityService.deleteMembership(userId, groupId);
+					}
+				}
+				for(String groupId:groupMap.keySet()) {
+					if(StringUtils.isNotBlank(groupId) && !activitiGroupMap.containsKey(groupId)) {
+						identityService.createMembership(userId, groupId);
+					}
 				}
 			}
-			for(String groupId:groupMap.keySet()) {
-				if(StringUtils.isNotBlank(groupId) && !activitiGroupMap.containsKey(groupId)) {
-					identityService.createMembership(userId, groupId);
-				}
-			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

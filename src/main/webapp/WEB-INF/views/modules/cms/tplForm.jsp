@@ -22,6 +22,9 @@
 					}
 				}
 			});
+			$(window).resize(function(){
+				$("#source").height($(window).height()-$('body').height()+$("#source").height()-8);
+			}).resize();
 		});
 	</script>
 </head>
@@ -39,10 +42,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-            <form:textarea id="source" path="source" htmlEscape="true" cssStyle="width:100%;height:460px;"/>
+            <form:textarea id="source" path="source" htmlEscape="true" cssStyle="width:100%;"/>
             <%--<tags:ckeditor replace="source" uploadPath="/cms/template" />--%>
 		</div>
-		<div class="form-actions">
+		<div class="form-actions hide">
 			<shiro:hasPermission name="cms:template:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
