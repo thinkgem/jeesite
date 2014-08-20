@@ -54,14 +54,14 @@ public class ${ClassName}Controller extends BaseController {
 		}
         Page<${ClassName}> page = ${className}Service.find(new Page<${ClassName}>(request, response), ${className}); 
         model.addAttribute("page", page);
-		return "${viewPrefix}List";
+		return "modules/" + "${viewPrefix}List";
 	}
 
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "form")
 	public String form(${ClassName} ${className}, Model model) {
 		model.addAttribute("${className}", ${className});
-		return "${viewPrefix}Form";
+		return "modules/" + "${viewPrefix}Form";
 	}
 
 	@RequiresPermissions("${permissionPrefix}:edit")
