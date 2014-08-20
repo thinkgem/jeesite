@@ -5,9 +5,12 @@
  */
 package com.thinkgem.jeesite.generate;
 
+import java.io.Writer;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +52,8 @@ public class Generate {
 		String functionName = "产品";			// 功能名，例：用户
 
 		// 是否启用生成工具
-		Boolean isEnable = false;			
+		//Boolean isEnable = false;
+		Boolean isEnable = true;
 		
 		// ========== ↑↑↑↑↑↑ 执行前请修改参数，谨慎执行。↑↑↑↑↑↑ ====================
 		
@@ -89,6 +93,7 @@ public class Generate {
 		
 		// 代码模板配置
 		Configuration cfg = new Configuration();
+		cfg.setDefaultEncoding("UTF-8");
 		cfg.setDirectoryForTemplateLoading(new File(tplPath));
 
 		// 定义模板变量
@@ -171,11 +176,12 @@ public class Generate {
 	public static void writeFile(String content, String filePath) {
 		try {
 			if (FileUtils.createFile(filePath)){
-				FileWriter fileWriter = new FileWriter(filePath, true);
-				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				FileOutputStream fos = new FileOutputStream(filePath);
+				Writer writer = new OutputStreamWriter(fos,"UTF-8");
+				BufferedWriter bufferedWriter = new BufferedWriter(writer);
 				bufferedWriter.write(content);
 				bufferedWriter.close();
-				fileWriter.close();
+				writer.close();
 			}else{
 				logger.info("生成失败，文件已存在！");
 			}
