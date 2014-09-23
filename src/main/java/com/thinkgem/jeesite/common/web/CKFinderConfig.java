@@ -5,6 +5,8 @@
  */
 package com.thinkgem.jeesite.common.web;
 
+import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,15 +36,18 @@ public class CKFinderConfig extends Configuration {
 		boolean isView = SecurityUtils.getSubject().isPermitted("cms:ckfinder:view");
 		boolean isUpload = SecurityUtils.getSubject().isPermitted("cms:ckfinder:upload");
 		boolean isEdit = SecurityUtils.getSubject().isPermitted("cms:ckfinder:edit");
-		AccessControlLevel alc = this.getAccessConrolLevels().get(0);
-		alc.setFolderView(isView);
-		alc.setFolderCreate(isEdit);
-		alc.setFolderRename(isEdit);
-		alc.setFolderDelete(isEdit);
-		alc.setFileView(isView);
-		alc.setFileUpload(isUpload);
-		alc.setFileRename(isEdit);
-		alc.setFileDelete(isEdit);
+		List<AccessControlLevel> accessControlLevels = this.getAccessConrolLevels();
+		if(accessControlLevels.size() > 0){
+			AccessControlLevel alc = this.getAccessConrolLevels().get(0);
+			alc.setFolderView(isView);
+			alc.setFolderCreate(isEdit);
+			alc.setFolderRename(isEdit);
+			alc.setFolderDelete(isEdit);
+			alc.setFileView(isView);
+			alc.setFileUpload(isUpload);
+			alc.setFileRename(isEdit);
+			alc.setFileDelete(isEdit);
+		}
 //		for (AccessControlLevel a : this.getAccessConrolLevels()){
 //			System.out.println(a.getRole()+", "+a.getResourceType()+", "+a.getFolder()
 //					+", "+a.isFolderView()+", "+a.isFolderCreate()+", "+a.isFolderRename()+", "+a.isFolderDelete()

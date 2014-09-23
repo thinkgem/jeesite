@@ -131,6 +131,7 @@ public class LoginController extends BaseController{
 	}
 	
 
+	@SuppressWarnings("resource")
 	@RequestMapping("${adminPath}/download")
 	public String download(@RequestParam String filePath,HttpServletResponse response) {
 		File file = new File(filePath);
