@@ -47,6 +47,22 @@ function confirmx(mess, href){
 	return false;
 }
 
+//设置validate的默认值
+$.validator.setDefaults({
+	 submitHandler: function(form) { 
+		 loading('正在提交，请稍等...');
+		 form.submit();
+	 },
+	 errorPlacement: function(error, element) {
+		 $("#messageBox").text("输入有误，请先更正！").removeClass("alert-success").addClass("alert-error");
+		 if ( element.is(":checkbox") || element.is(":radio") || element.parent().is(".input-append") ){
+			 error.appendTo(element.parent().parent());
+		 } else {
+			 error.insertAfter(element);
+		 }
+	 }
+});
+
 $(document).ready(function() {
 	//所有下拉框使用select2
 	$("select").select2();

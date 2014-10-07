@@ -28,28 +28,28 @@
 					$("#officeIds").val(ids2);
 					loading('正在提交，请稍等...');
 					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
 				}
 			});
 
-			var setting = {check:{enable:true,nocheckInherit:true},view:{selectedMulti:false},
-					data:{simpleData:{enable:true}},callback:{beforeClick:function(id, node){
+			var setting = {
+				check:{enable:true,nocheckInherit:true},
+				view:{selectedMulti:false},
+				data:{
+					simpleData:{enable:true}
+				},
+				callback:{
+					beforeClick:function(id, node){
 						tree.checkNode(node, !node.checked, true, true);
 						return false;
-					}}};
+					}
+				}
+			};
 			
 			// 用户-菜单
 			var zNodes=[
-					<c:forEach items="${menuList}" var="menu">{id:'${menu.id}', pId:'${not empty menu.parent.id?menu.parent.id:0}', name:"${not empty menu.parent.id?menu.name:'权限列表'}"},
-		            </c:forEach>];
+				<c:forEach items="${menuList}" var="menu">
+					{id:'${menu.id}', pId:'${not empty menu.parent.id?menu.parent.id:0}', name:"${not empty menu.parent.id?menu.name:'权限列表'}"},
+	            </c:forEach>];
 			// 初始化树结构
 			var tree = $.fn.zTree.init($("#menuTree"), setting, zNodes);
 			// 默认选择节点
@@ -63,8 +63,9 @@
 			
 			// 用户-机构
 			var zNodes2=[
-					<c:forEach items="${officeList}" var="office">{id:'${office.id}', pId:'${not empty office.parent?office.parent.id:0}', name:"${office.name}"},
-		            </c:forEach>];
+				<c:forEach items="${officeList}" var="office">
+						{id:'${office.id}', pId:'${not empty office.parent?office.parent.id:0}', name:"${office.name}"},
+            	</c:forEach>];
 			// 初始化树结构
 			var tree2 = $.fn.zTree.init($("#officeTree"), setting, zNodes2);
 			// 不选择父节点
@@ -84,7 +85,8 @@
 			});
 		});
 		function refreshOfficeTree(){
-			if($("#dataScope").val()==9){
+			// 按明细设置
+			if($("#dataScope").val()==9){ 
 				$("#officeTree").show();
 			}else{
 				$("#officeTree").hide();
@@ -97,9 +99,11 @@
 		<li><a href="${ctx}/sys/role/">角色列表</a></li>
 		<li class="active"><a href="${ctx}/sys/role/form?id=${role.id}">角色<shiro:hasPermission name="sys:role:edit">${not empty role.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:role:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
+	
 	<form:form id="inputForm" modelAttribute="role" action="${ctx}/sys/role/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
+		
 		<div class="control-group">
 			<label class="control-label">归属机构:</label>
 			<div class="controls">
@@ -133,7 +137,9 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="sys:role:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="sys:role:edit">
+				<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
