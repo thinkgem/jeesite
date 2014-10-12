@@ -63,6 +63,48 @@ $.validator.setDefaults({
 	 }
 });
 
+//表格排序
+function tableSort( configuration ){
+	
+	var defaults = {
+		orderBy : '#orderBy', // 排序字段
+		contentTable : '#contentTable', // 表格
+		sortClass : 'sort', // 标志要排序的列的class
+		callBack : $.noop // 回调函数
+	};
+	
+	var config = $.extend({}, defaults, configuration);
+	
+	var $orderBy = $(config.orderBy),
+		  $sortCol = $(config.contentTable + " th." + config.sortClass),
+	 	  orderBy = $orderBy.val().split(" ");
+
+	$sortCol.each(function(){
+		if ($(this).hasClass(orderBy[0])){
+			orderBy[1] = orderBy[1]&&orderBy[1].toUpperCase() == "DESC" ? "down" : "up";
+			$(this).html($(this).html() + " <i class=\"icon icon-arrow-" + orderBy[1] + "\"></i>");
+		}
+	});
+	
+	$sortCol.click(function(){
+		var order = $(this).attr("class").split(" "),
+			  sort = $orderBy.val().split(" ");
+		
+		for(var i=0; i<order.length; i++){
+			if (order[i] == config.sortClass){order = order[i+1]; break;}
+		}
+		
+		if (order == sort[0]){
+			sort = (sort[1]&&sort[1].toUpperCase()=="DESC" ? "ASC" : "DESC");
+			$orderBy.val(order + " DESC" != order+" " + sort ? "" : order + " " + sort);
+		}else{
+			$orderBy.val(order + " ASC");
+		}
+		
+		config.callBack();
+	});
+}
+
 $(document).ready(function() {
 	//所有下拉框使用select2
 	$("select").select2();
