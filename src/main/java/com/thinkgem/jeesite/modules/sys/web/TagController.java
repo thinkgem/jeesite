@@ -16,35 +16,36 @@ import com.thinkgem.jeesite.common.web.BaseController;
 
 /**
  * 标签Controller
+ * 
  * @author ThinkGem
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = "${adminPath}/tag")
+@RequestMapping("${adminPath}/tag")
 public class TagController extends BaseController {
-	
+
 	/**
 	 * 树结构选择标签（treeselect.tag）
 	 */
 	@RequiresUser
-	@RequestMapping(value = "treeselect")
+	@RequestMapping("treeselect")
 	public String treeselect(HttpServletRequest request, Model model) {
-		model.addAttribute("url", request.getParameter("url")); 	// 树结构数据URL
+		model.addAttribute("url", request.getParameter("url")); // 树结构数据URL
 		model.addAttribute("extId", request.getParameter("extId")); // 排除的编号ID
 		model.addAttribute("checked", request.getParameter("checked")); // 是否可复选
 		model.addAttribute("selectIds", request.getParameter("selectIds")); // 指定默认选中的ID
-		model.addAttribute("module", request.getParameter("module"));	// 过滤栏目模型（仅针对CMS的Category树）
+		model.addAttribute("module", request.getParameter("module")); // 过滤栏目模型（仅针对CMS的Category树）
 		return "modules/sys/tagTreeselect";
 	}
-	
+
 	/**
 	 * 图标选择标签（iconselect.tag）
 	 */
 	@RequiresUser
-	@RequestMapping(value = "iconselect")
+	@RequestMapping("iconselect")
 	public String iconselect(HttpServletRequest request, Model model) {
 		model.addAttribute("value", request.getParameter("value"));
 		return "modules/sys/tagIconselect";
 	}
-	
+
 }

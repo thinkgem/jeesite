@@ -148,7 +148,7 @@ public class UserUtils extends BaseService {
 //			}
 			DetachedCriteria dc = officeDao.createDetachedCriteria();
 			dc.add(dataScopeFilter(user, dc.getAlias(), ""));
-			dc.add(Restrictions.eq("delFlag", Office.DEL_FLAG_NORMAL));
+			dc.add(Restrictions.eq(Office.FIELD_DEL_FLAG, Office.DEL_FLAG_NORMAL));
 			dc.addOrder(Order.asc("code"));
 			officeList = officeDao.find(dc);
 			putCache(CACHE_OFFICE_LIST, officeList);
