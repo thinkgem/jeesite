@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import ${packageName}.${moduleName}.entity${subModuleName}.${ClassName};
@@ -53,14 +54,14 @@ public class ${ClassName}Controller extends BaseController {
 		}
         Page<${ClassName}> page = ${className}Service.find(new Page<${ClassName}>(request, response), ${className}); 
         model.addAttribute("page", page);
-		return "${viewPrefix}List";
+		return "modules/" + "${viewPrefix}List";
 	}
 
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "form")
 	public String form(${ClassName} ${className}, Model model) {
 		model.addAttribute("${className}", ${className});
-		return "${viewPrefix}Form";
+		return "modules/" + "${viewPrefix}Form";
 	}
 
 	@RequiresPermissions("${permissionPrefix}:edit")

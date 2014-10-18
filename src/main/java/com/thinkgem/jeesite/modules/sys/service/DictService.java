@@ -19,7 +19,6 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.modules.sys.dao.DictDao;
-import com.thinkgem.jeesite.modules.sys.dao.MyBatisDictDao;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
@@ -35,9 +34,8 @@ public class DictService extends BaseService {
 	@Autowired
 	private DictDao dictDao;
 	
-	@Autowired
-	@SuppressWarnings("unused")
-	private MyBatisDictDao myBatisDictDao;
+//	@Autowired
+//	private MyBatisDictDao myBatisDictDao;
 	
 	public Dict get(String id) {
 		// MyBatis 查询

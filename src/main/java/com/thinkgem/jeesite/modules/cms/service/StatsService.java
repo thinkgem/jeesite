@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,15 +55,15 @@ public class StatsService extends BaseService {
 			paramMap.put("endDate", DateUtils.formatDate(endDate, "yyyy-MM-dd"));
 		}
 		
-		Long categoryId = StringUtils.toLong(paramMap.get("categoryId"));
-		if (categoryId > 0){
+		String categoryId = ObjectUtils.toString(paramMap.get("categoryId"));
+		if (StringUtils.isNotBlank(categoryId)){
 			ql.append(" and (c.id = :id or c.parentIds like :parentIds)");
 			pm.put("id", categoryId);
 			pm.put("parentIds", "%,"+categoryId+",%");
 		}
 		
-		Long officeId = StringUtils.toLong(paramMap.get("officeId"));
-		if (officeId > 0){
+		String officeId = ObjectUtils.toString(paramMap.get("officeId"));
+		if (StringUtils.isNotBlank(officeId)){
 			ql.append(" and (o.id = :officeId or o.parentIds like :officeParentIds)");
 			pm.put("officeId", officeId);
 			pm.put("officeParentIds", "%,"+officeId+",%");

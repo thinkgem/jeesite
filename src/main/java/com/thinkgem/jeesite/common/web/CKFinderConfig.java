@@ -5,8 +5,6 @@
  */
 package com.thinkgem.jeesite.common.web;
 
-import java.io.File;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +14,6 @@ import com.ckfinder.connector.ServletContextFactory;
 import com.ckfinder.connector.configuration.Configuration;
 import com.ckfinder.connector.data.AccessControlLevel;
 import com.ckfinder.connector.utils.AccessControlUtil;
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**

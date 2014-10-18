@@ -37,7 +37,7 @@ import com.thinkgem.jeesite.common.utils.IdGen;
 @Table(name = "sys_log")
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Log extends BaseEntity<Area> {
+public class Log extends BaseEntity<Log> {
 
 	private static final long serialVersionUID = 1L;
 	private String id;			// 日志编号
