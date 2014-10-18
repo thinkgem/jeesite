@@ -21,35 +21,37 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 站点Entity
+ * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_site")
-@DynamicInsert @DynamicUpdate
+@DynamicInsert
+@DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Site extends IdEntity<Category> {
-	
+
 	private static final long serialVersionUID = 1L;
-	private String name;	// 站点名称
-	private String title;	// 站点标题
-	private String logo;	// 站点logo
+	private String name; // 站点名称
+	private String title; // 站点标题
+	private String logo; // 站点logo
 	private String description;// 描述，填写有助于搜索引擎优化
 	private String keywords;// 关键字，填写有助于搜索引擎优化
-	private String theme;	// 主题
+	private String theme; // 主题
 	private String copyright;// 版权信息
 	private String customIndexView;// 自定义首页视图文件
 
 	public Site() {
 		super();
 	}
-	
-	public Site(String id){
+
+	public Site(String id) {
 		this();
 		this.id = id;
 	}
 
-	@Length(min=1, max=100)
+	@Length(min = 1, max = 100)
 	public String getName() {
 		return name;
 	}
@@ -58,7 +60,7 @@ public class Site extends IdEntity<Category> {
 		this.name = name;
 	}
 
-	@Length(min=1, max=100)
+	@Length(min = 1, max = 100)
 	public String getTitle() {
 		return title;
 	}
@@ -66,7 +68,7 @@ public class Site extends IdEntity<Category> {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public String getLogo() {
 		return logo;
 	}
@@ -75,7 +77,7 @@ public class Site extends IdEntity<Category> {
 		this.logo = logo;
 	}
 
-	@Length(min=0, max=255)
+	@Length(min = 0, max = 255)
 	public String getDescription() {
 		return description;
 	}
@@ -84,7 +86,7 @@ public class Site extends IdEntity<Category> {
 		this.description = description;
 	}
 
-	@Length(min=0, max=255)
+	@Length(min = 0, max = 255)
 	public String getKeywords() {
 		return keywords;
 	}
@@ -93,7 +95,7 @@ public class Site extends IdEntity<Category> {
 		this.keywords = keywords;
 	}
 
-	@Length(min=1, max=255)
+	@Length(min = 1, max = 255)
 	public String getTheme() {
 		return theme;
 	}
@@ -122,40 +124,40 @@ public class Site extends IdEntity<Category> {
 	 * 获取默认站点ID
 	 */
 	@Transient
-	public static String defaultSiteId(){
+	public static String defaultSiteId() {
 		return "1";
 	}
-	
+
 	/**
 	 * 判断是否为默认（主站）站点
 	 */
 	@Transient
-	public static boolean isDefault(String id){
+	public static boolean isDefault(String id) {
 		return id != null && id.equals(defaultSiteId());
 	}
-	
+
 	/**
 	 * 获取当前编辑的站点编号
 	 */
 	@Transient
-	public static String getCurrentSiteId(){
-		String siteId = (String)UserUtils.getCache("siteId");
-		return StringUtils.isNotBlank(siteId)?siteId:defaultSiteId();
+	public static String getCurrentSiteId() {
+		String siteId = (String) UserUtils.getCache("siteId");
+		return StringUtils.isNotBlank(siteId) ? siteId : defaultSiteId();
 	}
 
-    /**
-   	 * 模板路径
-   	 */
-   	public static final String TPL_BASE = "/WEB-INF/views/modules/cms/front/themes";
+	/**
+	 * 模板路径
+	 */
+	public static final String TPL_BASE = "/WEB-INF/views/modules/cms/front/themes";
 
-    /**
-   	 * 获得模板方案路径。如：/WEB-INF/views/modules/cms/front/themes/jeesite
-   	 *
-   	 * @return
-   	 */
-    @Transient
-   	public String getSolutionPath() {
-   		return TPL_BASE + "/" + getTheme();
-   	}
-	
+	/**
+	 * 获得模板方案路径。如：/WEB-INF/views/modules/cms/front/themes/jeesite
+	 *
+	 * @return
+	 */
+	@Transient
+	public String getSolutionPath() {
+		return TPL_BASE + "/" + getTheme();
+	}
+
 }

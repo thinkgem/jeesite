@@ -30,44 +30,46 @@ import com.thinkgem.jeesite.common.utils.IdGen;
 
 /**
  * 日志Entity
+ * 
  * @author ThinkGem
  * @version 2013-05-30
  */
 @Entity
 @Table(name = "sys_log")
-@DynamicInsert @DynamicUpdate
+@DynamicInsert
+@DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Log extends BaseEntity<Log> {
 
 	private static final long serialVersionUID = 1L;
-	private String id;			// 日志编号
-	private String type; 		// 日志类型（1：接入日志；2：错误日志）
-	private User createBy;		// 创建者
-	private Date createDate;	// 日志创建时间
-	private String remoteAddr; 	// 操作用户的IP地址
-	private String requestUri; 	// 操作的URI
-	private String method; 		// 操作的方式
-	private String params; 		// 操作提交的数据
-	private String userAgent;	// 操作用户代理信息
-	private String exception; 	// 异常信息
-	
+	private String id; // 日志编号
+	private String type; // 日志类型（1：接入日志；2：错误日志）
+	private User createBy; // 创建者
+	private Date createDate; // 日志创建时间
+	private String remoteAddr; // 操作用户的IP地址
+	private String requestUri; // 操作的URI
+	private String method; // 操作的方式
+	private String params; // 操作提交的数据
+	private String userAgent; // 操作用户代理信息
+	private String exception; // 异常信息
+
 	public static final String TYPE_ACCESS = "1";
 	public static final String TYPE_EXCEPTION = "2";
-	
-	public Log(){
+
+	public Log() {
 		super();
 	}
-	
-	public Log(String id){
+
+	public Log(String id) {
 		this();
 		this.id = id;
 	}
 
 	@PrePersist
-	public void prePersist(){
+	public void prePersist() {
 		this.id = IdGen.uuid();
 	}
-	
+
 	@Id
 	public String getId() {
 		return id;
@@ -76,7 +78,7 @@ public class Log extends BaseEntity<Log> {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -86,7 +88,7 @@ public class Log extends BaseEntity<Log> {
 	}
 
 	@JsonIgnore
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	public User getCreateBy() {
 		return createBy;
@@ -105,7 +107,7 @@ public class Log extends BaseEntity<Log> {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
+
 	public String getRemoteAddr() {
 		return remoteAddr;
 	}
@@ -145,7 +147,7 @@ public class Log extends BaseEntity<Log> {
 	public void setParams(String params) {
 		this.params = params;
 	}
-	
+
 	public String getException() {
 		return exception;
 	}

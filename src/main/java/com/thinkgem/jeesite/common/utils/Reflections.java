@@ -249,7 +249,7 @@ public class Reflections {
 	 * 如public UserDao extends HibernateDao<User,Long>
 	 *
 	 * @param clazz clazz The class to introspect
-	 * @param index the Index of the generic ddeclaration,start from 0.
+	 * @param index the Index of the generic declaration,start from 0.
 	 * @return the index generic declaration, or Object.class if cannot be determined
 	 */
 	public static Class getClassGenricType(final Class clazz, final int index) {

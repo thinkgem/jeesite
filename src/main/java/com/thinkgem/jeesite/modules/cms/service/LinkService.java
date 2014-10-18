@@ -33,6 +33,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 链接Service
+ * 
  * @author ThinkGem
  * @version 2013-01-15
  */
@@ -42,49 +43,57 @@ public class LinkService extends BaseService {
 
 	@Autowired
 	private LinkDao linkDao;
-	
+
 	@Autowired
 	private CategoryDao categoryDao;
-	
+
 	public Link get(String id) {
 		return linkDao.get(id);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public Page<Link> find(Page<Link> page, Link link, boolean isDataScopeFilter) {
+		
 		// 更新过期的权重，间隔为“6”个小时
-		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByLink");
-		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null 
-				&& updateExpiredWeightDate.getTime() < new Date().getTime())){
+		Date updateExpiredWeightDate = (Date) CacheUtils.get("updateExpiredWeightDateByLink");
+		if (updateExpiredWeightDate == null
+				|| (updateExpiredWeightDate != null 
+				&& updateExpiredWeightDate.getTime() < new Date().getTime())) {
+			
 			linkDao.updateExpiredWeight();
 			CacheUtils.put("updateExpiredWeightDateByLink", DateUtils.addHours(new Date(), 6));
 		}
+		
 		DetachedCriteria dc = linkDao.createDetachedCriteria();
 		dc.createAlias("category", "category");
 		dc.createAlias("category.site", "category.site");
-		if (link.getCategory()!=null && StringUtils.isNotBlank(link.getCategory().getId()) && !Category.isRoot(link.getCategory().getId())){
+		if (link.getCategory() != null
+				&& StringUtils.isNotBlank(link.getCategory().getId())
+				&& !Category.isRoot(link.getCategory().getId())) {
+			
 			Category category = categoryDao.get(link.getCategory().getId());
-			if (category!=null){
+			if (category != null) {
 				dc.add(Restrictions.or(
 						Restrictions.eq("category.id", category.getId()),
-						Restrictions.like("category.parentIds", "%,"+category.getId()+",%")));
+						Restrictions.like("category.parentIds", "%," + category.getId() + ",%")));
+				
 				dc.add(Restrictions.eq("category.site.id", category.getSite().getId()));
 				link.setCategory(category);
-			}else{
-				dc.add(Restrictions.eq("category.site.id", Site.getCurrentSiteId()));
+			} else {
+				dc.add(Restrictions.eq("category.site.id",Site.getCurrentSiteId()));
 			}
-		}else{
+		} else {
 			dc.add(Restrictions.eq("category.site.id", Site.getCurrentSiteId()));
 		}
-		if (StringUtils.isNotEmpty(link.getTitle())){
-			dc.add(Restrictions.like("title", "%"+link.getTitle()+"%"));
+		if (StringUtils.isNotEmpty(link.getTitle())) {
+			dc.add(Restrictions.like("title", "%" + link.getTitle() + "%"));
 		}
-		if (link.getCreateBy()!=null && StringUtils.isNotBlank(link.getCreateBy().getId())){
+		if (link.getCreateBy() != null && StringUtils.isNotBlank(link.getCreateBy().getId())) {
 			dc.add(Restrictions.eq("createBy.id", link.getCreateBy().getId()));
 		}
-		if (isDataScopeFilter){
+		if (isDataScopeFilter) {
 			dc.createAlias("category.office", "categoryOffice").createAlias("createBy", "createBy");
-			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice", "createBy"));
+			dc.add(dataScopeFilter(UserUtils.getUser(), "categoryOffice","createBy"));
 		}
 		dc.add(Restrictions.eq(Link.FIELD_DEL_FLAG, link.getDelFlag()));
 		dc.addOrder(Order.desc("weight"));
@@ -94,36 +103,38 @@ public class LinkService extends BaseService {
 
 	@Transactional(readOnly = false)
 	public void save(Link link) {
+		
 		// 如果没有审核权限，则将当前内容改为待审核状态
-		if (!SecurityUtils.getSubject().isPermitted("cms:link:audit")){
+		if (!SecurityUtils.getSubject().isPermitted("cms:link:audit")) {
 			link.setDelFlag(Link.DEL_FLAG_AUDIT);
 		}
+		
 		// 如果栏目不需要审核，则将该内容设为发布状态
-		if (link.getCategory()!=null&&StringUtils.isNotBlank(link.getCategory().getId())){
+		if (link.getCategory() != null && StringUtils.isNotBlank(link.getCategory().getId())) {
 			Category category = categoryDao.get(link.getCategory().getId());
-			if (!Article.YES.equals(category.getIsAudit())){
+			if (!Article.YES.equals(category.getIsAudit())) {
 				link.setDelFlag(Article.DEL_FLAG_NORMAL);
 			}
 		}
 		linkDao.clear();
 		linkDao.save(link);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(String id, Boolean isRe) {
-		linkDao.updateDelFlag(id, isRe!=null&&isRe?Link.DEL_FLAG_NORMAL:Link.DEL_FLAG_DELETE);
+		linkDao.updateDelFlag(id, isRe != null && isRe ? Link.DEL_FLAG_NORMAL : Link.DEL_FLAG_DELETE);
 	}
-	
+
 	/**
 	 * 通过编号获取内容标题
 	 */
 	public List<Object[]> findByIds(String ids) {
 		List<Object[]> list = Lists.newArrayList();
-		Long[] idss = (Long[])ConvertUtils.convert(StringUtils.split(ids,","), Long.class);
-		if (idss.length>0){
+		Long[] idss = (Long[]) ConvertUtils.convert(StringUtils.split(ids, ","), Long.class);
+		if (idss.length > 0) {
 			List<Link> l = linkDao.findByIdIn(idss);
-			for (Link e : l){
-				list.add(new Object[]{e.getId(),StringUtils.abbr(e.getTitle(),50)});
+			for (Link e : l) {
+				list.add(new Object[] { e.getId(), StringUtils.abbr(e.getTitle(), 50) });
 			}
 		}
 		return list;

@@ -12,6 +12,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Log;
 
 /**
  * 日志DAO接口
+ * 
  * @author ThinkGem
  * @version 2013-8-23
  */

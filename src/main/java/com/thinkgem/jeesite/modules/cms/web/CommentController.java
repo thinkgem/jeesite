@@ -30,55 +30,61 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 评论Controller
+ * 
  * @author ThinkGem
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = "${adminPath}/cms/comment")
+@RequestMapping("${adminPath}/cms/comment")
 public class CommentController extends BaseController {
 
 	@Autowired
 	private CommentService commentService;
-	
+
 	@ModelAttribute
-	public Comment get(@RequestParam(required=false) String id) {
-		if (StringUtils.isNotBlank(id)){
+	public Comment get(@RequestParam(required = false) String id) {
+		if (StringUtils.isNotBlank(id)) {
 			return commentService.get(id);
-		}else{
+		} else {
 			return new Comment();
 		}
 	}
-	
+
 	@RequiresPermissions("cms:comment:view")
-	@RequestMapping(value = {"list", ""})
-	public String list(Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<Comment> page = commentService.find(new Page<Comment>(request, response), comment); 
-        model.addAttribute("page", page);
+	@RequestMapping({ "list", "" })
+	public String list(Comment comment, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		
+		Page<Comment> page = commentService.find(new Page<Comment>(request, response), comment);
+		model.addAttribute("page", page);
 		return "modules/cms/commentList";
 	}
 
 	@RequiresPermissions("cms:comment:edit")
-	@RequestMapping(value = "save")
+	@RequestMapping("save")
 	public String save(Comment comment, RedirectAttributes redirectAttributes) {
-		if (beanValidator(redirectAttributes, comment)){
-			if (comment.getAuditUser() == null){
+		if (beanValidator(redirectAttributes, comment)) {
+			if (comment.getAuditUser() == null) {
 				comment.setAuditUser(UserUtils.getUser());
 				comment.setAuditDate(new Date());
 			}
 			comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
 			commentService.save(comment);
-			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
-					+"评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()),50) + "'成功");
+			
+			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(),
+							"cms_del_flag", "保存")
+							+ "评论'"
+							+ StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()), 50) + "'成功");
 		}
-		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";
+		return "redirect:" + Global.getAdminPath() + "/cms/comment/?repage&delFlag=2";
 	}
-	
+
 	@RequiresPermissions("cms:comment:edit")
 	@RequestMapping(value = "delete")
-	public String delete(String id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(String id, @RequestParam(required = false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		commentService.delete(id, isRe);
-		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";
+		addMessage(redirectAttributes, (isRe != null && isRe ? "恢复审核" : "删除") + "评论成功");
+		return "redirect:" + Global.getAdminPath() + "/cms/comment/?repage&delFlag=2";
 	}
 
 }

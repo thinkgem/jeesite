@@ -24,22 +24,25 @@ import com.thinkgem.jeesite.modules.sys.service.LogService;
 
 /**
  * 日志Controller
+ * 
  * @author ThinkGem
  * @version 2013-6-2
  */
 @Controller
-@RequestMapping(value = "${adminPath}/sys/log")
+@RequestMapping("${adminPath}/sys/log")
 public class LogController extends BaseController {
 
 	@Autowired
 	private LogService logService;
-	
+
 	@RequiresPermissions("sys:log:view")
-	@RequestMapping(value = {"list", ""})
-	public String list(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<Log> page = logService.find(new Page<Log>(request, response), paramMap); 
-        model.addAttribute("page", page);
-        model.addAllAttributes(paramMap);
+	@RequestMapping({ "list", "" })
+	public String list(@RequestParam Map<String, Object> paramMap,
+			HttpServletRequest request, HttpServletResponse response,Model model) {
+		
+		Page<Log> page = logService.find(new Page<Log>(request, response),paramMap);
+		model.addAttribute("page", page);
+		model.addAllAttributes(paramMap);
 		return "modules/sys/logList";
 	}
 

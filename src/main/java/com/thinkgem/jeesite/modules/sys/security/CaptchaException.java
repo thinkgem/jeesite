@@ -9,6 +9,7 @@ import org.apache.shiro.authc.AuthenticationException;
 
 /**
  * 验证码异常处理类
+ * 
  * @author ThinkGem
  * @version 2013-5-19
  */

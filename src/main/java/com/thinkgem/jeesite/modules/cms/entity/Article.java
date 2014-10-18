@@ -42,35 +42,38 @@ import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 文章Entity
+ * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_article")
-@DynamicInsert @DynamicUpdate
+@DynamicInsert
+@DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Indexed @Analyzer(impl = IKAnalyzer.class)
+@Indexed
+@Analyzer(impl = IKAnalyzer.class)
 public class Article extends IdEntity<Article> {
 
-    public static final String DEFAULT_TEMPLATE = "frontViewArticle";
-	
+	public static final String DEFAULT_TEMPLATE = "frontViewArticle";
+
 	private static final long serialVersionUID = 1L;
 	private Category category;// 分类编号
-	private String title;	// 标题
-    private String link;	// 外部链接
-	private String color;	// 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
-	private String image;	// 文章图片
+	private String title; // 标题
+	private String link; // 外部链接
+	private String color; // 标题颜色（red：红色；green：绿色；blue：蓝色；yellow：黄色；orange：橙色）
+	private String image; // 文章图片
 	private String keywords;// 关键字
 	private String description;// 描述、摘要
-	private Integer weight;	// 权重，越大越靠前
+	private Integer weight; // 权重，越大越靠前
 	private Date weightDate;// 权重期限，超过期限，将weight设置为0
-	private Integer hits;	// 点击数
-	private String posid;	// 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
-    private String customContentView;	// 自定义内容视图
-   	private String viewConfig;	// 视图参数
+	private Integer hits; // 点击数
+	private String posid; // 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
+	private String customContentView; // 自定义内容视图
+	private String viewConfig; // 视图参数
 
-	private ArticleData articleData;	//文章副表
-    
+	private ArticleData articleData; // 文章副表
+
 	public Article() {
 		super();
 		this.weight = 0;
@@ -78,24 +81,24 @@ public class Article extends IdEntity<Article> {
 		this.posid = "";
 	}
 
-	public Article(String id){
+	public Article(String id) {
 		this();
 		this.id = id;
 	}
-	
-	public Article(Category category){
+
+	public Article(Category category) {
 		this();
 		this.category = category;
 	}
 
 	@PrePersist
-	public void prePersist(){
+	public void prePersist() {
 		super.prePersist();
 		articleData.setId(this.id);
 	}
-	
+
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
 	@IndexedEmbedded
@@ -107,8 +110,8 @@ public class Article extends IdEntity<Article> {
 		this.category = category;
 	}
 
-	@Length(min=1, max=255)
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Length(min = 1, max = 255)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getTitle() {
 		return title;
 	}
@@ -117,16 +120,16 @@ public class Article extends IdEntity<Article> {
 		this.title = title;
 	}
 
-    @Length(min=0, max=255)
-    public String getLink() {
-        return link;
-    }
+	@Length(min = 0, max = 255)
+	public String getLink() {
+		return link;
+	}
 
-    public void setLink(String link) {
-        this.link = link;
-    }
+	public void setLink(String link) {
+		this.link = link;
+	}
 
-	@Length(min=0, max=50)
+	@Length(min = 0, max = 50)
 	public String getColor() {
 		return color;
 	}
@@ -135,17 +138,17 @@ public class Article extends IdEntity<Article> {
 		this.color = color;
 	}
 
-	@Length(min=0, max=255)
+	@Length(min = 0, max = 255)
 	public String getImage() {
 		return image;
 	}
 
 	public void setImage(String image) {
-        this.image = CmsUtils.formatImageSrcToDb(image);
+		this.image = CmsUtils.formatImageSrcToDb(image);
 	}
 
-	@Length(min=0, max=255)
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Length(min = 0, max = 255)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getKeywords() {
 		return keywords;
 	}
@@ -154,8 +157,8 @@ public class Article extends IdEntity<Article> {
 		this.keywords = keywords;
 	}
 
-	@Length(min=0, max=255)
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Length(min = 0, max = 255)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getDescription() {
 		return description;
 	}
@@ -189,7 +192,7 @@ public class Article extends IdEntity<Article> {
 		this.hits = hits;
 	}
 
-	@Length(min=0, max=10)
+	@Length(min = 0, max = 10)
 	public String getPosid() {
 		return posid;
 	}
@@ -198,23 +201,23 @@ public class Article extends IdEntity<Article> {
 		this.posid = posid;
 	}
 
-    public String getCustomContentView() {
-        return customContentView;
-    }
+	public String getCustomContentView() {
+		return customContentView;
+	}
 
-    public void setCustomContentView(String customContentView) {
-        this.customContentView = customContentView;
-    }
+	public void setCustomContentView(String customContentView) {
+		this.customContentView = customContentView;
+	}
 
-    public String getViewConfig() {
-        return viewConfig;
-    }
+	public String getViewConfig() {
+		return viewConfig;
+	}
 
-    public void setViewConfig(String viewConfig) {
-        this.viewConfig = viewConfig;
-    }
+	public void setViewConfig(String viewConfig) {
+		this.viewConfig = viewConfig;
+	}
 
-	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
+	@OneToOne(mappedBy = "article", cascade = CascadeType.ALL, optional = false)
 	@Valid
 	@IndexedEmbedded
 	public ArticleData getArticleData() {
@@ -228,7 +231,7 @@ public class Article extends IdEntity<Article> {
 	@Transient
 	public List<String> getPosidList() {
 		List<String> list = Lists.newArrayList();
-		if (posid != null){
+		if (posid != null) {
 			for (String s : StringUtils.split(posid, ",")) {
 				list.add(s);
 			}
@@ -238,19 +241,17 @@ public class Article extends IdEntity<Article> {
 
 	@Transient
 	public void setPosidList(List<Long> list) {
-		posid = ","+StringUtils.join(list, ",")+",";
+		posid = "," + StringUtils.join(list, ",") + ",";
 	}
 
-    @Transient
-   	public String getUrl() {
-        return CmsUtils.getUrlDynamic(this);
-   	}
+	@Transient
+	public String getUrl() {
+		return CmsUtils.getUrlDynamic(this);
+	}
 
-    @Transient
-   	public String getImageSrc() {
-        return CmsUtils.formatImageSrcToWeb(this.image);
-   	}
-	
+	@Transient
+	public String getImageSrc() {
+		return CmsUtils.formatImageSrcToWeb(this.image);
+	}
+
 }
-
-

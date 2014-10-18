@@ -36,6 +36,7 @@ import com.thinkgem.jeesite.modules.cms.utils.TplUtils;
 
 /**
  * 栏目Controller
+ * 
  * @author ThinkGem
  * @version 2013-4-21
  */
@@ -45,78 +46,83 @@ public class CategoryController extends BaseController {
 
 	@Autowired
 	private CategoryService categoryService;
-    @Autowired
-   	private FileTplService fileTplService;
-    @Autowired
-   	private SiteService siteService;
 	
+	@Autowired
+	private FileTplService fileTplService;
+	
+	@Autowired
+	private SiteService siteService;
+
 	@ModelAttribute("category")
-	public Category get(@RequestParam(required=false) String id) {
-		if (StringUtils.isNotBlank(id)){
+	public Category get(@RequestParam(required = false) String id) {
+		if (StringUtils.isNotBlank(id)) {
 			return categoryService.get(id);
-		}else{
+		} else {
 			return new Category();
 		}
 	}
 
 	@RequiresPermissions("cms:category:view")
-	@RequestMapping(value = {"list", ""})
+	@RequestMapping({ "list", "" })
 	public String list(Model model) {
 		List<Category> list = Lists.newArrayList();
 		List<Category> sourcelist = categoryService.findByUser(true, null);
 		Category.sortList(list, sourcelist, "1");
-        model.addAttribute("list", list);
+		model.addAttribute("list", list);
 		return "modules/cms/categoryList";
 	}
 
 	@RequiresPermissions("cms:category:view")
-	@RequestMapping(value = "form")
+	@RequestMapping("form")
 	public String form(Category category, Model model) {
-		if (category.getParent()==null||category.getParent().getId()==null){
+		if (category.getParent() == null || category.getParent().getId() == null) {
 			category.setParent(new Category("1"));
 		}
 		category.setParent(categoryService.get(category.getParent().getId()));
-		if (category.getOffice()==null||category.getOffice().getId()==null){
+		if (category.getOffice() == null || category.getOffice().getId() == null) {
 			category.setOffice(category.getParent().getOffice());
 		}
-        model.addAttribute("listViewList",getTplContent(Category.DEFAULT_TEMPLATE));
-        model.addAttribute("category_DEFAULT_TEMPLATE",Category.DEFAULT_TEMPLATE);
-        model.addAttribute("contentViewList",getTplContent(Article.DEFAULT_TEMPLATE));
-        model.addAttribute("article_DEFAULT_TEMPLATE",Article.DEFAULT_TEMPLATE);
+		model.addAttribute("listViewList",getTplContent(Category.DEFAULT_TEMPLATE));
+		model.addAttribute("category_DEFAULT_TEMPLATE", Category.DEFAULT_TEMPLATE);
+		model.addAttribute("contentViewList", getTplContent(Article.DEFAULT_TEMPLATE));
+		model.addAttribute("article_DEFAULT_TEMPLATE", Article.DEFAULT_TEMPLATE);
 		model.addAttribute("office", category.getOffice());
 		model.addAttribute("category", category);
 		return "modules/cms/categoryForm";
 	}
-	
+
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "save")
 	public String save(Category category, Model model, RedirectAttributes redirectAttributes) {
-		if(Global.isDemoMode()){
+		if (Global.isDemoMode()) {
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:"+Global.getAdminPath()+"/cms/category/";
+			return "redirect:" + Global.getAdminPath() + "/cms/category/";
 		}
-		if (!beanValidator(model, category)){
+		
+		if (!beanValidator(model, category)) {
 			return form(category, model);
 		}
+		
 		categoryService.save(category);
 		addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/category/";
+		return "redirect:" + Global.getAdminPath() + "/cms/category/";
 	}
-	
+
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
-		if(Global.isDemoMode()){
+		if (Global.isDemoMode()) {
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:"+Global.getAdminPath()+"/cms/category/";
+			return "redirect:" + Global.getAdminPath() + "/cms/category/";
 		}
-		if (Category.isRoot(id)){
+		
+		if (Category.isRoot(id)) {
 			addMessage(redirectAttributes, "删除栏目失败, 不允许删除顶级栏目或编号为空");
-		}else{
+		} else {
 			categoryService.delete(id);
 			addMessage(redirectAttributes, "删除栏目成功");
 		}
-		return "redirect:"+Global.getAdminPath()+"/cms/category/";
+		return "redirect:" + Global.getAdminPath() + "/cms/category/";
 	}
 
 	/**
@@ -125,30 +131,34 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "updateSort")
 	public String updateSort(String[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
-    	int len = ids.length;
-    	Category[] entitys = new Category[len];
-    	for (int i = 0; i < len; i++) {
-    		entitys[i] = categoryService.get(ids[i]);
-    		entitys[i].setSort(sorts[i]);
-    		categoryService.save(entitys[i]);
-    	}
-    	addMessage(redirectAttributes, "保存栏目排序成功!");
-		return "redirect:"+Global.getAdminPath()+"/cms/category/";
+		int len = ids.length;
+		Category[] entitys = new Category[len];
+		for (int i = 0; i < len; i++) {
+			entitys[i] = categoryService.get(ids[i]);
+			entitys[i].setSort(sorts[i]);
+			categoryService.save(entitys[i]);
+		}
+		addMessage(redirectAttributes, "保存栏目排序成功!");
+		return "redirect:" + Global.getAdminPath() + "/cms/category/";
 	}
-	
+
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(String module, @RequestParam(required=false) Long extId, HttpServletResponse response) {
+	public List<Map<String, Object>> treeData(String module, @RequestParam(required = false) Long extId,
+			HttpServletResponse response) {
+		
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
 		List<Category> list = categoryService.findByUser(true, module);
-		for (int i=0; i<list.size(); i++){
+		for (int i = 0; i < list.size(); i++) {
 			Category e = list.get(i);
-			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
+			if (extId == null
+					|| (extId != null && !extId.equals(e.getId()) && e
+							.getParentIds().indexOf("," + extId + ",") == -1)) {
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
-				map.put("pId", e.getParent()!=null?e.getParent().getId():0);
+				map.put("pId", e.getParent() != null ? e.getParent().getId() : 0);
 				map.put("name", e.getName());
 				map.put("module", e.getModule());
 				mapList.add(map);
@@ -157,9 +167,9 @@ public class CategoryController extends BaseController {
 		return mapList;
 	}
 
-    private List<String> getTplContent(String prefix) {
-   		List<String> tplList = fileTplService.getNameListByPrefix(siteService.get(Site.getCurrentSiteId()).getSolutionPath());
-   		tplList = TplUtils.tplTrim(tplList, prefix, "");
-   		return tplList;
-   	}
+	private List<String> getTplContent(String prefix) {
+		List<String> tplList = fileTplService.getNameListByPrefix(siteService.get(Site.getCurrentSiteId()).getSolutionPath());
+		tplList = TplUtils.tplTrim(tplList, prefix, "");
+		return tplList;
+	}
 }
