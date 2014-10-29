@@ -7,9 +7,9 @@ cd %~dp0
 call compressor\compressor.bat common
 call compressor\compressor.bat jquery
 call compressor\compressor.bat jquery-jbox\2.3\i18n
-call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.css
-call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.js
-call compressor\compressor.bat jquery-validation\1.11.0\jquery.validate.method.js
+call compressor\compressor.bat jquery-validation\1.11.1\jquery.validate.css
+call compressor\compressor.bat jquery-validation\1.11.1\jquery.validate.js
+call compressor\compressor.bat jquery-validation\1.11.1\jquery.validate.method.js
 call compressor\compressor.bat jquery-ztree\3.5.12\css\zTreeStyle\zTreeStyle.css
 call compressor\compressor.bat treeTable\themes\default\treeTable.css
 call compressor\compressor.bat treeTable\themes\vsStyle\treeTable.css

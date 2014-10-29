@@ -100,14 +100,17 @@ public abstract class BaseService {
 	protected static String dataScopeFilterString(User user, String officeAlias, String userAlias) {
 		Junction junction = dataScopeFilter(user, officeAlias, userAlias);
 		Iterator<Criterion> it = junction.conditions().iterator();
+		
 		StringBuilder ql = new StringBuilder();
 		ql.append(" and (");
 		if (it.hasNext()){
 			ql.append(it.next());
 		}
+		
 		String[] strField = {".parentIds like ", ".type="}; // 需要给字段增加“单引号”的字段。
 		while (it.hasNext()) {
 			ql.append(" or (");
+			
 			String s = it.next().toString();
 			for(String field : strField){
 				s = s.replaceAll(field + "(\\w.*)", field + "'$1'");

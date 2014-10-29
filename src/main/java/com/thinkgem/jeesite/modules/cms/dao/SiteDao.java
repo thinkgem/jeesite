@@ -12,6 +12,7 @@ import com.thinkgem.jeesite.modules.cms.entity.Site;
 
 /**
  * 站点DAO接口
+ * 
  * @author ThinkGem
  * @version 2013-8-23
  */

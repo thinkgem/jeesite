@@ -69,6 +69,7 @@ public class Page<T> {
 	 * @param defaultPageSize 默认分页大小，如果传递 -1 则为不分页，返回所有数据
 	 */
 	public Page(HttpServletRequest request, HttpServletResponse response, int defaultPageSize){
+		
 		// 设置页码参数（传递repage参数，来记住页码）
 		String no = request.getParameter("pageNo");
 		if (StringUtils.isNumeric(no)){
@@ -80,6 +81,7 @@ public class Page<T> {
 				this.setPageNo(Integer.parseInt(no));
 			}
 		}
+		
 		// 设置页面大小参数（传递repage参数，来记住页码大小）
 		String size = request.getParameter("pageSize");
 		if (StringUtils.isNumeric(size)){
@@ -93,6 +95,7 @@ public class Page<T> {
 		}else if (defaultPageSize != -2){
 			this.pageSize = defaultPageSize;
 		}
+		
 		// 设置排序参数
 		String orderBy = request.getParameter("orderBy");
 		if (StringUtils.isNotBlank(orderBy)){
@@ -198,7 +201,13 @@ public class Page<T> {
 		if (pageNo == first) {// 如果是首页
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">&#171; 上一页</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+prev+","+pageSize+");\">&#171; 上一页</a></li>\n");
+			sb.append("<li><a href=\"javascript:\" onclick=\"")
+				.append(funcName)
+				.append("(")
+				.append(prev)
+				.append(",")
+				.append(pageSize)
+				.append(");\">&#171; 上一页</a></li>\n");
 		}
 
 		int begin = pageNo - (length / 2);
@@ -220,9 +229,17 @@ public class Page<T> {
 		if (begin > first) {
 			int i = 0;
 			for (i = first; i < first + slider && i < begin; i++) {
-				sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+pageSize+");\">"
-						+ (i + 1 - first) + "</a></li>\n");
+				sb.append("<li><a href=\"javascript:\" onclick=\"")
+					.append(funcName)
+					.append("(")
+					.append(i)
+					.append(",")
+					.append(pageSize)
+					.append(");\">")
+					.append(i + 1 - first)
+					.append("</a></li>\n");
 			}
+			
 			if (i < begin) {
 				sb.append("<li class=\"disabled\"><a href=\"javascript:\">...</a></li>\n");
 			}
@@ -230,11 +247,18 @@ public class Page<T> {
 
 		for (int i = begin; i <= end; i++) {
 			if (i == pageNo) {
-				sb.append("<li class=\"active\"><a href=\"javascript:\">" + (i + 1 - first)
-						+ "</a></li>\n");
+				sb.append("<li class=\"active\"><a href=\"javascript:\">")
+					.append(i + 1 - first)
+					.append("</a></li>\n");
 			} else {
-				sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+pageSize+");\">"
-						+ (i + 1 - first) + "</a></li>\n");
+				sb.append("<li><a href=\"javascript:\" onclick=\"")
+					.append(funcName)
+					.append("(")
+					.append(i)
+					.append(pageSize)
+					.append(");\">")
+					.append(i + 1 - first)
+					.append("</a></li>\n");
 			}
 		}
 
@@ -244,24 +268,49 @@ public class Page<T> {
 		}
 
 		for (int i = end + 1; i <= last; i++) {
-			sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+i+","+pageSize+");\">"
-					+ (i + 1 - first) + "</a></li>\n");
+			sb.append("<li><a href=\"javascript:\" onclick=\"")
+				.append(funcName)
+				.append("(")
+				.append(i)
+				.append(pageSize)
+				.append(");\">")
+				.append(i + 1 - first)
+				.append("</a></li>\n");
 		}
 
 		if (pageNo == last) {
 			sb.append("<li class=\"disabled\"><a href=\"javascript:\">下一页 &#187;</a></li>\n");
 		} else {
-			sb.append("<li><a href=\"javascript:\" onclick=\""+funcName+"("+next+","+pageSize+");\">"
-					+ "下一页 &#187;</a></li>\n");
+			sb.append("<li><a href=\"javascript:\" onclick=\"")
+				.append(funcName)
+				.append("(")
+				.append(next)
+				.append(pageSize)
+				.append(");\">")
+				.append("下一页 &#187;</a></li>\n");
 		}
 
 		sb.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 ");
-		sb.append("<input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
-		sb.append(funcName+"(this.value,"+pageSize+");\" onclick=\"this.select();\"/> / ");
-		sb.append("<input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
-		sb.append(funcName+"("+pageNo+",this.value);\" onclick=\"this.select();\"/> 条，");
-		sb.append("共 " + count + " 条"+(message!=null?message:"")+"</a><li>\n");
-
+		sb.append("<input type=\"text\" value=\"")
+			.append(pageNo)
+			.append("\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)")
+			.append(funcName)
+			.append("(this.value,")
+			.append(pageSize)
+			.append(");\" onclick=\"this.select();\"/> / ")
+			.append("<input type=\"text\" value=\"")
+			.append(pageSize)
+			.append("\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)")
+			.append(funcName)
+			.append("(")
+			.append(pageNo)
+			.append(",this.value);\" onclick=\"this.select();\"/> 条，")
+			.append("共 ")
+			.append(count)
+			.append(" 条")
+			.append(message!=null?message:"")
+			.append("</a><li>\n");
+		
 		sb.insert(0,"<ul>\n").append("</ul>\n");
 		
 		sb.append("<div style=\"clear:both;\"></div>");

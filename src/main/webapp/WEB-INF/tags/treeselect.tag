@@ -31,17 +31,22 @@
 			return true;
 		}
         var nameLevel = ${nameLevel eq null ? "1" : nameLevel};
+        
 		// 正常打开	
-		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&nodesLevel=${nodesLevel}&selectIds="+$("#${id}Id").val(), "选择${title}", 300, 420, {
-			buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
+		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url=" + encodeURIComponent("${url}") + "&module=${module}&checked=${checked}&extId=${extId}&nodesLevel=${nodesLevel}&selectIds=" + $("#${id}Id").val(), "选择${title}", 300, 420, {
+			buttons:{"确定":"ok", ${allowClear ? "\"清除\" : \"clear\", ":""}"关闭":true}, submit:function(v, h, f){
 				if (v=="ok"){
-					var tree = h.find("iframe")[0].contentWindow.tree;//h.find("iframe").contents();
-					var ids = [], names = [], nodes = [];
-					if ("${checked}" == "true"){
-						nodes = tree.getCheckedNodes(true);
+					var ids = [], 
+						  names = [], 
+						  nodes = [],
+						  tree = h.find("iframe")[0].contentWindow.tree; //h.find("iframe").contents();
+						  
+					if ("${checked}"){
+						nodes = tree.getCheckedNodes(); //省略checked参数，等同于 true
 					}else{
 						nodes = tree.getSelectedNodes();
 					}
+					
 					for(var i=0; i<nodes.length; i++) {//<c:if test="${checked}">
 						if (nodes[i].isParent){
 							continue; // 如果为复选框选择，则过滤掉父节点
@@ -61,22 +66,27 @@
 							top.$.jBox.tip("不能选择当前栏目以外的栏目模型，请重新选择。");
 							return false;
 						}//</c:if>
+						
 						ids.push(nodes[i].id);
-                        var t_node = nodes[i];
-                        var t_name = "";
-                        var name_l = 0;
+						
+                        var t_name = "",
+                        	  t_node = nodes[i],
+                        	  name_l = 0;
+                        
                         do{
                             name_l++;
                             t_name = t_node.name + " " + t_name;
                             t_node = t_node.getParentNode();
                         }while(name_l < nameLevel);
+                        
 						names.push(t_name);//<c:if test="${!checked}">
 						break; // 如果为非复选框选择，则返回第一个选择  </c:if>
 					}
+					
 					$("#${id}Id").val(ids);
 					$("#${id}Name").val(names);
 				}//<c:if test="${allowClear}">
-				else if (v=="clear"){
+				else if (v == "clear"){
 					$("#${id}Id").val("");
 					$("#${id}Name").val("");
                 }//</c:if>

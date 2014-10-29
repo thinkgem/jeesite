@@ -20,18 +20,20 @@ import com.thinkgem.jeesite.modules.cms.service.StatsService;
 
 /**
  * 统计Controller
+ * 
  * @author ThinkGem
  * @version 2013-5-21
  */
 @Controller
-@RequestMapping(value = "${adminPath}/cms/stats")
+@RequestMapping("${adminPath}/cms/stats")
 public class StatsController extends BaseController {
 
 	@Autowired
 	private StatsService statsService;
-	
+
 	/**
 	 * 文章信息量
+	 * 
 	 * @param paramMap
 	 * @param model
 	 * @return

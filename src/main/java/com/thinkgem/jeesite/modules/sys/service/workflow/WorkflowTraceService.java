@@ -31,6 +31,7 @@ import com.thinkgem.jeesite.common.workflow.WorkflowUtils;
 
 /**
  * 工作流跟踪相关Service
+ * 
  * @author HenryYan
  */
 @Service
@@ -50,21 +51,28 @@ public class WorkflowTraceService extends BaseService {
 
 	/**
 	 * 流程跟踪图
-	 * @param processInstanceId		流程实例ID
-	 * @return	封装了各种节点信息
+	 * 
+	 * @param processInstanceId 流程实例ID
+	 * @return 封装了各种节点信息
 	 */
 	public List<Map<String, Object>> traceProcess(String processInstanceId) throws Exception {
-		Execution execution = runtimeService.createExecutionQuery().executionId(processInstanceId).singleResult();//执行实例
+		
+		Execution execution = runtimeService.createExecutionQuery()
+				.executionId(processInstanceId).singleResult(); // 执行实例
+		
 		Object property = PropertyUtils.getProperty(execution, "activityId");
 		String activityId = "";
 		if (property != null) {
 			activityId = property.toString();
 		}
-		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId)
-				.singleResult();
+
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+				.processInstanceId(processInstanceId).singleResult();
+		
 		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
 				.getDeployedProcessDefinition(processInstance.getProcessDefinitionId());
-		List<ActivityImpl> activitiList = processDefinition.getActivities();//获得当前任务的所有节点
+		
+		List<ActivityImpl> activitiList = processDefinition.getActivities(); // 获得当前任务的所有节点
 
 		List<Map<String, Object>> activityInfos = new ArrayList<Map<String, Object>>();
 		for (ActivityImpl activity : activitiList) {
@@ -87,6 +95,7 @@ public class WorkflowTraceService extends BaseService {
 
 	/**
 	 * 封装输出信息，包括：当前节点的X、Y坐标、变量信息、任务类型、任务描述
+	 * 
 	 * @param activity
 	 * @param processInstance
 	 * @param currentActiviti
@@ -94,9 +103,11 @@ public class WorkflowTraceService extends BaseService {
 	 */
 	private Map<String, Object> packageSingleActivitiInfo(ActivityImpl activity, ProcessInstance processInstance,
 			boolean currentActiviti) throws Exception {
+		
 		Map<String, Object> vars = new HashMap<String, Object>();
 		Map<String, Object> activityInfo = new HashMap<String, Object>();
 		activityInfo.put("currentActiviti", currentActiviti);
+		
 		setPosition(activity, activityInfo);
 		setWidthAndHeight(activity, activityInfo);
 
@@ -105,23 +116,21 @@ public class WorkflowTraceService extends BaseService {
 
 		ActivityBehavior activityBehavior = activity.getActivityBehavior();
 		logger.debug("activityBehavior={}", activityBehavior);
+		
 		if (activityBehavior instanceof UserTaskActivityBehavior) {
 
 			Task currentTask = null;
 
-			/*
-			 * 当前节点的task
-			 */
+			// 当前节点的task
 			if (currentActiviti) {
 				currentTask = getCurrentTaskInfo(processInstance);
 			}
 
-			/*
-			 * 当前任务的分配角色
-			 */
+			// 当前任务的分配角色
 			UserTaskActivityBehavior userTaskActivityBehavior = (UserTaskActivityBehavior) activityBehavior;
 			TaskDefinition taskDefinition = userTaskActivityBehavior.getTaskDefinition();
 			Set<Expression> candidateGroupIdExpressions = taskDefinition.getCandidateGroupIdExpressions();
+			
 			if (!candidateGroupIdExpressions.isEmpty()) {
 
 				// 任务的处理角色
@@ -159,10 +168,12 @@ public class WorkflowTraceService extends BaseService {
 
 	/**
 	 * 设置当前处理人信息
+	 * 
 	 * @param vars
 	 * @param currentTask
 	 */
-	private void setCurrentTaskAssignee(Map<String, Object> vars, Task currentTask) {
+	private void setCurrentTaskAssignee(Map<String, Object> vars,Task currentTask) {
+		
 		String assignee = currentTask.getAssignee();
 		if (assignee != null) {
 			User assigneeUser = identityService.createUserQuery().userId(assignee).singleResult();
@@ -173,6 +184,7 @@ public class WorkflowTraceService extends BaseService {
 
 	/**
 	 * 获取当前节点信息
+	 * 
 	 * @param processInstance
 	 * @return
 	 */
@@ -182,18 +194,20 @@ public class WorkflowTraceService extends BaseService {
 			String activitiId = (String) PropertyUtils.getProperty(processInstance, "activityId");
 			logger.debug("current activity id: {}", activitiId);
 
-			currentTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).taskDefinitionKey(activitiId)
-					.singleResult();
-			logger.debug("current task for processInstance: {}", ToStringBuilder.reflectionToString(currentTask));
-
+			currentTask = taskService.createTaskQuery()
+					.processInstanceId(processInstance.getId())
+					.taskDefinitionKey(activitiId).singleResult();
+			
+			logger.debug("current task for processInstance: {}",ToStringBuilder.reflectionToString(currentTask));
 		} catch (Exception e) {
-			logger.error("can not get property activityId from processInstance: {}", processInstance);
+			logger.error("can not get property activityId from processInstance: {}",processInstance);
 		}
 		return currentTask;
 	}
 
 	/**
 	 * 设置宽度、高度属性
+	 * 
 	 * @param activity
 	 * @param activityInfo
 	 */
@@ -204,6 +218,7 @@ public class WorkflowTraceService extends BaseService {
 
 	/**
 	 * 设置坐标位置
+	 * 
 	 * @param activity
 	 * @param activityInfo
 	 */

@@ -17,6 +17,7 @@
  		      "${ctxStatic}/images/bg2.jpg",
  		      "${ctxStatic}/images/bg3.jpg"
  		  	], {duration: 10000, fade: 2000});
+			
 			$("#loginForm").validate({
 				rules: {
 					validateCode: {remote: "${pageContext.request.contextPath}/servlet/validateCodeServlet"}
@@ -59,23 +60,24 @@
 		</div>
         <div id="login-wraper">
             <form id="loginForm"  class="form login-form" action="${ctx}/login" method="post">
-                <legend><span style="color:#08c;">系统登陆</span></legend>
+                <fieldset><legend><span style="color:#08c;">系统登陆</span></legend></fieldset>
                 <div class="body">
 					<div class="control-group">
 						<div class="controls">
 							<input type="text" id="username" name="username" class="required" value="${username}" placeholder="登录名">
 						</div>
 					</div>
-					
 					<div class="control-group">
 						<div class="controls">
 							<input type="password" id="password" name="password" class="required" placeholder="密码"/>
 						</div>
 					</div>
-					<c:if test="${isValidateCodeLogin}"><div class="validateCode">
-						<label for="password">密　码：</label>
-						<tags:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
-					</div></c:if>
+					<c:if test="${isValidateCodeLogin}">
+						<div class="validateCode">
+							<label for="validateCode">验证码：</label>
+							<tags:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
+						</div>
+					</c:if>
                 </div>
                 <div class="footer">
                     <label class="checkbox inline">

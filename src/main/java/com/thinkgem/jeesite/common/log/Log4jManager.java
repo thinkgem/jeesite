@@ -47,8 +47,7 @@ public class Log4jManager {
 	}
 
 	/**
-	 * 获得项目默认logger的级别.
-	 * 项目默认logger名称通过#setProjectLoggerName(String)配置.
+	 * 获得项目默认logger的级别. 项目默认logger名称通过#setProjectLoggerName(String)配置.
 	 */
 	@ManagedAttribute(description = "Level of the project default package logger")
 	public String getProjectLoggerLevel() {
@@ -60,8 +59,7 @@ public class Log4jManager {
 	}
 
 	/**
-	 * 设置项目默认logger的级别.
-	 * 项目默认logger名称通过#setProjectLoggerName(String)配置.
+	 * 设置项目默认logger的级别. 项目默认logger名称通过#setProjectLoggerName(String)配置.
 	 */
 	@ManagedAttribute
 	public void setProjectLoggerLevel(String newLevel) {
@@ -81,11 +79,11 @@ public class Log4jManager {
 	}
 
 	/**
-	 * 设置Logger的日志级别.
-	 * 如果日志级别名称错误, 设为DEBUG.
+	 * 设置Logger的日志级别. 如果日志级别名称错误, 设为DEBUG.
 	 */
 	@ManagedOperation(description = "Set new logging level to the logger")
-	@ManagedOperationParameters({ @ManagedOperationParameter(name = "loggerName", description = "Logger name"),
+	@ManagedOperationParameters({
+			@ManagedOperationParameter(name = "loggerName", description = "Logger name"),
 			@ManagedOperationParameter(name = "newlevel", description = "New level") })
 	public void setLoggerLevel(String loggerName, String newLevel) {
 		Logger logger = Logger.getLogger(loggerName);

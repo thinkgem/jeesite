@@ -7,27 +7,44 @@
 	<%@include file="/WEB-INF/views/include/head.jsp" %>
 	<%@include file="/WEB-INF/views/include/treeview.jsp" %>
 	<script type="text/javascript">
-		var key, lastValue = "", nodeList = [];
-		var tree, setting = {view:{selectedMulti:false},check:{enable:"${checked}",nocheckInherit:true},
-				data:{simpleData:{enable:true}},
-				view:{
-					fontCss:function(treeId, treeNode) {
-						return (!!treeNode.highlight) ? {"font-weight":"bold"} : {"font-weight":"normal"};
+		var key, 
+			  tree, 
+			  lastValue = "", 
+			  nodeList = [],
+			  setting = {
+				view:{selectedMulti:false},
+				check:{enable:"${checked}", nocheckInherit:true},
+				data:{
+					// 官方建议:如果设置为 true，请务必设置 setting.data.simpleData 内的其他参数: idKey / pIdKey / rootPId
+					simpleData:{ 
+						enable:true,
+						idKey: "id",
+						pIdKey: "pId",
+						rootPId: 0,
 					}
 				},
-				callback:{beforeClick:function(id, node){
-					if("${checked}" == "true"){
-						tree.checkNode(node, !node.checked, true, true);
-						return false;
+				view:{
+					fontCss:function(treeId, treeNode) {
+						return {"font-weight" : (!!treeNode.highlight) ? "bold" : "normal" };
 					}
-				}, 
-				onDblClick:function(){
-					top.$.jBox.getBox().find("button[value='ok']").trigger("click");
-					//alert($("input[type='text']", top.mainFrame.document).val());
-					//$("input[type='text']", top.mainFrame.document).focus();
-				}}};
+				},
+				callback:{
+					beforeClick:function(id, node){
+						if("${checked}"){
+							tree.checkNode(node, !node.checked, true, true);
+							return false;
+						}
+					}, 
+					onDblClick:function(){
+						top.$.jBox.getBox().find("button[value='ok']").trigger("click");
+						//alert($("input[type='text']", top.mainFrame.document).val());
+						//$("input[type='text']", top.mainFrame.document).focus();
+					}
+				}
+			};
+			  
 		$(document).ready(function(){
-			$.get("${ctx}${url}${fn:indexOf(url,'?')==-1?'?':'&'}&extId=${extId}&module=${module}&t="+new Date().getTime(), function(zNodes){
+			$.get("${ctx}${url}${fn:indexOf(url,'?')==-1 ? '?' : '&'}&extId=${extId}&module=${module}&t="+new Date().getTime(), function(zNodes){
 				// 初始化树结构
 				tree = $.fn.zTree.init($("#tree"), setting, zNodes);
 				
@@ -36,11 +53,12 @@
 				for(var i=0; i<nodes.length; i++) {
 					tree.expandNode(nodes[i], true, false, false);
 				}
+				
 				// 默认选择节点
 				var ids = "${selectIds}".split(",");
 				for(var i=0; i<ids.length; i++) {
 					var node = tree.getNodeByParam("id", ids[i]);
-					if("${checked}" == "true"){
+					if("${checked}"){
 						try{tree.checkNode(node, true, true);}catch(e){}
 						tree.selectNode(node, false);
 					}else{
@@ -48,20 +66,24 @@
 					}
 				}
 			});
+			
 			key = $("#key");
 			key.bind("focus", focusKey).bind("blur", blurKey).bind("change keydown cut input propertychange", searchNode);
 		});
+		
 	  	function focusKey(e) {
 			if (key.hasClass("empty")) {
 				key.removeClass("empty");
 			}
 		}
+	  	
 		function blurKey(e) {
 			if (key.get(0).value === "") {
 				key.addClass("empty");
 			}
 			searchNode(e);
 		}
+		
 		function searchNode(e) {
 			// 取得输入的关键字的值
 			var value = $.trim(key.get(0).value);
@@ -72,7 +94,7 @@
 				value = "";
 			}
 			
-			// 如果和上次一次，就退出不查了。
+			// 如果和上次一样，就退出不查了。
 			if (lastValue === value) {
 				return;
 			}
@@ -84,10 +106,12 @@
 			if (value === "") {
 				return;
 			}
+			
 			updateNodes(false);
 			nodeList = tree.getNodesByParamFuzzy(keyType, value);
 			updateNodes(true);
 		}
+		
 		function updateNodes(highlight) {
 			for(var i=0, l=nodeList.length; i<l; i++) {
 				nodeList[i].highlight = highlight;				
@@ -95,6 +119,7 @@
 				tree.expandNode(nodeList[i].getParentNode(), true, false, false);
 			}
 		}
+		
 		function search() {
 			$("#search").slideToggle(200);
 			$("#txt").toggle();
