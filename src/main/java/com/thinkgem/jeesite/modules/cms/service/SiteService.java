@@ -21,7 +21,6 @@ import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 
 /**
  * 站点Service
- * 
  * @author ThinkGem
  * @version 2013-01-15
  */
@@ -31,36 +30,36 @@ public class SiteService extends BaseService {
 
 	@Autowired
 	private SiteDao siteDao;
-
+	
 	public Site get(String id) {
 		return siteDao.get(id);
 	}
-
+	
 	public Page<Site> find(Page<Site> page, Site site) {
 		DetachedCriteria dc = siteDao.createDetachedCriteria();
-		if (StringUtils.isNotEmpty(site.getName())) {
-			dc.add(Restrictions.like("name", "%" + site.getName() + "%"));
+		if (StringUtils.isNotEmpty(site.getName())){
+			dc.add(Restrictions.like("name", "%"+site.getName()+"%"));
 		}
 		dc.add(Restrictions.eq(Site.FIELD_DEL_FLAG, site.getDelFlag()));
-		// dc.addOrder(Order.asc("id"));
+		//dc.addOrder(Order.asc("id"));
 		return siteDao.find(page, dc);
 	}
 
 	@Transactional(readOnly = false)
 	public void save(Site site) {
-		if (site.getCopyright() != null) {
+		if (site.getCopyright()!=null){
 			site.setCopyright(StringEscapeUtils.unescapeHtml4(site.getCopyright()));
 		}
 		siteDao.save(site);
-		CmsUtils.removeCache("site_" + site.getId());
+		CmsUtils.removeCache("site_"+site.getId());
 		CmsUtils.removeCache("siteList");
 	}
-
+	
 	@Transactional(readOnly = false)
 	public void delete(String id, Boolean isRe) {
-		siteDao.updateDelFlag(id, isRe != null && isRe ? Site.DEL_FLAG_NORMAL : Site.DEL_FLAG_DELETE);
-		CmsUtils.removeCache("site_" + id);
+		siteDao.updateDelFlag(id, isRe!=null&&isRe?Site.DEL_FLAG_NORMAL:Site.DEL_FLAG_DELETE);
+		CmsUtils.removeCache("site_"+id);
 		CmsUtils.removeCache("siteList");
 	}
-
+	
 }

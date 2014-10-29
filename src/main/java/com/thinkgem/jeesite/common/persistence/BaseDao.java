@@ -144,14 +144,12 @@ public class BaseDao<T> {
 				return page;
 			}
     	}
-    	
     	// order by
     	String ql = qlString;
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			ql += " order by " + page.getOrderBy();
 		}
-        Query query = createQuery(ql, parameter);
-        
+        Query query = createQuery(ql, parameter); 
     	// set page
         if (!page.isDisabled()){
 	        query.setFirstResult(page.getFirstResult());
@@ -238,7 +236,6 @@ public class BaseDao<T> {
 					break;
 				}
 			}
-			
 			// 插入前执行方法
 			if (StringUtils.isBlank((String)id)){
 				for (Method method : entity.getClass().getMethods()){
@@ -249,7 +246,6 @@ public class BaseDao<T> {
 					}
 				}
 			}
-			
 			// 更新前执行方法
 			else{
 				for (Method method : entity.getClass().getMethods()){
@@ -304,9 +300,9 @@ public class BaseDao<T> {
 	 * @param id
 	 * @return
 	 */
-	public int deleteById(Serializable id) {
-		return update("update " + entityClass.getSimpleName() + " set delFlag='" + BaseEntity.DEL_FLAG_DELETE
-				+ "' where id = :p1", new Parameter(id));
+	public int deleteById(Serializable id){
+		return update("update "+entityClass.getSimpleName()+" set delFlag='" + BaseEntity.DEL_FLAG_DELETE + "' where id = :p1", 
+				new Parameter(id));
 	}
 	
 	/**
@@ -327,7 +323,7 @@ public class BaseDao<T> {
 	 * @return
 	 */
 	public int updateDelFlag(Serializable id, String delFlag){
-		return update("update " + entityClass.getSimpleName() + " set delFlag = :p2 where id = :p1", 
+		return update("update "+entityClass.getSimpleName()+" set delFlag = :p2 where id = :p1", 
 				new Parameter(id, delFlag));
 	}
 	
@@ -402,14 +398,12 @@ public class BaseDao<T> {
 				return page;
 			}
     	}
-    	
     	// order by
     	String sql = sqlString;
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			sql += " order by " + page.getOrderBy();
 		}
-        SQLQuery query = createSqlQuery(sql, parameter);
-        
+        SQLQuery query = createSqlQuery(sql, parameter); 
 		// set page
         if (!page.isDisabled()){
 	        query.setFirstResult(page.getFirstResult());
@@ -582,20 +576,18 @@ public class BaseDao<T> {
 		}
 		Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
 		criteria.setResultTransformer(resultTransformer);
-		
 		// set page
 		if (!page.isDisabled()){
 	        criteria.setFirstResult(page.getFirstResult());
 	        criteria.setMaxResults(page.getMaxResults()); 
 		}
-		
 		// order by
 		if (StringUtils.isNotBlank(page.getOrderBy())){
 			for (String order : StringUtils.split(page.getOrderBy(), ",")){
 				String[] o = StringUtils.split(order, " ");
-				if (o.length == 1) {
+				if (o.length==1){
 					criteria.addOrder(Order.asc(o[0]));
-				} else if (o.length == 2) {
+				}else if (o.length==2){
 					if ("DESC".equals(o[1].toUpperCase())){
 						criteria.addOrder(Order.desc(o[0]));
 					}else{
@@ -644,17 +636,13 @@ public class BaseDao<T> {
 			Field field = CriteriaImpl.class.getDeclaredField("orderEntries");
 			field.setAccessible(true);
 			List orderEntrys = (List)field.get(criteria);
-			
 			// Remove orders
 			field.set(criteria, new ArrayList());
-			
 			// Get count
 			criteria.setProjection(Projections.rowCount());
 			totalCount = Long.valueOf(criteria.uniqueResult().toString());
-			
 			// Clean count
 			criteria.setProjection(null);
-			
 			// Restore orders
 			field.set(criteria, orderEntrys);
 		} catch (NoSuchFieldException e) {

@@ -16,7 +16,6 @@ import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 
 /**
  * 内容管理Controller
- * 
  * @author ThinkGem
  * @version 2013-4-21
  */
@@ -26,20 +25,20 @@ public class CmsController extends BaseController {
 
 	@Autowired
 	private CategoryService categoryService;
-
+	
 	@RequiresPermissions("cms:view")
-	@RequestMapping("")
+	@RequestMapping(value = "")
 	public String index() {
 		return "modules/cms/cmsIndex";
 	}
-
+	
 	@RequiresPermissions("cms:view")
-	@RequestMapping("tree")
+	@RequestMapping(value = "tree")
 	public String tree(Model model) {
 		model.addAttribute("categoryList", categoryService.findByUser(true, null));
 		return "modules/cms/cmsTree";
 	}
-
+	
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "none")
 	public String none() {

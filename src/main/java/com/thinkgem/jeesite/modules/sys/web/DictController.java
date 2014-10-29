@@ -28,33 +28,32 @@ import com.thinkgem.jeesite.modules.sys.service.DictService;
 
 /**
  * 字典Controller
- * 
  * @author ThinkGem
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping("${adminPath}/sys/dict")
+@RequestMapping(value = "${adminPath}/sys/dict")
 public class DictController extends BaseController {
 
 	@Autowired
 	private DictService dictService;
-
+	
 	@ModelAttribute
-	public Dict get(@RequestParam(required = false) String id) {
-		if (StringUtils.isNotBlank(id)) {
+	public Dict get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return dictService.get(id);
-		} else {
+		}else{
 			return new Dict();
 		}
 	}
-
+	
 	@RequiresPermissions("sys:dict:view")
-	@RequestMapping(value = { "list", "" })
+	@RequestMapping(value = {"list", ""})
 	public String list(Dict dict, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<String> typeList = dictService.findTypeList();
 		model.addAttribute("typeList", typeList);
-		Page<Dict> page = dictService.find(new Page<Dict>(request, response),dict);
-		model.addAttribute("page", page);
+        Page<Dict> page = dictService.find(new Page<Dict>(request, response), dict); 
+        model.addAttribute("page", page);
 		return "modules/sys/dictList";
 	}
 
@@ -66,34 +65,30 @@ public class DictController extends BaseController {
 	}
 
 	@RequiresPermissions("sys:dict:edit")
-	@RequestMapping(value = "save")
-	// @Valid
+	@RequestMapping(value = "save")//@Valid 
 	public String save(Dict dict, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
-		if (Global.isDemoMode()) {
+		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + Global.getAdminPath() + "/sys/dict/?repage&type=" + dict.getType();
+			return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage&type="+dict.getType();
 		}
-		
-		if (!beanValidator(model, dict)) {
+		if (!beanValidator(model, dict)){
 			return form(dict, model);
 		}
-		
 		dictService.save(dict);
 		addMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");
-		return "redirect:" + Global.getAdminPath() + "/sys/dict/?repage&type=" + dict.getType();
+		return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage&type="+dict.getType();
 	}
-
+	
 	@RequiresPermissions("sys:dict:edit")
 	@RequestMapping(value = "delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
-		if (Global.isDemoMode()) {
+		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + Global.getAdminPath() + "/sys/dict/?repage";
+			return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage";
 		}
-		
 		dictService.delete(id);
 		addMessage(redirectAttributes, "删除字典成功");
-		return "redirect:" + Global.getAdminPath() + "/sys/dict/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sys/dict/?repage";
 	}
 
 }

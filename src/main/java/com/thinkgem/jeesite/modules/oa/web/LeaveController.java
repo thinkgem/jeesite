@@ -27,12 +27,11 @@ import com.thinkgem.jeesite.modules.oa.service.LeaveService;
 
 /**
  * 请假Controller
- * 
  * @author liuj
  * @version 2013-04-05
  */
 @Controller
-@RequestMapping("${adminPath}/oa/leave")
+@RequestMapping(value = "${adminPath}/oa/leave")
 public class LeaveController extends BaseController {
 
 	@Autowired
@@ -43,95 +42,97 @@ public class LeaveController extends BaseController {
 
 	@Autowired
 	protected TaskService taskService;
-
+	
+	
 	@ModelAttribute
-	public Leave get(@RequestParam(required = false) String id) {
-		if (StringUtils.isNotBlank(id)) {
+	public Leave get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return leaveService.get(id);
-		} else {
+		}else{
 			return new Leave();
 		}
 	}
-
+	
 	@RequiresPermissions("oa:leave:view")
-	@RequestMapping({ "list" })
+	@RequestMapping(value = {"list"})
 	public String list(Leave leave, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Leave> page = leaveService.find(new Page<Leave>(request, response), leave);
-		model.addAttribute("page", page);
+        Page<Leave> page = leaveService.find(new Page<Leave>(request, response), leave); 
+        model.addAttribute("page", page);
 		model.addAttribute("leave", leave);
 		return "modules/oa/leaveList";
 	}
 
 	@RequiresPermissions("oa:leave:view")
-	@RequestMapping("form")
+	@RequestMapping(value = "form")
 	public String form(Leave leave, Model model) {
 		model.addAttribute("leave", leave);
 		return "modules/oa/leaveForm";
 	}
+	
 
 	@RequiresPermissions("oa:leave:edit")
-	@RequestMapping("save")
+	@RequestMapping(value = "save")
 	public String save(Leave leave, Model model, RedirectAttributes redirectAttributes) {
 		leaveService.save(leave);
 		addMessage(redirectAttributes, "保存请假成功");
-		return "redirect:" + Global.getAdminPath() + "/oa/leave/";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/";
 	}
 
 	@RequiresPermissions("oa:leave:edit")
-	@RequestMapping("delete")
+	@RequestMapping(value = "delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
 		leaveService.delete(id);
 		addMessage(redirectAttributes, "删除请假成功");
-		return "redirect:" + Global.getAdminPath() + "/oa/leave/";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/";
 	}
 
 	@RequiresPermissions("oa:leave:view")
-	@RequestMapping({ "list/task", "" })
+	@RequestMapping(value = {"list/task", ""})
 	public String listTask(Leave leave, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Leave> page = leaveService.findTodoTasks(new Page<Leave>(request, response), leave);
-		model.addAttribute("page", page);
+		Page<Leave> page = leaveService.findTodoTasks(new Page<Leave>(request, response), leave); 
+        model.addAttribute("page", page);
 		model.addAttribute("leave", leave);
 		return "modules/oa/leaveTask";
 	}
-
+	
 	@RequiresPermissions("oa:leave:view")
-	@RequestMapping("detail")
+	@RequestMapping(value = "detail")
 	public String detail(Leave leave, Model model) {
 		model.addAttribute("leave", leave);
-		model.addAttribute("workflowEntity", WorkflowUtils.getWorkflowEntity(leave.getProcessInstanceId()));
+		model.addAttribute("workflowEntity",WorkflowUtils.getWorkflowEntity(leave.getProcessInstanceId()));
 		return "modules/oa/leaveDetail";
 	}
 
 	@RequiresPermissions("oa:leave:deptLeaderAudit")
-	@RequestMapping("deptLeaderAudit")
+	@RequestMapping(value = "deptLeaderAudit")
 	public String deptLeaderAudit(Leave leave, RedirectAttributes redirectAttributes) {
 		leaveService.deptLeaderAudit(leave);
 		addMessage(redirectAttributes, "请假审批成功");
-		return "redirect:" + Global.getAdminPath() + "/oa/leave/";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/";
 	}
 
 	@RequiresPermissions("oa:leave:hrAudit")
-	@RequestMapping("hrAudit")
+	@RequestMapping(value = "hrAudit")
 	public String hrAudit(Leave leave, RedirectAttributes redirectAttributes) {
 		leaveService.hrAudit(leave);
 		addMessage(redirectAttributes, "请假审批成功");
-		return "redirect:" + Global.getAdminPath() + "/oa/leave/";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/";
 	}
 
 	@RequiresPermissions("oa:leave:edit")
-	@RequestMapping("modifyApply")
+	@RequestMapping(value = "modifyApply")
 	public String modifyApply(Leave leave, RedirectAttributes redirectAttributes) {
 		leaveService.modifyApply(leave);
 		addMessage(redirectAttributes, "请假调整成功");
-		return "redirect:" + Global.getAdminPath() + "/oa/leave/";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/";
 	}
-
+	
 	@RequiresPermissions("oa:leave:edit")
-	@RequestMapping("reportBack")
+	@RequestMapping(value = "reportBack")
 	public String reportBack(Leave leave, RedirectAttributes redirectAttributes) {
 		leaveService.reportBack(leave);
 		addMessage(redirectAttributes, "请假销假成功");
-		return "redirect:" + Global.getAdminPath() + "/oa/leave/";
+		return "redirect:"+Global.getAdminPath()+"/oa/leave/";
 	}
 
 }

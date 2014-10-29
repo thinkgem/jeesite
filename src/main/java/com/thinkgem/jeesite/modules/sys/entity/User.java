@@ -41,48 +41,46 @@ import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 
 /**
  * 用户Entity
- * 
  * @author ThinkGem
  * @version 2013-5-15
  */
 @Entity
 @Table(name = "sys_user")
-@DynamicInsert
-@DynamicUpdate
+@DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends IdEntity<User> {
 
 	private static final long serialVersionUID = 1L;
-	private Office company; // 归属公司
-	private Office office; // 归属部门
+	private Office company;	// 归属公司
+	private Office office;	// 归属部门
 	private String loginName;// 登录名
 	private String password;// 密码
-	private String no; // 工号
-	private String name; // 姓名
-	private String email; // 邮箱
-	private String phone; // 电话
-	private String mobile; // 手机
+	private String no;		// 工号
+	private String name;	// 姓名
+	private String email;	// 邮箱
+	private String phone;	// 电话
+	private String mobile;	// 手机
 	private String userType;// 用户类型
-	private String loginIp; // 最后登陆IP
-	private Date loginDate; // 最后登陆日期
-
+	private String loginIp;	// 最后登陆IP
+	private Date loginDate;	// 最后登陆日期
+	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 
 	public User() {
 		super();
 	}
-
+	
 	public User(String id) {
 		this();
 		this.id = id;
 	}
-
+	
 	@ManyToOne
-	@JoinColumn(name = "company_id")
+	@JoinColumn(name="company_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JsonIgnore
-	@NotNull(message = "归属公司不能为空")
-	@ExcelField(title = "归属公司", align = 2, sort = 20)
+	@NotNull(message="归属公司不能为空")
+	@ExcelField(title="归属公司", align=2, sort=20)
 	public Office getCompany() {
 		return company;
 	}
@@ -90,13 +88,13 @@ public class User extends IdEntity<User> {
 	public void setCompany(Office company) {
 		this.company = company;
 	}
-
+	
 	@ManyToOne
-	@JoinColumn(name = "office_id")
+	@JoinColumn(name="office_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JsonIgnore
-	@NotNull(message = "归属部门不能为空")
-	@ExcelField(title = "归属部门", align = 2, sort = 25)
+	@NotNull(message="归属部门不能为空")
+	@ExcelField(title="归属部门", align=2, sort=25)
 	public Office getOffice() {
 		return office;
 	}
@@ -105,8 +103,8 @@ public class User extends IdEntity<User> {
 		this.office = office;
 	}
 
-	@Length(min = 1, max = 100)
-	@ExcelField(title = "登录名", align = 2, sort = 30)
+	@Length(min=1, max=100)
+	@ExcelField(title="登录名", align=2, sort=30)
 	public String getLoginName() {
 		return loginName;
 	}
@@ -116,7 +114,7 @@ public class User extends IdEntity<User> {
 	}
 
 	@JsonIgnore
-	@Length(min = 1, max = 100)
+	@Length(min=1, max=100)
 	public String getPassword() {
 		return password;
 	}
@@ -125,14 +123,14 @@ public class User extends IdEntity<User> {
 		this.password = password;
 	}
 
-	@Length(min = 1, max = 100)
-	@ExcelField(title = "姓名", align = 2, sort = 40)
+	@Length(min=1, max=100)
+	@ExcelField(title="姓名", align=2, sort=40)
 	public String getName() {
 		return name;
 	}
-
-	@Length(min = 1, max = 100)
-	@ExcelField(title = "工号", align = 2, sort = 45)
+	
+	@Length(min=1, max=100)
+	@ExcelField(title="工号", align=2, sort=45)
 	public String getNo() {
 		return no;
 	}
@@ -145,9 +143,8 @@ public class User extends IdEntity<User> {
 		this.name = name;
 	}
 
-	@Email
-	@Length(min = 0, max = 200)
-	@ExcelField(title = "邮箱", align = 1, sort = 50)
+	@Email @Length(min=0, max=200)
+	@ExcelField(title="邮箱", align=1, sort=50)
 	public String getEmail() {
 		return email;
 	}
@@ -155,9 +152,9 @@ public class User extends IdEntity<User> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	@Length(min = 0, max = 200)
-	@ExcelField(title = "电话", align = 2, sort = 60)
+	
+	@Length(min=0, max=200)
+	@ExcelField(title="电话", align=2, sort=60)
 	public String getPhone() {
 		return phone;
 	}
@@ -166,8 +163,8 @@ public class User extends IdEntity<User> {
 		this.phone = phone;
 	}
 
-	@Length(min = 0, max = 200)
-	@ExcelField(title = "手机", align = 2, sort = 70)
+    @Length(min=0, max=200)
+	@ExcelField(title="手机", align=2, sort=70)
 	public String getMobile() {
 		return mobile;
 	}
@@ -177,13 +174,13 @@ public class User extends IdEntity<User> {
 	}
 
 	@Transient
-	@ExcelField(title = "备注", align = 1, sort = 900)
+	@ExcelField(title="备注", align=1, sort=900)
 	public String getRemarks() {
 		return remarks;
 	}
-
-	@Length(min = 0, max = 100)
-	@ExcelField(title = "用户类型", align = 2, sort = 80, dictType = "sys_user_type")
+	
+	@Length(min=0, max=100)
+	@ExcelField(title="用户类型", align=2, sort=80, dictType="sys_user_type")
 	public String getUserType() {
 		return userType;
 	}
@@ -193,12 +190,12 @@ public class User extends IdEntity<User> {
 	}
 
 	@Transient
-	@ExcelField(title = "创建时间", type = 0, align = 1, sort = 90)
+	@ExcelField(title="创建时间", type=0, align=1, sort=90)
 	public Date getCreateDate() {
 		return createDate;
 	}
 
-	@ExcelField(title = "最后登录IP", type = 1, align = 1, sort = 100)
+	@ExcelField(title="最后登录IP", type=1, align=1, sort=100)
 	public String getLoginIp() {
 		return loginIp;
 	}
@@ -208,7 +205,7 @@ public class User extends IdEntity<User> {
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@ExcelField(title = "最后登录日期", type = 1, align = 1, sort = 110)
+	@ExcelField(title="最后登录日期", type=1, align=1, sort=110)
 	public Date getLoginDate() {
 		return loginDate;
 	}
@@ -219,17 +216,16 @@ public class User extends IdEntity<User> {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
-	@OrderBy("id")
-	@Fetch(FetchMode.SUBSELECT)
+	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
+	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	@JsonIgnore
-	@ExcelField(title = "拥有角色", align = 1, sort = 800, fieldType = RoleListType.class)
+	@ExcelField(title="拥有角色", align=1, sort=800, fieldType=RoleListType.class)
 	public List<Role> getRoleList() {
 		return roleList;
 	}
-
+	
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
@@ -253,7 +249,7 @@ public class User extends IdEntity<User> {
 			roleList.add(role);
 		}
 	}
-
+	
 	/**
 	 * 用户拥有的角色名称字符串, 多个角色名称用','分隔.
 	 */
@@ -261,19 +257,19 @@ public class User extends IdEntity<User> {
 	public String getRoleNames() {
 		return Collections3.extractToString(roleList, "name", ", ");
 	}
-
+	
 	@Transient
-	public boolean isAdmin() {
+	public boolean isAdmin(){
 		return isAdmin(this.id);
 	}
-
+	
 	@Transient
-	public static boolean isAdmin(String id) {
+	public static boolean isAdmin(String id){
 		return id != null && id.equals("1");
 	}
-
-	// @Override
-	// public String toString() {
-	// return ToStringBuilder.reflectionToString(this);
-	// }
+	
+//	@Override
+//	public String toString() {
+//		return ToStringBuilder.reflectionToString(this);
+//	}
 }

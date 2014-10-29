@@ -41,12 +41,11 @@ import com.thinkgem.jeesite.modules.sys.web.LoginController;
 
 /**
  * 系统安全认证实现类
- * 
  * @author ThinkGem
  * @version 2013-5-29
  */
 @Service
-@DependsOn({ "userDao", "roleDao", "menuDao" })
+@DependsOn({"userDao","roleDao","menuDao"})
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 	private SystemService systemService;
@@ -55,25 +54,23 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	 * 认证回调函数, 登录时调用
 	 */
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) 
-			throws AuthenticationException {
-
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-
-		// 判断验证码
-		if (LoginController.isValidateCodeLogin(token.getUsername(), false, false)) {
+		
+		if (LoginController.isValidateCodeLogin(token.getUsername(), false, false)){
+			// 判断验证码
 			Session session = SecurityUtils.getSubject().getSession();
-			String code = (String) session.getAttribute(ValidateCodeServlet.VALIDATE_CODE);
-			if (token.getCaptcha() == null || !token.getCaptcha().toUpperCase().equals(code)) {
+			String code = (String)session.getAttribute(ValidateCodeServlet.VALIDATE_CODE);
+			if (token.getCaptcha() == null || !token.getCaptcha().toUpperCase().equals(code)){
 				throw new CaptchaException("验证码错误.");
 			}
 		}
 
 		User user = getSystemService().getUserByLoginName(token.getUsername());
 		if (user != null) {
-			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0, 16));
-			return new SimpleAuthenticationInfo(new Principal(user), user.getPassword().substring(16), 
-					ByteSource.Util.bytes(salt),getName());
+			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
+			return new SimpleAuthenticationInfo(new Principal(user), 
+					user.getPassword().substring(16), ByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;
 		}
@@ -84,23 +81,20 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		
 		Principal principal = (Principal) getAvailablePrincipal(principals);
 		User user = getSystemService().getUserByLoginName(principal.getLoginName());
 		if (user != null) {
 			UserUtils.putCache("user", user);
-			
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			List<Menu> list = UserUtils.getMenuList();
-			for (Menu menu : list) {
-				if (StringUtils.isNotBlank(menu.getPermission())) {
+			for (Menu menu : list){
+				if (StringUtils.isNotBlank(menu.getPermission())){
 					// 添加基于Permission的权限信息
-					for (String permission : StringUtils.split(menu.getPermission(), ",")) {
+					for (String permission : StringUtils.split(menu.getPermission(),",")){
 						info.addStringPermission(permission);
 					}
 				}
 			}
-			
 			// 更新登录IP和时间
 			getSystemService().updateUserLoginInfo(user.getId());
 			return info;
@@ -108,24 +102,22 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * 设定密码校验的Hash算法与迭代次数
 	 */
 	@PostConstruct
 	public void initCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(
-				SystemService.HASH_ALGORITHM);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(SystemService.HASH_ALGORITHM);
 		matcher.setHashIterations(SystemService.HASH_INTERATIONS);
 		setCredentialsMatcher(matcher);
 	}
-
+	
 	/**
 	 * 清空用户关联权限认证，待下次使用时重新加载
 	 */
 	public void clearCachedAuthorizationInfo(String principal) {
-		SimplePrincipalCollection principals = new SimplePrincipalCollection(
-				principal, getName());
+		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		clearCachedAuthorizationInfo(principals);
 	}
 
@@ -145,19 +137,19 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	 * 获取系统业务对象
 	 */
 	public SystemService getSystemService() {
-		if (systemService == null) {
+		if (systemService == null){
 			systemService = SpringContextHolder.getBean(SystemService.class);
 		}
 		return systemService;
 	}
-
+	
 	/**
 	 * 授权用户信息
 	 */
 	public static class Principal implements Serializable {
 
 		private static final long serialVersionUID = 1L;
-
+		
 		private String id;
 		private String loginName;
 		private String name;
@@ -182,7 +174,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		}
 
 		public Map<String, Object> getCacheMap() {
-			if (cacheMap == null) {
+			if (cacheMap==null){
 				cacheMap = new HashMap<String, Object>();
 			}
 			return cacheMap;

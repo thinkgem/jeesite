@@ -33,7 +33,6 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 机构Controller
- * 
  * @author ThinkGem
  * @version 2013-5-15
  */
@@ -43,7 +42,7 @@ public class OfficeController extends BaseController {
 
 	@Autowired
 	private OfficeService officeService;
-
+	
 	@ModelAttribute("office")
 	public Office get(@RequestParam(required = false) String id) {
 		if (StringUtils.isNotBlank(id)) {
@@ -54,19 +53,19 @@ public class OfficeController extends BaseController {
 	}
 
 	@RequiresPermissions("sys:office:view")
-	@RequestMapping({ "list", "" })
+	@RequestMapping({"list", ""})
 	public String list(Office office, Model model) {
-		// User user = UserUtils.getUser();
-		// if(user.isAdmin()){
-		office.setId("1");
-		// }else{
-		// office.setId(user.getOffice().getId());
-		// }
+//		User user = UserUtils.getUser();
+//		if(user.isAdmin()){
+			office.setId("1");
+//		}else{
+//			office.setId(user.getOffice().getId());
+//		}
 		model.addAttribute("office", office);
 		List<Office> list = Lists.newArrayList();
 		List<Office> sourcelist = officeService.findAll();
 		Office.sortList(list, sourcelist, office.getId());
-		model.addAttribute("list", list);
+        model.addAttribute("list", list);
 		return "modules/sys/officeList";
 	}
 
@@ -84,10 +83,10 @@ public class OfficeController extends BaseController {
 		model.addAttribute("office", office);
 		return "modules/sys/officeForm";
 	}
-
+	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping("save")
-	public String save(Office office, Model model,RedirectAttributes redirectAttributes) {
+	public String save(Office office, Model model, RedirectAttributes redirectAttributes) {
 		if (Global.isDemoMode()) {
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + Global.getAdminPath() + "/sys/office/";
@@ -100,7 +99,7 @@ public class OfficeController extends BaseController {
 		addMessage(redirectAttributes, "保存机构'" + office.getName() + "'成功");
 		return "redirect:" + Global.getAdminPath() + "/sys/office/";
 	}
-
+	
 	@RequiresPermissions("sys:office:edit")
 	@RequestMapping("delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
@@ -125,24 +124,22 @@ public class OfficeController extends BaseController {
 			@RequestParam(required = false) Long extId,
 			@RequestParam(required = false) Long type,
 			@RequestParam(required = false) Long grade) {
-
+		
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-
-		// User user = UserUtils.getUser();
+		
+//		User user = UserUtils.getUser();
 		List<Office> list = officeService.findAll();
-		for (int i = 0; i < list.size(); i++) {
+		for (int i=0; i<list.size(); i++){
 			Office e = list.get(i);
-
-			if ((extId == null 
-					|| (extId != null && !extId.equals(e.getId()) && e.getParentIds().indexOf("," + extId + ",") == -1))
+			
+			if ((extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1))
 					&& (type == null || (type != null && Integer.parseInt(e.getType()) <= type.intValue()))
-					&& (grade == null || (grade != null && Integer.parseInt(e.getGrade()) <= grade.intValue()))) {
-
+					&& (grade == null || (grade != null && Integer.parseInt(e.getGrade()) <= grade.intValue()))){
+				
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
-				// map.put("pId", !user.isAdmin() &&
-				// e.getId().equals(user.getOffice().getId())?0:e.getParent()!=null?e.getParent().getId():0);
+//				map.put("pId", !user.isAdmin() && e.getId().equals(user.getOffice().getId())?0:e.getParent()!=null?e.getParent().getId():0);
 				map.put("pId", e.getParent() != null ? e.getParent().getId() : 0);
 				map.put("name", e.getName());
 				mapList.add(map);

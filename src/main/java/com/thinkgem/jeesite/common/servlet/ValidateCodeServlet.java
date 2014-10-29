@@ -48,7 +48,8 @@ public class ValidateCodeServlet extends HttpServlet {
 		return validateCode.toUpperCase().equals(code); 
 	}
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String validateCode = request.getParameter(VALIDATE_CODE); // AJAX验证，成功返回true
 		if (StringUtils.isNotBlank(validateCode)){
 			response.getOutputStream().print(validate(request, validateCode)?"true":"false");
@@ -57,18 +58,22 @@ public class ValidateCodeServlet extends HttpServlet {
 		}
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		createImage(request,response);
 	}
 	
-	private void createImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void createImage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 		
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		response.setContentType("image/jpeg");
 		
-		 // 得到参数高，宽，都为数字时，则使用设置高宽，否则使用默认值
+		/*
+		 * 得到参数高，宽，都为数字时，则使用设置高宽，否则使用默认值
+		 */
 		String width = request.getParameter("width");
 		String height = request.getParameter("height");
 		if (StringUtils.isNumeric(width) && StringUtils.isNumeric(height)) {
@@ -79,10 +84,14 @@ public class ValidateCodeServlet extends HttpServlet {
 		BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 		Graphics g = image.getGraphics();
 
-		 // 生成背景
+		/*
+		 * 生成背景
+		 */
 		createBackground(g);
 
-		 // 生成字符
+		/*
+		 * 生成字符
+		 */
 		String s = createCharacter(g);
 		request.getSession().setAttribute(VALIDATE_CODE, s);
 
@@ -107,11 +116,9 @@ public class ValidateCodeServlet extends HttpServlet {
 	}
 	
 	private void createBackground(Graphics g) {
-		
 		// 填充背景
 		g.setColor(getRandColor(220,250)); 
 		g.fillRect(0, 0, w, h);
-		
 		// 加入干扰线条
 		for (int i = 0; i < 8; i++) {
 			g.setColor(getRandColor(40,150));
@@ -125,12 +132,10 @@ public class ValidateCodeServlet extends HttpServlet {
 	}
 
 	private String createCharacter(Graphics g) {
-		
 		char[] codeSeq = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
 				'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
 				'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '8', '9' };
-		String[] fontTypes = {"\u5b8b\u4f53","\u65b0\u5b8b\u4f53","\u9ed1\u4f53","\u6977\u4f53","\u96b6\u4e66"};
-		
+		String[] fontTypes = {"\u5b8b\u4f53","\u65b0\u5b8b\u4f53","\u9ed1\u4f53","\u6977\u4f53","\u96b6\u4e66"}; 
 		Random random = new Random();
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < 4; i++) {

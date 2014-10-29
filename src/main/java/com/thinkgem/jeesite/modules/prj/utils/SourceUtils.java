@@ -27,25 +27,24 @@ public class SourceUtils {
 	public static String SOURCE_TYPE_DAO = "dao";
 	public static String SOURCE_TYPE_SERVICE = "service";
 	public static String SOURCE_TYPE_CONTROLLER = "controller";
-	public static String SOURCE_TYPE_VIEW = "view";
-	public static String SOURCE_TYPE_VIEW_MOBILE = "viewMobile";
-
+	public static String SOURCE_TYPE_VIEW= "view";
+	public static String SOURCE_TYPE_VIEW_MOBILE= "viewMobile";
+	
 	public static String TEMPLATE_TYPE_ENTITY_AND_DAO = "entityAndDao";
 	public static String TEMPLATE_TYPE_SINGLE = "single";
-
+	
 	public static String COMMON_COLUMNS = "remarks,create_by,create_date,update_by,update_date,del_flag";
 
-	public static Set<String> getCommonColumns() {
+	public static Set<String> getCommonColumns(){
 		Set<String> set = Sets.newHashSet();
-		for (String column : COMMON_COLUMNS.split(",")) {
+		for(String column:COMMON_COLUMNS.split(",")) {
 			set.add(column);
 		}
 		return set;
 	}
-
 	public static List<String> getImportList(String sourceType) {
 		List<String> importList = Lists.newArrayList();
-		if (SOURCE_TYPE_ENTITY.equals(sourceType)) {
+		if(SOURCE_TYPE_ENTITY.equals(sourceType)) {
 			importList.add(Id.class.getCanonicalName());
 			importList.add(Entity.class.getCanonicalName());
 			importList.add(Table.class.getCanonicalName());
@@ -59,10 +58,10 @@ public class SourceUtils {
 			importList.add(Parameter.class.getCanonicalName());
 			importList.add(List.class.getCanonicalName());
 		}
-
+		
 		return importList;
 	}
-
+	
 	public static Map<String, String> getFreemarkerMap() {
 		Map<String, String> fm = Maps.newHashMap();
 		fm.put("at", "@");
@@ -70,15 +69,12 @@ public class SourceUtils {
 		fm.put("well", "#");
 		return fm;
 	}
-
+	
 	public static String getTemplatePath(String templateType) {
-		return SpringContextHolder.getResourceRootRealPath() + "\\templates\\"
-				+ templateType;
+		return SpringContextHolder.getResourceRootRealPath() + "\\templates\\" + templateType ;
 	}
-
+	
 	public static String getGenerateRootPath() {
-		return SpringContextHolder.getRootRealPath() + "\\userfiles\\"
-				+ UserUtils.getUser().getId() + "\\files\\generate\\"
-				+ System.currentTimeMillis();
+		return SpringContextHolder.getRootRealPath() + "\\userfiles\\" + UserUtils.getUser().getId() + "\\files\\generate\\" + System.currentTimeMillis();
 	}
 }

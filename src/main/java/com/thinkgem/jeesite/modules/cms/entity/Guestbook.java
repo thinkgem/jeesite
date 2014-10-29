@@ -39,49 +39,46 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 留言Entity
- * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_guestbook")
-@DynamicInsert
-@DynamicUpdate
+@DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Indexed
-@Analyzer(impl = IKAnalyzer.class)
+@Indexed @Analyzer(impl = IKAnalyzer.class)
 public class Guestbook extends BaseEntity<Category> {
-
+	
 	private static final long serialVersionUID = 1L;
-	private String id; // 编号
-	private String type; // 留言分类（咨询、建议、投诉、其它）
+	private String id; 		// 编号
+	private String type; 	// 留言分类（咨询、建议、投诉、其它）
 	private String content; // 留言内容
-	private String name; // 姓名
-	private String email; // 邮箱
-	private String phone; // 电话
+	private String name; 	// 姓名
+	private String email; 	// 邮箱
+	private String phone; 	// 电话
 	private String workunit;// 单位
-	private String ip; // 留言IP
+	private String ip; 		// 留言IP
 	private Date createDate;// 留言时间
-	private User reUser; // 回复人
-	private Date reDate; // 回复时间
+	private User reUser; 		// 回复人
+	private Date reDate;	// 回复时间
 	private String reContent;// 回复内容
-	private String delFlag; // 删除标记删除标记（0：正常；1：删除；2：审核）
+	private String delFlag;	// 删除标记删除标记（0：正常；1：删除；2：审核）
 
 	public Guestbook() {
 		this.delFlag = DEL_FLAG_AUDIT;
 	}
 
-	public Guestbook(String id) {
+	public Guestbook(String id){
 		this();
 		this.id = id;
 	}
-
+	
 	@PrePersist
-	public void prePersist() {
+	public void prePersist(){
 		this.id = IdGen.uuid();
 		this.createDate = new Date();
 	}
-
+	
 	@Id
 	public String getId() {
 		return id;
@@ -91,8 +88,8 @@ public class Guestbook extends BaseEntity<Category> {
 		this.id = id;
 	}
 
-	@Length(min = 1, max = 100)
-	@Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+	@Length(min=1, max=100)
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
 	public String getType() {
 		return type;
 	}
@@ -101,8 +98,8 @@ public class Guestbook extends BaseEntity<Category> {
 		this.type = type;
 	}
 
-	@Length(min = 1, max = 2000)
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Length(min=1, max=2000)
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getContent() {
 		return content;
 	}
@@ -110,9 +107,9 @@ public class Guestbook extends BaseEntity<Category> {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	@Length(min = 1, max = 100)
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	
+	@Length(min=1, max=100)
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getName() {
 		return name;
 	}
@@ -121,8 +118,7 @@ public class Guestbook extends BaseEntity<Category> {
 		this.name = name;
 	}
 
-	@Email
-	@Length(min = 0, max = 100)
+	@Email @Length(min=0, max=100)
 	public String getEmail() {
 		return email;
 	}
@@ -131,7 +127,7 @@ public class Guestbook extends BaseEntity<Category> {
 		this.email = email;
 	}
 
-	@Length(min = 0, max = 100)
+	@Length(min=0, max=100)
 	public String getPhone() {
 		return phone;
 	}
@@ -140,7 +136,7 @@ public class Guestbook extends BaseEntity<Category> {
 		this.phone = phone;
 	}
 
-	@Length(min = 0, max = 100)
+	@Length(min=0, max=100)
 	public String getWorkunit() {
 		return workunit;
 	}
@@ -149,7 +145,7 @@ public class Guestbook extends BaseEntity<Category> {
 		this.workunit = workunit;
 	}
 
-	@Length(min = 1, max = 100)
+	@Length(min=1, max=100)
 	public String getIp() {
 		return ip;
 	}
@@ -159,7 +155,7 @@ public class Guestbook extends BaseEntity<Category> {
 	}
 
 	@NotNull
-	@Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
 	@DateBridge(resolution = Resolution.DAY)
 	public Date getCreateDate() {
 		return createDate;
@@ -170,7 +166,7 @@ public class Guestbook extends BaseEntity<Category> {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "re_user_id")
+	@JoinColumn(name="re_user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	public User getReUser() {
 		return reUser;
@@ -180,7 +176,7 @@ public class Guestbook extends BaseEntity<Category> {
 		this.reUser = reUser;
 	}
 
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getReContent() {
 		return reContent;
 	}
@@ -197,8 +193,8 @@ public class Guestbook extends BaseEntity<Category> {
 		this.reDate = reDate;
 	}
 
-	@Length(min = 1, max = 1)
-	@Field(index = Index.YES, analyze = Analyze.NO, store = Store.YES)
+	@Length(min=1, max=1)
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.YES)
 	public String getDelFlag() {
 		return delFlag;
 	}
@@ -206,5 +202,7 @@ public class Guestbook extends BaseEntity<Category> {
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
 	}
-
+	
 }
+
+

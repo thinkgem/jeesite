@@ -12,7 +12,6 @@ import com.thinkgem.jeesite.modules.cms.entity.Comment;
 
 /**
  * 评论DAO接口
- * 
  * @author ThinkGem
  * @version 2013-8-23
  */

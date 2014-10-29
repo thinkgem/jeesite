@@ -14,11 +14,11 @@ import com.google.common.collect.Lists;
 
 /**
  * 简单封装Dozer, 实现深度转换Bean<->Bean的Mapper.实现:
- * 
- * <p>1. 持有Mapper的单例. <p/>
- * <p>2. 返回值类型转换. <p/>
- * <p>3. 批量转换Collection中的所有对象.  <p/>
- * <p>4.区分创建新的B对象与将对象A值复制到已存在的B对象两种函数. <p/>
+ *  
+ * 1. 持有Mapper的单例. 
+ * 2. 返回值类型转换.
+ * 3. 批量转换Collection中的所有对象.
+ * 4. 区分创建新的B对象与将对象A值复制到已存在的B对象两种函数.
  * 
  * @author calvin
  * @version 2013-01-15

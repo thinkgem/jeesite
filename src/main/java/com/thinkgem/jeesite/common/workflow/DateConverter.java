@@ -41,15 +41,14 @@ public class DateConverter implements Converter {
 	 *
 	 * @param value
 	 * @return
-	 * @throws ParseException
+	 * @throws ParseException 
 	 */
 	private Date doConvertToDate(Object value) throws ParseException {
 		Date result = null;
 
 		if (value instanceof String) {
-			result = DateUtils.parseDate((String) value, new String[] {
-					DATE_PATTERN, DATETIME_PATTERN, DATETIME_PATTERN_NO_SECOND,
-					MONTH_PATTERN });
+			result = DateUtils.parseDate((String) value, new String[] { DATE_PATTERN, DATETIME_PATTERN,
+					DATETIME_PATTERN_NO_SECOND, MONTH_PATTERN });
 
 			// all patterns failed, try a milliseconds constructor
 			if (result == null && StringUtils.isNotEmpty((String) value)) {

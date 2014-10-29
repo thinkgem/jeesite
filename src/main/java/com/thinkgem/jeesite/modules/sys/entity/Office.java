@@ -33,46 +33,44 @@ import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 机构Entity
- * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 @Entity
 @Table(name = "sys_office")
-@DynamicInsert
-@DynamicUpdate
+@DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Office extends IdEntity<Office> {
 
 	private static final long serialVersionUID = 1L;
-	private Office parent; // 父级编号
+	private Office parent;	// 父级编号
 	private String parentIds; // 所有父级编号
-	private Area area; // 归属区域
-	private String code; // 机构编码
-	private String name; // 机构名称
-	private String type; // 机构类型（1：公司；2：部门；3：小组）
-	private String grade; // 机构等级（1：一级；2：二级；3：三级；4：四级）
+	private Area area;		// 归属区域
+	private String code; 	// 机构编码
+	private String name; 	// 机构名称
+	private String type; 	// 机构类型（1：公司；2：部门；3：小组）
+	private String grade; 	// 机构等级（1：一级；2：二级；3：三级；4：四级）
 	private String address; // 联系地址
 	private String zipCode; // 邮政编码
-	private String master; // 负责人
-	private String phone; // 电话
-	private String fax; // 传真
-	private String email; // 邮箱
-
-	private List<User> userList = Lists.newArrayList(); // 拥有用户列表
+	private String master; 	// 负责人
+	private String phone; 	// 电话
+	private String fax; 	// 传真
+	private String email; 	// 邮箱
+	
+	private List<User> userList = Lists.newArrayList();   // 拥有用户列表
 	private List<Office> childList = Lists.newArrayList();// 拥有子机构列表
 
-	public Office() {
+	public Office(){
 		super();
 	}
-
-	public Office(String id) {
+	
+	public Office(String id){
 		this();
 		this.id = id;
 	}
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id")
+	@JoinColumn(name="parent_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
 	public Office getParent() {
@@ -83,7 +81,7 @@ public class Office extends IdEntity<Office> {
 		this.parent = parent;
 	}
 
-	@Length(min = 1, max = 255)
+	@Length(min=1, max=255)
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -93,7 +91,7 @@ public class Office extends IdEntity<Office> {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "area_id")
+	@JoinColumn(name="area_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
 	public Area getArea() {
@@ -104,7 +102,7 @@ public class Office extends IdEntity<Office> {
 		this.area = area;
 	}
 
-	@Length(min = 1, max = 100)
+	@Length(min=1, max=100)
 	public String getName() {
 		return name;
 	}
@@ -112,8 +110,8 @@ public class Office extends IdEntity<Office> {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Length(min = 1, max = 1)
+	
+	@Length(min=1, max=1)
 	public String getType() {
 		return type;
 	}
@@ -122,7 +120,7 @@ public class Office extends IdEntity<Office> {
 		this.type = type;
 	}
 
-	@Length(min = 1, max = 1)
+	@Length(min=1, max=1)
 	public String getGrade() {
 		return grade;
 	}
@@ -131,7 +129,7 @@ public class Office extends IdEntity<Office> {
 		this.grade = grade;
 	}
 
-	@Length(min = 0, max = 255)
+	@Length(min=0, max=255)
 	public String getAddress() {
 		return address;
 	}
@@ -140,7 +138,7 @@ public class Office extends IdEntity<Office> {
 		this.address = address;
 	}
 
-	@Length(min = 0, max = 100)
+	@Length(min=0, max=100)
 	public String getZipCode() {
 		return zipCode;
 	}
@@ -149,7 +147,7 @@ public class Office extends IdEntity<Office> {
 		this.zipCode = zipCode;
 	}
 
-	@Length(min = 0, max = 100)
+	@Length(min=0, max=100)
 	public String getMaster() {
 		return master;
 	}
@@ -158,7 +156,7 @@ public class Office extends IdEntity<Office> {
 		this.master = master;
 	}
 
-	@Length(min = 0, max = 200)
+	@Length(min=0, max=200)
 	public String getPhone() {
 		return phone;
 	}
@@ -167,7 +165,7 @@ public class Office extends IdEntity<Office> {
 		this.phone = phone;
 	}
 
-	@Length(min = 0, max = 200)
+	@Length(min=0, max=200)
 	public String getFax() {
 		return fax;
 	}
@@ -176,7 +174,7 @@ public class Office extends IdEntity<Office> {
 		this.fax = fax;
 	}
 
-	@Length(min = 0, max = 200)
+	@Length(min=0, max=200)
 	public String getEmail() {
 		return email;
 	}
@@ -185,7 +183,7 @@ public class Office extends IdEntity<Office> {
 		this.email = email;
 	}
 
-	@Length(min = 0, max = 100)
+	@Length(min=0, max=100)
 	public String getCode() {
 		return code;
 	}
@@ -193,11 +191,10 @@ public class Office extends IdEntity<Office> {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-	@OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
-	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
-	@OrderBy(value = "id")
-	@Fetch(FetchMode.SUBSELECT)
+	
+	@OneToMany(mappedBy = "office", fetch=FetchType.LAZY)
+	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
+	@OrderBy(value="id") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<User> getUserList() {
@@ -208,10 +205,9 @@ public class Office extends IdEntity<Office> {
 		this.userList = userList;
 	}
 
-	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-	@Where(clause = "del_flag='" + DEL_FLAG_NORMAL + "'")
-	@OrderBy(value = "code")
-	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
+	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
+	@OrderBy(value="code") @Fetch(FetchMode.SUBSELECT)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Office> getChildList() {
@@ -223,22 +219,17 @@ public class Office extends IdEntity<Office> {
 	}
 
 	@Transient
-	public static void sortList(List<Office> list, List<Office> sourcelist,
-			String parentId) {
-		
-		for (int i = 0; i < sourcelist.size(); i++) {
+	public static void sortList(List<Office> list, List<Office> sourcelist, String parentId){
+		for (int i=0; i<sourcelist.size(); i++){
 			Office e = sourcelist.get(i);
-			if (e.getParent() != null && e.getParent().getId() != null
-					&& e.getParent().getId().equals(parentId)) {
+			if (e.getParent()!=null && e.getParent().getId()!=null
+					&& e.getParent().getId().equals(parentId)){
 				list.add(e);
-				
 				// 判断是否还有子节点, 有则继续获取子节点
-				for (int j = 0; j < sourcelist.size(); j++) {
+				for (int j=0; j<sourcelist.size(); j++){
 					Office child = sourcelist.get(j);
-					if (child.getParent() != null
-							&& child.getParent().getId() != null
-							&& child.getParent().getId().equals(e.getId())) {
-						
+					if (child.getParent()!=null && child.getParent().getId()!=null
+							&& child.getParent().getId().equals(e.getId())){
 						sortList(list, sourcelist, e.getId());
 						break;
 					}
@@ -248,13 +239,13 @@ public class Office extends IdEntity<Office> {
 	}
 
 	@Transient
-	public boolean isRoot() {
+	public boolean isRoot(){
 		return isRoot(this.id);
 	}
-
+	
 	@Transient
-	public static boolean isRoot(String id) {
+	public static boolean isRoot(String id){
 		return id != null && id.equals("1");
 	}
-
+	
 }

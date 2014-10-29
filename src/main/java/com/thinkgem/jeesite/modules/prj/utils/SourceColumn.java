@@ -10,35 +10,35 @@ import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.utils.Collections3;
 
 @SuppressWarnings("unused")
-public class SourceColumn {
+public class SourceColumn{
 	private SourceTable sourceTable;
 	private NormalColumn normalColumn;
-
+	
 	private SourceColumn() {
 	}
-
-	public SourceColumn(NormalColumn normalColumn) {
+	public SourceColumn(NormalColumn normalColumn){
 		this.normalColumn = normalColumn;
 	}
-
-	public SourceColumn(SourceTable sourceTable, NormalColumn normalColumn) {
-		this.sourceTable = sourceTable;
+	
+	public SourceColumn(SourceTable sourceTable,NormalColumn normalColumn){
+		this.sourceTable=sourceTable;
 		this.normalColumn = normalColumn;
 	}
-
+	
+	
 	public SourceTable getSourceTable() {
 		return sourceTable;
 	}
-
-	public String getPhysicalName() {
+	
+	public String getPhysicalName(){
 		return normalColumn.getPhysicalName();
 	}
-
-	public String getLogicalName() {
+	
+	public String getLogicalName(){
 		return normalColumn.getLogicalName();
 	}
-
-	public String getDescription() {
+	
+	public String getDescription(){
 		return normalColumn.getDescription();
 	}
 
@@ -49,23 +49,21 @@ public class SourceColumn {
 	public NormalColumn getNormalColumn() {
 		return normalColumn;
 	}
-
 	public void setNormalColumn(NormalColumn normalColumn) {
 		this.normalColumn = normalColumn;
 	}
-
-	// 获取字段的Java类型
+	
+	//获取字段的Java类型
 	public String getClassName() {
 		return getJavaClass().getSimpleName();
 	}
-
-	// 获取字段实例名
+	
+	//获取字段实例名
 	public String getInstance() {
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,
-				normalColumn.getPhysicalName());
+		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, normalColumn.getPhysicalName());
 	}
-
-	// 获取import名
+	
+	//获取import名
 	public String getImportName() {
 		String name = getJavaClass().getCanonicalName();
 		if (!name.startsWith("java.lang")) {
@@ -74,21 +72,19 @@ public class SourceColumn {
 			return "";
 		}
 	}
-
-	// 获取字段所有的关联关系
+	
+	//获取字段所有的关联关系
 	public List<SourceRelation> getSourceRelationList() {
 		List<SourceRelation> list = Lists.newArrayList();
-		if (!Collections3.isEmpty(normalColumn.getRelationList())) {
-			for (Relation relation : normalColumn.getRelationList()) {
-				SourceRelation sourceRelation = new SourceRelation(relation,
-						false);
+		if(!Collections3.isEmpty(normalColumn.getRelationList())) {
+			for(Relation relation:normalColumn.getRelationList()) {
+				SourceRelation sourceRelation = new SourceRelation(relation,false);
 				list.add(sourceRelation);
 			}
-		}
-		if (!Collections3.isEmpty(normalColumn.getOutgoingRelationList())) {
-			for (Relation relation : normalColumn.getOutgoingRelationList()) {
-				SourceRelation sourceRelation = new SourceRelation(relation,
-						true);
+ 		}		
+		if(!Collections3.isEmpty(normalColumn.getOutgoingRelationList())) {
+			for(Relation relation:normalColumn.getOutgoingRelationList()) {
+				SourceRelation sourceRelation = new SourceRelation(relation,true);
 				list.add(sourceRelation);
 			}
 		}

@@ -31,140 +31,133 @@ import com.thinkgem.jeesite.modules.sys.service.SystemService;
 
 /**
  * 菜单Controller
- * 
  * @author ThinkGem
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping("${adminPath}/sys/menu")
+@RequestMapping(value = "${adminPath}/sys/menu")
 public class MenuController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
-
+	
 	@ModelAttribute("menu")
-	public Menu get(@RequestParam(required = false) String id) {
-		if (StringUtils.isNotBlank(id)) {
+	public Menu get(@RequestParam(required=false) String id) {
+		if (StringUtils.isNotBlank(id)){
 			return systemService.getMenu(id);
-		} else {
+		}else{
 			return new Menu();
 		}
 	}
 
 	@RequiresPermissions("sys:menu:view")
-	@RequestMapping({ "list", "" })
+	@RequestMapping(value = {"list", ""})
 	public String list(Model model) {
 		List<Menu> list = Lists.newArrayList();
 		List<Menu> sourcelist = systemService.findAllMenu();
 		Menu.sortList(list, sourcelist, "1");
-		model.addAttribute("list", list);
+        model.addAttribute("list", list);
 		return "modules/sys/menuList";
 	}
 
 	@RequiresPermissions("sys:menu:view")
-	@RequestMapping("form")
+	@RequestMapping(value = "form")
 	public String form(Menu menu, Model model) {
-		if (menu.getParent() == null || menu.getParent().getId() == null) {
+		if (menu.getParent()==null||menu.getParent().getId()==null){
 			menu.setParent(new Menu("1"));
 		}
 		menu.setParent(systemService.getMenu(menu.getParent().getId()));
 		model.addAttribute("menu", menu);
 		return "modules/sys/menuForm";
 	}
-
+	
 	@RequiresPermissions("sys:menu:edit")
-	@RequestMapping("save")
+	@RequestMapping(value = "save")
 	public String save(Menu menu, Model model, RedirectAttributes redirectAttributes) {
-		if (Global.isDemoMode()) {
+		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+			return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 		}
-		
-		if (!beanValidator(model, menu)) {
+		if (!beanValidator(model, menu)){
 			return form(menu, model);
 		}
 		systemService.saveMenu(menu);
 		addMessage(redirectAttributes, "保存菜单'" + menu.getName() + "'成功");
-		return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
-
+	
 	@RequiresPermissions("sys:menu:edit")
-	@RequestMapping("delete")
+	@RequestMapping(value = "delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
-		if (Global.isDemoMode()) {
+		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+			return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 		}
-		
-		if (Menu.isRoot(id)) {
+		if (Menu.isRoot(id)){
 			addMessage(redirectAttributes, "删除菜单失败, 不允许删除顶级菜单或编号为空");
-		} else {
+		}else{
 			systemService.deleteMenu(id);
 			addMessage(redirectAttributes, "删除菜单成功");
 		}
-		return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
 
 	@RequiresUser
-	@RequestMapping("tree")
+	@RequestMapping(value = "tree")
 	public String tree() {
 		return "modules/sys/menuTree";
 	}
-
+	
 	/**
 	 * 同步工作流权限数据
 	 */
 	@RequiresPermissions("sys:menu:edit")
-	@RequestMapping("synToActiviti")
+	@RequestMapping(value = "synToActiviti")
 	public String synToActiviti(RedirectAttributes redirectAttributes) {
-		if (Global.isDemoMode()) {
+		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+			return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 		}
-		
 		systemService.synToActiviti();
-		addMessage(redirectAttributes, "同步工作流权限数据成功!");
-		return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+    	addMessage(redirectAttributes, "同步工作流权限数据成功!");
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
-
+	
+	
 	/**
 	 * 批量修改菜单排序
 	 */
 	@RequiresPermissions("sys:menu:edit")
-	@RequestMapping("updateSort")
+	@RequestMapping(value = "updateSort")
 	public String updateSort(String[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
-		if (Global.isDemoMode()) {
+		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+			return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 		}
-		
-		int len = ids.length;
-		Menu[] menus = new Menu[len];
-		for (int i = 0; i < len; i++) {
-			menus[i] = systemService.getMenu(ids[i]);
-			menus[i].setSort(sorts[i]);
-			systemService.saveMenu(menus[i]);
-		}
-		addMessage(redirectAttributes, "保存菜单排序成功!");
-		return "redirect:" + Global.getAdminPath() + "/sys/menu/";
+    	int len = ids.length;
+    	Menu[] menus = new Menu[len];
+    	for (int i = 0; i < len; i++) {
+    		menus[i] = systemService.getMenu(ids[i]);
+    		menus[i].setSort(sorts[i]);
+    		systemService.saveMenu(menus[i]);
+    	}
+    	addMessage(redirectAttributes, "保存菜单排序成功!");
+		return "redirect:"+Global.getAdminPath()+"/sys/menu/";
 	}
-
+	
 	@RequiresUser
 	@ResponseBody
-	@RequestMapping("treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required = false) Long extId,HttpServletResponse response) {
-
+	@RequestMapping(value = "treeData")
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) Long extId, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
 		List<Menu> list = systemService.findAllMenu();
-		for (int i = 0; i < list.size(); i++) {
+		for (int i=0; i<list.size(); i++){
 			Menu e = list.get(i);
-			if (extId == null || (extId != null && !extId.equals(e.getId()) 
-					&& e.getParentIds().indexOf("," + extId + ",") == -1)) {
-				
+			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
-				map.put("pId", e.getParent() != null ? e.getParent().getId() : 0);
+				map.put("pId", e.getParent()!=null?e.getParent().getId():0);
 				map.put("name", e.getName());
 				mapList.add(map);
 			}

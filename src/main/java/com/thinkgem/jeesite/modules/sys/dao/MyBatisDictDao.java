@@ -12,15 +12,14 @@ import com.thinkgem.jeesite.modules.sys.entity.Dict;
 
 /**
  * MyBatis字典DAO接口
- * 
  * @author ThinkGem
  * @version 2013-8-23
  */
 @MyBatisDao
 public interface MyBatisDictDao {
-
-	Dict get(String id);
-
-	List<Dict> find(Dict dict);
-
+	
+    Dict get(String id);
+    
+    List<Dict> find(Dict dict);
+    
 }
