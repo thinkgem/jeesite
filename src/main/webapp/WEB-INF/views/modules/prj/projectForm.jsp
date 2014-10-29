@@ -15,15 +15,6 @@
 						loading('正在提交，请稍等...');
 						form.submit();
 					}
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
 				}
 			});
 		});
@@ -34,11 +25,13 @@
 		<li><a href="${ctx}/prj/project/">项目列表</a></li>
 		<li class="active"><a href="${ctx}/prj/project/form?id=${project.id}">项目<shiro:hasPermission name="prj:project:edit">${not empty project.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="prj:project:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
+	
 	<form:form id="inputForm" modelAttribute="project" action="${ctx}/prj/project/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
+		
 		<div class="control-group">
-			<label class="control-label">名称:</label>
+			<label class="control-label" for="name">名称:</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="200" class="required"/>
 			</div>
@@ -52,14 +45,14 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">包名:</label>
+			<label class="control-label" for="rootPackage">包名:</label>
 			<div class="controls">
 				<form:input path="rootPackage" htmlEscape="false" maxlength="200" class="required"/>
 				<span class="help-inline">例如com.thinkgem.jeesite</span>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">备注:</label>
+			<label class="control-label" for="remarks">备注:</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="200" />
 			</div>

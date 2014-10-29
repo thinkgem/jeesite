@@ -29,7 +29,6 @@ import java.util.Set;
  */
 public class PaginationMapperProxy implements InvocationHandler {
 
-
     private static final Set<String> OBJECT_METHODS = new HashSet<String>() {
         private static final long serialVersionUID = -1782950882770203583L;
         {
@@ -59,11 +58,13 @@ public class PaginationMapperProxy implements InvocationHandler {
         if (isObjectMethod(method)) {
             return null;
         }
+        
         final Class<?> declaringInterface = findDeclaringInterface(proxy, method);
         if (Page.class.isAssignableFrom(method.getReturnType())) {
             // 分页处理
             return new PaginationMapperMethod(declaringInterface, method, sqlSession).execute(args);
         }
+        
         // 原处理方式
         final MapperMethod mapperMethod = new MapperMethod(declaringInterface, method, sqlSession.getConfiguration());
         final Object result = mapperMethod.execute(sqlSession, args);

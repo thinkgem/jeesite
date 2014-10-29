@@ -30,30 +30,33 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 留言Controller
+ * 
  * @author ThinkGem
  * @version 2013-3-23
  */
 @Controller
-@RequestMapping(value = "${adminPath}/cms/guestbook")
+@RequestMapping("${adminPath}/cms/guestbook")
 public class GuestbookController extends BaseController {
 
 	@Autowired
 	private GuestbookService guestbookService;
-	
+
 	@ModelAttribute
-	public Guestbook get(@RequestParam(required=false) String id) {
-		if (StringUtils.isNotBlank(id)){
+	public Guestbook get(@RequestParam(required = false) String id) {
+		if (StringUtils.isNotBlank(id)) {
 			return guestbookService.get(id);
-		}else{
+		} else {
 			return new Guestbook();
 		}
 	}
-	
+
 	@RequiresPermissions("cms:guestbook:view")
-	@RequestMapping(value = {"list", ""})
-	public String list(Guestbook guestbook, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<Guestbook> page = guestbookService.find(new Page<Guestbook>(request, response), guestbook); 
-        model.addAttribute("page", page);
+	@RequestMapping( { "list", "" })
+	public String list(Guestbook guestbook, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		
+		Page<Guestbook> page = guestbookService.find(new Page<Guestbook>(request, response), guestbook);
+		model.addAttribute("page", page);
 		return "modules/cms/guestbookList";
 	}
 
@@ -65,27 +68,34 @@ public class GuestbookController extends BaseController {
 	}
 
 	@RequiresPermissions("cms:guestbook:edit")
-	@RequestMapping(value = "save")
+	@RequestMapping("save")
 	public String save(Guestbook guestbook, Model model, RedirectAttributes redirectAttributes) {
-		if (!beanValidator(model, guestbook)){
+		if (!beanValidator(model, guestbook)) {
 			return form(guestbook, model);
 		}
-		if (guestbook.getReUser() == null){
+		
+		if (guestbook.getReUser() == null) {
 			guestbook.setReUser(UserUtils.getUser());
 			guestbook.setReDate(new Date());
 		}
 		guestbookService.save(guestbook);
-		addMessage(redirectAttributes, DictUtils.getDictLabel(guestbook.getDelFlag(), "cms_del_flag", "保存")
-				+"留言'" + guestbook.getName() + "'成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/guestbook/?repage&status=2";
+		
+		addMessage(redirectAttributes,
+				DictUtils.getDictLabel(guestbook.getDelFlag(), "cms_del_flag","保存") 
+				+ "留言'" + guestbook.getName() + "'成功");
+		
+		return "redirect:" + Global.getAdminPath() + "/cms/guestbook/?repage&status=2";
 	}
-	
+
 	@RequiresPermissions("cms:guestbook:edit")
-	@RequestMapping(value = "delete")
-	public String delete(String id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	@RequestMapping("delete")
+	public String delete(String id,
+			@RequestParam(required = false) Boolean isRe,
+			RedirectAttributes redirectAttributes) {
+		
 		guestbookService.delete(id, isRe);
-		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"留言成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/guestbook/?repage&status=2";
+		addMessage(redirectAttributes, (isRe != null && isRe ? "恢复审核" : "删除") + "留言成功");
+		return "redirect:" + Global.getAdminPath() + "/cms/guestbook/?repage&status=2";
 	}
 
 }

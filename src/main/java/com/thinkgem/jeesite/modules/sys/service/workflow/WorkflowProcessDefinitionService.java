@@ -22,7 +22,6 @@ import com.thinkgem.jeesite.common.service.BaseService;
  * 工作流中流程以及流程实例相关Service
  * 
  * @author HenryYan
- *
  */
 @Service
 public class WorkflowProcessDefinitionService extends BaseService {
@@ -80,9 +79,7 @@ public class WorkflowProcessDefinitionService extends BaseService {
 		String[] processKeys = { "leave", "leave-dynamic-from", "leave-formkey", "dispatch" };
 		for (String loopProcessKey : processKeys) {
 
-			/*
-			 * 需要过滤指定流程
-			 */
+			// 需要过滤指定流程
 			if (ArrayUtils.isNotEmpty(processKey)) {
 				if (ArrayUtils.contains(processKey, loopProcessKey)) {
 					logger.debug("hit module of {}", (Object[])processKey);
@@ -92,9 +89,7 @@ public class WorkflowProcessDefinitionService extends BaseService {
 							processKey);
 				}
 			} else {
-				/*
-				 * 所有流程
-				 */
+				// 所有流程
 				deploySingleProcess(resourceLoader, loopProcessKey);
 			}
 		}
@@ -112,6 +107,7 @@ public class WorkflowProcessDefinitionService extends BaseService {
 		logger.debug("read workflow from: {}", classpathResourceUrl);
 		Resource resource = resourceLoader.getResource(classpathResourceUrl);
 		InputStream inputStream = resource.getInputStream();
+		
 		if (inputStream == null) {
 			logger.warn("ignore deploy workflow module: {}", classpathResourceUrl);
 		} else {

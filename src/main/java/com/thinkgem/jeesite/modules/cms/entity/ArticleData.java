@@ -27,30 +27,32 @@ import com.thinkgem.jeesite.common.persistence.BaseEntity;
 
 /**
  * 文章Entity
+ * 
  * @author ThinkGem
  * @version 2013-01-15
  */
 @Entity
 @Table(name = "cms_article_data")
-@DynamicInsert @DynamicUpdate
+@DynamicInsert
+@DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ArticleData extends BaseEntity<ArticleData> {
 
 	private static final long serialVersionUID = 1L;
-	private String id;		// 编号
-	private String content;	// 内容
+	private String id; // 编号
+	private String content; // 内容
 	private String copyfrom;// 来源
 	private String relation;// 相关文章
 	private String allowComment;// 是否允许评论
 
 	private Article article;
-	
+
 	public ArticleData() {
 		super();
 		this.allowComment = YES;
 	}
-	
-	public ArticleData(String id){
+
+	public ArticleData(String id) {
 		this();
 		this.id = id;
 	}
@@ -65,7 +67,7 @@ public class ArticleData extends BaseEntity<ArticleData> {
 	}
 
 	@NotBlank
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getContent() {
 		return content;
 	}
@@ -74,7 +76,7 @@ public class ArticleData extends BaseEntity<ArticleData> {
 		this.content = content;
 	}
 
-	@Length(min=0, max=255)
+	@Length(min = 0, max = 255)
 	public String getCopyfrom() {
 		return copyfrom;
 	}
@@ -83,7 +85,7 @@ public class ArticleData extends BaseEntity<ArticleData> {
 		this.copyfrom = copyfrom;
 	}
 
-	@Length(min=0, max=255)
+	@Length(min = 0, max = 255)
 	public String getRelation() {
 		return relation;
 	}
@@ -92,7 +94,7 @@ public class ArticleData extends BaseEntity<ArticleData> {
 		this.relation = relation;
 	}
 
-	@Length(min=1, max=1)
+	@Length(min = 1, max = 1)
 	public String getAllowComment() {
 		return allowComment;
 	}
@@ -101,8 +103,8 @@ public class ArticleData extends BaseEntity<ArticleData> {
 		this.allowComment = allowComment;
 	}
 
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE},optional=false)  
-//	@OneToOne(mappedBy="articleData",cascade=CascadeType.ALL)
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, optional = false)
+	// @OneToOne(mappedBy="articleData",cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	public Article getArticle() {
 		return article;

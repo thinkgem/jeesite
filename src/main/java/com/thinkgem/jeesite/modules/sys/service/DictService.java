@@ -24,6 +24,7 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 
 /**
  * 字典Service
+ * 
  * @author ThinkGem
  * @version 2013-5-29
  */
@@ -33,49 +34,49 @@ public class DictService extends BaseService {
 
 	@Autowired
 	private DictDao dictDao;
-	
-//	@Autowired
-//	private MyBatisDictDao myBatisDictDao;
-	
+
+	// @Autowired
+	// private MyBatisDictDao myBatisDictDao;
+
 	public Dict get(String id) {
 		// MyBatis 查询
-//		return myBatisDictDao.get(id);
+		// return myBatisDictDao.get(id);
 		// Hibernate 查询
 		return dictDao.get(id);
 	}
-	
+
 	public Page<Dict> find(Page<Dict> page, Dict dict) {
 		// MyBatis 查询
-//		dict.setPage(page);
-//		page.setList(myBatisDictDao.find(dict));
-//		return page;
+		// dict.setPage(page);
+		// page.setList(myBatisDictDao.find(dict));
+		// return page;
 		// Hibernate 查询
 		DetachedCriteria dc = dictDao.createDetachedCriteria();
-		if (StringUtils.isNotEmpty(dict.getType())){
+		if (StringUtils.isNotEmpty(dict.getType())) {
 			dc.add(Restrictions.eq("type", dict.getType()));
 		}
-		if (StringUtils.isNotEmpty(dict.getDescription())){
-			dc.add(Restrictions.like("description", "%"+dict.getDescription()+"%"));
+		if (StringUtils.isNotEmpty(dict.getDescription())) {
+			dc.add(Restrictions.like("description", "%" + dict.getDescription() + "%"));
 		}
 		dc.add(Restrictions.eq(Dict.FIELD_DEL_FLAG, Dict.DEL_FLAG_NORMAL));
 		dc.addOrder(Order.asc("type")).addOrder(Order.asc("sort")).addOrder(Order.desc("id"));
 		return dictDao.find(page, dc);
 	}
-	
-	public List<String> findTypeList(){
+
+	public List<String> findTypeList() {
 		return dictDao.findTypeList();
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(Dict dict) {
 		dictDao.save(dict);
 		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(String id) {
 		dictDao.deleteById(id);
 		CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
 	}
-	
+
 }

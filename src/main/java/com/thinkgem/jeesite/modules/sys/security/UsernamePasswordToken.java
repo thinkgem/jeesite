@@ -7,6 +7,7 @@ package com.thinkgem.jeesite.modules.sys.security;
 
 /**
  * 用户和密码（包含验证码）令牌类
+ * 
  * @author ThinkGem
  * @version 2013-5-19
  */

@@ -29,45 +29,47 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 评论Entity
+ * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 @Entity
 @Table(name = "cms_comment")
-@DynamicInsert @DynamicUpdate
+@DynamicInsert
+@DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Comment extends BaseEntity<Category> {
 
 	private static final long serialVersionUID = 1L;
-	private String id;		// 编号
+	private String id; // 编号
 	private Category category;// 分类编号
-	private String contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
-	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
+	private String contentId; // 归属分类内容的编号（Article.id、Photo.id、Download.id）
+	private String title; // 归属分类内容的标题（Article.title、Photo.title、Download.title）
 	private String content; // 评论内容
-	private String name; 	// 评论姓名
-	private String ip; 		// 评论IP
+	private String name; // 评论姓名
+	private String ip; // 评论IP
 	private Date createDate;// 评论时间
 	private User auditUser; // 审核人
-	private Date auditDate;	// 审核时间
-	private String delFlag;	// 删除标记删除标记（0：正常；1：删除；2：审核）
+	private Date auditDate; // 审核时间
+	private String delFlag; // 删除标记删除标记（0：正常；1：删除；2：审核）
 
 	public Comment() {
 		super();
 		this.delFlag = DEL_FLAG_AUDIT;
 	}
-	
-	public Comment(String id){
+
+	public Comment(String id) {
 		this();
 		this.id = id;
 	}
-	
-	public Comment(Category category){
+
+	public Comment(Category category) {
 		this();
 		this.category = category;
 	}
-	
+
 	@PrePersist
-	public void prePersist(){
+	public void prePersist() {
 		this.id = IdGen.uuid();
 		this.createDate = new Date();
 	}
@@ -82,7 +84,7 @@ public class Comment extends BaseEntity<Category> {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name = "category_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
 	public Category getCategory() {
@@ -102,7 +104,7 @@ public class Comment extends BaseEntity<Category> {
 		this.contentId = contentId;
 	}
 
-	@Length(min=1, max=255)
+	@Length(min = 1, max = 255)
 	public String getContent() {
 		return content;
 	}
@@ -110,8 +112,8 @@ public class Comment extends BaseEntity<Category> {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	@Length(min=1, max=255)
+
+	@Length(min = 1, max = 255)
 	public String getTitle() {
 		return title;
 	}
@@ -119,8 +121,8 @@ public class Comment extends BaseEntity<Category> {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	@Length(min=1, max=100)
+
+	@Length(min = 1, max = 100)
 	public String getName() {
 		return name;
 	}
@@ -130,7 +132,7 @@ public class Comment extends BaseEntity<Category> {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="audit_user_id")
+	@JoinColumn(name = "audit_user_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	public User getAuditUser() {
 		return auditUser;
@@ -165,7 +167,7 @@ public class Comment extends BaseEntity<Category> {
 		this.createDate = createDate;
 	}
 
-	@Length(min=1, max=1)
+	@Length(min = 1, max = 1)
 	public String getDelFlag() {
 		return delFlag;
 	}

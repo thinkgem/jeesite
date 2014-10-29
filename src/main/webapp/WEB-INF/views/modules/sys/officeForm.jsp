@@ -7,21 +7,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
+			$("#inputForm").validate();
 		});
 	</script>
 </head>
@@ -30,9 +16,11 @@
 		<li><a href="${ctx}/sys/office/">机构列表</a></li>
 		<li class="active"><a href="${ctx}/sys/office/form?id=${office.id}&parent.id=${office.parent.id}">机构<shiro:hasPermission name="sys:office:edit">${not empty office.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:office:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
+	
 	<form:form id="inputForm" modelAttribute="office" action="${ctx}/sys/office/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
+		
 		<div class="control-group">
 			<label class="control-label">上级机构:</label>
 			<div class="controls">
@@ -48,19 +36,19 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">机构名称:</label>
+			<label class="control-label" for="name">机构名称:</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">机构编码:</label>
+			<label class="control-label" for="code">机构编码:</label>
 			<div class="controls">
 				<form:input path="code" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">机构类型:</label>
+			<label class="control-label" for="type">机构类型:</label>
 			<div class="controls">
 				<form:select path="type">
 					<form:options items="${fns:getDictList('sys_office_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
@@ -68,7 +56,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">机构级别:</label>
+			<label class="control-label" for="grade">机构级别:</label>
 			<div class="controls">
 				<form:select path="grade">
 					<form:options items="${fns:getDictList('sys_office_grade')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
@@ -76,49 +64,51 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">联系地址:</label>
+			<label class="control-label" for="address">联系地址:</label>
 			<div class="controls">
 				<form:input path="address" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">邮政编码:</label>
+			<label class="control-label" for="zipCode">邮政编码:</label>
 			<div class="controls">
 				<form:input path="zipCode" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">负责人:</label>
+			<label class="control-label" for="master">负责人:</label>
 			<div class="controls">
 				<form:input path="master" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">电话:</label>
+			<label class="control-label" for="phone">电话:</label>
 			<div class="controls">
 				<form:input path="phone" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">传真:</label>
+			<label class="control-label" for="fax">传真:</label>
 			<div class="controls">
 				<form:input path="fax" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">邮箱:</label>
+			<label class="control-label" for="email">邮箱:</label>
 			<div class="controls">
 				<form:input path="email" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">备注:</label>
+			<label class="control-label" for="remarks">备注:</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="sys:office:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="sys:office:edit">
+				<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

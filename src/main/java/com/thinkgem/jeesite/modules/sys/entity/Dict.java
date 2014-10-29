@@ -19,32 +19,34 @@ import com.thinkgem.jeesite.common.persistence.IdEntity;
 
 /**
  * 字典Entity
+ * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 @Entity
 @Table(name = "sys_dict")
-@DynamicInsert @DynamicUpdate
+@DynamicInsert
+@DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Dict extends IdEntity<Dict> {
 
 	private static final long serialVersionUID = 1L;
-	private String label;	// 标签名
-	private String value;	// 数据值
-	private String type;	// 类型
+	private String label; // 标签名
+	private String value; // 数据值
+	private String type; // 类型
 	private String description;// 描述
-	private Integer sort;	// 排序
+	private Integer sort; // 排序
 
 	public Dict() {
 		super();
 	}
-	
+
 	public Dict(String id) {
 		this();
 		this.id = id;
 	}
 
-	@Length(min=1, max=100)
+	@Length(min = 1, max = 100)
 	public String getLabel() {
 		return label;
 	}
@@ -52,8 +54,8 @@ public class Dict extends IdEntity<Dict> {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
-	@Length(min=1, max=100)
+
+	@Length(min = 1, max = 100)
 	public String getValue() {
 		return value;
 	}
@@ -62,7 +64,7 @@ public class Dict extends IdEntity<Dict> {
 		this.value = value;
 	}
 
-	@Length(min=1, max=100)
+	@Length(min = 1, max = 100)
 	public String getType() {
 		return type;
 	}
@@ -71,7 +73,7 @@ public class Dict extends IdEntity<Dict> {
 		this.type = type;
 	}
 
-	@Length(min=0, max=100)
+	@Length(min = 0, max = 100)
 	public String getDescription() {
 		return description;
 	}
@@ -88,5 +90,5 @@ public class Dict extends IdEntity<Dict> {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-	
+
 }

@@ -42,11 +42,13 @@ public class CKFinderFilesServlet extends HttpServlet {
 		if(index > 0) {
 			filepath = filepath.substring(index + userfilesPath.length());
 		}
+		
 		try {
 			filepath = UriUtils.decode(filepath, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			logger.error(String.format("解释图片文件路径失败，URL地址为%s", filepath), e1);
 		}
+		
 		File file = new File(Global.getCkBaseDir() + filepath);
 		Exception exception = null;
 		try {
@@ -75,14 +77,12 @@ public class CKFinderFilesServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		getFile(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		getFile(req, resp);
 	}
 }
