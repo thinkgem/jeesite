@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.security.Digests;
 import com.thinkgem.jeesite.common.service.BaseService;
@@ -310,6 +311,9 @@ public class SystemService extends BaseService  {
 	}
 	
 	private void saveActiviti(Role role) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			if(role!=null) {
 				List<User> userList = roleDao.get(role.getId()).getUserList();
@@ -332,9 +336,11 @@ public class SystemService extends BaseService  {
 			e.printStackTrace();
 		}
 	}
-	
 
 	private void deleteActiviti(Role role) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			if(role!=null) {
 				List<User> userList = roleDao.get(role.getId()).getUserList();
@@ -351,6 +357,9 @@ public class SystemService extends BaseService  {
 	}
 
 	private void saveActiviti(User user) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			if(user!=null) {
 				String userId = ObjectUtils.toString(user.getId());
@@ -370,6 +379,9 @@ public class SystemService extends BaseService  {
 	}
 
 	private void deleteActiviti(User user) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			if(user!=null) {
 				String userId = ObjectUtils.toString(user.getId());
@@ -381,6 +393,9 @@ public class SystemService extends BaseService  {
 	}
 
 	private void saveActiviti(Menu menu) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			if(menu!=null){
 				Group group = identityService.createGroupQuery().groupId(menu.getActivitiGroupId()).singleResult();
@@ -408,7 +423,11 @@ public class SystemService extends BaseService  {
 			e.printStackTrace();
 		}
 	}
+	
 	private void deleteActiviti(String id) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			if(id!=null) {
 				Menu menu = menuDao.get(id);
@@ -431,6 +450,9 @@ public class SystemService extends BaseService  {
 
 	@SuppressWarnings("unchecked")
 	private void merge(User user,List<Menu> menuList) {
+		if (!Global.isSynActivitiIndetity()){
+			return;
+		}
 		try{
 			String userId = ObjectUtils.toString(user.getId());
 			List<Group> activitiGroupList = identityService.createGroupQuery().groupMember(userId).list();
