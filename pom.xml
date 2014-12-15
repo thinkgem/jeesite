@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.thinkgem.jeesite</groupId>
-	<artifactId>jeesite</artifactId>
+	<artifactId>jeesite_hibernate</artifactId>
 	<version>1.1.0</version>
 	<packaging>war</packaging>
 	<name>JeeSite</name>
