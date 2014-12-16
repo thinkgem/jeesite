@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jqGrid Demos</title>
+<link href="../../../bootstrap/2.3.1/css_default/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+<!-- <link href="../css/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" /> -->
+<link href="../css/ui.jqgrid.css" rel="stylesheet" type="text/css" />
+
+<link href="../../../common/jeesite.css" type="text/css" rel="stylesheet"/>
+
+<script src="../../../jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="../i18n/grid.locale-cn.js" type="text/javascript"></script>
+<script src="../js/jquery.jqGrid.js" type="text/javascript"></script>
+<script src="../plugins/grid.complexHeaders.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	//  ==============
+	
+    var grid2 = $("#list2").jqGrid({
+		url:'server.json',
+		datatype: "json",
+		jsonReader: { // 自定义json数据格式
+			root: "list", page: "pageNo", total: "totalPage",
+			records: "count", subgrid: {root:"list"}
+		},
+		colNames:['编号','类型', '<font color=red>关键字</font>', '日期','访问数','其它'],
+		colModel:[
+			{name:'Id',index:'id', width:55, sortable:false, frozen : true},
+			{name:'DataType',index:'data_type', width:120, frozen : true},
+			{name:'KeyWords',index:'key_words desc, data_type', width:300},
+			{name:'DoTime',index:'do_time', width:360, align:"center"},
+			{name:'DataCount',index:'data_count', width:280, align:"right", formatter: 'number'},		
+			{name:'test',index:'total', width:500,formatter: function(val, obj, row, act){
+				return " test"
+			}}
+		],
+		rowNum:-1, // 显示行数，-1为显示全部
+		//rowList:[10,20,30],
+		//pager: '#pager2',
+		//sortname: 'id',
+		//sortorder: "asc",
+		//viewrecords: true,
+		rownumbers: true,	// 显示序号
+		shrinkToFit: false, // 不按百分比自适应列宽
+		multiselect: true, // 显示多选复选框
+		multiboxonly:true, // 单击复选框时在多选
+		footerrow: true, // 显示底部合计行
+		userDataOnFooter: true, // 使用json数据作为合计行数据
+		altRows: true, // 斑马线样式，交替行altclass
+		beforeRequest: function(data){
+			//console.log(data);
+		},
+		loadComplete: function(data){
+			//console.log(data.page);
+		},
+		loadError: function(data){
+			//console.log(data);
+		},
+		gridComplete : function() {
+			//var dataCount  = $(this).getCol('DataCount',false,'sum');
+			//$(this).footerData("set",{name:"合计",
+			//	DataCount:dataCount
+            //});
+			//$(".ui-jqgrid-sdiv").show();
+			$(window).resize();
+		}
+		//caption:"JSON Example"
+	});
+	// 二级表头
+	grid2.jqGrid('setGroupHeaders', {
+	  useColSpanStyle: true, 
+	  groupHeaders:[
+		{startColumnName: 'Id', numberOfColumns: 2, titleText: 'Client Details'},
+		{startColumnName: 'DoTime', numberOfColumns: 3, titleText: 'Client KeyWords'}
+	  ]
+	});
+	// 三级表头
+// 	grid2.jqGrid('setComplexHeaders', {
+// 	  complexHeaders:{
+// 		defaultStyle:true,
+// 		twoLevel:[
+// 			{startColumnName: 'DoTime', numberOfColumns: 2, titleText: '二级表头'}
+// 		],
+// 		threeLevel:[
+// 			{startColumnName:'Id',numberOfColumns:2,titleText:'三级表头'},
+// 			{startColumnName:'KeyWords',numberOfColumns:3,titleText:'三级表头2'}
+// 		]
+// 	  }
+// 	});
+	grid2.jqGrid('setFrozenColumns'); // 冻结列，在colModel指定frozen: true
+	//grid2.jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+	$(window).resize(function(){
+		grid2.jqGrid('setGridWidth',$(window).width()-100);// 自动调整表格大小
+		grid2.jqGrid('setGridHeight',$(window).height()/2-100);// 自动调整表格大小
+		$("#gbox_list2 .ui-jqgrid-bdiv").css({"padding-bottom":"20px"});
+		$("#gbox_list2 .ui-jqgrid-sdiv").width($(".ui-jqgrid-sdiv").width()-16);
+		$("#gbox_list2 .ui-jqgrid-sdiv").css({"position":"absolute","bottom":"16px"});
+		//$("#gbox_list2 .ui-jqgrid-sdiv td").css({"border-bottom":"solid 1px #ddd"});
+		$("#gbox_list2 .ui-jqgrid-sdiv td").not("td.jqgrid-rownum").css({"background":"#fdfdfd"});
+		$("#gbox_list2 .frozen-sdiv.ui-jqgrid-sdiv").css({"top":"auto","z-index":"1"});
+		$("#gbox_list2 .frozen-sdiv td:eq(3)").text("合计：");
+	}).resize();
+	
+	// ===========
+		
+    var grid = $("#list1").jqGrid({
+		url:'server.json',
+		datatype: "json",
+		jsonReader: {
+			root: "list",
+			page: "pageNo",
+			total: "totalPage",
+			records: "count",
+			subgrid: {root:"list"}
+		},
+		colNames:['编号','类型', '<font color=red>关键字</font>', '日期','访问数','操作'],
+		colModel:[
+			{name:'Id',index:'id', width:55, sortable:false, frozen : true},
+			{name:'DataType',index:'data_type', width:120, frozen : true},
+			{name:'KeyWords',index:'key_words desc, data_type', width:100},
+			{name:'DoTime',index:'do_time', width:160, align:"center"},
+			{name:'DataCount',index:'data_count', width:80, align:"right", formatter: 'number'},		
+			{name:'btns',index:'total', width:100,formatter: function(val, obj, row, act){
+				return " <a href='#"+row.Id+"'>添加</a> <a href='#"+row.Id+"'>删除</a>"
+			}}
+		],
+		rowNum:-1,
+		//rowList:[10,20,30],
+		//pager: '#pager2',
+		//sortname: 'id',
+		//sortorder: "asc",
+		//viewrecords: true,
+		rownumbers: true,
+		//shrinkToFit: false,
+		multiboxonly:true,
+		multiselect: true,
+		beforeRequest: function(data){
+			//console.log(data);
+		},
+		loadComplete: function(data){
+			//console.log(data.page);
+		},
+		loadError: function(data){
+			//console.log(data);
+		},
+		gridComplete : function() {
+			$(window).resize();
+		}
+		//caption:"JSON Example"
+	});
+	grid.jqGrid('navGrid','hideCol',"Id").jqGrid('sortableRows');
+	//grid.jqGrid('setFrozenColumns');
+	//grid.jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+	$(window).resize(function(){
+		grid.jqGrid('setGridWidth',$(window).width()-100);
+		grid.jqGrid('setGridHeight',$(window).height()/2-100);
+	}).resize();
+});
+</script>
+</head>
+<body>
+  	<table id="list2"></table>
+	<div id="pager2"></div>
+	<br/>
+  	<table id="list1"></table>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+<script type="text/javascript" src="../proptable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("object.tablelayout.xml?81");
+  genproptable('TagTableLayout', xmlDoc, "");
+  xmlDoc = getXMLDoc("object.tablelayout.col.xml?81");
+  genproptable('TagCol', xmlDoc, "");
+  xmlDoc = getXMLDoc("object.tablelayout.tr.xml?81");
+  genproptable('TagTR', xmlDoc, "");
+  xmlDoc = getXMLDoc("object.tablelayout.tr.td.xml?81");
+  genproptable('TagTD', xmlDoc, "");
+ }
+</script>
+</head>
+
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+<br>
+<div id="TagTableLayout"></div><br>
+
+<div id="TagCol"></div><br>
+
+<div id="TagTR"></div><br>
+
+<div id="TagTD"></div><br>
+
+
+<script type='text/javascript' src='../dev/nstd.js'></script>
+</body></html>

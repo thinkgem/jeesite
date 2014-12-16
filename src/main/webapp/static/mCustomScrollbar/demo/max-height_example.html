@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery custom scrollbar demo</title>
+	<!-- style for demo and examples -->
+	<style>
+		body{margin:0; padding:0; color:#eee; background:#222; font-family:Verdana,Geneva,sans-serif; font-size:13px; line-height:20px;}
+		a:link,a:visited,a:hover{color:inherit;}
+		h1{font-family:Georgia,serif; font-size:18px; font-style:italic; margin:40px; color:#26beff;}
+		p{margin:0 0 20px 0;}
+		hr{height:0; border:none; border-bottom:1px solid rgba(255,255,255,0.13); border-top:1px solid rgba(0,0,0,1); margin:9px 10px; clear:both;}
+		.links{margin:10px;}
+		.links a{display:inline-block; padding:3px 15px; margin:7px 10px; background:#444; text-decoration:none; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px;}
+		.links a:hover{background:#eb3755; color:#fff;}
+		.output{margin:20px 40px;}
+		.output a{display:inline-block; text-decoration:none; padding:3px 15px; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px; background:#000; margin:5px 20px 5px 0;}
+		code{color:#5b70ff;}
+		.content{margin:40px; width:260px; max-height:380px; padding:20px; overflow:auto; background:#333; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+		.content p:nth-child(even){color:#999; font-family:Georgia,serif; font-size:17px; font-style:italic;}
+		.content p:nth-child(3n+0){color:#c96;}
+	</style>
+	<!-- Custom scrollbars CSS -->
+	<link href="jquery.mCustomScrollbar.css" rel="stylesheet" />
+</head>
+<body>
+	<p class="links">
+		<a href="http://manos.malihu.gr">malihu</a>
+		<a href="http://manos.malihu.gr/jquery-custom-content-scroller">Plugin home</a>
+		<a href="complete_examples.html">Plugin demo</a>
+	</p>
+	<hr />
+	<h1>CSS max-height example</h1>
+	<p class="output"><a href="#" id="add-content">Add content</a> <a href="#" id="remove-content">Remove content</a></p>
+	<!-- content block -->
+	<div id="content_1" class="content">
+		<p><code>max-height</code> set to <code>380px</code>.</p>
+   		<p>Lorem ipsum dolor sit amet. Nullam felis tellus, tristique nec egestas in suspendisse potenti. Cras venenatis condimentum nibh a mollis.</p>
+	</div>
+	<hr />
+	<p>&nbsp;</p>
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/minified/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	<!-- custom scrollbars plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	<script>
+		(function($){
+			$(window).load(function(){
+				$("#content_1").mCustomScrollbar();
+				/*demo fn*/
+				$("#add-content").click(function(e){
+					e.preventDefault();
+					$("#content_1 .mCSB_container").append("<p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit. Fusce adipiscing dui eu metus gravida.</p>");
+					$("#content_1").mCustomScrollbar("update");
+				});
+				$("#remove-content").click(function(e){
+					e.preventDefault();
+					$("#content_1 .mCSB_container p:last").remove();
+					$("#content_1").mCustomScrollbar("update");
+				});
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>

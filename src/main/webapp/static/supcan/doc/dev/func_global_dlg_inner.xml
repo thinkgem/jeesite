@@ -1,0 +1,41 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="非模式对话框函数">
+	<function name="SetDialogFreeForm">
+		<usage>指定对话框的Freeform</usage>
+		<para>FreeForm的URL(相对或绝对)，或者直接就是XML大串</para>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="SetDialogPara">
+		<usage>指定对话框的参数</usage>
+		<para>可选，可以是如下属性值(多个属性间以分号(;)分隔)：&lt;br&gt;
+&lt;b&gt; width / height &lt;/b&gt; - 宽度和高度，可以是百分比(如"80%"，相对于组件的宽/高)、整数(绝对像素数)，默认都是80%;&lt;br&gt;
+&lt;b&gt;ExtWidth / ExtHeight&lt;/b&gt; - 扩展宽度/高度, 默认分别是20/14;&lt;br&gt;
+备注：扩展宽度/高度表示对话框右、下方预留的空白边界.&lt;br&gt;
+&lt;b&gt;IdFocus(或FocusId)&lt;/b&gt; - 指定定位焦点，如果为空，则按freeform的TabOrder自动定位;&lt;br&gt;
+&lt;b&gt;bgColor(或backColor)&lt;/b&gt; - 组件被遮罩的底色，默认是#C8C8C8;&lt;br&gt;
+&lt;b&gt;alpha&lt;/b&gt; - 遮罩时组件画面的透明度, 0-255, 默认是70;&lt;br&gt;
+</para>
+	</function>
+	<function name="OpenInnerDialog">
+		<usage>打开非模式对话框</usage>
+		<para>加载的数据的URL, 或直接就是XML/JSON大串，用于为FreeForm赋初值</para>
+		<return>成功 - 返回对话框的freeform的句柄(一个整数串); &lt;br&gt;失败 - 空串, 原因通常为：freeform的XML模版不存在、或对话框已经打开着</return>
+		<memo>由于函数返回了freeform的句柄，所以您可以以扩展函数的方式调用freeform的所有函数</memo>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="CloseInnerDialog">
+		<usage>关闭非模式对话框</usage>
+		<return>成功 - 返回对话框的freeform的句柄(一个整数串); &lt;br&gt;失败 - 空串, 对话框本来就没有打开</return>
+		<memo>关闭后，Freeform并未被销毁，您仍然可以使用这个返回的句柄，通过扩展函数存取freeform中的内容</memo>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框、15.辅助Treelist输入(2)</illu>
+	</function>
+	<function name="IsInnerDialogOpen">
+		<usage>非模式对话框是否正打开着</usage>
+		<detail>或"IsInnerDialogOpened"，非模式对话框是否正打开着</detail>
+		<return>1 / 0</return>
+		<memo>该函数很重要，常用于在OnEvent( )事件中判断当前的消息发送者.</memo>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框、15.辅助Treelist输入(2)</illu>
+	</function>
+</category>
+</functions>

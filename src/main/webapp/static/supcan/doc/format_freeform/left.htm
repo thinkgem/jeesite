@@ -1,0 +1,103 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<head>
+<script type="text/javascript" src="../../binary/dynaload.js?81"></script>
+<script language="JavaScript">
+	var url = document.location.search;
+	var arr = url.split('&');
+	var gtkey="";
+	for(var i=0;i<arr.length;i++) {
+		var ar = arr[i].split('=');
+		if(ar.length<2) continue;
+		if(ar[0] == '?key') {
+			gtkey = ar[1];
+			break;
+		}
+	}
+ 
+function OnReady(id)
+{
+var xml = '<Data><items>\
+<item ID="前言"/>\
+<item ID="Properties" tip="属性"/>\
+<item ID="Background" PID="Properties" tip="背景属性"/>\
+<item ID="Expresses" PID="Properties" tip="计算列表达式"/>\
+<item ID="Express" PID="Expresses"/>\
+<item ID="Validations" PID="Properties" str="Validations" tip="验证"/>\
+<item ID="Validation" PID="Validations" str="Validation"/>\
+<item ID="Fonts" tip="字体"/>\
+<item ID="Font" PID="Fonts" tip="字体"/>\
+<item ID="Objects" para="main2.htm"/>\
+<item PID="Objects" ID="公共属性" tip="公共属性" para="main2.htm"/>\
+<item PID="Objects" id="Input" tip="输入控件" para="object.input.xml"/>\
+<item PID="Objects" id="Text" tip="文本" para="object.text.xml"/>\
+<item PID="Objects" id="Line" tip="线条" para="object.line.xml"/>\
+<item PID="Objects" id="Rect" tip="矩形框" para="object.rect.xml"/>\
+<item PID="Objects" id="Image" tip="图片" para="object.image.xml"/>\
+<item PID="Objects" id="ImageFlow" tip="图片流" para="object.imageflow.xml"/>\
+<item PID="Objects" id="Group" tip="分组框" para="object.groupbox.xml"/>\
+<item PID="Objects" id="GroupEx" tip="Supcan风格分组框" para="object.groupboxex.xml"/>\
+<item PID="Objects" id="Pager" tip="分页器" para="object.pager.xml"/>\
+<item PID="Objects" id="WebBrowser" tip="内置 IE 浏览器" para="object.browser.xml"/>\
+<item PID="Objects" id="FreeformTree" tip="内嵌Freeform树" para="object.freeformtree.xml"/>\
+<item PID="Objects" id="Component" tip="大粒度组件" para="object.component.xml"/>\
+<item PID="Objects" id="Tab" tip="选项卡" para="tab.htm"/>\
+<item PID="Tab" id="TabComponent" text="Component" tip="选项卡中的大粒度组件" para="tab.htm"/>\
+<item PID="Objects" id="TableLayout" tip="布局" para="main3.htm"/>\
+<item PID="TableLayout" id="Col" para="main3.htm"/>\
+<item PID="TableLayout" id="TR" para="main3.htm"/>\
+<item PID="TR" id="TD" para="main3.htm"/>\
+<item ID="DropLists" tip="下拉选择内容" para="main4.htm"/>\
+<item PID="DropLists" id="DropList" para="main4.htm"/>\
+<item PID="DropList" id="item" para="main4.htm"/>\
+<item ID="Menus" tip="下拉按钮菜单" para="main5.htm"/>\
+<item PID="Menus" id="Menu" para="main5.htm"/>\
+<item PID="Menu" id="Item" para="main5.htm"/>\
+<item ID="Paths" tip="路径" para="main5.htm"/>\
+<item PID="Paths" id="Path" para="main5.htm"/>\
+<item PID="Path" id="Points" para="main5.htm"/>\
+<item PID="Points" id="Point" para="main5.htm"/>\
+<item PID="Path" id="Curve" para="main5.htm"/>\
+<item PID="Curve" id="Point " para="main5.htm"/>\
+<item PID="Path" id="Bezier" para="main5.htm"/>\
+<item PID="Bezier" id="point" para="main5.htm"/>\
+<item PID="Path" id="Arc" para="main5.htm"/>\
+<item PID="Path" id="rect" para="main5.htm"/>\
+<item ID="附录.关于TableLayout" para="main5.htm"/>\
+</items></Data>';
+	AF.func('ReadXML', xml);
+	if(gtkey != "") {
+		AF.func("Expand", gtkey);
+		AF.func("SetCurSel", gtkey);
+	}
+}
+function OnEvent(id, Event, p1, p2, p3, p4)
+{
+	if(Event!="SelChanged") return;
+	if(p2 == "") {
+		 parent.document.getElementById('ContentPage').src="main1.htm?81#Tag" + p1;
+	}
+	else {
+		if(p2.indexOf('htm') == -1)
+			parent.document.getElementById('ContentPage').src= "byxml.htm?v=81&filename=" + p2;
+		else
+			parent.document.getElementById('ContentPage').src= p2 + "?81#Tag" + p1;
+	}
+}
+</script>
+</head>
+
+<body bgcolor=#EEEEEE topmargin=10 leftMargin=3 rightMargin=1 bottommargin=1 vlink=#0000ff link=#0000ff alink=#0000ff>
+<table cols=1 border=0 height=100% width=100%>
+<tr height=24><td align=center>Supcan Freeform<br>XML文挡规范</td></tr>
+<tr height=38><td align=center><img src='../../res/tip2.bmp'>&nbsp; 目录 &nbsp;<img src='../../res/tip2.bmp'></td></tr>
+<tr><td>
+<div style="position:relative;width:100%;height:100%">
+ <script>insertTree('AF', 'Border=clientEdge; Style=hasButtons,hasLines,showSelAlways; leafImage=0; nodeImage=1; BackColor=#F0F0F0,#DFD8D8')</script>
+</div>
+</td></tr>
+</table>
+
+</body>
+</html>

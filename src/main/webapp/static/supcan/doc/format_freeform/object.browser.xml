@@ -1,0 +1,10 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="WebBrowser" meaning="内置 IE 浏览器的属性" number="0-n">
+<element name="src/URL" meaning="URL地址">
+	<category>外观</category>
+	<value>URL串, 支持绝对或相对路径</value>
+</element>
+</elements>
+
+</root>

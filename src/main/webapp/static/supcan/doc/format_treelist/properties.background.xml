@@ -1,0 +1,73 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Background" meaning="背景属性" number="0-1" example="4.图文并茂(1)、5.图文并茂(2)">
+<element name="bgColor/backColor" meaning="背景色">
+	<category>外观</category>
+	<value>颜色串，也可以是以逗号分隔的2个颜色(渐变填充)</value>
+</element>
+<element name="colorAngle" meaning="渐变背景色的旋转角度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 360, 顺时针旋转</value>
+	<default>0</default>
+</element>
+<element name="Picture/backPicture/bgPicture" meaning="背景图片">
+	<category>外观</category>
+	<value>URL串, 支持&lt;a href="../dev/pub.htm#Tag605" target=_blank&gt;图片扩展URL&lt;/a&gt;</value>
+</element>
+<element name="arrange" meaning="背景图片显示方式">
+	<category>外观</category>
+	<value meaning="平铺">tile</value>
+	<value meaning="伸展">stretch</value>
+	<value meaning='单幅原样显示，水平、垂直的对齐组合, 例如"bottom,right"'>(left/center/right) 和 (top/middle/bottom)的组合</value>
+	<default>tile</default>
+</element>
+<element name="rotate" meaning="顺时针旋转一个角度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 360, 顺时针旋转</value>
+	<default>0</default>
+</element>
+<element name="flip" meaning="翻转">
+	<category>外观</category>
+	<value meaning="垂直翻转">Vert</value>
+	<value meaning="水平翻转">Horz</value>
+</element>
+<element name="alpha" meaning="透明度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 255， 透明度越低(即数字越小)，图像越淡.</value>
+	<default>255</default>
+</element>
+<element name="gamma" meaning="Gamma校正">
+	<category>外观</category>
+	<datatype>double</datatype>
+	<value>1.0表示正常亮度, 用于调校颜色，不太常用</value>
+	<default>1.0</default>
+</element>
+<element name="isGray" meaning="是否以黑白(灰度)显示">
+	<category>外观</category>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="size" meaning="背景图缩放">
+	<category>外观</category>
+	<value>宽度、高度，以逗号分隔</value>
+</element>
+<element name="transparentColor" meaning="指定图片的透明色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+</element>
+<element name="rulerPicture" meaning="为左上标尺空白处设一个图标">
+	<category>外观</category>
+	<value>图片URL</value>
+</element>
+<element name="ref" meaning="引用外部XML描述文件">
+	<category>外观</category>
+	<value>外部XML文件的URL, 可以是相对URL, 该文件须包含&amp;lt;Background&amp;gt;内容, 实现类似页面CSS的统一置换功能</value>
+	<memo>如果本XML文档和外部的XML文档同时定义了某个属性, 则优先使用本文档中定义的属性值</memo>
+</element>
+</elements>
+
+</root>

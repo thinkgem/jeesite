@@ -1,0 +1,1242 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="初始函数">
+	<function name="Build">
+		<usage>创建Treelist</usage>
+		<detail>根据XML描述文件创建Treelist</detail>
+		<para>XML所在的URL(相对或绝对)，或者直接就是XML大串</para>
+		<para>可选, 允许是XML中&lt;Properties&gt;下的任何属性，表示将强制采用本属性, 多个属性间以分号(；)分隔，例如 isTree=false;editable=true&lt;br&gt;可见参数2能方便地使单个XML应用于多种场景， 当然也可以调用SetProp( )、SetColProp( )、SetDroplistProp( )动态更改属性</para>
+		<return>1 - 成功; 空串 - 失败(将自动弹出失败页面)</return>
+		<example>AF.func("build", "../tr3.xml \r\n isTree=true;editable=true");&lt;br&gt;
+		AF.func("build", '&amp;lt;?xml version="1.0"?&amp;gt;&amp;lt;TreeList&amp;gt; ...(略) &amp;lt;/TreeList&amp;gt;');
+		</example>
+		<illu>提示: 几乎每个演示页都使用了这个函数</illu>
+	</function>
+	<function name="Load">
+		<usage>加载数据</usage>
+		<detail>加载数据，数据格式可以为XML、JSON、TXT(TSV)</detail>
+		<para>数据所在的URL(相对或绝对), 或直接的XML/JSON/TXT数据大串;</para>
+		<para>可选, 格式为 Mode=[?];FillMode=[?];insertAt=[?];asNewRow=[?];Node=[?];GroupSep=[?];FadeInStep=[?];LoadUserProp=[?];Para1=[?];method=[?], 其含义分别为:&lt;br&gt;
+		&lt;b&gt;mode&lt;/b&gt; - 同步/异步模式，如果等于"asynch", 表示异步(多线程)加载，异步加载能改善服务器端响应时间过久而导致的界面滞涩.&lt;br&gt;
+		&lt;b&gt;FillMode&lt;/b&gt; - 数据填充方式, 默认为空(表示先彻底清除原有数据)，也可以为：&lt;br&gt;
+　　replaceByOrder - 不增删行，仅逐行替换数据;&lt;br&gt;
+　　replaceByKey - 不增删行，仅按相同Key的行替换数据;&lt;br&gt;
+　　insert - 不清理原有的数据，新数据是插入到表中的;&lt;br&gt;
+		&lt;b&gt;insertAt&lt;/b&gt; - 当fillmode = insert时，用来指定插入位置(行号, 前插), -1表示从末尾添加：&lt;br&gt;
+		&lt;b&gt;asNewRow&lt;/b&gt; - 可以为true/false, 默认false，用于标记加载的行的"N"(新增行标记)，用于提交：&lt;br&gt;
+		&lt;b&gt;Node&lt;/b&gt; - 指定XML数据内所在节点名.&lt;br&gt;
+		&lt;b&gt;GroupSep&lt;/b&gt; - 用于当XML/JSON数据中的节点名采用分组表头Group的id时，下属各列的数据分隔符，默认是斜杠("/");&lt;br&gt;
+		&lt;b&gt;FadeInStep&lt;/b&gt; - 屏幕展现时的淡入淡出效果，0至255，数字越小效果越明显，0表示关闭此效果，默认采用＜Properties＞中的同名属性.&lt;br&gt;
+		&lt;b&gt;LoadUserProp&lt;/b&gt; - true/false, 是否把XML中的附加属性作为单元格的自定义属性一起加载，以便让GetCellProp( )函数能存取。考虑到对性能的影响，默认是false的.&lt;br&gt;
+		&lt;b&gt;method&lt;/b&gt; - http的发送方法，为Get / PostEncodeURI / Post，默认是Get.  如果为PostEncodeURI，则自动将URL中问号(?)后面的部分移到http body中，并对文字作EncodeURI转码处理； 如果是Post，则不作转码处理.&lt;br&gt;
+		&lt;b&gt;Para1&lt;/b&gt; - 可以为data/URL, 表示声明上面的“参数1”是纯数据串还是一个URL，一般用于TXT格式的数据，因为TXT格式的数据有时候很难自动判断到底是数据还是URL。如果不声明，系统优先判断为URL .&lt;br&gt;
+备注1：如果是异步加载，那么在本Load( )函数后面不应该再执行针对本Treelist的其它函数，应该在“Load”事件中作后续处理，否则异步将失去意义(&lt;font color=red&gt;非常重要&lt;/font&gt;);&lt;br&gt;
+备注2：replaceByOrder 和 replaceByKey 不是很常用，加载的数据的列是原Treelist列的子集，用于增量刷新部分列;&lt;br&gt;
+备注3：TSV格式数据不支持Node、FillMode、insertAt选项;&lt;br&gt;</para>
+		<return>1 - 成功; 空串 - 失败(将自动弹出失败页面)</return>
+		<memo>建议该URL返回的XML/JSON数据支持&lt;a href="pub.htm#Tag604" target=_blank&gt;SoapLike&lt;/a&gt;异常包</memo>
+		<example>AF.func("load", "../datacenter/dataprov.aspx?id=11800102");&lt;br&gt;
+AF.func("load", "../datacenter/dataprov.aspx?id=11800102 \r\n fillmode=replaceByOrder");&lt;br&gt;		
+AF.func("load", '{"Record": [{"Country":"Austria","OrderID":"10258","CustomerID":"ERNSH"},{"Country":"Austria","OrderID":"10233","CustomerID":"GROSH"}]}');
+</example>
+	</function>
+	<function name="Refresh">
+		<usage>刷新数据</usage>
+		<para>可选, true/false(默认)，true表示如果数据有改动，能弹出对话框询问用户是否刷新.</para>
+	</function>
+</category>
+
+<category name="基本函数">
+	<function name="GetRows">
+		<usage>取得行数</usage>
+		<return>数值</return>
+		<example>var rows = AF.func("getRows", "");</example>
+	</function>
+	<function name="GetCols">
+		<usage>取得列数</usage>
+		<return>数值</return>
+	</function>
+	<function name="SetProp(用途1)">
+		<usage>动态更改 Properties 属性</usage>
+		<detail>动态更改XML文档中 Properties 定义的属性、以及自定义属性</detail>
+		<para>属性名, 包括Properties中的自定义属性</para>
+		<para>内容串.  如果是自定义属性，空串表示删除该自定义属性</para>
+		<example>AF.func("setProp", "sort \r\n ShipCity a, OrderDate d");</example>
+		<memo>1.更改dataURL属性相当于是调用Load( )函数，其内容可以是绝对或相对URL(相对于XML描述文件)，也可以是XML/JSON大串;&lt;br&gt;2.更改sort属性相当于执行了排序操作</memo>
+		<illu>参见演示页: 7.计算列合计行、19.分页方案(二)、20.提交修改内容、24.动态更改属性</illu>
+	</function>
+	<function name="GetProp(用途1)">
+		<usage>取得 Properties 属性内容</usage>
+		<detail>取得XML文档中 Properties 的属性内容</detail>
+		<para>属性名, 包括Properties中的自定义属性</para>
+		<return>内容</return>
+	</function>
+
+	<function name="GetProp(用途2)">
+		<usage>取得打印配置属性</usage>
+		<detail>取得打印配置属性, 即 PrintPage 节点下的全部内容</detail>
+		<para>固定的串，为 Print 或 PrintPage</para>
+		<return>XML串</return>
+		<memo>1.打印属性稍复杂，需要您对XML规范中的 PrintPage 节点进行分析;&lt;br&gt;
+2.返回的XML串内容不多，因为默认的设置就不出现在XML中了;&lt;br&gt;</memo>
+	</function>
+	<function name="SetProp(用途2)">
+		<usage>设置打印配置属性</usage>
+		<para>固定的串，为 Print 或 PrintPage</para>
+		<para>XML串</para>
+		<memo>更改打印参数，需要借助全局函数中的DOM函数集</memo>
+		<example>//如下例子是把打印纸的左边界修改为10毫米：&lt;br&gt;
+var xml=AF.func("GetProp", "Print");&lt;br&gt;
+var hDOM = AF.func("dom_new", xml);  //创建DOM对象&lt;br&gt;
+var hMargin = AF.func("dom_find", hDOM + "\r\n margin");   //查找节点&lt;br&gt;
+AF.func("dom_SetProp", hMargin + "\r\n  left  \r\n  10");   //设置&lt;br&gt;
+xml = AF.func("dom_export", hDOM);  //输出xml&lt;br&gt;
+AF.func("SetProp", "Print \r\n" + xml);  //完成&lt;br&gt;
+AF.func("dom_delete", hDOM);  //销毁对象&lt;br&gt;
+</example>
+	</function>
+
+	<function name="GetUserProps">
+		<usage>取得 Properties 中的全部自定义属性名</usage>
+		<return>属性名，多个属性名之间以逗号分隔</return>
+	</function>
+	<function name="SetColProp">
+		<usage>动态更改列属性</usage>
+		<detail>动态更改XML文档中某 Col 的属性、以及自定义属性</detail>
+		<para>列名或列号，建议用列名</para>
+		<para>属性名</para>
+		<para>内容</para>
+		<example>AF.func("SetColProp", "CustomerID \r\n edittype   \r\n droptreelist");</example>
+		<memo>1.若要更改列标题文字，请用“Title”属性;&lt;br&gt;2.少数属性如name、atLayer、extentRows、ref是无法修改的</memo>
+		<illu>参见演示页: 5.图文并茂(2)、24.动态更改属性</illu>
+	</function>
+	<function name="GetColProp">
+		<usage>取得列的属性内容</usage>
+		<usage>取得XML文档中某 Col 的属性内容、或者自定义属性的内容</usage>
+		<para>列名或列号，建议用列名</para>
+		<para>属性名</para>
+		<return>内容</return>
+		<memo>如果属性是 "isHide", 返回值只是1或0，如果要判断 absHide 或 absShow, 属性应该用 "isAbsHide" 或 "isAbsShow"</memo>
+	</function>
+	<function name="GetColUserProps">
+		<usage>取得某列的全部自定义属性名</usage>
+		<para>列名或列号，建议用列名</para>
+		<return>自定义属性名，如果有多个自定义属性，则以逗号分隔</return>
+	</function>
+	<function name="SetDroplistProp">
+		<usage>更改下拉内容属性</usage>
+		<detail>动态更改XML中某 Droplist 的属性</detail>
+		<para>Droplist的ID, 也可以是某列的列名</para>
+		<para>属性名</para>
+		<para>内容</para>
+		<memo>1.更改dataURL相当于是重新加载数据，其内容可以是绝对或相对URL(注意：是相对于XML描述文件，而不是页面)，也可以是XML/JSON大串，且对Edittype为Droplist、 DropTreelist均能生效;&lt;br&gt;2.若treelistURL内容是相对URL，那么是相对于该XML描述文件的&lt;br&gt;3.id是无法修改的</memo>
+		<example>AF.func("SetDroplistProp", "sex \r\n dataURL \r\n &amp;lt;items&amp;gt;&amp;lt;item key=1&amp;gt;男&amp;lt;/item&amp;gt;&amp;lt;item key=2&amp;gt;女&amp;lt;/item&amp;gt;&amp;lt;/items&amp;gt;");</example>
+	</function>
+	<function name="AddDroplist">
+		<usage>增加下拉字典资源</usage>
+		<detail>动态增加下拉资源(Droplists\Droplist)</detail>
+		<para>可包含id、treelistURL、dataURL等6个属性，以“;”分隔。 例如"id=cus;treelistURL=cus.xml;dataURL=http://www.abcde.com/aa/aa"</para>
+		<return>1 - 成功; 空串 - 失败(id为空或重复)</return>
+		<example>AF.func("AddDroplist", "id=customer;treelistURL=customer.xml;DataCol=id;DisplayCol=name");</example>
+		<illu>参见演示页: 24.动态更改属性</illu>
+	</function>
+	<function name="GetAsTree">
+		<usage>取得当前是否以树展现</usage>
+		<return>1/0 - 是/否</return>
+	</function>
+	<function name="SetAsTree">
+		<usage>切换到以树或列表展现</usage>
+		<para>true - 树,  false - 列表</para>
+		<return>1/0 - 成功/失败</return>
+	</function>
+	<function name="GetHandle">
+		<usage>取得Treelist或下拉的句柄</usage>
+		<detail>取得当前TreeList、或某下拉TreeList、或某下拉List的句柄</detail>
+		<para>可以为:&lt;br&gt;
+&lt;b&gt;空串(无参数)&lt;/b&gt; - 取当前TreeList的句柄;&lt;br&gt;
+&lt;b&gt;topBar (或tBar)&lt;/b&gt; - 取顶部工具条的Freeform句柄;&lt;br&gt;
+&lt;b&gt;bottomBar (或bBar)&lt;/b&gt; - 取底部工具条的Freeform句柄;&lt;br&gt;
+&lt;b&gt;innerDialog&lt;/b&gt; - 取内部非模式对话框的Freeform句柄;&lt;br&gt;
+&lt;b&gt;Validation&lt;/b&gt; - 取Validation的句柄;&lt;br&gt;
+&lt;b&gt;某下拉列的列名&lt;/b&gt; - 表示取得某列的下拉DropTreelist、或下拉DropList、或EditWithButton的Droplist字典的句柄;</para>
+		<return>整数串</return>
+		<memo>操控下拉TreeList的内容请参见“扩展函数”、操控下拉List的内容请参见“全局函数”</memo>
+		<illu>参见演示页: 17.Treelist拖曳、18.分页方案(一)</illu>
+	</function>
+	<function name="OpenFreeformBar">
+		<usage>打开freeform工具条</usage>
+		<para>可以为:&lt;br&gt;
+　空串(无参数) - freeform采用已定义的 〈freeformRes〉 元素中的freeform;&lt;br&gt;
+　url - 采用外部一个freeform的URL;&lt;br&gt;
+　id=[?] - 采用 〈freeformRes〉 下的某个freeform, id是该freeform的id;</para>
+		<para>可选，0/tBar/topBar - 顶部工具条;  1/bBar/bottomBar - 底部工具条。默认topBar</para>
+		<illu>参见演示页: 29.查询条件(一)</illu>
+	</function>
+	<function name="CloseFreeformBar">
+		<usage>关闭freeform工具条</usage>
+		<para>可选，0/tBar/topBar - 顶部工具条;  1/bBar/bottomBar - 底部工具条。&lt;br&gt;
+默认值是：如果当前只开启了一个工具条，那么默认的就是这个工具条，否则默认值是topBar</para>
+		<illu>参见演示页: 29.查询条件(一)</illu>
+	</function>
+	<function name="OpenEditFreeformDialog">
+		<usage>打开用于输入的freeform对话框</usage>
+		<para>行号</para>
+		<memo>即回车或双击时打开的对话框，请参见 Properties 中的 editFreeformId 属性</memo>
+	</function>
+</category>
+
+<category name="单元格数据">
+	<function name="GetCellData">
+		<usage>取得某单元格的数据</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>可选, true(或1)表示取原始缓存中的数据(即被你修改前的数据), 默认是false(或0)</para>
+		<return>串</return>
+	</function>
+	<function name="SetCellData">
+		<usage>设置某单元格的数据</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>内容串</para>
+		<para>可选，true(或1)表示修改原始缓存中的数据(即被你修改前的数据)，默认是false(或0).&lt;br&gt;
+这个选项一般用于强制更改"NMD"状态, 请参见下面"提交"类函数：GetRowChanged( )</para>
+		<para>可选，true(或1)表示自动修改 TreeCombine 的其它关联行的CheckBox内容, 默认是false(或0)</para>
+		<return>1 - 成功; 空串 - 失败</return>
+		<illu>参见演示页: 28.过滤: 关联下拉</illu>
+		<memo>1. &lt;font color=red&gt;严重警告：&lt;/font&gt;参数2和参数3之间不得留有多余空格，否则结果将不是你所期望的，例如：&lt;br&gt;　　AF.func("SetCellData", "0 \r\n city \r\n   "+ vCity);　　//执行结果是左侧有多余空格&lt;br&gt;
+2.如果内容串中含回车，需要先把回车转义成 "\\r\\n"
+</memo>
+	</function>
+	<function name="GetCellText">
+		<usage>取得某单元格的显示内容</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>串</return>
+		<memo>显示内容是指有下拉、或显示掩码的列，或者是通过 SetCellDataText 函数设置了 &lt;b&gt;key-value对&lt;/b&gt;的内容，有别于真实数据(data)的显示串，说白了就是你在屏幕上看到的文字</memo>
+		<illu>参见演示页: 25.自定义右键菜单</illu>
+	</function>
+	<function name="SetCellText">
+		<usage>设置某单元格的显示内容</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>内容串</para>
+		<memo>常用于和Droplist绑定的EditWithButton, 否则和SetCellData( )同义.</memo>
+		<return>1 - 成功; 空串 - 失败</return>
+	</function>
+	<function name="SetCellDataText">
+		<usage>同时设定某单元格的 key-value对</usage>
+		<usage>同时设定某单元格的 key-value对，包括值、和显示的内容</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>值串</para>
+		<para>内容串</para>
+		<memo>1.普通的列都可以拥有简易的 &lt;b&gt;key-value对&lt;/b&gt;字典，不管是否下拉;&lt;br&gt;
+2.如果 edittype 为 droplist, 此 &lt;b&gt;key-value对&lt;/b&gt; 将自动加入下拉字典.</memo>
+		<return>1 - 成功; 空串 - 失败</return>
+	</function>
+	<function name="SetRowCellData">
+		<usage>设置整行的单元格数据</usage>
+		<para>行号</para>
+		<para>XML或JSON大串(允许包含多行内容)</para>
+		<para>可选， true(或1)表示修改原始缓存中的数据(即被你修改前的数据), 默认是false(或0).&lt;br&gt;
+这个选项一般用于强制更改"NMD"状态, 请参见下面"提交"类函数：GetRowChanged( )</para>
+		<return>被修改的行数</return>
+		<example>AF.func("SetRowCellData", "0\r\n {id:'k101', price:33.40, orderdt:'2011/12/21'}");</example>
+		<illu>参见自由表头的演示页: 14.基于Freeform的对话框</illu>
+	</function>
+	<function name="SetColCellData">
+		<usage>设置整列的单元格数据</usage>
+		<detail>设置整列的单元格数据, 支持表达式，该函数非常有用</detail>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>内容串，支持以"="开头的表达式</para>
+		<para>可选，开始行号，默认0</para>
+		<para>可选，结束行号，默认-1, 表示末尾行</para>
+		<para>可选， true(或1)表示修改原始缓存中的数据(即被你修改前的数据), 默认是false(或0).&lt;br&gt;
+这个选项一般用于强制更改"NMD"状态, 请参见下面"提交"类函数：GetRowChanged( )</para>
+		<return>1 / 0 - 成功 / 失败，失败原因有：行列不正确、企图统一设置树节点列</return>
+		<example>AF.func("SetColCellData", 'price \r\n0');  //price设置成0&lt;br&gt;
+		AF.func("SetColCellData", 'price \r\n');   //price设置成 null&lt;br&gt;
+		AF.func("SetColCellData", 'price \r\n=if(product=102, 0, 100)');  //按条件设</example>
+		<illu>参见演示页: 16.行的复选</illu>
+	</function>
+	<function name="GetRadioCol">
+		<usage>取得某行某个GroupID的单选框(RadioButton)的选中列</usage>
+		<para>行号(从0开始)</para>
+		<para>GroupID号，如果只有一个分组，则可忽略</para>
+		<return>选中的列名</return>
+		<memo>没有SetRadioCol函数的，因为直接执行SetCellData置选中列的值为1即可.</memo>
+	</function>
+	<function name="GetDroplistIndex">
+		<usage>取得某下拉List的当前选中行顺序号</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>本单元格中的下拉列表的当前选中行, 从0开始计数</return>
+		<memo>一般用于非排序的下拉List</memo>
+	</function>
+	<function name="SetDroplistIndex">
+		<usage>选中下拉List中的某行</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>本单元格中的下拉列表中的顺序号, 从0开始计数</para>
+		<return>1 / 0 - 成功 / 失败</return>
+		<memo>一般用于非排序的下拉List</memo>
+	</function>
+	<function name="GetEditText">
+		<usage>取得当前输入框中的文字</usage>
+		<return>串</return>
+		<memo>通常用在事件中，因为你很难把握当前输入框是否正打开着</memo>
+	</function>
+	<function name="SetEditText">
+		<usage>设置当前输入框中的文字</usage>
+		<para>串</para>
+		<memo>通常用在事件中，因为你很难把握当前输入框是否正打开着</memo>
+	</function>
+</category>
+<category name="单元格属性">
+	<function name="GetCellEditAble">
+		<usage>取得某单元EditAble</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>1或0, 空串表示失败</return>
+	</function>
+	<function name="SetCellEditAble">
+		<usage>单独设置某单元格EditAble</usage>
+		<detail>单独设置某单元格的EditAble，其等级高于行列的EditAble规定，但低于 Properties 中的EditAble规定.</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>1/0，或true/false、yes/no</para>
+	</function>
+	
+	<function name="GetCellBackColor">
+		<usage>取得某单元的背景色</usage>
+		<detail>取得某单元被单独指定的、或根据DisplayMask计算出来的背景色</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>颜色串</return>
+	</function>
+	<function name="SetCellBackColor">
+		<usage>单独指定某单元的背景色</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>颜色串，空串表示解除背景色</para>
+		<illu>参见演示页: 24.动态更改属性</illu>
+	</function>
+	
+	<function name="GetCellTextColor">
+		<usage>取得某单元的文字色</usage>
+		<detail>取得某单元被单独指定的、或根据DisplayMask计算出来的文字色</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>颜色串</return>
+	</function>
+	<function name="SetCellTextColor">
+		<usage>单独指定某单元的文字色</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>颜色串，空串表示解除文字色</para>
+		<illu>参见演示页: 24.动态更改属性</illu>
+	</function>
+	
+	<function name="GetCellAlign">
+		<usage>取得某单元的文字水平对齐</usage>
+		<detail>取得某单元被单独指定的文字对齐，如果尚未被指定，则返回该列的默认对齐</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>left / center / right</return>
+	</function>
+	<function name="SetCellAlign">
+		<usage>单独指定某单元的文字水平对齐</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>left / center / right</para>
+	</function>
+	<function name="GetCellVAlign">
+		<usage>取得某单元的文字垂直对齐</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>top / middle / bottom</return>
+	</function>
+	<function name="SetCellVAlign">
+		<usage>单独指定某单元的文字垂直对齐</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>top / middle / bottom</para>
+	</function>
+
+	<function name="GetCellFontIndex">
+		<usage>取得某单元的字体序号</usage>
+		<detail>取得某单元被单独指定的字体、或默认的字体(如果没有被单独指定)，也可以写成GetCellFont</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>序号，即〈Fonts〉下的字体顺序号</return>
+	</function>
+	<function name="SetCellFontIndex">
+		<usage>单独指定某单元的字体序号</usage>
+		<detail>单独指定某单元的字体序号，其等级高于默认字体，也可以写成SetCellFont</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>序号，即〈Fonts〉下的字体顺序号，-1表示解除字体</para>
+		<illu>参见演示页: 24.动态更改属性</illu>
+	</function>
+	
+	<function name="GetCellHyperLink">
+		<usage>取得某单元是否超链接</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>1/0</return>
+	</function>
+	<function name="SetCellHyperLink">
+		<usage>单独指定某单元是否为超链接</usage>
+		<detail>单独指定某单元是否为超链接，其等级高于〈Col〉的isHyperLink规定</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>true/false</para>
+	</function>
+	<function name="GetCellTip">
+		<usage>取得某单元的Tip</usage>
+		<detail>取得某单元的Tip, Tip的含义为: 鼠标划过时，浮现的黄色文字注释</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>串</return>
+	</function>
+	<function name="SetCellTip">
+		<usage>单独指定某单元的Tip</usage>
+		<detail>单独指定某单元的Tip, Tip的含义为: 鼠标划过时，浮现的黄色文字注释</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>串</para>
+	</function>
+	<function name="GetCellLeftImage&lt;br&gt;GetCellRightImage">
+		<usage>取得某单元的左侧/右侧小图标</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>图标的URL</return>
+	</function>
+	<function name="SetCellLeftImage&lt;br&gt;SetCellRightImage">
+		<usage>单独指定某单元的左侧/右侧小图标</usage>
+		<detail>单独指定某单元的左侧/右侧小图标，优先级高于displayMask指定的图标</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>图标的URL</para>
+	</function>
+	
+	
+	<function name="SetCellProp">
+		<usage>设置某单元格的自定义属性</usage>
+		<detail>设置某单元格的自定义属性和它的值，每个单元格允许有多个这样的名-值对，其目的是方便程序员的编程设计，Treelist控件不对其语义作任何解析</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>属性名，任意串</para>
+		<para>该属性的值，任意串</para>
+	</function>
+	<function name="GetCellProp">
+		<usage>取得某单元格的自定义属性的值</usage>
+		<detail>取得某单元格的自定义属性的值，每个单元格允许有多个这样的名-值对，其目的是方便程序员的编程设计，Treelist控件不对其语义作任何解析</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>属性名，任意串</para>
+		<return>串，为该属性的值</return>
+	</function>
+	<function name="GetCellProps">
+		<usage>取得某单元格的所有自定义属性</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>串，以逗号分隔的属性名</return>
+	</function>
+</category>
+
+<category name="单元格合并">
+	<function name="MergeSame(用途1)">
+		<usage>合并某行给定范围内相同内容的单元格</usage>
+		<para>格式为：row=[?];col1=[?];col2=[?];isIgnoreNull=[?];isDemergeFirst=[?]，含义为：&lt;br&gt;
+&lt;b&gt;row&lt;/b&gt;  - 某行的行号&lt;br&gt;
+&lt;b&gt;col1&lt;/b&gt;  - 开始列名或列号(从0开始)，建议采用列名，默认是0&lt;br&gt;
+&lt;b&gt;col2&lt;/b&gt;  - 结束列名或列号(从0开始)，建议采用列名，默认是最后列&lt;br&gt;
+&lt;b&gt;isIgnoreNull&lt;/b&gt;  - 内容为空是否就不合并了，true/false，默认是true&lt;br&gt;
+&lt;b&gt;isDemergeFirst&lt;/b&gt;  - 合并前是否先解除覆盖了该范围的以前的合并，true/false，默认是true&lt;br&gt;
+&lt;b&gt;isKeepMergeAsPossible&lt;/b&gt;  - 如果新的合并区横贯了以前的合并区，是否把以前的合并区拆分为二段，true/false，默认是false, 只有在isDemergeFirst=false时才能生效&lt;br&gt;
+</para>
+		<illu>参见演示页: 32.合并单元格</illu>
+		<memo>1.以树展现时，合并无效; 2.合并只改变外观，并不影响各自单元格的数据;</memo>
+	</function>
+	<function name="MergeSame(用途2)">
+		<usage>合并某列给定范围内相同内容的单元格</usage>
+		<para>格式为：col=[?];row1=[?];row2=[?];isIgnoreNull=[?];isDemergeFirst=[?]，含义为：&lt;br&gt;
+&lt;b&gt;col&lt;/b&gt;  - 列名或列号(从0开始)，建议采用列名&lt;br&gt;
+&lt;b&gt;row1&lt;/b&gt;  - 开始行的行号，默认是0&lt;br&gt;
+&lt;b&gt;row2&lt;/b&gt;  - 结束行的行号，默认是最后行&lt;br&gt;
+&lt;b&gt;isIgnoreNull&lt;/b&gt;  - 内容为空是否就不合并了，true/false，默认是true&lt;br&gt;
+&lt;b&gt;isDemergeFirst&lt;/b&gt;  - 合并前是否先解除覆盖了该范围的以前的合并，true/false，默认是true&lt;br&gt;
+&lt;b&gt;isKeepMergeAsPossible&lt;/b&gt;  - 如果新的合并区横贯了以前的合并区，是否把以前的合并区拆分为二段，true/false，默认是false, 只有在isDemergeFirst=false时才能生效&lt;br&gt;
+</para>
+		<illu>参见演示页: 32.合并单元格</illu>
+		<memo>1.以树展现时，合并无效; 2.合并只改变外观，并不影响各自单元格的数据;</memo>
+	</function>
+	<function name="Merge">
+		<usage>合并指定范围内的单元格</usage>
+		<para>开始行号(从0开始)</para>
+		<para>开始列名或列号(从0开始)，建议采用列名</para>
+		<para>结束行号(从0开始)</para>
+		<para>结束列名或列号(从0开始)，建议采用列名</para>
+		<memo>1.参数之间也可以用逗号分隔;&lt;br&gt;
+2.以树展现时，合并无效; &lt;br&gt;
+3.合并只改变外观，并不影响各自单元格的数据;</memo>
+		<example>AF.func("merge", "0 \r\n id \r\n 10 \r\n city");</example>
+	</function>
+	<function name="DeMerge">
+		<usage>解除单元格的合并</usage>
+		<para>可选，开始行号(从0开始)</para>
+		<para>可选，开始列名或列号(从0开始)，建议采用列名</para>
+		<para>可选，结束行号(从0开始)</para>
+		<para>可选，结束列名或列号(从0开始)，建议采用列名</para>
+		<memo>1.如果没有参数，表示解除Treelist所有合并；&lt;br&gt;
+2.如果只有前2个参数，表示解除覆盖了该单元的合并；&lt;br&gt;
+3.参数之间也可以用逗号分隔;&lt;br&gt;
+4.以树展现时，合并功能无效</memo>
+		<example>AF.func("demerge", "0 \r\n id");</example>
+	</function>
+	<function name="GetCellStatus">
+		<usage>取得某单元格的状态</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>A - 普通单元格; &lt;br&gt; H - 被合并; &lt;br&gt; M - 被合并，但位于合并区的左上角，是有效的主单元格; &lt;br&gt; 空串 - 该单元格不存在</return>
+		<memo>以树展现时，合并功能无效</memo>
+	</function>
+	<function name="GetMainCell">
+		<usage>取得某单元格所在的合并区域中的主单元格(即左上角单元格)</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>诸如"10,3"格式的串，表示“行号，列号”。如果本单元格没有被合并，则返回它自己</return>
+		<memo>以树展现时，合并功能无效</memo>
+	</function>
+	<function name="GetMergedCells">
+		<usage>取得覆盖了某个单元格的合并范围</usage>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>诸如"10,3,20,3"格式的串，表示“开始行号，开始列号，结束行号，结束列号”</return>
+		<memo>以树展现时，合并功能无效</memo>
+	</function>
+	<function name="CopyCellDataByMerge">
+		<usage>将主单元格的数据复制给被合并的各个单元格</usage>
+		<detail>将主单元格的数据复制给被合并的各个单元格, 换句话说：所有被合并的单元格的数据，从各自的主单元格(即左上角单元格)中去复制</detail>
+		<para>可选，开始行号(从0开始)</para>
+		<para>可选，开始列名或列号(从0开始)，建议采用列名</para>
+		<para>可选，结束行号(从0开始)</para>
+		<para>可选，结束列名或列号(从0开始)，建议采用列名</para>
+		<memo>该函数一般用于提交前，因为用户如果修改了主单元格，被合并的单元格数据并不会自动跟着变</memo>
+	</function>
+</category>
+
+<category name="树相关">
+	<function name="IsTreeNodeRow">
+		<usage>是否树节点行</usage>
+		<detail>是否树节点行(即树杈行)</detail>
+		<para>行号(从0开始)</para>
+		<return>1/0 - 是/否</return>
+	</function>
+	<function name="GetTreeLevel(用途一)">
+		<usage>取得某行在树中的层次级别，从0开始计数</usage>
+		<para>行号(从0开始)</para>
+		<return>大于等于0的数字</return>
+	</function>
+	<function name="GetParentRow">
+		<usage>取得某行的父节点所在行</usage>
+		<para>行号(从0开始)</para>
+		<return>行号, -1表示失败，原因有：行号无效、已经是顶级、当前不是以树展现</return>
+	</function>
+	<function name="GetChildRow">
+		<usage>取得某行的第一个子孙的行</usage>
+		<para>行号(从0开始)</para>
+		<return>行号, -1表示失败，原因有：行号无效、已经是末级、当前不是以树展现</return>
+	</function>
+	<function name="GetNextSibling">
+		<usage>取得某行的下一个同级(即同辈、兄弟)的行</usage>
+		<para>行号(从0开始)</para>
+		<return>行号, -1表示失败，原因有：行号无效、已经是同辈中最后的一个(父亲的小儿子)、当前不是以树展现</return>
+	</function>
+	<function name="SetTreeImage">
+		<usage>更改树的图标</usage>
+		<detail>更改树的图标, 也可写成 SetTreeIcon</detail>
+		<para>行号(从0开始)</para>
+		<para>图片文件URL，合拢时的图标</para>
+		<para>可选，图片文件URL，展开时的图标</para>
+		<memo>仅对单列多层树有效</memo>
+	</function>
+	<function name="GetTreeImage">
+		<usage>取得树的图标的URL</usage>
+		<detail>取得树的图标, 也可写成 GetTreeIcon</detail>
+		<para>行号(从0开始)</para>
+		<return>URL，如果有不止一个图片(合拢和展开)，则以回车分隔</return>
+		<memo>仅对单列多层树有效</memo>
+	</function>
+	<function name="Expand">
+		<usage>展开树节点</usage>
+		<para>行号(从0开始计数)，如果为空或为 -1，表示展开所有节点</para>
+		<para>可选，true/false, 表示是否展开其子孙的节点。如果参数1为空或-1, 默认是true,  否则默认值是false</para>
+		<example>AF.func("expand", "-1 \r\n true");  //展开所有的节点 &lt;br&gt;
+AF.func("expand", "-1 \r\n false");  //仅展开第一层的所有节点 &lt;br&gt;
+AF.func("expand", "0 \r\n true");  //展开第一行，包括它的所有子孙节点 &lt;br&gt;
+AF.func("expand", "0 \r\n false");  //展开第一行，但不包括它的子孙节点 </example>
+	</function>
+	<function name="Collapse">
+		<usage>收拢树节点</usage>
+		<para>可选，行号(从0开始)，如果为空或为 -1，表示收拢所有节点</para>
+	</function>
+	<function name="IsExpand">
+		<usage>树节点是否已展开</usage>
+		<para>行号(从0开始)</para>
+		<return>1/0 - 是/否</return>
+	</function>
+	<function name="IsLazyloadRow">
+		<usage>某行是否Lazyload行</usage>
+		<para>行号(从0开始)</para>
+		<return>1/0 - 是/否</return>
+		<memo>用于单列多层树、以Lazyload方式加载数据的场景</memo>
+	</function>
+	<function name="RebuildTreeCombine">
+		<usage>重新整理 TreeCombine 的父节点的 Checkbox</usage>
+		<memo>用于 TreeCombine 包含了 "auto" 的树</memo>
+	</function>
+	<function name="ClearLazyload">
+		<usage>强制设定某Lazyload行没有子孙</usage>
+		<para>行号(从0开始)</para>
+		<memo>用于单列多层树、以Lazyload方式加载数据的场景</memo>
+	</function>
+</category>
+
+<category name="当前行 /&lt;br&gt; 当前单元格">
+	<function name="GetCurrentRow (方式一)">
+		<usage>取得当前选中的行</usage>
+		<return>行号(从0开始)，空串表示没有当前行；如果有多行，行号之间以逗号分隔</return>
+	</function>
+	<function name="GetCurrentRow (方式二)">
+		<usage>取得当前选中的行</usage>
+		<para>顺序号，从0开始，依次取得第几个选中行，直到返回空串</para>
+		<return>行号(从0开始)，空串表示没有当前行</return>
+	</function>
+	<function name="GetCurrentRows">
+		<usage>取得当前选中行的数量</usage>
+		<return>数量</return>
+	</function>
+	<function name="IsRowSelected">
+		<usage>某行是否被选中</usage>
+		<para>行号(从0开始)</para>
+		<return>1/0 - 是/否</return>
+	</function>
+	<function name="GetCurrentCell">
+		<usage>取得当前选中的单元格</usage>
+		<detail>用于取得当 curSelMode=“excel” 时当前选中的单元格范围，因为此时选中的单元格是一个区域</detail>
+		<para>如果为串 “ColName”，表示返回的列是用列名，否则用列号，默认是列号</para>
+		<return>以逗号分隔的4个值：开始行号, 开始列号或列名，结束行号, 结束列号或列名</return>
+		<example>var s = AF.func("GetCurrentCells", "");  //返回串可能为 "3,5,4,6" &lt;br&gt;
+var s = AF.func("GetCurrentCells", "ColName");  //返回串可能为 "3,dept,4,price"
+</example>
+	</function>
+	<function name="SelectRow">
+		<usage>选定当前行</usage>
+		<para>行号(从0开始)</para>
+		<para>可选，true/false - 允许动画方式定位/禁止动画, 默认false</para>
+		<memo>1.在可多选(curselmode = rows)的情况下,可以有多个参数,分别表示其它各个选中行;&lt;br&gt;
+2.如果行号无效，原当前行将失去当前标记</memo>
+	</function>
+	<function name="SelectCell">
+		<usage>将焦点切换到某单元格</usage>
+		<detail>选定当前行、并让某个单元格立即进入编辑状态</detail>
+		<para>行号(从0开始)</para>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>可选，true/false - 允许动画方式定位/禁止动画, 默认false</para>
+		<memo>如果行列号无效，原当前行将失去当前标记</memo>
+		<illu>参见自由表头的演示页: 9.有表头表体的表单(1)</illu>
+	</function>
+</category>
+
+<category name="行列增删">
+	<function name="InsertRows">
+		<usage>插入行</usage>
+		<para>插入处行号(从0开始，-1表示从末尾添加)</para>
+		<para>可选, 插入行数，默认1</para>
+		<para>可选, true/false(或1/0、yes/no)，分别表示前插/后插，默认前插</para>
+		<para>可选, 选项子句，语法为：&lt;br&gt;
+raiseEvent=[true/false];selectRow=[true/false];openEdit=[true/false];asChild=[true/false], 各选项的含义为：&lt;br&gt;
+&lt;b&gt;raiseEvent&lt;/b&gt;(或 &lt;b&gt;isRaiseEvent&lt;/b&gt;)  - 是否触发 rowsInserted 事件，默认是false&lt;br&gt;
+&lt;b&gt;selectRow&lt;/b&gt;(或 &lt;b&gt;isSelectRow&lt;/b&gt;) - 是否将当前行切换成新插入行，默认是true&lt;br&gt;
+&lt;b&gt;openEdit&lt;/b&gt;(或 &lt;b&gt;isOpenEdit&lt;/b&gt;) - 是否继续直接打开输入框，默认是true&lt;br&gt;
+&lt;b&gt;asFirstChild&lt;/b&gt; - 后插的行是否作为第一个儿子，默认是false;&lt;br&gt;
+&lt;b&gt;asLastChild&lt;/b&gt; - 后插的行是否作为最后一个儿子，默认是false;&lt;br&gt;
+备注：asFirstChild, asLastChild 不能同时为true，并且仅用于 treeFormat="format=byId; autoid=true" 或 "format=bypid"、"format=bydata"的单列多层树、在后插入1行的情况;&lt;br&gt;
+		</para>
+		<return>新增行的行号，空串表示失败</return>
+		<example>AF.func("insertRows", "0 \r\n 1 \r\n false \r\n raiseEvent=true;SelectRow=false");</example>
+		<memo>当以树显示时，插入的新行是插入处所在行（即参数1）的同级</memo>
+	</function>
+	<function name="InsertCol">
+		<usage>插入列</usage>
+		<para>插入处列号(从0开始，-1表示从末尾添加)</para>
+		<para>列的参数，例如"name=price;title=项目名称;width=100"，列属性可参考&lt;a href='../format_treelist/index.htm' target=_blank&gt;Supcan Treelist XML文档规范&lt;/a&gt;之Cols\col;</para>
+		<return>新增列的列号，空串表示失败</return>
+		<illu>参见演示页: 16.行的复选</illu>
+	</function>
+	<function name="DeleteRows (方式一)">
+		<usage>删除行</usage>
+		<para>开始删除的行号(从0开始)</para>
+		<para>行数，-1表示删除后面所有行</para>
+		<para>可选, 选项子句，语法为：&lt;br&gt;
+raiseEvent=[true/false];cacheKey=[true/false];withChild=[true/false], 各选项的含义为：&lt;br&gt;
+&lt;b&gt;raiseEvent&lt;/b&gt;(或 &lt;b&gt;isRaiseEvent&lt;/b&gt;)  - 是否触发 rowsDeleted 事件，默认是false&lt;br&gt;
+&lt;b&gt;cacheKey&lt;/b&gt;(或 &lt;b&gt;isCacheKey&lt;/b&gt;) - 是否将删除行的Key存入删除缓冲区(用于提交)，默认是true&lt;br&gt;
+&lt;b&gt;withChild&lt;/b&gt;(或 &lt;b&gt;withChildren&lt;/b&gt;) - 当以树显示时，是否将其子孙行也删除，默认是false&lt;br&gt;
+		</para>
+		<illu>参见演示页: 20.提交修改内容、25.自定义右键菜单</illu>
+	</function>
+	<function name="DeleteRows (方式二)">
+		<usage>删除行</usage>
+		<para>表达式。满足表达式的行均会被删除</para>
+		<para>可选, 选项子句，语法为：&lt;br&gt;
+raiseEvent=[true/false];cacheKey=[true/false];withChild=[true/false], 各选项的含义为：&lt;br&gt;
+&lt;b&gt;raiseEvent&lt;/b&gt;(或 &lt;b&gt;isRaiseEvent&lt;/b&gt;)  - 是否触发 rowsDeleted 事件，默认是false&lt;br&gt;
+&lt;b&gt;cacheKey&lt;/b&gt;(或 &lt;b&gt;isCacheKey&lt;/b&gt;) - 是否将删除行的Key存入删除缓冲区(用于提交)，默认是true&lt;br&gt;
+&lt;b&gt;withChild&lt;/b&gt;(或 &lt;b&gt;withChildren&lt;/b&gt;) - 当以树显示时，是否将其子孙行也删除，默认是false&lt;br&gt;
+		</para>
+		<example>AF.func("deleteRows", "price>100 and toUpperCase(left(ProdId,2))='KS' \r\n cacheKey=true");</example>
+		<illu>参见演示页: 16.行的复选</illu>
+	</function>
+	<function name="DeleteCurrentRow">
+		<usage>删除当前行</usage>
+		<para>可选, 选项子句，语法为：&lt;br&gt;
+raiseEvent=[true/false];cacheKey=[true/false];withChild=[true/false], 各选项的含义为：&lt;br&gt;
+&lt;b&gt;raiseEvent&lt;/b&gt;(或 &lt;b&gt;isRaiseEvent&lt;/b&gt;)  - 是否触发 rowsDeleted 事件，默认是false&lt;br&gt;
+&lt;b&gt;cacheKey&lt;/b&gt;(或 &lt;b&gt;isCacheKey&lt;/b&gt;) - 是否将删除行的Key存入删除缓冲区(用于提交)，默认是true&lt;br&gt;
+&lt;b&gt;withChild&lt;/b&gt;(或 &lt;b&gt;withChildren&lt;/b&gt;) - 当以树显示时，是否将其子孙行也删除，默认是false&lt;br&gt;
+		</para>
+		<memo>如果当前行允许多选，那么可能有多行</memo>
+	</function>
+	<function name="CopyCurrentRow">
+		<usage>复制当前行</usage>
+		<detail>将当前行拷贝入操作系统的剪帖板</detail>
+		<memo>如果有多个当前行(多选)，那么所有选中行内容都将被复制</memo>
+	</function>
+	<function name="PasteCurrentRow">
+		<usage>粘帖到当前行</usage>
+		<detail>将操作系统剪帖板内容粘帖到当前行</detail>
+		<memo>如果有多个当前行(多选)，那么所有选中行内容都将被粘帖</memo>
+	</function>
+	<function name="PasteNewRow">
+		<usage>粘帖到新增行</usage>
+		<detail>将操作系统剪帖板内容粘帖到新增行</detail>
+	</function>
+	<function name="MoveCol">
+		<usage>移动某列的位置</usage>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>目标列的列名或列号(从0开始)，建议采用列名</para>
+		<para>可选, true/false(或1/0、yes/no)，分别表示前插/后插，默认前插</para>
+		<return>新的位置, -1失败</return>
+		<illu>参见演示页: 13.分类汇总</illu>
+	</function>
+	<function name="MoveRow">
+		<usage>移动某行的位置</usage>
+		<para>行号(从0开始)</para>
+		<para>目标行的行号(从0开始)</para>
+		<para>可选, true/false(或1/0、yes/no)，分别表示前插/后插，默认前插</para>
+		<return>新的位置, -1失败</return>
+	</function>
+</category>
+
+<category name="行列属性">
+	<function name="GetNextValidRow">
+		<usage>遍历行</usage>
+		<detail>遍历行，用于需要自动跨越隐藏行、树杈行(多列多层树)、小计行、合计行的情形</detail>
+		<para>开始行, 如果是从头遍历，参数应该为空串或“-1”</para>
+		<para>可选, 1 / -1 表示 正向/反向遍历, 默认是1</para>
+		<return>行号，空串表示遍历完毕</return>
+		<illu>参见小型页面控件的演示页: 2.与Treelist联动</illu>
+	</function>
+	<function name="GetNextValidCol">
+		<usage>遍历列</usage>
+		<detail>遍历列，用于需要自动跨越多列多层树的首列的情形</detail>
+		<para>开始列的列名, 如果是从头遍历，参数应该为空串</para>
+		<return>列名，空串表示遍历完毕</return>
+		<illu>参见自由表头的演示页: 14.和Treelist互动、13.基于Freeform的对话框</illu>
+		<example>例如js:&lt;br&gt;
+for(col=AF.func("GetNextValidCol", ""); col!=""; col=AF.func("GetNextValidCol", col)) {&lt;br&gt;
+  ...&lt;br&gt;
+}
+			</example>
+	</function>
+	<function name="GetNextVisibleCol">
+		<usage>遍历可视列</usage>
+		<detail>遍历可视列，用于需要自动跨越隐藏列、树的首列的情形</detail>
+		<para>开始列的列名, 如果是从头遍历，参数应该为空串</para>
+		<return>列名，空串表示遍历完毕</return>
+		<example>例如js:&lt;br&gt;
+for(col=AF.func("GetNextVisibleCol", ""); col!=""; col=AF.func("GetNextVisibleCol", col)) {&lt;br&gt;
+  ...&lt;br&gt;
+}
+			</example>
+	</function>
+	<function name="IsTotalRow">
+		<usage>是否合计行</usage>
+		<detail>是否合计行，通常合计行只有一行，且位于最后</detail>
+		<para>行号(从0开始计数)</para>
+		<return>1 - 是，0 - 否</return>
+	</function>
+	<function name="IsSubTotalRow">
+		<usage>是否小计行</usage>
+		<para>行号(从0开始)</para>
+		<return>1 - 是，0 - 否</return>
+	</function>
+	<function name="GetTreeLevel(用途二)">
+		<usage>取得某小计行的分类层次级别，从1开始计数</usage>
+		<para>行号(从0开始)</para>
+		<return>如果此行不是小计行，返回0，否则返回大于0的数字，其含义是分类的层次，最外层是1</return>
+	</function>
+	<function name="GetRowKey">
+		<usage>取得某行的Key(即键值)</usage>
+		<detail>取得某行的Key(即键值)</detail>
+		<para>行号(从0开始)</para>
+		<para>可选，复合主键的分隔符，默认逗号(,)</para>
+		<para>可选, 0或1, 1表示取被修改前的原始内容, 默认是0</para>
+		<return>Key串</return>
+	</function>
+	<function name="GetRowEditAble">
+		<usage>某行是否能修改</usage>
+		<para>行号(从0开始)</para>
+		<return>1 - 是，0 - 否</return>
+	</function>
+	<function name="GetColEditAble">
+		<usage>某列是否能修改</usage>
+		<para>列名</para>
+		<return>1 - 是，0 - 否</return>
+	</function>
+	<function name="SetRowEditAble">
+		<usage>置某行能否修改</usage>
+		<para>行号(从0开始)</para>
+		<para>true/false(或1/0、yes/no)</para>
+	</function>
+	<function name="SetColEditAble">
+		<usage>置某列能否修改</usage>
+		<para>列名</para>
+		<para>true/false(或1/0、yes/no)</para>
+	</function>
+	<function name="GetColName">
+		<usage>取得列名</usage>
+		<para>列号(从0开始)</para>
+		<return>串</return>
+	</function>
+	<function name="GetColTitle">
+		<usage>取得列标题</usage>
+		<para>列号(从0开始)，或列名</para>
+		<return>串</return>
+		<illu>参见小型页面控件的演示页: 2.与Treelist联动</illu>
+	</function>
+	<function name="SetRowDeleteAble">
+		<usage>单独指定某行是否允许被删除(仅限于右键菜单)</usage>
+		<para>行号(从0开始)</para>
+		<para>true/false</para>
+	</function>
+	<function name="GetRowDeleteAble">
+		<usage>取得某行是否允许删除</usage>
+		<para>行号(从0开始)</para>
+		<return>1 / 0 - 允许/不允许</return>
+	</function>
+	<function name="GetRowBackColor">
+		<usage>取得某行被单独指定的背景色</usage>
+		<para>行号(从0开始)</para>
+		<return>颜色串，空串表示该行尚未被单独指定背景色</return>
+	</function>
+	<function name="SetRowBackColor">
+		<usage>单独指定某行的背景色</usage>
+		<para>行号(从0开始)</para>
+		<para>颜色串，空串表示解除背景色</para>
+	</function>
+	<function name="GetRowTextColor">
+		<usage>取得某行被单独指定的文字色</usage>
+		<para>行号(从0开始)</para>
+		<return>颜色串，空串表示该行尚未被单独指定文字色</return>
+	</function>
+	<function name="SetRowTextColor">
+		<usage>单独指定某行的文字色</usage>
+		<para>行号(从0开始)</para>
+		<para>颜色串，空串表示解除文字色</para>
+	</function>
+	<function name="GetRowEnable">
+		<usage>某行是否Enable</usage>
+		<detail>某行是否Enable，disable的行以灰色(或删除线)显示、不可编辑、不触发Clicked和DblClicked事件、不可拖拽</detail>
+		<para>行号(从0开始)</para>
+		<return>1/0/空串 - 是/否/无效行号</return>
+		<illu>请参见演示页: 28.下拉的其它功能</illu>
+	</function>
+	<function name="SetRowEnable">
+		<usage>置某行为Enable或disable</usage>
+		<detail>置某行为Enable或disable，disable的行以灰色(或删除线)显示、不可编辑、不触发Clicked事件</detail>
+		<para>行号(从0开始)</para>
+		<para>true/false(或1/0、yes/no) - 表示enable/disable</para>
+		<illu>请参见演示页: 28.下拉的其它功能</illu>
+	</function>
+	<function name="IsRowHide">
+		<usage>某行是否隐藏</usage>
+		<detail>或GetRowHide，某行是否隐藏</detail>
+		<para>行号(从0开始)</para>
+		<return>1/0/空串 - 隐藏/显示/无效行号</return>
+	</function>
+	<function name="HideRow">
+		<usage>隐藏某行</usage>
+		<para>行号(从0开始)</para>
+		<para>true/false - 隐藏/显示</para>
+	</function>
+	<function name="IsColHide">
+		<usage>某列是否隐藏</usage>
+		<detail>或GetColHide，某列是否隐藏，等同GetColProp(colname, "isHide")</detail>
+		<para>列名</para>
+		<return>1/0/空串 - 隐藏/显示/无效列名</return>
+	</function>
+	<function name="HideCol">
+		<usage>隐藏某列</usage>
+		<detail>隐藏某列，等同SetColProp(colname, "isHide", 1/0)</detail>
+		<para>列名</para>
+		<para>true/false - 隐藏/显示</para>
+	</function>
+	<function name="GetColCheckState">
+		<usage>取得isCheckboxOnly列标题处的CheckBox的状态</usage>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<return>1/0 - 已选中/未选中</return>
+	</function>
+	<function name="SetColCheckState">
+		<usage>设置isCheckboxOnly列标题处的CheckBox的状态</usage>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>1/0 - 已选中/未选中</para>
+		<memo>仅修改选中状态，并不改动数据. 如果要修改整列的数据，请执行 SetColCellData 函数</memo>
+	</function>
+	<function name="GetColGroup">
+		<usage>取得某列所属的分组(Group)</usage>
+		<para>列名或列号(从0开始)，建议采用列名</para>
+		<para>top/all - 仅返回顶层分组名/返回所有分组名，默认是 top</para>
+		<return>所属Group的名称，如果有多层分组，则以逗号分隔</return>
+	</function>
+</category>
+
+<category name="行列操作">
+	<function name="EnsureVisible">
+		<usage>保证让某个单元格或某行在屏幕中可见</usage>
+		<para>行号</para>
+		<para>可选, 列名, 如果为空表示仅定位行</para>
+		<para>可选，true/false - 允许动画方式定位/禁止动画, 默认false</para>
+	</function>
+	<function name="Find">
+		<usage>条件搜索</usage>
+		<detail>按表达式查找，并返回首个符合条件的行号</detail>
+		<para>表达式(可参见&lt;a href="pub.htm#Tag601" target=_blank&gt;“公共内容\表达式”&lt;/a&gt;)</para>
+		<para>可选, 格式为startRow=[行号];content=[asData/asDisplay];isReverse=[?], 其含义为:&lt;br&gt;
+&lt;b&gt;startRow&lt;/b&gt; - 开始的行号，默认是0;&lt;br&gt;
+&lt;b&gt;content&lt;/b&gt; - 为 asData 或 asDispplay，默认是asData, 表示搜索的内容是值还是显示的文字(例如下拉的值和显示文字是不一样的);&lt;br&gt;
+&lt;b&gt;isReverse&lt;/b&gt; - 为 true/false, 表示正向搜索 / 逆向搜索，默认是false;&lt;br&gt;
+</para>
+		<return>行号，-1表示未能找到匹配的行</return>
+	</function>
+	<function name="FindAll">
+		<usage>条件搜索</usage>
+		<detail>按表达式查找，并返回符合条件的所有行号</detail>
+		<para>表达式(可参见&lt;a href="pub.htm#Tag601" target=_blank&gt;“公共内容\表达式”&lt;/a&gt;)</para>
+		<para>可选, 格式为 content=[asData/asDisplay], 其含义为:&lt;br&gt;
+&lt;b&gt;content&lt;/b&gt; - 为 asData 或 asDispplay，默认是asData, 表示搜索的内容是值还是显示的文字(例如下拉的值和显示文字是不一样的).
+</para>
+		<return>从小到大排列的行号串，行号之间以逗号分隔，空串表示未能找到匹配的行</return>
+		<example>var s=AF.func("findAll", "price&lt;20 and if(len(ProcId)==0, 1, 0)");</example>
+	</function>
+	<function name="FindByKey">
+		<usage>按键值搜索</usage>
+		<para>键值</para>
+		<para>可选，表示复合主键之间的分隔符，默认是逗号</para>
+		<return>行号，-1表示未找到</return>
+	</function>
+	<function name="Filter">
+		<usage>过滤</usage>
+		<detail>对已加载的数据进行过滤，只显示满足条件的行</detail>
+		<para>表达式(可参见&lt;a href="pub.htm#Tag601" target=_blank&gt;“公共内容\表达式”&lt;/a&gt;)</para>
+		<para>可选，格式为 droplistCol=[?]; content=[asData/asDisplay], 其含义为：&lt;br&gt;
+&lt;b&gt;droplistCol&lt;/b&gt; -  , 列名，表示仅对该列的下拉TreeList的内容进行过滤;&lt;br&gt;
+&lt;b&gt;content&lt;/b&gt; - 为 asData 或 asDispplay，默认是asData, 表示搜索的内容是值还是显示的文字(例如下拉的值和显示文字是不一样的).</para>
+		<return>1 - 成功，0 - 失败，失败原因通常为表达式书写错误</return>
+		<example>AF.func("Filter", "price&lt;20 and if(len(ProcId)==0, 1, 0)");</example>
+		<illu>参见演示页: 26.过滤、27.过滤: 关联下拉</illu>
+	</function>
+	<function name="ApplyFilter">
+		<usage>对某个下拉执行过滤</usage>
+		<detail>对某个下拉列执行过滤，通常用于EditChanged事件中，对多个关联下拉、下拉过滤采用了表达式的某个下拉强制过滤</detail>
+		<para>基准的行号，例如在EditChanged事件中，行号就是 p1 参数</para>
+		<para>下拉列的列名</para>
+		<return>无</return>
+		<example>AF.func("ApplyFilter", p1 + "\r\n cityId");</example>
+	</function>
+	<function name="EnableDrag">
+		<usage>使2个Treelist之间能够拖拉行</usage>
+		<detail>使2个Treelist之间能够用鼠标拖拉(Drag)行</detail>
+		<para>另一个TreeList的句柄(句柄可通过GetHandle()取得)</para>
+		<return>1 - 成功</return>
+		<illu>参见演示页: 17.Treelist拖曳</illu>
+	</function>
+	<function name="DisableDrag">
+		<usage>终止2个Treelist之间的行拖拉</usage>
+		<para>另一个TreeList的句柄(句柄可通过GetHandle()取得)</para>
+		<return>1 - 成功</return>
+	</function>
+	<function name="Copy">
+		<usage>将某单元格/某行/某区块内容复制进内存剪切板</usage>
+		<para>开始行号</para>
+		<para>开始列名或列号(从0开始)，建议采用列名</para>
+		<para>可选，结束行号，默认等于开始行号</para>
+		<para>可选，结束列名或列号(从0开始)，建议采用列名，-1表示最后列，默认值是-1</para>
+		<para>可选，可包含如下属性子句：content=[asData/asDisplay];isIncludeTotalRow=[true/false];inIncludeHide=[true/false]，含义为:&lt;br&gt;
+&lt;b&gt;content&lt;/b&gt; - 内容，asData表示纯数据，asDisplay表示显示的内容，默认是asData;&lt;br&gt;
+&lt;b&gt;includeTotalRow&lt;/b&gt; (或&lt;b&gt;isIncludeTotalRow&lt;/b&gt;) - 是否包含合计/小计行，默认是false;&lt;br&gt;
+&lt;b&gt;includeHide&lt;/b&gt; (或&lt;b&gt;isIncludeHide&lt;/b&gt;) - 是否包含隐藏行或隐藏列，默认是false;&lt;br&gt;
+		</para>
+		<return>1/0 - 成功/失败</return>
+		<example>
+		AF.func("copy", "3 \r\n 0");  //复制第四行整行&lt;br&gt;
+		AF.func("copy", "3 \r\n orderid \r\n 5 \r\n price \r\n content=asDisplay;includeHide=true");  //复制一个区块&lt;br&gt;
+		</example>
+	</function>
+	<function name="ScrollToRow">
+		<usage>窗口滚动到某行</usage>
+		<para>行号(从0开始), 表示滚动到的首个可见行</para>
+		<memo>请参见函数 GetScrollRow </memo>
+	</function>
+	<function name="GetScrollRow">
+		<usage>取得窗口首个可见行</usage>
+		<return>行号</return>
+		<memo>请参见函数 ScrollToRow </memo>
+	</function>
+</category>
+
+<category name="提交">
+	<function name="Validate">
+		<usage>验证</usage>
+		<detail>验证输入的内容. 如果未通过验证，将自动浮现出错误提示，并将当前单元格切换到未通过验证的单元格</detail>
+		<para>可选, 可以有如下的选项，相互以分号分隔：&lt;br&gt;
+&lt;b&gt;startRow&lt;/b&gt; - 开始行，默认是0;&lt;br&gt;
+&lt;b&gt;endRow&lt;/b&gt; - 结束行，默认是-1，-1表示最后行;&lt;br&gt;
+&lt;b&gt;isValidateKey&lt;/b&gt; - 是否需要在校验Key(例如key重复)，默认是True;&lt;br&gt;
+&lt;b&gt;includeCol / excludeCol&lt;/b&gt; - 仅包含某些列/不包含某些列，二者可选其一，表示列的&lt;b&gt;范围&lt;/b&gt;. 列名之间以逗号分隔。默认是空串，表示验证所有列;&lt;br&gt;
+　　备注1：这个“范围”是指验证的范围，以及限定NMD中“M”的识别范围.&lt;br&gt;
+　　备注2：Key以及Key的验证和这个“范围”无关.&lt;br&gt;
+</para>
+		<return>1 - 通过验证;&lt;br&gt;0 - 未通过客户端验证, 如notNull、isUnique，以及〈Validations〉中的内容</return>
+		<example>AF.func("Validate", "isValidateKey=false");</example>
+		<memo>一般不需要调用这个函数，因为函数GetChangedXML( )本身就包含了验证过程.</memo>
+	</function>
+	<function name="GetChangedXML">
+		<usage>取得修改过的内容, 包括增、删、改</usage>
+		<detail>调用Validate( )验证，并生成用于提交的XML大串, XML格式规范请参见 "XML提交格式规范". </detail>
+		<para>可选, 可以有如下的选项，相互以分号分隔：&lt;br&gt;
+&lt;b&gt;level&lt;/b&gt; - 级别号，可以是0(默认)、1、2、3，其含义分别为:&lt;br&gt;　　0 - 级别0，生成当前全部、最新内容(不包括修改前的原始内容);&lt;br&gt;　　1 - 级别1，仅生成被修改过的单元格的内容(包括原始内容);&lt;br&gt;　　2 - 级别2，在级别1的基础上，增加被修改过单元的整行内容;&lt;br&gt;　　3 - 级别3，内容包含所有行、所有列、修改前后的内容;&lt;br&gt;
+&lt;b&gt;isIgnoreChange&lt;/b&gt; - true/false, 仅用于Level=0.  true表示不管内容是否被修改过，始终生成XML; false表示除非内容被修改过，否则返回空串. 默认是false;&lt;br&gt;
+&lt;b&gt;startRow&lt;/b&gt; - 开始行，默认是0;&lt;br&gt;
+&lt;b&gt;endRow&lt;/b&gt; - 结束行，默认是-1，-1表示最后行;&lt;br&gt;
+&lt;b&gt;DateFormat&lt;/b&gt; - 日期的格式，默认是'%Y.%m.%d'，可参见&lt;a href="pub.htm#now" target=_blank&gt;公共内容中now( )函数&lt;/a&gt;的参数;&lt;br&gt;
+&lt;b&gt;DateTimeFormat&lt;/b&gt; - 日期时间的格式，默认是'%Y.%m.%d %H:%M:%S'，可参见&lt;a href="pub.htm#now" target=_blank&gt;公共内容中now( )函数;&lt;/a&gt;的参数&lt;br&gt;
+&lt;b&gt;isValidateKey&lt;/b&gt; - 是否需要在客户端校验Key(如key重复)，默认是True;&lt;br&gt;
+&lt;b&gt;isExecuteValidations&lt;/b&gt; - 是否自动执行XML描述文件的〈Validations〉中的验证，默认是true.&lt;br&gt;
+&lt;b&gt;includeCol / excludeCol&lt;/b&gt; - 仅包含某些列/不包含某些列，二者可选其一，表示列的&lt;b&gt;范围&lt;/b&gt;. 列名之间以逗号分隔。默认是空串，表示提交所有列;&lt;br&gt;
+&lt;b&gt;absIncludeCol&lt;/b&gt; - 始终包含某些列，不管其列数据有没有被修改过，并且在删除行的XML节点中也包含这些列的内容. 仅用于Level=1;&lt;br&gt;
+　　备注1：这个“范围”是指提交、验证的范围，以及限定NMD中“M”的识别范围.&lt;br&gt;
+　　备注2：Key以及Key的验证和这个“范围”无关.&lt;br&gt;
+&lt;b&gt;CompKeySep&lt;/b&gt; - 复合主键的分隔符，默认逗号分隔;&lt;br&gt;
+</para>
+		<return>XML大串 - 成功;&lt;br&gt;空串 - 内容尚未被修改;&lt;br&gt;0 - 失败(原因为未通过客户端验证, 如notNull、isUnique)</return>
+		<memo>1.XML描述文件的〈Properties〉中必须定义Key;&lt;br&gt;2.如果包含了开始行和结束行参数，生成的XML中将不包括被删除行的信息</memo>
+		<example>//取得级别为0、复合主键无分隔符的XML提交串，且不校验Key是否重复&lt;br&gt;
+		AF.func("GetChangedXML", "level=0; CompKeySep=;isValidateKey=false");&lt;br&gt;
+		//取得级别为1、不校验Key重复、仅包含3个字段的XML提交串&lt;br&gt;
+		AF.func("GetChangedXML", "level=1; isValidateKey=false; includeCol=id,price,custid");&lt;br&gt;
+		</example>
+		<illu>参见演示页: 20.提交修改内容、21.4种提交级别、22.连续输入提交控制</illu>
+	</function>
+	<function name="GetRowChanged">
+		<usage>取得某行或整表的修改状态</usage>
+		<para>行号(从0开始).  如果为 -1，表示所有行，即整个表.</para>
+		<para>可选, 状态掩码，为字母 N、M、D 的组合(简称“ni-ma-的”)：&lt;br&gt;
+N - 表示有新增行;&lt;br&gt;
+M - 表示有修改过的行;&lt;br&gt;
+D - 表示有删除行(仅用于整表)&lt;br&gt;
+默认值为 NM 或 NMD(如果是整表)</para>
+		<return>为上述3个字母的组合，空串表示未符合掩码</return>
+		<example>AF.func("GetRowChanged", "-1\r\n ND");　　//可能返回N、D、ND、空串&lt;br&gt;
+AF.func("GetRowChanged", "30");　　//可能返回N、M、NM、空串</example>
+	</function>
+	<function name="SetAsNewRow">
+		<usage>修改某行的“新增行”状态(和GetRowChanged的 "N" 相关)</usage>
+		<detail>修改某行的“新增行”状态(和GetRowChanged的 "N" 相关)，它影响GetChangedXML( )的执行结果</detail>
+		<para>行号(从0开始)</para>
+		<para>可选，true/false，默认true</para>
+	</function>
+	<function name="GetCellChanged">
+		<usage>取得某单元格是否被修改过</usage>
+		<para>行号(从0开始)</para>
+		<para>开始列名或列号(从0开始)，建议采用列名</para>
+		<return>M - 被修改过，空串：未改过</return>
+	</function>
+	<function name="SetCellChanged">
+		<usage>强制更改某单元格的修改状态</usage>
+		<para>行号(从0开始)</para>
+		<para>开始列名或列号(从0开始)，建议采用列名</para>
+		<para>M - 将原始缓存数据修改成和当前不一样的内容， 空串 - 用当前内容替换原始缓存数据</para>
+	</function>
+	<function name="ResetChanged">
+		<usage>合并修改内容，清除行和单元格的修改标记，以避免重复提交.</usage>
+		<detail>合并修改内容，清除行和单元格的修改标记(即 "NMD" 状态)，以避免重复提交.</detail>
+		<para>可选，表示开始行，默认是0</para>
+		<para>可选，表示结束行，默认是-1, -1表示末行</para>
+		<para>可选，是多个"名=值"对选项，以分号分隔：&lt;br&gt;
+&lt;b&gt;includeCol/excludeCol&lt;/b&gt; - 仅包括某些列/仅排除某些列，二者只能选其一, 列名之间以逗号分隔. 默认为空，表示包含全部列;&lt;br&gt;
+&lt;b&gt;resetDelete&lt;/b&gt; - true/false, true表示清空删除行的缓存，默认是true, 该选项和开始行、结束行无关;&lt;br&gt;
+&lt;b&gt;resetNew&lt;/b&gt; - true/false, true表示清除新增行的“新增”标志，默认是true, 该选项和开始行、结束行有关;&lt;br&gt;
+		</para>
+		<example>
+//清除所有修改标记;&lt;br&gt;
+AF.func("resetchanged", "");&lt;br&gt;
+//仅清除某单元格的"M"标志;&lt;br&gt;
+AF.func("resetchanged", "3\r\n3\r\n includeCol=id; resetDelete=false; resetNew=false");&lt;br&gt;
+//清除所有行中除了3个列以外的"M"标志, 并清除删除行缓存("D");&lt;br&gt;
+AF.func("resetchanged", "0\r\n-1\r\n excludeCol=id,orgNo,flag; resetDelete=true; resetNew=false");</example>
+		<illu>参见演示页: 22.连续输入提交控制</illu>
+	</function>
+
+	<function name="GetDeleteRows">
+		<usage>取得被删除的总行数</usage>
+		<detail>或 GetDeletedRows，取得被删除的总行数.</detail>
+		<return>被删除的总行数</return>
+		<memo>删除区并不缓存新插入的行.</memo>
+	</function>
+	<function name="GetDeleteKey">
+		<usage>取得被删除的行中某行的Key</usage>
+		<detail>或 GetDeletedKey，取得被删除的行中某行的Key.</detail>
+		<para>序号，空串表示取得所有被删行的Key</para>
+		<return>Key值，如果是多个行，则以逗号分隔</return>
+		<memo>删除区并不缓存新插入的行.</memo>
+	</function>
+	<function name="UnDelete">
+		<usage>恢复被删除的行</usage>
+		<para>以逗号分隔的Key值，空串表示恢复所有被删行</para>
+		<return>恢复的总行数</return>
+		<memo>1.被恢复的行将位于表格末尾处;&lt;br&gt;
+2.删除区并不缓存新插入的行.</memo>
+	</function>
+</category>
+<category name="其它">
+	<function name="GetCustom">
+		<usage>取得当前Treelist的定制信息</usage>
+		<detail>取得当前Treelist的外观状态XML串用于上传，使操作者可定制外观</detail>
+		<return>XML串</return>
+		<illu>参见演示页: 33.定制</illu>
+	</function>
+	<function name="SetCustom">
+		<usage>设置Treelist定制信息</usage>
+		<para>XML串</para>
+		<detail>应用原先已保存(上传)的外观状态XML串</detail>
+		<illu>参见演示页: 33.定制</illu>
+	</function>
+	<function name="AddMenu">
+		<usage>增加自定义的弹出菜单项</usage>
+		<para>串、XML串，或URL，内容的格式规范请参考Treelist的帮助文档“8.自定义菜单”</para>
+		<para>可选，格式为LocateAt=[top/bottom], 表示自定义菜单在弹出时位于顶部还是底部，默认是bottom</para>
+		<memo>只能在OnEvent(id, "MenuBeforePopup", ...)事件中执行。</memo>
+		<illu>参见演示页: 25.自定义右键菜单</illu>
+	</function>
+	<function name="EnableMenu">
+		<usage>配置内置的右键菜单项，使之能显示</usage>
+		<para>固定的菜单项名称，以逗号分隔，含义为: &lt;br&gt;
+		copy - 复制　　　　　　paste - 粘贴　　　　　　　　pasteNewRow - 粘贴到新行&lt;br&gt;
+		delete - 删除　　　　　deleteMore - 删除更多　　　insert - 插入&lt;br&gt;
+		print - 打印预览　　　　addSort - 加入多重排序　　 selectCol - 自定义显示隐藏列&lt;br&gt;
+		export - 转换输出　　　import - 导入Excel2007文件　hue - 色调&lt;br&gt;
+		separate - 分屏冻结　　enter - 回车键行为　　　　　expandTree - 展开/合拢树&lt;br&gt;
+		showRuler - 显示/隐藏左标尺　　　　　　　　　　　displayAs - 以列表/树展现&lt;br&gt;
+		exportAll - 转换输出全部页(用于分页显示时)　　　　　printAll - 打印全部页(用于分页显示时)&lt;br&gt;
+		language - 语言切换
+		</para>
+		<para>可选， true - 仅对参数1的菜单项生效； false - 仅显示参数1的菜单项，其余的统统不显示.&lt;br&gt;默认是true</para>
+		<memo>默认情况下，language、exportAll、printAll是disable的</memo>
+	</function>
+	<function name="DisableMenu">
+		<usage>配置内置的右键菜单项，使之不显示</usage>
+		<para>同上</para>
+		<para>可选，true/false.&lt;br&gt;  true - 仅对参数1的菜单项生效； false - 仅隐藏参数1的菜单项，其余的统统显示, 默认是true</para>
+		<para>可选，true/false.&lt;br&gt;  true - 临时性的，仅用于 MenuBeforPopup 事件中, 默认是false</para>
+		<memo>默认情况下，language、exportAll、printAll是disable的</memo>
+	</function>
+	<function name="GetRedrawAble">
+		<usage>是否能够重画</usage>
+		<return>1 / 0 - 能 / 不能</return>
+	</function>
+	<function name="SetRedrawAble">
+		<usage>设置让Treelist能够重画或不能重画</usage>
+		<detail>设置让Treelist能够重画或不能重画。为了提高性能，消除不必要的重画，在需要连续对Treelist作改动性操作(比如改数据、改属性)前关闭重画，操作完成后再开启重画.</detail>
+		<para>true/false - 能 / 不能</para>
+	</function>
+	<function name="PrintPreview">
+		<usage>打印预览</usage>
+	</function>
+	<function name="Print">
+		<usage>直接打印</usage>
+	</function>
+	<function name="Import">
+		<usage>从 xlsx 文件导入数据</usage>
+		<para>格式为 filename=[?];SheetName=[?];isDeleteFirst=[?];HeaderRows=[?];TailRows=[?]; 列名1=[?]; 列名2=[?]...; 列名n=[?]：&lt;br&gt;
+&lt;b&gt;FileName&lt;/b&gt; - xlsx 文件的全文件名;&lt;br&gt;
+&lt;b&gt;SheetName&lt;/b&gt; 或 &lt;b&gt;Sheet&lt;/b&gt; - 如果是多工作表，需指定的工作表名，否则默认导入第一个工作表;&lt;br&gt;
+&lt;b&gt;HeaderRows&lt;/b&gt; - xlsx的上方不得导入的行数;&lt;br&gt;
+&lt;b&gt;TailRows&lt;/b&gt; - xlsx的下方不得导入的行数;&lt;br&gt;
+&lt;b&gt;isDeleteFirst&lt;/b&gt; - true/false, 是否先删除原先的数据, 默认是false;&lt;br&gt;
+&lt;b&gt;各个列名&lt;/b&gt; - xlsx中各个列的列号， 对应到XML中的列ID。需要逐个列对应过去，如果不指定这个对应关系，则以自然顺序逐个自动对应;&lt;br&gt;
+</para>
+		<return>1/0 - 成功/失败</return>
+		<example>AF.func("Import", "filename=d:\\表1.xlsx; A=Country; B=PrdId; D=price");</example>
+	</function>
+	<function name="Export">
+		<usage>取得XML格式的全部数据</usage>
+		<detail>取得XML格式的全部数据，一般用于打印:将串作为数据源转交给Report组件.</detail>
+		<para>可选，为 asData 或 asDisplay，表示输出内容是纯数据，还是和界面显示的一样串，默认是asDisplay</para>
+		<para>可选，为行的范围，默认是全部行，格式可以为：&lt;br&gt;
+row = 行号，多个行之间以逗号分隔;&lt;br&gt;
+startRow = 开始行的行号;&lt;br&gt;
+endRow = 结束行的行号(注：不包括结束行);&lt;br&gt;
+　或 count = 行数;&lt;br&gt;
+</para>
+		<return>XML大串</return>
+		<illu>参见自由表头的演示页: 10.有表头表体的表单(2)、14.基于Freeform的对话框</illu>
+		<example>var row=4;&lt;br&gt;AF.func("Export", "asData \r\n row=" + row);</example>
+	</function>
+	<function name="OpenExportDialog">
+		<usage>打开转换输出对话框</usage>
+		<para>可选串，格式为: &lt;br&gt;type=[?];typeOnly=[?];filename=[?];content=[?];dropdown=[?];includeHide=[?];includeHeader=[?];scale=[?];precision=[?],  其含义说明如下：&lt;br&gt;
+&lt;b&gt;type&lt;/b&gt; - 首选的文件名后缀，例如xlsx、 jpg、 pdf之类.&lt;br&gt;
+&lt;b&gt;typeOnly&lt;/b&gt; - 和type类似，表示仅限于该种文件类型.&lt;br&gt;
+&lt;b&gt;gridLine&lt;/b&gt; - 是否显示表格线，仅用于XLS.&lt;br&gt;
+&lt;b&gt;filename&lt;/b&gt; - 指定文件名.&lt;br&gt;
+&lt;b&gt;content&lt;/b&gt; - 为asData 或 asDisplay，表示输出内容是纯数据，还是和界面显示的一样串，默认是asData.&lt;br&gt;
+&lt;b&gt;dropdown&lt;/b&gt; - 为asData、asDisplay 或 asDataAndDisplay，表示下拉内容的输出格式，默认是asData.&lt;br&gt;
+&lt;b&gt;includeHide&lt;/b&gt; - 为true或false，表示是否包含隐藏列，默认是false.&lt;br&gt;
+&lt;b&gt;includeHeader&lt;/b&gt; - 为true或false，表示是否包含列标题，默认是true.&lt;br&gt;
+&lt;b&gt;scale&lt;/b&gt; - 图像类文件的打印比例，范围是10 到 400，默认100。对于PDF而言，Scale越大越清晰，例如300表示在300%的显示比例下仍很清晰.&lt;br&gt;
+&lt;b&gt;precision&lt;/b&gt; - JPG精度，仅对JPG有效，精度范围1-100(默认85)，越接近100越清晰，但文件尺寸越大.&lt;br&gt;
+&lt;b&gt;isOpenDialog&lt;/b&gt; - 是否需要弹出对话框.&lt;br&gt;
+&lt;b&gt;isEcho&lt;/b&gt; - 完成后是否需要提示框提示成功与否.&lt;br&gt;
+</para>
+		<return>转换输出成功的文件名(含路径的全文件名)，空串表示未作转换. 如果有多个文件名，则以回车分隔</return>
+		<example>AF.func("OpenExportDialog", "typeOnly=xlsx;content=asDisplay");</example>
+	</function>
+	<function name="OpenDeleteRowsDialog">
+		<usage>打开删除行对话框</usage>
+	</function>
+	<function name="AddHotKey">
+		<usage>增设快捷键</usage>
+		<detail>增设快捷键。快捷键将触发HotKey事件</detail>
+		<para>第一个快捷键，可以是F1至F12、字母、数字、或键的AscII码，也可再加Ctrl、Shift、Alt的组合，以'+'分隔.</para>
+		<para>可选，第二个快捷键，以此类推.</para>
+		<example>AF.func("AddHotKey", "F12 \r\n Ctrl+F4 \r\n Ctrl+Shift+S \r\n Alt+5 \r\n Ctrl+32");&lt;br&gt;
+		分别表示了5个快捷键：F12、Ctrl+F4、Ctrl+Shift+S、Alt+5、Ctrl+空格(空格的AscII码是32)
+		</example>
+		<memo>并不是所有键都能用作快捷的，受制于浏览器，您需要逐个测试</memo>
+	</function>
+</category>
+</functions>

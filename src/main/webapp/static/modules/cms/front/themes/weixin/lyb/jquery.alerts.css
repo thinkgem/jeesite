@@ -1,0 +1,182 @@
+#popup_container {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	min-width: 300px; 
+	max-width: 600px; 
+	background: #FFF;
+	border: solid 5px #999;
+	color: #000;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#popup_title {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.75em;
+	color: #666;
+	background: #CCC url("http://www.ygj.com.cn/js/alert/images/title.gif") top repeat-x;
+	border: solid 1px #FFF;
+	border-bottom: solid 1px #999;
+	cursor: default;
+	padding: 0em;
+	margin: 0em;
+}
+
+#popup_content {
+	background: 16px 16px no-repeat url("http://www.ygj.com.cn/js/alert/images/info.gif");
+	padding: 1em 1.75em;
+	margin: 0em;
+}
+
+#popup_content.alert {
+	background-image: url("http://www.ygj.com.cn/js/alert/images/info.gif");
+}
+
+#popup_content.confirm {
+	background-image: url("http://www.ygj.com.cn/js/alert/images/important.gif");
+}
+
+#popup_content.prompt {
+	background-image: url("http://www.ygj.com.cn/js/alert/images/help.gif");
+}
+
+#popup_message {
+	padding-left: 48px;
+}
+
+#popup_panel {
+	text-align: center;
+	margin: 1em 0em 0em 1em;
+}
+
+#popup_prompt {
+	margin: .5em 0em;
+}
+
+
+
+#popup_container {
+	font-family: Helvetica,Arial,sans-serif;
+	box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+	background-clip: padding-box;
+	background: linear-gradient(#F9F9F9, #EEEEEE) repeat scroll 0 0 #F9F9F9;
+	border-radius: 0.6em 0.6em 0.6em 0.6em;
+    border: 1px solid #AAAAAA;
+    color: #333333;
+    text-shadow: 0 1px 0 #FFFFFF;
+	max-width:300px;
+}
+
+#popup_container #popup_title {
+	border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+	border-left-width: 0;
+    border-right-width: 0;
+
+	background: #3C3C3C repeat scroll 0 0;
+    color: #FFFFFF;
+	border: 1px solid #333333;
+    font-weight: 700;
+    text-shadow: 0 -1px 0 #000000;
+
+	font-size: 16px;
+    font-weight: 700;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+}
+
+#popup_container #popup_content {
+	padding: 15px;
+	border-width: 0;
+	background: #FFFFFF repeat scroll 0 0;
+    border: 1px solid #BBBBBB;
+    color: #333333;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+#popup_container #popup_message {
+	padding: 0em;
+	line-height:25px;
+	margin:10px 0 20px;
+	font-size:15px;
+	font-weight:bold;
+}
+
+#popup_container .popup_panel {
+
+	
+	margin-left: 5px;
+    margin-right: 5px;
+	
+	cursor: pointer;
+    display: block;
+    margin: 0.5em 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	background-clip: padding-box;
+	border-radius: 1em 1em 1em 1em;
+	text-decoration: none;
+}
+
+#popup_container .alert-ui-btn{
+	display: block;
+    font-size: 16px;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 0.6em 20px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#popup_container .alert-ui-btn .ui-txt{
+	-moz-user-select: none;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+#popup_container .popup_ok{
+	background: #396B9E repeat scroll 0 0;
+    border: 1px solid #044062;
+    color: #FFFFFF;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #194B7E;
+	margin:10px 0;	
+
+	color: #FFFFFF;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #194B7E;
+}
+
+#popup_container .popup_ok:hover,#popup_container .popup_ok:active,
+#popup_container .popup_cancel:hover,#popup_container .popup_cancel:active {
+    background: #5393C5 repeat scroll 0 0 ;
+    border: 1px solid #2373A5;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #3373A5;
+}
+
+#popup_container .popup_cancel{
+	background: #EEEEEE repeat scroll 0 0;
+    border: 1px solid #CCCCCC;
+    color: #222222;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #FFFFFF;
+	margin:10px 0;	
+
+	color: #222222;
+    font-weight: 700;
+    text-shadow: 0 1px 0 #FFFFFF;
+}

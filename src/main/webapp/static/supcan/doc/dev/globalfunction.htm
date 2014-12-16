@@ -1,0 +1,238 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<script type="text/javascript" src="functable.js"></script>
+<script type="text/javascript" src="../../binary/dynaload.js?81"></script>
+<script>
+ function gentable()
+ {
+  xmlDoc = getXMLDoc("func_global_dlg_inner.xml?81");
+  genfunctable('TagDlgInnerTable', 'TagDlgInner', xmlDoc);
+  xmlDoc = getXMLDoc("func_global_dlg.xml?81");
+  genfunctable('TagDlgTable', 'TagDlg', xmlDoc);
+  xmlDoc = getXMLDoc("func_global_msg.xml?81");
+  genfunctable('TagMsgTable', 'TagMsg', xmlDoc);
+  xmlDoc = getXMLDoc("func_global_droplist.xml?81");
+  genfunctable('TagDroplistTable', 'TagDroplist', xmlDoc);
+  xmlDoc = getXMLDoc("func_global_valid.xml?81");
+  genfunctable('TagValidTable', 'TagValid', xmlDoc);
+  xmlDoc = getXMLDoc("func_global_dom.xml?81");
+  genfunctable('TagDomTable', 'TagDom', xmlDoc);
+  xmlDoc = getXMLDoc("func_global_other.xml?81");
+  genfunctable('TagOtherTable', 'TagOther', xmlDoc);
+ }
+ var xml_="<root><product id='001'>MB</product></root>";
+ function demo1()
+ {
+  var hRoot = AF.func("dom_new", xml_);
+  alert(AF.func("dom_export", hRoot));
+  AF.func("dom_delete", hRoot);
+ }
+ function demo2()
+ {
+  var hRoot = AF.func("dom_new", xml_);
+  var hProd = AF.func("dom_find", hRoot + "\r\n product");
+  AF.func("dom_setProp", hProd + "\r\n id \r\n100000");
+  AF.func("dom_setProp", hProd + "\r\n #text \r\nUser");
+  alert(AF.func("dom_export", hRoot));
+  AF.func("dom_delete", hRoot);
+ }
+ function demo3()
+ {
+  var hRoot = AF.func("dom_new", xml_);
+  var hNew = AF.func("dom_new", "");
+  AF.func("dom_setName", hNew + "\r\n customer");
+  AF.func("dom_setProp", hNew + "\r\n #text \r\nUser");
+  AF.func("dom_insertChild", hRoot + "\r\n -1 \r\n" + hNew);
+  var hProd = AF.func("dom_find", hRoot + "\r\n product");
+  AF.func("dom_Delete", hProd);
+  alert(AF.func("dom_export", hRoot));
+  AF.func("dom_delete", hRoot);
+ }
+</script>
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+<div id="g0"></div><br><br>
+　　<font style='font-size:15pt'>全局函数</font><hr color=#2266ee size=1>
+　　所谓全局函数是一组公共的函数，硕正的所有组件都拥有几乎完全一样的函数形式. 全局函数分如下几类：<br>
+　　<a href="#g1">1.非模式对话框函数</a><br>
+　　<a href="#g2">2.模式对话框函数</a><br>
+　　<a href="#g3">3.消息框函数</a><br>
+　　<a href="#g4">4.下拉List管理函数</a><br>
+　　<a href="#g5">5.Validations管理函数</a><br>
+　　<a href="#g6">6.对“计算函数”的封装</a><br>
+　　<a href="#g7">7.DOM函数</a><br>
+　　<a href="#g8">8.其它函数</a><br>
+<br>
+<br>
+<h4>1.对话框函数</h4>
+　　全局函数中有二组对话框函数。通过调用对话框函数，您能够打开一个对话框。对话框是以 一个FreeForm 作为显示样式的，其内容完全自定义.<br>
+　　硕正的对话框分为 <b>模式</b>对话框 和 <b>非模式</b>对话框 二种，模式对话框是Windows的标准对话框，当对话框出现时, 主线程是阻塞的，直到对话框关闭；而非模式对话框则是在控件的内部浮现出一个freeform，主线程不会阻塞. <br>
+　　非模式对话框的好处，是在打开对话框时不影响其它Tab选项卡 - 用户仍能正常切换选项卡. 此外，由于线程不阻塞，对话框中的 freeform 的子控件的事件能触发到页面的OnEvent( )中，能实现与页面的交互，这一点非常有用.<br>
+<br>
+<div id="g1"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>1.1.非模式对话框函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　非模式对话框是悬浮在组件中央的一个FreeForm，同时组件本身呈半透明、非活动状态. <br>
+　　并不是所有组件都支持内嵌的非模式对话框的，如下组件是支持的(即支持本组函数)：<br>
+　　　　<b>Treelist / Freeform / Freeform设计器 / Report / Tree / Chart</b>.<br>
+　　非模式对话框 和 它的容器(即组件本身)都会触发页面的OnEvent( )事件，为了相互区分，您应该在事件中调用 IsInnerDialogOpen( ) 这个函数来判断，<font color=red>这一点非常重要</font>，具体请参见自有表头的演示页：“13.基于Freeform的对话框”、“15.辅助Treelist输入(2)”。<br>
+<div id="TagDlgInnerTable"></div><br>
+<div id="TagDlgInner"></div>
+<br>
+
+<br>
+<div id="g2"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>1.2.模式对话框函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　模式对话框的FreeForm至少要有1个Button，但不支持菜单、下拉菜单按钮、分页器.<br>
+　　模式对话框弹出后，如果用户按下其中的Button，对话框随即关闭，并返回Button按钮的ID。<br>
+　　由于模式对话框是线程阻塞的，对话框中的控件的事件是无法被页面拦截的。模式对话框的函数分类说明如下:<br>
+<div id="TagDlgTable"></div><br>
+<div id="TagDlg"></div>
+<br>
+
+<div id="g3"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>3.消息框函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　消息框是指在组件中心位置呈现出的时尚的提示框、数据加载中的小对话，有了这批函数，您可以自己操控这些提示信息了.<br>
+<div id="TagMsgTable"></div><br>
+<div id="TagMsg"></div>
+<br>
+
+<div id="g4"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>4.下拉List管理函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　全局函数中还有一组用于操控下拉List的函数，能单独存取List的内容。下拉List的句柄是通过GetHandle( )函数获取的.<br>
+<div id="TagDroplistTable"></div><br>
+<div id="TagDroplist"></div>
+<br>
+
+<div id="g5"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>5.Validations管理函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　本函数集用于单独管理 Treelist 或 Report 中的&lt;Validations&gt;.<br>
+<div id="TagValidTable"></div><br>
+<div id="TagValid"></div>
+<br>
+
+<div id="g6"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>6.对“计算函数”的封装</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　“开发者指南 \ 公共内容” 中的 “计算函数” 一般单独用于硕正组件自身的表达式，但也可以用 AF.func( ) 单独调用，例如.<br>
+<pre class='cpp'>
+ //返回串 "壹万零壹佰贰拾叁元贰角肆分"
+ var s = AF.func("RMB", "10123.24");
+ 
+ //返回串 "10,123.20"
+ var s = AF.func("formatNum", "10123.2 \r\n #,##0.00");
+</pre>
+　　Report报表中的数据源函数，象 "data"、"head"这些取得单个数据的函数，可以通过本方法获取,  但 "datarow"、"headrow"这些函数就无法支持了。<br>
+<br>
+
+<div id="g7"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>7.DOM函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+　　DOM(文档对象模型)是XML/JSON在内存中的OO结构模型，通过以下的DOM函数集，您可以较方便地解析、修改或生成XML串. 为了能理解函数及参数的作用，我们先对某些术语作一个解释、约定：<br>
+<b>1.DOM句柄</b><br>
+　　XML/JSON是一棵树，树的每一个节点(包括树杈、树叶)在内存中都是DOM类的对象实例，而每个对象实例都有一个唯一的指针地址的，我们就把这个指针地址称作“句柄”。<br>
+<b>2.DOM父亲、子孙</b><br>
+　　由于XML/JSON可以是任意级别的复杂树，所以每个DOM对象中，都有父亲、子孙的存储位置的。没有父亲的DOM对象就是根节点，没有儿子的DOM对象就是树叶。<br>
+<b>3.DOM元素名、属性</b><br>
+　　按常规的资料，都叫做元素，但我们这里稍加区分：<br>
+<center><img src='dom.png'/></center>
+　　这样，每个DOM对象都有一个元素名，同时也可以有多个属性，以及属性对应的值.<br>
+<b>4.内存泄漏</b><br>
+　　如果您创建了DOM对象，但没有销毁它，那么势必会造成该内存块始终被占用，这就是所谓的内存泄漏。除非如下文档中有特别的声明，否则您最终必须销毁该对象。<br>
+　　子孙DOM对象是不需要你去销毁的，因为父对象在销毁自己的同时，它自己会去逐个销毁子孙对象的。<br>
+<b>5.实例</b><br>
+　　如下3个例子由浅入深，演示了部分DOM函数的功能，假如这是原始的XML:<br>
+<pre class='xml'>
+&lt;root&gt;
+ &lt;product id='001'&gt;MB&lt;/product&gt;
+&lt;/root&gt;</pre>
+　　<b>例一.简单的转换</b><br>
+<pre class='cpp'>
+ var xml="&lt;root&gt;&lt;product id='001'&gt;MB&lt;/product&gt;&lt;/root&gt;";
+ var hRoot = AF.func("dom_new", xml);  //创建DOM对象
+ alert(AF.func("dom_export", hRoot));  //export为 XML 串
+ AF.func("dom_delete", hRoot);  //最后必须销毁</pre>
+<Center><input type=button value=" 执行 " onClick="demo1()"><div style="position:relative;width:2px;height:2px"><script>insertTree('AF', 'Border=none;BackColor=#ffffff')</script></div></Center>
+<br><br>
+　　<b>例二.更改元素的内容</b><br>
+<pre class='cpp'>
+ var hRoot = AF.func("dom_new", xml);  //创建DOM对象
+ var hProd = AF.func("dom_find", hRoot + "\r\n product");  //定位到 product 元素
+ AF.func("dom_setProp", hProd + "\r\n id \r\n100000");  //修改属性
+ AF.func("dom_setProp", hProd + "\r\n #text \r\nUser");  //修改text
+ alert(AF.func("dom_export", hRoot));
+ AF.func("dom_delete", hRoot);  //最后必须销毁</pre>
+<Center><input type=button value=" 执行 " onClick="demo2()"></Center>
+<br><br>
+　　<b>例三.添加节点、删除节点:</b><br>
+<pre class='cpp'>
+ var hRoot = AF.func("dom_new", xml);  //创建DOM对象
+ 
+ //插入一个新的对象
+ var hNew = AF.func("dom_new", "");  //创建一个空的DOM元素
+ AF.func("dom_setName", hNew + "\r\n customer");  //设定元素名
+ AF.func("dom_setProp", hNew + "\r\n #text \r\nUser");  //设定text
+ AF.func("dom_insertChild", hRoot + "\r\n -1 \r\n" + hNew);
+ 
+ //删除 product 节点
+ var hProd = AF.func("dom_find", hRoot + "\r\n product");
+ AF.func("dom_Delete", hProd);
+ 
+ //查看结果
+ alert(AF.func("dom_export", hRoot));
+ AF.func("dom_delete", hRoot);  //最后必须销毁根节点</pre>
+<Center><input type=button value=" 执行 " onClick="demo3()"></Center>
+<br>
+
+<div id="TagDomTable"></div><br>
+<div id="TagDom"></div>
+<br>
+
+
+<div id="g8"></div><br>
+<table width=100%>
+	<tr>
+		<td><h4>8.其它函数</h4></td>
+		<td align=right><a href="#g0">回到目录		</a></td>
+	</tr>
+</table>
+<div id="TagOtherTable"></div><br>
+<div id="TagOther"></div>
+<br>
+<br><br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

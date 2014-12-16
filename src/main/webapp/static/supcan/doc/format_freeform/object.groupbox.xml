@@ -1,0 +1,19 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Group 或 GroupBox" meaning="分组框的属性" number="0-n">
+<element name="text/value" meaning="分组框的文字">
+	<category>外观</category>
+	<value>串</value>
+</element>
+<element name="fontIndex" meaning="文字字体">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，指向在&amp;lt;Fonts&amp;gt;中定义的字体的顺序号，从0开始计数</value>
+	<default>0</default>
+</element>
+</elements>
+
+<comments>
+	<comment>text允许以"|"分隔中英文(用于中英文切换)</comment>
+</comments>
+</root>

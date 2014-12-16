@@ -31,9 +31,9 @@
 	</ul>
 	<form:form id="searchForm" modelAttribute="article" action="${ctx}/cms/stats/article" method="post" class="breadcrumb form-search">
 		<div>
-			<label>归属栏目：</label><tags:treeselect id="category" name="categoryId" value="${paramMap.categoryId}" labelName="categoryName" labelValue="${paramMap.categoryName}"
+			<label>归属栏目：</label><sys:treeselect id="category" name="categoryId" value="${paramMap.id}" labelName="categoryName" labelValue="${paramMap.name}"
 				title="栏目" url="/cms/category/treeData" module="article" cssClass="input-small" allowClear="true"/>
-			<label>归属机构：</label><tags:treeselect id="office" name="officeId" value="${paramMap.officeId}" labelName="officeName" labelValue="${paramMap.officeName}" 
+			<label>归属机构：</label><sys:treeselect id="office" name="officeId" value="${paramMap.office.id}" labelName="officeName" labelValue="${paramMap.office.name}" 
 				title="机构" url="/sys/office/treeData" cssClass="input-small" allowClear="true"/>
 			<label>开始日期：</label><input id="beginDate" name="beginDate" type="text" readonly="readonly" maxlength="20" class="input-small Wdate"
 				value="${paramMap.beginDate}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
@@ -42,18 +42,18 @@
 			<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 		</div>
 	</form:form>
-	<tags:message content="${message}"/>
+	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead><tr><th>父级栏目</th><th>栏目名称</th><th>信息量</th><th>点击量</th><th>最后更新时间</th><th>归属机构</th>
 		<tbody>
 		<c:forEach items="${list}" var="stats">
 			<tr>
-				<td><a href="javascript:" onclick="$('#categoryId').val('${stats.categoryParentId}');$('#categoryName').val('${stats.categoryParentName}');$('#searchForm').submit();return false;">${stats.categoryParentName}</a></td>
-				<td><a href="javascript:" onclick="$('#categoryId').val('${stats.categoryId}');$('#categoryName').val('${stats.categoryName}');$('#searchForm').submit();return false;">${stats.categoryName}</a></td>
+				<td><a href="javascript:" onclick="$('#categoryId').val('${stats.parent.id}');$('#categoryName').val('${stats.parent.name}');$('#searchForm').submit();return false;">${stats.parent.name}</a></td>
+				<td><a href="javascript:" onclick="$('#categoryId').val('${stats.id}');$('#categoryName').val('${stats.name}');$('#searchForm').submit();return false;">${stats.name}</a></td>
 				<td>${stats.cnt}</td>
 				<td>${stats.hits}</td>
 				<td><fmt:formatDate value="${stats.updateDate}" type="both"/></td>
-				<td><a href="javascript:" onclick="$('#officeId').val('${stats.officeId}');$('#officeName').val('${stats.officeName}');$('#searchForm').submit();return false;">${stats.officeName}</a></td>
+				<td><a href="javascript:" onclick="$('#officeId').val('${stats.office.id}');$('#officeName').val('${stats.office.name}');$('#searchForm').submit();return false;">${stats.office.name}</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>

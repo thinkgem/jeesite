@@ -1,0 +1,96 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Pager" meaning="分页器的属性" number="0-n" example="Treelist的演示页: 18.分页方案(一)、30.FreeformBar">
+<element name="fontIndex" meaning="文字字体">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，指向在&amp;lt;Fonts&amp;gt;中定义的字体的顺序号，从0开始计数</value>
+	<default>0</default>
+</element>
+<element name="textColor" meaning="文字颜色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<default>#000000</default>
+</element>
+<element name="totalRows" meaning="数据的总行数">
+	<category>数据</category>
+	<value>数字或URL. 如果是URL, 返回的响应必须是数字(即总行数), 或包含数字的XML/JSON</value>
+</element>
+<element name="pageRows" meaning="每页显示行数">
+	<category>数据</category>
+	<datatype>int</datatype>
+	<value>数字</value>
+	<default>100</default>
+</element>
+<element name="dataURL" meaning="数据的URL">
+	<category>数据</category>
+	<value>URL，书写规则举例如下：</value>
+	<value>　　dataURL = "../getData.aspx?st=@startRow&amp;count=@rows"</value>
+	<value>其中必备的2个宏变量含义如下:</value>
+	<value meaning="本次开始行">@startRow</value>
+	<value meaning="本次要索取的行数">@rows</value>
+	<value>注：这2个宏变量在实际发送的http请求中会被替换成真实数字的.</value>
+</element>
+<element name="pageRowsList" meaning="每页显示行数的下拉的内容">
+	<category>外观</category>
+	<value>例如 pageRowsList="20,50,100,200",  界面就会出现一个下拉</value>
+</element>
+<element name="showText" meaning="文字串，常用于显示当前行号和行数">
+	<category>外观</category>
+	<value>带宏的串, 例如："共@Pages页, 第@startRow至@endRow行, 共@totRows行", 里面"@"开头的是宏, 宏在显示时会被替换成真实的值, 可用宏的含义如下：</value>
+	<value meaning="总页数">@Pages</value>
+	<value meaning="总行数">@totalRows</value>
+	<value meaning="当前页的开始行">@startRow</value>
+	<value meaning="当前页的结束行">@endRow</value>
+	<value>　　如果 showText 设成空串表示不需要显示该文字</value>
+	<default>(@startRow-@endRow) / @totalRows</default>
+</element>
+<element name="layout" meaning="界面内容布局">
+	<category>外观</category>
+	<value>逗号分隔的串, 可以带 first、 pagecode(或纯数字)、 last、 input、 pageRowsList、 showText, 布局是按照其先后次序从左往右展开的。 其含义分别为：</value>
+	<value meaning="需要首页按钮(超链接)">First</value>
+	<value meaning="需要末页按钮(超链接)">Last</value>
+	<value meaning="尽可能多地展现出页码按钮(超链接)。 注: 如果设了 pagecode, 就不能再设下面的纯数字了">pagecode</value>
+	<value meaning="最多只展现 n 个页码按钮(超链接)。 注：如果设定数字，就不需要前面的 pagecode 了">纯数字</value>
+	<value meaning="可直接输入页码的那个小输入框">input</value>
+	<value meaning='每页显示行数的下拉框, 注：必须要先定义 "pageRowsList" 属性，否则设了也没用'>pageRowsList</value>
+	<value meaning="文字串">showText</value>
+	<value>　　如果是按钮样式( style="pagecode=button" ), 还可以有如下2个内容选项:</value>
+	<value meaning="需要上页按钮">Prior</value>
+	<value meaning="需要下页按钮">Next</value>
+	<default>first, all, last, input, pageRowsList, showText</default>
+</element>
+<element name="style" meaning="显示的样式">
+	<category>外观</category>
+	<value>多个"名=值"的串, 例如："pagecode=button;prior=前页;next=下页", 可用的名值规定如下：</value>
+	<value meaning='页码的样式，可以为 hyperLink 或 button,  "hyperLink"表示超链接样式, "button"表示按钮样式,  默认是hyperLink '>pagecode</value>
+	<value>　　如果是超链接样式，就不需要设其它属性了。 &lt;b&gt;按钮样式&lt;/b&gt;可以有如下内容选项:</value>
+<value meaning="按钮的颜色">BackColor 或 BgColor</value>
+<value meaning="按钮边框的颜色">BorderColor</value>
+<value meaning="当前页按钮的颜色">CurrentBackColor 或 CurrentBgColor</value>
+<value meaning="当前页按钮边框的颜色">CurrentBorderColor</value>
+<value meaning="当前页的页码文字颜色">CurrentTextColor</value>
+<value meaning='“首页”按钮上的文字'>First</value>
+<value meaning='“上页”按钮上的文字'>Prior</value>
+<value meaning='“下页”按钮上的文字'>Next</value>
+<value meaning='“末页”按钮上的文字'>Last</value>
+
+	<default>pagecode=hyperlink</default>
+</element>
+
+
+
+
+
+
+
+
+
+
+</elements>
+
+<comments>
+	<comment>showText允许以"|"分隔中英文(用于中英文切换)</comment>
+</comments>
+</root>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.gen.dao.GenTableColumnDao">
+    
+    <sql id="genTableColumnColumns">
+		a.*,
+		b.id AS "genTable.id",
+		b.name AS "genTable.name",
+		b.comments AS "genTable.comments",
+		b.class_name AS "genTable.className",
+		b.parent_table AS "genTable.parentTable",
+		b.parent_table_fk AS "genTable.parentTableFk"
+	</sql>
+	
+	<sql id="genTableColumnJoins">
+		JOIN gen_table b ON b.id = a.gen_table_id
+    </sql>
+    
+    <select id="get" resultType="GenTableColumn">
+		SELECT 
+			<include refid="genTableColumnColumns"/>
+		FROM gen_table_column a
+		<include refid="genTableColumnJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="GenTableColumn">
+		SELECT 
+			<include refid="genTableColumnColumns"/>
+		FROM gen_table_column a
+		<include refid="genTableColumnJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="name != null and name != ''">
+			AND a.name LIKE 
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+		</if>
+		<if test="genTable != null and genTable.id != null and genTable.id != ''">
+			AND a.gen_table_id = #{genTable.id}
+		</if>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="findAllList" resultType="GenTableColumn">
+		SELECT 
+			<include refid="genTableColumnColumns"/>
+		FROM gen_table_column a
+		<include refid="genTableColumnJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY a.sort ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO gen_table_column(
+			id, 
+			gen_table_id, 
+			name, 
+			comments, 
+			jdbc_type, 
+			java_type, 
+			java_field, 
+			is_pk, 
+			is_null, 
+			is_insert, 
+			is_edit, 
+			is_list, 
+			is_query, 
+			query_type, 
+			show_type, 
+			dict_type, 
+			sort, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{genTable.id}, 
+			#{name}, 
+			#{comments}, 
+			#{jdbcType}, 
+			#{javaType}, 
+			#{javaField}, 
+			#{isPk}, 
+			#{isNull}, 
+			#{isInsert}, 
+			#{isEdit}, 
+			#{isList}, 
+			#{isQuery}, 
+			#{queryType}, 
+			#{showType}, 
+			#{dictType}, 
+			#{sort}, 
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE gen_table_column SET 
+			comments = #{comments}, 
+			jdbc_type = #{jdbcType}, 
+			java_type = #{javaType}, 
+			java_field = #{javaField}, 
+			is_pk = #{isPk}, 
+			is_null = #{isNull}, 
+			is_insert = #{isInsert}, 
+			is_edit = #{isEdit}, 
+			is_list = #{isList}, 
+			is_query = #{isQuery}, 
+			query_type = #{queryType}, 
+			show_type = #{showType}, 
+			dict_type = #{dictType}, 
+			sort = #{sort}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks},
+			del_flag = #{delFlag}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE gen_table_column SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="deleteByGenTableId">
+		UPDATE gen_table_column SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE gen_table_id = #{deleteByGenTableId}
+	</update>
+	
+</mapper>

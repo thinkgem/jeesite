@@ -102,7 +102,7 @@
 			<div class="control-group">
 				<label class="control-label">验证码:</label>
 				<div class="controls">
-					<tags:validateCode name="validateCode" />
+					<sys:validateCode name="validateCode" />
 				</div>
 			</div>
 			<div class="form-actions">

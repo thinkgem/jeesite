@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<link href="mapfiles/css/default.css" rel="stylesheet" type="text/css" />
+	<title>Google Maps JavaScript API v3 Example: Map Simple</title>
+	<!--script type="text/javascript" src="http://maps_googapis_com/maps/api/js?sensor=false"></script-->
+	<script type="text/javascript" src="mapapi3.8.6.js"></script>
+	<script type="text/javascript">
+  
+		// 地图服务地址
+		var strURL = "http://192.168.11.233:8780/maptile/googlemaps/roadmap/"
+	
+		function LocalMapType() {}
+		LocalMapType.prototype.tileSize = new google.maps.Size(256, 256);
+		LocalMapType.prototype.maxZoom = 17;   //地图显示最大级别
+		LocalMapType.prototype.minZoom = 4;    //地图显示最小级别
+		LocalMapType.prototype.name = "本地";
+		LocalMapType.prototype.alt = "显示本地地图数据";
+		LocalMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+			var img = ownerDocument.createElement("img");
+			img.style.width = this.tileSize.width + "px";
+			img.style.height = this.tileSize.height + "px";
+			img.src = strURL + zoom + "/" + coord.x + "/" + coord.y + ".png";
+			return img;
+		};
+	  
+		var localMapType = new LocalMapType();
+		 
+		function initialize() {
+		  //var myLatlng = new google.maps.LatLng(39.900827854566344, 116.38339402421877);
+		  var myLatlng = new google.maps.LatLng(36.679541, 117.136001);
+		  var myOptions = {
+		    center: myLatlng,
+		    zoom: 17,
+		    streetViewControl: false,
+		 	mapTypeControlOptions: {
+		        mapTypeIds: [
+ 		          //google.maps.MapTypeId.ROADMAP,
+ 		          //google.maps.MapTypeId.HYBRID,
+ 		          //google.maps.MapTypeId.SATELLITE,
+ 		          //google.maps.MapTypeId.TERRAIN,
+ 		          //'locaMap' //定义地图类型
+		     	] 
+			}
+		  };
+		  var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		  
+		  map.mapTypes.set('locaMap', localMapType);   //绑定本地地图类型
+		  map.setMapTypeId('locaMap');    //指定显示本地地图
+		  
+		  //var markerOptions = new google.maps.MarkerOptions({draggable:true});
+		  var marker = new google.maps.Marker({
+		      position: myLatlng, 
+		      map: map,
+		      //draggable:true,
+		      title:"Hello World!"
+		  });
+		  
+		  var infowindow = new google.maps.InfoWindow({
+		        content:"latlng:" + marker.getPosition().toString(),
+		        size: new google.maps.Size(50,50)
+		      });
+		
+		  google.maps.event.addListener(marker, 'click', function() {
+		    infowindow.setContent("latlng:" + marker.getPosition().toUrlValue(6));
+		    infowindow.open(map,marker);
+		  }); 
+		  
+		}
+	</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas"></div>
+</body>
+</html>

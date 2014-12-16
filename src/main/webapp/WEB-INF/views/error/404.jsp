@@ -1,8 +1,19 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<%response.setStatus(200);%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%
+response.setStatus(404);
+
+// 如果是异步请求或是手机端，则直接返回信息
+if (Servlets.isAjaxRequest(request)) {
+	out.print("页面不存在.");
+}
+
+//输出异常信息页面
+else {
+%>
+<%@page import="com.thinkgem.jeesite.common.web.Servlets"%>
+<%@page contentType="text/html;charset=UTF-8" isErrorPage="true"%>
+<%@include file="/WEB-INF/views/include/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
 <head>
 	<title>404 - 页面不存在</title>
 	<%@include file="/WEB-INF/views/include/head.jsp" %>
@@ -15,3 +26,7 @@
 	</div>
 </body>
 </html>
+<%
+out.print("<!--"+request.getAttribute("javax.servlet.forward.request_uri")+"-->");
+} out = pageContext.pushBody();
+%>

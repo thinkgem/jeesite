@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<link href="mapfiles/css/default.css" rel="stylesheet" type="text/css" />
+	<title>地图显示</title>
+	<script type="text/javascript" src="../jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../jquery/jquery-migrate-1.1.1.min.js"></script><!--
+	<script type="text/javascript" src="mapapi3.8.6.js"></script>-->
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script><!-- 
+	<script type="text/javascript" src="polygon.js"></script> -->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+	<script type="text/javascript">
+
+		// 本地地图服务地址
+		var strURL = "http://192.168.11.233:8780/maptile/googlemaps/roadmap/"
+
+		function LocalMapType() {}
+		LocalMapType.prototype.tileSize = new google.maps.Size(256, 256);
+		LocalMapType.prototype.maxZoom = 16;   //地图显示最大级别
+		LocalMapType.prototype.minZoom = 4;    //地图显示最小级别
+		LocalMapType.prototype.name = "本地";
+		LocalMapType.prototype.alt = "显示本地地图数据";
+		LocalMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+			var img = ownerDocument.createElement("img");
+			img.style.width = this.tileSize.width + "px";
+			img.style.height = this.tileSize.height + "px";
+			img.src = strURL + zoom + "/" + coord.x + "/" + coord.y + ".png";
+			return img;
+		};
+		var localMapType = new LocalMapType();
+		
+		var map, infoWindow = new google.maps.InfoWindow();
+
+		// 初始化地图
+		function initialize() {
+			
+			var myOptions = {
+				zoom: 10,//7,
+				minZoom: 7,
+				maxZoom: 18,
+			 	streetViewControl: false,
+			 	mapTypeControlOptions: {
+			        mapTypeIds: [
+     		          //google.maps.MapTypeId.ROADMAP,
+     		          //google.maps.MapTypeId.HYBRID,
+     		          //google.maps.MapTypeId.SATELLITE,
+     		          //google.maps.MapTypeId.TERRAIN,
+     		          //'locaMap' //定义地图类型
+			     	] 
+				}
+			};
+			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	
+			map.mapTypes.set('locaMap', localMapType);	//绑定本地地图类型
+			//map.setMapTypeId('locaMap');    				//指定显示本地地图
+			
+			var city = "文登市";
+			
+			new BMap.Boundary().get(city, function(rs){
+				var data = rs.boundaries + "";
+			
+			//$.get("data/" + encodeURIComponent(city) + ".dat", function(data){
+				if (data != ''){
+	                var latLngs = data.split(";"); // 拆分坐标
+		            var top=0, bottom=0, left=0, right=0; // 四周最外坐标
+	                var triangleCoords = []; // 经纬度坐标数组
+	                for (j = 1; j < latLngs.length - 1; j++) {  
+	                    var postion = latLngs[j].indexOf(",");  
+	                    var lng = parseFloat(latLngs[j].substr(0, postion));//经度
+	                    var lat = parseFloat(latLngs[j].substr(postion + 1));//纬度  
+	                    triangleCoords.push(new google.maps.LatLng(lat, lng));  //加入经纬度  
+	                    //活动最大，最小经纬度。计算地图中心点  
+	                    if(j==1&&top==0&&bottom==0&&left==0&&right==0){  
+	                        top=lat; bottom=lat; left=lng; right=lng;  
+	                    }else{ 
+	                        if(lat>top){ top=lat; } if(lat<bottom){ bottom=lat; }  
+	                        if(lng>right){ right=lng; } if(lng<left){ left=lng; }  
+	                    }  
+	                }  
+	                bermudaTriangle = new google.maps.Polygon({  
+	                    paths : triangleCoords,  
+	                    strokeColor : "#FF0000",  
+	                    strokeOpacity : 0.5,  
+	                    strokeWeight : 2,  
+	                    fillColor : "#FF0000",  
+	                    fillOpacity : 0.03  
+	                });  
+	                bermudaTriangle.setMap(map);  
+	    			// 单击
+	    			google.maps.event.addListener(bermudaTriangle, 'click', function(event) {
+	    				if (infoWindow != null){
+							infoWindow.close();
+						}
+	   				  	//tmpLatLng = tmpLatLng + event.latLng;
+	   					//showDialog(tmpLatLng);
+	    			});
+	    	        map.setCenter(new google.maps.LatLng(bottom+((top-bottom)/2),left+((right-left)/2)));  
+	    	        //map.setZoom(8);
+				}
+			});
+           
+			// 单击地图区域关闭消息框
+			google.maps.event.addListener(map, 'click', function (event) {
+				if (infoWindow != null){
+					infoWindow.close();
+				}
+			});
+
+			// 图标类型
+			var icons = ["marker1.png", "marker2.png", "marker3.png", "marker4.png"];
+			var iconNames = ["类型一", "类型二", "类型三", "类型四"];
+			var mapInfos = [];
+			for (i=0; i<icons.length; i++){
+				mapInfos.push("<tr><td><img src='mapfiles/markers/"+icons[i]+"'></td><td>"+iconNames[i]+"</td></tr>");
+			}
+			$('#map_infos').append(mapInfos.join(''));
+			
+			// 维度经度数据
+			//var ll = "37.07818882978002, 117.15133666992188;36.98280911070616, 117.257080078125;36.870832155646326, 117.40264892578125;36.711366342819254, 117.51937866210938;36.61662990355667, 117.3779296875;36.569217971443656, 117.16232299804688;36.52950186333475, 116.83135986328125;36.63316209558658, 116.883544921875;36.672824886786564, 117.00164794921875;36.17113976708937, 116.32598876953125;36.33725319397005, 116.553955078125;36.5184659896759, 116.75994873046875;36.40802070382984, 116.993408203125;36.52729481454624, 117.20489501953125;36.639773979496574, 117.11151123046875)";
+			var ll = "37.20435500746071, 122.06050872802734;37.175090072219206, 122.05570220947266;37.15183414397669, 122.09449768066406;37.17235445206045, 122.11544036865234;37.18767264916778, 122.13981628417969;37.20599569602764, 122.11441040039062;37.18493748465265, 122.07939147949219";
+			var lls = ll.split(";");
+			
+			// 添加标注点
+			for (i=0; i<lls.length; i++){
+				if (i==0) addMarker(map, lls[i], icons[3], "某项目", "2013", "高新区", "80574", "40574", "http://www.baidu.com/img/bdlogo.gif", "http://baike.baidu.com");
+				else if (i==1) addMarker(map, lls[i], icons[1], "某某项目", "2013", "高新区", "80574", "40574", "http://www.baidu.com/img/bdlogo.gif", "http://baike.baidu.com");
+				else if (i==2) addMarker(map, lls[i], icons[2], "某某某项目", "2013", "高新区", "80574", "40574", "http://www.baidu.com/img/bdlogo.gif", "http://baike.baidu.com");
+				else addMarker(map, lls[i], icons[i%2==0?3:0], "国家重型汽车有关建设项目"+i, "2013", "高新区", "80574", "40574", "http://www.baidu.com/img/bdlogo.gif", "http://baike.baidu.com");
+			}
+			
+			// 绘制区域线
+			if (lls.length > 0){
+				addPolygon(map, lls);
+			}
+			
+		}
+	
+		// 添加标注点
+		function addMarker(map, latLngs, icon, name, year, unit, total, curr, image, video){
+			
+			var latLng = latLngs.replace(/ /g,"").split(",");
+			
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(latLng[0], latLng[1]), 
+				map: map,
+				//draggable: true,
+				icon: 'mapfiles/markers/'+icon,  
+                //animation :google.maps.Animation.DROP,
+				title: name
+			});
+			
+			google.maps.event.addListener(marker, 'click', function() {
+				//parent.document.menuFrame.location = 'http://www.baidu.com/s?wd='+name;
+				var content = "<table><tr><td><b>项目名称: </b></td><td colspan='3' style='color:#f00'>"+name+"</td></tr>"
+					  +"<tr><td><b>年份: </b></td><td>"+year+"</td><td><b>责任单位: </b></td><td>"+unit+"</td></tr>"
+					  +"<tr><td><b>总投资额(万): </b></td><td>"+total+"</td><td><b>当前投资额(万): </b></td><td>"+curr+"</td></tr>"
+					  +"<tr><td colspan='4'><b>当前进度: </b></td></tr><tr>"
+					  +"  <td colspan='2'><img src='"+image+"' style='width:300px; height:200px; border:1px solid #ddd;'/></td>"
+					  +"  <td colspan='2'><iframe src='"+video+"' style='width:300px; height:200px; border:1px solid #ddd;'><iframe></td>"
+					  +"</tr>"
+					  +"</table>";
+				if (infoWindow != null){
+					infoWindow.close();
+				}
+				infoWindow.setContent(content);
+				infoWindow.open(map, this);/**/
+			});
+			
+		}
+		
+		// 绘制区域线
+		function addPolygon(map, latLngs){
+			var paths = [];
+			for (i=0; i<latLngs.length; i++){
+				var latLng = latLngs[i].replace(/ /g,"").split(",");
+				paths.push(new google.maps.LatLng(latLng[0], latLng[1]));  //加入经纬度  
+			}
+			var polygon = new google.maps.Polygon({  
+                paths : paths,
+                strokeColor : "#FF0000",
+                strokeOpacity : 0.5,
+                strokeWeight : 2,
+                fillColor : "#FF0000",
+                fillOpacity : 0.1
+            });
+			polygon.setMap(map); 
+		}
+	</script>
+</head>
+<body onload="initialize()">
+	<div style="height:100%"><!--
+		<div id="side">
+			<input id="reset" value="清除区域" type="button" class="navi"/>
+			<input id="showData"  value="显示区域坐标" type="button" class="navi"/>
+			<div id="dataPanel">&nbsp;</div>
+		</div>  -->
+		<div id="map_canvas" style="width:100%; height:100%"></div>
+		<table id="map_infos" style="position:absolute;right:30px;bottom:30px;width:140px;z-index:1000;background:#fff;padding:10px;border:1px solid #adadad;font-size:12px;text-align:center;"></table>
+	</div>
+</body>
+</html>

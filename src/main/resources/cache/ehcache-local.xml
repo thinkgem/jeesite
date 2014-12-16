@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
 <ehcache updateCheck="false" name="defaultCache">
 
-	<diskStore path="java.io.tmpdir/jeesite/ehcache/default" />
+	<diskStore path="../temp/jeesite/ehcache" />
 
-	<!-- DefaultCache setting. -->
+	<!-- 默认缓存配置. -->
 	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
 	
-	<cache name="sysCache" maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
+	<!-- 系统缓存 -->
+	<cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
 	
-	<cache name="cmsCache" maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
-	    
-    <cache name="shiro-activeSessionCache" maxElementsInMemory="100" overflowToDisk="true"
+	<!-- 用户缓存 -->
+	<cache name="userCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	
+	<!-- 工作流模块缓存 -->
+	<cache name="actCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	
+	<!-- 内容管理模块缓存
+	<cache name="cmsCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/> -->
+	
+	<!-- 系统活动会话缓存 -->
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="10000" overflowToDisk="true"
            eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
            diskPersistent="true" diskExpiryThreadIntervalSeconds="600"/>
-
-    <cache name="org.apache.shiro.realm.text.PropertiesRealm-0-accounts"
-           maxElementsInMemory="100" eternal="true" overflowToDisk="true"/>
     
-    <cache name="SimplePageCachingFilter" maxElementsInMemory="100" eternal="false" overflowToDisk="true"
-    	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/>
+    <!-- 简单页面缓存
+    <cache name="SimplePageCachingFilter" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true"
+    	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/> -->
     	
 </ehcache>

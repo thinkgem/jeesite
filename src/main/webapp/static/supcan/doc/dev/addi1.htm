@@ -1,0 +1,156 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+
+<div id="Tag10"/>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='devsh.jpg'></td></tr>
+</table>
+<h3>　<font color=#3366ff>附录一：数据格式</font></h3><hr color=#2266ee size=1>
+　　Supcan TreeList、Freeform、Report的外观样式都是由一个XML或JSON文件来描述的，加载的数据则支持XML、JSON、和TSV文本格式，Report的临时数据源还支持HTML格式。<br>
+　　Supcan内置了一个性能极为出色的XML/JSON/HTML解析器。考虑到程序员通常是手工编辑Treelist、Freeform的模板描述文件，难免出错，所以该解析器的另一特色
+就是能够解析出不太规范的粗放型XML、JSON文件, 比如对XML的大小写不敏感、对JSON的单引号双引号不敏感、甚至无引号也能正确解析。<br>
+<img src='glass.jpg'><font color="552222">当然，你不能粗犷得太离谱.</font><br><br>
+　　无论是XML或JSON描述文件，还是加载的XML、JSON数据，解析器是根据内容自适应的。也就是说，格式和文件(或URL)的后缀没有关系，比如，http://localhost/ack.xml 返回
+了JSON数据、http://localhost/ack.json 返回的是XML数据，解析器均能自动识别。<br>
+
+
+<div id="Tag11"/><br><br><br>
+　　<font style='font-size:15pt'>1.XML</font><hr color=#2266ee size=1>
+　　Supcan Treelist加载的数据、Report数据源加载的XML数据，格式比较简单，例如：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;DataRoot&gt;
+ &lt;Record&gt;
+  &lt;OrderID&gt;10248&lt;/OrderID&gt;
+  &lt;CustomerID&gt;VINET&lt;/CustomerID&gt;
+  &lt;Freight&gt;1,232.38&lt;/Freight&gt;
+ &lt;/Record&gt;
+ &lt;Record&gt;
+  &lt;OrderID&gt;10249&lt;/OrderID&gt;
+  &lt;CustomerID&gt;TOMSP&lt;/CustomerID&gt;
+  &lt;Freight&gt;11.60&lt;/Freight&gt;
+ &lt;/Record&gt;
+ ...(略)
+&lt;/DataRoot&gt;</pre>
+<img src='glass.jpg'><font color="552222">元素&lt;DataRoot&gt;、&lt;Record&gt;的命名是任意的，不一定要写成DataRoot、Record.</font><br><br>
+<br><br>
+　　Supcan Treelist、Freeform、Report有固定的XML/JSON语法规则，请参见顶部tab的"Treelist XML文档规范"、"Freeform XML文档规范"，Report没有公开文档规范是因为
+Report本身就是编辑器，不需要手工书写XML/JSON文件.<br>
+<br>
+　　Supcan Treelist、Freeform 的XML格式规范看上去复杂，其实并不复杂，尤其是Treelist，例如：
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;TreeList&gt;
+ &lt;Properties Title="订单明细表"&gt;&lt;/Properties&gt;
+ &lt;Cols&gt;
+  &lt;Col name="OrderID" width="70" align="center"&gt;订单号|Order ID&lt;/Col&gt;
+  &lt;Col name="CustomerID" width="70"&gt;客户号|CustomerID&lt;/Col&gt;
+  &lt;Col name="Freight" width="100" datatype="double"&gt;货重|Freight&lt;/Col&gt;
+ &lt;/Cols&gt;
+&lt;/TreeList&gt;</pre>
+
+　　规范中的大部分属性都不需要书写，因为不写就是自动采用默认。在演示包的Treelist子目录下有大量的模板文件，请自行参考。<br>
+<br>
+　　对粗放型的XML文件的支持表现在如下几个方面：<br>
+1.大小写不敏感，例如:<br>
+<table cellpadding=4 width=85% cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col align=center><col align=center width=90><col align=center width=110>
+<tr bgcolor=#eaeaea><td>片段</td><td>标准解析器</td><td>Supcan解析器</td></tr>
+<tr><td align=left>&lt;CustomerID&gt;abcde&lt;/<font color=red>c</font>ustomer<font color=red>id</font>&gt;</td><td><img src="button_cancel.png"></td><td><img src="button_ok.png"></td></tr>
+</table><br><br>
+2.不带引号，例如:<br>
+<table cellpadding=4 width=85% cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col align=center><col align=center width=90><col align=center width=110>
+<tr bgcolor=#eaeaea><td>片段</td><td>标准解析器</td><td>Supcan解析器</td></tr>
+<tr><td align=left>&lt;Properties title="物资清单"&gt;&lt;/Properties&gt;</td><td><img src="button_ok.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>&lt;Properties title=物资清单&gt;&lt;/Properties&gt;</td><td><img src="button_cancel.png"></td><td><img src="button_ok.png"></td></tr>
+</table><br><br>
+3.未转义:<br>
+<table cellpadding=4 width=85% cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col align=center><col align=center width=90><col align=center width=110>
+<tr bgcolor=#eaeaea><td>片段</td><td>标准解析器</td><td>Supcan解析器</td></tr>
+<tr><td align=left>&lt;Properties title="John<font color=red>&amp;amp;</font>Sam"&gt;&lt;/Properties&gt;</td><td><img src="button_ok.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>&lt;Properties title="John<font color=red>&</font>Sam"&gt;&lt;/Properties&gt;</td><td><img src="button_cancel.png"></td><td><img src="button_ok.png"></td></tr>
+</table><br><br>
+
+<div id="Tag12"/><br><br><br>
+　　<font style='font-size:15pt'>2.JSON</font><hr color=#2266ee size=1>
+　　Supcan Treelist加载的数据、Report数据源加载的JSON数据，格式比较简单，例如：<br>
+<pre class='xml'>
+{"Record": [
+ {"Country":"Austria","OrderID":"10258","CustomerID":"ERNSH","OrderDate":"2006.07.17"},
+ {"Country":"Austria","OrderID":"10263","CustomerID":"ERNSH","OrderDate":null},
+ {"Country":"Austria","OrderID":"10747","CustomerID":"PICCO","OrderDate":"2007.11.19"},
+ ...(略)
+]}</pre>
+<img src='glass.jpg'><font color="552222">对象名不一定是"Record"，你可以任意命名.</font><br>
+<img src='glass.jpg'><font color="552222">日期支持类似"\/Date(783643765+0800)\/"的格式; 中文支持类似"\u0f88\u44f0"的格式.</font><br>
+<img src='glass.jpg'><font color="552222">也可以写成这样：</font><br>
+<pre class='xml'>
+[
+ {"Country":"Austria","OrderID":"10258","CustomerID":"ERNSH","OrderDate":"2006.07.17"},
+ {"Country":"Austria","OrderID":"10263","CustomerID":"ERNSH","OrderDate":null},
+ {"Country":"Austria","OrderID":"10747","CustomerID":"PICCO","OrderDate":"2007.11.19"},
+ ...(略)
+]</pre>
+<br>
+<br>
+　　Supcan Treelist、Freeform、Report的模板描述文件和数据，均是既支持XML格式、也支持JSON格式.<br>
+　　例如上例Treelist的XML串，用JSON来表示，就是:<br>
+<pre class='xml'>
+{
+ "TreeList": {
+  "Properties": {"Title":"订单明细表"},
+  "Cols": [
+   {"name":"Country", "width":100, "text":"国家|Country"},
+   {"name":"OrderID", "width":70, "align":"center", "text":"订单号|OrderID"},
+   {"name":"CustomerID", "width":70, "text":"客户号|CustomerID"},
+  ]
+ }
+}</pre>
+　　XML中的 &lt;Col&gt;国家&lt;/Col&gt; 中的"国家"是用 { "text":"国家" } 来代替的。<br>
+<br>
+　　对粗放型的JSON文件的支持，主要表现在对引号不敏感，例如:<br>
+<table cellpadding=4 width=85% cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col align=center><col align=center width=90><col align=center width=110>
+<tr bgcolor=#eaeaea><td>片段</td><td>标准解析器</td><td>Supcan解析器</td></tr>
+<tr><td align=left>{ "align": "left" }</td><td><img src="button_ok.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>{ align: "left" }</td><td><img src="button_cancel.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>{ "align": left }</td><td><img src="button_cancel.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>{ align: left }</td><td><img src="button_cancel.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>{ 'align': 'left' }</td><td>不一定</td><td><img src="button_ok.png"></td></tr>
+</table><br>
+　　当然，引号必须配对，比如下面的片段Supcan解析器也无法解析：<br>
+<table cellpadding=4 width=85% cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col align=center><col align=center width=90><col align=center width=110>
+<tr bgcolor=#eaeaea><td>片段</td><td>标准解析器</td><td>Supcan解析器</td></tr>
+<tr><td align=left>{ "align": "left<font color=red>'</font> }</td><td><img src="button_cancel.png"></td><td><img src="button_cancel.png"></td></tr>
+</table><br><br>
+
+　　此外，Supcan解析器也允许正斜杠不转义：<br>
+<table cellpadding=4 width=85% cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col align=center><col align=center width=90><col align=center width=110>
+<tr bgcolor=#eaeaea><td>片段</td><td>标准解析器</td><td>Supcan解析器</td></tr>
+<tr><td align=left>{ "dataURL": "http:\/\/localhost\/index.aspx" }</td><td><img src="button_ok.png"></td><td><img src="button_ok.png"></td></tr>
+<tr><td align=left>{ "dataURL": "http://localhost/index.aspx" }</td><td>不一定</td><td><img src="button_ok.png"></td></tr>
+</table><br><br>
+
+<div id="Tag13"/><br><br><br>
+　　<font style='font-size:15pt'>3.TSV</font><hr color=#2266ee size=1>
+　　TSV格式只能用作数据格式，不能用来描述模板文件.<br>
+　　TSV格式是不含列信息的纯文本，类似二维的平面结果集，也无法表达树结构。<br>
+　　TSV即 Tab-Seperated Value，以Tab分隔列、回车分隔行 (在C#、Java、js中，Tab是"\t"，回车是"\r\n")，所以其废码特别少，耗用的网络流量比XML和JSON都要小得多.<br>
+　　TSV规则简单，转义规则为：<br>
+　　　　1.如果值串中本身就包含Tab符或回车符，那么请用双引号包绕这个值；<br>
+　　　　2.如果值串中本身就包含了双引号，那么请用连续2个双引号代替之、再用双引号包绕这个串.<br>
+
+<br><br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

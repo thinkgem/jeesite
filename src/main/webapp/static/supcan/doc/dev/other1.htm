@@ -1,0 +1,265 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag903"/>
+<br>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='devsh.jpg'></td></tr>
+</table>
+　　<font style='font-size:15pt'>1.关于硕正套件</font><hr color=#2266ee size=1>
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问1.为什么demo包采用静态页面？在 JSP 或 ASP.Net中能使用吗？</b></td></tr></table>
+<font color=#666666>答复: </font>因为是纯客户端产品的关系，和后端(服务器端)技术的关系不那么密切，所以我们选择最通用的静态页面作demo。不管是ASP还是JSP，HTML+CSS+JS是二者间最大的交集，换句话说，我们的产品在静态页面上都能跑，更何况是动态页面。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问2.demo页和文档从未提到数据库，硕正套件支持什么样的数据库？</b></td></tr></table>
+<font color=#666666>答复: </font> 硕正套件不直接连接数据库，所以也不关心数据库。我们认为，访问数据库应该是应用服务器的事，硕正套件只关心数据：基于Http request/response的数据。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问3.demo中的数据基本上都是XML文件，实际开发时也必须是XML文件吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 不是的，应该是基于Http Response的数据包。实际开发中，应用服务器从数据库中获取数据并将其封装成XML(或JSON、TSV-TXT)，然后将这个XML返回给客户端，这个过程有点类似于XML Web Service的对象封送，无论是JSP还是ASP.Net，都有简单的数据序列化的实现方法。<br>
+　　在Java EE开发中，通常采用Servlet作为顶层来处理Http Request / Response.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问4.在IE下，硕正套件是一个ActiveX控件。我自己以前也开发过ActiveX控件，发现维护量很大，有些客户根本就安装不了，硕正套件也会有这个问题吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 你自己开发的ActiveX控件通常未经签名，微软操作系统对未经签名控件的限制越来越严厉。<br>
+硕正套件ActiveX是经过签名的，并且在运行过程中不写注册表、不读写其它目录的文件，所以在用户正常的IE安全等级下能够下载、运行，极少发现被操作系统拦截、无法安装的情况.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问5.我的应用程序采用常规的服务器端Session来维护会话的安全性，Supcan套件的Http请求安全吗？</b></td></tr></table>
+<font color=#666666>答复: </font> Supcan套件继承了页面的上下文环境，其Http请求自然也共享了页面已有的Cookie、和服务端的会话，所以是安全的.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问6.Supcan套件能用在C/S产品中吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 不能，只能作为插件用在浏览器中。<br>
+　　硕正套件的C/S专版需要另外付费购买。<br>
+<br>
+
+<div id="Tag901"/><br><br>
+　　<font style='font-size:15pt'>2.开发</font><hr color=#2266ee size=1>
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问1.如何学习用硕正套件开发？</b></td></tr></table>
+<font color=#666666>答复: </font><br>　　首先，您必须明白硕正套件相当于是客户端的中间件，它的容器是浏览器，要操控它，您必须具备页面开发的基本知识，比如html、javaScript、Ajax、CSS等。<br>
+　　由于是浏览器插件的关系，硕正套件与后端数据库是没有连接的，它只与应用服务器通讯：标准的 http 协议交互。为此，您必须精通一种后端开发的技能：JavaEE 或 ASP.Net.<br>
+　　单就硕正套件而言，如下是可参考的学习步骤：<br>
+1.学习左侧的《使用指南》，这是原理性的入门知识，对今后的开发和部署很有帮助；<br>
+2.从套件中选一种具体的组件入手，比如硕正树列表 或 硕正报表;<br>
+3.您可以结合这几种手段，逐步深入:<br>
+　　A.学习《开发者指南》中的具体组件的相关章节；<br>
+　　B.观看在线演示，按提示操作。请注意：我们绝大多数的演示页，在下方都有“技术分析区”，值得深入分析；<br>
+　　C.进一步解剖演示页的HTML源文件，源文件都在 demo 包中的根目录下，文件的命名是和演示顺序号严格对应的。文件名前缀规则是：<br>
+　　　　<b>t</b>*.htm - 树列表的演示页，如t1.htm、t2.thm...;<br>
+　　　　<b>f</b>*.htm - 自由表头的演示页，如f1.htm、f2.thm...;<br>
+　　　　<b>report</b>*.htm - 报表的演示页，如report1.htm、report2.thm...;<br>
+　　　　<b>other</b>*.htm - 小型页面控件的演示页.<br>
+　　D.如果是研究树列表，需要同时参考顶部Tab中的《Treelist XML 文档规范》；<br>
+　　E.逐步尝试开发，把html转变成您自己的jsp或aspx, html部分可以对照我们的demo页照猫画虎就行;<br>
+　　F.重视本《常见问题解答》，这是我们整理的最常见的咨询问题; <br>
+<br>
+
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问2.书写Treelist、Freeform的XML描述文件时，需要注意元素名、属性名的大小写吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 不需要，硕正套件内置的XML解析器对大小写是不敏感的.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问3.我用asp.net开发了一个非常简单的页面，但是其中的硕正控件始终显示不出来，怎么回事？</b></td></tr></table>
+<font color=#666666>答复: </font>解决方法一：<br>
+把头上的这句没啥用的话去掉就行：<br>
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/ ... sitional.dtd"&gt;<br>
+解决方法二：用div包绕控件(需显式指定高宽)：<br>
+<pre class='cpp'>
+&lt;div style="width100%;height:400px"&gt;
+ &lt;script type="text/javascript"&gt;insertReport('AF','')&lt;/script&gt;
+&lt;/div&gt;</pre>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问4.OnReady() 是在页面事件onLoad( )前还是后触发？</b></td></tr></table>
+<font color=#666666>答复: </font>不确定的。因为浏览器通常采用多线程渲染&lt;div&gt;、&lt;td&gt;中的内容，所以很难说哪个先完成。<br>
+　　如果你希望在OnReady( )和onLoad( )全部完成后做某项事情，最安全的做法是用一个计数变量。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问5.为什么我的页面经常会发生Supcan控件OnReady( )事件未触发的现象？</b></td></tr></table>
+<font color=#666666>答复: </font> 将该段 js 写到靠前一点(例如在Html的Head中)，这样就保证能触发。<br>
+　　在IE浏览器中，OnReady( )的触发时机是：在硕正组件首次显示时。假如你的页面很长(指高度)，需要用垂直滚动条往下拖时才显示硕正组件，那么在硕正组件初次浮现的一刹那，
+OnReady( )事件才被触发的！<br>
+　　还有一种情形，页面中控件的Table、div容器的高度(height)，如果你将其定义成百分比(例如 <b>height="100%"</b>)，有可能也会导致该现象，因为我们发现，浏览器对百分比的高度的解析，在渲染过程中会有些不确定因素，建议您用js算出容器的高度，然后将高度修改成像素数.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问6.我将硕正套件集成在ExtJS中，比如安置在TabPanel中，但是发现OnReady( )事件报错: "AF为空或不是对象"，怎么解决？</b></td></tr></table>
+<font color=#666666>答复: </font>最终插件肯定是安置在某个&lt;form name="?" ...&gt;中，请参考“使用指南”中的“9.Firefox和IE的一些差别”，你需要取得这个form的name。或者也可以用 document.getElementsByTags('form') 返回form的数组，如果只有1个form元素，也可以用 document.getElementsByTags('form')[0] 代替。<br>
+　　此外，如果遵照ExtJS的建议，采用iframe作为容器的话，是不存在这个问题的。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问7.InsertTreeList( )是在&lt;div&gt;中，再将其嵌到Table的&lt;TD&gt;中，为什么就看不见硕正组件了？</b></td></tr></table>
+<font color=#666666>答复: </font>把&lt;div&gt;这一层去掉应该就可以。<br>
+　　对硕正组件来说，&lt;div&gt;、&lt;td&gt;相当于都是“容器”，有一个容器就已经够了。<br>
+　　如果选用&lt;td&gt;容器，通常还须确定&lt;tr&gt;的高度的像素数，否则组件仍有可能未显示。在Chrome浏览器中，甚至&lt;td&gt;中也必须明确高度的像素。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问8.我在页面中安置了多个控件，经常有些莫名其妙的问题，例如录入数据丢失、会自动刷新、甚至浏览器崩溃，但是单个控件的页面又是没问题的，什么原因？</b></td></tr></table>
+<font color=#666666>答复: </font><b>可能性一</b>: 你的OnReady( id )书写有问题，例如如下脚本就有严重问题：<br>
+<pre class='cpp'>
+function OnReady( id )
+{
+ AF1.func( ... );
+ AF2.func( ... );
+}</pre>
+　　从中可以看出页面中有2个控件实例，而2个实例各自会触发OnReady事件，也就是说这段js会执行2遍，在执行第一遍时，另外一个实例可能还没有被浏览器创建，这样就会发生难以预料的错误，这也是初学者容易忽视的地方。<br>
+　　正确的书写应该是：<br>
+<pre class='cpp'>
+function OnReady( id )
+{
+ if(id == 'AF1')
+   AF1.func( ... );
+ else if(id == 'AF2')
+   AF2.func( ... );
+}</pre>
+
+　　<b>可能性二</b>：假设你的页面一打开，控件之间就需要交互，如果你写成如下这样，也有大问题：<br>
+<pre class='cpp'>
+function OnReady( id )
+{
+ if(id == 'AF1') {
+  AF1.func( ... );
+ }
+ else if(id == 'AF2') {
+  var s = AF1.func( ... );   //在 OnReady('AF2')中访问其它对象：大忌
+  AF2.func( ... );
+ }
+}</pre>
+　　问题出在第7行，因为这个时候AF1可能尚未创建，浏览器<font color=red>未必</font>是按页面脚本的前后次序创建控件实例的。正确的写法可以参考如下的例子：<br>
+<pre class='cpp'>
+var count = 0;  //计数器
+function OnReady( id )
+{
+ count++;
+ if(count==2) {  //OnReady( )2遍了，此时2个对象均已创建，下面的代码就很安全了
+  AF1.func( ... );
+  var s = AF1.func( ... );
+  AF2.func( ... );
+ }
+}</pre>
+　　如下是一个更复杂的例子，请您分析一下问题的所在：<br>
+<pre class='cpp'>
+var bReadyAF1 = false;
+var bReadyAF2 = false;
+var bReadyAF3 = false;
+function OnReady(id) {
+  if (id == 'AFList') {
+    AFList.func("Build", "build/base/OrgsList.xml");
+    bReadyAF1 = true;                
+  }
+  else if (id == 'AFPager') {
+    AFPager.func("Build", "build/comm/Pager.xml");
+    bReadyAF2 = true;
+  }
+  else if (id == 'AFEditForm') {
+    AFEditForm.func("Build", "build/base/OrgsEdit.xml");
+    bReadyAF3 = true;
+  }
+ 
+  if (bReadyAF1 && bReadyAF2) {
+    var h = AFList.func("GetHandle", "");
+    AFPager.func("BindPager", h + "\r\n pageID"); //绑定  
+    var url = "build/base/Org.ashx?Method=Orgs&StartRow=@startRow&Rows=@rows";
+    AFPager.func("SetObjProp", "PageID \r\n dataUrl \r\n" + url + "\r\n mode=asynch ");
+  }
+  if (bReadyAF3) {
+    WinEdit.hide();
+  }
+}
+</pre>
+<br>
+　　<b>可能性三</b>：如果你的页面很长(指高度)，比如需要垂直滚动条, 如果插件一开始是隐藏在底部的，需要拖动滚动条才能显现，那么在IE中，插件是在初次显现时才会触发OnReady( )事件的!<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问9.我在&lt;script&gt;insertFreeForm('AF', '')&lt;/script&gt;下加了一句<br>&lt;asp:Button ID="Button2" runat="server" Text="提交"/&gt;后, 发现回车键不起作用了，怎么办？</b></td></tr></table>
+<font color=#666666>答复: </font>&lt;asp:Button &gt;对应到Html是&lt;input type="submit" &gt;，浏览器将拦截submit的回车事件。<br>
+解决方法也很简单：将&lt;script&gt;insertFreeForm('AF', '')&lt;/script&gt;安置在&lt;Form&gt;中、或将&lt;asp:Button &gt;安置在&lt;Form&gt;中就行。<br>
+　　如果这二者都在&lt;Form&gt;中，只要将其中一个移出&lt;Form&gt;就行。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问10.我的页面提交后，怎么组件中的数据全部丢失了？</b></td></tr></table>
+<font color=#666666>答复: </font>原因就是：你的页面刷新了。 对于硕正套件而言，刷新相当于就是重新创建一遍控件实例、重新触发OnReady( )。所以为了保持状态，建议不要轻易使用刷新, 一般象&lt;input type="submit" ...&gt;、页面上传文件均会导致刷新, 原生的ASP.Net页面开发也经常会导致刷新。<br>
+　　页面和后端的交互应尽可能使用AJAX, 而不是提交页面。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问11.硕正演示页中有多种模式对话框方案，我该如何选择使用？</b></td></tr></table>
+<font color=#666666>答复: </font>有3种方案，以下是方案的分析：<br>
+方案1：直接使用html的window.showModalDialog( )。这是浏览器本身就支持的对话框，对话框中是一个独立页面，易于开发，但很多程序员不喜欢它的界面风格；<br>
+方案2：使用能遮罩页面内容的js对话框。界面比较美观，并且对话框中也是一个独立页面，目前有很多开源项目，但并不是所有项目都能和硕正套件相配，在Treelist演示页中有一个改进后的lhgdialog的实例可参考；<br>
+方案3：使用硕正套件内置的自定义对话框，对话框中是一个Freeform，并且该Freeform可以是URL，也可以是XML大串，比较适合于服务器端的动态生成，常用于诸如查询条件、单据查询等简单场合。自定义对话框分模式、非模式对话框二种，二者的差别在于：<br>
+　　A.非模式对话框, 是线程不阻塞的对话框，所以支持js的OnEvent事件交互，但开发稍复杂，并且其窗口被包容在组件内部；<br>
+　　B.模式对话框, 是Windows标准对话框，主线程是阻塞的，所以开发稍简单，但不支持js的事件交互、对话框打开期间不能切换浏览器的选项卡(Tab)、并且对Firefox浏览器支持不好(易僵死)；<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问12.FireFox访问页面元素都需要采用 getElementById() 或 getElementByName() 函数，访问插件也需要这样写吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 不需要，因为插件是一种特殊的页面元素，可以直接访问，本demo页中均是这样写的。在这一点上，FireFox和IE是没区别的.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问13.在Firefox浏览器下，我修改了XML模板文件，但Treelist或Report经常无法刷新，加载的仍然是老文件，清理了浏览器的缓存也不顶用，这是怎么回事？</b></td></tr></table>
+<font color=#666666>答复: </font> 硕正套件的底层Http通讯直接使用了 Windows 的 WinInet 基础组件，所以它实际上是共享了 IE 的 Cache，你应该清理 IE 的 Cache.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问14.在Firefox 4.0下，发现在OnEvent( )事件中调用js函数 alert( ) 后浏览器有时会死机，如何解决？</b></td></tr></table>
+<font color=#666666>答复: </font> 请用全局函数MessageBoxFloat代替alert( )吧.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问15.我的网站在IE下完全正常，但在FireFox、Chrome下有很多问题，怎么办？</b></td></tr></table>
+<font color=#666666>答复: </font> HTML、CSS、JavaScript、正则表达式本身在IE和FireFox、Chrome下就有不少的差别，你需要先搞定和硕正套件无关的那些内容.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问16.我的网站在IE下完全正常，但为什么在FireFox下却发现同一个插件会多次触发OnReady( )事件？</b></td></tr></table>
+<font color=#666666>答复: </font> 可以肯定地说，一个插件只会触发一次OnReady( )。但是页面中样式发生变化时，FireFox可能会重新渲染一次的，导致插件被多次销毁、创建，每次创建肯定都会触发OnReady( )事件.<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问17.当Session过期时，执行Load加载不到数据，能否让客户端有个提示？</b></td></tr></table>
+<font color=#666666>答复: </font> 请参考开发者指南的《公共内容》下的“4.XML/JSON异常包”，相信您会满意!<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问18.可以结合Ext-JS开发吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 可以。事实上，我们很多成熟的用户都是以Ext-JS作为框架，包容了Supcan插件的。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问19.从安全考虑，我后端的程序需要甄别哪些请求来自页面、哪些来自硕正套件。怎么才能知道 request 请求是来自硕正套件的？</b></td></tr></table>
+<font color=#666666>答复: </font> 从硕正插件发起的http请求，它的http头大多是这样的格式：<br>
+<pre class='cpp'>
+GET /supcan/treelistdata/data.txt HTTP/1.1
+Accept-Encoding: gzip, deflate
+Content-Type: text/html; charset=UTF-8
+User-Agent: BC
+Host: localhost:8081
+Cache-Control: no-cache</pre>
+　　里面的 "User-Agent" 固定是 "BC"，你只要判断这个属性就行。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问20.我看到几乎所有demo页源码的底部都执行了 nstd.js，我们自己的页面有必要使用这个js吗？</b></td></tr></table>
+<font color=#666666>答复: </font> 没有必要，执行该js反而会影响性能。该js是硕正demo页格式化示例源码显示用的。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问21.有时候敲“BackSpace”键会导致页面回退，即回到上一个页面，如何避免这种现象？</b></td></tr></table>
+<font color=#666666>答复: </font> 如果当前焦点是硕正控件，应该是不会发生这种情况的，否则是有可能的，因为这个时候键盘的控制权不在控件。但是我们可以给您一个建议：请在页面按钮的js脚本的末尾处添加一句诸如：focusIE(AF)，该语句的作用是把焦点切换给控件 (此函数在 dynaload.js 中)。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问22.发现某些页面的 Treelist 或 Report的回车键都不起作用，怎么回事呢？</b></td></tr></table>
+<font color=#666666>答复: </font> 请检查一下您的页面源码，是否包含了这种页面元素： &lt;button type="submit" ... &gt;，因为 submit 将独占回车事件，硕正控件无法获得。<br>
+　　此外，submit是提交整个页面，将导致页面的刷新，过多的刷新不符合用户的习惯，建议将 type="submit" 换成 type="button"。<br>
+<br>
+
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问23.我隐藏了含硕正控件的Div图层， jquery是这样写的： $("#divMain").hide();  ，再显示图层时，发现里面数据清空了，似乎控件被销毁后又重建了。在Chrome、Firefox下有这个问题，IE下没问题，这是怎么回事啊？</b></td></tr></table>
+<font color=#666666>答复: </font> hide 是设置图层的 display 为 none，这样会导致里面的控件被自动销毁。请您重新写个隐藏的方法：设置  visibility  为 hidden 就可以了。<br>
+<br>
+
+<table cols=2 border=0><tr><td><img src='why.bmp'></td><td><b>问24.我后端一进入调试(Debug)，发现浏览器就僵死，这正常吗？</b></td></tr></table>
+<font color=#666666>答复: </font>正常，因为控件一直等着服务器返回 response 呢！<br>
+<br>
+
+<br>
+<br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

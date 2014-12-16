@@ -1,0 +1,123 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="全部函数">
+	<function name="AddSeries">
+		<usage>增加一个系列</usage>
+		<para>系列名，允许以|分隔中英文(用于中英文切换)</para>
+		<para>数据项的ID, 各个ID之间以Tab(即\t)分隔</para>
+		<para>数据项对应的数据，各个数据之间以Tab(即\t)分隔</para>
+		<memo>如果同名系列已经存在，则替换之</memo>
+		<example>AF.func("addSeries", "一月份 \r\n 销售一部\t销售二部\t销售三部 \r\n 12000\t 3000\t 10000");</example>
+		<illu>请参见小型页面控件的演示页: 1.体验统计图、2.与Treelist联动</illu>
+	</function>
+	<function name="DeleteSeries">
+		<usage>删除一个系列</usage>
+		<para>系列名</para>
+	</function>
+	<function name="DeleteAllSeries">
+		<usage>删除全部系列</usage>
+		<illu>请参见小型页面控件的演示页: 2.与Treelist联动</illu>
+	</function>
+	<function name="SetItemData">
+		<usage>改变某个数据项的数据</usage>
+		<para>系列名</para>
+		<para>数据项ID，或顺序号(从0开始)</para>
+		<para>数据</para>
+		<illu>请参见小型页面控件的演示页: 2.与Treelist联动</illu>
+	</function>
+	<function name="GetItemData">
+		<usage>取得某个数据项的数据</usage>
+		<para>系列名</para>
+		<para>数据项ID，或顺序号(从0开始)</para>
+		<return>数值，空串表示该数据项不存在</return>
+	</function>
+	<function name="GetItemPercent">
+		<usage>取得某个数据项的百分比</usage>
+		<para>系列名</para>
+		<para>数据项ID，或顺序号(从0开始)</para>
+		<return>数值，空串表示该数据项不存在</return>
+	</function>
+	<function name="GetItemName">
+		<usage>取得某个数据项的ID</usage>
+		<detail>或GetItemID,  取得某个数据项的ID</detail>
+		<para>系列名</para>
+		<para>顺序号(从0开始)</para>
+		<return>串，空串表示已超出范围</return>
+	</function>
+	<function name="GetItemText">
+		<usage>取得某个数据项的显示文字</usage>
+		<para>数据项ID</para>
+		<return>串</return>
+	</function>
+	<function name="SetItemText">
+		<usage>设置某个数据项的显示文字</usage>
+		<para>数据项ID</para>
+		<para>文字串, 允许以|分隔中英文(用于中英文切换)</para>
+	</function>
+	<function name="SetProp">
+		<usage>更改外观属性</usage>
+		<para>可以是 chart、textContent、textArrange、titlePosition、items 等创建参数, 请参见“创建实例”中的子串名(即属性名)</para>
+		<para>属性的值</para>
+		<illu>请参见小型页面控件的演示页: 1.体验统计图、2.与Treelist联动</illu>
+	</function>
+	<function name="GetProp">
+		<usage>取得属性值</usage>
+		<para>可以是 chart、textContent、textArrange、titlePosition、items 等创建参数, 请参见“创建实例”中的子串名(即属性名)</para>
+		<return>属性的值</return>
+	</function>
+	<function name="Load">
+		<usage>加载数据</usage>
+		<para>数据的URL，或直接就是XML/JSON大串，数据格式请参见本文档"3.Load的数据格式"</para>
+		<para>可选，格式为 mode = [?], 含义如下：&lt;br&gt;
+&lt;b&gt;mode&lt;/b&gt; - synch或asynch，表示同步或异步加载数据，默认是同步
+</para>
+		<return>1/0 - 成功/失败</return>
+		<example>AF.func("load", "../chart/chartdata.aspx  \r\n mode=asynch");</example>
+	</function>
+	<function name="AddLine">
+		<usage>添加一条水平线</usage>
+		<para>类似这样的固定格式：data=[?];Text=[?];Color=[?];style=[?];ID=[?]，含义为: &lt;br&gt;
+&lt;b&gt;data&lt;/b&gt; - 纯数字，或者是“ave”或"AllAve"  这样的串，"ave"表示平均线，"AllAve"表示是多系列情况下的总的平均线; &lt;br&gt;
+&lt;b&gt;text&lt;/b&gt; - 串，显示在坐标左侧; &lt;br&gt;
+&lt;b&gt;Color&lt;/b&gt; - 线条颜色,  默认是#C0C0C0; &lt;br&gt;
+&lt;b&gt;Style&lt;/b&gt; - 线型，可以为 Solid、Dot、DashDot，默认是Solid; &lt;br&gt;
+&lt;b&gt;ID&lt;/b&gt; - ID号，用于DeleteLine( )函数，如果不调用该函数，则不需要定义，默认是空; &lt;br&gt;
+		</para>
+		<memo>仅在柱状图、折线图、曲线图、区域图时显示</memo>
+		<example>AF.func("AddLine", "data=ave;text=平均线;color=#ff0000");</example>
+		<illu>请参见小型页面控件的演示页: 2.与Treelist联动</illu>
+	</function>
+	<function name="DeleteLine">
+		<usage>删除一条水平线</usage>
+		<para>ID号 (在AddLine函数中定义的)</para>
+		<illu>请参见小型页面控件的演示页: 2.与Treelist联动</illu>
+	</function>
+	
+	<function name="EnableMenu">
+		<usage>配置内置的右键菜单项，使之能显示</usage>
+		<para>固定的菜单项名称，以逗号分隔，含义为: &lt;br&gt;
+		　chart - 统计图类型　　　　textcontent - 文字内容　　textarrange - 文字排列&lt;br&gt;
+		　titleposition - 标题位置　　saveas - 另存为　　　　　animation - 动画&lt;br&gt;
+		　transparency - 透明度&lt;br&gt;
+		以及具体的统计图类型:&lt;br&gt;
+		　pie　　bar　　line　　curve　　area　　radar&lt;br&gt;
+		</para>
+		<para>可选， true - 仅对参数1的菜单项生效； false - 仅显示参数1的菜单项，其余的统统不显示.&lt;br&gt;默认是true</para>
+	</function>
+	<function name="DisableMenu">
+		<usage>配置内置的右键菜单项，使之不显示</usage>
+		<para>同上</para>
+		<para>可选， true - 仅对参数1的菜单项生效； false - 仅隐藏参数1的菜单项，其余的统统显示.&lt;br&gt;默认是true</para>
+		<example>AF.func("DisableMenu", "line, curve");</example>
+	</function>
+	
+	<function name="GetHandle">
+		<usage>取得内部非模式对话框的句柄</usage>
+		<para>可以为串:&lt;br&gt;
+		innerDialog - 取得内部非模式对话框的freeform的句柄;&lt;br&gt;
+		</para>
+		<return>句柄串</return>
+	</function>
+	
+</category>
+</functions>

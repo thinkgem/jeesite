@@ -22,8 +22,14 @@
 		function wSize(){
 			var strs=getWindowSize().toString().split(",");
 			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]-5);
-			$("#right").width($("body").width()-$("#left").width()-$("#openClose").width()-5);
+			$("#right").width($("body").width()-$("#left").width()-$("#openClose").width()-20);
 		}
+		// 鼠标移动到边界自动弹出左侧菜单
+		$("#openClose").mouseover(function(){
+			if($(this).hasClass("open")){
+				$(this).click();
+			}
+		});
 	</script>
 	<script src="${ctxStatic}/common/wsize.min.js" type="text/javascript"></script>
 </body>

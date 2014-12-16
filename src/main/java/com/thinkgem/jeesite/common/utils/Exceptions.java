@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package com.thinkgem.jeesite.common.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 关于异常的工具类.
@@ -29,7 +29,10 @@ public class Exceptions {
 	/**
 	 * 将ErrorStack转化为String.
 	 */
-	public static String getStackTraceAsString(Exception e) {
+	public static String getStackTraceAsString(Throwable e) {
+		if (e == null){
+			return "";
+		}
 		StringWriter stringWriter = new StringWriter();
 		e.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
@@ -50,4 +53,20 @@ public class Exceptions {
 		}
 		return false;
 	}
+
+	/**
+	 * 在request中获取异常类
+	 * @param request
+	 * @return 
+	 */
+	public static Throwable getThrowable(HttpServletRequest request){
+		Throwable ex = null;
+		if (request.getAttribute("exception") != null) {
+			ex = (Throwable) request.getAttribute("exception");
+		} else if (request.getAttribute("javax.servlet.error.exception") != null) {
+			ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
+		}
+		return ex;
+	}
+	
 }

@@ -1,0 +1,86 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<script type="text/javascript" src="functable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("func_treelist.xml?81");
+  genfunctable('TagFuncTable', 'TagFunc', xmlDoc);
+ }
+</script>
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+<div id="Tag506"/><br><br><br>
+　　<font style='font-size:15pt'>10.函数</font><hr color=#2266ee size=1>
+　　Supcan Treelist的函数是通过插件/加载项的 func( string funcname, string paras ) 函数间接调用的，Supcan Treelist组件的可用funcname及用途说明如下表。<br>
+　　有些函数需要行、列参数，行、列参数的书写规则为：行号一律从0开始计数；列名既可采用XML描述文件中指定的列名，也可以用#1、#2...顺序表示.<br>
+<div id="TagFuncTable"></div>
+<div id="TagFunc"></div>
+
+
+<div id="Tag507"/><br><br><br>
+　　<font style='font-size:15pt'>11.扩展函数</font><hr color=#2266ee size=1>
+　　通过 GetHandle() 函数可以获得TreeList或下拉TreeList的句柄，其实Treelist和下拉Treelist的内部结构(类)都是一样的，由于js的语法所致，很难用简单的方法调用下拉Treelist相关函数，
+为此，“扩展函数”解决了部分问题。<br>
+　　扩展函数规则如下：在函数名前加句柄。js举例如下：<br>
+<pre class='cpp'>
+ //取得country列的下拉Treelist句柄
+ var h = AF.func("GetHandle", "country");
+
+ //取得下拉Treelist的当前选中行
+ var row = AF.func(h + "GetCurrentRow", "");
+
+ //取得下拉Treelist当前行第一列的内容
+ var dat = AF.func(h + "GetCellData", row + "\r\n#1");</pre>
+　　支持上述扩展调用的函数如下：<br>
+　　　　Load<br>
+　　　　Refresh<br>
+　　　　GetAsTree<br>
+　　　　GetCurrentRow / GetCurrentRows<br>
+　　　　GetCellData / GetCellText / SetCellData / SetColCellData / SetRowCellData<br>
+　　　　GetProp / GetColProp<br>
+　　　　GetRows / GetCols<br>
+　　　　GetRowKey<br>
+　　　　GetScrollRow / ScrollToRow<br>
+　　　　DeleteRows<br>
+　　　　GetNextValidRow / GetNextValidCol<br>
+　　　　GetNextVisibleCol<br>
+　　　　GetCellBackColor / SetCellBackColor<br>
+　　　　GetCellTextColor / SetCellTextColor<br>
+　　　　GetCellFontIndex / SetCellFontIndex<br>
+　　　　GetCellAlign / SetCellAlign / GetCellVAlign / SetCellVAlign<br>
+　　　　GetCellProps / GetCellProp / SetCellProp<br>
+　　　　GetCellLeftImage / SetCellLeftImage / GetCellRightImage / SetCellRightImage<br>
+　　　　GetCellTip / SetCellTip<br>
+　　　　GetRowBackColor / SetRowBackColor<br>
+　　　　GetRowTextColor / SetRowTextColor<br>
+　　　　GetRowDeleteAble / SetRowDeleteAble<br>
+　　　　GetRowEnable / SetRowEnable<br>
+　　　　IsRowHide / IsColHide<br>
+　　　　HideRow / HideCol<br>
+　　　　MoveRow / MoveCol<br>
+　　　　GetColProp<br>
+　　　　GetRadioCol<br>
+　　　　Find / FindAll / FindByKey<br>
+　　　　Copy / InsertRows<br>
+　　　　Expand / Collapse / Export<br>
+　　　　GetTreeLevel<br>
+　　　　GetParentRow / GetChildRow / GetNextSibling<br>
+　　　　SetTreeImage / GetTreeImage<br>
+　　　　IsLazyloadRow / ClearLazyload<br>
+　　　　GetCellStatus / GetMainCell / GetMergedCell / Merge / Demerge / MergeSame<br>
+<br>
+　　此外, 通过 GetHandle("tBar")、GetHandle("bBar") 函数还可以获得工具条的freeform句柄，因而也能够执行freeform的函数，语法一样，例如：<br>
+<pre class='cpp'>
+ //取得Treelist中的 bar 的句柄
+ var h = AF.func("GetHandle", "tBar");
+ 
+ //执行freeform的函数
+ var dat = AF.func(h + "GetObjectProp", "visible");</pre>
+
+ 
+<br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

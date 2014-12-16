@@ -1,0 +1,42 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+<script type="text/javascript" src="../proptable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("../format_treelist/droplists.droplist.xml?81");
+  genproptable('TagDropList', xmlDoc, "");
+ }
+</script>
+</head>
+
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="TagDropLists"/><br>
+<b>DropLists</b>　　<img src='document.bmp' title='请参见演示页: "3.多种下拉"、"4.关联下拉"，以及树列表的"9.各种下拉", "10.可编辑的下拉", "27.过滤: 关联下拉", "28.下拉的其它功能"'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:下拉框字典资源；数量:0 - 1;</td></tr>
+</table>
+<br>
+
+<div id="TagDropList"></div>
+
+<br>
+<div id="Tagitem"/>
+<b>item</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgColor=#e4e4e4><td colspan=4>含义:下拉框字典条目；数量:1 - n；内容：该条目的显示串</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>key</td><td>条目键值</td><td>串</td><td>无</td></tr>
+</table>
+备注：如果已经定义了dataURL属性，就没必要再定义item元素了，dataURL优先级高于item元素;<br>
+<br>
+
+
+<script type='text/javascript' src='../dev/nstd.js'></script>
+</body></html>

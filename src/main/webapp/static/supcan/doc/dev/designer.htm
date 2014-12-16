@@ -1,0 +1,86 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<script type="text/javascript" src="functable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("func_designer.xml?81");
+  genfunctable('TagFuncTable', 'TagFunc', xmlDoc);
+  xmlDoc = getXMLDoc("events.xml?81");
+  geneventtable('TagEvent', xmlDoc, 'Designer');
+ }
+</script>
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag14"/>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='../../res/tradefreeform.jpg'></td></tr>
+</table>
+<h3>　<font color=#3366ff>Supcan FreeForm设计器</font></h3><hr color=#2266ee size=1>
+　　Supcan 套件从1.0.61.0版后正式引入了FreeForm 的在线设计器组件，用以减轻程序员书写Freeform XML描述文件的压力。<br>
+　　Freeform设计器使用简单，也可以作为普通非在线的设计使用。<br>
+　　Freeform设计器仅支持TableLayout定位方式的Freeform，尚不支持以x，y等绝对坐标定位的freeform，但是也支持绝对坐标定位中的TableLayout部分。<br>
+　　关于TableLayout辅助定位概念，请参考“Freeform XML文档规范”。<br><br>
+　　Freeform设计器支持了大多数常见的XML元素和属性，但未能涵盖“Freeform XML文档规范”中定义的全部, 因为有些元素及属性比较复杂(例如渲染路径: Path),  很难用设计器完整地表达, 所以您可能仍需要查资料手工书写。<br>
+<br>
+　　Freeform设计器的界面分设计、XML源码和预览三部分，实际上它们是一体的，任何一部分的改动都能影响其余的界面；“工具箱”是设计器的核心部件，双击任一控件即能打开它，并展现出其属性。<br>
+
+<div id="Tag1401"/><br><br><br>
+　　<font style='font-size:15pt'>1.创建实例</font><hr color=#2266ee size=1>
+　　Supcan FreeForm设计器是通过插件/加载项创建的，所以应该用<a href="act.htm?81#Tag205" target=_blank>使用指南 \ 页面语法</a>中叙述的插件/加载项的页面创建语法创建，
+&lt;Object&gt;中的某几个Param参数规则如下:<br>
+<pre class='xml'>
+&lt;Object ...(略)&gt;
+&lt;Param name="CtlName" value="<Font color=red>BCV4.FormDesigner</Font>"&gt;　　//固定
+&lt;Param name="ZipUrl" value="<Font color=red>BCV1.bin, BCV4.bin</Font>"&gt;	　　//也可以是绝对URL
+&lt;Param name="CtlPara" value="Border=single; bgColor=white"&gt;	//例子
+...</pre>
+　　如果页面是直接调用dynaload.js，那么可能就是这样:<br>
+<pre class='cpp'>insertFormDesigner('AF', 'Border=single; bgColor=white')</pre>
+　　CtlPara参数决定了如何在页面上展现Supcan FreeForm设计器的实例，在上面的例子中，参数串中可包含多个子串，子串间以 "；" 分隔。<br>
+　　子串的名值对的规范如下：<br>
+<table width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#eaeaea><td>子串名</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+
+<tr><td>Border</td><td>边界</td><td>
+1.none  - 无边界<br>
+2.single  - 单线条边界<br>
+3.3dLower(或3d)  - 3D凹进边界<br>
+4.3dRaise  - 3D凸起边界
+</td><td>single</td></tr>
+<tr><td>BorderColor</td><td>边界色</td><td>颜色，仅用于Border=single</td><td>#7f9db9</td></tr>
+<tr><td>Hue</td><td>强制更改色调</td><td>
+LightGray - 浅灰色<br>
+Caramel - 焦糖色<br>
+Lilian - 百合花色<br>
+Lividity - 青黑色<br>
+注：更改结果将保存至系统文件，永久有效.
+</td><td>(无)</td></tr>
+<tr><td>FuncLog</td><td>函数调用日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例被调用的所有函数, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncParaChars</td><td>函数日志中参数最大字数</td><td>数字，当启用函数日志时，函数的参数最多保留字数.</td><td>128</td></tr>
+<tr><td>FuncReturnChars</td><td>函数日志中返回值最大字数</td><td>数字，当启用函数日志时，函数的返回值最多保留字数.</td><td>0</td></tr>
+<tr><td>isComponentURLWithButton</td><td>大粒度组件的URL输入框右侧是否安置一个按钮</td><td>true/false</td><td>false</td></tr>
+</table><br>
+
+<div id="Tag1402"/><br><br><br>
+　　<font style='font-size:15pt'>2.函数</font><hr color=#2266ee size=1>
+　　Supcan FreeForm设计器的函数是通过插件/加载项的 func( string funcname, string paras ) 函数间接调用的，Supcan FreeForm设计器的可用funcname及用途说明如下:<br>
+<div id="TagFuncTable"></div><br>
+<div id="TagFunc"></div>
+
+
+<div id="Tag1404"/><br><br><br>
+　　<font style='font-size:15pt'>4.事件</font><hr color=#2266ee size=1>
+　　Supcan FreeForm设计器的OnEvent( id, Event, p1, p2, p3, p4 )事件含义及参数分别如下：<br>
+<div id="TagEvent"></div>
+　　设计器就只有一个"Saved"事件，通常在"Saved"事件后，调用GetFileXML(  )函数获得当前的XML大串，通过Ajax保存到后端，以实现在线设计。<br>
+
+
+<br><br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

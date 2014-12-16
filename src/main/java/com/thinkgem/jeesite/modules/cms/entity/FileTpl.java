@@ -13,7 +13,9 @@ import java.util.Date;
  * Time: 上午9:44
  */
 public class FileTpl {
+	
     private File file;
+    
    	// 应用的根目录
    	private String root;
 

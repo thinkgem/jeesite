@@ -1,0 +1,112 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag31002"/><br>
+<b>11.2 报表文件</b><br>
+　　报表最终的存储格式是 XML 格式，您可以将报表保存在本地，也可以保存到服务器。<br>
+　　将报表保存到服务器，通常是通过 js 调用 GetFileXML 函数实现的:<br>
+<pre class='cpp'>
+ var xml = AF.func("GetFileXML", "");</pre>
+　　上例中的这个名为"xml"的变量，其内容是一个大串，您可以通过 ajax 将它 POST 给应用服务器，让应用服务器去解决最终的存储。<br>
+　　至于如何在 html 页面上安排具体的上传功能，可以有如下几种方案: <br>
+方案1：在页面中增加一个“上传”的按钮，在按钮的 onClick 事件中调用 GetFileXML( ) 函数，将 XML 串 POST 给服务器;<br>
+方案2：监听工具条上的“保存”按钮： 在OnEvent( ) 事件函数中处理“Saved”事件, 在事件中执行 GetFileXML( ) 函数，将 XML 串 POST 给服务器;<br>
+<br>
+　　报表组件从1.0.81.0版开始，支持以 <font color=red>zip</font> 方式压缩的 XML 文件了，该支持包括 2 个方面：<br>
+1.Build( ) 函数能直接读入 zip 二进制文件或 http 流，例如 http://mysite/reports/abc1.zip ,  当然也支持动态的 aspx/jsp 的 URL, 只要这个 URL 返回 zip 文件的纯二进制内容即可;<br>
+2.将报表 XML 压缩成 zip 文件，并以 http POST 将二进制发送给服务器, 具体的实现方法如下：<br>
+步骤1. 通过 callfunc 函数调用 104 功能号 (104功能号的说明在"4.工具条功能号"中)，生成当前报表的 zip 文件，如：<br>
+<pre class='cpp'>
+AF.func("callfunc", "104 \r\n c:\\report3.zip");</pre>
+　　上例中，文件名是写死的，不太符合实际开发习惯，所以建议使用全局缓存函数 CacheDirUtility，该函数能动态生成唯一的文件名，将程序修改成如下：<br>
+<pre class='cpp'>
+var filename = AF.func("CacheDirUtility", "isCreateTempFile=true; ext=zip");
+AF.func("callfunc", "104 \r\n" + filename);</pre>
+步骤2. 通过全局函数 HttpPostLocalFile 将该文件上传，如：<br>
+<pre class='cpp'>
+AF.func("HttpPostLocalFile", "http://mysite/reports/rec.aspx?name=rpt1&org=23 \r\n" + filename);</pre>
+　　当然，上面的这个 "rec.aspx" 接收程序得由您自己写，由您决定把 Http Body 中的二进制内容写到服务器文件或存入数据库.<br>
+<br>
+
+<br>
+<div id="Tag31003"/><br>
+<b>11.3 异步计算</b><br>
+　　通过API函数Calc( )，或者工具条上的“计算”按钮，可以触发报表的填数计算。如果计算过程比较漫长(例如后端计算性能、数据量等因素导致)，浏览器表现为锁死, 甚至无法切换Tab选项卡，必须要等到整个计算过程结束才能恢复可操作。<br>
+<br>
+　　硕正报表从1.0.66.0版开始，增加了异步计算功能，解决了计算过程中的浏览器僵死问题。<br>
+　　如果Calc( )函数的参数设为 "mode=asynch", 就表示采用异步计算模式，计算过程被安排在另一个线程中，而该函数则立即返回，当计算真正结束时，报表组件会通过“Calced”事件通知浏览器。<br>
+　　从启动异步计算，到发出“Calced”事件之间，你不应该调用该控件的任何API函数，否则异步将无意义。<br>
+<img src='glass.jpg'><font color="552222">工具条上的计算按钮(<img src='../../res/calc.bmp'>)，也是采用异步计算的.</font><br>
+<br>
+
+<div id="Tag31004"/><br>
+<b>11.4 自定义打印纸</b><br>
+　　在打印设置对话框中，有自定义打印纸尺寸的选项按钮，关于自定义打印纸这个功能，有必要在此分析一下其原理。<br>
+　　首先，硕正报表的打印是基于Windows的常规API打印的，也就是说是基于页式打印，不可能去调用具体的打印机驱动程序做诸如逐行即打即停的功能的。<br>
+　　这个“页式打印”就是以打印纸为单位，每完成一个页任务，打印机就应该吐出一张打印纸来，所以，对于大多数激光、喷墨打印机而言，自定义打印纸恐怕是毫无意义的。<br>
+　　所以，通常所说的“自定义打印纸”是用于<b>针式打印机</b>的，针式打印机一般都允许自定义打印纸。<br><br>
+　　如果在自定义打印纸过程中出现如下错误：<br>
+<center><img src="report8.jpg"/></center>
+　　有2种可能的原因：<br>
+<b>原因1</b> - 所选的打印机本身就不支持自定义纸张；<br>
+<b>原因2</b> - 操作系统没有给IE控件足够的权限，具体的解决办法是在IE的“Internet选项”的“安全”中降低安全等级，待打印纸自定义完毕，再恢复安全等级；<br>
+　　如果权限问题总是无法解决，那么建议您到“控制面板”- “设备和打印机”中去手动设置，事实上，用硕正控件设置自定义打印纸和手动自定义打印纸是没区别的。<br>
+　　一旦打印纸自定义成功，那么在“打印纸”的下拉选择框中，就会自动包含有刚才自定义的那种打印纸，这个自定义信息是登记在操作系统注册表中的，一次定义好后，今后都能用。<br>
+<br>
+　　由于自定义打印纸是和具体的打印机相关联的，所以还建议您进一步勾选对话框中的“认定使用这台打印机”的选项，然后保存模板。<br>
+<br>
+　　最后，我们谈谈自定义打印纸的另一个常见话题：打印模板发布后，网络上其它用户都需要逐个去设置自定义打印纸吗？<br>
+　　首先，我们模板中是包含了自定义打印纸的完整的自定义信息的，比如纸名、设定的尺寸。当其它用户打开该模板后，报表控件首先会检查本地是否安装了同样的打印机，如果能找到同名的打印机，那么它会进一步去检查是否已经有这种自定义打印纸了，如果没有，它会自动创建的。所以这个过程是自动的。<br>
+　　当然，在自动创建的过程中，也同样可能遇到权限不足的问题，遇到此问题，您只好按上面的解决办法手工去解决了。<br>
+<br>
+
+
+<div id="Tag31005"/><br>
+<b>11.5 条形码</b><br>
+　　报表中的单元格和文本框都可以作为条形码显示，操作方法为：<br>
+1.在工具箱中切换到“显示格式”选项卡;<br>
+2.将数据类型改成“字符型”;<br>
+3."其它显示形式" 选 "以条形码显示";<br>
+4.条形码更多的选项在 "条形码选项";<br>
+<center><img src="report13.jpg"/></center>
+<br>
+
+
+<div id="Tag31006"/><br>
+<b>11.6 内嵌树列表(Treelist)</b><br>
+　　从1.0.72.0版开始，工具条中增加了树列表的图标，您可以把一个树列表直接加入到报表中。在上报模式中，树列表也能够以“指标”的方式被预先定义在指标库中。<br>
+　　内嵌树列表只有在运行时(RunTime)才是真正可用的。 而在设计时(DesignTime), 树列表始终处于不活动的状态，您看到的树列表只是一幅图，供您拖拽布局：<br>
+<center><img src='report7.jpg'></center><br>
+　　内嵌树列表 和 普通的页面中的树列表，完全是同一种东西，但是访问报表中的内嵌树列表，通常是先获得树列表的句柄，然后以扩展函数方式调用，如下例：<br>
+<pre class='cpp'>
+//先获得树列表的句柄 (注："m010" 是树列表的别名)
+var h = AF.func("GetHandle", "m010");
+ 
+//以扩展方式执行该树列表的函数
+var xml = AF.func(h + "GetChangedXML", "level=0;isIgnoreChange=true");</pre>
+　　此外，也可以采用另一种更简洁的写法：<br>
+<pre class='cpp'>
+var xml = AF.func("m010.GetChangedXML", "level=0;isIgnoreChange=true");  //"m010" 是树列表的别名</pre>
+
+　　通过上述的这2种扩展方式，您可以访问树列表的几乎所有函数。<br>
+<br>
+　　在运行时(RunTime), 报表内嵌的树列表能向页面抛出 OnEvent(id, Event, p1, p2, p3, p4) 事件，但是和普通的页面树列表有一个差别：Event(事件名)前面带有树列表的别名，例如:<br>
+<pre class='cpp'>
+function OnEvent(id, Event, p1, p2, p3, p4)
+{
+ if(id=='AF') { 	//id不变
+   //树列表的双击事件，其中 "m010" 是触发了事件的树列表的别名
+   if(Event == "m010.DblClicked") {
+    ...
+   }
+ }
+}</pre>
+<br>
+
+<br><br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

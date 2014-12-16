@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery custom scrollbar demo</title>
+	<!-- style for demo and examples -->
+	<style>
+		body{margin:0; padding:0; color:#eee; background:#222; font-family:Verdana,Geneva,sans-serif; font-size:13px; line-height:20px;}
+		a:link,a:visited,a:hover{color:inherit;}
+		h1{font-family:Georgia,serif; font-size:18px; font-style:italic; margin:40px; color:#26beff;}
+		p{margin:0 0 20px 0;}
+		hr{height:0; border:none; border-bottom:1px solid rgba(255,255,255,0.13); border-top:1px solid rgba(0,0,0,1); margin:9px 10px; clear:both;}
+		.links{margin:10px;}
+		.links a{display:inline-block; padding:3px 15px; margin:7px 10px; background:#444; text-decoration:none; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px;}
+		.links a:hover{background:#eb3755; color:#fff;}
+		.output,.info{margin:20px 40px; background:#111; width:50%; padding:0 21px 0 19px; overflow:hidden; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+		.output a{text-decoration:none; position:relative; display:inline-block; padding-left:19px; margin:5px 40px 5px 0;}
+		.output a.hidden{opacity:0.3;}
+		.output span{position:absolute; width:14px; height:14px; left:0; top:3px; display:none; border-radius:14px;}
+		.output span.onScrollStart{background:#b0ef0a;}
+		.output span.onTotalScrollBack{background:#f0df09;}
+		.output span.onTotalScroll{background:#f08209;}
+		.output span.onScroll{background:#0bbbee;}
+		.output span.whileScrolling{background:#930bee;}
+		.output span.hidden{visibility:hidden;}
+		.info{padding:0; background:transparent; color:#999;}
+		.info .content-position,.info .dragger-position,.info .scroll-pct{color:#eee; display:inline-block; min-width:40px; margin-right:20px;}
+		code{color:#5b70ff;}
+		.total-scroll-offset-cb{color:#f08209;}
+		.total-scroll-back-offset-cb{color:#f0df09;}
+		.content{margin:40px; width:50%; height:340px; padding:20px; overflow:auto; background:#333; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+		.content p:nth-child(even){color:#999; font-family:Georgia,serif; font-size:17px; font-style:italic;}
+		.content p:nth-child(3n+0){color:#c96;}
+	</style>
+	<!-- Custom scrollbars CSS -->
+	<link href="jquery.mCustomScrollbar.css" rel="stylesheet" />
+</head>
+<body>
+	<p class="links">
+		<a href="http://manos.malihu.gr">malihu</a>
+		<a href="http://manos.malihu.gr/jquery-custom-content-scroller">Plugin home</a>
+		<a href="complete_examples.html">Plugin demo</a>
+	</p>
+	<hr />
+	<h1>jQuery custom scrollbar callbacks demo</h1>
+	<p class="output">
+		<a href="#" rel="onScrollStart"><span class="onScrollStart">&nbsp;</span>onScrollStart</a>
+		<a href="#" rel="onScroll"><span class="onScroll">&nbsp;</span>onScroll</a>
+		<a href="#" rel="onTotalScroll"><span class="onTotalScroll">&nbsp;</span>onTotalScroll</a>
+		<a href="#" rel="onTotalScrollBack"><span class="onTotalScrollBack">&nbsp;</span>onTotalScrollBack</a>
+		<a href="#" rel="whileScrolling"><span class="whileScrolling">&nbsp;</span>whileScrolling</a>
+	</p>
+	<p class="info">
+		Content position: <span class="content-position"></span> Dragger position: <span class="dragger-position"></span> Scroll percentage: <span class="scroll-pct"></span><br /> 
+		<code>mcs.top</code> returns content top position (<code>mcs.left</code> for left position). <code>mcs.draggerTop</code> returns dragger top position (<code>mcs.draggerLeft</code> for left position). <code>mcs.topPct</code> returns vertical scroll percentage (<code>mcs.leftPct</code> for horizontal).<br />
+		<code>onTotalScrollOffset</code> is set to <span class="total-scroll-offset"></span> (<span class="total-scroll-offset-cb">callback</span> will fire <span class="total-scroll-offset"></span> pixels from bottom). <code>onTotalScrollBackOffset</code> is set to <span class="total-scroll-back-offset"></span> (<span class="total-scroll-back-offset-cb">callback</span> will fire <span class="total-scroll-back-offset"></span> pixels from top). 
+	</p>
+	<!-- content block -->
+	<div id="content_1" class="content">
+		<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit.</p>
+   		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+   		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat.</p>
+   		<p>Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst. Nulla scelerisque lorem quis dui sagittis egestas.</p> 
+		<p>Etiam sed massa felis, aliquam pellentesque est.</p>
+    	<p>Nam eu arcu at purus tincidunt pharetra ultrices at ipsum. Mauris urna nunc, vulputate quis gravida in, pharetra id mauris. Ut sit amet mi dictum nulla lobortis adipiscing quis a nulla. Etiam diam ante, imperdiet vel scelerisque eget, venenatis non eros. Praesent ipsum sem, eleifend ut gravida eget, tristique id orci. Nam adipiscing, sem in mattis vulputate, risus libero adipiscing risus, eu molestie mi justo eget nulla.</p> 
+		<p>Cras venenatis metus et urna egestas non laoreet orci rutrum. Pellentesque ullamcorper dictum nisl a tincidunt. Quisque et lacus quam, sed hendrerit mi. Mauris pretium, sapien et malesuada pulvinar, lorem leo viverra leo, et egestas mi nisl quis odio. </p>
+		<p>Aliquam erat volutpat. Sed urna arcu, tempus eu vulputate adipiscing, consectetur et orci. Vivamus congue, nunc vitae fringilla convallis, libero massa lacinia lorem, id convallis mauris elit ut leo. Nulla vel odio sem. Duis lorem urna, congue vitae rutrum sed, tincidunt vel tortor. In hac habitasse platea dictumst. Nunc vitae enim ante, vitae facilisis massa. Etiam sagittis sapien at nibh fermentum consectetur convallis lacus blandit.</p>
+		<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit.</p>
+   		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+   		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat.</p>
+   		<p>Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst. Nulla scelerisque lorem quis dui sagittis egestas.</p> 
+		<p>Etiam sed massa felis, aliquam pellentesque est.</p>
+    	<p>the end.</p>
+	</div>
+	<hr />
+	<p>&nbsp;</p>
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/minified/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	<!-- custom scrollbars plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	<script>
+		(function($){
+			$(window).load(function(){
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+						onScrollStart:function(){ OnScrollStart(); },
+						onScroll:function(){ OnScroll(); },
+						onTotalScroll:function(){ OnTotalScroll(); },
+						onTotalScrollBack:function(){ OnTotalScrollBack(); },
+						onTotalScrollOffset:40,
+						onTotalScrollBackOffset:20,
+						whileScrolling:function(){ WhileScrolling(); } 
+					}
+				});
+				function OnScrollStart(){
+					$(".output .onScrollStart").stop(true,true).css("display","inline-block").delay(500).fadeOut(500);
+				}
+				function OnScroll(){
+					$(".output .onScroll").stop(true,true).css("display","inline-block").delay(500).fadeOut(500);
+				}
+				function OnTotalScroll(){
+					$(".output .onTotalScroll").stop(true,true).css("display","inline-block").delay(500).fadeOut(500);
+				}
+				function OnTotalScrollBack(){
+					$(".output .onTotalScrollBack").stop(true,true).css("display","inline-block").delay(500).fadeOut(500);
+				}
+				function WhileScrolling(){
+					$(".output .whileScrolling").stop(true,true).css("display","inline-block").fadeOut(500);
+					$(".info .content-position").text(mcs.top);
+					$(".info .dragger-position").text(mcs.draggerTop);
+					$(".info .scroll-pct").text(mcs.topPct+"%");
+				}
+				$(".total-scroll-offset").text($("#content_1").data("onTotalScroll_Offset"));
+				$(".total-scroll-back-offset").text($("#content_1").data("onTotalScrollBack_Offset"));
+				$(".output a").click(function(e){
+					e.preventDefault();
+					var $this=$(this),
+						rel=$this.attr("rel"),
+						target=$this.parent().find("."+rel);
+					target.add($this).toggleClass("hidden");
+				});
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>

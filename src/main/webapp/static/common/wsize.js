@@ -1,22 +1,33 @@
 /*!
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * 
+ * 主框架窗口大小调整
+ * @author ThinkGem
+ * @version 2013-11-09
  */
 
-// 主框架窗口大小调整
 $("#left").width(leftWidth);
 $("#openClose").click(function(){
 	if($(this).hasClass("close")){
 		$(this).removeClass("close");
 		$(this).addClass("open");
 		$("#left").animate({width:0,opacity:"hide"});
-		$("#right").animate({width:$("#content").width()-$("#openClose").width()-5});
+		$("#right").animate({width:$("#content").width()-$("#openClose").width()-5},function(){
+			if(typeof openCloseClickCallBack == 'function'){
+				openCloseClickCallBack(true);
+			}
+			wSize();
+		});
 	}else{
 		$(this).addClass("close");
 		$(this).removeClass("open");
 		$("#left").animate({width:leftWidth,opacity:"show"});
-		$("#right").animate({width:$("#content").width()-$("#openClose").width()-leftWidth-9});
+		$("#right").animate({width:$("#content").width()-$("#openClose").width()-leftWidth-9},function(){
+			if(typeof openCloseClickCallBack == 'function'){
+				openCloseClickCallBack(true);
+			}
+			wSize();
+		});
 	}
 });
 if(!Array.prototype.map)

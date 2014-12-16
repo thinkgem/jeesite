@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery custom scrollbar demo</title>
+	<!-- style for demo and examples -->
+	<style>
+		body{margin:0; padding:0; color:#eee; background:#222; font-family:Verdana,Geneva,sans-serif; font-size:13px; line-height:20px;}
+		a:link,a:visited,a:hover{color:inherit;}
+		h1{font-family:Georgia,serif; font-size:18px; font-style:italic; margin:40px; color:#26beff;}
+		h2{font-family:Georgia,serif; font-size:16px; font-style:italic; color:#eee;}
+		p{margin:0 0 20px 0;}
+		hr{height:0; border:none; border-bottom:1px solid rgba(255,255,255,0.13); border-top:1px solid rgba(0,0,0,1); margin:9px 10px; clear:both;}
+		.links{margin:10px;}
+		.links a{display:inline-block; padding:3px 15px; margin:7px 10px; background:#444; text-decoration:none; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px;}
+		.links a:hover{background:#eb3755; color:#fff;}
+		.output{margin:20px 40px;}
+		.output a{display:inline-block; text-decoration:none; padding:3px 15px; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px; background:#000; margin:5px 20px 5px 0;}
+		code{color:#5b70ff;}
+		.content{position:relative; margin:40px auto; width:100%; height:400px; padding:20px 40px; overflow:auto; background:#333; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+		.content p:nth-child(even){color:#9dbfc6; font-family:Georgia,serif; font-size:17px; font-style:italic;}
+		.content p:nth-child(3n+0){color:#c96;}
+		.content#content_2{width:400px; margin:40px;}
+		.totalScrollOffsetInfo{border:2px solid #fc0; font-size:12px; padding:20px; text-align:center; margin-bottom:60px;}
+		.totalScrollOffset{height:50px; background:#fc0;}
+	</style>
+	<!-- Custom scrollbars CSS -->
+	<link href="jquery.mCustomScrollbar.css" rel="stylesheet" />
+</head>
+<body>
+	<p class="links">
+		<a href="http://manos.malihu.gr">malihu</a>
+		<a href="http://manos.malihu.gr/jquery-custom-content-scroller">Plugin home</a>
+		<a href="complete_examples.html">Plugin demo</a>
+	</p>
+	<hr />
+	<h1>Infinite scroll example</h1>
+	<p class="output"><a id="scroll_to_bottom" href="#">Scroll to bottom</a></p>
+	<!-- content block -->
+	<div id="content_2" class="content">
+		<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit.</p>
+   		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+   		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat.</p>
+    	<p>the end.</p>
+		<div class="totalScrollOffsetInfo">Yellow box below indicates total scroll offset area</div>
+		<div class="totalScrollOffset"></div>
+	</div>
+	<hr />
+	<p>&nbsp;</p>
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/minified/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	<!-- custom scrollbars plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	<script>
+		(function($){
+			$(window).load(function(){
+				var totalScrollOffsetH=$(".totalScrollOffset").height();
+				$("#content_2").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					},
+					callbacks:{
+						onTotalScroll:function(){
+							appendTextOnTotalScroll();
+						},
+						onTotalScrollOffset:totalScrollOffsetH
+					}
+				});
+				$("#scroll_to_bottom").click(function(e){
+					e.preventDefault();
+					$("#content_2").mCustomScrollbar("scrollTo","bottom");
+				});
+				function appendTextOnTotalScroll(){
+					var c=$("#content_2").find(".mCSB_container p:last");
+					var h="<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. <strong>Appended text end.</strong></p>";
+					c.after(h);
+					$("#content_2").mCustomScrollbar("update");
+				}
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>

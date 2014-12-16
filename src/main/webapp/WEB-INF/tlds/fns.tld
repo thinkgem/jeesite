@@ -39,6 +39,13 @@
     <function-signature>java.lang.String getConfig(java.lang.String)</function-signature>
     <example>${fns:getConfig(key)}</example>
   </function>
+  <function>
+    <description>获取常量</description>
+    <name>getConst</name>
+    <function-class>com.thinkgem.jeesite.common.config.Global</function-class>
+    <function-signature>java.lang.Object getConst(java.lang.String)</function-signature>
+    <example>${fns:getConst(key)}</example>
+  </function>
   
   <!-- UserUtils -->
   <function>
@@ -48,12 +55,21 @@
     <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUser()</function-signature>
     <example>${fns:getUser()}</example>  
   </function>
+  
   <function>
-    <description>根据ID获得用户对象</description>
+    <description>根据编码获取用户对象</description>
     <name>getUserById</name>
     <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
+    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User get(java.lang.String)</function-signature>
     <example>${fns:getUserById(id)}</example>  
+  </function>
+  
+  <function>
+    <description>获取授权用户信息</description>
+    <name>getPrincipal</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>
+    <function-signature>com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal getPrincipal()</function-signature>
+    <example>${fns:getPrincipal()}</example>  
   </function>
   
   <function>
@@ -95,6 +111,14 @@
     <function-class>com.thinkgem.jeesite.modules.sys.utils.DictUtils</function-class>
     <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String, java.lang.String)</function-signature>
     <example>${fns:getDictLabel(value, type, defaultValue)}</example>  
+  </function>
+  
+  <function>
+    <description>获取字典标签(多个)</description>
+    <name>getDictLabels</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictLabels(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example>${fns:getDictLabels(values, type, defaultValue)}</example>  
   </function>
 
   <function>
@@ -173,18 +197,18 @@
     <example>${fns:abbr(str,length)}</example>  
   </function>
   <function>
-    <description>替换掉HTML标签后缩写字符串，超过最大宽度用“...”表示</description>
-    <name>rabbr</name>
-    <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
-    <function-signature>java.lang.String rabbr(java.lang.String, int)</function-signature>
-    <example>${fns:rabbr(str,length)}</example>
-  </function>
-  <function>
     <description>替换掉HTML标签</description>
     <name>replaceHtml</name>
     <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
     <function-signature>java.lang.String replaceHtml(java.lang.String)</function-signature>
     <example>${fns:replaceHtml(html)}</example>  
+  </function>
+  <function>
+    <description>转换为JS获取对象值，生成三目运算返回结果。</description>
+    <name>jsGetVal</name>
+    <function-class>com.thinkgem.jeesite.common.utils.StringUtils</function-class>
+    <function-signature>java.lang.String jsGetVal(java.lang.String)</function-signature>
+    <example>${fns:jsGetVal('row.user.id')}  返回：!row?'':!row.user?'':!row.user.id?'':row.user.id</example>  
   </function>
   
   <!-- DateUtils -->
@@ -201,6 +225,15 @@
     <function-class>com.thinkgem.jeesite.common.utils.DateUtils</function-class>
     <function-signature>long pastDays(java.util.Date)</function-signature>
     <example>${fns:pastDays(date)}</example>  
+  </function>
+  
+  <!-- JsonMapper -->
+  <function>
+    <description>对象转换JSON字符串</description>
+    <name>toJson</name>
+    <function-class>com.thinkgem.jeesite.common.mapper.JsonMapper</function-class>
+    <function-signature>java.lang.String toJsonString(java.lang.Object)</function-signature>
+    <example>${fns:toJson(object)}</example>  
   </function>
   
 </taglib>

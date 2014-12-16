@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
@@ -11,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,17 +51,7 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Area area, Model model) {
-//		User user = UserUtils.getUser();
-//		if(user.isAdmin()){
-			area.setId("1");
-//		}else{
-//			area.setId(user.getArea().getId());
-//		}
-		model.addAttribute("area", area);
-		List<Area> list = Lists.newArrayList();
-		List<Area> sourcelist = areaService.findAll();
-		Area.sortList(list, sourcelist, area.getId());
-        model.addAttribute("list", list);
+		model.addAttribute("list", areaService.findAll());
 		return "modules/sys/areaList";
 	}
 
@@ -75,6 +62,19 @@ public class AreaController extends BaseController {
 			area.setParent(UserUtils.getUser().getOffice().getArea());
 		}
 		area.setParent(areaService.get(area.getParent().getId()));
+//		// 自动获取排序号
+//		if (StringUtils.isBlank(area.getId())){
+//			int size = 0;
+//			List<Area> list = areaService.findAll();
+//			for (int i=0; i<list.size(); i++){
+//				Area e = list.get(i);
+//				if (e.getParent()!=null && e.getParent().getId()!=null
+//						&& e.getParent().getId().equals(area.getParent().getId())){
+//					size++;
+//				}
+//			}
+//			area.setCode(area.getParent().getCode() + StringUtils.leftPad(String.valueOf(size > 0 ? size : 1), 4, "0"));
+//		}
 		model.addAttribute("area", area);
 		return "modules/sys/areaForm";
 	}
@@ -84,47 +84,44 @@ public class AreaController extends BaseController {
 	public String save(Area area, Model model, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:"+Global.getAdminPath()+"/sys/area";
+			return "redirect:" + adminPath + "/sys/area";
 		}
 		if (!beanValidator(model, area)){
 			return form(area, model);
 		}
 		areaService.save(area);
 		addMessage(redirectAttributes, "保存区域'" + area.getName() + "'成功");
-		return "redirect:"+Global.getAdminPath()+"/sys/area/";
+		return "redirect:" + adminPath + "/sys/area/";
 	}
 	
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "delete")
-	public String delete(String id, RedirectAttributes redirectAttributes) {
+	public String delete(Area area, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:"+Global.getAdminPath()+"/sys/area";
+			return "redirect:" + adminPath + "/sys/area";
 		}
-		if (Area.isAdmin(id)){
-			addMessage(redirectAttributes, "删除区域失败, 不允许删除顶级区域或编号为空");
-		}else{
-			areaService.delete(id);
+//		if (Area.isRoot(id)){
+//			addMessage(redirectAttributes, "删除区域失败, 不允许删除顶级区域或编号为空");
+//		}else{
+			areaService.delete(area);
 			addMessage(redirectAttributes, "删除区域成功");
-		}
-		return "redirect:"+Global.getAdminPath()+"/sys/area/";
+//		}
+		return "redirect:" + adminPath + "/sys/area/";
 	}
 
-	@RequiresUser
+	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
 	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, HttpServletResponse response) {
-		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-//		User user = UserUtils.getUser();
 		List<Area> list = areaService.findAll();
 		for (int i=0; i<list.size(); i++){
 			Area e = list.get(i);
-			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
+			if (StringUtils.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
-//				map.put("pId", !user.isAdmin()&&e.getId().equals(user.getArea().getId())?0:e.getParent()!=null?e.getParent().getId():0);
-				map.put("pId", e.getParent()!=null?e.getParent().getId():0);
+				map.put("pId", e.getParentId());
 				map.put("name", e.getName());
 				mapList.add(map);
 			}

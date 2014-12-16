@@ -1,0 +1,44 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="GroupEx 或 GroupBoxEx" meaning="Supcan风格的分组框的属性" number="0-n" example="3.多种下拉、7.动态更改属性(2)">
+<element name="text/value" meaning="分组框的文字">
+	<category>外观</category>
+	<value>串</value>
+</element>
+<element name="fontIndex" meaning="文字字体">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，指向在&amp;lt;Fonts&amp;gt;中定义的字体的顺序号，从0开始计数</value>
+	<default>0</default>
+</element>
+<element name="skin" meaning="色调">
+	<category>外观</category>
+	<value meaning="暖色调">1</value>
+	<value meaning="蓝灰中性色">2</value>
+	<value meaning="冷色调">3</value>
+	<default>自动</default>
+</element>
+<element name="titleHeight" meaning="标题高度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>19</default>
+</element>
+<element name="titleOffset/leftSize" meaning="标题文字的开始位置(相对于左侧)">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>10</default>
+</element>
+<element name="round" meaning="圆角直径">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>11</default>
+</element>
+</elements>
+
+<comments>
+	<comment>text允许以"|"分隔中英文(用于中英文切换)</comment>
+</comments>
+</root>

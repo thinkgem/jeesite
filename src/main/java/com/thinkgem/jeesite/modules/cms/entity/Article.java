@@ -1,56 +1,27 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.entity;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Length;
-import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.IdEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 
 /**
  * 文章Entity
  * @author ThinkGem
  * @version 2013-05-15
  */
-@Entity
-@Table(name = "cms_article")
-@DynamicInsert @DynamicUpdate
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Indexed @Analyzer(impl = IKAnalyzer.class)
-public class Article extends IdEntity<Article> {
+public class Article extends DataEntity<Article> {
 
     public static final String DEFAULT_TEMPLATE = "frontViewArticle";
 	
@@ -70,6 +41,11 @@ public class Article extends IdEntity<Article> {
    	private String viewConfig;	// 视图参数
 
 	private ArticleData articleData;	//文章副表
+	
+	private Date beginDate;	// 开始时间
+	private Date endDate;	// 结束时间
+	
+	private User user;
     
 	public Article() {
 		super();
@@ -88,17 +64,12 @@ public class Article extends IdEntity<Article> {
 		this.category = category;
 	}
 
-	@PrePersist
 	public void prePersist(){
-		super.prePersist();
+		//TODO 后续处理，暂不知有何用处
+		//super.prePersist();
 		articleData.setId(this.id);
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	@NotFound(action = NotFoundAction.IGNORE)
-	@NotNull
-	@IndexedEmbedded
 	public Category getCategory() {
 		return category;
 	}
@@ -107,8 +78,6 @@ public class Article extends IdEntity<Article> {
 		this.category = category;
 	}
 
-	@Length(min=1, max=255)
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getTitle() {
 		return title;
 	}
@@ -141,11 +110,10 @@ public class Article extends IdEntity<Article> {
 	}
 
 	public void setImage(String image) {
-        this.image = CmsUtils.formatImageSrcToDb(image);
+        this.image = image;//CmsUtils.formatImageSrcToDb(image);
 	}
 
 	@Length(min=0, max=255)
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getKeywords() {
 		return keywords;
 	}
@@ -155,9 +123,24 @@ public class Article extends IdEntity<Article> {
 	}
 
 	@Length(min=0, max=255)
-	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	public String getDescription() {
 		return description;
+	}
+
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public void setDescription(String description) {
@@ -214,9 +197,6 @@ public class Article extends IdEntity<Article> {
         this.viewConfig = viewConfig;
     }
 
-	@OneToOne(mappedBy="article",cascade=CascadeType.ALL,optional=false)
-	@Valid
-	@IndexedEmbedded
 	public ArticleData getArticleData() {
 		return articleData;
 	}
@@ -225,7 +205,6 @@ public class Article extends IdEntity<Article> {
 		this.articleData = articleData;
 	}
 
-	@Transient
 	public List<String> getPosidList() {
 		List<String> list = Lists.newArrayList();
 		if (posid != null){
@@ -236,17 +215,22 @@ public class Article extends IdEntity<Article> {
 		return list;
 	}
 
-	@Transient
-	public void setPosidList(List<Long> list) {
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setPosidList(List<String> list) {
 		posid = ","+StringUtils.join(list, ",")+",";
 	}
 
-    @Transient
    	public String getUrl() {
         return CmsUtils.getUrlDynamic(this);
    	}
 
-    @Transient
    	public String getImageSrc() {
         return CmsUtils.formatImageSrcToWeb(this.image);
    	}

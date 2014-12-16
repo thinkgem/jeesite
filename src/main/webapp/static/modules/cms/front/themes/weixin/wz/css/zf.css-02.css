@@ -1,0 +1,231 @@
+*{
+	margin:0;
+	padding:0;}
+.clfl{
+	clear:both;
+	float:none;}
+.zf_wrapper_001{
+font-size:18px;
+	font-family:"微软雅黑";
+	color:#44b5df;
+	width:100%;
+	text-align:center;
+}
+.zf_wrapper_zhuangfa{
+	margin:10px 5px;
+	border-radius: 15px;
+	width:100px;
+	height:39px;
+	background-color:#ffffff;
+	background:-webkit-linear-gradient(#ffffff,#f0f0f0);
+	border-width:1px;
+	border-style:solid;
+	border-color:#e5e5e5;
+	text-align:center;
+	line-height:39px;
+	box-shadow: 0px 1px 5px #e6e6e6;
+	font-size:18px;
+	font-family:"微软雅黑";
+	color:#44b5df;
+	}
+.zf_wrapper_fenxiang{
+	margin:10px 5px;
+	border-radius: 15px;
+	width:100px;
+	height:39px; 
+	background-color:#ffffff;
+	background:-webkit-linear-gradient(#ffffff,#f0f0f0);
+	border-width:1px;
+	border-style:solid;
+	border-color:#e5e5e5;
+	text-align:center;
+	line-height:39px;
+	box-shadow: 0px 1px 5px #e6e6e6;
+	font-size:18px;
+	font-family:"微软雅黑";
+	color:#44b5df;
+	}
+.zf_wrapper_fenxiang:hover{
+		background:-webkit-linear-gradient(#f9f9f9,#e9e9e9);
+		
+	}
+.zf_wrapper_fenxiang:active{
+		background:-webkit-linear-gradient(#f9f9f9,#e9e9e9);
+		
+	}
+.zf_wrapper_zhuangfa:hover{
+		background:-webkit-linear-gradient(#f9f9f9,#e9e9e9);
+		
+	}
+.zf_wrapper_zhuangfa:active{
+		background:-webkit-linear-gradient(#f9f9f9,#e9e9e9);
+		
+	}
+	
+	
+	#gallery img {
+		
+	}	
+	
+	
+	
+	
+/*弹出指示*/
+
+	#gallery {
+		width: 100%;
+		float:left;
+		padding-left: 0px;
+	}
+	#gallery ul { list-style: none; }
+	#gallery ul li { display: inline; }
+	#gallery ul img {
+	border: 5px solid #3e3e3e;
+	border-width: 5px 5px 20px;
+	}
+	#gallery ul a:hover img {
+	color: #fff;
+	border-top-width: 5px;
+	border-right-width: 5px;
+	border-bottom-width: 20px;
+	border-left-width: 5px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #CC0000;
+	border-right-color: #CC0000;
+	border-bottom-color: #CC0000;
+	border-left-color: #CC0000;
+	}
+	#gallery ul a:hover { color: #fff; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**
+ * jQuery lightBox plugin
+ * This jQuery plugin was inspired and based on Lightbox 2 by Lokesh Dhakar (http://www.huddletogether.com/projects/lightbox2/)
+ * and adapted to me for use like a plugin from jQuery.
+ * @name jquery-lightbox-0.5.css
+ * @author Leandro Vieira Pinho - http://leandrovieira.com
+ * @version 0.5
+ * @date April 11, 2008
+ * @category jQuery plugin
+ * @copyright (c) 2008 Leandro Vieira Pinho (leandrovieira.com)
+ * @license CCAttribution-ShareAlike 2.5 Brazil - http://creativecommons.org/licenses/by-sa/2.5/br/deed.en_US
+ * @example Visit http://leandrovieira.com/projects/jquery/lightbox/ for more informations about this jQuery plugin
+ */
+#jquery-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 90;
+	width: 320px;
+
+}
+#jquery-lightbox {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	text-align: center;
+	line-height: 0;
+}
+#jquery-lightbox a img {
+	border: none;
+}
+#lightbox-container-image-box {
+	position: relative;
+	background:none;
+	width: 250px;
+	height: 250px;
+	margin: 0 auto;
+}
+#lightbox-container-image {
+	width:10px;
+	height:10px;
+}
+#lightbox-loading {
+	position: absolute;
+	top: 40%;
+	left: 0%;
+	height: 25%;
+	width: 320px;;
+	text-align: center;
+	line-height: 0;
+}
+#lightbox-nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+}
+#lightbox-container-image-box > #lightbox-nav { left: 0; }
+#lightbox-nav a { outline: none;}
+#lightbox-nav-btnPrev, #lightbox-nav-btnNext {
+
+}
+#lightbox-nav-btnPrev { 
+	left: 0; 
+	float: left;
+}
+#lightbox-nav-btnNext { 
+	right: 0; 
+	float: right;
+}
+#lightbox-container-image-data-box {
+	font: 10px Verdana, Helvetica, sans-serif;
+	background:none;
+	margin: 0 auto;
+	line-height: 0em;
+	overflow: auto;
+	width: 0%;
+	padding: 0;
+}
+#lightbox-container-image-data {
+	padding: 0 10px; 
+	color: #666; 
+}
+#lightbox-container-image-data #lightbox-image-details { 
+	width: 320px; 
+	float: left; 
+	text-align: left; 
+}	
+#lightbox-image-details-caption { font-weight: bold; }
+#lightbox-image-details-currentNumber {
+	display: block; 
+	clear: left; 
+	padding-bottom: 0em;	
+}			
+#lightbox-secNav-btnClose {
+	width: 10px; 
+	float: right;
+	padding-bottom: 0.7em;	
+}
+.helper.forward{
+    position: fixed;
+    width: 320px;height: 225px;
+    top: 0;right: 0;
+    background: url("../images/zhuanfa.png") no-repeat;
+}
+
+.men_pho
+{
+	z-index:99999;
+    position: fixed;
+    width: 320px;height: 225px;
+    top: 0;right: 0;
+    background: url("../images/mem_pho.png") no-repeat;
+}

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.oa.dao.LeaveDao">
+	
+    <sql id="leaveColumns">
+		a.*,
+		u.id AS "createBy.id",
+		u.name AS "createBy.name",
+		o.id AS "createBy.office.id",
+		o.name AS "createBy.office.name"
+	</sql>
+	
+	<sql id="leaveJoins">
+		JOIN sys_user u ON u.id = a.create_by
+		JOIN sys_office o ON o.id = u.office_id
+    </sql>
+    
+    <select id="get" resultType="Leave">
+		SELECT 
+			<include refid="leaveColumns"/>
+		FROM oa_leave a
+		<include refid="leaveJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Leave">
+		SELECT 
+			<include refid="leaveColumns"/>
+		FROM oa_leave a
+		<include refid="leaveJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		<if test="createDateStart != null">
+			AND a.create_date &gt;= #{createDateStart}
+		</if>
+		<if test="createDateEnd != null">
+			AND a.create_date &lt;= #{createDateEnd}
+		</if>
+		<if test="leaveType != null and leaveType != ''">
+			AND a.leave_type = #{leaveType}
+		</if>
+		<if test="ids != null and ids != ''">
+			AND a.id IN (${ids})
+		</if>
+		${sqlMap.dsf}
+		ORDER BY a.id DESC
+	</select>
+	
+	<select id="findAllList" resultType="Leave">
+		SELECT 
+			<include refid="leaveColumns"/>
+		FROM oa_leave a
+		<include refid="leaveJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY a.id DESC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_leave(
+			id, 
+			process_instance_id, 
+			start_time, 
+			end_time, 
+			leave_type, 
+			reason, 
+			apply_time, 
+			reality_start_time, 
+			reality_end_time, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{processInstanceId}, 
+			#{startTime}, 
+			#{endTime}, 
+			#{leaveType}, 
+			#{reason}, 
+			#{createDate}, 
+			#{realityStartTime}, 
+			#{realityEndTime}, 
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_leave SET 
+			leave_type = #{leaveType}, 
+			start_time = #{startTime}, 
+			end_time = #{endTime}, 
+			reason = #{reason}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateRealityTime">
+		UPDATE oa_leave SET 
+			reality_start_time = #{realityStartTime}, 
+			reality_end_time = #{realityEndTime}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+		
+	<update id="updateProcessInstanceId">
+		UPDATE oa_leave SET 
+			process_instance_id = #{processInstanceId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE oa_leave SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,131 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="DOM函数">
+	<function name="DOM_new">
+		<usage>创建新的DOM对象</usage>
+		<para>XML/JSON大串，或者是URL(相对或绝对)，也可以是空串</para>
+		<return>DOM对象的句柄，空串表示创建失败。失败原因有：不是有效的XML/JSON串，或者参数作为URL时，无法从该URL读取.</return>
+		<memo>您最终必须通过 DOM_Delete 函数销毁这个句柄的，否则会导致内存泄漏.</memo>
+	</function>
+	<function name="DOM_Delete">
+		<usage>销毁某个DOM对象</usage>
+		<para>DOM对象的句柄</para>
+		<return>1/0 - 成功/失败，失败原因通常是参数不是有效的DOM对象句柄</return>
+		<memo>1.DOM对象句柄通常是根节点句柄，但也支持是某个子节点的对象句柄;&lt;br&gt;
+2.如果该对象是某个子节点，那么它的父节点将会把它从子孙集合中移除，换句话说，利用本函数，您可以单独删除DOM树中的某一个节点;&lt;br&gt;
+3.销毁时，该DOM对象的所有子孙节点DOM对象也将随之销毁；&lt;br&gt;
+</memo>
+	</function>
+	<function name="DOM_Clone">
+		<usage>克隆(即复制)DOM对象</usage>
+		<para>DOM对象句柄</para>
+		<return>新的DOM对象的句柄，空串表示参数无效</return>
+		<memo>1.返回的DOM对象内容上和原对象一模一样，但是它没有父节点;&lt;br&gt;
+2.一般情况下，该句柄也是必须要销毁的，否则也会造成内存泄漏;</memo>
+	</function>
+	<function name="DOM_IsValid">
+		<usage>判断某个句柄是否是DOM对象</usage>
+		<para>句柄</para>
+		<return>1/0 - 是/否</return>
+		<memo>如果DOM对象被销毁了，那么该句柄就无效了</memo>
+	</function>
+	<function name="DOM_Export">
+		<usage>取得DOM对象的完整的XML内容串(包含子孙)</usage>
+		<para>DOM对象句柄</para>
+		<return>XML串， 空串表示句柄无效</return>
+	</function>
+	<function name="DOM_GetName">
+		<usage>取得本DOM节点的名称</usage>
+		<para>DOM句柄</para>
+		<return>串</return>
+		<memo>名称是指元素名，比如〈Properties  height="3" ...〉这样的DOM对象，返回的是串"Properties"</memo>
+	</function>
+	<function name="DOM_SetName">
+		<usage>更改本DOM节点的名称</usage>
+		<para>DOM句柄</para>
+		<para>名称</para>
+		<return>1/0 - 成功/失败, 失败的原因通常为: DOM句柄不正确、或名称不符合规范</return>
+	</function>
+	<function name="DOM_GetProp">
+		<usage>取得DOM节点中某属性的值</usage>
+		<para>DOM句柄</para>
+		<para>属性名</para>
+		<return>串</return>
+		<memo>XML元素自身的内容用 “#text”表示(请参考示例)</memo>
+		<example>例如〈Properties  height="3" 〉ABC〈/Properties〉这样的DOM对象： &lt;br&gt;
+AF.func("DOM_GetProp", handle + "\r\n height") 返回 3 &lt;br&gt;
+AF.func("DOM_GetProp", handle + "\r\n #text") 返回 ABC &lt;br&gt;
+</example>
+	</function>
+	<function name="DOM_SetProp">
+		<usage>更改本DOM节点某属性的值 (包括了增删改功能)</usage>
+		<para>DOM句柄</para>
+		<para>属性名</para>
+		<para>值串</para>
+		<return>1/0 - 成功/失败。 失败的原因通常为: DOM句柄不正确、或属性名不符合规范</return>
+		<memo>1.XML元素自身的内容用 “#text”表示;&lt;br&gt;
+2.如果属性不存在，则自动增加这个属性;&lt;br&gt;
+3.如果值为空，表示删除这个属性;&lt;br&gt;
+4.请参考 DOM_GetProp 中的示例</memo>
+	</function>
+	<function name="DOM_GetPropNames">
+		<usage>取得本DOM节点全部的属性名</usage>
+		<para>DOM句柄</para>
+		<return>以逗号分隔的属性名</return>
+		<example>例如〈Properties  height="3" width="4" /〉这样的DOM对象： &lt;br&gt;
+AF.func("DOM_GetPropNames", handle) 返回串 "height,width"&lt;br&gt;
+</example>
+	</function>
+	<function name="DOM_GetParent">
+		<usage>取得某节点的父节点句柄</usage>
+		<para>DOM句柄</para>
+		<return>父亲的DOM句柄，空串表示参数句柄无效</return>
+	</function>
+	<function name="DOM_GetChildCount">
+		<usage>取得儿子的个数</usage>
+		<para>DOM句柄</para>
+		<return>数字</return>
+	</function>
+	<function name="DOM_GetChild">
+		<usage>取得n个儿子的句柄</usage>
+		<para>DOM句柄</para>
+		<para>数字，顺序号(从0开始计数)</para>
+		<return>该儿子的DOM句柄，空串表示顺序号已经超出</return>
+	</function>
+	<function name="DOM_IsLeaf">
+		<usage>判断某节点是否树叶</usage>
+		<para>DOM句柄</para>
+		<return>1/0/空串 - 是/否/无效的DOM句柄</return>
+	</function>
+	<function name="DOM_GetLeafArray">
+		<usage>取得子孙中所有树叶的句柄</usage>
+		<para>DOM句柄</para>
+		<para>可选，为 true/false，true - 从儿子、孙子、重孙辈...中查找； false - 仅在儿子辈中查找， 默认是 true</para>
+		<return>以逗号分隔的句柄</return>
+	</function>
+	<function name="DOM_Find">
+		<usage>从子孙中查找某个元素名的节点句柄</usage>
+		<para>DOM句柄</para>
+		<para>要查找的元素名</para>
+		<para>可选，为 true/false，true - 从儿子、孙子、重孙辈...中查找； false - 仅在儿子辈中查找， 默认是 true</para>
+		<return>以逗号分隔的句柄</return>
+	</function>
+	<function name="DOM_InsertChild(用法1)">
+		<usage>插入一个儿子</usage>
+		<para>DOM句柄</para>
+		<para>位置，-1表示从末尾添加</para>
+		<para>新加入的DOM句柄</para>
+		<return>DOM的句柄，即和参数3完全一样的串，空串表示失败</return>
+		<memo>1.如果新加入的DOM句柄是通过 DOM_New 函数生成的，那么你不必用DOM_Delete销毁它，因为它的生命周期已经被它的父亲控制了;&lt;br&gt;
+2.新加入的DOM句柄允许是现有的某个子孙的句柄(包括来自同一个祖先或其它祖先)，相当于是该DOM对象转移位置(或者说是改变父亲)而已.</memo>
+	</function>
+	<function name="DOM_InsertChild(用法2)">
+		<usage>插入一个儿子</usage>
+		<para>DOM句柄</para>
+		<para>位置，-1表示从末尾添加</para>
+		<para>新插入的节点元素的元素名</para>
+		<para>可选，新插入的元素自己的内容(即所谓 #text)</para>
+		<return>新生儿的句柄，空串表示失败，失败原因通常为父句柄无效、元素名命名不符合规范</return>
+	</function>
+</category>
+</functions>

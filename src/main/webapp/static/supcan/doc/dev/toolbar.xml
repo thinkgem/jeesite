@@ -1,0 +1,96 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<Toolbars ExtentHeight="3">
+
+	<!-- 子工具条：Main -->
+	<Toolbar name='Main' imageList='Toolbar_Main.bmp' imageHeight='16' imageTransparentColor='#C0C0C0'>
+		<item id='102' imageIndex='0' tip='新建|New'/>
+		<item id='103' imageIndex='1' tip='打开|Open'/>
+		<item id='104' imageIndex='2' tip='保存|Save'/>
+		<item id='1074' imageIndex='10' tip='另存为..|Save as'/>
+		<item id='105' imageIndex='3' tip='转换成其它格式文件|Convert export'/>
+		<item id='100' imageIndex='4' tip='属性|Properties'/>
+		<item id='189' imageIndex='5' tip='关于|About'/>
+		<item id='0'/>
+		<item id='20' imageIndex='6' defaultId='20' tip='复制|Copy'>
+			<item id='20' imageIndex='6' tip='复制|Copy' detail='复制当前单元格内容到剪贴板，支持与Excel之间的复制粘帖.\r\n按Esc键退出|Copy current content to Clipboard, support to interact with Excel.\r\nPress "Esc" to exit'/>
+			<item id='31' imageIndex='11' tip='剪切|Cut' detail='剪切当前单元格内容到剪贴板，支持与Excel之间的复制粘帖.\r\n按Esc键退出|Cut current content to Clipboard, support to interact with Excel.\r\nPress "Esc" to exit'/>
+		</item>
+		<item id='32' imageIndex='7' defaultId='34' tip='粘帖|Paste'>
+			<item id='34' imageIndex='7' tip='粘帖文字和格式|Paste text and format'/>
+			<item id='35' tip='仅粘帖文字|Paste text only'/>
+		</item>
+		<item id='106' imageIndex='8' tip='撤销|Undo'/>
+		<item id='107' imageIndex='9' defaultId='427' tip='查找与替换|Find and replace'>
+			<item id='427' imageIndex='9' tip='查找|Find'/>
+			<item id='426' tip='替换|Replace'/>
+		</item>
+	</Toolbar>
+
+	<!-- 子工具条：打印 -->
+	<Toolbar name='Print' imageList='Toolbar_Prt.bmp' imageHeight='16' imageTransparentColor='#C0C0C0'>
+		<item id='11' imageIndex='0' defaultId='11' tip='打印|Print'>
+			<item id='11' imageIndex='0' tip='打印|Print'/>
+			<item id='318' imageIndex='3' tip='转换成PDF或图片|Export as PDF or other file' detail='支持PDF,PNG,JPG,BMP,TIF,GIF,Excel,HTML,XML,TXT,DIF格式.|PDF,PNG,JPG,BMP,TIF,GIF,Excel,HTML,XML,TXT,DIF formats Supported'/>
+		</item>
+		<item id='216' imageIndex='1' tip='打印设置|Print setup'/>
+		<item id='18'  imageIndex='2' tip='打印预览|Print preview'/>
+	</Toolbar>
+
+	<!-- 子工具条：计算 -->
+	<Toolbar name='Form' imageList='Toolbar_Form.bmp' imageHeight='16' imageTransparentColor='#C0C0C0'>
+		<item id='110' imageIndex='0' tip='单元合并|Merge cells'/>
+		<item id='162' imageIndex='1' tip='求和|Sum'/>
+		<item id='164' imageIndex='2' tip='计算器|Calculator'/>
+		<item id='163' imageIndex='3' defaultId='163' tip='重新计算|Calculation'>
+			<item id='163' imageIndex='3' tip='重新计算|Calculate full'/>
+			<item id='260' tip='除数据源外，重新计算|Calculate without data source'/>
+		</item>
+		<item id='140' imageIndex='4' defaultId='140' tip='数据源|Data source'>
+			<item id='140' imageIndex='4' tip='数据源管理|Data source control pad'/>
+			<item id='395' imageIndex='5' tip='数据分类汇总|Data group summary'/>
+			<item id='520' imageIndex='6' tip='交叉表|Crosstab'/>
+			<item id='143' tip='清理从数据源填入的数据|Clear up data filled from data source'/>
+		</item>
+	</Toolbar>
+
+	<!-- 子工具条：工具箱、文本框、图片属性 -->
+	<Toolbar name='Property' imageList='Toolbar_Prop.bmp' imageHeight='16' imageTransparentColor='#C0C0C0'>
+		<item id='301' imageIndex='0' tip='工具箱|Tool box'/>
+		<item id='2' imageIndex='15' tip='显示计算公式、验证等|Displays formula, validation and other'>
+			<item id='2'  tip='单元格显示计算公式|Cell displays formula'/>
+			<item id='64' tip='单元格显示计算结果|Cell displays result'/>
+			<item id='0'/>
+			<item id='25' tip='设置数据验证|Setup Validations'/>
+			<item id='50' tip='执行数据验证|Validate'/>
+		</item>
+		<item id='309' imageIndex='1' tip='设定录入顺序(Tab-Order)|Input sequence setting(Tab-Order)'/>
+		<item id='0'/>
+		<item id='112' imageIndex='2' tip='添加文本框|Add text box'/>
+		<item id='192' imageIndex='3' tip='添加图片|Add picture'/>
+		<item id='144' imageIndex='4' tip='添加线条|Add line'/>
+		<item id='478' imageIndex='6' tip='添加统计图|Add chart'/>
+		<item id='274' imageIndex='5' tip='格式刷|Format brush'>
+			<item id='274' imageIndex='5' tip='格式刷|Format brush' detail='将当前单元的外观属性复制到其它单元.\r\n按住Ctrl键可多次使用；按Esc键、或击鼠标右键退出'/>
+			<item id='122' tip='表格线橡皮|Grid line eraser' detail='按Esc键、或击鼠标右键退出'/>
+		</item>
+		<item id='0'/>
+		<item id='29' imageIndex='7' tip='排列到前面|Bring to top'/>
+		<item id='30' imageIndex='8' tip='排列到后面|Bring to back'/>
+		<item id='134' imageIndex='9' tip='对齐|Align'>
+			<item id='61' tip='左对齐|Align left'/>
+			<item id='63' tip='右对齐|Align right'/>
+			<item id='127' tip='上对齐|Align top'/>
+			<item id='128' tip='下对齐|Align bottom'/>
+		</item>
+		<item id='129' imageIndex='10' tip='水平等间隔|Equal horizontal spacing'/>
+		<item id='130' imageIndex='11' tip='垂直等间隔|Equal vertical spacing'/>
+		<item id='131' imageIndex='12' tip='等宽|Equal width'/>
+		<item id='132' imageIndex='13' tip='等高|Equal height'/>
+		<item id='133' imageIndex='14' tip='等宽等高|Equal width and height'/>
+	</Toolbar>
+
+	<!-- 子工具条：字体(id固定) -->
+	<Toolbar name='Font'></Toolbar>
+	<!-- 子工具条：输入(id固定) -->
+	<Toolbar name='Text'></Toolbar>
+</Toolbars>

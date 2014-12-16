@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<!-- 生成分类 -->
+	<category>
+		<category value="curd" label="增删改查（单表）">
+			<template>curd/controller.xml</template>
+			<template>curd/service.xml</template>
+			<template>category-ref:dao</template>
+			<template>curd/viewForm.xml</template>
+			<template>curd/viewList.xml</template>
+		</category>
+		<category value="curd_many" label="增删改查（一对多）">
+			<template>curd/controller.xml</template>
+			<template>curd/serviceMany.xml</template>
+			<template>category-ref:dao</template>
+			<template>curd/viewFormMany.xml</template>
+			<template>curd/viewList.xml</template>
+			<childTable>
+				<template>category-ref:dao</template>
+			</childTable>
+		</category>
+		<category value="dao" label="仅持久层（dao/entity/mapper）">
+			<template>dao/dao.xml</template>
+			<template>dao/entity.xml</template>
+			<template>dao/mapper.xml</template>
+		</category>
+		<category value="treeTable" label="树结构表（一体）">
+			<template>treetable/controller.xml</template>
+			<template>treetable/service.xml</template>
+			<template>treetable/dao.xml</template>
+			<template>treetable/entity.xml</template>
+			<template>treetable/mapper.xml</template>
+			<template>treetable/viewForm.xml</template>
+			<template>treetable/viewList.xml</template>
+		</category>
+		<category value="treeTableAndList" label="树结构表（左树右表）">
+			<template>category-ref:dao</template>
+		</category>
+	</category>
+	<!-- java类型 -->
+	<javaType>
+		<dict value="String" label="String"/>
+		<dict value="Long" label="Long"/>
+		<dict value="Integer" label="Integer"/>
+		<dict value="Double" label="Double"/>
+		<dict value="java.util.Date" label="Date"/>
+		<dict value="com.thinkgem.jeesite.modules.sys.entity.User" label="User"/>
+		<dict value="com.thinkgem.jeesite.modules.sys.entity.Office" label="Office"/>
+		<dict value="com.thinkgem.jeesite.modules.sys.entity.Area" label="Area"/>
+		<dict value="This" label="ThisObj" description="生成当前对象"/>
+		<dict value="Custom" label="Custom" description="自定义对象，生成后手动设置"/>
+	</javaType>
+	<!-- 查询类型 -->
+	<queryType>
+		<dict value="=" label="="/>
+		<dict value="!=" label="!="/>
+		<dict value="&gt;" label="&gt;"/>
+		<dict value="&gt;=" label="&gt;="/>
+		<dict value="&lt;" label="&lt;"/>
+		<dict value="&lt;=" label="&lt;="/>
+		<dict value="between" label="Between"/>
+		<dict value="like" label="Like"/>
+		<dict value="left_like" label="Left Like"/>
+		<dict value="right_like" label="Right Like"/>
+	</queryType>
+	<!-- 字段显示类型 -->
+	<showType>
+		<dict value="input" label="单行文本"/>
+		<dict value="textarea" label="多行文本"/>
+		<dict value="select" label="下拉选项"/>
+		<dict value="radiobox" label="单选按钮"/>
+		<dict value="checkbox" label="复选框"/>
+		<dict value="dateselect" label="日期选择"/>
+		<dict value="userselect" label="人员选择"/>
+		<dict value="officeselect" label="部门选择"/>
+		<dict value="areaselect" label="区域选择"/>
+		<dict value="treeselect" label="树选择控件"/>
+		<dict value="fileselect" label="文件上传选择"/>
+	</showType>
+</config>

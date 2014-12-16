@@ -1,0 +1,181 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag50"/>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='../../res/tradetreelist.jpg'></td></tr>
+</table>
+<h3>　<font color=#3366ff>Supcan TreeList组件</font></h3><hr color=#2266ee size=1>
+　　Supcan TreeList是硕正RIA Suit中的一个功能组件，实现页面中固定表格(Grid)的富操纵浏览、富输入、行列计算关系、分页打印等功能。<br>
+　　Treelist显示方式有列表和树两种形式，并且二者是相通的，可随意转换；<br>
+　　Treelist列表允许多层表头显示、主窗口支持左右分屏(类似冻结)显示；<br>
+　　Treelist有完善的事件触发机制，包括鼠标单击双击、输入更改等等；<br>
+　　总之，Treelist吸取了PowerBuilder DataWindow 和 DevExpress 等产品的优势，产品定位于页面应用。因常规的依托于&lt;Table&gt;、 &lt;input&gt; 和js的纯html表格处理软件大多简陋不堪，或功能残缺不全、性能不佳，让页面开发人员头疼不已，而在企业Web应用软件的开发中，强交互的Grid又是一个绕不开的需求，Supcan Treelist应运而生。
+
+<div id="Tag501"/><br><br><br>
+　　<font style='font-size:15pt'>1.创建实例</font><hr color=#2266ee size=1>
+　　Supcan Treelist组件是通过插件/加载项创建的，所以应该用<a href="act.htm?81#Tag205" target=_blank>使用指南 \ 页面语法</a>中叙述的插件/加载项的页面创建语法创建，
+&lt;Object&gt;中的某几个Param参数规则如下:<br>
+<pre class='xml'>
+&lt;Object ...(略)&gt;
+&lt;Param name="CtlName" value="<Font color=red>BCV1.TreeList</Font>"&gt;　　//固定
+&lt;Param name="ZipUrl" value="<Font color=red>BCV1.bin</Font>"&gt;	　　//也可以是绝对URL
+&lt;Param name="CtlPara" value="Border=single; borderColor=red"&gt;	//例子
+...</pre>
+　　如果页面是直接调用dynaload.js，那么可能就是这样:<br>
+<pre class='cpp'>insertTreeList('AF', 'Border=single; borderColor=red')</pre>
+<br>
+　　CtlPara参数决定了如何在页面上展现Supcan Treelist实例，在上面的例子中，参数串中可包含多个子串，子串间以 "；" 分隔。<br>
+　　子串的名值对的规范如下：<br>
+<table width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#eaeaea><td>子串名</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+
+<tr><td>Border</td><td>边界</td><td>
+1.none  - 无边界<br>
+2.single  - 单线条边界<br>
+3.3dLower(或3d)  - 3D凹进边界<br>
+4.3dRaise  - 3D凸起边界
+</td><td>single</td></tr>
+<tr><td>BorderColor</td><td>边界色</td><td>颜色，仅用于Border=single</td><td>#7f9db9</td></tr>
+<tr><td>Hue</td><td>强制更改色调</td><td>
+LightGray - 浅灰色<br>
+Caramel - 焦糖色<br>
+Lilian - 百合花色<br>
+Lividity - 青黑色<br>
+注：更改结果将保存至系统文件，永久有效.
+</td><td>(无)</td></tr>
+<tr><td>EventLog</td><td>事件日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例的所有事件, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncLog</td><td>函数调用日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例被调用的所有函数, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncParaChars</td><td>函数日志中参数最大字数</td><td>数字，当启用函数日志时，函数的参数最多保留字数.</td><td>128</td></tr>
+<tr><td>FuncReturnChars</td><td>函数日志中返回值最大字数</td><td>数字，当启用函数日志时，函数的返回值最多保留字数.</td><td>0</td></tr>
+</table><br>
+
+
+
+<div id="Tag502"/><br><br><br><br>
+　　<font style='font-size:15pt'>2.展现与数据分离</font><hr color=#2266ee size=1>
+　　Supcan Treelist遵循展现与数据分离的原则：决定Treelist外观的是一个XML文件，我们把它叫做“XML描述文件”或者“模板文件”；而填入的数据则是独立的，通常来自一个URL。<br>
+　　所以，在页面上完整展示一个Treelist通常需要执行2个函数：<br>
+　　　　1.Build( ) － 根据XML描述文件构造外观，执行Build( )后你会看到一个只有表头的空表；<br>
+　　　　2.Load( ) － 访问URL、 取得数据并填入.<br>
+<img src='glass.jpg'><font color="552222">不过XML描述文件本身也允许夹带数据而不必Load( )，因为有时候这样处理更方便快捷，例如固定不变的国家、省份、城市等数据(请参见下面提到的&lt;Table&gt;节点).</font><br>
+<br>
+　　Treelist的XML描述文件须符合<a href="../format_treelist/index.htm" target=_blank>Treelist XML 文档规范<a/>，该规范并不复杂，文档有6个顶级节点：<br>
+　　<b>1</b>.&lt;Properties&gt;　-　总的外观、行为、背景等属性，以及列和列之间的逻辑关系、数据验证逻辑等；<br>
+　　<b>2</b>.&lt;Fonts&gt;　-　用到的字体；<br>
+　　<b>3</b>.&lt;Cols&gt;　-　每个列的详细描述，这是最关键内容；<br>
+　　<b>4</b>.&lt;Droplists&gt;　-　下拉、主外键引用的数据源定义(<img src='document.bmp' title='请参见演示页: 9.各种下拉'>)；<br>
+　　<b>5</b>.&lt;FreeformBar&gt;　-　上方和下方的工具条(<img src='document.bmp' title='请参见演示页: 29.查询条件(一)、30.查询条件(二)'>)；<br>
+　　<b>6</b>.&lt;Table&gt;　-　夹带的纯数据(<img src='document.bmp' title='请参见演示页: 7.计算列、合计行 '>)；<br>
+<br>
+　　Treelist的格式属性尽管由XML描述文件决定，但是通过 SetProp( ) 和 SetColProp( ) 函数，在页面中可以被动态更改(<img src='document.bmp' title='请参见演示页: 25.动态更改属性'>)；带参数的Build( )函数也可以强制更改其属性(<img src='document.bmp' title='请参见演示页: 2.以Tree展现'>)，请参考这3个函数的详细说明。<br>
+<br>
+　　Treelist的填入数据来自一个Http URL，数据格式支持XML、JSON、TSV-TXT(Tab分隔列、回车分隔行的纯文本)。目前XML和JSON格式最流行，TSV-TXT尽管不太流行，但也有其优势，那就是长度最短。有关数据格式的详细描述请参见下面的<a href="addi1.htm" target=_blank>附录1：数据格式</a>.<br>
+
+
+<div id="Tag503"/><br><br><br>
+　　<font style='font-size:15pt'>3.几个重要的属性</font><hr color=#2266ee size=1>
+　　XML描述文档中，有几个元素属性比较重要，在此详细说明。<br>
+1.Properties\<b>sort</b>: 默认初始排序，例如 sort="country a, city a"；<br>
+<img src='glass.jpg'><font color="552222">数据是不必预先排序的，因为Load( )后，Treelist会自动按 sort 属性进行再排序!</font><br>
+<br>
+2.Properties\<b>isTree</b>: Treelist是以列表显示，还是以树显示；<br>
+<img src='glass.jpg'><font color="552222">如果以树显示，通常还需要设定 sort 属性，这样 sort 的列就是树杈；如果有多个列参与排序，例如 sort="country a, city a"，就会有多层树杈，这就是所谓“多列多层树”；如果不指定 sort，那么默认第一列为树杈.</font><br>
+<br>
+3.Properties\<b>Key</b>: 主键(包括复合主键)。如果要使GetChangedXML( )函数成功执行，必须定义主键(level级别为0除外)。并且在调用 GetChangedXML("isValidatKey=true") 提交函数时，Treelist会自动检查，遇到重复键值能自动弹出提示，并将光标跳转到相应单元格<br>
+<br>
+4.Properties\<b>dataURL</b>: 可选的属性，表示数据来源的默认URL；<br>
+<img src='glass.jpg'><font color="552222">如果定义了 dataURL 属性，那么js中就不需要执行 Load( ) 函数了，因为在Build( )时能自动Load( )！这一点很重要.</font><br>
+<img src='glass.jpg'><font color="552222">通过SetProp( )函数能更改 dataURL，更改成功后，Treelist能立即自动刷新，相当于重新Load( )；</font><br>
+<img src='glass.jpg'><font color="552222">dataURL 支持表达式(以“＝”开头, <img src='document.bmp' title='请参见演示页: 9.各种下拉 中的经销商下拉'>);</font><br>
+<br>
+5.Cols\col\<b>isUnique</b> 和 Cols\col\<b>nullAble</b>: 如果定义了此属性，在GetChangedXML()函数执行期间，Treelist会自动检查，遇到重复主键能自动弹出提示，并将光标跳转到相应单元格；<br>
+<img src='glass.jpg'><font color="552222">隐藏列是不作nullAble、isUnique检查的;</font><br>
+<br>
+6.Cols \ Col \ <b>displayMask</b>: 显示掩码，语法为"表达式; textColor=表达式; backColor=表达式; leftImage=表达式; rightImage=表达式"。这当中相当于有5个分句，分别表示了文字、文字颜色、背景色、左侧图标、右侧图标的独立表达式，相互之间以分号(;)分隔。<br>
+　　表达式中可以包含列名(包括其它列的列名)，表示引用本行中其它列的内容，并允许用“data”代表本单元格的数据.<br>
+　　关于表达式的书写规则，在下面的<a href="pub.htm?81#Tag60" target=_blank>公共内容</a>中有详细说明，也有大量的演示页可供参考(<img src='document.bmp' title='请参见演示页: 5.图文并茂(2)、11.显示掩码'>)。<br>
+<img src='glass.jpg'><font color="552222">&lt;Properties&gt;中也有同名的DisplayMask属性，但&lt;Properties&gt;的displayMask作用域是整个行，且只有backColor和textColor二种表达式分句.</font><br>
+<br>
+7.Properties\<b>ref</b>、Background\<b>ref</b>、Fons\<b>ref</b>: 引用外部XML描述文件的相关内容，例如 &lt;Background ref="../Common/thc.xml"&gt;，本Background内容将从thc.xml中取得，这样做的好处是很容易统一更改外观.<br>
+<img src='glass.jpg'><font color="552222">外部属性将被自动添加到本XML中，本XML的已有属性不会被替换;</font><br>
+<img src='glass.jpg'><font color="552222">不支持多重嵌套引用</font><br>
+<br>
+
+<div id="Tag504"/><br><br><br>
+　　<font style='font-size:15pt'>4.富输入功能</font><hr color=#2266ee size=1>
+　　富输入(Rich-Edit)功能是Supcan Treelist相当重要的功能，也是作为强交互的Grid控件所必备的基本功能。Treelist内置如下10种EditType:<br>
+<b>1.Edit</b>，普通输入，其中数值型、日期型允许有和PowerBuilder类似的格式掩码(EditMask);<br>
+<b>2.EditWithButton</b>， 右侧带按钮的Edit(<img src='document.bmp' title='请参见演示页: 12.事件'>)，点击按钮会抛出OnEvent(id, "Clicked",,,,“button”)事件;<br>
+<b>3.MultiLineEdit</b>，多行编辑(<img src='document.bmp' title='请参见演示页: 4.图文并茂(1)'>);<br>
+<b>4.Checkbox</b>，复选框(<img src='document.bmp' title='请参见演示页: 4.图文并茂(1)、8.多种掩码输入、16.行的复选'>), Checkbox的选中/不选中状态和数据有关, 数据规则为:<br>
+<i>　　 1:选中;<br>
+　　 0:未选中;<br>
+　　 2:状态不确定(方框内显示一实框);<br>
+　　-1:不显示Checkbox;<br></i>
+<b>5.RadioButton</b>，单选框(<img src='document.bmp' title='请参见演示页: 27.过滤: 关联下拉'>)，单选框必须由多个列组成，并允许按GroupID分成多个独立的组. 其列的数据规则为:<br>
+<i>　　1:选中;<br>
+　　0:未选中(也不显示).<br></i>
+<b>6.button</b>，按钮列(<img src='document.bmp' title='请参见演示页: 12.事件'>)，点击按钮会抛出OnEvent(id, "Clicked",,,,“button”)事件。按钮表面除了可以显示文字，也可以显示图标；每列允许并排有多个按钮，详细规格请参见Treelist XML文档规范. 列的数据规则为:<br>
+<i>　　1:正常显示按钮;<br>
+　　0:按钮显示为Disabled;<br>
+　　其它值: 不显示按钮，作为纯文字显示;<br></i>
+<b>7.Droptreelist / EditAbleDroptreelist</b>，下拉嵌套的treelist/可编辑的下拉treelist(<img src='document.bmp' title='请参见演示页: 9.各种下拉'>)，下拉弹出的是另一个独立的Treelist，有点类似于 PowerBuilder 中的DDDW;<br>
+<b>8.Droplist / EditAbleDroplist</b>，下拉列表/可编辑的下拉列表(<img src='document.bmp' title='请参见演示页: 9.各种下拉'>)，Windows操作系统自带的Combobox下拉控件，相当于是Html的&lt;Option&gt;、&lt;Select&gt;;<br>
+　　Demo页中有很多演示页面，淋漓尽致地展示了各种富输入功能，请具体分析这些XML描述文件。<br>
+　　上述EditType中，有几种是下拉类型，下拉比较复杂，在此稍作详细分析。<br>
+<br>
+<div id="Tag5041"/><br>　　<font style='font-size:14pt'>4.1 DropTreelist</font><hr color=#2266ee size=1>
+　　DropTreelist类型的下拉列，都必须定义"droplistID"属性，该"droplistID"对应于当前XML描述文件中根元素&lt;Droplists&gt;下某个具体的&lt;Droplist&gt;，例如：<br>
+<img src='../../res/droplistid.png'><br>
+　　下拉的单元格的值数据(value)和显示串(text)通常是不一样的，显示什么样的串由关联的&lt;Droplist&gt;决定，这和数据库中的主-外键对应关系原理是一样的。<br>
+　　&lt;Droplist&gt;中的 Treelist="?" 就是下拉后弹出的Treelist, 它是一个独立的Treelist.<br>
+　　&lt;Droplist&gt;中的 DataCol 和 DisplayCol 属性很重要，分别指定了数据列和显示列，因为被引用的外部Treelist可能会有很多列.<br>
+　　从上图可以看出，&lt;Droplists&gt; 节点相当于是字典库，集中登记了可能会被引用到的所有外部Treelist.<br>
+<img src='glass.jpg'><font color="552222">你可以在这里直接指定下拉的dataURL: &lt;Droplist id="?" Treelist="?" <font color=red>dataURL="?"</font> ...&gt;, 这里的dataURL级别高于其默认的dataURL.</font><br>
+
+<br>
+<br>
+<div id="Tag5042"/><br>　　<font style='font-size:14pt'>4.2 DropList</font><hr color=#2266ee size=1>
+　　下图的“客户”、“国家”使用了Droplist输入类型，然而其数据字典的来源却不一样；<br>
+<img src='droplists.png'><br>
+　　Custom(客户)下拉指向了一个外部Treelist, 表示它的键-值数据来自这个外部Treelist;<br>
+　　Country(国家)下拉字典, 是一个真正的字典：已内置了字典数据;<br>
+<img src='glass.jpg'><font color="552222">国家的字典还可以这样写&lt;DropList id="country" dataURL="dataserv/action?did=country"/&gt;, 动态从后端拉数据!</font><br>
+<img src='glass.jpg'><font color="552222">还有一种不太常用的处理方法：不指定droplistID, 如&lt;col name="country" edittype="droplist"&gt;国家&lt;/col&gt;，通过全局函数中的 "droplist_"族函数动态为下拉字典添加键-值对.</font><br>
+<br>
+<br>
+<div id="Tag5043"/><br>　　<font style='font-size:14pt'>4.3 EditWithButton</font><hr color=#2266ee size=1>
+　　EditWithButton可以采用下拉字典，也可以不采用下拉字典.<br>
+　　在有些场合中，采用下拉字典来维护EditWithButton的键-值对，能简化开发。采用了下拉字典后，其存取数据、维护键-值对的API，就和常规的DropList类型一视同仁了。<br>
+　　要让EditWithButton采用下拉字典，只要和Droplist一样指定DroplistID即可: &lt;col name="?" edittype="editWithButton" droplistID="?" ...&gt;，当然这个下拉只是作为键-值对的缓存而已，绝不会弹出显示的，EditWithButton的交互行为，完全交由您在OnEvent( )事件中处理。<br>
+<center><img src='as2.png'></center>
+<img src='glass.jpg'><font color="552222">也可以让 DroplistID="auto"，系统能自动为其分配一个空的下拉字典.</font><br>
+
+
+<div id="Tag505"/><br><br><br>
+　　<font style='font-size:15pt'>5.行/列逻辑关系</font><hr color=#2266ee size=1>
+　　列与列之间的逻辑关系在&lt;Properties&gt; \ &lt;Expresses&gt; 中定义，一旦定义了之后，Treelist在交互、输入过程中能严格保持着这种关系。例如数量、单价和金额之间的关系：<br>
+<pre class='xml'>
+&lt;Properties editAble="true"&gt;
+ &lt;expresses&gt;
+  &lt;express&gt;total=round(price*num, 2)&lt;/express&gt;
+  &lt;express&gt;price=round(total/num, 4)&lt;/express&gt;
+ &lt;/expresses&gt;
+&lt;/Properties&gt;</pre>
+<img src='glass.jpg'><font color="552222"> price=round(total/num, 4) 表示如果金额被修改，则数量保持不变，而单价自动改变.</font><br>
+<br>
+　　行与行之间的逻辑关系是指小计、合计功能，在需要统计的列( &lt;col&gt;)中定义，例如：<br>
+<pre class='xml'>
+&lt;Col name="total" datatype="double" decimal="2" <font color=red>totalExpress</font>="=@sum"&gt;总价&lt;/Col&gt;</pre>
+　　表达式的书写规则请详见<a href="../format_treelist/index.htm" target=_blank>Treelist XML 文档规范<a/>，以及<a href="pub.htm?81#Tag603" target=_blank>公共内容\3.宏</a>。<br>
+
+<br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

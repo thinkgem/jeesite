@@ -3,10 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.oa.dao;
 
-import org.springframework.stereotype.Repository;
-
-import com.thinkgem.jeesite.common.persistence.BaseDao;
-import com.thinkgem.jeesite.common.persistence.Parameter;
+import com.thinkgem.jeesite.common.persistence.CrudDao;
+import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.oa.entity.Leave;
 
 /**
@@ -14,11 +12,21 @@ import com.thinkgem.jeesite.modules.oa.entity.Leave;
  * @author liuj
  * @version 2013-8-23
  */
-@Repository
-public class LeaveDao extends BaseDao<Leave> {
+@MyBatisDao
+public interface LeaveDao extends CrudDao<Leave> {
 	
-	public int updateProcessInstanceId(String id,String processInstanceId){
-		return update("update Leave set processInstanceId=:p1 where id = :p2", new Parameter(processInstanceId, id));
-	}
+	/**
+	 * 更新流程实例ID
+	 * @param leave
+	 * @return
+	 */
+	public int updateProcessInstanceId(Leave leave);
+	
+	/**
+	 * 更新实际开始结束时间
+	 * @param leave
+	 * @return
+	 */
+	public int updateRealityTime(Leave leave);
 	
 }

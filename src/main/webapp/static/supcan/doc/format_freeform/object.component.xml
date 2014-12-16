@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Component" meaning="硕正大粒度组件" number="0-n" example="20.Freeform框架">
+<element name="type" meaning="组件类型">
+	<category>主要</category>
+	<value meaning="树列表组件">Treelist</value>
+	<value meaning="自由表头组件">Freeform</value>
+	<value meaning="报表组件">Report</value>
+	<value meaning="树组件">Tree</value>
+	<value meaning="统计图组件">Chart</value>
+</element>
+<element name="CreatePara" meaning="创建参数">
+	<category>主要</category>
+	<value>串</value>
+	<memo>不同组件类型有不同的规范, 请参见相关组件的文档中的“1.创建实例”中的参数规范</memo>
+</element>
+<element name="URL/src" meaning="用于Build的URL">
+	<category>主要</category>
+	<value>绝对或相对URL</value>
+	<memo>仅用于有Build函数的组件：Report/Treelist/Freeform/Tree</memo>
+</element>
+</elements>
+
+</root>

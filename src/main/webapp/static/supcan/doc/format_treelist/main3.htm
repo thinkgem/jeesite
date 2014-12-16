@@ -1,0 +1,135 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+<script type="text/javascript" src="../proptable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("cols.col.xml?81");
+  genproptable('Tag121', xmlDoc, "#e2e2e2");
+  xmlDoc = getXMLDoc("droplists.droplist.xml?81");
+  genproptable('Tag161', xmlDoc, "");
+ }
+</script>
+</head>
+
+<body onload="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag12"/>
+<b>Cols</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:各列的信息；数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag121"></div><br>
+<div id="Memo1"/><b>备注1</b>: 上述列标题、buttonText，允许以"|"分隔中英文(用于中英文切换);<br>
+<div id="Memo2"/><b>备注2</b>: isHyperLink、isImage的列，如果加载的单元格数据以特征串 “<b>[NoEffect]</b>” 开头(大小写敏感)，表示该单元格以普通文字显示，特征串 <b>[NoEffect]</b> 使用范围为:<br>
+　　1.仅用于初始数据;<br>
+　　2.对 SetCellData( ) 函数设置的值无效;<br>
+　　3.该特征串在加载时能被自动识别、摘除，不会出现在单元格中;<br>
+<br>
+
+
+<div id="Tag122"/><br>
+<b>Group</b>　　<img src='document.bmp' title='请参见演示页: 3.多层表头'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:分组表头；数量:0 - n;</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>title(或name)</td><td>显示的文字</td><td>串</td><td>无</td></tr>
+<tr><td>headerFontIndex(或fontIndex)</td><td>采用的字体, 前面定义的&lt;Font&gt;的序号</td><td>数字</td><td>-1</td></tr>
+<tr><td>textColor(或color)</td><td>文字颜色</td><td>颜色串</td><td>#000000</td></tr>
+<tr><td>align</td><td>文字对齐</td><td>left/center/right</td><td>center</td></tr>
+<tr><td>id</td><td>分组的id，仅用于加载采用该id代替列名的XML/JSON数据</td><td>串</td><td>(无)</td></tr>
+</table>
+备注: 1.Group可以包含Col，也可以包含子Group，也可以和Col并列，相当于是树的树杈；<br>
+　　  2.title允许以"|"分隔中英文(用于中英文切换);<br>
+<br>
+
+
+
+<div id="Tag14"/>
+<b>FreeformRes</b>　　<img src='document.bmp' title='请参见演示页: 29.查询条件(一)、30.查询条件(二)'> 　<img src='document.bmp' title='请参见Freeform的演示页: 15.辅助Treelist输入(2)'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:自由表头资源区；数量:0 - 1;</td></tr>
+</table>
+<br>
+<div id="Tag141"/>
+<b>Freeform</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgColor=#e4e4e4><td colspan=5>含义:具体的Freeform；数量:0 - n；</td></tr>
+<tr bgcolor=#eaeaea><td>类别</td><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td rowspan=2>公共</td><td>id</td><td>该freeform的id, 用于有多个Freeform时</td><td>串</td><td>无</td></tr>
+<tr><td>url</td><td>引用的freeform的URL (见备注)</td><td>串</td><td>无</td></tr>
+
+<tr><td rowspan=11>用于内嵌输入</td><td>idOk</td><td>该freeform内"确认"按钮的id</td><td>串</td><td>无</td></tr>
+<tr><td>idCancel</td><td>该freeform内"取消"按钮的id</td><td>串</td><td>无</td></tr>
+<tr><td>Width</td><td>对话框宽度</td><td>数字(像素)，或百分比</td><td>80%</td></tr>
+<tr><td>Height</td><td>对话框高度</td><td>数字(像素)，或百分比</td><td>80%</td></tr>
+<tr><td>extW 或 extWidth</td><td>对话框向右侧扩展的宽度</td><td>数字(像素)</td><td>20</td></tr>
+<tr><td>extH 或 extHeight</td><td>对话框向下侧扩展的高度</td><td>数字(像素)</td><td>14</td></tr>
+<tr><td>idFocus 或 focusId</td><td>焦点定位到input的id</td><td>串</td><td>无</td></tr>
+<tr><td>border</td><td>边界线宽</td><td>数字(像素)</td><td>1</td></tr>
+<tr><td>borderColor</td><td>边界线色</td><td>颜色串</td><td>#96B4C4</td></tr>
+<tr><td>bgColor 或 backColor</td><td>遮罩色</td><td>颜色串</td><td>#C8C8C8</td></tr>
+<tr><td>alpha</td><td>遮罩透明度</td><td>1-255</td><td>70</td></tr>
+
+<tr><td rowspan=6>用于内嵌输入<br>(动态生成)</td><td>ZN</td><td>如果动态生成多行多列的&lt;input&gt;，那么是按照"Z"字型, 还是按照上下颠倒的"N"字型生成</td><td>Z或N</td><td>Z</td></tr>
+<tr><td>hiddenCol</td><td>隐藏列的动态生成模式，有如下3种选择：<br><b>edit 或 editable</b> - 可编辑;<br><b>disp 或 display</b> - 不可编辑，仅显示;<br><b>hide</b> - 仍隐藏</td><td>如左所述</td><td>hide</td></tr>
+<tr><td>unEditAbleCol</td><td>editAble=false的列的动态生成模式，有如下3种选择：<br><b>edit 或 editable</b> - 可编辑;<br><b>disp 或 display</b> - 不可编辑，仅显示;<br><b>hide</b> - 隐藏</td><td>如左所述</td><td>edit</td></tr>
+<tr><td>includeCol</td><td>动态生成的input, 仅包含某些列.<br>备注：includeCol、excludeCol不能同时存在</td><td>列名，逗号分隔</td><td>无</td></tr>
+<tr><td>excludeCol</td><td>动态生成的input, 除了某些列以外，都包含.<br>备注：includeCol、excludeCol不能同时存在</td><td>列名，逗号分隔</td><td>无</td></tr>
+<tr><td>GroupSep</td><td>分组的列名的分隔符.<br>生成诸如“分组1 \ 分组2 \ 列名”这样的输入框左侧文字</td><td>任意串，空串表示不需要分组名</td><td> \ (左右都带空格)</td></tr>
+</table>
+备注：可以不定义url，而在内部(子节点)直接嵌套入一个完整的Freeform XML，Freeform的语法请参见头部的“Freeform XML文档规范”;<br>
+<br>
+<br>
+<div id="Tag16"/>
+<b>DropLists</b>　　<img src='document.bmp' title='请参见演示页: 9.各种下拉、10.可编辑下拉、27.过滤: 关联下拉'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:下拉框字典资源；数量:0 - 1;</td></tr>
+</table>
+<br>
+
+<div id="Tag161"></div>
+<br>
+
+<div id="Tag1611"/>
+<b>item</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgColor=#e4e4e4><td colspan=4>含义:下拉框字典条目；数量:1 - n；内容：该条目的显示串</td></tr>
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>key</td><td>条目键值</td><td>串</td><td>无</td></tr>
+</table>
+备注：如果已经定义了dataURL属性，就没必要再定义item元素了，dataURL优先级高于item元素;<br>
+<br>
+
+<div id="Tag19"/>
+<b>Table</b>　　<img src='document.bmp' title='请参见演示页: 7.计算列合计行、27.过滤: 关联下拉'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 需初始加载的纯数据；数量:0 - 1;<br>注：一般不建议夹带纯数据.</td></tr>
+</table>
+<br>
+
+<div id="Tag191"/>
+<b>TR</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 初始的数据行；数量:0 - n;</td></tr>
+</table>
+<br>
+
+<div id="Tag1911"/>
+<b>TD</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义: 数据列；数量:1 - n;<br>备注：也可以不采用TD，而是采用&lt;Cols&gt;中具体的列名(name)</td></tr>
+</table>
+<br>
+
+
+<br><br><br><br><br><br><br>
+<script type='text/javascript' src='../dev/nstd.js'></script>
+</body></html>

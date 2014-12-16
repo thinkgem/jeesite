@@ -1,0 +1,382 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+
+<div id="Tag1"/><br><br><br>
+　　<font style='font-size:15pt'>6.分页</font><hr color=#2266ee size=1>
+　　在页面中每次加载数千条记录，通常被认为是不明智的，有必要使用分页。<br>
+　　实现分页的关键，是XML描述文档的&lt;Properties&gt;中的 dataURL 须包含@startRow、@rows宏(分别表示开始行、每页行数)，例如：<br>
+　　　　dataURL="../getdata/action?from=@startRow&count=@rows"<br>
+
+<div id="Tag2"/><br><b>6.1 分页方案</b><br>
+　　Supcan Treelist有二种分页方案：依赖外部Freeform Pager(自由表头的分页器)的方案、垂直滚动条即滚即刷新的内部分页方案.<br>
+　　第一个方案中，数据的分页刷新完全是由外部分页器触发的，所以在此不作详细分析，请参考演示页“分页方案(一)”，以及上方的
+"Freeform XML文档规范"的“Pager”小节内容。<br>
+　　采用该方案的优点是分页直观，用户体验好，结合Freeform的渲染功能可以做出各种漂亮的分页器。像demo页中那样，Freeform中除了有分页器，还有些功能小图标，相当于可以把Freeform作为工具条使用。<br>
+<br>
+　　第二个方案的分页完全是由Treelist内部处理的，不与外部分页器绑定。<br>
+　　该方案的数据刷新实际上是分段刷新，刷新的时机是：尚未加载的数据行，在需要显示时加载.<br>
+　　采用该方案的优点是简单，需要写的js很少。<br>
+<br>
+　　要采用分页功能，后端C#/Java必须开发出相应的功能；不管采用上述哪种方案，从后端开发角度看，是完全一样的。<br>
+
+<div id="Tag3"/><br><b>6.2 总行数</b><br>
+　　分页显示时，通常需要先取得数据的总行数，硕正提供二种获取总行数的方法：<br>
+　　方法一：在服务器返回的首个数据包中夹带总行数：安插一个名为"totalRows"的元素或属性，例如：<br>
+<pre class='xml'>
+&lt;root&gt;
+ &lt;resultSet totalRows="12000"&gt;
+   &lt;record&gt;
+    ...
+   &lt;/record&gt;
+   &lt;record&gt;
+    ...
+   &lt;/record&gt;
+   ...
+  &lt;/resultSet&gt;
+ &lt;/root&gt;</pre>
+　　该XML包表明了总行数是12000行，或者这样写也可以:
+<pre class='xml'>
+&lt;root&gt;
+ &lt;totalRows&gt;12000&lt;/totalRows&gt;
+ &lt;resultSet&gt;
+   &lt;record&gt;
+    ...
+   &lt;/record&gt;
+   &lt;record&gt;
+    ...
+   &lt;/record&gt;
+   ...
+  &lt;/resultSet&gt;
+ &lt;/root&gt;</pre>
+ 　　对于JSON格式，可以是：<br>
+ <pre class='cpp'>
+{"totalRows": 12000, "Record": [
+ {"Country":"France", "OrderID":"10248", "CustomerID":"VINET"},
+ {"Country":"Germany", "OrderID":"10249", "CustomerID":"TOMSP"},
+ {"Country":"Brazil", "OrderID":"10250", "CustomerID":"HANAR"}
+]}</pre>
+　　方法二：在XML中定义 "totalRows" 属性(或在页面中通过SetProp函数动态设置)，这是一个独立的普通URL，例如：totalRows = "../stock/search1.aspx?tag=23"，服务器只要返回总行数即可。
+但这种方案的缺点显而易见：需要访问二遍服务器，影响性能.<br><br>
+
+<div id="Tag33"/><br><b>6.3 其它功能</b><br>
+<i><b>6.3.1</b> 全部打印</i><br>
+　　在企业应用中，有这么一种常见的需求：以分页显示，但是调用菜单的“打印”、“转换输出”时，却要求得到全部的数据。<br>
+　　为了实现这个功能，我们采用这样的做法：<br>
+1.请调用EnableMenu( )函数，激活exportAll、printAll子菜单，这样右键菜单就变成了如下的菜单项了：<br>
+<center><img src='treelist10.png'></center>
+2.如果用户选择了“转换输出全部页”、“打印全部页” 或 “打印预览全部页”菜单项，控件将抛出"RequestAllPages"事件；<br>
+3.您需要响应这个事件：取得全部数据(Load( ));<br>
+　　事件返回后，控件将接下去做该做的事情。<br>
+<br>
+<i><b>6.3.2</b> 服务端排序</i><br>
+　　默认情况下，排序操作是在客户端进行的，如果要在服务器端实现排序，那么需要在&lt;Properties&gt;中定义IsRemoteSort="true"。<br>
+　　在触发的“Sort”事件中，你需要重新向服务器发送请求。 结合Treelist的demo页"17.分页方案(一)"，你可以将 OnReady( ) 和 OnEvent( ) 事件改成：<br>
+<pre class='cpp'>
+function OnReady(id)
+{
+ if(id=='AF1') {
+  bReadyAF1 = true;
+  AF1.func("Build", "treelist/t1.xml");
+  //这行指定要求服务端排序
+  AF1.func("SetProp", "IsRemoteSort \r\n1");
+ }
+ ...(略)
+}
+ 
+function OnEvent(id, Event, p1, p2, p3, p4)
+{
+ if(id=='AF1' && Event=='Sort' && p1=='1') {
+  //取得当前的排序串
+  var sort=AF1.func("GetProp", "sort");
+  //修改取数URL, 它会立即刷新的
+  AF2.func("SetObjectProp", "ID0 \r\n dataURL \r\n http://localhost/DotNet/rcds.aspx?startRow=@startRow&rows=@rows&sort="+sort);
+ }
+ ...(略)
+}</pre>
+　　在源码的第18行，sort=? 的条件子句，已包含了排序串，诸如"date a,custid d,price d"，需要你后端去解析.<br>
+<br>
+<div id="Tag34"/><br><b>6.4 ajax取数</b><br>
+　　含有分页器的分页数据流转过程是：分页器负责从后端取数，并把数据交给绑定的Treelist显示。<br>
+　　但也有这样的场景：程序员希望自己通过ajax取数，并把数据交给分页器或Treelist显示.  对于这样的场景，硕正套件也是支持的，以演示页"18.分页方案(一)"为例，需要修改的实现代码和原理分析如下：<br>
+<pre class='cpp'>
+function OnReady(id)
+{
+ ...
+ //前面部分略 
+ 
+ if(bReadyAF1 && bReadyAF2) {
+  //绑定
+  var h = AF1.func("GetHandle", "");
+  AF2.func("BindPager", h + "\r\n ID0");
+ 
+  //取得分页器的 "每页行数" 属性
+  var pgrows = AF2.func("GetObjProp", "ID0 \r\n PageRows");
+  //拼装出取第一页数据的URL
+  var url = "http://www.supcan.cn/DotNet/access.aspx?sleep=1&startRow=0&rows=" + pgrows;
+  //通过ajax取得数据串(注：这里是通过download全局函数模拟ajax的)
+  var xml = AF1.func("download", url + "\r\n toString=1;isEcho=0");
+  //把XML数据串交给分页器
+  AF2.func("SetObjectProp", "ID0\r\n dataURL \r\n" +xml);
+ }
+}</pre>
+　　上述代码仅仅是取得第一页的数据，当用户点击分页器的页码时，会触发"Pager"事件，所以还需要解决"Pager"事件：<br>
+<pre class='cpp'>
+function OnEvent(id, Event, p1, p2, p3, p4)
+{
+ if(id=='AF2') {
+  if(Event=="Pager") {
+   //p2,p3参数分别为开始行和每页行数
+   var url = "http://www.supcan.cn/DotNet/access.aspx?sleep=1&startRow=" +p2+ "&rows=" + p3;
+   //通过ajax取得数据串(注：这里是通过download全局函数模拟ajax的)
+   var xml = AF1.func("download", url + "\r\n toString=1;isEcho=0");
+   //有如下2种方法转交数据:
+   //方法一：把数据给分页器
+   AF2.func("SetObjectProp", "ID0\r\n dataURL \r\n" +xml);
+   //方法二：也可以直接把数据给Treelist
+   AF1.func("load", xml);
+   return;
+ }
+ ...(其它事件：略)
+}</pre>
+<br>
+<div id="Tag4"/><br><br><br>
+　　<font style='font-size:15pt'>7.树</font><hr color=#2266ee size=1>
+　　Treelist组件可以以树的形式显示，树分为二种：多列多层树 和 单列多层树. &lt;Properties&gt;中的 treeformat 属性决定了树的创建形式，默认是多列多层树。<br>
+
+<div id="Tag5"/><br><b>7.1 多列多层树</b><br>
+　　默认情况下(即 treeformat="normal" )Treelist可以以列表、或多列多层树展现，通过鼠标右键可以在二者之间任意切换，换句话说，列表和多列多层树是互通的.<br>
+　　树的层次分级完全是由列表的排序列决定的，有多少排序列就分多少层，例如：<br>
+<center><img src='treelist4.png'/></center>
+　　多列多层树的优点在于其灵活性，最终用户完全可以自主排序、分层。如果结合分类汇总，分类汇总的小计计算也完全是按照当前的排序项进行的。<br>
+
+<div id="Tag6"/><br><b>7.2 单列多层树</b><br>
+　　顾名思义，只有一列数据就能按多层展开的树就是单列多层树，例如我们熟知的windows的资源管理器，左侧的目录树就是单列多层树.<br>
+<b>7.2.1 单列多层树的treeformat语法</b><br>
+　　单列多层树的格式声明稍复杂，如下是全部可用的选项子句：<br>
+　　treeformat = "<b>[byid/bypid/bydata]; autoid=[true/false]; autoIdLen=[?]; subtotalNodeEditAble=[true/false]</b>"<br>
+　　下面将对这些格式作详细解释。<br>
+<i><b>7.2.1.1</b> 格式1：treeformat="byId"</i><br>
+　　此类单列多层树有一个明显的特征，就是某列的数据本身就蕴含了分层的特性，我们称之为“代码列”，例如会计科目代码。<br>
+　　这个 treeFormat 有另一种写法：treeformat="format=byId; displayId=part"，表示代码列数据的左侧相同部分在子孙中不显示，如下图的右图就是displayId=Part的情形(左图是普通的format="byId")：<br>
+<center><table border=0 width=100%><tr><td><img src='treelist5.png'/></td><td><img src='treelist6.png'/></td></tr></table></center>
+<img src='glass.jpg'><font color="552222">注1：此类单列多层树，在其XML描述文件中，代码列必须是第一列.</font><br>
+<img src='glass.jpg'><font color="552222">注2：代码列的各行内容不得重复，否则会导致树的分级紊乱.</font><br>
+<br>
+<i><b>7.2.1.2</b> 格式2：treeformat="byData"</i><br>
+　　Treelist还支持比较特殊的数据格式：数据本身就是XML树！ <br>
+　　这种XML数据和常规的XML数据结构不太一样，数据的内容全部在XML的属性元素中，例如：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Data&gt;
+ &lt;row ID="20" ks="硕正套件" ddm="ac"&gt;
+  &lt;row ID="51" ks="语法" ddm="ac" LazyLoad="tree.aspx?id=51"/&gt;
+  &lt;row ID="63302" ks="函数" ddm="at"/&gt;
+  &lt;row ID="DDM" ks="事件" ddm="ac"&gt;
+    &lt;row ID="20KK3" ks="OnReady" ddm="a"/&gt;
+    &lt;row ID="40KK4" ks="OnEvent" ddm="th"/&gt;
+  &lt;/row&gt;
+ &lt;/row&gt;
+ &lt;row ID="120" ks="安装" ddm="ac" LazyLoad="tree.aspx?id=120"/&gt;
+&lt;/Data&gt;</pre>
+<br>
+<i><b>7.2.1.3</b> 格式3：treeformat="byPid"</i><br>
+　　为了方便程序员后端开发，硕正单列多层数还支持通过显式的 PID (即ParentId)指定父节点的树数据格式, 例如：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Data&gt;
+&lt;row ID="20" ks="硕正套件" ddm="ac"/&gt;
+&lt;row ID="51" PID="20" ks="语法" ddm="ac" LazyLoad="tree.aspx?id=51"/&gt;
+&lt;row ID="63302" PID="20" ks="函数" ddm="at"/&gt;
+&lt;row ID="DDM" PID="20" ks="事件" ddm="ac"/&gt;
+&lt;row ID="20KK3" PID="DDM" ks="OnReady" ddm="a"/&gt;
+&lt;row ID="40KK4" PID="DDM" ks="OnEvent" ddm="th"/&gt;
+&lt;row ID="120" ks="安装" ddm="ac" LazyLoad="tree.aspx?id=120"/&gt;
+&lt;/Data&gt;</pre>
+　　也支持这样的普通XML格式：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Data&gt;
+ &lt;row&gt;
+  &lt;ID&gt;20&lt;/ID&gt;
+  &lt;PID&gt;&lt;/PID&gt;
+  &lt;ks&gt;硕正套件&lt;/ks&gt;
+  &lt;ddm&gt;ac&lt;/ddm&gt;
+ &lt;/row&gt;
+ &lt;row&gt;
+  &lt;ID&gt;51&lt;/ID&gt;
+  &lt;PID&gt;20&lt;/PID&gt;
+  &lt;ks&gt;语法&lt;/ks&gt;
+  &lt;ddm&gt;ac&lt;/ddm&gt;
+  &lt;LazyLoad&gt;tree.aspx?id=51&lt;/LazyLoad&gt;
+ &lt;/row&gt;
+ ...
+&lt;/Data&gt;</pre>
+<img src='glass.jpg'><font color="552222">注1：Treelist的XML描述文件中必须要有名为 "ID" 和 "PID" 的列，否则会抛出错误;</font><br>
+<img src='glass.jpg'><font color="552222">注2：如果数据行没有PID、或PID指向的行不存在，则自动作为根节点.</font><br>
+
+<br>
+<i><b>7.2.1.4</b> autoid子句</i><br>
+　　treeFormat语法中还有一个可用子句:  <b>autoid=[true/false]; autoIdLen=[?]</b>   例如: <br>
+　　　　treeFormat="format=byId; autoid=true"<br>
+　　 autoid=true 表示id代码值能由硕正软件自动生成，例如鼠标在作拖拽(包括窗口内部的自我拖拽)时，能自由拖动到其它行的上方平辈、下方平辈、或作为子孙，其id代码能自动按照父子级别重新自动生成，下面是拖拽时的屏幕截图：<br>
+<table cols=3 border=0>
+<col align=center><col width=20><col align=center>
+<tr><td><img src='treelist8.png'></td><td/><td><img src='treelist9.png'></td></tr>
+<tr><td align=center>图1：拖为平辈</td><td/><td align=center>图2：拖为子孙</td></tr>
+</table>
+<br>
+　　 autoidLen用于手工指定各级id的宽度，如果不指定，则根据总行数自动生成。<br>
+　　 此外，autoid=true状态下的鼠标右键的"插入"子菜单，和平常的也不一样：<br>
+<center><img src='treelist7.png'></center>
+<br>
+<img src='glass.jpg'><font color="552222">注：byPid、byData的单列多层树，本身就支持上述自由拖拽的功能的;</font><br>
+<br>
+
+<i><b>7.2.1.5</b> subtotalNodeEditAble子句</i><br>
+　　treeFormat语法中还有一个不太常用的子句:  <b>subtotalNodeEditAble=[true/false]</b> <br>
+　　subtotalEditAble 表示树杈行、小计列所在单元格的内容，是否允许被修改，默认是false，即小计是逐级自动汇总的，通常不需要人工干预.<br>
+
+<br>
+<b>7.2.2 单列多层树的懒加载(LazyLoad)</b> <img src='document.bmp' title='请参见演示页: 15.单列多层树(二)'><br>
+　　单列多层树的树杈有延后加载的功能：树杈在首次展开时，能即时从服务器加载数据。LazyLoad有几种不同的实现方法, 下面逐个介绍：<br>
+方法1:<br>
+　　定义一个名为“LazyLoad”的列(&lt;col name="lazyload" isHide="absHide"/&gt;)，这个lazyload列的数据是取子孙行的URL，如果该列内容为空，就表示是树叶。<br>
+方法2:<br>
+　　让&lt;Properties&gt;的"LazyLoad"属性指向一个能算出URL的表达式，比如 lazyLoad="='../getcd.aspx?id=' + id".<br>
+方法3:<br>
+　　让&lt;Properties&gt;的 LazyLoad="true"，表示树杈首次展开时将触发"LazyLoad"事件，由您自己从后端加载数据，然后通过Load( )函数插入数据.<br>
+<br>
+　　方法2和方法3都是默认让所有行都成为树杈，在加载不到数据时才变成树叶。如果您觉得这样不妥，可以增加一个名为"isLeaf"的列，比如：<br>
+　　&lt;col name="isLeaf" isHide="absHide"/&gt;<br>
+　　如果加载的数据中 isLeaf 为 1 或 true, 则该行就肯定是树叶了。<br>
+<br>
+<br>
+<b>7.2.3 单列多层树的图标</b></i><br>
+　　树通常需要一个小图标，有如下几种树的图标方案：<br>
+一.采用 displayMask 属性<br>
+　　displayMask是通用的格式掩码表达式，书写其中的 leftImage 子表达式就可以设图标了，例如: displayMask="leftImage = ../imgs.zip#01.bmp".<br>
+　　由于是表达式，其书写可以较灵活，可以让不同的行展现不同的图标，例如: displayMask="leftImage=imgfield", 其中imgfield是&lt;col&gt;的name，即图标文件列，其内容就是图片的URL, 该列不需要显示，将其隐藏即可，例如:<br>
+　　　　&lt;col name="imgfield" isHide="absolute"/&gt;<br>
+二.采用 treeImageLeaf / treeImageNodeExpand / treeImageNodeCollapse 属性<br>
+　　为树的树叶、树杈设置统一的图标，书写规则请参见Treelist XML文档规范.<br>
+　　在demo页"14.单列多层树"有例子可参考(在“技术分析区"的下方).<br>
+三.采用函数 SetTreeImage( )<br>
+　　执行该js函数，逐行为树设置图标.<br>
+<br>
+
+
+<div id="Tag7"/><br><br><br>
+　　<font style='font-size:15pt'>8.嵌入Freeform</font><hr color=#2266ee size=1>
+<b><i>8.1 普通嵌入</i></b><br>
+　　Supcan Treelist允许嵌入一个Freeform XML，来代替行的显示，相当于每行都是一个Freeform.<br>
+　　嵌入了Freeform后，数据行的外观就不再被限制在类似"表格"的范围了，数据展现可以相当地自由，演示页请参见“自由表头”中的“10.多记录Freeform(1)”、“12.多记录Freeform(2)”.<br>
+　　嵌入Freeform有一个最基本的要求：Treelist中的&lt;col <font color=red>name</font>="?"&gt;需要和Freeform中的&lt;text/input/img <font color=red>id</font>="?"&gt;相匹配.<br>
+　　满足了这一点后，Treelist就可以通过定义&lt;Properties <font color=red>freeform</font>="?"  <font color=red>rowHeight</font>="?" &gt;引用该Freeform了.<br>
+　　嵌入的Freeform将代替Treelist各行的显示，也能代替Treelist的输入，是否能输入取决于Treelist的&lt;Properties&gt;中的 "Editable" 属性，且和Freeform中的&lt;Properties&gt; 的"Editable" 无关.<br>
+<br>
+　　如果Treelist嵌入了Freeform，如下属性的默认值将和平常的不一样：<br>
+　　　　1.<b>&lt;Properties&gt; \ headerHeight</b>:  默认值将不是24，而是0，也就是说默认将没有表头;<br>
+　　　　2.<b>&lt;Properties&gt; \ isShowRuler</b>:  默认值将是true，也就是说默认显示左侧标尺;<br>
+　　　　3.<b>&lt;col&gt; \ width</b>:  默认值将不是0.1，而是0;<br>
+<img src='glass.jpg'><font color="552222">嵌入Freeform的Treelist不支持以树展现、不支持合计/小计行</font>;<br>
+<img src='glass.jpg'><font color="552222">被嵌入的Freeform不支持Menus、Upload、Pager、ImageFlow类型的Object</font>;<br>
+<br>
+<b><i>8.2 Freeform对话框</i></b><br>
+　　有一种常见的应用场景是，数据平常以Treelist列表展现，如果要修改数据，只要按回车键(或鼠标双击)，就能弹出一个对话框，在对话框中输入数据。<br>
+　　您可以在“自由表头”中的 “15.辅助Treelist输入(2)” 演示页中实际操作一下，您会发现这种内置Freeform的非模式对话框输入方式，也是一种很不错的输入方案，尤其是在列多的情况下，输入一条记录变得直观简单，不必再来回拖拽底部的滚动条了。<br>
+　　&lt;Properties&gt;有一个属性 "editFreeformId"，就是用来指定这个输入的freeform对话框的，就如下面例子中的：
+<pre class='xml'>
+&lt;Properties editFreeformId="FR1"/&gt;
+&lt;cols&gt;
+ &lt;col ...&gt;
+ ...
+&lt;/cols&gt;
+&lt;FreeformRes&gt;
+ &lt;freeform id="FR1" url="freeform71.xml" IdOk="ok" IdCancel="cancel" extWidth="0"/&gt;
+ &lt;freeform id="FR2" url="freeform72.xml" IdOk="ok" IdCancel="cancel" extWidth="0"/&gt;
+&lt;/FreeformRes&gt;
+...
+</pre>
+　　这种对话框有2种形式的freeform: <br>
+　　　　1.固定、写死的freeform;<br>
+　　　　2.动态生成、模版型的freeform<br>
+　　固定、写死的freeform就是普通的freeform，里面的所有元素都需要您亲手定义，在此就不再介绍。<br>
+　　动态freeform，是参照一个freeform模版生成的，该freeform中包含了<font size="4" color=red><b>&lt;repeat&gt;</b></font>元素和<font size="4" color=red><b>&lt;copy&gt;</b></font>元素，其含义分别为“动态替换” 和 “从Treelist复制”，典型例子如:<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!--Supcan Freeform --&gt;
+&lt;freeform&gt;
+&lt;Properties bgColor="#ffffff"&gt;
+ &lt;Expresses&gt;
+  <font color=red>〈Copy/〉</font>　　//注：Expresses(表达式)将从 Treelist 复制
+ &lt;/Expresses&gt;
+ &lt;Validations&gt;
+  <font color=red>〈Copy/〉</font>　　//注：Validations(验证)将从 Treelist 复制
+ &lt;/Validations&gt;
+&lt;/Properties&gt;
+&lt;Fonts&gt;
+ &lt;Font height="-13"/&gt;
+&lt;/Fonts&gt;
+ 
+&lt;Objects&gt;
+ &lt;TableLayout x="5" y="42" width="95%"&gt;
+  &lt;Col width=".1"/&gt;
+  &lt;Col width="90"/&gt;
+  &lt;Col width="6"/&gt;
+  &lt;Col width="190"/&gt;
+  &lt;Col width="30"/&gt;
+  &lt;Col width="90"/&gt;
+  &lt;Col width="6"/&gt;
+  &lt;Col width="190"/&gt;
+  &lt;Col width=".1"/&gt;
+  <font color=red>〈repeat〉</font>　　//注：本段内容将动态生成，里面有2个input, 表示垂直是双排的
+   &lt;tr height="24"&gt;
+    &lt;td/&gt;
+    &lt;td&gt;&lt;input width="3" leftTextAlign="left"/&gt;&lt;/td&gt;
+    &lt;td/&gt;
+    &lt;td/&gt;
+    &lt;td/&gt;
+    &lt;td&gt;&lt;input width="3" leftTextAlign="left"/&gt;&lt;/td&gt;
+   &lt;/tr&gt;
+   &lt;tr height="6"/&gt;
+  <font color=red>〈/repeat〉</font>
+ &lt;/TableLayout&gt;
+ &lt;groupEx x1="5" y1="5" width="99%" y2=".bottom+8" text=" 请输入 "/&gt;
+ &lt;input id="ok"  Text="确认" x="36%"  y=".bottom+10" width="80" type="button" /&gt;
+ &lt;input id="cancel"  Text="取消" x=".right+10"  y=".top" width="80" type="button" /&gt;
+&lt;/Objects&gt;
+ 
+&lt;DropLists&gt;
+ <font color=red>〈Copy/〉</font>　　//注：Droplists(下拉资源)将从 Treelist 复制
+&lt;/DropLists&gt;
+&lt;/freeform&gt;</pre>
+　　里面核心的部分就是&lt;TableLayout&gt;中的那段&lt;repeat&gt; ... &lt;/repeat&gt;，其中的&lt;input&gt;只能含有width、leftTextAlign属性，不能书写其它的属性.<br>
+　　实际动态生成过程，只是替换其中的&lt;repeat&gt;和&lt;copy&gt;元素. 模版的最大好处是：<b>复用</b>.<br>
+
+<div id="Tag8"/><br><br><br>
+　　<font style='font-size:15pt'>9.FreeformBar</font><hr color=#2266ee size=1>
+　　硕正Treelist从1.0.63.0版开始，增加了工具条功能，由于工具条的外观布局全部沿用了Freeform语法，故工具条被称作 "FreeformBar", 
+FreeformBar 分 topBar(简称 tBar) 和 bottomBar(简称 bBar) 二部分，彼此相互独立，并分别显现在Treelist的上方和下方:<br>
+<center><img src='treelist11.png'></center>
+　　通过函数 OpenFreeformBar( ) 和 CloseFreeformBar( ) 可开启、关闭Bar，用法请参考相关函数说明.<br>
+　　在线演示提供了3个可供参考的demo页：查询条件(一)、查询条件(二)、FreeformBar.<br>
+<br>
+　　FreeformBar内部是标准的freeform，已经和Treelist无关，它能做的功能也远超出所谓工具条的范围了，要进行freeform的开发请参考"自由表头"(即freeform)部分的文档.<br>
+<br>
+　　要访问topBar、bottomBar的Freeform函数，可以通过扩展函数实现，有如下2种方法：<br>
+方法一：先取得tBar/bBar的句柄，再访问freeform函数，例如:<br>
+<pre class='cpp'>
+ var hB = AF.func("GetHandle", "BBar");
+ AF.func(hB + "SetValue", "custid \r\n 336");</pre>
+方法二：用 "tBar." / "bBar."作为函数名的前缀，直接访问，例如：<br>
+<pre class='cpp'>
+ AF.func("bBar.SetValue", "custid \r\n 336");</pre>
+
+<br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

@@ -1,0 +1,212 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag1"/>
+<br>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='trademobile.jpg'></td></tr>
+</table>
+　　<font style='font-size:15pt'>1.原理</font><hr color=#2266ee size=1>
+　　硕正套件从1.0.78.0版开始进入移动应用领域，今后将逐步深化对该领域的支持。在1.0.78.0版中，硕正套件解决了迫切度最高的需求：在ipad、智能手机上实时查询报表。<br>
+<br>
+　　硕正套件常规应用于浏览器，属于客户端的交互、计算工具，在1.0.78.0版本中，我们把套件的核心功能从套件中剥离了出来，使其成了也可以部署在服务器端的组件，这样就实现了后端计算。最终，我们将这些不可视的组件打包, 以服务器专版的形式发布。<br>
+　　硕正服务器专版还能将后端计算的结果转化成标准的html格式输出，使得ipad、手机都能访问，并且和手机操作系统无关，支持主流的iOS、安卓(Android)、塞班(Symbian)、微软WP等系统。<br>
+　　由于报表的储存格式、布局方法、渲染规则和html不尽相同，在转化过程中，我们保留了报表的样式，并且尽可能精确地转换，但要完全一致是不可能的，不过最终结果很令人满意，二者已经非常接近了，今后我们也将不断努力提高这个格式转换的精度。<br>
+<br>
+　　由于服务器专版仍然是基于微软MFC开发的，所以对支持的服务器种类有限：只能部署在微软 Windows系列的服务器，不支持Linux/Unix。<br>
+　　和客户端套件一样，服务器专版也同时提供了32位和64位包，支持64位Windows操作系统。<br>
+　　后端支持 C# 、Java语言的开发。详细的介绍以 C# + IIS 为主， Java开发也有单独的章节介绍。<br>
+<br>
+
+
+<div id="Tag2"/><br><br>
+　　<font style='font-size:15pt'>2.接口</font><hr color=#2266ee size=1>
+　　硕正的服务器专版和以往的纯客户端版本之间，无论是功能还是内部实现代码，都存在着千丝万缕的联系。对于开发者，要进行服务器端的开发，必须先熟悉常规的浏览器端的开发。例如在后端调用硕正接口的最常见的 C# 语句形式如：<br>
+<pre class='cpp'>
+ ...
+ dll.func("build", ReportFilename);
+ dll.func("SetSource", "reportdata/datacenter.do?pa1=23");
+ dll.func("calc", "");
+ dll.func("callfunc", "105\r\n type=htm;filename=" + TempFilename);
+ ...</pre>
+　　如果您熟悉硕正客户端的开发，看到这段代码肯定不会感到陌生，其函数名、参数形式和浏览器 js 的书写方法几乎一致, 连最外层 "func" 都一样。<br>
+　　没错，这是我们刻意这样做的，使您在客户端开发的知识技能还能对接得上。<br>
+
+<br>
+　　硕正服务器专版的包中，最外层的接口暴露文件是 winface.dll，该接口共有4个 API，其标准的C++形式是 ：<br>
+<pre class='cpp'>
+HANDLE APIENTRY <font color=#009977>OpenReportService</font>(LPCTSTR para);
+void APIENTRY <font color=#009977>CloseService</font>(HANDLE h);
+int APIENTRY <font color=#009977>GetActiveServices</font>();
+LPCTSTR APIENTRY <font color=#009977>func</font>(HANDLE h, LPCTSTR funcname, LPCTSTR para);</pre>
+　　简单地说，这个接口所要做的就是打开报表服务、调用报表服务、关闭报表服务这几个简单的事情.<br>
+<br>
+　　C#调用 winface.dll 接口，只能以非托管方式调用，我们用C#对该接口做了一个很规范的封装类，对32位和64位都适用，代码如下：<br>
+<pre class='cpp'>
+public class DllInvoke 
+{
+ //操作系统函数
+ [DllImport("kernel32.dll")]
+ private extern static IntPtr LoadLibrary(String path);
+ [DllImport("kernel32.dll")]
+ private extern static IntPtr GetProcAddress(IntPtr lib, String funcName);
+ [DllImport("kernel32.dll")]
+ private extern static bool FreeLibrary(IntPtr lib);
+ //4个API的委托声明
+ private delegate int DllGetActiveServices( );
+ private delegate IntPtr DllOpenReportService(IntPtr CreatePara);
+ private delegate void DllCloseService(IntPtr h);
+ private delegate IntPtr Dllfunc(IntPtr h, IntPtr funcname, IntPtr para);
+ 
+ //构建函数, 参数DLLPath:  为winface.dll的全文件名
+ public DllInvoke(String DLLPath) {
+  //加载dll
+  m_hService = IntPtr.Zero;
+  m_hLib = LoadLibrary(DLLPath);
+  if(m_hLib == IntPtr.Zero) return;
+ 
+  //定位入口函数地址
+  m_getactiveservices = (DllGetActiveServices)GetInvoke("GetActiveServices", typeof(DllGetActiveServices));
+  m_openservice = (DllOpenReportService)GetInvoke("OpenReportService", typeof(DllOpenReportService));
+  m_closeservice = (DllCloseService)GetInvoke("CloseService", typeof(DllCloseService));
+  m_func = (Dllfunc)GetInvoke("func", typeof(Dllfunc));
+  if(m_getactiveservices==null || m_openservice==null || m_closeservice==null || m_func==null) {
+   //定位失败
+   FreeLibrary(m_hLib);  
+   m_hLib = IntPtr.Zero;
+  }
+ }
+ ~DllInvoke() {
+  CloseService( );
+  if(m_hLib != IntPtr.Zero) FreeLibrary(m_hLib);  
+ }
+ 
+ //DLL句柄
+ public IntPtr m_hLib;
+ 
+ //函数：取得当前活动的服务数量
+ public int GetActiveServices() {
+  return m_getactiveservices();
+ }
+ //函数：打开服务
+ public bool OpenReportService(string CreatePara) {
+  if(m_hService != IntPtr.Zero) return true;	//已经打开着
+  if(m_hLib == IntPtr.Zero) return false;
+  IntPtr h1 = Marshal.StringToHGlobalUni(CreatePara);
+  m_hService = m_openservice(h1);
+  Marshal.FreeHGlobal(h1);
+  return (m_hService == IntPtr.Zero) ? false : true;
+ }
+ //函数：关闭服务
+ public void CloseService() {
+  if(m_hService != IntPtr.Zero) {
+   m_closeservice(m_hService);
+   m_hService = IntPtr.Zero;
+  }
+ }
+ //函数：调用服务中的方法
+ public string func(string funcname, string para) {
+  if(m_hService == IntPtr.Zero) return "";
+  //参数 ==> Unicode串指针地址
+  IntPtr h1 = Marshal.StringToHGlobalUni(funcname);
+  IntPtr h2 = Marshal.StringToHGlobalUni(para);
+  //调用
+  IntPtr nRet = m_func(m_hService, h1, h2);
+  //释放参数内存
+  Marshal.FreeHGlobal(h1);
+  Marshal.FreeHGlobal(h2);
+  return Marshal.PtrToStringUni(nRet);
+ }
+ 
+ //private====================
+ private Delegate GetInvoke(String APIName,Type t) {
+  IntPtr api = GetProcAddress(m_hLib, APIName);
+  return (Delegate)Marshal.GetDelegateForFunctionPointer(api,t);
+ }
+ //入口函数地址
+ private DllGetActiveServices m_getactiveservices;
+ private DllOpenReportService m_openservice;
+ private DllCloseService m_closeservice;
+ private Dllfunc m_func;
+ //服务句柄
+ private IntPtr m_hService;
+};</pre>
+　　浏览这个类，它在创建时就加载winface.dll了，如果加载失败，其成员变量 m_hLib 为零，报表服务也就不可用。<br>
+<br>
+<img src='glass.jpg'><font color="552222">为什么我们要采用操作系统LoadLibrary函数、代理方式调用硕正的dll呢？原因是部署后DLL的位置是不固定的.</font><br>
+<br>
+　　为了方便讨论，我们在下面的文档中，都假定这个类的实例名为 "dll":
+<pre class='cpp'>
+ ...
+ DllInvoke dll = new DllInvoke(WinFacePathname);
+ if(dll.m_hLib == IntPtr.Zero) {
+  Response.Write("winface.dll加载失败");
+  Response.End();
+  return;
+ }
+ ...</pre>
+　　并都以该类的4个同名封装函数为准，不再深究 winface.dll 的原始API。<br>
+<br>
+　　下面我们逐个说明这4个函数的具体使用方法:<br>
+<table width=96% cellpadding=4 cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col width=60>
+<col>
+<tr bgcolor=#eaeaea><td colspan=2>函数 <b>int GetActiveServices( )</b></td></tr>
+<tr><td bgcolor=#eaeaea>用途</td><td>取得当前进程中活动的服务数量</td></tr>
+<tr><td bgcolor=#eaeaea>返回值</td><td>整数, 大于等于零</td></tr>
+</table>
+　　dll 创建成功后，您应该先调用这个函数，如果其返回值不为0，表示已经有其它登录用户正打开报表服务处理中，因为 aspx 是典型的多线程服务，此时我们建议您给出“服务器繁忙，请稍后再试”的页面提示并返回.<br>
+　　在后面稍高深的“线程模型”、“进程模型”文档中，我们会继续深入讨论这个并发访问数量的问题.<br>
+<br>
+<table width=96% cellpadding=4 cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col width=60>
+<col>
+<tr bgcolor=#eaeaea><td colspan=2>函数 <b>bool OpenReportService(string CreatePara)</b></td></tr>
+<tr><td bgcolor=#eaeaea>用途</td><td>打开报表服务</td></tr>
+<tr><td bgcolor=#eaeaea>参数</td><td>";"分隔的 名-值对 串, 例如:<br>
+　　LogSize=1000; LogLevel=2; TempDir=c:\\website\\temp;BaseDir=http://localhost/supcan<br>
+可用属性及其解释说明如下:<br>
+<b>TempDir</b> - 临时目录的全名, 非常重要。因为硕正报表服务在运行过程中会产生一些临时缓存文件，而Web服务器对目录的写权限有很严格的控制，为此您必须提供一个匿名访问者都能写的物理目录;<br>
+<b>BaseDir</b> - 为后继的函数中可能出现的相对URL提供统一的参考路径。在浏览器端的开发中，"相对URL" 通常是相对于页面的，而在后端开发中，这个相对URL的参考点就必须指定，因为报表服务根本不知道当前aspx的实际URL;<br>
+<b>LogLevel</b> - 日志级别， 为0/1/2, 默认是0, 0表示不需要日志，1表示需要简单的日志， 2需要更详细的日志.  日志文件名为 @Log.txt, 会自动产生于临时目录中;<br>
+<b>LogSize</b> - 日志文件最大尺寸, 单位为kb. 防止日志文件无限膨胀.<br>
+</td></tr>
+<tr><td bgcolor=#eaeaea>返回值</td><td>true/false, 失败的原因通常为DLL文件位置不正确</td></tr>
+</table>
+
+<br>
+<table width=96% cellpadding=4 cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col width=60>
+<col>
+<tr bgcolor=#eaeaea><td colspan=2>函数 <b>string func(string funcname, string para)</b></td></tr>
+<tr><td bgcolor=#eaeaea>用途</td><td>调用报表服务</td></tr>
+<tr><td bgcolor=#eaeaea>参数</td><td>和硕正套件常规的用法完全一致，请参考硕正常规的开发文档</td></tr>
+<tr><td bgcolor=#eaeaea>返回值</td><td>串, 也和套件的常规的用法一致</td></tr>
+</table>
+　　报表的客户端控件有上百个函数，大部分函数您都能在此调用，少数函数例如能导致打开对话框的函数肯定不能用，因为这是后端执行，不可视的.<br>
+
+<br>
+<table width=96% cellpadding=4 cellspacing=0 border=1 align="center" borderColorLight=#999999 borderColorDark=#999999>
+<col width=60>
+<col>
+<tr bgcolor=#eaeaea><td colspan=2>函数 <b>void CloseService( )</b></td></tr>
+<tr><td bgcolor=#eaeaea>用途</td><td>关闭报表服务</td></tr>
+<tr><td bgcolor=#eaeaea>返回值</td><td>无</td></tr>
+</table>
+　　您最终必须关闭报表服务，这一点<font color=red>非常非常重要</font>，如果您忘记关闭就退出程序了，迟早会出问题的，尽管在封装类的析构函数中有自动关闭服务的语句：<br>
+<pre class='cpp'>
+ ~DllInvoke() {
+  CloseService( );
+  if(m_hLib != IntPtr.Zero) FreeLibrary(m_hLib);  
+ }</pre>
+　　但我们发现，这个 CloseService( )不一定会被执行到，可能和非托管有关，最终结果就是应用程序池资源耗尽，导致http请求响应异常，产生大量 httpStatusCode 为 503 的错误，甚至IIS重启都困难. 切记!<br>
+
+<br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

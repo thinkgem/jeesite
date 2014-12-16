@@ -1,0 +1,34 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="FreeformTree 或 FormTree" meaning="内嵌Freeform树" number="0-n" example="12.多记录Freeform(3)">
+<element name="dataURL" meaning="数据的URL">
+	<category>数据</category>
+	<value>绝对或相对URL</value>
+	<memo>数据格式规范请参考开发者指南</memo>
+</element>
+<element name="lineType" meaning="父子树节点之间的线条连接方式">
+	<category>外观</category>
+	<value meaning="水平和垂直折线">lineVH</value>
+	<value meaning="单条笔直的斜线">lineStraight</value>
+	<default>lineVH</default>
+</element>
+<element name="lineColor/color" meaning="连接线颜色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<default>#000000</default>
+</element>
+<element name="thick" meaning="连接线粗">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>1</default>
+</element>
+<element name="style" meaning="连接线型">
+	<category>外观</category>
+	<value>solid / dash / dot / dashdot</value>
+	<default>solid</default>
+</element>
+</elements>
+
+</root>

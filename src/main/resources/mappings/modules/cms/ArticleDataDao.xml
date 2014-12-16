@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.ArticleDataDao">
+    
+	<sql id="cmsArticleDataColumns">
+		a.id AS "id",
+		a.content AS "content",
+		a.copyfrom AS "copyfrom",
+		a.relation AS "relation",
+		a.allow_comment AS "allow_comment"
+	</sql>
+	
+	<sql id="cmsArticleDataJoins">
+	</sql>
+    
+	<select id="get" resultType="ArticleData">
+		SELECT 
+			<include refid="cmsArticleDataColumns"/>
+		FROM cms_article_data a
+		<include refid="cmsArticleDataJoins"/>
+		WHERE a.id = #{id}
+	</select>
+		
+	<insert id="insert">
+		INSERT INTO cms_article_data(
+			id,
+			content,
+			copyfrom,
+			relation,
+			allow_comment
+		) VALUES (
+			#{id},
+			#{content},
+			#{copyfrom},
+			#{relation},
+			#{allowComment}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE cms_article_data SET 	
+			content = #{content},
+			copyfrom = #{copyfrom},
+			relation = #{relation},
+			allow_comment = #{allowComment}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

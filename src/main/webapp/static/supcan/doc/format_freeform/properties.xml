@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Properties" meaning="Freeform属性" number="0-1">
+<element name="id" meaning="Freeform的ID">
+	<category>主要</category>
+	<value>id串</value>
+	<memo>用于GetChangedXML函数生成XML串，相当于是告诉应用服务器，当前提交的是什么表单</memo>
+</element>
+<element name="key" meaning="主键">
+	<category>主要</category>
+	<value>是object的id, 如果是复合主键必须以逗号分隔</value>
+	<memo>用于GetChangedXML函数生成XML串</memo>
+</element>
+<element name="dataURL" meaning="数据的URL">
+	<category>数据</category>
+	<value>绝对或相对URL(相对本XML), 如果指定了该URL, 执行Build( )后将自动加载数据</value>
+</element>
+<element name="bgColor/backColor" meaning="背景色">
+	<category>外观</category>
+	<value>颜色串，也可以是以逗号分隔的2个颜色(渐变填充), 建议写在&amp;lt;Background&amp;gt;中，此处为兼容老版本</value>
+	<example>1.体验Freeform</example>
+</element>
+<element name="editAble" meaning="是否允许Edit(输入)">
+	<category>行为</category>
+	<datatype>bool</datatype>
+	<memo>如果是false，那么所有input都将仅显示、无法输入</memo>
+	<default>true</default>
+</element>
+<element name="HiLightUnNullable/HighLightUnNullable" meaning='是否在nullable="false"的输入控件加醒目的提示'>
+	<category>外观</category>
+	<value meaning="在输入框右侧显示红色*号">true</value>
+	<value meaning="无任何醒目标记">false</value>
+	<value meaning="在输入框右侧以某个颜色显示一个自定义的串">短句"text=?;color=?"</value>
+	<value meaning="左侧文字以某颜色显示">短句"leftTextColor=?"</value>
+	<example>8.有表头表体的表单(1)</example>
+	<default>false</default>
+</element>
+<element name="DropDataLoadMode" meaning="下拉数据的加载模式">
+	<category>行为</category>
+	<value>asynch/synch - 异步/同步</value>
+	<default>asynch</default>
+	<memo>"下拉数据"即&amp;lt;Droplists&amp;gt;下的需要加载外部数据的所有下拉资源</memo>
+	<example>3.多种下拉</example>
+</element>
+<element name="isSelectEditWhenFocus" meaning="当输入框取得焦点时，光标是否选中全部文字">
+	<category>行为</category>
+	<value meaning="全选">true</value>
+	<value meaning="不选">false</value>
+	<value meaning="自动, 表示数据类型为int或double时全选">auto</value>
+	<default>auto</default>
+</element>
+<element name="innerShadow" meaning="内凹陷阴影">
+	<category>行为</category>
+	<value>请参见Treelist的同名属性</value>
+</element>
+<element name="自定义属性" meaning="自定义属性">
+	<category>数据</category>
+	<value>符合变量命名的任意串, 不和上述属性重名即可</value>
+	<memo>可定义多个自定义属性, GetChangedXML( )、 Export( )函数输出的XML中将包含自定义属性, 您也可以用SetProp( )、GetProp( )函数存取自定义属性</memo>
+</element>
+</elements>
+
+</root>

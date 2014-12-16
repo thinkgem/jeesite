@@ -1,48 +1,24 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
-import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.IdEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 菜单Entity
  * @author ThinkGem
  * @version 2013-05-15
  */
-@Entity
-@Table(name = "sys_menu")
-@DynamicInsert @DynamicUpdate
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends IdEntity<Menu> {
+public class Menu extends DataEntity<Menu> {
 
 	private static final long serialVersionUID = 1L;
 	private Menu parent;	// 父级菜单
@@ -53,25 +29,21 @@ public class Menu extends IdEntity<Menu> {
 	private String icon; 	// 图标
 	private Integer sort; 	// 排序
 	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
-	private String isActiviti; 	// 是否同步到工作流（1：同步；0：不同步）
 	private String permission; // 权限标识
 	
-	private List<Menu> childList = Lists.newArrayList();// 拥有子菜单列表
-	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
-
+	private String userId;
+	
 	public Menu(){
 		super();
 		this.sort = 30;
+		this.isShow = "1";
 	}
 	
 	public Menu(String id){
-		this();
-		this.id = id;
+		super(id);
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="parent_id")
-	@NotFound(action = NotFoundAction.IGNORE)
+	@JsonBackReference
 	@NotNull
 	public Menu getParent() {
 		return parent;
@@ -81,7 +53,7 @@ public class Menu extends IdEntity<Menu> {
 		this.parent = parent;
 	}
 
-	@Length(min=1, max=255)
+	@Length(min=1, max=2000)
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -99,7 +71,7 @@ public class Menu extends IdEntity<Menu> {
 		this.name = name;
 	}
 
-	@Length(min=0, max=255)
+	@Length(min=0, max=2000)
 	public String getHref() {
 		return href;
 	}
@@ -144,15 +116,6 @@ public class Menu extends IdEntity<Menu> {
 		this.isShow = isShow;
 	}
 
-	@Length(min=1, max=1)
-	public String getIsActiviti() {
-		return isActiviti;
-	}
-
-	public void setIsActiviti(String isActiviti) {
-		this.isActiviti = isActiviti;
-	}
-
 	@Length(min=0, max=200)
 	public String getPermission() {
 		return permission;
@@ -162,70 +125,47 @@ public class Menu extends IdEntity<Menu> {
 		this.permission = permission;
 	}
 
-	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
-	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy(value="sort") @Fetch(FetchMode.SUBSELECT)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<Menu> getChildList() {
-		return childList;
+	public String getParentId() {
+		return parent != null && parent.getId() != null ? parent.getId() : "0";
 	}
 
-	public void setChildList(List<Menu> childList) {
-		this.childList = childList;
-	}
-	
-	@ManyToMany(mappedBy = "menuList", fetch=FetchType.LAZY)
-	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy("id") @Fetch(FetchMode.SUBSELECT)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-	
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-	
-	@Transient
-	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId){
+	@JsonIgnore
+	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId, boolean cascade){
 		for (int i=0; i<sourcelist.size(); i++){
 			Menu e = sourcelist.get(i);
 			if (e.getParent()!=null && e.getParent().getId()!=null
 					&& e.getParent().getId().equals(parentId)){
 				list.add(e);
-				// 判断是否还有子节点, 有则继续获取子节点
-				for (int j=0; j<sourcelist.size(); j++){
-					Menu child = sourcelist.get(j);
-					if (child.getParent()!=null && child.getParent().getId()!=null
-							&& child.getParent().getId().equals(e.getId())){
-						sortList(list, sourcelist, e.getId());
-						break;
+				if (cascade){
+					// 判断是否还有子节点, 有则继续获取子节点
+					for (int j=0; j<sourcelist.size(); j++){
+						Menu child = sourcelist.get(j);
+						if (child.getParent()!=null && child.getParent().getId()!=null
+								&& child.getParent().getId().equals(e.getId())){
+							sortList(list, sourcelist, e.getId(), true);
+							break;
+						}
 					}
 				}
 			}
 		}
 	}
 
-	@Transient
-	public boolean isRoot(){
-		return isRoot(this.id);
+	@JsonIgnore
+	public static String getRootId(){
+		return "1";
 	}
 	
-	@Transient
-	public static boolean isRoot(String id){
-		return id != null && id.equals("1");
-	}
-	
-	@Transient
-	public String getActivitiGroupId() {
-		return ObjectUtils.toString(getPermission());
+	public String getUserId() {
+		return userId;
 	}
 
-	@Transient
-	public String getActivitiGroupName() {
-		return ObjectUtils.toString(getId());
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

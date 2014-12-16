@@ -12,11 +12,11 @@
    			</c:when>
    			<c:otherwise><c:set var="url" value="${ctx}/list-${tpl.id}${urlSuffix}"/></c:otherwise>
    		</c:choose>
-		<li>
+		<li  class="${requestScope.category.id eq tpl.id ?'menu_activ':''}">
 			<c:choose><c:when test="${fn:length(tpl.name) gt 12}">
-				<a href="${url}" target="${tpl.target}" style="line-height:16px;padding-top:3px;">${fn:substring(tpl.name,0,8)}<br/>${fn:substring(tpl.name,8,18)}</a>
+				<a href="${url}" target="${tpl.target}" style="line-height:16px;padding-top:3px;">${tpl.name}</a>
 			</c:when><c:otherwise>
-				<a href="${url}" target="${tpl.target}" ${fn:length(tpl.name) gt 10?'style="font-size:12px;"':''}>${tpl.name}</a>
+				 <a href="${url}" target="${tpl.target}" ${fn:length(tpl.name) gt 10?'style="font-size:12px;"':''}>${tpl.name}</a>
 			</c:otherwise></c:choose></li>
 	<%--</c:if> --%>
 </c:forEach>

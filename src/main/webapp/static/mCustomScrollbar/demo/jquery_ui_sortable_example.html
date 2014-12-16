@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery custom scrollbar demo</title>
+	<!-- style for demo and examples -->
+	<style>
+		body{margin:0; padding:0; color:#eee; background:#222; font-family:Verdana,Geneva,sans-serif; font-size:13px; line-height:20px;}
+		a:link,a:visited,a:hover{color:inherit;}
+		h1{font-family:Georgia,serif; font-size:18px; font-style:italic; margin:40px; color:#26beff;}
+		h2{font-family:Georgia,serif; font-size:16px; font-style:italic; color:#eee;}
+		p{margin:0 0 20px 0;}
+		hr{height:0; border:none; border-bottom:1px solid rgba(255,255,255,0.13); border-top:1px solid rgba(0,0,0,1); margin:9px 10px; clear:both;}
+		.links{margin:10px;}
+		.links a{display:inline-block; padding:3px 15px; margin:7px 10px; background:#444; text-decoration:none; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px;}
+		.links a:hover{background:#eb3755; color:#fff;}
+		.content{margin:40px; width:260px; height:500px; padding:20px; overflow:auto; background:#333; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+		.content p:nth-child(even){color:#999; font-family:Georgia,serif; font-size:17px; font-style:italic;}
+		.content p:nth-child(3n+0){color:#c96;}
+		#sortable{margin:0 0 20px 0; padding:0; list-style-type:none;}
+		#sortable li{background:#444; padding:5px 10px; margin:5px 0; border-radius:3px;}
+		#sortable li:active{background:#cc3300;}
+	</style>
+	<!-- Custom scrollbars CSS -->
+	<link href="jquery.mCustomScrollbar.css" rel="stylesheet" />
+</head>
+<body>
+	<p class="links">
+		<a href="http://manos.malihu.gr">malihu</a>
+		<a href="http://manos.malihu.gr/jquery-custom-content-scroller">Plugin home</a>
+		<a href="complete_examples.html">Plugin demo</a>
+	</p>
+	<hr />
+	<h1>jQuery ui sortable example</h1>
+	<!-- content block -->
+	<div id="content_1" class="content">
+		<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit.</p>
+   		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+		<p><strong>Sortable list</strong></p>
+		<ul id="sortable">
+			<li>Item 1</li>
+			<li>Item 2</li>
+			<li>Item 3</li>
+			<li>Item 4</li>
+			<li>Item 5</li>
+			<li>Item 6</li>
+			<li>Item 7</li>
+			<li>Item 8</li>
+			<li>Item 9</li>
+			<li>Item 10</li>
+			<li>Item 11</li>
+			<li>Item 12</li>
+			<li>Item 13</li>
+			<li>Item 14</li>
+			<li>Item 15</li>
+			<li>Item 16</li>
+			<li>Item 17</li>
+			<li>Item 18</li>
+			<li>Item 19</li>
+			<li>Item 20</li>
+			<li>Item 21</li>
+			<li>Item 22</li>
+			<li>Item 23</li>
+			<li>Item 24</li>
+			<li>Item 25</li>
+			<li>Item 26</li>
+			<li>Item 27</li>
+			<li>Item 28</li>
+			<li>Item 29</li>
+			<li>Item 30</li>
+		</ul>
+   		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat.</p>
+   		<p>Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst. Nulla scelerisque lorem quis dui sagittis egestas.</p> 
+		<p>Etiam sed massa felis, aliquam pellentesque est.</p>
+    	<p>Nam eu arcu at purus tincidunt pharetra ultrices at ipsum. Mauris urna nunc, vulputate quis gravida in, pharetra id mauris. Ut sit amet mi dictum nulla lobortis adipiscing quis a nulla. Etiam diam ante, imperdiet vel scelerisque eget, venenatis non eros. Praesent ipsum sem, eleifend ut gravida eget, tristique id orci. Nam adipiscing, sem in mattis vulputate, risus libero adipiscing risus, eu molestie mi justo eget nulla.</p> 
+		<p>Cras venenatis metus et urna egestas non laoreet orci rutrum. Pellentesque ullamcorper dictum nisl a tincidunt. Quisque et lacus quam, sed hendrerit mi. Mauris pretium, sapien et malesuada pulvinar, lorem leo viverra leo, et egestas mi nisl quis odio. </p>
+		<p>Aliquam erat volutpat. Sed urna arcu, tempus eu vulputate adipiscing, consectetur et orci. Vivamus congue, nunc vitae fringilla convallis, libero massa lacinia lorem, id convallis mauris elit ut leo. Nulla vel odio sem. Duis lorem urna, congue vitae rutrum sed, tincidunt vel tortor. In hac habitasse platea dictumst. Nunc vitae enim ante, vitae facilisis massa. Etiam sagittis sapien at nibh fermentum consectetur convallis lacus blandit.</p>
+    	<p>the end.</p>
+	</div>
+	<hr />
+	<p>&nbsp;</p>
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/minified/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	<!-- Google CDN jQuery ui -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+	<!-- custom scrollbars plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	<script>
+		(function($){
+			$(window).load(function(){
+				$("#content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+				$("#sortable").sortable({
+					scroll:false,
+					axis:"y",
+					opacity:0.5,
+					change:function(event,ui){
+						var p=ui.position.top,
+							h=ui.helper.outerHeight(true),
+							s=ui.placeholder.position().top,
+							elem=$("#content_1 .mCustomScrollBox")[0],
+							elemHeight=$("#content_1 .mCustomScrollBox").height();
+							pos=findPos(elem),
+							mouseCoordsY=event.pageY-pos[0];
+						if(mouseCoordsY<h || mouseCoordsY>elemHeight-h){
+							$("#content_1").mCustomScrollbar("scrollTo",p-(elemHeight/2));
+						}
+					}
+				});
+				function findPos(obj){
+					var curleft=curtop=0;
+					if (obj.offsetParent){
+						curleft=obj.offsetLeft
+						curtop=obj.offsetTop
+						while(obj=obj.offsetParent){
+							curleft+=obj.offsetLeft
+							curtop+=obj.offsetTop
+						}
+					}
+					return [curtop,curleft];
+				}
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>

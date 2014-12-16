@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.utils;
 
@@ -34,14 +32,33 @@ public class CookieUtils {
 	 * @param name 名称
 	 * @param value 值
 	 * @param maxAge 生存时间（单位秒）
+	 * @param uri 路径
+	 */
+	public static void setCookie(HttpServletResponse response, String name, String value, String path) {
+		setCookie(response, name, value, path, 60*60*24);
+	}
+	
+	/**
+	 * 设置 Cookie
+	 * @param name 名称
+	 * @param value 值
+	 * @param maxAge 生存时间（单位秒）
+	 * @param uri 路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
+		setCookie(response, name, value, "/", maxAge);
+	}
+	
+	/**
+	 * 设置 Cookie
+	 * @param name 名称
+	 * @param value 值
+	 * @param maxAge 生存时间（单位秒）
+	 * @param uri 路径
+	 */
+	public static void setCookie(HttpServletResponse response, String name, String value, String path, int maxAge) {
 		Cookie cookie = new Cookie(name, null);
-        if(StringUtils.isNotBlank(SpringContextHolder.getApplicationContext().getApplicationName())){
-            cookie.setPath(SpringContextHolder.getApplicationContext().getApplicationName());
-        }else{
-            cookie.setPath("/");
-        }
+		cookie.setPath(path);
 		cookie.setMaxAge(maxAge);
 		try {
 			cookie.setValue(URLEncoder.encode(value, "utf-8"));
@@ -50,6 +67,7 @@ public class CookieUtils {
 		}
 		response.addCookie(cookie);
 	}
+	
 	/**
 	 * 获得指定Cookie的值
 	 * @param name 名称

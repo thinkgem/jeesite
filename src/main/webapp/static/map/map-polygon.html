@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<link href="mapfiles/css/default.css" rel="stylesheet" type="text/css" />
+	<title>地图显示 - 区域选取</title>
+	<script type="text/javascript" src="../jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../jquery/jquery-migrate-1.1.1.min.js"></script><!--
+	<script type="text/javascript" src="mapapi3.8.6.js"></script>-->
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="polygon.js"></script>
+	<script type="text/javascript">
+
+		// 地图服务地址
+		var strURL = "http://192.168.11.233:8780/maptile/googlemaps/roadmap/"
+
+		function LocalMapType() {}
+		LocalMapType.prototype.tileSize = new google.maps.Size(256, 256);
+		LocalMapType.prototype.maxZoom = 16;   //地图显示最大级别
+		LocalMapType.prototype.minZoom = 4;    //地图显示最小级别
+		LocalMapType.prototype.name = "本地";
+		LocalMapType.prototype.alt = "显示本地地图数据";
+		LocalMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+			var img = ownerDocument.createElement("img");
+			img.style.width = this.tileSize.width + "px";
+			img.style.height = this.tileSize.height + "px";
+			img.src = strURL + zoom + "/" + coord.x + "/" + coord.y + ".png";
+			return img;
+		};
+		var localMapType = new LocalMapType();
+
+		function initialize() {
+			var myLatlng = new google.maps.LatLng(36.69571558689667, 117.09051073510739);
+			var myOptions = {
+			  center: myLatlng,
+			  zoom: 13,
+			  streetViewControl: false,
+			 	mapTypeControlOptions: {
+			        mapTypeIds: [
+     		          //google.maps.MapTypeId.ROADMAP,
+     		          //google.maps.MapTypeId.HYBRID,
+     		          //google.maps.MapTypeId.SATELLITE,
+     		          //google.maps.MapTypeId.TERRAIN,
+     		          //'locaMap' //定义地图类型
+			     	] 
+				}
+			};
+			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	
+			map.mapTypes.set('locaMap', localMapType);   //绑定本地地图类型
+			//map.setMapTypeId('locaMap');    //指定显示本地地图
+	
+			var marker = new google.maps.Marker({
+				position: myLatlng, 
+				map: map,
+				//draggable:true,
+				//icon: 'mapfiles/rotate2.png',  
+                //animation :google.maps.Animation.DROP,
+				title:"这是一个点"
+			});
+	
+			var infoWindow = new google.maps.InfoWindow();
+	
+			google.maps.event.addListener(marker, 'click', function() {
+			  infoWindow.setContent("坐标位置:" + marker.getPosition().toUrlValue(6));
+			  infoWindow.open(map, this);
+			}); 
+			 
+			/////// 绘制矩形
+	  
+			var creator = new PolygonCreator(map);
+			
+			// 初始化矩形
+			var triangleCoords = [];
+			
+			var ll = "(36.702803801572976, 117.06424654443356)(36.68532294513613, 117.07300127465817)(36.66714965408092, 117.07351625878903)(36.6707295812113, 117.077292809082)(36.67403398151529, 117.08501757104489)(36.67995401049492, 117.11557329614254)(36.71876709472927, 117.11454332788082)(36.716565458365395, 117.09634722192379)";
+			var lls = ll.split(")(");
+			for (i=0; i<lls.length; i++){
+				ll = lls[i].replace(" ","").replace("(","").replace(")","").split(",");
+				triangleCoords.push(new google.maps.LatLng(ll[0], ll[1]));
+			}
+			
+			creator.drawPolygon(triangleCoords);
+					
+			// 单击矩形
+			google.maps.event.addListener(creator.getPolygon(), 'click', function(event) {
+				  // Since this polygon has only one path, we can call getPath()
+				  // to return the MVCArray of LatLngs.
+				  var vertices = this.getPath();
+	
+				  var contentString = '<b>当前区域</b><br>';
+	
+				  // Iterate over the vertices.
+				  for (var i =0; i < vertices.getLength(); i++) {
+					var xy = vertices.getAt(i);
+					contentString += xy.lat() + ', ' + xy.lng() + '; ';
+				  }
+				  
+				  contentString += '<br/><br/>';
+	
+				  // Replace the info window's content and position.
+				  infoWindow.setContent(contentString);
+				  infoWindow.setPosition(event.latLng);
+	
+				  infoWindow.open(map);
+			});
+			
+			// 清除区域坐标
+			$('#reset').click(function(){ 
+				creator.destroy();
+				creator=null;
+				creator=new PolygonCreator(map);
+			});		 
+	
+			// 显示区域坐标
+			$('#showData').click(function(){ 
+				$('#dataPanel').empty();
+				if(creator.getData() == ""){
+					$('#dataPanel').append('当前点坐标：' + creator.getDot());
+				}else{
+					$('#dataPanel').append('当前区域坐标：' + creator.getData());
+				}
+			});
+		
+			/////////////////
+			
+		}
+	</script>
+</head>
+<body onload="initialize()">
+	<div style="height:100%">
+		<div id="side">
+			<input id="reset" value="清除区域坐标" type="button" class="navi"/>
+			<input id="showData"  value="显示区域坐标" type="button" class="navi"/>
+			<div id="dataPanel">&nbsp;</div>
+		</div>
+		<div id="map_canvas" style="height:90%"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="(未分类)">
+	<function name="Build">
+		<usage>加载Freeform的XML描述文件</usage>
+		<para>XML的URL(相对或绝对)，或者直接就是XML大串</para>
+		<return>1 - 成功; 空串 - 失败(将自动弹出失败页面)</return>
+	</function>
+	<function name="GetFileXML">
+		<usage>取得模板的XML大串</usage>
+		<para>大粒度组件的ID。如果是空串，表示是顶级Freeform</para>
+		<return>XML串</return>
+		<memo>1.该函数取得XML后，通常需要再通过Ajax发送给服务器，以实现在线设计； 2.在嵌套使用的情况下，只有被设计器打开过的大粒度组件才有返回串</memo>
+	</function>
+	<function name="GetChangedComponents">
+		<usage>取得有改动的大粒度组件的ID</usage>
+		<return>逗号分隔的ID</return>
+		<memo>顶级Freeform的ID是空串</memo>
+	</function>
+	<function name="OpenToolBox">
+		<usage>打开工具箱</usage>
+		<para>可以是1、2、3，顺序表示工具箱中的属性、控件库和下拉字典页，默认是1.</para>
+	</function>
+	
+	<function name="GetHandle">
+		<usage>取得内部非模式对话框的句柄</usage>
+		<para>可以为:&lt;br&gt;
+&lt;b&gt;innerDialog&lt;/b&gt; - 取内部非模式对话框的Freeform句柄;&lt;br&gt;
+</para>
+		<return>整数串</return>
+	</function>
+
+	<function name="SetEventListInfo">
+		<usage>设置事件列表中某些事件的附加信息</usage>
+		<para>ID</para>
+		<para>串，可以是："Clicked;DblClicked", 也可以是 "Clicked=OnMyClick; DblClicked=OnMyDbl", 用于在事件列表中增加附加标注</para>
+		<memo>通常在 EventListRefreshed 事件中执行</memo>
+	</function>
+	<function name="SetToolboxCellData">
+		<usage>设置工具箱的属性窗中当前单元格的值</usage>
+		<para>串</para>
+		<memo>通常用于 ButtonClicked 事件</memo>
+	</function>
+</category>
+</functions>

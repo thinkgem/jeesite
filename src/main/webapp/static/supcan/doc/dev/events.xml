@@ -1,0 +1,494 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<events>
+<Report>
+	<SelChanged>
+		<meaning>选中了单元格</meaning>
+		<p>行号</p><p>列号</p>
+	</SelChanged>
+	<SelChanged>
+		<meaning>选中了内嵌对象</meaning>
+		<p>别名</p>
+	</SelChanged>
+	<Clicked>
+		<meaning>鼠标点到某单元格</meaning>
+		<p>行号</p><p>列号</p><p>超链接的URL&lt;br&gt;(如果该单元定义了超链接)</p><p>数据源超链接的列ID (如果是数据源的超链接)</p>
+	</Clicked>
+	<Clicked>
+		<meaning>鼠标点到定义了超链接的交叉表的单元格 (见备注5)</meaning>
+		<p>行号</p><p>列号</p><p>Crosstab</p><p>交叉表中该值的“副标题文字”</p>
+	</Clicked>
+	<Clicked>
+		<meaning>鼠标点到某统计图</meaning>
+		<p>统计图别名</p><p>系列名</p><p>数据项名</p><p>数据所在的单元格名称&lt;br&gt;如果是多工作表, 则在后面跟随有类似 "@sheet1" 的宏</p>
+	</Clicked>
+	<Clicked>
+		<meaning>鼠标点到某内嵌对象</meaning>
+		<p>别名</p>
+	</Clicked>
+	<DblClicked>
+		<meaning>鼠标双击某单元格</meaning>
+		<p>行号</p><p>列号</p>
+	</DblClicked>
+	<EditChanged>
+		<meaning>单元格内容被修改&lt;br&gt;备注：通常是输入框关闭(焦点离开)后才触发该事件的</meaning>
+		<p>行号</p><p>列号</p><p>输入前的内容</p>
+	</EditChanged>
+	<EditChanged>
+		<meaning>文本框内容被修改&lt;br&gt;备注：通常是输入框关闭(焦点离开)后才触发该事件的</meaning>
+		<p>别名</p><p>　</p><p>输入前的内容</p>
+	</EditChanged>
+	<Editing>
+		<meaning>正打开着的单元格的输入框内容有变&lt;br&gt;备注：在输入过程中，输入内容并不会立即更新到单元格中</meaning>
+		<p>行号</p><p>列号</p><p>当前内容串</p>
+	</Editing>
+	<Editing>
+		<meaning>正打开着的文本框的输入框内容有变&lt;br&gt;备注：在输入过程中，输入内容并不会立即更新到单元格中</meaning>
+		<p>别名</p><p>　</p><p>当前内容串</p>
+	</Editing>
+	<Checked>
+		<meaning>鼠标选了Checkbox</meaning>
+		<p>行号</p><p>列号</p><p>Checkbox的值(1/0)</p>
+	</Checked>
+	<Saved>
+		<p>本地的全文件名</p><p>如果一开始打开的是zip文件，则为该zip文件名</p>
+		<meaning>报表已保存</meaning>
+	</Saved>
+	<Exported>
+		<meaning>报表已转换输出</meaning>
+		<p>全文件名(多个文件以逗号分隔)</p><p>文件类型(即后缀)</p>
+	</Exported>
+	<MenuBeforePopup>
+		<meaning>右键菜单即将弹出(单元格)</meaning>
+		<p>行号</p><p>列号</p>
+	</MenuBeforePopup>
+	<MenuBeforePopup>
+		<meaning>右键菜单即将弹出(文本框/统计图/图片等)</meaning>
+		<p>别名，多个别名间以逗号分隔</p>
+	</MenuBeforePopup>
+	<MenuClicked>
+		<meaning>右键菜单的自定义部分被选中</meaning>
+		<p>功能号</p><p>行号</p><p>列号</p>
+	</MenuClicked>
+	<Toolbar>
+		<meaning>鼠标点击了工具条中的某按钮&lt;br&gt;注:你可以通过全局函数 CancelEvent 去阻止功能的执行</meaning>
+		<p>功能号</p><p>参数，和功能号有关</p>
+	</Toolbar>
+
+	<CellPropChanged>
+		<meaning>工具箱中单元格的某些属性已被改动</meaning>
+		<p>单元格名</p><p>属性名称</p><p>修改前的内容</p><p>修改后的内容</p>
+	</CellPropChanged>
+	<BeforeCellPropChanged>
+		<meaning>工具箱中单元格的某些属性被改动前</meaning>
+		<p>单元格名</p><p>属性名称</p><p>修改前的内容</p><p>修改后的内容</p>
+	</BeforeCellPropChanged>
+	<RowInserted>
+		<meaning>行已插入</meaning>
+		<p>行号</p><p>数量</p>
+	</RowInserted>
+	<BeforeRowInserted>
+		<meaning>行插入前</meaning>
+		<p>行号</p><p>数量</p>
+	</BeforeRowInserted>
+	<RowDeleted>
+		<meaning>行已删除</meaning>
+		<p>行号</p><p>数量</p>
+	</RowDeleted>
+	<BeforeRowDeleted>
+		<meaning>行删除前</meaning>
+		<p>行号</p><p>数量</p>
+	</BeforeRowDeleted>
+	<ColInserted>
+		<meaning>列已插入</meaning>
+		<p>列号</p><p>数量</p>
+	</ColInserted>
+	<BeforeColInserted>
+		<meaning>列插入前</meaning>
+		<p>列号</p><p>数量</p>
+	</BeforeColInserted>
+	<ColDeleted>
+		<meaning>列已删除</meaning>
+		<p>列号</p><p>数量</p>
+	</ColDeleted>
+	<BeforeColDeleted>
+		<meaning>列删除前</meaning>
+		<p>列号</p><p>数量</p>
+	</BeforeColDeleted>
+	<WorkSheetSelChanged>
+		<meaning>当前工作表已切换</meaning>
+		<p>工作表序号</p>
+	</WorkSheetSelChanged>
+	<BeforeSheetDeleted>
+		<meaning>工作表被删除前&lt;br&gt;注:可在事件中执行全局函数 CancelEvent 去阻止删除</meaning>
+		<p>工作表序号</p>
+	</BeforeSheetDeleted>
+	<SheetDeleted>
+		<meaning>工作表已经被删除</meaning>
+		<p>工作表序号</p>
+	</SheetDeleted>
+	<BeforePrint>
+		<meaning>正准备要打印&lt;br&gt;注:可在事件中执行全局函数 CancelEvent 去阻止打印</meaning>
+	</BeforePrint>
+	<Printed>
+		<meaning>已打印</meaning>
+		<p>已打印次数</p>
+	</Printed>
+	<PrintSetupBeforeUpdate>
+		<meaning>打印参数设置对话框已经按下"确认", 但尚未更新到报表&lt;br&gt;注:可在事件中执行全局函数 CancelEvent 去阻止确认</meaning>
+		<p>即将要更新的新的配置串(XML串)</p>
+	</PrintSetupBeforeUpdate>
+	<PrintSetupUpdated>
+		<meaning>打印参数设置对话框已经按"确认"关闭, 并且已经更新到报表</meaning>
+	</PrintSetupUpdated>
+	<Calced>
+		<meaning>已执行计算</meaning>
+		<p>0 - 执行了工具条上的“重新计算”;&lt;br&gt;1 - 执行了"除数据源外，重新计算";&lt;br&gt;2 - API执行了计算函数;&lt;br&gt;3 - API执行了当前工作表的计算</p>
+		<p>0 - 是同步计算&lt;br&gt;1 - 是异步计算&lt;br&gt;&lt;br&gt;注：工具条上的“计算”按钮是异步计算</p>
+	</Calced>
+	<HotKey>
+		<meaning>触发了快捷键</meaning>
+		<p>快捷键</p><p>如果当前选中的是单元格，为所在行号; &lt;br&gt;如果是内嵌对象，则为它的别名</p><p>当前单元格的列号, 如果有单元格选中的话</p>
+	</HotKey>
+	<UserEvent>
+		<meaning>全局函数 PostMessage 发出的自定义事件</meaning>
+		<p>自定义</p><p>自定义</p><p>自定义</p><p>自定义</p>
+	</UserEvent>
+	<Download>
+		<meaning>全局事件，请参见Freeform组件的同名事件</meaning>
+	</Download>
+	<树列表别名.树列表事件名>
+		<meaning>内嵌树列表的事件</meaning>
+		<p>参见树列表</p><p>参见树列表</p><p>参见树列表</p><p>参见树列表</p>
+	</树列表别名.树列表事件名>
+</Report>
+
+<Treelist>
+	<SelChanged>
+		<meaning>当前行或单元格已变化(被切换).&lt;br&gt;备注：当p2参数为空串时, 表示当前行已变化: 否则表示当前单元格已变化, 并且进入编辑状态</meaning>
+		<p>行号</p><p>列名</p>
+	</SelChanged>
+	<Clicked>
+		<meaning>情形1: 鼠标点到某单元格</meaning>
+		<p>行号</p><p>列名</p><p>如果当前列为超链接, 则为本单元格的内容</p><p>见备注1</p>
+	</Clicked>
+	<Clicked>
+		<meaning>情形2: 鼠标点到某列表头</meaning>
+		<p>-1</p><p>列名</p><p>1.如果是isCheckboxOnly 列, 则为 1 或 0; &lt;br&gt;2.如果是点击在headerIcon小图标上，则为串icon</p>
+	</Clicked>
+	<DblClicked>
+		<meaning>鼠标双击某单元格&lt;br&gt;注：可执行全局函数CalcelEvent( )阻止继续执行</meaning>
+		<p>行号</p><p>列名</p>
+	</DblClicked>
+	<BeforeEdit>
+		<meaning>某单元进入编辑(输入)前&lt;br&gt;注：可执行全局函数CalcelEvent( )阻止继续执行</meaning>
+		<p>行号</p><p>列名</p>
+	</BeforeEdit>
+	<EditChanged>
+		<meaning>某单元被修改</meaning>
+		<p>行号</p><p>列名</p>
+	</EditChanged>
+	<DropdownSelChanged>
+		<meaning>某单元的下拉 Treelist 的选中行已变.&lt;br&gt;备注: 该事件和 EditChanged 不太一样, 因为下拉以后, 仍可以通过 Esc 键反悔、 不再触发 EditChanged 事件. 当然，如果您在 &amp;lt;properties&amp;gt; 中设定了 AutoUpdate="true", 那就无法用 Esc 反悔了</meaning>
+		<p>行号</p><p>列名</p>
+	</DropdownSelChanged>
+	<BeforeDropdown>
+		<meaning>某单元的下拉 List 或下拉 Treelist 正准备下拉.&lt;br&gt;注：可执行全局函数CalcelEvent( )阻止继续执行, 但仅对下拉Treelist有效, 对下拉List无效</meaning>
+		<p>行号</p><p>列名</p>
+	</BeforeDropdown>
+	<EditKeydown>
+		<meaning>在编辑状态时输入框的键盘动作&lt;br&gt;请见备注2</meaning>
+		<p>行号</p><p>列名</p><p>键的ASCII码，例如回车是13、空格是32</p><p>见备注3</p>
+	</EditKeydown>
+	<EditChar>
+		<meaning>在编辑状态时输入框的键盘字符&lt;br&gt;请见备注2</meaning>
+		<p>行号</p><p>列名</p><p>字符的ASCII码</p>
+	</EditChar>
+	<Keydown>
+		<meaning>在非编辑状态时的键盘动作&lt;br&gt;注：可执行全局函数CalcelEvent( )阻止继续执行</meaning>
+		<p>行号，如果有多行则以逗号分隔</p><p>　</p><p>键的ASCII码，例如回车是13、空格是32</p><p>见备注3</p>
+	</Keydown>
+	<LooseFocus>
+		<meaning>某单元刚失去焦点</meaning>
+		<p>行号</p><p>列名</p><p>导致失去焦点的动作键位值：&lt;br&gt;9 - Tab&lt;br&gt;13 - 回车&lt;br&gt;37 - left&lt;br&gt;38 - up&lt;br&gt;39 - right;&lt;br&gt;40 - down&lt;br&gt; 空串 - 鼠标或其它原因导致</p>
+	</LooseFocus>
+	<rowsInserted>
+		<meaning>有行插入</meaning>
+		<p>新行的行号</p><p>数量</p>
+	</rowsInserted>
+	<rowsDeleted>
+		<meaning>有行被删除&lt;br&gt;注：未定义key的Treelist不会触发该事件</meaning>
+		<p>被删行的Key, 若有多行则以\t分隔</p><p>被删除行的原始内容(XML格式)</p>
+	</rowsDeleted>
+	<LazyLoad>
+		<meaning>LazyLoad="true"的单列多层树的树杈被首次点击</meaning>
+		<p>行号</p><p>id号 (当treeformat为byId、byPid时)</p>
+	</LazyLoad>
+	<MenuBeforePopup>
+		<meaning>鼠标右键菜单即将弹出</meaning>
+		<p>行号，&lt;br&gt;可能为-1</p><p>列名, &lt;br&gt;有可能为空</p>
+	</MenuBeforePopup>
+	<MenuClicked>
+		<meaning>鼠标右键菜单自定义功能被选中</meaning>
+		<p>菜单项id</p><p>行号</p><p>列名</p>
+	</MenuClicked>
+	<BeforeDragRow>
+		<meaning>行即将被拖拽&lt;br&gt;注：可执行全局函数CalcelEvent( )阻止继续执行</meaning>
+		<p>被拖动的行，多个行则以逗号分隔</p><p>目的行</p><p>1/0 - 拖动到目的行的上方/下方</p><p>见备注4</p>
+	</BeforeDragRow>
+	<RequestAllPages>
+		<meaning>需要加载全部数据，以打印或转换输出&lt;br&gt;注：用于分页显示时</meaning>
+	</RequestAllPages>
+	<Sort>
+		<meaning>已重新排序 (触发了排序操作)</meaning>
+		<p>如果&amp;lt;Properties&amp;gt;中定义了IsRemoteSort, &lt;br&gt;则为“1”，否则是空</p>
+	</Sort>
+	<InvalidMouseWheel>
+		<meaning>无效的鼠标滚轮操作&lt;br&gt;注：常用于分页显示情形</meaning>
+		<p>如果顶部已经是第一行仍然要上滚，为"up"; 如果底部已经是末行仍要下滚, 则为“down”</p>
+	</InvalidMouseWheel>
+	<Load>
+		<meaning>数据已经通过Load( )函数加载</meaning>
+		<p>URL, 空串表示加载的是XML/JSON串</p><p>0-同步加载&lt;br&gt;1-异步加载</p>
+	</Load>
+	<Imported>
+		<meaning>刚从Excel文件导入</meaning>
+		<p>导入的起始行的行号</p><p>导入的总行数</p>
+	</Imported>
+	<HotKey>
+		<meaning>触发了快捷键</meaning>
+		<p>快捷键</p><p>当前行的行号, 如果正在输入的话</p><p>当前列的列名, 如果正在输入的话</p>
+	</HotKey>
+	<UserEvent>
+		<meaning>全局函数 PostMessage 发出的自定义事件</meaning>
+		<p>自定义</p><p>自定义</p><p>自定义</p><p>自定义</p>
+	</UserEvent>
+	<Download>
+		<meaning>全局事件，请参见Freeform组件的同名事件</meaning>
+	</Download>
+</Treelist>
+
+<Freeform>
+	<EditChanged>
+		<meaning>某输入框内容已修改&lt;br&gt;注：包括Checkbox、RadioButton</meaning>
+		<p>id</p>
+	</EditChanged>
+	<EditChanged>
+		<meaning>文件上传控件的上传文件有变动&lt;br&gt;注：通常在关闭对话框后</meaning>
+		<p>id</p>
+	</EditChanged>
+	<ButtonClicked>
+		<meaning>某按钮已Clicked&lt;br&gt;注：支持CancelEvent全局函数</meaning>
+		<p>id</p>
+	</ButtonClicked>
+	<EditKeydown>
+		<meaning>输入框的键盘动作&lt;br&gt;请见备注1</meaning>
+		<p>id</p><p>键的ASCII码，例如回车是13、空格是32</p><p>见备注2</p>
+	</EditKeydown>
+	<EditChar>
+		<meaning>输入框的键盘字符&lt;br&gt;请见备注1</meaning>
+		<p>id</p><p>字符的ASCII码</p>
+	</EditChar>
+	<LooseFocus>
+		<meaning>某输入框已失去焦点</meaning>
+		<p>id</p><p>下一个焦点的id&lt;br&gt;(仅和键盘动作有关)</p>
+	</LooseFocus>
+	<BeforeDropdown>
+		<meaning>某输入框的下拉 List 或下拉 Treelist 正准备下拉&lt;br&gt;注：可执行全局函数CalcelEvent( )阻止继续执行, 但仅对下拉Treelist有效, 对下拉List无效</meaning>
+		<p>id</p>
+	</BeforeDropdown>
+
+	<DropdownSelChanged>
+		<meaning>某下拉的下拉行被鼠标选择了</meaning>
+		<p>id</p>
+	</DropdownSelChanged>
+	<MenuClicked>
+		<meaning>下拉菜单按钮的菜单项已选中</meaning>
+		<p>菜单item的id</p>
+	</MenuClicked>
+	<MenuBeforePopup>
+		<meaning>某动态菜单按钮将要弹出菜单</meaning>
+		<p>按钮控件的id</p><p>该控件的menuID</p>
+	</MenuBeforePopup>
+	<ImageClicked>
+		<meaning>鼠标点到某图&lt;br&gt;(仅用于imageFlow)</meaning>
+		<p>id号</p><p>text</p><p>url</p>
+	</ImageClicked>
+	<ImageDblClicked>
+		<meaning>鼠标双击某图&lt;br&gt;(仅用于imageFlow)</meaning>
+		<p>id号</p><p>text</p><p>url</p>
+	</ImageDblClicked>
+	<FreeformTreeClicked>
+		<meaning>鼠标单击树的某节点&lt;br&gt;(仅用于FreeformTree)</meaning>
+		<p>FreeformTree的id</p><p>数据的id</p>
+	</FreeformTreeClicked>
+	<FreeformTreeDblClicked>
+		<meaning>鼠标双击树的某节点&lt;br&gt;(仅用于FreeformTree)</meaning>
+		<p>FreeformTree的id</p><p>数据的id</p>
+	</FreeformTreeDblClicked>
+	<BeforePager>
+		<meaning>分页触发前.&lt;br&gt;注:支持 CancelEvent 全局函数取消分页.&lt;br&gt;(仅用于Pager分页器)</meaning>
+		<p>id号</p><p>开始行</p><p>每页行数</p>
+	</BeforePager>
+	<Pager>
+		<meaning>分页触发后&lt;br&gt;(仅用于Pager分页器)</meaning>
+		<p>id号</p><p>开始行</p><p>每页行数</p>
+	</Pager>
+	<HyperLink>
+		<meaning>鼠标点击了超链接的Text</meaning>
+		<p>id号</p>
+	</HyperLink>
+
+	<BeforeSelChanged>
+		<meaning>选项卡(Tab)切换前.&lt;br&gt;注:支持 CancelEvent 全局函数取消切换</meaning>
+		<p>老的页签的序号</p><p>新的页签的序号</p><p>新的页签的ID</p><p>0表示第一次展现, 1表示已经被展现过</p>
+	</BeforeSelChanged>
+	<SelChanged>
+		<meaning>选项卡(Tab)切换后</meaning>
+		<p>老的页签的序号</p><p>新的页签的序号</p><p>新的页签的ID</p><p>0表示第一次展现, 1表示已经被展现过</p>
+	</SelChanged>
+
+
+	<Upload>
+		<meaning>有文件上传成功(仅用于 type="upload")</meaning>
+		<p>文件顺序号</p><p>文件总数</p><p>见备注3</p>
+	</Upload>
+	<Upload>
+		<meaning>文件上传过程中有异常</meaning>
+		<p>　</p><p>　</p><p>　</p><p>异常信息</p>
+	</Upload>
+	<Download>
+		<meaning>文件异步下载成功</meaning>
+		<p>任务ID号</p><p>文件名(若toString=true则为内容串)</p>
+	</Download>
+	<Download>
+		<meaning>文件异步下载失败</meaning>
+		<p>任务ID号</p><p>&amp;nbsp;</p><p>错误信息</p>
+	</Download>
+	<Download>
+		<meaning>文件异步下载中</meaning>
+		<p>任务ID号</p><p>&amp;nbsp;</p><p>&amp;nbsp;</p><p>见备注4</p>
+	</Download>
+	<HotKey>
+		<meaning>触发了快捷键</meaning>
+		<p>快捷键</p><p>id号,如果正在输入的话</p>
+	</HotKey>
+	<UserEvent>
+		<meaning>全局函数 PostMessage 发出的自定义事件</meaning>
+		<p>自定义</p><p>自定义</p><p>自定义</p><p>自定义</p>
+	</UserEvent>
+	<组件id.事件名>
+		<meaning>内部的大粒度组件的事件</meaning>
+		<p>和组件有关</p><p>和组件有关</p><p>和组件有关</p><p>和组件有关</p>
+	</组件id.事件名>
+</Freeform>
+
+<Edit>
+	<EditChanged>
+		<meaning>当前输入有变化</meaning>
+	</EditChanged>
+	<BeforeDropdown>
+		<meaning>下拉 Treelist 正准备下拉</meaning>
+	</BeforeDropdown>
+	<DropdownSelChanged>
+		<meaning>下拉行被鼠标选择了</meaning>
+	</DropdownSelChanged>
+	<EditKeydown>
+		<meaning>键盘动作(请见备注1)</meaning>
+		<p>键的ASCII码，例如回车是13、空格是32</p>
+		<p>见备注2</p>
+	</EditKeydown>
+	<EditChar>
+		<meaning>键盘字符(请见备注1)</meaning>
+		<p>字符的ASCII码</p>
+	</EditChar>
+	<LooseFocus>
+		<meaning>失去焦点</meaning>
+	</LooseFocus>
+	<UserEvent>
+		<meaning>全局函数 PostMessage 发出的自定义事件</meaning>
+		<p>自定义</p><p>自定义</p><p>自定义</p><p>自定义</p>
+	</UserEvent>
+</Edit>
+
+<upload>
+	<EditChanged>
+		<meaning>上传的文件有变化(对话框关闭时)</meaning>
+	</EditChanged>
+	<Upload>
+		<meaning>有文件上传成功</meaning>
+		<p>序号</p><p>上传文件总数</p><p>见备注</p>
+	</Upload>
+	<Download>
+		<meaning>请参见 Supcan Freeform组件 中的同名事件</meaning>
+	</Download>
+</upload>
+
+<Chart>
+	<Clicked>
+		<meaning>鼠标点中某个数据项</meaning>
+		<p>系列名</p><p>数据项ID</p><p>数值</p><p>百分比</p>
+	</Clicked>
+	<DblClicked>
+		<meaning>鼠标双击某个数据项</meaning>
+		<p>系列名</p><p>数据项ID</p><p>数值</p><p>百分比</p>
+	</DblClicked>
+	<UserEvent>
+		<meaning>全局函数 PostMessage 发出的自定义事件</meaning>
+		<p>自定义</p><p>自定义</p><p>自定义</p><p>自定义</p>
+	</UserEvent>
+</Chart>
+
+<Tree>
+	<SelChanged>
+		<meaning>当前项变化</meaning>
+		<p>ID</p><p>para值</p><p>text</p>
+	</SelChanged>
+	<Clicked>
+		<meaning>鼠标单击某项</meaning>
+		<p>ID</p><p>para值</p><p>text</p>
+	</Clicked>
+	<DblClicked>
+		<meaning>鼠标双击某项</meaning>
+		<p>ID</p><p>para值</p><p>text</p>
+	</DblClicked>
+	<RButtonDown>
+		<meaning>鼠标右键点到某项</meaning>
+		<p>ID</p><p>para值</p><p>text</p>
+	</RButtonDown>
+	<LazyLoad>
+		<meaning>需要加载LazyLoad的节点了</meaning>
+		<p>ID</p><p>para值</p><p>text</p>
+	</LazyLoad>
+	<Checked>
+		<meaning>鼠标单击导致Check更改</meaning>
+		<p>ID</p><p>CheckBox值(1/0)</p>
+	</Checked>
+	<UserEvent>
+		<meaning>全局函数 PostMessage 发出的自定义事件</meaning>
+		<p>自定义</p><p>自定义</p><p>自定义</p><p>自定义</p>
+	</UserEvent>
+</Tree>
+
+<Designer>
+	<Saved>
+		<meaning>点击了“保存”按钮</meaning>
+		<p>ID号，当前的Freeform或Treelist的ID, 如果当前是最外层Freeform，则为空串</p><p>URL, 是当前Freeform或Treelist的URL</p>
+	</Saved>
+	<EventListDblClicked>
+		<meaning>双击了工具箱的事件列表中的某个事件</meaning>
+		<p>组件类型, 如"Freeform"</p><p>大粒度组件的ID, 空串表示当前未选中(即最外层)</p><p>事件名</p>
+	</EventListDblClicked>
+	<EventListRefreshed>
+		<meaning>当前对象切换导致的工具箱的事件列表刷新</meaning>
+		<p>ID, 空串表示当前是最外层Freeform</p>
+	</EventListRefreshed>
+	<ButtonClicked>
+		<meaning>点击了工具箱中属性输入框中的右侧按钮</meaning>
+		<p>ID</p><p>值串</p>
+	</ButtonClicked>
+	<EditChanged>
+		<meaning>工具箱中URL输入框内容有变化 (仅右侧含按钮的场景)</meaning>
+		<p>ID</p><p>修改后的串</p><p>修改前的串</p>
+	</EditChanged>
+</Designer>
+</events>

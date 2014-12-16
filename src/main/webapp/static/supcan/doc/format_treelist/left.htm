@@ -1,0 +1,71 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<head>
+<script type="text/javascript" src="../../binary/dynaload.js?81"></script>
+<script language="JavaScript">
+ function OnReady(id)
+ {
+var xml = '<Data><items>\
+<item ID="1" str="前言" para="main1.htm"/>\
+<item ID="11" str="Properties" tip="属性" para="main1.htm"/>\
+<item ID="110" PID="11" str="Background" para="main1.htm"/>\
+<item ID="112" PID="11" str="Expresses" tip="计算列表达式"/>\
+<item ID="1121" PID="112" str="Express"/>\
+<item ID="113" PID="11" str="Validations" tip="验证"/>\
+<item ID="1131" PID="113" str="Validation"/>\
+<item ID="114" PID="11" str="PrintPage" tip="打印配置"/>\
+<item ID="1141" PID="114" str="Printer" tip="默认打印机"/>\
+<item ID="1142" PID="114" str="Paper" tip="打印纸及相关配置"/>\
+<item ID="11421" PID="1142" str="Margin" tip="页边距"/>\
+<item ID="1143" PID="114" str="PageHeader" tip="页眉"/>\
+<item ID="11431" PID="1143" str="Layer" tip="图层"/>\
+<item ID="1144" PID="114" str="PageFooter" tip="页脚"/>\
+<item ID="11441" PID="1144" str="Layer" tip="图层"/>\
+<item ID="1145" PID="114" str="Header" tip="表头"/>\
+<item ID="11451" PID="1145" str="Layer" tip="图层"/>\
+<item ID="1146" PID="114" str="Footer" tip="表尾"/>\
+<item ID="11461" PID="1146" str="Layer" tip="图层"/>\
+<item ID="13" str="Fonts" tip="字体"/>\
+<item ID="131" PID="13" str="Font" tip="字体"/>\
+<item ID="12" str="Cols" para="main3.htm"/>\
+<item ID="121" PID="12" str="Col" tip="各列的定义" para="main3.htm"/>\
+<item ID="122" PID="12" str="Group" tip="分组表头" para="main3.htm"/>\
+<item ID="14" str="FreeformRes" tip="自由表头资源区" para="main3.htm"/>\
+<item ID="141" PID="14" str="Freeform" para="main3.htm"/>\
+<item ID="16" str="DropLists" tip="下拉选择内容" para="main3.htm"/>\
+<item ID="161" PID="16" str="DropList" para="main3.htm"/>\
+<item ID="1611" PID="161" str="item" para="main3.htm"/>\
+<item ID="19" str="Table" tip="初始数据" para="main3.htm"/>\
+<item ID="191" PID="19" str="TR" para="main3.htm"/>\
+<item ID="1911" PID="191" str="TD" para="main3.htm"/>\
+</items></Data>';
+  AF.func('ReadXML', xml);
+ }
+ function OnEvent(id, Event, p1, p2, p3, p4)
+ {
+	if(Event!="SelChanged") return;
+	if(p2 == "") {
+		if(p1=="11441" || p1=="11451" || p1=="11461") p1="11431";
+		 parent.document.getElementById('ContentPage').src="main2.htm?81#Tag" + p1;
+	}
+	else {
+		parent.document.getElementById('ContentPage').src= p2 + "?81#Tag" + p1;
+	}
+ }
+</script>
+</head>
+
+<body bgcolor=#EEEEEE topmargin=10 leftMargin=3 rightMargin=1 bottommargin=1 vlink=#0000ff link=#0000ff alink=#0000ff>
+<table cols=1 border=0 height=100% width=100%>
+<tr height=24><td align=center>Supcan Treelist<br>XML文挡规范</td></tr>
+<tr height=38><td align=center><img src='../../res/tip2.bmp'>&nbsp; 目录 &nbsp;<img src='../../res/tip2.bmp'></td></tr>
+<tr><td>
+<div style="position:relative;width:100%;height:100%">
+	<script>insertTree('AF', 'Border=clientEdge; Style=hasButtons,hasLines,showSelAlways; leafImage=0; nodeImage=1; BackColor=#F0F0F0,#DFD8D8')</script>
+</div>
+</td></tr>
+</table>
+
+</body>
+</html>

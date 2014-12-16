@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery custom scrollbar demo</title>
+	<!-- style for demo and examples -->
+	<style>
+		@import url(http://fonts.googleapis.com/css?family=Lobster);
+		@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:extralight);
+		html,body{height:100%; min-width:980px;}
+		body{margin:0; padding:0; color:#eee; background:#222 url(demo_files/mcs_demo_bg.jpg) no-repeat; font-family:Verdana,Geneva,sans-serif; font-size:13px; line-height:20px;}
+		a:link,a:visited,a:hover{color:inherit;}
+		h1{font-family:"Yanone Kaffeesatz",Arial,sans-serif;}
+		h2,h3,h4,.info{font-family:"Lobster",Georgia,serif;}
+		h1{font-size:32px; line-height:34px; font-weight:normal; color:#fff; padding:10px 5px; margin:10px 0;}
+		h2{font-size:22px; line-height:25px; font-weight:normal; color:#26beff; margin:10px 0;}
+		h3{font-size:26px; line-height:30px; font-weight:normal; color:#777; margin:10px 0;}
+		h4{font-size:18px; font-weight:normal; color:#C30; margin:10px 0;}
+		p{margin:0 0 20px 0;}
+		hr{height:0; border:none; border-bottom:1px solid rgba(255,255,255,0.13); border-top:1px solid rgba(0,0,0,0.8); margin:9px 10px; clear:both;}
+		hr+h2{color:#999; margin:30px 20px 10px 20px;}
+		.links,.demo_functions{margin:10px;}
+		.links a,.demo_functions a{display:inline-block; padding:3px 15px; margin:7px 10px; background:rgba(255,255,255,0.15); text-decoration:none; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px;}
+		.links a:hover,.demo_functions a:hover{background:#eb3755; color:#fff;}
+		code{color:#5b70ff;}
+		.wrapper{height:100%; width:900px; min-height:960px;}
+		.content{margin:20px 0 40px 40px; width:260px; height:600px; padding:10px; overflow:auto;}
+		.content img{max-width:100%; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; padding:4px; border:solid 1px #666;}
+		.content p:nth-child(even){color:#999; font-family:Georgia,serif; font-size:17px; font-style:italic;}
+		.content p:nth-child(3n+0){color:#c96;}
+		.content_1,.content_2,.content_3{float:left;}
+		.content_1{margin-top:140px; padding:0 5px; border-top:1px dashed rgba(255,255,255,0.15); border-bottom:1px dashed rgba(255,255,255,0.15);}
+		.content_2{height:440px;}
+		.content_3{height:220px; border:1px dashed #26beff; padding:0 10px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+		.content_3 p:nth-child(3n+0){color:#26beff;}
+		.content_4{position:absolute; left:640px; border-bottom:1px solid #666; border-right:1px solid #666; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; background:#866c51; -webkit-box-shadow:inset 4px 4px 20px rgba(0,0,0,0.6); -moz-box-shadow:inset 4px 4px 20px rgba(0,0,0,0.6); box-shadow:inset 4px 4px 20px rgba(0,0,0,0.6); -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; padding:0 15px;}
+		.content_4 h3,.content_4 p,.content_4 p:nth-child(even),.content_4 p:nth-child(3n+0){color:#31231E; text-shadow:1px 1px 0 rgba(255,255,255,0.15);}
+		.content_4 img{border-color:#31231E;}
+		.content_5{width:590px; height:125px; padding:10px 0; overflow:auto; background:#888; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; clear:both; -webkit-box-shadow:inset 0 0 25px rgba(0,0,0,0.95); -moz-box-shadow:inset 0 0 25px rgba(0,0,0,0.95); box-shadow:inset 0 0 25px rgba(0,0,0,0.95);}
+		.content_5 h4{margin:0 0 10px 10px; color:#333;}
+		.content_5 .images_container{width:1403px; overflow:hidden; min-height:80px;}
+		.content_5 .images_container img,.content_6 .images_container img{display:block; float:left; margin:0 5px; border:none; padding:5px; background:rgba(0,0,0,0.3); -webkit-box-shadow:1px 1px 10px rgba(0,0,0,0.2); -moz-box-shadow:1px 1px 10px rgba(0,0,0,0.2); box-shadow:1px 1px 10px rgba(0,0,0,0.2);}
+		.content_5 .images_container img:first-child{margin-left:10px;}
+		.content_5 .images_container img:last-child{margin-right:10px;}
+		.content_6,.content_7{position:relative; margin:20px auto; width:100%; height:110px; overflow:auto; background:#333; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;}
+		.content_6.toggle_width{width:70%;}
+		.content_6 .images_container{overflow:hidden;}
+		.content_6 .images_container img{max-width:none;} /* stupid ie8 */
+		.content_6 .images_container img:first-child{margin-left:0;}
+		.content_6 .images_container img:last-child{margin-right:0;}
+		.content_6 .images_container img.new{background:#de4816;}
+		#mcs_t_5{background:#e7be00;}
+		.content_7{height:500px; padding:20px; background:#362f2d; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+		.content form{margin-bottom:20px;}
+		.content form input{color:#eee; border:none; background:rgba(0,0,0,0.2); -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; margin-bottom:10px; padding:0 5px; height:25px; width:180px; -webkit-box-shadow:inset 2px 2px 10px rgba(0,0,0,0.4),1px 1px 0 rgba(255,255,255,0.4); -moz-box-shadow:inset 2px 2px 10px rgba(0,0,0,0.4),1px 1px 0 rgba(255,255,255,0.4); box-shadow:inset 2px 2px 10px rgba(0,0,0,0.4),1px 1px 0 rgba(255,255,255,0.4);}
+		.content form input:focus{background:rgba(0,0,0,0.3);}
+		.key{display:inline-block; background:rgba(255,255,255,0.15); padding:0 2px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+		.content_8{background:#333; height:400px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+		.callback_demo{margin:0 20px 20px 20px; color:#ccc;}
+		.callback_demo .callback_demo_output{color:#fff;}
+		.info{position:absolute; margin:20px 0 40px 40px; width:260px; height:100px; color:#ccc; font-size:18px; padding:5px;}
+		.info span:first-child{color:#26beff;}
+		.info span:last-child{font-size:34px; line-height:38px;}
+	</style>
+	<!-- Custom scrollbars CSS -->
+	<link href="demo_files/jquery.mCustomScrollbar.css" rel="stylesheet" />
+</head>
+<body>
+	<p class="links">
+		<a href="http://manos.malihu.gr">malihu</a>
+		<a href="http://manos.malihu.gr/jquery-custom-content-scroller">Plugin home</a>
+		<a href="scrollbar_themes_demo.html">Scrollbar themes</a>
+		<a href="callbacks_example.html">Callbacks demo</a>
+		<a href="disable_destroy_example.html"><em>disable</em>/<em>destroy</em> methods demo</a>
+		<a href="nested_scrollbars_demo.html">Nested scrollbars</a>
+	</p>
+	<hr />
+	<div class="wrapper">
+		<div class="info"><span>malihu </span><br /><span>Custom Scrollbar </span>plugin</div>
+		<!-- content block -->
+ 		<div class="content_1 content">
+    		<h1>Default scrollbar with scroll buttons</h1>
+			<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit.</p>
+       		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+       		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat.</p>
+       		<p><img src="demo_files/mcsImg1.jpg" /></p>
+       		<p>Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst. Nulla scelerisque lorem quis dui sagittis egestas.</p> 
+			<p>Etiam sed massa felis, aliquam pellentesque est.</p>
+        	<p><img src="demo_files/mcsImg2.jpg" /></p>
+        	<p>Nam eu arcu at purus tincidunt pharetra ultrices at ipsum. Mauris urna nunc, vulputate quis gravida in, pharetra id mauris. Ut sit amet mi dictum nulla lobortis adipiscing quis a nulla. Etiam diam ante, imperdiet vel scelerisque eget, venenatis non eros. Praesent ipsum sem, eleifend ut gravida eget, tristique id orci. Nam adipiscing, sem in mattis vulputate, risus libero adipiscing risus, eu molestie mi justo eget nulla.</p> 
+			<p>Cras venenatis metus et urna egestas non laoreet orci rutrum. Pellentesque ullamcorper dictum nisl a tincidunt. Quisque et lacus quam, sed hendrerit mi. Mauris pretium, sapien et malesuada pulvinar, lorem leo viverra leo, et egestas mi nisl quis odio. </p>
+			<p>Aliquam erat volutpat. Sed urna arcu, tempus eu vulputate adipiscing, consectetur et orci. Vivamus congue, nunc vitae fringilla convallis, libero massa lacinia lorem, id convallis mauris elit ut leo. Nulla vel odio sem. Duis lorem urna, congue vitae rutrum sed, tincidunt vel tortor. In hac habitasse platea dictumst. Nunc vitae enim ante, vitae facilisis massa. Etiam sagittis sapien at nibh fermentum consectetur convallis lacus blandit.</p>
+        	<h3>the end.</h3>
+		</div>
+		<!-- content block -->
+		<div class="content_2 content">
+			<h1>No scrolling inertia</h1>
+			<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat.</p>
+        	<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam.</p>
+        	<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis.</p>
+			<p><img src="demo_files/mcsImg2.jpg" /></p>
+        	<p>In hac habitasse platea dictumst. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper.</p>
+        	<h3>the end.</h3>
+		</div>
+		<!-- content block -->
+		<div class="content_3 content">
+			<h2>Non-adjustable, fixed scrollbar height</h2>
+			<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+			<p>consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+			<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst. Nulla scelerisque lorem quis dui sagittis egestas. Etiam sed massa felis, aliquam pellentesque est. Quisque quis ante tortor, sed egestas risus. Maecenas varius adipiscing nulla, nec rhoncus est mattis id. Aenean blandit convallis nisi at fringilla. Nunc id massa eu sapien fringilla posuere.</p>
+			<h3>the end.</h3>
+		</div>
+		<!-- content block -->
+		<div class="content_4 content">
+			<h3>Fluid height container without mouse-wheel support</h3>
+			<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+			<p><strong>If needed, scrollbar will scroll automatically to any element that has focus. <br />Press the <span class="key">TAB key</span> to test.</strong></p>
+			<form>
+				<input type="text" name="textfield_1" tabindex="1" />
+				<input type="text" name="textfield_2" tabindex="2" />
+			</form>
+			<p>consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+			<p>Morbi porttitor rhoncus nisi, eget vehicula quam sodales at. Maecenas ipsum tellus, mollis quis faucibus id, feugiat molestie lacus. Sed nec quam purus, at condimentum quam. Integer imperdiet faucibus urna tempus consectetur. Nullam non purus ligula, et tincidunt nulla. Aenean tincidunt, dui at elementum egestas, sem turpis volutpat turpis, nec congue purus quam quis ligula. Nam dictum rutrum pulvinar. Aenean sed cursus purus. Curabitur non dui eu nibh fermentum interdum a id dui. Fusce iaculis blandit tellus, nec tincidunt massa adipiscing id. Aliquam dui massa, porttitor eget molestie at, semper eu libero. Suspendisse sit amet velit et elit viverra convallis vitae ut turpis. Maecenas vehicula blandit odio sollicitudin eleifend. Curabitur molestie porta neque ac imperdiet.</p>
+			<p><img src="demo_files/mcsImg1.jpg" /></p>
+			<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst.</p>
+			<form>
+				<input type="text" name="textfield_3" tabindex="3" />
+				<input type="text" name="textfield_4" tabindex="4" />
+			</form>
+			<p><img src="demo_files/mcsImg2.jpg" /></p>
+			<p>the end.</p>
+		</div>
+		<!-- content block -->
+		<div class="content_5 content">
+    		<h4>Horizontal scrollbar with scroll buttons</h4>
+			<div class="images_container">
+				<img src="demo_files/mcsThumb1.jpg" />
+				<img src="demo_files/mcsThumb2.jpg" />
+				<img src="demo_files/mcsThumb3.jpg" />
+				<img src="demo_files/mcsThumb4.jpg" />
+				<img src="demo_files/mcsThumb5.jpg" />
+				<img src="demo_files/mcsThumb6.jpg" />
+				<img src="demo_files/mcsThumb7.jpg" />
+				<img src="demo_files/mcsThumb8.jpg" />
+				<img src="demo_files/mcsThumb1.jpg" />
+				<img src="demo_files/mcsThumb2.jpg" />
+				<img src="demo_files/mcsThumb3.jpg" />
+				<img src="demo_files/mcsThumb4.jpg" />
+			</div>
+		</div>
+	</div>
+	<hr />
+	<h2>Fluid width horizontal scrollbar</h2>
+	<p class="demo_functions"><a href="#" rel="append-new">Append new image</a> <a href="#" rel="prepend-new">Prepend new image</a> <a href="#" rel="append-new-scrollto">Append new image and scroll to right-end</a> <a href="#" rel="scrollto">Scroll to yellow border image</a> <a href="#" rel="remove-last">Remove last image</a> <a href="#" rel="toggle-width">Toggle container width</a></p>
+	<!-- content block -->
+	<div class="content_6 content">
+		<div class="images_container">
+			<img src="demo_files/mcsThumb1.jpg" />
+			<img src="demo_files/mcsThumb2.jpg" />
+			<img src="demo_files/mcsThumb3.jpg" />
+			<img src="demo_files/mcsThumb4.jpg" />
+			<img src="demo_files/mcsThumb5.jpg" id="mcs_t_5" />
+			<img src="demo_files/mcsThumb6.jpg" />
+			<img src="demo_files/mcsThumb7.jpg" />
+			<img src="demo_files/mcsThumb8.jpg" />
+			<img src="demo_files/mcsThumb1.jpg" />
+			<img src="demo_files/mcsThumb2.jpg" />
+			<img src="demo_files/mcsThumb3.jpg" />
+			<img src="demo_files/mcsThumb4.jpg" />
+			<img src="demo_files/mcsThumb5.jpg" />
+			<img src="demo_files/mcsThumb6.jpg" />
+			<img src="demo_files/mcsThumb7.jpg" />
+			<img src="demo_files/mcsThumb8.jpg" />
+			<img src="demo_files/mcsThumb1.jpg" />
+			<img src="demo_files/mcsThumb2.jpg" />
+			<img src="demo_files/mcsThumb3.jpg" />
+			<img src="demo_files/mcsThumb4.jpg" />
+			<img src="demo_files/mcsThumb5.jpg" />
+			<img src="demo_files/mcsThumb6.jpg" />
+			<img src="demo_files/mcsThumb7.jpg" />
+			<img src="demo_files/mcsThumb8.jpg" />
+		</div>
+	</div>
+	<hr />
+	<h2>Fluid width vertical scrollbar</h2>
+	<p class="demo_functions"><a href="#" rel="scrollto-par-5">Scroll to 5th paragraph</a> <a href="#" rel="increase-height">Increase container height</a> <a href="#" rel="decrease-height">Decrease container height</a> <a href="#" rel="reset-height">Reset container height</a> <a href="#" rel="scrollto-bottom">Scroll to bottom</a> <a href="#" rel="scrollto-top">Scroll to top</a> <a href="#" rel="scrollto-par-1st">Scroll to 1st paragraph</a></p>
+	<!-- content block -->
+	<div class="content_7 content">
+		<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti.</p>
+		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+		<p>Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+		<p id="par-5">Morbi porttitor rhoncus nisi, eget vehicula quam sodales at. Maecenas ipsum tellus, mollis quis faucibus id, feugiat molestie lacus. Sed nec quam purus, at condimentum quam. Integer imperdiet faucibus urna tempus consectetur. Nullam non purus ligula, et tincidunt nulla. Aenean tincidunt, dui at elementum egestas, sem turpis volutpat turpis, nec congue purus quam quis ligula. Nam dictum rutrum pulvinar. Aenean sed cursus purus. Curabitur non dui eu nibh fermentum interdum a id dui. Fusce iaculis blandit tellus, nec tincidunt massa adipiscing id. Aliquam dui massa, porttitor eget molestie at, semper eu libero. Suspendisse sit amet velit et elit viverra convallis vitae ut turpis. Maecenas vehicula blandit odio sollicitudin eleifend. Curabitur molestie porta neque ac imperdiet.</p>
+		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst.</p>
+		<p>consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+		<p>Morbi porttitor rhoncus nisi, eget vehicula quam sodales at. Maecenas ipsum tellus, mollis quis faucibus id, feugiat molestie lacus. Sed nec quam purus, at condimentum quam. Integer imperdiet faucibus urna tempus consectetur. Nullam non purus ligula, et tincidunt nulla. Aenean tincidunt, dui at elementum egestas, sem turpis volutpat turpis, nec congue purus quam quis ligula. Nam dictum rutrum pulvinar. Aenean sed cursus purus. Curabitur non dui eu nibh fermentum interdum a id dui. Fusce iaculis blandit tellus, nec tincidunt massa adipiscing id. Aliquam dui massa, porttitor eget molestie at, semper eu libero. Suspendisse sit amet velit et elit viverra convallis vitae ut turpis. Maecenas vehicula blandit odio sollicitudin eleifend. Curabitur molestie porta neque ac imperdiet.</p>
+		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst.</p>
+		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+		<p>consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+		<p>Morbi porttitor rhoncus nisi, eget vehicula quam sodales at. Maecenas ipsum tellus, mollis quis faucibus id, feugiat molestie lacus. Sed nec quam purus, at condimentum quam. Integer imperdiet faucibus urna tempus consectetur. Nullam non purus ligula, et tincidunt nulla. Aenean tincidunt, dui at elementum egestas, sem turpis volutpat turpis, nec congue purus quam quis ligula. Nam dictum rutrum pulvinar. Aenean sed cursus purus. Curabitur non dui eu nibh fermentum interdum a id dui. Fusce iaculis blandit tellus, nec tincidunt massa adipiscing id. Aliquam dui massa, porttitor eget molestie at, semper eu libero. Suspendisse sit amet velit et elit viverra convallis vitae ut turpis. Maecenas vehicula blandit odio sollicitudin eleifend. Curabitur molestie porta neque ac imperdiet.</p>
+		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. Cras venenatis condimentum nibh a mollis. Duis id sapien nibh. Vivamus porttitor, felis quis blandit tincidunt, erat magna scelerisque urna, a faucibus erat nisl eget nisl. Aliquam consequat turpis id velit egestas a posuere orci semper. Mauris suscipit erat quis urna adipiscing ultricies. In hac habitasse platea dictumst.</p>
+       	<p>the end.</p>
+	</div>
+	<hr />
+	<h2>Simple callbacks demo</h2>
+	<p class="callback_demo"><a href="#" rel="scrollto-bottom">Scroll to bottom</a> to load an image at the end of the content | Output: <span class="callback_demo_output"></span><br />
+	<code>onTotalScrollOffset</code> is set to <code>40</code> pixels, <code>onTotalScrollBackOffset</code> is set to <code>20</code> pixels. <br />
+	<a href="callbacks_example.html">Advanced callbacks demo</a>
+	</p>
+	<!-- content block -->
+	<div class="content_8 content">
+		<p>Lorem ipsum dolor sit amet. Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti.</p>
+		<p>Consectetur adipiscing elit. Nulla consectetur libero consectetur quam consequat nec tincidunt massa feugiat. Donec egestas mi turpis. Fusce adipiscing dui eu metus gravida vel facilisis ligula iaculis. Cras a rhoncus massa. Donec sed purus eget nunc placerat consequat. Nulla facilisi. Nam vel augue odio, dignissim mattis dolor. Nullam at mi aliquet quam interdum consectetur. Duis tempus mauris in lorem dictum eget euismod urna aliquet. In vestibulum tempor porta.</p>
+		<p>Aliquam erat volutpat. Maecenas non tortor nulla, non malesuada velit. Nullam felis tellus, tristique nec egestas in, luctus sed diam. Suspendisse potenti. </p>
+		<p id="par-5">Morbi porttitor rhoncus nisi, eget vehicula quam sodales at. Maecenas ipsum tellus, mollis quis faucibus id, feugiat molestie lacus. Sed nec quam purus, at condimentum quam. Integer imperdiet faucibus urna tempus consectetur. Nullam non purus ligula, et tincidunt nulla. Aenean tincidunt, dui at elementum egestas, sem turpis volutpat turpis, nec congue purus quam quis ligula. Nam dictum rutrum pulvinar. Aenean sed cursus purus. Curabitur non dui eu nibh fermentum interdum a id dui. Fusce iaculis blandit tellus, nec tincidunt massa adipiscing id. Aliquam dui massa, porttitor eget molestie at, semper eu libero. Suspendisse sit amet velit et elit viverra convallis vitae ut turpis. Maecenas vehicula blandit odio sollicitudin eleifend. Curabitur molestie porta neque ac imperdiet.</p>
+       	<p>the end.</p>
+	</div>
+	<hr />
+	<p>&nbsp;</p>
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/minified/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	<!-- custom scrollbars plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	<script>
+		(function($){
+			$(window).load(function(){
+				/* custom scrollbar fn call */
+				$(".content_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+				$(".content_2").mCustomScrollbar({
+					scrollInertia:150
+				});
+				$(".content_3").mCustomScrollbar({
+					scrollInertia:600,
+					autoDraggerLength:false
+				});
+				$(".content_4").mCustomScrollbar({
+					set_height:"85%",
+					mouseWheel:false
+				});
+				$(".content_5").mCustomScrollbar({
+					horizontalScroll:true,
+					scrollButtons:{
+						enable:true
+					},
+					theme:"dark-thin"
+				});
+				$(".content_6").mCustomScrollbar({
+					horizontalScroll:true,
+					advanced:{
+						autoExpandHorizontalScroll:true
+					}
+				});
+				$(".content_7").mCustomScrollbar({
+					set_width:"95%",
+					scrollButtons:{
+						enable:true
+					},
+					theme:"light-2"
+				});
+				$(".content_8").mCustomScrollbar({
+					callbacks:{
+						onScroll:function(){
+							onScrollCallback();
+						},
+						onTotalScroll:function(){
+							onTotalScrollCallback();
+						},
+						onTotalScrollOffset:40,
+						onTotalScrollBack:function(){
+							onTotalScrollBackCallback();
+						},
+						onTotalScrollBackOffset:20
+					}
+				});
+				
+				/* 
+				demo fn 
+				functions below are for demo and examples
+				*/
+				$(".demo_functions a[rel='append-new']").click(function(e){
+					e.preventDefault();
+					$(".content_6 .images_container").append("<img src='demo_files/mcsThumb1.jpg' class='new' />");
+					$(".content_6 .images_container img").load(function(){
+						$(".content_6").mCustomScrollbar("update");
+					});
+				});
+				$(".demo_functions a[rel='prepend-new']").click(function(e){
+					e.preventDefault();
+					$(".content_6 .images_container").prepend("<img src='demo_files/mcsThumb8.jpg' class='new' />");
+					$(".content_6 .images_container img").load(function(){
+						$(".content_6").mCustomScrollbar("update");
+					});
+				});
+				$(".demo_functions a[rel='append-new-scrollto']").click(function(e){
+					e.preventDefault();
+					$(".content_6 .images_container").append("<img src='demo_files/mcsThumb1.jpg' class='new' />");
+					$(".content_6 .images_container img").load(function(){
+						$(".content_6").mCustomScrollbar("update");
+						$(".content_6").mCustomScrollbar("scrollTo","right");
+					});
+				});
+				$(".demo_functions a[rel='scrollto']").click(function(e){
+					e.preventDefault();
+					$(".content_6").mCustomScrollbar("scrollTo","#mcs_t_5");
+				});
+				$(".demo_functions a[rel='remove-last']").click(function(e){
+					e.preventDefault();
+					$(".content_6 .images_container img:last").remove();
+					$(".content_6").mCustomScrollbar("update");
+				});
+				$(".demo_functions a[rel='toggle-width']").click(function(e){
+					e.preventDefault();
+					$(".content_6").toggleClass("toggle_width");
+					$(".content_6").mCustomScrollbar("update");
+				});
+				$(".demo_functions a[rel='scrollto-par-5']").click(function(e){
+					e.preventDefault();
+					$(".content_7").mCustomScrollbar("scrollTo","#par-5");
+				});
+				$(".demo_functions a[rel='increase-height']").click(function(e){
+					e.preventDefault();
+					$(".content_7").animate({height:1100},"slow",function(){
+						$(this).mCustomScrollbar("update");
+					});
+				});
+				$(".demo_functions a[rel='decrease-height']").click(function(e){
+					e.preventDefault();
+					$(".content_7").animate({height:350},"slow",function(){
+						$(this).mCustomScrollbar("update");
+					});
+				});
+				var content_7_height=$(".content_7").height();
+				$(".demo_functions a[rel='reset-height']").click(function(e){
+					e.preventDefault();
+					if($(".content_7").height()!=content_7_height){
+						$(".content_7").animate({height:content_7_height},"slow",function(){
+							$(this).mCustomScrollbar("update");
+						});
+					}
+				});
+				$(".demo_functions a[rel='scrollto-bottom']").click(function(e){
+					e.preventDefault();
+					$(".content_7").mCustomScrollbar("scrollTo","bottom");
+				});
+				$(".demo_functions a[rel='scrollto-top']").click(function(e){
+					e.preventDefault();
+					$(".content_7").mCustomScrollbar("scrollTo","top");
+				});
+				$(".demo_functions a[rel='scrollto-par-1st']").click(function(e){
+					e.preventDefault();
+					$(".content_7").mCustomScrollbar("scrollTo","first");
+				});
+				function onScrollCallback(){
+					$(".callback_demo .callback_demo_output").html("<em>Scrolled... Content top position: "+mcs.top+"</em>").children("em").delay(1000).fadeOut("slow");
+				}
+				function onTotalScrollCallback(){
+					if($(".appended").length<1){
+						$(".content_8 .mCSB_container").append("<p class='appended'><img src='demo_files/mcsImg1.jpg' /></p>");
+					}else{
+						$(".callback_demo .callback_demo_output").html("<em>Scrolled to bottom. Content top position: "+mcs.top+"</em>").children("em").delay(1000).fadeOut("slow");
+					}
+					$(".content_8 .mCSB_container img").load(function(){
+						$(".content_8").mCustomScrollbar("update");
+						$(".callback_demo .callback_demo_output").html("<em>New image loaded...</em>").children("em").delay(1000).fadeOut("slow");
+					});
+				}
+				function onTotalScrollBackCallback(){
+					$(".callback_demo .callback_demo_output").html("<em>Scrolled to top. Content top position: "+mcs.top+"</em>").children("em").delay(1000).fadeOut("slow");
+				}
+				$(".callback_demo a[rel='scrollto-bottom']").click(function(e){
+					e.preventDefault();
+					$(".content_8").mCustomScrollbar("scrollTo","bottom");
+				});
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>

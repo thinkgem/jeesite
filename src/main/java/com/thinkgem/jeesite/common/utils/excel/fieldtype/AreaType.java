@@ -1,10 +1,9 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.utils.excel.fieldtype;
 
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.entity.Area;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -20,7 +19,7 @@ public class AreaType {
 	 */
 	public static Object getValue(String val) {
 		for (Area e : UserUtils.getAreaList()){
-			if (val.equals(e.getName())){
+			if (StringUtils.trimToEmpty(val).equals(e.getName())){
 				return e;
 			}
 		}

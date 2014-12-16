@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery custom scrollbar demo</title>
+	<!-- style for demo and examples -->
+	<style>
+		body{margin:0; padding:0; color:#eee; background:#222; font-family:Verdana,Geneva,sans-serif; font-size:13px; line-height:20px;}
+		a:link,a:visited,a:hover{color:inherit;}
+		h1{font-family:Georgia,serif; font-size:18px; font-style:italic; margin:40px; color:#26beff;}
+		p{margin:0 0 20px 0;}
+		hr{height:0; border:none; border-bottom:1px solid rgba(255,255,255,0.13); border-top:1px solid rgba(0,0,0,1); margin:9px 10px; clear:both;}
+		.links{margin:10px;}
+		.links a{display:inline-block; padding:3px 15px; margin:7px 10px; background:#444; text-decoration:none; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px;}
+		.links a:hover{background:#eb3755; color:#fff;}
+		.output{margin:20px 40px;}
+		code{color:#5b70ff;}
+		.content{margin:40px; width:580px; height:90px; padding:10px; overflow:auto; background:#444; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px;}
+		.content .images_container{overflow:hidden;}
+		.content .images_container img{display:block; float:left; margin:0 5px; border:5px solid #777;}
+		a[rel='toggle-buttons-scroll-type']{display:inline-block; text-decoration:none; padding:3px 15px; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px; background:#000; margin:5px 20px 5px 0;}
+	</style>
+	<!-- Custom scrollbars CSS -->
+	<link href="jquery.mCustomScrollbar.css" rel="stylesheet" />
+</head>
+<body>
+	<p class="links">
+		<a href="http://manos.malihu.gr">malihu</a>
+		<a href="http://manos.malihu.gr/jquery-custom-content-scroller">Plugin home</a>
+		<a href="complete_examples.html">Plugin demo</a>
+	</p>
+	<hr />
+	<h1>Example of snap scrolling to images</h1>
+	<p class="output"><a href="#" rel="toggle-buttons-scroll-type"></a></p>
+	<!-- content block -->
+	<div id="content_1" class="content">
+		<div class="images_container">
+			<img src="demo_files/mcsThumb1.jpg" />
+			<img src="demo_files/mcsThumb2.jpg" />
+			<img src="demo_files/mcsThumb3.jpg" />
+			<img src="demo_files/mcsThumb4.jpg" />
+			<img src="demo_files/mcsThumb5.jpg" />
+			<img src="demo_files/mcsThumb6.jpg" />
+			<img src="demo_files/mcsThumb7.jpg" />
+			<img src="demo_files/mcsThumb8.jpg" />
+			<img src="demo_files/mcsThumb1.jpg" />
+			<img src="demo_files/mcsThumb2.jpg" />
+			<img src="demo_files/mcsThumb3.jpg" />
+			<img src="demo_files/mcsThumb4.jpg" />
+			<img src="demo_files/mcsThumb5.jpg" />
+			<img src="demo_files/mcsThumb6.jpg" />
+			<img src="demo_files/mcsThumb7.jpg" />
+			<img src="demo_files/mcsThumb8.jpg" />
+		</div>
+	</div>
+	<hr />
+	<p>&nbsp;</p>
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="js/minified/jquery-1.9.1.min.js"%3E%3C/script%3E'))</script>
+	<!-- custom scrollbars plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+	<script>
+		(function($){
+			$(window).load(function(){
+				$("#content_1").mCustomScrollbar({
+					scrollInertia:550,
+					horizontalScroll:true,
+					mouseWheelPixels:116,
+					scrollButtons:{
+						enable:true,
+						scrollType:"pixels",
+						scrollAmount:116
+					},
+					callbacks:{
+						onScroll:function(){ snapScrollbar(); }
+					}
+				});
+				/* toggle buttons scroll type */
+				var content=$("#content_1");
+				$("a[rel='toggle-buttons-scroll-type']").html("<code>scrollType: \""+content.data("scrollButtons_scrollType")+"\"</code>");
+				$("a[rel='toggle-buttons-scroll-type']").click(function(e){
+					e.preventDefault();
+					var scrollType;
+					if(content.data("scrollButtons_scrollType")==="pixels"){
+						scrollType="continuous";
+					}else{
+						scrollType="pixels";
+					}
+					content.data({"scrollButtons_scrollType":scrollType}).mCustomScrollbar("update");
+					$(this).html("<code>scrollType: \""+content.data("scrollButtons_scrollType")+"\"</code>");
+				});
+				/* snap scrollbar fn */
+				var snapTo=[];
+				$("#content_1 .images_container img").each(function(){
+					var $this=$(this),thisX=$this.position().left;
+					snapTo.push(thisX);
+				});
+				function snapScrollbar(){
+					var posX=$("#content_1 .mCSB_container").position().left,closestX=findClosest(Math.abs(posX),snapTo);
+					$("#content_1").mCustomScrollbar("scrollTo",closestX,{scrollInertia:350,callbacks:false});
+				}
+				function findClosest(num,arr){
+	                var curr=arr[0];
+    	            var diff=Math.abs(num-curr);
+        	        for(var val=0; val<arr.length; val++){
+            	        var newdiff=Math.abs(num-arr[val]);
+                	    if(newdiff<diff){
+                    	    diff=newdiff;
+                        	curr=arr[val];
+                    	}
+                	}
+                	return curr;
+            	}
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>

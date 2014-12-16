@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="TableLayout" meaning='类似Html Table的布局，在&amp;lt;TD&amp;gt; ..  &amp;lt;/TD&amp;gt;之间嵌入具体的对象, 辅助其它对象定位. 请详见下方的“附录:关于TableLayout”' number="0-n" example="1.体验Freeform、3.多种下拉、7.动态更改属性(2)、8.有表头表体的表单(1)">
+<element name="border" meaning="表格线宽">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数, 通常用于调试</value>
+	<default>0</default>
+</element>
+<element name="borderColor" meaning="表格线色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<default>#000000</default>
+</element>
+<element name="cellPadding" meaning="内嵌对象离表格线的距离">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>0</default>
+</element>
+</elements>
+
+</root>

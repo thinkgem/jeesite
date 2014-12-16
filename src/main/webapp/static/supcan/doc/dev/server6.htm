@@ -1,0 +1,93 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag1"/>
+<br>
+　　<font style='font-size:15pt'>6.演示页分析</font><hr color=#2266ee size=1>
+　　硕正主页的在线演示中有移动应用的示例，每个示例解决的问题不尽相同，下面我们对其进行分析。<br>
+<br>
+　　在线演示都是以aspx书写的，C#源码用到了前面的非托管代码的封装类，这里不再分析了。<br>
+<br>
+<b>1.ASPX的返回值</b><br>
+　　这几个示例都有些相同的地方，例如它们都是把计算结果转换输出到临时目录下的某个临时的HTML文件，就算大功告成了.<br>
+　　在例一和例二中，aspx仅返回这个临时文件对应的URL, 浏览器获得这个URL后，将其以二维码方式在页面中展现，以便手机访问；<br>
+　　在例三中，aspx用 Response.Redirect( )重定位函数，引导手机指向这个URL.<br>
+　　所以，我们可以在aspx中设定Content-Type为纯文本就行，不需要返回HTML:<br>
+<pre class='cpp'>
+Response.ContentType = "text/plain";</pre>
+<br>
+<b>2.临时目录</b><br>
+　　在示例中，报表服务将结果输出到Temp目录，和其自身的缓存目录处于同一个位置，试想一下，如果用的次数多了，垃圾文件就越来越多，服务器磁盘空间会被耗尽，为此我们专门增加了一个全局函数：CacheDirUtility，当您报表服务创建成功后，可以调用这个函数:<br>
+
+<pre class='cpp'>
+ String ReportFilename = dll.func("CacheDirUtility", "isCreateTempFile=true;ext=htm;DeleteEarlierFile=15m;KeepMB=10");</pre>
+　　这个函数的详细文档在 "Supcan Treelist组件\12.全局函数"中，参数中的 "DeleteEarlierFile=15m;KeepMB=10" 就是表示清理垃圾，它将删除15分钟前的文件、并保证缓存垃圾不超过10MB; "isCreateTempFile=true;ext=htm" 表示生成一个唯一的.htm文件，并返回全文件名.<br>
+<img src='glass.jpg'><font color="552222">清理缓存需要消耗一定CPU，建议您产生一个随机数，随机清理，不需要每次都清理;</font><br>
+<img src='glass.jpg'><font color="552222">KeepMB建议不要设得太大, 数字越大则缓存清理过程越慢;</font><br>
+<br>
+
+<b>3.示例3中分类汇总表查询的aspx源码分析</b><br>
+<pre class='cpp'>
+public void Page_Load(Object sender, EventArgs e) {
+ //仅返回平面的串, 可用于简单的错误提示
+ Response.ContentType = "text/plain";
+ 
+ //winface.dll所在目录 (硕正服务器专版的绝对目录)
+ String WinFacePathname = Server.MapPath("DemoWin32\\winface.dll");
+ 
+ //加载winface.dll
+ DllInvoke dll = new DllInvoke(WinFacePathname);
+ if(dll.m_hLib == IntPtr.Zero) {
+  Response.Write("dll加载失败");
+  Response.End();
+  return;
+ }
+ 
+ //服务是否被其它线程打开着
+ if(dll.GetActiveServices( ) > 0) {
+  Response.Write("服务器忙，请稍后再试");
+  Response.End();
+  return;
+ }
+ 
+ //创建报表服务
+ //Temp 目录的绝对路径
+ String TempDir = Server.MapPath("Temp");
+ //报表服务中，为中心数据源设定相对URL的绝对部分, 它访问的是服务器本机的中心数据源
+ String BaseDir = "http://localhost/supcan/";
+ if(dll.OpenReportService("LogSize=1000;LogLevel=2;TempDir=" +TempDir+ ";BaseDir=" + BaseDir) == false) {
+  Response.Write("服务创建失败");
+  Response.End();
+  return;
+ }
+ 
+ //报表服务：打开文件
+ dll.func("build", Server.MapPath("..\\report\\center2.xml"));
+ 
+ //指定中心数据源的URL，参数是一个相对URL，相对于服务创建参数中的BaseDir，当然您也可以用绝对URL
+ dll.func("SetSource", "reportdata/datacenter.xml");
+ //计算、填充数据
+ dll.func("calc", "");
+ 
+ //生成唯一的临时文件，同时自洁临时目录
+ String TempFilename = dll.func("CacheDirUtility", "isCreateTempFile=true;ext=htm;DeleteEarlierFile=15m;KeepMB=10");
+ //报表转换成html
+ dll.func("callfunc", "105\r\n type=htm;filename=" + TempFilename);
+ //关闭服务
+ dll.CloseService();
+ 
+ //取得不含路径的文件名
+ int n = TempFilename.LastIndexOf('\\');
+ TempFilename = TempFilename.Substring(n+1);
+ //拼接成URL后 Redirect
+ Response.Redirect("http://www.mysite.cn/supcan/dotnet/temp/" + TempFilename);
+}</pre>
+
+
+<br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>
