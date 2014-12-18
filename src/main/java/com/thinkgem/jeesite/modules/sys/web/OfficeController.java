@@ -121,7 +121,7 @@ public class OfficeController extends BaseController {
 	@ResponseBody
 	@RequestMapping("treeData")
 	public List<Map<String, Object>> treeData(HttpServletResponse response,
-			@RequestParam(required = false) Long extId,
+			@RequestParam(required = false) String extId,
 			@RequestParam(required = false) Long type,
 			@RequestParam(required = false) Long grade) {
 		
