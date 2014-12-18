@@ -436,6 +436,11 @@
 			<artifactId>activiti-spring</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>draw2d</artifactId>
+			<version>3.2.100-v20070529</version>
+		</dependency>
 		
 		<!-- LOGGING begin -->
 		<dependency>
