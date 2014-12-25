@@ -112,15 +112,6 @@
 			<name>ThinkGem Repository 2</name>
 			<url>https://raw.github.com/thinkgem/repository/master</url>
 		</repository>
-		<repository>
-		  <id>bitwalker.user-agent-utils.mvn.repo</id>
-		  <url>https://raw.github.com/HaraldWalker/user-agent-utils/mvn-repo/</url>
-		  <!-- use snapshot version -->
-		  <snapshots>
-		     <enabled>true</enabled>
-		     <updatePolicy>always</updatePolicy>
-		   </snapshots>
-		</repository>
 		
 	</repositories>	
 	<pluginRepositories> 
