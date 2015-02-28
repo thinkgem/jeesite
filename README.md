@@ -136,7 +136,8 @@ Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hi
 
 ## 如何交流、反馈、参与贡献？
 
-* QQ Group：127515876 &nbsp; 209330483
+* QQ Group：127515876 &nbsp; 209330483 &nbsp; 223507718
+* E-mail：thinkgem@163.com
 * GitHub：<https://github.com/thinkgem/jeesite>
 * 开源中国：<http://git.oschina.net/thinkgem/jeesite>
 * 官方网址：<http://jeesite.com>  论坛：<http://bbs.jeesite.com>
