@@ -24,6 +24,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+        $.ajaxSetup({cache:false});
 		var setting = {data:{simpleData:{enable:true,idKey:"id",pIdKey:"pId",rootPId:'0'}},
 			callback:{onClick:function(event, treeId, treeNode){
 					var id = treeNode.pId == '0' ? '' :treeNode.pId;

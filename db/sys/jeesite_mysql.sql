@@ -2,17 +2,17 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE sys_role_office;
-DROP TABLE sys_user_role;
-DROP TABLE sys_user;
-DROP TABLE sys_office;
-DROP TABLE sys_area;
-DROP TABLE sys_dict;
-DROP TABLE sys_log;
-DROP TABLE sys_mdict;
-DROP TABLE sys_role_menu;
-DROP TABLE sys_menu;
-DROP TABLE sys_role;
+DROP TABLE IF EXISTS sys_role_office;
+DROP TABLE IF EXISTS sys_user_role;
+DROP TABLE IF EXISTS sys_user;
+DROP TABLE IF EXISTS sys_office;
+DROP TABLE IF EXISTS sys_area;
+DROP TABLE IF EXISTS sys_dict;
+DROP TABLE IF EXISTS sys_log;
+DROP TABLE IF EXISTS sys_mdict;
+DROP TABLE IF EXISTS sys_role_menu;
+DROP TABLE IF EXISTS sys_menu;
+DROP TABLE IF EXISTS sys_role;
 
 
 
