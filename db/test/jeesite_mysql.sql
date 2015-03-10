@@ -2,10 +2,10 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE test_data;
-DROP TABLE test_data_child;
-DROP TABLE test_data_main;
-DROP TABLE test_tree;
+DROP TABLE IF EXISTS test_data;
+DROP TABLE IF EXISTS test_data_child;
+DROP TABLE IF EXISTS test_data_main;
+DROP TABLE IF EXISTS test_tree;
 
 
 
@@ -90,7 +90,6 @@ CREATE INDEX test_data_child_del_flag ON test_data_child (del_flag ASC);
 CREATE INDEX test_data_main_del_flag ON test_data_main (del_flag ASC);
 CREATE INDEX test_tree_del_flag ON test_tree (del_flag ASC);
 CREATE INDEX test_data_parent_id ON test_tree (parent_id ASC);
-CREATE INDEX test_data_parent_ids ON test_tree (parent_ids ASC);
 
 
 
