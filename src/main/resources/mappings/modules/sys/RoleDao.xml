@@ -168,7 +168,7 @@
 	</update>
 	
 	<delete id="deleteRoleMenu">
-		DELETE sys_role_menu WHERE role_id = #{id}
+		DELETE FROM sys_role_menu WHERE role_id = #{id}
 	</delete>
 	
 	<insert id="insertRoleMenu">
@@ -179,7 +179,7 @@
 	</insert>
 	
 	<delete id="deleteRoleOffice">
-		DELETE sys_role_office WHERE role_id = #{id}
+		DELETE FROM sys_role_office WHERE role_id = #{id}
 	</delete>
 	
 	<insert id="insertRoleOffice">

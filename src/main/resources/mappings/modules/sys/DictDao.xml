@@ -18,7 +18,7 @@
 			AND type = #{type}
 		</if>
 		<if test="description != null and description != ''">
-			AND description LIKE '%'||#{description}||'%'
+			AND description LIKE CONCAT('%',#{description},'%')
 		</if>
 		ORDER BY type, sort, update_date DESC
 	</select>

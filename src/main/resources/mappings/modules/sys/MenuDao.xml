@@ -137,7 +137,7 @@
 	<update id="delete">
 		UPDATE sys_menu SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id} OR parent_ids LIKE '%,'||#{id}||',%'
+		WHERE id = #{id} OR parent_ids LIKE CONCAT('%,',#{id},',%')
 	</update>
 	
 </mapper>
