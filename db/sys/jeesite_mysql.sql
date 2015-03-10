@@ -61,6 +61,7 @@ CREATE TABLE sys_log
 (
 	id varchar(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
 	type char(1) DEFAULT '1' COMMENT '日志类型',
+	title varchar(255) DEFAULT '' COMMENT '日志标题',
 	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
 	remote_addr varchar(255) COMMENT '操作IP地址',
