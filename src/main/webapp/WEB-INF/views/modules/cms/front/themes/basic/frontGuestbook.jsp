@@ -57,7 +57,7 @@
 		</ul>
 		<div class="pagination">${page}</div>
 		<h4>我要留言</h4>
-		<form:form id="inputForm" action="" method="post" class="form-horizontal">
+		<form:form id="inputForm" action="${ctx}/guestbook" method="post" class="form-horizontal">
 			<div class="control-group">
 				<label class="control-label">名称:</label>
 				<div class="controls">
@@ -102,7 +102,7 @@
 			<div class="control-group">
 				<label class="control-label">验证码:</label>
 				<div class="controls">
-					<tags:validateCode name="validateCode" />
+					<sys:validateCode name="validateCode" />
 				</div>
 			</div>
 			<div class="form-actions">

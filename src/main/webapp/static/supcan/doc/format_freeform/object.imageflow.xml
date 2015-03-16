@@ -1,0 +1,105 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="ImageFlow 或 ImgFlow" example='18.炫酷ImageFlow(图像流)控件, 以及报表的 33.统计图ImageFlow' meaning="图片流的属性" number="0-n">
+<element name="style" meaning="图片流样式">
+	<category>主要</category>
+	<value>ipod / horz</value>
+	<default>ipod</default>
+</element>
+<element name="src/URL" meaning="图片流的XML描述文件的URL">
+	<category>数据</category>
+	<value>绝对或相对URL</value>
+	<memo>:该XML通常为多记录的树, 其文档规则说明如下：</memo>
+	<memo>:1. 每记录可有id、url(或src)、tip(或text)元素;</memo>
+	<memo>:2. 其含义为ID、图片URL、文字说明，其中id、url为必需;</memo>
+	<memo>:3. url可以是相对URL，相对于图片流XML文档位置;</memo>
+	<memo>:4. 可参考freeform的demo页实例</memo>
+</element>
+<element name="slider" meaning="滚动条的样式">
+	<category>外观</category>
+	<value meaning="普通的滑竿">scroll</value>
+	<value meaning="数字框">digital</value>
+	<value meaning="无滚动条">no</value>
+	<default>scroll</default>
+</element>
+<element name="alpha" meaning="倒影的上部透明度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 255</value>
+	<default>70</default>
+</element>
+<element name="shadowHeightPercent" meaning="倒影高度百分比">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 100</value>
+	<default>18</default>
+</element>
+<element name="shadowDistance" meaning="图片底边和倒影顶部之间的距离(像素)">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 100</value>
+	<default>1</default>
+</element>
+<element name="preLoadImages" meaning="预加载图片数">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，例如50表示预加载当前中心位置的前、后各50幅</value>
+	<default>50</default>
+</element>
+<element name="isToolTipEnabled" meaning="是否随鼠标显示Tip">
+	<category>行为</category>
+	<datatype>bool</datatype>
+	<default>true</default>
+</element>
+<element name="autoFlowInterval" meaning="自动滚动播放的时间间隔">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，单位为秒，0表示不自动滚动</value>
+	<default>0</default>
+</element>
+<element name="enlargeActive" meaning="放大显示活动的当前图片">
+	<group>Horz样式</group>
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，像素数</value>
+	<default>4</default>
+</element>
+<element name="imageSize" meaning="指定图片显示的宽和高">
+	<group>Horz样式</group>
+	<category>外观</category>
+	<value>逗号分隔的数字或百分比(相对于ImageFlow区)</value>
+	<default>200,200</default>
+</element>
+<element name="hasMouseButton" meaning="鼠标划过左、右边界时，是否要浮现前页、下页的三角形按钮">
+	<group>Horz样式</group>
+	<category>行为</category>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+
+<element name="sliderCount" meaning="显示多少个数字">
+	<group>Digital滚动条</group>
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字, 0表示自动</value>
+	<default>0</default>
+</element>
+<element name="sliderPos" meaning="数字区位于ImaleFlow中的位置">
+	<group>Digital滚动条</group>
+	<category>外观</category>
+	<value>topLeft / bottomRight / bottomLeft / topRight</value>
+	<default>bottomRight</default>
+</element>
+<element name="sliderColor" meaning="数字区的底色">
+	<group>Digital滚动条</group>
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>Html颜色串</value>
+	<default>#C00000</default>
+</element>
+</elements>
+
+<comments>
+	<comment>ImageFlow是没有背景属性的，它将沿用当前Freeform的上下文背景</comment>
+</comments>
+</root>

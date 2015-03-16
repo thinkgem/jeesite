@@ -1,0 +1,177 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<script type="text/javascript" src="functable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("func_chart.xml?81");
+  genfunctable('TagFuncTable', 'TagFunc', xmlDoc);
+  xmlDoc = getXMLDoc("events.xml?81");
+  geneventtable('TagEvent', xmlDoc, 'Chart');
+ }
+</script>
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+
+<div id="Tag80"/>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='../../res/tradechart.jpg'></td></tr>
+</table>
+<br>
+<h3>　<font color=#3366ff>Supcan Chart组件</font></h3><hr color=#2266ee size=1>
+　　Chart组件实现了统计图功能，目前已完成了圆饼图、柱状图、折线图、曲线图、区域图(面积图)、雷达图，能满足大多数统计的需要。<br>
+　　下图是统计图的一些基本概念和约定的说明，使用Chart组件前需要了解清楚：<br>
+<center><img src='../../res/chart.png'></center>
+　　数据“系列”是一组完整的数据，可以在Chart组件中显示。对于数据表(Table)而言，一个系列相当于是一行记录，或者是垂直的一列数据。“系列”和“数据项”是可以互换的。<br>
+　　统计图中可以包含1个系列，也可以包含多个系列，上图中展示了包含了4个系列的情况。<br>
+
+<div id="Tag801"/><br><br><br>
+　　<font style='font-size:15pt'>1.创建实例</font><hr color=#2266ee size=1>
+　　Supcan Chart组件是通过插件/加载项创建的，所以应该用<a href="act.htm?81#Tag205" target=_blank>使用指南 \ 页面语法</a>中叙述的插件/加载项的页面创建语法创建，
+&lt;Object&gt;中的某几个Param参数规则如下:<br>
+<pre class='xml'>
+&lt;Object ...(略)&gt;
+&lt;Param name="CtlName" value="<Font color=red>BCV1.Chart</Font>"&gt;　　//固定
+&lt;Param name="ZipUrl" value="<Font color=red>BCV1.bin</Font>"&gt;	　　//也可以是绝对URL
+&lt;Param name="CtlPara" value="border=single; bordercolor=#4499ff; borderWidth=2; borderRound=23; backcolor=#fff5ea"&gt;	//例子
+...</pre>
+　　如果页面是直接调用dynaload.js，那么可能就是这样:<br>
+<pre class='cpp'>insertChart('AF', 'border=single; bordercolor=#4499ff; borderWidth=2; borderRound=23; backcolor=#fff5ea')</pre>
+　　可见参数串中包含了多个子串，子串间以 ";" 分隔，子串是以"name=value1,value2,..."方式书写的。<br>
+　　子串的名值对的规范如下：<br>
+<table width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#eaeaea><td>子串名</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+
+<tr><td>chart</td><td>统计图类型</td><td>
+0 或 pie - 圆饼图<br>
+1 或 bar - 柱状图<br>
+2 或 line - 折线图<br>
+3 或 curve - 曲线图<br>
+4 或 area - 区域图<br>
+5 或 radar - 雷达图<br>
+</td><td>0</td></tr>
+<tr><td>isUseContextFont</td><td>是否采用页面上下文字体</td><td>true/false</td><td>false</td></tr>
+<tr><td>items</td><td>统计图中最多能显示数据项数量，最多不得超过155.<br>注：超出部分、且数值小的数据项将归并到“其它”数据项.</td><td>数值</td><td>28</td></tr>
+<tr><td>textContent</td><td>显示的文字内容</td><td>0 - 不显示<br>1 - 仅数据项名称<br>2 - 名称、百分比<br>3 - 名称、数值</td><td>2</td></tr>
+<tr><td>textArrange</td><td>文字位置</td><td>0 - 不显示<br>1 - 外部且对齐<br>2 - 外部<br>3 - 内部<br>备注：2、3仅用于圆饼图</td><td>2</td></tr>
+<tr><td>Caption</td><td>标题</td><td>文字</td><td>(无)</td></tr>
+<tr><td>titlePosition</td><td>标题和系列名的位置</td><td>0 - 不显示<br>2 - 上方<br>8 - 底部</td><td>2</td></tr>
+<tr><td>bgColor<br>或BackColor</td><td>整个统计图的背景色</td><td>颜色串，或以逗号分隔的2个颜色串(垂直渐变)</td><td>沿用页面上下文</td></tr>
+<tr><td>Colors</td><td>统计图的颜色</td><td>以逗号分隔的颜色串</td><td>(无)<br>自动产生</td></tr>
+<tr><td>isOutlineDataPoint<br>或isOutlinePoint</td><td>是否显示数据点的小圆球</td><td>true/false<br>备注：仅用于折线/曲线/区域图</td><td>true</td></tr>
+<tr><td>LineThick</td><td>折线/曲线的线条宽度</td><td>像素数, 0 到 12</td><td>1</td></tr>
+<tr><td>Border</td><td>边界线风格</td><td>1.none - 无边界<br>2.single - 单线条边界<br>3.3d - 3D凹陷边界</td><td>single</td></tr>
+<tr><td>BorderWidth</td><td>边界线粗细</td><td>像素数</td><td>1</td></tr>
+<tr><td>BorderRound</td><td>圆角边界的直径</td><td>像素数</td><td>0</td></tr>
+<tr><td>BorderColor</td><td>边界线颜色</td><td>颜色串</td><td>0</td></tr>
+<tr><td>BarImage</td><td>柱状图的背景图案</td><td>如下名值对，分号(;)分隔：<br>src - 图片URL;<br>alpha - 透明度(0-255);<br>rotate - 旋转角度(0-360);<br>arrange - 布局, 有tile(平铺) / stretch(伸展)等, 默认tile, 可参见Treelist XML文档规范中的&lt;Properties&gt;下的&lt;background&gt;.<br>例如：barImage='src=res/flag.jpg;alpha=100'</td><td>(无)</td></tr>
+<tr><td>isFillRadar</td><td>是否以颜色填充雷达图</td><td>true/false</td><td>true</td></tr>
+<tr><td>isAnimate</td><td>是否以动画启动</td><td>true/false</td><td>true</td></tr>
+<tr><td>coordinateBackColor</td><td>坐标区域背景色</td><td>颜色串，或以逗号分隔的2个颜色串(垂直渐变)<br>注: 仅用于bar、line、curve、area</td><td>(无)</td></tr>
+<tr><td>valueMask</td><td>数值显示掩码</td><td>串，如"#,###.00"</td><td>#,##0.#</td></tr>
+<tr><td>valueMaskY</td><td>Y轴数值显示掩码</td><td>串，如"#,###.00"<br>注1: 仅用于bar、line、curve、area、radar</td><td>#,##0</td></tr>
+<tr><td>valueStepY<br>或 stepValueY</td><td>Y轴坐标刻度步进值</td><td>数值，0表示由插件根据实际数据生成合适的值<br>注1: 仅用于bar、line、curve、area、radar<br>注2: 间距过密，该设置将失效</td><td>0</td></tr>
+<tr><td>valueMaxY<br>或 maxValueY</td><td>强制设定Y轴坐标最大值</td><td>数值，0表示由实际数据决定<br>注1: 仅用于bar、line、curve、area、radar<br>注2: 实际数据若超过该值，该设置将失效</td><td>0</td></tr>
+<tr><td>valueMinY<br>或 minValueY</td><td>强制设定Y轴坐标最小值</td><td>数值，0表示由实际数据决定<br>注1: 仅用于bar、line、curve、area、radar<br>注2: 实际数据若超过该值，该设置将失效</td><td>0</td></tr>
+<tr><td>Overflow</td><td>宽度不够导致数据项文字重叠的处理选项<br>注：用于柱状图、曲线折线图</td><td>0 - 垂直错落显示;<br>1 - 文字倾斜45度显示</td><td>0</td></tr>
+<tr><td>ActiveSeries</td><td>当前高亮的活动系列</td><td>系列名，或系列的顺序号(从0开始计数)</td><td>(无)</td></tr>
+<tr><td>hasMenu</td><td>是否需要鼠标右键弹出菜单</td><td>true/false</td><td>true</td></tr>
+<tr><td>EventLog</td><td>事件日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例的所有事件, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncLog</td><td>函数调用日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例被调用的所有函数, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncParaChars</td><td>函数日志中参数最大字数</td><td>数字，当启用函数日志时，函数的参数最多保留字数.</td><td>128</td></tr>
+<tr><td>FuncReturnChars</td><td>函数日志中返回值最大字数</td><td>数字，当启用函数日志时，函数的返回值最多保留字数.</td><td>0</td></tr>
+</table>
+
+
+
+<div id="Tag802"/><br><br><br>
+　　<font style='font-size:15pt'>2.函数</font><hr color=#2266ee size=1>
+　　Supcan Chart的函数是通过插件/加载项的 func( string funcname, string paras ) 函数间接调用的，Supcan Chart组件的可用funcname如下:<br>
+<div id="TagFuncTable"></div>
+<div id="TagFunc"></div>
+　　此外，Chart还拥有一组和Treelist、Freeform完全一样的全局函数，请参见<a href="globalfunction.htm?81" target=_blank>全局函数</a>介绍。<br>
+<br>
+
+
+<div id="Tag803"/><br><br><br>
+　　<font style='font-size:15pt'>3.Load的数据格式</font><hr color=#2266ee size=1>
+　　Chart组件除了用AddSeries( )函数设置数据，也可以用Load( )函数一次性加载数据，数据的格式必须是XML或JSON格式，比如:<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;root&gt;
+ &lt;serieses&gt;
+  &lt;series name="一季度"&gt;
+   &lt;北京市&gt;3902&lt;/北京市&gt;
+   &lt;沈阳市&gt;1080&lt;/沈阳市&gt;
+   &lt;西宁市&gt;4380&lt;/西宁市&gt;
+   &lt;合肥市&gt;3300&lt;/合肥市&gt;
+  &lt;/series&gt;
+  &lt;series name="二季度"&gt;
+   &lt;北京市&gt;902&lt;/北京市&gt;
+   &lt;沈阳市&gt;80&lt;/沈阳市&gt;
+   &lt;西宁市&gt;380&lt;/西宁市&gt;
+   &lt;合肥市&gt;300&lt;/合肥市&gt;
+  &lt;/series&gt;
+ &lt;/serieses&gt;
+&lt;/root&gt;</pre>
+　　该例子有2个系列，数据项ID是城市.  如果采用JSON格式，则应该是类似这样的：<br>
+<pre class='xml'>
+[
+ {"series":"一季度", "data":{"北京市":3902, "沈阳市":1080} },
+ {"series":"二季度", "data":{"北京市":1902, "沈阳市":80} }
+]</pre>
+<br>
+　　这例子比较简单，更复杂的例子请看 <a href="../../treelistdata/chartdata.xml" target=_blank>chartdata.xml</a>. <br>
+　　XML数据的书写规则如下：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;root&gt;
+ &lt;!-- Properties是可选的节点，用于设定统计图的外观  --&gt;
+ &lt;!-- Chart、Caption这些属性即本文档“1.创建实例”中的创建参数  --&gt;
+ &lt;properties Chart="bar" Caption="上半年各市销售额(万元)"&gt;
+  &lt;!-- itemtext定义了各个数据项ID在统计图上的显示文字  --&gt;
+  &lt;itemtext&gt;
+   &lt;city1&gt;北京市&lt;/city1&gt;
+   &lt;city2&gt;沈阳市&lt;/city2&gt;
+   &lt;city3&gt;西宁市&lt;/city3&gt;
+  &lt;/itemtext&gt;
+ &lt;/properties&gt;
+ &lt;!-- 下面是纯数据， 注意，由于在Properties中定义了数据项的显示文字，所以数据项ID没有采用中文  --&gt;
+ &lt;serieses&gt;
+  &lt;series name="一季度"&gt;  //name是系列名
+   &lt;city1&gt;3902&lt;/city1&gt;
+   &lt;city2&gt;1080&lt;/city2&gt;
+   &lt;city3&gt;4380&lt;/city3&gt;
+  &lt;/series&gt;
+  &lt;series name="二季度"&gt;
+   &lt;city1&gt;902&lt;/city1&gt;
+   &lt;city2&gt;80&lt;/city2&gt;
+   &lt;city3&gt;380&lt;/city3&gt;
+  &lt;/series&gt;
+ &lt;/serieses&gt;
+&lt;/root&gt;</pre>
+<br>
+　　如果采用JSON, 则应该类似如下：<br>
+<pre class='xml'>
+{"properties": {"chart":"bar", "Caption":"上半年各市销售额(万元)", "itemtext": {"city1":"合肥市", "city2":"哈尔滨市"} } },
+{"serieses":
+ [
+  {"series":"一季度", "data": {"city1":3902, "city2":3902} },
+  {"series":"二季度", "data": {"city1":3112, "city2":5000} }
+ ]
+}</pre>
+<br>
+
+<div id="Tag804"/><br><br><br>
+　　<font style='font-size:15pt'>4.事件</font><hr color=#2266ee size=1>
+　　Supcan Chart的OnEvent( id, Event, p1, p2, p3, p4 )事件含义及参数分别如下：<br>
+<div id="TagEvent"></div>
+
+<br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

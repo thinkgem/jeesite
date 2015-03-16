@@ -1,0 +1,108 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Droplist" meaning='下拉框字典' number="0-n">
+<element name="id" meaning="字典的ID号">
+	<category>主要</category>
+	<group>全部适用</group>
+	<value>串</value>
+</element>
+<element name="treelistURL/treelist" meaning="下拉Treelist的URL">
+	<category>主要</category>
+	<group>全部适用</group>
+	<value>URL串(绝对或相对)</value>
+	<memo>&lt;font color=red&gt;如果为空，表示是dropList(即最简单的下拉)；否则就是dropTreeList&lt;/font&gt;</memo>
+</element>
+<element name="dataURL" meaning="数据的URL">
+	<category>主要</category>
+	<group>全部适用</group>
+	<value>数据的URL(绝对或相对)</value>
+	<memo> 如果为空，dropTreeList自动采用自身的dataURL、 dropList则采用下面跟随的item条目</memo>
+</element>
+<element name="dataCol" meaning='绑定的下拉数据的"数据列"的列名'>
+	<category>主要</category>
+	<group>全部适用</group>
+	<value>列名</value>
+</element>
+<element name="displayCol" meaning='绑定的下拉数据的"显示列"的列名'>
+	<category>主要</category>
+	<group>全部适用</group>
+	<value>列名，其内容用于显示</value>
+	<memo>允许是以“=”开头的表达式, 可绑定多列(服务器搜索除外), 可参见树列表的演示页"28.下拉的其它功能"</memo>
+</element>
+<element name="isSortByKey" meaning='下拉内容是否按Key重新排序'>
+	<category>主要</category>
+	<group>用于dropList</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+
+<element name="totalRows" meaning='用于分页显示'>
+	<category>数据</category>
+	<group>用于dropTreeList</group>
+	<value>URL</value>
+</element>
+<element name="isMultiSelectAble" meaning='是否允许作多行选择'>
+	<category>数据</category>
+	<group>用于dropTreeList</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="isAutoSelectChildren" meaning='是否自动选择树杈的子孙'>
+	<category>行为</category>
+	<group>用于dropTreeList</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>仅用于isMultiSelectAble=true 时</memo>
+</element>
+<element name="isTreeNodeSelectAble" meaning='树杈是否允许被选中'>
+	<category>行为</category>
+	<group>用于dropTreeList</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>:作用范围1: 单列多层树</memo>
+	<memo>:作用范围2: 多列多层树在多选时(checkbox勾选)</memo>
+</element>
+<element name="expandTree" meaning='如果输入框尚未输入内容, 首次下拉时是否自动展开(Expand)其树杈'>
+	<category>行为</category>
+	<group>用于dropTreeList</group>
+	<value meaning="展开全部树杈">all</value>
+	<value meaning="展开第一个树杈">first</value>
+	<value meaning="不展开">no</value>
+	<default>no</default>
+</element>
+
+
+<element name="RefreshDelay" meaning='服务器搜索时, 键盘触发刷新的最短时间间隔'>
+	<category>行为</category>
+	<group>用于editAbledropTreeList</group>
+	<value>毫秒数, 须大于300</value>
+	<default>1000</default>
+</element>
+<element name="RefreshChars" meaning='服务器搜索时, 键盘触发刷新的最短字数'>
+	<category>行为</category>
+	<group>用于editAbledropTreeList</group>
+	<value>字数</value>
+	<default>1</default>
+</element>
+<element name="dropdownMode" meaning='下拉的显示方式'>
+	<category>行为</category>
+	<group>用于editAbledropTreeList</group>
+	<value meaning="在输入过程中会自动下拉">auto</value>
+	<value meaning="只有在鼠标点击右侧按钮时才下拉">buttonClick</value>
+	<default>auto</default>
+</element>
+<element name="buttonMode" meaning='右侧按钮的行为'>
+	<category>行为</category>
+	<group>用于editAbledropTreeList</group>
+	<value meaning="点击时触发下拉动作">auto</value>
+	<value meaning='只触发"Clicked"事件(p4参数为"button")，不触发下拉动作'>sendMessage</value>
+	<default>auto</default>
+</element>
+</elements>
+
+<comments>
+	<comment>如果treelistURL、dataURL是相对URL，应该是相对于当前Treelist XML，而不是相对于页面</comment>	
+	<comment>如果EditAbleDropTreelist、且dataURL是表达式，就表示服务器搜索, RefreshDelay和RefreshChars用于控制搜索的频度</comment>	
+</comments>
+
+</root>

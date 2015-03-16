@@ -1,0 +1,60 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+
+<category name="下拉List函数">
+	<function name="DropList_Add">
+		<usage>往下拉List中添加 Key-Value 对</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>键(key)</para>
+		<para>值(value)</para>
+		<return>1 - 成功，空串 - 失败，失败的原因通常为Key已经存在</return>
+	</function>
+	<function name="DropList_Insert">
+		<usage>往下拉List中插入一个Key-value对</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>位置的键(key)，表示位于这个key插入</para>
+		<para>键(key)</para>
+		<para>值(value)</para>
+		<return>1 - 成功，空串 - 失败，失败的原因通常为位置的键(Key)不存在、或新的Key已经存在</return>
+	</function>
+	<function name="DropList_Delete">
+		<usage>删除下拉List中某个Key</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>键(key)</para>
+		<return>1 - 成功，空串 - 失败，失败的原因通常为Key不存在</return>
+	</function>
+	<function name="DropList_DeleteAll">
+		<usage>清除下拉List的全部内容</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+	</function>
+	<function name="DropList_Find">
+		<usage>根据Key从下拉List中查找Value</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>键(key)</para>
+		<return>值(Value)</return>
+	</function>
+	<function name="DropList_GetKey">
+		<usage>从下拉List中顺序取得Key</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>顺序号，从0开始</para>
+		<para>可选，true/false, 表示是否按照下拉中的显示顺序，默认false, 仅用于isSortByKey="true"的情形</para>
+		<return>键(key)的内容</return>
+	</function>
+	<function name="DropList_GetValue">
+		<usage>从下拉List中顺序取得value</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>顺序号，从0开始</para>
+		<para>可选，true/false, 表示是否按照下拉中的显示顺序，默认false, 仅用于isSortByKey="true"的情形</para>
+		<return>值(value)的内容</return>
+	</function>
+	<function name="DropList_SetValue">
+		<usage>更改下拉List中某个Key对应的value</usage>
+		<para>下拉List的句柄 (注: 通过GetHandle( )函数获取)</para>
+		<para>键(key)</para>
+		<para>值(value)</para>
+		<return>1 - 成功，空串 - 失败，失败的原因通常为键(Key)不存在</return>
+	</function>
+</category>
+
+
+</functions>

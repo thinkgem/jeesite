@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao">
+    
+	<sql id="oaNotifyRecordColumns">
+		a.ID AS "id",
+		a.OA_NOTIFY_ID AS "oaNotify.id",
+		a.USER_ID AS "user.id",
+		a.READ_FLAG AS "readFlag",
+		a.READ_DATE AS "readDate",
+		u.name AS "user.name",
+		o.name AS "user.office.name"
+	</sql>
+	
+	<sql id="oaNotifyRecordJoins">
+		JOIN sys_user u ON u.id = a.user_id
+		JOIN sys_office o ON o.id = u.office_id
+	</sql>
+    
+	<select id="get" resultType="OaNotifyRecord">
+		SELECT 
+			<include refid="oaNotifyRecordColumns"/>
+		FROM OA_NOTIFY_RECORD a
+		<include refid="oaNotifyRecordJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaNotifyRecord">
+		SELECT 
+			<include refid="oaNotifyRecordColumns"/>
+		FROM OA_NOTIFY_RECORD a
+		<include refid="oaNotifyRecordJoins"/>
+		WHERE 1=1
+		<if test="oaNotify != null and oaNotify.id != null and oaNotify.id != ''">
+			AND oa_notify_id = #{oaNotify.id}
+		</if>
+		ORDER BY a.read_flag ASC
+	</select>
+	
+	<select id="findAllList" resultType="OaNotifyRecord">
+		SELECT 
+			<include refid="oaNotifyRecordColumns"/>
+		FROM OA_NOTIFY_RECORD a
+		<include refid="oaNotifyRecordJoins"/>
+		WHERE 1=1
+		ORDER BY a.read_flag ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO OA_NOTIFY_RECORD(
+			ID,
+			OA_NOTIFY_ID,
+			USER_ID,
+			READ_FLAG,
+			READ_DATE
+		) VALUES (
+			#{id},
+			#{oaNotify.id},
+			#{user.id},
+			#{readFlag},
+			#{readDate}
+		)
+	</insert>
+	
+	<insert id="insertAll" parameterType="List">
+		INSERT INTO OA_NOTIFY_RECORD(
+			ID,
+			OA_NOTIFY_ID,
+			USER_ID,
+			READ_FLAG,
+			READ_DATE
+		)
+		<foreach collection="list" item="e" separator=" UNION ALL ">
+			SELECT
+				#{e.id},
+				#{e.oaNotify.id},
+				#{e.user.id},
+				#{e.readFlag},
+				#{e.readDate}
+			FROM dual
+		</foreach>
+	</insert>
+	
+	<update id="update">
+		UPDATE OA_NOTIFY_RECORD SET 	
+			READ_FLAG = #{readFlag},
+			READ_DATE = #{readDate}
+		WHERE OA_NOTIFY_ID = #{oaNotify.id}
+			AND USER_ID = #{user.id}
+			AND READ_FLAG != '1'
+	</update>
+	
+	<delete id="delete">
+		UPDATE FROM OA_NOTIFY_RECORD 
+		WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteByOaNotifyId">
+		DELETE FROM OA_NOTIFY_RECORD 
+		WHERE oa_notify_id = #{oaNotifyId}
+	</delete>
+	
+</mapper>

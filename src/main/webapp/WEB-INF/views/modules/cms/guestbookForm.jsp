@@ -7,7 +7,21 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#reContent").focus();
-			$("#inputForm").validate();
+			$("#inputForm").validate({
+				submitHandler: function(form){
+					loading('正在提交，请稍等...');
+					form.submit();
+				},
+				errorContainer: "#messageBox",
+				errorPlacement: function(error, element) {
+					$("#messageBox").text("输入有误，请先更正。");
+					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+						error.appendTo(element.parent().parent());
+					} else {
+						error.insertAfter(element);
+					}
+				}
+			});
 		});
 	</script>
 </head>
@@ -16,12 +30,10 @@
 		<li><a href="${ctx}/cms/guestbook/">留言列表</a></li>
 		<li class="active"><a href="${ctx}/cms/guestbook/form?id=${guestbook.id}">留言<shiro:hasPermission name="cms:guestbook:edit">${guestbook.delFlag eq '2'?'审核':'查看'}</shiro:hasPermission><shiro:lacksPermission name="cms:guestbook:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	
 	<form:form id="inputForm" modelAttribute="guestbook" action="${ctx}/cms/guestbook/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<form:hidden path="delFlag"/>
-		<tags:message content="${message}"/>
-		
+		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>
 			<div class="controls">
@@ -90,13 +102,9 @@
 				<form:textarea path="reContent" htmlEscape="false" rows="4" maxlength="200" class="required input-xxlarge"/>
 			</div>
 		</div>
-		<div class="form-actions">
-			<c:if test="${guestbook.delFlag eq '2'}">
-				<shiro:hasPermission name="cms:guestbook:edit">
-					<input id="btnSubmit" class="btn btn-success" type="submit" value="通 过" onclick="$('#delFlag').val('0')"/>&nbsp;
-					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#delFlag').val('1')"/>&nbsp;
-				</shiro:hasPermission>
-			</c:if>
+		<div class="form-actions"><c:if test="${guestbook.delFlag eq '2'}">
+			<shiro:hasPermission name="cms:guestbook:edit"><input id="btnSubmit" class="btn btn-success" type="submit" value="通 过" onclick="$('#delFlag').val('0')"/>&nbsp;
+			<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#delFlag').val('1')"/>&nbsp;</shiro:hasPermission></c:if>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

@@ -18,19 +18,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.Validate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.google.common.net.HttpHeaders;
+import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.Encodes;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * Http与Servlet工具类.
- * @author calvin
- * @version 2013-01-15
+ * @author calvin/thinkgem
+ * @version 2014-8-19
  */
 public class Servlets {
 
 	// -- 常用数值定义 --//
 	public static final long ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
+	
+	// 静态文件后缀
+	private final static String[] staticFiles = StringUtils.split(Global.getConfig("web.staticFile"), ",");
+	
+	// 动态映射URL后缀
+	private final static String urlSuffix = Global.getUrlSuffix();
 
 	/**
 	 * 设置客户端缓存过期时间 的Header.
@@ -193,4 +205,56 @@ public class Servlets {
 		String encode = userName + ":" + password;
 		return "Basic " + Encodes.encodeBase64(encode.getBytes());
 	}
+	
+	/**
+	 * 是否是Ajax异步请求
+	 * @param request
+	 */
+	public static boolean isAjaxRequest(HttpServletRequest request){
+		
+		String accept = request.getHeader("accept");
+		String xRequestedWith = request.getHeader("X-Requested-With");
+		Principal principal = UserUtils.getPrincipal();
+
+		// 如果是异步请求或是手机端，则直接返回信息
+		return ((accept != null && accept.indexOf("application/json") != -1 
+			|| (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1)
+			|| (principal != null && principal.isMobileLogin())));
+	}
+	
+	/**
+	 * 获取当前请求对象
+	 * @return
+	 */
+	public static HttpServletRequest getRequest(){
+		try{
+			return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+	/**
+     * 判断访问URI是否是静态文件请求
+	 * @throws Exception 
+     */
+    public static boolean isStaticFile(String uri){
+		if (staticFiles == null){
+			try {
+				throw new Exception("检测到“app.properties”中没有配置“web.staticFile”属性。配置示例：\n#静态文件后缀\n"
+					+"web.staticFile=.css,.js,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+//		if ((StringUtils.startsWith(uri, "/static/") || StringUtils.endsWithAny(uri, sfs)) 
+//				&& !StringUtils.endsWithAny(uri, ".jsp") && !StringUtils.endsWithAny(uri, ".java")){
+//			return true;
+//		}
+		if (StringUtils.endsWithAny(uri, staticFiles) && !StringUtils.endsWithAny(uri, urlSuffix)
+				&& !StringUtils.endsWithAny(uri, ".jsp") && !StringUtils.endsWithAny(uri, ".java")){
+			return true;
+		}
+		return false;
+    }
 }

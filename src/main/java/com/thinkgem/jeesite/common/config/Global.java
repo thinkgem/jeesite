@@ -1,23 +1,26 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.config;
 
 import java.util.Map;
 
-import org.springframework.util.Assert;
-
+import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.utils.PropertiesLoader;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 
 /**
  * 全局配置类
  * @author ThinkGem
- * @version 2013-03-23
+ * @version 2014-06-25
  */
 public class Global {
+
+	/**
+	 * 当前对象实例
+	 */
+	private static Global global = new Global();
 	
 	/**
 	 * 保存全局属性值
@@ -30,17 +33,25 @@ public class Global {
 	private static PropertiesLoader propertiesLoader = new PropertiesLoader("jeesite.properties");
 	
 	/**
+	 * 获取当前对象实例
+	 */
+	public static Global getInstance() {
+		return global;
+	}
+	
+	/**
 	 * 获取配置
+	 * @see ${fns:getConfig('adminPath')}
 	 */
 	public static String getConfig(String key) {
 		String value = map.get(key);
 		if (value == null){
 			value = propertiesLoader.getProperty(key);
-			map.put(key, value);
+			map.put(key, value != null ? value : StringUtils.EMPTY);
 		}
 		return value;
 	}
-
+	
 	/////////////////////////////////////////////////////////
 	
 	/**
@@ -79,17 +90,53 @@ public class Global {
 		String dm = getConfig("activiti.isSynActivitiIndetity");
 		return "true".equals(dm) || "1".equals(dm);
 	}
+	
+	/////////////////////////////////////////////////////////
+	
+	// 显示/隐藏
+	public static final String SHOW = "1";
+	public static final String HIDE = "0";
+
+	// 是/否
+	public static final String YES = "1";
+	public static final String NO = "0";
+	
+	// 对/错
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
+	
+	public static final String USERFILES_BASE_URL = "/userfiles/";
 
 	/**
-	 * 获取CKFinder上传文件的根目录
+	 * 页面获取常量
+	 * @see ${fns:getConst('YES')}
+	 */
+	public static Object getConst(String field) {
+		try {
+			return Global.class.getField(field).get(null);
+		} catch (Exception e) {
+			// 异常代表无配置，这里什么也不做
+		}
+		return null;
+	}
+
+	/**
+	 * 获取上传文件的根目录
 	 * @return
 	 */
-	public static String getCkBaseDir() {
+	public static String getUserfilesBaseDir() {
 		String dir = getConfig("userfiles.basedir");
-		Assert.hasText(dir, "配置文件里没有配置userfiles.basedir属性");
+		if (StringUtils.isBlank(dir)){
+			try {
+				dir = ServletContextFactory.getServletContext().getRealPath("/");
+			} catch (Exception e) {
+				return "";
+			}
+		}
 		if(!dir.endsWith("/")) {
 			dir += "/";
 		}
+//		System.out.println("userfiles.basedir: " + dir);
 		return dir;
 	}
 	

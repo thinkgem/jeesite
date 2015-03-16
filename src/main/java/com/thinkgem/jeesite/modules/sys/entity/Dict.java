@@ -1,58 +1,44 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAttribute;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.IdEntity;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
  * 字典Entity
  * @author ThinkGem
  * @version 2013-05-15
  */
-@Entity
-@Table(name = "sys_dict")
-@DynamicInsert @DynamicUpdate
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Dict extends IdEntity<Dict> {
+public class Dict extends DataEntity<Dict> {
 
 	private static final long serialVersionUID = 1L;
-	private String label;	// 标签名
 	private String value;	// 数据值
+	private String label;	// 标签名
 	private String type;	// 类型
 	private String description;// 描述
 	private Integer sort;	// 排序
+	private String parentId;//父Id
 
 	public Dict() {
 		super();
 	}
 	
-	public Dict(String id) {
-		this();
-		this.id = id;
+	public Dict(String id){
+		super(id);
 	}
-
-	@Length(min=1, max=100)
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
+	
+	public Dict(String value, String label){
+		this.value = value;
 		this.label = label;
 	}
 	
+	@XmlAttribute
 	@Length(min=1, max=100)
 	public String getValue() {
 		return value;
@@ -60,6 +46,16 @@ public class Dict extends IdEntity<Dict> {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	@XmlAttribute
+	@Length(min=1, max=100)
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@Length(min=1, max=100)
@@ -71,6 +67,7 @@ public class Dict extends IdEntity<Dict> {
 		this.type = type;
 	}
 
+	@XmlAttribute
 	@Length(min=0, max=100)
 	public String getDescription() {
 		return description;
@@ -88,5 +85,18 @@ public class Dict extends IdEntity<Dict> {
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
+
+	@Length(min=1, max=100)
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 	
+	@Override
+	public String toString() {
+		return label;
+	}
 }

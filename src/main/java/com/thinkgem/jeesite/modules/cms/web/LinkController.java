@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.web;
 
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -61,7 +58,7 @@ public class LinkController extends BaseController {
 //		if (!user.isAdmin() && !SecurityUtils.getSubject().isPermitted("cms:link:audit")){
 //			link.setUser(user);
 //		}
-        Page<Link> page = linkService.find(new Page<Link>(request, response), link, true); 
+        Page<Link> page = linkService.findPage(new Page<Link>(request, response), link, true); 
         model.addAttribute("page", page);
 		return "modules/cms/linkList";
 	}
@@ -74,6 +71,8 @@ public class LinkController extends BaseController {
 			List<Category> list = categoryService.findByParentId(link.getCategory().getId(), Site.getCurrentSiteId());
 			if (list.size() > 0){
 				link.setCategory(null);
+			}else{
+				link.setCategory(categoryService.get(link.getCategory().getId()));
 			}
 		}
 		model.addAttribute("link", link);
@@ -88,15 +87,15 @@ public class LinkController extends BaseController {
 		}
 		linkService.save(link);
 		addMessage(redirectAttributes, "保存链接'" + StringUtils.abbr(link.getTitle(),50) + "'成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/link/?repage&category.id="+link.getCategory().getId();
+		return "redirect:" + adminPath + "/cms/link/?repage&category.id="+link.getCategory().getId();
 	}
 	
 	@RequiresPermissions("cms:link:edit")
 	@RequestMapping(value = "delete")
-	public String delete(String id, Long categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
-		linkService.delete(id, isRe);
+	public String delete(Link link, String categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+		linkService.delete(link, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"发布":"删除")+"链接成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/link/?repage&category.id="+categoryId;
+		return "redirect:" + adminPath + "/cms/link/?repage&category.id="+categoryId;
 	}
 
 	/**

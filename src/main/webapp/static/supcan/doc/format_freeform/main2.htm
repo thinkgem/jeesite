@@ -1,0 +1,46 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<style>
+	table {font-family:微软雅黑,Consolas,Arial,宋体;}
+</style>
+</head>
+<body>
+
+<div id="TagObjects"/><br>
+<b>Objects</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#e4e4e4><td colspan=4>含义:各对象信息；数量: 1</td></tr>
+</table>
+<br>
+
+<div id="Tag公共属性"/><br>
+<b>公共属性</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center" cols=6>
+<tr bgcolor=#e4e4e4><td colspan=6>含义: Edit、Upload、Text、Line、TableLayout等所有对象共同具备的属性.</td></tr>
+<tr bgcolor=#f1f1f1><td colspan=>分类</td><td colspan=2>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td rowspan=8>不嵌入于<br>tableLayout<br>的坐标</td> <td rowspan=4>可选1</td><td>x</td><td>x坐标</td><td rowspan=8>
+1.像素数，相当于绝对数；<br>
+2.百分比, 控件区域高或宽的百分比；<br>
+3.相对于某个对象的坐标，例如 price.x1+2、price.right-20<br>
+4.相对于上一个对象的坐标，例如 .bottom+2、.right、.y2+2、.x2<br><br>备注：相对坐标的运算只支持加、减(+、-)</td><td>(无)</td></tr>
+<tr><td>y</td><td>y坐标</td><td>(无)</td></tr>
+<tr><td>width</td><td>宽度</td><td>200</td></tr>
+<tr><td>height</td><td>高度</td><td>22</td></tr>
+<tr><td rowspan=4>可选2</td><td>x1</td><td>左上x坐标</td><td>(无)</td></tr>
+<tr><td>y1</td><td>左上y坐标</td><td>(无)</td></tr>
+<tr><td>x2</td><td>右下x坐标</td><td>(无)</td></tr>
+<tr><td>y2</td><td>右下y坐标</td><td>(无)</td></tr>
+<tr><td rowspan=2>嵌入于<br>tableLayout<br>的坐标</td><td colspan=2>width</td><td>跨越的列数</td><td>数字</td><td>1</td></tr>
+<tr><td colspan=2>height</td><td>跨越的行数</td><td>数字</td><td>1</td></tr>
+<tr><td rowspan=3>其它属性</td><td colspan=2>id (或name)</td><td>该对象的id</td><td>串，每个对象须唯一，允许为空</td><td>(无)</td></tr>
+<tr><td colspan=2>visible</td><td>该对象是否可视</td><td>true/false - 可视/隐藏</td><td>true</td></tr>
+<tr><td colspan=2>自定义串</td><td>自定义属性</td><td>任意串</td><td>(无)</td></tr>
+</table>
+备注1：坐标 y = ".bottom + 2"， 表示相对上一个对象的坐标，“上一个对象”是指可视(visible="true")、不嵌入TableLayout中的独立对象;<br>
+备注2：坐标 y = "price.bottom + 2"， 如果price对象不可视、或嵌入在TableLayout中，则该y值无效，将自动转换成".bottom + 2";<br>
+备注3：坐标 y = ".bottom + 2"， 如果上一个对象在页面中被动态修改成visible="false"，“上一个对象”也将动态变成可视的“上一个对象”，界面的效果是：从该对象开始，坐标整体往上平移;<br>
+<br>
+
+</body></html>

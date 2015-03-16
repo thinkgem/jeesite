@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.gen.dao.GenDataBaseDictDao">
+    
+	<select id="findTableList" resultType="GenTable">
+		<if test="dbName == 'oracle'">
+			SELECT 
+				t.TABLE_NAME AS name, 
+				c.COMMENTS AS comments
+			FROM user_tables t, user_tab_comments c 
+			WHERE t.table_name = c.table_name
+			<if test="name != null and name != ''">
+				AND t.TABLE_NAME = upper(#{name})
+			</if>
+			ORDER BY t.TABLE_NAME
+		</if>
+		<if test="dbName == 'mysql'">			
+			SELECT t.table_name AS name,t.TABLE_COMMENT AS comments 
+			FROM information_schema.`TABLES` t 
+			WHERE t.TABLE_SCHEMA = (select database())
+			<if test="name != null and name != ''">
+				AND t.TABLE_NAME = upper(#{name})
+			</if>
+			ORDER BY t.TABLE_NAME
+		</if>
+	</select>
+	
+	<select id="findTableColumnList" resultType="GenTableColumn">
+		<if test="dbName == 'oracle'">
+			SELECT
+				t.COLUMN_NAME AS name,<!-- 
+				t.DATA_TYPE,
+				t.DATA_LENGTH,
+				t.DATA_PRECISION,
+				t.DATA_SCALE, -->
+				(CASE WHEN t.NULLABLE = 'Y' THEN '1' ELSE '0' END) AS isNull,
+				(t.COLUMN_ID * 10) AS sort,
+				c.COMMENTS AS comments,
+				decode(t.DATA_TYPE,'DATE',t.DATA_TYPE || '(' || t.DATA_LENGTH || ')',
+					'VARCHAR2', t.DATA_TYPE || '(' || t.DATA_LENGTH || ')',
+					'VARCHAR', t.DATA_TYPE || '(' || t.DATA_LENGTH || ')',
+					'NVARCHAR2', t.DATA_TYPE || '(' || t.DATA_LENGTH/2 || ')',
+					'CHAR', t.DATA_TYPE || '(' || t.DATA_LENGTH || ')',
+					'NUMBER',t.DATA_TYPE || (nvl2(t.DATA_PRECISION,nvl2(decode(t.DATA_SCALE,0,null,t.DATA_SCALE),
+						'(' || t.DATA_PRECISION || ',' || t.DATA_SCALE || ')', 
+						'(' || t.DATA_PRECISION || ')'),'(18)')),t.DATA_TYPE) AS jdbcType 
+			FROM user_tab_columns t, user_col_comments c 
+			WHERE t.TABLE_NAME = c.table_name 
+				AND t.COLUMN_NAME = c.column_name 
+			<if test="name != null and name != ''">
+				AND t.TABLE_NAME = upper(#{name})
+			</if>
+			ORDER BY t.COLUMN_ID
+		</if>
+		<if test="dbName == 'mysql'">	
+			SELECT t.COLUMN_NAME AS name, (CASE WHEN t.IS_NULLABLE = 'YES' THEN '1' ELSE '0' END) AS isNull,
+				(t.ORDINAL_POSITION * 10) AS sort,t.COLUMN_COMMENT AS comments,t.COLUMN_TYPE AS jdbcType 
+			FROM information_schema.`COLUMNS` t 
+			WHERE t.TABLE_SCHEMA = (select database())
+			<if test="name != null and name != ''">
+				AND t.TABLE_NAME = upper(#{name})
+			</if>
+			ORDER BY t.ORDINAL_POSITION
+		</if>
+	</select>
+	
+	<select id="findTablePK" resultType="string">
+		<if test="dbName == 'oracle'">
+			SELECT lower(cu.COLUMN_NAME) AS columnName
+			FROM user_cons_columns cu, user_constraints au
+			WHERE cu.constraint_name = au.constraint_name
+				AND au.constraint_type = 'P'
+				AND au.table_name = upper(#{name})
+		</if>
+		<if test="dbName == 'mysql'">
+			SELECT lower(au.COLUMN_NAME) AS columnName 
+			FROM information_schema.`COLUMNS` au
+			WHERE au.TABLE_SCHEMA = (select database()) 
+			AND au.COLUMN_KEY='PRI' AND au.TABLE_NAME = upper(#{name})
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,143 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+<script type="text/javascript" src="functable.js"></script>
+<script>
+ function gentable()
+ {
+  var xmlDoc = getXMLDoc("func_report.xml?81");
+  genfunctable('TagFuncTable', 'TagFunc', xmlDoc);
+ }
+</script>
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag30"/>
+<Table cols=2 border=0 width=100%>
+<col width=60%>
+<col width=40%>
+<tr height=91><td/><td><img src='../../res/tradereport.jpg'></td></tr>
+</table>
+<h3>　<font color=#3366ff>Supcan Report组件</font></h3><hr color=#2266ee size=1>
+　　Supcan Report组件是一个集自定义设计、编辑、查询、打印功能的通用报表组件，并作为一个组件供插件/加载项展示到浏览器页面。<br>
+　　和Supcan Treelist组件相比，Supcan Report实现了格式不固定的表格处理的功能，并允许程序员、实施人员、最终客户参与对格式的修改，Supcan Report通常用于展现，实现类似自由报表的功能。<br>
+　　Supcan Report组件依赖于Supcan Treelist组件。<br>
+
+
+
+<div id="Tag301"/><br><br><br>
+　　<font style='font-size:15pt'>1.创建实例</font><hr color=#2266ee size=1>
+　　Supcan Report组件是通过插件/加载项创建的，所以应该用<a href="act.htm?81#Tag205" target=_blank>使用指南 \ 页面语法</a>中叙述的插件/加载项的页面创建语法创建，
+&lt;Object&gt;中的某几个Param参数规则如下:<br>
+<pre class='xml'>
+&lt;Object ...(略)&gt;
+&lt;Param name="CtlName" value="<Font color=red>LuxForm</Font>"&gt;　　//固定
+&lt;Param name="ZipUrl" value="<Font color=red>BCV1.bin,LuxForm.bin</Font>"&gt;	　　//也可以是绝对URL
+&lt;Param name="CtlPara" value="Border=single,3D;  Ruler=Horz;  Rebar=Print,Property,Font;  print=11, 216"&gt;	//例子
+...</pre>
+　　如果页面是直接调用dynaload.js，那么可能就是这样:<br>
+<pre class='cpp'>insertReport('AF', 'Border=single,3D;  Ruler=Horz;  Rebar=Print,Property,Font;  print=11, 216')</pre>
+　　CtlPara参数决定了如何在页面上展现Supcan Report实例，在上面的例子中，参数串中可包含多个子串，子串间以 "；" 分隔。<br>
+　　子串的 名-值对 的规范如下：<br>
+<table width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#eaeaea><td>子串名</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+
+<tr><td>Border</td><td>边界</td><td>
+1.none  - 无边界<br>
+2.single  - 单线条边界<br>
+3.3dLower(或3d)  - 3D凹进边界<br>
+4.3dRaise  - 3D凸起边界
+</td><td>single</td></tr>
+<tr><td>BorderColor</td><td>边界色</td><td>颜色，仅用于Border=single</td><td>#7f9db9</td></tr>
+<tr><td>Hue</td><td>强制更改色调</td><td>
+LightGray - 浅灰色<br>
+Caramel - 焦糖色<br>
+Lilian - 百合花色<br>
+Lividity - 青黑色<br>
+注：更改结果将保存至系统文件，永久有效.
+</td><td>(无)</td></tr>
+<tr><td>FadeInStep</td><td>淡入淡出效果</td><td>打开报表时的淡入淡出效果<br>0 至 255，数值越小效果越明显, 0表示关闭此效果</td><td>5</td></tr>
+<tr><td>UserRebar</td><td>自定义工具条</td><td>
+URL(绝对或相对)，指向一个包含自定义信息的Zip包
+</td><td>无</td></tr>
+
+<tr><td>Rebar</td><td>工具条</td><td>
+1.none - 无工具条<br>
+2.Main - 主工具条<br>
+3.Print - 打印功能的工具条<br>
+4.Form - 常用功能工具条<br>
+5.Font - 字体工具条<br>
+6.Property - 工具箱等功能的工具条<br>
+7.Text - 文字输入工具条<br>
+注:含空串表示在该处强制断行，请参见默认值
+</td><td>Main, Print, Form,,Font, Property,,Text</td></tr>
+
+<tr><td>CollapseToolbar</td><td>是否折叠工具条</td><td>true/false - 折叠/不折叠.<br>备注:  下图为折叠控制按钮.<br><img src='report5.png'></td><td>false</td></tr>
+<tr><td>SeperateBar</td><td>分隔条</td><td>1.Vert - 垂直分隔条<br>2.Horz - 水平分隔条<br>注: 组件内置了2根分隔条，可以把窗口分为4份，分隔条通常隐藏在左侧、顶部，可用鼠标拖动</td><td>Vert, Horz</td></tr>
+<tr><td>Ruler</td><td>标尺</td><td>1.Vert - 垂直标尺<br>2.Horz - 水平标尺</td><td>Vert, Horz</td></tr>
+<tr><td>Main</td><td>主工具条图标</td><td>
+<img src='Toolbar1.bmp'><br>这些图标的功能号分别为102, 103, 104, 1074, 105, 100, 189, 20, 32, 106, 107
+</td><td>102, 103, 104, 1074, 105, 100, 189, 0, 20, 32, 106, 107</td></tr>
+
+<tr><td>Print</td><td>打印工具条图标</td><td><img src='Toolbar2.bmp'><br>这些图标的功能号分别为11, 216, 18
+</td><td>11, 216, 18</td></tr>
+
+<tr><td>Form</td><td>常用工具条图标</td><td><img src='Toolbar4.bmp'><br>左侧6个图标的功能号分别为110, 162, 164, 163, 140, 717
+</td><td>110, 162, 164, 163, 140, 717</td></tr>
+
+<tr><td>Property</td><td>工具箱工具条图标</td><td><img src='Toolbar32.bmp'><br>这些图标的功能号分别为301, 2, 112, 192, 144, 478, 382, 274
+</td><td>301, 2, 0, 112, 192, 144, 478, 382, 274</td></tr>
+
+<tr><td>Text</td><td>文字输入工具条图标</td><td><img src='text.png'><br>这3个图标的功能号分别为541, 23, 585.<br>注："23"完全用于自定义功能，Supcan report是没有针对23的功能的.
+</td><td>541, 585</td></tr>
+
+<tr><td>PagesTabPercent</td><td>底部滑动条的左侧Tab区长度比例</td><td>百分比，0至100</td><td>30</td></tr>
+<tr><td>TabScrollBar</td><td>底部整个滑动条(含左侧Tab)显示与否</td><td>show - 始终显示;<br>none - 设置不显示<br>moresheet - 多于1个工作表时才显示;<br>outofsize - 宽度超出时才显示<br>moresheet,outofsize - 合并上述二者(“或”的关系)</td><td>show</td></tr>
+<tr><td>DSCenterDialogHeader</td><td>中心数据源对话框的顶部布局</td><td>url - 显示中心数据源URL下拉框<br>search - 显示搜索选项<br>none - 无顶部内容</td><td>url</td></tr>
+<tr><td>WorkMode</td><td>工作方式</td><td><b>DesignTime</b> - 设计时;<br><b>RunTime</b> - 运行时;<br>　二者差别有:<br>
+　1."运行时"的界面略有简化、提示略少些专业性;<br>
+　2."设计时"插入的树列表是虚拟的，不可输入：<br>
+　3."设计时"工具条属性中的这个选项是不生效的：<br>
+<center><img src='report4.png'></center><br>
+　4."设计时"数据源的高级功能更多;<br>
+　5."设计时"的工具条“打开”按钮有20个历史文件的弹出菜单;<br>
+　6."运行时"文本框单击即进入编辑("设计时"需要双击);<br>
+<br>如下2种模式用于报表的上报汇总：<br>
+<b>UploadDesignTime</b> - 上报报表的设计时;<br>
+<b>UploadRunTime</b> - 上报报表的填报时;</td><td>DesignTime</td></tr>
+<tr><td>isHiLightProtect</td><td>是否在被保护的单元格的左侧显示红色醒目标记</td><td>true / false</td><td>true</td></tr>
+<tr><td>isHiLightTabOrder</td><td>填报时是否在 TabOrder 单元格左侧显示红色醒目标记</td><td>true / false<br>注: 仅用于上报的填报时(workMode="UploadRunTime")</td><td>true</td></tr>
+<tr><td>image.功能号</td><td>强制设定某功能号的图标</td><td>图标文件的URL, 例如:<br>image.102=../icons/jd.bmp; image.301=icons/bp.ico</td><td>(无)</td></tr>
+<tr><td>tip.功能号</td><td>强制设定某功能号的tip</td><td>文字串, 例如:<br>tip.102=打开|Open; tip.301=工具盒|Tool box</td><td>(无)</td></tr>
+<tr><td>EventLog</td><td>事件日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例的所有事件, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncLog</td><td>函数调用日志</td><td>文件名，建议后缀是txt, 不必带路径，系统将自动在 BC 目录下创建. 该文件能自动记录本组件实例被调用的所有函数, 用于程序调试.<br>注：正式运行时请不要使用，因为频繁读写磁盘会导致性能下降.</td><td>无</td></tr>
+<tr><td>FuncParaChars</td><td>函数日志中参数最大字数</td><td>数字，当启用函数日志时，函数的参数最多保留字数.</td><td>128</td></tr>
+<tr><td>FuncReturnChars</td><td>函数日志中返回值最大字数</td><td>数字，当启用函数日志时，函数的返回值最多保留字数.</td><td>0</td></tr>
+</table>
+注1: 所谓“默认值”就是在没有设定值的情况下，Supcan Report自动采用的值.<br>
+注2: Main、Print... 这些工具条，除了允许含系统功能号以外，还允许含自定义功能号(大于3000的功能号就是自定义功能号).<br>
+
+
+<div id="Tag302"/><br><br><br>
+　　<font style='font-size:15pt'>2.函数</font><hr color=#2266ee size=1>
+　　Supcan Report的函数是通过插件/加载项的 func( string funcname, string paras ) 函数间接调用的，在此列举了Supcan Report组件的可用funcname及用途说明。<br>
+<div id="TagFuncTable"></div>
+<div id="TagFunc"></div>
+
+<div id="Tag3021"/><br><br><br>
+　　<font style='font-size:15pt'>3.扩展函数和全局函数</font><hr color=#2266ee size=1>
+<i>3.1 扩展函数</i><br>
+　　上述API中，涉及对单元格、行列的操作都是相对于当前工作表而言，如果要存取其它工作表，就必须要先切换工作表。<br>
+　　为了方便存取其它工作表的内容，可以采用Report的扩展函数语法：首先通过GetHandle( )函数取得该工作表的句柄，然后在函数名前加句柄调用。下面是例子:<br>
+<pre class='cpp'>
+ var handle = AF.func("GetHandle", "3");  //取得第四个工作表的句柄
+ var data = AF.func(handle + "GetCellData", "B5");  //取得该工作表B5单元格的内容</pre>
+<br>
+
+<i>3.2 全局函数</i><br>
+　　Report还拥有和Treelist、Freeform完全一样的全局函数，请参见<a href="globalfunction.htm?81" target=_blank>全局函数</a>介绍。<br><br>
+
+<br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

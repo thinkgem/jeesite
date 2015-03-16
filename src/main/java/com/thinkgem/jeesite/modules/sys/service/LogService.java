@@ -1,76 +1,38 @@
 /**
  * Copyright &copy; 2012-2013 <a href="httparamMap://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package com.thinkgem.jeesite.modules.sys.service;
 
-import java.util.Date;
-import java.util.Map;
-
-import org.apache.commons.lang3.ObjectUtils;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
-import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.common.utils.DateUtils;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.dao.LogDao;
 import com.thinkgem.jeesite.modules.sys.entity.Log;
 
 /**
  * 日志Service
  * @author ThinkGem
- * @version 2013-6-2
+ * @version 2014-05-16
  */
 @Service
 @Transactional(readOnly = true)
-public class LogService extends BaseService {
+public class LogService extends CrudService<LogDao, Log> {
 
-	@Autowired
-	private LogDao logDao;
-	
-	public Log get(String id) {
-		return logDao.get(id);
-	}
-	
-	public Page<Log> find(Page<Log> page, Map<String, Object> paramMap) {
-		DetachedCriteria dc = logDao.createDetachedCriteria();
-
-		Long createById = StringUtils.toLong(paramMap.get("createById"));
-		if (createById > 0){
-			dc.add(Restrictions.eq("createBy.id", createById));
+	public Page<Log> findPage(Page<Log> page, Log log) {
+		
+		// 设置默认时间范围，默认当前月
+		if (log.getBeginDate() == null){
+			log.setBeginDate(DateUtils.setDays(DateUtils.parseDate(DateUtils.getDate()), 1));
+		}
+		if (log.getEndDate() == null){
+			log.setEndDate(DateUtils.addMonths(log.getBeginDate(), 1));
 		}
 		
-		String requestUri = ObjectUtils.toString(paramMap.get("requestUri"));
-		if (StringUtils.isNotBlank(requestUri)){
-			dc.add(Restrictions.like("requestUri", "%"+requestUri+"%"));
-		}
-
-		String exception = ObjectUtils.toString(paramMap.get("exception"));
-		if (StringUtils.isNotBlank(exception)){
-			dc.add(Restrictions.eq("type", Log.TYPE_EXCEPTION));
-		}
+		return super.findPage(page, log);
 		
-		Date beginDate = DateUtils.parseDate(paramMap.get("beginDate"));
-		if (beginDate == null){
-			beginDate = DateUtils.setDays(new Date(), 1);
-			paramMap.put("beginDate", DateUtils.formatDate(beginDate, "yyyy-MM-dd"));
-		}
-		Date endDate = DateUtils.parseDate(paramMap.get("endDate"));
-		if (endDate == null){
-			endDate = DateUtils.addDays(DateUtils.addMonths(beginDate, 1), -1);
-			paramMap.put("endDate", DateUtils.formatDate(endDate, "yyyy-MM-dd"));
-		}
-		dc.add(Restrictions.between("createDate", beginDate, endDate));
-		
-		dc.addOrder(Order.desc("id"));
-		return logDao.find(page, dc);
 	}
 	
 }

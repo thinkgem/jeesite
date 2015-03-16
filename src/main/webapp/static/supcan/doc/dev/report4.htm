@@ -1,0 +1,203 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag305"/><br><br>
+　　<font style='font-size:15pt'>9.上报汇总模式</font><hr color=#2266ee size=1>
+<b>9.1.简单应用</b><br>
+　　Supcan Report报表可以用在一种特殊但是也很常见的场合：报表上报汇总，例如政府机关、有上下级的企业集团，经常会统一下发一些统计报表，让下级单位填报/申报，这些表格是由上级单位设计的，下级单位仅填写数据而已。<br>
+　　Supcan Report的创建参数中有一个WorkMode，如果是UploadDesignTime，就表示上报报表的“设计时”，是UploadRuntime就表示是下级单位的“运行时”(即填报时)，在Demo页中有这二种状态的例子。<br>
+　　在上报报表的“设计时”，工具条上会多出一个<img src='prop.bmp'>图标，如果按下该图标，表示在输入时，输入的数字将是该单元格的TabOrder(即录入顺序号)，用以限定“填写时”的输入范围及按回车键后的跳转顺序。<br>
+　　此外，还需注意单元格的“别名”，这个别名会出现在填写上报时生成的XML串中，硕正报表的上报不是上传整个报表，而是上传有别名、或有TabOrder的单元格的内容的一段XML，通过调用GetUploadXML()函数可以得到，XML例如：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;WorkSheet name="销售额统计表"&gt;
+　&lt;data name="OrgID" Cell="D6"&gt;001&lt;/data&gt;
+　&lt;data name="Target1" Cell="D7"&gt;3000&lt;/data&gt;
+　&lt;data name="Target2" Cell="D8"&gt;2039.12&lt;/data&gt;
+&lt;/WorkSheet&gt;</pre>
+　　里面的name元素就是别名，这样便于后端(服务器端)解析; Cell是单元格名，用处不大。 解析、处理这段XML的后端程序需要自己写，通常就是把这段采集到的数据写到数据库中而已。<br>
+
+<div id="Tag306"/><br><br>
+<b>9.2.指标库(1)</b><br>
+　　在设计报表时，输入“别名”这个工作比较麻烦，且容易出错，为此，硕正Report自1.0.60版后增加了"指标库"功能，可以用鼠标拖拽方式直接导入指标，使设计工作既轻松又不易出差错。<br>
+　　指标库需要你自己在后端统一定义，页面的 js 中通过 SetItemLibraryURL( ) 函数将指标库的URL交给Report控件即可。一旦定义了指标库，Report的工具箱中就会出现“指标库”的内容：<br>
+<center><img src='report1.png'></center>
+<br>
+　　指标被鼠标拖入单元格后，单元格的“别名”就自动设为指标的ID了，并且自动设定了一个TabOrder.<br>
+　　所以采用指标库，本质上仅是能简化设置“别名”和“TabOrder”的过程而已.<br>
+　　指标库的XML格式举例如：
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;root&gt;
+ &lt;project name="业务指标"&gt;
+  &lt;project name="部门(单独)"&gt;
+   &lt;item id="res1" datatype="int"&gt;人数&lt;/item&gt;
+   &lt;item id="res2" datatype="int"&gt;临时工&lt;/item&gt;
+  &lt;/project&gt;
+  &lt;item id="con1" editType="checkbox"&gt;是否盈利&lt;/item&gt;
+  &lt;item id="con33"&gt;应收款&lt;/item&gt;
+ &lt;/project&gt;
+ &lt;project name="财务指标"&gt;
+  &lt;item id="KML1"&gt;资产负债率&lt;/item&gt;
+  &lt;item id="KML2"&gt;存货周转率&lt;/item&gt;
+  &lt;item id="KML3" decimal="4"&gt;应收帐款周转率&lt;/item&gt;
+ &lt;/project&gt;
+&lt;/root&gt;</pre>
+　　上面的XML中，树的级次可以任意嵌套，Report能原样显示，其中的树叶就是单个指标。树叶的可用属性规定如下：<br>
+<table width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#eaeaea><td>属性名</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>id 或 alias</td><td>唯一的ID，拖入报表中就是“别名”</td><td>串</td><td>无</td></tr>
+<tr><td>editType</td><td>输入类型</td><td>edit / checkbox</td><td>edit</td></tr>
+<tr><td>dataType</td><td>数据类型</td><td>decimal / int / string / date / datetime</td><td>decimal</td></tr>
+<tr><td>decimal</td><td>小数位数</td><td>数字</td><td>2</td></tr>
+<tr><td>tip</td><td>帮助说明</td><td>串</td><td>无</td></tr>
+<tr><td>max<br>min</td><td>最大值和最小值，用于输入限制<br>注：仅限于数值型和日期型</td><td>值</td><td>无</td></tr>
+<tr><td>maxChars<br>maxMBytes</td><td>串的最大长度，用于输入限制<br>注1：仅限于字符型；<br>注2：maxChars以字计，中英文一视同仁; <br>maxMBytes以字节计，中文占2字节;<br>注3：定义其中一个即可，无法同时生效</td><td>数字</td><td>无</td></tr>
+<tr><td>text</td><td>指标的中文名称，例如“人数”，也可以写成:<br>&lt;item id="res1"&gt;人数&lt;/item&gt; </td><td>文字</td><td>无</td></tr>
+</table>
+注：例子中的XML元素名如data、project、item并没有严格规定，您可随意定义。<br>
+
+<div id="Tag307"/><br><br>
+<b>9.3.指标库(2)</b><br>
+　　指标往往带有某些附加属性，以“人数”指标为例，它可以有部门属性：财务部、工程部、人事部等；有可以同时有月份属性：1月份、2月份..等。为了既能保持“人数”指标的单一性、又能按某种形式相互区分，我们增加了指标的“属性”。<br>
+　　指标属性是这样声明的：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;root&gt;
+ &lt;project name="财务指标"&gt;
+  &lt;item id="km101" text="资产负债率"&gt;
+     &lt;attr name="month" text="月份"/&gt;
+     &lt;attr name="dept" text="部门"/&gt;
+  &lt;/item&gt;
+  &lt;item id="km103" decimal="4" text="应收帐款周转率"&gt;
+     &lt;attr name="month" text="月份"/&gt;
+     &lt;attr name="dept" text="部门" value="3"/&gt;
+  &lt;/item&gt;
+ &lt;/project&gt;
+&lt;/root&gt;</pre>
+　　上面的 <font color=red>&lt;attr&gt;</font>就是属性，其中<b>name</b>是属性名；<b>text</b>是属性的中文说明，用于设计时的帮助；<b>value</b>表示默认值，可选的，当鼠标将指标拖入单元格时，自动赋予该属性的值.<br>
+　　在设计时，当指标被拖入报表单元格后，你既可以通过 SetItemAttr( ) 函数修改指标的属性值，也可以通过工具箱直接修改，下面工具箱中底部深底色的部分表示指标属性：<br>
+<center><img src="report6.jpg"></center>
+　　在报表的运行时，含属性的指标被提交，生成的XML包是诸如这样的：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;WorkSheet name="销售额统计表"&gt;
+　&lt;data name="km101" attr="month=2;dept=3" &gt;3003.12&lt;/data&gt;
+　&lt;data name="km103" attr="month=;dept=" &gt;2500&lt;/data&gt;
+&lt;/WorkSheet&gt;</pre>
+　　报表的在线演示页中，"38.设计阶段(方法二)"的指标中的 “财务指标” 含有属性，您可以体验一下。<br>
+
+
+<div id="Tag308"/><br><br>
+<b>9.4.指标库(3)</b><br>
+　　上述指标库中的“指标”是单个指标，在实际使用中，经常需要以表格的形式输入一组指标、或者是多行多列的一块数据，为此，硕正套件从1.0.68.0版开始，新增了另一种形式的指标库：内嵌表格。<br>
+　　内嵌表格也是在指标库中定义的，和单个指标相比，它的格式稍复杂：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;root&gt;
+ &lt;project name="业务指标"&gt;
+  &lt;project name="部门(单独)"&gt;
+   &lt;item id="res1" datatype="int"&gt;人数&lt;/item&gt;
+   ...
+  &lt;/project&gt;
+ &lt;/project&gt;
+ &lt;item <font color="red">type="embedTable"</font> id="FiGroup" name="财务指标"&gt;
+  &lt;properties rows="5" addRowAble="true"/&gt;
+  &lt;cols&gt;
+   &lt;col id="kmdm" datatype="string" editAble="false" align="center"&gt;科目代码&lt;/col&gt;
+   &lt;col id="kmmc" datatype="string" editAble="false"&gt;科目名称&lt;/col&gt;
+   &lt;col id="je" decimal="4"&gt;金额&lt;/col&gt;
+  &lt;/cols&gt;
+  &lt;Table&gt;
+   &lt;TR&gt;
+    &lt;TD&gt;101&lt;/TD&gt;&lt;TD&gt;现金&lt;/TD&gt;
+   &lt;/TR&gt;
+   &lt;TR&gt;
+    &lt;TD&gt;102&lt;/TD&gt;&lt;TD&gt;银行存款&lt;/TD&gt;
+   &lt;/TR&gt;
+  &lt;/Table&gt;
+ &lt;/item&gt;
+&lt;/root&gt;</pre>
+　　上图中，第 9 行到第 24 行就是内嵌表格类型的指标，关键是第9行 type="embedTable" 的声明，该指标一旦被鼠标拖入报表中，报表将自动划定一块区域，作为其指标输入区。<br>
+　　内嵌表格的模版也可以在别处定义，用 "ref" 链接，例如:<br>
+<pre class='xml'>
+&lt;item id="FiGroup" name="财务指标" type="embedTable" <font color="red">ref="../libs/FisGroup.xml"</font>/&gt;</pre>
+
+　　内嵌表格的语法和 "硕正树列表(Treelist)" 的XML规范很相似，它采纳了一部分的Treelist的XML属性，也有自己的特有的一些属性。元素、属性列举如下：<br>
+1.<b>&lt;Properties&gt;</b><br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td>类型</td><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td rowspan=2>Treelist<br>属性</td><td>addRowAble</td><td>在上报运行时, 是否允许添加行</td><td>true/false</td><td>false</td></tr>
+<tr><td>enter</td><td>在上报运行时, 击回车键后的光标跳转方向</td><td>down/right</td><td>right</td></tr>
+<tr><td>自有属性</td><td>rows</td><td>设计时鼠标拖入后，内嵌表格区域所占的行数</td><td>数字</td><td>5</td></tr>
+</table>
+<br>
+2.<b>&lt;Cols&gt; \ &lt;Col&gt;</b><br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td>类型</td><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td rowspan=12>Treelist<br>属性</td><td>id</td><td>列ID</td><td>串，相当于字段名</td><td>(无)</td></tr>
+<tr><td>datatype</td><td>数据类型</td><td>sting / double / int / date / datetime</td><td><font color=red>decimal</font></td></tr>
+<tr><td>decimal</td><td>小数位数，仅用于 datatype 为 double 时</td><td>-1表示小数位数不确定, 在0和8之间可以任意输入.</td><td>2</td></tr>
+<tr><td>EditAble</td><td>是否允许输入</td><td>true/false</td><td>true</td></tr>
+<tr><td>maxChars<br>maxMBytes</td><td>长度限制，仅用于 datatype 为 string 时</td><td>maxChars表示限制输入字数，以Unicode计(中英文一视同仁);<br>maxMBytes表示限制输入字节数，以多字节(非Unicode)计(中文2字节、英文1字节).<br>注: 不能同时使用maxChars和maxMBytes</td><td>0</td></tr>
+<tr><td>max</td><td>限制输入的最大值</td><td>仅用于int、 double、date、 datetime</td><td>无</td></tr>
+<tr><td>min</td><td>限制输入的最小值</td><td>仅用于int、 double、date、 datetime</td><td>无</td></tr>
+<tr><td>align</td><td>水平对齐</td><td>left / center / right</td><td>和数据类型有关</td></tr>
+<tr><td>valign</td><td>垂直对齐</td><td>top / middle / bottom</td><td>middle</td></tr>
+<tr><td>edittype</td><td>输入方式</td><td>edit / checkbox / droplist</td><td>edit</td></tr>
+<tr><td>droplistId</td><td>相关联的下拉资源ID，仅用于下拉输入</td><td>该ID须存在于下面的&lt;Droplists&gt;节点中，或者是报表内的字典名</td><td>无</td></tr>
+<tr><td>isHide</td><td>是否隐藏列</td><td>true/false<br>在报表中不会生成隐藏列，但其数据能够被传递、上报</td><td>false</td></tr>
+<tr><td>自有属性</td><td>updateAble</td><td>本列内容是否需要上报</td><td>true/false</td><td>true</td></tr>
+</table>
+<br>
+3.<b>&lt;Table&gt;</b><br>
+　　Table是模版的一部分，它不是必需的。作为样式，有时候需要在内嵌表格的左侧、顶部设定好若干固定的文字，Table的作用就在于此。<br>
+　　Table主要内容是初始的数据或样式文字，以 &lt;TR&gt; 作为行，&lt;TD&gt;作为列构成，结构和 HTML 中的Table大致相似，但可用元素不多，如下所示：<br>
+<b>&lt;Table&gt; \ &lt;TR&gt;</b><br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>editAble</td><td>本行是否可输入</td><td>true/false</td><td>true</td></tr>
+<tr><td>updateAble</td><td>本行内容是否可上报<br>注: 如果不上报，本行的单元格数据类型将是字符串</td><td>true/false</td><td>true</td></tr>
+<tr><td>bgColor</td><td>本行底色</td><td>颜色串</td><td>无(透明)</td></tr>
+<tr><td>textColor</td><td>本行文字色</td><td>颜色串</td><td>#000000</td></tr>
+</table>
+<b>&lt;Table&gt; \ &lt;TR&gt; \ &lt;TD&gt;</b><br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>editAble</td><td>本单元格是否可输入</td><td>true/false</td><td>true</td></tr>
+<tr><td>bgColor</td><td>本单元格底色</td><td>颜色串</td><td>无(透明)</td></tr>
+<tr><td>textColor</td><td>本单元格文字色</td><td>颜色串</td><td>#000000</td></tr>
+<tr><td>rowspan</td><td>单元格垂直合并，含义同html table</td><td>数字</td><td>无</td></tr>
+<tr><td>colspan</td><td>单元格水平合并，含义同html table</td><td>数字</td><td>无</td></tr>
+<tr><td>align</td><td>水平对齐</td><td>left / center / right</td><td>无</td></tr>
+<tr><td>valign</td><td>垂直对齐</td><td>top / middle / bottom</td><td>无</td></tr>
+<tr><td>isVerticalText</td><td>文字是否垂直显示</td><td>true/false</td><td>false</td></tr>
+</table>
+<br>
+4.<b>&lt;Droplists&gt;</b><br>
+　　下拉资源，和"硕正树列表(Treelist)" 的XML规范中的下拉资源相同，请参考相关文档。<br>
+
+<div id="Tag309"/><br><br>
+<b>9.5.指标库(4)</b><br>
+　　硕正套件从1.0.72.0版开始，指标库增加了 “内嵌树列表” 类型。 由于树列表(Treelist)输入功能远比报表强，所以在对交互要求高的场合下可以采用树列表。<br>
+　　内嵌树列表的指标库实例如：<br>
+<pre class='xml'>
+ ...
+ &lt;item id="d010" type="treelist" tip="销售单" url="../treelist/t1.xml"&gt;销售单&lt;/item&gt;
+ ...
+</pre>
+　　内嵌树列表的指标库元素规则如下：<br>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td>属性名称</td><td>含义</td><td>可用值</td><td>默认值</td></tr>
+<tr><td>type</td><td>指定为树列表</td><td>必须为 treelist</td><td>treelist</td></tr>
+<tr><td>url</td><td>树列表的XML的URL</td><td>相对或绝对URL</td><td>&nbsp;</td></tr>
+<tr><td>GetChangedXMLPara</td><td>上报提交时的选项串</td><td>参数串，请参见树列表的GetChangedXML( )函数说明</td><td>level=0;isIgnoreChange=true</td></tr>
+</table>
+
+<br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

@@ -1,0 +1,49 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="模式对话框函数">
+	<function name="SetDialogFreeForm">
+		<usage>指定对话框的Freeform</usage>
+		<para>FreeForm的URL(相对或绝对)，或者直接就是XML大串</para>
+		<memo>&lt;font color=red&gt;该Freeform中必须要有一个按钮控件&lt;/font&gt;，否则不起作用</memo>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="SetDialogPara">
+		<usage>指定对话框的标题等参数</usage>
+		<para>可选，可以是如下属性值(多个属性间以分号(;)分隔)：&lt;br&gt;
+&lt;b&gt;title&lt;/b&gt; - 对话框窗口的标题&lt;br&gt;
+&lt;b&gt;IdOk(或OkId)&lt;/b&gt; - 相当于“确认”的按钮的id, 点击后能自动执行Freeform的 Validate( ) 验证函数;&lt;br&gt;
+&lt;b&gt;IdFocus(或FocusId)&lt;/b&gt; - 指定定位焦点，如果为空，则按freeform的TabOrder自动定位;&lt;br&gt;
+&lt;b&gt;ExtWidth / ExtHeight&lt;/b&gt; - 扩展宽度/高度, 默认分别是20/14;&lt;br&gt;
+备注：扩展宽度/高度表示对话框右、下方预留的空白边界.&lt;br&gt;
+</para>
+		<example>AF.func("SetDialogPara", "title=警告; ExtWidth=20; ExtHeight=20");</example>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="OpenDialog">
+		<usage>打开模式对话框</usage>
+		<para>可选，加载的数据的URL, 或直接就是XML/JSON大串，用于为FreeForm赋初值</para>
+		<return>鼠标点击Freeform中的Button按钮的ID</return>
+		<example>AF.func("OpenDialog", "{price:20, date1:2010.12.20, checked:true}");</example>
+		<memo>1.如果未弹出对话框，可能是Freeform的URL不正确、或Freeform中没有Button导致;&lt;br&gt;
+2.本函数执行时，线程进入阻塞状态，直到对话框关闭，本函数才返回.</memo>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="GetDialogValues">
+		<usage>取得刚关闭的对话框中的FreeForm的所有input的输入内容</usage>
+		<para>可选，可以为 XML / JSON, 默认是XML</para>
+		<return>XML或JSON串</return>
+		<memo>如果返回JSON串，可能是类似这样的：{"price":"20", "date1":"2010.12.20", "checked":"1"}</memo>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="GetDialogValue">
+		<usage>取得刚关闭的对话框中的FreeForm的某个input的输入内容</usage>
+		<para>Input的ID&lt;br&gt;如果是串 @freeform, 表示取得该freeform的ID(在freeform的XML的〈Properties〉中定义的ID)</para>
+		<return>该input的输入内容</return>
+		<illu>请参见自由表头的演示页: 13.基于Freeform的对话框</illu>
+	</function>
+	<function name="GetDialogIDs">
+		<usage>取得刚关闭的对话框中的FreeForm中的所有ID</usage>
+		<return>以逗号分隔的所有ID</return>
+	</function>
+</category>
+</functions>

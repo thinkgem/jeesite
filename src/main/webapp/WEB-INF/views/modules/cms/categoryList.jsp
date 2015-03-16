@@ -21,12 +21,12 @@
 		<li class="active"><a href="${ctx}/cms/category/">栏目列表</a></li>
 		<shiro:hasPermission name="cms:category:edit"><li><a href="${ctx}/cms/category/form">栏目添加</a></li></shiro:hasPermission>
 	</ul>
-	<tags:message content="${message}"/>
+	<sys:message content="${message}"/>
 	<form id="listForm" method="post">
 		<table id="treeTable" class="table table-striped table-bordered table-condensed">
 			<tr><th>栏目名称</th><th>归属机构</th><th>栏目模型</th><th style="text-align:center;">排序</th><th title="是否在导航中显示该栏目">导航菜单</th><th title="是否在分类页中显示该栏目的文章列表">栏目列表</th><th>展现方式</th><th>操作</th></tr>
 			<c:forEach items="${list}" var="tpl">
-				<tr id="${tpl.id}" pId="${tpl.parent.id ne '1' ? tpl.parent.id : '0'}">
+				<tr id="${tpl.id}" pId="${tpl.parent.id ne '1'?tpl.parent.id:'0'}">
 					<td><a href="${ctx}/cms/category/form?id=${tpl.id}">${tpl.name}</a></td>
 					<td>${tpl.office.name}</td>
 					<td>${fns:getDictLabel(tpl.module, 'cms_module', '公共模型')}</td>

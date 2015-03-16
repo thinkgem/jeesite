@@ -1,0 +1,584 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+<category name="公共函数">
+	<function name="if">
+		<usage>条件判断函数</usage>
+		<para>条件，非零表示满足条件</para>
+		<para>条件满足时的返回值</para>
+		<para>条件未满足时的返回值</para>
+		<return>见参数</return>
+		<example>=if(getDay(now())&lt;10, '上旬', if(getDay(now())&gt;=20,'下旬','中旬'))</example>
+	</function>
+	<function name="js">
+		<usage>调用页面的javascript函数</usage>
+		<detail>反向调用当前页面的JavaScript函数(“当前页面”是指包容当前控件的页面)</detail>
+		<para>要调用的js函数名</para>
+		<para>可选, 该js函数的第一个参数</para>
+		<para>可选, 该js函数的第二个参数，以下以此类推...</para>
+		<return>由js函数决定</return>
+		<example>=js('getProd', '1', 'true')&lt;br&gt;当前页面上应该有名为getProd的js函数，例如：&lt;br&gt;function getProd(index, isOpened)&lt;br&gt;{&lt;br&gt;　...&lt;br&gt;　return 1;&lt;br&gt;}</example>
+	</function>
+</category>
+
+<category name="数学函数">
+	<function name="sum">
+		<usage>求和</usage>
+		<para>参数数量可任意</para>
+		<return>数值</return>
+		<example>=sum(1, 220, sum(22, 33))&lt;br&gt;在Report中，参数可以含有单元名，例如 sum(D4:D9, B5, B7)</example>
+	</function>
+	<function name="sumDim">
+		<usage>数组求和</usage>
+		<para>参数数量可任意，参数的形式是以某个字符分隔的多个数字</para>
+		<return>和参数类似的形式</return>
+		<memo>分隔符可以是除空格外的任意字符(或字符串)，但必须保持一致</memo>
+		<example>=sumDim("1.1 / 2.1 / 3",  "10 / 20 / 30")  返回的将是串"11.1 / 22.1 / 33"&lt;br&gt;在Report中，参数可以含有单元名，例如 sumDim(D4:D9)</example>
+	</function>
+	<function name="average">
+		<usage>求平均值</usage>
+		<para>参数数量可任意</para>
+		<return>数值</return>
+	</function>
+	<function name="max">
+		<usage>求最大值</usage>
+		<para>参数数量可任意</para>
+		<return>数值</return>
+	</function>
+	<function name="min">
+		<usage>求最小值</usage>
+		<para>参数数量可任意</para>
+		<return>数值</return>
+	</function>
+	<function name="percent">
+		<usage>求百分比</usage>
+		<para>数字</para>
+		<para>可选, 小数位数，默认为0</para>
+		<return>百分比串，带'%'符号</return>
+		<example>=percent(0.12345, 2)，返回值为串“12.35%”</example>
+	</function>
+	<function name="abs">
+		<usage>绝对值</usage>
+		<para>数字</para>
+		<return>正数</return>
+	</function>
+	<function name="round">
+		<usage>四舍五入</usage>
+		<para>数字</para>
+		<para>小数位数</para>
+		<return>数值</return>
+	</function>
+	<function name="int">
+		<usage>取整</usage>
+		<para>数字</para>
+		<return>整数</return>
+	</function>
+	<function name="mod">
+		<usage>求余数</usage>
+		<para>被除数</para>
+		<para>除数</para>
+		<return>余数</return>
+	</function>
+	<function name="floor">
+		<usage>小于n(参数)的最大整数</usage>
+		<para>数字</para>
+		<return>整数</return>
+	</function>
+	<function name="ceil">
+		<usage>大于n(参数)的最小整数</usage>
+		<para>数字</para>
+		<return>整数</return>
+	</function>
+	<function name="sqrt">
+		<usage>平方根</usage>
+		<para>数字</para>
+		<return>数值</return>
+	</function>
+	<function name="exp">
+		<usage>e的n次幂</usage>
+		<para>数字</para>
+		<return>数值</return>
+	</function>
+	<function name="log">
+		<usage>log</usage>
+		<para>数字</para>
+		<return>数值</return>
+	</function>
+	<function name="log10">
+		<usage>以10为底的log</usage>
+		<return>数值</return>
+	</function>
+	<function name="pow">
+		<usage>n(参数)的n次方</usage>
+		<para>底数</para>
+		<para>幂数</para>
+		<return>数值</return>
+	</function>
+	<function name="rand">
+		<usage>随机数</usage>
+		<return>0 - 0.99</return>
+	</function>
+</category>
+
+<category name="文字函数">
+	<function name="len">
+		<usage>取串长度(字数)</usage>
+		<para>串</para>
+		<return>数值</return>
+		<example>=len('字符串12')，返回值5</example>
+	</function>
+	<function name="left">
+		<usage>取串的左n个字</usage>
+		<para>串</para>
+		<para>字数</para>
+		<return>串</return>
+	</function>
+	<function name="right">
+		<usage>取串的右n个字</usage>
+		<para>串</para>
+		<para>字数</para>
+		<return>串</return>
+	</function>
+	<function name="mid">
+		<usage>取串的中间若干个字</usage>
+		<para>串</para>
+		<para>位置(从0开始)</para>
+		<para>字数</para>
+		<return>串</return>
+	</function>
+	<function name="indexOf">
+		<usage>取子串在串中的位置</usage>
+		<para>串</para>
+		<para>子串</para>
+		<para>可选, 开始查找位置，默认为0</para>
+		<para>可选, 大小写是否敏感，默认为0(即不敏感)</para>
+		<return>位置，从0开始，-1表示未找到</return>
+	</function>
+	<function name="endWith">
+		<usage>串是否以某子串结尾</usage>
+		<para>串</para>
+		<para>子串</para>
+		<para>可选, 大小写是否敏感，默认为0(即不敏感)</para>
+		<return>1/0, 表示是/否</return>
+	</function>
+	<function name="compare">
+		<usage>比较2个串</usage>
+		<para>串1</para>
+		<para>串2</para>
+		<para>可选, 大小写是否敏感，默认为0(即不敏感)</para>
+		<return>整数，0表示相等；大于0表示串1大于串2；小于0表示串1小于串2</return>
+	</function>
+	<function name="replace">
+		<usage>替换串的中间若干个字</usage>
+		<para>串</para>
+		<para>位置(从0开始)</para>
+		<para>长度</para>
+		<para>替换的串</para>
+		<return>被替换后的串</return>
+	</function>
+	<function name="replaceAll">
+		<usage>替换串的中某些子串</usage>
+		<para>串</para>
+		<para>需要被替换的串</para>
+		<para>替换的新串</para>
+		<return>被替换后的串</return>
+		<example>=replaceAll('ABCA', 'A', '02')，返回值为串“02BC02”</example>
+	</function>
+	<function name="toLowerCase">
+		<usage>把串中的英文转换为小写</usage>
+		<para>串</para>
+		<return>串</return>
+	</function>
+	<function name="toUpperCase">
+		<usage>把串中的英文转换为大写</usage>
+		<para>串</para>
+		<return>串</return>
+	</function>
+	<function name="trim">
+		<usage>除去串的首尾空格、或任意串</usage>
+		<para>串</para>
+		<para>可选，要除去的串，默认空格</para>
+		<return>串</return>
+	</function>
+	<function name="trimLeft">
+		<usage>除去串的左侧空格、或任意串</usage>
+		<para>串</para>
+		<para>可选，要除去的串，默认空格</para>
+		<return>串</return>
+	</function>
+	<function name="trimRight">
+		<usage>除去串的尾部空格、或任意串</usage>
+		<para>串</para>
+		<para>可选，要除去的串，默认空格</para>
+		<return>串</return>
+	</function>
+	<function name="encodeURI">
+		<usage>对文字进行URI编码</usage>
+		<para>串</para>
+		<return>串</return>
+		<memo>encodeURI不会对数字、字母和“-_.!~*'()”进行编码，也不会对有特殊含义的“;/?:@=+$,#&amp;”进行编码</memo>
+		<example>=encodeURI('http://www.supcan.cn/supcan?val=硕正RIA')，返回值为串“http://www.supcan.cn/supcan?val=%e7%a1%95%e6%ad%a3RIA”</example>
+	</function>
+	<function name="encodeURIComponent">
+		<usage>对更多文字进行URI编码</usage>
+		<para>串</para>
+		<return>串</return>
+		<memo>和encodeURI的唯一差别是：会对有特殊含义的“;/?:@=+$,#&amp;”进行编码</memo>
+		<example>=encodeURIComponent('硕正RIA')，返回值为串“%e7%a1%95%e6%ad%a3RIA”</example>
+	</function>
+	<function name="englishNum">
+		<usage>英文数字</usage>
+		<para>数字</para>
+		<return>串</return>
+		<example>=englishNum(10123.24)，返回值为串“ten thousand one hundred and twenty three point twenty four”</example>
+	</function>
+	<function name="chineseNum">
+		<usage>中文大写</usage>
+		<para>0至9之间的数字，允许有多个数字</para>
+		<para>1 表示普通的中文大写，0或忽略该参数表示中文金额的大写</para>
+		<return>串</return>
+		<example>=chineseNum(123) 返回值为串“壹贰叁”;  =chineseNum(123, 1) 返回值为串“一二三”</example>
+	</function>
+	<function name="RMB">
+		<usage>人民币大写</usage>
+		<para>数字</para>
+		<return>串</return>
+		<example>=rmb(10123.24)，返回值为串“壹万零壹佰贰拾叁元贰角肆分”</example>
+	</function>
+	<function name="formatDate">
+		<usage>按指定掩码表示日期</usage>
+		<para>日期串</para>
+		<para>掩码，如'YYYY.MM.DD hh:mm:ss'、'YY年度'.&lt;br&gt;
+上面的Y、M、D、h、m、s为掩码保留字，次序位置无规定，其含义说明如下：&lt;br&gt;
+Y - 年，YYYY表示4位显示, YY表示显示后2位;&lt;br&gt;
+M - 月，MM表示2位显示，不足2位的左侧以'0'填补;&lt;br&gt;
+D - 日，DD表示2位显示，不足2位的左侧以'0'填补;&lt;br&gt;
+Month(或Mon) - 英文的月份;&lt;br&gt;
+Month.(或Mon.) - 英文的月份缩写;&lt;br&gt;
+Day - 英文的星期;&lt;br&gt;
+Day. - 英文的星期缩写;&lt;br&gt;
+h - 小时，hh表示2位显示，不足2位的左侧以'0'填补;&lt;br&gt;
+m - 分钟，mm表示2位显示，不足2位的左侧以'0'填补;&lt;br&gt;
+s - 秒，ss表示2位显示，不足2位的左侧以'0'填补;&lt;br&gt;
+</para>
+		<return>串</return>
+		<example>=formatdate(now(), 'YYYY年MM月DD日')，返回值例如“2010年08月05日”&lt;br&gt;
+=formatdate(now(), 'YYYY年M月D日')，返回值例如“2010年8月15日”&lt;br&gt;
+=formatdate(now(), 'D, Month YYYY, day')，返回值例如“15, August 2010, Sunday”
+		</example>
+	</function>
+	<function name="formatNum">
+		<usage>按指定掩码表示数值</usage>
+		<para>数值</para>
+		<para>掩码，如'#,##0.00'、'共：#.00# 吨'. 掩码中'0'表示固定位、'#'表示任意位、','表示千位符.</para>
+		<example>=formatNum(12345.6, '#,##0.00')，返回“12,345.60”;&lt;br&gt;
+=formatNum(0, '#.#')，返回空串;&lt;br&gt;
+=formatNum(0, '#,##0.00')，返回"0.00";&lt;br&gt;
+=formatNum(123456, '编码 00 - 00 - 00 - 00')，返回"编码 00 - 12 - 34 - 56";&lt;br&gt;
+=formatNum(1234.5678, '00.00')，返回"34.56";&lt;br&gt;
+		</example>
+		<memo>最常用的掩码为"#,##0.00"，表示小数始终显示2位、整数部分任意但至少有1位、且以千位符分隔.</memo>
+		<return>串</return>
+	</function>
+	<function name="chineseDate">
+		<usage>中文的日期表示</usage>
+		<para>日期串</para>
+		<para>可选, 掩码，默认是'YYYY年MM月DD日'</para>
+		<return>串</return>
+	</function>
+	<function name="chineseBankDate">
+		<usage>中国银行的日期表示</usage>
+		<para>日期串</para>
+		<para>格式，默认是'YYYY年MM月DD日'</para>
+		<return>串</return>
+		<example>=chineseBankDate(now())，返回值例如“贰零壹零年零捌月壹拾伍日”</example>
+	</function>
+</category>
+
+<category name="日期函数">
+	<function name="dateDifYears">
+		<usage>2个日期的年度之差</usage>
+		<para>日期1</para>
+		<para>日期2</para>
+		<return>数值</return>
+	</function>
+	<function name="dateDifMonths">
+		<usage>2个日期的月份之差</usage>
+		<para>日期1</para>
+		<para>日期2</para>
+		<return>数值</return>
+		<example>=dateDifMonths('2010.1.19', '2010.12.21')，返回11</example>
+	</function>
+	<function name="dateDifDays">
+		<usage>2个日期的天数之差</usage>
+		<para>日期1</para>
+		<para>日期2</para>
+		<return>数值</return>
+	</function>
+	<function name="dateDifHours">
+		<usage>2个日期的小时之差</usage>
+		<para>日期1</para>
+		<para>日期2</para>
+		<return>数值</return>
+	</function>
+	<function name="dateDifMinutes">
+		<usage>2个日期的分钟数之差</usage>
+		<para>日期1</para>
+		<para>日期2</para>
+		<return>数值</return>
+	</function>
+	<function name="dateAddYears">
+		<usage>日期增加若干年</usage>
+		<para>日期</para>
+		<para>数字</para>
+		<return>新的日期</return>
+	</function>
+	<function name="dateAddMonths">
+		<usage>日期增加若干月</usage>
+		<para>日期</para>
+		<para>数字</para>
+		<return>新的日期</return>
+	</function>
+	<function name="dateAddDays">
+		<usage>日期增加若干天</usage>
+		<para>日期</para>
+		<para>数字</para>
+		<return>新的日期</return>
+	</function>
+	<function name="dateAddHours">
+		<usage>日期增加若干小时</usage>
+		<para>日期</para>
+		<para>数字</para>
+		<return>新的日期</return>
+	</function>
+	<function name="dateAddMinutes">
+		<usage>日期增加若干分钟</usage>
+		<para>日期</para>
+		<para>数字</para>
+		<return>新的日期</return>
+	</function>
+	<function name="getYear">
+		<usage>取某日期的年度</usage>
+		<para>日期</para>
+		<return>数值</return>
+	</function>
+	<function name="getMonth">
+		<usage>取某日期的月份</usage>
+		<para>日期</para>
+		<return>数值</return>
+	</function>
+	<function name="getDay">
+		<usage>取某日期的日期号</usage>
+		<para>日期</para>
+		<return>数值</return>
+	</function>
+	<function name="GetHour">
+		<usage>取某日期时间型串的小时</usage>
+		<para>日期</para>
+		<return>数值</return>
+	</function>
+	<function name="getMinute">
+		<usage>取某日期时间型串的分钟</usage>
+		<para>日期</para>
+		<return>数值</return>
+	</function>
+	<function name="now">
+		<usage>取当前日期</usage>
+		<para>可选, 格式掩码，默认是'%Y.%m.%d %H:%M:%S'，掩码含义如下(注意大小写)：&lt;br&gt;
+%Y - 4位数字的年;&lt;br&gt;
+%y - 2位数字的年;&lt;br&gt;
+%m - 月份(01至12);&lt;br&gt;
+%d - 月中的某日(01至31);&lt;br&gt;
+%H - 小时(24小时制，00至23);&lt;br&gt;
+%I - 小时(12小时制，01至12);&lt;br&gt;
+%M - 分钟(00至59);&lt;br&gt;
+%S - 秒钟(00至59);&lt;br&gt;
+%p - AM/PM表示上午/下午;&lt;br&gt;
+%x - 日期的英文普遍写法;&lt;br&gt;
+%X - 时间的英文普遍写法;&lt;br&gt;
+%c - 日期时间的英文普遍写法;&lt;br&gt;
+%b - 月份的英文缩写;&lt;br&gt;
+%B - 月份的英文全称;&lt;br&gt;
+%a - 星期的英文缩写;&lt;br&gt;
+%A - 星期的英文全称;&lt;br&gt;
+%w - 数字表示的星期(0至6, 0是星期天);&lt;br&gt;
+%j - 相对于1月1日的日期差(001至366);&lt;br&gt;
+%Z - 和GMT(或UTC)时区的时差;&lt;br&gt;
+选项：&lt;br&gt;
+/Z - 转换为GMT(或UTC)时间;&lt;br&gt;
+</para>
+		<return>日期串</return>
+		<example>以北京时间2011.1.20 08:00:00为例:&lt;br&gt;now("%Y.%m.%dT%H:%M:%S%Z")将显示为 2011.01.20T08:00:00+08:00&lt;br&gt;now("%Y.%m.%dT%H:%M:%SZ/Z")将显示为 2011.01.20T00:00:00Z</example>
+	</function>
+	<function name="compareDate">
+		<usage>比较2个日期大小</usage>
+		<para>日期1</para>
+		<para>日期2</para>
+		<return>1、0或-1，分别表示大于、等于或小于</return>
+	</function>
+	<function name="firstDateOfMonth">
+		<usage>取得某日期的月初日期</usage>
+		<para>日期</para>
+		<return>日期</return>
+	</function>
+	<function name="firstDateOfSeason">
+		<usage>取得某日期的季初日期</usage>
+		<para>日期</para>
+		<return>日期</return>
+		<example>假如今天是2012.9.5， firstDateOfSeason(now( )) 将返回 “2012.7.1 00:00:00”</example>
+	</function>
+	<function name="firstDateOfYear">
+		<usage>取得某日期的年初日期</usage>
+		<para>日期</para>
+		<return>日期</return>
+		<example>假如今天是2012.9.5， firstDateOfYear(now( )) 将返回 “2012.1.1 00:00:00”</example>
+	</function>
+	<function name="lastDateOfMonth">
+		<usage>取得某日期的月末日期</usage>
+		<para>日期</para>
+		<return>日期</return>
+	</function>
+	<function name="lastDateOfSeason">
+		<usage>取得某日期的季末日期</usage>
+		<para>日期</para>
+		<return>日期</return>
+		<example>假如今天是2012.8.5， lastDateOfSeason(now( )) 将返回 “2012.9.30 23:59:59”</example>
+	</function>
+	<function name="lastDateOfYear">
+		<usage>取得某日期的年末日期</usage>
+		<para>日期</para>
+		<return>日期</return>
+		<example>假如今天是2012.8.5， lastDateOfYear(now( )) 将返回 “2012.12.31 23:59:59”</example>
+	</function>
+</category>
+
+<category name="Treelist专用函数">
+	<function name="isNull">
+		<usage>判断某单元格内容是否为null</usage>
+		<para>列名，如果为串"data", 则表示自己(当前列)</para>
+		<return>1/0 - 是/否</return>
+		<memo>1.仅用于Treelist的表达式中;&lt;br&gt;
+2.参数必须以引号围绕，例如 isNull('price')，否则将无法计算;&lt;br&gt;
+3.参数可以带 @origin 宏，表示取原始数据，例如 isNull('price@origin');&lt;br&gt;
+4.只支持数值型、日期型的列，对string列无效;&lt;br&gt;
+5.本函数一般用于需要精确判断 0 或 null 的特定场合，在大多数情况下，直接用 price==0 判断即可，比如表达式: if(price==0, '未输入', data),  不管price的值为0或为null, 等式 "price==0" 均是成立的;&lt;br&gt;
+</memo>
+		<example>例一.列的属性定义:   displayMask="if(isNull('price'), '未输入', data)"&lt;br&gt;
+例二.执行js过滤：  var s = AF.func("FindAll", "isNull('price')");
+</example>
+	</function>
+</category>
+
+<category name="Report专用函数(1)">
+	<function name="ref">
+		<usage>单元格引用函数(仅用于Supcan Report)</usage>
+		<para>行号</para>
+		<para>列号</para>
+		<para>可选, 工作表序号(从1开始计数), 默认是当前工作表</para>
+		<return>单元格内容</return>
+		<memo>为了方便，允许直接用单元名(如B3、C8)代替本函数</memo>
+		<example>=ref(3,2)，等同于 =B3&lt;br&gt;=ref(3,2,1)，等同于=B3@sheet1&lt;br&gt;=sum(ref(1,2,3,4,5))，等同于=sum(B1:D3@sheet5)&lt;br&gt;注："@sheet"的含义请参见下面的“宏”</example>
+	</function>
+	<function name="ref(高级用法)">
+		<usage>从其它报表引用数据(仅用于Supcan Report)</usage>
+		<para>行号</para>
+		<para>列号</para>
+		<para>其它报表的绝对URL或相对URL(相对于当前页面)</para>
+		<para>可选, 工作表序号(从1开始计数), 默认第一张工作表</para>
+		<para>可选, 1 表示该表加载后需要先经过计算处理，默认是 0</para>
+		<return>单元格内容</return>
+		<example>=ref(3,2, "../reports/reportfin2.xml", 8, 1); 表示从"../reports/reportfin2.xml"报表的第八个工作表取数，报表是需要先计算的.</example>
+	</function>
+	<function name="refAlias">
+		<usage>引用某别名的单元格(仅用于Supcan Report)</usage>
+		<para>别名</para>
+		<para>可选, 工作表序号(从1开始计数), 默认是当前工作表</para>
+		<para>可选, 其它报表的绝对URL或相对URL(相对于当前页面)</para>
+		<para>可选, 1 表示该表加载后需要先经过计算处理，默认是 0</para>
+		<return>单元格内容</return>
+		<memo>参数2、3的次序可以互换</memo>
+		<example>=refAlias('price'), 等同于=@Aliasprice&lt;br&gt;=refAlias('price', 2), 等同于=@Aliasprice@sheet2&lt;br&gt;=refAlias('price', 1, "../reports/reportfin2.xml");&lt;br&gt;注："@Alias"、"@sheet"的含义请参见下面的“宏”</example>
+	</function>
+	<function name="sumif(语法一)">
+		<usage>按条件求sum(仅用于Supcan Report)</usage>
+		<para>以冒号分隔的单元格区域</para>
+		<para>条件表达式</para>
+		<return>值</return>
+		<memo>条件表达式的写法比较灵活，里面可以内嵌函数、引用别的单元格，比如:&lt;br&gt;
+&lt;b&gt;"data &gt; 100"&lt;/b&gt;, 变量 data 表示单元格的数据，也可以和Excel那样，简写成 "&gt; 100";&lt;br&gt;
+&lt;b&gt;"data &gt;= 100 + A5"&lt;/b&gt;, A5是单元格名，表示引用该单元格数据;&lt;br&gt;
+</memo>
+		<example>=sumif(A2:B20, "&gt;200"); //对A2到B20区域内，数值大于200的内容求和&lt;br&gt;
+=sumif(A2:B20, "data&gt;K20 and data!=K21"); //对A2到B20区域内，数值大于K20单元格数据、且不等于K21单元格的内容求和&lt;br&gt;
+</example>
+	</function>
+	<function name="sumif(语法二)">
+		<usage>按条件求sum(仅用于Supcan Report)</usage>
+		<para>以冒号分隔的单元格区域，供条件判断用</para>
+		<para>条件表达式，参见 语法一 中的备注</para>
+		<para>以冒号分隔的单元格区域，数据区</para>
+		<return>值</return>
+		<example>=sumif(A2:A20, "&gt;200", B2:B20); //A2到A20区域内，数值大于200的内容，对B2:B20对应内容求和&lt;br&gt;
+=sumif(A2:A20, "left(data, 2)='CA'", B2:B20); //以“CA”开头的单元格(A2到A20区域内容是字符串)，对应到B2:B20区域内容求和&lt;br&gt;
+=sumif(A2:@A2, "left(data, 2)='CA'", B2:@B2); //和上例同，只是区域是数据源的填入区
+</example>
+	</function>
+	<function name="page">
+		<usage>当前打印页(仅用于Supcan Report)</usage>
+		<return>页码，从1开始</return>
+		<illu>请参见demo页：15.分类汇总</illu>
+	</function>
+	<function name="pages">
+		<usage>总共打印页(仅用于Supcan Report)</usage>
+		<return>总页数</return>
+		<illu>请参见demo页：15.分类汇总</illu>
+	</function>
+	<function name="pageBatch">
+		<usage>在批打印中的当前打印页(仅用于Supcan Report)</usage>
+		<return>页码，从1开始</return>
+	</function>
+</category>
+
+<category name="Report专用函数(2):&lt;br&gt;数据源函数">
+	<function name="dataRow">
+		<usage>顺序填入数据源中的数据行(仅用于Report组件)</usage>
+		<para>数据源名, 如果是XML类型的临时数据源，还可以在斜杠"\"后跟随XML节点名</para>
+		<para>可选, 可跟随多个参数, 具体的参数由数据源规定</para>
+		<example>=dataRow('ds1'); //表示在此处开始填入'ds1'数据源的数据&lt;br&gt;
+=dataRow('ds1\\node1'); //表示在此处开始填入'ds1'XML数据源中node1节点的数据
+</example>
+	</function>
+	<function name="headRow">
+		<usage>填入数据源的标题行(仅用于Report组件)</usage>
+		<para>数据源名, 如果是XML类型的临时数据源，还可以在斜杠"\"后跟随XML节点名</para>
+		<para>可选, 可跟随多个参数, 具体的参数由数据源规定</para>
+		<example>=headRow('ds1')，表示本行从本单元格开始填入'ds1'数据源的列标题</example>
+	</function>
+	<function name="data">
+		<usage>取得数据源中的单个数据(仅用于Report组件)</usage>
+		<para>数据源名, 如果是XML类型的临时数据源，还可以在斜杠"\"后跟随XML节点名</para>
+		<para>行号(从1开始计数)</para>
+		<para>列号或列名</para>
+		<para>可选, 可跟随多个参数, 具体的参数由数据源规定</para>
+		<return>数据源中的数据</return>
+		<example>=data('ds1', 1, 'price')，表示本单元格(或本文本框)填入'ds1'数据源第一行、price列的数据</example>
+	</function>
+	<function name="head">
+		<usage>取得数据源的单个标题(仅用于Report组件)</usage>
+		<para>数据源名, 如果是XML类型的临时数据源，还可以在斜杠"\"后跟随XML节点名</para>
+		<para>列号或列名</para>
+		<para>可选, 可跟随多个参数, 具体的参数由数据源规定</para>
+		<return>标题串</return>
+	</function>
+	<function name="dataRows">
+		<usage>取得数据源总行数(仅用于Report组件)</usage>
+		<para>数据源名, 如果是XML类型的临时数据源，还可以在斜杠"\"后跟随XML节点名</para>
+		<para>可选, 可跟随多个参数, 具体的参数由数据源规定</para>
+		<return>数字</return>
+	</function>
+	<function name="dataRowNumber">
+		<usage>填入数据源中的行号(仅用于Report组件)</usage>
+		<memo>备注：同一行中，应该有包含dataRow( )函数的单元格</memo>
+		<illu>请参见demo页：26.从HTML Table数据源取数(2)</illu>
+	</function>
+</category>
+</functions>

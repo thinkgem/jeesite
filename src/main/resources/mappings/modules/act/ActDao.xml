@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.act.dao.ActDao">
+    
+	<update id="updateProcInsIdByBusinessId">
+		UPDATE ${businessTable} SET 
+			proc_ins_id = #{procInsId}
+		WHERE id = #{businessId}
+	</update>
+	
+</mapper>

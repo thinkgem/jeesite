@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.MenuDao">
+	
+	<sql id="menuColumns">
+		a.id,
+		a.parent_id AS "parent.id",
+		a.parent_ids,
+		a.name,
+		a.href,
+		a.target,
+		a.icon,
+		a.sort,
+		a.is_show,
+		a.permission,
+		a.remarks,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag,
+		p.name AS "parent.name"
+	</sql>
+	
+	<sql id="menuJoins">
+		LEFT JOIN sys_menu p ON p.id = a.parent_id
+    </sql>
+	
+	<select id="get" resultType="Menu">
+		SELECT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findAllList" resultType="Menu">
+		SELECT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="Menu">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids
+		FROM sys_menu a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.parent_ids LIKE #{parentIds}
+		ORDER BY a.sort
+	</select>
+	
+	<select id="findByUserId" resultType="Menu">
+		SELECT DISTINCT
+			<include refid="menuColumns"/>
+		FROM sys_menu a
+		LEFT JOIN sys_menu p ON p.id = a.parent_id
+		JOIN sys_role_menu rm ON rm.menu_id = a.id
+		JOIN sys_role r ON r.id = rm.role_id AND r.useable='1'
+		JOIN sys_user_role ur ON ur.role_id = r.id
+		JOIN sys_user u ON u.id = ur.user_id AND u.id = #{userId}
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND r.del_flag = #{DEL_FLAG_NORMAL} AND u.del_flag = #{DEL_FLAG_NORMAL} 
+		ORDER BY a.sort
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_menu(
+			id, 
+			parent_id, 
+			parent_ids, 
+			name, 
+			href, 
+			target, 
+			icon, 
+			sort, 
+			is_show, 
+			permission, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			del_flag
+		) VALUES (
+			#{id}, 
+			#{parent.id}, 
+			#{parentIds}, 
+			#{name}, 
+			#{href}, 
+			#{target}, 
+			#{icon}, 
+			#{sort}, 
+			#{isShow}, 
+			#{permission}, 
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_menu SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}, 
+			name = #{name}, 
+			href = #{href}, 
+			target = #{target}, 
+			icon = #{icon}, 
+			sort = #{sort}, 
+			is_show = #{isShow}, 
+			permission = #{permission}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE sys_menu SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateSort">
+		UPDATE sys_menu SET 
+			sort = #{sort}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sys_menu SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE '%,'||#{id}||',%'
+	</update>
+	
+</mapper>

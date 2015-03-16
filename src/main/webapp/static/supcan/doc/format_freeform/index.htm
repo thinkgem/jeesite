@@ -1,0 +1,21 @@
+<HTML>
+<script>
+	var url = document.location.search;
+	var arr = url.split('&');
+	var gtkey="";
+	for(var i=0; i<arr.length; i++) {
+		var a = arr[i].split('=');
+		if(a.length<2) continue;
+		if(a[0] == '?key') {
+			gtkey = a[1];
+			break;
+		}
+	}
+	var s = '<Frameset cols="19%, 81%" resize frameBorder=yes frameSpacing=1><Frame src="left.htm@MARCRO" scrolling=no><Frame id=ContentPage src="main1.htm?81"></Frameset>';
+	if(gtkey == '')
+		gtkey = "?81";
+	else
+		gtkey = '?key=' + gtkey;
+	document.write(s.replace(/@MARCRO/, gtkey));
+ </script> 
+</html>

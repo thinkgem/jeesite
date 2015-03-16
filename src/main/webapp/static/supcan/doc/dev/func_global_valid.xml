@@ -1,0 +1,41 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<functions>
+
+<category name="Validation函数">
+	<function name="Validation_Get">
+		<usage>取得某id的Validation的内容</usage>
+		<para>Validation的句柄</para>
+		<para>Validation的id</para>
+		<return>该Validation的JSon串</return>
+	</function>
+	<function name="Validation_GetIds">
+		<usage>取得所有Validation的ID</usage>
+		<para>Validation的句柄</para>
+		<return>ID, 多个ID间以逗号分隔</return>
+	</function>
+	<function name="Validation_Set">
+		<usage>更改或添加Validation</usage>
+		<para>Validation的句柄</para>
+		<para>Validation的id，如果该id不存在，就添加</para>
+		<para>该Validation的JSon串，或以分号分隔的"key=value"格式串</para>
+		<example>var h = AF.func("GetHandle", "Validation");  //取得句柄&lt;br&gt;
+		AF.func("Validation_Set", h+"DJ1 \r\n {'errorText':'价格不对', 'validation':'price>0'}");
+		</example>
+	</function>
+	<function name="Validation_Add">
+		<usage>添加Validation</usage>
+		<para>Validation的句柄</para>
+		<para>Validation的JSon串，或以分号分隔的"key=value"格式串</para>
+	</function>
+	<function name="Validation_Delete">
+		<usage>删除某id的Validation</usage>
+		<para>Validation的句柄</para>
+		<para>Validation的id</para>
+	</function>
+	<function name="Validation_DeleteAll">
+		<usage>删除所有Validation</usage>
+		<para>Validation的句柄</para>
+	</function>
+</category>
+
+</functions>

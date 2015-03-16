@@ -53,7 +53,7 @@
 	<c:forEach items="${page.list}" var="comment">
 		<li>
 			<h6>姓名: ${comment.name} &nbsp;时间：<fmt:formatDate value="${comment.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				<a href="javascript:comment(${comment.id})">回复</a></h6>
+				<a href="javascript:comment('${comment.id}')">回复</a></h6>
 			<div>${comment.content}</div>
 			<div id="commentForm${comment.id}" class="commentForm hide"></div>
 		</li>
@@ -81,7 +81,7 @@
 			<label class="control-label">姓名:</label>
 			<div class="controls">
 				<input type="text" name="name" maxlength="11" class="txt required" style="width:100px;" value="匿名"/>
-				<label class="mid">验证码:</label><tags:validateCode name="validateCode" />
+				<label class="mid">验证码:</label><sys:validateCode name="validateCode" />
 				<input class="btn mid" type="submit" value="提 交"/>&nbsp;
 			</div>
 		</div>

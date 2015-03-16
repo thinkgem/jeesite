@@ -1,0 +1,108 @@
+<section id="form_section" >
+    <header>
+        <nav class="left">
+            <a href="#" data-icon="previous" data-target="back">Back</a>
+        </nav>
+        <h1 class="title">Form</h1>
+    </header>
+    <footer>
+        <a  href="#form_module_article" class="active" data-target="article" data-icon="stack">组件</a>
+        <a  href="#form_article" data-target="article" data-icon="list" >表单</a>
+    </footer>
+    <article data-scroll="true" id="form_article" >
+        <div class="indented">
+            <!-- Input -->
+            <form>
+                <input type="date">
+                <input type="time">
+                <input type="month">
+                <input type="week">
+                <a class="button block" data-icon="cogs">保存</a>
+            </form>
+
+            <!-- Input group -->
+            <form class="input-group">
+                <input type="text" placeholder="真实姓名">
+                <input type="email" placeholder="电子邮箱">
+                <input type="text" placeholder="用户名">
+            </form>
+
+            <!-- Input group with labels-->
+            <form class="input-group">
+                <div class="input-row">
+                    <label>姓名</label>
+                    <input type="text" placeholder="张三">
+                </div>
+                <div class="input-row">
+                    <label>邮箱</label>
+                    <input type="email" placeholder="example@gmail.com">
+                </div>
+                <div class="input-row">
+                    <label>用户名</label>
+                    <input id="username_form" type="text" placeholder="字母、数字、下划线">
+                </div>
+                <div class="input-row">
+                    <label>性别</label>
+                    <div class="toggle active" data-on="男" data-off="女" name="sex"></div>
+                </div>
+            </form>
+        </div>
+    </article>
+    <article data-scroll="true" class="active " id="form_module_article" >
+        <div>
+        <ul class="list">
+            <li class="divider">checkbox</li>
+            <li>
+                <div data-checkbox="unchecked" id="checkbox_1">爱我你就勾勾我</div>
+                <div data-checkbox="checked" id="checkbox_2">爱我你就勾勾我</div>
+            </li>
+            <li class="divider">toggle</li>
+            <li>
+                <div class="demo-btn-group">
+                    <div style="text-align: left">默认：</div>
+                    <div class="toggle active" >
+                    </div>
+                    <div class="toggle" >
+                    </div>
+                    <div style="text-align: left">自定义文字 data-on="开启" data-off="关闭"</div>
+                    <div style="text-align: left">
+                        <label>测试：</label>
+                        <div class="toggle active" data-on="开启" data-off="关闭"></div>
+                    </div>
+                    <div style="text-align: left">
+                        <label>测试：</label>
+                        <div class="toggle" data-on="是" data-off="否"></div>
+                    </div>
+
+                </div>
+            </li>
+            <li class="divider">range</li>
+            <li>
+                <div class="demo-btn-group">
+                    <div style="text-align: left">默认：</div>
+                    <div>
+                        <input type="range" min=4 max=10 value="7"/>
+                    </div>
+                    <div style="text-align: left">右侧显示值：</div>
+                    <div  data-rangeinput="right">
+                        <input type="range" min=4 max=10 value="7"/>
+                    </div>
+                    <div style="text-align: left">左侧显示值：</div>
+                    <div  data-rangeinput="left">
+                        <input type="range" min=4 max=10 value="8"/>
+                    </div>
+                </div>
+            </li>
+            <li class="divider">progress</li>
+            <li>
+                <div class="demo-btn-group">
+                    <div style="text-align: left">默认：</div>
+                    <div data-progress="40"></div>
+                    <div style="text-align: left">自定义文字：</div>
+                    <div data-progress="80" data-title="已完成"></div>
+                </div>
+            </li>
+        </ul>
+        </div>
+    </article>
+</section>

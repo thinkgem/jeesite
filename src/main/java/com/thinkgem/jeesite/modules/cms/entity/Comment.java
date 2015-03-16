@@ -1,30 +1,15 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Length;
 
-import com.thinkgem.jeesite.common.persistence.BaseEntity;
-import com.thinkgem.jeesite.common.utils.IdGen;
+import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
@@ -32,14 +17,9 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
  * @author ThinkGem
  * @version 2013-05-15
  */
-@Entity
-@Table(name = "cms_comment")
-@DynamicInsert @DynamicUpdate
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Comment extends BaseEntity<Category> {
+public class Comment extends DataEntity<Comment> {
 
 	private static final long serialVersionUID = 1L;
-	private String id;		// 编号
 	private Category category;// 分类编号
 	private String contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
 	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
@@ -66,24 +46,8 @@ public class Comment extends BaseEntity<Category> {
 		this.category = category;
 	}
 	
-	@PrePersist
-	public void prePersist(){
-		this.id = IdGen.uuid();
-		this.createDate = new Date();
-	}
 
-	@Id
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
 	public Category getCategory() {
 		return category;
@@ -129,9 +93,6 @@ public class Comment extends BaseEntity<Category> {
 		this.name = name;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="audit_user_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	public User getAuditUser() {
 		return auditUser;
 	}

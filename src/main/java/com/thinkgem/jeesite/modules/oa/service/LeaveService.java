@@ -3,36 +3,29 @@
  */
 package com.thinkgem.jeesite.modules.oa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
-import org.apache.commons.lang3.ObjectUtils;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
+import com.thinkgem.jeesite.common.utils.Collections3;
 import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.common.workflow.WorkflowUtils;
+import com.thinkgem.jeesite.modules.act.utils.ActUtils;
 import com.thinkgem.jeesite.modules.oa.dao.LeaveDao;
 import com.thinkgem.jeesite.modules.oa.entity.Leave;
-import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 请假Service
@@ -55,162 +48,114 @@ public class LeaveService extends BaseService {
 	protected RepositoryService repositoryService;
 	@Autowired
 	private IdentityService identityService;
-	
-	private String processDefinitionKey = "leave";
-	
+
+	/**
+	 * 获取流程详细及工作流参数
+	 * @param id
+	 */
+	@SuppressWarnings("unchecked")
 	public Leave get(String id) {
-		return  leaveDao.get(id);
+		Leave leave = leaveDao.get(id);
+		Map<String,Object> variables=null;
+		HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
+		if(historicProcessInstance!=null) {
+			variables = Collections3.extractToMap(historyService.createHistoricVariableInstanceQuery().processInstanceId(historicProcessInstance.getId()).list(), "variableName", "value");
+		} else {
+			variables = runtimeService.getVariables(runtimeService.createProcessInstanceQuery().processInstanceId(leave.getProcessInstanceId()).active().singleResult().getId());
+		}
+		leave.setVariables(variables);
+		return leave;
+	}
+	
+	/**
+	 * 启动流程
+	 * @param entity
+	 */
+	@Transactional(readOnly = false)
+	public void save(Leave leave, Map<String, Object> variables) {
+		
+		// 保存业务数据
+		if (StringUtils.isBlank(leave.getId())){
+			leave.preInsert();
+			leaveDao.insert(leave);
+		}else{
+			leave.preUpdate();
+			leaveDao.update(leave);
+		}
+		logger.debug("save entity: {}", leave);
+		
+		// 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
+		identityService.setAuthenticatedUserId(leave.getCurrentUser().getLoginName());
+		
+		// 启动流程
+		String businessKey = leave.getId().toString();
+		variables.put("type", "leave");
+		variables.put("busId", businessKey);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ActUtils.PD_LEAVE[0], businessKey, variables);
+		leave.setProcessInstance(processInstance);
+		
+		// 更新流程实例ID
+		leave.setProcessInstanceId(processInstance.getId());
+		leaveDao.updateProcessInstanceId(leave);
+		
+		logger.debug("start process of {key={}, bkey={}, pid={}, variables={}}", new Object[] { 
+				ActUtils.PD_LEAVE[0], businessKey, processInstance.getId(), variables });
+		
 	}
 
-	public Page<Leave> findTodoTasks(Page<Leave> page, Leave leave) {
-		//获取所有未未完成任务
-		User user = UserUtils.getUser();
-		DetachedCriteria dc = leaveDao.createDetachedCriteria();
-		if (StringUtils.isNotBlank(leave.getIds())){
-			dc.add(Restrictions.in("id", getIdList(leave.getIds())));
+	/**
+	 * 查询待办任务
+	 * @param userId 用户ID
+	 * @return
+	 */
+	public List<Leave> findTodoTasks(String userId) {
+		
+		List<Leave> results = new ArrayList<Leave>();
+		List<Task> tasks = new ArrayList<Task>();
+		// 根据当前人的ID查询
+		List<Task> todoList = taskService.createTaskQuery().processDefinitionKey(ActUtils.PD_LEAVE[0]).taskAssignee(userId).active().orderByTaskPriority().desc().orderByTaskCreateTime().desc().list();
+		// 根据当前人未签收的任务
+		List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(ActUtils.PD_LEAVE[0]).taskCandidateUser(userId).active().orderByTaskPriority().desc().orderByTaskCreateTime().desc().list();
+		// 合并
+		tasks.addAll(todoList);
+		tasks.addAll(unsignedTasks);
+		// 根据流程的业务ID查询实体并关联
+		for (Task task : tasks) {
+			String processInstanceId = task.getProcessInstanceId();
+			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).active().singleResult();
+			String businessKey = processInstance.getBusinessKey();
+			Leave leave = leaveDao.get(businessKey);
+			leave.setTask(task);
+			leave.setProcessInstance(processInstance);
+			leave.setProcessDefinition(repositoryService.createProcessDefinitionQuery().processDefinitionId((processInstance.getProcessDefinitionId())).singleResult());
+			results.add(leave);
 		}
-		if(leave.getCreateDateStart()!=null) {
-			dc.add(Restrictions.ge("createDate", leave.getCreateDateStart()));
-		} 
-		if(leave.getCreateDateEnd()!=null) {
-			dc.add(Restrictions.le("createDate", leave.getCreateDateEnd()));
-		} 
-		if(StringUtils.isNotBlank(leave.getLeaveType())) {
-			dc.add(Restrictions.like("leaveType", leave.getLeaveType()));
-		}
-		dc.add(Restrictions.ne("processStatus","已完成"));
-		dc.add(Restrictions.eq("delFlag", Leave.DEL_FLAG_NORMAL));
-		dc.createAlias("createBy", "createBy");
-		dc.createAlias("createBy.office", "office");
-		dc.add(dataScopeFilter(UserUtils.getUser(), "office", "createBy"));
-		dc.addOrder(Order.desc("id"));
-		List<Leave> list = leaveDao.find(dc);
-		List<Leave> result = Lists.newArrayList();
-		//过滤出当前用户的任务
-		if(list.size()>0) {
-			List<Task> tasks =Lists.newArrayList();
-			List<Task> todoList = taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).taskAssignee(ObjectUtils.toString(user.getId())).active().list();
-			List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).taskCandidateUser(ObjectUtils.toString(user.getId())).active().list();
-			tasks.addAll(todoList);
-			tasks.addAll(unsignedTasks);
-			Set<String> processInstanceIds = Sets.newHashSet();
-			for (Task task : tasks) {
-				processInstanceIds.add(task.getProcessInstanceId());
-			}
-			for(Leave l:list) {
-				if(processInstanceIds.contains(l.getProcessInstanceId())) {
-					result.add(l);
-				}
-			}
-		}
-		page.setCount(result.size());
-		page.setList(result.subList(page.getFirstResult(),page.getLastResult()));
-		return page;
+		return results;
 	}
 
 	public Page<Leave> find(Page<Leave> page, Leave leave) {
-		DetachedCriteria dc = leaveDao.createDetachedCriteria();
-		if (StringUtils.isNotBlank(leave.getIds())){
-			dc.add(Restrictions.in("id", getIdList(leave.getIds())));
-		}
-		if(leave.getCreateDateStart()!=null) {
-			dc.add(Restrictions.ge("createDate", leave.getCreateDateStart()));
-		} 
-		if(leave.getCreateDateEnd()!=null) {
-			dc.add(Restrictions.le("createDate", leave.getCreateDateEnd()));
-		} 
-		if(StringUtils.isNotBlank(leave.getLeaveType())) {
-			dc.add(Restrictions.like("leaveType", leave.getLeaveType()));
-		}
-		dc.add(Restrictions.eq("delFlag", Leave.DEL_FLAG_NORMAL));
-		dc.createAlias("createBy", "createBy");
-		dc.createAlias("createBy.office", "office");
-		dc.add(dataScopeFilter(UserUtils.getUser(), "office", "createBy"));
-		dc.addOrder(Order.desc("id"));
-	    return leaveDao.find(page, dc);
-	}
 
-	@Transactional(readOnly = false)
-	public void save(Leave leave) {
-		leaveDao.save(leave);
-		leaveDao.flush();
-		String businessKey = leave.getId().toString();
-		// 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
-		identityService.setAuthenticatedUserId(ObjectUtils.toString(leave.getCreateBy().getId()));
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey);
-		String processInstanceId = processInstance.getId();
-		leave.setProcessInstanceId(processInstanceId);
-		leave.setProcessStatus(taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult().getName());
-		leaveDao.save(leave);
-	}
-	
-
-	//部门领导审批
-	@Transactional(readOnly = false)
-	public void deptLeaderAudit(Leave leave) {
-		WorkflowUtils.claim(leave.getProcessInstanceId());
-		Task task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		//添加批注
-		taskService.addComment(task.getId(), leave.getProcessInstanceId(), leave.getAuditRemarks());
-		Map<String, Object> map = Maps.newHashMap();
-		map.put("deptLeaderPass", leave.isPass());
-		//完成任务
-		taskService.complete(task.getId(),map);
-		task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		leave.setProcessStatus(task.getName());
-		leaveDao.save(leave);
-	}
-	
-	//人事审批
-	@Transactional(readOnly = false)
-	public void hrAudit(Leave leave) {
-		WorkflowUtils.claim(leave.getProcessInstanceId());
-		Task task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		//添加批注
-		taskService.addComment(task.getId(), leave.getProcessInstanceId(), leave.getAuditRemarks());
-		Map<String, Object> map = Maps.newHashMap();
-		map.put("hrPass", leave.isPass());
-		//完成任务
-		taskService.complete(task.getId(),map);
-		task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		leave.setProcessStatus(task.getName());
-		leaveDao.save(leave);
-	}
-	
-	//调整申请
-	@Transactional(readOnly = false)
-	public void modifyApply(Leave leave) {
-		WorkflowUtils.claim(leave.getProcessInstanceId());
-		Task task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		Map<String, Object> map = Maps.newHashMap();
-		map.put("reApply", leave.isPass());
-		//完成任务
-		taskService.complete(task.getId(),map);
-		task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		if(task==null) {
-			leave.setProcessStatus("已完成");
-			leave.setDelFlag(Leave.DEL_FLAG_DELETE);
-		} else {
-			leave.setProcessStatus(task.getName());
+		leave.getSqlMap().put("dsf", dataScopeFilter(leave.getCurrentUser(), "o", "u"));
+		
+		leave.setPage(page);
+		page.setList(leaveDao.findList(leave));
+		
+		for(Leave item : page.getList()) {
+			String processInstanceId = item.getProcessInstanceId();
+			Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
+			item.setTask(task);
+			HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+			if(historicProcessInstance!=null) {
+				item.setHistoricProcessInstance(historicProcessInstance);
+				item.setProcessDefinition(repositoryService.createProcessDefinitionQuery().processDefinitionId(historicProcessInstance.getProcessDefinitionId()).singleResult());
+			} else {
+				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).active().singleResult();
+				if (processInstance != null){
+					item.setProcessInstance(processInstance);
+					item.setProcessDefinition(repositoryService.createProcessDefinitionQuery().processDefinitionId(processInstance.getProcessDefinitionId()).singleResult());
+				}
+			}
 		}
-		leaveDao.save(leave);
-	}
-	
-	//销假
-	@Transactional(readOnly = false)
-	public void reportBack(Leave leave) {
-		WorkflowUtils.claim(leave.getProcessInstanceId());
-		Task task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		//完成任务
-		taskService.complete(task.getId());
-		task = taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
-		leave.setProcessStatus("已完成");
-		leaveDao.save(leave);
-	}
-	
-	
-	@Transactional(readOnly = false)
-	public void delete(String id) {
-		leaveDao.deleteById(id);
+		return page;
 	}
 }

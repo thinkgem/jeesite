@@ -1,21 +1,16 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.utils;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
@@ -254,10 +249,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		File file = new File(fileName);
 		if (file.exists() && file.isFile()) {
 			if (file.delete()) {
-				log.debug("删除单个文件 " + fileName + " 成功!");
+				log.debug("删除文件 " + fileName + " 成功!");
 				return true;
 			} else {
-				log.debug("删除单个文件 " + fileName + " 失败!");
+				log.debug("删除文件 " + fileName + " 失败!");
 				return false;
 			}
 		} else {
@@ -387,6 +382,32 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	}
 
+	/**
+	 * 写入文件
+	 * @param file 要写入的文件
+	 */
+	public static void writeToFile(String fileName, String content, boolean append) {
+		try {
+			FileUtils.write(new File(fileName), content, "utf-8", append);
+			log.debug("文件 " + fileName + " 写入成功!");
+		} catch (IOException e) {
+			log.debug("文件 " + fileName + " 写入失败! " + e.getMessage());
+		}
+	}
+
+	/**
+	 * 写入文件
+	 * @param file 要写入的文件
+	 */
+	public static void writeToFile(String fileName, String content, String encoding, boolean append) {
+		try {
+			FileUtils.write(new File(fileName), content, encoding, append);
+			log.debug("文件 " + fileName + " 写入成功!");
+		} catch (IOException e) {
+			log.debug("文件 " + fileName + " 写入失败! " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * 压缩文件或目录
 	 * @param srcDirName 压缩的根目录
@@ -562,7 +583,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 获取待压缩文件在ZIP文件中entry的名字，即相对于跟目录的相对路径名
-	 * @param dirPath 目录名
+	 * @param dirPat 目录名
 	 * @param file entry文件名
 	 * @return
 	 */
@@ -581,33 +602,21 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		return filePath.substring(index + dirPaths.length());
 	}
 	
-	public static String getAbsolutePath(String urlPath) {
-		if(StringUtils.isBlank(urlPath)) {
-			return "";
-		} else {
-			return SpringContextHolder.getRootRealPath() + urlPath.substring(urlPath.indexOf("/", 1), urlPath.length());
-		}
-	}
-	
 	/**
-	 * 将内容写入文件
-	 * @param content
-	 * @param filePath
+	 * 修复路径，将 \\ 或 / 等替换为 File.separator
+	 * @param path
+	 * @return
 	 */
-	public static void writeFile(String content, String filePath) {
-		try {
-			if (FileUtils.createFile(filePath)){
-				FileWriter fileWriter = new FileWriter(filePath, true);
-				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-				bufferedWriter.write(content);
-				bufferedWriter.close();
-				fileWriter.close();
-			}else{
-				log.info("生成失败，文件已存在！");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static String path(String path){
+		String p = StringUtils.replace(path, "\\", "/");
+		p = StringUtils.join(StringUtils.split(p, "/"), "/");
+		if (!StringUtils.startsWithAny(p, "/") && StringUtils.startsWithAny(path, "\\", "/")){
+			p += "/";
 		}
+		if (!StringUtils.endsWithAny(p, "/") && StringUtils.endsWithAny(path, "\\", "/")){
+			p = p + "/";
+		}
+		return p;
 	}
 
 }

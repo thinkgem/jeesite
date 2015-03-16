@@ -1,6 +1,5 @@
 package com.thinkgem.jeesite.modules.cms.service;
 
-import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.modules.cms.entity.FileTpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.List;
  */
 @Service
 @Transactional(readOnly = true)
-public class FileTplService extends BaseService {
+public class FileTplService {
 
     @Autowired
     ServletContext context;
@@ -68,7 +67,7 @@ public class FileTplService extends BaseService {
         }
     }
 
-    public FileTpl get(String name) {
+    public FileTpl getFileTpl(String name) {
    		File f = new File(context.getRealPath(name));
    		if (f.exists()) {
    			return new FileTpl(f, "");
@@ -76,4 +75,5 @@ public class FileTplService extends BaseService {
    			return null;
    		}
    	}
+    
 }

@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.web;
 
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
@@ -52,7 +49,7 @@ public class CommentController extends BaseController {
 	@RequiresPermissions("cms:comment:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<Comment> page = commentService.find(new Page<Comment>(request, response), comment); 
+        Page<Comment> page = commentService.findPage(new Page<Comment>(request, response), comment); 
         model.addAttribute("page", page);
 		return "modules/cms/commentList";
 	}
@@ -70,15 +67,15 @@ public class CommentController extends BaseController {
 			addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
 					+"评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()),50) + "'成功");
 		}
-		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";
+		return "redirect:" + adminPath + "/cms/comment/?repage&delFlag=2";
 	}
 	
 	@RequiresPermissions("cms:comment:edit")
 	@RequestMapping(value = "delete")
-	public String delete(String id, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
-		commentService.delete(id, isRe);
+	public String delete(Comment comment, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+		commentService.delete(comment, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/comment/?repage&delFlag=2";
+		return "redirect:" + adminPath + "/cms/comment/?repage&delFlag=2";
 	}
 
 }

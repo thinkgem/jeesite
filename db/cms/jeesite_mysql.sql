@@ -55,10 +55,10 @@ CREATE TABLE cms_article_data
 CREATE TABLE cms_category
 (
 	id varchar(64) NOT NULL COMMENT '编号',
-	site_id varchar(64) DEFAULT '1' COMMENT '站点编号',
-	office_id varchar(64) COMMENT '归属机构',
 	parent_id varchar(64) NOT NULL COMMENT '父级编号',
 	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
+	site_id varchar(64) DEFAULT '1' COMMENT '站点编号',
+	office_id varchar(64) COMMENT '归属机构',
 	module varchar(20) COMMENT '栏目模块',
 	name varchar(100) NOT NULL COMMENT '栏目名称',
 	image varchar(255) COMMENT '栏目图片',
@@ -74,13 +74,13 @@ CREATE TABLE cms_category
 	is_audit char(1) COMMENT '是否需要审核',
 	custom_list_view varchar(255) COMMENT '自定义列表视图',
 	custom_content_view varchar(255) COMMENT '自定义内容视图',
+	view_config text COMMENT '视图配置',
 	create_by varchar(64) COMMENT '创建者',
 	create_date datetime COMMENT '创建时间',
 	update_by varchar(64) COMMENT '更新者',
 	update_date datetime COMMENT '更新时间',
 	remarks varchar(255) COMMENT '备注信息',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
-	view_config text COMMENT '视图配置',
 	PRIMARY KEY (id)
 ) COMMENT = '栏目表';
 
@@ -173,8 +173,6 @@ CREATE INDEX cms_article_del_flag ON cms_article (del_flag ASC);
 CREATE INDEX cms_article_weight ON cms_article (weight ASC);
 CREATE INDEX cms_article_update_date ON cms_article (update_date ASC);
 CREATE INDEX cms_article_category_id ON cms_article (category_id ASC);
-CREATE INDEX cms_article_id ON cms_article (id ASC);
-CREATE INDEX cms_article_data_id ON cms_article_data (id ASC);
 CREATE INDEX cms_category_parent_id ON cms_category (parent_id ASC);
 CREATE INDEX cms_category_parent_ids ON cms_category (parent_ids ASC);
 CREATE INDEX cms_category_module ON cms_category (module ASC);
@@ -183,22 +181,17 @@ CREATE INDEX cms_category_sort ON cms_category (sort ASC);
 CREATE INDEX cms_category_del_flag ON cms_category (del_flag ASC);
 CREATE INDEX cms_category_office_id ON cms_category (office_id ASC);
 CREATE INDEX cms_category_site_id ON cms_category (site_id ASC);
-CREATE INDEX cms_category_id ON cms_category (id ASC);
 CREATE INDEX cms_comment_category_id ON cms_comment (category_id ASC);
 CREATE INDEX cms_comment_content_id ON cms_comment (content_id ASC);
 CREATE INDEX cms_comment_status ON cms_comment (del_flag ASC);
-CREATE INDEX cms_comment_id ON cms_comment (id ASC);
 CREATE INDEX cms_guestbook_del_flag ON cms_guestbook (del_flag ASC);
-CREATE INDEX cms_site_id ON cms_guestbook (id ASC);
 CREATE INDEX cms_link_category_id ON cms_link (category_id ASC);
 CREATE INDEX cms_link_title ON cms_link (title ASC);
 CREATE INDEX cms_link_del_flag ON cms_link (del_flag ASC);
 CREATE INDEX cms_link_weight ON cms_link (weight ASC);
 CREATE INDEX cms_link_create_by ON cms_link (create_by ASC);
 CREATE INDEX cms_link_update_date ON cms_link (update_date ASC);
-CREATE INDEX cms_link_id ON cms_link (id ASC);
 CREATE INDEX cms_site_del_flag ON cms_site (del_flag ASC);
-CREATE INDEX cms_site_id ON cms_site (id ASC);
 
 
 

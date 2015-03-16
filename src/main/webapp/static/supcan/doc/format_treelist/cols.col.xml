@@ -1,0 +1,531 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Col" meaning="列的属性" number="1-n" content='列标题文字。如果希望分多行显示，可以直接加回车、或加插"\r\n"'>
+<element name="name/id" meaning="列名">
+	<category>主要</category>
+	<group>主要</group>
+	<value>串, 相当于字段名</value>
+</element>
+<element name="isUnique" meaning="内容是否允许重复">
+	<category>数据</category>
+	<group>主要</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>用于生成XML提交文档前的唯一性验证</memo>
+</element>
+<element name="nullAble" meaning="是否允许为空">
+	<category>数据</category>
+	<group>主要</group>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<memo>用于生成XML提交文档前的简单验证</memo>
+	<example>19.提交修改内容</example>
+</element>
+<element name="defaultValue" meaning="默认值">
+	<category>数据</category>
+	<group>主要</group>
+	<value>串, 用于新插入行操作时的初始, 支持以 "=" 开头的表达式，例如 defaultValue="=now( )",  表示将日期型默认值设为当天</value>
+	<memo>仅对新插入的行有效</memo>
+</element>
+<element name="dataType" meaning="数据类型">
+	<category>数据</category>
+	<group>主要</group>
+	<value>有 string / int / double / bool / date / datetime 这几种</value>
+	<default>string</default>
+</element>
+<element name="decimal" meaning="小数位数">
+	<category>数据</category>
+	<group>主要</group>
+	<datatype>int</datatype>
+	<value> -1至8, 仅用于 double 型。 -1表示小数位数不确定, 可以在0位和8位之间可以任意输入</value>
+	<default>2</default>
+</element>
+<element name="isHyperlink" meaning="是否超链接列">
+	<category>行为</category>
+	<group>主要</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>请参见下面的&lt;a href="#Memo2"&gt;备注2&lt;/a&gt;</memo>
+	<example>12.事件</example>
+</element>
+<element name="isHide" meaning="是否隐藏,">
+	<category>主要</category>
+	<group>主要</group>
+	<default>false</default>
+	<value meaning="隐藏">true</value>
+	<value meaning="显示">false</value>
+	<value meaning="绝对隐藏，不会被鼠标右键菜单选择">absHide 或 absTrue</value>
+	<value meaning="绝对显示，不会被鼠标右键菜单选择">absShow 或 absFalse</value>
+	<example>11.显示掩码</example>
+</element>
+<element name="sortAble" meaning="点击列标题是否执行排序">
+	<category>行为</category>
+	<group>主要</group>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<memo>如果&amp;lt;Properties&amp;gt;中的sortAble设为false, 则本sortAble无效(false)</memo>
+</element>
+<element name="moveAble" meaning="是否允许列的拖动操作">
+	<category>行为</category>
+	<group>主要</group>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<memo>如果&amp;lt;Properties&amp;gt;中的moveAble设为false, 则本moveAble无效(false)</memo>
+</element>
+<element name="pasteAble" meaning="是否允许被粘贴">
+	<category>行为</category>
+	<group>主要</group>
+	<default>supcan.xml</default>
+	<value meaning="允许">true</value>
+	<value meaning="不允许">false</value>
+	<value meaning="通常是允许，但是当列不可编辑时(包括隐藏时)，将以supcan.xml中的 &amp;lt;pasteAbleWhenUnEditAble&amp;gt; 的设定为准">supcan.xml</value>
+</element>
+<element name="textId" meaning="指向另一列的列名，显示的内容存放在该列中，是另类 &lt;b&gt;key-value对&lt;/b&gt; 的简易字典解决方案">
+	<category>数据</category>
+	<group>主要</group>
+	<value>列名</value>
+	<example>10.可编辑下拉 中的技术分析区中的例子</example>
+</element>
+<element name="自定义属性" meaning="自定义属性">
+	<category>主要</category>
+	<group>主要</group>
+	<value>符合变量命名的任意串, 只要不和其它属性重名即可;  此外，允许有多个自定义属性</value>
+</element>
+
+
+
+<element name="isThousandSeparat" meaning="是否以千位符分隔显示">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<memo>仅用于 datatype 为 int 或 double 时</memo>
+</element>
+<element name="width" meaning="列宽">
+	<category>外观</category>
+	<group>外观</group>
+	<default>0.1</default>
+	<value meaning="绝对宽度 (单位:像素数)">整数</value>
+	<value meaning="窗口宽度的百分比, 如：20%">百分比</value>
+	<value meaning="比例因子，用于分配剩余的宽度, 如0.2">为小于1的分数</value>
+	<value meaning="自动伸展到能使表头标题能够完整显示">fitHeader 或 header</value>
+	<memo>请参考开发者指南"Supcan Treelist组件"中的"16.2 关于列宽"</memo>
+</element>
+<element name="minWidth" meaning="列的最小宽度">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>int</datatype>
+	<default>10</default>
+	<value>像素数</value>
+	<example>6.引用外部Treelist</example>
+</element>
+<element name="align" meaning="水平对齐">
+	<category>外观</category>
+	<group>外观</group>
+	<default>随datatype而变</default>
+	<value>left / center / right</value>
+</element>
+<element name="vAlign" meaning="垂直对齐">
+	<category>外观</category>
+	<group>外观</group>
+	<default>vcenter</default>
+	<value>top / vcenter(或middle) / bottom</value>
+</element>
+<element name="alignHeader" meaning="列标题文字的对齐">
+	<category>外观</category>
+	<group>外观</group>
+	<default>center</default>
+	<value>left / center / right</value>
+</element>
+<element name="fontIndex" meaning="采用的字体">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>int</datatype>
+	<value>数字，指向在&amp;lt;Fonts&amp;gt;中定义的字体的顺序号, 从0开始计数, 等级高于&amp;lt;Properties&amp;gt;中的同名属性</value>
+	<default>-1</default>
+	<example>6.引用外部Treelist</example>
+</element>
+<element name="headerFontIndex" meaning="列标题采用的字体">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>int</datatype>
+	<value>数字，指向在&amp;lt;Fonts&amp;gt;中定义的字体的顺序号, 从0开始计数, 等级高于&amp;lt;Properties&amp;gt;中的同名属性</value>
+	<default>-1</default>
+	<example>6.引用外部Treelist</example>
+</element>
+<element name="headerTextColor" meaning="列标题文字颜色">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<default>#000000</default>
+	<example>7.计算列、合计行</example>
+</element>
+<element name="headerIcon" meaning="列标题旁边的小图标">
+	<category>外观</category>
+	<group>外观</group>
+	<value>可以是图标的URL, 也可以是如下格式的串: </value>
+	<value>　　url=[?];pos=[?]</value>
+	<value>pos用于指定图标的位置, 是水平(left/right)、 垂直(top/middle/bottom)方向的组合. 举例如下:</value>
+	<value>　　url=../ac.png;pos=right,bottom</value>
+	<value>建议采用png或ico这类透明的图片</value>
+	<example>10.可编辑下拉</example>
+</element>
+<element name="headerIconTip" meaning="鼠标点击上述小图标时弹出的提示文字">
+	<category>外观</category>
+	<group>外观</group>
+	<value>文字串, 如果不定义这个串，鼠标点击小图标时将触发Clicked事件</value>
+	<example>10.可编辑下拉</example>
+</element>
+<element name="displayMask" meaning="用于显示的格式掩码表达式">
+	<category>外观</category>
+	<group>外观</group>
+	<value>表达式的内容包括显示内容、 背景色、 文字色、 左图、 右图.  请详见Treelist帮助文档的"3.几个重要的属性"</value>
+	<example>4.图文并茂(1)、5.图文并茂(2)、7.计算列合计行、11.显示掩码</example>
+</element>
+<element name="atLayer" meaning="位于多层表头的层位置">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>int</datatype>
+	<value>数字，从0开始</value>
+	<default>0</default>
+	<example>4.图文并茂(1)</example>
+</element>
+<element name="extentRows" meaning="当以多层表头显示时，该列可跨越多行显示的额外行数">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>int</datatype>
+	<value>数字，从0开始</value>
+	<default>0</default>
+	<example>4.图文并茂(1)</example>
+</element>
+<element name="dropDisplayType" meaning="下拉列(droplis, droptreelist)单元格的文字显示方式">
+	<category>外观</category>
+	<group>外观</group>
+	<datatype>int</datatype>
+	<value meaning="仅显示文字部分">0</value>
+	<value meaning="仅显示键值(即key)部分">1</value>
+	<value meaning='键值+" - "+文字'>2</value>
+	<default>0</default>
+</element>
+<element name="VColSep" meaning="虚拟列的数据分隔符">
+	<category>外观</category>
+	<group>外观</group>
+	<value>串，比如"/", 如果设了这个串，在加载数据后，程序将按这个分隔符自动对各行数据进行处理，使其看上去呈现多列的效果。此外, 各个段中纵向、横向如果有连续相同的数据，将自动呈现纵、横的合并效果</value>
+	<memo>仅改变显示效果，并不改变数据</memo>
+	<memo>VColSep列有诸多限制，例如只能用于string型、不能作为树的排序列等等</memo>
+	<example>32.合并单元格</example>
+</element>
+<element name="VColSepStyle" meaning="虚拟列的合并方式">
+	<category>外观</category>
+	<group>外观</group>
+	<value meaning="只允许跨行的垂直合并">row</value>
+	<value meaning="只允许跨列的横向合并">col</value>
+	<value meaning="跨行、跨列自动合并">row,col</value>
+	<default>row,col</default>
+</element>
+
+<element name="isImage" meaning="是否图片列">
+	<category>外观</category>
+	<group>图片列</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>若以图片显示, 内容串将是图片的URL(支持&lt;a href="../dev/pub.htm#Tag605" target=_blank&gt;图片扩展URL&lt;/a&gt;)、或图片二进制的Base64串</memo>
+	<memo>如果是相对URL, 是指相对于填入数据的URL, 而不是相对于当前XML文档或当前页面</memo>
+	<memo>如果是URL, 图片是需要显示时才从URL取得图片数据的, 即所谓即用即下载</memo>
+	<memo>不建议采用Base64串，因为数据包会很大</memo>
+	<memo>请参见下面的&lt;a href="#Memo2"&gt;备注2&lt;/a&gt;</memo>
+	<example>4.图文并茂(1)</example>
+</element>
+<element name="isBase64First" meaning="当isImage=true时，内容串是否优先认作是图片的Base64大串">
+	<category>外观</category>
+	<group>图片列</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="imageArrange" meaning="图片展现方式">
+	<category>外观</category>
+	<group>图片列</group>
+	<value meaning="采用原始尺寸, 且从不缩放, 若单元格太小则显示局部">useOriSize</value>
+	<value meaning="能自动缩小(但从不放大), 使其完整显示, 保持长宽比">full</value>
+	<value meaning="自动缩放、完整显示, 且全部填满单元格, 不保持长宽比">stretch</value>
+	<value meaning="自动缩放、完整显示、保持长宽比, 长、宽中至少有一个是伸缩到满格的">stretchKeepRatio</value>
+	<default>useOriSize</default>
+</element>
+
+
+
+<element name="editAble" meaning="是否允许输入">
+	<category>主要</category>
+	<group>输入</group>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<memo>其等级低于Properties中的同名属性，也就是说如果 Properties 中的 editAble 为 false，则本editAble无效</memo>
+</element>
+<element name="editAbleNewRow" meaning="当上方的editable=false时，新插入行(即非Load的行)的单元格是否可编辑">
+	<category>主要</category>
+	<group>输入</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="isSelectEditWhenFocus" meaning="当输入框取得焦点时，光标是否选中全部文字">
+	<category>主要</category>
+	<group>输入</group>
+	<value meaning="全选">true</value>
+	<value meaning="不选">false</value>
+	<value meaning="自动, 表示数据类型为int或double时全选">auto</value>
+	<default>沿用&amp;lt;Properties&amp;gt;中的同名属性</default>
+</element>
+<element name="editType" meaning="输入控件类型">
+	<category>主要</category>
+	<group>输入</group>
+	<value meaning="最普通、允许EditMask的编辑">Edit</value>
+	<value meaning="右侧有按钮的Edit">EditWithButton</value>
+	<value meaning="多行编辑(默认以Ctrl+Enter换行)">MultiLineEdit</value>
+	<value meaning="复选框 (规则请见注1)">Checkbox/Check</value>
+	<value meaning="单选框 (规则请见注2)">RadioButton/Radio</value>
+	<value meaning="按钮">Button</value>
+	<value meaning="下拉列表">Droplist</value>
+	<value meaning="可编辑的下拉列表">EditAbleDroplist</value>
+	<value meaning="下拉嵌套的treelist">Droptreelist</value>
+	<value meaning="可编辑的下拉嵌套treelist">EditAbleDroptreelist</value>
+	<editType>edit</editType>
+	<default>Edit</default>
+	<example>9.各种下拉、10.可编辑的下拉、12.事件</example>
+	<memo>Checkbox显示方式和数据的关系:  单元格数据可以为 1 / 0 / 2 / -1,  分别显示为 选中 / 未选中 / 状态不确定(方框内显示一实框) / 不显示Checkbox</memo>
+	<memo>Radio显示方式和数据的关系:  单元格数据可以为 1 / 0,  分别显示为 选中 / 未选中(也不显示), 如果要显示未选中的radio, 请参考 &amp;lr;Properties&amp;gt; 的 isDrawUncheckedRadio 属性</memo>
+</element>
+<element name="maxChars" meaning="字符串长度限定">
+	<category>数据</category>
+	<group>输入</group>
+	<datatype>int</datatype>
+	<default>0</default>
+	<value>长度限制，以Unicode计(中英文均以 '字' 为单位)</value>
+	<memo>不能同时使用maxChars和maxMBytes, 仅用于string型</memo>
+	<example>8.多种掩码输入</example>
+</element>
+<element name="maxMBytes" meaning="字符串长度限定">
+	<category>数据</category>
+	<group>输入</group>
+	<datatype>int</datatype>
+	<default>0</default>
+	<value>长度限制，以字节计(中文算2字节、英文1字节)</value>
+	<memo>不能同时使用maxChars和maxMBytes, 仅用于string型</memo>
+	<example>8.多种掩码输入</example>
+</element>
+<element name="max" meaning="最大值">
+	<category>数据</category>
+	<group>输入</group>
+	<value>值串</value>
+	<memo>仅用于int、double、date、datetime型</memo>
+	<example>8.多种掩码输入</example>
+</element>
+<element name="min" meaning="最小值">
+	<category>数据</category>
+	<group>输入</group>
+	<value>值串</value>
+	<memo>仅用于int、double、date、datetime型</memo>
+	<example>8.多种掩码输入</example>
+</element>
+<element name="editmask" meaning="日期型、数值型的输入掩码">
+	<category>行为</category>
+	<group>输入</group>
+	<value>对于日期型，例如YYYY.MM.DD hh:mm:ss&lt;br&gt;对于数值型，例如 ##,###,###.00 (表示千位符分隔、小数点2位)、 +00000 (表示最长5位的正整数)、#,###.#(表示千位符分隔、小数位数不确定)</value>
+	<default>如左</default>
+	<memo>double型的默认值和小数位数有关，例如decimal=3时，EditMask默认为"#.000"</memo>
+	<memo>仅用于日期型、数值型的输入</memo>
+	<example>8.多种掩码输入、11.显示掩码</example>
+</element>
+<element name="spin" meaning="输入框内的垂直旋转滚动条">
+	<category>行为</category>
+	<group>输入</group>
+	<datatype>bool</datatype>
+	<memo>仅用于int、date、datetime型</memo>
+	<default>日期型是true</default>
+	<example>2.多种掩码输入</example>
+</element>
+<element name="spinAsCalendar" meaning="右侧显示下拉按钮、点击弹出日历">
+	<category>行为</category>
+	<group>输入</group>
+	<datatype>bool</datatype>
+	<memo>仅用于date、datetime型</memo>
+	<memo>spin="true"才生效</memo>
+	<default>false</default>
+</element>
+<element name="startDate" meaning="日期为空时，在输入时的起跳日期(即开始日期)">
+	<category>数据</category>
+	<group>输入</group>
+	<value>日期串，也可以是表达式</value>
+	<memo>仅用于date、datetime型</memo>
+	<default>2000.1.1</default>
+</element>
+<element name="isWordWrap" meaning="超宽时是否自动折行">
+	<category>行为</category>
+	<group>输入</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>仅用于MultiLineEdit</memo>
+</element>
+<element name="isConvertToZeroIfInputNull" meaning="当清除输入框内容(比如全选后按 Del 键、Backspace键)时, 是否将单元格的内容转为0 (因为0和null是有区别的)">
+	<category>行为</category>
+	<group>输入</group>
+	<value meaning="转为0">true</value>
+	<value meaning="仍然为null">false</value>
+	<default>false</default>
+	<memo>仅用于数值型的Edit</memo>
+</element>
+
+<element name="droplistId" meaning="下拉框的相关联的下拉资源ID">
+	<category>数据</category>
+	<group>输入</group>
+	<value>串，该ID必须存在于下面的&amp;lt;Droplists&amp;gt;节点中</value>
+	<example>9.各种下拉、10.可编辑下拉、27.过滤: 关联下拉</example>
+	<memo>仅用于edittype为 droplist / droptreelist / editAbleDroplist / editAbleDropTreelist / editWithButton</memo>
+	<memo>如果是下拉输入, 则为下拉框的相关联的下拉资源ID</memo>
+	<memo>如果是EditWithButton,  则用作Key-Value字典(该ID须存在，或用"auto"表示自动创建)</memo>
+</element>
+<element name="delayBeforeDropdown" meaning="BeforeDropdown事件重复触发的最短时间差">
+	<category>行为</category>
+	<group>输入</group>
+	<datatype>int</datatype>
+	<value>秒</value>
+	<default>0</default>
+	<memo>仅用于edittype为 droplist / droptreelist / editAbleDroplist / editAbleDropTreelist</memo>
+</element>
+<element name="dropdownWidth" meaning="强制设定下拉窗的宽度">
+	<category>外观</category>
+	<group>输入</group>
+	<value>像素数或百分比</value>
+	<memo>百分比是指相对于列宽</memo>
+	<memo>仅用于下拉</memo>
+</element>
+<element name="dropdownHeight" meaning="强制设定下拉窗的高度">
+	<category>外观</category>
+	<group>输入</group>
+	<value>像素数或百分比</value>
+	<memo>百分比是指相对于屏幕的高度</memo>
+	<memo>仅用于edittype为 droptreelist / editAbleDropTreelist</memo>
+</element>
+<element name="isDropDownWhenFocus" meaning="是否得到焦点就自动弹出下拉">
+	<category>外观</category>
+	<group>输入</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="freeInputAble" meaning="输入内容是否受限">
+	<category>行为</category>
+	<group>输入</group>
+	<value meaning="可任意输入，内容不受限制">true</value>
+	<value meaning="受Droplist中的dataCol、dispCol限制, 输入内容必须和dataCol、dispCol匹配, 否则输入无效">false</value>
+	<includeOnly>EditAbleDropTreelist, editWithbutton</includeOnly>
+	<default>false</default>
+	<memo>如果EditWithButton绑定了DroplistID，则强制被设为false</memo>
+</element>
+<element name="isCheckboxOnly" meaning="是否仅仅用于Checkbox选择">
+	<category>行为</category>
+	<group>输入</group>
+	<default>false</default>
+	<value>true/false, 如果是True，则不管 &amp;lt;Properties&amp;gt; 中的"editable"是true还是false，该Checkbox均是可操作的，并且左标尺的鼠标右键有全选、反选等菜单功能</value>
+	<example>15.行的复选</example>
+	<memo>仅用于 Checkbox</memo>
+	<memo>一般不允许有多个 isCheckboxOnly 列</memo>
+</element>
+<element name="TreeCombine" meaning="以树显示时, CheckBox显示在树的第一列, 本列自动隐藏">
+	<category>行为</category>
+	<group>输入</group>
+	<default>false</default>
+	<value>可以包含如下串：</value>
+	<value meaning="树杈不允许有复选框">normal</value>
+	<value meaning="树杈允许有复选框">NodeSelectAble 或 node</value>
+	<value meaning="树杈选中后, 将自动影响到其子孙">AutoSelectChildren 或 auto</value>
+	<example>15.行的复选</example>
+	<memo>仅用于Checkbox 且 isCheckboxObly="true"</memo>
+	<memo>单列多层树、多列多层树均适用; 例如：treeCombine="node,auto"</memo>
+	<memo>仅仅是显示合并，其单元格数据仍然是独立的</memo>
+</element>
+<element name="GroupID" meaning="RadioButton(单选框)所在的组">
+	<category>行为</category>
+	<group>输入</group>
+	<value>串</value>
+	<memo>仅用于 Radio</memo>
+	<memo>GroupId="row"表示纵向选择，即只有一行的值为1</memo>
+	<memo>如果仅有一个组, 则可忽略</memo>
+</element>
+
+
+<element name="buttonText" meaning="按钮上的文字">
+	<category>外观</category>
+	<group>按钮列</group>
+	<value>串</value>
+	<memo>buttonText 和 buttonImg至少要定义一项</memo>
+	<example>12.事件</example>
+</element>
+<element name="buttonImg/buttonImage" meaning="按钮上的小图标">
+	<category>外观</category>
+	<group>按钮列</group>
+	<value>URL</value>
+	<memo>buttonText 和 buttonImg至少要定义一项</memo>
+	<memo>buttonImage除了用于按钮列，也能用于EditWithButton、DropTreelist的右侧的图标</memo>
+</element>
+<element name="buttonTip" meaning="鼠标划过按钮时的Tip">
+	<category>行为</category>
+	<group>按钮列</group>
+	<value>文字串</value>
+</element>
+<element name="buttonWidth" meaning="按钮宽度">
+	<category>外观</category>
+	<group>按钮列</group>
+	<datatype>int</datatype>
+	<value>数字，像素数</value>
+	<example>12.事件</example>
+</element>
+<element name="buttonHeight" meaning="按钮高度">
+	<category>外观</category>
+	<group>按钮列</group>
+	<datatype>int</datatype>
+	<value>数字，像素数</value>
+</element>
+<element name="buttonSkin" meaning="强制指定按钮皮肤">
+	<category>外观</category>
+	<group>按钮列</group>
+	<value meaning="操作系统按钮外观">windows</value>
+	<value meaning="自动，与全局色调一致">default</value>
+	<value meaning="平坦，无按钮边框，常用于仅有图标的情形">flat</value>
+	<value meaning="浅灰色">light gray</value>
+	<value meaning="焦糖色">caramel</value>
+	<value meaning="百合花色">lilian</value>
+	<value meaning="青黑色">lividity</value>
+	<default>windows</default>
+</element>
+<textLine>关于按钮状态的&lt;font color=red&gt;重要提示&lt;/font&gt;:&lt;br&gt;　　按钮在每行的显示和单元格的值有关: &lt;b&gt;1&lt;/b&gt;:正常显示按钮,  &lt;b&gt;0&lt;/b&gt;:按钮显示为Disabled,  &lt;b&gt;其它值&lt;/b&gt;: 不显示按钮，作为纯文字显示;</textLine>
+<textLine>关于多按钮:&lt;br&gt;　　一列中允许同时有多个按钮， 上述buttonText、buttonTip、buttonImg、buttonWidth的内容只要用逗号(,)分隔即可，例如：  buttonText="审核,  不审核"　buttonWidth="50, 70"  </textLine>
+
+
+<element name="totalExpress\subtotalExpress" meaning="合计/小计表达式">
+	<category>外观</category>
+	<group>合计/小计</group>
+	<value>表达式</value>
+	<memo>表达式可以包含其它列的列名、和@开头的宏(参见《开发者指南》中的“公共内容”的“3.宏”中的“合计宏”)</memo>
+	<example>7.计算列合计行、13.分类汇总</example>
+</element>
+<element name="totalAlign\subtotalAlign" meaning="合计/小计的水平对齐">
+	<category>外观</category>
+	<group>合计/小计</group>
+	<value>left / center / right</value>
+	<default>right</default>
+	<example>7.计算列合计行、13.分类汇总</example>
+</element>
+<element name="totalDecimal\subtotalDecimal" meaning="合计/小计保留的小数位数">
+	<category>外观</category>
+	<group>合计/小计</group>
+	<value>0 至 8</value>
+	<default>与当前列一致</default>
+</element>
+<textLine>多个合计行的语法:&lt;br&gt;　　允许有多个独立的合计行，命名规则为 totalExpress1、 totalExpress2...类推， totalAlign 和 totalDecimal 也可按这个规则书写</textLine>
+
+
+</elements>
+<!--
+-->
+
+</root>

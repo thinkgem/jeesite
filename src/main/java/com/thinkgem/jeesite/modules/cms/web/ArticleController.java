@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.web;
 
@@ -10,10 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.thinkgem.jeesite.modules.cms.service.FileTplService;
-import com.thinkgem.jeesite.modules.cms.service.SiteService;
-import com.thinkgem.jeesite.modules.cms.utils.TplUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -32,8 +25,14 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
+import com.thinkgem.jeesite.modules.cms.service.ArticleDataService;
 import com.thinkgem.jeesite.modules.cms.service.ArticleService;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
+import com.thinkgem.jeesite.modules.cms.service.FileTplService;
+import com.thinkgem.jeesite.modules.cms.service.SiteService;
+import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
+import com.thinkgem.jeesite.modules.cms.utils.TplUtils;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 文章Controller
@@ -46,6 +45,8 @@ public class ArticleController extends BaseController {
 
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private ArticleDataService articleDataService;
 	@Autowired
 	private CategoryService categoryService;
     @Autowired
@@ -73,7 +74,7 @@ public class ArticleController extends BaseController {
 //			a.getArticleData().setContent(a.getTitle());
 //			articleService.save(a);
 //		}
-        Page<Article> page = articleService.find(new Page<Article>(request, response), article, true); 
+        Page<Article> page = articleService.findPage(new Page<Article>(request, response), article, true); 
         model.addAttribute("page", page);
 		return "modules/cms/articleList";
 	}
@@ -86,11 +87,18 @@ public class ArticleController extends BaseController {
 			List<Category> list = categoryService.findByParentId(article.getCategory().getId(), Site.getCurrentSiteId());
 			if (list.size() > 0){
 				article.setCategory(null);
+			}else{
+				article.setCategory(categoryService.get(article.getCategory().getId()));
 			}
 		}
+		article.setArticleData(articleDataService.get(article.getId()));
+//		if (article.getCategory()=null && StringUtils.isNotBlank(article.getCategory().getId())){
+//			Category category = categoryService.get(article.getCategory().getId());
+//		}
         model.addAttribute("contentViewList",getTplContent());
         model.addAttribute("article_DEFAULT_TEMPLATE",Article.DEFAULT_TEMPLATE);
 		model.addAttribute("article", article);
+		CmsUtils.addViewConfigAttribute(model, article.getCategory());
 		return "modules/cms/articleForm";
 	}
 
@@ -103,19 +111,19 @@ public class ArticleController extends BaseController {
 		articleService.save(article);
 		addMessage(redirectAttributes, "保存文章'" + StringUtils.abbr(article.getTitle(),50) + "'成功");
 		String categoryId = article.getCategory()!=null?article.getCategory().getId():null;
-		return "redirect:"+Global.getAdminPath()+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
+		return "redirect:" + adminPath + "/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
 	}
 	
 	@RequiresPermissions("cms:article:edit")
 	@RequestMapping(value = "delete")
-	public String delete(String id, String categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
+	public String delete(Article article, String categoryId, @RequestParam(required=false) Boolean isRe, RedirectAttributes redirectAttributes) {
 		// 如果没有审核权限，则不允许删除或发布。
-		if (!SecurityUtils.getSubject().isPermitted("cms:article:audit")){
+		if (!UserUtils.getSubject().isPermitted("cms:article:audit")){
 			addMessage(redirectAttributes, "你没有删除或发布权限");
 		}
-		articleService.delete(id, isRe);
+		articleService.delete(article, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"发布":"删除")+"文章成功");
-		return "redirect:"+Global.getAdminPath()+"/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
+		return "redirect:" + adminPath + "/cms/article/?repage&category.id="+(categoryId!=null?categoryId:"");
 	}
 
 	/**

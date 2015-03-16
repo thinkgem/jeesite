@@ -1,0 +1,26 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Line" meaning="线条对象的属性" number="0-n">
+<element name="color/lineColor" meaning="线条的颜色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<default>#000000</default>
+</element>
+<element name="thick" meaning="线粗">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>1</default>
+</element>
+<element name="style" meaning="线型">
+	<category>外观</category>
+	<value>solid / dash / dot / dashdot</value>
+	<default>solid</default>
+</element>
+</elements>
+
+<comments>
+	<comment>在TableLayout内，Line的 x1,x2,y1,y2 属性仍有效，但其相对坐标是&amp;lt;TD&amp;gt;容器的左上角</comment>
+</comments>
+</root>

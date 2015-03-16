@@ -1,53 +1,30 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
-import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.persistence.IdEntity;
+import com.thinkgem.jeesite.common.persistence.TreeEntity;
 
 /**
  * 机构Entity
  * @author ThinkGem
  * @version 2013-05-15
  */
-@Entity
-@Table(name = "sys_office")
-@DynamicInsert @DynamicUpdate
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Office extends IdEntity<Office> {
+public class Office extends TreeEntity<Office> {
 
 	private static final long serialVersionUID = 1L;
-	private Office parent;	// 父级编号
-	private String parentIds; // 所有父级编号
+//	private Office parent;	// 父级编号
+//	private String parentIds; // 所有父级编号
 	private Area area;		// 归属区域
 	private String code; 	// 机构编码
-	private String name; 	// 机构名称
+//	private String name; 	// 机构名称
+//	private Integer sort;		// 排序
 	private String type; 	// 机构类型（1：公司；2：部门；3：小组）
 	private String grade; 	// 机构等级（1：一级；2：二级；3：三级；4：四级）
 	private String address; // 联系地址
@@ -56,23 +33,55 @@ public class Office extends IdEntity<Office> {
 	private String phone; 	// 电话
 	private String fax; 	// 传真
 	private String email; 	// 邮箱
+	private String useable;//是否可用
+	private User primaryPerson;//主负责人
+	private User deputyPerson;//副负责人
+	private List<String> childDeptList;//快速添加子部门
 	
-	private List<User> userList = Lists.newArrayList();   // 拥有用户列表
-	private List<Office> childList = Lists.newArrayList();// 拥有子机构列表
-
 	public Office(){
 		super();
+//		this.sort = 30;
+		this.type = "2";
 	}
-	
+
 	public Office(String id){
-		this();
-		this.id = id;
+		super(id);
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="parent_id")
-	@NotFound(action = NotFoundAction.IGNORE)
-	@NotNull
+	public List<String> getChildDeptList() {
+		return childDeptList;
+	}
+
+	public void setChildDeptList(List<String> childDeptList) {
+		this.childDeptList = childDeptList;
+	}
+
+	public String getUseable() {
+		return useable;
+	}
+
+	public void setUseable(String useable) {
+		this.useable = useable;
+	}
+
+	public User getPrimaryPerson() {
+		return primaryPerson;
+	}
+
+	public void setPrimaryPerson(User primaryPerson) {
+		this.primaryPerson = primaryPerson;
+	}
+
+	public User getDeputyPerson() {
+		return deputyPerson;
+	}
+
+	public void setDeputyPerson(User deputyPerson) {
+		this.deputyPerson = deputyPerson;
+	}
+
+//	@JsonBackReference
+//	@NotNull
 	public Office getParent() {
 		return parent;
 	}
@@ -80,19 +89,16 @@ public class Office extends IdEntity<Office> {
 	public void setParent(Office parent) {
 		this.parent = parent;
 	}
+//
+//	@Length(min=1, max=2000)
+//	public String getParentIds() {
+//		return parentIds;
+//	}
+//
+//	public void setParentIds(String parentIds) {
+//		this.parentIds = parentIds;
+//	}
 
-	@Length(min=1, max=255)
-	public String getParentIds() {
-		return parentIds;
-	}
-
-	public void setParentIds(String parentIds) {
-		this.parentIds = parentIds;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="area_id")
-	@NotFound(action = NotFoundAction.IGNORE)
 	@NotNull
 	public Area getArea() {
 		return area;
@@ -101,15 +107,23 @@ public class Office extends IdEntity<Office> {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-
-	@Length(min=1, max=100)
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+//
+//	@Length(min=1, max=100)
+//	public String getName() {
+//		return name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
+//
+//	public Integer getSort() {
+//		return sort;
+//	}
+//
+//	public void setSort(Integer sort) {
+//		this.sort = sort;
+//	}
 	
 	@Length(min=1, max=1)
 	public String getType() {
@@ -191,61 +205,13 @@ public class Office extends IdEntity<Office> {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+//	public String getParentId() {
+//		return parent != null && parent.getId() != null ? parent.getId() : "0";
+//	}
 	
-	@OneToMany(mappedBy = "office", fetch=FetchType.LAZY)
-	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy(value="id") @Fetch(FetchMode.SUBSELECT)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<User> getUserList() {
-		return userList;
+	@Override
+	public String toString() {
+		return name;
 	}
-
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
-
-	@OneToMany(mappedBy = "parent", fetch=FetchType.LAZY)
-	@Where(clause="del_flag='"+DEL_FLAG_NORMAL+"'")
-	@OrderBy(value="code") @Fetch(FetchMode.SUBSELECT)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<Office> getChildList() {
-		return childList;
-	}
-
-	public void setChildList(List<Office> childList) {
-		this.childList = childList;
-	}
-
-	@Transient
-	public static void sortList(List<Office> list, List<Office> sourcelist, String parentId){
-		for (int i=0; i<sourcelist.size(); i++){
-			Office e = sourcelist.get(i);
-			if (e.getParent()!=null && e.getParent().getId()!=null
-					&& e.getParent().getId().equals(parentId)){
-				list.add(e);
-				// 判断是否还有子节点, 有则继续获取子节点
-				for (int j=0; j<sourcelist.size(); j++){
-					Office child = sourcelist.get(j);
-					if (child.getParent()!=null && child.getParent().getId()!=null
-							&& child.getParent().getId().equals(e.getId())){
-						sortList(list, sourcelist, e.getId());
-						break;
-					}
-				}
-			}
-		}
-	}
-
-	@Transient
-	public boolean isRoot(){
-		return isRoot(this.id);
-	}
-	
-	@Transient
-	public static boolean isRoot(String id){
-		return id != null && id.equals("1");
-	}
-	
 }

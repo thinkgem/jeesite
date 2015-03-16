@@ -1,0 +1,352 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body bgcolor=#ffffff vlink=#0000ff>
+<div id="Tag303"/><br><br><br>
+　　<font style='font-size:15pt'>4.工具条功能号</font><hr color=#2266ee size=1>
+
+　　通过上面的CallFunc函数可以调用工具条中的各个功能，各个工具条中的功能号规则如下：<br>
+1.主工具条 ( <img src='Toolbar1.bmp'> )：<br>
+<table cols=4 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<col align=center width=20>
+<col align=center width=20>
+<col align=left>
+<tr bgcolor=#f1f1f1><td align=center colspan=2>功能号</td><td align=center>含义</td><td align=center>CallFunc函数参数</td></tr>
+<tr><td colspan=2>102</td><td>新建报表</td><td>
+如果没有参数，表示直接打开对话框，就像鼠标点击工具条一样; 如果含有参数，则不打开对话框，而是直接建立新表，参数规则如下：<br>
+name=[?]; rows=[?];cols=[?]; rowheight=[?]; colwidth=[?], 含义如下：<br>
+name - 工作表名;<br>
+rows/cols - 总行数/列数;<br>
+rowheight/colwidth - 行高/列宽<br>
+示例： AF.func("callfunc", "102 \r\n name=我的工作表;rows=20;cols=8");
+</td></tr>
+<tr><td colspan=2>103</td><td>弹出打开报表文件的对话框</td><td>如果没有参数，就表示像鼠标点击工具条一样；如果有参数，那么参数格式为: <br>type=[?];Dir=[?], 含义如下：<br>type - xml 或 xlsx，表示对话框默认的文件类型;<br>dir - 本地文件目录，表示对话框的初始目录定位 </td></tr>
+<tr><td colspan=2>104</td><td>保存报表</td><td>文件名，用于强制指定文件名，文件类型可以是xml、zip</td></tr>
+<tr><td colspan=2>1074</td><td>报表另存为</td><td>如果没有参数，表示直接打开对话框，就像鼠标点击工具条一样; 如果含有参数，参数含义为本地全文件名，并且不打开对话框</td></tr>
+<tr><td colspan=2>105</td><td>转换输出.</td>
+<td>
+如果没有参数，表示直接打开转换输出对话框，就像鼠标点击工具条一样; 如果含有参数，则不打开对话框，而是直接生成转换文件，并返回文件名，参数格式分数据文件和图像文件二种。<br>
+<h3>1.数据文件</h3>
+参数格式为："Type=[?]; asData=[?]; includeHide=[?]; gridLine=[?];filename=[?];isForMobile=[?];isReturnContent=[?]"<br>
+　<b>Type</b>是输出文档格式，有xlsx, xls, htm, doc, txt, xml, dif, rtf 这几种; <br>
+　<b>asData</b> 为 true 表示输出纯数据，否则是包含了格式掩码的数据(比如含千位符)，默认false;<br>
+　<b>includeHide</b> 表示是否包含隐藏行、隐藏列，默认false;<br>
+　<b>gridLine</b> 表示是否是否显示表格线，仅用于XLS，默认false;<br>
+　<b>includeFormula</b> 用于xlsx格式的转换，表示是否连公式一起转换, 默认是true.<br>
+　<b>isForMobile</b> 用于Type="htm"，用于服务器专版中的报表转换输出的优化, 默认是false.<br>
+　<b>filename</b> 要生成的全文件名，如果为空，则文件自动生成在硕正的临时目录下.<br>
+　<b>isReturnContent</b> 如果为true, 表示函数返回的不是文件名，而是内容本身的字符串，常用于Type="htm"、服务器专版中的报表转换输出的优化, 默认是false.<br>
+<h3>2.图像文件</h3>
+参数格式为："Type=[?]; Scale=[?]; Precision=[?];filename=[?]"<br>
+　<b>Type</b>是输出文档格式，有pdf, jpg, bmp, gif, png, tif 这6种，默认是jpg; <br>
+　<b>Scale</b>是打印比例，范围是10 到 400，默认100。对于PDF而言，Scale越大越清晰，例如300表示在300%的显示比例下仍很清晰;<br>
+　<b>Precision</b>是JPG精度，仅对JPG有效，精度范围1-100(默认85)，越接近100越清晰，但文件尺寸越大.<br>
+　<b>filename</b> 要生成的全文件名，如果为空，则文件自动生成在硕正的临时目录下.<br>
+<br>
+函数调用举例如下:<br>
+　var filename = func("callfunc", "105\r\nType=jpg; Scale=100; Precision=85");<br>
+<br>
+　返回值均为输出文件名(含路径的全文件名)，由于图像文件是分页输出的，所以象jpg、bmp这些格式可能会有多个文件名(PDF除外)，文件名间以回车分隔，空串表示转换过程有错误.</td></tr>
+<tr><td colspan=2>100</td><td>报表属性设置</td><td/></tr>
+<tr><td colspan=2>189</td><td>关于</td><td/></tr>
+<tr><td rowspan=2>20</td><td>20</td><td>复制</td><td/></tr>
+<tr><td>31</td><td>剪切</td><td/></tr>
+<tr><td rowspan=2>32</td><td>34</td><td>粘贴格式和文字</td><td/></tr>
+<tr><td>35</td><td>仅粘贴文字</td><td/></tr>
+<tr><td colspan=2>106</td><td>Undo</td><td/></tr>
+<tr><td rowspan=2>107</td><td>427</td><td>查找</td><td/></tr>
+<tr><td>426</td><td>替换</td><td/></tr>
+</table><br>
+<br>
+
+2.打印工具条 ( <img src='Toolbar2.bmp'> )：<br>
+<table cols=4 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<col align=center width=20>
+<col align=center width=20>
+<col align=left>
+<tr bgcolor=#f1f1f1><td align=center colspan=2>功能号</td><td align=center>含义</td><td align=center>CallFunc函数参数</td></tr>
+<tr><td rowspan=2>11</td><td>11</td><td>打印报表</td><td/></tr>
+<tr><td>318</td><td>转换为PDF或图片文件</td><td>请参考功能号105(转换输出)</td></tr>
+<tr><td colspan=2>216</td><td>打印设置</td><td/></tr>
+<tr><td colspan=2>18</td><td>打印预览</td><td/></tr>
+</table><br>
+<br>
+
+3.常用功能工具条 ( <img src='Toolbar4.bmp'> )：<br>
+<table cols=3 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<col align=center width=20>
+<col align=center width=20>
+<col align=left>
+<tr bgcolor=#f1f1f1><td align=center colspan=2>功能号</td><td align=center>含义</td><td align=center>CallFunc函数参数</td></tr>
+<tr><td colspan=2>110</td><td>单元合并</td><td/></tr>
+<tr><td colspan=2>162</td><td>求和</td><td/></tr>
+<tr><td colspan=2>164</td><td>计算器</td><td/></tr>
+<tr><td rowspan=3>163</td><td>163</td><td>重新计算</td><td/></tr>
+<tr><td>260</td><td>除数据源外，重新计算</td><td/></tr>
+<tr><td>630</td><td>仅计算当前工作表</td><td/></tr>
+<tr><td rowspan=4>140</td><td>140</td><td>打开数据源对话框</td><td/></tr>
+<tr><td>395</td><td>数据分组汇总</td><td/></tr>
+<tr><td>520</td><td>交叉表</td><td/></tr>
+<tr><td>143</td><td>清理从数据源填入的数据</td><td>如果参数是 true, 表示同时清理表头的信息</td></tr>
+<tr><td colspan=2>717</td><td>全屏显示</td><td>0-自动，1-退出全屏, 2-进入全屏</td></tr>
+<tr><td colspan=2>4</td><td>折叠/展开工具条</td><td/></tr>
+</table><br>
+<br>
+
+4.工具箱工具条 ( <img src='Toolbar32.bmp'> )：<br>
+<table cols=4 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<col align=center width=20>
+<col align=center width=20>
+<col align=left>
+<tr bgcolor=#f1f1f1><td align=center colspan=2>功能号</td><td align=center>含义</td><td align=center>CallFunc函数参数</td></tr>
+<tr><td colspan=2>301</td><td>打开工具箱</td><td>参数可以为1、2、3、4，分别表示将当前页定位在属性、计算公式、数据源、上报的指标库页</td></tr>
+<tr><td rowspan=4>2</td><td>2</td><td>单元格显示计算公式</td><td/></tr>
+<tr><td>64</td><td>单元格显示计算结果</td><td/></tr>
+<tr><td>25</td><td>设置数据验证</td><td/></tr>
+<tr><td>50</td><td>执行数据验证</td><td>参数如下：<br>　无参数: 验证全部工作表;<br>　-1:  仅验证当前工作表;<br>　0 到 n，或工作表名称: 验证指定名称或次序的工作表.<br>返回1表示通过验证, 0表示未通过，空串表示工作表不存在</td></tr>
+
+<tr><td colspan=2>112</td><td>添加文本框</td><td>
+如果没有参数，就表示像鼠标点击工具条一样; 如果含有参数，则参数规则如下:<br>
+x=[?];y=[?];width=[?];height=[?]; alias=[?];text=[?]  或<br>
+x1=[?];y1=[?];x2=[?];y2=[?]; alias=[?];text=[?]  或<br>
+其中的 x / y / x1 / x2 / y1 / y2 / width / height为坐标参数，alias表示别名，text表示文本框的文字(也可以是计算函数)。<br>
+坐标参数含义及可用值语法为：<br>
+　<b>x / y 或 x1 / y1</b> - 左上角坐标, 可以是像素数，或单元格名，表示位于该单元格的左上角位置，此外，如果是串<b>"drag"</b>, 表示位置不固定，并将随即出现拖拽中的鼠标，效果如同点击该按钮;<br>
+　<b>x2 / y2</b> - 右下角坐标, 可以是像素数，或单元格名，表示位于该单元格的右下角位置;<br>
+　<b>width / height</b> - 宽度和高度, 像素数<br>
+示例：<br>
+　AF.func("callfunc", "112 \r\n x=drag; text=测试");
+</td></tr>
+
+<tr><td rowspan=3>192</td><td>192</td><td>添加图片</td><td>同上，但有三个跟图片相关的参数：URL、IsSaveURLOnly、MaxSize, 其含义如下：<br>
+<b>URL</b> - 图片的URL(也可以是本地的全文件名)；<br>
+<b>IsSaveURLOnly</b> - 是否仅仅将图片的URL保存入到报表，默认是false；<br>
+<b>MaxSize</b> - 限定图片尺寸，格式为宽度和高度的像素数，逗号分隔。当图片的宽度或高度超过时，将自动转换到该尺寸，以减小报表文件的尺寸，仅用于IsSaveURLOnly=false时。当设置了maxSize后，图片将按比例缩放，x2、y2、width、height参数可以省略；<br>
+示例：<br>
+　AF.func("callfunc", "192 \r\n x=drag; URL=../mylib/demo.jpg; maxSize=400,400");
+</td></tr>
+<tr><td>17</td><td>添加图片(打开对话框)</td><td></td></tr>
+<tr><td>683</td><td>从剪切板粘贴图片</td><td></td></tr>
+
+<tr><td colspan=2>144</td><td>添加线条</td><td>同上，但有二个跟线条相关的参数：color、thick, 其含义如下：<br>
+thick - 线条粗细，像素数，默认是1；<br>
+color - 线条颜色；<br>
+</td></tr>
+<tr><td colspan=2>478</td><td>添加统计图</td><td/></tr>
+<tr><td colspan=2>382</td><td>添加树列表</td><td>同上，但有三个跟树列表相关的参数：URL、isSaveURLOnly、isBackGround, 其含义如下：<br>
+URL - 树列表的URL(也可以直接是XML大串);<br>
+isSaveURLOnly - true/false, 分别表示仅将URL保存到报表/把树列表的XML串储存到报表中, 默认是true；<br>
+isBackGround - true/false, 分别表示树列表采用原始背景效果/采用白色背景， 默认是true.<br>
+</td></tr>
+<tr><td rowspan=2>274</td><td>274</td><td>格式刷</td><td/></tr>
+<tr><td>122</td><td>表格线橡皮</td><td/></tr>
+</table><br>
+<br>
+
+5.不在工具条上的其它功能号：<br>
+<table cols=4 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<col align=center width=80>
+<col align=left>
+<tr bgcolor=#f1f1f1><td align=center colspan=2>功能号</td><td align=center>含义</td><td align=center>CallFunc函数参数</td></tr>
+<tr><td colspan=2>404</td><td>自动调整行高，使文字能全部显示</td><td/></tr>
+<tr><td colspan=2>405</td><td>自动调整列宽，使文字能全部显示</td><td/></tr>
+<tr><td colspan=2>446</td><td>合并相同内容行</td><td>参数为列号，列号从0开始</td></tr>
+<tr><td colspan=2>0</td><td>计算消息窗的打开方式</td><td>0－始终不打开；1-遇到计算有错误就打开</td></tr>
+<tr><td colspan=2>900</td><td>取得当前报表已打印的次数，返回值其实是整数</td><td/></tr>
+<tr><td colspan=2>108</td><td>切换为分页显示</td><td/></tr>
+<tr><td colspan=2>109</td><td>切换为常规显示</td><td/></tr>
+<tr><td colspan=2>15</td><td>切换显示比例</td><td>参数可为20、50、80、100、150、200</td></tr>
+<tr><td colspan=2>309</td><td>切换上报模式时的普通输入和设定输入顺序.</td><td/></tr>
+</table>
+
+
+<div id="Tag304"/><br><br><br>
+　　<font style='font-size:15pt'>5.自定义工具条</font><hr color=#2266ee size=1>
+　　Supcan Report的工具条是可以自定义的，请在\Documents and Settings\用户名\BC 目录下的相应版本目录中找到如下文件：<br>
+　　　　<b>FormRes.zip</b><br>
+　　将其解开，会发现有一个名为ToolBar.xml的文件，该XML就是默认工具条的配置文件，可<a href='toolbar.xml' target=_blank>查看</a>该XML，工具条的秘密基本上都在这里了。<br><br>
+　　您也可以自己制作一个xml，连同bmp图片文件一起打成zip包，然后在页面控件“CtlPara”中定义“UserRebar”(该zip包所在的URL，请参见前面的“语法”部分)、在“Rebar”中确定要显示的子工具条即可实现自定义工具条。本demo包中“几种展现方式”页的第五个例子就是自定义工具条的详细演示。<br><br>
+　　子工具条&lt;Toolbar ...&gt;的可用属性及其含义如下：<br>
+<table cols=3 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td align=center>属性名</td><td align=center>含义</td></tr>
+<tr><td>name</td><td>子工具条名称</td></tr>
+<tr><td>imageList</td><td>按钮的图片表，是BMP格式的ImageList，该图片文件须位于同一zip包内.</td></tr>
+<tr><td>imageHeight</td><td>图片高度，单位：像素数，通常为16、24、32、48，单幅图片的宽度必须和高度一致.</td></tr>
+<tr><td>imageTransparentColor</td><td>图片需要转换为透明的背景色.</td></tr>
+<tr><td>textAlign</td><td>按钮中的文字相对于图片的位置，可为“right”、“bottom”，没有定义就表示仅显示图片、不显示文字。默认工具条就没有显示文字。</td></tr>
+<tr><td>textDistance</td><td>按钮中文字和图片的最小间隔，单位：像素数，默认：3.</td></tr>
+<tr><td>textColor</td><td>文字颜色，默认：黑色.</td></tr>
+</table><br>
+　　子工具条内各个按钮&lt;item ...&gt;的可用属性及其含义如下：<br>
+<table cols=3 width=98% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+<tr bgcolor=#f1f1f1><td align=center>属性名</td><td align=center>含义</td></tr>
+<tr><td>id</td><td>功能号，3000以内是内部保留号，每个功能号对应了报表中固定的功能(可参见前面的“工具条功能号”)；3000以上(包括3000)表示自定义功能号；0表示分隔条.</td></tr>
+<tr><td>imageIndex</td><td>表示在Imagelist内的单幅图片的位置，从0开始计数.</td></tr>
+<tr><td>tip</td><td>鼠标滑过时的帮助文字、和下拉菜单的文字，如果需要支持中英文双语，则以“|”分隔中英文.</td></tr>
+<tr><td>text</td><td>显示在按钮上的文字、或下拉菜单的文字，如果需要支持中英文双语，则以“|”分隔中英文.</td></tr>
+<tr><td>detail</td><td>下拉菜单功能的具体说明，当菜单下拉时，会在菜单下方弹出该说明文字，则以“|”分隔中英文.</td></tr>
+<tr><td>defaultId</td><td>仅用于有子树(需要下拉)的按钮，表示鼠标点击在按钮左侧非下拉区域时，默认执行的功能，该功能通常可为子树中的第一个功能；如果没有定义defaultId，那么点击在整个按钮均为下拉.</td></tr>
+<tr><td>style</td><td>button - 普通平坦透明按钮<br>checkbutton - 按钮有凹陷显示、普通显示2种状态，类似于Checkbox.</td></tr>
+</table><br>
+
+　　自定义工具条注意事项：<br>
+　　1.通过了解默认工具条的XML配置文件，会发现其中共定义了7个子工具条：Main, Print, Form, Font, Property, Text，除了“Font”和“Text”是固定的、不可配置，其它子工具条均是可配置的;<br>
+　　2.自定义功能(即功能号在3000以上的)一律以OnEvent("Toolbar", ..)事件形式抛给页面、交由页面处理的；<br>
+　　3.须将XML文件和BMP打成一个zip包，XML文件的文件名必须为Toolbar.XML；<br>
+　　4.自定义工具条中须包含“关于”功能(功能号:189)，否则，Supcan Report会自动在第一个子工具条后安插一个“关于”功能；<br>
+　　5.一旦启用自定义的zip包，原默认zip中的同名子工具条将被替换，未被同名的子工具条仍然有效；<br>
+　　6.一旦启用自定义的zip包，“CtlPara”中的“Rebar”串的取值范围可包括自定义包、原默认包的的子工具条名；<br>
+　　7.自定义工具条的作用范围仅为当前Report实例；<br>
+　　8.函数 SetToolBarItemStatus / GetToolBarItemStatus 可以动态更改某些状态；<br>
+
+
+
+<div id="Tag309"/><br><br><br>
+　　<font style='font-size:15pt'>6.自定义菜单</font><hr color=#2266ee size=1>
+　　自定义菜单和Treelist中的自定义菜单完全一致，请参考Treelist的<a href="treelist4.htm?81#Tag508" target=_blank>8.自定义菜单</a>.
+
+
+<div id="Tag308"/><br><br><br>
+　　<font style='font-size:15pt'>7.自定义函数</font><hr color=#2266ee size=1>
+　　在报表的集成开发中，免不了会需要自定义一些业务函数，以简化开发。<br>
+　　自定义函数对于开发者而言，是一种抽象、归纳数据逻辑的非常好的手段。最终使用者是否能接纳自定义函数，关键要看自定义函数能否有诸如向导式帮助、实例书写参考等等方便输入的功能，如果这些问题解决不好，用户很有可能产生畏惧心理。<br>
+　　硕正报表自身已经有向导式帮助、实例书写参考等功能，只要求开发者以如下的XML格式、并通过调用AddUserFunctions( )函数，将自定义函数告诉控件即可：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;Category name="函数分类1"&gt;
+ &lt;function name="函数名" &gt;
+  &lt;usage&gt;用途说明&lt;/usage&gt;
+  &lt;detail&gt;更详细的说明，可选&lt;/detail&gt;
+  &lt;para&gt;参数1，可选&lt;/para&gt;
+  &lt;para&gt;参数2，以此类推，可选&lt;/para&gt;
+  &lt;returnDatatype&gt;返回值的数据类型，如int、double等，可选&lt;/returnDatatype&gt;
+  &lt;example&gt;示例说明，可选&lt;/example&gt;
+ &lt;/function&gt;
+ &lt;function name="函数名" &gt;
+  ...
+ &lt;/function&gt;
+ ...
+ 
+ &lt;!-- 嵌套分类 --&gt;
+ &lt;Category name="函数分类11"&gt;
+  &lt;function name="函数名" &gt;
+   ...
+  &lt;/function&gt;
+ &lt;/Category&gt;
+&lt;/Category&gt;
+&lt;Category name="函数分类2"&gt;
+ ...
+&lt;/Category&gt;</pre>
+　　通过分析上述XML，可见XML文档中允许多个函数分类(即Category)，每个类别中允许有多个函数，并支持子类别的层层嵌套。<br>
+　　一旦控件得到该函数声明XML，就会立即建立起函数的语法词法规则、在工具箱中展示这些函数、并能提供函数的即时输入帮助。<br>
+　　此外，开发者也可以将函数分散在多个XML文件中，可以分多次调用AddUserFunctions( )，分别传入不同的XML文档。<br>
+　　总之，自定义函数功能的价值在于让最终用户方便地使用业务函数：在开发者设定的范围内，指导最终用户正确地去书写、调用，以省去很多维护、定制开发的工作量。<br>
+
+<div id="Tag040801"/><br>
+<font style='font-size:12pt'><b>7.1</b> 简单应用</font><br>
+　　自定义函数最终怎么完成计算？ 控件反向调用js!<br>
+　　例如，XML中声明了如下函数名:<br>
+<pre class='xml'>
+ &lt;function name="balance" &gt;
+  &lt;para&gt;编码，可选&lt;/para&gt;
+  &lt;para&gt;月份，可选&lt;/para&gt;
+  &lt;returnDatatype&gt;double&lt;/returnDatatype&gt;
+ &lt;/function&gt;</pre>
+　　那么在页面中必须要有同名、大小写一致的js函数:<br>
+<pre class='cpp'>
+ function balance(code, mon)
+ {
+   var d;
+   ..(略)
+   return d;
+ }</pre>
+　　如果函数在处理过程中需要调用后端数据库信息，那么可以通过Ajax调用(必须是"同步")后端服务方式实现.<br>
+　　可见普通的自定义函数应用场景，只不过是使某些固定的js()函数的调用变得方便而已，因为自定义函数最终仍由页面的同名js函数负责执行，这在“自定义函数”演示页中已经剖析殆尽。<br>
+
+<div id="Tag040802"/><br>
+<font style='font-size:12pt'><b>7.2</b> 高级应用</font><br>
+<i><b>7.2.1</b> SetBatchFunctionURL( )</i><br>
+　　有一种极端的应用场景是：用户设计的报表很大，引用自定义函数会达数百处甚至上千处，如果按照上面“6.1.简单应用”的实现方式，并且假设自定义函数都是需要通过Ajax来完成计算，那么，最终会导致什么后果？想必您应该知道了!<br>
+　　为了解决成百上千次的Http请求/响应带来的网络性能瓶颈，硕正报表提供了一个批处理解决方案，方案说明如下：<br>
+1.通过js函数 SetBatchFunctionURL( ) 设置后端批处理函数的URL;<br>
+2.开发者需要开发后端的Java/Asp.Net批处理响应程序.<br>
+　　一旦通过SetBatchFunctionURL( )设置了后端批处理URL地址，报表在计算过程中将不再调用页面的同名自定义函数，转而采用分批的方式将函数直接交由后端执行，
+分批发送的是Http POST，并采用如下的XML格式:<br>
+<pre class='xml'>
+&lt;Root&gt;
+ &lt;Functions addition="附加串" &gt;
+  &lt;!-- 第一个 --&gt;
+  &lt;Function name="函数名"&gt;
+  &lt;/Function&gt;
+  &lt;!-- 第二个 --&gt;
+  &lt;Function name="函数名"&gt;
+   &lt;Para&gt;参数&lt;/Para&gt;
+   &lt;Para&gt;参数&lt;/Para&gt;
+  &lt;/Function&gt;
+  &lt;!-- 第三个 --&gt;
+  &lt;Function name="函数名"&gt;
+   &lt;Para&gt;参数&lt;/Para&gt;
+  &lt;/Function&gt;
+  &lt;!-- 第 n 个等等 --&gt;
+  ...
+ &lt;/Functions&gt;
+&lt;/Root&gt;</pre>
+　　其中的“函数名”、“参数”表示真实的函数名、参数。“附加串”是SetBatchFunctionURL()函数中的附加参数(相当于附言，任意串，请参考SetBatchFunctionURL()函数帮助)。<br>
+　　后端的服务程序需要解析该XML，并完成这些函数的计算，最终按如下XML格式作为响应返回:<br>
+<pre class='xml'>
+&lt;Root&gt;
+ &lt;Functions&gt;
+  &lt;Function&gt;返回值&lt;/Function&gt;
+  &lt;Function&gt;返回值&lt;/Function&gt;
+  &lt;Function&gt;返回值&lt;/Function&gt;
+  &lt;Function&gt;
+   &lt;fault&gt;
+    &lt;faultcode&gt;错误代码&lt;/faultcode&gt;
+     &lt;faultstring&gt;错误&lt;/faultstring&gt;
+     &lt;detail&gt;详细描述&lt;/detail&gt;
+     &lt;reason&gt;错误原因&lt;/reason&gt;
+     &lt;faultactor&gt;错误角色&lt;/faultactor&gt;
+   &lt;/fault&gt;
+  &lt;/Function&gt;
+  &lt;Function&gt;返回值&lt;/Function&gt;
+  ...
+ &lt;/Functions&gt;
+&lt;/Root&gt;</pre>
+备注1: &lt;Function&gt;的顺序必须和前面请求中的XML保持一致;<br>
+备注2: &lt;Function&gt;的返回值，硕正默认是把它当作数值型的，如果您希望返回 string 型，必须在串的前后加<b>单引号</b>;<br>
+备注3: 其中&lt;fault&gt; ... &lt;/fault&gt;表示某个函数的服务器端错误信息;<br>
+<br>
+<i><b>7.2.2</b> 前后端混合计算</i><br>
+　　有时候并不是所有自定义函数都必须推送到后端计算，可能有部分函数需要在本地页面中计算，那么只要修改XML的定义，增加&lt;RunAt&gt;内容：<br>
+<pre class='xml'>
+&lt;?xml version="1.0" encoding="UTF-8"?"&gt;
+&lt;Category name="函数分类"&gt;
+ &lt;function name="函数名" &gt;
+  &lt;usage&gt;用途说明&lt;/usage&gt;
+  &lt;detail&gt;更详细的说明，可选&lt;/detail&gt;
+  <font color=red>&lt;runAt&gt;Local&lt;/runAt&gt;</font>
+ ...</pre>
+　　凡是runAt被定义为 "Local"(或Client)的函数，都不会被发送到后端，而是简单地在客户端计算. runAt的默认值是"Server"，即后端计算.<br>
+<br>
+<div id="Tag040803"/><br>
+<font style='font-size:12pt'><b>7.3</b> 参数输入向导</font><br>
+　　硕正报表从1.0.64.0开始，增加了函数的向导式输入功能(输入框左侧的f(x)小按钮)：<br>
+<center><img src='report2.png'></center>
+　　为了方便自定义函数的输入，我们对自定义函数的XML规范作了扩充，使得参数在输入时能支持下拉选择，例如下图所示的效果：<br>
+<center><img src='../../res/illu38.jpg'></center>
+<br>
+　　扩充后的自定义函数XML规范增加了如下内容：<br>
+<b>1</b>.XML增加了&lt;Droplists&gt;下拉资源库节点<br>
+　　XML中须增加&lt;Droplists&gt;节点，&lt;Droplists&gt;语法和硕正Treelist树列表、Freeform自由表头中的&lt;Droplists&gt;完全一致，请参见其XML文档规范，也可以参考自定义函数演示页中的<a href='../../reportdata/func_account.xml' target=_blank>XML例子</a>.<br>
+<br>
+<b>2</b>.参数&lt;Para&gt;增加下拉相关属性<br>
+　　增加3个属性, 例如&lt;Para <font color=red>dataType</font>="?" <font color=red>edittype</font>="?" <font color=red>droplistID</font>="?" &gt;参数&lt;/Para&gt;，其含义和可用值如下：<br>
+datatype - 可以为int, string;<br>
+edittype - 可以为droplist、editAbleDroplist、dropTreelist、editAbleDropTreelist，含义请参考树列表或自由表头文档资料;<br>
+droplistId - 指向下拉资源库的Id;<br>
+　　如果您开发过Treelist或freeform，会发现该规则很简单，相当于把Treelist、freeform的下拉语法直接搬过来了.<br>
+<br><br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

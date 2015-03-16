@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Jericho TabPanel</title>
+    <style type="text/css">
+    	body,html{font-size:12px;font-family:Calibri;padding:0;margin:0;background:#7d9edb;} a img{border:0px;}
+		.functree{margin:0;padding:0;} .functree ul,.functree li{list-style-type:none;margin:0;padding:0;}
+		.functree li{padding-left:14px;line-height:18px;} .functree span.modules{cursor:pointer;color:#783432;}
+		.divTop span{padding-left:20px;line-height:70px;font-size:16px;} .divMain{float:left;clear:both;}
+		.divLeft,.divRight{display:none;float:left;background-color:White;border:double 4px #eee;padding:5px;}
+		#divMainLoader{position:absolute;top:15px;right:15px;z-index:100;width:80px;height:20px;line-height:20px;background:#EEF3F7 url(../images/smallloader.gif) no-repeat 8px center;border:1px solid #A5B6C8;padding-left:30px;font-family:10px;display:none;}
+    </style>
+    <link rel="Stylesheet" href="css/jquery.jerichotab.css" />
+    <script type="text/javascript" src="../jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.jerichotab.js"></script>
+    <script type="text/javascript">
+        var jericho = {
+            showLoader: function() {
+                $('#divMainLoader').css('display', 'block');
+            },
+            removeLoader: function() {
+                $('#divMainLoader').css('display', 'none');
+            },
+            buildTree: function() {/*
+                $('.functree li').each(function() {
+                    if ($(this).is(':has(ul)'))
+                        $(this).addClass('collapse');
+                    if ($(this).next().is('li') || $(this).next().is('ul'))
+                        $(this).css({ borderLeft: 'dashed 1px #dedede' });
+                })
+                $('li.collapse>span').click(function() {
+                    $(this).next('ul').slideToggle('fast', function() {
+                        if ($(this).parent().hasClass('collapse'))
+                            $(this).parent().removeClass('collapse').addClass('expand');
+                        else
+                            $(this).parent().removeClass('expand').addClass('collapse');
+                    })
+                })*/
+
+                $('span.func').css({ 'cursor': 'pointer' }).hover(function() {
+                    $(this).css({ 'color': '#3de', 'text-decoration': 'underline' });
+                }, function() {
+                    $(this).css({ 'color': '#000', 'text-decoration': 'none' });
+                }).click(function() {
+                    $.fn.jerichoTab.addTab({
+                        tabFirer: $(this),
+                        title: $(this).text(),
+                        //closeable: true,
+                        //iconImg: $(this).attr('iconImg'),
+                        data: {
+                            dataType: $(this).attr('dataType'),
+                            dataLink: $(this).attr('dataLink')
+                        }
+                    }).loadData();
+                });
+            },
+            buildTabpanel: function() {
+                $.fn.initJerichoTab({
+                    renderTo: '.divRight',
+                    uniqueId: 'myJerichoTab',
+                    contentCss: { 'height': $('.divRight').height() - 50 },
+                    tabs: [{
+                            title: 'JeirchoTab',
+                            closeable: false,
+                            iconImg: 'images/jerichotab.png',
+                            data: { dataType: 'formtag', dataLink: '#tbNews' },
+                            onLoadCompleted: function(h) {
+                                $('<b style="color:red" />').html('The JerichoTab processed in ' + (new Date().getTime() - d1) + ' milliseconds!').appendTo(h);
+                            }
+                        }, {
+                            title: 'ASPX',
+                            closeable: false,
+                            data: { dataType: 'iframe', dataLink: 'a.aspx' }
+                        }],
+                        activeTabIndex: 1,
+                        loadOnce: true
+                    });
+                }
+            }
+        $().ready(function() {
+            d1 = new Date().getTime();
+            jericho.showLoader();
+            var w = $(document).width();
+            var h = $(document).height();
+            $('.divLeft').css({ width: 190, height: h - 120, 'display': 'block' });
+            $('.divRight').css({ width: w - 260, height: h - 120, 'display': 'block', 'margin-left': 7 });
+            $('#firefoxuser').html(($.browser.mozilla ? 'yes, your browser is Firefox' : 'oh, you are not using Firefox?'));
+            $('#ieuser').html(($.browser.msie ? 'yes, your browser is Internet Explorer' : 'oh, you are not using Internet Explorer?'));
+            jericho.buildTree();
+            jericho.buildTabpanel();
+            jericho.removeLoader();
+        })
+        $(window).resize(function() {
+            var w = $(document).width();
+            $('.divRight').css({ width: w - 250 });
+        })
+    </script>
+</head>
+<body>
+<div class="divTop">
+    <span>Jericho TabPanel</span>
+</div>
+<div class="divMain">
+    <div class="divLeft">
+        <ul class="functree">
+		    <li><span class="modules">About</span>
+			    <ul>
+				    <li><span class="func" jerichotabindex="0">JerichoTab</span></li>
+			    </ul>
+		    </li>
+		    <li><span class="modules">Products</span>
+			    <ul>
+				    <li><span class="modules">IM</span>
+					    <ul>
+						    <li><span class="func" dataType='html' dataLink='template/msn.htm' iconImg='images/msn.gif'>MSN</span></li>
+						    <li><span class="func" dataType='html' dataLink='template/skype.htm' iconImg='images/skype.png'>Skype</span></li>
+					    </ul>
+				    </li>
+				    <li><span class="modules" >Browsers</span>
+				        <ul>
+						    <li><span class="func" iconImg='images/firefox.png' dataType='formtag' dataLink='#firefoxuser'>Firefox</span></li>
+						    <li><span class="func" iconImg='images/ie.png' dataType='formtag' dataLink='#ieuser'>Internet Explorer</span></li>
+					    </ul>
+				    </li>				
+			    </ul>
+		    </li>
+		    <li><span class="modules">Corporations</span>
+			    <ul>
+				    <li><span class="func" dataType='iframe' dataLink='http://www.g.cn'>Google</span></li>
+				    <li><span class="func" iconImg="images/yahoo.png" dataType="iframe" dataLink="http://www.yahoo.com">Yahoo</span></li>
+				    <li><span class="func" dataType="iframe" dataLink="handler/dataexchange.ashx?action=microsoft">Microsoft</span></li>
+			    </ul>
+		    </li>
+		    <li><span class="modules">News</span>
+		        <ul>
+				    <li><span class="func" iconImg="images/chess.png" dataType="ajax" dataLink="handler/dataexchange.ashx?action=chess">I-go</span></li>
+				    <li><span class="func" iconImg="images/ent.png" dataType="ajax" dataLink="handler/dataexchange.ashx?action=ent">Entertainment</span></li>
+				    <li><span class="func" iconImg="images/whether.png" dataType="ajax" dataLink="handler/dataexchange.ashx?action=whether">Whether</span></li>
+			    </ul>
+		    </li>
+		    <li><span class="modules">Testing...</span>
+		        <ul>
+				    <li><span class="func" iconImg="images/clock.png" dataType='ajax' dataLink='handler/dataexchange.ashx?action=getdatetime'>Get Ticks(AJAX)</span></li>
+			    </ul>
+		    </li>;
+	    </ul>
+    </div>
+    <div class="divRight"></div>
+</div>
+<div id="divMainLoader">Loading...</div>
+<b id="firefoxuser" style="display:none"></b>
+<b id="ieuser" style="display:none"></b>
+<div id="tbNews" style="display:none">
+    <h4>Wow...just wow!!!</h4>
+    <p>This plugin is really amazing!</p>
+    <p>it's light-weight but powerful and perfect</p>
+    <p>It's easy to use, all the API was opened, you can get them from the remarks that in the head of js file.</p>
+    <p>JeirchoTab has supported four types of data:</p>
+    <p>
+        <ol>
+            <li>formtag</li>
+            <li>html</li>
+            <li>iframe</li>
+            <li>ajax</li>
+        </ol>
+    </p>
+    <p>You wanna known '<b>How to use it</b>'?</p>
+    <p>See the demo by yourself!</p>
+    <p><strong style="color:#7623ee">--jericho</strong><img src="images/china.gif" alt="China" title="China" /></p>
+    <p><a href="http://www.ajaxplaza.net" target="_blank">http://www.ajaxplaza.net</a></p>
+</div>
+</body>
+</html>

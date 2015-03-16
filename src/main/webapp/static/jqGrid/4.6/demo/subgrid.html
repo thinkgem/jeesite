@@ -1,0 +1,210 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<html>
+<head>
+	<title>指标任务查询</title>
+	<meta name="decorator" content="default"/>
+	<style type="text/css">
+		.searchDiv {background-image: url(${ctxStatic}/images/railline.png);height:28px;background-repeat:no-repeat;}
+		.searchText {color:white;font-size:14px;padding:3px 10px;}
+		.breadcrumb {padding:2px 15px;margin-bottom:3px;}
+	</style>
+	<link href="${ctxStatic}/jqGrid/4.6/css/ui.jqgrid.css" rel="stylesheet"/>
+	<script src="${ctxStatic}/jqGrid/4.6/js/jquery.jqGrid.js" type="text/javascript"></script>
+	<script src="${ctxStatic}/jqGrid/4.6/js/jquery.jqGrid.extend.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	var dataGrid, dataGrids = {}; // 定义全局表格对象。
+	$(document).ready(function() {
+		
+		// 初始化DataGrid对象
+		dataGrid = new DataGrid({
+			
+			// 当前页签编号
+			tabPageId: '${param.tabPageId}',
+			
+			// 设置数据表格列
+			columnModel: [
+	  			{header:'绩效内容', name:'jxnr', width:150},
+				{header:'一级指标', name:'yjzb', width:150},
+				{header:'二级指标', name:'ejzb', width:150},
+				{header:'三级指标', name:'sjzb', width:150},
+				{header:'分值', name:'fz', width:150},
+				{header:'操作', name:'actions', width:80, fixed:true, sortable:false, resizable:false, fixed:true, formatter: function(val, obj, row, act){
+					var actions = [];
+					actions.push('<a href="${ctx}?'+row.id+'" class="btnList" title="查看"><i class="fa fa-pencil"></i></a>&nbsp;');
+					return actions.join('');
+				}}
+			],
+			showRownum: false,
+			sortable: false,
+			autoGridWidthFix: 2,
+			subGrid: true,
+			subGridRowExpanded: function(subgrid_id, row_id) {
+				var subgrid_table_id = subgrid_id+"_t", subgrid_pager_id = "p_"+subgrid_table_id;
+				$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"'></table><div id='"+subgrid_pager_id+"' class='pagination'></div>");
+				$("#sjzbId").val(row_id);
+				// 初始化DataGrid对象
+				var dataGrid = new DataGrid({
+
+					dataGrid: $("#"+subgrid_table_id),
+					dataGridPage: $("#"+subgrid_pager_id),
+					searchForm: $("#"+"searchForm2"),
+					
+					// 当前页签编号
+					tabPageId: '${param.tabPageId}',
+					
+					// 设置数据表格列
+					columnModel: [
+						{header:'指标名称', name:'zbmc', width:150},
+						{header:'指标属性', name:'zbsx', width:150},
+						{header:'考评周期', name:'kpzq', width:150},
+						{header:'分值', name:'fz', width:150},
+						{header:'操作', name:'actions', width:80, fixed:true, sortable:false, resizable:false, fixed:true, formatter: function(val, obj, row, act){
+							var actions = [];
+							actions.push('<a href="${ctx}?'+row.id+'" class="btnList" title="查看"><i class="fa fa-pencil"></i></a>&nbsp;');
+							return actions.join('');
+						}}
+					],
+					showRownum: false,
+					sortable: false,
+					height: "100%",
+					autoGridHeight: false,
+					autoGridWidthFix: 55,
+					subGrid: true,
+					subGridRowExpanded: function(subgrid_id, row_id) {
+						var subgrid_table_id = subgrid_id+"_t", subgrid_pager_id = "p_"+subgrid_table_id;
+						$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"'></table><div id='"+subgrid_pager_id+"' class='pagination'></div>");
+						$("#sjzbId3").val(row_id);
+						// 初始化DataGrid对象
+						var dataGrid = new DataGrid({
+
+							dataGrid: $("#"+subgrid_table_id),
+							dataGridPage: $("#"+subgrid_pager_id),
+							searchForm: $("#"+"searchForm3"),
+							
+							// 当前页签编号
+							tabPageId: '${param.tabPageId}',
+							
+							// 设置数据表格列
+							columnModel: [
+								{header:'指标名称', name:'zbmc', width:150},
+								{header:'指标属性', name:'zbsx', width:150},
+								{header:'考评周期', name:'kpzq', width:150},
+								{header:'分值', name:'fz', width:150},
+								{header:'操作', name:'actions', width:80, fixed:true, sortable:false, resizable:false, fixed:true, formatter: function(val, obj, row, act){
+									var actions = [];
+									actions.push('<a href="${ctx}?'+row.id+'" class="btnList" title="查看"><i class="fa fa-pencil"></i></a>&nbsp;');
+									return actions.join('');
+								}}
+							],
+							showRownum: false,
+							sortable: false,
+							height: "100%",
+							autoGridHeight: false,
+							autoGridWidthFix: 88,
+							subGrid: true,
+							subGridRowExpanded: function(subgrid_id, row_id) {
+								var subgrid_table_id = subgrid_id+"_t", subgrid_pager_id = "p_"+subgrid_table_id;
+								$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"'></table><div id='"+subgrid_pager_id+"' class='pagination'></div>");
+								$("#sjzbId4").val(row_id);
+								// 初始化DataGrid对象
+								var dataGrid = new DataGrid({
+
+									dataGrid: $("#"+subgrid_table_id),
+									dataGridPage: $("#"+subgrid_pager_id),
+									searchForm: $("#"+"searchForm4"),
+									
+									// 当前页签编号
+									tabPageId: '${param.tabPageId}',
+									
+									// 设置数据表格列
+									columnModel: [
+										{header:'指标名称', name:'zbmc', width:150},
+										{header:'指标属性', name:'zbsx', width:150},
+										{header:'考评周期', name:'kpzq', width:150},
+										{header:'分值', name:'fz', width:150},
+										{header:'操作', name:'actions', width:80, fixed:true, sortable:false, resizable:false, fixed:true, formatter: function(val, obj, row, act){
+											var actions = [];
+											actions.push('<a href="${ctx}?'+row.id+'" class="btnList" title="查看"><i class="fa fa-pencil"></i></a>&nbsp;');
+											return actions.join('');
+										}}
+									],
+									showRownum: false,
+									sortable: false,
+									height: "100%",
+									autoGridHeight: false,
+									autoGridWidthFix: 120,
+									ajaxSuccess: function(data){ // 加载成功后执行方法
+										
+									}
+								});
+								dataGrids[row_id] = dataGrid;
+							},
+							subGridRowColapsed: function(subgrid_id, row_id) {
+								
+							},
+							ajaxSuccess: function(data){ // 加载成功后执行方法
+								
+							}
+						});
+						dataGrids[row_id] = dataGrid;
+					},
+					subGridRowColapsed: function(subgrid_id, row_id) {
+						
+					},
+					ajaxSuccess: function(data){ // 加载成功后执行方法
+						$(window).resize();
+					}
+				});
+				dataGrids[row_id] = dataGrid;
+			},
+			subGridRowColapsed: function(subgrid_id, row_id) {
+				
+			},
+			ajaxSuccess: function(data){ // 加载成功后执行方法
+				
+			}
+		});
+		
+	});
+	</script>
+</head>
+<body>
+	<div class="searchDiv"><div class="searchText">查询条件</div></div>
+	<form:form id="searchForm" modelAttribute="jxjhGcglTask" action="${ctx}/jxjh/zbfpSjzb/listData" method="post" class="breadcrumb form-search"
+		data-page-no="${page.pageNo}" data-page-size="${page.pageSize}" data-order-by="${page.orderBy}">
+		<ul class="ul-form">	
+			<li><label>状态：</label>
+				<form:select id="status" path="status" class="input-medium">
+					<form:option value=" " label=""/>
+					<form:options items="${fns:getDictList('jxkh_task_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
+			<li>
+				<label></label>
+				<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+			</li>
+			<li>
+				<label></label>
+				<input id="btnSubmit" class="btn btn-primary" type="button" value="导出全部"/>
+			</li>
+		</ul>
+	</form:form>
+	<form:form id="searchForm2" modelAttribute="jxjhGcglTask" action="${ctx}/sjzbfj/jxJxjhQjzb/sjzbfj/listData" method="post"
+		class="breadcrumb form-search hide" data-page-no="${page.pageNo}" data-page-size="${page.pageSize}" data-order-by="${page.orderBy}">
+		<input type="hidden" id="sjzbId" name="sjzbId">
+	</form:form>
+	<form:form id="searchForm3" modelAttribute="jxjhGcglTask" action="${ctx}/sjzbfj/jxJxjhQjzb/sjzbfj/listData" method="post"
+		class="breadcrumb form-search hide" data-page-no="${page.pageNo}" data-page-size="${page.pageSize}" data-order-by="${page.orderBy}">
+		<input type="hidden" id="sjzbId3" name="sjzbId">
+	</form:form>
+	<form:form id="searchForm4" modelAttribute="jxjhGcglTask" action="${ctx}/sjzbfj/jxJxjhQjzb/sjzbfj/listData" method="post"
+		class="breadcrumb form-search hide" data-page-no="${page.pageNo}" data-page-size="${page.pageSize}" data-order-by="${page.orderBy}">
+		<input type="hidden" id="sjzbId4" name="sjzbId">
+	</form:form>
+	<sys:message content="${message}"/>
+	<div class="searchDiv"><div class="searchText">列表</div></div>
+	<table id="dataGrid"></table>
+    <div id="dataGridPage" class="pagination"></div>
+</body>
+</html>

@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.utils.excel.annotation;
 
@@ -36,8 +34,6 @@ public @interface ExcelField {
 
 	/**
 	 * 导出字段对齐方式（0：自动；1：靠左；2：居中；3：靠右）
-	 * 
-	 * 备注：Integer/Long类型设置居右对齐（align=3）
 	 */
 	int align() default 0;
 	

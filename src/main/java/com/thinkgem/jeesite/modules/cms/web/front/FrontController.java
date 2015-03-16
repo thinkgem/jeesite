@@ -1,19 +1,14 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.web.front;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,10 +29,12 @@ import com.thinkgem.jeesite.modules.cms.entity.Category;
 import com.thinkgem.jeesite.modules.cms.entity.Comment;
 import com.thinkgem.jeesite.modules.cms.entity.Link;
 import com.thinkgem.jeesite.modules.cms.entity.Site;
+import com.thinkgem.jeesite.modules.cms.service.ArticleDataService;
 import com.thinkgem.jeesite.modules.cms.service.ArticleService;
 import com.thinkgem.jeesite.modules.cms.service.CategoryService;
 import com.thinkgem.jeesite.modules.cms.service.CommentService;
 import com.thinkgem.jeesite.modules.cms.service.LinkService;
+import com.thinkgem.jeesite.modules.cms.service.SiteService;
 import com.thinkgem.jeesite.modules.cms.utils.CmsUtils;
 
 /**
@@ -52,11 +49,15 @@ public class FrontController extends BaseController{
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
+	private ArticleDataService articleDataService;
+	@Autowired
 	private LinkService linkService;
 	@Autowired
 	private CommentService commentService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private SiteService siteService;
 	
 	/**
 	 * 网站首页
@@ -85,8 +86,14 @@ public class FrontController extends BaseController{
 			return "modules/cms/front/themes/"+site.getTheme()+"/frontIndex"+site.getCustomIndexView();
 		}
 		// 否则显示子站第一个栏目
-		String firstCategoryId = CmsUtils.getMainNavList(siteId).get(0).getId();
-		return "redirect:"+Global.getFrontPath()+"/list-"+firstCategoryId+Global.getUrlSuffix();
+		List<Category> mainNavList = CmsUtils.getMainNavList(siteId);
+		if (mainNavList.size() > 0){
+			String firstCategoryId = CmsUtils.getMainNavList(siteId).get(0).getId();
+			return "redirect:"+Global.getFrontPath()+"/list-"+firstCategoryId+Global.getUrlSuffix();
+		}else{
+			model.addAttribute("site", site);
+			return "modules/cms/front/themes/"+site.getTheme()+"/frontListCategory";
+		}
 	}
 	
 	/**
@@ -101,7 +108,8 @@ public class FrontController extends BaseController{
 			model.addAttribute("site", site);
 			return "error/404";
 		}
-		model.addAttribute("site", category.getSite());
+		Site site = siteService.get(category.getSite().getId());
+		model.addAttribute("site", site);
 		// 2：简介类栏目，栏目第一条内容
 		if("2".equals(category.getShowModes()) && "article".equals(category.getModule())){
 			// 如果没有子栏目，并父节点为跟节点的，栏目列表为当前栏目。
@@ -116,15 +124,16 @@ public class FrontController extends BaseController{
 			// 获取文章内容
 			Page<Article> page = new Page<Article>(1, 1, -1);
 			Article article = new Article(category);
-			page = articleService.find(page, article, false);
+			page = articleService.findPage(page, article, false);
 			if (page.getList().size()>0){
 				article = page.getList().get(0);
+				article.setArticleData(articleDataService.get(article.getId()));
 				articleService.updateHitsAddOne(article.getId());
 			}
 			model.addAttribute("article", article);
-            setTplModelAttribute(model, category);
-            setTplModelAttribute(model, article.getViewConfig());
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
+            CmsUtils.addViewConfigAttribute(model, category);
+            CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
+			return "modules/cms/front/themes/"+site.getTheme()+"/"+getTpl(article);
 		}else{
 			List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
 			// 展现方式为1 、无子栏目或公共模型，显示栏目内容列表
@@ -145,31 +154,36 @@ public class FrontController extends BaseController{
 				// 获取内容列表
 				if ("article".equals(category.getModule())){
 					Page<Article> page = new Page<Article>(pageNo, pageSize);
-					page = articleService.find(page, new Article(category), false);
+					//System.out.println(page.getPageNo());
+					page = articleService.findPage(page, new Article(category), false);
 					model.addAttribute("page", page);
 					// 如果第一个子栏目为简介类栏目，则获取该栏目第一篇文章
 					if ("2".equals(category.getShowModes())){
 						Article article = new Article(category);
 						if (page.getList().size()>0){
 							article = page.getList().get(0);
+							article.setArticleData(articleDataService.get(article.getId()));
 							articleService.updateHitsAddOne(article.getId());
 						}
 						model.addAttribute("article", article);
-                        setTplModelAttribute(model, category);
-                        setTplModelAttribute(model, article.getViewConfig());
-						return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
+			            CmsUtils.addViewConfigAttribute(model, category);
+			            CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
+						return "modules/cms/front/themes/"+site.getTheme()+"/"+getTpl(article);
 					}
 				}else if ("link".equals(category.getModule())){
 					Page<Link> page = new Page<Link>(1, -1);
-					page = linkService.find(page, new Link(category), false);
+					page = linkService.findPage(page, new Link(category), false);
 					model.addAttribute("page", page);
 				}
 				String view = "/frontList";
 				if (StringUtils.isNotBlank(category.getCustomListView())){
 					view = "/"+category.getCustomListView();
 				}
-                setTplModelAttribute(model, category);
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
+	            CmsUtils.addViewConfigAttribute(model, category);
+                site =siteService.get(category.getSite().getId());
+                //System.out.println("else 栏目第一条内容 _2 :"+category.getSite().getTheme()+","+site.getTheme());
+				return "modules/cms/front/themes/"+siteService.get(category.getSite().getId()).getTheme()+view;
+				//return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
 			}
 			// 有子栏目：显示子栏目列表
 			else{
@@ -179,8 +193,8 @@ public class FrontController extends BaseController{
 				if (StringUtils.isNotBlank(category.getCustomListView())){
 					view = "/"+category.getCustomListView();
 				}
-                setTplModelAttribute(model, category);
-				return "modules/cms/front/themes/"+category.getSite().getTheme()+view;
+	            CmsUtils.addViewConfigAttribute(model, category);
+				return "modules/cms/front/themes/"+site.getTheme()+view;
 			}
 		}
 	}
@@ -197,12 +211,13 @@ public class FrontController extends BaseController{
 			model.addAttribute("site", site);
 			return "error/404";
 		}
-		model.addAttribute("site", category.getSite());
+		Site site = siteService.get(category.getSite().getId());
+		model.addAttribute("site", site);
 		List<Category> categoryList = categoryService.findByParentId(category.getId(), category.getSite().getId());
 		model.addAttribute("category", category);
 		model.addAttribute("categoryList", categoryList);
-        setTplModelAttribute(model, category);
-		return "modules/cms/front/themes/"+category.getSite().getTheme()+"/frontListCategory"+customView;
+        CmsUtils.addViewConfigAttribute(model, category);
+		return "modules/cms/front/themes/"+site.getTheme()+"/frontListCategory"+customView;
 	}
 
 	/**
@@ -233,15 +248,19 @@ public class FrontController extends BaseController{
 			// 文章阅读次数+1
 			articleService.updateHitsAddOne(contentId);
 			// 获取推荐文章列表
-			List<Object[]> relationList = articleService.findByIds(article.getArticleData().getRelation());
+			List<Object[]> relationList = articleService.findByIds(articleDataService.get(article.getId()).getRelation());
 			// 将数据传递到视图
-			model.addAttribute("category", article.getCategory());
+			model.addAttribute("category", categoryService.get(article.getCategory().getId()));
 			model.addAttribute("categoryList", categoryList);
+			article.setArticleData(articleDataService.get(article.getId()));
 			model.addAttribute("article", article);
 			model.addAttribute("relationList", relationList); 
-            setTplModelAttribute(model, article.getCategory());
-            setTplModelAttribute(model, article.getViewConfig());
-			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
+            CmsUtils.addViewConfigAttribute(model, article.getCategory());
+            CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
+            Site site = siteService.get(category.getSite().getId());
+            model.addAttribute("site", site);
+//			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
+            return "modules/cms/front/themes/"+site.getTheme()+"/"+getTpl(article);
 		}
 		return "error/404";
 	}
@@ -256,7 +275,7 @@ public class FrontController extends BaseController{
 		c.setCategory(comment.getCategory());
 		c.setContentId(comment.getContentId());
 		c.setDelFlag(Comment.DEL_FLAG_NORMAL);
-		page = commentService.find(page, c);
+		page = commentService.findPage(page, c);
 		model.addAttribute("page", page);
 		model.addAttribute("comment", comment);
 		return "modules/cms/front/themes/"+theme+"/frontComment";
@@ -318,35 +337,6 @@ public class FrontController extends BaseController{
             return StringUtils.isBlank(view) ? Article.DEFAULT_TEMPLATE : view;
         }else{
             return article.getCustomContentView();
-        }
-    }
-
-    private void setTplModelAttribute(Model model, String param){
-        if(StringUtils.isNotBlank(param)){
-            @SuppressWarnings("rawtypes")
-			Map map = JsonMapper.getInstance().fromJson(param, Map.class);
-            if(map != null){
-                for(Object o : map.keySet()){
-                    model.addAttribute("viewConfig_"+o.toString(), map.get(o));
-                }
-            }
-        }
-    }
-
-    private void setTplModelAttribute(Model model, Category category){
-        List<Category> categoryList = Lists.newArrayList();
-        Category c = category;
-        boolean goon = true;
-        do{
-            if(c.getParent() == null || c.getParent().isRoot()){
-                goon = false;
-            }
-            categoryList.add(c);
-            c = c.getParent();
-        }while(goon);
-        Collections.reverse(categoryList);
-        for(Category ca : categoryList){
-            setTplModelAttribute(model, ca.getViewConfig());
         }
     }
 	

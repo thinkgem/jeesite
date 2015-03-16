@@ -54,10 +54,10 @@ CREATE TABLE cms_article_data
 CREATE TABLE cms_category
 (
 	id varchar2(64) NOT NULL,
-	site_id varchar2(64) DEFAULT '1',
-	office_id varchar2(64),
 	parent_id varchar2(64) NOT NULL,
 	parent_ids varchar2(2000) NOT NULL,
+	site_id varchar2(64) DEFAULT '1',
+	office_id varchar2(64),
 	module varchar2(20),
 	name varchar2(100) NOT NULL,
 	image varchar2(255),
@@ -73,13 +73,13 @@ CREATE TABLE cms_category
 	is_audit char(1),
 	custom_list_view varchar2(255),
 	custom_content_view varchar2(255),
+	view_config clob,
 	create_by varchar2(64),
 	create_date timestamp,
 	update_by varchar2(64),
 	update_date timestamp,
 	remarks varchar2(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
-	view_config clob,
 	PRIMARY KEY (id)
 );
 
@@ -172,8 +172,6 @@ CREATE INDEX cms_article_del_flag ON cms_article (del_flag);
 CREATE INDEX cms_article_weight ON cms_article (weight);
 CREATE INDEX cms_article_update_date ON cms_article (update_date);
 CREATE INDEX cms_article_category_id ON cms_article (category_id);
-CREATE INDEX cms_article_id ON cms_article (id);
-CREATE INDEX cms_article_data_id ON cms_article_data (id);
 CREATE INDEX cms_category_parent_id ON cms_category (parent_id);
 CREATE INDEX cms_category_parent_ids ON cms_category (parent_ids);
 CREATE INDEX cms_category_module ON cms_category (module);
@@ -182,22 +180,17 @@ CREATE INDEX cms_category_sort ON cms_category (sort);
 CREATE INDEX cms_category_del_flag ON cms_category (del_flag);
 CREATE INDEX cms_category_office_id ON cms_category (office_id);
 CREATE INDEX cms_category_site_id ON cms_category (site_id);
-CREATE INDEX cms_category_id ON cms_category (id);
 CREATE INDEX cms_comment_category_id ON cms_comment (category_id);
 CREATE INDEX cms_comment_content_id ON cms_comment (content_id);
 CREATE INDEX cms_comment_status ON cms_comment (del_flag);
-CREATE INDEX cms_comment_id ON cms_comment (id);
 CREATE INDEX cms_guestbook_del_flag ON cms_guestbook (del_flag);
-CREATE INDEX cms_site_id ON cms_guestbook (id);
 CREATE INDEX cms_link_category_id ON cms_link (category_id);
 CREATE INDEX cms_link_title ON cms_link (title);
 CREATE INDEX cms_link_del_flag ON cms_link (del_flag);
 CREATE INDEX cms_link_weight ON cms_link (weight);
 CREATE INDEX cms_link_create_by ON cms_link (create_by);
 CREATE INDEX cms_link_update_date ON cms_link (update_date);
-CREATE INDEX cms_link_id ON cms_link (id);
 CREATE INDEX cms_site_del_flag ON cms_site (del_flag);
-CREATE INDEX cms_site_id ON cms_site (id);
 
 
 
@@ -232,10 +225,10 @@ COMMENT ON COLUMN cms_article_data.relation IS '相关文章';
 COMMENT ON COLUMN cms_article_data.allow_comment IS '是否允许评论';
 COMMENT ON TABLE cms_category IS '栏目表';
 COMMENT ON COLUMN cms_category.id IS '编号';
-COMMENT ON COLUMN cms_category.site_id IS '站点编号';
-COMMENT ON COLUMN cms_category.office_id IS '归属机构';
 COMMENT ON COLUMN cms_category.parent_id IS '父级编号';
 COMMENT ON COLUMN cms_category.parent_ids IS '所有父级编号';
+COMMENT ON COLUMN cms_category.site_id IS '站点编号';
+COMMENT ON COLUMN cms_category.office_id IS '归属机构';
 COMMENT ON COLUMN cms_category.module IS '栏目模块';
 COMMENT ON COLUMN cms_category.name IS '栏目名称';
 COMMENT ON COLUMN cms_category.image IS '栏目图片';
@@ -251,13 +244,13 @@ COMMENT ON COLUMN cms_category.allow_comment IS '是否允许评论';
 COMMENT ON COLUMN cms_category.is_audit IS '是否需要审核';
 COMMENT ON COLUMN cms_category.custom_list_view IS '自定义列表视图';
 COMMENT ON COLUMN cms_category.custom_content_view IS '自定义内容视图';
+COMMENT ON COLUMN cms_category.view_config IS '视图配置';
 COMMENT ON COLUMN cms_category.create_by IS '创建者';
 COMMENT ON COLUMN cms_category.create_date IS '创建时间';
 COMMENT ON COLUMN cms_category.update_by IS '更新者';
 COMMENT ON COLUMN cms_category.update_date IS '更新时间';
 COMMENT ON COLUMN cms_category.remarks IS '备注信息';
 COMMENT ON COLUMN cms_category.del_flag IS '删除标记';
-COMMENT ON COLUMN cms_category.view_config IS '视图配置';
 COMMENT ON TABLE cms_comment IS '评论表';
 COMMENT ON COLUMN cms_comment.id IS '编号';
 COMMENT ON COLUMN cms_comment.category_id IS '栏目编号';

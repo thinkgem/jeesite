@@ -1,0 +1,38 @@
+<HTML>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<link rel="stylesheet" href="../temp1.css" type="text/css">
+</head>
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag310"/><br><br><br>
+　　<font style='font-size:15pt'>11.其它</font><hr color=#2266ee size=1>
+<div id="Tag31001"/><br>
+<b>11.1 如何使用数据源</b><br>
+　　一旦建立好数据源，报表就可以使用数据源来填充数据了。打开工具条上的“工具箱”(<img src='toolbox.bmp'/>)按钮，切换到“数据源”选项卡，即可看到数据源的列结构：<br>
+<center><img src='reportds11.jpg'/></center>
+<br>
+　　上图选项卡中，数据源的结构树分为“表”和“单个数据”,  可以用鼠标直接将其下级内容直接拖拽至报表中，“表”和“单个数据”是有差别的，差别如下：<br>
+<b>A) 将“表”的“数据行”拖到报表的某个单元格</b><br>
+　　将自动在该单元格生成一个计算公式如"=datarow('ds1')",  表示以该单元格作为左上角，将数据源填充至报表。由于数据源的总行数是不确定的，所以报表将动态插入新的临时行。<br>
+<b>B) 将“单个数据”的某个字段拖入报表的某个单元格(或文本框)</b><br>
+　　将自动在该单元格(或文本框)生成一个计算公式如"=data('ds1', 1, 'price')",  表示仅从数据源取得单个数据，填充到本单元格(或文本框), 这个函数的参数用于指定数据源的行号和列名。<br>
+　　本方法通常用于报表的表头，因为表头内容对应到数据库，通常是只有一条记录的。<br>
+<br>
+　　“数据行"(datarow 函数)导致的整表填充，报表组件是有一些填充规则的，其规则和某些设计技巧说明如下：<br>
+1.数据源的第一行直接填充到本行;<br>
+2.报表动态插入的临时行，用于容纳数据源的其它行，这些动态行的行号在标尺中略显蓝色并倾斜显示:<br>
+<center><img src='report10.png'/></center>
+3.从左向右的填充规则为：逐个单元格顺序填充，但遇到如下情况，将跨过这些单元格:<br>
+　　　　1.单元格是被组合的、不是主单元格;<br>
+　　　　2.单元格内有其它计算函数;<br>
+<br>
+4.数据源选项卡右下角的这个”更多“功能比较有用，能定制列的左右次序、以及是否填充:<br>
+<center><img src='report12.png'/></center>
+5.可以用工具条上的“数据源”下的"清除从数据源填入的数据"功能清除临时新增行:<br>
+<center><img src='report11.png'/></center>
+<br>
+
+<br><br><br><br>
+<script type='text/javascript' src='nstd.js'></script>
+</body></html>

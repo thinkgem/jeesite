@@ -1,41 +1,75 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.dao;
 
-import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-import com.thinkgem.jeesite.common.persistence.BaseDao;
-import com.thinkgem.jeesite.common.persistence.Parameter;
+import com.thinkgem.jeesite.common.persistence.CrudDao;
+import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 用户DAO接口
  * @author ThinkGem
- * @version 2013-8-23
+ * @version 2014-05-16
  */
-@Repository
-public class UserDao extends BaseDao<User> {
+@MyBatisDao
+public interface UserDao extends CrudDao<User> {
 	
-	public List<User> findAllList() {
-		return find("from User where delFlag=:p1 order by id", new Parameter(User.DEL_FLAG_NORMAL));
-	}
-	
-	public User findByLoginName(String loginName){
-		return getByHql("from User where loginName = :p1 and delFlag = :p2", new Parameter(loginName, User.DEL_FLAG_NORMAL));
-	}
+	/**
+	 * 根据登录名称查询用户
+	 * @param loginName
+	 * @return
+	 */
+	public User getByLoginName(User user);
 
-	public int updatePasswordById(String newPassword, String id){
-		return update("update User set password=:p1 where id = :p2", new Parameter(newPassword, id));
-	}
+	/**
+	 * 通过OfficeId获取用户列表，仅返回用户id和name（树查询用户时用）
+	 * @param user
+	 * @return
+	 */
+	public List<User> findUserByOfficeId(User user);
 	
-	public int updateLoginInfo(String loginIp, Date loginDate, String id){
-		return update("update User set loginIp=:p1, loginDate=:p2 where id = :p3", new Parameter(loginIp, loginDate, id));
-	}
+	/**
+	 * 查询全部用户数目
+	 * @return
+	 */
+	public long findAllCount(User user);
 	
+	/**
+	 * 更新用户密码
+	 * @param user
+	 * @return
+	 */
+	public int updatePasswordById(User user);
+	
+	/**
+	 * 更新登录信息，如：登录IP、登录时间
+	 * @param user
+	 * @return
+	 */
+	public int updateLoginInfo(User user);
+
+	/**
+	 * 删除用户角色关联数据
+	 * @param user
+	 * @return
+	 */
+	public int deleteUserRole(User user);
+	
+	/**
+	 * 插入用户角色关联数据
+	 * @param user
+	 * @return
+	 */
+	public int insertUserRole(User user);
+	
+	/**
+	 * 更新用户信息
+	 * @param user
+	 * @return
+	 */
+	public int updateUserInfo(User user);
+
 }

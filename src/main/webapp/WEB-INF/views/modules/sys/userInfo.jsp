@@ -29,8 +29,17 @@
 		<li class="active"><a href="${ctx}/sys/user/info">个人信息</a></li>
 		<li><a href="${ctx}/sys/user/modifyPwd">修改密码</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/info" method="post" class="form-horizontal">
-		<tags:message content="${message}"/>
+	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/info" method="post" class="form-horizontal"><%--
+		<form:hidden path="email" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+		<sys:ckfinder input="email" type="files" uploadPath="/mytask" selectMultiple="false"/> --%>
+		<sys:message content="${message}"/>
+		<div class="control-group">
+			<label class="control-label">头像:</label>
+			<div class="controls">
+				<form:hidden id="nameImage" path="photo" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+				<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">归属公司:</label>
 			<div class="controls">
@@ -86,9 +95,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">最后登陆:</label>
+			<label class="control-label">上次登录:</label>
 			<div class="controls">
-				<label class="lbl">IP: ${user.loginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.loginDate}" type="both" dateStyle="full"/></label>
+				<label class="lbl">IP: ${user.oldLoginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.oldLoginDate}" type="both" dateStyle="full"/></label>
 			</div>
 		</div>
 		<div class="form-actions">

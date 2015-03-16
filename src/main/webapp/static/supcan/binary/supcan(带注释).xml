@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Supcan的默认值 -->
+<!-- 本文件相当于是 supcan.xml 的使用指导，本文件不会被下载，真正会被自动下载的是 supcan.xml 文件 -->
+<!-- 允许修改元素的值、允许仅保留修改过的元素(但XML树的结构不能变) -->
+<root>
+<!-- 全局默认值 -->
+<global>
+	<!-- 皮肤色调, "Light Gray"-浅灰色; "Caramel"-焦糖色; "Lilian"-百合花色; "Lividity"-青黑色; "一个自定义的XML文件的URL" - 自定义皮肤, 例如<hue>../../myskin.xml</hue>，其中的路径相对于本文件 -->
+	<!-- 备注：等级低于 reg.ini 中记忆的hue值 -->
+	<hue>Lividity</hue>
+
+	<!-- 日期的值的格式, 也可以为 "%Y-%m-%d"、"%Y/%m/%d"-->
+	<dateformat>%Y.%m.%d</dateformat>
+	<datetimeformat>%Y.%m.%d %H:%M:%S</datetimeformat>
+
+	<!-- 多行编辑的换行，"Ctrl+Enter"-Ctrl加回车键换行; "Enter"-回车键就换行 -->
+	<MultiLineEnter>Ctrl+Enter</MultiLineEnter>
+	<!-- 多行编辑超宽时是否自动折行 -->
+	<isWordWrap>false</isWordWrap>
+
+	<!-- 用于Freeform、小型页面控件的默认背景色, "context"-从页面上下文环境辨认; 也可以是如"#00ffaa"这样的颜色串 -->
+	<bgColor>context</bgColor>
+
+	<!-- 是否允许从浏览器的缓存中读取http的请求，可用值及含义为：-->
+	<!--  "Cache" - 允许，http响应的内容受浏览器控制，静态内容未必能保证及时刷新；-->
+	<!--  "NoCache" - 访问所有URL均不允许缓存。 建议慎重选择之，因为在某些情况下会导致数据流量加大而影响性能;	-->
+	<!--  "localhostNoCache" - 仅在访问本地资源(http://localhost、或http://192.168...、http://127.0.0.1)时不允许缓存，因为在开发阶段，静态资源修改较频繁-->
+	<httpCache>localhostNoCache</httpCache>
+	
+	<!-- 硕正套件内部发出的 http 请求，如果超过若干秒种响应仍未到达，屏幕将自动给出一个MessageBoxFloat 提示框-->
+	<!-- 默认5(单位：秒), 0表示从不弹出提示-->
+	<httpConnectingPromptTimeout>5</httpConnectingPromptTimeout>
+
+	<!-- 设置硕正套件内部发出的 http 请求的 S/R (发送/接收) 超时, 单位为秒, 默认是0，即采用操作系统默认的超时(通常是30秒)-->
+	<!-- 如果后端计算的时间较长，必须设置该项的值，让其大于计算时间 -->
+	<httpSRTimeOut>0</httpSRTimeOut>
+
+	<!-- 是否自动对URL中的中文进行UTF-8转码，例如 "../doc/仓储/work.aspx" 转换成 "../doc/%e4%bb%93%e5%82%a8/work.aspx" -->
+	<!-- 可选："none" - 不转换；"full" - 整个URL全部转换; "para" - 仅转换?(问号)后面的参数部分 -->
+	<!-- 如下情况不会自动转换：1.服务器硕正bin包所在目录；2.硕正WebFile.bin内的文件上传下载功能 -->
+	<autoEncodeChineseURL>none</autoEncodeChineseURL>
+
+	<!-- 日期型输入的右侧旋转按钮，是否用于打开日历 -->
+	<!-- 注：仅用于 Treelist和Freeform的日期型输入 -->
+	<spinAsCalendar>false</spinAsCalendar>
+
+	<!-- 空的日期，在首次响应键盘鼠标动作时，自动赋予的一个初始值 -->
+	<!-- 注：仅用于 Treelist和Freeform的日期型输入 -->
+	<startDate>2000.1.1</startDate>
+	
+	<!-- 如何处理在异步计算/加载数据过程中意外的func函数调用。 "ignore" - 函数直接就返回，相当于忽略该js语句；"wait" - 等待直到异步线程终止再继续执行 -->
+	<!-- 注："wait" 是在主线程等待，有界面僵死的风险 -->
+	<callFuncWhenAsynch>ignore</callFuncWhenAsynch>
+	
+	<!-- 自定义统计图的颜色(例如圆饼图中的各个饼)，用逗号分隔，例如："#ff0000,#00ff00,#0000ff,#008800 ..." ，尽可能多地枚举 -->
+	<chartcolors></chartcolors>
+
+	<!-- 转换输出对话框的数据文件类型仅出现如下几种(空串表示全部): -->
+	<!-- 注：类型 json 仅用于Treelist -->
+	<convertDataFileType>xlsx, xls, htm, doc, txt, xml, dif, rtf, json</convertDataFileType>
+	<!-- 转换输出对话框的图片文件类型仅出现如下几种(空串表示全部): -->
+	<convertPictureFileType>pdf, png, tif, jpg, bmp, gif</convertPictureFileType>
+
+	<!-- 分瓶冻结的分隔条宽度和颜色,  其中的颜色分别是普通色、高亮色和低亮色-->
+	<SeparateBarWidth>3</SeparateBarWidth>
+	<SeparateBarColor>#F0F0F0,#FFFFFF,#C8C8C8</SeparateBarColor>
+</global>
+
+<!-- Treelist默认值 -->
+<Treelist>
+	<!-- 右键菜单，未选入的还有 "language"-语言切换; "printall"-打印全部(用于分页显示); "exportall"-转换输出全部(用于分页显示) -->
+	<!-- 部分项解释："pasteNewrow"-粘贴到新行; "deleteMore"-删除更多; "addSort"-加入多重排序;"selectCol"-自定义显示隐藏列; "hue"-色调; "separate"-分屏冻结; "displayAs"-以数/列表展现; "enter"-回车键行为-->
+	<menu>copy,paste,pasteNewrow,delete,deleteMore,insert,selectCol,print,addSort,export,import,hue,showruler,separate,expandTree,displayAs,enter</menu>
+
+	<!-- 不可编辑的列，是否允许被“粘帖” -->
+	<pasteAbleWhenUnEditAble>false</pasteAbleWhenUnEditAble>
+
+	
+	<!-- 转换输出的默认格式-->
+	<export>
+		<!-- mask - asData/asDisplay， 按纯数据输出/按显示格式转换输出 -->
+		<!-- dropdownMask - 下拉内容输出格式，为 asData/asDisplay/asDataDisplay，分别表示 纯数据/显示内容/按 “纯数据 - 显示内容” 格式输出 -->
+		<!-- isIncludeHead - true/false， 是否包含头部的标题 -->
+		<mask>asDisplay</mask>
+		<dropdownMask>asDisplay</dropdownMask>
+		<isIncludeHead>true</isIncludeHead>
+	</export>
+	
+	<Properties>
+		<!-- 修改过单元格醒目标记, "true"-是; "false"-否; "editAble"-取editAble -->
+		<isHiLightModified>false</isHiLightModified>
+		<!-- 新增行醒目标记, "true"-是; "false"-否; "editAble"-取editAble -->
+		<isHiLightNewRow>false</isHiLightNewRow>
+		<!-- 是否允许拖拽为多层表头 -->
+		<multiLayerAble>true</multiLayerAble>
+		<!-- 默认行高 -->
+		<rowHeight>19</rowHeight>
+		<!-- 表头(标题)高 -->
+		<headerHeight>24</headerHeight>
+		<!-- 表头(标题)字体 -->
+		<headerFontIndex></headerFontIndex>
+		<!-- disable的行的标记，"gray"-灰色文字; "deleteline"-文字带删除线; "none"-无标记 -->
+		<disableRowFlag>gray</disableRowFlag>
+		<!-- 当前行或区域的选择方式 可以为: row/rows/excel -->
+		<curselMode>row</curselMode>
+		<!-- 得到焦点时是否全选, 可以为: true/false/auto -->
+		<isSelectEditWhenFocus>auto</isSelectEditWhenFocus>
+		<!-- 左侧和顶部的渐变阴影滤镜 -->
+		<innerShadow>top.width=6;top.alpha=25;left.width=2;left.alpha=33</innerShadow>
+		<!-- 分屏冻结, "auto" - 超宽时会在左侧浮现分隔条; "true" - "始终浮现"; "false" - "始终不显示分隔条"-->
+		<separateBarStyle>auto</separateBarStyle>
+		<!-- 分屏冻结后，是否隐藏左窗的水平滚动条 -->
+		<isHideLeftScroll>true</isHideLeftScroll>
+		<!-- 分屏冻结后，是否冻结右(主)窗的水平滚动条 -->
+		<isFrozenWhenSeparate>true</isFrozenWhenSeparate>
+		<!-- 是否显示未选中的Radio (显示一个圆圈), 为true/false -->
+		<isDrawUncheckedRadio>false</isDrawUncheckedRadio>
+		<!-- 显示超出宽度的文字："0" - 自动换行、缩小字体，换行优先; "1"-不处理; "2"-自动缩小字体、换行，缩小字体优先; "3"-自动换行，但不缩小字体 -->
+		<autoBreakLine>0</autoBreakLine>
+		<!-- 下拉Treelist在选中后，是否自动将所选数据更新到Treelist -->
+		<autoUpdate>false</autoUpdate>
+		<!-- 淡入淡出效果, 0-255, 0表示关闭此效果 -->
+		<fadeInStep>20</fadeInStep>
+		<!-- 左标尺的宽度 -->
+		<leftWidth>35</leftWidth>
+		<!--下拉数据的加载方式: "asynch" - 异步; "synch" - 同步。建议采用异步，以提升性能体验-->
+		<dropDataLoadMode>asynch</dropDataLoadMode>
+	</Properties>
+	<Fonts>
+		<!-- 允许增加 <Font>，默认的字体 -->
+	</Fonts>
+	<col>
+		<!-- 默认列宽：比例因子0.1 -->
+		<width>0.1</width>
+		<!-- 当editable=false时，新增行是否可编辑; "true" - 可编辑; "false" - 仍不可编辑-->
+		<editableNewRow>false</editableNewRow>
+		<!-- 数值型显示时是否默认含千位符-->
+		<isThousandSeparat>true</isThousandSeparat>
+	</col>
+</Treelist>
+
+<!-- Freeform默认值 -->
+<Freeform>
+	<Properties>
+		<!-- 得到焦点时是否全选, 可以为: true/false/auto -->
+		<isSelectEditWhenFocus>auto</isSelectEditWhenFocus>
+		<!-- 高亮显示nullAble=false的输入框，具体设置请参看文档 -->
+		<HilightUnNullAble>false</HilightUnNullAble>
+		<!--下拉数据的加载方式: "asynch" - 异步; "synch" - 同步。建议采用异步，以提升性能体验-->
+		<dropDataLoadMode>asynch</dropDataLoadMode>
+	</Properties>
+	<Fonts>
+		<!-- 允许增加 <Font>，默认的字体 -->
+	</Fonts>
+	<Objects>
+		<Input>
+			<!-- 左侧文字对齐 -->
+			<LeftTextAlign>right</LeftTextAlign>
+		</Input>
+	</Objects>
+</Freeform>
+
+<!-- Report默认值 -->
+<Report>
+	<!-- 公式 "=datarow( )" 所在行如果有垂直合并，是否默认为“区块” -->
+	<DSAreaIfRowsMerged>false</DSAreaIfRowsMerged>
+	<!-- 中心数据源对话框的头部, "url" - 显示URL; "search" - 显示搜索; "none" - 没有头部 ; "auto"(默认) - 根据WorkMode自动设置， 运行时为 none,  设计时为 url-->
+	<DSCenterDialogHeader>auto</DSCenterDialogHeader>
+	<!-- 中心数据源URL，使得页面中可以不书写 SetSource( ) 函数 -->
+	<DSCenterURL></DSCenterURL>
+	<!-- 清理数据源填入数据时，公式"=data(..)"的单元格(或文本框) 如何赋值： "none" - 空白； "name" - 显示列名； "Title" - 显示列的中文名 -->
+	<DSDataFunctionText>none</DSDataFunctionText>
+	<!-- 淡入淡出效果, 0-255, 0表示关闭此效果 -->
+	<fadeInStep>5</fadeInStep>
+	<!-- 图片单元格，当URL无效时的显示内容, "Text"-显示文本; "none"-空白 -->
+	<DrawInvalidPicture>Text</DrawInvalidPicture>
+</Report>
+
+</root>

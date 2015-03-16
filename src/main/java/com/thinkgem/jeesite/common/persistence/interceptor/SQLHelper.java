@@ -1,7 +1,5 @@
 /**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.persistence.interceptor;
 
@@ -154,7 +152,7 @@ public class SQLHelper {
     
     /** 
      * 去除qlString的select子句。 
-     * @param qlString
+     * @param hql 
      * @return 
      */  
     @SuppressWarnings("unused")
@@ -165,7 +163,7 @@ public class SQLHelper {
       
     /** 
      * 去除hql的orderBy子句。 
-     * @param qlString
+     * @param hql 
      * @return 
      */  
     @SuppressWarnings("unused")

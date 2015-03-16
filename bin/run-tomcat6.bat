@@ -1,9 +1,18 @@
 @echo off
-echo [INFO] Use maven tomcat6-plugin run the project.
+rem /**
+rem  * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+rem  *
+rem  * Author: ThinkGem@163.com
+rem  */
+title %cd%
+echo.
+echo [信息] 使用Tomcat6插件运行工程。
+echo.
+rem pause
+rem echo.
 
-%~d0
 cd %~dp0
-cd ..
+cd..
 
 set MAVEN_OPTS=%MAVEN_OPTS% -Xms256m -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
 call mvn tomcat6:run

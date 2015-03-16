@@ -1,0 +1,70 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Img 或 Image" example='1.体验Freeform、6.动态更改属性(1)中的js部分、10.多记录Freeform(1)、12.多记录Freeform(3)' meaning="图片的属性" number="0-n">
+<element name="src/URL" meaning="图片的URL，支持jpg、bmp、png、gif、tif、ico格式">
+	<category>外观</category>
+	<value>URL串, 支持&lt;a href="../dev/pub.htm#Tag605" target=_blank&gt;图片扩展URL&lt;/a&gt;</value>
+</element>
+<element name="isTransparent" meaning="是否透明，即是否以SRCAND画图">
+	<category>外观</category>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="isUseOriSize" meaning="是否以原始尺寸显示">
+	<category>外观</category>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="arrange" meaning="当图片尺寸和矩形框不相等时，图片的显示排列方式">
+	<category>外观</category>
+	<value meaning="平铺">tile</value>
+	<value meaning="伸展">stretch</value>
+	<value meaning='单幅原样显示，水平、垂直的对齐组合, 例如"bottom,right"'>(left/center/right) 和 (top/middle/bottom)的组合</value>
+	<memo>仅用于 isUseOriSize 为 false 时</memo>
+</element>
+<element name="alpha" meaning="透明度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 255</value>
+	<default>255</default>
+</element>
+<element name="gamma" meaning="Gamma校正">
+	<category>外观</category>
+	<datatype>double</datatype>
+	<value>1.0表示正常亮度, 小于1变亮，大于1变暗</value>
+	<default>1.0</default>
+</element>
+<element name="rotate" meaning="顺时针旋转一个角度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>0 - 360, 顺时针旋转</value>
+	<default>0</default>
+</element>
+<element name="flip" meaning="翻转">
+	<category>外观</category>
+	<value meaning="垂直翻转">Vert</value>
+	<value meaning="水平翻转">Horz</value>
+</element>
+<element name="isGray" meaning="是否以黑白(灰度)显示">
+	<category>外观</category>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="transparentColor" meaning="指定图片的透明色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+</element>
+<element name="pathId" meaning="使用路径">
+	<category>外观</category>
+	<value>&amp;lt;Paths&amp;gt;中某个Path资源，表示肯定画在该封闭Path内，不太常用</value>
+</element>
+<element name="isBindingCol" meaning="是否数据绑定列">
+	<category>数据</category>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<memo>用于函数GetChangedXML()生成的XML串、以及 Load( ) 加载的数据</memo>
+</element>
+</elements>
+
+</root>

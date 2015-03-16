@@ -1,7 +1,5 @@
 /**
  * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package com.thinkgem.jeesite.common.utils;
 
@@ -32,7 +30,7 @@ public class Encodes {
 	 * Hex编码.
 	 */
 	public static String encodeHex(byte[] input) {
-		return Hex.encodeHexString(input);
+		return new String(Hex.encodeHex(input));
 	}
 
 	/**
@@ -50,21 +48,43 @@ public class Encodes {
 	 * Base64编码.
 	 */
 	public static String encodeBase64(byte[] input) {
-		return Base64.encodeBase64String(input);
+		return new String(Base64.encodeBase64(input));
+	}
+	
+	/**
+	 * Base64编码.
+	 */
+	public static String encodeBase64(String input) {
+		try {
+			return new String(Base64.encodeBase64(input.getBytes(DEFAULT_URL_ENCODING)));
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 
-	/**
-	 * Base64编码, URL安全(将Base64中的URL非法字符'+'和'/'转为'-'和'_', 见RFC3548).
-	 */
-	public static String encodeUrlSafeBase64(byte[] input) {
-		return Base64.encodeBase64URLSafeString(input);
-	}
+//	/**
+//	 * Base64编码, URL安全(将Base64中的URL非法字符'+'和'/'转为'-'和'_', 见RFC3548).
+//	 */
+//	public static String encodeUrlSafeBase64(byte[] input) {
+//		return Base64.encodeBase64URLSafe(input);
+//	}
 
 	/**
 	 * Base64解码.
 	 */
 	public static byte[] decodeBase64(String input) {
-		return Base64.decodeBase64(input);
+		return Base64.decodeBase64(input.getBytes());
+	}
+	
+	/**
+	 * Base64解码.
+	 */
+	public static String decodeBase64String(String input) {
+		try {
+			return new String(Base64.decodeBase64(input.getBytes()), DEFAULT_URL_ENCODING);
+		} catch (UnsupportedEncodingException e) {
+			return "";
+		}
 	}
 
 	/**
@@ -96,7 +116,7 @@ public class Encodes {
 	 * Xml 转码.
 	 */
 	public static String escapeXml(String xml) {
-		return StringEscapeUtils.escapeXml(xml);
+		return StringEscapeUtils.escapeXml10(xml);
 	}
 
 	/**

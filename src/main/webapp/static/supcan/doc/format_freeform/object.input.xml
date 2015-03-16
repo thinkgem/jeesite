@@ -1,0 +1,409 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<root>
+<elements name="Input" meaning="输入对象的属性" number="0-n">
+<element name="type/editType" meaning="输入控件类型">
+	<category>主要</category>
+	<datatype>string</datatype>
+	<enable>false</enable>
+	<value meaning="最普通、允许EditMask的编辑">Edit</value>
+	<value meaning="右侧有按钮的Edit">EditWithButton</value>
+	<value meaning="多行编辑(默认以Ctrl+Enter换行)">MultiLineEdit</value>
+	<value meaning="复选框">Checkbox/Check</value>
+	<value meaning="单选框">RadioButton/Radio</value>
+	<value meaning="按钮">Button</value>
+	<value meaning="下拉列表">Droplist</value>
+	<value meaning="可编辑的下拉列表">EditAbleDroplist</value>
+	<value meaning="下拉嵌套的treelist">Droptreelist</value>
+	<value meaning="可编辑的下拉嵌套treelist">EditAbleDroptreelist</value>
+	<value meaning="文件上传输入控件">Upload</value>
+	<value meaning="密码输入控件">password/pwd</value>
+	<example/>
+	<memo/>
+	<group/>
+	<editType>edit</editType>
+	<includeOnly/>
+	<excludeOnly/>
+	<default>Edit</default>
+</element>
+<element name="tabOrder" meaning="输入顺序">
+	<category>行为</category>
+	<datatype>int</datatype>
+	<value>数字</value>
+	<editType>edit</editType>
+	<default>-1</default>
+</element>
+<element name="enable" meaning="Enable">
+	<category>行为</category>
+	<value>true/false/readonly(仅用于有输入框的input)</value>
+	<default>true</default>
+</element>
+<element name="editAble" meaning="是否可输入">
+	<category>行为</category>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<excludeOnly>Button</excludeOnly>
+</element>
+<element name="nullAble" meaning="是否允许为空">
+	<category>数据</category>
+	<datatype>bool</datatype>
+	<default>true</default>
+	<example>8.有表头表体的表单(1)</example>
+	<includeOnly>Edit*</includeOnly>
+</element>
+<element name="align" meaning="水平对齐">
+	<category>外观</category>
+	<value>left/center/right</value>
+	<default>和数据类型有关</default>
+	<excludeOnly>Button,checkbox,radiobutton</excludeOnly>
+</element>
+<element name="leftText" meaning="左侧文字">
+	<category>外观</category>
+	<value>串</value>
+	<excludeOnly>Button</excludeOnly>
+	<example>1.体验Freeform</example>
+</element>
+<element name="leftTextAlign/alignLeftText" meaning="左侧文字对齐">
+	<category>外观</category>
+	<value>left/center/right</value>
+	<default>right</default>
+	<excludeOnly>Button</excludeOnly>
+</element>
+<element name="leftSize" meaning="左侧文字宽度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>如果Input是嵌在tableLayout中，表示跨越的列数(当 width>1 时)， 否则表示像素数</value>
+	<memo>如果是像素数, LeftSize, EditSize选其一即可</memo>
+	<excludeOnly>Button</excludeOnly>
+	<example>1.体验Freeform</example>
+</element>
+<element name="editSize" meaning="右侧输入框宽度">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>如果Input是嵌在tableLayout中，表示跨越的列数(当 width>1 时)， 否则表示像素数</value>
+	<memo>如果是像素数, LeftSize, EditSize选其一即可</memo>
+	<excludeOnly>Button</excludeOnly>
+</element>
+<element name="color/textColor" meaning="左侧文字的颜色">
+	<category>外观</category>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<excludeOnly>Button</excludeOnly>
+	<default>#000000</default>
+</element>
+<element name="fontIndex" meaning="字体">
+	<category>外观</category>
+	<datatype>int</datatype>
+	<value>数字，指向在&amp;lt;Fonts&amp;gt;中定义的字体的顺序号，从0开始计数</value>
+	<default>0</default>
+</element>
+<element name="value" meaning="初始值">
+	<category>数据</category>
+	<value>串</value>
+	<example>1.体验Freeform</example>
+</element>
+<element name="border" meaning="输入框的边框">
+	<category>外观</category>
+	<value meaning="有边界">空</value>
+	<value meaning="表示无边界">none</value>
+	<excludeOnly>Button</excludeOnly>
+</element>
+<element name="isSelectEditWhenFocus" meaning="当输入框取得焦点时，光标是否选中全部文字">
+	<category>行为</category>
+	<value meaning="全选">true</value>
+	<value meaning="不选">false</value>
+	<value meaning="自动, 表示为数值型(int、double)时全选">auto</value>
+	<includeOnly>Edit*</includeOnly>
+	<default>沿用&amp;lt;Properties&amp;gt;</default>
+</element>
+
+
+<element name="droplistId" meaning="下拉框的相关联的下拉资源ID">
+	<category>数据</category>
+	<group>Droplist/DropTreelist</group>
+	<value>串，该ID必须存在于下面的&amp;lt;Droplists&amp;gt;节点中</value>
+	<example>3.多种下拉、4.关联下拉</example>
+</element>
+<element name="freeInputAble" meaning="输入内容是否受限">
+	<category>行为</category>
+	<group>Droplist/DropTreelist</group>
+	<value meaning="可任意输入，内容不受限制">true</value>
+	<value meaning="受Droplist中的dataCol、dispCol限制, 输入内容必须和dataCol、dispCol匹配, 否则输入无效">false</value>
+	<includeOnly>EditAbleDropTreelist</includeOnly>
+	<default>false</default>
+</element>
+<element name="emptyPrompt" meaning="未输入时显示的提示">
+	<category>外观</category>
+	<group>Droplist/DropTreelist</group>
+	<value>串，例如"-请输入-|-Input-"</value>
+</element>
+<element name="delayBeforeDropdown" meaning="BeforeDropdown事件重复触发的最短时间差">
+	<category>行为</category>
+	<group>Droplist/DropTreelist</group>
+	<datatype>int</datatype>
+	<value>秒</value>
+	<default>0</default>
+</element>
+<element name="dropdownWidth" meaning="强制设定下拉窗的宽度">
+	<category>外观</category>
+	<group>Droplist/DropTreelist</group>
+	<value>像素数或百分比</value>
+	<memo>百分比是指相对于输入框的宽度</memo>
+</element>
+<element name="dropdownHeight" meaning="强制设定下拉窗的高度">
+	<category>外观</category>
+	<group>Droplist/DropTreelist</group>
+	<value>像素数或百分比</value>
+	<memo>百分比是指相对于屏幕的高度</memo>
+</element>
+<element name="isDropDownWhenFocus" meaning="是否得到焦点就自动弹出下拉">
+	<category>外观</category>
+	<group>Droplist/DropTreelist</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+<element name="datatype" meaning="数据类型">
+	<category>主要</category>
+	<group>Edit</group>
+	<value>string / int / double / bool / date / datetime</value>
+	<default>string</default>
+</element>
+<element name="editmask" meaning="日期型、数值型的输入掩码">
+	<category>行为</category>
+	<group>Edit</group>
+	<value>对于日期型，例如YYYY.MM.DD hh:mm:ss&lt;br&gt;对于数值型，例如 ##,###,###.00 (表示千位符分隔、小数点2位)、 +00000 (表示最长5位的正整数)、#,###.#(表示千位符分隔、小数位数不确定)</value>
+	<example>1.体验Freeform</example>
+</element>
+<element name="spin" meaning="输入框内的垂直旋转滚动条">
+	<category>行为</category>
+	<group>Edit</group>
+	<datatype>bool</datatype>
+	<memo>仅用于int、date、datetime型</memo>
+	<default>日期型是true</default>
+	<example>2.多种掩码输入</example>
+</element>
+<element name="spinAsCalendar" meaning="右侧显示下拉按钮、点击弹出日历">
+	<category>行为</category>
+	<group>Edit</group>
+	<datatype>bool</datatype>
+	<memo>仅用于date、datetime型</memo>
+	<memo>spin="true"才生效</memo>
+	<default>false</default>
+</element>
+<element name="max" meaning="最大值">
+	<category>数据</category>
+	<group>Edit</group>
+	<value>值串</value>
+	<memo>仅用于int、double、date、datetime型</memo>
+	<example>2.多种掩码输入</example>
+</element>
+<element name="min" meaning="最小值">
+	<category>数据</category>
+	<group>Edit</group>
+	<value>值串</value>
+	<memo>仅用于int、double、date、datetime型</memo>
+	<example>2.多种掩码输入</example>
+</element>
+<element name="maxChars" meaning="字符串长度限定">
+	<category>数据</category>
+	<group>Edit</group>
+	<datatype>int</datatype>
+	<default>0</default>
+	<value>长度限制，以Unicode计(中英文均以 '字' 为单位)</value>
+	<memo>不能同时使用maxChars和maxMBytes, 仅用于string型</memo>
+	<example>2.多种掩码输入</example>
+</element>
+<element name="maxMBytes" meaning="字符串长度限定">
+	<category>数据</category>
+	<group>Edit</group>
+	<datatype>int</datatype>
+	<default>0</default>
+	<value>长度限制，以字节计(中文算2字节、英文1字节)</value>
+	<memo>不能同时使用maxChars和maxMBytes, 仅用于string型</memo>
+	<example>2.多种掩码输入</example>
+</element>
+<element name="defaultValue" meaning="初始值">
+	<category>数据</category>
+	<group>Edit</group>
+	<value>支持以“=”开头的表达式</value>
+	<memo>Input的“id”不得为空，否则无效</memo>
+	<example>1.体验Freeform、2.多种掩码输入</example>
+</element>
+<element name="startDate" meaning="日期为空时，在输入时的起跳日期(即开始日期)">
+	<category>数据</category>
+	<group>Edit</group>
+	<value>日期串，也可以是表达式</value>
+	<memo>仅用于date、datetime型</memo>
+	<default>2000.1.1</default>
+</element>
+<element name="textId" meaning="指定用于显示的数据列的列名(出现在数据的XML中)">
+	<category>数据</category>
+	<group>Edit</group>
+	<value>串</value>
+	<memo>可参考树列表中的同名属性</memo>
+</element>
+
+<element name="freeInputAble" meaning="是否允许键盘输入">
+	<category>数据</category>
+	<group>EditWithButton</group>
+	<datatype>bool</datatype>
+	<memo>如果指定了droplistID(即绑定了字典)，则强制为false</memo>
+	<default>true</default>
+</element>
+<element name="droplistId" meaning="下拉资源ID，作为Key-Value的字典">
+	<category>数据</category>
+	<group>EditWithButton</group>
+	<value>串，该ID必须存在于下面的&amp;lt;Droplists&amp;gt;节点中, 也可以为"auto"，表示自动创建一个空的下拉字典</value>
+</element>
+<element name="image/img" meaning="右侧按钮的图标">
+	<category>外观</category>
+	<group>EditWithButton</group>
+	<value>URL</value>
+</element>
+<element name="textId" meaning="指定用于显示的数据列的列名(出现在数据的XML中)">
+	<category>数据</category>
+	<group>EditWithButton</group>
+	<value>串</value>
+</element>
+
+<element name="isWordWrap" meaning="超宽时是否自动折行">
+	<category>行为</category>
+	<group>MultiLineEdit</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+</element>
+
+<element name="text" meaning="Checkbox的文字">
+	<category>外观</category>
+	<group>CheckBox</group>
+	<value>串</value>
+	<example>1.体验Freeform</example>
+</element>
+
+
+<element name="text" meaning="RadioButton的文字">
+	<category>外观</category>
+	<group>RadioButton</group>
+	<value>串</value>
+	<example>1.体验Freeform</example>
+</element>
+<element name="groupID" meaning="分组的ID">
+	<category>数据</category>
+	<group>RadioButton</group>
+	<value>串，必需</value>
+	<example>1.体验Freeform</example>
+</element>
+<element name="selectValue" meaning="真实的值">
+	<category>数据</category>
+	<group>RadioButton</group>
+	<value>串, 用于GetChangedXML( )函数</value>
+	<example>1.体验Freeform</example>
+</element>
+
+
+<element name="text/value" meaning="按钮上的文字">
+	<category>外观</category>
+	<group>Button</group>
+	<value>串</value>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="tip/toolTip" meaning="鼠标滑过时的黄底文字">
+	<category>行为</category>
+	<group>Button</group>
+	<value>串</value>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="textColor" meaning="文字颜色">
+	<category>外观</category>
+	<group>Button</group>
+	<datatype>color</datatype>
+	<value>颜色串</value>
+	<default>#000000</default>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="style" meaning="按钮的样式">
+	<category>外观</category>
+	<group>Button</group>
+	<value>为如下串的组合、逗号分隔:</value>
+	<value meaning="平坦的按钮，无凸起">flat</value>
+	<value meaning="全透明的平坦按钮">transparent</value>
+	<value meaning="圆角矩形的平坦按钮">round</value>
+	<value meaning="鼠标滑过时保持不变">noMouseHover</value>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="bgColor/backColor" meaning="自定义按钮色">
+	<category>外观</category>
+	<group>Button</group>
+	<value>颜色串，多个颜色间以逗号分隔，通常为1、3、4个颜色</value>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="icon/image/picture" meaning="按钮小图标">
+	<category>外观</category>
+	<group>Button</group>
+	<value>URL，支持&lt;a href="../dev/pub.htm#Tag605" target=_blank&gt;图片扩展URL&lt;/a&gt;, 图片支持ico、bmp、jpg、png、gif</value>
+	<example>5.事件、按钮、菜单、工具条,  7.动态更改属性(2)</example>
+</element>
+<element name="at" meaning="小图标相对于文字的位置">
+	<category>外观</category>
+	<group>Button</group>
+	<value>left / right / top / bottom</value>
+	<default>left</default>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="distance/dis" meaning="小图标与文字的距离">
+	<category>外观</category>
+	<group>Button</group>
+	<datatype>int</datatype>
+	<value>像素数</value>
+	<default>4</default>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="menuID" meaning="下拉菜单ID">
+	<category>数据</category>
+	<group>Button</group>
+	<value>指向菜单资源ID串，即&amp;lt;Menus&amp;gt; \ &amp;lt;Menu&amp;gt;的id</value>
+	<example>5.事件、按钮、菜单、工具条</example>
+</element>
+<element name="isDynamicMenu" meaning="是否动态下拉菜单">
+	<category>行为</category>
+	<group>Button</group>
+	<datatype>bool</datatype>
+	<default>false</default>
+	<example>6.动态更改属性(1)</example>
+</element>
+
+
+<element name="fileTypes" meaning="允许的文件类型">
+	<category>行为</category>
+	<group>Upload</group>
+	<value>为文件后缀，后缀间以逗号分隔，如"bmp,jpg,png"。 后缀也可以是星号(*)，例如"bmp,jpg, *"，带星号表示允许选任何文件，前面的后缀只是起引导作用</value>
+</element>
+<element name="files" meaning="文件个数限制">
+	<category>行为</category>
+	<group>Upload</group>
+	<datatype>int</datatype>
+	<value>数字，0表示无限制</value>
+	<default>0</default>
+	<example>17.文件上传</example>
+</element>
+<element name="fileMaxKb" meaning="单个文件的长度限制">
+	<category>行为</category>
+	<group>Upload</group>
+	<datatype>int</datatype>
+	<value>数字，单位为KB，0表示不限制</value>
+	<default>0</default>
+</element>
+<element name="pictureMaxSize" meaning="图片文件的尺寸限制">
+	<category>行为</category>
+	<group>Upload</group>
+	<value>2个数字，以逗号分隔，分别表示横向/纵向的像素数，0表示不限制</value>
+	<memo>只能辨认后缀是BMP、JPG、PNG、GIF、TIF的图片文件</memo>
+	<default>0,0</default>
+</element>
+</elements>
+
+<comments>
+	<comment>如果设定了LeftText，那么必须设定 LeftSize 或 EditSize (只要有其一即可)，否则无法保证输入框在垂直方向的对齐</comment>
+	<comment>下拉Treelist也可以不采用droplistID，而使用诸如treelistURL、DataCol、DisplayCol属性以自行指定下拉Treelist</comment>
+	<comment>leftText、text、tip允许以"|"分隔中英文(用于中英文切换)</comment>
+</comments>
+</root>
