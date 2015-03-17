@@ -47,7 +47,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		Date updateExpiredWeightDate =  (Date)CacheUtils.get("updateExpiredWeightDateByArticle");
 		if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null 
 				&& updateExpiredWeightDate.getTime() < new Date().getTime())){
-			dao.updateExpiredWeight();
+			dao.updateExpiredWeight(article);
 			CacheUtils.put("updateExpiredWeightDateByArticle", DateUtils.addHours(new Date(), 6));
 		}
 //		DetachedCriteria dc = dao.createDetachedCriteria();

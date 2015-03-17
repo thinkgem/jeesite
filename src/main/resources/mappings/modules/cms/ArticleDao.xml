@@ -47,17 +47,23 @@
 		FROM cms_article a
 		<include refid="cmsArticleJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{delFlag}
 			<if test="title != null and title != ''">
-				AND a.title LIKE '%'||#{title}||'%'
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 			</if>
 			<if test="posid != null and posid != ''">
-				AND a.posid LIKE '%'||#{posid}||'%'
+				AND a.posid LIKE 
+					<if test="dbName == 'oracle'">'%'||#{posid}||'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{posid}, '%')</if>
 			</if>
 			<if test="category.id != null and category.id != ''">
-				AND (a.category_id = #{category.id} <!-- or c.parent_ids like '%,'||#{category.id}||',%' -->
+				AND (a.category_id = #{category.id}
 				<if test="category.parentIds != null and category.parentIds != ''">
-					or c.parent_ids like '%,'||#{category.id}||',%'
+					or c.parent_ids like 
+						<if test="dbName == 'oracle'">'%'||#{category.id}||'%'</if>
+						<if test="dbName == 'mysql'">CONCAT('%,', #{category.id}, ',%')</if>
 				</if>)
 			</if>
 			<if test="image != null and image != ''">
@@ -160,7 +166,8 @@
 			create_date = #{createDate},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			del_flag = #{delFlag}
 		WHERE id = #{id}
 	</update>
 	
@@ -182,7 +189,9 @@
 	<update id="updateExpiredWeight">
 		update cms_article SET
 			 weight = 0
-		WHERE weight &gt; 0 AND weight_date &lt; sysdate
+		WHERE weight &gt; 0 AND weight_date &lt; 
+			<if test="dbName == 'oracle'">sysdate</if>
+			<if test="dbName == 'mysql'">CURDATE()</if>
 	</update>
 	
 	<update id="updateHitsAddOne">
@@ -209,7 +218,9 @@
 			a.del_flag = #{DEL_FLAG_NORMAL} 
 			AND c.site_id = #{site.id}
 			<if test="office.id != null and office.id != ''">
-				AND (c.office_id = #{office.id} OR o.parent_ids like '%'||#{office.id}||'%')
+				AND (c.office_id = #{office.id} OR o.parent_ids like 
+					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{office.id}, '%')</if>)
 			</if>
 			<if test="beginDate != null and beginDate != ''">
 				AND a.update_date <![CDATA[ >= #{beginDate} ]]>
@@ -218,7 +229,9 @@
 				AND a.update_date <![CDATA[ <= #{endDate} ]]>
 			</if>
 			<if test="id != null and id != ''">
-				AND (c.id = #{id} OR c.parent_ids LIKE '%'||#{id}||'%')
+				AND (c.id = #{id} OR c.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%'||#{id}||'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{id}, '%')</if>)
 			</if>
 			group by cp.sort, cp.id, c.sort, c.id
 			order by cp.sort, cp.id, c.sort, c.id

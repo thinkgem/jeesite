@@ -130,10 +130,5 @@
 			id in ();
 		</where>		
 	</select>
-
-	<update id="updateExpiredWeight">
-		update cms_guestbook SET
-			 weight=0
-		WHERE weight > 0
-	</update>
+	
 </mapper>

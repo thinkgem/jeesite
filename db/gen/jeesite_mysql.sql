@@ -1,11 +1,11 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Tables */
+/* Drop Tables*/
 
-DROP TABLE gen_scheme;
-DROP TABLE gen_table_column;
-DROP TABLE gen_table;
-DROP TABLE gen_template;
+DROP TABLE IF EXISTS gen_scheme;
+DROP TABLE IF EXISTS gen_table_column;
+DROP TABLE IF EXISTS gen_table;
+DROP TABLE IF EXISTS gen_template; 
 
 
 

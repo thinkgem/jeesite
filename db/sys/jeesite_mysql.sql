@@ -2,17 +2,17 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE sys_role_office;
-DROP TABLE sys_user_role;
-DROP TABLE sys_user;
-DROP TABLE sys_office;
-DROP TABLE sys_area;
-DROP TABLE sys_dict;
-DROP TABLE sys_log;
-DROP TABLE sys_mdict;
-DROP TABLE sys_role_menu;
-DROP TABLE sys_menu;
-DROP TABLE sys_role;
+DROP TABLE IF EXISTS sys_role_office;
+DROP TABLE IF EXISTS sys_user_role;
+DROP TABLE IF EXISTS sys_user;
+DROP TABLE IF EXISTS sys_office;
+DROP TABLE IF EXISTS sys_area;
+DROP TABLE IF EXISTS sys_dict;
+DROP TABLE IF EXISTS sys_log;
+DROP TABLE IF EXISTS sys_mdict;
+DROP TABLE IF EXISTS sys_role_menu;
+DROP TABLE IF EXISTS sys_menu;
+DROP TABLE IF EXISTS sys_role;
 
 
 
@@ -59,7 +59,7 @@ CREATE TABLE sys_dict
 
 CREATE TABLE sys_log
 (
-	id varchar(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
+	id varchar(64) NOT NULL COMMENT '编号',
 	type char(1) DEFAULT '1' COMMENT '日志类型',
 	title varchar(255) DEFAULT '' COMMENT '日志标题',
 	create_by varchar(64) COMMENT '创建者',
@@ -219,7 +219,7 @@ CREATE TABLE sys_user_role
 /* Create Indexes */
 
 CREATE INDEX sys_area_parent_id ON sys_area (parent_id ASC);
-CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids ASC);
+/*CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids ASC);*/
 CREATE INDEX sys_area_del_flag ON sys_area (del_flag ASC);
 CREATE INDEX sys_dict_value ON sys_dict (value ASC);
 CREATE INDEX sys_dict_label ON sys_dict (label ASC);
@@ -229,13 +229,13 @@ CREATE INDEX sys_log_request_uri ON sys_log (request_uri ASC);
 CREATE INDEX sys_log_type ON sys_log (type ASC);
 CREATE INDEX sys_log_create_date ON sys_log (create_date ASC);
 CREATE INDEX sys_mdict_parent_id ON sys_mdict (parent_id ASC);
-CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids ASC);
+/*CREATE INDEX sys_mdict_parent_ids ON sys_mdict (parent_ids ASC);*/
 CREATE INDEX sys_mdict_del_flag ON sys_mdict (del_flag ASC);
 CREATE INDEX sys_menu_parent_id ON sys_menu (parent_id ASC);
-CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids ASC);
+/*CREATE INDEX sys_menu_parent_ids ON sys_menu (parent_ids ASC);*/
 CREATE INDEX sys_menu_del_flag ON sys_menu (del_flag ASC);
 CREATE INDEX sys_office_parent_id ON sys_office (parent_id ASC);
-CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids ASC);
+/*CREATE INDEX sys_office_parent_ids ON sys_office (parent_ids ASC);*/
 CREATE INDEX sys_office_del_flag ON sys_office (del_flag ASC);
 CREATE INDEX sys_office_type ON sys_office (type ASC);
 CREATE INDEX sys_role_del_flag ON sys_role (del_flag ASC);
