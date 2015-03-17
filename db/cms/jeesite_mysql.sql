@@ -1,18 +1,12 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Tables */
-
-DROP TABLE cms_article_data;
-DROP TABLE cms_article;
-DROP TABLE cms_comment;
-DROP TABLE cms_link;
-DROP TABLE cms_category;
-DROP TABLE cms_guestbook;
-DROP TABLE cms_site;
-
-
-
-
+DROP TABLE IF EXISTS cms_article;
+DROP TABLE IF EXISTS cms_article_data;
+DROP TABLE IF EXISTS cms_category;
+DROP TABLE IF EXISTS cms_comment;
+DROP TABLE IF EXISTS cms_guestbook;
+DROP TABLE IF EXISTS cms_link;
+DROP TABLE IF EXISTS cms_site;
 /* Create Tables */
 
 CREATE TABLE cms_article
@@ -174,7 +168,7 @@ CREATE INDEX cms_article_weight ON cms_article (weight ASC);
 CREATE INDEX cms_article_update_date ON cms_article (update_date ASC);
 CREATE INDEX cms_article_category_id ON cms_article (category_id ASC);
 CREATE INDEX cms_category_parent_id ON cms_category (parent_id ASC);
-CREATE INDEX cms_category_parent_ids ON cms_category (parent_ids ASC);
+/*CREATE INDEX cms_category_parent_ids ON cms_category (parent_ids ASC);*/
 CREATE INDEX cms_category_module ON cms_category (module ASC);
 CREATE INDEX cms_category_name ON cms_category (name ASC);
 CREATE INDEX cms_category_sort ON cms_category (sort ASC);

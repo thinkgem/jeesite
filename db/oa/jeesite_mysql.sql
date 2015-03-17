@@ -2,10 +2,10 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE oa_leave;
-DROP TABLE oa_notify_record;
-DROP TABLE oa_notify;
-DROP TABLE OA_TEST_AUDIT;
+DROP TABLE IF EXISTS oa_leave;
+DROP TABLE IF EXISTS oa_notify_record;
+DROP TABLE IF EXISTS oa_notify;
+DROP TABLE IF EXISTS OA_TEST_AUDIT;
 
 
 

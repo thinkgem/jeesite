@@ -25,13 +25,13 @@
 		<include refid="genTemplateJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 		<if test="name != null and name != ''">
-			AND a.name LIKE '%'||#{name}||'%'
+			AND a.name LIKE 
 				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 		</if>
 		<if test="category != null and category != ''">
-			AND a.category LIKE '%,'||#{category}||',%'
+			AND a.category LIKE 
 				<if test="dbName == 'oracle'">'%'||#{category}||'%'</if>
 				<if test="dbName == 'mssql'">'%'+#{category}+'%'</if>
 				<if test="dbName == 'mysql'">concat('%',#{category},'%')</if>
