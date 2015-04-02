@@ -93,6 +93,9 @@ public class GenSchemeService extends BaseService {
 		
 		//拼接config文件路径，用来验证设置的path是否正确。
 		String configPath = srcPath + File.separator + packagePath + File.separator + "config.xml";
+		
+		logger.info("计算出来的config.xml的位置为：" + configPath);
+		
 		File configFile = new File(configPath);
 		if(!configFile.exists()){
 			return false;
