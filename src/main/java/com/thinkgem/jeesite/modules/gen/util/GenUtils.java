@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.DefaultResourceLoader;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -179,10 +180,17 @@ public class GenUtils {
 	 * @return
 	 */
 	public static String getTemplatePath(){
-		String path = StringUtils.getProjectPath() + StringUtils.replaceEach(".src.main.java." + GenUtils.class.getName(), 
-				new String[]{"util."+GenUtils.class.getSimpleName(), "."}, new String[]{"template", File.separator});
-//		logger.debug("template path: {}", path);
-		return path;
+		try{
+			File file = new DefaultResourceLoader().getResource("").getFile();
+			if(file != null){
+				return file.getAbsolutePath() + File.separator + StringUtils.replaceEach(GenUtils.class.getName(), 
+						new String[]{"util."+GenUtils.class.getSimpleName(), "."}, new String[]{"template", File.separator});
+			}			
+		}catch(Exception e){
+			logger.error("{}", e);
+		}
+
+		return "";
 	}
 	
 	/**
@@ -295,7 +303,7 @@ public class GenUtils {
 	 */
 	public static String generateToFile(GenTemplate tpl, Map<String, Object> model, boolean isReplaceFile){
 		// 获取生成文件    "c:\\temp\\"//
-		String fileName = StringUtils.getProjectPath() + File.separator 
+		String fileName = Global.getConfig("srcPath") + File.separator 
 				+ StringUtils.replaceEach(FreeMarkers.renderString(tpl.getFilePath() + "/", model), 
 						new String[]{"//", "/", "."}, new String[]{File.separator, File.separator, File.separator})
 				+ FreeMarkers.renderString(tpl.getFileName(), model);
