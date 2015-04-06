@@ -3,7 +3,6 @@
  */
 package com.thinkgem.jeesite.modules.gen.service;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
@@ -73,35 +71,6 @@ public class GenSchemeService extends BaseService {
 	@Transactional(readOnly = false)
 	public void delete(GenScheme genScheme) {
 		genSchemeDao.delete(genScheme);
-	}
-	
-	/**
-	 * 检查配置文件中配置的srcPath是否正确。
-	 * @return
-	 */
-	public boolean checkSrcPathConfig(){
-		String srcPath = Global.getConfig("srcPath");
-		if(StringUtils.isBlank(srcPath)){
-			logger.error("未在“jeesite.properties”中配置“srcPath”！");
-			return false;
-		}
-		
-		//获取包的路径
-		String packagePath = StringUtils.replaceEach("src.main.java." + GenUtils.class.getName(),
-				new String[]{"util." + GenUtils.class.getSimpleName(), "."},
-				new String[]{"template", File.separator});
-		
-		//拼接config文件路径，用来验证设置的path是否正确。
-		String configPath = srcPath + File.separator + packagePath + File.separator + "config.xml";
-		
-		logger.info("计算出来的config.xml的位置为：" + configPath);
-		
-		File configFile = new File(configPath);
-		if(!configFile.exists()){
-			return false;
-		}
-		
-		return true;
 	}
 	
 	private String generateCode(GenScheme genScheme){

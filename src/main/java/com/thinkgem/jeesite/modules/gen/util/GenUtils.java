@@ -3,14 +3,19 @@
  */
 package com.thinkgem.jeesite.modules.gen.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -201,16 +206,41 @@ public class GenUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T fileToObject(String fileName, Class<?> clazz){
-		String pathName = StringUtils.replace(getTemplatePath() + "/" + fileName, "/", File.separator);
-		logger.debug("file to object: {}", pathName);
-		String content = "";
 		try {
-			content = FileUtils.readFileToString(new File(pathName), "utf-8");
-//			logger.debug("read config content: {}", content);
-			return (T) JaxbMapper.fromXml(content, clazz);
+			String pathName = "/templates/modules/gen/" + fileName;
+//			logger.debug("File to object: {}", pathName);
+			Resource resource = new ClassPathResource(pathName); 
+			InputStream is = resource.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+			StringBuilder sb = new StringBuilder();  
+			while (true) {
+				String line = br.readLine();
+				if (line == null){
+					break;
+				}
+				sb.append(line).append("\r\n");
+			}
+			if (is != null) {
+				is.close();
+			}
+			if (br != null) {
+				br.close();
+			}
+//			logger.debug("Read file content: {}", sb.toString());
+			return (T) JaxbMapper.fromXml(sb.toString(), clazz);
 		} catch (IOException e) {
-			logger.warn("error convert: {}", e.getMessage());
+			logger.warn("Error file convert: {}", e.getMessage());
 		}
+//		String pathName = StringUtils.replace(getTemplatePath() + "/" + fileName, "/", File.separator);
+//		logger.debug("file to object: {}", pathName);
+//		String content = "";
+//		try {
+//			content = FileUtils.readFileToString(new File(pathName), "utf-8");
+////			logger.debug("read config content: {}", content);
+//			return (T) JaxbMapper.fromXml(content, clazz);
+//		} catch (IOException e) {
+//			logger.warn("error convert: {}", e.getMessage());
+//		}
 		return null;
 	}
 	
@@ -302,8 +332,8 @@ public class GenUtils {
 	 * @return
 	 */
 	public static String generateToFile(GenTemplate tpl, Map<String, Object> model, boolean isReplaceFile){
-		// 获取生成文件    "c:\\temp\\"//
-		String fileName = Global.getConfig("srcPath") + File.separator 
+		// 获取生成文件
+		String fileName = Global.getProjectPath() + File.separator 
 				+ StringUtils.replaceEach(FreeMarkers.renderString(tpl.getFilePath() + "/", model), 
 						new String[]{"//", "/", "."}, new String[]{File.separator, File.separator, File.separator})
 				+ FreeMarkers.renderString(tpl.getFileName(), model);
