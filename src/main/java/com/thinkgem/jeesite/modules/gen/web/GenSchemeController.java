@@ -58,6 +58,14 @@ public class GenSchemeController extends BaseController {
 		}
         Page<GenScheme> page = genSchemeService.find(new Page<GenScheme>(request, response), genScheme); 
         model.addAttribute("page", page);
+		
+        //验证设置的源码路径是否正确
+        if(!genSchemeService.checkSrcPathConfig()){
+			addMessage(model, "您未配置源码路径“srcPath”或您配置的路径不正确，只有正确配置后才能生成源码！</br>"
+					+ "请在“jeesite.properties”中配置正确的“srcPath”。</br>"
+					+ "srcPath路径需指向jeesite项目源码所在的路径，如：C:\\Users\\Administrator\\workspace\\jeesite");
+		}
+		
 		return "modules/gen/genSchemeList";
 	}
 
@@ -82,6 +90,15 @@ public class GenSchemeController extends BaseController {
 		if (!beanValidator(model, genScheme)){
 			return form(genScheme, model);
 		}
+		
+		//验证设置的源码路径是否正确
+		if("1".equals(genScheme.getFlag())){
+			if(!genSchemeService.checkSrcPathConfig()){
+				addMessage(redirectAttributes, "您未配置源码路径“srcPath”，或您配置的路径不正确！");
+				return "redirect:" + adminPath + "/gen/genScheme/?repage";
+			}
+		}
+		
 		String result = genSchemeService.save(genScheme);
 		addMessage(redirectAttributes, "操作生成方案'" + genScheme.getName() + "'成功<br/>"+result);
 		return "redirect:" + adminPath + "/gen/genScheme/?repage";
