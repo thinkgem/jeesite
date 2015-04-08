@@ -141,7 +141,7 @@ Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hi
 * GitHub：<https://github.com/thinkgem/jeesite>
 * 开源中国：<http://git.oschina.net/thinkgem/jeesite>
 * 官方网址：<http://jeesite.com>  论坛：<http://bbs.jeesite.com>
-* 捐赠支持JeeSite（支付宝）：thinkgem@163.com
+* 捐赠支持JeeSite（支付宝）：[thinkgem@163.com](http://jeesite.com/donation.html)
 
 一个人的个人能力再强，也无法战胜一个团队，希望兄弟姐妹的支持，能够贡献出自己的部分代码，参与进来共同完善它(^_^)。
 

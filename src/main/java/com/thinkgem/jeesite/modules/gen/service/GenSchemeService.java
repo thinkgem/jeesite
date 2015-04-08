@@ -13,15 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.gen.dao.GenSchemeDao;
+import com.thinkgem.jeesite.modules.gen.dao.GenTableColumnDao;
+import com.thinkgem.jeesite.modules.gen.dao.GenTableDao;
 import com.thinkgem.jeesite.modules.gen.entity.GenConfig;
 import com.thinkgem.jeesite.modules.gen.entity.GenScheme;
 import com.thinkgem.jeesite.modules.gen.entity.GenTable;
 import com.thinkgem.jeesite.modules.gen.entity.GenTableColumn;
 import com.thinkgem.jeesite.modules.gen.entity.GenTemplate;
 import com.thinkgem.jeesite.modules.gen.util.GenUtils;
-import com.thinkgem.jeesite.modules.gen.dao.GenSchemeDao;
-import com.thinkgem.jeesite.modules.gen.dao.GenTableColumnDao;
-import com.thinkgem.jeesite.modules.gen.dao.GenTableDao;
 
 /**
  * 生成方案Service
