@@ -35,25 +35,6 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 8.	连接池监视：监视当期系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
 9.	工作流引擎：实现业务工单流转、在线流程设计器。
 
-##为何使用MyBatis
-
-* 学习成本：Hibernate的真正掌握要比Mybatis来得难不少。Mybatis框架相对简单很容易上手，也更加灵活。
-对于学习过Hibernate的用户，学习起MyBatis也更容易上手。
-
-* 开发成本：大家都说Hibernate开发效率高，个人认为MyBatis的开发效率并不比Hibernate低，
-通过代码生成器和封装开发效率不是问题，并且MyBatis可控性比较高，并更易于维护。
-
-* 性能方面：由于Hibernate比较难以掌握，性能方面也成为了Hibernate的问题瓶颈，当然如果你对Hibernate非常熟，
-Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hibernate的人少之又少，然而的也就造就了项目风险加大。
-
-* 多数据库支持：有些人说MyBatis对多数据库支持困难，我认为这个不是问题，虽说目前JeeSite仅提供对Oracle
-数据库的支持，但对于支持其它数据库的改动也不是很麻烦，SQL是被专门写在XML中，对于大多数SQL来说都是通用的，
-对于不同的数据库可通过dbName区分和修改各别的SQL片段即可。
-
-上述纯属个人观点，欢迎指正（thinkgem@163.com）。
-
-如果你仍然喜欢Hibernate，请点击[下载Hibernate版本](https://github.com/thinkgem/jeesite/tree/master_hibernate)。
-
 ## 为何选择JeeSite
 
 1. 使用 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，源代码完全开源，无商业限制。
@@ -157,3 +138,21 @@ Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hi
 4. 如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。
 3. Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售
 
+##为何使用MyBatis
+
+* 学习成本：Hibernate的真正掌握要比Mybatis来得难不少。Mybatis框架相对简单很容易上手，也更加灵活。
+对于学习过Hibernate的用户，学习起MyBatis也更容易上手。
+
+* 开发成本：大家都说Hibernate开发效率高，个人认为MyBatis的开发效率并不比Hibernate低，
+通过代码生成器和封装开发效率不是问题，并且MyBatis可控性比较高，并更易于维护。
+
+* 性能方面：由于Hibernate比较难以掌握，性能方面也成为了Hibernate的问题瓶颈，当然如果你对Hibernate非常熟，
+Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hibernate的人少之又少，然而的也就造就了项目风险加大。
+
+* 多数据库支持：有些人说MyBatis对多数据库支持困难，我认为这个不是问题，虽说目前JeeSite仅提供对Oracle
+数据库的支持，但对于支持其它数据库的改动也不是很麻烦，SQL是被专门写在XML中，对于大多数SQL来说都是通用的，
+对于不同的数据库可通过dbName区分和修改各别的SQL片段即可。
+
+上述纯属个人观点，欢迎指正（thinkgem@163.com）。
+
+如果你仍然喜欢Hibernate，请点击[下载JeeSite Hibernate版本](https://github.com/thinkgem/jeesite/tree/master_hibernate)。
