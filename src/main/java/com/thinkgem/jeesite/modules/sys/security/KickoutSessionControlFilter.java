@@ -1,4 +1,4 @@
-package com.coffer.core.modules.sys.security;
+package com.thinkgem.jeesite.modules.sys.security;
 
 import java.io.Serializable;
 import java.util.Deque;
@@ -16,7 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.coffer.core.modules.sys.security.SystemAuthorizingRealm.Principal;
+import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 
 /**
  * <p>
