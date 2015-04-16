@@ -16,10 +16,11 @@
 			<value>
 				/static/** = anon
 				/userfiles/** = anon
+				/kickout = anon
 				${adminPath}/cas = cas
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
-				${adminPath}/** = user
+				${adminPath}/** = kickout,user
 				/act/rest/service/editor/** = perms[act:model:edit]
 				/act/rest/service/model/** = perms[act:model:edit]
 				/act/rest/service/** = user
@@ -38,6 +39,7 @@
             <map>
                 <entry key="cas" value-ref="casFilter"/>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="kickout" value-ref="kickoutSessionControlFilter"/>
             </map>
         </property>
 		<property name="filterChainDefinitions">
@@ -57,8 +59,17 @@
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 	
+	<!-- 并发登录控制 -->
+	<bean id="kickoutSessionControlFilter"
+		class="com.coffer.core.modules.sys.security.KickoutSessionControlFilter">
+		<property name="cacheManager" ref="shiroCacheManager" />
+		<property name="kickoutAfter" value="false" />
+		<property name="maxSession" value="1" />
+		<property name="kickoutUrl" value="${adminPath}/login" />
+	</bean>
+	
 	<!-- 自定义会话管理配置 -->
-	<bean id="sessionManager" class="com.thinkgem.jeesite.common.security.shiro.session.SessionManager"> 
+	<bean id="sessionManager" class="com.coffer.core.common.security.shiro.session.SessionManager"> 
 		<property name="sessionDAO" ref="sessionDAO"/>
 		
 		<!-- 会话超时时间，单位：毫秒  -->
@@ -80,18 +91,18 @@
 	</bean>
 
 	<!-- 自定义Session存储容器 -->
-<!-- 	<bean id="sessionDAO" class="com.thinkgem.jeesite.common.security.shiro.session.JedisSessionDAO"> -->
+<!-- 	<bean id="sessionDAO" class="com.coffer.core.common.security.shiro.session.JedisSessionDAO"> -->
 <!-- 		<property name="sessionIdGenerator" ref="idGen" /> -->
 <!-- 		<property name="sessionKeyPrefix" value="${redis.keyPrefix}_session_" /> -->
 <!-- 	</bean> -->
-	<bean id="sessionDAO" class="com.thinkgem.jeesite.common.security.shiro.session.CacheSessionDAO">
+	<bean id="sessionDAO" class="com.coffer.core.common.security.shiro.session.CacheSessionDAO">
 		<property name="sessionIdGenerator" ref="idGen" />
 		<property name="activeSessionsCacheName" value="activeSessionsCache" />
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 	
 	<!-- 定义授权缓存管理器 -->
-<!-- 	<bean id="shiroCacheManager" class="com.thinkgem.jeesite.common.security.shiro.cache.SessionCacheManager" /> -->
+<!-- 	<bean id="shiroCacheManager" class="com.coffer.core.common.security.shiro.cache.SessionCacheManager" /> -->
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManager" ref="cacheManager"/>
 	</bean>
