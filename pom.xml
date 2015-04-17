@@ -995,12 +995,12 @@
 								
 								<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />
 								
-								<!-- mysql、mssql
-								<dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"> -->
+								<!-- mysql、mssql -->
+								<dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}">
 								
-								<!-- oracle -->
+								<!-- oracle
 								<dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"
-									schema="${jdbc.username}" >
+									schema="${jdbc.username}" > -->
 									
 									<dbconfig>
 										<property name="datatypeFactory" value="${dbunit.datatype}" />
