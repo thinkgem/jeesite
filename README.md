@@ -39,7 +39,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 1. 使用 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，源代码完全开源，无商业限制。
 2. 使用目前主流的Java EE开发框架，简单易学，学习成本低。
-3. 数据库无限制，支持Oracle、MySql、SQL Server、H2等数据库（目前仅支持Oracle、MySql）。
+3. 数据库无限制，目前支持MySql、Oracle，可扩充SQL Server、PostgreSQL、H2等。
 4. 模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
 5. 操作权限控制精密细致，对所有管理链接都进行权限验证，可控制到按钮。
 6. 数据权限控制精密细致，对指定数据集权限进行过滤，七种数据权限可供选择。
@@ -83,7 +83,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * 服务器中间件：在Java EE 5规范（Servlet 2.5、JSP 2.1）下开发，支持应用服务器中间件
 有Tomcat 6、Jboss 7、WebLogic 10、WebSphere 8。
-* 数据库支持：目前仅提供Oracle数据库的支持，但不限于数据库，平台留有其它数据库支持接口，
+* 数据库支持：目前仅提供MySql和Oracle数据库的支持，但不限于数据库，平台留有其它数据库支持接口，
 可方便更改为其它数据库，如：SqlServer 2008、MySql 5.5、H2等
 * 开发环境：Java EE、Eclipse、Maven、Git
 
@@ -98,9 +98,9 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 快速体验
 
-1. 具备运行环境：JDK1.6+、Maven3.0+、Oracle10g+。
+1. 具备运行环境：JDK1.6+、Maven3.0+、MySql5+或Oracle10g+。
 2. 修改src\main\resources\jeesite.properties文件中的数据库设置参数。
-3. 根据修改参数创建对应Oracle数据库用户。
+3. 根据修改参数创建对应MySql或Oracle数据库用户和参数。
 4. 运行bin\init-db.bat脚本，即可导入表结构及演示数据(linux操作系统：在控制台中切换至项目根目录，运行命令：mvn antrun:run -Pinit-db)
 5. 运行bin\run-tomcat7.bat或bin\run-jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
 6. 最高管理员账号，用户名：thinkgem 密码：admin
@@ -149,7 +149,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * 性能方面：由于Hibernate比较难以掌握，性能方面也成为了Hibernate的问题瓶颈，当然如果你对Hibernate非常熟，
 Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hibernate的人少之又少，然而的也就造就了项目风险加大。
 
-* 多数据库支持：有些人说MyBatis对多数据库支持困难，我认为这个不是问题，虽说目前JeeSite仅提供对Oracle
+* 多数据库支持：有些人说MyBatis对多数据库支持困难，我认为这个不是问题，虽说目前JeeSite仅提供对MySql或Oracle
 数据库的支持，但对于支持其它数据库的改动也不是很麻烦，SQL是被专门写在XML中，对于大多数SQL来说都是通用的，
 对于不同的数据库可通过dbName区分和修改各别的SQL片段即可。
 
