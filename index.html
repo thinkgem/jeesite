@@ -114,7 +114,7 @@
 			<span style="background-color:;">使用目前主流的Java EE开发框架，简单易学，学习成本低。</span>
 		</li>
 		<li>
-			<span style="background-color:;">数据库无限制，支持Oracle、MySql、SQL Server、H2等数据库（目前仅支持Oracle）。</span>
+			<span style="background-color:;">数据库无限制，目前支持MySql、Oracle，可扩充SQL Server、PostgreSQL、H2等。</span>
 		</li>
 		<li>
 			<span style="background-color:;">模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。</span>
@@ -228,7 +228,7 @@
 			<span style="background-color:;">服务器中间件：在Java EE 5规范（Servlet 2.5、JSP 2.1）下开发，支持应用服务器中间件 有Tomcat 6、Jboss 7、WebLogic 10、WebSphere 8。</span>
 		</li>
 		<li>
-			<span style="background-color:;">数据库支持：目前仅提供Oracle数据库的支持，但不限于数据库，平台留有其它数据库支持接口， 可方便更改为其它数据库，如：SqlServer 2008、MySql 5.5、H2等</span>
+			<span style="background-color:;">数据库支持：目前仅提供MySql或Oracle数据库的支持，但不限于数据库，平台留有其它数据库支持接口， 可方便更改为其它数据库，如：SqlServer 2008、MySql 5.5、H2等</span>
 		</li>
 		<li>
 			<span style="background-color:;">开发环境：Java EE、Eclipse、Maven、Git</span>
@@ -262,13 +262,13 @@
 	</h2>
 	<ol style="color:rgba(0, 0, 0, 0.8);font-family:Lato, 'Helvetica Neue', 'Microsoft YaHei', Arial, Helvetica, sans-serif;font-size:15px;background-color:">
 		<li>
-			<span style="background-color:;">具备运行环境：JDK1.6+、Maven3.0+、Oracle10g+。</span>
+			<span style="background-color:;">具备运行环境：JDK1.6+、Maven3.0+、MySql5+或Oracle10g+。</span>
 		</li>
 		<li>
 			<span style="background-color:;">修改src\main\resources\jeesite.properties文件中的数据库设置参数。</span>
 		</li>
 		<li>
-			<span style="background-color:;">根据修改参数创建对应Oracle数据库用户。</span>
+			<span style="background-color:;">根据修改参数创建对应MySql或Oracle数据库用户和参数。</span>
 		</li>
 		<li>
 			<span style="background-color:;">运行bin\init-db.bat脚本，即可导入表结构及演示数据(linux操作系统：在控制台中切换至项目根目录，运行命令：mvn antrun:run -Pinit-db)</span>
@@ -375,7 +375,7 @@
 		</li>
 		<li>
 			<p>
-				<span style="background-color:;">多数据库支持：有些人说MyBatis对多数据库支持困难，我认为这个不是问题，虽说目前JeeSite仅提供对Oracle 数据库的支持，但对于支持其它数据库的改动也不是很麻烦，SQL是被专门写在XML中，对于大多数SQL来说都是通用的， 对于不同的数据库可通过dbName区分和修改各别的SQL片段即可。</span>
+				<span style="background-color:;">多数据库支持：有些人说MyBatis对多数据库支持困难，我认为这个不是问题，虽说目前JeeSite仅提供对MySql和Oracle 数据库的支持，但对于支持其它数据库的改动也不是很麻烦，SQL是被专门写在XML中，对于大多数SQL来说都是通用的， 对于不同的数据库可通过dbName区分和修改各别的SQL片段即可。</span>
 			</p>
 		</li>
 	</ul>
