@@ -178,7 +178,7 @@
 		<url-pattern>/servlet/validateCodeServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- FineReport -->
+	<!-- FineReport 
 	<servlet>
 		<servlet-name>ReportServer</servlet-name>
 		<servlet-class>com.fr.web.ReportServlet</servlet-class>
@@ -186,7 +186,7 @@
 	<servlet-mapping>
 		<servlet-name>ReportServer</servlet-name>
 		<url-pattern>/ReportServer</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>-->
 	
 	<!-- [INSERT FRAGMENT HERE] -->
 

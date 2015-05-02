@@ -65,6 +65,7 @@ public class ActModelService extends BaseService {
 	 * 创建模型
 	 * @throws UnsupportedEncodingException 
 	 */
+	@Transactional(readOnly = false)
 	public org.activiti.engine.repository.Model create(String name, String key, String description, String category) throws UnsupportedEncodingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ObjectNode editorNode = objectMapper.createObjectNode();
@@ -96,6 +97,7 @@ public class ActModelService extends BaseService {
 	/**
 	 * 根据Model部署流程
 	 */
+	@Transactional(readOnly = false)
 	public String deploy(String id) {
 		String message = "";
 		try {
