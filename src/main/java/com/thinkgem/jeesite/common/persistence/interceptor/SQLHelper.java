@@ -100,8 +100,8 @@ public class SQLHelper {
     public static int getCount(final String sql, final Connection connection,
     							final MappedStatement mappedStatement, final Object parameterObject,
     							final BoundSql boundSql, Log log) throws SQLException {
-        final String countSql = "select count(1) from (" + sql + ") tmp_count";
-//        final String countSql = "select count(1) " + removeSelect(removeOrders(sql));
+//        final String countSql = "select count(1) from (" + sql + ") tmp_count";
+        final String countSql = "select count(1) " + removeSelect(removeOrders(sql));
         Connection conn = connection;
         PreparedStatement ps = null;
         ResultSet rs = null;
