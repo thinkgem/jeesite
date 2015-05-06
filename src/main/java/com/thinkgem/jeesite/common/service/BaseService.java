@@ -160,7 +160,7 @@ public abstract class BaseService {
 			else if (Role.DATA_SCOPE_OFFICE_AND_CHILD.equals(dataScopeString)){
 				sqlString.append(" AND EXISTS (SELECT 1 FROM SYS_OFFICE");
 				sqlString.append(" WHERE (id = '" + user.getOffice().getId() + "'");
-				sqlString.append(" OR o.parent_ids LIKE '" + user.getOffice().getParentIds() + user.getOffice().getId() + ",%')");
+				sqlString.append(" OR parent_ids LIKE '" + user.getOffice().getParentIds() + user.getOffice().getId() + ",%')");
 				sqlString.append(" AND " + where +")");
 			}
 			else if (Role.DATA_SCOPE_OFFICE.equals(dataScopeString)){
