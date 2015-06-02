@@ -14,6 +14,15 @@
 			</if>
 			ORDER BY t.TABLE_NAME
 		</if>
+		<if test="dbName == 'mssql'">
+			SELECT t.name AS name,b.value AS comments 
+			FROM sys.objects t,sys.extended_properties b 
+			WHERE b.major_id=t.object_id and b.minor_id=0 and b.class=1 AND b.name='MS_Description'
+			<if test="name != null and name != ''">
+				AND t.name = upper(#{name})
+			</if>
+			ORDER BY t.name
+		</if>
 		<if test="dbName == 'mysql'">			
 			SELECT t.table_name AS name,t.TABLE_COMMENT AS comments 
 			FROM information_schema.`TABLES` t 
@@ -52,6 +61,22 @@
 			</if>
 			ORDER BY t.COLUMN_ID
 		</if>
+		<if test="dbName == 'mssql'">	
+			SELECT t.COLUMN_NAME AS name, (CASE WHEN t.IS_NULLABLE = 'YES' THEN '1' ELSE '0' END) AS isNull,
+				(t.ORDINAL_POSITION * 10) AS sort,isnull(g.[value], '') AS comments,
+				(t.DATA_TYPE+
+					CASE WHEN t.DATA_TYPE IN ('varchar','char','nvarchar','nchar') THEN '('+CONVERT(VARCHAR,t.CHARACTER_MAXIMUM_LENGTH)+')'
+						WHEN t.DATA_TYPE IN ('numeric','decimal') THEN '('+CONVERT(VARCHAR,t.NUMERIC_PRECISION_RADIX)+','+CONVERT(VARCHAR,ISNULL(t.NUMERIC_SCALE, 0))+')'
+					ELSE '' END) AS jdbcType 
+			FROM INFORMATION_SCHEMA.COLUMNS t INNER JOIN sys.sysobjects o ON t.TABLE_NAME=o.name AND SCHEMA_NAME(o.uid)=t.TABLE_SCHEMA
+				LEFT JOIN sys.extended_properties g ON o.id = g.major_id
+					AND t.ORDINAL_POSITION = g.minor_id AND g.name='MS_Description'
+			WHERE t.TABLE_SCHEMA = (SCHEMA_NAME())
+			<if test="name != null and name != ''">
+				AND t.TABLE_NAME = upper(#{name})
+			</if>
+			ORDER BY t.ORDINAL_POSITION
+		</if>
 		<if test="dbName == 'mysql'">	
 			SELECT t.COLUMN_NAME AS name, (CASE WHEN t.IS_NULLABLE = 'YES' THEN '1' ELSE '0' END) AS isNull,
 				(t.ORDINAL_POSITION * 10) AS sort,t.COLUMN_COMMENT AS comments,t.COLUMN_TYPE AS jdbcType 
@@ -71,6 +96,12 @@
 			WHERE cu.constraint_name = au.constraint_name
 				AND au.constraint_type = 'P'
 				AND au.table_name = upper(#{name})
+		</if>
+		<if test="dbName == 'mssql'">
+			SELECT lower(au.COLUMN_NAME) AS columnName 
+			FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE au
+			WHERE au.TABLE_NAME = upper(#{name})
+			AND au.TABLE_SCHEMA = (SCHEMA_NAME())
 		</if>
 		<if test="dbName == 'mysql'">
 			SELECT lower(au.COLUMN_NAME) AS columnName 
