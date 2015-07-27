@@ -146,7 +146,7 @@
 			 weight=0
 		WHERE weight &gt; 0 AND weight_date &lt; 
 			<if test="dbName == 'oracle'">sysdate</if>
-			<if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,ETDATE()))</if>
+			<if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,GETDATE()))</if>
 			<if test="dbName == 'mysql'">CURDATE()</if>
 	</update>
 </mapper>
