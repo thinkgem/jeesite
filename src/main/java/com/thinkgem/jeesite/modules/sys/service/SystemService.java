@@ -25,6 +25,7 @@ import com.thinkgem.jeesite.common.service.ServiceException;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.Encodes;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.web.Servlets;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.RoleDao;
 import com.thinkgem.jeesite.modules.sys.dao.UserDao;
@@ -197,7 +198,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		user.setOldLoginIp(user.getLoginIp());
 		user.setOldLoginDate(user.getLoginDate());
 		// 更新本次登录信息
-		user.setLoginIp(UserUtils.getSession().getHost());
+		user.setLoginIp(StringUtils.getRemoteAddr(Servlets.getRequest()));
 		user.setLoginDate(new Date());
 		userDao.updateLoginInfo(user);
 	}
