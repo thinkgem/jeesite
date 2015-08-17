@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -29,6 +28,7 @@ import org.springframework.stereotype.Service;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.Encodes;
+import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite.common.web.Servlets;
 import com.thinkgem.jeesite.modules.sys.entity.Menu;
@@ -129,7 +129,8 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 				info.addRole(role.getEnname());
 			}
 			// 更新登录IP和时间
-			getSystemService().updateUserLoginInfo(user);
+			String loginIP = StringUtils.getRemoteAddr(Servlets.getRequest());
+			getSystemService().updateUserLoginInfo(user, loginIP);
 			// 记录登录日志
 			LogUtils.saveLog(Servlets.getRequest(), "系统登录");
 			return info;

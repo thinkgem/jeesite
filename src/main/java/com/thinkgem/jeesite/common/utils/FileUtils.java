@@ -611,7 +611,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		String p = StringUtils.replace(path, "\\", "/");
 		p = StringUtils.join(StringUtils.split(p, "/"), "/");
 		if (!StringUtils.startsWithAny(p, "/") && StringUtils.startsWithAny(path, "\\", "/")){
-			p += "/";
+			p = "/" + p;
 		}
 		if (!StringUtils.endsWithAny(p, "/") && StringUtils.endsWithAny(path, "\\", "/")){
 			p = p + "/";

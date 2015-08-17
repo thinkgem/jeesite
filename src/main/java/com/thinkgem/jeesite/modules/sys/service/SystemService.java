@@ -192,12 +192,12 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	@Transactional(readOnly = false)
-	public void updateUserLoginInfo(User user) {
+	public void updateUserLoginInfo(User user, String loginIP) {
 		// 保存上次登录信息
 		user.setOldLoginIp(user.getLoginIp());
 		user.setOldLoginDate(user.getLoginDate());
 		// 更新本次登录信息
-		user.setLoginIp(UserUtils.getSession().getHost());
+		user.setLoginIp(loginIP);
 		user.setLoginDate(new Date());
 		userDao.updateLoginInfo(user);
 	}
