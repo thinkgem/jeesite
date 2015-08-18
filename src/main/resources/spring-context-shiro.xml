@@ -19,7 +19,7 @@
 				${adminPath}/cas = cas
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
-				${adminPath}/** = user
+				${adminPath}/** = kickout,user
 				/act/rest/service/editor/** = perms[act:model:edit]
 				/act/rest/service/model/** = perms[act:model:edit]
 				/act/rest/service/** = user
@@ -38,6 +38,7 @@
             <map>
                 <entry key="cas" value-ref="casFilter"/>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="kickout" value-ref="kickoutSessionControlFilter"/>
             </map>
         </property>
 		<property name="filterChainDefinitions">
@@ -55,6 +56,15 @@
 		<property name="realm" ref="systemAuthorizingRealm" />
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	
+	<!-- 并发登录控制 -->
+	<bean id="kickoutSessionControlFilter"
+		class="com.thinkgem.jeesite.modules.sys.security.KickoutSessionControlFilter">
+		<property name="cacheManager" ref="shiroCacheManager" />
+		<property name="kickoutAfter" value="false" />
+		<property name="maxSession" value="1" />
+		<property name="kickoutUrl" value="${adminPath}/login" />
 	</bean>
 	
 	<!-- 自定义会话管理配置 -->

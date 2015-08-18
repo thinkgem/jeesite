@@ -59,7 +59,7 @@
 					// 获取二级菜单数据
 					$.get($(this).attr("data-href"), function(data){
 						if (data.indexOf("id=\"loginForm\"") != -1){
-							alert('未登录或登录超时。请重新登录，谢谢！');
+							alert('您已登录超时或在其他地点登录，请重新登录！');
 							top.location = "${ctx}";
 							return false;
 						}
@@ -151,7 +151,7 @@
 			<div class="navbar-inner">
 				<div class="brand"><span id="productName">${fns:getConfig('productName')}</span></div>
 				<ul id="userControl" class="nav pull-right">
-					<li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index-${fnc:getCurrentSiteId()}.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
+					<li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
 					<li id="themeSwitch" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>
 						<ul class="dropdown-menu">
