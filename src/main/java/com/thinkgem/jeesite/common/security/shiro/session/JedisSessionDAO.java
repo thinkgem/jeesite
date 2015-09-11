@@ -17,8 +17,8 @@ import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import redis.clients.jedis.Jedis;
 
@@ -36,7 +36,7 @@ import com.thinkgem.jeesite.common.web.Servlets;
  */
 public class JedisSessionDAO extends AbstractSessionDAO implements SessionDAO {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LogManager.getLogger(getClass());
 	
 	private String sessionKeyPrefix = "shiro_session_";
 
