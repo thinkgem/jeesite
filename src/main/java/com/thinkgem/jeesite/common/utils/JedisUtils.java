@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -27,7 +26,7 @@ import redis.clients.jedis.exceptions.JedisException;
  */
 public class JedisUtils {
 
-	private static Logger logger = LoggerFactory.getLogger(JedisUtils.class);
+	private static Logger logger = LogManager.getLogger(JedisUtils.class);
 	
 	private static JedisPool jedisPool = SpringContextHolder.getBean(JedisPool.class);
 
@@ -191,7 +190,7 @@ public class JedisUtils {
 			if (jedis.exists(key)) {
 				jedis.del(key);
 			}
-			result = jedis.rpush(key, (String[])value.toArray());
+			result = jedis.rpush(key, value.toArray(new String[]{}));
 			if (cacheSeconds != 0) {
 				jedis.expire(key, cacheSeconds);
 			}

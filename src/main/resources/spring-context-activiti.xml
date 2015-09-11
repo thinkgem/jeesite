@@ -15,7 +15,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="deploymentResources" value="classpath*:/act/deployments/**/*.bar"/>
-		<property name="databaseSchemaUpdate" value="true" />
+		<property name="databaseSchemaUpdate" value="false" />
 		<property name="jobExecutorActivate" value="false" />
 		<property name="history" value="full" />
 		<property name="processDefinitionCacheLimit" value="10"/>

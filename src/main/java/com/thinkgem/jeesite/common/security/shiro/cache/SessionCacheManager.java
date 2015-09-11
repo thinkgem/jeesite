@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.cache.Cache;
@@ -17,8 +19,6 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 import com.thinkgem.jeesite.common.web.Servlets;
@@ -40,7 +40,7 @@ public class SessionCacheManager implements CacheManager {
 	 */
 	public class SessionCache<K, V> implements Cache<K, V> {
 
-		private Logger logger = LoggerFactory.getLogger(getClass());
+		private Logger logger = LogManager.getLogger(getClass());
 		
 		private String cacheKeyName = null;
 
