@@ -59,7 +59,7 @@
 	</bean>
 	
 	<!-- 计划任务配置，用 @Service @Lazy(false)标注类，用@Scheduled(cron = "0 0 2 * * ?")标注方法 -->
-    <task:executor id="executor" pool-size="10"/> 
+    <task:executor id="executor" pool-size="10"/>  
     <task:scheduler id="scheduler" pool-size="10"/>
     <task:annotation-driven scheduler="scheduler" executor="executor" mode="proxy" />
     
