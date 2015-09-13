@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="off" monitorInterval="1800">
-
+<!-- http://www.cnblogs.com/elaron/archive/2013/02/17/2914633.html -->
+<configuration status="off">
 	<properties>
-		<property name="LOG_HOME">logs/sample</property>
-		<property name="FILE_NAME">mylog</property>
+		<property name="log_home">logs/pet</property>
+		<property name="file_name">pet</property>
+		<property name="file_pattern">%d %p [%t] %l{1.} - %msg%xEx%n</property>
 	</properties>
-
-	<Appenders>
+	<!--先定义所有的appender -->
+	<appenders>
+		<!--这个输出控制台的配置 -->
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="debug" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<!--这个都知道是输出日志的格式 -->
+			<PatternLayout pattern="${file_pattern}" />
 		</Console>
-		<RollingRandomAccessFile name="running-log"
-			fileName="${LOG_HOME}/${FILE_NAME}.log"
-			filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
-			<PatternLayout
-				pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />
-			<Policies>
-				<TimeBasedTriggeringPolicy />
-				<SizeBasedTriggeringPolicy size="10 MB" />
-			</Policies>
-			<DefaultRolloverStrategy max="20" />
-		</RollingRandomAccessFile>
-	</Appenders>
+		<!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
+		<!-- <File name="log" fileName="logs/test.log" append="false"> -->
+		<!-- <PatternLayout -->
+		<!-- pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" 
+			/> -->
+		<!-- </File> -->
 
-	<Loggers>
-		<Logger name="com.thinkgem.jeesite.modules.sys.security.FormAuthenticationFilter" level="trace"
-			additivity="true">
-			<AppenderRef ref="running-log" />
-		</Logger>
-		<Root level="info">
+		<!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<RollingFile name="RollingFile" fileName="${log_home}/${file_name}.log"
+			filePattern="${log_home}/$${date:yyyy-MM}/%d{yyyy-MM-dd}.log.gz">
+			<PatternLayout pattern="${file_pattern}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- <SizeBasedTriggeringPolicy size="10 MB" /> -->
+			</Policies>
+		</RollingFile>
+		<!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+		<!-- <RandomAccessFile name="RandomAccessFile" fileName="logs/asyncWithLocation.log" -->
+		<!-- immediateFlush="false" append="false"> -->
+		<!-- <PatternLayout> -->
+		<!-- <Pattern>%d %p %class{1.} [%t] %location %m %ex%n</Pattern> -->
+		<!-- </PatternLayout> -->
+		<!-- </RandomAccessFile> -->
+	</appenders>
+	<!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
+	<loggers>
+		<!-- pattern layout actually uses location, so we need to include it -->
+		<AsyncLogger
+			name="com.thinkgem.jeesite.modules.sys.security.FormAuthenticationFilter"
+			level="trace" includeLocation="true">
+			<AppenderRef ref="RollingFile" />
+		</AsyncLogger>
+		<!--建立一个默认的root的logger -->
+		<root level="trace">
+			<!-- <AppenderRef ref="RandomAccessFile" /> -->
+			<!-- <AppenderRef ref="RollingFile" /> -->
 			<AppenderRef ref="Console" />
-		</Root>
-	</Loggers>
-</Configuration>
+		</root>
+
+	</loggers>
+</configuration>

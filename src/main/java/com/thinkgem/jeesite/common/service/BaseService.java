@@ -26,7 +26,7 @@ public abstract class BaseService {
 	/**
 	 * 日志对象
 	 */
-	protected Logger logger = LogManager.getLogger(getClass());
+	protected Logger logger = LogManager.getLogger(BaseService.class.getName());
 
 	/**
 	 * 数据范围过滤
