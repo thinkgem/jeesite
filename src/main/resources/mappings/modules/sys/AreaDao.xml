@@ -20,7 +20,7 @@
 	</sql>
 	
 	<sql id="areaJoins">
-		LEFT JOIN sys_office p ON p.id = a.parent_id
+		LEFT JOIN sys_area p ON p.id = a.parent_id
     </sql>
     
 	<select id="get" resultType="Area">
