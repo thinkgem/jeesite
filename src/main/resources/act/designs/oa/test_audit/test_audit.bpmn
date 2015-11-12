@@ -4,17 +4,17 @@
     <startEvent id="start" name="启动审批" activiti:initiator="apply" activiti:formKey="/oa/testAudit/form"/>
     <endEvent id="end" name="结束审批"/>
     <userTask id="modify" name="员工薪酬档级修改" activiti:assignee="${apply}"/>
-    <userTask id="audit" name="薪酬主管初审" activiti:assignee="system"/>
+    <userTask id="audit" name="薪酬主管初审" activiti:assignee="thinkgem"/>
     <exclusiveGateway id="sid-C28BB5F6-013D-4570-B432-61B380C1F46F"/>
-    <userTask id="audit2" name="集团人力资源部部长审核" activiti:assignee="system"/>
+    <userTask id="audit2" name="集团人力资源部部长审核" activiti:assignee="thinkgem"/>
     <exclusiveGateway id="sid-ED46FE41-A0FD-496D-86DC-2C97AF5735F0"/>
     <sequenceFlow id="sid-EF2F51BB-1D99-4F0B-ACF2-B6C1300A7D2B" sourceRef="audit2" targetRef="sid-ED46FE41-A0FD-496D-86DC-2C97AF5735F0"/>
-    <userTask id="audit3" name="集团人力资源部分管领导审核" activiti:assignee="system"/>
+    <userTask id="audit3" name="集团人力资源部分管领导审核" activiti:assignee="thinkgem"/>
     <exclusiveGateway id="sid-FE485B2D-9A23-4236-BD0D-D788CA6E30E4"/>
     <sequenceFlow id="sid-3DBCD661-5720-4480-8156-748BE0275FEF" sourceRef="audit3" targetRef="sid-FE485B2D-9A23-4236-BD0D-D788CA6E30E4"/>
-    <userTask id="audit4" name="集团总经理审批" activiti:assignee="system"/>
+    <userTask id="audit4" name="集团总经理审批" activiti:assignee="thinkgem"/>
     <exclusiveGateway id="sid-3F53B6BD-F8F3-496B-AC08-50630BD11477"/>
-    <userTask id="apply_end" name="薪酬档级兑现" activiti:assignee="system"/>
+    <userTask id="apply_end" name="薪酬档级兑现" activiti:assignee="thinkgem"/>
     <sequenceFlow id="sid-02DB2AD9-1332-4198-AC8D-22A35169D15C" sourceRef="audit4" targetRef="sid-3F53B6BD-F8F3-496B-AC08-50630BD11477"/>
     <sequenceFlow id="sid-2AB7C01A-50EE-4AAC-8C8F-F6E1935B3DA7" sourceRef="audit" targetRef="sid-C28BB5F6-013D-4570-B432-61B380C1F46F"/>
     <sequenceFlow id="sid-36E50C8B-6C7C-4968-B02D-EBAA425BF4BE" sourceRef="start" targetRef="audit"/>

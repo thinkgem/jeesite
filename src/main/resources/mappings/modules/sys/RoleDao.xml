@@ -168,24 +168,30 @@
 	</update>
 	
 	<delete id="deleteRoleMenu">
-		DELETE sys_role_menu WHERE role_id = #{id}
+		DELETE FROM sys_role_menu WHERE role_id = #{id}
 	</delete>
 	
 	<insert id="insertRoleMenu">
 		INSERT INTO sys_role_menu(role_id, menu_id)
 		<foreach collection="menuList" item="menu" separator=" union all ">
-			SELECT #{id}, #{menu.id} FROM dual
+			SELECT #{id}, #{menu.id}
+			<if test="dbName != 'mssql'">
+			FROM dual
+			</if>
 		</foreach>
 	</insert>
 	
 	<delete id="deleteRoleOffice">
-		DELETE sys_role_office WHERE role_id = #{id}
+		DELETE FROM sys_role_office WHERE role_id = #{id}
 	</delete>
 	
 	<insert id="insertRoleOffice">
 		INSERT INTO sys_role_office(role_id, office_id)
 		<foreach collection="officeList" item="office" separator=" union all ">
-			SELECT #{id}, #{office.id} FROM dual
+			SELECT #{id}, #{office.id}
+			<if test="dbName != 'mssql'">
+			FROM dual
+			</if>
 		</foreach>
 	</insert>
 	

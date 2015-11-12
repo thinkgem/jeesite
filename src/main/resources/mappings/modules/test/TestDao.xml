@@ -27,7 +27,9 @@
 		<include refid="testJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 		<if test="name != null and name != ''">
-			AND a.name LIKE '%'||#{name}||'%'
+			AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
 		</if>
 		ORDER BY a.id DESC
 	</select>

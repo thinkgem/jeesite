@@ -42,7 +42,10 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="title != null and title != ''">
-				AND a.title LIKE '%'||#{title}||'%'
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 			</if>
 		</where>
 		<choose>
@@ -118,7 +121,8 @@
 			weight_date = #{weightDate},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			del_flag = #{delFlag}
 		WHERE id = #{id}
 	</update>
 	
@@ -140,6 +144,9 @@
 	<update id="updateExpiredWeight">
 		update cms_link SET
 			 weight=0
-		WHERE weight > 0
+		WHERE weight &gt; 0 AND weight_date &lt; 
+			<if test="dbName == 'oracle'">sysdate</if>
+			<if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,GETDATE()))</if>
+			<if test="dbName == 'mysql'">CURDATE()</if>
 	</update>
 </mapper>

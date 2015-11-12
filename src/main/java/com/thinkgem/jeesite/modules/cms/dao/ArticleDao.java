@@ -28,7 +28,7 @@ public interface ArticleDao extends CrudDao<Article> {
 //		return update("update Article set hits=hits+1 where id = :p1", new Parameter(id));
 //	}
 	
-	public int updateExpiredWeight();
+	public int updateExpiredWeight(Article article);
 	
 	public List<Category> findStats(Category category);
 //	{

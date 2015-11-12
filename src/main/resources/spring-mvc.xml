@@ -81,7 +81,7 @@
 	<!-- 定义无Controller的path<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
 	
-	<!-- 拦截器配置 -->
+	<!-- 拦截器配置，拦截顺序：先执行后定义的，排在第一位的最后执行。-->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="${adminPath}/**" />
@@ -91,6 +91,11 @@
 			<mvc:exclude-mapping path="${adminPath}/sys/menu/treeData"/>
 			<mvc:exclude-mapping path="${adminPath}/oa/oaNotify/self/count"/>
 			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
+		</mvc:interceptor>
+		<!-- 手机视图拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.MobileInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 	

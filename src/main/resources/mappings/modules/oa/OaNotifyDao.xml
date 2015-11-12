@@ -51,7 +51,10 @@
 		</if>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<if test="title != null and title != ''">
-			AND a.TITLE LIKE '%'||#{title}||'%'
+			AND a.TITLE LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 		</if>
 		<if test="type != null and type != ''">
 			AND a.TYPE = #{type}

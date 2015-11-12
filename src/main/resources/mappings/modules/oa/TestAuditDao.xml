@@ -60,7 +60,10 @@
 		<include refid="testAuditJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 		<if test="user != null and user.id != null and user.id != ''">
-			AND u.id LIKE '%'||#{user.id}||'%'
+			AND u.id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{user.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{user.id}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{user.id}, '%')</if>
 		</if>
 		ORDER BY a.update_date DESC
 	</select>

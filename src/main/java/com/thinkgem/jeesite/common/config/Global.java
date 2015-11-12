@@ -3,7 +3,11 @@
  */
 package com.thinkgem.jeesite.common.config;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+
+import org.springframework.core.io.DefaultResourceLoader;
 
 import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
@@ -30,7 +34,30 @@ public class Global {
 	/**
 	 * 属性文件加载对象
 	 */
-	private static PropertiesLoader propertiesLoader = new PropertiesLoader("jeesite.properties");
+	private static PropertiesLoader loader = new PropertiesLoader("jeesite.properties");
+
+	/**
+	 * 显示/隐藏
+	 */
+	public static final String SHOW = "1";
+	public static final String HIDE = "0";
+
+	/**
+	 * 是/否
+	 */
+	public static final String YES = "1";
+	public static final String NO = "0";
+	
+	/**
+	 * 对/错
+	 */
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
+	
+	/**
+	 * 上传文件基础虚拟路径
+	 */
+	public static final String USERFILES_BASE_URL = "/userfiles/";
 	
 	/**
 	 * 获取当前对象实例
@@ -46,13 +73,11 @@ public class Global {
 	public static String getConfig(String key) {
 		String value = map.get(key);
 		if (value == null){
-			value = propertiesLoader.getProperty(key);
+			value = loader.getProperty(key);
 			map.put(key, value != null ? value : StringUtils.EMPTY);
 		}
 		return value;
 	}
-	
-	/////////////////////////////////////////////////////////
 	
 	/**
 	 * 获取管理端根路径
@@ -90,23 +115,7 @@ public class Global {
 		String dm = getConfig("activiti.isSynActivitiIndetity");
 		return "true".equals(dm) || "1".equals(dm);
 	}
-	
-	/////////////////////////////////////////////////////////
-	
-	// 显示/隐藏
-	public static final String SHOW = "1";
-	public static final String HIDE = "0";
-
-	// 是/否
-	public static final String YES = "1";
-	public static final String NO = "0";
-	
-	// 对/错
-	public static final String TRUE = "true";
-	public static final String FALSE = "false";
-	
-	public static final String USERFILES_BASE_URL = "/userfiles/";
-
+    
 	/**
 	 * 页面获取常量
 	 * @see ${fns:getConst('YES')}
@@ -139,5 +148,37 @@ public class Global {
 //		System.out.println("userfiles.basedir: " + dir);
 		return dir;
 	}
+	
+    /**
+     * 获取工程路径
+     * @return
+     */
+    public static String getProjectPath(){
+    	// 如果配置了工程路径，则直接返回，否则自动获取。
+		String projectPath = Global.getConfig("projectPath");
+		if (StringUtils.isNotBlank(projectPath)){
+			return projectPath;
+		}
+		try {
+			File file = new DefaultResourceLoader().getResource("").getFile();
+			if (file != null){
+				while(true){
+					File f = new File(file.getPath() + File.separator + "src" + File.separator + "main");
+					if (f == null || f.exists()){
+						break;
+					}
+					if (file.getParentFile() != null){
+						file = file.getParentFile();
+					}else{
+						break;
+					}
+				}
+				projectPath = file.toString();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return projectPath;
+    }
 	
 }

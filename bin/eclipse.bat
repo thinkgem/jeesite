@@ -10,7 +10,7 @@ echo.
 pause
 echo.
 
-cd %~dp0
+cd /d %~dp0
 cd..
 
 call mvn -Declipse.workspace=%cd% eclipse:clean eclipse:eclipse

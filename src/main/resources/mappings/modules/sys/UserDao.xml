@@ -156,20 +156,32 @@
 		</if>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<if test="company != null and company.id != null and company.id != ''">
-			AND (c.id = #{company.id} OR c.parent_ids LIKE '%,'||#{company.id}||',%')
+			AND (c.id = #{company.id} OR c.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
+					<if test="dbName == 'mssql'">'%,'+#{company.id}+',%')</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{company.id}, ',%'))</if>
 		</if>
 		<if test="office != null and office.id != null and office.id != ''">
-			AND (o.id = #{office.id} OR o.parent_ids LIKE '%,'||#{office.id}||',%')
+			AND (o.id = #{office.id} OR o.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+					<if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
 		</if>
 		<!-- 如果不是超级管理员，则不显示超级管理员用户 -->
 		<if test="!currentUser.admin">
 			AND a.id != '1'
 		</if>
 		<if test="loginName != null and loginName != ''">
-			AND a.login_name like '%'||#{loginName}||'%'
+			AND a.login_name like 
+					<if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{loginName}, '%')</if>
 		</if>
 		<if test="name != null and name != ''">
-			AND a.name like '%'||#{name}||'%'
+			AND a.name like 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
 		</if>
 		<!-- 数据范围过滤 -->
 		${sqlMap.dsf}
@@ -279,14 +291,17 @@
 	
 	<!-- 删除用户和角色关联表数据 -->
 	<delete id="deleteUserRole">
-		DELETE sys_user_role WHERE user_id = #{id}
+		DELETE FROM sys_user_role WHERE user_id = #{id}
 	</delete>
 	
 	<!-- 插入用户和角色关联表数据 -->
 	<insert id="insertUserRole">
 		INSERT INTO sys_user_role(user_id, role_id)
 		<foreach collection="roleList" item="role" separator=" union all ">
-			SELECT #{id}, #{role.id} FROM dual
+			SELECT #{id}, #{role.id}
+			<if test="dbName != 'mssql'">
+			FROM dual
+			</if>
 		</foreach>
 	</insert>
 	

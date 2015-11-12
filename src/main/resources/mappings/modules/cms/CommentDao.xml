@@ -35,7 +35,10 @@
 		<where>
 			a.del_flag = #{delFlag}
 			<if test="title != null and title != ''">
-				AND a.title LIKE '%'||#{title}||'%'
+				AND a.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 			</if>
 		</where>
 		<choose>
