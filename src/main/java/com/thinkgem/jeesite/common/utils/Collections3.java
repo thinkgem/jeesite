@@ -19,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
  * @author calvin
  * @version 2013-01-15
  */
-@SuppressWarnings("rawtypes")
 public class Collections3 {
 
 	/**
@@ -29,7 +28,7 @@ public class Collections3 {
 	 * @param keyPropertyName 要提取为Map中的Key值的属性名.
 	 * @param valuePropertyName 要提取为Map中的Value值的属性名.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Map extractToMap(final Collection collection, final String keyPropertyName,
 			final String valuePropertyName) {
 		Map map = new HashMap(collection.size());
@@ -52,7 +51,7 @@ public class Collections3 {
 	 * @param collection 来源集合.
 	 * @param propertyName 要提取的属性名.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List extractToList(final Collection collection, final String propertyName) {
 		List list = new ArrayList(collection.size());
 
@@ -74,6 +73,7 @@ public class Collections3 {
 	 * @param propertyName 要提取的属性名.
 	 * @param separator 分隔符.
 	 */
+	@SuppressWarnings("rawtypes")
 	public static String extractToString(final Collection collection, final String propertyName, final String separator) {
 		List list = extractToList(collection, propertyName);
 		return StringUtils.join(list, separator);
@@ -82,14 +82,14 @@ public class Collections3 {
 	/**
 	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
 	 */
-	public static String convertToString(final Collection collection, final String separator) {
+	public static String convertToString(final Collection<?> collection, final String separator) {
 		return StringUtils.join(collection, separator);
 	}
 
 	/**
 	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>mymessage</div>。
 	 */
-	public static String convertToString(final Collection collection, final String prefix, final String postfix) {
+	public static String convertToString(final Collection<?> collection, final String prefix, final String postfix) {
 		StringBuilder builder = new StringBuilder();
 		for (Object o : collection) {
 			builder.append(prefix).append(o).append(postfix);
@@ -100,7 +100,7 @@ public class Collections3 {
 	/**
 	 * 判断是否为空.
 	 */
-	public static boolean isEmpty(Collection collection) {
+	public static boolean isEmpty(Collection<?> collection) {
 		return (collection == null || collection.isEmpty());
 	}
 
@@ -153,9 +153,10 @@ public class Collections3 {
 	 */
 	public static <T> List<T> subtract(final Collection<T> a, final Collection<T> b) {
 		List<T> list = new ArrayList<T>(a);
-		for (T element : b) {
-			list.remove(element);
-		}
+		list.removeAll(b);
+//		for (T element : b) {
+//			list.remove(element);
+//		}
 
 		return list;
 	}

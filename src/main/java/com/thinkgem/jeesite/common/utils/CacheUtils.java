@@ -13,8 +13,8 @@ import net.sf.ehcache.Element;
  * @version 2013-5-29
  */
 public class CacheUtils {
-	
-	private static CacheManager cacheManager = ((CacheManager)SpringContextHolder.getBean("cacheManager"));
+
+	private static CacheManager cacheManager = null;
 
 	private static final String SYS_CACHE = "sysCache";
 
@@ -81,17 +81,25 @@ public class CacheUtils {
 	 * @param cacheName
 	 * @return
 	 */
-	private static Cache getCache(String cacheName){
+	private static Cache getCache(String cacheName) {
+		CacheManager cacheManager = getCacheManager();
 		Cache cache = cacheManager.getCache(cacheName);
-		if (cache == null){
-			cacheManager.addCache(cacheName);
-			cache = cacheManager.getCache(cacheName);
-			cache.getCacheConfiguration().setEternal(true);
+		if (cache == null) {
+			synchronized (cacheManager) {
+				if (cache == null) {
+					cacheManager.addCache(cacheName);
+					cache = cacheManager.getCache(cacheName);
+					cache.getCacheConfiguration().setEternal(true);
+				}
+			}
 		}
 		return cache;
 	}
 
 	public static CacheManager getCacheManager() {
+		if (cacheManager == null) {
+			cacheManager = ((CacheManager) SpringContextHolder.getBean("cacheManager"));
+		}
 		return cacheManager;
 	}
 	

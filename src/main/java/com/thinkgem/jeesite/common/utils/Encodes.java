@@ -30,7 +30,7 @@ public class Encodes {
 	 * Hex编码.
 	 */
 	public static String encodeHex(byte[] input) {
-		return new String(Hex.encodeHex(input));
+		return Hex.encodeHexString(input);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Encodes {
 	 * Base64编码.
 	 */
 	public static String encodeBase64(byte[] input) {
-		return new String(Base64.encodeBase64(input));
+		return Base64.encodeBase64String(input);
 	}
 	
 	/**
@@ -56,35 +56,35 @@ public class Encodes {
 	 */
 	public static String encodeBase64(String input) {
 		try {
-			return new String(Base64.encodeBase64(input.getBytes(DEFAULT_URL_ENCODING)));
+			return encodeBase64(input.getBytes(DEFAULT_URL_ENCODING));
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			throw Exceptions.unchecked(e);
 		}
 	}
-
-//	/**
-//	 * Base64编码, URL安全(将Base64中的URL非法字符'+'和'/'转为'-'和'_', 见RFC3548).
-//	 */
-//	public static String encodeUrlSafeBase64(byte[] input) {
-//		return Base64.encodeBase64URLSafe(input);
-//	}
-
-	/**
-	 * Base64解码.
-	 */
-	public static byte[] decodeBase64(String input) {
-		return Base64.decodeBase64(input.getBytes());
-	}
 	
+	/**
+	 * Base64编码, URL安全(将Base64中的URL非法字符'+'和'/'转为'-'和'_', 见RFC3548).
+	 */
+	public static String encodeUrlSafeBase64(byte[] input) {
+		return Base64.encodeBase64URLSafeString(input);
+	}
+
 	/**
 	 * Base64解码.
 	 */
 	public static String decodeBase64String(String input) {
 		try {
-			return new String(Base64.decodeBase64(input.getBytes()), DEFAULT_URL_ENCODING);
+			return new String(decodeBase64(input), DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			throw Exceptions.unchecked(e);
 		}
+	}
+	
+	/**
+	 * Base64解码.
+	 */
+	public static byte[] decodeBase64(String input) {
+		return Base64.decodeBase64(input);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Encodes {
 	public static String encodeBase62(byte[] input) {
 		char[] chars = new char[input.length];
 		for (int i = 0; i < input.length; i++) {
-			chars[i] = BASE62[((input[i] & 0xFF) % BASE62.length)];
+			chars[i] = BASE62[(input[i] & 0xFF) % BASE62.length];
 		}
 		return new String(chars);
 	}
@@ -116,7 +116,7 @@ public class Encodes {
 	 * Xml 转码.
 	 */
 	public static String escapeXml(String xml) {
-		return StringEscapeUtils.escapeXml10(xml);
+		return StringEscapeUtils.escapeXml11(xml);
 	}
 
 	/**

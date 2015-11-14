@@ -63,7 +63,7 @@ public class CookieUtils {
 		try {
 			cookie.setValue(URLEncoder.encode(value, "utf-8"));
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			throw Exceptions.unchecked(e);
 		}
 		response.addCookie(cookie);
 	}
@@ -101,7 +101,7 @@ public class CookieUtils {
 					try {
 						value = URLDecoder.decode(cookie.getValue(), "utf-8");
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+						throw Exceptions.unchecked(e);
 					}
 					if (isRemove) {
 						cookie.setMaxAge(0);
