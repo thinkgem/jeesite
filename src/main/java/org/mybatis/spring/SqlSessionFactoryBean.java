@@ -504,11 +504,12 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>,
 		String location = null;
 		if (!isEmpty(this.mapperLocations)) {
 			for (Resource mapperLocation : this.mapperLocations) {
-				if (location == null) {
-					location = mapperLocation.toString();
-				}
 				if (mapperLocation == null) {
 					continue;
+				}
+				
+				if (location == null) {
+					location = mapperLocation.toString();
 				}
 
 				try {
