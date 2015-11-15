@@ -57,14 +57,14 @@ public class JsonMapper extends ObjectMapper {
 		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
 		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 空值处理为空串
-		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
-			@Override
-			public void serialize(Object value, JsonGenerator jgen,
-					SerializerProvider provider) throws IOException,
-					JsonProcessingException {
-				jgen.writeString("");
-			}
-        });
+//		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
+//			@Override
+//			public void serialize(Object value, JsonGenerator jgen,
+//					SerializerProvider provider) throws IOException,
+//					JsonProcessingException {
+//				jgen.writeString("");
+//			}
+//        });
 		// 进行HTML解码。
 		this.registerModule(new SimpleModule().addSerializer(String.class, new JsonSerializer<String>(){
 			@Override

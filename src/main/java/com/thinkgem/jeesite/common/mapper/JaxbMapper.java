@@ -17,12 +17,12 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.namespace.QName;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.util.Assert;
 
 import com.thinkgem.jeesite.common.utils.Exceptions;
 import com.thinkgem.jeesite.common.utils.Reflections;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 
 /**
  * 使用Jaxb2.0实现XML<->Java Object的Mapper.
@@ -33,16 +33,15 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
  * @author calvin
  * @version 2013-01-15
  */
-@SuppressWarnings("rawtypes")
 public class JaxbMapper {
 
-	private static ConcurrentMap<Class, JAXBContext> jaxbContexts = new ConcurrentHashMap<Class, JAXBContext>();
+	private static ConcurrentMap<Class<?>, JAXBContext> jaxbContexts = new ConcurrentHashMap<Class<?>, JAXBContext>();
 
 	/**
 	 * Java Object->Xml without encoding.
 	 */
 	public static String toXml(Object root) {
-		Class clazz = Reflections.getUserClass(root);
+		Class<?> clazz = Reflections.getUserClass(root);
 		return toXml(root, clazz, null);
 	}
 
@@ -50,14 +49,14 @@ public class JaxbMapper {
 	 * Java Object->Xml with encoding.
 	 */
 	public static String toXml(Object root, String encoding) {
-		Class clazz = Reflections.getUserClass(root);
+		Class<?> clazz = Reflections.getUserClass(root);
 		return toXml(root, clazz, encoding);
 	}
 
 	/**
 	 * Java Object->Xml with encoding.
 	 */
-	public static String toXml(Object root, Class clazz, String encoding) {
+	public static String toXml(Object root, Class<?> clazz, String encoding) {
 		try {
 			StringWriter writer = new StringWriter();
 			createMarshaller(clazz, encoding).marshal(root, writer);
@@ -70,14 +69,14 @@ public class JaxbMapper {
 	/**
 	 * Java Collection->Xml without encoding, 特别支持Root Element是Collection的情形.
 	 */
-	public static String toXml(Collection<?> root, String rootName, Class clazz) {
+	public static String toXml(Collection<?> root, String rootName, Class<?> clazz) {
 		return toXml(root, rootName, clazz, null);
 	}
 
 	/**
 	 * Java Collection->Xml with encoding, 特别支持Root Element是Collection的情形.
 	 */
-	public static String toXml(Collection<?> root, String rootName, Class clazz, String encoding) {
+	public static String toXml(Collection<?> root, String rootName, Class<?> clazz, String encoding) {
 		try {
 			CollectionWrapper wrapper = new CollectionWrapper();
 			wrapper.collection = root;
@@ -111,7 +110,7 @@ public class JaxbMapper {
 	 * 创建Marshaller并设定encoding(可为null).
 	 * 线程不安全，需要每次创建或pooling。
 	 */
-	public static Marshaller createMarshaller(Class clazz, String encoding) {
+	public static Marshaller createMarshaller(Class<?> clazz, String encoding) {
 		try {
 			JAXBContext jaxbContext = getJaxbContext(clazz);
 
@@ -133,7 +132,7 @@ public class JaxbMapper {
 	 * 创建UnMarshaller.
 	 * 线程不安全，需要每次创建或pooling。
 	 */
-	public static Unmarshaller createUnmarshaller(Class clazz) {
+	public static Unmarshaller createUnmarshaller(Class<?> clazz) {
 		try {
 			JAXBContext jaxbContext = getJaxbContext(clazz);
 			return jaxbContext.createUnmarshaller();
@@ -142,7 +141,7 @@ public class JaxbMapper {
 		}
 	}
 
-	protected static JAXBContext getJaxbContext(Class clazz) {
+	protected static JAXBContext getJaxbContext(Class<?> clazz) {
 		Assert.notNull(clazz, "'clazz' must not be null");
 		JAXBContext jaxbContext = jaxbContexts.get(clazz);
 		if (jaxbContext == null) {
@@ -165,5 +164,4 @@ public class JaxbMapper {
 		@XmlAnyElement
 		protected Collection<?> collection;
 	}
-	
 }

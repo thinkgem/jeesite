@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -62,7 +63,10 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return baos.toByteArray();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw Exceptions.unchecked(e);
+		} finally {
+			IOUtils.closeQuietly(oos);
+			IOUtils.closeQuietly(baos);
 		}
 		return null;
 	}
@@ -73,15 +77,19 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @return
 	 */
 	public static Object unserialize(byte[] bytes) {
+		ObjectInputStream ois = null;
 		ByteArrayInputStream bais = null;
 		try {
 			if (bytes != null && bytes.length > 0){
 				bais = new ByteArrayInputStream(bytes);
-				ObjectInputStream ois = new ObjectInputStream(bais);
+				ois = new ObjectInputStream(bais);
 				return ois.readObject();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw Exceptions.unchecked(e);
+		} finally {
+			IOUtils.closeQuietly(ois);
+			IOUtils.closeQuietly(bais);
 		}
 		return null;
 	}

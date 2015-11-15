@@ -24,6 +24,14 @@ import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 public class DictService extends CrudService<DictDao, Dict> {
 	
 	/**
+	 * 查询字段列表
+	 * @return
+	 */
+	public List<Dict> findAllList(){
+		return dao.findAllList(new Dict());
+	}
+	
+	/**
 	 * 查询字段类型列表
 	 * @return
 	 */

@@ -132,7 +132,9 @@ public class ValidateCodeServlet extends HttpServlet {
 	private String createCharacter(Graphics g) {
 		char[] codeSeq = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
 				'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-				'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '8', '9' };
+				'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j',
+				'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+				'x', 'y', 'z', '2', '3', '4', '5', '6', '7', '8', '9' };
 		String[] fontTypes = {"Arial","Arial Black","AvantGarde Bk BT","Calibri"}; 
 		Random random = new Random();
 		StringBuilder s = new StringBuilder();
@@ -144,7 +146,7 @@ public class ValidateCodeServlet extends HttpServlet {
 //			g.drawString(r, i*w/4, h-5);
 			s.append(r);
 		}
-		return s.toString();
+		return s.toString().toUpperCase();
 	}
 	
 }

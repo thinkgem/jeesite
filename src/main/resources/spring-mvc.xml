@@ -100,9 +100,11 @@
 	</mvc:interceptors>
 	
 	<!-- 支持Shiro对Controller的方法级AOP安全控制 begin-->
+	<!-- 
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
 		<property name="proxyTargetClass" value="true" />
 	</bean>
+	 -->
 	
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">

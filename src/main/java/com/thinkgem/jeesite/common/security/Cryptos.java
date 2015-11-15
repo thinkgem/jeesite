@@ -96,7 +96,7 @@ public class Cryptos {
 		try {
 			return Encodes.encodeHex(aesEncrypt(input.getBytes(DEFAULT_URL_ENCODING), DEFAULT_KEY));
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			throw Exceptions.unchecked(e);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class Cryptos {
 		try {
 			return Encodes.encodeHex(aesEncrypt(input.getBytes(DEFAULT_URL_ENCODING), Encodes.decodeHex(key)));
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			throw Exceptions.unchecked(e);
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class Cryptos {
 		try {
 			return new String(aesDecrypt(Encodes.decodeHex(input), DEFAULT_KEY), DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			throw Exceptions.unchecked(e);
 		}
 	}
 	
@@ -158,7 +158,7 @@ public class Cryptos {
 		try {
 			return new String(aesDecrypt(Encodes.decodeHex(input), Encodes.decodeHex(key)), DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			throw Exceptions.unchecked(e);
 		}
 	}
 	
