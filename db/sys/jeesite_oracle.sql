@@ -4,8 +4,9 @@
 DROP INDEX sys_area_parent_id;
 DROP INDEX sys_area_parent_ids;
 DROP INDEX sys_area_del_flag;
-DROP INDEX sys_dict_value;
-DROP INDEX sys_dict_label;
+DROP INDEX sys_dict_type;
+/*DROP INDEX sys_dict_value;*/
+/*DROP INDEX sys_dict_label;*/
 DROP INDEX sys_dict_del_flag;
 DROP INDEX sys_log_create_by;
 DROP INDEX sys_log_request_uri;
@@ -263,8 +264,9 @@ CREATE TABLE sys_user_role
 CREATE INDEX sys_area_parent_id ON sys_area (parent_id);
 CREATE INDEX sys_area_parent_ids ON sys_area (parent_ids);
 CREATE INDEX sys_area_del_flag ON sys_area (del_flag);
-CREATE INDEX sys_dict_value ON sys_dict (value);
-CREATE INDEX sys_dict_label ON sys_dict (label);
+CREATE INDEX sys_dict_type ON sys_dict (type);
+/*CREATE INDEX sys_dict_value ON sys_dict (value);*/
+/*CREATE INDEX sys_dict_label ON sys_dict (label);*/
 CREATE INDEX sys_dict_del_flag ON sys_dict (del_flag);
 CREATE INDEX sys_log_create_by ON sys_log (create_by);
 CREATE INDEX sys_log_request_uri ON sys_log (request_uri);

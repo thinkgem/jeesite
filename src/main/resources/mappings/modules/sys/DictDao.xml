@@ -23,7 +23,7 @@
 					<if test="dbName == 'mssql'">'%'+#{description}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{description}, '%')</if>
 		</if>
-		ORDER BY type, sort, update_date DESC
+		ORDER BY type, sort
 	</select>
 	
 	<select id="findAllList" resultType="Dict">
@@ -31,7 +31,7 @@
 			* 
 		FROM sys_dict 
 		WHERE del_flag = #{DEL_FLAG_NORMAL} 
-		ORDER BY type, sort, update_date DESC
+		ORDER BY type, sort
 	</select>
 	
 	<select id="findTypeList" resultType="string">
