@@ -137,6 +137,14 @@
     <example>${fns:getDictList(type)}</example>  
   </function>
   
+  <function>
+    <description>获取字典对象列表</description>
+    <name>getDictListJson</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.DictUtils</function-class>
+    <function-signature>java.lang.String getDictListJson(java.lang.String)</function-signature>
+    <example>${fns:getDictListJson(type)}</example>  
+  </function>
+  
   <!-- Encodes -->
   <function>
     <description>URL编码</description>

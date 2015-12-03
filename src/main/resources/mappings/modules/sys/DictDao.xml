@@ -20,6 +20,7 @@
 		<if test="description != null and description != ''">
 			AND description LIKE 
 					<if test="dbName == 'oracle'">'%'||#{description}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{description}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{description}, '%')</if>
 		</if>
 		ORDER BY type, sort, update_date DESC
