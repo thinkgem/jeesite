@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.sys.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -36,8 +37,11 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 	
 	@Transactional(readOnly = true)
 	public List<Office> findList(Office office){
-		office.setParentIds(office.getParentIds()+"%");
-		return dao.findByParentIdsLike(office);
+		if(office != null){
+			office.setParentIds(office.getParentIds()+"%");
+			return dao.findByParentIdsLike(office);
+		}
+		return  new ArrayList<Office>();
 	}
 	
 	@Transactional(readOnly = false)

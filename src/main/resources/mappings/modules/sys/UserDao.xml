@@ -111,10 +111,10 @@
     </sql>
     
     <sql id="userJoins">
-		JOIN sys_office c ON c.id = a.company_id
-		JOIN sys_area ca ON ca.id = c.area_id
-		JOIN sys_office o ON o.id = a.office_id
-		JOIN sys_area oa ON oa.id = o.area_id
+		LEFT JOIN sys_office c ON c.id = a.company_id
+		LEFT JOIN sys_area ca ON ca.id = c.area_id
+		LEFT JOIN sys_office o ON o.id = a.office_id
+		LEFT JOIN sys_area oa ON oa.id = o.area_id
 		LEFT JOIN sys_user cu ON cu.id = c.primary_person
 		LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person
 		LEFT JOIN sys_user ou ON ou.id = o.primary_person
