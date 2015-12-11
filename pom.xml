@@ -645,6 +645,13 @@
 			<artifactId>UserAgentUtils</artifactId>
 			<version>1.13</version>
 		</dependency>
+
+		<dependency>
+		  <groupId>org.apache.cxf</groupId>
+		  <artifactId>apache-cxf</artifactId>
+		  <version>3.1.4</version>
+		  <type>zip</type>
+		</dependency>
 		
 		<!-- 自定义jar依赖包
 		<dependency>
