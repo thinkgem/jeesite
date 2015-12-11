@@ -13,6 +13,22 @@
     <style type="text/css">strong, th{font-weight:bold;}</style>
     <!--[if lt IE 9]><script src="javascripts/html5.js"></script><![endif]-->	
     <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?59e1eb3d57e34d425d615b85092ebe95";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
+    <script src="js/libs/jquery-1.7.1.min.js"></script>
+    <script src="js/jPages.js"></script>
+    <script>
+      $(function(){
+        $("div.holder").jPages({
+          containerID : "tbody",
+          previous : "←",
+          next : "→",
+          perPage : 15,
+          delay : 20,
+          callback : function( pages, items ) {
+            $(document).scrollTop( $(document).height() );
+          }
+        });
+      });
+    </script>
   </head>
   <body>
     <header>
@@ -43,10 +59,24 @@
 </p>
 <h2>捐赠列表</h2>
 <table>
-	<tr><th>姓名</th><th>金额</th><th>时间</th></tr>
+	<thead><tr><th>姓名</th><th>金额</th><th>时间</th></tr></thead><tbody id="tbody">
 	
-  <tr><td>后海</td><td>8.88</td><td>2015.09.23</td></tr>
-  <tr><td>十三</td><td>10</td><td>2015.09.08</td></tr>
+	<tr><td>明月不懂</td><td>50</td><td>2015.12.09</td></tr>
+	<tr><td>含</td><td>20</td><td>2015.12.03</td></tr>
+	<tr><td>宁</td><td>10</td><td>2015.11.30</td></tr>
+	<tr><td>泰可</td><td>100</td><td>2015.11.22</td></tr>
+	<tr><td>永江</td><td>10</td><td>2015.11.13</td></tr>
+	<tr><td>崔文龙</td><td>2</td><td>2015.11.12</td></tr>
+	<tr><td>刘义</td><td>10</td><td>2015.11.12</td></tr>
+	<tr><td>强</td><td>11.11</td><td>2015.11.11</td></tr>
+	<tr><td>我心永恒</td><td>50</td><td>2015.11.08</td></tr>
+	<tr><td>庆贺</td><td>36</td><td>2015.11.02</td></tr>
+	<tr><td>东升</td><td>16.66</td><td>2015.10.30</td></tr>
+	<tr><td>夏牧的夏</td><td>30</td><td>2015.10.19</td></tr>
+	<tr><td>陈敏杰</td><td>19.88</td><td>2015.10.19</td></tr>
+	<tr><td>liuyan</td><td>12</td><td>2015.10.15</td></tr>
+	<tr><td>后海</td><td>8.88</td><td>2015.09.23</td></tr>
+	<tr><td>十三</td><td>10</td><td>2015.09.08</td></tr>
 
 	<tr><td>覃慎</td><td>200</td><td>2015.08.17</td></tr>
 	<tr><td>晓东</td><td>50</td><td>2015.08.17</td></tr>
@@ -91,7 +121,8 @@
 	<tr><td>顾**</td><td>2</td><td>2013.07.05</td></tr>
 	<tr><td>王超朋</td><td>10</td><td>2013.07.04</td></tr>
 	
-</table>
+</tbody></table>
+<div class="holder"></div>
 <p></br/>注：捐赠者将留名，如不希望留名请在捐赠时说明。</p>
 
         </section>
