@@ -24,7 +24,9 @@
           perPage : 15,
           delay : 20,
           callback : function( pages, items ) {
-            $(document).scrollTop( $(document).height() );
+            if (pages.current > 1){
+              $(document).scrollTop($(document).height());
+            }
           }
         });
       });
