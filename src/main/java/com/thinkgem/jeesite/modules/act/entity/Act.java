@@ -147,8 +147,8 @@ public class Act extends BaseEntity<Act> {
 
 	public void setProcIns(ProcessInstance procIns) {
 		this.procIns = procIns;
-		if (procIns != null && procIns.getBusinessKey() != null){
-			String[] ss = procIns.getBusinessKey().split(":");
+		if (procIns != null && procIns.getProcessDefinitionId() != null){
+			String[] ss = procIns.getProcessDefinitionId().split(":");
 			setBusinessTable(ss[0]);
 			setBusinessId(ss[1]);
 		}
