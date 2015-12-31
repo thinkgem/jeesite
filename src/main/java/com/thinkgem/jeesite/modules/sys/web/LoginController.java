@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
@@ -27,8 +28,10 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
 import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.security.FormAuthenticationFilter;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -41,6 +44,26 @@ public class LoginController extends BaseController{
 	
 	@Autowired
 	private SessionDAO sessionDAO;
+	
+	@Autowired
+	private SystemService systemService;
+	
+
+	/**
+	 * 手机端登录接口
+	 * @param user
+	 * @return JSON 格式用户信息
+	 */
+	@RequestMapping(value="${mobilePath}/login")
+	@ResponseBody
+	public User loginMobile(User user){
+		User user2 = systemService.getUserByLoginName(user.getLoginName());
+		if(user2!=null && SystemService.validatePassword(user.getPassword(), user2.getPassword())){
+			return user2;
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * 管理登录
