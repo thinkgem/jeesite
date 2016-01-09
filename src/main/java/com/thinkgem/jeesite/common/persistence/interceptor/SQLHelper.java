@@ -180,7 +180,6 @@ public class SQLHelper {
      * @param hql 
      * @return 
      */  
-    @SuppressWarnings("unused")
 	private static String removeOrders(String qlString) {  
         Pattern p = Pattern.compile("order\\s*by[\\w|\\W|\\s|\\S]*", Pattern.CASE_INSENSITIVE);  
         Matcher m = p.matcher(qlString);  

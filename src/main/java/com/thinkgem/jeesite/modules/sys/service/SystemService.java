@@ -58,6 +58,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	private MenuDao menuDao;
 	@Autowired
 	private SessionDAO sessionDao;
+	@SuppressWarnings("unused")
 	@Autowired
 	private SystemAuthorizingRealm systemRealm;
 	

@@ -73,7 +73,7 @@ public class ActUtils {
 //		return url;
 //	}
 	
-	@SuppressWarnings({ "unused" })
+	@SuppressWarnings({ "unused", "deprecation" })
 	public static Map<String, Object> getMobileEntity(Object entity,String spiltType){
 		if(spiltType==null){
 			spiltType="@";
