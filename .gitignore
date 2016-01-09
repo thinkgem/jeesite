@@ -14,3 +14,5 @@
 /src/main/webapp/WEB-INF/classes/*
 /src/main/webapp/userfiles/*
 /target/
+/output/*
+src/main/webapp/META-INF/MANIFEST.MF

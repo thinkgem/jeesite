@@ -48,7 +48,7 @@
 		<mssql.driver.version>1.3.1</mssql.driver.version>
 	    
 		<!-- environment setting -->
-		<jdk.version>1.6</jdk.version>
+		<jdk.version>1.7</jdk.version>
 		<tomcat.version>2.2</tomcat.version>
 		<jetty.version>7.6.14.v20131031</jetty.version>
 		<webserver.port>8181</webserver.port>
@@ -59,6 +59,10 @@
 	
 	<!-- 设定主仓库，按设定顺序进行查找。 -->
 	<repositories>
+		<repository>
+	         <id>nexus_public</id>
+	         <url>http://nexus.110monitor.com:8081/nexus/content/groups/public/</url>
+	     </repository>
 	
 		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<repository>
