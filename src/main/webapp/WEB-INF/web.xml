@@ -85,7 +85,7 @@
 			<param-value>classpath*:/spring-mvc*.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-	</servlet>
+	</servlet>	
 	<servlet-mapping>
 		<servlet-name>springServlet</servlet-name>
 		<url-pattern>/</url-pattern>
