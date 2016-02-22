@@ -128,13 +128,13 @@
 	
 	<update id="delete">
 		UPDATE gen_table_column SET 
-			del_flag = #{DEL_FLAG_DELETE}
+			del_flag = '1'
 		WHERE id = #{id}
 	</update>
 	
 	<update id="deleteByGenTableId">
 		UPDATE gen_table_column SET 
-			del_flag = #{DEL_FLAG_DELETE}
+			del_flag = '1'
 		WHERE gen_table_id = #{deleteByGenTableId}
 	</update>
 	
