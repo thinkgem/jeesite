@@ -1,4 +1,4 @@
-# JeeSite 企业信息化快速开发平台 by wanghongfeng
+# JeeSite 企业信息化快速开发平台
 
 ## 平台简介
 
