@@ -18,8 +18,8 @@
 		<!-- main version setting -->
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<validator.version>5.2.4.Final</validator.version>
-		<!-- <mybatis.version>3.3.1</mybatis.version> -->
-		<mybatis.version>3.2.8</mybatis.version>
+		<mybatis.version>3.3.1</mybatis.version>
+		<!-- <mybatis.version>3.2.8</mybatis.version> -->
 		<mybatis-spring.version>1.2.4</mybatis-spring.version>
 		<druid.version>1.0.17</druid.version>
 		<ehcache.version>2.6.11</ehcache.version>

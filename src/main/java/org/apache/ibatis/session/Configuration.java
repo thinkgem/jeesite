@@ -71,7 +71,9 @@ import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.InterceptorChain;
+import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.ReflectorFactory;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
@@ -111,13 +113,15 @@ public class Configuration {
 	protected Set<String> lazyLoadTriggerMethods = new HashSet<String>(
 			Arrays.asList(new String[] { "equals", "clone", "hashCode",
 					"toString" }));
-	protected Integer defaultStatementTimeout;
+	protected Integer defaultStatementTimeout=25;
+	protected Integer defaultFetchSize=100;
 	protected ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
 	protected AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
 
 	protected Properties variables = new Properties();
 	protected ObjectFactory objectFactory = new DefaultObjectFactory();
 	protected ObjectWrapperFactory objectWrapperFactory = new DefaultObjectWrapperFactory();
+	protected ReflectorFactory reflectorFactory=new DefaultReflectorFactory();
 	protected MapperRegistry mapperRegistry = new MapperRegistry(this);
 
 	protected boolean lazyLoadingEnabled = false;
@@ -467,7 +471,7 @@ public class Configuration {
 
 	public MetaObject newMetaObject(Object object) {
 		return MetaObject
-				.forObject(object, objectFactory, objectWrapperFactory);
+				.forObject(object, objectFactory, objectWrapperFactory,reflectorFactory);
 	}
 
 	public ParameterHandler newParameterHandler(
@@ -565,6 +569,14 @@ public class Configuration {
 		return caches.get(id);
 	}
 
+	public ReflectorFactory getReflectorFactory() {
+		return reflectorFactory;
+	}
+
+	public void setReflectorFactory(ReflectorFactory reflectorFactory) {
+		this.reflectorFactory = reflectorFactory;
+	}
+
 	public boolean hasCache(String id) {
 		return caches.containsKey(id);
 	}
@@ -659,6 +671,14 @@ public class Configuration {
 
 	public MappedStatement getMappedStatement(String id) {
 		return this.getMappedStatement(id, true);
+	}
+
+	public Integer getDefaultFetchSize() {
+		return defaultFetchSize;
+	}
+
+	public void setDefaultFetchSize(Integer defaultFetchSize) {
+		this.defaultFetchSize = defaultFetchSize;
 	}
 
 	public MappedStatement getMappedStatement(String id,
