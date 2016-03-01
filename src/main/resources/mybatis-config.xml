@@ -36,7 +36,14 @@
 		
         <!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
         <setting name="jdbcTypeForNull" value="NULL"/>
-		
+        <!-- 设置超时时间，它决定驱动等待数据库响应的秒数。 -->
+		<setting name="defaultStatementTimeout" value="25"/>
+		<!-- Sets the driver a hint as to control fetching size for return results. This parameter value can be override by a query setting. -->
+        <setting name="defaultFetchSize" value="100"/>
+        <!-- 指定哪个对象的方法触发一次延迟加载。 -->
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+        <!-- 允许在嵌套语句中使用分页（RowBounds）。 -->
+        <setting name="safeRowBoundsEnabled" value="false"/>
 	</settings>
 	
 	<!-- 类型别名 -->

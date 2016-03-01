@@ -16,12 +16,13 @@
 	<properties>
 		
 		<!-- main version setting -->
-		<spring.version>4.0.8.RELEASE</spring.version>
-		<validator.version>5.1.1.Final</validator.version>
-		<mybatis.version>3.2.8</mybatis.version>
-		<mybatis-spring.version>1.2.2</mybatis-spring.version>
-		<druid.version>1.0.11</druid.version>
-		<ehcache.version>2.6.9</ehcache.version>
+		<spring.version>4.2.4.RELEASE</spring.version>
+		<validator.version>5.2.4.Final</validator.version>
+		<mybatis.version>3.3.1</mybatis.version>
+		<!-- <mybatis.version>3.2.8</mybatis.version> -->
+		<mybatis-spring.version>1.2.4</mybatis-spring.version>
+		<druid.version>1.0.17</druid.version>
+		<ehcache.version>2.6.11</ehcache.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
 		<shiro.version>1.2.3</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
@@ -39,7 +40,7 @@
 		<xstream.version>1.4.7</xstream.version>
 		<guava.version>17.0</guava.version>
 		<dozer.version>5.5.1</dozer.version>
-		<poi.version>3.9</poi.version>
+		<poi.version>3.13</poi.version>
 		<freemarker.version>2.3.20</freemarker.version>
 		
 		<!-- jdbc driver setting -->
