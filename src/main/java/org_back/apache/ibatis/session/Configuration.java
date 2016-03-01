@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.apache.ibatis.session;
+package org_back.apache.ibatis.session;
 
 import java.util.Arrays;
 import java.util.Collection;

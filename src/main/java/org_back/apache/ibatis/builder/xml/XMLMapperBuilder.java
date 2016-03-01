@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.apache.ibatis.builder.xml;
+package org_back.apache.ibatis.builder.xml;
 
 import java.io.InputStream;
 import java.io.Reader;
