@@ -110,6 +110,7 @@ public class PaginationInterceptor extends BaseInterceptor {
         builder.parameterMap(ms.getParameterMap());
         builder.resultMaps(ms.getResultMaps());
         builder.cache(ms.getCache());
+        builder.useCache(ms.isUseCache());
         return builder.build();
     }
 
