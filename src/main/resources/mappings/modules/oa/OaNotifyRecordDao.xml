@@ -71,15 +71,18 @@
 			READ_DATE
 		)
 		<foreach collection="list" item="e" separator=" UNION ALL ">
-			SELECT
+		<!-- 多种数据库支持（判断问题解决，list中的对象才具有dbName的值） -->
+			 ( 
+			<if test="e.dbName == 'oracle'"> SELECT </if>
 				#{e.id},
 				#{e.oaNotify.id},
 				#{e.user.id},
 				#{e.readFlag},
 				#{e.readDate}
-			<if test="dbName != 'mssql'">
-			FROM dual
-			</if>
+			<if test="e.dbName == 'oracle'">
+				  FROM dual 
+			</if> 
+			 ) 
 		</foreach>
 	</insert>
 	
