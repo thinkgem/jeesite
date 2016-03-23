@@ -15,7 +15,7 @@
 		<listener-class>com.thinkgem.jeesite.modules.sys.listener.WebContextListener</listener-class>
 	</listener>
 	<listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>  
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -33,7 +33,7 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- Apache Shiro -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
@@ -48,19 +48,11 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- PageCache, cache .html suffix.
-	<filter>
-		<filter-name>PageCacheFilter</filter-name>
-		<filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>PageCacheFilter</filter-name>
-		<url-pattern>/</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>PageCacheFilter</filter-name>
-		<url-pattern>*.html</url-pattern>
-	</filter-mapping>-->
+	<!-- PageCache, cache .html suffix. <filter> <filter-name>PageCacheFilter</filter-name> 
+		<filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>PageCacheFilter</filter-name> <url-pattern>/</url-pattern> 
+		</filter-mapping> <filter-mapping> <filter-name>PageCacheFilter</filter-name> 
+		<url-pattern>*.html</url-pattern> </filter-mapping> -->
 
 	<!-- SiteMesh -->
 	<filter>
@@ -75,7 +67,7 @@
 		<filter-name>sitemeshFilter</filter-name>
 		<url-pattern>/f/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- MVC Servlet -->
 	<servlet>
 		<servlet-name>springServlet</servlet-name>
@@ -118,7 +110,7 @@
 		<servlet-name>DruidStatView</servlet-name>
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- CKFinder -->
 	<servlet>
 		<servlet-name>CKFinderConnectorServlet</servlet-name>
@@ -160,14 +152,14 @@
 
 	<!-- Userfiles download -->
 	<servlet>
-	  	<servlet-name>UserfilesDownloadServlet</servlet-name>
-	  	<servlet-class>com.thinkgem.jeesite.common.servlet.UserfilesDownloadServlet</servlet-class>
+		<servlet-name>UserfilesDownloadServlet</servlet-name>
+		<servlet-class>com.thinkgem.jeesite.common.servlet.UserfilesDownloadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	  	<servlet-name>UserfilesDownloadServlet</servlet-name>
-	  	<url-pattern>/userfiles/*</url-pattern>
+		<servlet-name>UserfilesDownloadServlet</servlet-name>
+		<url-pattern>/userfiles/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Validate code -->
 	<servlet>
 		<servlet-name>ValidateCodeServlet</servlet-name>
@@ -177,29 +169,19 @@
 		<servlet-name>ValidateCodeServlet</servlet-name>
 		<url-pattern>/servlet/validateCodeServlet</url-pattern>
 	</servlet-mapping>
-	
-	<!-- FineReport 
-	<servlet>
-		<servlet-name>ReportServer</servlet-name>
-		<servlet-class>com.fr.web.ReportServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReportServer</servlet-name>
-		<url-pattern>/ReportServer</url-pattern>
-	</servlet-mapping>-->
-	
+
+	<!-- FineReport <servlet> <servlet-name>ReportServer</servlet-name> <servlet-class>com.fr.web.ReportServlet</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>ReportServer</servlet-name> <url-pattern>/ReportServer</url-pattern> 
+		</servlet-mapping> -->
+
 	<!-- [INSERT FRAGMENT HERE] -->
 
-	<!-- Session configure, to "jeesite.properties" file "session.sessionTimeout" parameter.
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>-->
+	<!-- Session configure, to "jeesite.properties" file "session.sessionTimeout" 
+		parameter. <session-config> <session-timeout>30</session-timeout> </session-config> -->
 
 	<!-- Error page -->
-	<!-- <error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/WEB-INF/views/error/500.jsp</location>
-	</error-page> -->
+	<!-- <error-page> <exception-type>java.lang.Throwable</exception-type> <location>/WEB-INF/views/error/500.jsp</location> 
+		</error-page> -->
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/error/500.jsp</location>

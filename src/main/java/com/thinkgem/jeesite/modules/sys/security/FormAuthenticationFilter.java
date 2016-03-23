@@ -7,10 +7,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
  */
 @Service
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
-
+	private Logger logger=LogManager.getLogger(FormAuthenticationFilter.class.getName());
 	public static final String DEFAULT_CAPTCHA_PARAM = "validateCode";
 	public static final String DEFAULT_MOBILE_PARAM = "mobileLogin";
 	public static final String DEFAULT_MESSAGE_PARAM = "message";
@@ -33,6 +36,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	private String messageParam = DEFAULT_MESSAGE_PARAM;
 
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
+		logger.debug("fdsfdsfsdfsdfsdf");
 		String username = getUsername(request);
 		String password = getPassword(request);
 		if (password==null){
@@ -105,5 +109,11 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         request.setAttribute(getMessageParam(), message);
         return true;
 	}
-	
+	@Override
+	protected boolean onLoginSuccess(AuthenticationToken token,
+			Subject subject, ServletRequest request, ServletResponse response)
+			throws Exception {
+		logger.info("登录成功");
+		return super.onLoginSuccess(token, subject, request, response);
+	}
 }

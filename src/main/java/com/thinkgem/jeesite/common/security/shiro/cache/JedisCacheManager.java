@@ -9,11 +9,11 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 
@@ -50,7 +50,7 @@ public class JedisCacheManager implements CacheManager {
 	 */
 	public class JedisCache<K, V> implements Cache<K, V> {
 
-		private Logger logger = LoggerFactory.getLogger(getClass());
+		private Logger logger = LogManager.getLogger(getClass());
 
 		private String cacheKeyName = null;
 

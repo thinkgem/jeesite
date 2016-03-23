@@ -5,8 +5,8 @@ package com.thinkgem.jeesite.common.service;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
@@ -26,7 +26,7 @@ public abstract class BaseService {
 	/**
 	 * 日志对象
 	 */
-	protected Logger logger = LoggerFactory.getLogger(getClass());
+	protected Logger logger = LogManager.getLogger(BaseService.class.getName());
 
 	/**
 	 * 数据范围过滤
