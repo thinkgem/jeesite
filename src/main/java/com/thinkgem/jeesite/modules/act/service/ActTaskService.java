@@ -184,6 +184,8 @@ public class ActTaskService extends BaseService {
 		
 		// 查询列表
 		List<HistoricTaskInstance> histList = histTaskQuery.listPage(page.getFirstResult(), page.getMaxResults());
+		//处理分页问题
+		List<Act> actList=Lists.newArrayList();
 		for (HistoricTaskInstance histTask : histList) {
 			Act e = new Act();
 			e.setHistTask(histTask);
@@ -194,8 +196,10 @@ public class ActTaskService extends BaseService {
 //			e.setProcIns(runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult());
 //			e.setProcExecUrl(ActUtils.getProcExeUrl(task.getProcessDefinitionId()));
 			e.setStatus("finish");
-			page.getList().add(e);
+			actList.add(e);
+			//page.getList().add(e);
 		}
+		page.setList(actList);
 		return page;
 	}
 	
