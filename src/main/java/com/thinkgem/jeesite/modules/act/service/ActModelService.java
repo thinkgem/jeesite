@@ -161,6 +161,7 @@ public class ActModelService extends BaseService {
 	/**
 	 * 更新Model分类
 	 */
+	@Transactional(readOnly = false)
 	public void updateCategory(String id, String category) {
 		org.activiti.engine.repository.Model modelData = repositoryService.getModel(id);
 		modelData.setCategory(category);
@@ -172,6 +173,7 @@ public class ActModelService extends BaseService {
 	 * @param id
 	 * @return
 	 */
+	@Transactional(readOnly = false)
 	public void delete(String id) {
 		repositoryService.deleteModel(id);
 	}

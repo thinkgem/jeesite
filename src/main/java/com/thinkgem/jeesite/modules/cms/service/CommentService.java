@@ -36,6 +36,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 		return super.findPage(page, comment);
 	}
 	
+	@Transactional(readOnly = false)
 	public void delete(Comment entity, Boolean isRe) {
 		super.delete(entity);
 	}
