@@ -7,12 +7,12 @@
 	<artifactId>jeesite</artifactId>
 	<version>1.2.6</version>
 	<packaging>war</packaging>
-	
+	 
 	<name>JeeSite</name>
 	<url>http://thinkgem.github.com/jeesite</url>
 	<inceptionYear>2012-2014</inceptionYear>
-	
-	<!-- 项目属性 -->
+	 
+	<!-- 项目属性 --> 
 	<properties>
 		
 		<!-- main version setting -->
@@ -51,7 +51,7 @@
 		<jdk.version>1.6</jdk.version>
 		<tomcat.version>2.2</tomcat.version>
 		<jetty.version>7.6.14.v20131031</jetty.version>
-		<webserver.port>8181</webserver.port>
+		<webserver.port>80</webserver.port>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<downloadSources>true</downloadSources>
 		
