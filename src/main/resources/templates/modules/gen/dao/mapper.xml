@@ -182,6 +182,7 @@ ${insertJavaField?substring(0, insertJavaField?last_index_of(","))}
 						<if test="${c.simpleJavaField} != null<#if c.simpleJavaField != c.javaFieldId> and ${c.javaFieldId} != null</#if> and ${c.javaFieldId} != ''">
 							${c.name} = ${"#"}{${c.javaFieldId}},
 						</#if>
+						</if>
 					</#if>
 				</#list>
 			</#assign>
