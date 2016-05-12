@@ -184,6 +184,8 @@ public class ActTaskService extends BaseService {
 		
 		// 查询列表
 		List<HistoricTaskInstance> histList = histTaskQuery.listPage(page.getFirstResult(), page.getMaxResults());
+		//处理分页问题
+		List<Act> actList=Lists.newArrayList();
 		for (HistoricTaskInstance histTask : histList) {
 			Act e = new Act();
 			e.setHistTask(histTask);
@@ -194,8 +196,10 @@ public class ActTaskService extends BaseService {
 //			e.setProcIns(runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult());
 //			e.setProcExecUrl(ActUtils.getProcExeUrl(task.getProcessDefinitionId()));
 			e.setStatus("finish");
-			page.getList().add(e);
+			actList.add(e);
+			//page.getList().add(e);
 		}
+		page.setList(actList);
 		return page;
 	}
 	
@@ -428,6 +432,7 @@ public class ActTaskService extends BaseService {
 	 * @param taskId 任务ID
 	 * @param deleteReason 删除原因
 	 */
+	@Transactional(readOnly = false)
 	public void deleteTask(String taskId, String deleteReason){
 		taskService.deleteTask(taskId, deleteReason);
 	}
@@ -487,6 +492,7 @@ public class ActTaskService extends BaseService {
 	 * 完成第一个任务
 	 * @param procInsId
 	 */
+	@Transactional(readOnly = false)
 	public void completeFirstTask(String procInsId){
 		completeFirstTask(procInsId, null, null, null);
 	}
@@ -498,6 +504,7 @@ public class ActTaskService extends BaseService {
 	 * @param title
 	 * @param vars
 	 */
+	@Transactional(readOnly = false)
 	public void completeFirstTask(String procInsId, String comment, String title, Map<String, Object> vars){
 		String userId = UserUtils.getUser().getLoginName();
 		Task task = taskService.createTaskQuery().taskAssignee(userId).processInstanceId(procInsId).active().singleResult();

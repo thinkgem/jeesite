@@ -224,7 +224,7 @@
 			<if test="office.id != null and office.id != ''">
 				AND (c.office_id = #{office.id} OR o.parent_ids like 
 					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>)
+					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{office.id}, '%')</if>)
 			</if>
 			<if test="beginDate != null and beginDate != ''">
@@ -236,7 +236,7 @@
 			<if test="id != null and id != ''">
 				AND (c.id = #{id} OR c.parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%'||#{id}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{id}+'%'</if>)
+					<if test="dbName == 'mssql'">'%'+#{id}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{id}, '%')</if>)
 			</if>
 			group by cp.sort, cp.id, c.sort, c.id
