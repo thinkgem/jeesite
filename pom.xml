@@ -60,65 +60,10 @@
 	<!-- 设定主仓库，按设定顺序进行查找。 -->
 	<repositories>
 	
-		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<repository>
-			<id>nexus-repos</id>
-			<name>Team Nexus Repository</name>
-			<url>http://192.168.11.36:8888/nexus/content/groups/public</url>
-		</repository> -->
-		
-		<repository>
-            <id>oschina-repos</id>
-            <name>Oschina Releases</name>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </repository>
-        
-        <repository>
-            <id>java-repos</id>
-            <name>Java Repository</name>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-        
-        <repository>
-            <id>springsource-repos</id>
-            <name>SpringSource Repository</name>
-            <url>http://repo.spring.io/release/</url>
-        </repository>
-        
-		<repository>
-			<id>central-repos</id>
-			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-		</repository>
-		
-		<repository>
-			<id>central-repos2</id>
-			<name>Central Repository 2</name>
-			<url>http://repo1.maven.org/maven2/</url>
-		</repository>
-		
-		<repository>
-			<id>activiti-repos</id>
-			<name>Activiti Repository</name>
-			<url>https://maven.alfresco.com/nexus/content/groups/public</url>
-		</repository>
-		
-		<repository>
-			<id>activiti-repos2</id>
-			<name>Activiti Repository 2</name>
-			<url>https://app.camunda.com/nexus/content/groups/public</url>
-		</repository>
-		
-		<repository> 
-			<id>thinkgem-repos</id> 
-			<name>ThinkGem Repository</name>
-			<url>http://git.oschina.net/thinkgem/repos/raw/master</url>
-		</repository>
-		
-		<repository> 
-			<id>thinkgem-repos2</id> 
-			<name>ThinkGem Repository 2</name>
-			<url>https://raw.github.com/thinkgem/repository/master</url>
+			<id>jeesite-repos</id>
+			<name>Jeesite Repository</name>
+			<url>http://maven.jeesite.com/nexus/content/groups/public</url>
 		</repository>
 		
 	</repositories>
@@ -126,18 +71,11 @@
 	<!-- 设定插件仓库 -->
 	<pluginRepositories> 
 	
-		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<pluginRepository>
-			<id>nexus-repos</id>
-			<name>Team Nexus Repository</name>
-			<url>http://192.168.11.36:8888/nexus/content/groups/public</url>
-		</pluginRepository> -->
-		
-		<pluginRepository>
-            <id>oschina-repos</id>
-            <name>Oschina Releases</name>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </pluginRepository>
+			<id>jeesite-repos</id>
+			<name>Jeesite Repository</name>
+			<url>http://maven.jeesite.com/nexus/content/groups/public</url>
+		</pluginRepository>
 		
 	</pluginRepositories> 
 	
