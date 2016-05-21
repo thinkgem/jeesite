@@ -254,12 +254,7 @@
 			<version>${mysql.driver.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc14</artifactId>
-			<version>${oracle.driver.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+		
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
