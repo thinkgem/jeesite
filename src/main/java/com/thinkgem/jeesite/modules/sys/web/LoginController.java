@@ -190,8 +190,6 @@ public class LoginController extends BaseController{
 	public String getThemeInCookie(@PathVariable String theme, HttpServletRequest request, HttpServletResponse response){
 		if (StringUtils.isNotBlank(theme)){
 			CookieUtils.setCookie(response, "theme", theme);
-		}else{
-			theme = CookieUtils.getCookie(request, "theme");
 		}
 		return "redirect:"+request.getParameter("url");
 	}
