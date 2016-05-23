@@ -349,17 +349,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
         return sb.toString();
     }
-    
-    /**
-     * 如果不为空，则设置值
-     * @param target
-     * @param source
-     */
-    public static void setValueIfNotBlank(String target, String source) {
-		if (isNotBlank(source)){
-			target = source;
-		}
-	}
  
     /**
      * 转换为JS获取对象值，生成三目运算返回结果
