@@ -70,20 +70,24 @@
 			READ_FLAG,
 			READ_DATE
 		)
-		<foreach collection="list" item="e" separator=" UNION ALL ">
-		<!-- 多种数据库支持（判断问题解决，list中的对象才具有dbName的值） -->
-			 ( 
-			<if test="e.dbName == 'oracle'"> SELECT </if>
-				#{e.id},
+		<if test="list.get(0).dbName == 'oracle'">
+			<foreach collection="list" item="e" separator=" union all ">
+				SELECT #{e.id},
 				#{e.oaNotify.id},
 				#{e.user.id},
 				#{e.readFlag},
-				#{e.readDate}
-			<if test="e.dbName == 'oracle'">
-				  FROM dual 
-			</if> 
-			 ) 
-		</foreach>
+				#{e.readDate} FROM dual
+			</foreach>
+		</if>
+		<if test="list.get(0).dbName == 'mssql' or list.get(0).dbName == 'mysql'"> VALUES  
+		    <foreach collection="list" item="e" open="" separator="," close="">  
+				(#{e.id},
+				#{e.oaNotify.id},
+				#{e.user.id},
+				#{e.readFlag},
+				#{e.readDate})
+			</foreach>
+	    </if>
 	</insert>
 	
 	<update id="update">
