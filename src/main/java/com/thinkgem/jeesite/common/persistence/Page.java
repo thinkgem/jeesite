@@ -87,13 +87,24 @@ public class Page<T> {
 			CookieUtils.setCookie(response, "pageSize", size);
 			this.setPageSize(Integer.parseInt(size));
 		}else if (request.getParameter("repage")!=null){
-			no = CookieUtils.getCookie(request, "pageSize");
+			size = CookieUtils.getCookie(request, "pageSize");
 			if (StringUtils.isNumeric(size)){
 				this.setPageSize(Integer.parseInt(size));
 			}
 		}else if (defaultPageSize != -2){
 			this.pageSize = defaultPageSize;
 		}
+		// 设置页面分页函数
+        String funcName = request.getParameter("funcName");
+        if (StringUtils.isNotBlank(funcName)){
+            CookieUtils.setCookie(response, "funcName", funcName);
+            this.setFuncName(funcName);
+        }else if (request.getParameter("repage")!=null){
+            funcName = CookieUtils.getCookie(request, "funcName");
+            if (StringUtils.isNotBlank(funcName)){
+                this.setFuncName(funcName);
+            }
+        }
 		// 设置排序参数
 		String orderBy = request.getParameter("orderBy");
 		if (StringUtils.isNotBlank(orderBy)){
