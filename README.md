@@ -121,7 +121,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 如何交流、反馈、参与贡献？
 
-* QQ Group：127515876 &nbsp; 209330483 &nbsp; 223507718 &nbsp; 1373527
+* QQ Group：127515876 &nbsp; 209330483 &nbsp; 223507718
 * E-mail：thinkgem@163.com
 * GitHub：<https://github.com/thinkgem/jeesite>
 * 开源中国：<http://git.oschina.net/thinkgem/jeesite>
