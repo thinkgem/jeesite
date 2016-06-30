@@ -22,7 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Comment;
-import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -324,37 +323,49 @@ public class ExportExcel {
 	 */
 	public Cell addCell(Row row, int column, Object val, int align, Class<?> fieldType){
 		Cell cell = row.createCell(column);
-		CellStyle style = styles.get("data"+(align>=1&&align<=3?align:""));
+		String cellFormatString = "@";
 		try {
-			if (val == null){
+			if(val == null){
 				cell.setCellValue("");
-			} else if (val instanceof String) {
-				cell.setCellValue((String) val);
-			} else if (val instanceof Integer) {
-				cell.setCellValue((Integer) val);
-			} else if (val instanceof Long) {
-				cell.setCellValue((Long) val);
-			} else if (val instanceof Double) {
-				cell.setCellValue((Double) val);
-			} else if (val instanceof Float) {
-				cell.setCellValue((Float) val);
-			} else if (val instanceof Date) {
-				DataFormat format = wb.createDataFormat();
-	            style.setDataFormat(format.getFormat("yyyy-MM-dd"));
-				cell.setCellValue((Date) val);
-			} else {
-				if (fieldType != Class.class){
-					cell.setCellValue((String)fieldType.getMethod("setValue", Object.class).invoke(null, val));
-				}else{
+			}else if(fieldType != Class.class){
+				cell.setCellValue((String)fieldType.getMethod("setValue", Object.class).invoke(null, val));
+			}else{
+				if(val instanceof String) {
+					cell.setCellValue((String) val);
+				}else if(val instanceof Integer) {
+					cell.setCellValue((Integer) val);
+					cellFormatString = "0";
+				}else if(val instanceof Long) {
+					cell.setCellValue((Long) val);
+					cellFormatString = "0";
+				}else if(val instanceof Double) {
+					cell.setCellValue((Double) val);
+					cellFormatString = "0.00";
+				}else if(val instanceof Float) {
+					cell.setCellValue((Float) val);
+					cellFormatString = "0.00";
+				}else if(val instanceof Date) {
+					cell.setCellValue((Date) val);
+					cellFormatString = "yyyy-MM-dd HH:mm";
+				}else {
 					cell.setCellValue((String)Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
 						"fieldtype."+val.getClass().getSimpleName()+"Type")).getMethod("setValue", Object.class).invoke(null, val));
 				}
+			}
+			if (val != null){
+				CellStyle style = styles.get("data_column_"+column);
+				if (style == null){
+					style = wb.createCellStyle();
+					style.cloneStyleFrom(styles.get("data"+(align>=1&&align<=3?align:"")));
+			        style.setDataFormat(wb.createDataFormat().getFormat(cellFormatString));
+					styles.put("data_column_" + column, style);
+				}
+				cell.setCellStyle(style);
 			}
 		} catch (Exception ex) {
 			log.info("Set cell value ["+row.getRowNum()+","+column+"] error: " + ex.toString());
 			cell.setCellValue(val.toString());
 		}
-		cell.setCellStyle(style);
 		return cell;
 	}
 
