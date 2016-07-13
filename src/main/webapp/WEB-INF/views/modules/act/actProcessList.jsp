@@ -50,15 +50,15 @@
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>流程分类</th>
+				<th>分类</th>
+				<th>操作</th>
 				<th>流程ID</th>
 				<th>流程标识</th>
 				<th>流程名称</th>
 				<th>流程版本</th>
+				<th>部署时间</th>
 				<th>流程XML</th>
 				<th>流程图片</th>
-				<th>部署时间</th>
-				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -66,15 +66,8 @@
 				<c:set var="process" value="${object[0]}" />
 				<c:set var="deployment" value="${object[1]}" />
 				<tr>
-					<td><a href="javascript:updateCategory('${process.id}', '${process.category}')" title="设置分类">${fns:getDictLabel(process.category,'act_category','无分类')}</a></td>
-					<td>${process.id}</td>
-					<td>${process.key}</td>
-					<td>${process.name}</td>
-					<td><b title='流程版本号'>V: ${process.version}</b></td>
-					<td><a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=xml">${process.resourceName}</a></td>
-					<td><a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=image">${process.diagramResourceName}</a></td>
-					<td><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td>
+					<td nowrap><a href="javascript:updateCategory('${process.id}', '${process.category}')" title="设置分类">${fns:getDictLabel(process.category,'act_category','无分类')}</a></td>
+					<td nowrap>
 						<c:if test="${process.suspended}">
 							<a href="${ctx}/act/process/update/active?procDefId=${process.id}" onclick="return confirmx('确认要激活吗？', this.href)">激活</a>
 						</c:if>
@@ -84,6 +77,13 @@
 						<a href='${ctx}/act/process/delete?deploymentId=${process.deploymentId}' onclick="return confirmx('确认要删除该流程吗？', this.href)">删除</a>
                         <a href='${ctx}/act/process/convert/toModel?procDefId=${process.id}' onclick="return confirmx('确认要转换为模型吗？', this.href)">转换为模型</a>
 					</td>
+					<td nowrap>${process.id}</td>
+					<td nowrap>${process.key}</td>
+					<td nowrap>${process.name}</td>
+					<td nowrap><b title='流程版本号'>V: ${process.version}</b></td>
+					<td nowrap><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<td nowrap><a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=xml">${process.resourceName}</a></td>
+					<td nowrap><a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=image">${process.diagramResourceName}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

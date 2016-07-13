@@ -49,32 +49,32 @@
 	<table class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>流程分类</th>
+				<th>分类</th>
+				<th>操作</th>
 				<th>模型ID</th>
 				<th>模型标识</th>
 				<th>模型名称</th>
 				<th>版本号</th>
 				<th>创建时间</th>
 				<th>最后更新时间</th>
-				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${page.list}" var="model">
 				<tr>
-					<td><a href="javascript:updateCategory('${model.id}', '${model.category}')" title="设置分类">${fns:getDictLabel(model.category,'act_category','无分类')}</a></td>
-					<td>${model.id}</td>
-					<td>${model.key}</td>
-					<td>${model.name}</td>
-					<td><b title='流程版本号'>V: ${model.version}</b></td>
-					<td><fmt:formatDate value="${model.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td><fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td>
-						<a href="${pageContext.request.contextPath}/act/rest/service/editor?id=${model.id}" target="_blank">编辑</a>
+					<td nowrap><a href="javascript:updateCategory('${model.id}', '${model.category}')" title="设置分类">${fns:getDictLabel(model.category,'act_category','无分类')}</a></td>
+					<td nowrap>
+						<a href="${pageContext.request.contextPath}/act/process-editor/modeler.jsp?modelId=${model.id}" target="_blank">编辑</a>
 						<a href="${ctx}/act/model/deploy?id=${model.id}" onclick="return confirmx('确认要部署该模型吗？', this.href)">部署</a>
 						<a href="${ctx}/act/model/export?id=${model.id}" target="_blank">导出</a>
 	                    <a href="${ctx}/act/model/delete?id=${model.id}" onclick="return confirmx('确认要删除该模型吗？', this.href)">删除</a>
 					</td>
+					<td nowrap>${model.id}</td>
+					<td nowrap>${model.key}</td>
+					<td nowrap>${model.name}</td>
+					<td nowrap><b title='流程版本号'>V: ${model.version}</b></td>
+					<td nowrap><fmt:formatDate value="${model.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<td nowrap><fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>
