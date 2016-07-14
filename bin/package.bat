@@ -1,11 +1,11 @@
 @echo off
 rem /**
-rem  * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+rem  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
 rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [信息] 打包工程，生成war包文件。
+echo [锟斤拷息] 锟斤拷锟教ｏ拷锟斤拷锟絯ar锟斤拷锟侥硷拷锟斤拷
 echo.
 pause
 echo.

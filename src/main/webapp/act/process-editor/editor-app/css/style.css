@@ -230,7 +230,7 @@ div.propertySection {
 .selected-item-title {
     font-size: 25px;
     font-weight: bold;
-    padding: 8px 0 8px 8px;
+    padding: 0 0 0 8px;
     border-bottom: 1px solid #a4acb9;
     cursor: pointer;
 }

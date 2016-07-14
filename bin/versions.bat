@@ -1,28 +1,28 @@
 @echo off
 rem /**
-rem  * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+rem  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
 rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [ÐÅÏ¢] ¸üÐÂÏîÄ¿°æ±¾ºÅ¡£
+echo [ï¿½ï¿½Ï¢] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½æ±¾ï¿½Å¡ï¿½
 echo.
 rem pause
 echo.
 
 cd %~dp0
 
-set /p new=ÇëÊäÈëÐÂ°æ±¾ºÅ£º
+set /p new=ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°æ±¾ï¿½Å£ï¿½
 echo.
 
 pause
 echo.
 cd ..
 
-rem ¸üÐÂpom°æ±¾ºÅ
+rem ï¿½ï¿½ï¿½ï¿½pomï¿½æ±¾ï¿½ï¿½
 call mvn versions:set -DnewVersion=%new%
 
-rem Ìæ»» jeesite.properties ÖÐµÄ°æ±¾ºÅ
+rem ï¿½æ»» jeesite.properties ï¿½ÐµÄ°æ±¾ï¿½ï¿½
 echo.
 set f=%cd%\src\main\resources\jeesite.properties
 echo [INFO] Update %f%

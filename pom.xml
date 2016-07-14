@@ -5,12 +5,12 @@
 	
 	<groupId>com.thinkgem.jeesite</groupId>
 	<artifactId>jeesite</artifactId>
-	<version>1.2.6</version>
+	<version>1.2.7</version>
 	<packaging>war</packaging>
 	
 	<name>JeeSite</name>
 	<url>http://thinkgem.github.com/jeesite</url>
-	<inceptionYear>2012-2014</inceptionYear>
+	<inceptionYear>2012-2016</inceptionYear>
 	
 	<!-- 项目属性 -->
 	<properties>
