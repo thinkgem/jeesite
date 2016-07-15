@@ -5,24 +5,24 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [ï¿½ï¿½Ï¢] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½æ±¾ï¿½Å¡ï¿½
+echo [ÐÅÏ¢] ¸üÐÂÏîÄ¿°æ±¾ºÅ¡£
 echo.
 rem pause
 echo.
 
 cd %~dp0
 
-set /p new=ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°æ±¾ï¿½Å£ï¿½
+set /p new=ÇëÊäÈëÐÂ°æ±¾ºÅ£º
 echo.
 
 pause
 echo.
 cd ..
 
-rem ï¿½ï¿½ï¿½ï¿½pomï¿½æ±¾ï¿½ï¿½
+rem ¸üÐÂpom°æ±¾ºÅ
 call mvn versions:set -DnewVersion=%new%
 
-rem ï¿½æ»» jeesite.properties ï¿½ÐµÄ°æ±¾ï¿½ï¿½
+rem Ìæ»» jeesite.properties ÖÐµÄ°æ±¾ºÅ
 echo.
 set f=%cd%\src\main\resources\jeesite.properties
 echo [INFO] Update %f%

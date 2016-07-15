@@ -5,7 +5,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [О©╫О©╫о╒] О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╥О©╫О©╫О©╫О©╫
+echo [пео╒] гЕюМиЗЁиб╥╬╤║ё
 echo.
 pause
 echo.

@@ -5,7 +5,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [锟斤拷息] 锟斤拷锟紼clipse锟斤拷锟斤拷锟侥硷拷锟斤拷
+echo [信息] 生成Eclipse工程文件。
 echo.
 pause
 echo.
