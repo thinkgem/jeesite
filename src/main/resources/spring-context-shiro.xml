@@ -88,8 +88,10 @@
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 	
-	<!-- 定义授权缓存管理器 -->
-<!-- 	<bean id="shiroCacheManager" class="com.thinkgem.jeesite.common.security.shiro.cache.SessionCacheManager" /> -->
+	<!-- 自定义系统缓存管理器-->
+<!-- 	<bean id="shiroCacheManager" class="com.thinkgem.jeesite.common.security.shiro.cache.JedisCacheManager"> -->
+<!-- 		<property name="cacheKeyPrefix" value="${redis.keyPrefix}_cache_" /> -->
+<!-- 	</bean> -->
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManager" ref="cacheManager"/>
 	</bean>

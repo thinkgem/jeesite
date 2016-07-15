@@ -3,10 +3,10 @@
  */
 package com.thinkgem.jeesite.common.filter;
 
-import com.thinkgem.jeesite.common.utils.CacheUtils;
-
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.constructs.web.filter.SimplePageCachingFilter;
+
+import com.thinkgem.jeesite.common.utils.SpringContextHolder;
 
 /**
  * 页面高速缓存过滤器
@@ -15,9 +15,12 @@ import net.sf.ehcache.constructs.web.filter.SimplePageCachingFilter;
  */
 public class PageCachingFilter extends SimplePageCachingFilter {
 
+	private CacheManager cacheManager = SpringContextHolder.getBean(CacheManager.class);
+	
 	@Override
 	protected CacheManager getCacheManager() {
-		return CacheUtils.getCacheManager();
+		this.cacheName = "pageCachingFilter";
+		return cacheManager;
 	}
 	
 }

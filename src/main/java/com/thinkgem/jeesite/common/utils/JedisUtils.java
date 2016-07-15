@@ -816,6 +816,24 @@ public class JedisUtils {
 	}
 	
 	/**
+	 * 获取byte[]类型Key
+	 * @param key
+	 * @return
+	 */
+	public static Object getObjectKey(byte[] key){
+		try{
+			return StringUtils.toString(key);
+		}catch(UnsupportedOperationException uoe){
+			try{
+				return JedisUtils.toObject(key);
+			}catch(UnsupportedOperationException uoe2){
+				uoe2.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Object转换byte[]类型
 	 * @param key
 	 * @return
