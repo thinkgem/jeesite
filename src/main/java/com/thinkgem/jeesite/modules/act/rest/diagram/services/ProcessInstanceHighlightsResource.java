@@ -14,7 +14,6 @@
 package com.thinkgem.jeesite.modules.act.rest.diagram.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,11 +23,9 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.history.HistoricActivityInstance;
-import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.thinkgem.jeesite.common.mapper.JsonMapper;
 
 @RestController
 public class ProcessInstanceHighlightsResource {
@@ -69,28 +65,13 @@ public class ProcessInstanceHighlightsResource {
 
 		try {
 			ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-			String processDefinitionId = null;
-			List<String> highLightedActivities = Collections.<String> emptyList();
-			List<HistoricActivityInstance> historicActivityInstances = null;
-			if (processInstance == null) {
-				HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
-						.processInstanceId(processInstanceId).singleResult();
-				processDefinitionId = historicProcessInstance.getProcessDefinitionId();
-				historicActivityInstances = historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).list();
+			ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processInstance
+					.getProcessDefinitionId());
 
-				System.out.println(JsonMapper.toJsonString(historicActivityInstances));
+			responseJSON.put("processDefinitionId", processInstance.getProcessDefinitionId());
 
-			} else {
-				processDefinitionId = processInstance.getProcessDefinitionId();
-				highLightedActivities = runtimeService.getActiveActivityIds(processInstanceId);
-			}
-
-			ProcessDefinition processDefinition = repositoryService.getProcessDefinition(processDefinitionId);
-			ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) processDefinition;
-
-			responseJSON.put("processDefinitionId", processDefinitionId);
-
-			List<String> highLightedFlows = getHighLightedFlows(processDefinitionEntity, historicActivityInstances);//getHighLightedFlows(processDefinitionEntity, processInstanceId);
+			List<String> highLightedActivities = runtimeService.getActiveActivityIds(processInstanceId);
+			List<String> highLightedFlows = getHighLightedFlows(processDefinition, processInstanceId);
 
 			for (String activityId : highLightedActivities) {
 				activitiesArray.add(activityId);
@@ -108,37 +89,6 @@ public class ProcessInstanceHighlightsResource {
 		responseJSON.put("flows", flowsArray);
 
 		return responseJSON;
-	}
-
-	private List<String> getHighLightedFlows(ProcessDefinitionEntity processDefinitionEntity, List<HistoricActivityInstance> historicActivityInstances) {
-
-		List<String> highFlows = new ArrayList<String>();// 用 以保存高亮的线flowId
-		for (int i = 0; i < historicActivityInstances.size() - 1; i++) {// 对历史流程节点进行遍历
-			ActivityImpl activityImpl = processDefinitionEntity.findActivity(historicActivityInstances.get(i).getActivityId());// 得到节点定义的详细信息
-
-			List<ActivityImpl> sameStartTimeNodes = new ArrayList<ActivityImpl>(); // 用以保存后需开始时间相同的节点
-			ActivityImpl sameActivityImpl1 = processDefinitionEntity.findActivity(historicActivityInstances.get(i + 1).getActivityId()); // 将后面第一个节点放在时间相同节点的集合里
-			sameStartTimeNodes.add(sameActivityImpl1);
-			for (int j = i + 1; j < historicActivityInstances.size() - 1; j++) {
-				HistoricActivityInstance activityImpl1 = historicActivityInstances.get(j); // 后续第一个节点
-				HistoricActivityInstance activityImpl2 = historicActivityInstances.get(j + 1); // 后续第二个节点
-				if (activityImpl1.getStartTime().equals(activityImpl2.getStartTime())) { // 如果第一个节点和第二个节点开始时间相同保存
-					ActivityImpl sameActivityImpl2 = processDefinitionEntity.findActivity(activityImpl2.getActivityId());
-					sameStartTimeNodes.add(sameActivityImpl2);
-				} else {
-					break;
-				}
-			}
-			List<PvmTransition> pvmTransitions = activityImpl.getOutgoingTransitions();// 取出节点的所有出去的线
-			for (PvmTransition pvmTransition : pvmTransitions) { // 对所有的线进行遍历
-				ActivityImpl pvmActivityImpl = (ActivityImpl) pvmTransition.getDestination();// 如果取出的线的目标节点存在时间相同的节点里，保存该线的id，进行高亮显示
-				if (sameStartTimeNodes.contains(pvmActivityImpl)) {
-					highFlows.add(pvmTransition.getId());
-				}
-			}
-
-		}
-		return highFlows;
 	}
 
 	/**

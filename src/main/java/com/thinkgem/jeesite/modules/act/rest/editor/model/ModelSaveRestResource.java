@@ -49,8 +49,8 @@ public class ModelSaveRestResource implements ModelDataJsonConstants {
 	@Autowired
 	private RepositoryService repositoryService;
 
-//	@Autowired
-//	private ObjectMapper objectMapper;
+	//	@Autowired
+	//	private ObjectMapper objectMapper;
 	protected ObjectMapper objectMapper = new ObjectMapper();
 
 	@RequiresPermissions("act:model:edit")
@@ -85,7 +85,7 @@ public class ModelSaveRestResource implements ModelDataJsonConstants {
 			final byte[] result = outStream.toByteArray();
 			repositoryService.addModelEditorSourceExtra(model.getId(), result);
 			outStream.close();
-			LOGGER.debug("Model Saved.");
+
 		} catch (Exception e) {
 			LOGGER.error("Error saving model", e);
 			throw new ActivitiException("Error saving model", e);
