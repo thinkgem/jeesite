@@ -5,7 +5,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [锟斤拷息] 锟斤拷锟教ｏ拷锟斤拷锟絯ar锟斤拷锟侥硷拷锟斤拷
+echo [信息] 打包工程，生成war包文件。
 echo.
 pause
 echo.
