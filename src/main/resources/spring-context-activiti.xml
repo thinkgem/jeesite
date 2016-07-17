@@ -38,32 +38,25 @@
 		
 	</bean>
 	
-	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+	<bean id="processEngineFactory" class="org.activiti.spring.ProcessEngineFactoryBean">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
 	</bean>
 	
-	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
-	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
-	<bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
-	<bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
-	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
-	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
-	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
-	<!-- Activiti end -->
+	<bean id="processEngine" factory-bean="processEngineFactory" factory-method="getObject" />
+	<bean id="repositoryService" factory-bean="processEngineFactory" factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngineFactory" factory-method="getRuntimeService" />
+	<bean id="formService" factory-bean="processEngineFactory" factory-method="getFormService" />
+	<bean id="identityService" factory-bean="processEngineFactory" factory-method="getIdentityService" />
+	<bean id="taskService" factory-bean="processEngineFactory" factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngineFactory" factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngineFactory" factory-method="getManagementService" />
 		
 	<!-- json处理 
 	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
 	-->
 	
-	<!-- Rest处理 ,测试发现5.20版本中不需要这个
-	<bean id="restResponseFactory" class="org.activiti.rest.service.api.RestResponseFactory" />
-	-->
-
+	<!-- 设置默认的资源类型 -->
 	<bean id="contentTypeResolver" class="org.activiti.rest.common.application.DefaultContentTypeResolver" />
+	<!-- Activiti end -->
 	
-	<!-- 使用Annotation自动注册加载Listener实现类,只扫描@Component -->
-	<context:component-scan base-package="edu.sdpt.web.activiti.listener" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
-	</context:component-scan>
-
 </beans>

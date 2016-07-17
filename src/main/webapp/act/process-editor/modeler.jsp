@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <!doctype html>
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
