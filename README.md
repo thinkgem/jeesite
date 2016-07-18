@@ -71,7 +71,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * JS框架：jQuery 1.9。
 * CSS框架：Twitter Bootstrap 2.3.1（稳定是后台，UI方面根据需求自己升级改造吧）。
 * 客户端验证：JQuery Validation Plugin 1.11。
-* 富文本在线编辑：CKEcitor
+* 富文本在线编辑：CKEditor
 * 在线文件管理：CKFinder
 * 动态页签：Jerichotab
 * 手机端框架：Jingle
