@@ -1466,7 +1466,6 @@ button.selection:active, button.selection:focus {
 .modal-backdrop {
     background-color: #999999; /** Non alpha-supporting browser fallback */
     background-color: rgba(100, 100, 100, .75);
-    background-image: url('../../images/glasspane.png');
 }
 .modal-content {
     -webkit-border-radius: 0;
