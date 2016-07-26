@@ -41,7 +41,7 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @author ThinkGem
  * @version 2013-11-16
  */
-public class GenUtils {
+public class   GenUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(GenUtils.class);
 
