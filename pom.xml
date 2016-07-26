@@ -592,6 +592,13 @@
 			<version>3.9</version>
 		</dependency>
 
+		<!-- 微信服务号支持 start -->
+		<dependency>
+			<groupId>me.chanjar</groupId>
+			<artifactId>weixin-java-mp</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+		<!-- 微信服务号支持 end -->
 
 
 		<!-- 自定义jar依赖包
