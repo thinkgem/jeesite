@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.wechat.dao.WechatAccountDao">
+    
+	<sql id="wechatAccountColumns">
+		a.id AS "id",
+		a.app_id AS "appId",
+		a.app_secret AS "appSecret",
+		a.token AS "token",
+		a.access_token AS "accessToken",
+		a.aes_key AS "aesKey",
+		a.aes_encoding_key AS "aesEncodingKey",
+		a.agent_id AS "agentId",
+		a.expires_time AS "expiresTime",
+		a.oauth2redirect_uri AS "oauth2redirectUri",
+		a.http_proxy_host AS "httpProxyHost",
+		a.http_proxy_port AS "httpProxyPort",
+		a.http_proxy_username AS "httpProxyUsername",
+		a.http_proxy_password AS "httpProxyPassword",
+		a.jsapi_ticket AS "jsapiTicket",
+		a.jsapi_ticket_expires_time AS "jsapiTicketExpiresTime",
+		a.tmp_dir_file AS "tmpDirFile",
+		a.del_flag AS "delFlag",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.remarks AS "remarks",
+		a.status AS "status",
+		a.add_time AS "addTime"
+	</sql>
+	
+	<sql id="wechatAccountJoins">
+	</sql>
+    
+	<select id="get" resultType="WechatAccount">
+		SELECT 
+			<include refid="wechatAccountColumns"/>
+		FROM wechat_account a
+		<include refid="wechatAccountJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="WechatAccount">
+		SELECT 
+			<include refid="wechatAccountColumns"/>
+		FROM wechat_account a
+		<include refid="wechatAccountJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="WechatAccount">
+		SELECT 
+			<include refid="wechatAccountColumns"/>
+		FROM wechat_account a
+		<include refid="wechatAccountJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wechat_account(
+			id,
+			app_id,
+			app_secret,
+			token,
+			access_token,
+			aes_key,
+			aes_encoding_key,
+			agent_id,
+			expires_time,
+			oauth2redirect_uri,
+			http_proxy_host,
+			http_proxy_port,
+			http_proxy_username,
+			http_proxy_password,
+			jsapi_ticket,
+			jsapi_ticket_expires_time,
+			tmp_dir_file,
+			del_flag,
+			update_by,
+			update_date,
+			create_date,
+			create_by,
+			remarks
+		) VALUES (
+			#{id},
+			#{appId},
+			#{appSecret},
+			#{token},
+			#{accessToken},
+			#{aesKey},
+			#{aesEncodingKey},
+			#{agentId},
+			#{expiresTime},
+			#{oauth2redirectUri},
+			#{httpProxyHost},
+			#{httpProxyPort},
+			#{httpProxyUsername},
+			#{httpProxyPassword},
+			#{jsapiTicket},
+			#{jsapiTicketExpiresTime},
+			#{tmpDirFile},
+			#{delFlag},
+			#{updateBy.id},
+			#{updateDate},
+			#{createDate},
+			#{createBy.id},
+			#{remarks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wechat_account SET 	
+			app_id = #{appId},
+			app_secret = #{appSecret},
+			token = #{token},
+			access_token = #{accessToken},
+			aes_key = #{aesKey},
+			aes_encoding_key = #{aesEncodingKey},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE wechat_account SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
