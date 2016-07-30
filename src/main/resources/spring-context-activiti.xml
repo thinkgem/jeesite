@@ -14,11 +14,10 @@
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
-		<property name="deploymentResources" value="classpath*:/act/deployments/**/*.bar"/>
-		<property name="databaseSchemaUpdate" value="true" />
+		<property name="deploymentResources" value="classpath*:/act/deployments/**/*.bar"/><!-- 自动部署 -->
+		<property name="databaseSchemaUpdate" value="true" /><!-- 自动建表，自动更新表结构 -->
 		<property name="jobExecutorActivate" value="true" /><!-- 该参数将启用定时相关的功能 -->
-		<property name="history" value="full" />
-		<property name="processDefinitionCacheLimit" value="10"/>
+		<property name="history" value="full" /><!-- 历史记录保存模式 -->
 
 		<!-- UUID作为主键生成策略 -->
 		<property name="idGenerator" ref="idGen" />

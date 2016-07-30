@@ -12,7 +12,7 @@
 var supcans = [];
 
 /**
- * 实例化一个硕正控件
+ * 实例化一个硕正控件（已废弃，可删除）
  * @param AF 硕正对象
  * @param url 硕正描述文件URL，如果不是一个URL，则填写实体类名
  * @param options 参数选项

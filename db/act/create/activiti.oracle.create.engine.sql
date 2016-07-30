@@ -6,10 +6,10 @@ create table ACT_GE_PROPERTY (
 );
 
 insert into ACT_GE_PROPERTY
-values ('schema.version', '5.15.1', 1);
+values ('schema.version', '5.21.0.0', 1);
 
 insert into ACT_GE_PROPERTY
-values ('schema.history', 'create(5.15.1)', 1);
+values ('schema.history', 'create(5.21.0.0)', 1);
 
 insert into ACT_GE_PROPERTY
 values ('next.dbid', '1', 1);
@@ -66,6 +66,8 @@ create table ACT_RU_EXECUTION (
     SUSPENSION_STATE_ INTEGER,
     CACHED_ENT_STATE_ INTEGER,
     TENANT_ID_ NVARCHAR2(255) DEFAULT '',
+    NAME_ NVARCHAR2(255),
+    LOCK_TIME_ TIMESTAMP(6),
     primary key (ID_)
 );
 
@@ -102,6 +104,7 @@ create table ACT_RE_PROCDEF (
     DGRM_RESOURCE_NAME_ varchar(4000),
     DESCRIPTION_ NVARCHAR2(2000),
     HAS_START_FORM_KEY_ NUMBER(1,0) CHECK (HAS_START_FORM_KEY_ IN (1,0)),
+    HAS_GRAPHICAL_NOTATION_ NUMBER(1,0) CHECK (HAS_GRAPHICAL_NOTATION_ IN (1,0)),
     SUSPENSION_STATE_ INTEGER,
     TENANT_ID_ NVARCHAR2(255) DEFAULT '',
     primary key (ID_)
@@ -126,6 +129,7 @@ create table ACT_RU_TASK (
     CATEGORY_ NVARCHAR2(255),
     SUSPENSION_STATE_ INTEGER,
     TENANT_ID_ NVARCHAR2(255) DEFAULT '',
+    FORM_KEY_ NVARCHAR2(255),
     primary key (ID_)
 );
 
@@ -169,6 +173,32 @@ create table ACT_RU_EVENT_SUBSCR (
     CREATED_ TIMESTAMP(6) not null,
     PROC_DEF_ID_ NVARCHAR2(64),
     TENANT_ID_ NVARCHAR2(255) DEFAULT '',
+    primary key (ID_)
+);
+
+create table ACT_EVT_LOG (
+    LOG_NR_ NUMBER(19),
+    TYPE_ NVARCHAR2(64),
+    PROC_DEF_ID_ NVARCHAR2(64),
+    PROC_INST_ID_ NVARCHAR2(64),
+    EXECUTION_ID_ NVARCHAR2(64),
+    TASK_ID_ NVARCHAR2(64),
+    TIME_STAMP_ TIMESTAMP(6) not null,
+    USER_ID_ NVARCHAR2(255),
+    DATA_ BLOB,
+    LOCK_OWNER_ NVARCHAR2(255),
+    LOCK_TIME_ TIMESTAMP(6) null,
+    IS_PROCESSED_ NUMBER(3) default 0,
+    primary key (LOG_NR_)
+);
+
+create sequence act_evt_log_seq;
+
+create table ACT_PROCDEF_INFO (
+	ID_ NVARCHAR2(64) not null,
+    PROC_DEF_ID_ NVARCHAR2(64) not null,
+    REV_ integer,
+    INFO_JSON_ID_ NVARCHAR2(64),
     primary key (ID_)
 );
 
@@ -296,4 +326,19 @@ alter table ACT_RE_MODEL
     add constraint ACT_FK_MODEL_DEPLOYMENT 
     foreign key (DEPLOYMENT_ID_) 
     references ACT_RE_DEPLOYMENT (ID_);        
+
+create index ACT_IDX_PROCDEF_INFO_JSON on ACT_PROCDEF_INFO(INFO_JSON_ID_);
+alter table ACT_PROCDEF_INFO 
+    add constraint ACT_FK_INFO_JSON_BA 
+    foreign key (INFO_JSON_ID_) 
+    references ACT_GE_BYTEARRAY (ID_);
+
+create index ACT_IDX_PROCDEF_INFO_PROC on ACT_PROCDEF_INFO(PROC_DEF_ID_);
+alter table ACT_PROCDEF_INFO 
+    add constraint ACT_FK_INFO_PROCDEF 
+    foreign key (PROC_DEF_ID_) 
+    references ACT_RE_PROCDEF (ID_);
     
+alter table ACT_PROCDEF_INFO
+    add constraint ACT_UNIQ_INFO_PROCDEF
+    unique (PROC_DEF_ID_);
