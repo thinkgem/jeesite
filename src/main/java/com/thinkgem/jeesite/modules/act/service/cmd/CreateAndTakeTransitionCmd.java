@@ -30,7 +30,6 @@ public class CreateAndTakeTransitionCmd implements Command<java.lang.Void> {
 			execution.setActivity(activity);
 			execution.performOperation(AtomicOperation.TRANSITION_CREATE_SCOPE);
 
-			//删除当前的任务，不能删除当前正在执行的任务，所以要先清除掉关联
 			if (variables != null) {
 				if (currentTaskEntity.getExecutionId() != null) {
 					currentTaskEntity.setExecutionVariables(variables);
@@ -38,7 +37,7 @@ public class CreateAndTakeTransitionCmd implements Command<java.lang.Void> {
 					currentTaskEntity.setVariables(variables);
 				}
 			}
-
+			//删除当前的任务，不能删除当前正在执行的任务，所以要先清除掉关联
 			Context.getCommandContext().getTaskEntityManager().deleteTask(currentTaskEntity, TaskEntity.DELETE_REASON_DELETED, false);
 		}
 		return null;
