@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.utils;
 
@@ -155,13 +155,15 @@ public class StreamUtils {
 	 */
 	public static String byteTOString(byte[] in) {
 
+		String result = null;
 		InputStream is = null;
 		try {
 			is = byteTOInputStream(in);
+			result = InputStreamTOString(is, "UTF-8");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return InputStreamTOString(is, "UTF-8");
+		return result;
 	}
 	/**
 	 * 将byte数组转换成String

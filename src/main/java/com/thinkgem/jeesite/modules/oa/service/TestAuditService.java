@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.oa.service;
 
@@ -115,7 +115,10 @@ public class TestAuditService extends CrudService<TestAuditDao, TestAudit> {
 		Map<String, Object> vars = Maps.newHashMap();
 		vars.put("pass", "yes".equals(testAudit.getAct().getFlag())? "1" : "0");
 		actTaskService.complete(testAudit.getAct().getTaskId(), testAudit.getAct().getProcInsId(), testAudit.getAct().getComment(), vars);
-		
+
+//		vars.put("var_test", "yes_no_test2");
+//		actTaskService.getProcessEngine().getTaskService().addComment(testAudit.getAct().getTaskId(), testAudit.getAct().getProcInsId(), testAudit.getAct().getComment());
+//		actTaskService.jumpTask(testAudit.getAct().getProcInsId(), testAudit.getAct().getTaskId(), "audit2", vars);
 	}
 	
 }
