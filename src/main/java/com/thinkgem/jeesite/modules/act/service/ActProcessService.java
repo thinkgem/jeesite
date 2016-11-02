@@ -138,7 +138,7 @@ public class ActProcessService extends BaseService {
 		
 		try {
 			InputStream fileInputStream = file.getInputStream();
-			Deployment deployment = null;
+			Deployment deployment;
 			String extension = FilenameUtils.getExtension(fileName);
 			if (extension.equals("zip") || extension.equals("bar")) {
 				ZipInputStream zip = new ZipInputStream(fileInputStream);
@@ -152,6 +152,7 @@ public class ActProcessService extends BaseService {
 				deployment = repositoryService.createDeployment().addInputStream(baseName + ".bpmn20.xml", fileInputStream).deploy();
 			} else {
 				message = "不支持的文件类型：" + extension;
+				return message;
 			}
 			
 			List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list();
