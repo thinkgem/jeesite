@@ -19,7 +19,6 @@ public class PageCachingFilter extends SimplePageCachingFilter {
 	
 	@Override
 	protected CacheManager getCacheManager() {
-		this.cacheName = "pageCachingFilter";
 		return cacheManager;
 	}
 	

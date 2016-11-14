@@ -52,6 +52,10 @@
 	<filter>
 		<filter-name>PageCacheFilter</filter-name>
 		<filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter</filter-class>
+		<init-param>
+			<param-name>cacheName</param-name>
+			<param-value>pageCachingFilter</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>PageCacheFilter</filter-name>
