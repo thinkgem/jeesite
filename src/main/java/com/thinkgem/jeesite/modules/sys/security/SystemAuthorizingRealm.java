@@ -51,6 +51,10 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private SystemService systemService;
+	
+	public SystemAuthorizingRealm() {
+		this.setCachingEnabled(false);
+	}
 
 	/**
 	 * 认证回调函数, 登录时调用
@@ -85,6 +89,28 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * 获取权限授权信息，如果缓存中存在，则直接从缓存中获取，否则就重新获取， 登录成功后调用
+	 */
+	protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
+		if (principals == null) {
+            return null;
+        }
+		
+        AuthorizationInfo info = null;
+
+        info = (AuthorizationInfo)UserUtils.getCache(UserUtils.CACHE_AUTH_INFO);
+
+        if (info == null) {
+            info = doGetAuthorizationInfo(principals);
+            if (info != null) {
+            	UserUtils.putCache(UserUtils.CACHE_AUTH_INFO, info);
+            }
+        }
+
+        return info;
 	}
 
 	/**
