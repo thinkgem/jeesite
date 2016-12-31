@@ -24,7 +24,7 @@ public class ActUserEntityServiceFactory implements SessionFactory {
 	}
 
 	public Session openSession() {
-		// 返回自定义的GroupEntityManager实例
+		// 返回自定义的UserEntityManager实例
 		return actUserEntityService;
 	}
 

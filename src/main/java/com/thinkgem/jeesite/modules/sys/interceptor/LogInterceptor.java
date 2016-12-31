@@ -61,6 +61,8 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	        		new SimpleDateFormat("hh:mm:ss.SSS").format(endTime), DateUtils.formatDateTime(endTime - beginTime),
 					request.getRequestURI(), Runtime.getRuntime().maxMemory()/1024/1024, Runtime.getRuntime().totalMemory()/1024/1024, Runtime.getRuntime().freeMemory()/1024/1024, 
 					(Runtime.getRuntime().maxMemory()-Runtime.getRuntime().totalMemory()+Runtime.getRuntime().freeMemory())/1024/1024); 
+	        //删除线程变量中的数据，防止内存泄漏
+	        startTimeThreadLocal.remove();
 		}
 		
 	}
