@@ -48,7 +48,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	/**
 	 * 获取登录用户名
 	 */
-	protected String getUsername(ServletRequest request, ServletResponse response) {
+	protected String getUsername(ServletRequest request) {
 		String username = super.getUsername(request);
 		if (StringUtils.isBlank(username)){
 			username = StringUtils.toString(request.getAttribute(getUsernameParam()), StringUtils.EMPTY);
