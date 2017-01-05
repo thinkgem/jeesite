@@ -85,7 +85,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection(); 
 			connection.connect(); connection.getInputStream(); connection.disconnect();
 		} catch (Exception e) {
-			new RuntimeException(e);
+			throw new RuntimeException(e);
 		}
 		SpringContextHolder.applicationContext = applicationContext;
 	}
