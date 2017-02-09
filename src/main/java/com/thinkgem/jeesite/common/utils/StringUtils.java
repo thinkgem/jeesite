@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -46,6 +47,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
     
     /**
+	 * 转换为Boolean类型
+	 * 'true', 'on', 'y', 't', 'yes' or '1' (case insensitive) will return true. Otherwise, false is returned.
+	 */
+	public static Boolean toBoolean(final Object val){
+		if (val == null){
+			return false;
+		}
+		return BooleanUtils.toBoolean(val.toString()) || "1".equals(val.toString());
+	}
+	
+    /**
      * 转换为字节数组
      * @param str
      * @return
@@ -56,6 +68,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		} catch (UnsupportedEncodingException e) {
 			return EMPTY;
 		}
+    }
+    
+    /**
+	 * 如果对象为空，则使用defaultVal值 
+	 * 	see: ObjectUtils.toString(obj, defaultVal)
+	 * @param obj
+	 * @param defaultVal
+	 * @return
+	 */
+    public static String toString(final Object obj, final String defaultVal) {
+    	 return obj == null ? defaultVal : obj.toString();
     }
     
     /**

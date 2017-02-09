@@ -44,6 +44,41 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		boolean mobile = isMobileLogin(request);
 		return new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha, mobile);
 	}
+	
+	/**
+	 * 获取登录用户名
+	 */
+	protected String getUsername(ServletRequest request, ServletResponse response) {
+		String username = super.getUsername(request);
+		if (StringUtils.isBlank(username)){
+			username = StringUtils.toString(request.getAttribute(getUsernameParam()), StringUtils.EMPTY);
+		}
+		return username;
+	}
+	
+	/**
+	 * 获取登录密码
+	 */
+	@Override
+	protected String getPassword(ServletRequest request) {
+		String password = super.getPassword(request);
+		if (StringUtils.isBlank(password)){
+			password = StringUtils.toString(request.getAttribute(getPasswordParam()), StringUtils.EMPTY);
+		}
+		return password;
+	}
+	
+	/**
+	 * 获取记住我
+	 */
+	@Override
+	protected boolean isRememberMe(ServletRequest request) {
+		String isRememberMe = WebUtils.getCleanParam(request, getRememberMeParam());
+		if (StringUtils.isBlank(isRememberMe)){
+			isRememberMe = StringUtils.toString(request.getAttribute(getRememberMeParam()), StringUtils.EMPTY);
+		}
+		return StringUtils.toBoolean(isRememberMe);
+	}
 
 	public String getCaptchaParam() {
 		return captchaParam;
