@@ -43,7 +43,8 @@ public class UserUtils {
 	public static final String USER_CACHE_ID_ = "id_";
 	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
 	public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
-
+	
+	public static final String CACHE_AUTH_INFO = "authInfo";
 	public static final String CACHE_ROLE_LIST = "roleList";
 	public static final String CACHE_MENU_LIST = "menuList";
 	public static final String CACHE_AREA_LIST = "areaList";
@@ -92,6 +93,7 @@ public class UserUtils {
 	 * 清除当前用户缓存
 	 */
 	public static void clearCache(){
+		removeCache(CACHE_AUTH_INFO);
 		removeCache(CACHE_ROLE_LIST);
 		removeCache(CACHE_MENU_LIST);
 		removeCache(CACHE_AREA_LIST);
