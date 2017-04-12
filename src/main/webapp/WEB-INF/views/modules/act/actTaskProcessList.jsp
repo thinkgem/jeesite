@@ -49,7 +49,7 @@
 					<td>${fns:getDictLabel(process.category,'act_category','无分类')}</td>
 					<td><a href="${ctx}/act/task/form?procDefId=${process.id}">${process.key}</a></td>
 					<td>${process.name}</td>
-					<td><a target="_blank" href="${pageContext.request.contextPath}/act/rest/diagram-viewer?processDefinitionId=${process.id}">${process.diagramResourceName}</a><%--
+					<td><a target="_blank" href="${pageContext.request.contextPath}/act/diagram-viewer?processDefinitionId=${process.id}">${process.diagramResourceName}</a><%--
 						<a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=image">${process.diagramResourceName}</a>--%></td>
 					<td><b title='流程版本号'>V: ${process.version}</b></td>
 					<td><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>

@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.gen.web;
 
@@ -58,6 +58,7 @@ public class GenSchemeController extends BaseController {
 		}
         Page<GenScheme> page = genSchemeService.find(new Page<GenScheme>(request, response), genScheme); 
         model.addAttribute("page", page);
+		
 		return "modules/gen/genSchemeList";
 	}
 
@@ -82,6 +83,7 @@ public class GenSchemeController extends BaseController {
 		if (!beanValidator(model, genScheme)){
 			return form(genScheme, model);
 		}
+		
 		String result = genSchemeService.save(genScheme);
 		addMessage(redirectAttributes, "操作生成方案'" + genScheme.getName() + "'成功<br/>"+result);
 		return "redirect:" + adminPath + "/gen/genScheme/?repage";

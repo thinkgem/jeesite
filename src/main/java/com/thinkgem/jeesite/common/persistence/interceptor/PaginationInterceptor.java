@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.persistence.interceptor;
 
@@ -11,10 +11,12 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.utils.Reflections;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 
 import java.util.Properties;
@@ -66,6 +68,12 @@ public class PaginationInterceptor extends BaseInterceptor {
 //                }
                 invocation.getArgs()[2] = new RowBounds(RowBounds.NO_ROW_OFFSET, RowBounds.NO_ROW_LIMIT);
                 BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(), pageSql, boundSql.getParameterMappings(), boundSql.getParameterObject());
+                //解决MyBatis 分页foreach 参数失效 start
+                if (Reflections.getFieldValue(boundSql, "metaParameters") != null) {
+                    MetaObject mo = (MetaObject) Reflections.getFieldValue(boundSql, "metaParameters");
+                    Reflections.setFieldValue(newBoundSql, "metaParameters", mo);
+                }
+                //解决MyBatis 分页foreach 参数失效 end
                 MappedStatement newMs = copyFromMappedStatement(mappedStatement, new BoundSqlSqlSource(newBoundSql));
 
                 invocation.getArgs()[0] = newMs;
@@ -102,6 +110,7 @@ public class PaginationInterceptor extends BaseInterceptor {
         builder.parameterMap(ms.getParameterMap());
         builder.resultMaps(ms.getResultMaps());
         builder.cache(ms.getCache());
+        builder.useCache(ms.isUseCache());
         return builder.build();
     }
 

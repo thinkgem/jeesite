@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.security;
 
@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,41 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		boolean mobile = isMobileLogin(request);
 		return new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha, mobile);
 	}
+	
+	/**
+	 * 获取登录用户名
+	 */
+	protected String getUsername(ServletRequest request, ServletResponse response) {
+		String username = super.getUsername(request);
+		if (StringUtils.isBlank(username)){
+			username = StringUtils.toString(request.getAttribute(getUsernameParam()), StringUtils.EMPTY);
+		}
+		return username;
+	}
+	
+	/**
+	 * 获取登录密码
+	 */
+	@Override
+	protected String getPassword(ServletRequest request) {
+		String password = super.getPassword(request);
+		if (StringUtils.isBlank(password)){
+			password = StringUtils.toString(request.getAttribute(getPasswordParam()), StringUtils.EMPTY);
+		}
+		return password;
+	}
+	
+	/**
+	 * 获取记住我
+	 */
+	@Override
+	protected boolean isRememberMe(ServletRequest request) {
+		String isRememberMe = WebUtils.getCleanParam(request, getRememberMeParam());
+		if (StringUtils.isBlank(isRememberMe)){
+			isRememberMe = StringUtils.toString(request.getAttribute(getRememberMeParam()), StringUtils.EMPTY);
+		}
+		return StringUtils.toBoolean(isRememberMe);
+	}
 
 	public String getCaptchaParam() {
 		return captchaParam;
@@ -63,14 +100,6 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		return messageParam;
 	}
 	
-	protected void setFailureAttribute(ServletRequest request, AuthenticationException ae) {
-    	request.setAttribute(getFailureKeyAttribute(), ae.getClass().getName());
-		if (ae.getMessage() != null && StringUtils.startsWith(ae.getMessage(), "msg:")){
-			String message = StringUtils.replace(ae.getMessage(), "msg:", "");
-	        request.setAttribute(getMessageParam(), message);
-		}
-    }
-	
 	/**
 	 * 登录成功之后跳转URL
 	 */
@@ -88,4 +117,28 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 //			super.issueSuccessRedirect(request, response);
 //		}
 	}
+
+	/**
+	 * 登录失败调用事件
+	 */
+	@Override
+	protected boolean onLoginFailure(AuthenticationToken token,
+			AuthenticationException e, ServletRequest request, ServletResponse response) {
+		String className = e.getClass().getName(), message = "";
+		if (IncorrectCredentialsException.class.getName().equals(className)
+				|| UnknownAccountException.class.getName().equals(className)){
+			message = "用户或密码错误, 请重试.";
+		}
+		else if (e.getMessage() != null && StringUtils.startsWith(e.getMessage(), "msg:")){
+			message = StringUtils.replace(e.getMessage(), "msg:", "");
+		}
+		else{
+			message = "系统出现点问题，请稍后再试！";
+			e.printStackTrace(); // 输出到控制台
+		}
+        request.setAttribute(getFailureKeyAttribute(), className);
+        request.setAttribute(getMessageParam(), message);
+        return true;
+	}
+	
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.oa.service;
 
@@ -72,6 +72,7 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 	/**
 	 * 更新阅读状态
 	 */
+	@Transactional(readOnly = false)
 	public void updateReadFlag(OaNotify oaNotify) {
 		OaNotifyRecord oaNotifyRecord = new OaNotifyRecord(oaNotify);
 		oaNotifyRecord.setUser(oaNotifyRecord.getCurrentUser());

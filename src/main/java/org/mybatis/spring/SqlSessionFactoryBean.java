@@ -504,13 +504,13 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>,
 		String location = null;
 		if (!isEmpty(this.mapperLocations)) {
 			for (Resource mapperLocation : this.mapperLocations) {
-				if (location == null) {
-					location = mapperLocation.toString();
-				}
 				if (mapperLocation == null) {
 					continue;
 				}
-
+				if (location == null) {
+					location = mapperLocation.toString();
+				}
+				
 				try {
 					XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
 							mapperLocation.getInputStream(), configuration,
@@ -518,6 +518,7 @@ public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>,
 							configuration.getSqlFragments());
 					xmlMapperBuilder.parse();
 				} catch (Exception e) {
+					e.printStackTrace(); // 出现错误抛出异常
 					throw new NestedIOException(
 							"Failed to parse mapping resource: '"
 									+ mapperLocation + "'", e);

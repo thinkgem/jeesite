@@ -6,10 +6,10 @@ create table ACT_GE_PROPERTY (
 );
 
 insert into ACT_GE_PROPERTY
-values ('schema.version', '5.15.1', 1);
+values ('schema.version', '5.21.0.0', 1);
 
 insert into ACT_GE_PROPERTY
-values ('schema.history', 'create(5.15.1)', 1);
+values ('schema.history', 'create(5.21.0.0)', 1);
 
 insert into ACT_GE_PROPERTY
 values ('next.dbid', '1', 1);
@@ -66,6 +66,8 @@ create table ACT_RU_EXECUTION (
     SUSPENSION_STATE_ integer,
     CACHED_ENT_STATE_ integer,
     TENANT_ID_ varchar(255) default '',
+    NAME_ varchar(255),
+    LOCK_TIME_ timestamp,
     primary key (ID_)
 );
 
@@ -102,6 +104,7 @@ create table ACT_RE_PROCDEF (
     DGRM_RESOURCE_NAME_ varchar(4000),
     DESCRIPTION_ varchar(4000),
     HAS_START_FORM_KEY_ boolean,
+    HAS_GRAPHICAL_NOTATION_ boolean,
     SUSPENSION_STATE_ integer,
     TENANT_ID_ varchar(255) default '',
     primary key (ID_)
@@ -126,6 +129,7 @@ create table ACT_RU_TASK (
     CATEGORY_ varchar(255),
     SUSPENSION_STATE_ integer,
     TENANT_ID_ varchar(255) default '',
+    FORM_KEY_ varchar(255),
     primary key (ID_)
 );
 
@@ -172,6 +176,29 @@ create table ACT_RU_EVENT_SUBSCR (
     primary key (ID_)
 );
 
+create table ACT_EVT_LOG (
+    LOG_NR_ SERIAL PRIMARY KEY,
+    TYPE_ varchar(64),
+    PROC_DEF_ID_ varchar(64),
+    PROC_INST_ID_ varchar(64),
+    EXECUTION_ID_ varchar(64),
+    TASK_ID_ varchar(64),
+    TIME_STAMP_ timestamp not null,
+    USER_ID_ varchar(255),
+    DATA_ bytea,
+    LOCK_OWNER_ varchar(255),
+    LOCK_TIME_ timestamp null,
+    IS_PROCESSED_ smallint default 0
+);
+
+create table ACT_PROCDEF_INFO (
+	ID_ varchar(64) not null,
+    PROC_DEF_ID_ varchar(64) not null,
+    REV_ integer,
+    INFO_JSON_ID_ varchar(64),
+    primary key (ID_)
+);
+
 create index ACT_IDX_EXEC_BUSKEY on ACT_RU_EXECUTION(BUSINESS_KEY_);
 create index ACT_IDX_TASK_CREATE on ACT_RU_TASK(CREATE_TIME_);
 create index ACT_IDX_IDENT_LNK_USER on ACT_RU_IDENTITYLINK(USER_ID_);
@@ -212,7 +239,6 @@ alter table ACT_RU_EXECUTION
     add constraint ACT_FK_EXE_PROCDEF 
     foreign key (PROC_DEF_ID_) 
     references ACT_RE_PROCDEF (ID_);    
-    
 
 create index ACT_IDX_TSKASS_TASK on ACT_RU_IDENTITYLINK(TASK_ID_);
 alter table ACT_RU_IDENTITYLINK
@@ -246,9 +272,9 @@ alter table ACT_RU_TASK
     
 create index ACT_IDX_TASK_PROCDEF on ACT_RU_TASK(PROC_DEF_ID_);
 alter table ACT_RU_TASK
-  add constraint ACT_FK_TASK_PROCDEF
-  foreign key (PROC_DEF_ID_)
-  references ACT_RE_PROCDEF (ID_);
+  	add constraint ACT_FK_TASK_PROCDEF
+  	foreign key (PROC_DEF_ID_)
+  	references ACT_RE_PROCDEF (ID_);
   
 create index ACT_IDX_VAR_EXE on ACT_RU_VARIABLE(EXECUTION_ID_);
 alter table ACT_RU_VARIABLE 
@@ -297,3 +323,20 @@ alter table ACT_RE_MODEL
     add constraint ACT_FK_MODEL_DEPLOYMENT 
     foreign key (DEPLOYMENT_ID_) 
     references ACT_RE_DEPLOYMENT (ID_);        
+
+create index ACT_IDX_PROCDEF_INFO_JSON on ACT_PROCDEF_INFO(INFO_JSON_ID_);
+alter table ACT_PROCDEF_INFO 
+    add constraint ACT_FK_INFO_JSON_BA 
+    foreign key (INFO_JSON_ID_) 
+    references ACT_GE_BYTEARRAY (ID_);
+
+create index ACT_IDX_PROCDEF_INFO_PROC on ACT_PROCDEF_INFO(PROC_DEF_ID_);
+alter table ACT_PROCDEF_INFO 
+    add constraint ACT_FK_INFO_PROCDEF 
+    foreign key (PROC_DEF_ID_) 
+    references ACT_RE_PROCDEF (ID_);
+    
+alter table ACT_PROCDEF_INFO
+    add constraint ACT_UNIQ_INFO_PROCDEF
+    unique (PROC_DEF_ID_);
+    

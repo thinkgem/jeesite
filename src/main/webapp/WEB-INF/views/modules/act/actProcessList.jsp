@@ -22,6 +22,7 @@
 			style="text-align:center;" class="form-search" onsubmit="loading('正在设置，请稍等...');"><br/>
 			<input id="categoryBoxId" type="hidden" name="procDefId" value="" />
 			<select id="categoryBoxCategory" name="category">
+				<option value="">无分类</option>
 				<c:forEach items="${fns:getDictList('act_category')}" var="dict">
 					<option value="${dict.value}">${dict.label}</option>
 				</c:forEach>
@@ -47,7 +48,7 @@
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form>
 	<sys:message content="${message}"/>
-	<table class="table table-striped table-bordered table-condensed">
+	<table class="table table-striped table-bordered table-condensed table-nowrap">
 		<thead>
 			<tr>
 				<th>流程分类</th>
@@ -55,9 +56,9 @@
 				<th>流程标识</th>
 				<th>流程名称</th>
 				<th>流程版本</th>
+				<th>部署时间</th>
 				<th>流程XML</th>
 				<th>流程图片</th>
-				<th>部署时间</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -71,9 +72,9 @@
 					<td>${process.key}</td>
 					<td>${process.name}</td>
 					<td><b title='流程版本号'>V: ${process.version}</b></td>
+					<td><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td><a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=xml">${process.resourceName}</a></td>
 					<td><a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=image">${process.diagramResourceName}</a></td>
-					<td><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td>
 						<c:if test="${process.suspended}">
 							<a href="${ctx}/act/process/update/active?procDefId=${process.id}" onclick="return confirmx('确认要激活吗？', this.href)">激活</a>

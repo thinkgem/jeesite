@@ -111,10 +111,10 @@
     </sql>
     
     <sql id="userJoins">
-		JOIN sys_office c ON c.id = a.company_id
-		JOIN sys_area ca ON ca.id = c.area_id
-		JOIN sys_office o ON o.id = a.office_id
-		JOIN sys_area oa ON oa.id = o.area_id
+		LEFT JOIN sys_office c ON c.id = a.company_id
+		LEFT JOIN sys_area ca ON ca.id = c.area_id
+		LEFT JOIN sys_office o ON o.id = a.office_id
+		LEFT JOIN sys_area oa ON oa.id = o.area_id
 		LEFT JOIN sys_user cu ON cu.id = c.primary_person
 		LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person
 		LEFT JOIN sys_user ou ON ou.id = o.primary_person
@@ -158,11 +158,13 @@
 		<if test="company != null and company.id != null and company.id != ''">
 			AND (c.id = #{company.id} OR c.parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
+					<if test="dbName == 'mssql'">'%,'+#{company.id}+',%')</if>
 					<if test="dbName == 'mysql'">CONCAT('%,', #{company.id}, ',%'))</if>
 		</if>
 		<if test="office != null and office.id != null and office.id != ''">
 			AND (o.id = #{office.id} OR o.parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+					<if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
 					<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
 		</if>
 		<!-- 如果不是超级管理员，则不显示超级管理员用户 -->
@@ -172,11 +174,13 @@
 		<if test="loginName != null and loginName != ''">
 			AND a.login_name like 
 					<if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{loginName}, '%')</if>
 		</if>
 		<if test="name != null and name != ''">
 			AND a.name like 
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
 		</if>
 		<!-- 数据范围过滤 -->
@@ -294,7 +298,10 @@
 	<insert id="insertUserRole">
 		INSERT INTO sys_user_role(user_id, role_id)
 		<foreach collection="roleList" item="role" separator=" union all ">
-			SELECT #{id}, #{role.id} FROM dual
+			SELECT #{id}, #{role.id}
+			<if test="dbName != 'mssql'">
+			FROM dual
+			</if>
 		</foreach>
 	</insert>
 	

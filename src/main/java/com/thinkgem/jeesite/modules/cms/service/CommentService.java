@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.cms.service;
 
@@ -36,6 +36,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 		return super.findPage(page, comment);
 	}
 	
+	@Transactional(readOnly = false)
 	public void delete(Comment entity, Boolean isRe) {
 		super.delete(entity);
 	}

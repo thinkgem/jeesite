@@ -1,5 +1,5 @@
 /*!
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  * 
  * 通用公共方法
  * @author ThinkGem
@@ -92,6 +92,14 @@ function loading(mess){
 	}
 	resetTip();
 	top.$.jBox.tip(mess,'loading',{opacity:0});
+}
+
+// 关闭提示框
+function closeLoading(){
+	// 恢复提示框显示
+	resetTip();
+	// 关闭提示框
+	closeTip();
 }
 
 // 警告对话框

@@ -25,14 +25,14 @@
             SELECT r.oa_notify_id, 
                    sum(case when r.read_flag = '1' then 1 else 0 end) read_num,
                    sum(case when r.read_flag != '1' then 1 else 0 end) un_read_num 
-            FROM OA_NOTIFY_RECORD r GROUP BY r.oa_notify_id
+            FROM oa_notify_record r GROUP BY r.oa_notify_id
     	) b ON b.oa_notify_id = a.id
 	</sql>
     
 	<select id="get" resultType="OaNotify">
 		SELECT 
 			<include refid="oaNotifyColumns"/>
-		FROM OA_NOTIFY a
+		FROM oa_notify a
 		<include refid="oaNotifyJoins"/>
 		WHERE a.id = #{id}
 	</select>
@@ -43,16 +43,17 @@
 			<if test="isSelf">,
 				r.read_flag
 			</if>
-		FROM OA_NOTIFY a
+		FROM oa_notify a
 		<include refid="oaNotifyJoins"/>
 		<!-- 我的通知 -->
 		<if test="isSelf">
-			JOIN OA_NOTIFY_RECORD r ON r.oa_notify_id = a.id AND r.user_id = #{currentUser.id}
+			JOIN oa_notify_record r ON r.oa_notify_id = a.id AND r.user_id = #{currentUser.id}
 		</if>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<if test="title != null and title != ''">
 			AND a.TITLE LIKE 
 					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 		</if>
 		<if test="type != null and type != ''">
@@ -70,7 +71,7 @@
 	<select id="findAllList" resultType="OaNotify">
 		SELECT 
 			<include refid="oaNotifyColumns"/>
-		FROM OA_NOTIFY a
+		FROM oa_notify a
 		<include refid="oaNotifyJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 		ORDER BY a.update_date DESC
@@ -79,9 +80,9 @@
 	<select id="findCount" resultType="Long">
 		SELECT 
 			count(1)
-		FROM OA_NOTIFY a
+		FROM oa_notify a
 		<if test="isSelf">
-			JOIN OA_NOTIFY_RECORD r ON r.oa_notify_id = a.id AND r.user_id = #{currentUser.id}
+			JOIN oa_notify_record r ON r.oa_notify_id = a.id AND r.user_id = #{currentUser.id}
 				<if test="readFlag != null and readFlag != ''">
 					AND r.read_flag = #{readFlag}
 				</if>
@@ -93,7 +94,7 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO OA_NOTIFY(
+		INSERT INTO oa_notify(
 			ID,
 			TYPE,
 			TITLE,
@@ -123,7 +124,7 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE OA_NOTIFY SET 	
+		UPDATE oa_notify SET 	
 			TYPE = #{type},
 			TITLE = #{title},
 			CONTENT = #{content},
@@ -136,7 +137,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE OA_NOTIFY SET 
+		UPDATE oa_notify SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>

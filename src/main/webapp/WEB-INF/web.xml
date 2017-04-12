@@ -52,6 +52,10 @@
 	<filter>
 		<filter-name>PageCacheFilter</filter-name>
 		<filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter</filter-class>
+		<init-param>
+			<param-name>cacheName</param-name>
+			<param-value>pageCachingFilter</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>PageCacheFilter</filter-name>
@@ -91,19 +95,15 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- Activiti -->
-	<servlet>
-		<servlet-name>RestletServlet</servlet-name>
-		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
-		<init-param>
-			<param-name>org.restlet.application</param-name>
-			<param-value>com.thinkgem.jeesite.modules.act.rest.ActRestApplication</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>RestletServlet</servlet-name>
-		<url-pattern>/act/rest/service/*</url-pattern>
-	</servlet-mapping>
+	<!-- Activiti diagram-view callback filter-->
+	<filter>
+		<filter-name>JSONPFilter</filter-name>
+		<filter-class>com.thinkgem.jeesite.modules.act.rest.servlet.JsonpCallbackFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>JSONPFilter</filter-name>
+		<url-pattern>/act/service/*</url-pattern>
+	</filter-mapping>
 
 	<!-- DruidStatView -->
 	<servlet>
@@ -178,7 +178,7 @@
 		<url-pattern>/servlet/validateCodeServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- FineReport -->
+	<!-- FineReport 
 	<servlet>
 		<servlet-name>ReportServer</servlet-name>
 		<servlet-class>com.fr.web.ReportServlet</servlet-class>
@@ -186,7 +186,7 @@
 	<servlet-mapping>
 		<servlet-name>ReportServer</servlet-name>
 		<url-pattern>/ReportServer</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>-->
 	
 	<!-- [INSERT FRAGMENT HERE] -->
 

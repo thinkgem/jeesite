@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.act.service;
 
@@ -14,6 +14,7 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -23,10 +24,13 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.RuntimeServiceImpl;
 import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
-import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.impl.identity.Authentication;
+import org.activiti.engine.impl.interceptor.CommandExecutor;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.pvm.delegate.ActivityBehavior;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.impl.task.TaskDefinition;
@@ -44,6 +48,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -52,8 +57,15 @@ import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.act.dao.ActDao;
 import com.thinkgem.jeesite.modules.act.entity.Act;
+import com.thinkgem.jeesite.modules.act.service.cmd.CreateAndTakeTransitionCmd;
+import com.thinkgem.jeesite.modules.act.service.cmd.JumpTaskCmd;
+import com.thinkgem.jeesite.modules.act.service.creator.ChainedActivitiesCreator;
+import com.thinkgem.jeesite.modules.act.service.creator.MultiInstanceActivityCreator;
+import com.thinkgem.jeesite.modules.act.service.creator.RuntimeActivityDefinitionEntityIntepreter;
+import com.thinkgem.jeesite.modules.act.service.creator.SimpleRuntimeActivityDefinitionEntity;
 import com.thinkgem.jeesite.modules.act.utils.ActUtils;
 import com.thinkgem.jeesite.modules.act.utils.ProcessDefCache;
+import com.thinkgem.jeesite.modules.act.utils.ProcessDefUtils;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -68,9 +80,12 @@ public class ActTaskService extends BaseService {
 
 	@Autowired
 	private ActDao actDao;
+
+	@Autowired
+	private ProcessEngineFactoryBean processEngineFactory;
 	
 	@Autowired
-	private ProcessEngineFactoryBean processEngine;
+	private ProcessEngine processEngine;
 	@Autowired
 	private RuntimeService runtimeService;
 	@Autowired
@@ -184,6 +199,8 @@ public class ActTaskService extends BaseService {
 		
 		// 查询列表
 		List<HistoricTaskInstance> histList = histTaskQuery.listPage(page.getFirstResult(), page.getMaxResults());
+		//处理分页问题
+		List<Act> actList=Lists.newArrayList();
 		for (HistoricTaskInstance histTask : histList) {
 			Act e = new Act();
 			e.setHistTask(histTask);
@@ -194,8 +211,10 @@ public class ActTaskService extends BaseService {
 //			e.setProcIns(runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult());
 //			e.setProcExecUrl(ActUtils.getProcExeUrl(task.getProcessDefinitionId()));
 			e.setStatus("finish");
-			page.getList().add(e);
+			actList.add(e);
+			//page.getList().add(e);
 		}
+		page.setList(actList);
 		return page;
 	}
 	
@@ -428,6 +447,7 @@ public class ActTaskService extends BaseService {
 	 * @param taskId 任务ID
 	 * @param deleteReason 删除原因
 	 */
+	@Transactional(readOnly = false)
 	public void deleteTask(String taskId, String deleteReason){
 		taskService.deleteTask(taskId, deleteReason);
 	}
@@ -487,6 +507,7 @@ public class ActTaskService extends BaseService {
 	 * 完成第一个任务
 	 * @param procInsId
 	 */
+	@Transactional(readOnly = false)
 	public void completeFirstTask(String procInsId){
 		completeFirstTask(procInsId, null, null, null);
 	}
@@ -498,6 +519,7 @@ public class ActTaskService extends BaseService {
 	 * @param title
 	 * @param vars
 	 */
+	@Transactional(readOnly = false)
 	public void completeFirstTask(String procInsId, String comment, String title, Map<String, Object> vars){
 		String userId = UserUtils.getUser().getLoginName();
 		Task task = taskService.createTaskQuery().taskAssignee(userId).processInstanceId(procInsId).active().singleResult();
@@ -531,6 +553,217 @@ public class ActTaskService extends BaseService {
 //		taskService.
 //	}
 	
+	/**
+	 * 添加任务意见
+	 */
+	public void addTaskComment(String taskId, String procInsId, String comment){
+		taskService.addComment(taskId, procInsId, comment);
+	}
+	
+	//////////////////  回退、前进、跳转、前加签、后加签、分裂 移植  https://github.com/bluejoe2008/openwebflow  ////////////////////////////////////////////////// 
+
+	/**
+	 * 任务后退一步
+	 */
+	public void taskBack(String procInsId, Map<String, Object> variables) {
+		taskBack(getCurrentTask(procInsId), variables);
+	}
+
+	/**
+	 * 任务后退至指定活动
+	 */
+	public void taskBack(TaskEntity currentTaskEntity, Map<String, Object> variables) {
+		ActivityImpl activity = (ActivityImpl) ProcessDefUtils
+				.getActivity(processEngine, currentTaskEntity.getProcessDefinitionId(), currentTaskEntity.getTaskDefinitionKey())
+				.getIncomingTransitions().get(0).getSource();
+		jumpTask(currentTaskEntity, activity, variables);
+	}
+
+	/**
+	 * 任务前进一步
+	 */
+	public void taskForward(String procInsId, Map<String, Object> variables) {
+		taskForward(getCurrentTask(procInsId), variables);
+	}
+
+	/**
+	 * 任务前进至指定活动
+	 */
+	public void taskForward(TaskEntity currentTaskEntity, Map<String, Object> variables) {
+		ActivityImpl activity = (ActivityImpl) ProcessDefUtils
+				.getActivity(processEngine, currentTaskEntity.getProcessDefinitionId(), currentTaskEntity.getTaskDefinitionKey())
+				.getOutgoingTransitions().get(0).getDestination();
+
+		jumpTask(currentTaskEntity, activity, variables);
+	}
+	
+	/**
+	 * 跳转（包括回退和向前）至指定活动节点
+	 */
+	public void jumpTask(String procInsId, String targetTaskDefinitionKey, Map<String, Object> variables) {
+		jumpTask(getCurrentTask(procInsId), targetTaskDefinitionKey, variables);
+	}
+
+	/**
+	 * 跳转（包括回退和向前）至指定活动节点
+	 */
+	public void jumpTask(String procInsId, String currentTaskId, String targetTaskDefinitionKey, Map<String, Object> variables) {
+		jumpTask(getTaskEntity(currentTaskId), targetTaskDefinitionKey, variables);
+	}
+
+	/**
+	 * 跳转（包括回退和向前）至指定活动节点
+	 * @param currentTaskEntity 当前任务节点
+	 * @param targetTaskDefinitionKey 目标任务节点（在模型定义里面的节点名称）
+	 * @throws Exception
+	 */
+	public void jumpTask(TaskEntity currentTaskEntity, String targetTaskDefinitionKey, Map<String, Object> variables) {
+		ActivityImpl activity = ProcessDefUtils.getActivity(processEngine, currentTaskEntity.getProcessDefinitionId(),
+				targetTaskDefinitionKey);
+		jumpTask(currentTaskEntity, activity, variables);
+	}
+
+	/**
+	 * 跳转（包括回退和向前）至指定活动节点
+	 * @param currentTaskEntity 当前任务节点
+	 * @param targetActivity 目标任务节点（在模型定义里面的节点名称）
+	 * @throws Exception
+	 */
+	private void jumpTask(TaskEntity currentTaskEntity, ActivityImpl targetActivity, Map<String, Object> variables) {
+		CommandExecutor commandExecutor = ((RuntimeServiceImpl) runtimeService).getCommandExecutor();
+		commandExecutor.execute(new JumpTaskCmd(currentTaskEntity, targetActivity, variables));
+	}
+	
+	/**
+	 * 后加签
+	 */
+	@SuppressWarnings("unchecked")
+	public ActivityImpl[] insertTasksAfter(String procDefId, String procInsId, String targetTaskDefinitionKey, Map<String, Object> variables, String... assignees) {
+		List<String> assigneeList = new ArrayList<String>();
+		assigneeList.add(Authentication.getAuthenticatedUserId());
+		assigneeList.addAll(CollectionUtils.arrayToList(assignees));
+		String[] newAssignees = assigneeList.toArray(new String[0]);
+		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(procDefId);
+		ActivityImpl prototypeActivity = ProcessDefUtils.getActivity(processEngine, processDefinition.getId(), targetTaskDefinitionKey);
+		return cloneAndMakeChain(processDefinition, procInsId, targetTaskDefinitionKey, prototypeActivity.getOutgoingTransitions().get(0).getDestination().getId(), variables, newAssignees);
+	}
+
+	/**
+	 * 前加签
+	 */
+	public ActivityImpl[] insertTasksBefore(String procDefId, String procInsId, String targetTaskDefinitionKey, Map<String, Object> variables, String... assignees) {
+		ProcessDefinitionEntity procDef = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(procDefId);
+		return cloneAndMakeChain(procDef, procInsId, targetTaskDefinitionKey, targetTaskDefinitionKey, variables, assignees);
+	}
+
+	/**
+	 * 分裂某节点为多实例节点
+	 */
+	public ActivityImpl splitTask(String procDefId, String procInsId, String targetTaskDefinitionKey, Map<String, Object> variables, String... assignee) {
+		return splitTask(procDefId, procInsId, targetTaskDefinitionKey, variables, true, assignee);
+	}
+	
+	/**
+	 * 分裂某节点为多实例节点
+	 */
+	@SuppressWarnings("unchecked")
+	public ActivityImpl splitTask(String procDefId, String procInsId, String targetTaskDefinitionKey, Map<String, Object> variables, boolean isSequential, String... assignees) {
+		SimpleRuntimeActivityDefinitionEntity info = new SimpleRuntimeActivityDefinitionEntity();
+		info.setProcessDefinitionId(procDefId);
+		info.setProcessInstanceId(procInsId);
+
+		RuntimeActivityDefinitionEntityIntepreter radei = new RuntimeActivityDefinitionEntityIntepreter(info);
+
+		radei.setPrototypeActivityId(targetTaskDefinitionKey);
+		radei.setAssignees(CollectionUtils.arrayToList(assignees));
+		radei.setSequential(isSequential);
+		
+		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(procDefId);
+		ActivityImpl clone = new MultiInstanceActivityCreator().createActivities(processEngine, processDefinition, info)[0];
+
+		TaskEntity currentTaskEntity = this.getCurrentTask(procInsId);
+		
+		CommandExecutor commandExecutor = ((RuntimeServiceImpl) runtimeService).getCommandExecutor();
+		commandExecutor.execute(new CreateAndTakeTransitionCmd(currentTaskEntity, clone, variables));
+
+//		recordActivitiesCreation(info);
+		return clone;
+	}
+
+	private TaskEntity getCurrentTask(String procInsId) {
+		return (TaskEntity) taskService.createTaskQuery().processInstanceId(procInsId).active().singleResult();
+	}
+
+	private TaskEntity getTaskEntity(String taskId) {
+		return (TaskEntity) taskService.createTaskQuery().taskId(taskId).singleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	private ActivityImpl[] cloneAndMakeChain(ProcessDefinitionEntity procDef, String procInsId, String prototypeActivityId, String nextActivityId, Map<String, Object> variables, String... assignees) {
+		SimpleRuntimeActivityDefinitionEntity info = new SimpleRuntimeActivityDefinitionEntity();
+		info.setProcessDefinitionId(procDef.getId());
+		info.setProcessInstanceId(procInsId);
+
+		RuntimeActivityDefinitionEntityIntepreter radei = new RuntimeActivityDefinitionEntityIntepreter(info);
+		radei.setPrototypeActivityId(prototypeActivityId);
+		radei.setAssignees(CollectionUtils.arrayToList(assignees));
+		radei.setNextActivityId(nextActivityId);
+
+		ActivityImpl[] activities = new ChainedActivitiesCreator().createActivities(processEngine, procDef, info);
+
+		jumpTask(procInsId, activities[0].getId(), variables);
+//		recordActivitiesCreation(info);
+
+		return activities;
+	}
+	
+//	private void recordActivitiesCreation(SimpleRuntimeActivityDefinitionEntity info) {
+//		info.serializeProperties();
+//		_activitiesCreationStore.save(info);
+//	}
+	
+	//////////////////////////////////////////////////////////////////// 
+	
+
+//	private void recordActivitiesCreation(SimpleRuntimeActivityDefinitionEntity info) throws Exception {
+//		info.serializeProperties();
+//		_activitiesCreationStore.save(info);
+//	}
+//
+//	/**
+//	 * 分裂某节点为多实例节点
+//	 * 
+//	 * @param targetTaskDefinitionKey
+//	 * @param assignee
+//	 * @throws IOException
+//	 * @throws IllegalAccessException
+//	 * @throws IllegalArgumentException
+//	 */
+//	public ActivityImpl split(String targetTaskDefinitionKey, boolean isSequential, String... assignees) throws Exception {
+//		SimpleRuntimeActivityDefinitionEntity info = new SimpleRuntimeActivityDefinitionEntity();
+//		info.setProcessDefinitionId(processDefinition.getId());
+//		info.setProcessInstanceId(_processInstanceId);
+//
+//		RuntimeActivityDefinitionEntityIntepreter radei = new RuntimeActivityDefinitionEntityIntepreter(info);
+//
+//		radei.setPrototypeActivityId(targetTaskDefinitionKey);
+//		radei.setAssignees(CollectionUtils.arrayToList(assignees));
+//		radei.setSequential(isSequential);
+//
+//		ActivityImpl clone = new MultiInstanceActivityCreator().createActivities(_processEngine, processDefinition, info)[0];
+//
+//		TaskEntity currentTaskEntity = getCurrentTask();
+//		executeCommand(new CreateAndTakeTransitionCmd(currentTaskEntity.getExecutionId(), clone));
+//		executeCommand(new DeleteRunningTaskCmd(currentTaskEntity));
+//
+//		recordActivitiesCreation(info);
+//		return clone;
+//	}
+//
+//	public ActivityImpl split(String targetTaskDefinitionKey, String... assignee) throws Exception {
+//		return split(targetTaskDefinitionKey, true, assignee);
+//	}
+
 	////////////////////////////////////////////////////////////////////
 	
 	/**
@@ -539,7 +772,7 @@ public class ActTaskService extends BaseService {
 	 * @return	封装了各种节点信息
 	 */
 	public InputStream tracePhoto(String processDefinitionId, String executionId) {
-		// ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(executionId).singleResult();
+//		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(executionId).singleResult();
 		BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
 		
 		List<String> activeActivityIds = Lists.newArrayList();
@@ -552,9 +785,10 @@ public class ActTaskService extends BaseService {
 		// Context.setProcessEngineConfiguration(defaultProcessEngine.getProcessEngineConfiguration());
 
 		// 使用spring注入引擎请使用下面的这行代码
-		Context.setProcessEngineConfiguration(processEngine.getProcessEngineConfiguration());
-
-		return ProcessDiagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
+		Context.setProcessEngineConfiguration(processEngineFactory.getProcessEngineConfiguration());
+//		return ProcessDiagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
+		return processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
+				.generateDiagram(bpmnModel, "png", activeActivityIds);
 	}
 	
 	/**
@@ -593,6 +827,7 @@ public class ActTaskService extends BaseService {
 
 		return activityInfos;
 	}
+	
 
 	/**
 	 * 封装输出信息，包括：当前节点的X、Y坐标、变量信息、任务类型、任务描述
@@ -718,6 +953,10 @@ public class ActTaskService extends BaseService {
 	private void setPosition(ActivityImpl activity, Map<String, Object> activityInfo) {
 		activityInfo.put("x", activity.getX());
 		activityInfo.put("y", activity.getY());
+	}
+
+	public ProcessEngine getProcessEngine() {
+		return processEngine;
 	}
 	
 }

@@ -236,7 +236,10 @@
 	<update id="delete">
 		UPDATE cms_category SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id}
+		WHERE id = #{id} OR parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
 	</update>
 	
 	<select id="findByParentIdAndSiteId" resultType="Category">
@@ -264,6 +267,7 @@
 			a.del_flag = #{DEL_FLAG_NORMAL} 
 			AND a.parent_id LIKE 
 					<if test="dbName == 'oracle'">'%'||#{id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{id}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{id}, '%')</if>
 		</where>		
 		order by a.site_id, a.sort
@@ -289,6 +293,7 @@
 			AND c.site_id =
 			AND c.id = :id or c.parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{parentIds}, '%')</if>
 			group by cp.sort, cp.id, c.sort, c.id
 			order by cp.sort, cp.id, c.sort, c.id

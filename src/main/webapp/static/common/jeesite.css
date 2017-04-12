@@ -32,6 +32,7 @@ input.btn:hover {*color:#333333}
 .table th, .table td {vertical-align:middle;}
 .table td i{margin:0 2px;}
 .table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th{background-color:#F5F5F5}
+.table-nowrap td {width:200px;max-width:175px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
 
 .sort-column{color:#0663A2;cursor:pointer;}
 

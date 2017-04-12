@@ -51,11 +51,13 @@
 			<if test="title != null and title != ''">
 				AND a.title LIKE 
 					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 			</if>
 			<if test="posid != null and posid != ''">
 				AND a.posid LIKE 
 					<if test="dbName == 'oracle'">'%'||#{posid}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{posid}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{posid}, '%')</if>
 			</if>
 			<if test="category.id != null and category.id != ''">
@@ -63,6 +65,7 @@
 				<if test="category.parentIds != null and category.parentIds != ''">
 					or c.parent_ids like 
 						<if test="dbName == 'oracle'">'%'||#{category.id}||'%'</if>
+						<if test="dbName == 'mssql'">'%,'+#{category.id}+',%'</if>
 						<if test="dbName == 'mysql'">CONCAT('%,', #{category.id}, ',%')</if>
 				</if>)
 			</if>
@@ -191,6 +194,7 @@
 			 weight = 0
 		WHERE weight &gt; 0 AND weight_date &lt; 
 			<if test="dbName == 'oracle'">sysdate</if>
+			<if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,GETDATE()))</if>
 			<if test="dbName == 'mysql'">CURDATE()</if>
 	</update>
 	
@@ -220,6 +224,7 @@
 			<if test="office.id != null and office.id != ''">
 				AND (c.office_id = #{office.id} OR o.parent_ids like 
 					<if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{office.id}, '%')</if>)
 			</if>
 			<if test="beginDate != null and beginDate != ''">
@@ -231,6 +236,7 @@
 			<if test="id != null and id != ''">
 				AND (c.id = #{id} OR c.parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%'||#{id}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{id}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{id}, '%')</if>)
 			</if>
 			group by cp.sort, cp.id, c.sort, c.id

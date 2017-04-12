@@ -13,47 +13,51 @@
 	<diskStore path="../temp/jeesite/ehcache" />
 
 	<!-- 默认缓存配置. -->
-	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
-		overflowToDisk="true" maxEntriesLocalDisk="100000" >
+	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+		overflowToDisk="true" statistics="true">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
 			properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
-	</defaultCache>
+    </defaultCache>
 	
 	<!-- 系统缓存 -->
-	<cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true">
+	<cache name="sysCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
-	</cache>
-	
-	<!-- 用户缓存 -->
-	<cache name="userCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true">
+    </cache>
+    
+    <!-- 用户缓存 -->
+	<cache name="userCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
-	</cache>
+    </cache>
+    
+    <!-- 用户缓存 -->
+	<cache name="corpCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+    </cache>
+    
+	<!-- 内容管理模块缓存 -->
+	<cache name="cmsCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+    </cache>
 	
 	<!-- 工作流模块缓存 -->
 	<cache name="actCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
 	</cache>
-	
-	<!-- 内容管理模块缓存
-	<cache name="cmsCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
-	</cache> -->
+
+    <!-- 简单页面缓存 -->
+    <cache name="pageCachingFilter" maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="120"
+    	timeToLiveSeconds="120" overflowToDisk="true" memoryStoreEvictionPolicy="LFU" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+				replicateUpdatesViaCopy=false, replicateRemovals=true "/>
+    </cache>
 	
 	<!-- 系统活动会话缓存 -->
-	<cache name="activeSessionsCache" maxEntriesLocalHeap="10000" overflowToDisk="true"
-			eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
-			diskPersistent="true" diskExpiryThreadIntervalSeconds="600">
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="10000" eternal="true" overflowToDisk="true"
+           diskPersistent="true" diskExpiryThreadIntervalSeconds="600" statistics="true">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
 			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
 				replicateUpdatesViaCopy=false, replicateRemovals=true "/>
-	</cache>
-
-	<!-- 简单页面缓存
-	<cache name="SimplePageCachingFilter" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true"
-		timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU">
-		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
-			properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
-				replicateUpdatesViaCopy=false, replicateRemovals=true "/>
-	</cache> -->
-		
+    </cache>
+	
 </ehcache>

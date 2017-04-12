@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
     
     <description>Spring MVC Configuration</description>
     
@@ -81,7 +81,7 @@
 	<!-- 定义无Controller的path<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:${web.view.index}"/>
 	
-	<!-- 拦截器配置 -->
+	<!-- 拦截器配置，拦截顺序：先执行后定义的，排在第一位的最后执行。-->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="${adminPath}/**" />
@@ -91,6 +91,11 @@
 			<mvc:exclude-mapping path="${adminPath}/sys/menu/treeData"/>
 			<mvc:exclude-mapping path="${adminPath}/oa/oaNotify/self/count"/>
 			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
+		</mvc:interceptor>
+		<!-- 手机视图拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.MobileInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 	

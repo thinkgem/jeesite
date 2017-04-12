@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
@@ -71,6 +71,14 @@ public class UserController extends BaseController {
 		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
         model.addAttribute("page", page);
 		return "modules/sys/userList";
+	}
+	
+	@ResponseBody
+	@RequiresPermissions("sys:user:view")
+	@RequestMapping(value = {"listData"})
+	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
+		return page;
 	}
 
 	@RequiresPermissions("sys:user:view")
