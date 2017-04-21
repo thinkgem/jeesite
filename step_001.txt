@@ -1,8 +1,5 @@
 手把手教你进行源码跟踪：
 
-使用的项目是 jeesite：
-https://github.com/thinkgem/jeesite
-
 1、改变表名 cms_article => cms_article1，最后添加了一个 1
 /jeesite/src/main/resources/mappings/modules/cms/ArticleDao.xml
 
