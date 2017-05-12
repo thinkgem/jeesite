@@ -315,6 +315,10 @@ public class Page<T> {
 		if (pageSize >= count){
 			pageNo = 1;
 		}
+		//如果总数据量大于从数据库中查询的数据量，重启计算页面各个参数
+		if(pageSize*pageNo>count){
+			initialize();
+		}
 	}
 	
 	/**
