@@ -26,7 +26,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
- * 字典工具类
+ * 日志工具类
  * @author ThinkGem
  * @version 2014-11-7
  */
