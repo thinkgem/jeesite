@@ -69,16 +69,8 @@ public class JedisCacheManager implements CacheManager {
 			if (key == null){
 				return null;
 			}
-			
-			V v = null;
+						
 			HttpServletRequest request = Servlets.getRequest();
-			if (request != null){
-				v = (V)request.getAttribute(cacheKeyName);
-				if (v != null){
-					return v;
-				}
-			}
-			
 			V value = null;
 			Jedis jedis = null;
 			try {
@@ -89,10 +81,6 @@ public class JedisCacheManager implements CacheManager {
 				logger.error("get {} {} {}", cacheKeyName, key, request != null ? request.getRequestURI() : "", e);
 			} finally {
 				JedisUtils.returnResource(jedis);
-			}
-			
-			if (request != null && value != null){
-				request.setAttribute(cacheKeyName, value);
 			}
 			
 			return value;
