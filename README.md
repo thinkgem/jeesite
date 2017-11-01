@@ -161,6 +161,5 @@ Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hi
 数据库的支持，但对于支持其它数据库的改动也不是很麻烦，SQL是被专门写在XML中，对于大多数SQL来说都是通用的，
 对于不同的数据库可通过dbName区分和修改各别的SQL片段即可。
 
-上述纯属个人观点，欢迎指正（thinkgem@163.com）。
 
 如果你仍然喜欢Hibernate，请点击[下载JeeSite Hibernate版本](https://github.com/thinkgem/jeesite/tree/master_hibernate)。
