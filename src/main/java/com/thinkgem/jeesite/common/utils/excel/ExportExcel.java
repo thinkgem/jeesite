@@ -161,7 +161,95 @@ public class ExportExcel {
 		}
 		initialize(title, headerList);
 	}
-	
+
+	/**
+	 * 重载
+	 *  实体对多业务导出（根据业务导出字段），使用模式匹配
+	 * 例如： 对用户的导出：带密码导出
+	 *    属性get方法注解带有  bussinessType = "密码" 都会导入
+	 * @param bussniessType 支持对实体的多业务不同字段导出
+	 * @param title
+	 * @param cls
+	 * @param type
+	 * @param groups
+	 */
+	public ExportExcel(String bussniessType,String title, Class<?> cls, int type, int... groups){
+		// Get annotation field
+		Field[] fs = cls.getDeclaredFields();
+		for (Field f : fs){
+			ExcelField ef = f.getAnnotation(ExcelField.class);
+			if (ef != null && (ef.type()==0 || ef.type()==type)) {
+				if( ef.bussinessType().toString().contains( bussniessType)){ //模糊匹配支持一个属性支撑多个业务 xuelongjiang@jiadakeji.cn
+					if (groups != null && groups.length > 0) {
+						boolean inGroup = false;
+						for (int g : groups) {
+							if (inGroup) {
+								break;
+							}
+							for (int efg : ef.groups()) {
+								if (g == efg) {
+									inGroup = true;
+									annotationList.add(new Object[]{ef, f});
+									break;
+								}
+							}
+						}
+					} else {
+						annotationList.add(new Object[]{ef, f});
+					}
+				}
+			}
+		}
+		// Get annotation method
+		Method[] ms = cls.getDeclaredMethods();
+		for (Method m : ms){
+			ExcelField ef = m.getAnnotation(ExcelField.class);
+			if (ef != null && (ef.type()==0 || ef.type()==type)) {
+				if( ef.bussinessType().toString().contains( bussniessType)){//模糊匹配支持一个属性支撑多个业务 xuelongjiang@jiadakeji.cn
+					if (groups != null && groups.length > 0) {
+						boolean inGroup = false;
+						for (int g : groups) {
+							if (inGroup) {
+								break;
+							}
+							for (int efg : ef.groups()) {
+								if (g == efg) {
+									inGroup = true;
+									annotationList.add(new Object[]{ef, m});
+									break;
+								}
+							}
+						}
+					} else {
+						annotationList.add(new Object[]{ef, m});
+					}
+				}
+			}
+		}
+		// Field sorting
+		Collections.sort(annotationList, new Comparator<Object[]>() {
+			public int compare(Object[] o1, Object[] o2) {
+				return new Integer(((ExcelField)o1[0]).sort()).compareTo(
+						new Integer(((ExcelField)o2[0]).sort()));
+			};
+		});
+		// Initialize
+		List<String> headerList = Lists.newArrayList();
+		for (Object[] os : annotationList){
+			String t = ((ExcelField)os[0]).title();
+			// 如果是导出，则去掉注释
+			if (type==1){
+				String[] ss = StringUtils.split(t, "**", 2);
+				if (ss.length==2){
+					t = ss[0];
+				}
+			}
+			headerList.add(t);
+		}
+		initialize(title, headerList);
+	}
+
+
 	/**
 	 * 构造函数
 	 * @param title 表格标题，传“空值”，表示无标题
