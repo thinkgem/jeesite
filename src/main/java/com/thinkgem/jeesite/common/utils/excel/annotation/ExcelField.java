@@ -56,4 +56,10 @@ public @interface ExcelField {
 	 * 字段归属组（根据分组导出导入）
 	 */
 	int[] groups() default {};
+	/**
+	 * 业务类型，针对每一种业务的导出，
+	 * 根据导出操作时
+	 * xuelongjiang@jiadakeji.cn
+	 */
+	String  bussinessType ()  default "";
 }

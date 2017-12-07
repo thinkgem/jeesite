@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -191,7 +189,12 @@ public class ImportExcel {
 			Cell cell = row.getCell(column);
 			if (cell != null){
 				if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC){
+					//处理数字为科学计数，及日期正确转换为字符 xuelongjiang@jiadakeji.cn
 					val = cell.getNumericCellValue();
+					if(val.toString().contains("E")){
+						BigDecimal bd = new BigDecimal(val.toString());
+						val = bd.toPlainString();
+					}
 				}else if (cell.getCellType() == Cell.CELL_TYPE_STRING){
 					val = cell.getStringCellValue();
 				}else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA){
@@ -348,6 +351,175 @@ public class ImportExcel {
 		}
 		return dataList;
 	}
+
+	/**
+	 * 重载getDataList
+	 * 实体对多业务导出（根据业务导出字段），使用模式匹配
+	 * 例如： 对用户的导出：带密码导出
+	 *    属性get方法注解带有  bussinessType = "密码" 都会导入
+	 *
+	 * @param bussinessType 业务场景 使用字符 模糊匹配 如
+	 * @param cls
+	 * @param groups
+	 * @param <E>
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
+	public <E> List<E> getDataList(String bussinessType,Class<E> cls, int... groups) throws InstantiationException, IllegalAccessException{
+		List<Object[]> annotationList = Lists.newArrayList();
+		// Get annotation field
+		Field[] fs = cls.getDeclaredFields();
+		for (Field f : fs){
+			ExcelField ef = f.getAnnotation(ExcelField.class);
+			if (ef != null && (ef.type()==0 || ef.type()==2)){
+				if( ef.bussinessType().toString().contains( bussinessType)){ //模糊匹配支持一个属性支撑多个业务 xuelongjiang@jiadakeji.cn
+					if (groups!=null && groups.length>0) {
+						boolean inGroup = false;
+						for (int g : groups) {
+							if (inGroup) {
+								break;
+							}
+							for (int efg : ef.groups()) {
+								if (g == efg) {
+									inGroup = true;
+									annotationList.add(new Object[]{ef, f});
+									break;
+								}
+							}
+						}
+					}
+				}else{
+					annotationList.add(new Object[]{ef, f});
+				}
+			}
+		}
+		// Get annotation method
+		Method[] ms = cls.getDeclaredMethods();
+		for (Method m : ms){
+			ExcelField ef = m.getAnnotation(ExcelField.class);
+			if (ef != null && (ef.type()==0 || ef.type()==2)){
+				if( ef.bussinessType().toString().contains( bussinessType)){ //模糊匹配支持一个属性支撑多个业务
+					if (groups!=null && groups.length>0) {
+						boolean inGroup = false;
+						for (int g : groups) {
+							if (inGroup) {
+								break;
+							}
+							for (int efg : ef.groups()) {
+								if (g == efg) {
+									inGroup = true;
+									annotationList.add(new Object[]{ef, m});
+									break;
+								}
+							}
+						}
+					}
+				}else{
+					annotationList.add(new Object[]{ef, m});
+				}
+			}
+		}
+		// Field sorting
+		Collections.sort(annotationList, new Comparator<Object[]>() {
+			public int compare(Object[] o1, Object[] o2) {
+				return new Integer(((ExcelField)o1[0]).sort()).compareTo(
+						new Integer(((ExcelField)o2[0]).sort()));
+			};
+		});
+		//log.debug("Import column count:"+annotationList.size());
+		// Get excel data
+		List<E> dataList = Lists.newArrayList();
+		for (int i = this.getDataRowNum(); i < this.getLastDataRowNum(); i++) {
+			E e = (E)cls.newInstance();
+			int column = 0;
+			Row row = this.getRow(i);
+			//判断行是否为空  xuelongjiang@jiadakeji.cn
+			Iterator<Cell> cellIterable = row.cellIterator();
+			int  cellCount = 0;
+			int cellEmpty = 0;
+			while (cellIterable.hasNext()){
+				Cell itCell =	cellIterable.next();
+				cellCount++;
+				if("".equals(itCell.toString())){
+					cellEmpty++;
+				}
+			}
+			if(cellCount == cellEmpty){
+				continue;
+			}
+			StringBuilder sb = new StringBuilder();
+			for (Object[] os : annotationList){
+				Object val = this.getCellValue(row, column++);
+				if (val != null){
+					ExcelField ef = (ExcelField)os[0];
+					// If is dict type, get dict value
+					if (StringUtils.isNotBlank(ef.dictType())){
+						val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
+						//log.debug("Dictionary type value: ["+i+","+colunm+"] " + val);
+					}
+					// Get param type and type cast
+					Class<?> valType = Class.class;
+					if (os[1] instanceof Field){
+						valType = ((Field)os[1]).getType();
+					}else if (os[1] instanceof Method){
+						Method method = ((Method)os[1]);
+						if ("get".equals(method.getName().substring(0, 3))){
+							valType = method.getReturnType();
+						}else if("set".equals(method.getName().substring(0, 3))){
+							valType = ((Method)os[1]).getParameterTypes()[0];
+						}
+					}
+					//log.debug("Import value type: ["+i+","+column+"] " + valType);
+					try {
+						if (valType == String.class){
+							String s = String.valueOf(val.toString());
+							if(StringUtils.endsWith(s, ".0")){
+								val = StringUtils.substringBefore(s, ".0");
+							}else{
+								val = String.valueOf(val.toString());
+							}
+						}else if (valType == Integer.class){
+							val = Double.valueOf(val.toString()).intValue();
+						}else if (valType == Long.class){
+							val = Double.valueOf(val.toString()).longValue();
+						}else if (valType == Double.class){
+							val = Double.valueOf(val.toString());
+						}else if (valType == Float.class){
+							val = Float.valueOf(val.toString());
+						}else if (valType == Date.class){
+							val = DateUtil.getJavaDate((Double)val);
+						}else{
+							if (ef.fieldType() != Class.class){
+								val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val.toString());
+							}else{
+								val = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(),
+										"fieldtype."+valType.getSimpleName()+"Type")).getMethod("getValue", String.class).invoke(null, val.toString());
+							}
+						}
+					} catch (Exception ex) {
+						log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
+						val = null;
+					}
+					// set entity value
+					if (os[1] instanceof Field){
+						Reflections.invokeSetter(e, ((Field)os[1]).getName(), val);
+					}else if (os[1] instanceof Method){
+						String mthodName = ((Method)os[1]).getName();
+						if ("get".equals(mthodName.substring(0, 3))){
+							mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
+						}
+						Reflections.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
+					}
+				}
+				sb.append(val+", ");
+			}
+			dataList.add(e);
+			log.debug("Read success: ["+i+"] "+sb.toString());
+		}
+		return dataList;
+	}
+
 
 //	/**
 //	 * 导入测试
