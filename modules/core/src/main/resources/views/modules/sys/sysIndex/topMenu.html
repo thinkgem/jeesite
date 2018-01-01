@@ -1,0 +1,27 @@
+<% var productName = @Global.getConfig('productName'); %>
+<nav class="navbar navbar-static-top">
+	<div class="logo" data-toggle="push-menu" title="${productName}">
+		<b>${productName}</b>
+		<small>&nbsp; &nbsp;<i class="fa fa-bars"></i></small>
+	</div>
+	<%/*<!--%><a href="javascript:" class="sidebar-toggle" data-toggle="push-menu" role="button">
+		<span class="sr-only">菜单切换</span><span class="icon-bar"></span>
+		<span class="icon-bar"></span><span class="icon-bar"></span>
+	</a><%-->*/%>
+	<div class="navbar-custom-menu">
+		<ul class="nav navbar-nav">
+			<% if(__info_type == '0'){ %>
+			<li><a href="javascript:" data-href="http://jeesite.com" class="addTabPage"><i class="fa fa-diamond"></i> 官方网站</a></li>
+			<li><a href="javascript:" data-href="http://blog.jeesite.com" class="addTabPage"><i class="fa fa-codepen"></i> 作者博客</a></li>
+			<% } %>
+			<li><a href="javascript:" id="fullScreen" title="全屏"><i class="fa fa-arrows-alt"></i></a></li>
+			<li><a href="javascript:" id="switchSkin" title="切换主题" style="margin-top:-1px;"><i class="fa fa-dashboard"></i></a></li>
+			<% include('/modules/sys/sysIndex/topMenuLang.html'){} %>
+			<% include('/modules/sys/sysIndex/topMenuOnline.html'){} %>
+			<% include('/modules/sys/sysIndex/topMenuMsg.html'){} %>
+			<% include('/modules/sys/sysIndex/topMenuNotify.html'){} %>
+			<% include('/modules/sys/sysIndex/topMenuTask.html'){} %>
+			<% include('/modules/sys/sysIndex/topMenuUser.html'){} %>
+		</ul>
+	</div>
+</nav>

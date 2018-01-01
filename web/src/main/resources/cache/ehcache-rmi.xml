@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+	
+	<!-- <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=manual,socketTimeoutMillis=2000,rmiUrls=//localhost:40001/mainCache"/>
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=localhost,port=40000,socketTimeoutMillis=2000"/> -->
+	
+	<!-- RMI组播方式，只能在一个网段内传输，不能跨网段 -->
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1,multicastGroupPort=4446"/>
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"/>
+	
+	<diskStore path="java.io.tmpdir"/>
+	
+	<!-- 
+		集群cacheEventListenerFactory properties="replicateAsynchronously=true"相关属性：
+		replicatePuts=true | false – 当一个新元素增加到缓存中的时候是否要复制到其他的peers. 默认是true。  是否同步新增信息。
+        replicateUpdates=true | false – 当一个已经在缓存中存在的元素被覆盖时是否要进行复制。默认是true。  
+        replicateRemovals= true | false – 当元素移除的时候是否进行复制。默认是true。  
+        replicateAsynchronously=true | false – 复制方式是异步的（指定为true时）还是同步的（指定为false时）。默认是true。  
+        replicatePutsViaCopy=true | false – 当一个新增元素被拷贝到其他的cache中时是否进行复制（指定为true时为复制）还是设置为无效，默认是true。更新是否同步内容，否则通知其它节点无效。
+        replicateUpdatesViaCopy=true | false – 当一个元素被拷贝到其他的cache中时是否进行复制（指定为true时为复制）还是设置为无效，默认是true。更新是否同步内容，否则通知其它节点删除。
+	 -->
+	
+	<!-- 默认缓存配置，自动失效，超过300秒未访问此缓存失效，缓存最多可以存活600秒，溢出不存储到磁盘，不持久化，增加统计。-->
+	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" overflowToDisk="false" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </defaultCache>
+	
+	<!-- 系统活动会话缓存，永不失效，溢出不存储到磁盘，不持久化，增加统计。 -->
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="100000" eternal="true" overflowToDisk="true" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=true,replicateUpdatesViaCopy=true"/>
+    </cache>
+    
+    <!-- 简单页面缓存，自动失效，超过60秒未访问此缓存失效，缓存最多可以存活120秒，溢出不存储到磁盘，不持久化，添加统计-->
+    <cache name="pageCachingFilter" maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="60" timeToLiveSeconds="120" overflowToDisk="false" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+	
+	<!-- 系统配置相关缓存 -->
+	<cache name="sysCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+	
+	<!-- 用户数据相关缓存 -->
+	<cache name="userCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+	
+	<!-- 集团数据相关缓存 -->
+	<cache name="corpCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+	
+	<!-- 内容管理模块缓存 -->
+	<cache name="cmsCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+	
+</ehcache>

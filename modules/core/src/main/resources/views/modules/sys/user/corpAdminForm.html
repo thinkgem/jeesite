@@ -1,0 +1,166 @@
+<% layout('/layouts/default.html', {title: '系统管理员', libs: ['validate','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${user.isNewRecord ? op == 'addCorp' ? '新增集团' : '新增管理员' : '编辑管理员'}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${user}" action="${ctx}/sys/corpAdmin/save" method="post" class="form-horizontal">
+			<#form:hidden name="op" value="${op}"/>
+			<#form:hidden name="userType" value="employee"/>
+			<#form:hidden path="userCode"/>
+			<div class="box-body">
+				<div class="form-unit">基本信息</div>
+				<div class="row ${@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))?'':'hide'}">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label" title="">
+								<span class="required">*</span> 集团代码：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="corpCode_" placeholder="请输入集团代码" maxlength="20"
+									readonly="${!user.isNewRecord || op=='addAdmin'}" class="form-control abc required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required">*</span> 集团名称：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="corpName_" placeholder="请输入集团名称" maxlength="32"
+									readonly="${!user.isNewRecord || op=='addAdmin'}" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 登录账号：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden name="oldLoginCode" value="${user.loginCode}"/>
+								<#form:input path="loginCode" minlength="4" maxlength="20"
+									class="form-control required userName"
+									data-msg-remote="登录账号已存在"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 用户昵称：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userName" maxlength="32" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 电子邮箱：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-envelope" style="margin-top:-2px;display:block;"></i></span>
+									<#form:input path="email" maxlength="300" class="form-control email"/>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 手机号码：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-mobile" style="margin-top:-2px;display:block;"></i></span>
+									<#form:input path="mobile" maxlength="100" class="form-control mobile"/>
+				                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 办公电话：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-phone"></i></span>
+									<#form:input path="phone" maxlength="100" class="form-control phone"/>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 权重(排序)：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userWeight" maxlength="8" class="form-control digits" placeholder="权重越大排名越靠前，请填写数字。"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<#form:extend collapsed="true" />
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:corpAdmin:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	rules:{
+		loginCode: {
+			remote: function(){
+				return '${ctx}/sys/user/checkLoginCode?oldLoginCode=${user.loginCode}'//&corpCode=' + $('#corpCode_').val()
+			}
+		}
+	},
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+$('#corpCode_').change(function(){
+	if ($('#loginCode').val() != ''){
+		$('#loginCode').valid();
+	}else{
+		$('#loginCode').val('admin'+$(this).val()).valid();
+	}
+});
+</script>

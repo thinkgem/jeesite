@@ -1,0 +1,91 @@
+<% layout('/layouts/default.html', {title: '岗位管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-trophy"></i> 岗位管理
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<% if(hasPermi('sys:post:edit')){ %>
+					<a href="${ctx}/sys/post/form" class="btn btn-default btnTool" title="新增岗位"><i class="fa fa-plus"></i> 新增</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${post}" action="${ctx}/sys/post/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">岗位编码：</label>
+					<div class="control-inline">
+						<#form:input path="postCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">岗位名称：</label>
+					<div class="control-inline">
+						<#form:input path="postName" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">岗位分类：</label>
+					<div class="control-inline width-90">
+						<#form:select path="postType" dictType="sys_post_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">状态：</label>
+					<div class="control-inline width-60">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">查询</button>
+					<button type="reset" class="btn btn-default btn-sm">重置</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'岗位名称', name:'postName', index:'a.post_name', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" data-title="编辑岗位">'+(val ? val : row.id)+'</a>';
+		}},
+		{header:'岗位编码', name:'postCode', index:'a.post_code', width:200, align:"center"},
+		{header:'排序号', name:'postSort', index:'a.post_sort', width:80, align:"center"},
+		{header:'岗位分类', name:'postType', index:'a.post_type', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_post_type')}, val, '未知', true);
+		}},
+		{header:'更新时间', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'备注信息', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'状态', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+		}},
+		{header:'操作', name:'actions', width:130, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('sys:post:edit')){ %>
+				actions.push('<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" title="编辑岗位"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/sys/post/disable?postCode='+row.postCode+'" class="btnList" title="停用岗位" data-confirm="确认要停用该岗位吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/sys/post/enable?postCode='+row.postCode+'" class="btnList" title="启用岗位" data-confirm="确认要启用该岗位吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/sys/post/delete?postCode='+row.postCode+'" class="btnList" title="删除岗位" data-confirm="确认要删除该岗位吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

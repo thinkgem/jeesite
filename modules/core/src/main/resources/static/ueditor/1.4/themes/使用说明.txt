@@ -1,0 +1,10 @@
+列表文件本地化使用说明：
+1、解压放到你的themes/文件夹下（可以按照需求放置路径）
+2、修改editor_config.js文件，修改listiconpath配置项：
+    listiconpath : URL+'themes/ueditor-list/'  //如果是自己的目录，请使用  '/'开头的绝对路径
+3、在发布文章的页面，引用uparse.js，并运行 uParse 函数，传入列表路径：
+    <script type="text/javascript">
+    uParse('.content',{
+        'liiconpath':'/UTest/ueditor/themes/ueditor-list/'    //使用 '/' 开头的绝对路径
+    })
+	</script>

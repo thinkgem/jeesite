@@ -1,0 +1,3 @@
+表情文件本地化使用说明：
+1、images目录下的所有表情文件夹复制到dialogs/emotion/images/文件夹下面
+2、修改editor_config.js文件，去掉 emotionLocalization 项的注释，值改为true。

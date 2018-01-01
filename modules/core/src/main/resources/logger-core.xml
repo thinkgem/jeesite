@@ -1,0 +1,18 @@
+<included>
+
+<!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
+<!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
+<!-- 	<logger name="org.springframework.jdbc" level="DEBUG" /> -->
+	<logger name="org.mybatis.spring.transaction" level="DEBUG" />
+	<logger name="org.apache.catalina.webresources.Cache" level="ERROR" />
+	
+	<logger name="com.jeesite" level="DEBUG" />
+	<logger name="com.jeesite.common.i18n" level="INFO" />
+	<logger name="com.jeesite.common.shiro" level="INFO" />
+	<logger name="com.jeesite.common.mybatis" level="INFO" />
+	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
+	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
+	<logger name="com.jeesite.common.cache.JedisUtils" level="INFO" />
+	<logger name="com.jeesite.common.web.view.JstlView" level="INFO" />
+	
+</included>

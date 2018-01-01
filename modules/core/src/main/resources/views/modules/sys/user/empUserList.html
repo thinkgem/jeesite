@@ -1,0 +1,140 @@
+<% layout('/layouts/default.html', {title: '用户管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-user"></i> 用户管理
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<% if(hasPermi('sys:empUser:edit')){ %>
+					<a href="${ctx}/sys/empUser/form?op=add" class="btn btn-default btnTool" title="新增用户"><i class="fa fa-plus"></i> 新增</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">账号：</label>
+					<div class="control-inline">
+						<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">昵称：</label>
+					<div class="control-inline">
+						<#form:input path="userName" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">邮箱：</label>
+					<div class="control-inline">
+						<#form:input path="email" maxlength="300" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">手机：</label>
+					<div class="control-inline">
+						<#form:input path="mobile" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">电话：</label>
+					<div class="control-inline">
+						<#form:input path="phone" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-row"></div>
+				<div class="form-group">
+					<label class="control-label">姓名：</label>
+					<div class="control-inline">
+						<#form:input path="refName" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">部门：</label>
+					<div class="control-inline width-90">
+						<#form:treeselect id="office" title="部门"
+								path="employee.office.officeCode" labelPath="employee.office.officeName" 
+								url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">公司：</label>
+					<div class="control-inline width-90">
+						<#form:treeselect id="company" title="公司"
+								path="employee.company.companyCode" labelPath="employee.company.companyName" 
+								url="${ctx}/sys/company/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">岗位：</label>
+					<div class="control-inline width-90">
+						<#form:select name="employee.postCode" items="${postList}"
+							itemLabel="postName" itemValue="postCode" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">状态：</label>
+					<div class="control-inline width-90">
+						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">查询</button>
+					<button type="reset" class="btn btn-default btn-sm">重置</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'登录账号', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="编辑用户">'+(val ? val : row.id)+'</a>';
+		}},
+		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'用户姓名', name:'refName', index:'a.ref_name', width:200, align:"center"},
+		{header:'归属部门', name:'employee.office.officeName', index:'o.office_name', width:200, align:"center"},
+		{header:'归属公司', name:'employee.company.companyName', index:'c.company_name', width:200, align:"center"},
+		{header:'电子邮箱', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'手机号码', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'办公电话', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'更新时间', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'状态', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+		}},
+		{header:'操作', name:'actions', width:250, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('sys:empUser:edit')){ %>
+				actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" title="编辑用户"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="停用用户" data-confirm="确认要停用该用户吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="启用用户" data-confirm="确认要启用该用户吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/sys/empUser/delete?userCode='+row.userCode+'" class="btnList" title="删除用户" data-confirm="确认要删除该用户吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="javascript:" class="btnMore" title="更多操作"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+				actions.push('<div class="moreItems">');
+				actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=auth" class="btn btn-default btn-xs btnList" title="用户分配角色"><i class="fa fa-check-square-o"></i> 分配角色</a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/empUser/formAuthDataScope?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="用户分配数据权限"><i class="fa fa-check-circle-o"></i> 数据权限</a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/empUser/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="用户密码重置" data-confirm="确认要将该用户密码重置到初始状态吗？"><i class="fa fa-reply-all"></i> 重置密码</a>&nbsp;');
+				actions.push('</div>');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

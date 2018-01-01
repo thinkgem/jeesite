@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+		
+	<groupId>com.jeesite</groupId>
+	<artifactId>jeesite-parent</artifactId>
+	<version>4.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<name>JeeSite Parent</name>
+	<url>http://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+	
+	<properties>
+		
+		<!-- common version setting -->
+		<commons-lang3.version>3.4</commons-lang3.version>
+		<commons-io.version>2.5</commons-io.version>
+		<commons-codec.version>1.9</commons-codec.version>
+		<commons-fileupload.version>1.3.1</commons-fileupload.version>
+		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<esotericsoftware-kryo.version>4.0.0</esotericsoftware-kryo.version>
+		<codeartisans-json.version>20130603</codeartisans-json.version>
+		<fasterxml-jackson.version>2.8.6</fasterxml-jackson.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<jaxen.version>1.1.6</jaxen.version>
+		<json-lib.version>2.4</json-lib.version>
+		<snakeyaml.version>1.17</snakeyaml.version>
+		<dozer.version>5.5.1</dozer.version>
+		<junit.version>4.12</junit.version>
+		<poi.version>3.14</poi.version>
+		
+		<!-- framework version setting -->
+		<slf4j.version>1.7.25</slf4j.version>
+		<logback.version>1.2.3</logback.version>
+		<spring.version>4.3.13.RELEASE</spring.version>
+		<aop-aspectj.version>1.7.4</aop-aspectj.version>
+		<aop-cglib.version>3.1</aop-cglib.version>
+		<mybatis.version>3.4.5</mybatis.version>
+		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<druid.version>1.1.3</druid.version>
+		<shiro.version>1.4.0</shiro.version>
+		<beetl.version>2.7.11-SNAPSHOT</beetl.version>
+		<ehcache.version>2.6.11</ehcache.version>
+		<ehcache-web.version>2.0.4</ehcache-web.version>
+		<validator.version>5.2.4.Final</validator.version>
+		<jedis.version>2.9.0</jedis.version>
+		<dbunit.version>2.5.2</dbunit.version>
+		<quartz.version>2.2.3</quartz.version>
+		
+		<!-- environment setting -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.7</jdk.version>
+		<downloadSources>false</downloadSources>
+		<downloadJavadocs>false</downloadJavadocs>
+		
+	</properties>
+	
+	<dependencies>
+		
+		<!-- WEB begin -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- WEB end -->
+		
+	</dependencies>
+	
+	<build>
+	
+		<plugins>
+		
+			<!-- Compiler 插件, 设定JDK版本 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<showWarnings>true</showWarnings>
+					<compilerArguments>
+<!-- 						<verbose /> 输出有关编译器正在执行的操作的消息 -->
+						<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+				
+			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<!-- <phase>prepare-package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals> -->
+						<configuration>
+							<!-- <classesDirectory>${project.outputDirectory}</classesDirectory>
+							<finalName>jeesite</finalName>
+							<outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
+							<includes>
+					        	<include>com/thinkgem/jeesite/**</include>
+					       	</includes> -->
+							<archive>
+								<manifest>
+									<!-- caution: add directory entries -->
+									<addClasspath>true</addClasspath>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<!-- resource插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
+			
+			<!-- install插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+			</plugin>
+			
+			<!-- clean插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+			
+			<!-- ant插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+			</plugin>
+			
+			<!-- dependency插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
+			
+		</plugins>
+	
+		<pluginManagement>
+		
+			<plugins>
+				
+				<!-- 打包插件, war包名称不带版本号 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<packagingExcludes></packagingExcludes>
+						<warSourceExcludes></warSourceExcludes>
+						<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+						<!-- <webXml>${project.basedir}/target/jspweb.xml</webXml> -->
+						<warName>${project.artifactId}</warName>
+						<archive>
+							<addMavenDescriptor>false</addMavenDescriptor>
+						</archive>
+					</configuration>
+				</plugin>
+				
+				<!-- Eclipse 插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.9</version>
+					<configuration>
+						<downloadSources>${downloadSources}</downloadSources>
+						<downloadJavadocs>${downloadJavadocs}</downloadJavadocs>
+						<wtpversion>2.0</wtpversion>
+						<jeeversion>6.0</jeeversion>
+						<additionalConfig>
+							<file>
+								<name>.settings/org.eclipse.core.resources.prefs</name>
+								<content>
+									<![CDATA[eclipse.preferences.version=1${line.separator}encoding/<project>=${project.build.sourceEncoding}${line.separator}]]>
+								</content>
+							</file>
+						</additionalConfig>
+						<additionalProjectnatures>
+							<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+						</additionalProjectnatures>
+					</configuration>
+				</plugin>
+				
+				<!-- Java Document Generate -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.4</version>
+					<configuration>
+				        <aggregate>true</aggregate>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				
+				<!-- YUI Compressor (CSS/JS压缩) -->
+				<plugin>
+					<groupId>net.alchim31.maven</groupId>
+					<artifactId>yuicompressor-maven-plugin</artifactId>
+					<version>1.5.1</version>
+					<executions>
+						<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>compress</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<jswarn>false</jswarn>
+						<nosuffix>true</nosuffix>
+						<linebreakpos>30000</linebreakpos>
+						<force>true</force>
+						<includes>
+							<include>**/*.js</include>
+							<include>**/*.css</include>
+						</includes>
+						<excludes>
+							<exclude>**/*.min.js</exclude>
+							<exclude>**/*.min.css</exclude>
+						</excludes>
+<!-- 					<aggregations> -->
+<!-- 						<aggregation> -->
+<!-- 							<removeIncluded>true</removeIncluded> -->
+<!-- 							<insertNewLine>true</insertNewLine> -->
+<!-- 							<inputDir>${project.build.directory}/${project.build.finalName}</inputDir> -->
+<!-- 							<output>${project.build.directory}/${project.build.finalName}/app/js/app.pack.js</output> -->
+<!-- 							<includes> -->
+<!-- 								<include>app/js/app*.js</include> -->
+<!-- 							</includes> -->
+<!-- 							<excludes> -->
+<!-- 								<exclude>**/**min.js</exclude> -->
+<!-- 							</excludes> -->
+<!-- 						</aggregation> -->
+<!-- 					</aggregations> -->
+					</configuration>
+				</plugin>
+				
+				<!-- 这个插件的配置只用于存储Eclipse m2e设置。它没有影响Maven构建本身。 -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-javadoc-plugin</artifactId>
+										<versionRange>[2.10.4,)</versionRange>
+										<goals>
+											<goal>jar</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[2.10,)</versionRange>
+										<goals>
+											<goal>
+												copy-dependencies
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			
+			</plugins>
+			
+		</pluginManagement>
+		
+		<!-- 资源文件配置 -->
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		
+	</build>
+	
+	<developers>  
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>  
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>JeeSite</name>
+		<url>http://jeesite.com</url>
+	</organization>
+	
+	<repositories>
+		
+		<repository>
+			<id>aliyun-repos</id>
+			<name>Aliyun Repository</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>sonatype-repos</id>
+			<name>Sonatype Repository</name>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+            <id>sonatype-repos-s</id>
+			<name>Sonatype Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+		
+	</repositories>
+	
+	<pluginRepositories>
+		
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<name>Aliyun Repository</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</pluginRepository>
+		<pluginRepository>
+            <id>sonatype-repos</id>
+			<name>Sonatype Repository</name>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+        </pluginRepository>
+        
+	</pluginRepositories>
+	
+	<profiles>
+	
+		<!-- 打包项目 -->
+		<profile>
+	    	<id>package</id>
+	    	<build>
+	    		<plugins>
+					<!-- Java Document Generate
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin> -->
+					<!-- YUI Compressor (CSS/JS压缩) -->
+					<plugin>
+						<groupId>net.alchim31.maven</groupId>
+						<artifactId>yuicompressor-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+	    	</build>
+		</profile>
+		
+		<!-- 部署项目 -->
+		<profile>
+	    	<id>deploy</id>
+	    	<build>
+	    		<plugins>
+					<!-- Java Document Generate
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin> -->
+					<!-- YUI Compressor (CSS/JS压缩) -->
+					<plugin>
+						<groupId>net.alchim31.maven</groupId>
+						<artifactId>yuicompressor-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+	    	</build>
+			<distributionManagement>
+				<repository>
+					<id>sonatype-repos</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+				</repository>
+				<snapshotRepository>
+					<id>sonatype-repos-s</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+
+</project>

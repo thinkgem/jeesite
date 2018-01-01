@@ -1,0 +1,194 @@
+<% layout('/layouts/default.html', {title: '用户管理', libs: ['validate', 'zTree']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-users"></i> 用户授权数据权限
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${empUser}" action="${ctx}/sys/empUser/saveAuthDataScope" method="post" class="form-horizontal">
+			<#form:hidden path="userCode"/>
+			<div class="box-body"><br/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 登录账号：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="loginCode" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 用户昵称：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userName" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">授权数据权限</div>
+				<div id="dataScopeTrees"></div>
+				<script id="dataScopeTpl" type="text/template">
+					<div class="pull-left" style="padding:0 15px;min-width:300px;">
+						<div class="box box-solid" style="background:#FAFAFA">
+							<div class="box-header">
+								<div class="box-title icheck">
+									<label><input type="checkbox" id="checkall_{{d.key}}"
+										class="checkall"/> {{d.label}}</label>
+								</div>
+								<div class="box-tools pull-right" style="top:8px;">
+									<a class="btn btn-box-tool" id="expand_{{d.key}}"
+										value="dataScopeTree_{{d.key}}" >展开</a>/<a
+										class="btn btn-box-tool" id="collapse_{{d.key}}"
+										value="dataScopeTree_{{d.key}}" >折叠</a>
+								</div>
+							</div>
+							<div class="box-body">
+								<div id="dataScopeTree_{{d.key}}" class="ztree"></div>
+							</div>
+						</div>
+					</div>
+				</script>
+			    <#form:hidden name="userDataScopeListJson"/>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:empUser:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		// 获取数据权限数据
+		var dataScopeData = [];
+		$.each(dataScopeTrees, function(key, dataScopeTree){
+			var treeNodes = dataScopeTree.getCheckedNodes(true);
+			for(var i=0; i<treeNodes.length; i++) {
+				dataScopeData.push({
+					ctrlType: key, ctrlData: treeNodes[i].id
+				});
+			}
+		});
+		$("#userDataScopeListJson").val(JSON.stringify(dataScopeData));
+		// 提交表单数据
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+//加载数据权限树结构
+var setting = {
+	check:{enable:true,nocheckInherit:true},
+	view:{selectedMulti:false,nameIsHTML: true},
+	data:{simpleData:{enable:true},key:{title:"title"}},
+	callback:{
+		beforeClick: function (treeId, treeNode, clickFlag) {
+			var tree = $.fn.zTree.getZTreeObj(treeId);
+			tree.checkNode(treeNode, !treeNode.checked, true, true);
+			return false;
+		},
+		onCheck: function (event, treeId, treeNode){
+			var tid = treeNode.tId;
+			if(!treeNode.checked){
+				$(".checkall[value="+treeId+"]").each(function(){
+					if(this.checked){
+					    $(this).removeAttr("checked").iCheck('update');
+					}
+					return false;
+				}); 
+			}
+		}
+	}
+},
+moduleCodes = '${toJson(@ModuleUtils.getEnableModuleCodes())}';
+dataScopes = ${@Global.getConfig('user.dataScopes','[]')},
+dataScopeTrees = {}; // 用sysCode分类存储所有菜单树
+for (var i=0; i<dataScopes.length; i++){
+	var dataScope = dataScopes[i];
+	// 验证模块是否开启，如果未开启，则跳过
+	if (moduleCodes.indexOf("\""+dataScope.moduleCode+"\"") == -1){
+		continue;
+	}
+	// 控制权限 ctrlPermi: 0全部  1拥有权限  2管理权限
+	if (!(dataScope.ctrlPermi == '0'
+			|| dataScope.ctrlPermi == '1')){
+		continue;
+	}
+ 	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
+ 		key: dataScope.ctrlType, label: dataScope.ctrlName}));
+	$.ajax({
+		type: 'POST',
+		url: "${ctx}" + dataScope.ctrlDataUrl,
+		data: {ctrlPermi: '2'},
+		dataType: 'json',
+		async: false,
+		error: function(data){
+			js.showErrorMessage(data.responseText);
+		},
+		success: function(data, status, xhr){
+			// 初始化树结构
+			var tree = $.fn.zTree.init($("#dataScopeTree_"+dataScope.ctrlType), setting, data);
+			tree.setting.check.chkboxType = dataScope.chkboxType;
+			// 展开第一级节点
+			var nodes = tree.getNodesByParam("level", 0);
+			for(var i=0; i<nodes.length; i++) {
+				tree.expandNode(nodes[i], true, false, false);
+			}
+			// 展开第二级节点
+			nodes = tree.getNodesByParam("level", 1);
+			for(var i=0; i<nodes.length; i++) {
+				tree.expandNode(nodes[i], true, false, false);
+			}
+ 			// 默认展开全部节点
+ 			//tree.expandAll(true);
+			// 树结构：全选、取消全选
+			$('#checkall_'+dataScope.ctrlType).iCheck({
+		 		checkboxClass:'icheckbox_minimal-grey'
+		 	}).on('ifChecked ifUnchecked', function(){
+	        	var ctrlType = $(this).attr('ctrlType');
+				if(this.checked){
+					dataScopeTrees[ctrlType].checkAllNodes(true);
+				}else{
+					dataScopeTrees[ctrlType].checkAllNodes(false);
+				}
+			}).attr("ctrlType", dataScope.ctrlType);
+			// 展开和折叠按钮绑定
+			$('#expand_'+dataScope.ctrlType).click(function(){
+				var ctrlType = $(this).attr('ctrlType');
+				dataScopeTrees[ctrlType].expandAll(true);
+			}).attr("ctrlType", dataScope.ctrlType);
+			$('#collapse_'+dataScope.ctrlType).click(function(){
+				var ctrlType = $(this).attr('ctrlType');
+				dataScopeTrees[ctrlType].expandAll(false);
+			}).attr("ctrlType", dataScope.ctrlType);
+			// 将树对象存储到全局数组里
+			dataScopeTrees[dataScope.ctrlType] = tree;
+		}
+	});
+}
+// 默认选择节点
+<% for(dataScope in userDataScopeList){ %> 
+try{dataScopeTrees['${dataScope.ctrlType}'].checkNode(dataScopeTrees['${dataScope.ctrlType}']
+	.getNodeByParam("id","${dataScope.ctrlData}"), true, false);}catch(e){}
+<% } %>
+</script>

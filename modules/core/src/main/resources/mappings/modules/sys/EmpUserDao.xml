@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.sys.dao.EmpUserDao">
+    
+    <!-- 查询数据  -->
+	<select id="findList" resultType="EmpUser">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<if test="roleCode != null and roleCode != ''">
+			JOIN ${_prefix}sys_user_role ur ON ur.user_code = a.user_code
+		</if>
+		<if test="employee.postCode != null and employee.postCode != ''">
+			JOIN ${_prefix}sys_employee_post ep ON e.emp_code = ep.emp_code
+		</if>
+		<where>
+			${sqlMap.where.toSql()}
+			<if test="roleCode != null and roleCode != ''">
+				AND ur.role_code = #{roleCode}
+			</if>
+			<if test="employee.postCode != null and employee.postCode != ''">
+				AND ep.post_code = #{employee.postCode}
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+	
+</mapper>

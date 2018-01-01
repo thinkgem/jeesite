@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>多功能jQuery日期控件asDatepicker - 素材家园（www.sucaijiayuan.com）</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/prism.css">
+<link rel="stylesheet" href="../css/asDatepicker.css">
+</head>
+<body>
+<div id="toc"></div>
+<div class="container">
+  <h1>jQuery.asDatepicker</h1>
+  <section>
+    <h2>Examples</h2>
+    <p>You can pass these options as key/value object to $.asDatepicker() method. </p>
+    <section>
+      <h3>default single</h3>
+      <pre class="has-example"><code class="language-markup">
+&lt;input&nbsp;type=&quot;text&quot;&nbsp;id=&quot;calendar&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+&nbsp;&nbsp;$(&quot;#calendar&quot;).asDatepicker();
+});
+&lt;script&gt;</code></pre>
+      <div class="example"> 
+        <!-- <input type="text" id="calendar" data-range-mode="section" data-selectable-year="2001>2010,2013,2015>2018"> -->
+        <input type="text" id="calendar">
+      </div>
+    </section>
+    <section>
+      <h3>range</h3>
+      <pre class="has-example"><code class="language-markup">
+&lt;input&nbsp;type=&quot;text&quot;&nbsp;id=&quot;calendar2&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+&nbsp;&nbsp;$(&quot;#calendar2&quot;).asDatepicker({mode:&nbsp;&#39;range&#39;});
+});
+&lt;script&gt;</code></pre>
+      <div class="example">
+        <input type="text" id="calendar2" style="width:170px;">
+      </div>
+    </section>
+    <section>
+      <h3>multiple</h3>
+      <pre class="has-example"><code class="language-markup">
+&lt;input&nbsp;type=&quot;text&quot;&nbsp;id=&quot;calendar3&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+&nbsp;&nbsp;$(&quot;#calendar3&quot;).asDatepicker({mode:&nbsp;&#39;multiple&#39;, calendars:&nbsp;&#39;4&#39;});
+});
+&lt;script&gt;</code></pre>
+      <div class="example">
+        <input type="text" id="calendar3">
+      </div>
+    </section>
+    <section>
+      <h3>Data attributes</h3>
+      <p>Any option of the asDatepicker can also be set via data-attributes.</p>
+      <p>Such as:</p>
+      <pre class="has-example"><code class="language-markup">
+&lt;input&nbsp;type=&quot;text&quot;&nbsp;id=&quot;calendar4&quot;&nbsp;data-mode=&quot;range&quot;&nbsp;data-range-mode=&quot;section&quot;&nbsp;data-selectable-year=&quot;2001&gt;2010,2012,2014&gt;2016&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+&nbsp;&nbsp;$(&quot;#calendar4&quot;).asDatepicker();
+});
+&lt;script&gt;</code></pre>
+      <div class="example">
+        <input type="text" id="calendar4" data-mode="range" data-range-mode="section" data-selectable-year="2001>2010,2012,2014>2016">
+      </div>
+    </section>
+    <section>
+      <h3>Mobile Single</h3>
+      <pre class="has-example"><code class="language-markup">
+&lt;input type=&quot;text&quot; id=&quot;calendar-mobile-single&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+  $(&#39;#calendar-mobile-single&#39;).asDatepicker({
+     mobileMode: true
+  });
+});
+&lt;script&gt;
+</code></pre>
+      <div class="example">
+        <input type="text" id="calendar-mobile-single">
+      </div>
+    </section>
+    <section>
+      <h3>Mobile Range</h3>
+      <pre class="has-example"><code class="language-markup">
+&lt;input type=&quot;text&quot; id=&quot;calendar-mobile-range&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+  $(&#39;#calendar-mobile-range&#39;).asDatepicker({
+     mode: &#39;range&#39;,
+     mobileMode: true
+  });
+});
+&lt;script&gt;
+</code></pre>
+      <div class="example">
+        <input type="text" id="calendar-mobile-range">
+      </div>
+    </section>
+    <section>
+      <h3>Mobile Multiple</h3>
+      <pre class="has-example"><code class="language-markup">
+&lt;input type=&quot;text&quot; id=&quot;calendar-mobile-multiple&quot;&gt;
+&lt;script&gt;
+$(document).ready(function(){
+  $(&#39;#calendar-mobile-multiple&#39;).asDatepicker({
+     mode: &#39;multiple&#39;,
+     mobileMode: true
+  });
+});
+&lt;script&gt;
+</code></pre>
+      <div class="example">
+        <input type="text" id="calendar-mobile-multiple">
+      </div>
+    </section>
+  </section>
+  <section>
+    <h2>Keyboard navigation</h2>
+    <p> <span>left arrow ----- </span> highlights previous day </p>
+    <p> <span>right arrow ----- </span> highlights next day </p>
+    <p> <span>up arrow ----- </span> highlights same day from the previous week </p>
+    <p> <span>down arrow ----- </span> highlights same day from the next week </p>
+    <p> <span>ctrl + left arrow ----- </span> navigates to previous month </p>
+    <p> <span>ctrl + right arrow ----- </span> navigates to next month </p>
+    <p> <span>ctrl + up arrow ----- </span> navigates to higher view </p>
+    <p> <span>ctrl + down arrow ----- </span> navigates to lower view </p>
+    <p> <span>alt + left arrow ----- </span> focus in previous calendar </p>
+    <p> <span>alt + right arrow ----- </span> focus in next calendar </p>
+    <p> <span>enter ----- </span> if in "days" view selects the highlighted day. In other views navigates to a lower view </p>
+    <p> <span>esc ----- </span> closes the popup </p>
+  </section>
+  <section>
+    <h2>Available options</h2>
+    <p>You can pass these options as key/value object to $.asDatepicker() method. </p>
+  </section>
+  <section>
+  <h2>API</h2>
+  <section>
+    <h3>DisplayMode</h3>
+    <p>With default dropdown and inline</p>
+    <pre class="has-example"><code class="language-markup">
+$(&quot;#calendar-api-displayMode&quot;).asDatepicker({displayMode:&nbsp;&#39;inline&#39;});</code></pre>
+    <div class="example">
+      <input type="text" id="calendar-api-displayMode">
+    </div>
+  </section>
+  <section>
+    <h3>show()</h3>
+    <pre class="has-example"><code class="language-markup">
+$(&#39;#calendar-api-show&#39;).asDatepicker(&#39;show&#39;);</code></pre>
+    <div class="example">
+      <input type="text" class="asDatepicker" id="calendar-api-show">
+      <a href="#" id="calendar-api-show-click">Click to show calendar</a> </div>
+  </section>
+  <section>
+    <h3>hide()</h3>
+    <pre class="has-example"><code class="language-markup">
+$(&#39;#calendar-api-show&#39;).asDatepicker(&#39;hide&#39;);</code></pre>
+    <div class="example">
+      <input type="text" class="asDatepicker" id="calendar-api-hide">
+      <a href="#" id="calendar-api-hide-click">Click to hide calendar</a> </div>
+  </section>
+  <section>
+    <h3>multipleClear()</h3>
+    <pre class="has-example"><code class="language-markup">
+$(&#39;#calendar-api-multipleClear&#39;).asDatepicker(&#39;multipleClear&#39;);</code></pre>
+    <div class="example">
+      <input type="text" class="calendar-multiple" id="calendar-api-multipleClear">
+      <button id="api-multipleClear-click">Clear</button>
+    </div>
+  </section>
+  <section>
+  <h3>getWrap()</h3>
+  <pre class="has-example"><code class="language-markup">
+$.asDatepicker(&#39;getWrap&#39;);</code></pre>
+  <div class="example">
+    <p>Returns the wrapper of the calendar.</p>
+  </div>
+  <section>
+  <h3>getInput()</h3>
+  <pre class="has-example"><code class="language-markup">
+$.asDatepicker(&#39;getInput&#39;);</code></pre>
+  <div class="example"> Returns the input field. </div>
+  <section>
+  <h3>getDate()</h3>
+  <pre class="has-example"><code class="language-markup">
+$(&#39;#calendar-api-getDate&#39;).asDatepicker(&#39;getDate&#39;);</code></pre>
+  <div class="example">
+    <p>Returns the currently selected date.</p>
+    <input type="text" class="asDatepicker" id="calendar-api-getDate">
+    <button id="api-getDate-click">getDate</button>
+  </div>
+  <div class="example info">
+    <div class="content" id="api-getDate-info"></div>
+  </div>
+  <section>
+  <h3>getDate(format)</h3>
+  <pre class="has-example"><code class="language-markup">
+$(&#39;#calendar-api-getDate-format&#39;).asDatepicker(&#39;getDate&#39;,&nbsp;&#39;yyyy-mm-dd&#39;);</code></pre>
+  <div class="example">
+    <p>Returns the current date, formatted with the pattern given as the argument.</p>
+    <input type="text" class="asDatepicker" id="calendar-api-getDate-format">
+    <button id="api-getDate-format-click">getDate</button>
+  </div>
+  <div class="example info">
+    <div class="content" id="api-getDate-format-info"></div>
+  </div>
+  <section>
+  <h3>update()</h3>
+  <pre class="has-example"><code class="language-markup">
+$(&#39;#calendar-api-update&#39;).asDatepicker();
+$(&#39;#calendar-api-update&#39;).asDatepicker(&#39;update&#39;, {mode:&nbsp;&#39;range&#39;});</code></pre>
+  <div class="example">
+    <p>Sets one or more options for the asDatepicker.</p>
+    <input type="text" class="asDatepicker" id="calendar-api-update">
+    <button id="api-update-click">update</button>
+  </div>
+  <section> </section>
+  <section>
+    <h2>Events</h2>
+    <section>
+      <h3>on_show</h3>
+    </section>
+    <section>
+      <h3>on_before_show</h3>
+    </section>
+    <section>
+      <h3>on_hide</h3>
+    </section>
+    <section>
+      <h3>on_change</h3>
+    </section>
+    <section>
+      <h3>on_render</h3>
+    </section>
+  </section>
+  <section>
+    <h2>Skin</h2>
+  </section>
+  <section>
+    <h2>Location</h2>
+  </section>
+</div>
+<script src="js/jquery.js"></script> 
+<script src="js/jquery.mobile.custom.js"></script> 
+<script src="js/jquery.toc.min.js"></script> 
+<script src="js/prism.js"></script> 
+<script src="../js/jquery-asDatepicker.js"></script>
+<script>
+$(document).ready(function(){
+	(function(){
+		$('#toc').toc();
+	})();
+    $("#calendar").asDatepicker({
+        namespace: 'calendar',
+        lang: 'zh',
+        position: 'bottom'
+    });
+    
+	$("#calendar2").asDatepicker({
+        mode: 'range',
+        namespace: 'calendar',
+        lang: 'zh',
+        position: 'bottom'
+	});
+
+    $("#calendar3").asDatepicker({
+        mode: 'multiple', 
+        calendars: 4, 
+    });
+
+	$("#calendar4").asDatepicker();
+    
+    $('#calendar-mobile-single').asDatepicker({
+        mobileMode: true
+    });
+    $('#calendar-mobile-range').asDatepicker({
+        mode: 'range',
+        mobileMode: true
+    });
+    $('#calendar-mobile-multiple').asDatepicker({
+        mode: 'multiple',
+        mobileMode: true
+    });
+
+
+
+	$('.asDatepicker').asDatepicker();
+    $('.calendar-multiple').asDatepicker({mode: 'multiple', calendars: 3});
+
+    $('#calendar-api-displayMode').asDatepicker({displayMode: 'inline'});
+
+	$('#calendar-api-show-click').click(function(){
+		$('#calendar-api-show').asDatepicker('show');
+		return false;
+	});
+	$('#calendar-api-hide-click').click(function(){
+		$('#calendar-api-hide').asDatepicker('hide');
+		return false;
+	});
+
+    $('#api-multipleClear-click').click(function() {
+        $("#calendar-api-multipleClear").asDatepicker('multipleClear');
+        return false;
+    });
+
+    $('#api-getDate-click').click(function() {
+        var html = '<div>' + $('#calendar-api-getDate').asDatepicker('getDate') + '</div>';
+        $(html).prependTo($('#api-getDate-info'));
+        return false;
+    });
+
+    $('#api-getDate-format-click').click(function() {
+        var html = '<div>' + $('#calendar-api-getDate-format').asDatepicker('getDate', 'yyyy-mm-dd') + '</div>';
+        $(html).prependTo($('#api-getDate-format-info'));
+        return false;
+    });
+
+    $('#api-update-click').click(function() {
+         $('#calendar-api-update').asDatepicker('update', {mode: 'range'});
+        
+        return false;
+    });
+
+
+});
+</script>
+</body>
+</html>

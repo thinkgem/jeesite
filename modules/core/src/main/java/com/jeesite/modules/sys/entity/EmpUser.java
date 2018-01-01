@@ -1,0 +1,102 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package com.jeesite.modules.sys.entity;
+
+import javax.validation.Valid;
+
+import com.jeesite.common.mybatis.annotation.Column;
+import com.jeesite.common.mybatis.annotation.JoinTable;
+import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+import com.jeesite.common.mybatis.annotation.Table;
+import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.common.utils.excel.annotation.ExcelField;
+import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
+import com.jeesite.common.utils.excel.annotation.ExcelFields;
+import com.jeesite.common.utils.excel.fieldtype.RoleListType;
+
+/**
+ * 员工用户管理Entity
+ * @author ThinkGem
+ * @version 2017-03-25
+ */
+@Table(name="${_prefix}sys_user", alias="a", columns={
+		@Column(includeEntity=User.class),
+	}, joinTable={
+		@JoinTable(type=Type.JOIN, entity=Employee.class, alias="e",
+			on="e.emp_code=a.ref_code AND a.user_type=#{USER_TYPE_EMPLOYEE}",
+			attrName="employee", columns={@Column(includeEntity=Employee.class)}),
+		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
+			on="o.office_code=e.office_code", attrName="employee.office",
+			columns={
+					@Column(name="office_code", label="机构编码", isPK=true),
+					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
+					@Column(name="view_code", 	label="机构代码"),
+					@Column(name="office_name", label="机构名称", isQuery=false),
+					@Column(name="full_name", 	label="机构全称"),
+					@Column(name="office_type", label="机构类型"),
+					@Column(name="leader", 		label="负责人"),
+					@Column(name="phone", 		label="电话"),
+					@Column(name="address", 	label="联系地址"),
+					@Column(name="zip_code", 	label="邮政编码"),
+					@Column(name="email", 		label="邮箱"),
+			}),
+		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
+			on="c.company_code=e.company_code", attrName="employee.company",
+			columns={
+					@Column(name="company_code", label="公司编码", isPK=true),
+					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
+					@Column(name="view_code", 	label="公司代码"),
+					@Column(name="company_name", label="公司名称", isQuery=false),
+					@Column(name="full_name", 	label="公司全称"),
+					@Column(name="area_code", attrName="area.areaCode", label="区域编码"),
+			}),
+		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
+			on="ar.area_code = c.area_code", attrName="employee.company.area",
+			columns={
+					@Column(name="area_code", label="区域代码", isPK=true),
+					@Column(name="area_name", label="区域名称", isQuery=false),
+					@Column(name="area_type", label="区域类型"),
+		}),
+	}, extWhereKeys="dsfOffice, dsfCompany", orderBy="a.user_weight DESC, a.update_date DESC"
+)
+public class EmpUser extends User {
+	
+	private static final long serialVersionUID = 1L;
+
+	public EmpUser() {
+		this(null);
+	}
+
+	public EmpUser(String id){
+		super(id);
+	}
+	
+	@Valid
+	@ExcelFields({
+		@ExcelField(title="归属机构", attrName="office.officeName", align=Align.CENTER, sort=10),
+		@ExcelField(title="归属公司", attrName="company.officeName", align = Align.CENTER, sort=20),
+		@ExcelField(title="登录账号", attrName="loginCode", align=Align.CENTER, sort=30),
+		@ExcelField(title="用户昵称", attrName="userName", align=Align.LEFT, sort=40),
+		@ExcelField(title="电子邮箱", attrName="email", align=Align.LEFT, sort=50),
+		@ExcelField(title="手机号码", attrName="mobile", align=Align.CENTER, sort=60),
+		@ExcelField(title="办公电话", attrName="phone", align=Align.CENTER, sort=70),
+		@ExcelField(title="员工编码", attrName="employee.empCode", align=Align.CENTER, sort=80),
+		@ExcelField(title="员工姓名", attrName="employee.empName", align=Align.CENTER, sort=95),
+		@ExcelField(title="拥有角色", attrName="userRoleString", align=Align.LEFT, sort=800, fieldType=RoleListType.class),
+		@ExcelField(title="最后登录日期", attrName="lastLoginDate", type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd HH:mm", align=Align.CENTER, sort=900),
+	})
+	public Employee getEmployee(){
+		Employee employee = (Employee)super.getRefObj();
+		if (employee == null){
+			employee = new Employee();
+			super.setRefObj(employee);
+		}
+		return employee;
+	}
+	
+	public void setEmployee(Employee employee){
+		super.setRefObj(employee);
+	}
+	
+}

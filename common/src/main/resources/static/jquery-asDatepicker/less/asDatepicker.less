@@ -1,0 +1,317 @@
+//==========================  core  ==========================
+
+@namespace: calendar;
+
+@mobileWrapWidth: 80%;
+@mobileWrapHeight: 80%;
+
+@contentWidth: 210px;
+@contentHeight: 230px;
+
+
+.@{namespace} {	
+	&-content {
+		display: inline-block;
+		position: relative;
+		vertical-align: middle;
+		white-space: normal;
+		width: @contentWidth;
+		height: @contentHeight;
+		background-color: white;
+
+		&.@{namespace}_days {
+			> .@{namespace}-days {
+				display: block;
+			}
+		}
+		&.@{namespace}_months {
+			.@{namespace}-months {
+				display: block;
+			}
+		}
+		&.@{namespace}_years {
+			.@{namespace}-years {
+				display: block;
+			}
+		}
+	}
+
+	&-days, &-months, &-years, &-buttons {
+		display: none;
+	}
+
+	&-row, &-head {
+		display: table;
+		width: 100%;
+		> span {
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+		}
+	}
+
+	&-header {
+		display: table;
+		width: 100%;
+		height: 15%;
+		> div {
+			display: table-cell;
+			height: 100%;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+		}
+	}
+
+	&-prev, &-next {
+		width: 20%;
+	}
+
+	&-caption {
+		width: 60%;
+	}
+
+	&-days, &-months, &-years {
+		height: 85%;
+	} 
+	
+	&-head {
+		height: 13%;
+		span {
+			cursor: default;
+		}
+	}
+	&-body {
+		height: 87%;
+		.@{namespace}-row {
+	  		height: 100% / 6;
+	  	}
+	  	span {
+	  		width: 14.28%;
+	  		height: 100%;
+	  		cursor: pointer;
+	  		&.@{namespace}_otherMonth, &.@{namespace}_untouchable {
+				cursor: default;
+			}
+	  	}
+	}
+
+	&-months, &-years {
+		.@{namespace}-row {
+	  		height: 25%;
+	  	}
+		span {
+			height: 100%;
+			width: 33.3%;
+			cursor: pointer;
+			&.@{namespace}_untouchable {
+				cursor: default;
+			}
+		}
+	}
+
+	&_hide {
+		display: none !important;
+	}
+
+	&_show {
+		display: block !important;
+	}
+
+	&-wrap {
+		white-space: nowrap;
+		display: none;
+		position: absolute;
+
+		&, & *:focus { outline: none; }
+
+		* {
+			-webkit-box-sizing: border-box;
+		  	   -moz-box-sizing: border-box;
+		  			box-sizing: border-box;
+		}
+		&.@{namespace}_isMobile {
+			z-index: 99999;
+			position: fixed;
+			width: 80%;
+			height: 80%;
+			line-height: 1;
+			.@{namespace} {
+				&-title {
+					width: 100%;
+					text-align: center;
+					position: absolute;
+					top: -1.5em;
+					left: 0;
+				}
+				&-content {
+					display: none;
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					&.@{namespace}_show {
+						display: block;
+					}
+				}
+				&-header {
+					height: 11%;
+				}
+				&-days, &-months, &-years {
+					height: 78%;
+				}
+				&-buttons {
+					display: table;
+					height: 11%;
+					width: 100%;
+					> div {
+						display: table-cell;
+						width: 50%;
+						height: 100%;
+						text-align: center;
+						vertical-align: middle;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+
+	&-cover {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		opacity: 0.5;
+		z-index: 9999;
+	}	
+}
+
+
+//==========================  skin  ==========================
+
+.@{namespace} {
+	&-input {
+		border: 1px solid green;
+	}
+	&-icon {
+		background-color: gray;
+		border: 1px solid green;
+	}
+	&_active {
+		.@{namespace} {
+			&-input {
+				border: 1px solid red;
+			}
+			&-icon {
+				border: 1px solid red;
+			}
+		}
+	}
+	&-content {
+		background-color: white;
+		border: 1px solid rgb(235, 235, 235);
+		color: rgb(119, 119, 119);
+		-webkit-border-radius: 3px;
+	  	   -moz-border-radius: 3px;
+	  			border-radius: 3px;
+		font-family: 'Proxima Nova';
+		span {
+			border: 1px dashed transparent;
+			&.@{namespace}_active {
+				background-color: rgb(50, 184, 226) !important;
+				color: white !important;
+				border: 1px solid rgba(0, 0, 0, 0.15) !important;
+	    		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset;
+	    		text-shadow: 0 2px 1px rgba(0, 0, 0, 0.15);
+			}
+			&.@{namespace}_otherMonth, &.@{namespace}_untouchable {
+				color: rgb(200, 200, 200);
+				background-color: inherit;
+				&:hover, &:active, &.@{namespace}_active {
+					background-color: inherit;
+					color: rgb(200, 200, 200);
+				}
+			}
+			&.@{namespace}_inRange {
+				background-color: rgb(224, 244, 251);
+				&:hover {
+					background-color: inherit;
+				}
+			}
+			&.@{namespace}_otherMonth.@{namespace}_inRange {
+				&:hover {
+					background-color: rgb(224, 244, 251);
+				}
+			}
+			&.@{namespace}_focus {
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				color: rgb(50, 184, 226);
+			}
+		}
+	}
+	&-header {
+		border-bottom: 1px solid rgb(235, 235, 235);
+	}
+	&-prev, &-next {
+		color: transparent;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	&-prev {
+		background-image: url('../images/calendar-prev.png');
+		&.@{namespace}_blocked, &.@{namespace}_blocked:hover{
+			background-image: none;
+			cursor: auto;
+		}
+		&:hover {
+			background-image: url('../images/calendar-prev-hover.png');
+		}
+	}
+
+	&-next {
+		background-image: url('../images/calendar-next.png');
+		&.@{namespace}_blocked, &.@{namespace}_blocked:hover{
+			background-image: none;
+			cursor: auto;
+		}
+		&:hover {
+			background-image: url('../images/calendar-next-hover.png');
+		}
+	}
+	&-caption {
+		color: rgb(105, 105, 105);
+		&:hover {
+			color: rgb(0, 0, 0);
+		}
+		&.@{namespace}_blocked, &.@{namespace}_blocked:hover {
+			color: rgb(105, 105, 105);	
+			cursor: auto;
+		}
+	}
+	&-head {
+		background-color: rgb(246, 246, 246);
+		padding-left: 6px;
+		padding-right: 6px;
+		span {
+			-webkit-box-shadow: inset 0 1px 0 rgb(251, 251, 251);
+			   -moz-box-shadow: inset 0 1px 0 rgb(251, 251, 251);
+					box-shadow: inset 0 1px 0 rgb(251, 251, 251);
+		}
+	}
+	&-body, &-months, &-years  {
+		span {
+			&:hover {
+				background-color: rgb(224, 244, 251);
+			}
+		}
+		padding: 6px;
+	}
+	&-buttons {
+		border-top: 1px solid rgb(235, 235, 235);
+	}
+
+}

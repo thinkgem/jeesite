@@ -1,0 +1,32 @@
+<%
+// 默认皮肤样式名称：详见jeesite-common项目下的static/adminlte/css/skins目录
+var defaultSkinName = @Global.getConfig('sys.index.skinName', 'skin-blue-light');
+// 从cookie里获取样式名，取不到使用默认样式
+var skinName = cookie('skinName_'+user.userCode, false, defaultSkinName);
+// 侧边栏的默认显示样式：1：默认显示侧边栏；2：默认折叠侧边栏
+var sidebarStyle = @Global.getConfig('sys.index.sidebarStyle', '1');
+var sidebarCollapse = (sidebarStyle == '2' ? 'sidebar-collapse' : '');
+var bodyClass = 'fixed noscroll2 sidebar-mini ' + sidebarCollapse;
+%>
+<% layout('/layouts/default.html', {title: '', bodyClass: bodyClass, libs: ['tabPage']}){ %>
+<% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
+<link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/adminlte/css/skins/${skinName}.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/modules/sys/sysIndex.css?${_version}">
+<header class="main-header">
+	<% include('/modules/sys/sysIndex/topMenu.html'){} %>
+</header>
+<aside class="main-sidebar">
+	<% include('/modules/sys/sysIndex/leftMenu.html'){} %>
+</aside>
+<div class="content-wrapper">
+	<div id="tabpanel"></div>
+</div>
+<% } %>
+<script>
+var desktopUrl = '${ctx}${@Global.getConfig("sys.index.desktopUrl", "/desktop")}',
+modifyPasswordTip = '${modifyPasswordTip!}';
+</script>
+<script src="${ctxStatic}/jquery-toastr/2.0/toastr.min.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-plugins/jquery.slimscroll.js"></script>
+<script src="${ctxStatic}/modules/sys/sysIndex.js?${_version}"></script>

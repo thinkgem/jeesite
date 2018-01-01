@@ -1,0 +1,158 @@
+<% layout('/layouts/default.html', {title: '切换主题风格'}){ %>
+<style>
+	.list-unstyled{margin:10px;}
+	.full-opacity-hover{opacity:1;filter:alpha(opacity=1);border:1px solid #fff}
+	.full-opacity-hover:hover{border:1px solid #f00;}
+</style>
+<ul class="list-unstyled clearfix">
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-blue" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin">
+		蓝
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-black" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix">
+		<span style="display:block; width: 20%; float: left; height: 15px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 15px; background: #fefefe"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin">
+		白
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-purple" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin">
+		紫
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-green" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin">
+		绿
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-red" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin">
+		红
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-yellow" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin">
+		黄
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin" style="font-size: 12px">
+		蓝灰
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix">
+		<span style="display:block; width: 20%; float: left; height: 15px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 15px; background: #fefefe"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin" style="font-size: 12px">
+		白灰
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-purple-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin" style="font-size: 12px">
+		紫灰
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-green-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin" style="font-size: 12px">
+		绿灰
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-red-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin" style="font-size: 12px">
+		红灰
+	</p>
+	</li>
+	<li style="float:left; width: 33.33333%; padding: 5px;"><a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 15px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 15px;"></span>
+	</div>
+	<div>
+		<span style="display:block; width: 20%; float: left; height: 35px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 35px; background: #f4f5f7"></span>
+	</div>
+	</a>
+	<p class="text-center no-margin" style="font-size: 12px">
+		黄灰
+	</p>
+	</li>
+</ul>
+<% } %>
+<script>
+$('.full-opacity-hover').click(function(){
+	top.location = '${ctx}/switchSkin/' + $(this).data('skin');
+});
+</script>

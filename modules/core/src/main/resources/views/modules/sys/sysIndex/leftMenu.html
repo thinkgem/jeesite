@@ -1,0 +1,41 @@
+<section class="sidebar">
+	<div class="user-panel">
+		<div class="pull-left image">
+			<img data-href="${ctx}/sys/user/info" data-title="个人中心" class="addTabPage img-circle"
+				src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}">
+		</div>
+		<div class="pull-left info">
+			<p>${user.userName}</p>
+			<a href="javascript:"><i class="fa fa-circle text-success"></i> 在线</a>
+			<a href="${ctx}/logout"><i class="fa fa-sign-out text-danger"></i> 注销</a>
+		</div>
+	</div>
+	<%/*<!--%>
+	<form action="#" method="get" class="sidebar-form">
+		<div class="input-group">
+			<input type="text" name="q" class="form-control" placeholder="查询...">
+			<span class="input-group-btn">
+				<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+				</button>
+			</span>
+		</div>
+	</form>
+	<%-->*/%>
+	<ul class="sidebar-menu" data-widget="tree">
+		<%/*<!--%>
+		<% var menuSysCode = @UserUtils.getLoginInfo().getParam('sysCode', 'default'); %>
+		<li class="header">${@DictUtils.getDictLabel('sys_menu_sys_code', menuSysCode, '')}</li>
+		<%-->*/%>
+		<% 
+			var p = {parentCode: '0', firstMenu: true};
+			menu.tree(p);
+			print(p.html);
+		%>
+		<%/*<!--%>
+		<li class="header">快捷菜单</li>
+		<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>快捷菜单1</span></a></li>
+		<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>快捷菜单2</span></a></li>
+		<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>快捷菜单3</span></a></li>
+		<%-->*/%>
+	</ul>
+</section>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"/><meta content="webkit" name="renderer"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Cache-Control" content="no-cache"/><meta http-equiv="Cache-Control" content="no-store"/>
+<meta content="width=device-width, initial-scale=1, user-scalable=1" name="viewport"/>
+<meta content="target-densitydpi=320,width=640,user-scalable=no" name="viewport"/>
+<link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="fullcalendar.css" rel="stylesheet" type="text/css"/>
+<link href="fullcalendar.print.css" rel="stylesheet" type="text/css" media="print" />
+<style>
+	body {
+		margin: 40px 10px!important;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+	}
+	#calendar {
+		margin: 40px 10px;
+		max-width: 900px;
+		margin: 0 auto;
+	}
+</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-9">
+			<div id="calendar"></div>
+		</div>
+		<div class="col-sm-2">
+			<div class="widget-box transparent">
+				<div class="widget-header">
+					<h4>任务拖动</h4>
+				</div>
+				<div class="widget-body">
+					<div class="widget-main no-padding">
+						<div id="external-events">
+							<div class="external-event label-grey" data-class="label-grey">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 1
+							</div>
+
+							<div class="external-event label-success" data-class="label-success">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 2
+							</div>
+
+							<div class="external-event label-danger" data-class="label-danger">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 3
+							</div>
+
+							<div class="external-event label-purple" data-class="label-purple">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 4
+							</div>
+
+							<div class="external-event label-yellow" data-class="label-yellow">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 5
+							</div>
+
+							<div class="external-event label-pink" data-class="label-pink">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 6
+							</div>
+
+							<div class="external-event label-info" data-class="label-info">
+								<i class="ace-icon fa fa-arrows"></i>
+								任务 7
+							</div>
+
+							<label>
+								<input type="checkbox" class="ace ace-checkbox" id="drop-remove" checked="checked"/>
+								<span class="lbl"> 拖动后移除</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="../../jquery/jquery-1.12.4.min.js"></script>
+<script src="../../jquery/jquery-ui-draggable-1.12.1.min.js"></script>
+<script src="lib/moment.min.js"></script>
+<script src="fullcalendar.js"></script>
+<script src="lang/zh-cn.js"></script>
+<script src="../../jeesite/jeesite.js"></script>
+<script>
+	$(document).ready(function() {
+
+		// http://fullcalendar.io/docs/
+		$('#calendar').fullCalendar({
+			defaultDate: '2016-01-12',	// 初始化日期
+			editable: true, 			// 是否可编辑事件
+// 			eventLimit: true,			// 是否显示更多按钮
+			// 获取事件数据
+			events: function( start, end, timezone, callback ) {
+				log("获取事件，时间范围： " + start + " - " + end);
+				var events = [
+					{
+						id: "11", 
+						title: '支持HTML代码  <a href="http://baidu.com" target="_blank">Baidu</a>',
+						start: '2016-01-01', end: '2016-01-01', allDay: true,
+						color: '#999',
+					},
+					{id: "12", title: 'Long Event', start: '2016-01-07', end: '2016-01-10', allDay: true},
+					{id: "13", title: '点击我', start: '2016-01-15', end: '2016-01-15', allDay: true},
+					{id: "14", title: '单击我删除', start: '2016-01-16', end: '2016-01-16', allDay: true},
+					{id: "15", title: 'Conference', start: '2016-01-11', end: '2016-01-13', allDay: true},
+					{id: "16", title: 'Meeting', start: '2016-01-12', end: '2016-01-12', allDay: true},
+					{id: "17", title: 'Lunch', start: '2016-01-12', end: '2016-01-12', allDay: true},
+					{id: "18", title: 'Meeting', start: '2016-01-12', end: '2016-01-12', allDay: true},
+					{id: "19", title: 'Happy Hour', start: '2016-01-12', end: '2016-01-12', allDay: true},
+					{id: "20", title: 'Dinner', start: '2016-01-12', end: '2016-01-12', allDay: true},
+					{id: "21", title: 'Birthday Party', start: '2016-01-13', end: '2016-01-13', allDay: true},
+					{id: "22", title: 'Click for Baidu', url: 'http://baidu.com/', start: '2016-01-28', end: '2016-01-28', allDay: true}
+				];
+                callback(events);
+//  				closeLoading();
+			},
+			// 事件点击
+			eventClick: function(event, jsEvent, view) {
+				log(event);
+				
+				// 修改事件测试
+		        if (event.id == '13'){
+					event.title = "单击我了！";
+			        $('#calendar').fullCalendar('updateEvent', event);
+		        }
+		     
+		        // 删除事件测试
+		        if (event.id == '14'){
+			        $('#calendar').fullCalendar('removeEvents', '14');
+		        }
+		        
+			},
+			// 日期空白处点击
+			dayClick: function(date, allDay, jsEvent, view){  
+				log(date);
+				// 添加事件完成后，重新获取所有事件数据测试
+				$('#calendar').fullCalendar('refetchEvents');
+			},
+			// 事件拖动日期改变
+		    eventDrop: function(event, delta, revertFunc, jsEvent, ui, view) {
+		        log(event)
+		        log(delta) // 拖动前后的日期变更（偏移量）
+		    },
+			// 事件拖动日期范围改变
+		    eventResize: function(event, delta, revertFunc, jsEvent, ui, view) {
+		        log(event)
+		        log(delta) // 拖动前后的日期变更（偏移量）
+		    },
+		    // 支持外部元素拖动到日历
+		    droppable: true,
+			drop: function(date, allDay) {
+				var originalEventObject = $(this).data('eventObject');
+				var $extraEventClass = $(this).attr('data-class');
+				var copiedEventObject = $.extend({}, originalEventObject);
+				copiedEventObject.start = date;
+				copiedEventObject.allDay = allDay;
+				if($extraEventClass) {
+					copiedEventObject['className'] = [$extraEventClass];
+				}
+				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+				if ($('#drop-remove').is(':checked')) {
+					$(this).remove();
+				}
+			}
+		});
+		
+	});
+	
+	// 支持外部元素拖动到日历
+	$('#external-events div.external-event').each(function() {
+		var eventObject = {
+			title: $.trim($(this).text()) // use the element's text as the event title
+		};
+		$(this).data('eventObject', eventObject);
+		$(this).draggable({
+			zIndex: 999,
+			revert: true,      // will cause the event to go back to its
+			revertDuration: 0  //  original position after the drag
+		});
+	});
+
+</script>

@@ -1,0 +1,6 @@
+.classpath
+.project
+.class
+**/target
+**/WEB-INF/classes
+**/logs/log*.log

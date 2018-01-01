@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.sys.dao.OfficeDao">
+
+	<!-- 查询数据（支持根据公司编码查询部门） -->
+	<select id="findList" resultType="Office">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<if test="companyCode != null and companyCode != ''">
+			JOIN ${_prefix}sys_company_office b ON a.office_code = b.office_code
+			JOIN ${_prefix}sys_company c ON c.company_code = b.company_code
+		</if>
+		<where>
+			${sqlMap.where.toSql()}
+			<if test="companyCode != null and companyCode != ''">
+				AND b.company_code = #{companyCode}
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+	
+</mapper>

@@ -1,0 +1,241 @@
+<% layout('/layouts/default.html', {title: '用户管理', libs: ['validate','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${empUser.isNewRecord ? '新增用户' : op == 'auth' ? '用户授权角色' : '编辑用户'}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${empUser}" action="${ctx}/sys/empUser/save" method="post" class="form-horizontal">
+			<#form:hidden name="op" value="${op}"/>
+			<#form:hidden name="userType" value="employee"/>
+			<#form:hidden path="userCode"/>
+			<div class="box-body">
+				<% if(op=='auth'){ %><br/><% } %>
+				<% if(op == 'add' || op == 'edit') { %>
+				<div class="form-unit">基本信息</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 归属机构：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="office" title="部门"
+									path="employee.office.officeCode" labelPath="employee.office.officeName" 
+									url="${ctx}/sys/office/treeData" class="required" allowClear="false"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 归属公司：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="company" title="公司"
+									path="employee.company.companyCode" labelPath="employee.company.companyName" 
+									url="${ctx}/sys/company/treeData" btnClass="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 登录账号：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden name="oldLoginCode" value="${empUser.loginCode}"/>
+								<#form:input path="loginCode" minlength="4" maxlength="20" readonly="${op=='auth'}"
+									class="form-control required userName"
+									remote="${ctx}/sys/user/checkLoginCode?oldLoginCode=${empUser.loginCode}"
+									data-msg-remote="登录账号已存在"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 用户昵称：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userName" maxlength="32" readonly="${op=='auth'}" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% if(op == 'add' || op == 'edit') { %>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 电子邮箱：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<#form:input path="email" maxlength="300" class="form-control email"/>
+									<span class="input-group-addon"><i class="fa fa-fw fa-envelope" style="margin-top:-2px;display:block;"></i></span>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 手机号码：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<#form:input path="mobile" maxlength="100" class="form-control mobile"/>
+									<span class="input-group-addon"><i class="fa fa-fw fa-mobile" style="margin-top:-2px;display:block;"></i></span>
+				                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 办公电话：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<#form:input path="phone" maxlength="100" class="form-control phone"/>
+									<span class="input-group-addon"><i class="fa fa-fw fa-phone"></i></span>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 权重(排序)：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userWeight" maxlength="8" class="form-control digits" placeholder="权重越大排名越靠前，请填写数字。"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">详细信息</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 员工编号：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="employee.empCode" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control abc"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 员工姓名：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="employee.empName" maxlength="32" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 所在岗位：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+							<#form:select multiple="true" path="employee.employeePosts" items="${postList}"
+								itemLabel="postName" itemValue="postCode" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 英文名：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="employee.empNameEn" maxlength="32" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+				<% if(op == 'add' || op == 'auth') { %>
+				<div class="form-unit">授权角色</div>
+				<div class="pl10 pb20">
+					<table id="roleGrid"></table>
+					<#form:hidden name="userRoleString"/>
+				</div>
+			    <% } %>
+				<% if(op == 'add' || op == 'edit') { %>
+				<#form:extend collapsed="true" />
+				<% } %>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:empUser:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		<% if(op == 'add' || op == 'auth') {%>
+		// 获取选中角色
+		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
+		<% } %>
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+<% if(op == 'add' || op == 'auth') {%>
+// 加载角色列表
+var roleGrid = $("#roleGrid").dataGrid({
+	url: '${ctx}/sys/role/treeData',
+	postData: [
+		{name:'userType',value:'employee'},
+		{name:'ctrlPermi',value:'2'}
+	],
+	columnModel: [
+		{header:'角色名称', name:'name', sortable:false, width:100, align:"center"},
+		{header:'角色编码', name:'id', sortable:false, width:100, align:"center"}  
+	],
+	showCheckbox: true,
+	autoGridHeight: function(){
+		return 'auto';
+	},
+	autoGridWidth: function(){
+		return $('#inputForm .box-body').width()-20;
+	},
+	ajaxSuccess: function(){
+		<% for (role in roleList!){ %>
+ 		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
+		<% } %>
+	}
+});
+<% } %>
+</script>

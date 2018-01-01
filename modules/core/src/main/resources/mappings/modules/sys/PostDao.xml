@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.sys.dao.PostDao">
+
+	<!-- 查询数据 -->
+	<select id="findList" resultType="Post">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<if test="empCode != null and empCode != ''">
+			JOIN ${_prefix}sys_employee_post b on a.post_code = b.post_code
+		</if>
+		<where>
+			${sqlMap.where.toSql()}
+			<if test="empCode != null and empCode != ''">
+				AND b.emp_code = #{empCode}
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+	
+</mapper>

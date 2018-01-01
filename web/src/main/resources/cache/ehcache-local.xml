@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="defaultCache">
+
+	<diskStore path="java.io.tmpdir"/>
+	
+	<!-- 默认缓存配置，自动失效，超过300秒未访问此缓存失效，缓存最多可以存活600秒，溢出不存储到磁盘，不持久化，增加统计。-->
+	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
+	<!-- 系统活动会话缓存，永不失效，溢出不存储到磁盘，不持久化，增加统计。-->
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="100000" eternal="true" overflowToDisk="true" diskPersistent="false" statistics="true"/>
+    
+    <!-- 简单页面缓存，自动失效，超过60秒未访问此缓存失效，缓存最多可以存活120秒，溢出不存储到磁盘，不持久化，添加统计-->
+    <cache name="pageCachingFilter" maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="60" timeToLiveSeconds="120" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
+	<!-- 系统配置相关缓存 -->
+	<cache name="sysCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
+	<!-- 用户数据相关缓存 -->
+	<cache name="userCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
+	<!-- 集团数据相关缓存 -->
+	<cache name="corpCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
+	<!-- 内容管理模块缓存 -->
+	<cache name="cmsCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
+</ehcache>

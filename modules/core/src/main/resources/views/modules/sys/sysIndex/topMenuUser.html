@@ -1,0 +1,37 @@
+<li class="dropdown user-menu mr5">
+	<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+		<img src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}" class="user-image">
+		<span class="hidden-xs">${user.userName}</span>
+	</a>
+	<ul class="dropdown-menu">
+		<li class="mt5">
+			<a id="userInfo" href="javascript:" data-href="${ctx}/sys/user/info" class="addTabPage">
+			<i class="fa fa-user"></i> 个人中心</a>
+		</li>
+		<li>
+			<a id="modifyPassword" href="javascript:" data-href="${ctx}/sys/user/info?op=pwd" class="addTabPage">
+			<i class="fa fa-key"></i> 修改密码</a>
+		</li>
+		<li class="divider"></li>
+		<li>
+			<a href="${ctx}/logout">
+			<i class="fa fa-sign-out"></i> 退出登录</a>
+		</li>
+		<% if(user.superAdmin){ %>
+			<li class="divider"></li>
+			<li class="dropdown-header mb5">系统切换：</li>
+			<% var menuSysCode = @UserUtils.getLoginInfo().getParam('sysCode', 'default'); %>
+			<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
+				<li>
+					<a href="${ctx}/switch/${dict.dictValue}">
+						<i class="fa fa-${menuSysCode == dict.dictValue 
+							? 'check-' : ''}circle-o"></i> ${dict.dictLabel}
+					</a>
+				</li>
+			<% } %>
+			<li class="mt10"></li>
+		<% }else{ %>
+		<li class="mt10"></li>
+		<% } %>
+	</ul>
+</li>

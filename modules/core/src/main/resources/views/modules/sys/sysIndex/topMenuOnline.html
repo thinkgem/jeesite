@@ -1,0 +1,15 @@
+<li>
+	<a href="javascript:" data-href="${ctx}/sys/online/list" data-title="在线人员" title="在线人员"
+		class="${hasPermi('sys:online:view') ? 'addTabPage' : ''}">
+		<i class="icon-users"></i><span id="onlineCount" class="label label-success">0</span>
+	</a>
+	<script>
+		function refreshOnlineCount(){
+			$.get('${ctx}/sys/online/count?__notUpdateSession=true', function(data){
+				try{$('#onlineCount').html(Number(data))}catch(e){}
+			})
+		}
+		refreshOnlineCount(); // 先执行一次
+		setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
+	</script>
+</li>

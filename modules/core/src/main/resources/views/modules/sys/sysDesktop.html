@@ -1,0 +1,265 @@
+<% layout('/layouts/default.html', {title: '', bodyClass: ''}){ %>
+<!-- <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysDesktop.css?${_version}"> -->
+<div class="content pb0">
+	<!-- Info boxes -->
+	<div class="row">
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-aqua"><i class="fa fa-cog"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">CPU 使用率</span>
+					<span class="info-box-number">90<small>%</small></span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<!-- /.col -->
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">关注数</span>
+					<span class="info-box-number">41,410</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<!-- /.col -->
+
+		<!-- fix for small devices only -->
+		<div class="clearfix visible-sm-block"></div>
+
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-green"><i class="fa fa-internet-explorer"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">因特网</span>
+					<span class="info-box-number">760</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<!-- /.col -->
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="info-box">
+				<span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+
+				<div class="info-box-content">
+					<span class="info-box-text">新用户</span>
+					<span class="info-box-number">2,000</span>
+				</div>
+				<!-- /.info-box-content -->
+			</div>
+			<!-- /.info-box -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">月度报告</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+						<div class="btn-group">
+							<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-wrench"></i></button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">导出Excel</a></li>
+								<li><a href="#">导出Word</a></li>
+								<li class="divider"></li>
+								<li><a href="#">基本设置</a></li>
+							</ul>
+						</div>
+						<button type="button" class="btn btn-box-tool" data-widget="remove">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="row">
+						<div class="col-md-8">
+							<div class="chart">
+								<div id="myChart" style="height:230px;width:99%"></div>
+								<script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+								<script>
+									var option = {
+									    title : {
+									        text: '2017-5'
+									    },
+									    tooltip : {
+									        trigger: 'axis'
+									    },
+									    legend: {
+									        data:['意向','预购','成交']
+									    },
+									    toolbox: {
+									        show : true,
+									        feature : {
+									            mark : {show: true},
+									            dataView : {show: true, readOnly: false},
+									            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+									            restore : {show: true},
+									            saveAsImage : {show: true}
+									        }
+									    },
+									    calculable : true,
+									    grid : {
+									    	top: '49',
+									    	right: '20',
+									    	bottom: '30'
+									    },
+									    xAxis : [
+									        {
+									            type : 'category',
+									            boundaryGap : false,
+									            data : ['周一','周二','周三','周四','周五','周六','周日']
+									        }
+									    ],
+									    yAxis : [
+									        {
+									            type : 'value'
+									        }
+									    ],
+									    series : [
+									        {
+									            name:'成交',
+									            type:'line',
+									            smooth:true,
+									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+									            data:[10, 12, 21, 54, 260, 830, 710]
+									        },
+									        {
+									            name:'预购',
+									            type:'line',
+									            smooth:true,
+									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+									            data:[30, 182, 434, 791, 390, 30, 10]
+									        },
+									        {
+									            name:'意向',
+									            type:'line',
+									            smooth:true,
+									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+									            data:[1320, 1132, 601, 234, 120, 90, 20]
+									        }
+									     ]
+									};
+									// 基于准备好的dom，初始化echarts实例
+							        var myChart = echarts.init(document.getElementById('myChart'));
+							        myChart.setOption(option);
+								</script>
+							</div>
+							<!-- /.chart-responsive -->
+						</div>
+						<!-- /.col -->
+						<div class="col-md-4">
+							<p class="text-center">
+								<strong>完成目标</strong>
+							</p>
+							<div class="progress-group">
+								<span class="progress-text">将产品添加到购物车</span>
+								<span class="progress-number"><b>160</b>/200</span>
+								<div class="progress sm">
+									<div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+								</div>
+							</div>
+							<!-- /.progress-group -->
+							<div class="progress-group">
+								<span class="progress-text">完成购买率</span>
+								<span class="progress-number"><b>310</b>/400</span>
+								<div class="progress sm">
+									<div class="progress-bar progress-bar-red" style="width: 80%"></div>
+								</div>
+							</div>
+							<!-- /.progress-group -->
+							<div class="progress-group">
+								<span class="progress-text">产品访问量</span>
+								<span class="progress-number"><b>480</b>/800</span>
+								<div class="progress sm">
+									<div class="progress-bar progress-bar-green" style="width: 80%"></div>
+								</div>
+							</div>
+							<!-- /.progress-group -->
+							<div class="progress-group">
+								<span class="progress-text">查询访问量</span>
+								<span class="progress-number"><b>250</b>/500</span>
+								<div class="progress sm">
+									<div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
+								</div>
+							</div>
+							<!-- /.progress-group -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- ./box-body -->
+				<div class="box-footer">
+					<div class="row">
+						<div class="col-sm-3 col-xs-6">
+							<div class="description-block border-right">
+								<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+								<h5 class="description-header">￥35,210.43</h5>
+								<span class="description-text">总营收</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-3 col-xs-6">
+							<div class="description-block border-right">
+								<span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+								<h5 class="description-header">￥10,390.90</h5>
+								<span class="description-text">总成本</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-3 col-xs-6">
+							<div class="description-block border-right">
+								<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+								<h5 class="description-header">￥24,813.53</h5>
+								<span class="description-text">总利润</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-3 col-xs-6">
+							<div class="description-block">
+								<span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+								<h5 class="description-header">1200</h5>
+								<span class="description-text">目标完成</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.box-footer -->
+			</div>
+			<!-- /.box -->
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</div>
+<footer class="main-footer m0">
+	<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
+	<div class="pull-right hidden-xs">当前版本： ${productVersion}</div>
+	版权所有 &copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+</footer>
+<% } %>
+<script>
+$(window).resize(function(){
+	var footerHeight  = $('.main-footer').outerHeight() || 0;
+	var windowHeight  = $(window).height();
+	$('.content').css('min-height', windowHeight - footerHeight)
+}).resize();
+</script>

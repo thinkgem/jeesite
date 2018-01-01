@@ -1,0 +1,36 @@
+
+#============================#
+#===== Database sttings =====#
+#============================#
+
+# 数据库连接
+jdbc: 
+
+  # Oracle 数据库配置
+  type: oracle
+  driver: oracle.jdbc.driver.OracleDriver
+  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+  username: jeesite
+  password: jeesite
+  testSql: SELECT 1 FROM DUAL
+
+  # Mysql 数据库配置
+#  type: mysql
+#  driver: com.mysql.jdbc.Driver
+#  url: jdbc:mysql://127.0.0.1:3306/jeesite?useUnicode=true&characterEncoding=utf-8
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#============================#
+#===== System settings ======#
+#============================#
+
+#产品信息设置
+productName: JeeSite Demo
+productVersion: V4.0
+copyrightYear: 2018
+companyName: ThinkGem
+
+#是否演示模式
+demoMode: false
