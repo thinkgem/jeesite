@@ -51,7 +51,8 @@
 		
 		<!-- environment setting -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.7</jdk.version>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> 
+		<java.version>1.7</java.version>
 		<downloadSources>false</downloadSources>
 		<downloadJavadocs>false</downloadJavadocs>
 		
@@ -80,8 +81,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<showWarnings>true</showWarnings>
 					<compilerArguments>
 <!-- 						<verbose /> 输出有关编译器正在执行的操作的消息 -->
