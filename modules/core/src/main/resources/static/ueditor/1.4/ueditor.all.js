@@ -8065,7 +8065,7 @@ UE.Editor.defaultOptions = function(editor){
         imagePopup: true,
         enterTag: 'p',
         customDomain: false,
-        lang: 'zh-cn',
+        lang: 'zh_CN', // ThinkGem zh-cn to zh_CN
         langPath: _url + 'lang/',
         theme: 'default',
         themePath: _url + 'themes/',
