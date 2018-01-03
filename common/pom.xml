@@ -174,11 +174,11 @@
 		  <artifactId>httpclient</artifactId>
 		  <version>4.5.3</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>sun-jaxws</groupId>
 			<artifactId>sjsxp</artifactId>
 			<version>2.1.1</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Jsoup HTTP -->
 		<dependency>
