@@ -119,6 +119,19 @@
     	
 	</bean>
 	
+	<!-- 数据库自动升级程序 -->
+	<bean id="dbUpgrade" class="com.jeesite.common.db.DbUpgrade"></bean>
+	
+	<!-- 配置国际化资源文件路径 -->
+	<bean id="messageSource" class="com.jeesite.common.i18n.I18nMessageSource"
+			depends-on="springUtils">
+	</bean>
+	
+	<!-- 基于Cookie和Session的本地化解析器 -->
+	<bean id="localeResolver" class="com.jeesite.common.i18n.I18nLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+	
 	<!-- 配置 JSR303 Bean Validator 定义 -->
 	<bean id="beanValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
