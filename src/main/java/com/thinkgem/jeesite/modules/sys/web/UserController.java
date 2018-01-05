@@ -289,7 +289,7 @@ public class UserController extends BaseController {
 			model.addAttribute("message", "保存用户信息成功");
 		}
 		model.addAttribute("user", currentUser);
-		model.addAttribute("Global", new Global());
+		model.addAttribute("Global", Global.getInstance());
 		return "modules/sys/userInfo";
 	}
 
