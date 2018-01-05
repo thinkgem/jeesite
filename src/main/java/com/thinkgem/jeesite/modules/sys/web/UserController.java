@@ -289,6 +289,7 @@ public class UserController extends BaseController {
 			model.addAttribute("message", "保存用户信息成功");
 		}
 		model.addAttribute("user", currentUser);
+		//修改Global 没有私有构造函数，实现懒汉式单例模式.在第一次调用的时候实例化自己！
 		model.addAttribute("Global", Global.getInstance());
 		return "modules/sys/userInfo";
 	}
