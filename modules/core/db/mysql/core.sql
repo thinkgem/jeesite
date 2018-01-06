@@ -58,8 +58,6 @@ DROP INDEX idx_sys_menu_is ON js_sys_menu;
 DROP INDEX idx_sys_menu_mcs ON js_sys_menu;
 DROP INDEX idx_sys_module_status ON js_sys_module;
 DROP INDEX idx_sys_message_cb ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_bk ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_bt ON js_sys_msg_inner;
 DROP INDEX idx_sys_message_status ON js_sys_msg_inner;
 DROP INDEX idx_sys_message_cl ON js_sys_msg_inner;
 DROP INDEX idx_sys_message_sc ON js_sys_msg_inner;
@@ -68,7 +66,7 @@ DROP INDEX idx_sys_message_record_mi ON js_sys_msg_inner_record;
 DROP INDEX idx_sys_message_record_rc ON js_sys_msg_inner_record;
 DROP INDEX idx_sys_message_record_ruc ON js_sys_msg_inner_record;
 DROP INDEX idx_sys_message_record_status ON js_sys_msg_inner_record;
-DROP INDEX idx_sys_message_record_mt ON js_sys_msg_inner_record;
+DROP INDEX idx_sys_message_record_star ON js_sys_msg_inner_record;
 DROP INDEX idx_sys_msg_push_type ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_rc ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_uc ON js_sys_msg_push;
@@ -87,9 +85,9 @@ DROP INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait;
-DROP INDEX idx_sys_msg_tpl_key ON js_sys_msg_tpl;
-DROP INDEX idx_sys_msg_tpl_type ON js_sys_msg_tpl;
-DROP INDEX idx_sys_msg_tpl_status ON js_sys_msg_tpl;
+DROP INDEX idx_sys_msg_tpl_key ON js_sys_msg_template;
+DROP INDEX idx_sys_msg_tpl_type ON js_sys_msg_template;
+DROP INDEX idx_sys_msg_tpl_status ON js_sys_msg_template;
 DROP INDEX idx_sys_office_cc ON js_sys_office;
 DROP INDEX idx_sys_office_pc ON js_sys_office;
 DROP INDEX idx_sys_office_pcs ON js_sys_office;
@@ -145,7 +143,7 @@ DROP TABLE IF EXISTS js_sys_msg_inner_record;
 DROP TABLE IF EXISTS js_sys_msg_inner;
 DROP TABLE IF EXISTS js_sys_msg_push;
 DROP TABLE IF EXISTS js_sys_msg_push_wait;
-DROP TABLE IF EXISTS js_sys_msg_tpl;
+DROP TABLE IF EXISTS js_sys_msg_template;
 DROP TABLE IF EXISTS js_sys_office;
 DROP TABLE IF EXISTS js_sys_post;
 DROP TABLE IF EXISTS js_sys_role_data_scope;
@@ -372,8 +370,8 @@ CREATE TABLE js_sys_file_upload
 	file_id varchar(64) NOT NULL COMMENT '文件编号',
 	file_name varchar(500) NOT NULL COMMENT '文件名称',
 	file_type varchar(20) NOT NULL COMMENT '文件分类（image、media、file）',
-	biz_type varchar(64) NOT NULL COMMENT '业务类型',
-	biz_key varchar(64) NOT NULL COMMENT '业务主键',
+	biz_key varchar(64) COMMENT '业务主键',
+	biz_type varchar(64) COMMENT '业务类型',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date timestamp NOT NULL COMMENT '创建时间',
@@ -408,6 +406,7 @@ CREATE TABLE js_sys_job
 CREATE TABLE js_sys_lang
 (
 	id varchar(64) NOT NULL COMMENT '编号',
+	module_code varchar(64) NOT NULL COMMENT '归属模块',
 	lang_code varchar(500) NOT NULL COMMENT '语言编码',
 	lang_text varchar(500) NOT NULL COMMENT '语言译文',
 	lang_type varchar(50) NOT NULL COMMENT '语言类型',
@@ -564,27 +563,24 @@ CREATE TABLE js_sys_msg_push
 	msg_type varchar(16) NOT NULL COMMENT '消息类型（PC APP 短信 邮件 微信）',
 	msg_title varchar(200) NOT NULL COMMENT '消息标题',
 	msg_content text NOT NULL COMMENT '消息内容',
-	msg_buttons varchar(2000) COMMENT '消息操作按钮（JSON）',
+	biz_key varchar(64) COMMENT '业务主键',
+	biz_type varchar(64) COMMENT '业务类型',
 	receive_code varchar(64) NOT NULL COMMENT '接受者账号',
 	receive_user_code varchar(64) NOT NULL COMMENT '接受者用户编码',
 	receive_user_name varchar(100) NOT NULL COMMENT '接受者用户姓名',
-	email_cc varchar(2000) COMMENT '邮件抄送地址',
-	email_bcc varchar(2000) COMMENT '邮件密送地址',
 	send_user_code varchar(64) NOT NULL COMMENT '发送者用户编码',
 	send_user_name varchar(100) NOT NULL COMMENT '发送者用户姓名',
 	send_date timestamp NOT NULL COMMENT '发送时间',
+	is_merge_push char(1) COMMENT '是否合并推送',
 	plan_push_date timestamp COMMENT '计划推送时间',
 	push_number int COMMENT '推送尝试次数',
-	push_result text COMMENT '推送结果信息',
-	return_code varchar(200) COMMENT '第三方返回结果码',
-	return_msg_id varchar(200) COMMENT '第三方返回消息编号',
-	push_date date COMMENT '最后推送时间',
-	push_status char(1) COMMENT '推送状态（1成功  2失败）',
-	push_after_read_status char(1) COMMENT '指定推送后的读取状态',
+	push_return_code varchar(200) COMMENT '推送返回结果码',
+	push_return_msg_id varchar(200) COMMENT '推送返回消息编号',
+	push_return_content text COMMENT '推送返回的内容信息',
+	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
+	push_date date COMMENT '推送时间',
 	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
 	read_date date COMMENT '读取时间',
-	biz_key varchar(64) COMMENT '业务主键',
-	biz_type varchar(64) COMMENT '业务类型',
 	PRIMARY KEY (id)
 ) COMMENT = '消息推送表';
 
@@ -596,35 +592,33 @@ CREATE TABLE js_sys_msg_push_wait
 	msg_type varchar(16) NOT NULL COMMENT '消息类型（PC APP 短信 邮件 微信）',
 	msg_title varchar(200) NOT NULL COMMENT '消息标题',
 	msg_content text NOT NULL COMMENT '消息内容',
-	msg_buttons varchar(2000) COMMENT '消息操作按钮（JSON）',
+	biz_key varchar(64) COMMENT '业务主键',
+	biz_type varchar(64) COMMENT '业务类型',
 	receive_code varchar(64) NOT NULL COMMENT '接受者账号',
 	receive_user_code varchar(64) NOT NULL COMMENT '接受者用户编码',
 	receive_user_name varchar(100) NOT NULL COMMENT '接受者用户姓名',
-	email_cc varchar(2000) COMMENT '邮件抄送地址',
-	email_bcc varchar(2000) COMMENT '邮件密送地址',
 	send_user_code varchar(64) NOT NULL COMMENT '发送者用户编码',
 	send_user_name varchar(100) NOT NULL COMMENT '发送者用户姓名',
 	send_date timestamp NOT NULL COMMENT '发送时间',
+	is_merge_push char(1) COMMENT '是否合并推送',
 	plan_push_date timestamp COMMENT '计划推送时间',
 	push_number int COMMENT '推送尝试次数',
-	push_result text COMMENT '推送结果信息',
-	return_code varchar(200) COMMENT '第三方返回结果码',
-	return_msg_id varchar(200) COMMENT '第三方返回消息编号',
-	push_date date COMMENT '最后推送时间',
-	push_status char(1) COMMENT '推送状态（1成功  2失败）',
-	push_after_read_status char(1) COMMENT '指定推送后的读取状态',
+	push_return_content text COMMENT '推送返回的内容信息',
+	push_return_code varchar(200) COMMENT '推送返回结果码',
+	push_return_msg_id varchar(200) COMMENT '推送返回消息编号',
+	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
+	push_date date COMMENT '推送时间',
 	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
 	read_date date COMMENT '读取时间',
-	biz_key varchar(64) COMMENT '业务主键',
-	biz_type varchar(64) COMMENT '业务类型',
 	PRIMARY KEY (id)
 ) COMMENT = '消息待推送表';
 
 
 -- 消息模板
-CREATE TABLE js_sys_msg_tpl
+CREATE TABLE js_sys_msg_template
 (
 	id varchar(64) NOT NULL COMMENT '编号',
+	module_code varchar(64) COMMENT '归属模块',
 	tpl_key varchar(100) NOT NULL COMMENT '模板键值',
 	tpl_name varchar(100) NOT NULL COMMENT '模板名称',
 	tpl_type char(1) NOT NULL COMMENT '模板类型',
@@ -902,8 +896,10 @@ CREATE INDEX idx_sys_message_cl ON js_sys_msg_inner (content_level ASC);
 CREATE INDEX idx_sys_message_sc ON js_sys_msg_inner (send_user_code ASC);
 CREATE INDEX idx_sys_message_sd ON js_sys_msg_inner (send_date ASC);
 CREATE INDEX idx_sys_message_record_mi ON js_sys_msg_inner_record (message_id ASC);
+CREATE INDEX idx_sys_message_record_rc ON js_sys_msg_inner_record (receive_user_code ASC);
 CREATE INDEX idx_sys_message_record_ruc ON js_sys_msg_inner_record (receive_user_code ASC);
 CREATE INDEX idx_sys_message_record_status ON js_sys_msg_inner_record (read_status ASC);
+CREATE INDEX idx_sys_message_record_star ON js_sys_msg_inner_record (is_star ASC);
 CREATE INDEX idx_sys_msg_push_type ON js_sys_msg_push (msg_type ASC);
 CREATE INDEX idx_sys_msg_push_rc ON js_sys_msg_push (receive_code ASC);
 CREATE INDEX idx_sys_msg_push_uc ON js_sys_msg_push (receive_user_code ASC);
@@ -922,9 +918,9 @@ CREATE INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait (push_status ASC);
 CREATE INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait (read_status ASC);
 CREATE INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait (biz_key ASC);
 CREATE INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait (biz_type ASC);
-CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_tpl (tpl_key ASC);
-CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_tpl (tpl_type ASC);
-CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_tpl (status ASC);
+CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_template (tpl_key ASC);
+CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_template (tpl_type ASC);
+CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_template (status ASC);
 CREATE INDEX idx_sys_office_cc ON js_sys_office (corp_code ASC);
 CREATE INDEX idx_sys_office_pc ON js_sys_office (parent_code ASC);
 CREATE INDEX idx_sys_office_pcs ON js_sys_office (parent_codes ASC);
