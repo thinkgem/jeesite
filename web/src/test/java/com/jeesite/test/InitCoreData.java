@@ -16,18 +16,18 @@ public class InitCoreData extends com.jeesite.modules.db.InitCoreData {
 	
 	@Test
 	public void initCoreData() throws Exception{
-//		initLog();
-//		initConfig();
-//		initModule();
+		initLog();
+		initConfig();
+		initModule();
 		initDict();
-//		initRole();
+		initRole();
 		initMenu();
-//		initUser();
+		initUser();
 //		initArea();
-//		initOffice();
-//		initCompany();
-//		initPost();
-//		initEmpUser();
+		initOffice();
+		initCompany();
+		initPost();
+		initEmpUser();
 	}
 	
 }

@@ -13,19 +13,24 @@ import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.sys.dao.RoleMenuDao;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.entity.Company;
+import com.jeesite.modules.sys.entity.CompanyOffice;
 import com.jeesite.modules.sys.entity.Config;
 import com.jeesite.modules.sys.entity.DictData;
 import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeePost;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.Module;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.Post;
 import com.jeesite.modules.sys.entity.Role;
+import com.jeesite.modules.sys.entity.RoleDataScope;
 import com.jeesite.modules.sys.entity.RoleMenu;
 import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.entity.UserDataScope;
+import com.jeesite.modules.sys.entity.UserRole;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.ConfigService;
@@ -53,13 +58,19 @@ public class InitCoreData extends BaseInitDataTests {
 		dataFile = new File(InitCoreData.class.getResource(
 				InitCoreData.class.getSimpleName() + ".xlsx").getFile());
 	}
-	
+
+	/**
+	 * 清理日志表
+	 */
 	public void initLog() throws Exception{
 		clearTable(new Log());
 	}
 	
 	@Autowired
 	private ConfigService configService;
+	/**
+	 * 参数配置表
+	 */
 	public void initConfig() throws Exception{
 		try{
 			clearTable(new Config());
@@ -85,6 +96,9 @@ public class InitCoreData extends BaseInitDataTests {
 
 	@Autowired
 	private ModuleService moduleService;
+	/**
+	 * 系统模块表
+	 */
 	public void initModule() throws Exception{
 		try{
 			clearTable(new Module());
@@ -111,6 +125,9 @@ public class InitCoreData extends BaseInitDataTests {
 	private DictTypeService dictTypeService;
 	@Autowired
 	private DictDataService dictDataService;
+	/**
+	 * 系统字典、用户字典表
+	 */
 	public void initDict() throws Exception{
 		try{
 			clearTable(new DictType());
@@ -151,9 +168,14 @@ public class InitCoreData extends BaseInitDataTests {
 	
 	@Autowired
 	private RoleService roleService;
+	/**
+	 * 角色表
+	 */
 	public void initRole() throws Exception{
 		try{
 			clearTable(new Role());
+			clearTable(new RoleMenu());
+			clearTable(new RoleDataScope());
 			initExcelData(Role.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -177,6 +199,9 @@ public class InitCoreData extends BaseInitDataTests {
 	private MenuService menuService;
 	@Autowired
 	private RoleMenuDao roleMenuDao;
+	/**
+	 * 菜单表
+	 */
 	public void initMenu() throws Exception{
 		try{
 			clearTable(new Menu());
@@ -206,9 +231,14 @@ public class InitCoreData extends BaseInitDataTests {
 	
 	@Autowired
 	private UserService userService;
+	/**
+	 * 用户表
+	 */
 	public void initUser() throws Exception{
 		try{
 			clearTable(new User());
+			clearTable(new UserRole());
+			clearTable(new UserDataScope());
 			initExcelData(User.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -231,6 +261,9 @@ public class InitCoreData extends BaseInitDataTests {
 	
 	@Autowired
 	private AreaService areaService;
+	/**
+	 * 区域、行政区划表
+	 */
 	public void initArea() throws Exception{
 		try{
 			clearTable(new Area());
@@ -255,6 +288,9 @@ public class InitCoreData extends BaseInitDataTests {
 	
 	@Autowired
 	private OfficeService officeService;
+	/**
+	 * 组织机构、部门表
+	 */
 	public void initOffice() throws Exception{
 		try{
 			clearTable(new Office());
@@ -279,9 +315,13 @@ public class InitCoreData extends BaseInitDataTests {
 
 	@Autowired
 	private CompanyService companyService;
+	/**
+	 * 公司表
+	 */
 	public void initCompany() throws Exception{
 		try{
 			clearTable(new Company());
+			clearTable(new CompanyOffice());
 			initExcelData(Company.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -303,6 +343,9 @@ public class InitCoreData extends BaseInitDataTests {
 
 	@Autowired
 	private PostService postService;
+	/**
+	 * 岗位表
+	 */
 	public void initPost() throws Exception{
 		try{
 			clearTable(new Post());
@@ -327,9 +370,13 @@ public class InitCoreData extends BaseInitDataTests {
 	
 	@Autowired
 	private EmpUserService empUserService;
+	/**
+	 * 员工、用户表
+	 */
 	public void initEmpUser() throws Exception{
 		try{
 			clearTable(new Employee());
+			clearTable(new EmployeePost());
 			initExcelData(EmpUser.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
