@@ -2,7 +2,7 @@
 <configuration debug="false" scan="false">
 
 	<!-- Log file path ../../../../../../../ to disk root -->
-	<property name="log.path" value="${classpath:-../../../../../../../}/logs" />
+	<property name="log.path" value="${logPath:-../../../../../../../}/logs" />
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -46,7 +46,7 @@
 	</appender>
 	
 	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
-	<root level="INFO">
+	<root level="WARN">
 		<appender-ref ref="console" />
 		<appender-ref ref="debug" />
 		<appender-ref ref="error" />
