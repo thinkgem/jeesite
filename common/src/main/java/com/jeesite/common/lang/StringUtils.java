@@ -17,7 +17,7 @@ import com.jeesite.common.collect.ListUtils;
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
  * @author ThinkGem
- * @version 2014-8-19
+ * @version 2018-1-6
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	
@@ -225,92 +225,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return result.toString();
 	}
 	
-//	/**
-//	 * 转换为Double类型
-//	 */
-//	public static Double toDouble(final Object val){
-//		return ObjectUtils.toDouble(val);
-//	}
-//
-//	/**
-//	 * 转换为Float类型
-//	 */
-//	public static Float toFloat(final Object val){
-//		return ObjectUtils.toFloat(val);
-//	}
-//
-//	/**
-//	 * 转换为Long类型
-//	 */
-//	public static Long toLong(final Object val){
-//		return ObjectUtils.toLong(val);
-//	}
-//
-//	/**
-//	 * 转换为Integer类型
-//	 */
-//	public static Integer toInteger(final Object val){
-//		return ObjectUtils.toInteger(val);
-//	}
-//	
-//	/**
-//	 * 转换为Boolean类型
-//	 * 'true', 'on', 'y', 't', 'yes' or '1' (case insensitive) will return true. Otherwise, false is returned.
-//	 */
-//	public static Boolean toBoolean(final Object val){
-//		return ObjectUtils.toBoolean(val);
-//	}
-//	
-//	/**
-//	 * 转换为字符串 
-//	 * 	see: ObjectUtils.toString(obj)
-//	 * @param obj
-//	 * @return
-//	 */
-//	public static String toString(final Object obj) {
-//        return ObjectUtils.toString(obj);
-//    }
-//	
-//	/**
-//	 * 如果对象为空，则使用defaultVal值 
-//	 * 	see: ObjectUtils.toString(obj, defaultVal)
-//	 * @param obj
-//	 * @param defaultVal
-//	 * @return
-//	 */
-//    public static String toString(final Object obj, final String defaultVal) {
-//        return ObjectUtils.toString(obj, defaultVal);
-//    }
-//    
-//	/**
-//	 * 空转空字符串（"" to "" ; null to "" ; "null" to "" ; "NULL" to "" ; "Null" to ""）
-//	 * @param val 需转换的值
-//	 * @return 返回转换后的值
-//	 */
-//	public static String toStringIgnoreNull(Object val) {
-//		return ObjectUtils.toStringIgnoreNull(val);
-//	}
-//
-//	/**
-//	 * 空对象转空字符串 （"" to defaultVal ; null to defaultVal ; "null" to defaultVal ; "NULL" to defaultVal ; "Null" to defaultVal）
-//	 * @param val 需转换的值
-//	 * @param defaultVal 默认值
-//	 * @return 返回转换后的值
-//	 */
-//	public static String toStringIgnoreNull(Object val, String defaultVal) {
-//		return ObjectUtils.toStringIgnoreNull(val, defaultVal);
-//	}
-	
-//	/**
-//	 * 获得i18n字符串
-//	 */
-//	public static String getMessage(String code, Object[] args) {
-//		LocaleResolver localLocaleResolver = (LocaleResolver) SpringContextHolder.getBean(LocaleResolver.class);
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();  
-//		Locale localLocale = localLocaleResolver.resolveLocale(request);
-//		return SpringContextHolder.getApplicationContext().getMessage(code, args, localLocale);
-//	}
-
 	/**
 	 * 首字母大写
 	 */
@@ -410,18 +324,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return sb.toString();
     }
     
-//    /**
-//     * 如果不为空，则设置值
-//     * @param target
-//     * @param source
-//     * @Deprecated 兼容老系统
-//     */
-//    public static void setValueIfNotBlank(String target, String source) {
-//		if (isNotBlank(source)){
-//			target = source;
-//		}
-//	}
- 
     /**
      * 转换为JS获取对象值，生成三目运算返回结果
      * @param objectString 对象串
@@ -474,21 +376,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		return s.toString();
 	}
 	
-//	/** 
-//	 * 验证数组是否包含该字符串
-//	 * @param ss 数组
-//	 * @param str 字符串
-//	 * @deprecated StringUtils.inString(String str, String... strs)
-//	 */
-//	@Deprecated
-//	public boolean isExist(String[] ss, String str) {
-//		for (String s : ss) {
-//			if (s.equals(str))
-//				return true;
-//		}
-//		return false;
-//	}
-	
 	/**
 	 * 获取树节点名字
 	 * @param isShowCode 是否显示编码<br>
@@ -509,15 +396,16 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		}
 	}
 	
-	/**
-	 * 测试代码
-	 * @param args
-	 */
-	public static void main(String[] args) {
+//	/**
+//	 * 测试代码
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
 //		String html = "<p style=\"text-align: left; padding-bottom: 0px; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; margin: 0px; padding-left: 0px; letter-spacing: normal; padding-right: 0px; font: 14px/25px 宋体, tahoma, arial, sans-serif; white-space: normal; color: rgb(0,0,0); word-spacing: 0px; padding-top: 0px; -webkit-text-stroke-width: 0px\">__eol__	科技日报讯&nbsp;（通讯员辛志向&nbsp;记者王建高）日前，青岛高新区国家级生态工业示范园区通过了由国家环保部及科技部、商务部三部门联合组织的国家正式验收。</p>__eol__<p style=\"text-align: left; padding-bottom: 0px; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; margin: 0px; padding-left: 0px; letter-spacing: normal; padding-right: 0px; font: 14px/25px 宋体, tahoma, arial, sans-serif; white-space: normal; color: rgb(0,0,0); word-spacing: 0px; padding-top: 0px; -webkit-text-stroke-width: 0px\">__eol__	&nbsp;&nbsp;&nbsp;&nbsp;青岛市委常委、红岛经济区工委书记、管委主任陈飞介绍，建立国家生态工业示范园区是青岛高新区深化和拓展生态创建成果，加快结构调整，推进转型发展，进而辐射带动红岛经济区生态建设的重要抓手。</p>__eol__<p style=\"text-align: left; padding-bottom: 0px; text-transform: none; background-color: rgb(255,255,255); text-indent: 0px; margin: 0px; padding-left: 0px; letter-spacing: normal; padding-right: 0px; font: 14px/25px 宋体, tahoma, arial, sans-serif; white-space: normal; color: rgb(0,0,0); word-spacing: 0px; padding-top: 0px; -webkit-text-stroke-width: 0px\">__eol__	&nbsp;&nbsp;&nbsp;&nbsp;自2007年经国家三部委批准创建以来，青岛高新区高度重视，强化措施，始终按照创建工作要求，坚持生态、生活、生产&ldquo;三生共融&rdquo;理念，以生态环境的优化带动经济的发展。创建过程中，坚持&ldquo;科学性规划，高水平建设，生态化发展&rdquo;的原则，实施&ldquo;国际化、高端化、低碳化&rdquo;三大战略，逐步建立起适应循环经济发展的产业体系和政策体系，形成了完善的生态工业园建设框架和循环经济发展机制，实现了经济高速发展与环境持续改善的良性循环。随着发展环境和核心竞争力的不断提升，通过了ISO14001环境管理体系认证，获得了中国最具投资潜力经济园区、国家科技兴贸创新基地、山东省海外高层次人才创新创业基地等称号，在国家级高新区综合评价中连续多年跻身前列，已经成为山东半岛乃至环渤海区域快速成长、极具创新活力和竞争力的蓝色经济特色高科技产业园区。</p>";
 //		html += "<div style=\"text-indent: 32pt\">__eol__	<span style=\"line-height: 20px; font-size: 20px\"><span style=\"font-family: 宋体\">我市积极支持和引导企业、高校院所&ldquo;走出去&rdquo;开展国际科技合作，在国外集聚和利用各种创新资源，增强我市企业和科研院所竞争实力。</span></span></div>__eol__<div align=\"left\" style=\"text-align: left; text-indent: 32pt; text-autospace: \">__eol__	<span style=\"line-height: 20px; font-size: 20px\"><span style=\"font-family: 宋体\">一是在国外设立研发中心。通过合资、并购、控股等方式，在国外设立研发中心和产业园，传播中国文化，提升青岛声誉。如，软控在斯洛伐克设立的研发中心成为我国与中东欧国家合作的成功样板。南车青岛四方积极筹建与泰国等高铁联合研发中心，将成为我国高端成套装备出口的重要研发基地。<span style=\"color: black\">2013</span><span style=\"color: black\">年，我市企业与大学科研机构与国外共建7家联合研发中心。 </span></span></span></div>__eol__<div style=\"text-indent: 32pt\">__eol__	<span style=\"line-height: 20px; font-size: 20px\"><span style=\"font-family: 宋体\"><span style=\"color: black\">二是利用科技资源和渠道助推中小科技企业&ldquo;走出去&rdquo;开发新兴市场。</span><span style=\"color: black\">利用尼日利亚总统访华契机，积极向尼方政府代表团推介我市现代农业技术和先进制造业企业。引导我市科技型企业输出技术，拓展西非共同体市场，推动企业转型升级，拓宽&ldquo;走出去&rdquo;渠道</span><span style=\"color: black\">。</span></span></span></div>";
 //		html += "<p style='TEXT-ALIGN: center' class=\"sdfasf\"><strong>蓝海技术加以</strong></p><p style='TEXT-ALIGN: center'><em>蓝海技术加以</em></p><p style='TEXT-ALIGN: center'><span style='TEXT-DECORATION: underline'>蓝海技术加以</span></p><p style='TEXT-ALIGN: center'>蓝海技术加以</p><p></p>";
 //		html = html.replaceAll("__eol__", "");
 //		System.out.println(replaceMobileHtml(html));
-	}
+//	}
+	
 }
