@@ -48,12 +48,12 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
-		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
-		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			return REDIRECT + adminPath + "/login" + queryString;
-		}
+//		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
+//		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
+//			String queryString = request.getQueryString();
+//			queryString = queryString == null ? "" : "?" + queryString;
+//			return REDIRECT + adminPath + "/login" + queryString;
+//		}
 
 		LoginInfo loginInfo = UserUtils.getLoginInfo();
 		
@@ -196,12 +196,12 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "index")
 	public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
-		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
-		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			return REDIRECT + adminPath + "/index" + queryString;
-		}
+//		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
+//		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
+//			String queryString = request.getQueryString();
+//			queryString = queryString == null ? "" : "?" + queryString;
+//			return REDIRECT + adminPath + "/index" + queryString;
+//		}
 
 		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
 		if (!SecurityUtils.getSubject().isPermitted("user")){

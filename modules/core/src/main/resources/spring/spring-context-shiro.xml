@@ -19,7 +19,7 @@
 	</bean>
 
 	<!-- Shiro安全认证过滤器 -->
-	<bean id="shiroFilter" class="com.jeesite.common.shiro.sso.ShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="com.jeesite.common.shiro.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="${shiro.loginUrl}" />
 		<property name="successUrl" value="${shiro.successUrl}" />
@@ -59,7 +59,7 @@
 	<bean id="shiroUserFilter" class="com.jeesite.common.shiro.filter.UserFilter"/>
 	
 	<!-- 单点登录信息句柄，单点退出用 -->
-	<bean id="singleSignOutHandler" class="com.jeesite.common.shiro.sso.SingleSignOutHandler"/>
+	<bean id="casOutHandler" class="com.jeesite.common.shiro.cas.CasOutHandler"/>
 		
 	<!-- 系统安全认证实现类 -->
 	<bean id="authorizingRealm" class="com.jeesite.common.shiro.realm.AuthorizingRealm">
@@ -67,13 +67,13 @@
         <property name="sessionDAO" ref="sessionDAO"/>
         <property name="userService" ref="userService"/>
         <property name="empUserService" ref="empUserService"/> 
-        <property name="singleSignOutHandler" ref="singleSignOutHandler"/> 
+        <property name="casOutHandler" ref="casOutHandler"/> 
         <property name="casServerUrl" value="${shiro.casServerUrl}"/>
         <property name="casServerCallbackUrl" value="${shiro.casClientUrl}${adminPath}/login-cas"/>
     </bean>
     
 	<!-- 定义Shiro安全管理配置 -->
-	<bean id="securityManager" class="com.jeesite.common.shiro.mgt.WebSecurityManager">
+	<bean id="securityManager" class="com.jeesite.common.shiro.web.WebSecurityManager">
 		<property name="realm" ref="authorizingRealm" />
 		<property name="sessionManager" ref="sessionManager" />
 		<!-- shiroCacheManager 在spring-context.xml中定义 -->
@@ -88,6 +88,9 @@
 	<bean id="sessionManager" class="com.jeesite.common.shiro.session.SessionManager"> 
 		<!-- sessionDAO 在spring-context.xml中定义 -->
 		<property name="sessionDAO" ref="sessionDAO"/> 
+		
+		<!-- 从URL中去掉JSESSIONID串 -->
+		<property name="sessionIdUrlRewritingEnabled" value="false" /> 
 		
 		<!-- 会话超时时间，单位：毫秒  -->
 		<property name="globalSessionTimeout" value="${session.sessionTimeout}"/>

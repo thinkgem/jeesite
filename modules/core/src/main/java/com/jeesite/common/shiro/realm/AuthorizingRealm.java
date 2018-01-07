@@ -59,7 +59,7 @@ public class AuthorizingRealm extends com.jeesite.common.shiro.realm.BaseAuthori
 	}
 	
 	@Override
-	public void onSingleSignOut(User logoutUser) {
+	public void onLogoutSuccess(User logoutUser) {
 		// 记录用户退出日志
 		LogUtils.saveLog(logoutUser, null, null, null, "系统退出");
 	}

@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>3166</x>
-	<y>1170</y>
+	<x>3413</x>
+	<y>1172</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -12959,6 +12959,19 @@
 						</column>
 					</columns>
 				</inidex>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>idx_sys_msg_pushw_imp</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>013bfa07b771054f43105d72d01324d96518fc38</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
 			</indexes>
 			<complex_unique_key_list>
 			</complex_unique_key_list>
@@ -13829,6 +13842,19 @@
 					<columns>
 						<column>
 							<id>7d9a7eae0e2ffc810fa615128b5dab3a613669af</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>idx_sys_msg_push_imp</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>385ac7698fd3d6123c18f7cd819a83e80313f614</id>
 							<desc>false</desc>
 						</column>
 					</columns>

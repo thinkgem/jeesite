@@ -34,7 +34,7 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	
-    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+    <!-- REST中根据MediaType自动判定Content-Type及相应的View -->
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 	    <property name="mediaTypes" >
 	        <value>
@@ -88,9 +88,6 @@
 		</mvc:content-negotiation>
 	</mvc:view-resolvers>
 	
-	<!-- 直接访问项目名称跳转到默认地址 -->
-	<mvc:view-controller path="/" view-name="redirect:${defaultPath}"/>
-    
     <!-- 静态资源映射，可读取classes下、jar包里的静态文件 -->
     <mvc:resources mapping="/static/**" location="/static/,classpath:/static/" cache-period="31536000"/>
 	

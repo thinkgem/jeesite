@@ -19,7 +19,7 @@
 	
 	<!-- CAS Session Listener -->
 	<listener>
-		<listener-class>com.jeesite.common.shiro.sso.SingleSignOutSessionListener</listener-class>
+		<listener-class>com.jeesite.common.shiro.cas.CasOutSessionListener</listener-class>
 	</listener>
 	
 	<!-- Request Context Listener -->
