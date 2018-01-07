@@ -9,6 +9,7 @@ import java.io.InputStream;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.jeesite.common.lang.ExceptionUtils;
 
@@ -20,6 +21,14 @@ import com.jeesite.common.lang.ExceptionUtils;
 public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	
 	private static ResourceLoader resourceLoader = new DefaultResourceLoader();
+	
+	/**
+	 * 获取资源加载器（可读取jar内的文件）
+	 * @author ThinkGem
+	 */
+	public static ResourceLoader getResourceLoader() {
+		return resourceLoader;
+	}
 	
 	/**
 	 * 获取ClassLoader
@@ -64,11 +73,17 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	}
 	
 	/**
-	 * 获取资源加载器（可读取jar内的文件）
+	 * Spring 搜索资源文件
+	 * @param locationPattern
 	 * @author ThinkGem
 	 */
-	public static ResourceLoader getResourceLoader() {
-		return resourceLoader;
+	public static Resource[] getResources(String locationPattern){
+		try {
+			return new PathMatchingResourcePatternResolver()
+				.getResources(locationPattern);
+		} catch (IOException e) {
+			throw ExceptionUtils.unchecked(e);
+		}
 	}
 	
 }
