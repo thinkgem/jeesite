@@ -17,12 +17,14 @@ public class RolesAuthorizationFilter extends org.apache.shiro.web.filter.authz.
 
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+		super.redirectToLogin(request, response);
+//		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
 	}
 	
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        return PermissionsAuthorizationFilter.redirectTo403Page(request, response);
+		return super.onAccessDenied(request, response);
+//		return PermissionsAuthorizationFilter.redirectTo403Page(request, response);
     }
 	
 }

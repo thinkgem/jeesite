@@ -37,7 +37,6 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>commons-fileupload</groupId>
@@ -47,59 +46,52 @@
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>${commons-beanutils.version}</version>
 		</dependency>
 		
 		<!-- Java serialization -->
 		<dependency>
 			<groupId>com.esotericsoftware</groupId>
 			<artifactId>kryo</artifactId>
-			<version>${esotericsoftware-kryo.version}</version>
+			<version>${esotericsoftware.kryo.version}</version>
 		</dependency>
 		
 		<!-- Org json -->
 		<dependency>
 			<groupId>org.codeartisans</groupId>
 			<artifactId>org.json</artifactId>
-			<version>${codeartisans-json.version}</version>
+			<version>${codeartisans.json.version}</version>
 		</dependency>
 		
 		<!-- Jackson json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>${fasterxml-jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${fasterxml-jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>${fasterxml-jackson.version}</version>
 		</dependency>
 		
 		<!-- Java xml -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
-			<version>${dom4j.version}</version>
 		</dependency>
 		
 		<!-- XPath xml -->
 		<dependency>
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
-			<version>${jaxen.version}</version>
 		</dependency>
 		
 		<!-- Snake YAML -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
-			<version>${snakeyaml.version}</version>
 		</dependency>
 		
 		<!-- Bean To Bean copy -->
@@ -172,13 +164,7 @@
 		<dependency>
 		  <groupId>org.apache.httpcomponents</groupId>
 		  <artifactId>httpclient</artifactId>
-		  <version>4.5.3</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>sun-jaxws</groupId>
-			<artifactId>sjsxp</artifactId>
-			<version>2.1.1</version>
-		</dependency> -->
 		
 		<!-- Jsoup HTTP -->
 		<dependency>
@@ -242,31 +228,26 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- common-logging 实际调用 slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- jdk logging 实际调用 slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- log4j 实际调用 slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- slf4j logback 实现 -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
 		</dependency>
 		<!-- LOGGING end -->
 		
@@ -274,31 +255,26 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		
 		<!-- Bean validate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${validator.version}</version>
 		</dependency>
 		
 		<!-- JUnit Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		
 	</dependencies>

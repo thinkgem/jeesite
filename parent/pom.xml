@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-		
+	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
 	<version>4.0-SNAPSHOT</version>
@@ -12,49 +12,36 @@
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.9.RELEASE</version>
+	</parent>
+	
 	<properties>
 		
 		<!-- common version setting -->
 		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-io.version>2.5</commons-io.version>
-		<commons-codec.version>1.9</commons-codec.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
-		<commons-beanutils.version>1.9.2</commons-beanutils.version>
-		<esotericsoftware-kryo.version>4.0.0</esotericsoftware-kryo.version>
-		<codeartisans-json.version>20130603</codeartisans-json.version>
-		<fasterxml-jackson.version>2.8.6</fasterxml-jackson.version>
-		<dom4j.version>1.6.1</dom4j.version>
-		<jaxen.version>1.1.6</jaxen.version>
-		<json-lib.version>2.4</json-lib.version>
-		<snakeyaml.version>1.17</snakeyaml.version>
+		<esotericsoftware.kryo.version>4.0.0</esotericsoftware.kryo.version>
+		<codeartisans.json.version>20130603</codeartisans.json.version>
 		<dozer.version>5.5.1</dozer.version>
-		<junit.version>4.12</junit.version>
 		<poi.version>3.14</poi.version>
 		
 		<!-- framework version setting -->
-		<slf4j.version>1.7.25</slf4j.version>
-		<logback.version>1.2.3</logback.version>
-		<spring.version>4.3.13.RELEASE</spring.version>
-		<aop-aspectj.version>1.7.4</aop-aspectj.version>
-		<aop-cglib.version>3.1</aop-cglib.version>
 		<mybatis.version>3.4.5</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
 		<druid.version>1.1.3</druid.version>
 		<shiro.version>1.4.0</shiro.version>
 		<beetl.version>2.7.11-SNAPSHOT</beetl.version>
-		<ehcache.version>2.6.11</ehcache.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
-		<validator.version>5.2.4.Final</validator.version>
-		<jedis.version>2.9.0</jedis.version>
-		<dbunit.version>2.5.2</dbunit.version>
 		<quartz.version>2.2.3</quartz.version>
 		
 		<!-- environment setting -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> 
 		<java.version>1.7</java.version>
-		<downloadSources>false</downloadSources>
-		<downloadJavadocs>false</downloadJavadocs>
+		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 	</properties>
 	
@@ -64,7 +51,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- WEB end -->
@@ -79,10 +65,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
 					<showWarnings>true</showWarnings>
 					<compilerArguments>
 <!-- 						<verbose /> 输出有关编译器正在执行的操作的消息 -->
@@ -95,7 +78,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<archive>
@@ -130,35 +112,30 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
 			</plugin>
 			
 			<!-- install插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
-				<version>2.5.2</version>
 			</plugin>
 			
 			<!-- clean插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
 			</plugin>
 			
 			<!-- ant插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
 			</plugin>
 			
 			<!-- dependency插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.0.2</version>
 			</plugin>
 			
 		</plugins>
@@ -171,12 +148,10 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.0.0</version>
 					<configuration>
 						<packagingExcludes></packagingExcludes>
 						<warSourceExcludes></warSourceExcludes>
 						<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
-						<!-- <webXml>${project.basedir}/target/jspweb.xml</webXml> -->
 						<warName>${project.artifactId}</warName>
 						<archive>
 							<addMavenDescriptor>false</addMavenDescriptor>
@@ -188,10 +163,9 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.9</version>
 					<configuration>
-						<downloadSources>${downloadSources}</downloadSources>
-						<downloadJavadocs>${downloadJavadocs}</downloadJavadocs>
+						<downloadSources>${eclipse-plugin-download-sources}</downloadSources>
+						<downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
 						<wtpversion>2.0</wtpversion>
 						<jeeversion>6.0</jeeversion>
 						<additionalConfig>
@@ -212,7 +186,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.4</version>
 					<configuration>
 				        <aggregate>true</aggregate>
 					</configuration>
@@ -270,47 +243,6 @@
 					</configuration>
 				</plugin>
 				
-				<!-- 这个插件的配置只用于存储Eclipse m2e设置。它没有影响Maven构建本身。 -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-javadoc-plugin</artifactId>
-										<versionRange>[2.10.4,)</versionRange>
-										<goals>
-											<goal>jar</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-dependency-plugin</artifactId>
-										<versionRange>[2.10,)</versionRange>
-										<goals>
-											<goal>
-												copy-dependencies
-											</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			
 			</plugins>
 			
 		</pluginManagement>

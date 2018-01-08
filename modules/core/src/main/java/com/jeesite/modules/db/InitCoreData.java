@@ -49,7 +49,6 @@ import com.jeesite.modules.sys.service.UserService;
  * @author ThinkGem
  * @version 2017-10-22
  */
-//@Commit
 public class InitCoreData extends BaseInitDataTests {
 	
 	@Override
