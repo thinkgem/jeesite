@@ -78,10 +78,15 @@ jdbc:
 
 # Redis 配置
 redis: 
-
+  
+  # 是否启用 Redis
+  enable: false
+  
   # Redis 连接参数
-  host: 127.0.0.1
+  host: 192.168.11.12
   port: 6379
+  isSSL: false
+  timeout: 2000
   password: 1234
   database: 0
   
@@ -92,6 +97,9 @@ redis:
   pool:
     maxIdle: 3
     maxTotal: 20
+
+  # 是否启用Redis系统缓存及会话
+  cacheAndSession: false
 
 # Mapper文件刷新线程
 mapperRefresh:
