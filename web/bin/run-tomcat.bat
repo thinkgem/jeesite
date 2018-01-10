@@ -4,31 +4,29 @@ rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
 rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
-title %cd%
 echo.
-echo [信息] 使用Jetty插件运行Web工程。
+echo [信息] 使用 Spring Boot Tomcat 运行 Web 工程。
 echo.
 rem pause
 rem echo.
 
+%~d0
 cd %~dp0
-cd ..
+
+cd ../
+title %cd%
+
 set currPath=%cd%
 
 set MAVEN_OPTS=%MAVEN_OPTS% -Xms256m -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
 
-if exist "../parent/pom.xml" (
-	cd ../parent
-	call mvn clean install -Dmaven.test.skip=true
-)
-
-if exist "../modules/pom.xml" (
-	cd ../modules
-	call mvn clean install -Dmaven.test.skip=true
+if exist "../package/pom.xml" (
+	cd ../package
+	call mvn clean install -Dmaven.test.skip=true -Ppackage -U
 )
 
 cd %currPath%
-call mvn jetty:run -D maven.javadoc.skip=true -U
 
-cd bin
+call mvn clean spring-boot:run -U
+
 pause

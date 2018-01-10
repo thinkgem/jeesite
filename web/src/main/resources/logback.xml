@@ -3,6 +3,9 @@
 
 	<!-- Log file path ../../../../../../../ to disk root -->
 	<property name="log.path" value="${logPath:-../../../../../../../}/logs" />
+	
+	<!-- Spring boot default -->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

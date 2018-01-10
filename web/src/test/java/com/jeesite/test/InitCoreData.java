@@ -4,15 +4,17 @@
 package com.jeesite.test;
 
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.ContextConfiguration;
+
+import com.jeesite.config.Application;
 
 /**
  * 初始化核心表数据
  * @author ThinkGem
  * @version 2017-10-22
  */
-@ContextConfiguration(locations={"classpath*:/spring/spring-context-test.xml"})
+@SpringBootTest(classes=Application.class)
 @Commit
 public class InitCoreData extends com.jeesite.modules.db.InitCoreData {
 	

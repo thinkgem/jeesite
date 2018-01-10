@@ -5,15 +5,19 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [信息] 打包Web工程，生成war/jar包文件。
+echo [信息] 运行 Web 工程。
 echo.
-pause
-echo.
+rem pause
+rem echo.
 
 %~d0
 cd %~dp0
 
 cd ../
-call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
+title %cd%
+
+set JAVA_OPTS= -Xms256m -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
+
+java -jar target/jeesite-web-4.0-SNAPSHOT.war
 
 pause

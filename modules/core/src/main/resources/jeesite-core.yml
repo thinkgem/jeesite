@@ -80,7 +80,7 @@ jdbc:
 redis: 
   
   # 是否启用 Redis
-  enable: false
+  enabled: false
   
   # Redis 连接参数
   host: 192.168.11.12
@@ -100,14 +100,6 @@ redis:
 
   # 是否启用Redis系统缓存及会话
   cacheAndSession: false
-
-# Mapper文件刷新线程
-mapperRefresh:
-
-  enabled: true
-  delaySeconds: 60
-  sleepSeconds: 3
-  mappingPath: mappings
 
 #============================#
 #===== System settings ======#
@@ -130,6 +122,12 @@ frontPath: /f
 
 #索引页路径
 defaultPath: ${adminPath}/login
+
+# 分页配置
+page:
+
+  # 分页默认大小
+  pageSize: 20
 
 # 用户相关参数
 user:
@@ -184,12 +182,6 @@ user:
 
   # 集团模式（多公司、多租户、SAAS模式）
   useCorpModel: false
-
-# 分页配置
-page:
-
-  # 分页默认大小
-  pageSize: 20
 
 # 任务调度
 job:
@@ -311,6 +303,14 @@ mybatis:
   # 扫描基础包设置（Aliases、@MyBatisDao），如果多个，用“,”分隔
   scanBasePackage: com.jeesite.modules
   
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
+      delaySeconds: 60
+      sleepSeconds: 3
+      mappingPath: mappings
+  
 # 缓存设置
 ehcache:
 
@@ -321,6 +321,11 @@ ehcache:
   # 清理缓存的缓存名称
   clearNames: sysCache,userCache,corpCache,cmsCache,pageCachingFilter
 
+  # 页面缓存配置
+  pageCaching:
+    enabled: false
+    urlPatterns: "*.html"
+  
 # Web 相关
 web:
   
@@ -332,6 +337,17 @@ web:
     # 引入页面为不：'/themes/'+themeName+'/include/footer.html'
     themeName: default
 
+  # MVC 拦截器
+  interceptor:
+    
+    # 后台管理日志记录拦截器
+    log:
+      enabled: true
+    
+    # 前台自动切换到手机视图拦截器
+    mobile:
+      enabled: false
+  
   # 静态文件后缀，过滤静态文件，以提高访问性能。
   staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
   
