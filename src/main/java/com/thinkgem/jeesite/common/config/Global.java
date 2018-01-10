@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.jeesite.common.config;
+package com.thinkgem.jeesite.common.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,15 @@ import org.springframework.core.io.DefaultResourceLoader;
 import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
 
-import com.jeesite.common.utils.PropertiesLoader;
-import com.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.utils.PropertiesLoader;
+import com.thinkgem.jeesite.common.utils.StringUtils;
+
+/**
+ * 全局配置类 懒汉式单例类.在第一次调用的时候实例化自己
+ * 
+ * @author ThinkGem,长春叭哥
+ * @version 2018年1月5日
+ */
 
 /**
  * 全局配置类 懒汉式单例类.在第一次调用的时候实例化自己
@@ -22,9 +29,7 @@ import com.jeesite.common.utils.StringUtils;
  */
 public class Global {
 
-	private Global() {
-
-	}
+	private Global() {}
 
 	/**
 	 * 当前对象实例
@@ -32,13 +37,16 @@ public class Global {
 	private static Global global = null;
 
 	/**
-	 * 静态工厂方法 获取当前对象实例
+	 * 静态工厂方法 获取当前对象实例 多线程安全单例模式(使用双重同步锁)
 	 */
-	
-	public static Global getInstance() {
+
+	public static synchronized Global getInstance() {
 
 		if (global == null) {
-			global = new Global();
+			synchronized (Global.class) {
+				if (global == null)
+					global = new Global();
+			}
 		}
 		return global;
 	}
