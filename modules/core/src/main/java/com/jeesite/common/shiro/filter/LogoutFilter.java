@@ -29,31 +29,30 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-		return super.preHandle(request, response);
-//		try{
-//			Subject subject = getSubject(request, response);
-//	        String redirectUrl = getRedirectUrl(request, response, subject);
-//	        //try/catch added for SHIRO-298:
-//	        try {
-//	        	// 记录用户退出日志
-//	    		LogUtils.saveLog(ServletUtils.getRequest(), "系统退出");
-//	    		// 退出登录	
-//	    		subject.logout();
-//	        } catch (SessionException ise) {
-//	            log.debug("Encountered session exception during logout.  This can generally safely be ignored.", ise);
-//	        }
-//	        
-//	        // 如果是Ajax请求，返回Json字符串。
-//	 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
-//	 			ServletUtils.renderResult((HttpServletResponse)response, Global.TRUE, "退出成功！");
-//	 			return false;
-//	 		}
-//	     	
-//	        issueRedirect(request, response, redirectUrl);
-//		}catch(Exception e){
-//			log.debug("Encountered session exception during logout.  This can generally safely be ignored.", e);
-//		}
-//		return false;
+		try{
+			Subject subject = getSubject(request, response);
+	        String redirectUrl = getRedirectUrl(request, response, subject);
+	        //try/catch added for SHIRO-298:
+	        try {
+	        	// 记录用户退出日志
+	    		LogUtils.saveLog(ServletUtils.getRequest(), "系统退出");
+	    		// 退出登录	
+	    		subject.logout();
+	        } catch (SessionException ise) {
+	            log.debug("Encountered session exception during logout.  This can generally safely be ignored.", ise);
+	        }
+	        
+	        // 如果是Ajax请求，返回Json字符串。
+	 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
+	 			ServletUtils.renderResult((HttpServletResponse)response, Global.TRUE, "退出成功！");
+	 			return false;
+	 		}
+	     	
+	        issueRedirect(request, response, redirectUrl);
+		}catch(Exception e){
+			log.debug("Encountered session exception during logout.  This can generally safely be ignored.", e);
+		}
+		return false;
 	}
 	
 	/**
@@ -61,12 +60,12 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	 */
 	@Override
 	protected String getRedirectUrl(ServletRequest request, ServletResponse response, Subject subject) {
+		String url = Global.getProperty("shiro.logoutUrl");
+		// 如果配置了登出之后跳转的url，并且url不能为 ${adminPath}/logout 否则会造成死循环。
+		if (StringUtils.isNoneBlank(url) && !url.equals((Global.getAdminPath()+"/logout"))){
+			return url;
+		}
 		return super.getRedirectUrl(request, response, subject);
-//		String url = Global.getProperty("shiro.logoutUrl");
-//		// 如果配置了登出之后跳转的url，并且url不能为 ${adminPath}/logout 否则会造成死循环。
-//		if (StringUtils.isNoneBlank(url) && !url.equals((Global.getAdminPath()+"/logout"))){
-//			return url;
-//		}
 	}
 	
 }

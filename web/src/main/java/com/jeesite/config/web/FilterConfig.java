@@ -3,17 +3,19 @@
  */
 package com.jeesite.config.web;
 
+import javax.servlet.Filter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.filter.RequestContextFilter;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.common.shiro.web.ShiroFilterFactoryBean;
 import com.jeesite.common.web.PageCachingFilter;
 
 /**
@@ -28,13 +30,13 @@ public class FilterConfig {
 	 * Encoding Filter
 	 */
 	@Bean
+	@Order(1000)
 	public FilterRegistrationBean characterEncodingFilter() {
 		FilterRegistrationBean bean = new FilterRegistrationBean();
 		bean.setFilter(new CharacterEncodingFilter());
 		bean.addInitParameter("encoding", "UTF-8");
 		bean.addInitParameter("forceEncoding", "true");
 		bean.addUrlPatterns("/*");
-		bean.setOrder(1000);
 		return bean;
 	}
 
@@ -42,6 +44,7 @@ public class FilterConfig {
 	 * PageCache Filter, cache .html suffix.
 	 */
 	@Bean
+	@Order(2000)
 	@ConditionalOnProperty(name = "ehcache.pageCaching.enabled", havingValue = "true")
 	public FilterRegistrationBean pageCachingFilter(EhCacheManagerFactoryBean ehCacheManager) {
 		FilterRegistrationBean bean = new FilterRegistrationBean();
@@ -51,33 +54,20 @@ public class FilterConfig {
 		bean.addInitParameter("cacheName", "pageCachingFilter");
 		bean.addUrlPatterns(StringUtils.split(Global.getProperty(
 				"ehcache.pageCaching.urlPatterns"), ","));
-		bean.setOrder(2000);
 		return bean;
 	}
 
 	/**
 	 * Apache Shiro Filter
+	 * @throws Exception 
 	 */
 	@Bean
-	public FilterRegistrationBean shiroFilterProxy() {
+	@Order(3000)
+	public FilterRegistrationBean shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
 		FilterRegistrationBean bean = new FilterRegistrationBean();
-		bean.setFilter(new DelegatingFilterProxy("shiroFilter"));
-		bean.addInitParameter("targetFilterLifecycle", "true");
+		bean.setFilter((Filter) shiroFilter.getInstance());
 		bean.addUrlPatterns("/*");
-		bean.setOrder(3000);
 		return bean;
 	}
-
-	/**
-	 * Request Context Filter 需要放在shiroFilter后，否则request获取不到session
-	 */
-	@Bean
-	public FilterRegistrationBean requestContextFilter() {
-		FilterRegistrationBean bean = new FilterRegistrationBean();
-		bean.setFilter(new RequestContextFilter());
-		bean.addUrlPatterns("/*");
-		bean.setOrder(4000);
-		return bean;
-	}
-
+	
 }

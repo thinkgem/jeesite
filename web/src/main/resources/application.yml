@@ -1,3 +1,10 @@
+spring:
+
+  profiles:
+    active: default
+    
+  main:
+    banner-mode: "off"
 
 server:
 
@@ -5,10 +12,6 @@ server:
   context-path: /js
   tomcat:
     uri-encoding: UTF-8
-
-spring:
-  main:
-    banner-mode: "off"
 
 debug: true
 
