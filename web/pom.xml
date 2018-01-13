@@ -19,7 +19,7 @@
 	
 	<properties>
 		
-		<start-class>com.jeesite.config.Application</start-class>
+		<start-class>com.jeesite.modules.config.Application</start-class>
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		

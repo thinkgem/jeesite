@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.config;
+package com.jeesite.modules.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ import com.jeesite.common.io.PropertiesUtils;
  * @version 2018-1-8
  */
 @Profile("default")
-@SpringBootApplication(scanBasePackages={"com.jeesite.config"})
+@SpringBootApplication(scanBasePackages={"com.jeesite.modules"})
 public class Application extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {

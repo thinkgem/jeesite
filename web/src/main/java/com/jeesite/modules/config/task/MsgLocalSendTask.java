@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.config.task;
+package com.jeesite.modules.config.task;
 
 /**
  * 消息发送服务，如果需要支持定时任务，则要在作业管理里添加该任务：msgLocalSendTask.execute(); 

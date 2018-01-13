@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.config.web;
+package com.jeesite.modules.config.web;
 
 import javax.servlet.Filter;
 

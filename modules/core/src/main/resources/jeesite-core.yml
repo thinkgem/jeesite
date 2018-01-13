@@ -132,13 +132,13 @@ page:
 # 用户相关参数
 user:
 
-  # 指定超级管理员编号（实施人员，开发团队使用的用户）
-  superAdminCode: thinkgem
+  # 指定超级管理员编号（研发团队使用的账号）
+  superAdminCode: system
 
   # 超级管理员获取菜单的最小权重（默认20；>=40二级管理员；>=60系统管理员；>=80超级管理员）
   superAdminGetMenuMinWeight: 40
 
-  # 系统管理员角色编号（客户方使用的角色，客户方管理员）
+  # 系统管理员角色编号（客户方管理员使用的角色）
   corpAdminRoleCode: corpAdmin
 
   # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...）

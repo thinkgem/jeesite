@@ -682,7 +682,7 @@ $.layout.defaults = {
 ,	inset:						null		// custom container-inset values (override padding)
 ,	scrollToBookmarkOnLoad:		true		// after creating a layout, scroll to bookmark in URL (.../page.htm#myBookmark)
 ,	resizeWithWindow:			true		// bind thisLayout.resizeAll() to the window.resize event
-,	resizeWithWindowDelay:		200			// delay calling resizeAll because makes window resizing very jerky
+,	resizeWithWindowDelay:		50			// delay calling resizeAll because makes window resizing very jerky
 ,	resizeWithWindowMaxDelay:	0			// 0 = none - force resize every XX ms while window is being resized
 ,	maskPanesEarly:				false		// true = create pane-masks on resizer.mouseDown instead of waiting for resizer.dragstart
 ,	onresizeall_start:			null		// CALLBACK when resizeAll() STARTS	- NOT pane-specific

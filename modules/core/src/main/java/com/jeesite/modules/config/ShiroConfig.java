@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.config.common;
+package com.jeesite.modules.config;
 
 import java.util.Map;
 

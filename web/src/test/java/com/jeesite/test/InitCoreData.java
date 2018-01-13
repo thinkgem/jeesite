@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import com.jeesite.config.Application;
+import com.jeesite.modules.config.Application;
 
 /**
  * 初始化核心表数据
@@ -21,17 +21,17 @@ public class InitCoreData extends com.jeesite.modules.db.InitCoreData {
 	@Test
 	public void initCoreData() throws Exception{
 		initLog();
-//		initConfig();
-//		initModule();
-//		initDict();
-//		initRole();
-//		initMenu();
-//		initUser();
+		initConfig();
+		initModule();
+		initDict();
+		initRole();
+		initMenu();
+		initUser();
 //		initArea();
-//		initOffice();
-//		initCompany();
-//		initPost();
-//		initEmpUser();
+		initOffice();
+		initCompany();
+		initPost();
+		initEmpUser();
 	}
 	
 }
