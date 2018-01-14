@@ -31,7 +31,7 @@ jdbc:
 #  testSql: SELECT 1
   
   # PostgreSql 数据库配置
-#  type: postgre
+#  type: postgresql
 #  driver: org.postgresql.Driver
 #  url: jdbc:postgresql://localhost:5432/jeesite
 #  username: jeesite
@@ -186,11 +186,21 @@ user:
 # 任务调度
 job:
 
-  # 是否自动启动任务调度（集群情况下开启一个服务）
+  # 是否自动启动任务调度（可关闭）
   autoStartup: true
 
   # 任务调度启动延迟设置（单位：秒）（建议设置项目启动完成后的时间）
   startupDelay: 60
+  
+  # 任务调度线程池
+  threadPool:
+    threadCount: 10
+    threadPriority: 5
+
+  # 任务调度集群设置
+  jobStore:
+    isClustered: true
+    clusterCheckinInterval: 1000
 
 # 内容管理
 cms:

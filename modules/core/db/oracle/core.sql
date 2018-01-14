@@ -134,6 +134,7 @@ DROP TABLE js_sys_dict_data CASCADE CONSTRAINTS;
 DROP TABLE js_sys_dict_type CASCADE CONSTRAINTS;
 DROP TABLE js_sys_file_upload CASCADE CONSTRAINTS;
 DROP TABLE js_sys_file_entity CASCADE CONSTRAINTS;
+DROP TABLE js_sys_job_log CASCADE CONSTRAINTS;
 DROP TABLE js_sys_job CASCADE CONSTRAINTS;
 DROP TABLE js_sys_lang CASCADE CONSTRAINTS;
 DROP TABLE js_sys_log CASCADE CONSTRAINTS;
@@ -398,6 +399,21 @@ CREATE TABLE js_sys_job
 	update_date timestamp NOT NULL,
 	remarks nvarchar2(500),
 	PRIMARY KEY (job_name, job_group)
+);
+
+
+-- 作业调度日志表
+CREATE TABLE js_sys_job_log
+(
+	id varchar2(64) NOT NULL,
+	job_name varchar2(64) NOT NULL,
+	job_group varchar2(64) NOT NULL,
+	job_type varchar2(50),
+	job_event varchar2(200),
+	job_message varchar2(500),
+	exception_info clob,
+	create_date timestamp,
+	PRIMARY KEY (id)
 );
 
 
@@ -1134,6 +1150,15 @@ COMMENT ON COLUMN js_sys_job.create_date IS '创建时间';
 COMMENT ON COLUMN js_sys_job.update_by IS '更新者';
 COMMENT ON COLUMN js_sys_job.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_job.remarks IS '备注信息';
+COMMENT ON TABLE js_sys_job_log IS '作业调度日志表';
+COMMENT ON COLUMN js_sys_job_log.id IS '编号';
+COMMENT ON COLUMN js_sys_job_log.job_name IS '任务名称';
+COMMENT ON COLUMN js_sys_job_log.job_group IS '任务组名';
+COMMENT ON COLUMN js_sys_job_log.job_type IS '日志类型';
+COMMENT ON COLUMN js_sys_job_log.job_event IS '日志事件';
+COMMENT ON COLUMN js_sys_job_log.job_message IS '日志信息';
+COMMENT ON COLUMN js_sys_job_log.exception_info IS '异常信息';
+COMMENT ON COLUMN js_sys_job_log.create_date IS '创建时间';
 COMMENT ON TABLE js_sys_lang IS '国际化语言';
 COMMENT ON COLUMN js_sys_lang.id IS '编号';
 COMMENT ON COLUMN js_sys_lang.module_code IS '归属模块';
