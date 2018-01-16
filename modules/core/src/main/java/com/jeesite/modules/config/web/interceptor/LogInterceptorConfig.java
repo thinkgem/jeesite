@@ -6,10 +6,12 @@ package com.jeesite.modules.config.web.interceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.interceptor.LogInterceptor;
 
 /**
@@ -24,17 +26,19 @@ public class LogInterceptorConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LogInterceptor())
-			.addPathPatterns(Global.getAdminPath() + "/**")
-			.excludePathPatterns(Global.getAdminPath() + "/index")
-			.excludePathPatterns(Global.getAdminPath() + "/login")
-			.excludePathPatterns(Global.getAdminPath() + "/**/listData")
-			.excludePathPatterns(Global.getAdminPath() + "/**/treeData")
-			.excludePathPatterns(Global.getAdminPath() + "/file/**")
-			.excludePathPatterns(Global.getAdminPath() + "/tags/**")
-			.excludePathPatterns(Global.getAdminPath() + "/sys/log/**")
-			.excludePathPatterns(Global.getAdminPath() + "/sys/online/count")
-			;
+		InterceptorRegistration registration = registry.addInterceptor(new LogInterceptor());
+		String apps = Global.getProperty("web.interceptor.log.addPathPatterns");
+		String epps = Global.getProperty("web.interceptor.log.excludePathPatterns");
+		for (String uri : StringUtils.split(apps, ",")){
+			if (StringUtils.isNotBlank(uri)){
+				registration.addPathPatterns(StringUtils.trim(uri));
+			}
+		}
+		for (String uri : StringUtils.split(epps, ",")){
+			if (StringUtils.isNotBlank(uri)){
+				registration.excludePathPatterns(StringUtils.trim(epps));
+			}
+		}
 	}
 
 }

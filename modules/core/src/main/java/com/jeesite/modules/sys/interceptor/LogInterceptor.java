@@ -16,6 +16,7 @@ import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.modules.sys.utils.LogUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 日志拦截器
@@ -52,7 +53,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 			Object handler, Exception ex) throws Exception {
 
 		// 保存日志
-		LogUtils.saveLog(request, handler, ex, null);
+		LogUtils.saveLog(UserUtils.getUser(), request, handler, ex, null, null);
 		
 		// 打印JVM信息。
 		if (logger.isDebugEnabled()){

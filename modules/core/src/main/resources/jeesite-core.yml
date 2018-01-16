@@ -56,9 +56,6 @@ jdbc:
     # 最大连接数
     maxActive: 20
 
-  # 表名前缀
-  tablePrefix: js_
-
 #  # 多数数据源名称列表，调用方式：DataSourceHolder.setDataSourceName("ds2")
 #  dataSourceNames: ds2
 #  
@@ -69,13 +66,23 @@ jdbc:
 #    url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
 #    username: jeesite
 #    password: jeesite
-#    encryptUsername: false
-#    encryptPassword: true
+#    testSql: ~
+#    encrypt:
+#      username: false
+#      password: true
 #    pool:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
 
+  # 表名前缀
+  tablePrefix: js_
+
+  # Druid连接池监控
+  druid:
+    stat:
+      enabled: true
+  
 # Redis 配置
 redis: 
   
@@ -353,11 +360,25 @@ web:
     # 后台管理日志记录拦截器
     log:
       enabled: true
+      addPathPatterns: >
+        ${adminPath}/**
+      excludePathPatterns: >
+        ${adminPath}/index,
+        ${adminPath}/login,
+        ${adminPath}/**/listData,
+        ${adminPath}/**/treeData,
+        ${adminPath}/file/**,
+        ${adminPath}/tags/*,
+        ${adminPath}/sys/log/**,
+        ${adminPath}/sys/online/count
     
     # 前台自动切换到手机视图拦截器
     mobile:
       enabled: false
-  
+      addPathPatterns: >
+        ${frontPath}/**
+      excludePathPatterns: ~
+        
   # 静态文件后缀，过滤静态文件，以提高访问性能。
   staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
   

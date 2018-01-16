@@ -20,6 +20,9 @@
 	<properties>
 		
 		<start-class>com.jeesite.modules.config.Application</start-class>
+		
+		<!-- environment setting -->
+		<java.version>1.8</java.version>
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		

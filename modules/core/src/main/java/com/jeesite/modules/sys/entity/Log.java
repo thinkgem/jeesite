@@ -39,6 +39,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 		@Column(name="biz_type", 		attrName="bizType", 		label="业务类型"),
 		@Column(name="remote_addr", 	attrName="remoteAddr", 		label="操作IP地址"),
 		@Column(name="server_addr", 	attrName="serverAddr", 		label="请求服务器地址"),
+		@Column(name="is_exception", 	attrName="isException", 	label="是否异常"),
 		@Column(name="exception_info", 	attrName="exceptionInfo", 	label="异常信息"),
 		@Column(name="user_agent", 		attrName="userAgent", 		label="用户代理"),
 		@Column(name="device_name", 	attrName="deviceName", 		label="设备名称/操作系统", queryType=QueryType.LIKE),
@@ -47,9 +48,11 @@ import com.jeesite.modules.sys.utils.UserUtils;
 )
 public class Log extends DataEntity<Log> {
 
-	// 日志类型（1：接入日志；2：错误日志）
-	public static final String TYPE_ACCESS = "1";
-	public static final String TYPE_EXCEPTION = "2";
+	// 日志类型（access：接入日志；update：修改日志；select：查询日志；loginLogout：登录登出；）
+	public static final String TYPE_ACCESS = "access";
+	public static final String TYPE_UPDATE = "update";
+	public static final String TYPE_SELECT = "select";
+	public static final String TYPE_LOGIN_LOGOUT = "loginLogout";
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -62,6 +65,7 @@ public class Log extends DataEntity<Log> {
 	private String bizType;			// 业务类型
 	private String remoteAddr;		// 操作IP地址
 	private String serverAddr;		// 请求服务器地址
+	private String isException;		// 是否有异常
 	private String exceptionInfo;	// 异常信息
 	private String userAgent;		// 用户代理
 	private String deviceName;		// 设备名称/操作系统
@@ -165,6 +169,14 @@ public class Log extends DataEntity<Log> {
 		this.serverAddr = serverAddr;
 	}
 	
+	public String getIsException() {
+		return isException;
+	}
+
+	public void setIsException(String isException) {
+		this.isException = isException;
+	}
+
 	public String getExceptionInfo() {
 		return exceptionInfo;
 	}

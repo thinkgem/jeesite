@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
@@ -17,19 +18,18 @@ import org.springframework.web.method.HandlerMethod;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.lang.ExceptionUtils;
+import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.MapperHelper;
 import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.utils.SpringUtils;
-import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.common.web.http.UserAgentUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.LogService;
 import com.jeesite.modules.sys.service.MenuService;
-import com.jeesite.modules.sys.utils.UserUtils;
 
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -54,59 +54,54 @@ public class LogUtils {
 	/**
 	 * 保存日志
 	 */
-	public static void saveLog(String title){
-		saveLog(null, null, null, title);
+	public static void saveLog(HttpServletRequest request, String logTitle, String logType){
+		saveLog(UserUtils.getUser(), request, null, null, logTitle, logType);
 	}
 	
 	/**
 	 * 保存日志
 	 */
-	public static void saveLog(HttpServletRequest request, String title){
-		saveLog(request, null, null, title);
-	}
-	
-	/**
-	 * 保存日志
-	 */
-	public static void saveLog(HttpServletRequest request, Object handler, Exception ex, String title){
-		saveLog(null, request, handler, ex, title);
-	}
-	
-	/**
-	 * 保存日志
-	 */
-	public static void saveLog(User user, HttpServletRequest request, Object handler, Exception ex, String title){
-		if (user == null){
-			user = UserUtils.getUser();
+	public static void saveLog(User user, HttpServletRequest request, Object handler, Exception ex, String logTitle, String logType){
+		if (user == null || StringUtils.isBlank(user.getUserCode()) || request == null){
+			return;
 		}
-		if (request == null){
-			request = ServletUtils.getRequest();
-		}
-		if (request != null && user != null && StringUtils.isNotBlank(user.getUserCode())){
-			Log log = new Log();
-			log.setLogTitle(title);
-			Throwable throwable = ex != null ? ex : ExceptionUtils.getThrowable(request);
-			log.setLogType(throwable == null ? Log.TYPE_ACCESS : Log.TYPE_EXCEPTION);
-			log.setServerAddr(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
-			log.setRemoteAddr(IpUtils.getRemoteAddr(request));
-			UserAgent userAgent = UserAgentUtils.getUserAgent(request);
-			log.setDeviceName(userAgent.getOperatingSystem().getName());
-			log.setBrowserName(userAgent.getBrowser().getName());
-			log.setUserAgent(request.getHeader("User-Agent"));
-			log.setRequestUri(StringUtils.abbr(request.getRequestURI(), 255));
-			log.setRequestParams(request.getParameterMap());
-			log.setRequestMethod(request.getMethod());
-			if (Global.isUseCorpModel()){
-				log.setCorpCode(user.getCorpCode());
-				log.setCorpName(user.getCorpName());
+		Log log = new Log();
+		log.setLogTitle(logTitle);
+		log.setLogType(logType);
+		if (StringUtils.isBlank(log.getLogType())){
+			String sqlCommandTypes = ObjectUtils.toString(request.getAttribute(SqlCommandType.class.getName()));
+			if (StringUtils.inString(","+sqlCommandTypes+",", ",INSERT,", ",UPDATE,", ",DELETE,")){
+				log.setLogType(Log.TYPE_UPDATE);
+			}else if (StringUtils.inString(","+sqlCommandTypes+",", ",SELECT,")){
+				log.setLogType(Log.TYPE_SELECT);
+			}else{
+				log.setLogType(Log.TYPE_ACCESS);
 			}
-			log.setCurrentUser(user);
-            log.preInsert();
-			
-			// 异步保存日志
-			new SaveLogThread(log, handler, throwable).start();
-            
 		}
+		log.setServerAddr(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
+		log.setRemoteAddr(IpUtils.getRemoteAddr(request));
+		UserAgent userAgent = UserAgentUtils.getUserAgent(request);
+		log.setDeviceName(userAgent.getOperatingSystem().getName());
+		log.setBrowserName(userAgent.getBrowser().getName());
+		log.setUserAgent(request.getHeader("User-Agent"));
+		log.setRequestUri(StringUtils.abbr(request.getRequestURI(), 255));
+		log.setRequestParams(request.getParameterMap());
+		log.setRequestMethod(request.getMethod());
+		if (Global.isUseCorpModel()){
+			log.setCorpCode(user.getCorpCode());
+			log.setCorpName(user.getCorpName());
+		}
+		log.setCurrentUser(user);
+        log.preInsert();
+        
+        // 获取异常对象
+        Throwable throwable = null;
+        if (ex != null){
+        	throwable = ExceptionUtils.getThrowable(request);
+        }
+		
+		// 异步保存日志
+		new SaveLogThread(log, handler, throwable).start();
 	}
 	/**
 	 * 保存日志线程
@@ -173,28 +168,20 @@ public class LogUtils {
 								String[] ps = pnd.getParameterNames(me);
 								if(ps != null && ps.length > 0){
 									log.setBizKey(StringUtils.abbr(log.getRequestParam(ps[0]), 64));
+									log.setBizType(me.getReturnType().getSimpleName());
 									break;
 								}
 							}
 						}
 					}
-					
-					// 最后尝试获取参数为id的值
-					if (StringUtils.isBlank(log.getBizKey())){
-						log.setBizKey(log.getRequestParam("id"));
-					}
-					
 				}
 				log.setLogTitle(Static.menuService.getMenuNamePath(log.getRequestUri(), permission));
 			}
 			if (StringUtils.isBlank(log.getLogTitle())){
-				if (StringUtils.contains(log.getRequestParams(), "taskCommandInfo=")){
-					log.setLogTitle("我的任务-任务办理");
-				}else{
-					log.setLogTitle("未知操作");
-				}
+				log.setLogTitle("未知操作");
 			}
 			// 如果有异常，设置异常信息（将异常对象转换为字符串）
+			log.setExceptionInfo(throwable != null ? Global.YES : Global.NO);
 			log.setExceptionInfo(ExceptionUtils.getStackTraceAsString(throwable));
 			// 如果无地址并无异常日志，则不保存信息
 			if (StringUtils.isBlank(log.getRequestUri()) && StringUtils.isBlank(log.getExceptionInfo())){

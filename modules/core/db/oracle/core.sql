@@ -39,6 +39,11 @@ DROP INDEX idx_sys_file_biz_ud;
 DROP INDEX idx_sys_file_biz_bt;
 DROP INDEX idx_sys_file_biz_bk;
 DROP INDEX idx_sys_job_status;
+DROP INDEX idx_sys_job_log_jn;
+DROP INDEX idx_sys_job_log_jg;
+DROP INDEX idx_sys_job_log_t;
+DROP INDEX idx_sys_job_log_e;
+DROP INDEX idx_sys_job_log_ie;
 DROP INDEX idx_sys_lang_code;
 DROP INDEX idx_sys_lang_type;
 DROP INDEX idx_sys_log_cd;
@@ -46,6 +51,7 @@ DROP INDEX idx_sys_log_cc;
 DROP INDEX idx_sys_log_lt;
 DROP INDEX idx_sys_log_bk;
 DROP INDEX idx_sys_log_bt;
+DROP INDEX idx_sys_log_ie;
 DROP INDEX idx_sys_menu_pc;
 DROP INDEX idx_sys_menu_ts;
 DROP INDEX idx_sys_menu_status;
@@ -411,6 +417,7 @@ CREATE TABLE js_sys_job_log
 	job_type varchar2(50),
 	job_event varchar2(200),
 	job_message varchar2(500),
+	is_exception char(1),
 	exception_info clob,
 	create_date timestamp,
 	PRIMARY KEY (id)
@@ -438,7 +445,7 @@ CREATE TABLE js_sys_lang
 CREATE TABLE js_sys_log
 (
 	id varchar2(64) NOT NULL,
-	log_type char(1) NOT NULL,
+	log_type varchar2(50) NOT NULL,
 	log_title nvarchar2(500) NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_by_name nvarchar2(100) NOT NULL,
@@ -446,10 +453,12 @@ CREATE TABLE js_sys_log
 	request_uri nvarchar2(255),
 	request_method varchar2(10),
 	request_params clob,
+	diff_modify_data clob,
 	biz_key varchar2(64),
 	biz_type varchar2(64),
 	remote_addr varchar2(255) NOT NULL,
 	server_addr varchar2(255) NOT NULL,
+	is_exception char(1),
 	exception_info clob,
 	user_agent nvarchar2(500),
 	device_name varchar2(100),
@@ -888,6 +897,11 @@ CREATE INDEX idx_sys_file_biz_ud ON js_sys_file_upload (update_date);
 CREATE INDEX idx_sys_file_biz_bt ON js_sys_file_upload (biz_type);
 CREATE INDEX idx_sys_file_biz_bk ON js_sys_file_upload (biz_key);
 CREATE INDEX idx_sys_job_status ON js_sys_job (status);
+CREATE INDEX idx_sys_job_log_jn ON js_sys_job_log (job_name);
+CREATE INDEX idx_sys_job_log_jg ON js_sys_job_log (job_group);
+CREATE INDEX idx_sys_job_log_t ON js_sys_job_log (job_type);
+CREATE INDEX idx_sys_job_log_e ON js_sys_job_log (job_event);
+CREATE INDEX idx_sys_job_log_ie ON js_sys_job_log (is_exception);
 CREATE INDEX idx_sys_lang_code ON js_sys_lang (lang_code);
 CREATE INDEX idx_sys_lang_type ON js_sys_lang (lang_type);
 CREATE INDEX idx_sys_log_cd ON js_sys_log (create_by);
@@ -895,6 +909,7 @@ CREATE INDEX idx_sys_log_cc ON js_sys_log (corp_code);
 CREATE INDEX idx_sys_log_lt ON js_sys_log (log_type);
 CREATE INDEX idx_sys_log_bk ON js_sys_log (biz_key);
 CREATE INDEX idx_sys_log_bt ON js_sys_log (biz_type);
+CREATE INDEX idx_sys_log_ie ON js_sys_log (is_exception);
 CREATE INDEX idx_sys_menu_pc ON js_sys_menu (parent_code);
 CREATE INDEX idx_sys_menu_ts ON js_sys_menu (tree_sort);
 CREATE INDEX idx_sys_menu_status ON js_sys_menu (status);
@@ -1157,6 +1172,7 @@ COMMENT ON COLUMN js_sys_job_log.job_group IS '任务组名';
 COMMENT ON COLUMN js_sys_job_log.job_type IS '日志类型';
 COMMENT ON COLUMN js_sys_job_log.job_event IS '日志事件';
 COMMENT ON COLUMN js_sys_job_log.job_message IS '日志信息';
+COMMENT ON COLUMN js_sys_job_log.is_exception IS '是否异常';
 COMMENT ON COLUMN js_sys_job_log.exception_info IS '异常信息';
 COMMENT ON COLUMN js_sys_job_log.create_date IS '创建时间';
 COMMENT ON TABLE js_sys_lang IS '国际化语言';
@@ -1180,10 +1196,12 @@ COMMENT ON COLUMN js_sys_log.create_date IS '创建时间';
 COMMENT ON COLUMN js_sys_log.request_uri IS '请求URI';
 COMMENT ON COLUMN js_sys_log.request_method IS '操作方式';
 COMMENT ON COLUMN js_sys_log.request_params IS '操作提交的数据';
+COMMENT ON COLUMN js_sys_log.diff_modify_data IS '新旧数据比较结果';
 COMMENT ON COLUMN js_sys_log.biz_key IS '业务主键';
 COMMENT ON COLUMN js_sys_log.biz_type IS '业务类型';
 COMMENT ON COLUMN js_sys_log.remote_addr IS '操作IP地址';
 COMMENT ON COLUMN js_sys_log.server_addr IS '请求服务器地址';
+COMMENT ON COLUMN js_sys_log.is_exception IS '是否异常';
 COMMENT ON COLUMN js_sys_log.exception_info IS '异常信息';
 COMMENT ON COLUMN js_sys_log.user_agent IS '用户代理';
 COMMENT ON COLUMN js_sys_log.device_name IS '设备名称/操作系统';

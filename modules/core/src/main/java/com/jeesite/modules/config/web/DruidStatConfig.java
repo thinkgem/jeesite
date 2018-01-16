@@ -3,6 +3,7 @@
  */
 package com.jeesite.modules.config.web;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
  * @version 2017年11月30日
  */
 @Configuration
+@ConditionalOnProperty(name="druid.stat.enabled", havingValue="true", matchIfMissing=true)
 public class DruidStatConfig {
 
 	/**

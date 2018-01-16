@@ -16,8 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.jeesite.test.diff;
+package com.jeesite.common.text;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -45,7 +44,7 @@ import java.util.regex.Pattern;
  * Class containing the diff, match and patch methods.
  * Also contains the behaviour settings.
  */
-public class diff_match_patch {
+public class DiffMatchPatch {
 
   // Defaults.
   // Set these on your diff_match_patch instance to override the defaults.
@@ -1340,8 +1339,9 @@ public class diff_match_patch {
   public String diff_prettyHtml(LinkedList<Diff> diffs) {
     StringBuilder html = new StringBuilder();
     for (Diff aDiff : diffs) {
-      String text = aDiff.text.replace("&", "&amp;").replace("<", "&lt;")
-          .replace(">", "&gt;").replace("\n", "&para;<br>");
+      String text = aDiff.text;
+//      text = text.replace("&", "&amp;").replace("<", "&lt;")
+//      			 .replace(">", "&gt;").replace("\n", "<br>");
       switch (aDiff.operation) {
       case INSERT:
         html.append("<ins style=\"background:#e6ffe6;\">").append(text)

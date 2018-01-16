@@ -5,12 +5,15 @@ package com.jeesite.common.shiro.realm;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.EmpUser;
+import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.UserService;
@@ -55,13 +58,13 @@ public class AuthorizingRealm extends com.jeesite.common.shiro.realm.BaseAuthori
 		userService.updateUserLoginInfo(user);
 		
 		// 记录用户登录日志
-		LogUtils.saveLog(ServletUtils.getRequest(), "系统登录");
+		LogUtils.saveLog(ServletUtils.getRequest(), "系统登录", Log.TYPE_LOGIN_LOGOUT);
 	}
 	
 	@Override
-	public void onLogoutSuccess(User logoutUser) {
+	public void onLogoutSuccess(User logoutUser, HttpServletRequest request) {
 		// 记录用户退出日志
-		LogUtils.saveLog(logoutUser, null, null, null, "系统退出");
+		LogUtils.saveLog(logoutUser, request, null, null, "系统退出", Log.TYPE_LOGIN_LOGOUT);
 	}
 	
 	public void setUserService(UserService userService) {
