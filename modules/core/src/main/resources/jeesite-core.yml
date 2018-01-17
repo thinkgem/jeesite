@@ -365,12 +365,12 @@ web:
       excludePathPatterns: >
         ${adminPath}/index,
         ${adminPath}/login,
+        ${adminPath}/desktop,
+        ${adminPath}/sys/online/count,
         ${adminPath}/**/listData,
         ${adminPath}/**/treeData,
         ${adminPath}/file/**,
-        ${adminPath}/tags/*,
-        ${adminPath}/sys/log/**,
-        ${adminPath}/sys/online/count
+        ${adminPath}/tags/*
     
     # 前台自动切换到手机视图拦截器
     mobile:

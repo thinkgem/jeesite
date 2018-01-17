@@ -1,0 +1,195 @@
+<% layout('/layouts/default.html', {title: '操作日志表管理', libs: ['validate']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${log.isNewRecord ? '新增操作日志表' : '编辑操作日志表'}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${log}" action="${ctx}/sys/log/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">基本信息</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 日志标题：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="logTitle" maxlength="500" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 日志类型：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="logType" dictType="sys_log_type" class="form-control required " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 用户名称：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="createByName" maxlength="100" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 请求URI：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="requestUri" maxlength="255" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 操作方式：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="requestMethod" maxlength="10" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 操作提交的数据：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="requestParams" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 业务主键：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="bizKey" maxlength="64" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 业务类型：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="bizType" maxlength="64" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 操作IP地址：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="remoteAddr" maxlength="255" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> 请求服务器地址：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="serverAddr" maxlength="255" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 是否异常：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="isException" dictType="sys_yes_no" blankOption="true" class="form-control " />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 异常信息：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="exceptionInfo" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 用户代理：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="userAgent" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 设备名称/操作系统：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="deviceName" maxlength="100" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 浏览器名称：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="browserName" maxlength="100" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:log:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

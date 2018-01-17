@@ -36,7 +36,7 @@ public class MobileViewInterceptorConfig extends WebMvcConfigurerAdapter {
 		}
 		for (String uri : StringUtils.split(epps, ",")){
 			if (StringUtils.isNotBlank(uri)){
-				registration.excludePathPatterns(StringUtils.trim(epps));
+				registration.excludePathPatterns(StringUtils.trim(uri));
 			}
 		}
 	}

@@ -39,10 +39,6 @@ public class LogService extends CrudService<LogDao, Log> {
 			log.setCreateDate_lte(DateUtils.addDays(DateUtils.addMonths(log.getCreateDate_gte(), 1), -1));
 		}
 		
-		// 为了方便进行按天查询，设置一天的开始和结束时间（如：开始为一天的0点0分，结束为一天的23点59分）
-		log.setCreateDate_gte(DateUtils.getOfDayFirst(log.getCreateDate_gte()));
-		log.setCreateDate_lte(DateUtils.getOfDayLast(log.getCreateDate_lte()));
-
 		// 普通用户看自己的，管理员看全部的。
 		if (!log.getCurrentUser().isAdmin()){
 			log.setCreateBy(new User(log.getCurrentUser().getUserCode()));

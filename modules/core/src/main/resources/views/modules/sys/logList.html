@@ -1,0 +1,151 @@
+<% layout('/layouts/default.html', {title: '访问日志查询', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-bug"></i> 访问日志查询
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<% if(hasPermi('sys:log:edit')){ %>
+					<a href="${ctx}/sys/log/form" class="btn btn-default btnTool" title="新增操作日志表"><i class="fa fa-plus"></i> 新增</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${log}" action="${ctx}/sys/log/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">日志标题：</label>
+					<div class="control-inline">
+						<#form:input path="logTitle" maxlength="500" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">请求地址：</label>
+					<div class="control-inline">
+						<#form:input path="requestUri" maxlength="255" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">日志类型：</label>
+					<div class="control-inline width-90">
+						<#form:select path="logType" dictType="sys_log_type" class="form-control required " />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">操作账号：</label>
+					<div class="control-inline">
+						<#form:input path="createBy.userCode" maxlength="64" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">操作用户：</label>
+					<div class="control-inline">
+						<#form:input path="createBy.userName" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="form-group">
+					<label class="control-label">是否异常：</label>
+					<div class="control-inline width-90">
+						<#form:select path="isException" dictType="sys_yes_no" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">业务主键：</label>
+					<div class="control-inline">
+						<#form:input path="bizKey" maxlength="64" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">业务类型：</label>
+					<div class="control-inline">
+						<#form:input path="bizType" maxlength="64" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">操作时间：</label>
+					<div class="control-inline">
+						<#form:input path="createDate_gte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
+							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,onpicked:function(){createDate_lte.click()}});"/>
+						&nbsp;--&nbsp;
+						<#form:input path="createDate_lte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
+							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="form-group">
+					<label class="control-label">客户端IP：</label>
+					<div class="control-inline">
+						<#form:input path="remoteAddr" maxlength="255" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">服务器IP：</label>
+					<div class="control-inline">
+						<#form:input path="serverAddr" maxlength="255" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">设备名称：</label>
+					<div class="control-inline">
+						<#form:input path="deviceName" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">浏览器名：</label>
+					<div class="control-inline">
+						<#form:input path="browserName" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">查询</button>
+					<button type="reset" class="btn btn-default btn-sm">重置</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'日志标题', name:'logTitle', index:'a.log_title', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="编辑操作日志表">'+(val ? val : row.id)+'</a>';
+		}},
+		{header:'请求URI', name:'requestUri', index:'a.request_uri', width:200, align:"left"},
+		{header:'操作方式', name:'requestMethod', index:'a.request_method', width:200, align:"left"},
+		{header:'日志类型', name:'logType', index:'a.log_type', width:200, align:"left", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_log_type')}, val, '未知', true);
+		}},
+		{header:'操作账号', name:'createBy.userCode', index:'a.create_by', width:200, align:"left"},
+		{header:'操作用户', name:'createByName.userCode', index:'a.create_by_name', width:200, align:"left"},
+		{header:'是否异常', name:'isException', index:'a.is_exception', width:200, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);
+		}},
+		{header:'业务主键', name:'bizKey', index:'a.biz_key', width:200, align:"left"},
+		{header:'业务类型', name:'bizType', index:'a.biz_type', width:200, align:"left"},
+		{header:'操作时间', name:'createDate', index:'a.create_date', width:200, align:"left"},
+		{header:'客户端IP', name:'remoteAddr', index:'a.remote_addr', width:200, align:"left"},
+		{header:'服务器IP', name:'serverAddr', index:'a.server_addr', width:200, align:"left"},
+		{header:'设备名称', name:'deviceName', index:'a.device_name', width:200, align:"left"},
+		{header:'浏览器名', name:'browserName', index:'a.browser_name', width:200, align:"left"},
+		{header:'操作', name:'actions', width:130, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('sys:log:edit')){ %>
+				actions.push('<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="编辑操作日志表"><i class="fa fa-pencil"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
