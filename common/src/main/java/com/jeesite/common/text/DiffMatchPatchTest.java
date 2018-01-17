@@ -25,14 +25,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
+
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.text.DiffMatchPatch.Diff;
 import com.jeesite.common.text.DiffMatchPatch.LinesToCharsResult;
 import com.jeesite.common.text.DiffMatchPatch.Patch;
 
-import junit.framework.Assert;
-
-@SuppressWarnings("deprecation")
 public class DiffMatchPatchTest {
 
   private DiffMatchPatch dmp;

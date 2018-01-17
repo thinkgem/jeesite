@@ -24,14 +24,14 @@ public class InitCoreData extends com.jeesite.modules.db.InitCoreData {
 		initConfig();
 		initModule();
 		initDict();
-//		initRole();
-//		initMenu();
-//		initUser();
+		initRole();
+		initMenu();
+		initUser();
 //		initArea();
-//		initOffice();
-//		initCompany();
-//		initPost();
-//		initEmpUser();
+		initOffice();
+		initCompany();
+		initPost();
+		initEmpUser();
 	}
 	
 }

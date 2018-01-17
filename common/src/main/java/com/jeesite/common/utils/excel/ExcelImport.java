@@ -131,15 +131,7 @@ public class ExcelImport {
         }else{  
         	throw new ExcelException("文档格式不正确!");
         }
-		if (sheetIndexOrName instanceof Integer || sheetIndexOrName instanceof Long){
-			this.sheet = this.wb.getSheetAt(ObjectUtils.toInteger(sheetIndexOrName));
-		}else{
-			this.sheet = this.wb.getSheet(ObjectUtils.toString(sheetIndexOrName));
-		}
-		if (this.sheet == null){
-			throw new ExcelException("没有找到工作表!");
-		}
-		this.headerNum = headerNum;
+		this.setSheet(sheetIndexOrName, headerNum);
 		log.debug("Initialize success.");
 	}
 	
@@ -170,6 +162,30 @@ public class ExcelImport {
 	}
 
 	/**
+	 * 获取当前工作薄
+	 * @author ThinkGem
+	 */
+	public Workbook getWorkbook() {
+		return wb;
+	}
+	
+	/**
+	 * 设置当前工作表和标题行数
+	 * @author ThinkGem
+	 */
+	public void setSheet(Object sheetIndexOrName, int headerNum) {
+		if (sheetIndexOrName instanceof Integer || sheetIndexOrName instanceof Long){
+			this.sheet = this.wb.getSheetAt(ObjectUtils.toInteger(sheetIndexOrName));
+		}else{
+			this.sheet = this.wb.getSheet(ObjectUtils.toString(sheetIndexOrName));
+		}
+		if (this.sheet == null){
+			throw new ExcelException("没有找到‘"+sheetIndexOrName+"’工作表!");
+		}
+		this.headerNum = headerNum;
+	}
+
+	/**
 	 * 获取行对象
 	 * @param rownum
 	 * @return
@@ -191,7 +207,7 @@ public class ExcelImport {
 	 * @return
 	 */
 	public int getLastDataRowNum(){
-		//return this.sheet.getLastRowNum()+headerNum;
+		//return this.sheet.getLastRowNum() + headerNum;
 		return this.sheet.getLastRowNum() + 1;
 	}
 	
