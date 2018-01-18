@@ -367,7 +367,6 @@ web:
         ${adminPath}/login,
         ${adminPath}/desktop,
         ${adminPath}/sys/online/count,
-        ${adminPath}/**/listData,
         ${adminPath}/**/treeData,
         ${adminPath}/file/**,
         ${adminPath}/tags/*

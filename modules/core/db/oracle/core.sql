@@ -450,7 +450,7 @@ CREATE TABLE js_sys_log
 	create_by varchar2(64) NOT NULL,
 	create_by_name nvarchar2(100) NOT NULL,
 	create_date timestamp NOT NULL,
-	request_uri nvarchar2(255),
+	request_uri nvarchar2(500),
 	request_method varchar2(10),
 	request_params clob,
 	diff_modify_data clob,

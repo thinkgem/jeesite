@@ -246,7 +246,20 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	}
 	
 	/**
-	 * 克隆一个对象
+	 * 克隆一个对象（完全拷贝）
+	 * @param source
+	 */
+	public static Object cloneBean(Object source){
+		if (source == null){
+			return null;
+		}
+    	byte[] bytes = ObjectUtils.serializeKryo(source);
+    	Object target = ObjectUtils.unserializeKryo(bytes);
+	    return target;
+	}
+	
+	/**
+	 * 拷贝一个对象（但是子对象无法拷贝）
 	 * @param source
 	 * @param ignoreProperties
 	 */

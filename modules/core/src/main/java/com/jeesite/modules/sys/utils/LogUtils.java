@@ -70,9 +70,9 @@ public class LogUtils {
 		log.setLogType(logType);
 		if (StringUtils.isBlank(log.getLogType())){
 			String sqlCommandTypes = ObjectUtils.toString(request.getAttribute(SqlCommandType.class.getName()));
-			if (StringUtils.inString(","+sqlCommandTypes+",", ",INSERT,", ",UPDATE,", ",DELETE,")){
+			if (StringUtils.containsAny(","+sqlCommandTypes+",", ",INSERT,", ",UPDATE,", ",DELETE,")){
 				log.setLogType(Log.TYPE_UPDATE);
-			}else if (StringUtils.inString(","+sqlCommandTypes+",", ",SELECT,")){
+			}else if (StringUtils.contains(","+sqlCommandTypes+",", ",SELECT,")){
 				log.setLogType(Log.TYPE_SELECT);
 			}else{
 				log.setLogType(Log.TYPE_ACCESS);
@@ -101,7 +101,7 @@ public class LogUtils {
         }
 		
 		// 异步保存日志
-		new SaveLogThread(log, handler, throwable).start();
+		new SaveLogThread(log, handler, request.getContextPath(), throwable).start();
 	}
 	/**
 	 * 保存日志线程
@@ -110,12 +110,14 @@ public class LogUtils {
 		
 		private Log log;
 		private Object handler;
+		private String contextPath;
 		private Throwable throwable;
 		
-		public SaveLogThread(Log log, Object handler, Throwable throwable){
+		public SaveLogThread(Log log, Object handler, String contextPath, Throwable throwable){
 			super(SaveLogThread.class.getSimpleName());
 			this.log = log;
 			this.handler = handler;
+			this.contextPath = contextPath;
 			this.throwable = throwable;
 		}
 		
@@ -148,6 +150,7 @@ public class LogUtils {
 											String attrName = MapperHelper.getAttrName(c);
 											if (attrName != null){
 												log.setBizKey(log.getRequestParam(attrName));
+												log.setBizType(type.getSimpleName());
 											}
 										} catch (Exception e) {
 											break;
@@ -175,7 +178,17 @@ public class LogUtils {
 						}
 					}
 				}
-				log.setLogTitle(Static.menuService.getMenuNamePath(log.getRequestUri(), permission));
+				String href = log.getRequestUri();
+				if (StringUtils.startsWith(href, contextPath)){
+					href = StringUtils.substringAfter(href, contextPath);
+				}
+				if (StringUtils.startsWith(href, Global.getAdminPath())){
+					href = StringUtils.substringAfter(href, Global.getAdminPath());
+				}
+				if (StringUtils.startsWith(href, Global.getFrontPath())){
+					href = StringUtils.substringAfter(href, Global.getFrontPath());
+				}
+				log.setLogTitle(Static.menuService.getMenuNamePath(href, permission));
 			}
 			if (StringUtils.isBlank(log.getLogTitle())){
 				log.setLogTitle("未知操作");

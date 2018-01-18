@@ -14,7 +14,6 @@ import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.LogDao;
 import com.jeesite.modules.sys.entity.Log;
-import com.jeesite.modules.sys.entity.User;
 
 /**
  * 日志Service
@@ -41,7 +40,7 @@ public class LogService extends CrudService<LogDao, Log> {
 		
 		// 普通用户看自己的，管理员看全部的。
 		if (!log.getCurrentUser().isAdmin()){
-			log.setCreateBy(new User(log.getCurrentUser().getUserCode()));
+			log.setCreateBy(log.getCurrentUser().getUserCode());
 		}
 		
 		return super.findPage(page, log);

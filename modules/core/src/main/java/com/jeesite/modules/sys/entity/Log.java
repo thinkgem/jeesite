@@ -29,8 +29,8 @@ import com.jeesite.modules.sys.utils.UserUtils;
 		@Column(name="id", 				attrName="id", 				label="编码", isPK=true),
 		@Column(name="log_type", 		attrName="logType", 		label="日志类型"),
 		@Column(name="log_title", 		attrName="logTitle", 		label="日志标题", queryType=QueryType.LIKE),
-		@Column(name="create_by", 		attrName="createBy.userCode", label="创建者", isUpdate=false),
-		@Column(name="create_by_name", 	attrName="createBy.userName", label="创建者名称", queryType=QueryType.LIKE),
+		@Column(name="create_by", 		attrName="createBy", 		label="创建者", isUpdate=false),
+		@Column(name="create_by_name", 	attrName="createByName",	label="创建者名称", isUpdate=false, queryType=QueryType.LIKE),
 		@Column(name="create_date", 	attrName="createDate", 		label="创建时间", isUpdate=false, isQuery=false),
 		@Column(name="request_uri", 	attrName="requestUri", 		label="请求URI", queryType=QueryType.LIKE),
 		@Column(name="request_method", 	attrName="requestMethod", 	label="操作方式"),
@@ -101,7 +101,7 @@ public class Log extends DataEntity<Log> {
 		this.logTitle = logTitle;
 	}
 	
-	@Length(min=0, max=255, message="请求URI长度不能超过 255 个字符")
+	@Length(min=0, max=500, message="请求URI长度不能超过 500 个字符")
 	public String getRequestUri() {
 		LoginInfo p = UserUtils.getLoginInfo();
 		if (p != null && "1".equals(p.getParam("l"))){

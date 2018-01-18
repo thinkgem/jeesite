@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>109</x>
-	<y>1843</y>
+	<y>1903</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -2776,8 +2776,8 @@
 			<type>longtext</type>
 		</word>
 		<word>
-			<id>f03c7f6fd8e06c46193fbbb4f0bd913293f055dc</id>
-			<length>255</length>
+			<id>f638d63bc277ad1057f0b0bfad3358ca3ba54294</id>
+			<length>500</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -13910,7 +13910,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>f03c7f6fd8e06c46193fbbb4f0bd913293f055dc</word_id>
+					<word_id>f638d63bc277ad1057f0b0bfad3358ca3ba54294</word_id>
 					<id>34aa444468170790d3bd52b0d8a5885776813978</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
