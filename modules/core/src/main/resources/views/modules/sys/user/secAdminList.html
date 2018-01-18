@@ -70,7 +70,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'登录账号', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" data-title="管理数据权限">'+(val ? val : row.id)+'</a>';
+			return '<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" data-title="管理数据权限">'+(val||row.id)+'</a>';
 		}},
 		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
 		{header:'电子邮箱', name:'email', index:'a.email', width:200, align:"center"},

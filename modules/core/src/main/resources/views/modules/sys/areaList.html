@@ -52,7 +52,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'区域名称', name:'areaName', index:'a.area_name', width:230, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.areaCode+' ) '+'<a href="${ctx}/sys/area/form?areaCode='+row.areaCode+'" class="btnList" data-title="编辑区域">'+(val ? val : row.id)+'</a>';
+			return '( '+row.areaCode+' ) '+'<a href="${ctx}/sys/area/form?areaCode='+row.areaCode+'" class="btnList" data-title="编辑区域">'+(val||row.id)+'</a>';
 		}},
 		{header:'区域类型', name:'areaType', index:'a.area_type', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_area_type')}, val, '未知', true);

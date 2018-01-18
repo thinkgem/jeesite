@@ -58,7 +58,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'公司名称', name:'companyName', index:'a.company_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/company/form?companyCode='+row.companyCode+'" class="btnList" data-title="编辑公司">'+(val ? val : row.id)+'</a>';
+			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/company/form?companyCode='+row.companyCode+'" class="btnList" data-title="编辑公司">'+(val||row.id)+'</a>';
 		}},
 		{header:'公司全称', name:'fullName', index:'a.full_name', width:200, align:"left"},
 		{header:'排序号', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},

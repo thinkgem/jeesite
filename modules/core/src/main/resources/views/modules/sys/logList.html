@@ -7,9 +7,6 @@
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
-				<% if(hasPermi('sys:log:edit')){ %>
-					<a href="${ctx}/sys/log/form" class="btn btn-default btnTool" title="新增操作日志表"><i class="fa fa-plus"></i> 新增</a>
-				<% } %>
 			</div>
 		</div>
 		<div class="box-body">
@@ -33,12 +30,6 @@
 						<#form:select path="logType" dictType="sys_log_type" blankOption="true" class="form-control required " />
 					</div>
 				</div>
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class="control-label">操作账号：</label> -->
-<!-- 					<div class="control-inline"> -->
-<!-- 						<#form:input path="createBy" maxlength="64" class="form-control width-90"/> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 				<div class="form-group">
 					<label class="control-label">操作用户：</label>
 					<div class="control-inline width-120">
@@ -82,24 +73,6 @@
 						<#form:input path="remoteAddr" maxlength="255" class="form-control width-90"/>
 					</div>
 				</div>
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class="control-label">服务器IP：</label> -->
-<!-- 					<div class="control-inline"> -->
-<!-- 						<#form:input path="serverAddr" maxlength="255" class="form-control width-90"/> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class="control-label">设备名称：</label> -->
-<!-- 					<div class="control-inline"> -->
-<!-- 						<#form:input path="deviceName" maxlength="100" class="form-control width-90"/> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label class="control-label">浏览器名：</label> -->
-<!-- 					<div class="control-inline"> -->
-<!-- 						<#form:input path="browserName" maxlength="100" class="form-control width-90"/> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-sm">查询</button>
 					<button type="reset" class="btn btn-default btn-sm">重置</button>
@@ -117,7 +90,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'日志标题', name:'logTitle', index:'a.log_title', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="日志详情">'+(val ? val : row.id)+'</a>';
+			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="日志详情">'+(val||row.id)+'</a>';
 		}},
 		{header:'请求地址', name:'requestUri', index:'a.request_uri', width:260, align:"left", formatter: function(val, obj, row, act){
 			return '<span title="['+row.requestMethod+'] '+row.serverAddr+row.requestUri+'">'+ row.requestUri;

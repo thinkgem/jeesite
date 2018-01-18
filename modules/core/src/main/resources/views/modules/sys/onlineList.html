@@ -1,0 +1,77 @@
+<% layout('/layouts/default.html', {title: '在线用户', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-social-twitter"></i> 在线用户
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" action="${ctx}/sys/online/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">操作用户：</label>
+					<div class="control-inline width-160">
+						<#form:listselect id="userSelect" title="用户" path="userCode"
+							url="${ctx}/sys/user/userSelect?userType=" allowClear="false" 
+							checkbox="false" itemCode="userCode" itemName="userName"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="control-inline" title="包含3分钟以上未操作的用户">&nbsp;
+						<#form:checkbox name="isAllOnline" value="false" label="查询所有在线"
+							class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="control-inline" title="包含未登录的用户">
+						<#form:checkbox name="isVisitor" value="false" label="查询游客用户"
+							class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">查询</button>
+					<button type="reset" class="btn btn-default btn-sm">重置</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'用户名称', name:'userName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
+			return '<span title="账号：'+(row.userCode||'')+'">'+(val||'游客');
+		}},
+		{header:'创建时间', name:'startTimestamp', width:100, align:'center'},
+		{header:'最后访问', name:'lastAccessTime', width:100, align:'center'},
+		{header:'超时时间', name:'timeout', width:100, align:'center'},
+		{header:'客户主机', name:'host', width:70, align:'center'},
+		{header:'用户类型', name:'userType', width:50, align:'center', formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_user_type')}, val, '未知', true);
+		}},
+		{header:'设备类型', name:'deviceType', width:50, align:'center', formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_device_type')}, val, 'PC', true);
+		}}
+		<% if(hasPermi('sys:online:edit')){ %>
+		,{header:'操作', name:'actions', width:50, sortable:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			actions.push('<a href="${ctx}/sys/online/tickOut?sessionId='+row.id+'" class="btnList" title="踢出在线用户" data-confirm="确认要踢出该用户在线状态吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			return actions.join('');
+		}}
+		<% } %>
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

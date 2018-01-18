@@ -56,10 +56,10 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'字典名称', name:'dictName', index:'a.dict_name', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/dictType/form?id='+row.id+'" class="btnList" data-title="编辑字典类型">'+(val ? val : row.id)+'</a>';
+			return '<a href="${ctx}/sys/dictType/form?id='+row.id+'" class="btnList" data-title="编辑字典类型">'+(val||row.id)+'</a>';
 		}},
 		{header:'字典类型', name:'dictType', index:'a.dict_type', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/dictData/list?dictType='+row.dictType+'" class="btnList" data-title="编辑字典数据">'+(val ? val : row.id)+'</a>';
+			return '<a href="${ctx}/sys/dictData/list?dictType='+row.dictType+'" class="btnList" data-title="编辑字典数据">'+(val||row.id)+'</a>';
 		}},
 		{header:'系统字典', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);

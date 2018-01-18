@@ -66,7 +66,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'登录账号', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="编辑用户">'+(val ? val : row.id)+'</a>';
+			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="编辑用户">'+(val||row.id)+'</a>';
 		}},
 		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
 		<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>

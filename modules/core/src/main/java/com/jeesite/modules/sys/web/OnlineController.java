@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beust.jcommander.internal.Lists;
@@ -80,11 +79,13 @@ public class OnlineController extends BaseController{
 	@RequiresPermissions("sys:online:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public List<Map<String, Object>> listData(@RequestParam(defaultValue="true") Boolean excludeLeave,
-			@RequestParam(defaultValue="true") Boolean excludeVisitor, String sessionId, String userCode,
-			String userName, String userType, String orderBy) {
+	public List<Map<String, Object>> listData(String isAllOnline, String isVisitor, String sessionId, 
+			String userCode, String userName, String userType, String orderBy) {
 		List<Map<String, Object>> list = Lists.newArrayList();
-		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave, excludeVisitor, null, sessionId, userCode);
+		boolean excludeLeave = isAllOnline==null || !Global.YES.equals(isAllOnline);
+		boolean excludeVisitor = isVisitor==null || !Global.YES.equals(isVisitor);
+ 		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave, 
+				excludeVisitor, null, sessionId, userCode);
 		long currentTime = System.currentTimeMillis();
 		for (Session session : sessions){
 			if (StringUtils.isNotBlank(userName) && ((String)session.getAttribute("userName")).contains(userName)){

@@ -56,7 +56,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'岗位名称', name:'postName', index:'a.post_name', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" data-title="编辑岗位">'+(val ? val : row.id)+'</a>';
+			return '<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" data-title="编辑岗位">'+(val||row.id)+'</a>';
 		}},
 		{header:'岗位编码', name:'postCode', index:'a.post_code', width:200, align:"center"},
 		{header:'排序号', name:'postSort', index:'a.post_sort', width:80, align:"center"},
