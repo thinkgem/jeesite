@@ -10,7 +10,7 @@ DROP TABLE test_tree CASCADE CONSTRAINTS;
 
 /* Create Tables */
 
--- test_data
+-- 测试数据
 CREATE TABLE test_data
 (
 	id varchar2(64) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE test_data
 );
 
 
--- test_data_child
+-- 测试数据子表
 CREATE TABLE test_data_child
 (
 	id varchar2(64) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE test_data_child
 );
 
 
--- test_tree
+-- 测试树表
 CREATE TABLE test_tree
 (
 	id varchar2(64) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE test_tree
 
 /* Comments */
 
-COMMENT ON TABLE test_data IS 'test_data';
+COMMENT ON TABLE test_data IS '测试数据';
 COMMENT ON COLUMN test_data.id IS '编号';
 COMMENT ON COLUMN test_data.test_input IS '单行文本';
 COMMENT ON COLUMN test_data.test_textarea IS '多行文本';
@@ -90,7 +90,7 @@ COMMENT ON COLUMN test_data.test_select_multiple IS '下拉多选';
 COMMENT ON COLUMN test_data.test_radio IS '单选框';
 COMMENT ON COLUMN test_data.test_checkbox IS '复选框';
 COMMENT ON COLUMN test_data.test_date IS '日期选择';
-COMMENT ON COLUMN test_data.test_datetime IS '日期时间选择';
+COMMENT ON COLUMN test_data.test_datetime IS '日期时间';
 COMMENT ON COLUMN test_data.test_user_code IS '用户选择';
 COMMENT ON COLUMN test_data.test_office_code IS '部门选择';
 COMMENT ON COLUMN test_data.test_company_code IS '公司选择';
@@ -100,7 +100,7 @@ COMMENT ON COLUMN test_data.create_date IS '创建时间';
 COMMENT ON COLUMN test_data.update_by IS '更新者';
 COMMENT ON COLUMN test_data.update_date IS '更新时间';
 COMMENT ON COLUMN test_data.remarks IS '备注信息';
-COMMENT ON TABLE test_data_child IS 'test_data_child';
+COMMENT ON TABLE test_data_child IS '测试数据子表';
 COMMENT ON COLUMN test_data_child.id IS '编号';
 COMMENT ON COLUMN test_data_child.test_sort IS '排序号';
 COMMENT ON COLUMN test_data_child.test_data_id IS '父表主键';
@@ -111,11 +111,11 @@ COMMENT ON COLUMN test_data_child.test_select_multiple IS '下拉多选';
 COMMENT ON COLUMN test_data_child.test_radio IS '单选框';
 COMMENT ON COLUMN test_data_child.test_checkbox IS '复选框';
 COMMENT ON COLUMN test_data_child.test_date IS '日期选择';
-COMMENT ON COLUMN test_data_child.test_datetime IS '日期时间选择';
+COMMENT ON COLUMN test_data_child.test_datetime IS '日期时间';
 COMMENT ON COLUMN test_data_child.test_user_code IS '用户选择';
 COMMENT ON COLUMN test_data_child.test_office_code IS '部门选择';
 COMMENT ON COLUMN test_data_child.test_company_code IS '公司选择';
-COMMENT ON TABLE test_tree IS 'test_tree';
+COMMENT ON TABLE test_tree IS '测试树表';
 COMMENT ON COLUMN test_tree.id IS '编号';
 COMMENT ON COLUMN test_tree.parent_code IS '父级编号';
 COMMENT ON COLUMN test_tree.parent_codes IS '所有父级编号';

@@ -46,15 +46,15 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="form-group">
-					<label class="control-label">业务主键：</label>
-					<div class="control-inline">
-						<#form:input path="bizKey" maxlength="64" class="form-control width-90"/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label">业务类型：</label>
 					<div class="control-inline">
 						<#form:input path="bizType" maxlength="64" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">业务主键：</label>
+					<div class="control-inline">
+						<#form:input path="bizKey" maxlength="64" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -104,8 +104,8 @@ $('#dataGrid').dataGrid({
 		{header:'异常', name:'isException', index:'a.is_exception', width:60, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);
 		}},
-		{header:'业务主键', name:'bizKey', index:'a.biz_key', width:90, align:"center"},
 		{header:'业务类型', name:'bizType', index:'a.biz_type', width:90, align:"center"},
+		{header:'业务主键', name:'bizKey', index:'a.biz_key', width:90, align:"center"},
 		{header:'操作时间', name:'createDate', index:'a.create_date', width:100, align:"center"},
 		{header:'客户端IP', name:'remoteAddr', index:'a.remote_addr', width:100, align:"center"},
 		{header:'设备名称', name:'deviceName', index:'a.device_name', width:100, align:"center"},
