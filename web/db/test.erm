@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>48</y>
+	<y>31</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -712,7 +712,7 @@
 			<type>timestamp</type>
 		</word>
 		<word>
-			<id>3b2a776b71472966918ed6f30e56b7ebf0c7b9ec</id>
+			<id>38b1e9d7b26e11fab47d111ba7f951b0705aabe1</id>
 			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -723,7 +723,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>日期时间选择</logical_name>
+			<logical_name>日期时间</logical_name>
 			<physical_name>test_datetime</physical_name>
 			<type>timestamp</type>
 		</word>
@@ -1003,7 +1003,7 @@
 			<connections>
 			</connections>
 			<physical_name>test_tree</physical_name>
-			<logical_name>test_tree</logical_name>
+			<logical_name>测试树表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1102,7 +1102,7 @@
 			<connections>
 			</connections>
 			<physical_name>test_data</physical_name>
-			<logical_name>test_data</logical_name>
+			<logical_name>测试数据</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1373,7 +1373,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>3b2a776b71472966918ed6f30e56b7ebf0c7b9ec</word_id>
+					<word_id>38b1e9d7b26e11fab47d111ba7f951b0705aabe1</word_id>
 					<id>c131dc5cb7ce6f1aa5e8d5f86f2002c8ae1bb8f6</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1530,7 +1530,7 @@
 			<connections>
 			</connections>
 			<physical_name>test_data_child</physical_name>
-			<logical_name>test_data_child</logical_name>
+			<logical_name>测试数据子表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1867,7 +1867,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>3b2a776b71472966918ed6f30e56b7ebf0c7b9ec</word_id>
+					<word_id>38b1e9d7b26e11fab47d111ba7f951b0705aabe1</word_id>
 					<id>b91171b99f3628aadb0e6986fbfa30cc547b280e</id>
 					<description></description>
 					<unique_key_name></unique_key_name>

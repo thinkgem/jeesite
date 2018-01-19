@@ -49,17 +49,21 @@
 		</dependency>
 		
 		<!-- Java serialization -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.esotericsoftware</groupId> -->
+<!-- 			<artifactId>kryo</artifactId> -->
+<!-- 			<version>${esotericsoftware-kryo.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
-			<groupId>com.esotericsoftware</groupId>
-			<artifactId>kryo</artifactId>
-			<version>${esotericsoftware.kryo.version}</version>
+			<groupId>de.ruedigermoeller</groupId>
+			<artifactId>fst</artifactId>
+			<version>${ruedigermoeller-fst.version}</version>
 		</dependency>
 		
-		<!-- Org json -->
+		<!-- Json in java  -->
 		<dependency>
-			<groupId>org.codeartisans</groupId>
-			<artifactId>org.json</artifactId>
-			<version>${codeartisans.json.version}</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
 		</dependency>
 		
 		<!-- Jackson json -->

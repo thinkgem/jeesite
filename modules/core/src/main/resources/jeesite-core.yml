@@ -86,24 +86,21 @@ jdbc:
 # Redis 配置
 redis: 
   
-  # 是否启用 Redis
-  enabled: false
-  
   # Redis 连接参数
-  host: 192.168.11.12
+  host: 127.0.0.1
   port: 6379
   isSSL: false
   timeout: 2000
   password: 1234
   database: 0
   
-  # 定义Key的前缀标识
-  keyPrefix: jeesite
-  
   # Redis 连接池配置
   pool:
     maxIdle: 3
     maxTotal: 20
+  
+  # 定义Key的前缀标识
+  keyPrefix: ${jdbc.tablePrefix}
 
   # 是否启用Redis系统缓存及会话
   cacheAndSession: false
@@ -312,7 +309,7 @@ session:
   sessionIdCookieName: jeesite.session.id
   
   #共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
-  shareSessionIdCookieName: jeesite.session.id
+  shareSessionIdCookieName: ${session.sessionIdCookieName}
 
 # MyBatis 相关
 mybatis:

@@ -2,5 +2,6 @@
 .project
 .class
 **/target
+**/webapps/userfiles
 **/WEB-INF/classes
 **/logs/log*.log

@@ -22,6 +22,17 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
+# Redis 配置
+redis: 
+  
+  # Redis 连接参数
+  host: 192.168.11.12
+  port: 6379
+  password: 1234
+
+  # 是否启用Redis系统缓存及会话
+  cacheAndSession: false
+  
 #============================#
 #===== System settings ======#
 #============================#
