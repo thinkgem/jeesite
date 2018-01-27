@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS test_tree;
 
 /* Create Tables */
 
--- test_data
+-- 测试数据
 CREATE TABLE test_data
 (
 	id varchar(64) NOT NULL COMMENT '编号',
@@ -22,10 +22,11 @@ CREATE TABLE test_data
 	test_radio varchar(10) COMMENT '单选框',
 	test_checkbox varchar(200) COMMENT '复选框',
 	test_date timestamp COMMENT '日期选择',
-	test_datetime timestamp COMMENT '日期时间选择',
+	test_datetime timestamp COMMENT '日期时间',
 	test_user_code varchar(64) COMMENT '用户选择',
 	test_office_code varchar(64) COMMENT '部门选择',
 	test_company_code varchar(64) COMMENT '公司选择',
+	test_area_code varchar(64) COMMENT '区域选择',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date timestamp NOT NULL COMMENT '创建时间',
@@ -33,10 +34,10 @@ CREATE TABLE test_data
 	update_date timestamp NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (id)
-) COMMENT = 'test_data';
+) ENGINE = InnoDB COMMENT = '测试数据' DEFAULT CHARACTER SET utf8;
 
 
--- test_data_child
+-- 测试数据子表
 CREATE TABLE test_data_child
 (
 	id varchar(64) NOT NULL COMMENT '编号',
@@ -49,15 +50,16 @@ CREATE TABLE test_data_child
 	test_radio varchar(10) COMMENT '单选框',
 	test_checkbox varchar(200) COMMENT '复选框',
 	test_date timestamp COMMENT '日期选择',
-	test_datetime timestamp COMMENT '日期时间选择',
+	test_datetime timestamp COMMENT '日期时间',
 	test_user_code varchar(64) COMMENT '用户选择',
 	test_office_code varchar(64) COMMENT '部门选择',
 	test_company_code varchar(64) COMMENT '公司选择',
+	test_area_code varchar(64) COMMENT '区域选择',
 	PRIMARY KEY (id)
-) COMMENT = 'test_data_child';
+) ENGINE = InnoDB COMMENT = '测试数据子表' DEFAULT CHARACTER SET utf8;
 
 
--- test_tree
+-- 测试树表
 CREATE TABLE test_tree
 (
 	id varchar(64) NOT NULL COMMENT '编号',
@@ -76,7 +78,7 @@ CREATE TABLE test_tree
 	update_date timestamp NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (id)
-) COMMENT = 'test_tree';
+) ENGINE = InnoDB COMMENT = '测试树表' DEFAULT CHARACTER SET utf8;
 
 
 

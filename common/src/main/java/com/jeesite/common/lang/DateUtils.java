@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
@@ -276,6 +277,44 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static Date getServerStartDate(){
 		long time = ManagementFactory.getRuntimeMXBean().getStartTime();
 		return new Date(time);
+	}
+	
+	/**
+	 * 格式化为日期范围字符串
+	 * @param beginDate 2018-01-01
+	 * @param endDate 2018-01-31
+	 * @return 2018-01-01 ~ 2018-01-31
+	 * @author ThinkGem
+	 */
+	public static String formatDateBetweenString(Date beginDate, Date endDate){
+		String begin = DateUtils.formatDate(beginDate);
+		String end = DateUtils.formatDate(endDate);
+		if (StringUtils.isNoneBlank(begin, end)){
+			return begin + " ~ " + end;
+		}
+		return StringUtils.EMPTY;
+	}
+	
+	/**
+	 * 解析日期范围字符串为日期对象
+	 * @param dateString 2018-01-01 ~ 2018-01-31
+	 * @return new Date[]{2018-01-01, 2018-01-31}
+	 * @author ThinkGem
+	 */
+	public static Date[] parseDateBetweenString(String dateString){
+		Date beginDate = null; Date endDate = null;
+		if (StringUtils.isNotBlank(dateString)){
+			String[] ss = StringUtils.split(dateString, "~");
+			if (ss != null && ss.length == 2){
+				String begin = StringUtils.trim(ss[0]);
+				String end = StringUtils.trim(ss[1]);
+				if (StringUtils.isNoneBlank(begin, end)){
+					beginDate = DateUtils.parseDate(begin);
+					endDate = DateUtils.parseDate(end);
+				}
+			}
+		}
+		return new Date[]{beginDate, endDate};
 	}
 	
 //	/**

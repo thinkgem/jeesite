@@ -6,6 +6,14 @@
 # 数据库连接
 jdbc: 
 
+  # Mysql 数据库配置
+#  type: mysql
+#  driver: com.mysql.jdbc.Driver
+#  url: jdbc:mysql://127.0.0.1:3306/jeesite4?useUnicode=true&characterEncoding=utf-8
+#  username: root
+#  password: 123456
+#  testSql: SELECT 1
+  
   # Oracle 数据库配置
   type: oracle
   driver: oracle.jdbc.driver.OracleDriver
@@ -13,15 +21,7 @@ jdbc:
   username: jeesite
   password: jeesite
   testSql: SELECT 1 FROM DUAL
-
-  # Mysql 数据库配置
-#  type: mysql
-#  driver: com.mysql.jdbc.Driver
-#  url: jdbc:mysql://127.0.0.1:3306/jeesite?useUnicode=true&characterEncoding=utf-8
-#  username: jeesite
-#  password: jeesite
-#  testSql: SELECT 1
-
+  
 # Redis 配置
 redis: 
   

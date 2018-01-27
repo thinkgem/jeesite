@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.modules.db;
+package com.jeesite.modules.sys.db;
 
 import java.io.File;
 
@@ -62,7 +62,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 * 清理日志表
 	 */
 	public void initLog() throws Exception{
-		clearTable(new Log());
+		clearTable(Log.class);
 	}
 	
 	@Autowired
@@ -72,7 +72,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initConfig() throws Exception{
 		try{
-			clearTable(new Config());
+			clearTable(Config.class);
 			initExcelData(Config.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -100,7 +100,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initModule() throws Exception{
 		try{
-			clearTable(new Module());
+			clearTable(Module.class);
 			initExcelData(Module.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -129,7 +129,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initDict() throws Exception{
 		try{
-			clearTable(new DictType());
+			clearTable(DictType.class);
 			initExcelData(DictType.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -145,7 +145,7 @@ public class InitCoreData extends BaseInitDataTests {
 				}
 			});
 
-			clearTable(new DictData());
+			clearTable(DictData.class);
 			initExcelData(DictData.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -172,9 +172,9 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initRole() throws Exception{
 		try{
-			clearTable(new Role());
-			clearTable(new RoleMenu());
-			clearTable(new RoleDataScope());
+			clearTable(Role.class);
+			clearTable(RoleMenu.class);
+			clearTable(RoleDataScope.class);
 			initExcelData(Role.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -203,8 +203,8 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initMenu() throws Exception{
 		try{
-			clearTable(new Menu());
-			clearTable(new RoleMenu());
+			clearTable(Menu.class);
+			clearTable(RoleMenu.class);
 			initExcelData(Menu.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -235,9 +235,9 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initUser() throws Exception{
 		try{
-			clearTable(new User());
-			clearTable(new UserRole());
-			clearTable(new UserDataScope());
+			clearTable(User.class);
+			clearTable(UserRole.class);
+			clearTable(UserDataScope.class);
 			initExcelData(User.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -265,7 +265,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initArea() throws Exception{
 		try{
-			clearTable(new Area());
+			clearTable(Area.class);
 			initExcelData(Area.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -292,7 +292,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initOffice() throws Exception{
 		try{
-			clearTable(new Office());
+			clearTable(Office.class);
 			initExcelData(Office.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -319,8 +319,8 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initCompany() throws Exception{
 		try{
-			clearTable(new Company());
-			clearTable(new CompanyOffice());
+			clearTable(Company.class);
+			clearTable(CompanyOffice.class);
 			initExcelData(Company.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -347,7 +347,7 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initPost() throws Exception{
 		try{
-			clearTable(new Post());
+			clearTable(Post.class);
 			initExcelData(Post.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {
@@ -374,8 +374,8 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initEmpUser() throws Exception{
 		try{
-			clearTable(new Employee());
-			clearTable(new EmployeePost());
+			clearTable(Employee.class);
+			clearTable(EmployeePost.class);
 			initExcelData(EmpUser.class, new MethodCallback() {
 				@Override
 				public Object execute(Object... params) {

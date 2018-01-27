@@ -24,7 +24,8 @@ CREATE TABLE test_data
 	test_datetime timestamp,
 	test_user_code varchar2(64),
 	test_office_code varchar2(64),
-	test_company_code varchar2(64),
+	test_area_code varchar2(64),
+	test_area_name nvarchar2(100),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -51,7 +52,8 @@ CREATE TABLE test_data_child
 	test_datetime timestamp,
 	test_user_code varchar2(64),
 	test_office_code varchar2(64),
-	test_company_code varchar2(64),
+	test_area_code varchar2(64),
+	test_area_name nvarchar2(100),
 	PRIMARY KEY (id)
 );
 
@@ -93,7 +95,8 @@ COMMENT ON COLUMN test_data.test_date IS '日期选择';
 COMMENT ON COLUMN test_data.test_datetime IS '日期时间';
 COMMENT ON COLUMN test_data.test_user_code IS '用户选择';
 COMMENT ON COLUMN test_data.test_office_code IS '部门选择';
-COMMENT ON COLUMN test_data.test_company_code IS '公司选择';
+COMMENT ON COLUMN test_data.test_area_code IS '区域选择';
+COMMENT ON COLUMN test_data.test_area_name IS '区域名称';
 COMMENT ON COLUMN test_data.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN test_data.create_by IS '创建者';
 COMMENT ON COLUMN test_data.create_date IS '创建时间';
@@ -114,7 +117,8 @@ COMMENT ON COLUMN test_data_child.test_date IS '日期选择';
 COMMENT ON COLUMN test_data_child.test_datetime IS '日期时间';
 COMMENT ON COLUMN test_data_child.test_user_code IS '用户选择';
 COMMENT ON COLUMN test_data_child.test_office_code IS '部门选择';
-COMMENT ON COLUMN test_data_child.test_company_code IS '公司选择';
+COMMENT ON COLUMN test_data_child.test_area_code IS '区域选择';
+COMMENT ON COLUMN test_data_child.test_area_name IS '区域名称';
 COMMENT ON TABLE test_tree IS '测试树表';
 COMMENT ON COLUMN test_tree.id IS '编号';
 COMMENT ON COLUMN test_tree.parent_code IS '父级编号';
