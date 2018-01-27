@@ -1,0 +1,402 @@
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">基本信息</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 单行文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> 多行文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="testTextarea" rows="4" maxlength="200" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 下拉框：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control " />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 下拉多选：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 单选框：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="testRadio" dictType="sys_menu_type" class="form-control " />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 复选框：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:checkbox path="testCheckbox" dictType="sys_menu_type" class="form-control " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
+									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
+									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 用户选择：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testUser" title="用户"
+									path="testUser.userCode" labelPath="testUser.userName"
+									url="${ctx}/sys/office/treeData?isLoadUser=true"
+									class=" " allowClear="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 部门选择：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testOffice" title="部门"
+									path="testOffice.officeCode" labelPath="testOffice.officeName"
+									url="${ctx}/sys/office/treeData"
+									class=" " allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 区域选择：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testAreaCode" title="区域"
+									path="testAreaCode" labelPath="testAreaName"
+									url="${ctx}/sys/area/treeData"
+									class=" " allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">扩展字段</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 1：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS1" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 2：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS2" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 3：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS3" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 4：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS4" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 5：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS5" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 6：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS6" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 7：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS7" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 String 8：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendS8" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Integer 1：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendI1" maxlength="19" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Integer 2：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendI2" maxlength="19" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Integer 3：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendI3" maxlength="19" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Integer 4：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendI4" maxlength="19" class="form-control digits"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Float 1：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendF1" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Float 2：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendF2" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Float 3：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendF3" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Float 4：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendF4" class="form-control number"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Date 1：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendD1" maxlength="6" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Date 2：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendD2" maxlength="6" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Date 3：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendD3" maxlength="6" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 扩展 Date 4：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="extend.extendD4" maxlength="6" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">图片上传：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
+									uploadType="image" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">附件上传：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
+									uploadType="all" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('test:testData:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>
