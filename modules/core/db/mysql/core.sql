@@ -40,6 +40,11 @@ DROP INDEX idx_sys_file_biz_ud ON js_sys_file_upload;
 DROP INDEX idx_sys_file_biz_bt ON js_sys_file_upload;
 DROP INDEX idx_sys_file_biz_bk ON js_sys_file_upload;
 DROP INDEX idx_sys_job_status ON js_sys_job;
+DROP INDEX idx_sys_job_log_jn ON js_sys_job_log;
+DROP INDEX idx_sys_job_log_jg ON js_sys_job_log;
+DROP INDEX idx_sys_job_log_t ON js_sys_job_log;
+DROP INDEX idx_sys_job_log_e ON js_sys_job_log;
+DROP INDEX idx_sys_job_log_ie ON js_sys_job_log;
 DROP INDEX idx_sys_lang_code ON js_sys_lang;
 DROP INDEX idx_sys_lang_type ON js_sys_lang;
 DROP INDEX idx_sys_log_cd ON js_sys_log;
@@ -47,6 +52,7 @@ DROP INDEX idx_sys_log_cc ON js_sys_log;
 DROP INDEX idx_sys_log_lt ON js_sys_log;
 DROP INDEX idx_sys_log_bk ON js_sys_log;
 DROP INDEX idx_sys_log_bt ON js_sys_log;
+DROP INDEX idx_sys_log_ie ON js_sys_log;
 DROP INDEX idx_sys_menu_pc ON js_sys_menu;
 DROP INDEX idx_sys_menu_ts ON js_sys_menu;
 DROP INDEX idx_sys_menu_status ON js_sys_menu;
@@ -76,6 +82,7 @@ DROP INDEX idx_sys_msg_push_ps ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_rs ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_bk ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_bt ON js_sys_msg_push;
+DROP INDEX idx_sys_msg_push_imp ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_pushw_type ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_rc ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_uc ON js_sys_msg_push_wait;
@@ -85,6 +92,7 @@ DROP INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait;
+DROP INDEX idx_sys_msg_pushw_imp ON js_sys_msg_push_wait;
 DROP INDEX idx_sys_msg_tpl_key ON js_sys_msg_template;
 DROP INDEX idx_sys_msg_tpl_type ON js_sys_msg_template;
 DROP INDEX idx_sys_msg_tpl_status ON js_sys_msg_template;
@@ -133,6 +141,7 @@ DROP TABLE IF EXISTS js_sys_dict_data;
 DROP TABLE IF EXISTS js_sys_dict_type;
 DROP TABLE IF EXISTS js_sys_file_upload;
 DROP TABLE IF EXISTS js_sys_file_entity;
+DROP TABLE IF EXISTS js_sys_job_log;
 DROP TABLE IF EXISTS js_sys_job;
 DROP TABLE IF EXISTS js_sys_lang;
 DROP TABLE IF EXISTS js_sys_log;
@@ -402,6 +411,22 @@ CREATE TABLE js_sys_job
 ) COMMENT = '作业调度表';
 
 
+-- 作业调度日志表
+CREATE TABLE js_sys_job_log
+(
+	id varchar(64) NOT NULL COMMENT '编号',
+	job_name varchar(64) NOT NULL COMMENT '任务名称',
+	job_group varchar(64) NOT NULL COMMENT '任务组名',
+	job_type varchar(50) COMMENT '日志类型',
+	job_event varchar(200) COMMENT '日志事件',
+	job_message varchar(500) COMMENT '日志信息',
+	is_exception char(1) COMMENT '是否异常',
+	exception_info text COMMENT '异常信息',
+	create_date timestamp COMMENT '创建时间',
+	PRIMARY KEY (id)
+) COMMENT = '作业调度日志表';
+
+
 -- 国际化语言
 CREATE TABLE js_sys_lang
 (
@@ -423,19 +448,21 @@ CREATE TABLE js_sys_lang
 CREATE TABLE js_sys_log
 (
 	id varchar(64) NOT NULL COMMENT '编号',
-	log_type char(1) NOT NULL COMMENT '日志类型',
+	log_type varchar(50) NOT NULL COMMENT '日志类型',
 	log_title varchar(500) NOT NULL COMMENT '日志标题',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_by_name varchar(100) NOT NULL COMMENT '用户名称',
-	create_date datetime NOT NULL COMMENT '创建时间',
-	request_uri varchar(255) COMMENT '请求URI',
+	create_date timestamp NOT NULL COMMENT '创建时间',
+	request_uri varchar(500) COMMENT '请求URI',
 	request_method varchar(10) COMMENT '操作方式',
 	request_params longtext COMMENT '操作提交的数据',
+	diff_modify_data text COMMENT '新旧数据比较结果',
 	biz_key varchar(64) COMMENT '业务主键',
 	biz_type varchar(64) COMMENT '业务类型',
 	remote_addr varchar(255) NOT NULL COMMENT '操作IP地址',
 	server_addr varchar(255) NOT NULL COMMENT '请求服务器地址',
-	exception_info longtext COMMENT '异常信息',
+	is_exception char(1) COMMENT '是否异常',
+	exception_info text COMMENT '异常信息',
 	user_agent varchar(500) COMMENT '用户代理',
 	device_name varchar(100) COMMENT '设备名称/操作系统',
 	browser_name varchar(100) COMMENT '浏览器名称',
@@ -873,6 +900,11 @@ CREATE INDEX idx_sys_file_biz_ud ON js_sys_file_upload (update_date ASC);
 CREATE INDEX idx_sys_file_biz_bt ON js_sys_file_upload (biz_type ASC);
 CREATE INDEX idx_sys_file_biz_bk ON js_sys_file_upload (biz_key ASC);
 CREATE INDEX idx_sys_job_status ON js_sys_job (status ASC);
+CREATE INDEX idx_sys_job_log_jn ON js_sys_job_log (job_name ASC);
+CREATE INDEX idx_sys_job_log_jg ON js_sys_job_log (job_group ASC);
+CREATE INDEX idx_sys_job_log_t ON js_sys_job_log (job_type ASC);
+CREATE INDEX idx_sys_job_log_e ON js_sys_job_log (job_event ASC);
+CREATE INDEX idx_sys_job_log_ie ON js_sys_job_log (is_exception ASC);
 CREATE INDEX idx_sys_lang_code ON js_sys_lang (lang_code ASC);
 CREATE INDEX idx_sys_lang_type ON js_sys_lang (lang_type ASC);
 CREATE INDEX idx_sys_log_cd ON js_sys_log (create_by ASC);
@@ -880,6 +912,7 @@ CREATE INDEX idx_sys_log_cc ON js_sys_log (corp_code ASC);
 CREATE INDEX idx_sys_log_lt ON js_sys_log (log_type ASC);
 CREATE INDEX idx_sys_log_bk ON js_sys_log (biz_key ASC);
 CREATE INDEX idx_sys_log_bt ON js_sys_log (biz_type ASC);
+CREATE INDEX idx_sys_log_ie ON js_sys_log (is_exception ASC);
 CREATE INDEX idx_sys_menu_pc ON js_sys_menu (parent_code ASC);
 CREATE INDEX idx_sys_menu_ts ON js_sys_menu (tree_sort ASC);
 CREATE INDEX idx_sys_menu_status ON js_sys_menu (status ASC);
@@ -909,6 +942,7 @@ CREATE INDEX idx_sys_msg_push_ps ON js_sys_msg_push (push_status ASC);
 CREATE INDEX idx_sys_msg_push_rs ON js_sys_msg_push (read_status ASC);
 CREATE INDEX idx_sys_msg_push_bk ON js_sys_msg_push (biz_key ASC);
 CREATE INDEX idx_sys_msg_push_bt ON js_sys_msg_push (biz_type ASC);
+CREATE INDEX idx_sys_msg_push_imp ON js_sys_msg_push (is_merge_push ASC);
 CREATE INDEX idx_sys_msg_pushw_type ON js_sys_msg_push_wait (msg_type ASC);
 CREATE INDEX idx_sys_msg_pushw_rc ON js_sys_msg_push_wait (receive_code ASC);
 CREATE INDEX idx_sys_msg_pushw_uc ON js_sys_msg_push_wait (receive_user_code ASC);
@@ -918,6 +952,7 @@ CREATE INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait (push_status ASC);
 CREATE INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait (read_status ASC);
 CREATE INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait (biz_key ASC);
 CREATE INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait (biz_type ASC);
+CREATE INDEX idx_sys_msg_pushw_imp ON js_sys_msg_push_wait (is_merge_push ASC);
 CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_template (tpl_key ASC);
 CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_template (tpl_type ASC);
 CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_template (status ASC);

@@ -64,8 +64,7 @@ CREATE TABLE js_gen_table_column
 	query_type varchar(200) COMMENT '查询方式',
 	is_edit char(1) COMMENT '是否编辑字段',
 	show_type varchar(200) COMMENT '表单类型',
-	dict_type varchar(200) COMMENT '字典类型',
-	field_valid varchar(500) COMMENT '字段验证',
+	options varchar(2000) COMMENT '其它生成选项',
 	PRIMARY KEY (id)
 ) COMMENT = '代码生成表列';
 

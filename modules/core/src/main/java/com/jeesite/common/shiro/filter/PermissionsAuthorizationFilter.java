@@ -65,7 +65,7 @@ public class PermissionsAuthorizationFilter extends org.apache.shiro.web.filter.
 	 */
 	public static void redirectToDefaultPath(ServletRequest request, ServletResponse response) throws IOException {
 		// AJAX不支持Redirect改用Forward
-		String loginUrl = Global.getProperty("defaultPath");
+		String loginUrl = Global.getProperty("shiro.defaultPath");
 		if (ServletUtils.isAjaxRequest((HttpServletRequest) request)) {
 			try {
 				request.getRequestDispatcher(loginUrl).forward(

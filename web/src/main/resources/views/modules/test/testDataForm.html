@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload']}){ %>
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
@@ -371,6 +371,13 @@
 						</div>
 					</div>
 				</div>
+				<h4 class="form-unit">测试数据子表</h4>
+				<div class="ml10 mr10">
+					<table id="testDataChildDataGrid"></table>
+					<% if (hasPermi('test:testData:edit')){ %>
+						<a href="#" id="testDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> 增行</a>
+					<% } %>
+				</div>
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -386,7 +393,57 @@
 	</div>
 </div>
 <% } %>
-<script>
+<script>//初始化测试数据子表DataGrid对象
+$("#testDataChildDataGrid").dataGrid({
+
+	data: ${toJson(testData.testDataChildList)},
+	datatype: "local", // 设置本地数据
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 设置数据表格列
+	columnModel: [
+		{header:'状态', name:'status', editable:true, hidden:false},
+		{header:'主键', name:'id', editable:true, hidden:false},
+		{header:'排序号', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'10', 'class':'form-control digits'}},
+		{header:'父表主键', name:'testData.id', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'下拉框', name:'testSelect', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'10', 'class':'form-control'}},
+		{header:'下拉多选', name:'testSelectMultiple', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'单选框', name:'testRadio', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'10', 'class':'form-control'}},
+		{header:'复选框', name:'testCheckbox', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'日期选择', name:'testDate', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'6', 'class':'form-control'}},
+		{header:'日期时间', name:'testDatetime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'6', 'class':'form-control'}},
+		{header:'用户选择', name:'testUserCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'部门选择', name:'testOfficeCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'区域选择', name:'testAreaCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'区域名称', name:'testAreaName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'100', 'class':'form-control'}},		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+			var actions = [];
+			if (val == 'new'){
+				actions.push('<a href="#" onclick="js.confirm(\'你确认要删除这条数据吗？\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}else{
+				actions.push('<a href="#" onclick="js.confirm(\'你确认要删除这条数据吗？\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}}
+	],
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#testDataChildDataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
+	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,testRadio,testCheckbox,testDate,testDatetime,testUserCode,testOfficeCode,testAreaCode,testAreaName,', // 提交数据列表的属性字段
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+
 $("#inputForm").validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){

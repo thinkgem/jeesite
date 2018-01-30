@@ -3,6 +3,7 @@
  */
 package com.jeesite.common.shiro.filter;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -154,6 +155,11 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		return captcha;
 	}
+	
+	@Override
+	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+	}
 
 	/**
 	 * 地址访问接入验证
@@ -178,6 +184,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 				logger.trace("Attempting to access a path which requires authentication.  Forwarding to the " + "Authentication url ["
 						+ getLoginUrl() + "]");
 			}
+			redirectToLogin(request, response); // 此过滤器优先级较高，未登录，则跳转登录页，方便 CAS 登录
 //			saveRequestAndRedirectToLogin(request, response);  // 去掉保存登录前的跳转地址  ThinkGem
 			return false;
 		}

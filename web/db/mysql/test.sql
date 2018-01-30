@@ -25,8 +25,8 @@ CREATE TABLE test_data
 	test_datetime timestamp COMMENT '日期时间',
 	test_user_code varchar(64) COMMENT '用户选择',
 	test_office_code varchar(64) COMMENT '部门选择',
-	test_company_code varchar(64) COMMENT '公司选择',
 	test_area_code varchar(64) COMMENT '区域选择',
+	test_area_name varchar(100) COMMENT '区域名称',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date timestamp NOT NULL COMMENT '创建时间',
@@ -34,7 +34,7 @@ CREATE TABLE test_data
 	update_date timestamp NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (id)
-) ENGINE = InnoDB COMMENT = '测试数据' DEFAULT CHARACTER SET utf8;
+) COMMENT = '测试数据';
 
 
 -- 测试数据子表
@@ -53,10 +53,10 @@ CREATE TABLE test_data_child
 	test_datetime timestamp COMMENT '日期时间',
 	test_user_code varchar(64) COMMENT '用户选择',
 	test_office_code varchar(64) COMMENT '部门选择',
-	test_company_code varchar(64) COMMENT '公司选择',
 	test_area_code varchar(64) COMMENT '区域选择',
+	test_area_name varchar(100) COMMENT '区域名称',
 	PRIMARY KEY (id)
-) ENGINE = InnoDB COMMENT = '测试数据子表' DEFAULT CHARACTER SET utf8;
+) COMMENT = '测试数据子表';
 
 
 -- 测试树表
@@ -78,7 +78,7 @@ CREATE TABLE test_tree
 	update_date timestamp NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (id)
-) ENGINE = InnoDB COMMENT = '测试树表' DEFAULT CHARACTER SET utf8;
+) COMMENT = '测试树表';
 
 
 

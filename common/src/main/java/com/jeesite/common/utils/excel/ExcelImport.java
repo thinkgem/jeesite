@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.formula.eval.ErrorEval;
@@ -232,7 +233,12 @@ public class ExcelImport {
 			Cell cell = row.getCell(column);
 			if (cell != null){
 				if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC){
-					val = new DecimalFormat("0").format(cell.getNumericCellValue());
+					val = cell.getNumericCellValue();
+					if (HSSFDateUtil.isCellDateFormatted(cell)) {
+				        val = DateUtil.getJavaDate((Double)val); // POI Excel 日期格式转换
+				    }else{
+				    	val = new DecimalFormat("0").format(val);
+				    }
 				}else if (cell.getCellType() == Cell.CELL_TYPE_STRING){
 					val = cell.getStringCellValue();
 				}else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA){
@@ -399,9 +405,8 @@ public class ExcelImport {
 						}else if (valType == Date.class){
 							if (val instanceof String){
 								val = DateUtils.parseDate(val);
-							}else{
-								// POI Excel 日期格式转换
-								val = DateUtil.getJavaDate((Double)val);
+							}else if (val instanceof Double){
+								val = DateUtil.getJavaDate((Double)val); // POI Excel 日期格式转换
 							}
 						}else{
 							if (ef.fieldType() != Class.class){

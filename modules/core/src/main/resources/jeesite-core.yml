@@ -124,9 +124,6 @@ adminPath: /a
 #前端基础路径
 frontPath: /f
 
-#索引页路径
-defaultPath: ${adminPath}/login
-
 # 分页配置
 page:
 
@@ -219,17 +216,20 @@ cms:
 # Shiro 相关配置
 shiro:
 
+  #索引页路径
+  defaultPath: ${shiro.loginUrl}
+
   # 登录相关设置
   loginUrl: ${adminPath}/login
   logoutUrl: ${shiro.loginUrl}
   successUrl: ${adminPath}/index
 
   # CAS 相关配置
-  casServerUrl: http://192.168.1.3:8080/cas
-  casClientUrl: http://192.168.1.3:8180/jeesite
+#  casServerUrl: http://192.168.1.3:8080/cas
+#  casClientUrl: http://192.168.1.3:8180/jeesite
 #  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
 #  logoutUrl: ${shiro.casServerUrl}/logout?service=${shiro.loginUrl}
-#  successUrl: ${shiro.casClientUrl}
+#  successUrl: ${shiro.casClientUrl}${adminPath}/index
 
   # SSO 登录相关配置
   sso:

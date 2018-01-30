@@ -5,6 +5,7 @@ package com.jeesite.modules.test.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,15 +14,20 @@ import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.test.entity.TestDataChild;
+import com.jeesite.modules.test.dao.TestDataChildDao;
 
 /**
  * 测试数据Service
  * @author ThinkGem
- * @version 2018-01-28
+ * @version 2018-01-30
  */
 @Service
 @Transactional(readOnly=true)
 public class TestDataService extends CrudService<TestDataDao, TestData> {
+	
+	@Autowired
+	private TestDataChildDao testDataChildDao;
 	
 	/**
 	 * 获取单条数据
@@ -29,7 +35,13 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * @return
 	 */
 	public TestData get(TestData testData) {
-		return super.get(testData);
+		TestData entity = super.get(testData);
+		if (entity != null){
+			TestDataChild testDataChild = new TestDataChild(entity);
+			testDataChild.setStatus(TestDataChild.STATUS_NORMAL);
+			entity.setTestDataChildList(testDataChildDao.findList(testDataChild));
+		}
+		return entity;
 	}
 	
 	/**
@@ -53,6 +65,21 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		FileUploadUtils.saveFileUpload(testData.getId(), "testData_image");
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(testData.getId(), "testData_file");
+		// 保存 TestData子表
+		for (TestDataChild testDataChild : testData.getTestDataChildList()){
+			if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
+				testDataChild.setTestData(testData);
+				if (testDataChild.getIsNewRecord()){
+					testDataChild.preInsert();
+					testDataChildDao.insert(testDataChild);
+				}else{
+					testDataChild.preUpdate();
+					testDataChildDao.update(testDataChild);
+				}
+			}else{
+				testDataChildDao.delete(testDataChild);
+			}
+		}
 	}
 	
 	/**
@@ -71,6 +98,9 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	@Transactional(readOnly=false)
 	public void delete(TestData testData) {
 		super.delete(testData);
+		TestDataChild testDataChild = new TestDataChild();
+		testDataChild.setTestData(testData);
+		testDataChildDao.delete(testDataChild);
 	}
 	
 }

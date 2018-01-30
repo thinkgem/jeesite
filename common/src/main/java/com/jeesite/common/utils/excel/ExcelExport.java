@@ -245,7 +245,7 @@ public class ExcelExport {
 	 * @param groups 导入分组
 	 */
 	public void createSheet(String sheetName, String title, List<String> headerList, List<Integer> headerWidthList) {
-		this.sheet = wb.createSheet(StringUtils.defaultString(sheetName, "Export"));
+		this.sheet = wb.createSheet(StringUtils.defaultString(sheetName, StringUtils.defaultString(title, "Sheet1")));
 		this.styles = createStyles(wb);
 		// Create title
 		if (StringUtils.isNotBlank(title)){
@@ -271,6 +271,8 @@ public class ExcelExport {
 				cell.setCellValue(ss[0]);
 				Comment comment = this.sheet.createDrawingPatriarch().createCellComment(
 						new XSSFClientAnchor(0, 0, 0, 0, (short) 3, 3, (short) 5, 6));
+				comment.setRow(cell.getRowIndex());
+				comment.setColumn(cell.getColumnIndex());
 				comment.setString(new XSSFRichTextString(ss[1]));
 				cell.setCellComment(comment);
 			}else{

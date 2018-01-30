@@ -5,7 +5,7 @@ package com.jeesite.modules.test.dao;
 
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
-import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.entity.TestDataChild;
 
 /**
  * 测试数据DAO接口
@@ -13,6 +13,6 @@ import com.jeesite.modules.test.entity.TestData;
  * @version 2018-01-30
  */
 @MyBatisDao
-public interface TestDataDao extends CrudDao<TestData> {
+public interface TestDataChildDao extends CrudDao<TestDataChild> {
 	
 }
