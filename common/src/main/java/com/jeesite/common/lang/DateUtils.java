@@ -292,7 +292,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		if (StringUtils.isNoneBlank(begin, end)){
 			return begin + " ~ " + end;
 		}
-		return StringUtils.EMPTY;
+		return null;
 	}
 	
 	/**

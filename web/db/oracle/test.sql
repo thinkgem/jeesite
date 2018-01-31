@@ -15,7 +15,7 @@ CREATE TABLE test_data
 (
 	id varchar2(64) NOT NULL,
 	test_input varchar2(200),
-	test_textarea varchar2(200),
+	test_textarea nvarchar2(200),
 	test_select varchar2(10),
 	test_select_multiple varchar2(200),
 	test_radio varchar2(10),
@@ -43,7 +43,7 @@ CREATE TABLE test_data_child
 	test_sort number(10,0),
 	test_data_id varchar2(64),
 	test_input varchar2(200),
-	test_textarea varchar2(200),
+	test_textarea nvarchar2(200),
 	test_select varchar2(10),
 	test_select_multiple varchar2(200),
 	test_radio varchar2(10),

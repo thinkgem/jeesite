@@ -20,7 +20,7 @@ import com.jeesite.modules.test.dao.TestDataChildDao;
 /**
  * 测试数据Service
  * @author ThinkGem
- * @version 2018-01-30
+ * @version 2018-01-31
  */
 @Service
 @Transactional(readOnly=true)
@@ -68,7 +68,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		// 保存 TestData子表
 		for (TestDataChild testDataChild : testData.getTestDataChildList()){
 			if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
-				testDataChild.setTestData(testData);
+				testDataChild.setTestDataId(testData);
 				if (testDataChild.getIsNewRecord()){
 					testDataChild.preInsert();
 					testDataChildDao.insert(testDataChild);
@@ -99,7 +99,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	public void delete(TestData testData) {
 		super.delete(testData);
 		TestDataChild testDataChild = new TestDataChild();
-		testDataChild.setTestData(testData);
+		testDataChild.setTestDataId(testData);
 		testDataChildDao.delete(testDataChild);
 	}
 	

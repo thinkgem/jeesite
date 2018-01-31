@@ -8,6 +8,9 @@ import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.validation.constraints.NotNull;
+import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.entity.Office;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -17,31 +20,42 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 测试数据Entity
  * @author ThinkGem
- * @version 2018-01-30
+ * @version 2018-01-31
  */
 @Table(name="test_data_child", alias="a", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
 		@Column(name="test_sort", attrName="testSort", label="排序号"),
-		@Column(name="test_data_id", attrName="testData.id", label="父表主键"),
-		@Column(name="test_input", attrName="testInput", label="单行文本"),
-		@Column(name="test_textarea", attrName="testTextarea", label="多行文本"),
+		@Column(name="test_data_id", attrName="testDataId.id", label="父表主键"),
+		@Column(name="test_input", attrName="testInput", label="单行文本", queryType=QueryType.LIKE),
+		@Column(name="test_textarea", attrName="testTextarea", label="多行文本", queryType=QueryType.LIKE),
 		@Column(name="test_select", attrName="testSelect", label="下拉框"),
 		@Column(name="test_select_multiple", attrName="testSelectMultiple", label="下拉多选"),
 		@Column(name="test_radio", attrName="testRadio", label="单选框"),
 		@Column(name="test_checkbox", attrName="testCheckbox", label="复选框"),
 		@Column(name="test_date", attrName="testDate", label="日期选择"),
 		@Column(name="test_datetime", attrName="testDatetime", label="日期时间"),
-		@Column(name="test_user_code", attrName="testUserCode", label="用户选择"),
-		@Column(name="test_office_code", attrName="testOfficeCode", label="部门选择"),
+		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
+		@Column(name="test_office_code", attrName="testOffice.officeCode", label="部门选择"),
 		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
-		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", queryType=QueryType.LIKE),
+		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", isQuery=false),
+	}, joinTable={
+		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="testUser", alias="u12",
+			on="u12.user_code = a.test_user_code", columns={
+				@Column(name="user_code", label="用户编码", isPK=true),
+				@Column(name="user_name", label="用户名称", isQuery=false),
+		}),
+		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="testOffice", alias="u13",
+			on="u13.office_code = a.test_office_code", columns={
+				@Column(name="office_code", label="部门编码", isPK=true),
+				@Column(name="office_name", label="部门名称", isQuery=false),
+		}),
 	}, orderBy="a.id ASC"
 )
 public class TestDataChild extends DataEntity<TestDataChild> {
 	
 	private static final long serialVersionUID = 1L;
-	private Integer testSort;		// 排序号
-	private TestData testData;		// 父表主键 父类
+	private Long testSort;		// 排序号
+	private TestData testDataId;		// 父表主键 父类
 	private String testInput;		// 单行文本
 	private String testTextarea;		// 多行文本
 	private String testSelect;		// 下拉框
@@ -50,8 +64,8 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	private String testCheckbox;		// 复选框
 	private Date testDate;		// 日期选择
 	private Date testDatetime;		// 日期时间
-	private String testUserCode;		// 用户选择
-	private String testOfficeCode;		// 部门选择
+	private User testUser;		// 用户选择
+	private Office testOffice;		// 部门选择
 	private String testAreaCode;		// 区域选择
 	private String testAreaName;		// 区域名称
 	
@@ -60,25 +74,25 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	}
 
 
-	public TestDataChild(TestData testData){
-		this.testData = testData;
+	public TestDataChild(TestData testDataId){
+		this.testDataId = testDataId;
 	}
 	
-	public Integer getTestSort() {
+	public Long getTestSort() {
 		return testSort;
 	}
 
-	public void setTestSort(Integer testSort) {
+	public void setTestSort(Long testSort) {
 		this.testSort = testSort;
 	}
 	
 	@Length(min=0, max=64, message="父表主键长度不能超过 64 个字符")
-	public TestData getTestData() {
-		return testData;
+	public TestData getTestDataId() {
+		return testDataId;
 	}
 
-	public void setTestData(TestData testData) {
-		this.testData = testData;
+	public void setTestDataId(TestData testDataId) {
+		this.testDataId = testDataId;
 	}
 	
 	@Length(min=0, max=200, message="单行文本长度不能超过 200 个字符")
@@ -136,6 +150,7 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@NotNull(message="日期选择不能为空")
 	public Date getTestDate() {
 		return testDate;
 	}
@@ -145,6 +160,7 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@NotNull(message="日期时间不能为空")
 	public Date getTestDatetime() {
 		return testDatetime;
 	}
@@ -153,22 +169,20 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 		this.testDatetime = testDatetime;
 	}
 	
-	@Length(min=0, max=64, message="用户选择长度不能超过 64 个字符")
-	public String getTestUserCode() {
-		return testUserCode;
+	public User getTestUser() {
+		return testUser;
 	}
 
-	public void setTestUserCode(String testUserCode) {
-		this.testUserCode = testUserCode;
+	public void setTestUser(User testUser) {
+		this.testUser = testUser;
 	}
 	
-	@Length(min=0, max=64, message="部门选择长度不能超过 64 个字符")
-	public String getTestOfficeCode() {
-		return testOfficeCode;
+	public Office getTestOffice() {
+		return testOffice;
 	}
 
-	public void setTestOfficeCode(String testOfficeCode) {
-		this.testOfficeCode = testOfficeCode;
+	public void setTestOffice(Office testOffice) {
+		this.testOffice = testOffice;
 	}
 	
 	@Length(min=0, max=64, message="区域选择长度不能超过 64 个字符")
@@ -187,6 +201,38 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 
 	public void setTestAreaName(String testAreaName) {
 		this.testAreaName = testAreaName;
+	}
+	
+	public Date getTestDate_gte() {
+		return sqlMap.getWhere().getValue("test_date", QueryType.GTE);
+	}
+
+	public void setTestDate_gte(Date testDate) {
+		sqlMap.getWhere().and("test_date", QueryType.GTE, testDate);
+	}
+	
+	public Date getTestDate_lte() {
+		return sqlMap.getWhere().getValue("test_date", QueryType.LTE);
+	}
+
+	public void setTestDate_lte(Date testDate) {
+		sqlMap.getWhere().and("test_date", QueryType.LTE, testDate);
+	}
+	
+	public Date getTestDatetime_gte() {
+		return sqlMap.getWhere().getValue("test_datetime", QueryType.GTE);
+	}
+
+	public void setTestDatetime_gte(Date testDatetime) {
+		sqlMap.getWhere().and("test_datetime", QueryType.GTE, testDatetime);
+	}
+	
+	public Date getTestDatetime_lte() {
+		return sqlMap.getWhere().getValue("test_datetime", QueryType.LTE);
+	}
+
+	public void setTestDatetime_lte(Date testDatetime) {
+		sqlMap.getWhere().and("test_datetime", QueryType.LTE, testDatetime);
 	}
 	
 }

@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>91</y>
+	<y>0</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -840,7 +840,7 @@
 			<type>integer</type>
 		</word>
 		<word>
-			<id>68b1f859bfea8bf1733964c0ccaf826fc05f3b1f</id>
+			<id>2fed92437d28f1427e913aba1251fe0807c7b209</id>
 			<length>200</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -853,7 +853,7 @@
 			<description></description>
 			<logical_name>多行文本</logical_name>
 			<physical_name>test_textarea</physical_name>
-			<type>varchar(n)</type>
+			<type>nvarchar(n)</type>
 		</word>
 		<word>
 			<id>2eda719a62fb7e1d3face62555046d938abddda9</id>
@@ -1257,13 +1257,13 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>68b1f859bfea8bf1733964c0ccaf826fc05f3b1f</word_id>
+					<word_id>2fed92437d28f1427e913aba1251fe0807c7b209</word_id>
 					<id>693f8af2fe6cf45255b6f2bc7e9077f3630c3dd8</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>varchar(n)</type>
+					<type>nvarchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -1717,13 +1717,13 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>68b1f859bfea8bf1733964c0ccaf826fc05f3b1f</word_id>
+					<word_id>2fed92437d28f1427e913aba1251fe0807c7b209</word_id>
 					<id>8050d948828b16267482e9e3716219321f206b81</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>varchar(n)</type>
+					<type>nvarchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>

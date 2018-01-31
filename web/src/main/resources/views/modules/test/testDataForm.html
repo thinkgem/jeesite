@@ -50,7 +50,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 下拉多选：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control " />
+								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control required" />
 							</div>
 						</div>
 					</div>
@@ -79,9 +79,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate required "
 									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</div>
 						</div>
@@ -89,9 +89,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate required "
 									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
 							</div>
 						</div>
@@ -148,207 +148,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-unit">扩展字段</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 1：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS1" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 2：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS2" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 3：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS3" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 4：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS4" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 5：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS5" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 6：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS6" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 7：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS7" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 String 8：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendS8" maxlength="500" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Integer 1：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendI1" maxlength="19" class="form-control digits"/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Integer 2：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendI2" maxlength="19" class="form-control digits"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Integer 3：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendI3" maxlength="19" class="form-control digits"/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Integer 4：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendI4" maxlength="19" class="form-control digits"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Float 1：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendF1" class="form-control number"/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Float 2：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendF2" class="form-control number"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Float 3：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendF3" class="form-control number"/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Float 4：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendF4" class="form-control number"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Date 1：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendD1" maxlength="6" class="form-control "/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Date 2：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendD2" maxlength="6" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Date 3：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendD3" maxlength="6" class="form-control "/>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 扩展 Date 4：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:input path="extend.extendD4" maxlength="6" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
@@ -393,7 +192,8 @@
 	</div>
 </div>
 <% } %>
-<script>//初始化测试数据子表DataGrid对象
+<script>
+//初始化测试数据子表DataGrid对象
 $("#testDataChildDataGrid").dataGrid({
 
 	data: ${toJson(testData.testDataChildList)},
@@ -402,22 +202,104 @@ $("#testDataChildDataGrid").dataGrid({
 	
 	// 设置数据表格列
 	columnModel: [
-		{header:'状态', name:'status', editable:true, hidden:false},
-		{header:'主键', name:'id', editable:true, hidden:false},
-		{header:'排序号', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'10', 'class':'form-control digits'}},
-		{header:'父表主键', name:'testData.id', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'id', editable:true, hidden:true},
+		{header:'排序号', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
+		{header:'父表主键', name:'testDataId.id', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
 		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'下拉框', name:'testSelect', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'10', 'class':'form-control'}},
-		{header:'下拉多选', name:'testSelectMultiple', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'单选框', name:'testRadio', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'10', 'class':'form-control'}},
-		{header:'复选框', name:'testCheckbox', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'日期选择', name:'testDate', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'6', 'class':'form-control'}},
-		{header:'日期时间', name:'testDatetime', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'6', 'class':'form-control'}},
-		{header:'用户选择', name:'testUserCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
-		{header:'部门选择', name:'testOfficeCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
-		{header:'区域选择', name:'testAreaCode', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
-		{header:'区域名称', name:'testAreaName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'100', 'class':'form-control'}},		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
+		{header:'下拉框', name:'testSelect', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'下拉多选', name:'testSelectMultiple', width:100, 
+			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'单选框', name:'testRadio', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'复选框', name:'testCheckbox', width:100, 
+			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
+				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'日期选择', name:'testDate', width:150, 
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate required', 'readonly':'true',
+				dataInit: function(element){ $(element).on('focus', function(){
+					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
+				});
+			}}
+		},
+		{header:'日期时间', name:'testDatetime', width:150, 
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate required', 'readonly':'true',
+				dataInit: function(element){ $(element).on('focus', function(){
+					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});
+				});
+			}}
+		},
+		{header:'用户选择', name:'testUser', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return template('treeselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户', 
+						name: 'testUser.userCode', value: val.split('|')[0], 
+						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
+					});
+				}
+			}
+		},
+		{header:'部门选择', name:'testOffice', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return template('treeselectTpl', {
+						id: 'office_'+editOptions.id, title: '部门', 
+						name: 'testOffice.officeCode', value: val.split('|')[0], 
+						labelName: 'testOffice.officeName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: ''
+					});
+				}
+			}
+		},
+		{header:'区域选择', name:'testAreaCode', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return template('treeselectTpl', {
+						id: 'area_'+editOptions.id, title: '区域', 
+						name: 'testAreaCode', value: val.split('|')[0], 
+						labelName: 'testAreaName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/area/treeData', cssClass: ''
+					});
+				}
+			}
+		},
+		{header:'区域名称', name:'testAreaName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'100', 'class':'form-control'}},
+		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
 				actions.push('<a href="#" onclick="js.confirm(\'你确认要删除这条数据吗？\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
@@ -436,14 +318,20 @@ $("#testDataChildDataGrid").dataGrid({
 	
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
-	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,testRadio,testCheckbox,testDate,testDatetime,testUserCode,testOfficeCode,testAreaCode,testAreaName,', // 提交数据列表的属性字段
+	editGridInputFormListAttrs: 'status,id,testSort,testDataId.id,testInput,testTextarea,testSelect,testSelectMultiple,testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,testAreaCode,testAreaName,', // 提交数据列表的属性字段
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}
 });
-
+</script>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
+<script>
 $("#inputForm").validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){

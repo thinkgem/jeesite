@@ -21,8 +21,8 @@ public class InitGenData extends com.jeesite.modules.gen.db.InitGenData {
 
 	@Test
 	public void initGenData() throws Exception{
-		initGenTestData();
 		initGenTreeData();
+		initGenTestData();
 	}
 
 }

@@ -8,9 +8,9 @@ import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.validation.constraints.NotNull;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.entity.Office;
-import com.jeesite.common.entity.Extend;
 import java.util.List;
 import com.jeesite.common.collect.ListUtils;
 
@@ -22,7 +22,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 测试数据Entity
  * @author ThinkGem
- * @version 2018-01-30
+ * @version 2018-01-31
  */
 @Table(name="test_data", alias="a", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
@@ -39,7 +39,6 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
 		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", isQuery=false),
 		@Column(includeEntity=DataEntity.class),
-		@Column(includeEntity=Extend.class, attrName="extend"),
 	}, joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="testUser", alias="u10",
 			on="u10.user_code = a.test_user_code", columns={
@@ -68,7 +67,6 @@ public class TestData extends DataEntity<TestData> {
 	private Office testOffice;		// 部门选择
 	private String testAreaCode;		// 区域选择
 	private String testAreaName;		// 区域名称
-	private Extend extend;		// 扩展字段
 	private List<TestDataChild> testDataChildList = ListUtils.newArrayList();		// 子表列表
 	
 	public TestData() {
@@ -134,6 +132,7 @@ public class TestData extends DataEntity<TestData> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@NotNull(message="日期选择不能为空")
 	public Date getTestDate() {
 		return testDate;
 	}
@@ -143,6 +142,7 @@ public class TestData extends DataEntity<TestData> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@NotNull(message="日期时间不能为空")
 	public Date getTestDatetime() {
 		return testDatetime;
 	}
@@ -183,14 +183,6 @@ public class TestData extends DataEntity<TestData> {
 
 	public void setTestAreaName(String testAreaName) {
 		this.testAreaName = testAreaName;
-	}
-	
-	public Extend getExtend() {
-		return extend;
-	}
-
-	public void setExtend(Extend extend) {
-		this.extend = extend;
 	}
 	
 	public Date getTestDate_gte() {
