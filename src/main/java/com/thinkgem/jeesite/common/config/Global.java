@@ -11,26 +11,51 @@ import org.springframework.core.io.DefaultResourceLoader;
 
 import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
+
 import com.thinkgem.jeesite.common.utils.PropertiesLoader;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 
 /**
- * 全局配置类
- * @author ThinkGem
- * @version 2014-06-25
+ * 全局配置类 懒汉式单例类.在第一次调用的时候实例化自己
+ * 
+ * @author ThinkGem,长春叭哥
+ * @version 2018年1月5日
+ */
+
+/**
+ * 全局配置类 懒汉式单例类.在第一次调用的时候实例化自己
+ * @author ThinkGem,长春叭哥
+ * @version 2018年1月5日
  */
 public class Global {
+
+	private Global() {}
 
 	/**
 	 * 当前对象实例
 	 */
-	private static Global global = new Global();
-	
+	private static Global global = null;
+
+	/**
+	 * 静态工厂方法 获取当前对象实例 多线程安全单例模式(使用双重同步锁)
+	 */
+
+	public static synchronized Global getInstance() {
+
+		if (global == null) {
+			synchronized (Global.class) {
+				if (global == null)
+					global = new Global();
+			}
+		}
+		return global;
+	}
+
 	/**
 	 * 保存全局属性值
 	 */
 	private static Map<String, String> map = Maps.newHashMap();
-	
+
 	/**
 	 * 属性文件加载对象
 	 */
@@ -47,59 +72,53 @@ public class Global {
 	 */
 	public static final String YES = "1";
 	public static final String NO = "0";
-	
+
 	/**
 	 * 对/错
 	 */
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
-	
+
 	/**
 	 * 上传文件基础虚拟路径
 	 */
 	public static final String USERFILES_BASE_URL = "/userfiles/";
-	
-	/**
-	 * 获取当前对象实例
-	 */
-	public static Global getInstance() {
-		return global;
-	}
-	
+
 	/**
 	 * 获取配置
+	 * 
 	 * @see ${fns:getConfig('adminPath')}
 	 */
 	public static String getConfig(String key) {
 		String value = map.get(key);
-		if (value == null){
+		if (value == null) {
 			value = loader.getProperty(key);
 			map.put(key, value != null ? value : StringUtils.EMPTY);
 		}
 		return value;
 	}
-	
+
 	/**
 	 * 获取管理端根路径
 	 */
 	public static String getAdminPath() {
 		return getConfig("adminPath");
 	}
-	
+
 	/**
 	 * 获取前端根路径
 	 */
 	public static String getFrontPath() {
 		return getConfig("frontPath");
 	}
-	
+
 	/**
 	 * 获取URL后缀
 	 */
 	public static String getUrlSuffix() {
 		return getConfig("urlSuffix");
 	}
-	
+
 	/**
 	 * 是否是演示模式，演示模式下不能修改用户、角色、密码、菜单、授权
 	 */
@@ -107,7 +126,7 @@ public class Global {
 		String dm = getConfig("demoMode");
 		return "true".equals(dm) || "1".equals(dm);
 	}
-	
+
 	/**
 	 * 在修改系统用户和角色时是否同步到Activiti
 	 */
@@ -115,9 +134,10 @@ public class Global {
 		String dm = getConfig("activiti.isSynActivitiIndetity");
 		return "true".equals(dm) || "1".equals(dm);
 	}
-    
+
 	/**
 	 * 页面获取常量
+	 * 
 	 * @see ${fns:getConst('YES')}
 	 */
 	public static Object getConst(String field) {
@@ -131,45 +151,47 @@ public class Global {
 
 	/**
 	 * 获取上传文件的根目录
+	 * 
 	 * @return
 	 */
 	public static String getUserfilesBaseDir() {
 		String dir = getConfig("userfiles.basedir");
-		if (StringUtils.isBlank(dir)){
+		if (StringUtils.isBlank(dir)) {
 			try {
 				dir = ServletContextFactory.getServletContext().getRealPath("/");
 			} catch (Exception e) {
 				return "";
 			}
 		}
-		if(!dir.endsWith("/")) {
+		if (!dir.endsWith("/")) {
 			dir += "/";
 		}
-//		System.out.println("userfiles.basedir: " + dir);
+		// System.out.println("userfiles.basedir: " + dir);
 		return dir;
 	}
-	
-    /**
-     * 获取工程路径
-     * @return
-     */
-    public static String getProjectPath(){
-    	// 如果配置了工程路径，则直接返回，否则自动获取。
+
+	/**
+	 * 获取工程路径
+	 * 
+	 * @return
+	 */
+	public static String getProjectPath() {
+		// 如果配置了工程路径，则直接返回，否则自动获取。
 		String projectPath = Global.getConfig("projectPath");
-		if (StringUtils.isNotBlank(projectPath)){
+		if (StringUtils.isNotBlank(projectPath)) {
 			return projectPath;
 		}
 		try {
 			File file = new DefaultResourceLoader().getResource("").getFile();
-			if (file != null){
-				while(true){
+			if (file != null) {
+				while (true) {
 					File f = new File(file.getPath() + File.separator + "src" + File.separator + "main");
-					if (f == null || f.exists()){
+					if (f == null || f.exists()) {
 						break;
 					}
-					if (file.getParentFile() != null){
+					if (file.getParentFile() != null) {
 						file = file.getParentFile();
-					}else{
+					} else {
 						break;
 					}
 				}
@@ -179,6 +201,6 @@ public class Global {
 			e.printStackTrace();
 		}
 		return projectPath;
-    }
-	
+	}
+
 }
