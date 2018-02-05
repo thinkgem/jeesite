@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -189,10 +190,25 @@ public class ExcelImport {
 	/**
 	 * 获取行对象
 	 * @param rownum
-	 * @return
+	 * @return 返回Row对象，如果空行返回null
 	 */
 	public Row getRow(int rownum){
-		return this.sheet.getRow(rownum);
+		Row row = this.sheet.getRow(rownum);
+		// 验证是否是空行，如果空行返回null
+		short cellNum = 0;
+		short emptyNum = 0;
+		Iterator<Cell> it = row.cellIterator();
+		while (it.hasNext()) {
+			cellNum++;
+			Cell cell = it.next();
+			if (StringUtils.isBlank(cell.toString())) {
+				emptyNum++;
+			}
+		}
+		if (cellNum == emptyNum) {
+			return null;
+		}
+		return row;
 	}
 
 	/**
@@ -228,6 +244,9 @@ public class ExcelImport {
 	 * @return 单元格值
 	 */
 	public Object getCellValue(Row row, int column){
+		if (row == null){
+			return row;
+		}
 		Object val = "";
 		try{
 			Cell cell = row.getCell(column);
@@ -353,6 +372,9 @@ public class ExcelImport {
 		for (int i = this.getDataRowNum(); i < this.getLastDataRowNum(); i++) {
 			E e = (E)cls.newInstance();
 			Row row = this.getRow(i);
+			if (row == null){
+				continue;
+			}
 			StringBuilder sb = new StringBuilder();
 			for (int j = 0; j < annotationList.size(); j++){//Object[] os : annotationList){
 				Object[] os = annotationList.get(j);
@@ -450,6 +472,9 @@ public class ExcelImport {
 //		
 //		for (int i = ei.getDataRowNum(); i < ei.getLastDataRowNum(); i++) {
 //			Row row = ei.getRow(i);
+//			if (row == null){
+//				continue;
+//			}
 //			for (int j = 0; j < ei.getLastCellNum(); j++) {
 //				Object val = ei.getCellValue(row, j);
 //				System.out.print(val+", ");
