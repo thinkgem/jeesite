@@ -5,7 +5,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [ÐÅÏ¢] ÔËÐÐ Web ¹¤³Ì¡£
+echo [ï¿½ï¿½Ï¢] ï¿½ï¿½ï¿½ï¿½ Web ï¿½ï¿½ï¿½Ì¡ï¿½
 echo.
 rem pause
 rem echo.
@@ -16,8 +16,10 @@ cd %~dp0
 cd ../
 title %cd%
 
-set JAVA_OPTS= -Xms256m -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
+rem set JAVA_OPTS= -Xms256m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=512m
+set JAVA_OPTS= -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m
 
-java -jar target/jeesite-web-4.0-SNAPSHOT.war
+cd target/
+java -jar jeesite-web.war
 
 pause

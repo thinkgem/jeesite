@@ -22,7 +22,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 测试数据Entity
  * @author ThinkGem
- * @version 2018-01-31
+ * @version 2018-02-05
  */
 @Table(name="test_data", alias="a", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
@@ -37,7 +37,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
 		@Column(name="test_office_code", attrName="testOffice.officeCode", label="部门选择"),
 		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
-		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", isQuery=false),
+		@Column(name="test_area_name", attrName="testAreaName", label="区域名称"),
 		@Column(includeEntity=DataEntity.class),
 	}, joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="testUser", alias="u10",

@@ -34,9 +34,9 @@ import com.jeesite.modules.sys.service.MenuService;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
- * 字典工具类
+ * 日志工具类
  * @author ThinkGem
- * @version 2014-11-7
+ * @version 2017-11-7
  */
 public class LogUtils {
 	

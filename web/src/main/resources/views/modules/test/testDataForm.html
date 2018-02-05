@@ -19,7 +19,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 单行文本：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testInput" maxlength="200" class="form-control "/>
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -30,7 +30,7 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required hide">*</span> 多行文本：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:textarea path="testTextarea" rows="4" maxlength="200" class="form-control "/>
+								<#form:textarea path="testTextarea" rows="4" maxlength="200" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 下拉框：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control " />
+								<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 下拉多选：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control required" />
+								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 单选框：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:radio path="testRadio" dictType="sys_menu_type" class="form-control " />
+								<#form:radio path="testRadio" dictType="sys_menu_type" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -70,7 +70,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 复选框：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:checkbox path="testCheckbox" dictType="sys_menu_type" class="form-control " />
+								<#form:checkbox path="testCheckbox" dictType="sys_menu_type" class="form-control" />
 							</div>
 						</div>
 					</div>
@@ -81,7 +81,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required ">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate required "
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate required"
 									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required ">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate required "
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate required"
 									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
 							</div>
 						</div>
@@ -106,7 +106,7 @@
 								<#form:treeselect id="testUser" title="用户"
 									path="testUser.userCode" labelPath="testUser.userName"
 									url="${ctx}/sys/office/treeData?isLoadUser=true"
-									class=" " allowClear="true"/>
+									class="" allowClear="true"/>
 							</div>
 						</div>
 					</div>
@@ -118,7 +118,7 @@
 								<#form:treeselect id="testOffice" title="部门"
 									path="testOffice.officeCode" labelPath="testOffice.officeName"
 									url="${ctx}/sys/office/treeData"
-									class=" " allowClear="true"/>
+									class="" allowClear="true"/>
 							</div>
 						</div>
 					</div>
@@ -132,7 +132,7 @@
 								<#form:treeselect id="testAreaCode" title="区域"
 									path="testAreaCode" labelPath="testAreaName"
 									url="${ctx}/sys/area/treeData"
-									class=" " allowClear="true"/>
+									class="" allowClear="true"/>
 							</div>
 						</div>
 					</div>
@@ -143,7 +143,7 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -205,7 +205,7 @@ $("#testDataChildDataGrid").dataGrid({
 		{header:'状态', name:'status', editable:true, hidden:true},
 		{header:'主键', name:'id', editable:true, hidden:true},
 		{header:'排序号', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
-		{header:'父表主键', name:'testDataId.id', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'64', 'class':'form-control'}},
+		{header:'父表主键', name:'testDataId.id', editable:true, hidden:true},
 		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
 		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
 		{header:'下拉框', name:'testSelect', width:100, 
@@ -218,7 +218,7 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'下拉多选', name:'testSelectMultiple', width:100, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
-				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					$(element).select2().on("change",function(){$(this).valid()});
 				}
@@ -261,7 +261,7 @@ $("#testDataChildDataGrid").dataGrid({
 				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
-					return template('treeselectTpl', {
+					return js.template('treeselectTpl', {
 						id: 'user_'+editOptions.id, title: '用户', 
 						name: 'testUser.userCode', value: val.split('|')[0], 
 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
@@ -275,7 +275,7 @@ $("#testDataChildDataGrid").dataGrid({
 				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
-					return template('treeselectTpl', {
+					return js.template('treeselectTpl', {
 						id: 'office_'+editOptions.id, title: '部门', 
 						name: 'testOffice.officeCode', value: val.split('|')[0], 
 						labelName: 'testOffice.officeName', labelValue: val.split('|')[1],
@@ -289,7 +289,7 @@ $("#testDataChildDataGrid").dataGrid({
 				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
-					return template('treeselectTpl', {
+					return js.template('treeselectTpl', {
 						id: 'area_'+editOptions.id, title: '区域', 
 						name: 'testAreaCode', value: val.split('|')[0], 
 						labelName: 'testAreaName', labelValue: val.split('|')[1],
@@ -298,7 +298,6 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'区域名称', name:'testAreaName', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'100', 'class':'form-control'}},
 		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){

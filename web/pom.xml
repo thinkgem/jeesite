@@ -76,6 +76,7 @@
 	</dependencies>
 	
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
 		<plugins>
 			
@@ -83,30 +84,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-			</plugin>
-			
-			<!-- WAR打包插件, 设定war包名称不带版本号 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<packagingExcludes>
-					</packagingExcludes>
-					<warSourceExcludes>
-						userfiles/**,
-						test/**
-					</warSourceExcludes>
-					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory> 
-					<warName>${project.artifactId}</warName>
-					<archive>
-						<addMavenDescriptor>false</addMavenDescriptor>
-					</archive>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
+			</plugin> -->
 			
 			<!-- Eclipse插件 -->
 			<plugin>
