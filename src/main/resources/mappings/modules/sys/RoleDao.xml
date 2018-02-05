@@ -4,6 +4,10 @@
     
     <resultMap id="roleResult" type="Role">
 		<id property="id" column="id" />
+	    	<association property="office" javaType="Office">
+			<id property="id" column="office.id" />
+			<id property="name" column="office.name" />
+		</association>
 		<result property="name" column="name" />
 		<result property="enname" column="enname" />
 		<result property="roleType" column="roleType" />
