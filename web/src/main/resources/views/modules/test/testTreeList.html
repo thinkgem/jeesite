@@ -1,0 +1,89 @@
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> 数据管理
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<a href="#" class="btn btn-default" id="btnRefreshTree" title="刷新"><i class="fa fa-refresh"></i> 刷新</a>
+				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="展开一级"><i class="fa fa-angle-double-down"></i> 展开</a>
+				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="折叠全部"><i class="fa fa-angle-double-up"></i> 折叠</a>
+				<% if(hasPermi('test:testTree:edit')){ %>
+					<a href="${ctx}/test/testTree/form" class="btn btn-default btnTool" title="新增数据"><i class="fa fa-plus"></i> 新增</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${testTree}" action="${ctx}/test/testTree/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">树节点名：</label>
+					<div class="control-inline">
+						<#form:input path="treeName" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">状态：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">备注信息：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">查询</button>
+					<button type="reset" class="btn btn-default btn-sm">重置</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'父级编号', name:'parentCode', index:'a.parent_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/test/testTree/form?treeCode='+row.treeCode+'" class="btnList" data-title="编辑数据">'+(val||row.id)+'</a>';
+		}},
+		{header:'所有父级编号', name:'parentCodes', index:'a.parent_codes', width:150, align:"left"},
+		{header:'本级排序号', name:'treeSort', index:'a.tree_sort', width:150, align:"left"},
+		{header:'全节点名', name:'treeNames', index:'a.tree_names', width:150, align:"left"},
+		{header:'树节点名', name:'treeName', index:'a.tree_name', width:150, align:"left"},
+		{header:'状态', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '未知', true);
+		}},
+		{header:'创建时间', name:'createDate', index:'a.create_date', width:150, align:"left"},
+		{header:'备注信息', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'操作', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('test:testTree:edit')){ %>
+				actions.push('<a href="${ctx}/test/testTree/form?treeCode='+row.treeCode+'" class="btnList" title="编辑数据"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/test/testTree/disable?treeCode='+row.treeCode+'" class="btnList" title="停用数据" data-confirm="确认要停用该数据吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/test/testTree/enable?treeCode='+row.treeCode+'" class="btnList" title="启用数据" data-confirm="确认要启用该数据吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/test/testTree/delete?treeCode='+row.treeCode+'" class="btnList" title="删除数据" data-confirm="确认要删除该数据及所有子数据吗？" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/test/testTree/form?parentCode='+row.id+'" class="btnList" title="新增下级数据"><i class="fa fa-plus-square"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	treeGrid: true,			// 启用树结构表格
+	defaultExpandLevel: 0,	// 默认展开的层次
+	expandNodeClearPostData: 'treeName,status,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

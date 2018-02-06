@@ -1,3 +1,4 @@
+/* Electron */ if(typeof module==='object'){window.module=module;module=undefined;}
 /*!
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/
@@ -11006,3 +11007,4 @@ if ( !noGlobal ) {
 
 return jQuery;
 }));
+/* Electron */ if(window.module)module=window.module;
