@@ -15,12 +15,12 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 测试树表Entity
  * @author ThinkGem
- * @version 2018-02-06
+ * @version 2018-02-07
  */
 @Table(name="test_tree", alias="a", columns={
 		@Column(name="tree_code", attrName="treeCode", label="节点编码", isPK=true),
 		@Column(includeEntity=TreeEntity.class),
-		@Column(name="tree_name", attrName="treeName", label="树节点名", queryType=QueryType.LIKE, isTreeName=true),
+		@Column(name="tree_name", attrName="treeName", label="节点名称", queryType=QueryType.LIKE, isTreeName=true),
 		@Column(includeEntity=DataEntity.class),
 	}, orderBy="a.tree_sorts, a.tree_code"
 )
@@ -28,7 +28,7 @@ public class TestTree extends TreeEntity<TestTree> {
 	
 	private static final long serialVersionUID = 1L;
 	private String treeCode;		// 节点编码
-	private String treeName;		// 树节点名
+	private String treeName;		// 节点名称
 	
 	public TestTree() {
 		this(null);
@@ -54,8 +54,8 @@ public class TestTree extends TreeEntity<TestTree> {
 		this.treeCode = treeCode;
 	}
 	
-	@NotBlank(message="树节点名不能为空")
-	@Length(min=0, max=200, message="树节点名长度不能超过 200 个字符")
+	@NotBlank(message="节点名称不能为空")
+	@Length(min=0, max=200, message="节点名称长度不能超过 200 个字符")
 	public String getTreeName() {
 		return treeName;
 	}

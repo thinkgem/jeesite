@@ -139,8 +139,8 @@ $('#dataGrid').dataGrid({
 		{header:'复选框', name:'testCheckbox', index:'a.test_checkbox', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '未知', true);
 		}},
-		{header:'日期选择', name:'testDate', index:'a.test_date', width:150, align:"left"},
-		{header:'日期时间', name:'testDatetime', index:'a.test_datetime', width:150, align:"left"},
+		{header:'日期选择', name:'testDate', index:'a.test_date', width:150, align:"center"},
+		{header:'日期时间', name:'testDatetime', index:'a.test_datetime', width:150, align:"center"},
 		{header:'用户选择', name:'testUser.userName', index:'a.test_user_code', width:150, align:"center"},
 		{header:'部门选择', name:'testOffice.officeName', index:'a.test_office_code', width:150, align:"center"},
 		{header:'区域选择', name:'testAreaName', index:'a.test_area_code', width:150, align:"center"},
@@ -148,7 +148,7 @@ $('#dataGrid').dataGrid({
 		{header:'状态', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '未知', true);
 		}},
-		{header:'创建时间', name:'createDate', index:'a.create_date', width:150, align:"left"},
+		{header:'创建时间', name:'createDate', index:'a.create_date', width:150, align:"center"},
 		{header:'备注信息', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'操作', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];

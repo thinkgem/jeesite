@@ -5,6 +5,7 @@ package com.jeesite.common.security;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -24,6 +25,8 @@ public class AesUtils {
 	private static final String AES = "AES";
 	private static final String AES_CBC = "AES/CBC/PKCS5Padding";
 	private static final int DEFAULT_AES_KEYSIZE = 128; 			// 生成AES密钥, 默认长度为128位(16字节).
+	private static final int DEFAULT_IVSIZE = 16; 					// 生成随机向量, 默认大小为cipher.getBlockSize(), 16字节
+	private static final SecureRandom RANDOM = new SecureRandom();	// 用于 生成 generateIV随机数对象
 
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 	private static final byte[] DEFAULT_KEY = new byte[]{-97,88,-94,9,70,-76,126,25,0,3,-20,113,108,28,69,125}; 
@@ -108,6 +111,15 @@ public class AesUtils {
 		} catch (GeneralSecurityException e) {
 			throw ExceptionUtils.unchecked(e);
 		}
+	}
+	
+	/**
+	 * 生成随机向量,默认大小为cipher.getBlockSize(), 16字节.
+	 */
+	public static byte[] genIV() {
+		byte[] bytes = new byte[DEFAULT_IVSIZE];
+		RANDOM.nextBytes(bytes);
+		return bytes;
 	}
 	
 	/**

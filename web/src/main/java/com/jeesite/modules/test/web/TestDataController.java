@@ -19,14 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.service.TestDataService;
 
 /**
  * 测试数据Controller
  * @author ThinkGem
- * @version 2018-02-05
+ * @version 2018-02-07
  */
 @Controller
 @RequestMapping(value = "${adminPath}/test/testData")

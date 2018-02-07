@@ -20,12 +20,12 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 测试数据Entity
  * @author ThinkGem
- * @version 2018-02-05
+ * @version 2018-02-07
  */
 @Table(name="test_data_child", alias="a", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
 		@Column(name="test_sort", attrName="testSort", label="排序号"),
-		@Column(name="test_data_id", attrName="testDataId.id", label="父表主键"),
+		@Column(name="test_data_id", attrName="testData.id", label="父表主键"),
 		@Column(name="test_input", attrName="testInput", label="单行文本", queryType=QueryType.LIKE),
 		@Column(name="test_textarea", attrName="testTextarea", label="多行文本", queryType=QueryType.LIKE),
 		@Column(name="test_select", attrName="testSelect", label="下拉框"),
@@ -55,7 +55,7 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	
 	private static final long serialVersionUID = 1L;
 	private Long testSort;		// 排序号
-	private TestData testDataId;		// 父表主键 父类
+	private TestData testData;		// 父表主键 父类
 	private String testInput;		// 单行文本
 	private String testTextarea;		// 多行文本
 	private String testSelect;		// 下拉框
@@ -74,8 +74,8 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	}
 
 
-	public TestDataChild(TestData testDataId){
-		this.testDataId = testDataId;
+	public TestDataChild(TestData testData){
+		this.testData = testData;
 	}
 	
 	public Long getTestSort() {
@@ -87,12 +87,12 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	}
 	
 	@Length(min=0, max=64, message="父表主键长度不能超过 64 个字符")
-	public TestData getTestDataId() {
-		return testDataId;
+	public TestData getTestData() {
+		return testData;
 	}
 
-	public void setTestDataId(TestData testDataId) {
-		this.testDataId = testDataId;
+	public void setTestData(TestData testData) {
+		this.testData = testData;
 	}
 	
 	@Length(min=0, max=200, message="单行文本长度不能超过 200 个字符")
