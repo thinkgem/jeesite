@@ -34,6 +34,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * @param testData
 	 * @return
 	 */
+	@Override
 	public TestData get(TestData testData) {
 		TestData entity = super.get(testData);
 		if (entity != null){
@@ -50,6 +51,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * @param testData
 	 * @return
 	 */
+	@Override
 	public Page<TestData> findPage(Page<TestData> page, TestData testData) {
 		return super.findPage(page, testData);
 	}
@@ -58,6 +60,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * 保存数据（插入或更新）
 	 * @param testData
 	 */
+	@Override
 	@Transactional(readOnly=false)
 	public void save(TestData testData) {
 		super.save(testData);
@@ -86,6 +89,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * 更新状态
 	 * @param testData
 	 */
+	@Override
 	@Transactional(readOnly=false)
 	public void updateStatus(TestData testData) {
 		super.updateStatus(testData);
@@ -95,6 +99,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * 删除数据
 	 * @param testData
 	 */
+	@Override
 	@Transactional(readOnly=false)
 	public void delete(TestData testData) {
 		super.delete(testData);

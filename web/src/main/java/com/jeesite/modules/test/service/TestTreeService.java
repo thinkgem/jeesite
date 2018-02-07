@@ -28,6 +28,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * @param testTree
 	 * @return
 	 */
+	@Override
 	public TestTree get(TestTree testTree) {
 		return super.get(testTree);
 	}
@@ -37,6 +38,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * @param testTree
 	 * @return
 	 */
+	@Override
 	public List<TestTree> findList(TestTree testTree) {
 		return super.findList(testTree);
 	}
@@ -45,6 +47,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * 保存数据（插入或更新）
 	 * @param testTree
 	 */
+	@Override
 	@Transactional(readOnly=false)
 	public void save(TestTree testTree) {
 		super.save(testTree);
@@ -58,6 +61,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * 更新状态
 	 * @param testTree
 	 */
+	@Override
 	@Transactional(readOnly=false)
 	public void updateStatus(TestTree testTree) {
 		super.updateStatus(testTree);
@@ -67,6 +71,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * 删除数据
 	 * @param testTree
 	 */
+	@Override
 	@Transactional(readOnly=false)
 	public void delete(TestTree testTree) {
 		super.delete(testTree);

@@ -38,10 +38,12 @@ public class TestTree extends TreeEntity<TestTree> {
 		super(id);
 	}
 	
+	@Override
 	public TestTree getParent() {
 		return parent;
 	}
 
+	@Override
 	public void setParent(TestTree parent) {
 		this.parent = parent;
 	}

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.common.security;
+package com.jeesite.common.codec;
 
 import java.io.IOException;
 import java.io.InputStream;

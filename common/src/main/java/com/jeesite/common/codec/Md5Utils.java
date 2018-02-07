@@ -1,15 +1,13 @@
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
-package com.jeesite.common.security;
+package com.jeesite.common.codec;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.jeesite.common.codec.EncodeUtils;
 
 /**
  * MD5不可逆加密工具类
