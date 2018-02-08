@@ -3,8 +3,6 @@
  */
 package com.jeesite.modules.sys.db;
 
-import java.io.File;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeesite.common.callback.MethodCallback;
@@ -50,12 +48,19 @@ import com.jeesite.modules.sys.service.UserService;
  * @version 2017-10-22
  */
 public class InitCoreData extends BaseInitDataTests {
-	
+
 	@Override
 	public void begin() {
 		super.begin();
-		dataFile = new File(InitCoreData.class.getResource(
-				InitCoreData.class.getSimpleName() + ".xlsx").getFile());
+		excelFile = InitCoreData.class.getName().replaceAll("\\.", "/")+".xlsx";
+	}
+	
+	/**
+	 * 建表语句执行
+	 */
+	public void createTable() throws Exception{
+		runScript("core.sql");
+		runScript("job.sql");
 	}
 
 	/**

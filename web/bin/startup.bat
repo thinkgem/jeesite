@@ -5,7 +5,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [��Ϣ] ���� Web ���̡�
+echo [信息] 运行Web工程。
 echo.
 rem pause
 rem echo.

@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Profile;
 
 import com.jeesite.common.io.PropertiesUtils;
 
@@ -16,7 +15,6 @@ import com.jeesite.common.io.PropertiesUtils;
  * @author ThinkGem
  * @version 2018-1-8
  */
-@Profile("default")
 @SpringBootApplication(scanBasePackages={"com.jeesite.modules"})
 public class Application extends SpringBootServletInitializer {
 	
