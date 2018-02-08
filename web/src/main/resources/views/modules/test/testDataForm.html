@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
@@ -143,7 +143,9 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+<!-- 								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/> -->
+								<#form:ueditor name="remarks" maxlength="10000" height="200" class="required"
+									simpleToolbars="true" readonly="false" outline="false"/>
 							</div>
 						</div>
 					</div>
