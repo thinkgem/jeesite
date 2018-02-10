@@ -15,7 +15,7 @@
     <property name="context-root" value="jeesite-web"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>
-        <property name="component.exclusion.patterns" value="userfiles/**,test/**"/>
+        <property name="component.exclusion.patterns"/>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>

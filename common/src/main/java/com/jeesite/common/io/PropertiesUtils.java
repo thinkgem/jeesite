@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.Resource;
 
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.ObjectUtils;
 
 /**
@@ -29,8 +31,9 @@ public class PropertiesUtils {
 	
 	// 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
 	public static final String[] DEFAULT_CONFIG_FILE = new String[]{
-			"classpath:jeesite-core.yml", "classpath:jeesite.yml",
-			"classpath:config/application.yml", "classpath:application.yml"};
+			"classpath:config/jeesite.yml",
+			"classpath:config/application.yml",
+			"classpath:application.yml"};
 
 	private static Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
 	
@@ -45,7 +48,16 @@ public class PropertiesUtils {
 			releadInstance();
 		}
 		public static void releadInstance(){
-			INSTANCE = new PropertiesUtils(DEFAULT_CONFIG_FILE);
+			Set<String> configFiles = SetUtils.newLinkedHashSet();
+			Resource[] resources = ResourceUtils.getResources("classpath*:/config/jeesite-*.*");
+			for(Resource resource : resources){
+				configFiles.add("classpath:/config/"+resource.getFilename());
+			}
+			for (String configFile : DEFAULT_CONFIG_FILE){
+				configFiles.add(configFile);
+			}
+			logger.debug("Loading jeesite config: {}", configFiles);
+			INSTANCE = new PropertiesUtils(configFiles.toArray(new String[configFiles.size()]));
 		}
 	}
 

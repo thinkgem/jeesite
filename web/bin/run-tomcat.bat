@@ -14,19 +14,11 @@ rem echo.
 cd %~dp0
 
 cd ../
-title %cd%
 
-set currPath=%cd%
+title %cd%
 
 rem set MAVEN_OPTS=%MAVEN_OPTS% -Xms256m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=512m
 set MAVEN_OPTS=%MAVEN_OPTS% -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m
-
-if exist "../package/pom.xml" (
-	cd ../package
-	call mvn clean install -Dmaven.test.skip=true -Ppackage -U
-)
-
-cd %currPath%
 
 call mvn clean spring-boot:run -U
 

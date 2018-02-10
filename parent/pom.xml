@@ -100,7 +100,9 @@
 					       	</includes> -->
 							<archive>
 								<manifest>
-									<!-- caution: add directory entries -->
+									<!-- Add directory entries -->
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+									<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 									<addClasspath>true</addClasspath>
 								</manifest>
 							</archive>

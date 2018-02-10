@@ -79,8 +79,12 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	 */
 	public static Resource[] getResources(String locationPattern){
 		try {
-			return new PathMatchingResourcePatternResolver()
-				.getResources(locationPattern);
+			Resource[] resources = new PathMatchingResourcePatternResolver()
+					.getResources(locationPattern);
+//			System.out.println("===========\n===========");
+//			System.out.println(locationPattern + "   :   " + resources.length);
+//			System.out.println("===========\n===========");
+			return resources;
 		} catch (IOException e) {
 			throw ExceptionUtils.unchecked(e);
 		}

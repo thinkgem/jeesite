@@ -6,6 +6,7 @@ package com.jeesite.common.io;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +18,6 @@ import java.util.List;
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.jmimemagic.Magic;
-import net.sf.jmimemagic.MagicMatch;
 
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
@@ -33,6 +31,9 @@ import org.springframework.core.io.ClassPathResource;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
+
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicMatch;
 
 /**
  * 文件操作工具类
@@ -966,6 +967,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				}
 				projectPath = file.toString();
 			}
+		} catch (FileNotFoundException e) {
+			;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -998,6 +1001,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				}
 				webappPath = file.toString();
 			}
+		} catch (FileNotFoundException e) {
+			;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
