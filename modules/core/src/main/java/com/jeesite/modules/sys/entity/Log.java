@@ -16,8 +16,6 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import com.jeesite.common.shiro.realm.LoginInfo;
-import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 操作日志Entity
@@ -103,10 +101,6 @@ public class Log extends DataEntity<Log> {
 	
 	@Length(min=0, max=500, message="请求URI长度不能超过 500 个字符")
 	public String getRequestUri() {
-		LoginInfo p = UserUtils.getLoginInfo();
-		if (p != null && "1".equals(p.getParam("l"))){
-			return null;
-		}
 		return requestUri;
 	}
 

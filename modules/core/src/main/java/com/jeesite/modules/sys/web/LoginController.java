@@ -233,7 +233,9 @@ public class LoginController extends BaseController{
 		
 		// 设置共享SessionId的Cookie值，睿思BI使用。
 		String cookieName = Global.getProperty("session.shareSessionIdCookieName");
-		CookieUtils.setCookie((HttpServletResponse)response, cookieName, (String)session.getId());
+		if (StringUtils.isNotBlank(cookieName)){
+			CookieUtils.setCookie((HttpServletResponse)response, cookieName, (String)session.getId());
+		}
 
 		// 如果是登录操作，则设置登录信息（移动端用）
 		model.addAttribute("result", Global.TRUE);

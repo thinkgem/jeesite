@@ -9,6 +9,9 @@
         <dependent-module archiveName="jeesite-common-4.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-common/jeesite-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="beetl-2.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/beetl/beetl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="jeesite-module-devtools-4.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-devtools/jeesite-module-devtools">
             <dependency-type>uses</dependency-type>
         </dependent-module>

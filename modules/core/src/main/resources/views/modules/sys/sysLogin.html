@@ -36,24 +36,22 @@
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
 				<#form:validcode name="validCode" isRequired="true" isRemote="true" isLazy="false"/>
 			</div>
-			<div class="row">
-				<div class="col-xs-8">
-					<div class="mt5 icheck">
-						<label title="公共场所慎用,下次不需要再填写帐号"><input type="checkbox"
-							name="rememberUserCode"${isNotBlank(cookie('rememberUserCode'))?' checked':''}
-							class="form-control" data-style="square-blue"> 记住账号</label> &nbsp; 
-						<label title="公共场所慎用,下次不需要再填写帐号和密码"><input type="checkbox"
-							name="rememberMe"${isNotBlank(cookie('rememberMe'))?' checked':''}
-							class="form-control" data-style="square-blue"> 记住密码</label>
-					</div>
-				</div>
-				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-block btn-flat">登 录</button>
+			<div class="form-group">
+				<div class="mt5 icheck">
+					<label title="公共场所慎用,下次不需要再填写帐号"><input type="checkbox"
+						name="rememberUserCode"${isNotBlank(cookie('rememberUserCode'))?' checked':''}
+						class="form-control" data-style="square-blue"> 记住账号</label> &nbsp; 
+					<label title="公共场所慎用,下次不需要再填写帐号和密码"><input type="checkbox"
+						name="rememberMe"${isNotBlank(cookie('rememberMe'))?' checked':''}
+						class="form-control" data-style="square-blue"> 记住密码</label>
 				</div>
 			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-block btn-flat">立即登录</button>
+			</div>
 		</#form:form>
-		<div class="row mt10">
-			<div class="col-xs-12 mt10">
+		<div class="row">
+			<div class="col-xs-12">
 				<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.registerUser'))){ %>
 				<a href="${ctxPath}/account/registerUser" class="pull-right">注册账号</a><% } %>
 				<a href="${ctxPath}/account/forgetPwd" class="pull-left">忘记密码</a>
