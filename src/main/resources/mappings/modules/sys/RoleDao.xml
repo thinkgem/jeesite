@@ -4,17 +4,17 @@
     
     <resultMap id="roleResult" type="Role">
 		<id property="id" column="id" />
-	    	<association property="office" javaType="Office">
-			<id property="id" column="office.id" />
-			<id property="name" column="office.name" />
-		</association>
 		<result property="name" column="name" />
 		<result property="enname" column="enname" />
 		<result property="roleType" column="roleType" />
 		<result property="dataScope" column="dataScope" />
 		<result property="remarks" column="remarks" />
 		<result property="useable" column="useable" />
-		<result property="sysData" column="sysData" /><!-- 
+		<result property="sysData" column="sysData" />
+		<association property="office" javaType="Office">
+            <id property="id" column="office.id"/>
+            <id property="name" column="office.name"/>
+        </association><!-- 
 		<collection property="userList" ofType="User">
 			<id property="id" column="userList.id" />
 			<id property="loginName" column="userList.loginName" />
