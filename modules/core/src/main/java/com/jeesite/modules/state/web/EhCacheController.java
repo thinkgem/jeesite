@@ -5,6 +5,7 @@ package com.jeesite.modules.state.web;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -18,7 +19,8 @@ public class EhCacheController {
 
 	@RequiresPermissions("stste:ehcache")
 	@RequestMapping(value="")
-	public String index(){
+	public String index(Model model){
+		model.addAttribute("message", "敬请期待！");
 		return "modules/state/ehcacheIndex";
 	}
 	
