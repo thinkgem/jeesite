@@ -12,17 +12,21 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
    <https://my.oschina.net/thinkgem/blog/913777>
 
+
 * ##### JeeSite 4.0 简化MyBatis持久层开发
 
    <https://my.oschina.net/thinkgem/blog/1503611>
+
 
 * ##### JeeSite 4.0 简化业务逻辑层开发
 
    <https://my.oschina.net/thinkgem/blog/1538766>
 
+
 * ##### JeeSite 4.0 MVC层及前端组件介绍
 
    <https://my.oschina.net/thinkgem/blog/1561129>
+
 
 * ##### JeeSite 4.0 内置功能模块划分
 
