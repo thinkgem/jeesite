@@ -63,16 +63,16 @@ DROP INDEX idx_sys_menu_sc ON js_sys_menu;
 DROP INDEX idx_sys_menu_is ON js_sys_menu;
 DROP INDEX idx_sys_menu_mcs ON js_sys_menu;
 DROP INDEX idx_sys_module_status ON js_sys_module;
-DROP INDEX idx_sys_message_cb ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_status ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_cl ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_sc ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_sd ON js_sys_msg_inner;
-DROP INDEX idx_sys_message_record_mi ON js_sys_msg_inner_record;
-DROP INDEX idx_sys_message_record_rc ON js_sys_msg_inner_record;
-DROP INDEX idx_sys_message_record_ruc ON js_sys_msg_inner_record;
-DROP INDEX idx_sys_message_record_status ON js_sys_msg_inner_record;
-DROP INDEX idx_sys_message_record_star ON js_sys_msg_inner_record;
+DROP INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner;
+DROP INDEX idx_sys_msg_inner_status ON js_sys_msg_inner;
+DROP INDEX idx_sys_msg_inner_cl ON js_sys_msg_inner;
+DROP INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner;
+DROP INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner;
+DROP INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record;
+DROP INDEX idx_sys_msg_inner_r_rc ON js_sys_msg_inner_record;
+DROP INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record;
+DROP INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record;
+DROP INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record;
 DROP INDEX idx_sys_msg_push_type ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_rc ON js_sys_msg_push;
 DROP INDEX idx_sys_msg_push_uc ON js_sys_msg_push;
@@ -573,7 +573,7 @@ CREATE TABLE js_sys_msg_inner
 CREATE TABLE js_sys_msg_inner_record
 (
 	id varchar(64) NOT NULL COMMENT '编号',
-	message_id varchar(64) NOT NULL COMMENT '所属消息',
+	msg_inner_id varchar(64) NOT NULL COMMENT '所属消息',
 	receive_user_code varchar(64) COMMENT '接受者用户编码',
 	receive_user_name varchar(100) NOT NULL COMMENT '接受者用户姓名',
 	read_status char(1) NOT NULL COMMENT '读取状态（0未送达 1未读 2已读）',
@@ -923,16 +923,16 @@ CREATE INDEX idx_sys_menu_sc ON js_sys_menu (sys_code ASC);
 CREATE INDEX idx_sys_menu_is ON js_sys_menu (is_show ASC);
 CREATE INDEX idx_sys_menu_mcs ON js_sys_menu (module_codes ASC);
 CREATE INDEX idx_sys_module_status ON js_sys_module (status ASC);
-CREATE INDEX idx_sys_message_cb ON js_sys_msg_inner (create_by ASC);
-CREATE INDEX idx_sys_message_status ON js_sys_msg_inner (status ASC);
-CREATE INDEX idx_sys_message_cl ON js_sys_msg_inner (content_level ASC);
-CREATE INDEX idx_sys_message_sc ON js_sys_msg_inner (send_user_code ASC);
-CREATE INDEX idx_sys_message_sd ON js_sys_msg_inner (send_date ASC);
-CREATE INDEX idx_sys_message_record_mi ON js_sys_msg_inner_record (message_id ASC);
-CREATE INDEX idx_sys_message_record_rc ON js_sys_msg_inner_record (receive_user_code ASC);
-CREATE INDEX idx_sys_message_record_ruc ON js_sys_msg_inner_record (receive_user_code ASC);
-CREATE INDEX idx_sys_message_record_status ON js_sys_msg_inner_record (read_status ASC);
-CREATE INDEX idx_sys_message_record_star ON js_sys_msg_inner_record (is_star ASC);
+CREATE INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner (create_by ASC);
+CREATE INDEX idx_sys_msg_inner_status ON js_sys_msg_inner (status ASC);
+CREATE INDEX idx_sys_msg_inner_cl ON js_sys_msg_inner (content_level ASC);
+CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code ASC);
+CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date ASC);
+CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id ASC);
+CREATE INDEX idx_sys_msg_inner_r_rc ON js_sys_msg_inner_record (receive_user_code ASC);
+CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code ASC);
+CREATE INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record (read_status ASC);
+CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star ASC);
 CREATE INDEX idx_sys_msg_push_type ON js_sys_msg_push (msg_type ASC);
 CREATE INDEX idx_sys_msg_push_rc ON js_sys_msg_push (receive_code ASC);
 CREATE INDEX idx_sys_msg_push_uc ON js_sys_msg_push (receive_user_code ASC);

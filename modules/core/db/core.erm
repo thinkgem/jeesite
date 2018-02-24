@@ -10,9 +10,9 @@
 		<right_margin>30</right_margin>
 	</page_setting>
 	<category_index>0</category_index>
-	<zoom>1.0</zoom>
-	<x>109</x>
-	<y>1903</y>
+	<zoom>0.5</zoom>
+	<x>1293</x>
+	<y>485</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -8282,13 +8282,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>12fb747d5b3255fe6af29552bf66e95908ac6f45</id>
+			<id>5a55f28ca4981311f4dace00ee7a95458ae7e556</id>
 			<height>191</height>
 			<width>437</width>
 				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
-			<x>3804</x>
-			<y>1956</y>
+			<x>3780</x>
+			<y>1383</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -8296,9 +8296,9 @@
 			</color>
 			<connections>
 				<relation>
-					<id>17196f8765286294a5c236803a5459c9edd88493</id>
-					<source>d020e8d2a030c61cef2f4a5dccd3edee3275ed7f</source>
-					<target>12fb747d5b3255fe6af29552bf66e95908ac6f45</target>
+					<id>e09e1c696eeab068658a8e23d0521c7bad167640</id>
+					<source>06bec351d8370028d7d476207a365f62c2774461</source>
+					<target>5a55f28ca4981311f4dace00ee7a95458ae7e556</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
 						<target_xp>-1</target_xp>
@@ -8359,13 +8359,13 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<id>ffb4560727a7b938a074bc05a831bec12d7a7000</id>
+					<id>f385f23b1163beb8b239a67f5a262c83fb46cae6</id>
 					<referenced_column>5eecd1e4e1dc132da52de1bd1f59b13dd13a3587</referenced_column>
-					<relation>17196f8765286294a5c236803a5459c9edd88493</relation>
+					<relation>e09e1c696eeab068658a8e23d0521c7bad167640</relation>
 					<description>所属消息</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>所属消息</logical_name>
-					<physical_name>message_id</physical_name>
+					<physical_name>msg_inner_id</physical_name>
 					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
@@ -8562,12 +8562,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_record_mi</name>
+					<name>idx_sys_msg_inner_r_mi</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>ffb4560727a7b938a074bc05a831bec12d7a7000</id>
+							<id>f385f23b1163beb8b239a67f5a262c83fb46cae6</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -8575,20 +8575,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_record_rc</name>
-					<type></type>
-					<description></description>
-					<columns>
-						<column>
-							<id>f291132581e824fea013624aa68208b946df9fe4</id>
-							<desc>false</desc>
-						</column>
-					</columns>
-				</inidex>
-				<inidex>
-					<full_text>false</full_text>
-					<non_unique>true</non_unique>
-					<name>idx_sys_message_record_ruc</name>
+					<name>idx_sys_msg_inner_r_rc</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -8601,7 +8588,20 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_record_status</name>
+					<name>idx_sys_msg_inner_r_ruc</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>f291132581e824fea013624aa68208b946df9fe4</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>idx_sys_msg_inner_r_status</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -8614,7 +8614,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_record_star</name>
+					<name>idx_sys_msg_inner_r_star</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -10671,13 +10671,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>dfa9e9f85b8f4c4a65c33fa5ac51c2edbab8305d</id>
+			<id>a7747e8ed06cfd1d77c15b7ce77082d651c45bfe</id>
 			<height>296</height>
 			<width>320</width>
 				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
-			<x>2969</x>
-			<y>1224</y>
+			<x>2750</x>
+			<y>1938</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -10940,13 +10940,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>d020e8d2a030c61cef2f4a5dccd3edee3275ed7f</id>
+			<id>06bec351d8370028d7d476207a365f62c2774461</id>
 			<height>443</height>
 			<width>484</width>
 				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
-			<x>3000</x>
-			<y>1836</y>
+			<x>3024</x>
+			<y>1257</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -11429,7 +11429,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_cb</name>
+					<name>idx_sys_msg_inner_cb</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -11442,7 +11442,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_status</name>
+					<name>idx_sys_msg_inner_status</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -11455,7 +11455,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_cl</name>
+					<name>idx_sys_msg_inner_cl</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -11468,7 +11468,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_sc</name>
+					<name>idx_sys_msg_inner_sc</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -11481,7 +11481,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_message_sd</name>
+					<name>idx_sys_msg_inner_sd</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -11499,13 +11499,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>ec3befafc5dcca3e7d5fdcd6bbf927043f710321</id>
-			<height>373</height>
+			<id>3e332349cc4dee90c48f4a86de799362111ac497</id>
+			<height>506</height>
 			<width>419</width>
 				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
-			<x>3888</x>
-			<y>1164</y>
+			<x>3840</x>
+			<y>1825</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -12386,13 +12386,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>0644a53664ad02b879345ad7c216edfce2515716</id>
-			<height>373</height>
+			<id>332ac990d4a8e4dd77ca650d230c9f1deedee83b</id>
+			<height>506</height>
 			<width>419</width>
 				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
-			<x>3396</x>
-			<y>1164</y>
+			<x>3228</x>
+			<y>1825</y>
 			<color>
 				<r>128</r>
 				<g>128</g>

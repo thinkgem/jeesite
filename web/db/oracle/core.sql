@@ -39,6 +39,11 @@ DROP INDEX idx_sys_file_biz_ud;
 DROP INDEX idx_sys_file_biz_bt;
 DROP INDEX idx_sys_file_biz_bk;
 DROP INDEX idx_sys_job_status;
+DROP INDEX idx_sys_job_log_jn;
+DROP INDEX idx_sys_job_log_jg;
+DROP INDEX idx_sys_job_log_t;
+DROP INDEX idx_sys_job_log_e;
+DROP INDEX idx_sys_job_log_ie;
 DROP INDEX idx_sys_lang_code;
 DROP INDEX idx_sys_lang_type;
 DROP INDEX idx_sys_log_cd;
@@ -46,6 +51,7 @@ DROP INDEX idx_sys_log_cc;
 DROP INDEX idx_sys_log_lt;
 DROP INDEX idx_sys_log_bk;
 DROP INDEX idx_sys_log_bt;
+DROP INDEX idx_sys_log_ie;
 DROP INDEX idx_sys_menu_pc;
 DROP INDEX idx_sys_menu_ts;
 DROP INDEX idx_sys_menu_status;
@@ -56,16 +62,16 @@ DROP INDEX idx_sys_menu_sc;
 DROP INDEX idx_sys_menu_is;
 DROP INDEX idx_sys_menu_mcs;
 DROP INDEX idx_sys_module_status;
-DROP INDEX idx_sys_message_cb;
-DROP INDEX idx_sys_message_status;
-DROP INDEX idx_sys_message_cl;
-DROP INDEX idx_sys_message_sc;
-DROP INDEX idx_sys_message_sd;
-DROP INDEX idx_sys_message_record_mi;
-DROP INDEX idx_sys_message_record_rc;
-DROP INDEX idx_sys_message_record_ruc;
-DROP INDEX idx_sys_message_record_status;
-DROP INDEX idx_sys_message_record_star;
+DROP INDEX idx_sys_msg_inner_cb;
+DROP INDEX idx_sys_msg_inner_status;
+DROP INDEX idx_sys_msg_inner_cl;
+DROP INDEX idx_sys_msg_inner_sc;
+DROP INDEX idx_sys_msg_inner_sd;
+DROP INDEX idx_sys_msg_inner_r_mi;
+DROP INDEX idx_sys_msg_inner_r_rc;
+DROP INDEX idx_sys_msg_inner_r_ruc;
+DROP INDEX idx_sys_msg_inner_r_status;
+DROP INDEX idx_sys_msg_inner_r_star;
 DROP INDEX idx_sys_msg_push_type;
 DROP INDEX idx_sys_msg_push_rc;
 DROP INDEX idx_sys_msg_push_uc;
@@ -75,6 +81,7 @@ DROP INDEX idx_sys_msg_push_ps;
 DROP INDEX idx_sys_msg_push_rs;
 DROP INDEX idx_sys_msg_push_bk;
 DROP INDEX idx_sys_msg_push_bt;
+DROP INDEX idx_sys_msg_push_imp;
 DROP INDEX idx_sys_msg_pushw_type;
 DROP INDEX idx_sys_msg_pushw_rc;
 DROP INDEX idx_sys_msg_pushw_uc;
@@ -84,6 +91,7 @@ DROP INDEX idx_sys_msg_pushw_ps;
 DROP INDEX idx_sys_msg_pushw_rs;
 DROP INDEX idx_sys_msg_pushw_bk;
 DROP INDEX idx_sys_msg_pushw_bt;
+DROP INDEX idx_sys_msg_pushw_imp;
 DROP INDEX idx_sys_msg_tpl_key;
 DROP INDEX idx_sys_msg_tpl_type;
 DROP INDEX idx_sys_msg_tpl_status;
@@ -132,6 +140,7 @@ DROP TABLE js_sys_dict_data CASCADE CONSTRAINTS;
 DROP TABLE js_sys_dict_type CASCADE CONSTRAINTS;
 DROP TABLE js_sys_file_upload CASCADE CONSTRAINTS;
 DROP TABLE js_sys_file_entity CASCADE CONSTRAINTS;
+DROP TABLE js_sys_job_log CASCADE CONSTRAINTS;
 DROP TABLE js_sys_job CASCADE CONSTRAINTS;
 DROP TABLE js_sys_lang CASCADE CONSTRAINTS;
 DROP TABLE js_sys_log CASCADE CONSTRAINTS;
@@ -399,6 +408,22 @@ CREATE TABLE js_sys_job
 );
 
 
+-- 作业调度日志表
+CREATE TABLE js_sys_job_log
+(
+	id varchar2(64) NOT NULL,
+	job_name varchar2(64) NOT NULL,
+	job_group varchar2(64) NOT NULL,
+	job_type varchar2(50),
+	job_event varchar2(200),
+	job_message varchar2(500),
+	is_exception char(1),
+	exception_info clob,
+	create_date timestamp,
+	PRIMARY KEY (id)
+);
+
+
 -- 国际化语言
 CREATE TABLE js_sys_lang
 (
@@ -420,18 +445,20 @@ CREATE TABLE js_sys_lang
 CREATE TABLE js_sys_log
 (
 	id varchar2(64) NOT NULL,
-	log_type char(1) NOT NULL,
+	log_type varchar2(50) NOT NULL,
 	log_title nvarchar2(500) NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_by_name nvarchar2(100) NOT NULL,
 	create_date timestamp NOT NULL,
-	request_uri nvarchar2(255),
+	request_uri nvarchar2(500),
 	request_method varchar2(10),
 	request_params clob,
+	diff_modify_data clob,
 	biz_key varchar2(64),
 	biz_type varchar2(64),
 	remote_addr varchar2(255) NOT NULL,
 	server_addr varchar2(255) NOT NULL,
+	is_exception char(1),
 	exception_info clob,
 	user_agent nvarchar2(500),
 	device_name varchar2(100),
@@ -543,7 +570,7 @@ CREATE TABLE js_sys_msg_inner
 CREATE TABLE js_sys_msg_inner_record
 (
 	id varchar2(64) NOT NULL,
-	message_id varchar2(64) NOT NULL,
+	msg_inner_id varchar2(64) NOT NULL,
 	receive_user_code varchar2(64),
 	receive_user_name varchar2(100) NOT NULL,
 	read_status char(1) NOT NULL,
@@ -870,6 +897,11 @@ CREATE INDEX idx_sys_file_biz_ud ON js_sys_file_upload (update_date);
 CREATE INDEX idx_sys_file_biz_bt ON js_sys_file_upload (biz_type);
 CREATE INDEX idx_sys_file_biz_bk ON js_sys_file_upload (biz_key);
 CREATE INDEX idx_sys_job_status ON js_sys_job (status);
+CREATE INDEX idx_sys_job_log_jn ON js_sys_job_log (job_name);
+CREATE INDEX idx_sys_job_log_jg ON js_sys_job_log (job_group);
+CREATE INDEX idx_sys_job_log_t ON js_sys_job_log (job_type);
+CREATE INDEX idx_sys_job_log_e ON js_sys_job_log (job_event);
+CREATE INDEX idx_sys_job_log_ie ON js_sys_job_log (is_exception);
 CREATE INDEX idx_sys_lang_code ON js_sys_lang (lang_code);
 CREATE INDEX idx_sys_lang_type ON js_sys_lang (lang_type);
 CREATE INDEX idx_sys_log_cd ON js_sys_log (create_by);
@@ -877,6 +909,7 @@ CREATE INDEX idx_sys_log_cc ON js_sys_log (corp_code);
 CREATE INDEX idx_sys_log_lt ON js_sys_log (log_type);
 CREATE INDEX idx_sys_log_bk ON js_sys_log (biz_key);
 CREATE INDEX idx_sys_log_bt ON js_sys_log (biz_type);
+CREATE INDEX idx_sys_log_ie ON js_sys_log (is_exception);
 CREATE INDEX idx_sys_menu_pc ON js_sys_menu (parent_code);
 CREATE INDEX idx_sys_menu_ts ON js_sys_menu (tree_sort);
 CREATE INDEX idx_sys_menu_status ON js_sys_menu (status);
@@ -887,16 +920,16 @@ CREATE INDEX idx_sys_menu_sc ON js_sys_menu (sys_code);
 CREATE INDEX idx_sys_menu_is ON js_sys_menu (is_show);
 CREATE INDEX idx_sys_menu_mcs ON js_sys_menu (module_codes);
 CREATE INDEX idx_sys_module_status ON js_sys_module (status);
-CREATE INDEX idx_sys_message_cb ON js_sys_msg_inner (create_by);
-CREATE INDEX idx_sys_message_status ON js_sys_msg_inner (status);
-CREATE INDEX idx_sys_message_cl ON js_sys_msg_inner (content_level);
-CREATE INDEX idx_sys_message_sc ON js_sys_msg_inner (send_user_code);
-CREATE INDEX idx_sys_message_sd ON js_sys_msg_inner (send_date);
-CREATE INDEX idx_sys_message_record_mi ON js_sys_msg_inner_record (message_id);
-CREATE INDEX idx_sys_message_record_rc ON js_sys_msg_inner_record (receive_user_code);
-CREATE INDEX idx_sys_message_record_ruc ON js_sys_msg_inner_record (receive_user_code);
-CREATE INDEX idx_sys_message_record_status ON js_sys_msg_inner_record (read_status);
-CREATE INDEX idx_sys_message_record_star ON js_sys_msg_inner_record (is_star);
+CREATE INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner (create_by);
+CREATE INDEX idx_sys_msg_inner_status ON js_sys_msg_inner (status);
+CREATE INDEX idx_sys_msg_inner_cl ON js_sys_msg_inner (content_level);
+CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code);
+CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date);
+CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id);
+CREATE INDEX idx_sys_msg_inner_r_rc ON js_sys_msg_inner_record (receive_user_code);
+CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code);
+CREATE INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record (read_status);
+CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star);
 CREATE INDEX idx_sys_msg_push_type ON js_sys_msg_push (msg_type);
 CREATE INDEX idx_sys_msg_push_rc ON js_sys_msg_push (receive_code);
 CREATE INDEX idx_sys_msg_push_uc ON js_sys_msg_push (receive_user_code);
@@ -906,6 +939,7 @@ CREATE INDEX idx_sys_msg_push_ps ON js_sys_msg_push (push_status);
 CREATE INDEX idx_sys_msg_push_rs ON js_sys_msg_push (read_status);
 CREATE INDEX idx_sys_msg_push_bk ON js_sys_msg_push (biz_key);
 CREATE INDEX idx_sys_msg_push_bt ON js_sys_msg_push (biz_type);
+CREATE INDEX idx_sys_msg_push_imp ON js_sys_msg_push (is_merge_push);
 CREATE INDEX idx_sys_msg_pushw_type ON js_sys_msg_push_wait (msg_type);
 CREATE INDEX idx_sys_msg_pushw_rc ON js_sys_msg_push_wait (receive_code);
 CREATE INDEX idx_sys_msg_pushw_uc ON js_sys_msg_push_wait (receive_user_code);
@@ -915,6 +949,7 @@ CREATE INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait (push_status);
 CREATE INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait (read_status);
 CREATE INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait (biz_key);
 CREATE INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait (biz_type);
+CREATE INDEX idx_sys_msg_pushw_imp ON js_sys_msg_push_wait (is_merge_push);
 CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_template (tpl_key);
 CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_template (tpl_type);
 CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_template (status);
@@ -1130,6 +1165,16 @@ COMMENT ON COLUMN js_sys_job.create_date IS '创建时间';
 COMMENT ON COLUMN js_sys_job.update_by IS '更新者';
 COMMENT ON COLUMN js_sys_job.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_job.remarks IS '备注信息';
+COMMENT ON TABLE js_sys_job_log IS '作业调度日志表';
+COMMENT ON COLUMN js_sys_job_log.id IS '编号';
+COMMENT ON COLUMN js_sys_job_log.job_name IS '任务名称';
+COMMENT ON COLUMN js_sys_job_log.job_group IS '任务组名';
+COMMENT ON COLUMN js_sys_job_log.job_type IS '日志类型';
+COMMENT ON COLUMN js_sys_job_log.job_event IS '日志事件';
+COMMENT ON COLUMN js_sys_job_log.job_message IS '日志信息';
+COMMENT ON COLUMN js_sys_job_log.is_exception IS '是否异常';
+COMMENT ON COLUMN js_sys_job_log.exception_info IS '异常信息';
+COMMENT ON COLUMN js_sys_job_log.create_date IS '创建时间';
 COMMENT ON TABLE js_sys_lang IS '国际化语言';
 COMMENT ON COLUMN js_sys_lang.id IS '编号';
 COMMENT ON COLUMN js_sys_lang.module_code IS '归属模块';
@@ -1151,10 +1196,12 @@ COMMENT ON COLUMN js_sys_log.create_date IS '创建时间';
 COMMENT ON COLUMN js_sys_log.request_uri IS '请求URI';
 COMMENT ON COLUMN js_sys_log.request_method IS '操作方式';
 COMMENT ON COLUMN js_sys_log.request_params IS '操作提交的数据';
+COMMENT ON COLUMN js_sys_log.diff_modify_data IS '新旧数据比较结果';
 COMMENT ON COLUMN js_sys_log.biz_key IS '业务主键';
 COMMENT ON COLUMN js_sys_log.biz_type IS '业务类型';
 COMMENT ON COLUMN js_sys_log.remote_addr IS '操作IP地址';
 COMMENT ON COLUMN js_sys_log.server_addr IS '请求服务器地址';
+COMMENT ON COLUMN js_sys_log.is_exception IS '是否异常';
 COMMENT ON COLUMN js_sys_log.exception_info IS '异常信息';
 COMMENT ON COLUMN js_sys_log.user_agent IS '用户代理';
 COMMENT ON COLUMN js_sys_log.device_name IS '设备名称/操作系统';
@@ -1242,7 +1289,7 @@ COMMENT ON COLUMN js_sys_msg_inner.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_msg_inner.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_msg_inner_record IS '内部消息发送记录表';
 COMMENT ON COLUMN js_sys_msg_inner_record.id IS '编号';
-COMMENT ON COLUMN js_sys_msg_inner_record.message_id IS '所属消息';
+COMMENT ON COLUMN js_sys_msg_inner_record.msg_inner_id IS '所属消息';
 COMMENT ON COLUMN js_sys_msg_inner_record.receive_user_code IS '接受者用户编码';
 COMMENT ON COLUMN js_sys_msg_inner_record.receive_user_name IS '接受者用户姓名';
 COMMENT ON COLUMN js_sys_msg_inner_record.read_status IS '读取状态（0未送达 1未读 2已读）';
