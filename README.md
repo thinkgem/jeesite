@@ -31,10 +31,11 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 # 快速体验、部署运行
 
 1. 环境准备：`JDK 1.8`、`Maven 3.3`、`MySQL 5.7`
-2. 打开文件 `/web/src/main/resources/jeesite.yml` 配置JDBC连接
-3. 执行脚本 `/web/bin/init-data.bat` 初始化数据库
-4. 执行脚本 `/web/bin/run-tomcat.bat` 启动服务即可
-5. 浏览器访问 <http://127.0.0.1:8980/js/>  账号 system 密码 admin
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/attach_files>
+3. 打开文件 /web`/src/main/resources/jeesite.yml` 配置JDBC连接
+4. 执行脚本 /web`/bin/init-data.bat` 初始化数据库
+5. 执行脚本 /web`/bin/run-tomcat.bat` 启动服务即可
+6. 浏览器访问  <http://127.0.0.1:8980/js/>  账号 system 密码 admin
 
 # 常见问题
 
