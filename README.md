@@ -30,11 +30,13 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
 # 快速体验
 
-# 演示地址
+### 在线演示
 
-1. 演示地址：<http://demo.jeesite.net/>  账号 system 密码 admin
+* 地址：<http://demo.jeesite.net/>
+* 账号：system
+* 密码：admin
 
-# 部署运行
+### 本地运行
 
 1. 环境准备：`JDK 1.8`、`Maven 3.3`、`MySQL 5.7`
 2. 下载源码：<https://gitee.com/thinkgem/jeesite4/attach_files>
