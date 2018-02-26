@@ -1,3 +1,29 @@
+# JeeSite 4.0 最新动态
+
+* **JeeSite 4.0 新特性、技术选型**
+
+   <https://my.oschina.net/thinkgem/blog/913777>
+
+* **JeeSite 4.0 简化MyBatis持久层开发**
+
+   <https://my.oschina.net/thinkgem/blog/1503611>
+
+* **JeeSite 4.0 简化业务逻辑层开发**
+
+   <https://my.oschina.net/thinkgem/blog/1538766>
+
+* **JeeSite 4.0 MVC层及前端组件介绍**
+
+   <https://my.oschina.net/thinkgem/blog/1561129>
+
+* **JeeSite 4.0 内置功能模块划分**
+
+   <https://my.oschina.net/thinkgem/blog/1609852>
+
+* **JeeSite 4.0 社区公测版发布，欢迎大家测试反馈意见（New）**
+
+   <http://www.oschina.net/news/93647/jeesite-4-0-public-test>
+
 # JeeSite 企业信息化快速开发平台
 
 ## 平台简介

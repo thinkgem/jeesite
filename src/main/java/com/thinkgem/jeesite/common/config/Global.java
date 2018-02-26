@@ -17,13 +17,6 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 
 /**
  * 全局配置类 懒汉式单例类.在第一次调用的时候实例化自己
- * 
- * @author ThinkGem,长春叭哥
- * @version 2018年1月5日
- */
-
-/**
- * 全局配置类 懒汉式单例类.在第一次调用的时候实例化自己
  * @author ThinkGem,长春叭哥
  * @version 2018年1月5日
  */
