@@ -63,8 +63,7 @@ CREATE TABLE js_gen_table_column
 	query_type varchar2(200),
 	is_edit char(1),
 	show_type varchar2(200),
-	dict_type varchar2(200),
-	field_valid nvarchar2(500),
+	options nvarchar2(2000),
 	PRIMARY KEY (id)
 );
 
@@ -118,8 +117,7 @@ COMMENT ON COLUMN js_gen_table_column.is_query IS '是否查询字段';
 COMMENT ON COLUMN js_gen_table_column.query_type IS '查询方式';
 COMMENT ON COLUMN js_gen_table_column.is_edit IS '是否编辑字段';
 COMMENT ON COLUMN js_gen_table_column.show_type IS '表单类型';
-COMMENT ON COLUMN js_gen_table_column.dict_type IS '字典类型';
-COMMENT ON COLUMN js_gen_table_column.field_valid IS '字段验证';
+COMMENT ON COLUMN js_gen_table_column.options IS '其它生成选项';
 
 
 
