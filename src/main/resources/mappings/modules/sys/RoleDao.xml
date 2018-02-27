@@ -4,10 +4,7 @@
     
     <resultMap id="roleResult" type="Role">
 		<id property="id" column="id" />
-	    	<association property="office" javaType="Office">
-			<id property="id" column="office.id" />
-			<id property="name" column="office.name" />
-		</association>
+
 		<result property="name" column="name" />
 		<result property="enname" column="enname" />
 		<result property="roleType" column="roleType" />
@@ -25,6 +22,11 @@
 			<id property="office.name" column="userList.office.name" />
 			<id property="company.name" column="userList.company.name" />
 		</collection> -->
+	    	<association property="office" javaType="Office">
+			<id property="id" column="office.id" />
+			<id property="name" column="office.name" />
+		</association>
+	    
 		<collection property="menuList" ofType="Menu">
 			<id property="id" column="menuList.id" />
 		</collection>
