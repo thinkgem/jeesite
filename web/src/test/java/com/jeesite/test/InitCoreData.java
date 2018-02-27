@@ -24,13 +24,13 @@ public class InitCoreData extends com.jeesite.modules.sys.db.InitCoreData {
 	public void initCoreData() throws Exception{
 		createTable();
 		initLog();
+		initArea();
 		initConfig();
 		initModule();
 		initDict();
 		initRole();
 		initMenu();
 		initUser();
-		initArea();
 		initOffice();
 		initCompany();
 		initPost();

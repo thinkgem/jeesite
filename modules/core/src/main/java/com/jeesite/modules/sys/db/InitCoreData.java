@@ -71,6 +71,33 @@ public class InitCoreData extends BaseInitDataTests {
 	}
 	
 	@Autowired
+	private AreaService areaService;
+	/**
+	 * 区域、行政区划表
+	 */
+	public void initArea() throws Exception{
+		try{
+			clearTable(Area.class);
+			initExcelData(Area.class, new MethodCallback() {
+				@Override
+				public Object execute(Object... params) {
+					String action = (String)params[0];
+					if("save".equals(action)){
+						Area entity = (Area)params[1];
+						entity.setIsNewRecord(true);
+						areaService.save(entity);
+						return null;
+					}
+					return null;
+				}
+			});
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+	}
+	
+	@Autowired
 	private ConfigService configService;
 	/**
 	 * 参数配置表
@@ -264,33 +291,6 @@ public class InitCoreData extends BaseInitDataTests {
 	}
 	
 	@Autowired
-	private AreaService areaService;
-	/**
-	 * 区域、行政区划表
-	 */
-	public void initArea() throws Exception{
-		try{
-			clearTable(Area.class);
-			initExcelData(Area.class, new MethodCallback() {
-				@Override
-				public Object execute(Object... params) {
-					String action = (String)params[0];
-					if("save".equals(action)){
-						Area entity = (Area)params[1];
-						entity.setIsNewRecord(true);
-						areaService.save(entity);
-						return null;
-					}
-					return null;
-				}
-			});
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new Exception(e);
-		}
-	}
-	
-	@Autowired
 	private OfficeService officeService;
 	/**
 	 * 组织机构、部门表
@@ -389,7 +389,10 @@ public class InitCoreData extends BaseInitDataTests {
 						EmpUser entity = (EmpUser)params[1];
 						String header = (String)params[2];
 						String val = (String)params[3];
-						if ("employee.employeePosts".equals(header)){
+						if ("userRoleString".equals(header)){
+							entity.setUserRoleString(val);
+							return true;
+						}else if ("employee.employeePosts".equals(header)){
 							entity.getEmployee().setEmployeePosts(new String[]{val});
 							return true;
 						}
@@ -399,6 +402,8 @@ public class InitCoreData extends BaseInitDataTests {
 						entity.setIsNewRecord(true);
 						entity.setPassword(UserService.encryptPassword(entity.getPassword()));
 						empUserService.save(entity);
+						// 设置当前为管理员，否则无法保存用户角色关系
+						entity.setCurrentUser(new User(User.SUPER_ADMIN_CODE));
 						userService.saveAuth(entity);
 						return null;
 					}
