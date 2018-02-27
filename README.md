@@ -45,6 +45,12 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 5. 执行脚本 /web`/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问  <http://127.0.0.1:8980/js/>  账号 system 密码 admin
 
+### 开发环境
+
+* **JeeSite 4.0 开发环境部署运行调试（Eclipse）**
+
+   <https://my.oschina.net/thinkgem/blog/1625562>
+
 # 常见问题
 
 * 管理员账号system与admin的区别：system为开发者使用的最高级别管理员，主要用于开发和调试，有些修改会直接影响系统的正常运行；admin为客户方使用的系统管理员，用于一些基础数据配置，如机构、用户、权限、用户字典等。 
@@ -53,10 +59,10 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
 * QQ 群： `127515876`、`209330483`、`223507718` 
 * 入群须知：目前为付费群，刚入群会有5分钟禁言，腾讯预设置的，无法解除，稍等片刻即可正常发言；由于群容量有限，为了维持运营千人QQ群的所需支付的QQ年费会员费用，故开启付费入群模式，申请者只需支付少量金额即可加入，这样也可以保证只有真实交流需求的人进入，避免闲杂做广告人员的乱入；新手提问前，请先阅读此[【文章】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)。
-* GitHub：<https://github.com/thinkgem/jeesite4>
 * 开源中国：<https://gitee.com/thinkgem/jeesite4>
-* 作者博客：https://my.oschina.net/thinkgem/blog
-* 开源问答：https://www.oschina.net/question/tag/jeesite
+* GitHub：<https://github.com/thinkgem/jeesite4>
+* 作者博客：<https://my.oschina.net/thinkgem/blog>
+* 开源问答：<https://www.oschina.net/question/tag/jeesite>
 * 官方网站：<http://jeesite.com>  论坛：<http://jeesite.net>
 
 # 关于授权协议声明
@@ -67,7 +73,7 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 4. 如果您修改了代码，需要在被修改的文件中进行说明（帮助他人更好的理解您的用意）。
 5. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
 6. **社区版**您可以应用于商业软件，但必须遵循以上条款原则（请协助改进本作品）。
-7. 为了避免给您造成比必要的损失，请知晓：社区版最大允许10个用户同时登录，1万行数据。
+7. 为了避免给您造成不必要的损失，请知晓：社区版最大允许10个用户同时登录，1万行数据。
 8. 没有收入的开源软件不是好软件，请给我们一些动力吧，后面会推出**企业版**敬请期待。
 
 # Maven快照强制更新
