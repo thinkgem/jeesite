@@ -1,0 +1,41 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved. */ %>
+<script src="${ctxStatic}/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctxStatic}/select2/4.0/select2.js?${_version}"></script>
+<script src="${ctxStatic}/select2/4.0/i18n/${lang()}.js?${_version}"></script>
+<script src="${ctxStatic}/layer/3.1/layer.js?${_version}"></script>
+<script src="${ctxStatic}/my97/WdatePicker.js?${_version}"></script>
+<% if (@ListUtils.inString('zTree', libs!)){ %>
+<script src="${ctxStatic}/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('tabPage', libs!)){ %>
+<script src="${ctxStatic}/wdScrollTab/js/TabPanel.js?${_version}"></script>
+<script src="${ctxStatic}/wdScrollTab/js/TabPanel.extend.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('dataGrid', libs!)){ %>
+<script src="${ctxStatic}/jqGrid/4.7/js/jquery.jqGrid.js?${_version}"></script>
+<script src="${ctxStatic}/jqGrid/4.7/js/jquery.jqGrid.extend.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('validate', libs!)){ %>
+<script src="${ctxStatic}/jquery-validation/1.16/jquery.validate.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-validation/1.16/jquery.validate.extend.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-validation/1.16/localization/messages_${lang()}.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('layout', libs!)){ %>
+<script src="${ctxStatic}/jquery/jquery-ui-draggable-1.12.1.min.js?${_version}"></script>
+<script src="${ctxStatic}/jquery/jquery-ui-effect-1.12.1.min.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-plugins/jquery.layout-latest.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('inputmask', libs!)){ %>
+<script src="${ctxStatic}/jquery-plugins/jquery.inputmask.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('fileupload', libs!)){ %>
+<script src="${ctxStatic}/webuploader/0.1/webuploader.js?${_version}"></script>
+<script src="${ctxStatic}/webuploader/0.1/webuploader.extend.js?${_version}"></script>
+<% } %>
+<% if (@ListUtils.inString('ueditor', libs!)){ %>
+<script src="${ctxStatic}/ueditor/1.4/ueditor.config.js?${_version}"></script>
+<script src="${ctxStatic}/ueditor/1.4/ueditor.all.js?${_version}"></script>
+<script src="${ctxStatic}/ueditor/1.4/lang/${lang()}/${lang()}.js?${_version}"></script>
+<% } %>
+<script src="${ctxStatic}/common/jeesite.js?${_version}"></script>
+<script src="${ctxStatic}/common/i18n/${lang()}.js?${_version}"></script>
