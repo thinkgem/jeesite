@@ -57,12 +57,12 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
 # 技术交流方式
 
-* QQ 群： `127515876`、`209330483`、`223507718` 
+* QQ 群： <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=1a1af37857283f4b9da4c9f3ae317a8df8e24611179c09942555af3c17a9f940">`127515876`</a>、<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=853cd1af011e3324cd56d110f88b7815933a3b2d40b67775da21bd1b0b1d4b03">`209330483`</a>、<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=bc1cdb06c093b18aebd05ad6ef2aea1bba2184a84f66b4d374772209eb3516d7">`223507718`</a>
 * 入群须知：目前为付费群，刚入群会有5分钟禁言，腾讯预设置的，无法解除，稍等片刻即可正常发言；由于群容量有限，为了维持运营千人QQ群的所需支付的QQ年费会员费用，故开启付费入群模式，申请者只需支付少量金额即可加入，这样也可以保证只有真实交流需求的人进入，避免闲杂做广告人员的乱入；新手提问前，请先阅读此[【文章】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)。
 * 开源中国：<https://gitee.com/thinkgem/jeesite4>
 * GitHub：<https://github.com/thinkgem/jeesite4>
 * 作者博客：<https://my.oschina.net/thinkgem/blog>
-* 开源问答：<https://www.oschina.net/question/tag/jeesite>
+* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues>
 * 官方网站：<http://jeesite.com>  论坛：<http://jeesite.net>
 
 # 关于授权协议声明
@@ -76,9 +76,15 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 7. 为了避免给您造成不必要的损失，请知晓：社区版最大允许10个用户同时登录，1万行数据。
 8. 没有收入的开源软件不是好软件，请给我们一些动力吧，后面会推出**企业版**敬请期待。
 
-# Maven快照强制更新
+# 今后如何升级？
 
-Eclipse： 在web项目上右键，选择菜单 -> Maven -> Update Project...（或按Alt+F5） -> 点击 Select All 按钮 -> 选择 Force Update of Snapshots/Releases 复选框 -> 点击OK按钮即可
+尽量不修改web项目以外的项目，如jeesite-common、jeesite-modele-core，如果修改了，请尽量 Pull Requests 上来，否则代码编码将与官方不同步，将对你的日后升级带来困难。
+
+JeeSite的小版本（4.0.x）升级是非常便捷的，你只需要进行Maven快照强制更新，即可将最新版的依赖jar更新到本地，下面介绍一下在Eclipse里如何操作：
+
+在web项目上右键，选择菜单 -> Maven -> Update Project...（或按Alt+F5） -> 点击 Select All 按钮 -> 选择 Force Update of Snapshots/Releases 复选框 -> 点击OK按钮即可。
+
+如果进行相对大的版本（4.x.x）升级这里我们会附加一个声明，帮助你进行迁移操作。
 
 # Git 全局设置技巧
 

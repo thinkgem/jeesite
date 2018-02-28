@@ -348,7 +348,7 @@ web:
     
     # 系统主题名称，主题视图优先级最高，如果主题下无这个视图文件则访问默认视图
     # 引入页面头部：'/themes/'+themeName+'/include/header.html'
-    # 引入页面为不：'/themes/'+themeName+'/include/footer.html'
+    # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
     themeName: default
 
   # MVC 拦截器

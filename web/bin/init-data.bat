@@ -11,11 +11,23 @@ pause
 echo.
 echo [信息] 此操作会清空您的现有数据表，并恢复初始状态。
 echo.
-echo [信息] 确认继续吗？否则请关闭窗口。
+echo [信息] 确认继续吗？否则请关闭窗口。（5）
 echo.
 pause
 echo.
-echo [信息] 您真的确认继续吗？否则请关闭窗口。
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（4）
+echo.
+pause
+echo.
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（3）
+echo.
+pause
+echo.
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（2）
+echo.
+pause
+echo.
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（1）
 echo.
 pause
 echo.

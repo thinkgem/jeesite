@@ -1,10 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Indexes */
-
-DROP INDEX idx_gen_table_ptn ON js_gen_table;
-DROP INDEX idx_gen_table_column_tn ON js_gen_table_column;
-
 
 
 /* Drop Tables */
