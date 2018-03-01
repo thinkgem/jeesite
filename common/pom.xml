@@ -49,11 +49,6 @@
 		</dependency>
 		
 		<!-- Java serialization -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.esotericsoftware</groupId> -->
-<!-- 			<artifactId>kryo</artifactId> -->
-<!-- 			<version>${esotericsoftware-kryo.version}</version> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>de.ruedigermoeller</groupId>
 			<artifactId>fst</artifactId>
