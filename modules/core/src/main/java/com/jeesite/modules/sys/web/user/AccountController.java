@@ -43,6 +43,7 @@ public class AccountController extends BaseController{
 	 */
 	@RequestMapping(value = "forgetPwd")
 	public String forgetPwd(Model model) {
+		model.addAttribute("message", "正在研发中，敬请期待！");
 		return "modules/sys/account/forgetPwd";
 	}
 	
