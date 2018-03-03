@@ -22,7 +22,7 @@
 		<!-- 允许JDBC 生成主键。需要驱动器支持。如果设为了true，这个设置将强制使用被生成的主键，有一些驱动器不兼容不过仍然可以执行。  default:false  -->
 		<setting name="useGeneratedKeys" value="false"/>
 		
-		<!-- 指定 MyBatis 如何自动映射 数据基表的列 NONE：不隐射　PARTIAL:部分  FULL:全部  -->  
+		<!-- 指定 MyBatis 如何自动映射 数据基表的列 NONE：不映射　PARTIAL:部分  FULL:全部  -->  
 		<setting name="autoMappingBehavior" value="PARTIAL"/>
 		
 		<!-- 这是默认的执行类型  （SIMPLE: 简单； REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）  -->

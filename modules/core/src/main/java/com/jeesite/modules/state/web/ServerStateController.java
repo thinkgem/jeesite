@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="${adminPath}/state/server")
 public class ServerStateController {
 
-	@RequiresPermissions("stste:server")
+	@RequiresPermissions("sys:stste:server")
 	@RequestMapping(value="")
 	public String index(){
 		return "modules/state/serverIndex";

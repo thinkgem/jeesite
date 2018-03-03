@@ -235,7 +235,7 @@ shiro:
   sso:
   
     # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
-    secretKey: abc
+    secretKey: ~
 
     # 是否加密单点登录安全Key
     encryptKey: true
@@ -280,7 +280,7 @@ shiro:
   defaultFilterChainDefinitions: |
     /static/** = anon
     /userfiles/** = anon
-    /druid/** = perms[state:druid]
+    /druid/** = perms[sys:state:druid]
     ${adminPath}/login-cas = cas
     ${adminPath}/login = authc
     ${adminPath}/logout = logout
