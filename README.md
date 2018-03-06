@@ -68,7 +68,13 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 * 作者博客：<https://my.oschina.net/thinkgem/blog>
 * 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues>
 * 官方网站：<http://jeesite.com>  论坛：<http://jeesite.net>
-* 微信公众号：<center> ![https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号") </center>
+* 微信公众号：
+
+<center>
+
+![https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
+
+</center>
 
 # 关于授权协议声明
 
