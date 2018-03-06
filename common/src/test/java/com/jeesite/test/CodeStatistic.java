@@ -22,11 +22,19 @@ public class CodeStatistic {
 	 */
 	public static void main(String[] args) {
 		String file = CodeStatistic.class.getResource("/").getFile();
-		String path = file.replace("web/target/test-classes", "");
-
+		String path = file.replace("/jeesite/common/target/test-classes", "");
+		System.out.println("Path: " + path);
 		ArrayList<File> al = getFile(new File(path));
 		for (File f : al) {
-			if (f.getName().matches(".*\\.java$")){ // 匹配java格式的文件
+			if (!(f.getPath().contains("4.0\\jeesite\\")
+					|| f.getPath().contains("\\devtools\\")
+					|| f.getPath().contains("\\framework\\"))
+					|| f.getPath().contains("\\target\\")){
+				continue;
+			}
+			if (f.getName().matches(".*\\.java$") 
+					|| f.getName().matches(".*\\.html$")
+					|| f.getName().matches(".*\\.js$")){
 				count(f);
 				System.out.println(f);
 			}
