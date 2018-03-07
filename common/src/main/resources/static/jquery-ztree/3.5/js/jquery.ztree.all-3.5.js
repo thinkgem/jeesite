@@ -3818,3 +3818,37 @@
 		}
 	}
 })(jQuery);
+
+/*
+ * 扩展方法 ThinkGem
+ */
+(function($){
+	$.extend(true, $.fn.zTree, {
+		/**
+		 * 根据级别展开节点（如果级别设置为-1，则：如果有1个根节点，则展开一级节点，否则不展开）
+		 * ThinkGem 2018-3-7
+		 */
+		expandNodeByLevel: function(tree, expandLevel){
+			if (!tree){
+				return;
+			}
+			if (typeof expandLevel != 'number'){
+				expandLevel = -1;
+			}
+			var expandNodes = [];
+			if (expandLevel == -1){
+				expandNodes = tree.getNodesByParam("level", 0);
+				if (expandNodes.length > 1){
+					expandNodes = [];
+				}
+			}else{
+				for (var i=0; i<expandLevel; i++){
+					expandNodes = expandNodes.concat(tree.getNodesByParam("level", i));
+				}
+			}
+			for(var i=0; i<expandNodes.length; i++) {
+				tree.expandNode(expandNodes[i], true, false, false);
+			}
+		}
+	});
+})(jQuery);

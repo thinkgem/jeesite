@@ -149,18 +149,8 @@ for (var i=0; i<dataScopes.length; i++){
 			// 初始化树结构
 			var tree = $.fn.zTree.init($("#dataScopeTree_"+dataScope.ctrlType), setting, data);
 			tree.setting.check.chkboxType = dataScope.chkboxType;
-			// 展开第一级节点
-			var nodes = tree.getNodesByParam("level", 0);
-			for(var i=0; i<nodes.length; i++) {
-				tree.expandNode(nodes[i], true, false, false);
-			}
-			// 展开第二级节点
-			nodes = tree.getNodesByParam("level", 1);
-			for(var i=0; i<nodes.length; i++) {
-				tree.expandNode(nodes[i], true, false, false);
-			}
- 			// 默认展开全部节点
- 			//tree.expandAll(true);
+			// 默认展开节点（如果级别设置为-1，则：如果有1个根节点，则展开一级节点，否则不展开）
+			$.fn.zTree.expandNodeByLevel(tree, dataScope.expandLevel);
 			// 树结构：全选、取消全选
 			$('#checkall_'+dataScope.ctrlType).iCheck({
 		 		checkboxClass:'icheckbox_minimal-grey'
