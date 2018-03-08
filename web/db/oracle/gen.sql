@@ -1,6 +1,4 @@
 
-
-
 /* Drop Tables */
 
 DROP TABLE js_gen_table_column CASCADE CONSTRAINTS;

@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.5</zoom>
-	<x>1293</x>
-	<y>485</y>
+	<x>85</x>
+	<y>836</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -56,7 +56,7 @@
 					<create_tablespace>false</create_tablespace>
 					<create_trigger>false</create_trigger>
 					<create_view>false</create_view>
-					<drop_index>true</drop_index>
+					<drop_index>false</drop_index>
 					<drop_sequence>false</drop_sequence>
 					<drop_table>true</drop_table>
 					<drop_tablespace>false</drop_tablespace>
@@ -14344,7 +14344,7 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_log_cd</name>
+					<name>idx_sys_log_cb</name>
 					<type></type>
 					<description></description>
 					<columns>
@@ -14415,6 +14415,19 @@
 					<columns>
 						<column>
 							<id>186bf2bddf5b4fb9ce835106138d47adb1bebc9e</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>idx_sys_log_cd</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>ee5addb412d3d8bb20efab0d4f26d782e1502c06</id>
 							<desc>false</desc>
 						</column>
 					</columns>

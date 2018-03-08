@@ -1,6 +1,5 @@
 
 
-
 /* Drop Tables */
 
 DROP TABLE js_sys_company_office CASCADE CONSTRAINTS;
@@ -780,12 +779,13 @@ CREATE INDEX idx_sys_job_log_e ON js_sys_job_log (job_event);
 CREATE INDEX idx_sys_job_log_ie ON js_sys_job_log (is_exception);
 CREATE INDEX idx_sys_lang_code ON js_sys_lang (lang_code);
 CREATE INDEX idx_sys_lang_type ON js_sys_lang (lang_type);
-CREATE INDEX idx_sys_log_cd ON js_sys_log (create_by);
+CREATE INDEX idx_sys_log_cb ON js_sys_log (create_by);
 CREATE INDEX idx_sys_log_cc ON js_sys_log (corp_code);
 CREATE INDEX idx_sys_log_lt ON js_sys_log (log_type);
 CREATE INDEX idx_sys_log_bk ON js_sys_log (biz_key);
 CREATE INDEX idx_sys_log_bt ON js_sys_log (biz_type);
 CREATE INDEX idx_sys_log_ie ON js_sys_log (is_exception);
+CREATE INDEX idx_sys_log_cd ON js_sys_log (create_date);
 CREATE INDEX idx_sys_menu_pc ON js_sys_menu (parent_code);
 CREATE INDEX idx_sys_menu_ts ON js_sys_menu (tree_sort);
 CREATE INDEX idx_sys_menu_status ON js_sys_menu (status);

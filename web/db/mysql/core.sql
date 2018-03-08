@@ -1,8 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-
-
-
 /* Drop Tables */
 
 DROP TABLE IF EXISTS js_sys_company_office;
@@ -784,12 +781,13 @@ CREATE INDEX idx_sys_job_log_e ON js_sys_job_log (job_event ASC);
 CREATE INDEX idx_sys_job_log_ie ON js_sys_job_log (is_exception ASC);
 CREATE INDEX idx_sys_lang_code ON js_sys_lang (lang_code ASC);
 CREATE INDEX idx_sys_lang_type ON js_sys_lang (lang_type ASC);
-CREATE INDEX idx_sys_log_cd ON js_sys_log (create_by ASC);
+CREATE INDEX idx_sys_log_cb ON js_sys_log (create_by ASC);
 CREATE INDEX idx_sys_log_cc ON js_sys_log (corp_code ASC);
 CREATE INDEX idx_sys_log_lt ON js_sys_log (log_type ASC);
 CREATE INDEX idx_sys_log_bk ON js_sys_log (biz_key ASC);
 CREATE INDEX idx_sys_log_bt ON js_sys_log (biz_type ASC);
 CREATE INDEX idx_sys_log_ie ON js_sys_log (is_exception ASC);
+CREATE INDEX idx_sys_log_cd ON js_sys_log (create_date ASC);
 CREATE INDEX idx_sys_menu_pc ON js_sys_menu (parent_code ASC);
 CREATE INDEX idx_sys_menu_ts ON js_sys_menu (tree_sort ASC);
 CREATE INDEX idx_sys_menu_status ON js_sys_menu (status ASC);
