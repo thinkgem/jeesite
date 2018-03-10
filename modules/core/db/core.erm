@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.5</zoom>
-	<x>85</x>
-	<y>836</y>
+	<x>717</x>
+	<y>685</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -3112,8 +3112,8 @@
 			<type>nvarchar(n)</type>
 		</word>
 		<word>
-			<id>3bb91c4711f1cc7f2b386349d9df0a8cc620a0f7</id>
-			<length>1</length>
+			<id>c37221af63cbefcf4e7f94fcfbc2e6af6779c915</id>
+			<length>16</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -3122,10 +3122,10 @@
 			<binary>false</binary>
 			<args></args>
 			<char_semantics>false</char_semantics>
-			<description>1 短信 2 邮件</description>
+			<description>sms 短信 mail 邮件</description>
 			<logical_name>模板类型</logical_name>
 			<physical_name>tpl_type</physical_name>
-			<type>character(n)</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>40b63ab3e485fd55370d6d04b063c4397483ebc1</id>
@@ -10825,13 +10825,13 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>3bb91c4711f1cc7f2b386349d9df0a8cc620a0f7</word_id>
+					<word_id>c37221af63cbefcf4e7f94fcfbc2e6af6779c915</word_id>
 					<id>e76a1511b06ae78cfda28f6c2b8c0a7f24f28be1</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>character(n)</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>

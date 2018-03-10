@@ -124,7 +124,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		if (txt == null){
 			return "";
 		}
-		return replace(replace(EncodeUtils.escapeHtml(trim(txt)), "\n", "<br/>"), "\t", "&nbsp; &nbsp; ");
+		return replace(replace(EncodeUtils.encodeHtml(trim(txt)), "\n", "<br/>"), "\t", "&nbsp; &nbsp; ");
 	}
 
 	/**

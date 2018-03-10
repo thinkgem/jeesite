@@ -1,5 +1,4 @@
 
-
 /* Drop Tables */
 
 DROP TABLE js_sys_company_office CASCADE CONSTRAINTS;
@@ -520,7 +519,7 @@ CREATE TABLE js_sys_msg_template
 	module_code varchar2(64),
 	tpl_key varchar2(100) NOT NULL,
 	tpl_name nvarchar2(100) NOT NULL,
-	tpl_type char(1) NOT NULL,
+	tpl_type varchar2(16) NOT NULL,
 	tpl_content clob NOT NULL,
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,

@@ -522,7 +522,7 @@ CREATE TABLE js_sys_msg_template
 	module_code varchar(64) COMMENT '归属模块',
 	tpl_key varchar(100) NOT NULL COMMENT '模板键值',
 	tpl_name varchar(100) NOT NULL COMMENT '模板名称',
-	tpl_type char(1) NOT NULL COMMENT '模板类型',
+	tpl_type varchar(16) NOT NULL COMMENT '模板类型',
 	tpl_content text NOT NULL COMMENT '模板内容',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
