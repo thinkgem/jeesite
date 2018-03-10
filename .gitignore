@@ -11,6 +11,7 @@
 *.ipr
 *.iml
 *.iws
+*.lic
 
 .DS_Store
 Thumbs.db
