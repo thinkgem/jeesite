@@ -1,3 +1,4 @@
+# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到jeesite.yml里进行覆盖该参数值。
 
 #============================#
 #===== Database sttings =====#
@@ -13,24 +14,24 @@ jdbc:
 #  username: root
 #  password: 123456
 #  testSql: SELECT 1
-
-  # Oracle 数据库配置
+#
+#  # Oracle 数据库配置
 #  type: oracle
 #  driver: oracle.jdbc.driver.OracleDriver
 #  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1 FROM DUAL
-
-  # Sql Server 数据库配置
+#
+#  # Sql Server 数据库配置
 #  type: mssql
 #  driver: net.sourceforge.jtds.jdbc.Driver
 #  url: jdbc:jtds:sqlserver://127.0.0.1:1433/jeesite
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
-  
-  # PostgreSql 数据库配置
+#  
+#  # PostgreSql 数据库配置
 #  type: postgresql
 #  driver: org.postgresql.Driver
 #  url: jdbc:postgresql://localhost:5432/jeesite
@@ -109,10 +110,12 @@ redis:
 #===== System settings ======#
 #============================#
 
-#产品信息设置
+# 产品或项目名称、版本、版权年份
 productName: JeeSite Demo
 productVersion: V4.0
 copyrightYear: 2018
+
+# 软件提供商公司或个人名称
 companyName: ThinkGem
 
 #是否演示模式
