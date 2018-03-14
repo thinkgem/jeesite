@@ -31,7 +31,7 @@ else {
 			<li>地址输入错误，链接已经失效过期.</li>
 			<li style="word-break:break-all;word-wrap:break-word;">
 				您访问的地址为：${
-					@EncodeUtils.escapeHtml(
+					@EncodeUtils.encodeHtml(
 						@request.getAttribute('javax.servlet.forward.request_uri')
 					)
 				}</li>
