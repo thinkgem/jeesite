@@ -11,7 +11,7 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>134</x>
+	<x>114</x>
 	<y>14</y>
 	<default_color>
 		<r>128</r>
@@ -56,7 +56,7 @@
 					<create_tablespace>false</create_tablespace>
 					<create_trigger>false</create_trigger>
 					<create_view>false</create_view>
-					<drop_index>true</drop_index>
+					<drop_index>false</drop_index>
 					<drop_sequence>false</drop_sequence>
 					<drop_table>true</drop_table>
 					<drop_tablespace>false</drop_tablespace>

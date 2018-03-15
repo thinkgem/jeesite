@@ -9,11 +9,11 @@ jdbc:
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite4?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
   username: root
   password: 123456
   testSql: SELECT 1
-
+#
 #  # Oracle 数据库配置
 #  type: oracle
 #  driver: oracle.jdbc.driver.OracleDriver
@@ -30,10 +30,10 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 #  
-#  # PostgreSql 数据库配置
+#  # PostgreSql 数据库配置（注意：一定要创建的schema与username相同，否则将找不到数据表字典信息）
 #  type: postgresql
 #  driver: org.postgresql.Driver
-#  url: jdbc:postgresql://localhost:5432/jeesite
+#  url: jdbc:postgresql://127.0.0.1:5432/jeesite
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
@@ -66,7 +66,7 @@ jdbc:
 #    url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
 #    username: jeesite
 #    password: jeesite
-#    testSql: ~
+#    testSql: SELECT 1 FROM DUAL
 #    encrypt:
 #      username: false
 #      password: true
