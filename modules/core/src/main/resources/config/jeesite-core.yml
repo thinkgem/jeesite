@@ -262,7 +262,7 @@ shiro:
   isAllowExternalSiteIframe: true
   
   # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
-#  accessControlAllowOrigin: http://demo.jeesite.com
+#  accessControlAllowOrigin: http://demo.jeesite.net
 #  accessControlAllowOrigin: '*'
   
   # URI 权限过滤器定义

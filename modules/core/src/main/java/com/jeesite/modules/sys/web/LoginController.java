@@ -86,6 +86,10 @@ public class LoginController extends BaseController{
 		// 是否显示验证码
 		model.addAttribute("isValidCodeLogin", ObjectUtils.toInteger(Global.getConfig("sys.login.failedNumAfterValidCode", "200")) == 0);
 
+		//获取当前会话对象
+		Session session = UserUtils.getSession();
+		model.addAttribute("sessionid", (String)session.getId());
+		
 		// 获取登录参数
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);
 		
@@ -172,6 +176,10 @@ public class LoginController extends BaseController{
 //			}
 			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username, /*corpCode, */(String)paramMap.get("deviceType"), "failed"));
 		}
+		
+		//获取当前会话对象
+		Session session = UserUtils.getSession();
+		model.addAttribute("sessionid", (String)session.getId());
 
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
 		if (ServletUtils.isAjaxRequest(request)){
