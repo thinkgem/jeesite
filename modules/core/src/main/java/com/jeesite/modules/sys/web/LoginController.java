@@ -3,6 +3,7 @@
  */
 package com.jeesite.modules.sys.web;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
@@ -30,6 +32,7 @@ import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -257,15 +260,6 @@ public class LoginController extends BaseController{
 			model.addAttribute("message", text("获取信息成功！"));
 		}
 		model.addAttribute("sessionid", (String)session.getId());
-		// 授权信息获取
-		AuthorizationInfo authInfo = null;
-		// 获取当前用户权限字符串
-		if (WebUtils.isTrue(request, "permi")){
-			if (authInfo == null){
-				authInfo = (AuthorizationInfo)UserUtils.getCache(UserUtils.CACHE_AUTH_INFO);
-			}
-			model.addAttribute("permi", authInfo.getStringPermissions());
-		}
 		
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
 		if (ServletUtils.isAjaxRequest(request)){
@@ -305,6 +299,26 @@ public class LoginController extends BaseController{
 		
 		// 返回主页面视图
 		return "modules/sys/sysIndex";
+	}
+	
+	/**
+	 * 获取当前用户权限字符串数据
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "authInfo")
+	@ResponseBody
+	public AuthorizationInfo authInfo() {
+		return UserUtils.getAuthInfo();
+	}
+
+	/**
+	 * 获取当前用户菜单数据
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "menuTree")
+	@ResponseBody
+	public List<Menu> menuTree(String parentCode) {
+		return UserUtils.getMenuTree();
 	}
 
 	/**
