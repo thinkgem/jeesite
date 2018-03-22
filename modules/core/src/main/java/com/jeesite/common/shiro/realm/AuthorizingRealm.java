@@ -58,13 +58,13 @@ public class AuthorizingRealm extends com.jeesite.common.shiro.realm.BaseAuthori
 		userService.updateUserLoginInfo(user);
 		
 		// 记录用户登录日志
-		LogUtils.saveLog(ServletUtils.getRequest(), "系统登录", Log.TYPE_LOGIN_LOGOUT);
+		LogUtils.saveLog(user, ServletUtils.getRequest(), "系统登录", Log.TYPE_LOGIN_LOGOUT);
 	}
 	
 	@Override
 	public void onLogoutSuccess(User logoutUser, HttpServletRequest request) {
 		// 记录用户退出日志
-		LogUtils.saveLog(logoutUser, request, null, null, "系统退出", Log.TYPE_LOGIN_LOGOUT);
+		LogUtils.saveLog(logoutUser, request, "系统退出", Log.TYPE_LOGIN_LOGOUT);
 	}
 	
 	public void setUserService(UserService userService) {

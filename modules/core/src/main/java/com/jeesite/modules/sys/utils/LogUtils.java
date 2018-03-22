@@ -54,14 +54,15 @@ public class LogUtils {
 	/**
 	 * 保存日志
 	 */
-	public static void saveLog(HttpServletRequest request, String logTitle, String logType){
-		saveLog(UserUtils.getUser(), request, null, null, logTitle, logType);
+	public static void saveLog(User user, HttpServletRequest request, String logTitle, String logType){
+		saveLog(user, request, null, null, logTitle, logType, 0);
 	}
 	
 	/**
 	 * 保存日志
+	 * @param executeTime 
 	 */
-	public static void saveLog(User user, HttpServletRequest request, Object handler, Exception ex, String logTitle, String logType){
+	public static void saveLog(User user, HttpServletRequest request, Object handler, Exception ex, String logTitle, String logType, long executeTime){
 		if (user == null || StringUtils.isBlank(user.getUserCode()) || request == null){
 			return;
 		}
@@ -91,6 +92,7 @@ public class LogUtils {
 			log.setCorpCode(user.getCorpCode());
 			log.setCorpName(user.getCorpName());
 		}
+		log.setExecuteTime(executeTime);
 		log.setCurrentUser(user);
         log.preInsert();
         

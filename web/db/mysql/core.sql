@@ -340,6 +340,7 @@ CREATE TABLE js_sys_log
 	user_agent varchar(500) COMMENT '用户代理',
 	device_name varchar(100) COMMENT '设备名称/操作系统',
 	browser_name varchar(100) COMMENT '浏览器名称',
+	execute_time decimal(19) COMMENT '执行时间',
 	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
 	PRIMARY KEY (id)

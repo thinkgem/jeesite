@@ -13,6 +13,7 @@ import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
@@ -42,6 +43,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="user_agent", 		attrName="userAgent", 		label="用户代理"),
 		@Column(name="device_name", 	attrName="deviceName", 		label="设备名称/操作系统", queryType=QueryType.LIKE),
 		@Column(name="browser_name", 	attrName="browserName", 	label="浏览器名称", queryType=QueryType.LIKE),
+		@Column(name="execute_time", 	attrName="executeTime", 	label="执行时间"),
 	}, orderBy="a.create_date DESC"
 )
 public class Log extends DataEntity<Log> {
@@ -68,6 +70,7 @@ public class Log extends DataEntity<Log> {
 	private String userAgent;		// 用户代理
 	private String deviceName;		// 设备名称/操作系统
 	private String browserName;		// 浏览器名称
+	private Long executeTime;		// 执行时间
 	
 	private Map<String, String[]> paramsMap; 		// 操作提交的数据，临时存储用
 	
@@ -206,6 +209,18 @@ public class Log extends DataEntity<Log> {
 		this.browserName = browserName;
 	}
 	
+	public Long getExecuteTime() {
+		return executeTime;
+	}
+
+	public void setExecuteTime(Long executeTime) {
+		this.executeTime = executeTime;
+	}
+	
+	public String getExecuteTimeFormat(){
+		return TimeUtils.formatDateAgo(executeTime);
+	}
+
 	/**
 	 * 设置请求参数
 	 * @param paramMap

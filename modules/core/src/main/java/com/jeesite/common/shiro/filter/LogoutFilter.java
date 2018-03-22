@@ -18,6 +18,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.utils.LogUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 登出过滤器
@@ -36,7 +37,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	        //try/catch added for SHIRO-298:
 	        try {
 	        	// 记录用户退出日志
-	    		LogUtils.saveLog(ServletUtils.getRequest(), "系统退出", Log.TYPE_LOGIN_LOGOUT);
+	    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(), "系统退出", Log.TYPE_LOGIN_LOGOUT);
 	    		// 退出登录	
 	    		subject.logout();
 	        } catch (SessionException ise) {

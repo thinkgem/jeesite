@@ -337,6 +337,7 @@ CREATE TABLE [js_sys_log]
 	[user_agent] nvarchar(500),
 	[device_name] varchar(100),
 	[browser_name] varchar(100),
+	[execute_time] decimal(19),
 	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
 	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
 	PRIMARY KEY ([id])

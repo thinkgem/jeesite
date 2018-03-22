@@ -337,6 +337,7 @@ CREATE TABLE js_sys_log
 	user_agent varchar(500),
 	device_name varchar(100),
 	browser_name varchar(100),
+	execute_time decimal(19),
 	corp_code varchar(64) DEFAULT '0' NOT NULL,
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL,
 	PRIMARY KEY (id)
@@ -1081,6 +1082,7 @@ COMMENT ON COLUMN js_sys_log.exception_info IS '异常信息';
 COMMENT ON COLUMN js_sys_log.user_agent IS '用户代理';
 COMMENT ON COLUMN js_sys_log.device_name IS '设备名称/操作系统';
 COMMENT ON COLUMN js_sys_log.browser_name IS '浏览器名称';
+COMMENT ON COLUMN js_sys_log.execute_time IS '执行时间';
 COMMENT ON COLUMN js_sys_log.corp_code IS '归属集团Code';
 COMMENT ON COLUMN js_sys_log.corp_name IS '归属集团Name';
 COMMENT ON TABLE js_sys_menu IS '菜单表';
