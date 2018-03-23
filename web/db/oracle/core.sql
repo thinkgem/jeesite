@@ -24,7 +24,7 @@ DROP TABLE js_sys_module CASCADE CONSTRAINTS;
 DROP TABLE js_sys_msg_inner_record CASCADE CONSTRAINTS;
 DROP TABLE js_sys_msg_inner CASCADE CONSTRAINTS;
 DROP TABLE js_sys_msg_push CASCADE CONSTRAINTS;
-DROP TABLE js_sys_msg_push_wait CASCADE CONSTRAINTS;
+DROP TABLE js_sys_msg_pushed CASCADE CONSTRAINTS;
 DROP TABLE js_sys_msg_template CASCADE CONSTRAINTS;
 DROP TABLE js_sys_office CASCADE CONSTRAINTS;
 DROP TABLE js_sys_post CASCADE CONSTRAINTS;
@@ -484,8 +484,8 @@ CREATE TABLE js_sys_msg_push
 );
 
 
--- 消息待推送表
-CREATE TABLE js_sys_msg_push_wait
+-- 消息已推送表
+CREATE TABLE js_sys_msg_pushed
 (
 	id varchar2(64) NOT NULL,
 	msg_type varchar2(16) NOT NULL,
@@ -816,16 +816,16 @@ CREATE INDEX idx_sys_msg_push_rs ON js_sys_msg_push (read_status);
 CREATE INDEX idx_sys_msg_push_bk ON js_sys_msg_push (biz_key);
 CREATE INDEX idx_sys_msg_push_bt ON js_sys_msg_push (biz_type);
 CREATE INDEX idx_sys_msg_push_imp ON js_sys_msg_push (is_merge_push);
-CREATE INDEX idx_sys_msg_pushw_type ON js_sys_msg_push_wait (msg_type);
-CREATE INDEX idx_sys_msg_pushw_rc ON js_sys_msg_push_wait (receive_code);
-CREATE INDEX idx_sys_msg_pushw_uc ON js_sys_msg_push_wait (receive_user_code);
-CREATE INDEX idx_sys_msg_pushw_suc ON js_sys_msg_push_wait (send_user_code);
-CREATE INDEX idx_sys_msg_pushw_pd ON js_sys_msg_push_wait (plan_push_date);
-CREATE INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait (push_status);
-CREATE INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait (read_status);
-CREATE INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait (biz_key);
-CREATE INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait (biz_type);
-CREATE INDEX idx_sys_msg_pushw_imp ON js_sys_msg_push_wait (is_merge_push);
+CREATE INDEX idx_sys_msg_pushed_type ON js_sys_msg_pushed (msg_type);
+CREATE INDEX idx_sys_msg_pushed_rc ON js_sys_msg_pushed (receive_code);
+CREATE INDEX idx_sys_msg_pushed_uc ON js_sys_msg_pushed (receive_user_code);
+CREATE INDEX idx_sys_msg_pushed_suc ON js_sys_msg_pushed (send_user_code);
+CREATE INDEX idx_sys_msg_pushed_pd ON js_sys_msg_pushed (plan_push_date);
+CREATE INDEX idx_sys_msg_pushed_ps ON js_sys_msg_pushed (push_status);
+CREATE INDEX idx_sys_msg_pushed_rs ON js_sys_msg_pushed (read_status);
+CREATE INDEX idx_sys_msg_pushed_bk ON js_sys_msg_pushed (biz_key);
+CREATE INDEX idx_sys_msg_pushed_bt ON js_sys_msg_pushed (biz_type);
+CREATE INDEX idx_sys_msg_pushed_imp ON js_sys_msg_pushed (is_merge_push);
 CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_template (tpl_key);
 CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_template (tpl_type);
 CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_template (status);
@@ -1195,29 +1195,29 @@ COMMENT ON COLUMN js_sys_msg_push.push_status IS '推送状态（0未推送 1成
 COMMENT ON COLUMN js_sys_msg_push.push_date IS '推送时间';
 COMMENT ON COLUMN js_sys_msg_push.read_status IS '读取状态（0未送达 1未读 2已读）';
 COMMENT ON COLUMN js_sys_msg_push.read_date IS '读取时间';
-COMMENT ON TABLE js_sys_msg_push_wait IS '消息待推送表';
-COMMENT ON COLUMN js_sys_msg_push_wait.id IS '编号';
-COMMENT ON COLUMN js_sys_msg_push_wait.msg_type IS '消息类型（PC APP 短信 邮件 微信）';
-COMMENT ON COLUMN js_sys_msg_push_wait.msg_title IS '消息标题';
-COMMENT ON COLUMN js_sys_msg_push_wait.msg_content IS '消息内容';
-COMMENT ON COLUMN js_sys_msg_push_wait.biz_key IS '业务主键';
-COMMENT ON COLUMN js_sys_msg_push_wait.biz_type IS '业务类型';
-COMMENT ON COLUMN js_sys_msg_push_wait.receive_code IS '接受者账号';
-COMMENT ON COLUMN js_sys_msg_push_wait.receive_user_code IS '接受者用户编码';
-COMMENT ON COLUMN js_sys_msg_push_wait.receive_user_name IS '接受者用户姓名';
-COMMENT ON COLUMN js_sys_msg_push_wait.send_user_code IS '发送者用户编码';
-COMMENT ON COLUMN js_sys_msg_push_wait.send_user_name IS '发送者用户姓名';
-COMMENT ON COLUMN js_sys_msg_push_wait.send_date IS '发送时间';
-COMMENT ON COLUMN js_sys_msg_push_wait.is_merge_push IS '是否合并推送';
-COMMENT ON COLUMN js_sys_msg_push_wait.plan_push_date IS '计划推送时间';
-COMMENT ON COLUMN js_sys_msg_push_wait.push_number IS '推送尝试次数';
-COMMENT ON COLUMN js_sys_msg_push_wait.push_return_content IS '推送返回的内容信息';
-COMMENT ON COLUMN js_sys_msg_push_wait.push_return_code IS '推送返回结果码';
-COMMENT ON COLUMN js_sys_msg_push_wait.push_return_msg_id IS '推送返回消息编号';
-COMMENT ON COLUMN js_sys_msg_push_wait.push_status IS '推送状态（0未推送 1成功  2失败）';
-COMMENT ON COLUMN js_sys_msg_push_wait.push_date IS '推送时间';
-COMMENT ON COLUMN js_sys_msg_push_wait.read_status IS '读取状态（0未送达 1未读 2已读）';
-COMMENT ON COLUMN js_sys_msg_push_wait.read_date IS '读取时间';
+COMMENT ON TABLE js_sys_msg_pushed IS '消息已推送表';
+COMMENT ON COLUMN js_sys_msg_pushed.id IS '编号';
+COMMENT ON COLUMN js_sys_msg_pushed.msg_type IS '消息类型（PC APP 短信 邮件 微信）';
+COMMENT ON COLUMN js_sys_msg_pushed.msg_title IS '消息标题';
+COMMENT ON COLUMN js_sys_msg_pushed.msg_content IS '消息内容';
+COMMENT ON COLUMN js_sys_msg_pushed.biz_key IS '业务主键';
+COMMENT ON COLUMN js_sys_msg_pushed.biz_type IS '业务类型';
+COMMENT ON COLUMN js_sys_msg_pushed.receive_code IS '接受者账号';
+COMMENT ON COLUMN js_sys_msg_pushed.receive_user_code IS '接受者用户编码';
+COMMENT ON COLUMN js_sys_msg_pushed.receive_user_name IS '接受者用户姓名';
+COMMENT ON COLUMN js_sys_msg_pushed.send_user_code IS '发送者用户编码';
+COMMENT ON COLUMN js_sys_msg_pushed.send_user_name IS '发送者用户姓名';
+COMMENT ON COLUMN js_sys_msg_pushed.send_date IS '发送时间';
+COMMENT ON COLUMN js_sys_msg_pushed.is_merge_push IS '是否合并推送';
+COMMENT ON COLUMN js_sys_msg_pushed.plan_push_date IS '计划推送时间';
+COMMENT ON COLUMN js_sys_msg_pushed.push_number IS '推送尝试次数';
+COMMENT ON COLUMN js_sys_msg_pushed.push_return_content IS '推送返回的内容信息';
+COMMENT ON COLUMN js_sys_msg_pushed.push_return_code IS '推送返回结果码';
+COMMENT ON COLUMN js_sys_msg_pushed.push_return_msg_id IS '推送返回消息编号';
+COMMENT ON COLUMN js_sys_msg_pushed.push_status IS '推送状态（0未推送 1成功  2失败）';
+COMMENT ON COLUMN js_sys_msg_pushed.push_date IS '推送时间';
+COMMENT ON COLUMN js_sys_msg_pushed.read_status IS '读取状态（0未送达 1未读 2已读）';
+COMMENT ON COLUMN js_sys_msg_pushed.read_date IS '读取时间';
 COMMENT ON TABLE js_sys_msg_template IS '消息模板';
 COMMENT ON COLUMN js_sys_msg_template.id IS '编号';
 COMMENT ON COLUMN js_sys_msg_template.module_code IS '归属模块';

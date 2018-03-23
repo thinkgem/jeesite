@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS js_sys_module;
 DROP TABLE IF EXISTS js_sys_msg_inner_record;
 DROP TABLE IF EXISTS js_sys_msg_inner;
 DROP TABLE IF EXISTS js_sys_msg_push;
-DROP TABLE IF EXISTS js_sys_msg_push_wait;
+DROP TABLE IF EXISTS js_sys_msg_pushed;
 DROP TABLE IF EXISTS js_sys_msg_template;
 DROP TABLE IF EXISTS js_sys_office;
 DROP TABLE IF EXISTS js_sys_post;
@@ -487,8 +487,8 @@ CREATE TABLE js_sys_msg_push
 ) COMMENT = '消息推送表';
 
 
--- 消息待推送表
-CREATE TABLE js_sys_msg_push_wait
+-- 消息已推送表
+CREATE TABLE js_sys_msg_pushed
 (
 	id varchar(64) NOT NULL COMMENT '编号',
 	msg_type varchar(16) NOT NULL COMMENT '消息类型（PC APP 短信 邮件 微信）',
@@ -513,7 +513,7 @@ CREATE TABLE js_sys_msg_push_wait
 	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
 	read_date date COMMENT '读取时间',
 	PRIMARY KEY (id)
-) COMMENT = '消息待推送表';
+) COMMENT = '消息已推送表';
 
 
 -- 消息模板
@@ -819,16 +819,16 @@ CREATE INDEX idx_sys_msg_push_rs ON js_sys_msg_push (read_status ASC);
 CREATE INDEX idx_sys_msg_push_bk ON js_sys_msg_push (biz_key ASC);
 CREATE INDEX idx_sys_msg_push_bt ON js_sys_msg_push (biz_type ASC);
 CREATE INDEX idx_sys_msg_push_imp ON js_sys_msg_push (is_merge_push ASC);
-CREATE INDEX idx_sys_msg_pushw_type ON js_sys_msg_push_wait (msg_type ASC);
-CREATE INDEX idx_sys_msg_pushw_rc ON js_sys_msg_push_wait (receive_code ASC);
-CREATE INDEX idx_sys_msg_pushw_uc ON js_sys_msg_push_wait (receive_user_code ASC);
-CREATE INDEX idx_sys_msg_pushw_suc ON js_sys_msg_push_wait (send_user_code ASC);
-CREATE INDEX idx_sys_msg_pushw_pd ON js_sys_msg_push_wait (plan_push_date ASC);
-CREATE INDEX idx_sys_msg_pushw_ps ON js_sys_msg_push_wait (push_status ASC);
-CREATE INDEX idx_sys_msg_pushw_rs ON js_sys_msg_push_wait (read_status ASC);
-CREATE INDEX idx_sys_msg_pushw_bk ON js_sys_msg_push_wait (biz_key ASC);
-CREATE INDEX idx_sys_msg_pushw_bt ON js_sys_msg_push_wait (biz_type ASC);
-CREATE INDEX idx_sys_msg_pushw_imp ON js_sys_msg_push_wait (is_merge_push ASC);
+CREATE INDEX idx_sys_msg_pushed_type ON js_sys_msg_pushed (msg_type ASC);
+CREATE INDEX idx_sys_msg_pushed_rc ON js_sys_msg_pushed (receive_code ASC);
+CREATE INDEX idx_sys_msg_pushed_uc ON js_sys_msg_pushed (receive_user_code ASC);
+CREATE INDEX idx_sys_msg_pushed_suc ON js_sys_msg_pushed (send_user_code ASC);
+CREATE INDEX idx_sys_msg_pushed_pd ON js_sys_msg_pushed (plan_push_date ASC);
+CREATE INDEX idx_sys_msg_pushed_ps ON js_sys_msg_pushed (push_status ASC);
+CREATE INDEX idx_sys_msg_pushed_rs ON js_sys_msg_pushed (read_status ASC);
+CREATE INDEX idx_sys_msg_pushed_bk ON js_sys_msg_pushed (biz_key ASC);
+CREATE INDEX idx_sys_msg_pushed_bt ON js_sys_msg_pushed (biz_type ASC);
+CREATE INDEX idx_sys_msg_pushed_imp ON js_sys_msg_pushed (is_merge_push ASC);
 CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_template (tpl_key ASC);
 CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_template (tpl_type ASC);
 CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_template (status ASC);

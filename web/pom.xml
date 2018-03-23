@@ -43,13 +43,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 代码生成模块 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-devtools</artifactId>
-			<version>${project.parent.version}</version>
- 		</dependency>
-		
 		<!-- 内容管理模块 
 		<dependency>
 			<groupId>com.jeesite</groupId>

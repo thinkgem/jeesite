@@ -24,7 +24,7 @@ IF OBJECT_ID('[js_sys_module]') IS NOT NULL DROP TABLE [js_sys_module];
 IF OBJECT_ID('[js_sys_msg_inner_record]') IS NOT NULL DROP TABLE [js_sys_msg_inner_record];
 IF OBJECT_ID('[js_sys_msg_inner]') IS NOT NULL DROP TABLE [js_sys_msg_inner];
 IF OBJECT_ID('[js_sys_msg_push]') IS NOT NULL DROP TABLE [js_sys_msg_push];
-IF OBJECT_ID('[js_sys_msg_push_wait]') IS NOT NULL DROP TABLE [js_sys_msg_push_wait];
+IF OBJECT_ID('[js_sys_msg_pushed]') IS NOT NULL DROP TABLE [js_sys_msg_pushed];
 IF OBJECT_ID('[js_sys_msg_template]') IS NOT NULL DROP TABLE [js_sys_msg_template];
 IF OBJECT_ID('[js_sys_office]') IS NOT NULL DROP TABLE [js_sys_office];
 IF OBJECT_ID('[js_sys_post]') IS NOT NULL DROP TABLE [js_sys_post];
@@ -484,8 +484,8 @@ CREATE TABLE [js_sys_msg_push]
 );
 
 
--- 消息待推送表
-CREATE TABLE [js_sys_msg_push_wait]
+-- 消息已推送表
+CREATE TABLE [js_sys_msg_pushed]
 (
 	[id] varchar(64) NOT NULL,
 	[msg_type] varchar(16) NOT NULL,
@@ -816,16 +816,16 @@ CREATE INDEX [idx_sys_msg_push_rs] ON [js_sys_msg_push] ([read_status]);
 CREATE INDEX [idx_sys_msg_push_bk] ON [js_sys_msg_push] ([biz_key]);
 CREATE INDEX [idx_sys_msg_push_bt] ON [js_sys_msg_push] ([biz_type]);
 CREATE INDEX [idx_sys_msg_push_imp] ON [js_sys_msg_push] ([is_merge_push]);
-CREATE INDEX [idx_sys_msg_pushw_type] ON [js_sys_msg_push_wait] ([msg_type]);
-CREATE INDEX [idx_sys_msg_pushw_rc] ON [js_sys_msg_push_wait] ([receive_code]);
-CREATE INDEX [idx_sys_msg_pushw_uc] ON [js_sys_msg_push_wait] ([receive_user_code]);
-CREATE INDEX [idx_sys_msg_pushw_suc] ON [js_sys_msg_push_wait] ([send_user_code]);
-CREATE INDEX [idx_sys_msg_pushw_pd] ON [js_sys_msg_push_wait] ([plan_push_date]);
-CREATE INDEX [idx_sys_msg_pushw_ps] ON [js_sys_msg_push_wait] ([push_status]);
-CREATE INDEX [idx_sys_msg_pushw_rs] ON [js_sys_msg_push_wait] ([read_status]);
-CREATE INDEX [idx_sys_msg_pushw_bk] ON [js_sys_msg_push_wait] ([biz_key]);
-CREATE INDEX [idx_sys_msg_pushw_bt] ON [js_sys_msg_push_wait] ([biz_type]);
-CREATE INDEX [idx_sys_msg_pushw_imp] ON [js_sys_msg_push_wait] ([is_merge_push]);
+CREATE INDEX [idx_sys_msg_pushed_type] ON [js_sys_msg_pushed] ([msg_type]);
+CREATE INDEX [idx_sys_msg_pushed_rc] ON [js_sys_msg_pushed] ([receive_code]);
+CREATE INDEX [idx_sys_msg_pushed_uc] ON [js_sys_msg_pushed] ([receive_user_code]);
+CREATE INDEX [idx_sys_msg_pushed_suc] ON [js_sys_msg_pushed] ([send_user_code]);
+CREATE INDEX [idx_sys_msg_pushed_pd] ON [js_sys_msg_pushed] ([plan_push_date]);
+CREATE INDEX [idx_sys_msg_pushed_ps] ON [js_sys_msg_pushed] ([push_status]);
+CREATE INDEX [idx_sys_msg_pushed_rs] ON [js_sys_msg_pushed] ([read_status]);
+CREATE INDEX [idx_sys_msg_pushed_bk] ON [js_sys_msg_pushed] ([biz_key]);
+CREATE INDEX [idx_sys_msg_pushed_bt] ON [js_sys_msg_pushed] ([biz_type]);
+CREATE INDEX [idx_sys_msg_pushed_imp] ON [js_sys_msg_pushed] ([is_merge_push]);
 CREATE INDEX [idx_sys_msg_tpl_key] ON [js_sys_msg_template] ([tpl_key]);
 CREATE INDEX [idx_sys_msg_tpl_type] ON [js_sys_msg_template] ([tpl_type]);
 CREATE INDEX [idx_sys_msg_tpl_status] ON [js_sys_msg_template] ([status]);

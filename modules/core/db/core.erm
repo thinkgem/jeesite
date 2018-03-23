@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.8</zoom>
-	<x>0</x>
-	<y>1406</y>
+	<x>2476</x>
+	<y>1455</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -10793,7 +10793,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>3e332349cc4dee90c48f4a86de799362111ac497</id>
+			<id>5073939d7dbd96d0da1b7879a566895d90f29624</id>
 			<height>506</height>
 			<width>419</width>
 				<font_name>Segoe UI</font_name>
@@ -10807,8 +10807,8 @@
 			</color>
 			<connections>
 			</connections>
-			<physical_name>js_sys_msg_push_wait</physical_name>
-			<logical_name>消息待推送表</logical_name>
+			<physical_name>js_sys_msg_pushed</physical_name>
+			<logical_name>消息已推送表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -10816,7 +10816,7 @@
 			<columns>
 				<normal_column>
 					<word_id>869fc70cf3a4e92e8056b40814df8e03f9f9efde</word_id>
-					<id>0744094f5aab9760c9590b0407295c556ea51fd4</id>
+					<id>94142372cce0fa637010a4f1ffbcdb09c79280a5</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -10849,7 +10849,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>e0b1aac165f125b035482c239571e732457eb8a9</word_id>
-					<id>802c839a51f7f6bd90cf6037b6758c8ff1330a42</id>
+					<id>48e3284819439b54313716f5d1b7875d96a94346</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -10882,7 +10882,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>a304841afc9968e7c8768979fe2ba3f2f315db78</word_id>
-					<id>da2a732bb762f9c899103cd46681c818926f1aeb</id>
+					<id>348959ce20a023239a8585e94c0a26b144c706ab</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -10915,7 +10915,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>98eb079aebd2f56c461cb92d97ab4d56f603b840</word_id>
-					<id>4da41fb3f900fd011d77567cf0ac900b2c18db2c</id>
+					<id>ad07cb36dfe9635464a8e916d1ff0f4cfc39354d</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -10948,7 +10948,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>667704664e4b88b145cebda0d6a1fbafb53525f0</word_id>
-					<id>7c1fcc6ee48ce6985cfd67af04fbda94164a92b2</id>
+					<id>9616345b413d53f24fcfbd55ef76702530c5e135</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -10981,7 +10981,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>4f9a5bc4fccb64cfc3a35f9209c9ce9bd044a6b9</word_id>
-					<id>06bec07afc77506106e74d52ca0f8d0ab203ebec</id>
+					<id>5818a0753aaaf1b6f7b5424c94109feca573eb9f</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11014,7 +11014,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>6b9d91752acccc30552bfaf5c7a8793defd825fb</word_id>
-					<id>3030ea0e133c205cd7de02e9656f49cd45888727</id>
+					<id>c1ad8a7f995b7e311e37727f2d83ab2999378bc3</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11047,7 +11047,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>63ba93a883b0de38c98f6bd84772c7666b453576</word_id>
-					<id>ddeb3fb795b43881fe8277512eb6ddcb6d3c5875</id>
+					<id>1b9ecf5da3526acc0cb3d46775447289dd16781e</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11080,7 +11080,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>1e639355834e23e3a39ac190e4768ef48463ae83</word_id>
-					<id>00b6cbf48c49b92096150c7ea67356f1374bdf27</id>
+					<id>3020883c0d78e9565931fa4cae562f1c5cbff195</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11113,7 +11113,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>c5364fcf3327275d038d229e22f80ce97c28d402</word_id>
-					<id>6390942fdd516dfbf1a8547f34c395ba27c45465</id>
+					<id>14c84ddd9d5d81064c0e63c03280b58242e2f1ed</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11146,7 +11146,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>949f48cec7229094875af06d5c3ee4e7efbba1e0</word_id>
-					<id>0b3011dd73bfd5009a14b8fe3436049f0a66539b</id>
+					<id>de9e2029fea32d3ec721bed77fc90e870cee92a8</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11179,7 +11179,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>17feded8380d1dfd61365054eb92bba181ae23f7</word_id>
-					<id>fecddb5e522b73a99975db0c16ae8a487c3745dd</id>
+					<id>c3f7c93f6a43005dbffb262eb843aa0049a0069a</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11212,7 +11212,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>5224ef38946585af8ba22f294756ffaecb434ddc</word_id>
-					<id>013bfa07b771054f43105d72d01324d96518fc38</id>
+					<id>da53917cef89b0ef7e6a4e190f1d74149d1f02a4</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11245,7 +11245,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>583e6e4dc671433b137fbbe6674bd7b81be2b57d</word_id>
-					<id>0f154198da38cc614865ff87fd74c0665e31b9ec</id>
+					<id>855d14e23de62f5e57c41c705f39d7b749735ad2</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11278,7 +11278,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>7f00758215841d707b4eb3b7bdb1f7cbb4752a95</word_id>
-					<id>0443fa6277cc51ec8e20f5a9dae5403381257324</id>
+					<id>d6eb5f4356f8b46b1b74ca1fa9fe95dd7557bf4e</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11311,7 +11311,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>a327f23161a6e1fad764457889fc84600651185b</word_id>
-					<id>2d3783d76578748731ab8cabf57776279843017c</id>
+					<id>3c90e218d5110ed4f34dd5d7e8ee07dc468a57af</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11344,7 +11344,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>4dcc8f1c91f65017557f2c3840e9245b21b22937</word_id>
-					<id>9af4b998ab404996deecd44a48441f633450d10f</id>
+					<id>8ecec2692a35e304edd445baa3944803de256ab4</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11377,7 +11377,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>858797dd1d77830004f9030e960fedcc8fa3f4d5</word_id>
-					<id>88d026ef5288f46960efa59e3b26bf7eb9415eca</id>
+					<id>a068a1a088b68f12b1c8141e473d53e57faf9a6b</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11410,7 +11410,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>d58d7e14692bb3a537852c764bd0b13909be2167</word_id>
-					<id>e8c2b0e89c35ccc3f5b15c9f98ab407ba95219ba</id>
+					<id>8c6b914d0d7fbf484630a356ebad0c5a370aefea</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11443,7 +11443,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>23e677fb626631780d092ad56ce7fddc1b470a85</word_id>
-					<id>a223a180c40a31ab4b1151826b0eb42d08490c4d</id>
+					<id>d91930762399578e65dc3d3b028052460dd28bdd</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11476,7 +11476,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>fd2e1d009edc93641f31c8ce386a46089b346023</word_id>
-					<id>bb55c13a70f444ee4155ca716a3febae5349baf4</id>
+					<id>1f712c0ab5fc4ef2b948047153cbc63e947c4fc5</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11509,7 +11509,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>6aebba19b24d1792a8b1e8a03ad43af4eb0b6ad3</word_id>
-					<id>91a015fa98c3ef791994f88f967bc2ad01b2d4ad</id>
+					<id>6a9f1a249aa33b4171ccaa3b9110e0ae015016cf</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -11545,12 +11545,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_type</name>
+					<name>idx_sys_msg_pushed_type</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>802c839a51f7f6bd90cf6037b6758c8ff1330a42</id>
+							<id>48e3284819439b54313716f5d1b7875d96a94346</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11558,12 +11558,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_rc</name>
+					<name>idx_sys_msg_pushed_rc</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>3030ea0e133c205cd7de02e9656f49cd45888727</id>
+							<id>c1ad8a7f995b7e311e37727f2d83ab2999378bc3</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11571,12 +11571,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_uc</name>
+					<name>idx_sys_msg_pushed_uc</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>ddeb3fb795b43881fe8277512eb6ddcb6d3c5875</id>
+							<id>1b9ecf5da3526acc0cb3d46775447289dd16781e</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11584,12 +11584,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_suc</name>
+					<name>idx_sys_msg_pushed_suc</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>6390942fdd516dfbf1a8547f34c395ba27c45465</id>
+							<id>14c84ddd9d5d81064c0e63c03280b58242e2f1ed</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11597,12 +11597,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_pd</name>
+					<name>idx_sys_msg_pushed_pd</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>0f154198da38cc614865ff87fd74c0665e31b9ec</id>
+							<id>855d14e23de62f5e57c41c705f39d7b749735ad2</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11610,12 +11610,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_ps</name>
+					<name>idx_sys_msg_pushed_ps</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>e8c2b0e89c35ccc3f5b15c9f98ab407ba95219ba</id>
+							<id>8c6b914d0d7fbf484630a356ebad0c5a370aefea</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11623,12 +11623,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_rs</name>
+					<name>idx_sys_msg_pushed_rs</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>bb55c13a70f444ee4155ca716a3febae5349baf4</id>
+							<id>1f712c0ab5fc4ef2b948047153cbc63e947c4fc5</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11636,12 +11636,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_bk</name>
+					<name>idx_sys_msg_pushed_bk</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>7c1fcc6ee48ce6985cfd67af04fbda94164a92b2</id>
+							<id>9616345b413d53f24fcfbd55ef76702530c5e135</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11649,12 +11649,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_bt</name>
+					<name>idx_sys_msg_pushed_bt</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>06bec07afc77506106e74d52ca0f8d0ab203ebec</id>
+							<id>5818a0753aaaf1b6f7b5424c94109feca573eb9f</id>
 							<desc>false</desc>
 						</column>
 					</columns>
@@ -11662,12 +11662,12 @@
 				<inidex>
 					<full_text>false</full_text>
 					<non_unique>true</non_unique>
-					<name>idx_sys_msg_pushw_imp</name>
+					<name>idx_sys_msg_pushed_imp</name>
 					<type></type>
 					<description></description>
 					<columns>
 						<column>
-							<id>013bfa07b771054f43105d72d01324d96518fc38</id>
+							<id>da53917cef89b0ef7e6a4e190f1d74149d1f02a4</id>
 							<desc>false</desc>
 						</column>
 					</columns>
