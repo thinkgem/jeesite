@@ -104,7 +104,7 @@ public class LoginController extends BaseController{
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
 			model.addAttribute("result", "login");
-			model.addAttribute("message", text("未登录或登录超时。请重新登录，谢谢！"));
+			model.addAttribute("message", text("sys.login.notLongIn"));
 			return ServletUtils.renderObject(response, model);
 		}
 		
@@ -255,9 +255,9 @@ public class LoginController extends BaseController{
 			if (loginInfo.getParam("lang") != null){
 				Global.setLang(loginInfo.getParam("lang"), request, response);
 			}
-			model.addAttribute("message", text("登录成功！"));
+			model.addAttribute("message", text("sys.login.success"));
 		}else{
-			model.addAttribute("message", text("获取信息成功！"));
+			model.addAttribute("message", text("sys.login.getInfo"));
 		}
 		model.addAttribute("sessionid", (String)session.getId());
 		

@@ -4,7 +4,7 @@
 var message = @ObjectUtils.toString(@request.getAttribute("message"));
 
 if (isBlank(message)){
-	message = "您访问的页面不存在！";
+	message = text('sys.error.404.message');
 }
 
 // 下载文件不存在的异常，状态码设为正常
@@ -20,7 +20,7 @@ if (@ServletUtils.isAjaxRequest(request)) {
 // 输出异常信息页面
 else {
 %>
-<% layout('/layouts/default.html', {title: '404 - 页面不存在'}){ %>
+<% layout('/layouts/default.html', {title: '404 - '+text('sys.error.404.title')}){ %>
 <link rel="stylesheet" href="${ctxStatic}/common/error.css?${_version}">
 <div class="error-page">
 	<div class="headline text-aqua mt20">404</div>
@@ -39,7 +39,7 @@ else {
 			<li>......</li>
 		</ul>
 		<button type="button" class="btn btn-info btn-sm" onclick="history.go(-1);"><i
-			class="fa fa-reply-all"></i> 返回上一页</button>
+			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button>
 	</div>
 	<div class="copyright">
 		<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>

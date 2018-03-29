@@ -37,7 +37,8 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	        //try/catch added for SHIRO-298:
 	        try {
 	        	// 记录用户退出日志
-	    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(), "系统退出", Log.TYPE_LOGIN_LOGOUT);
+	    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
+	    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
 	    		// 退出登录	
 	    		subject.logout();
 	        } catch (SessionException ise) {
@@ -46,7 +47,8 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	        
 	        // 如果是Ajax请求，返回Json字符串。
 	 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
-	 			ServletUtils.renderResult((HttpServletResponse)response, Global.TRUE, "退出成功！");
+	 			ServletUtils.renderResult((HttpServletResponse)response,
+	 					Global.TRUE, Global.getText("sys.logout.success"));
 	 			return false;
 	 		}
 	     	

@@ -17,7 +17,7 @@ if (isBlank(message)){
 }
 
 if (isBlank(message)){
-	message = "您访问的页面出错啦！";
+	message = text('sys.error.500.message');
 }
 
 // 如果是异步请求或是手机端，则直接返回信息
@@ -28,7 +28,7 @@ if (@ServletUtils.isAjaxRequest(request)) {
 // 输出异常信息页面
 else {
 %>
-<% layout('/layouts/default.html', {title: '500 - 系统内部错误'}){ %>
+<% layout('/layouts/default.html', {title: '500 - '+text('sys.error.500.title')}){ %>
 <link rel="stylesheet" href="${ctxStatic}/common/error.css?${_version}">
 <div class="error-page">
 	<div class="headline text-red">500</div>
@@ -36,7 +36,7 @@ else {
 		<h3><i class="fa fa-warning text-red"></i> ${message}</h3>
 		<p>对不起，你访问的页面出现了一点问题，请及时联系管理员解决！</p>
 		<button type="button" class="btn btn-danger btn-sm" onclick="history.go(-1);"><i
-			class="fa fa-reply-all"></i> 返回上一页</button>
+			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button>
 	</div>
 	<div class="copyright">
 		<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
