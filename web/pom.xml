@@ -145,12 +145,9 @@
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
 		</pluginRepository>
-		<pluginRepository>
-            <id>sonatype-repos</id>
-			<name>Sonatype Repository</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
-        </pluginRepository>
         
 	</pluginRepositories>
 	
