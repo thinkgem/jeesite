@@ -496,7 +496,7 @@ public class ExcelExport {
 					if (StringUtils.isNotBlank(ef.dictType())){
 						Class<?> dictUtils = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
 						val = dictUtils.getMethod("getDictLabel", String.class, String.class,
-									String.class).invoke(null, val==null?"":val.toString(), ef.dictType(), "");
+									String.class).invoke(null, ef.dictType(), val==null?"":val.toString(), "");
 						//val = DictUtils.getDictLabel(val==null?"":val.toString(), ef.dictType(), "");
 					}
 				}catch(Exception ex) {

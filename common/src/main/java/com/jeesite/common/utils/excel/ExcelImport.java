@@ -387,7 +387,7 @@ public class ExcelImport {
 						try{
 							Class<?> dictUtils = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
 							val = dictUtils.getMethod("getDictValue", String.class, String.class,
-										String.class).invoke(null, val.toString(), ef.dictType(), "");
+										String.class).invoke(null, ef.dictType(), val.toString(), "");
 						} catch (Exception ex) {
 							log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
 							val = null;
