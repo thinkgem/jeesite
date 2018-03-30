@@ -80,14 +80,16 @@ public class CookieUtils {
 	public static String getCookie(HttpServletRequest request, String name) {
 		return getCookie(request, null, name, false);
 	}
+	
 	/**
 	 * 获得指定Cookie的值，并删除。
 	 * @param name 名称
 	 * @return 值
 	 */
 	public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name) {
-		return getCookie(request, response, name, true);
+		return getCookie(request, response, name, false);
 	}
+
 	/**
 	 * 获得指定Cookie的值
 	 * @param request 请求对象
@@ -97,6 +99,18 @@ public class CookieUtils {
 	 * @return 值
 	 */
 	public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name, boolean isRemove) {
+		return getCookie(request, response, name, "/", false);
+	}
+
+	/**
+	 * 获得指定Cookie的值
+	 * @param request 请求对象
+	 * @param response 响应对象
+	 * @param name 名字
+	 * @param isRemove 是否移除
+	 * @return 值
+	 */
+	public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name, String path, boolean isRemove) {
 		String value = null;
 		if (StringUtils.isNotBlank(name)){
 			Cookie[] cookies = request.getCookies();
@@ -108,7 +122,8 @@ public class CookieUtils {
 						} catch (UnsupportedEncodingException e) {
 							e.printStackTrace();
 						}
-						if (isRemove) {
+						if (isRemove && response != null) {
+							cookie.setPath(path);
 							cookie.setMaxAge(0);
 							response.addCookie(cookie);
 						}
