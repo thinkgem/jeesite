@@ -1,5 +1,20 @@
 
 #============================#
+#===== Project settings =====#
+#============================#
+
+# 产品或项目名称、版本、版权年份
+productName: JeeSite Demo
+productVersion: V4.0
+copyrightYear: 2018
+
+# 软件提供商公司或个人名称
+companyName: ThinkGem
+
+#是否演示模式
+demoMode: false
+
+#============================#
 #===== Database sttings =====#
 #============================#
 
@@ -108,17 +123,6 @@ jdbc:
 #============================#
 #===== System settings ======#
 #============================#
-
-# 产品或项目名称、版本、版权年份
-productName: JeeSite Demo
-productVersion: V4.0
-copyrightYear: 2018
-
-# 软件提供商公司或个人名称
-companyName: ThinkGem
-
-#是否演示模式
-demoMode: false
 
 ##管理基础路径
 #adminPath: /a
