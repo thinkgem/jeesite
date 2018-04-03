@@ -109,17 +109,18 @@ redis:
   timeout: 2000
   password: 1234
   database: 0
+  clientName: ~
   
   # Redis 连接池配置
   pool:
     maxIdle: 3
     maxTotal: 20
-  
-  # 定义Key的前缀标识
-  keyPrefix: ${jdbc.tablePrefix}
 
   # 是否启用Redis系统缓存及会话
   cacheAndSession: false
+  
+  # 定义Key的前缀标识
+  keyPrefix: ${jdbc.tablePrefix}
 
 #============================#
 #===== System settings ======#
