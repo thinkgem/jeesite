@@ -18,6 +18,8 @@ title %cd%
 
 set JAVA_OPTS= -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m
 
-call java org.springframework.boot.loader.WarLauncher
+set CURR_DIR=%cd%
+cd..
+call java -cp %CURR_DIR% org.springframework.boot.loader.WarLauncher
 
 pause
