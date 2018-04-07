@@ -625,8 +625,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				}
 				zouts.closeEntry();
 				fin.close();
-				System.out
-						.println("添加文件 " + file.getAbsolutePath() + " 到zip文件中!");
+				logger.debug("添加文件 " + file.getAbsolutePath() + " 到zip文件中!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -698,26 +697,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 返回错误信息，无错误信息返回null
 	 */
 	public static String downFile(File file, HttpServletRequest request, HttpServletResponse response, String fileName){
-		String error = null;
-		if (file != null && file.exists()) {
-			if (file.isFile()) {
-				if (file.length() <= 0) {
-					error = "该文件是一个空文件。";
-				}
-				if (!file.canRead()) {
-					error = "该文件没有读取权限。";
-				}
-			} else {
-				error = "该文件是一个文件夹。";
-			}
-		} else {
-			error = "文件已丢失或不存在！";
-		}
-		if (error != null){
-			logger.debug("---------------" + file + " " + error);
-			return error;
-		}
-
 		long fileLength = file.length(); // 记录文件大小
 		long pastLength = 0; 	// 记录已下载文件大小
 		int rangeSwitch = 0; 	// 0：从头开始的全文下载；1：从某字节开始的下载（bytes=27000-）；2：从某字节开始到某字节结束的下载（bytes=27000-39000）
@@ -778,7 +757,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			// 是从开始下载
 			logger.debug("---------------是从开始进行下载！");
 		}
-
+		
 		try {
 			response.addHeader("Content-Disposition", "attachment; filename=\"" + 
 					EncodeUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName) + "\"");

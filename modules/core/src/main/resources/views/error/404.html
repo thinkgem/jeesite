@@ -1,15 +1,10 @@
 <% 
-@servlet.getResponse().setStatus(404);
+@servlet.getResponse().setStatus(responseStatus!404);
 
 var message = @ObjectUtils.toString(@request.getAttribute("message"));
 
 if (isBlank(message)){
 	message = text('sys.error.404.message');
-}
-
-// 下载文件不存在的异常，状态码设为正常
-if (message == '文件已丢失或不存在！'){
-	@servlet.getResponse().setStatus(200);
 }
 
 // 如果是异步请求或是手机端，则直接返回信息

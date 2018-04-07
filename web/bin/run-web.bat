@@ -20,7 +20,7 @@ call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
 cd target/
 call unzip -n *.war -d web
 
-cd web
+cd web/WEB-INF/
 call startup.bat
 
 pause
