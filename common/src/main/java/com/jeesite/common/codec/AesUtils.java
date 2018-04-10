@@ -201,18 +201,18 @@ public class AesUtils {
 		}
 	}
 	
-	public static void main(String[] args) {
-
-		String s = "hello word!";
-		System.out.println(s);
-		
-		String k = genKeyString();
-		System.out.println(k);
-		String ss = encode(s, k);
-		System.out.println(ss);
-		String sss = decode(ss, k);
-		System.out.println(sss);
-		
-	}
+//	public static void main(String[] args) {
+//
+//		String s = "hello word!";
+//		System.out.println(s);
+//		
+//		String k = genKeyString();
+//		System.out.println(k);
+//		String ss = encode(s, k);
+//		System.out.println(ss);
+//		String sss = decode(ss, k);
+//		System.out.println(sss);
+//		
+//	}
 	
 }

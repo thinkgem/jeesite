@@ -3,9 +3,7 @@
  */
 package com.jeesite.common.mapper;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,9 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.io.FileUtils;
 
 /**
  * XML <-> Map、Object
@@ -269,38 +264,38 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 		return map;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static void main(String[] args) throws Exception {
-		
-		File file = new File(FileUtils.getProjectPath() 
-				+ "/../modules/core/src/main/resources/spring/spring-context-core.xml");
-		String xml = FileUtils.readFileToString(file, Charset.defaultCharset());
-		
-		System.out.println(xmlToMap(xml, true));
-		System.out.println(xmlToMapWithAttr(xml, true));
-		
-		XmlMapper m = XmlMapper.getInstance();
-		System.out.println(m.readValue(xml, List.class));
-		System.out.println(m.readValue(xml, Map.class));
-		
-		List<Map<String, Object>> list = ListUtils.newArrayList();
-		Map<String, Object> map = MapUtils.newHashMap();
-		map.put("id", 1);
-		map.put("pId", -1);
-		map.put("name", "根节点");
-		list.add(map);
-		map = MapUtils.newHashMap();
-		map.put("id", 2);
-		map.put("pId", 1);
-		map.put("name", "你好");
-		map.put("open", true);
-		list.add(map);
-
-		String s = XmlMapper.getInstance().writeValueAsString(list);
-		System.out.println(s);
-		
-		list = XmlMapper.getInstance().readValue(s, List.class);
-		System.out.println(list);
-		
-	}
+//	public static void main(String[] args) throws Exception {
+//		
+//		File file = new File(FileUtils.getProjectPath() 
+//				+ "/../modules/core/src/main/resources/spring/spring-context-core.xml");
+//		String xml = FileUtils.readFileToString(file, Charset.defaultCharset());
+//		
+//		System.out.println(xmlToMap(xml, true));
+//		System.out.println(xmlToMapWithAttr(xml, true));
+//		
+//		XmlMapper m = XmlMapper.getInstance();
+//		System.out.println(m.readValue(xml, List.class));
+//		System.out.println(m.readValue(xml, Map.class));
+//		
+//		List<Map<String, Object>> list = ListUtils.newArrayList();
+//		Map<String, Object> map = MapUtils.newHashMap();
+//		map.put("id", 1);
+//		map.put("pId", -1);
+//		map.put("name", "根节点");
+//		list.add(map);
+//		map = MapUtils.newHashMap();
+//		map.put("id", 2);
+//		map.put("pId", 1);
+//		map.put("name", "你好");
+//		map.put("open", true);
+//		list.add(map);
+//
+//		String s = XmlMapper.getInstance().writeValueAsString(list);
+//		System.out.println(s);
+//		
+//		list = XmlMapper.getInstance().readValue(s, List.class);
+//		System.out.println(list);
+//		
+//	}
+	
 }

@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -20,7 +19,7 @@ import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
- * <b>function:</b> 缩放图片工具类，创建缩略图、伸缩图片比例
+ * 缩放图片工具类，创建缩略图、伸缩图片比例
  * @author hoojo
  * @createDate 2012-2-3 上午10:08:47
  * @file ScaleImageUtils.java
@@ -35,7 +34,7 @@ public abstract class ImageUtils {
 	private static final String DEFAULT_FILE_PATH = FileUtils.getTempDirectoryPath();
 
 	/**
-	 * <b>function:</b> 设置图片压缩质量枚举类；
+	 * 设置图片压缩质量枚举类；
 	 * Some guidelines: 0.75 high quality、0.5  medium quality、0.25 low quality
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午11:31:45
@@ -61,7 +60,7 @@ public abstract class ImageUtils {
 	private static Image image;
 
 	/**
-	 * <b>function:</b> 通过目标对象的大小和标准（指定）大小计算出图片缩小的比例
+	 * 通过目标对象的大小和标准（指定）大小计算出图片缩小的比例
 	 * @author hoojo
 	 * @createDate 2012-2-6 下午04:41:48
 	 * @param targetWidth 目标的宽度
@@ -87,7 +86,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 将Image的宽度、高度缩放到指定width、height，并保存在savePath目录
+	 * 将Image的宽度、高度缩放到指定width、height，并保存在savePath目录
 	 * @author hoojo
 	 * @createDate 2012-2-6 下午04:54:35
 	 * @param width 缩放的宽度
@@ -120,7 +119,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 可以设置图片缩放质量，并且可以根据指定的宽高缩放图片
+	 * 可以设置图片缩放质量，并且可以根据指定的宽高缩放图片
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午11:01:27
 	 * @param width 缩放的宽度
@@ -162,7 +161,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 通过指定大小和图片的大小，计算出图片缩小的合适大小
+	 * 通过指定大小和图片的大小，计算出图片缩小的合适大小
 	 * @author hoojo
 	 * @createDate 2012-2-6 下午05:53:10
 	 * @param width 指定的宽度
@@ -180,7 +179,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 通过指定的比例和图片对象，返回一个放大或缩小的宽度、高度
+	 * 通过指定的比例和图片对象，返回一个放大或缩小的宽度、高度
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:27:59
 	 * @param scale 缩放比例
@@ -210,8 +209,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * 
-	 * <b>function:</b> 将指定的targetFile图片文件的宽度、高度大于指定width、height的图片缩小，并保存在savePath目录
+	 * 将指定的targetFile图片文件的宽度、高度大于指定width、height的图片缩小，并保存在savePath目录
 	 * @author hoojo
 	 * @createDate 2012-2-6 下午04:57:02
 	 * @param width 缩小的宽度
@@ -230,7 +228,7 @@ public abstract class ImageUtils {
 
 	/**
 	 * 
-	 * <b>function:</b> 将指定的targetURL网络图片文件的宽度、高度大于指定width、height的图片缩小，并保存在savePath目录
+	 * 将指定的targetURL网络图片文件的宽度、高度大于指定width、height的图片缩小，并保存在savePath目录
 	 * @author hoojo
 	 * @createDate 2012-2-6 下午04:57:07
 	 * @param width 缩小的宽度
@@ -248,7 +246,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 将一个本地的图片文件按照指定的比例进行缩放
+	 * 将一个本地的图片文件按照指定的比例进行缩放
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:29:18
 	 * @param scale 缩放比例
@@ -265,7 +263,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 将一个网络图片文件按照指定的比例进行缩放
+	 * 将一个网络图片文件按照指定的比例进行缩放
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:30:56
 	 * @param scale 缩放比例
@@ -282,7 +280,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 按照固定宽度进行等比缩放本地图片
+	 * 按照固定宽度进行等比缩放本地图片
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:49:56
 	 * @param width 固定宽度
@@ -299,7 +297,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 按照固定宽度进行等比缩放网络图片
+	 * 按照固定宽度进行等比缩放网络图片
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:50:52
 	 * @param width 固定宽度
@@ -317,7 +315,7 @@ public abstract class ImageUtils {
 
 	/**
 	 * 
-	 * <b>function:</b> 按照固定高度进行等比缩放本地图片
+	 * 按照固定高度进行等比缩放本地图片
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:51:17
 	 * @param height 固定高度
@@ -334,7 +332,7 @@ public abstract class ImageUtils {
 	}
 
 	/**
-	 * <b>function:</b> 按照固定高度进行等比缩放网络图片
+	 * 按照固定高度进行等比缩放网络图片
 	 * @author hoojo
 	 * @createDate 2012-2-7 上午10:52:23
 	 * @param height 固定高度
@@ -350,18 +348,10 @@ public abstract class ImageUtils {
 		return resize(size[0], size[1], savePath, image);
 	}
 
-	/**
-	 * <b>function:</b>
-	 * @author hoojo
-	 * @createDate 2012-2-3 上午10:08:47
-	 * @param args
-	 * @throws IOException 
-	 * @throws MalformedURLException 
-	 * @throws ImageFormatException 
-	 */
-	public static void main(String[] args) throws ImageFormatException, MalformedURLException, IOException {
-
-		System.out.println(ImageUtils.resize(140, 140, null, new URL("http://www.open-open.com/lib/images/logo.jpg")));
-		ImageUtils.resize(100, 100, ImageQuality.high.getQuality(), null, ImageIO.read(new URL("http://www.open-open.com/lib/images/logo.jpg")));
-	}
+//	public static void main(String[] args) throws ImageFormatException, MalformedURLException, IOException {
+//
+//		System.out.println(ImageUtils.resize(140, 140, null, new URL("http://www.open-open.com/lib/images/logo.jpg")));
+//		ImageUtils.resize(100, 100, ImageQuality.high.getQuality(), null, ImageIO.read(new URL("http://www.open-open.com/lib/images/logo.jpg")));
+//	}
+	
 }

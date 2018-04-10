@@ -6,7 +6,6 @@ package com.jeesite.common.image;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
@@ -171,12 +170,12 @@ public class CaptchaUtils {
 		return s;
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		FileOutputStream fos = new FileOutputStream("x:\\captcha.png");
-		String s = generateCaptcha(fos);
-		System.out.println(s);
-		fos.close();
-
-	}
+//	public static void main(String[] args) throws IOException {
+//
+//		FileOutputStream fos = new FileOutputStream("x:\\captcha.png");
+//		String s = generateCaptcha(fos);
+//		System.out.println(s);
+//		fos.close();
+//
+//	}
 }

@@ -57,9 +57,9 @@ public class ImageGeo {
 		System.out.println(filename + ": (" + lat + ", " + lon + ")");
 	}
 
-	public static void main(String[] args) {
-		ImageGeo imageGeo = new ImageGeo(ImageGeo.class.getResource("IMAG0068.jpg").getFile());
-		System.out.println(imageGeo.lon + "," + imageGeo.lat);
-	}
+//	public static void main(String[] args) {
+//		ImageGeo imageGeo = new ImageGeo(ImageGeo.class.getResource("IMAG0068.jpg").getFile());
+//		System.out.println(imageGeo.lon + "," + imageGeo.lat);
+//	}
 
 }

@@ -97,10 +97,10 @@ public class PinyinUtils {
 		return pybf.toString();
 	}
 	
-	public static void main(String[] args) {
-		String str = "你好，123，世界abc,~!#$_Sdf";
-//		System.out.println(getPinyin(str));
-		System.out.println(getFirstSpell(str));
-		System.out.println(getFullSpell(str));
-	}
+//	public static void main(String[] args) {
+//		String str = "你好，123，世界abc,~!#$_Sdf";
+////		System.out.println(getPinyin(str));
+//		System.out.println(getFirstSpell(str));
+//		System.out.println(getFullSpell(str));
+//	}
 }

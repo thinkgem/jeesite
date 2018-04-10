@@ -81,35 +81,35 @@ public class IdGenerate {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(uuid());
-		System.out.println(nextId());
-		System.out.println(nextCode("8"));
-		System.out.println(nextCode("09"));
-		System.out.println(nextCode("009"));
-		System.out.println(nextCode("E09"));
-		System.out.println(nextCode("EC09"));
-		System.out.println(nextCode("EC0101"));
-		System.out.println(nextCode("EC0109"));
-		System.out.println(nextCode("EC02T03"));
-		System.out.println(nextCode("EC02T099"));
-		System.out.println(nextCode("EC02T100"));
-		System.out.println(nextCode("EC02T10A"));
-//		// 数值型ID重复验证测试
-//		Set<String> set = SetUtils.newHashSet();
-//		try{
-//			for (int i=0; i<100; i++){
-//				String id = String.valueOf(nextId());
-//				if (set.contains(id)){
-//					throw new Exception(id + " exists");
-//				}
-//				set.add(id);
-//				System.out.println(id);
-//				Thread.sleep(100);
-//			}
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+//	public static void main(String[] args) {
+//		System.out.println(uuid());
+//		System.out.println(nextId());
+//		System.out.println(nextCode("8"));
+//		System.out.println(nextCode("09"));
+//		System.out.println(nextCode("009"));
+//		System.out.println(nextCode("E09"));
+//		System.out.println(nextCode("EC09"));
+//		System.out.println(nextCode("EC0101"));
+//		System.out.println(nextCode("EC0109"));
+//		System.out.println(nextCode("EC02T03"));
+//		System.out.println(nextCode("EC02T099"));
+//		System.out.println(nextCode("EC02T100"));
+//		System.out.println(nextCode("EC02T10A"));
+////		// 数值型ID重复验证测试
+////		Set<String> set = SetUtils.newHashSet();
+////		try{
+////			for (int i=0; i<100; i++){
+////				String id = String.valueOf(nextId());
+////				if (set.contains(id)){
+////					throw new Exception(id + " exists");
+////				}
+////				set.add(id);
+////				System.out.println(id);
+////				Thread.sleep(100);
+////			}
+////		}catch (Exception e) {
+////			e.printStackTrace();
+////		}
+//	}
 
 }

@@ -87,16 +87,16 @@ public class ByteUtils {
         return  String.format(formatStr, (size)) + "B";
     }
 
-    public static void main(String[] args) {
-        System.out.println(ByteUtils.formatByteSize(1023));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT * 1023));
-        System.out.println(ByteUtils.formatByteSize(1L * 1023 * 1023 * 1023));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT * UNIT));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT * UNIT * UNIT));
-        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT * UNIT * UNIT * UNIT));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(ByteUtils.formatByteSize(1023));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT * 1023));
+//        System.out.println(ByteUtils.formatByteSize(1L * 1023 * 1023 * 1023));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT * UNIT));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT * UNIT * UNIT));
+//        System.out.println(ByteUtils.formatByteSize(1L * UNIT * UNIT * UNIT * UNIT * UNIT * UNIT));
+//    }
 
 }
