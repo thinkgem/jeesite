@@ -24,8 +24,8 @@ CREATE TABLE [js_gen_table]
 	[function_name] nvarchar(200),
 	[function_name_simple] nvarchar(50),
 	[function_author] nvarchar(50),
-	[gen_base_dir] nvarchar(2000),
-	[options] nvarchar(2000),
+	[gen_base_dir] nvarchar(1000),
+	[options] nvarchar(1000),
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,
 	[update_by] varchar(64) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE [js_gen_table_column]
 	[query_type] varchar(200),
 	[is_edit] char(1),
 	[show_type] varchar(200),
-	[options] nvarchar(2000),
+	[options] nvarchar(1000),
 	PRIMARY KEY ([id])
 );
 

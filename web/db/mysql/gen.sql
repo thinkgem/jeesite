@@ -1,7 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-
-
 /* Drop Tables */
 
 DROP TABLE IF EXISTS js_gen_table_column;
@@ -27,12 +25,12 @@ CREATE TABLE js_gen_table
 	function_name varchar(200) COMMENT '生成功能名',
 	function_name_simple varchar(50) COMMENT '生成功能名（简写）',
 	function_author varchar(50) COMMENT '生成功能作者',
-	gen_base_dir varchar(2000) COMMENT '生成基础路径',
-	options varchar(2000) COMMENT '其它生成选项',
+	gen_base_dir varchar(1000) COMMENT '生成基础路径',
+	options varchar(1000) COMMENT '其它生成选项',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
-	create_date timestamp NOT NULL COMMENT '创建时间',
+	create_date datetime NOT NULL COMMENT '创建时间',
 	update_by varchar(64) NOT NULL COMMENT '更新者',
-	update_date timestamp NOT NULL COMMENT '更新时间',
+	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (table_name)
 ) COMMENT = '代码生成表';
@@ -59,7 +57,7 @@ CREATE TABLE js_gen_table_column
 	query_type varchar(200) COMMENT '查询方式',
 	is_edit char(1) COMMENT '是否编辑字段',
 	show_type varchar(200) COMMENT '表单类型',
-	options varchar(2000) COMMENT '其它生成选项',
+	options varchar(1000) COMMENT '其它生成选项',
 	PRIMARY KEY (id)
 ) COMMENT = '代码生成表列';
 

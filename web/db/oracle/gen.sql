@@ -24,8 +24,8 @@ CREATE TABLE js_gen_table
 	function_name nvarchar2(200),
 	function_name_simple nvarchar2(50),
 	function_author nvarchar2(50),
-	gen_base_dir nvarchar2(2000),
-	options nvarchar2(2000),
+	gen_base_dir nvarchar2(1000),
+	options nvarchar2(1000),
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
 	update_by varchar2(64) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE js_gen_table_column
 	query_type varchar2(200),
 	is_edit char(1),
 	show_type varchar2(200),
-	options nvarchar2(2000),
+	options nvarchar2(1000),
 	PRIMARY KEY (id)
 );
 
