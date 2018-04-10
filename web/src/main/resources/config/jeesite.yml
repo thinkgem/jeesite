@@ -108,17 +108,18 @@ jdbc:
 #  timeout: 2000
 #  password: 1234
 #  database: 0
+#  clientName: ~
 #  
 #  # Redis 连接池配置
 #  pool:
 #    maxIdle: 3
 #    maxTotal: 20
-#  
-#  # 定义Key的前缀标识
-#  keyPrefix: ${jdbc.tablePrefix}
 #
 #  # 是否启用Redis系统缓存及会话
 #  cacheAndSession: false
+#  
+#  # 定义Key的前缀标识
+#  keyPrefix: ${jdbc.tablePrefix}
 
 #============================#
 #===== System settings ======#
@@ -379,7 +380,7 @@ jdbc:
 #  #设置允许上传的文件后缀
 #  imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,
 #  mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
-#  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,
+#  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.ipa,.apk,
 #  
 #  #允许上传的文件内容类型（图片、word、excel、ppt）防止修改后缀恶意上传文件（默认不启用验证）
 ##  allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
