@@ -16,4 +16,4 @@ echo "\n[信息] 您真的确认继续吗？否则请关闭窗口。（1）\n"
 read -s -n1 -p "请按任意键继续 ... "
 
 cd ..
-mvn test -Dtest=com.jeesite.test.InitCoreData,com.jeesite.test.InitGenData
+mvn test -Dtest=com.jeesite.test.InitCoreData,com.jeesite.test.InitGenData -U
