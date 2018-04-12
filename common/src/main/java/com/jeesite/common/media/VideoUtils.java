@@ -438,9 +438,7 @@ public class VideoUtils {
 				BufferedReader br = new BufferedReader(new InputStreamReader(__is));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					if (line != null){
-						log.debug(line);
-					}
+					log.debug(line);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -461,9 +459,7 @@ public class VideoUtils {
 				BufferedReader br = new BufferedReader(new InputStreamReader(__is));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					if (line != null){
-						log.error(line);
-					}
+					log.error(line);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -409,7 +409,7 @@ file:
   # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
   uploadPath: '{yyyy}{MM}/'
   
-  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等。
+  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等，此设置会覆盖 spring.http.multipart.maxFileSize 设置
   maxFileSize: 500*1024*1024
   
   #设置允许上传的文件后缀

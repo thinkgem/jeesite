@@ -74,10 +74,12 @@ public class CodeStatistic {
 	 * @param f
 	 */
 	private static void count(File f) {
+		FileReader fr = null;
 		BufferedReader br = null;
 		boolean flag = false;
 		try {
-			br = new BufferedReader(new FileReader(f));
+			fr = new FileReader(f);
+			br = new BufferedReader(fr);
 			String line = "";
 			while ((line = br.readLine()) != null) {
 				line = line.trim(); // 除去注释前的空格
@@ -109,6 +111,14 @@ public class CodeStatistic {
 				try {
 					br.close();
 					br = null;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (fr != null){
+				try {
+					fr.close();
+					fr = null;
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

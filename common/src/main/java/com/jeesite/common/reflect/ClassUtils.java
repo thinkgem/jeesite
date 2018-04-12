@@ -244,8 +244,9 @@ public class ClassUtils {
 			if (test.matches(type)) {
 				matches.add((Class<?>) type);
 			}
-		} catch (Throwable t) {
-			log.warn("Could not examine class '" + fqn + "'" + " due to a " + t.getClass().getName() + " with message: " + t.getMessage());
+		} catch (Exception t) {
+			log.warn("Could not examine class '" + fqn + "'" + " due to a " 
+					+ t.getClass().getName() + " with message: " + t.getMessage());
 		}
 	}
 }
@@ -682,8 +683,12 @@ class DefaultVFS extends VFS {
 			// Failure to read the stream means this is not a JAR
 		} finally {
 			try {
-				is.close();
-			} catch (Exception e) {}
+				if (is != null){
+					is.close();
+				}
+			} catch (Exception e) {
+				
+			}
 		}
 
 		return false;

@@ -849,7 +849,7 @@ public class DiffMatchPatch {
         thisDiff = pointer.next();
       }
     }
-    while (thisDiff != null) {
+    while (prevDiff != null && thisDiff != null) { //  while (thisDiff != null) {   ThinkGem
       if (prevDiff.operation == Operation.DELETE &&
           thisDiff.operation == Operation.INSERT) {
         String deletion = prevDiff.text;

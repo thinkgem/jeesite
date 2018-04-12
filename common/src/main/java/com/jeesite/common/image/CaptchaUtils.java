@@ -39,9 +39,9 @@ public class CaptchaUtils {
 	private static MarbleRippleFilterFactory mrff; 	// 大理石
 	
 	private static void initialize(){
-		if (ccs == null || true){
+		if (ccs == null){
         	synchronized (CaptchaUtils.class) {
-        		if (ccs == null || true){
+        		if (ccs == null){
         			// 配置初始化
 	            	ccs = new ConfigurableCaptchaService();
 	            	

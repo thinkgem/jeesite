@@ -110,28 +110,45 @@ public abstract class ExcelWriter {
 	 * @param entry the name of the sheet entry to substitute, e.g. xl/worksheets/sheet1.xml
 	 * @param out the stream to write the result to
 	 */
-	@SuppressWarnings("resource")
 	private static void substitute(File zipfile, File tmpfile, String entry,
 			OutputStream out) throws IOException {
-		ZipFile zip = new ZipFile(zipfile);
-		ZipOutputStream zos = new ZipOutputStream(out);
-
-		@SuppressWarnings("unchecked")
-		Enumeration<ZipEntry> en = (Enumeration<ZipEntry>) zip.entries();
-		while (en.hasMoreElements()) {
-			ZipEntry ze = en.nextElement();
-			if (!ze.getName().equals(entry)) {
-				zos.putNextEntry(new ZipEntry(ze.getName()));
-				InputStream is = zip.getInputStream(ze);
-				copyStream(is, zos);
+		ZipFile zip = null;
+		ZipOutputStream zos = null;
+		InputStream is = null;
+		try{
+			zip = new ZipFile(zipfile);
+			zos = new ZipOutputStream(out);
+			@SuppressWarnings("unchecked")
+			Enumeration<ZipEntry> en = (Enumeration<ZipEntry>) zip.entries();
+			while (en.hasMoreElements()) {
+				ZipEntry ze = en.nextElement();
+				if (!ze.getName().equals(entry)) {
+					zos.putNextEntry(new ZipEntry(ze.getName()));
+					InputStream is2 = null;
+					try{
+						is2 = zip.getInputStream(ze);
+						copyStream(is2, zos);
+					}finally {
+						if (is2 != null){
+							is2.close();
+						}
+					}
+				}
+			}
+			zos.putNextEntry(new ZipEntry(entry));
+			is = new FileInputStream(tmpfile);
+			copyStream(is, zos);
+		}finally {
+			if (is != null){
 				is.close();
 			}
+			if (zos != null){
+				zos.close();
+			}
+			if (zip != null){
+				zip.close();
+			}
 		}
-		zos.putNextEntry(new ZipEntry(entry));
-		InputStream is = new FileInputStream(tmpfile);
-		copyStream(is, zos);
-		is.close();
-		zos.close();
 	}
 
 	private static void copyStream(InputStream in, OutputStream out)
