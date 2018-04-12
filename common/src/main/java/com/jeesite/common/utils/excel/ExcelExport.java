@@ -18,7 +18,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Comment;
@@ -37,11 +36,13 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.reflect.ReflectUtils;
 import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
-import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
+import com.jeesite.common.utils.excel.annotation.ExcelFields;
 
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
@@ -474,7 +475,7 @@ public class ExcelExport {
 //			}
 		} catch (Exception ex) {
 			log.info("Set cell value ["+row.getRowNum()+","+column+"] error: " + ex.toString());
-			cell.setCellValue(val.toString());
+			cell.setCellValue(ObjectUtils.toString(val));
 		}
 		return cell;
 	}

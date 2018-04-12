@@ -221,8 +221,12 @@ public class WordExport {
 			e.printStackTrace();
 		} finally {
 			try {
-				fos.flush();
-				fos.close();
+				if (fos != null){
+					fos.flush();
+				}
+				if (fos != null){
+					fos.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
