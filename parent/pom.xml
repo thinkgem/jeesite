@@ -67,10 +67,10 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<showWarnings>true</showWarnings>
-					<compilerArguments>
+<!-- 					<compilerArguments> -->
 <!-- 						<verbose /> 输出有关编译器正在执行的操作的消息 -->
-						<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
-					</compilerArguments>
+<!-- 						<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath> -->
+<!-- 					</compilerArguments> -->
 				</configuration>
 			</plugin>
 				
