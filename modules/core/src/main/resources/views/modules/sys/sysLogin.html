@@ -32,7 +32,7 @@
 					<% } %>
 				</select>
 			</div>
-			<% }  -->*/%>
+			<% } -->*/%>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
 				<#form:validcode name="validCode" isRequired="true" isRemote="true" isLazy="false"/>
 			</div>
@@ -55,6 +55,23 @@
 				<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.registerUser'))){ %>
 				<a href="${ctxPath}/account/registerUser" class="pull-right">注册账号</a><% } %>
 				<a href="${ctxPath}/account/forgetPwd" class="pull-left">忘记密码</a>
+				<%
+				var langTypeList = @DictUtils.getDictList('sys_lang_type');
+				if (langTypeList.~size > 1){
+				%>
+				<div class="dropdown pull-right">
+					<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" title="语言切换">
+						<i class="fa icon-globe"></i> ${@DictUtils.getDictLabel('sys_lang_type', lang(), 'zh_CN')}
+					</a>
+					<ul class="dropdown-menu">
+						<li class="mt5"></li>
+						<% for(var dict in langTypeList){ %>
+							<li><a href="${ctxPath}/lang/${dict.dictValue}">${dict.dictLabel}</a></li>
+						<% } %>
+						<li class="mt10"></li>
+					</ul>
+				</div>
+				<% } %>
 			</div>
 		</div>
 	</div>
