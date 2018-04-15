@@ -30,8 +30,6 @@ import com.jeesite.common.shiro.session.SessionDAO;
 import com.jeesite.common.shiro.session.SessionManager;
 import com.jeesite.common.shiro.web.ShiroFilterFactoryBean;
 import com.jeesite.common.shiro.web.WebSecurityManager;
-import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.UserService;
 
 /**
  * Shiro配置
@@ -54,13 +52,10 @@ public class ShiroConfig {
 	 * 系统安全认证实现类
 	 */
 	@Bean
-	public AuthorizingRealm authorizingRealm(SessionDAO sessionDAO, UserService userService,
-			EmpUserService empUserService, CasOutHandler casOutHandler) {
+	public AuthorizingRealm authorizingRealm(SessionDAO sessionDAO, CasOutHandler casOutHandler) {
 		AuthorizingRealm bean = new AuthorizingRealm();
 		bean.setCachingEnabled(false);
 		bean.setSessionDAO(sessionDAO);
-		bean.setUserService(userService);
-		bean.setEmpUserService(empUserService);
 		bean.setCasOutHandler(casOutHandler);
 		bean.setCasServerUrl(Global.getProperty("shiro.casServerUrl"));
 		bean.setCasServerCallbackUrl(Global.getProperty("shiro.casClientUrl") + Global.getAdminPath() + "/login-cas");
