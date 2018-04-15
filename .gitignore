@@ -2,7 +2,7 @@
 **/target
 **/webapp/userfiles
 **/WEB-INF/classes
-**/logs/log*.log
+**/logs/*.log*
 
 .classpath
 .project
