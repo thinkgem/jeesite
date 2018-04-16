@@ -10,10 +10,20 @@
 ;!function(window, undefined){
 "use strict";
 
-var messages;
-var lang = window.lang || "zh_CN";
-if (lang == 'en'){
-	messages = {
+var i18n = {
+	btnOk: '确定',
+	btnCancel: '取消',
+	title: '信息',
+	promptTipA: '最多输入',
+	promptTipB: '个字符',
+	noPicture: '没有图片',
+	photoError: '当前图片地址异常<br>是否继续查看下一张？',
+	photoNextPage: '下一张',
+	photoClose: '不看了'
+};
+
+if (window.lang == 'en'){
+	i18n = {
 		btnOk: 'Ok',
 		btnCancel: 'Cancle',
 		title: 'Information',
@@ -23,18 +33,6 @@ if (lang == 'en'){
 		photoError: 'Current image address error.<br>Next slide?',
 		photoNextPage: 'The next',
 		photoClose: 'Close'
-	};
-}else{
-	messages = {
-		btnOk: '确定',
-		btnCancel: '取消',
-		title: '信息',
-		promptTipA: '最多输入',
-		promptTipB: '个字符',
-		noPicture: '没有图片',
-		photoError: '当前图片地址异常<br>是否继续查看下一张？',
-		photoNextPage: '下一张',
-		photoClose: '不看了'
 	};
 }
 
@@ -46,7 +44,7 @@ var isLayui = window.layui && layui.define, $, win, ready = {
   }(),
 
   config: {}, end: {}, minIndex: 0, minLeft: [],
-  btn: [messages.btnOk, messages.btnCancel],
+  btn: [i18n.btnOk, i18n.btnCancel],
 
   //五种原始层模式
   type: ['dialog', 'page', 'iframe', 'loading', 'tips']
@@ -212,7 +210,7 @@ Class.pt.config = {
   shade: 0.3,
   fixed: true,
   move: doms[1],
-  title: messages.title,
+  title: i18n.title,
   offset: 'auto',
   area: 'auto',
   closeBtn: 1,
@@ -1022,7 +1020,7 @@ layer.prompt = function(options, yes){
   
   return layer.open($.extend({
     type: 1
-    ,btn: [messages.btnOk,messages.btnCancel]
+    ,btn: [i18n.btnOk,i18n.btnCancel]
     ,content: content
     ,skin: 'layui-layer-prompt' + skin('prompt')
     ,maxWidth: win.width()
@@ -1037,7 +1035,7 @@ layer.prompt = function(options, yes){
       if(value === ''){
         prompt.focus();
       } else if(value.length > (options.maxlength||500)) {
-        layer.tips(messages.promptTipA + (options.maxlength || 500) + messages.promptTipB, prompt, {tips: 1});
+        layer.tips(i18n.promptTipA + (options.maxlength || 500) + i18n.promptTipB, prompt, {tips: 1});
       } else {
         yes && yes(value, index, prompt);
       }
@@ -1289,9 +1287,9 @@ layer.photos = function(options, loop, key){
     }, options));
   }, function(){
     layer.close(dict.loadi);
-    layer.msg(messages.photoError, {
+    layer.msg(i18n.photoError, {
       time: 30000, 
-      btn: [messages.photoNextPage, messages.photoClose], 
+      btn: [i18n.photoNextPage, i18n.photoClose], 
       yes: function(){
         data.length > 1 && dict.imgnext(true,true);
       }

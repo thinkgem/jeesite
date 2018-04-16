@@ -1,13 +1,13 @@
 <section class="sidebar">
 	<div class="user-panel">
 		<div class="pull-left image">
-			<img data-href="${ctx}/sys/user/info" data-title="个人中心" class="addTabPage img-circle"
+			<img data-href="${ctx}/sys/user/info" data-title="${text('个人中心')}" class="addTabPage img-circle"
 				src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}">
 		</div>
 		<div class="pull-left info">
 			<p>${user.userName}</p>
-			<a href="javascript:"><i class="fa fa-circle text-success"></i> 在线</a>
-			<a href="${ctx}/logout"><i class="fa fa-sign-out text-danger"></i> 注销</a>
+			<a href="javascript:"><i class="fa fa-circle text-success"></i> ${text('在线')}</a>
+			<a href="${ctx}/logout"><i class="fa fa-sign-out text-danger"></i> ${text('注销')}</a>
 		</div>
 	</div>
 	<%/*<!--%>

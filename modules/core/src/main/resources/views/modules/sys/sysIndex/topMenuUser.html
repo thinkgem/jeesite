@@ -6,20 +6,20 @@
 	<ul class="dropdown-menu">
 		<li class="mt5">
 			<a id="userInfo" href="javascript:" data-href="${ctx}/sys/user/info" class="addTabPage">
-			<i class="fa fa-user"></i> 个人中心</a>
+			<i class="fa fa-user"></i> ${text('个人中心')}</a>
 		</li>
 		<li>
 			<a id="modifyPassword" href="javascript:" data-href="${ctx}/sys/user/info?op=pwd" class="addTabPage">
-			<i class="fa fa-key"></i> 修改密码</a>
+			<i class="fa fa-key"></i> ${text('修改密码')}</a>
 		</li>
 		<li class="divider"></li>
 		<li>
 			<a href="${ctx}/logout">
-			<i class="fa fa-sign-out"></i> 退出登录</a>
+			<i class="fa fa-sign-out"></i> ${text('退出登录')}</a>
 		</li>
 		<% if(user.superAdmin){ %>
 			<li class="divider"></li>
-			<li class="dropdown-header mb5">系统切换：</li>
+			<li class="dropdown-header mb5">${text('系统切换：')}</li>
 			<% var menuSysCode = @UserUtils.getLoginInfo().getParam('sysCode', 'default'); %>
 			<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
 				<li>

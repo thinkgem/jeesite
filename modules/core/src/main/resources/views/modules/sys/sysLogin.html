@@ -11,18 +11,18 @@
 	<div class="login-box-body">
 		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post">
 			<div class="form-group has-feedback">
-				<span class="glyphicon glyphicon-user form-control-feedback" title="登录账号"></span>
+				<span class="glyphicon glyphicon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
-					data-msg-required="请填写登录账号." placeholder="登录账号"
+					data-msg-required="${text('请填写登录账号.')}" placeholder="${text('登录账号')}"
 					value="${cookie('rememberUserCode')}"/>
 			</div>
 			<div class="form-group has-feedback">
 				<span class="glyphicon glyphicon-lock form-control-feedback"
-					title="登录密码，鼠标按下显示密码"
+					title="${text('登录密码，鼠标按下显示密码')}"
 					onmousedown="$('#password').attr('type','text')"
 					onmouseup="$('#password').attr('type','password')"></span>
 				<#form:input type="password" name="password" class="form-control required"
-					data-msg-required="请填写登录密码." placeholder="登录密码" autocomplete="off"/>
+					data-msg-required="${text('请填写登录密码.')}" placeholder="${text('登录密码')}" autocomplete="off"/>
 			</div>
 			<%/*<!-- if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
 			<div class="form-group has-feedback">
@@ -38,29 +38,31 @@
 			</div>
 			<div class="form-group">
 				<div class="mt5 icheck">
-					<label title="公共场所慎用,下次不需要再填写帐号"><input type="checkbox"
+					<label title="${text('公共场所慎用,下次不需要再填写帐号')}"><input type="checkbox"
 						name="rememberUserCode"${isNotBlank(cookie('rememberUserCode'))?' checked':''}
-						class="form-control" data-style="square-blue"> 记住账号</label> &nbsp; 
-					<label title="公共场所慎用,下次不需要再填写帐号和密码"><input type="checkbox"
+						class="form-control" data-style="square-blue"> ${text('记住账号')}</label> &nbsp; 
+					<label title="${text('公共场所慎用,下次不需要再填写帐号和密码')}"><input type="checkbox"
 						name="rememberMe"${isNotBlank(cookie('rememberMe'))?' checked':''}
-						class="form-control" data-style="square-blue"> 记住密码</label>
+						class="form-control" data-style="square-blue"> ${text('记住密码')}</label>
 				</div>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-block btn-flat">立即登录</button>
+				<button type="submit" class="btn btn-primary btn-block btn-flat"
+					id="btnSubmit" data-loading="${text('登录验证成功，正在进入...')}"
+					data-login-valid="${text('正在验证登录，请稍后...')}">${text('立即登录')}</button>
 			</div>
 		</#form:form>
 		<div class="row">
 			<div class="col-xs-12">
 				<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.registerUser'))){ %>
-				<a href="${ctxPath}/account/registerUser" class="pull-right">注册账号</a><% } %>
-				<a href="${ctxPath}/account/forgetPwd" class="pull-left">忘记密码</a>
+				<a href="${ctxPath}/account/registerUser" class="pull-right">${text('注册账号')}</a><% } %>
+				<a href="${ctxPath}/account/forgetPwd" class="pull-left">${text('忘记密码')}</a>
 				<%
 				var langTypeList = @DictUtils.getDictList('sys_lang_type');
 				if (langTypeList.~size > 1){
 				%>
 				<div class="dropdown pull-right">
-					<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" title="语言切换">
+					<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
 						<i class="fa icon-globe"></i> ${@DictUtils.getDictLabel('sys_lang_type', lang(), 'zh_CN')}
 					</a>
 					<ul class="dropdown-menu">
@@ -76,7 +78,7 @@
 		</div>
 	</div>
 	<div class="login-copyright">
-		版权所有 &copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+		&copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
 	</div>
 </div>
 <% } %>

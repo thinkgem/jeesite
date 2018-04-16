@@ -30,13 +30,13 @@ else {
 	<div class="headline text-yellow">403</div>
 	<div class="error-content">
 		<h3><i class="fa fa-warning text-yellow"></i> ${message}</h3>
-		<p>很抱歉，您没有权限访问此页面，若有疑问请联系管理员。</p>
+		<p>${text('sys.error.403.message.p1')}</p>
 		<button type="button" class="btn btn-warning btn-sm" onclick="history.go(-1);"><i
 			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button>
 	</div>
 	<div class="copyright">
 		<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
-		版权所有 &copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+		&copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
 	</div>
 </div>
 <% } %>

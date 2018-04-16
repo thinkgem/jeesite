@@ -21,7 +21,7 @@
 				<div class="form-group">
 					<label class="control-label">字典标签：</label>
 					<div class="control-inline">
-						<#form:input path="dictLabel" maxlength="100" class="form-control"/>
+						<#form:input path="dictLabelOrig" maxlength="100" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -63,7 +63,7 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'字典标签', name:'dictLabel', index:'a.dict_label', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+		{header:'字典标签', name:'dictLabelOrig', index:'a.dict_label', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/dictData/form?dictCode='+row.dictCode+'" class="btnList" data-title="编辑字典数据">'+(val||row.id)+'</a>';
 		}},
 		{header:'字典键值', name:'dictValue', index:'a.dict_value', width:200, align:"left"},
@@ -94,7 +94,7 @@ $('#dataGrid').dataGrid({
 	],
 	treeGrid: true,			// 启用树结构表格
 	defaultExpandLevel: 0,	// 默认展开的层次
-	expandNodeClearPostData: 'dictLabel,dictValue,dictType,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+	expandNodeClearPostData: 'dictLabelOrig,dictValue,dictType,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

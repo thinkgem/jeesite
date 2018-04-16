@@ -9,7 +9,7 @@ var themeName = @Global.getConfig('web.view.themeName', 'default');
 %>
 <% print('<'+'!DOC'+'TYPE html'+'>'); %>
 <% print('<'+'html'+'><'+'head'+'>'); %>
-<% include('/include/head.html', {title: title!}){} %>
+<% include('/include/head.html', {title: text(title!)}){} %>
 <% include('/themes/'+themeName+'/include/header.html', {libs: libs!}){} %>
 </head><body class="hold-transition ${bodyClass!}">
 <% if (!@ListUtils.inString('layout', libs!)){ %>

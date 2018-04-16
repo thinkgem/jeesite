@@ -23,10 +23,8 @@ var bodyClass = 'fixed noscroll2 sidebar-mini ' + sidebarCollapse;
 	<div id="tabpanel"></div>
 </div>
 <% } %>
-<script>
-var desktopUrl = '${ctx}${@Global.getConfig("sys.index.desktopUrl", "/desktop")}',
-modifyPasswordTip = '${modifyPasswordTip!}';
-</script>
+<div id="modifyPasswordTip" class="hide" data-message="${modifyPasswordTip!}"></div>
+<div id="desktopTabPage" class="hide" data-title="${text('仪表盘')}" data-url="${ctx}${@Global.getConfig('sys.index.desktopUrl', '/desktop')}"></div>
 <script src="${ctxStatic}/jquery-toastr/2.0/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/jquery-plugins/jquery.slimscroll.js"></script>
 <script src="${ctxStatic}/modules/sys/sysIndex.js?${_version}"></script>

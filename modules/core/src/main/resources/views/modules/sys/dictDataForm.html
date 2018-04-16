@@ -18,8 +18,8 @@
 							<label class="control-label col-sm-4">上级字典：</label>
 							<div class="col-sm-8">
 								<#form:treeselect id="parent" title="上级字典"
-									path="parent.id" labelPath="parent.dictLabel" 
-									url="${ctx}/sys/dictData/treeData?excludeCode=${dictData.id}&dictType=${dictData.dictType}"
+									path="parent.id" labelPath="parent.dictLabelOrig" 
+									url="${ctx}/sys/dictData/treeData?excludeCode=${dictData.id}&dictType=${dictData.dictType}&isShowNameOrig=true"
 									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
@@ -33,7 +33,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required ">*</span> 字典标签：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="dictLabel" maxlength="100" class="form-control required "/>
+								<#form:input path="dictLabelOrig" maxlength="100" class="form-control required "/>
 							</div>
 						</div>
 					</div>
