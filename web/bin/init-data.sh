@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-
+# /**
+#  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+#  *
+#  * Author: ThinkGem@163.com
+#  * 
+#  */
 echo ""
 echo "[信息] 初始化数据库，请谨慎操作。"
 read -s -n1 -p "请按任意键继续 ... "
@@ -24,4 +29,4 @@ read -s -n1 -p "请按任意键继续 ... "
 echo ""
 
 cd ..
-exec mvn test -Dtest=com.jeesite.test.InitCoreData,com.jeesite.test.InitGenData
+mvn test -Dtest=com.jeesite.test.InitCoreData,com.jeesite.test.InitGenData

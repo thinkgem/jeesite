@@ -13,7 +13,7 @@ echo.
 %~d0
 cd %~dp0
 
-cd ../
+cd ..
 call mvn clean deploy -Dmaven.test.skip=true -Pdeploy
 
 pause

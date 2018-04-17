@@ -7,13 +7,11 @@ rem  */
 echo.
 echo [信息] 部署工程版本到Nexus服务器。
 echo.
-pause
-echo.
 
 %~d0
 cd %~dp0
 
-cd ../
+cd ..
 call mvn clean deploy -Dmaven.test.skip=true -Pdeploy
 
 pause

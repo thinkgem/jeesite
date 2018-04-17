@@ -25,6 +25,12 @@
 		
 		<dependency>
 			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-common</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-framework</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>

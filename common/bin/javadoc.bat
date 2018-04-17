@@ -7,13 +7,11 @@ rem  */
 echo.
 echo [信息] 编译工程Javadoc，生成jar包文件。
 echo.
-pause
-echo.
 
 %~d0
 cd %~dp0
 
-cd ../
+cd ..
 call mvn clean javadoc:jar
 
 pause
