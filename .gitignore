@@ -15,3 +15,5 @@
 
 .DS_Store
 Thumbs.db
+
+*.epoch
