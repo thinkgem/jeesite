@@ -16,60 +16,60 @@
 			<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">账号：</label>
+					<label class="control-label">${text('账号')}：</label>
 					<div class="control-inline">
 						<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">昵称：</label>
+					<label class="control-label">${text('昵称')}：</label>
 					<div class="control-inline">
 						<#form:input path="userName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">邮箱：</label>
+					<label class="control-label">${text('邮箱')}：</label>
 					<div class="control-inline">
 						<#form:input path="email" maxlength="300" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">手机：</label>
+					<label class="control-label">${text('手机')}：</label>
 					<div class="control-inline">
 						<#form:input path="mobile" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">电话：</label>
+					<label class="control-label">${text('电话')}：</label>
 					<div class="control-inline">
 						<#form:input path="phone" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-row"></div>
 				<div class="form-group">
-					<label class="control-label">姓名：</label>
+					<label class="control-label">${text('姓名')}：</label>
 					<div class="control-inline">
 						<#form:input path="refName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">机构：</label>
+					<label class="control-label">${text('机构')}：</label>
 					<div class="control-inline width-90">
-						<#form:treeselect id="office" title="机构选择"
+						<#form:treeselect id="office" title="${text('机构选择')}"
 								path="employee.office.officeCode" labelPath="employee.office.officeName" 
 								url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">公司：</label>
+					<label class="control-label">${text('公司')}：</label>
 					<div class="control-inline width-90">
-						<#form:treeselect id="company" title="公司选择"
+						<#form:treeselect id="company" title="${text('公司选择')}"
 								path="employee.company.companyCode" labelPath="employee.company.companyName" 
 								url="${ctx}/sys/company/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">岗位：</label>
+					<label class="control-label">${text('岗位')}：</label>
 					<div class="control-inline width-90">
 						<#form:select name="employee.postCode" items="${postList}"
 							itemLabel="postName" itemValue="postCode" blankOption="true" class="form-control"/>
@@ -97,17 +97,17 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'登录账号', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
+		{header:'${text('登录账号')}', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text('编辑用户')}">'+(val||row.id)+'</a>';
 		}},
-		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
-		{header:'用户姓名', name:'refName', index:'a.ref_name', width:200, align:"center"},
-		{header:'归属机构', name:'employee.office.officeName', index:'o.office_name', width:200, align:"center"},
-		{header:'归属公司', name:'employee.company.companyName', index:'c.company_name', width:200, align:"center"},
-		{header:'电子邮箱', name:'email', index:'a.email', width:200, align:"center"},
-		{header:'手机号码', name:'mobile', index:'a.mobile', width:200, align:"center"},
-		{header:'办公电话', name:'phone', index:'a.phone', width:200, align:"center"},
-		{header:'更新时间', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text('用户昵称')}', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'${text('员工姓名')}', name:'refName', index:'a.ref_name', width:200, align:"center"},
+		{header:'${text('归属机构')}', name:'employee.office.officeName', index:'o.office_name', width:200, align:"center"},
+		{header:'${text('归属公司')}', name:'employee.company.companyName', index:'c.company_name', width:200, align:"center"},
+		{header:'${text('电子邮箱')}', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'${text('手机号码')}', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'${text('办公电话')}', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'${text('更新时间')}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
 		{header:'${text('状态')}', name:'status', index:'a.status', width:140, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},

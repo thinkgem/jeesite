@@ -135,7 +135,7 @@ for (var i=0; i<dataScopes.length; i++){
 		continue;
 	}
  	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
- 		key: dataScope.ctrlType, label: dataScope.ctrlName}));
+ 		key: dataScope.ctrlType, label: dataScope.ctrlName_${lang()} || dataScope.ctrlName}));
 	$.ajax({
 		type: 'POST',
 		url: "${ctx}" + dataScope.ctrlDataUrl,

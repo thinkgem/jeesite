@@ -142,7 +142,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, empUser.getLoginCode()/*, null*/))) {
-			return renderResult(Global.FALSE, "保存用户'" + empUser.getLoginCode() + "'失败，登录账号已存在");
+			return renderResult(Global.FALSE, text("保存用户'{0}'失败，登录账号已存在", empUser.getLoginCode()));
 		}
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)){
 			empUser.setUserType(User.USER_TYPE_EMPLOYEE);
@@ -152,7 +152,7 @@ public class EmpUserController extends BaseController {
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH)){
 			userService.saveAuth(empUser);
 		}
-		return renderResult(Global.TRUE, "保存用户'" + empUser.getUserName() + "'成功");
+		return renderResult(Global.TRUE, text("保存用户''{0}''成功", empUser.getUserName()));
 	}
 
 //	/**
@@ -244,11 +244,11 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (empUser.getCurrentUser().getUserCode().equals(empUser.getUserCode())) {
-			return renderResult(Global.FALSE, "停用用户失败, 不允许停用当前用户");
+			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
 		}
 		empUser.setStatus(User.STATUS_DISABLE);
 		userService.updateStatus(empUser);
-		return renderResult(Global.TRUE, "停用用户成功");
+		return renderResult(Global.TRUE, text("停用用户成功"));
 	}
 	
 	/**
@@ -268,7 +268,7 @@ public class EmpUserController extends BaseController {
 		}
 		empUser.setStatus(User.STATUS_NORMAL);
 		userService.updateStatus(empUser);
-		return renderResult(Global.TRUE, "启用用户成功");
+		return renderResult(Global.TRUE, text("启用用户成功"));
 	}
 	
 	/**
@@ -287,7 +287,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		userService.updatePassword(empUser.getUserCode(), null);
-		return renderResult(Global.TRUE, "重置用户密码成功");
+		return renderResult(Global.TRUE, text("重置用户密码成功"));
 	}
 
 	/**
@@ -306,10 +306,10 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (empUser.getCurrentUser().getUserCode().equals(empUser.getUserCode())) {
-			return renderResult(Global.FALSE, "删除用户失败, 不允许删除当前用户");
+			return renderResult(Global.FALSE, text("删除用户失败，不允许删除当前用户"));
 		}
 		empUserService.delete(empUser);
-		return renderResult(Global.TRUE, "删除用户'" + empUser.getUserName() + "'成功！");
+		return renderResult(Global.TRUE, text("删除用户'{0}'成功", empUser.getUserName()));
 	}
 	
 	/** 
@@ -341,7 +341,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		userService.saveAuthDataScope(empUser);
-		return renderResult(Global.TRUE, "角色授权数据权限成功");
+		return renderResult(Global.TRUE, text("用户分配数据权限成功"));
 	}
 
 	/**

@@ -166,6 +166,7 @@ jdbc:
 #      moduleCode: "core",
 #      ctrlPermi: "0",
 #      ctrlName: "机构权限",
+#      ctrlName_en: "Office",
 #      ctrlType: "Office",
 #      ctrlDataUrl: "/sys/office/treeData",
 #      chkboxType: {"Y":"ps","N":"ps"},
@@ -174,6 +175,7 @@ jdbc:
 #    },{
 #      moduleCode: "core",
 #      ctrlName: "公司权限",
+#      ctrlName_en: "Company",
 #      ctrlType: "Company",
 #      ctrlPermi: "0",
 #      ctrlDataUrl: "/sys/company/treeData",
@@ -183,6 +185,7 @@ jdbc:
 #    },{
 #      moduleCode: "core",
 #      ctrlName: "角色权限",
+#      ctrlName_en: "Role",
 #      ctrlType: "Role",
 #      ctrlPermi: "2",
 #      ctrlDataUrl: "/sys/role/treeData",

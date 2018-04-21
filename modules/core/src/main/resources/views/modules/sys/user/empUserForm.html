@@ -16,14 +16,14 @@
 			<div class="box-body">
 				<% if(op=='auth'){ %><br/><% } %>
 				<% if(op == 'add' || op == 'edit') { %>
-				<div class="form-unit">基本信息</div>
+				<div class="form-unit">${text('基本信息')}</div>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 归属机构：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('归属机构')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="office" title="机构选择"
+								<#form:treeselect id="office" title="${text('机构选择')}"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
 									url="${ctx}/sys/office/treeData" class="required" allowClear="false"/>
 							</div>
@@ -32,9 +32,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 归属公司：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('归属公司')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="company" title="公司选择"
+								<#form:treeselect id="company" title="${text('公司选择')}"
 									path="employee.company.companyCode" labelPath="employee.company.companyName" 
 									url="${ctx}/sys/company/treeData" btnClass="" allowClear="true"/>
 							</div>
@@ -46,20 +46,20 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 登录账号：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('登录账号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:hidden name="oldLoginCode" value="${empUser.loginCode}"/>
 								<#form:input path="loginCode" minlength="4" maxlength="20" readonly="${op=='auth'}"
 									class="form-control required userName"
 									remote="${ctx}/sys/user/checkLoginCode?oldLoginCode=${empUser.loginCode}"
-									data-msg-remote="登录账号已存在"/>
+									data-msg-remote="${text('登录账号已存在')}"/>
 							</div>
 						</div>
 					</div>
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 用户昵称：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('用户昵称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="userName" maxlength="32" readonly="${op=='auth'}" class="form-control required "/>
 							</div>
@@ -71,7 +71,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 电子邮箱：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('电子邮箱')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<div class="input-group">
 									<#form:input path="email" maxlength="300" class="form-control email"/>
@@ -83,7 +83,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 手机号码：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('手机号码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<div class="input-group">
 									<#form:input path="mobile" maxlength="100" class="form-control mobile"/>
@@ -97,7 +97,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 办公电话：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('办公电话')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<div class="input-group">
 									<#form:input path="phone" maxlength="100" class="form-control phone"/>
@@ -109,19 +109,19 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 权重(排序)：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('权重(排序)')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="userWeight" maxlength="8" class="form-control digits" placeholder="权重越大排名越靠前，请填写数字。"/>
+								<#form:input path="userWeight" maxlength="8" class="form-control digits" placeholder="${text('权重越大排名越靠前，请填写数字。')}"/>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="form-unit">详细信息</div>
+				<div class="form-unit">${text('详细信息')}</div>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 员工编号：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('员工编号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="employee.empCode" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control abc"/>
 							</div>
@@ -130,7 +130,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 员工姓名：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('员工姓名')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="employee.empName" maxlength="32" class="form-control "/>
 							</div>
@@ -141,7 +141,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 所在岗位：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('所在岗位')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 							<#form:select multiple="true" path="employee.employeePosts" items="${postList}"
 								itemLabel="postName" itemValue="postCode" class="form-control"/>
@@ -151,7 +151,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 英文名：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('英文名')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="employee.empNameEn" maxlength="32" class="form-control "/>
 							</div>
@@ -162,7 +162,7 @@
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label class="control-label col-sm-2" title="">
-								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
 								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
 							</div>
@@ -171,7 +171,7 @@
 				</div>
 				<% } %>
 				<% if(op == 'add' || op == 'auth') { %>
-				<div class="form-unit">授权角色</div>
+				<div class="form-unit">${text('分配角色')}</div>
 				<div class="pl10 pb20">
 					<table id="roleGrid"></table>
 					<#form:hidden name="userRoleString"/>
@@ -221,8 +221,8 @@ var roleGrid = $("#roleGrid").dataGrid({
 		{name:'ctrlPermi',value:'2'}
 	],
 	columnModel: [
-		{header:'角色名称', name:'name', sortable:false, width:100, align:"center"},
-		{header:'角色编码', name:'id', sortable:false, width:100, align:"center"}  
+		{header:'${text('角色名称')}', name:'name', sortable:false, width:100, align:"center"},
+		{header:'${text('角色编码')}', name:'id', sortable:false, width:100, align:"center"}  
 	],
 	showCheckbox: true,
 	autoGridHeight: function(){

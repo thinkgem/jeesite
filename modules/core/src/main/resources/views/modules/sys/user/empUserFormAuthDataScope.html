@@ -16,7 +16,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 登录账号：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('登录账号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="loginCode" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control required "/>
 							</div>
@@ -25,14 +25,14 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 用户昵称：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('用户昵称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="userName" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control required "/>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="form-unit">授权数据权限</div>
+				<div class="form-unit">${text('数据权限')}</div>
 				<div id="dataScopeTrees"></div>
 				<script id="dataScopeTpl" type="text/template">
 					<div class="pull-left" style="padding:0 15px;min-width:300px;">
@@ -44,9 +44,9 @@
 								</div>
 								<div class="box-tools pull-right" style="top:8px;">
 									<a class="btn btn-box-tool" id="expand_{{d.key}}"
-										value="dataScopeTree_{{d.key}}" >展开</a>/<a
+										value="dataScopeTree_{{d.key}}" >${text('展开')}</a>/<a
 										class="btn btn-box-tool" id="collapse_{{d.key}}"
-										value="dataScopeTree_{{d.key}}" >折叠</a>
+										value="dataScopeTree_{{d.key}}" >${text('折叠')}</a>
 								</div>
 							</div>
 							<div class="box-body">
@@ -135,7 +135,7 @@ for (var i=0; i<dataScopes.length; i++){
 		continue;
 	}
  	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
- 		key: dataScope.ctrlType, label: dataScope.ctrlName}));
+ 		key: dataScope.ctrlType, label: dataScope.ctrlName_${lang()} || dataScope.ctrlName}));
 	$.ajax({
 		type: 'POST',
 		url: "${ctx}" + dataScope.ctrlDataUrl,
