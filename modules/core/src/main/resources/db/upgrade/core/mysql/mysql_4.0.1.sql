@@ -6,6 +6,4 @@ ADD COLUMN `execute_time` decimal(19,0) NULL COMMENT '执行时间' AFTER `brows
 -- 重命名待推送为已完成消息表
 RENAME TABLE ${_prefix}sys_msg_push_wait TO ${_prefix}sys_msg_pushed;
 
--- 更新模块数据库版本
-update ${_prefix}sys_module set current_version = '4.0.1' where module_code = 'core';
 commit;
