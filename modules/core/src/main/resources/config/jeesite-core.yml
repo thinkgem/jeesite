@@ -72,7 +72,7 @@ jdbc:
     # 最大连接数
     maxActive: 20
 
-#  # 多数数据源名称列表，调用方式：DataSourceHolder.setDataSourceName("ds2")
+#  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2
 #  
 #  # 多数据源配置：ds2

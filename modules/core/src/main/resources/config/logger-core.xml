@@ -6,6 +6,8 @@
 	<logger name="org.mybatis.spring.transaction" level="DEBUG" />
 	<logger name="org.apache.catalina.webresources.Cache" level="ERROR" />
 	<logger name="org.springframework.boot.context.embedded" level="INFO" />
+	<logger name="com.atomikos.icatch.config.UserTransactionServiceImp" level="ERROR" />
+	<logger name="com.atomikos.jdbc.AbstractDataSourceBean" level="ERROR" />
 	
 	<logger name="com.jeesite" level="DEBUG" />
 	<logger name="com.jeesite.common.i18n" level="INFO" />

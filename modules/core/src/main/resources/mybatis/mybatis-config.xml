@@ -46,8 +46,8 @@
 	
 	<!-- 插件配置 -->
 	<plugins>
+		<plugin interceptor="com.jeesite.common.mybatis.interceptor.DataSourceInterceptor" />
 		<plugin interceptor="com.jeesite.common.mybatis.interceptor.PaginationInterceptor" />
-<!-- 		<plugin interceptor="com.jeesite.common.mybatis.interceptor.TimerInterceptor" /> -->
     </plugins>
 	
 </configuration>

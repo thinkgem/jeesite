@@ -12,7 +12,6 @@ import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.service.BaseService;
@@ -56,10 +55,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		long endTime = System.currentTimeMillis(); 	// 2、结束时间
 		long executeTime = endTime - beginTime;	// 3、获取执行时间
 		startTimeThreadLocal.remove(); // 用完之后销毁线程变量数据
-
-		// 恢复多数据源参数，使用默认数据源
-		DataSourceHolder.clearDataSourceName();
-
+		
 		// 保存日志
 		LogUtils.saveLog(UserUtils.getUser(), request, handler, ex, null, null, executeTime);
 		

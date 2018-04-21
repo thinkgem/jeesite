@@ -4,6 +4,7 @@
 package com.jeesite.modules.sys.dao;
 
 import com.jeesite.common.dao.CrudDao;
+import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.sys.entity.EmpUser;
 
@@ -12,7 +13,7 @@ import com.jeesite.modules.sys.entity.EmpUser;
  * @author ThinkGem
  * @version 2015-4-24
  */
-@MyBatisDao
+@MyBatisDao(dataSourceName=DataSourceHolder.DEFAULT)
 public interface EmpUserDao extends CrudDao<EmpUser> {
 
 }
