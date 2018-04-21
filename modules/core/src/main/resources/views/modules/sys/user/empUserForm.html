@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa icon-people"></i> ${empUser.isNewRecord ? '新增用户' : op == 'auth' ? '用户授权角色' : '编辑用户'}
+				<i class="fa icon-people"></i> ${text(empUser.isNewRecord ? '新增用户' : op == 'auth' ? '用户分配角色' : '编辑用户')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -23,7 +23,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required ">*</span> 归属机构：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="office" title="部门"
+								<#form:treeselect id="office" title="机构选择"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
 									url="${ctx}/sys/office/treeData" class="required" allowClear="false"/>
 							</div>
@@ -34,7 +34,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 归属公司：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="company" title="公司"
+								<#form:treeselect id="company" title="公司选择"
 									path="employee.company.companyCode" labelPath="employee.company.companyName" 
 									url="${ctx}/sys/company/treeData" btnClass="" allowClear="true"/>
 							</div>
@@ -185,9 +185,9 @@
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
 						<% if (hasPermi('sys:empUser:edit')){ %>
-							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
-						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
 					</div>
 				</div>
 			</div>

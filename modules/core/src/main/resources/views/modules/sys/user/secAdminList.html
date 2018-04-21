@@ -60,7 +60,7 @@
 	</div>
 </div>
 <% var userType = isNotBlank(parameter.userType)?parameter.userType:'employee'; %>
-<div class="hide"><#form:listselect id="userSelect" title="用户"
+<div class="hide"><#form:listselect id="userSelect" title="用户选择"
 	url="${ctx}/sys/user/userSelect?userType=${userType}" allowClear="false" 
 	checkbox="false" itemCode="userCode" itemName="userName"/></div>
 <% } %>

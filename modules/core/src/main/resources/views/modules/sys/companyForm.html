@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-fire"></i> ${company.isNewRecord ? '新增公司' : '编辑公司'}
+				<i class="fa icon-fire"></i> ${text(company.isNewRecord ? '新增公司' : '编辑公司')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -73,7 +73,7 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 归属区域：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="area" title="区域"
+								<#form:treeselect id="area" title="区域选择"
 									path="area.areaCode" labelName="area.areaName" labelValue="${company.area.treeNames!}"
 									url="${ctx}/sys/area/treeData" returnFullName="true"
 									class=" " allowClear="true"/>
@@ -83,9 +83,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 包含部门：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 包含机构：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="companyOfficeList" title="部门"
+								<#form:treeselect id="companyOfficeList" title="机构选择"
 									value="${@ListUtils.extractToString(officeList!, 'officeCode', ',')}"
 									labelValue="${@ListUtils.extractToString(officeList!, 'officeName', ',')}"
 									url="${ctx}/sys/office/treeData" checkbox="true"
@@ -112,9 +112,9 @@
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
 						<% if (hasPermi('sys:company:edit')){ %>
-							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
-						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
 					</div>
 				</div>
 			</div>

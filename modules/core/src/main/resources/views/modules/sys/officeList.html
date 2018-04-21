@@ -3,15 +3,15 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-grid"></i> 机构管理
+				<i class="fa icon-grid"></i> ${text('机构管理')}
 			</div>
 			<div class="box-tools pull-right">
-				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
-				<a href="#" class="btn btn-default" id="btnRefreshTree" title="刷新"><i class="fa fa-refresh"></i> 刷新</a>
-				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="展开一级"><i class="fa fa-angle-double-down"></i> 展开</a>
-				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="折叠全部"><i class="fa fa-angle-double-up"></i> 折叠</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="#" class="btn btn-default" id="btnRefreshTree" title="${text('刷新')}"><i class="fa fa-refresh"></i> ${text('刷新')}</a>
+				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="${text('展开一级')}"><i class="fa fa-angle-double-down"></i> ${text('展开')}</a>
+				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a>
 				<% if(hasPermi('sys:office:edit')){ %>
-					<a href="${ctx}/sys/office/form" class="btn btn-default btnTool" title="新增机构"><i class="fa fa-plus"></i> 新增</a>
+					<a href="${ctx}/sys/office/form" class="btn btn-default btnTool" title="${text('新增机构')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 			</div>
 		</div>
@@ -43,14 +43,14 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">状态：</label>
+					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-60">
 						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm">查询</button>
-					<button type="reset" class="btn btn-default btn-sm">重置</button>
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
 				</div>
 			</#form:form>			
 			<table id="dataGrid"></table>
@@ -64,7 +64,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'机构名称', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="编辑机构">'+(val||row.id)+'</a>';
+			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="${text('编辑机构')}">'+(val||row.id)+'</a>';
 		}},
 		{header:'机构全称', name:'fullName', index:'a.full_name', width:200, align:"left"},
 		{header:'排序号', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
@@ -73,21 +73,21 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'更新时间', name:'updateDate', index:'a.update_date', width:150, align:"center"},
 		{header:'备注信息', name:'remarks', index:'a.remarks', width:200, align:"left"},
-		{header:'状态', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text('状态')}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		{header:'操作', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text('操作')}', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:office:edit')){ %>
-				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="编辑机构"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="${text('编辑机构')}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="停用机构" data-confirm="确认要停用该机构吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="${text('停用机构')}" data-confirm="${text('确认要停用该机构吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
 				}
 				if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="启用机构" data-confirm="确认要启用该机构吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="${text('启用机构')}" data-confirm="${text('确认要启用该机构吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-				actions.push('<a href="${ctx}/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="删除机构" data-confirm="确认要删除该机构及所有子机构吗？" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/sys/office/form?parentCode='+row.id+'" class="btnList" title="新增下级机构"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="${text('删除机构')}" data-confirm="${text('确认要删除该机构及所有子机构吗？')}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/form?parentCode='+row.id+'" class="btnList" title="${text('新增下级机构')}"><i class="fa fa-plus-square"></i></a>&nbsp;');
 			<% } %>
 			return actions.join('');
 		}}

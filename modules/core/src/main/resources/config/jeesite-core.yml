@@ -166,7 +166,7 @@ user:
     [{
       moduleCode: "core",
       ctrlPermi: "0",
-      ctrlName: "部门权限",
+      ctrlName: "机构权限",
       ctrlType: "Office",
       ctrlDataUrl: "/sys/office/treeData",
       chkboxType: {"Y":"ps","N":"ps"},

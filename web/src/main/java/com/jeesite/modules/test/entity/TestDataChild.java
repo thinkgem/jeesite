@@ -35,7 +35,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="test_date", attrName="testDate", label="日期选择"),
 		@Column(name="test_datetime", attrName="testDatetime", label="日期时间"),
 		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
-		@Column(name="test_office_code", attrName="testOffice.officeCode", label="部门选择"),
+		@Column(name="test_office_code", attrName="testOffice.officeCode", label="机构选择"),
 		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
 		@Column(name="test_area_name", attrName="testAreaName", label="区域名称", isQuery=false),
 	}, joinTable={
@@ -46,8 +46,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="testOffice", alias="u13",
 			on="u13.office_code = a.test_office_code", columns={
-				@Column(name="office_code", label="部门编码", isPK=true),
-				@Column(name="office_name", label="部门名称", isQuery=false),
+				@Column(name="office_code", label="机构编码", isPK=true),
+				@Column(name="office_name", label="机构名称", isQuery=false),
 		}),
 	}, orderBy="a.id ASC"
 )
@@ -65,7 +65,7 @@ public class TestDataChild extends DataEntity<TestDataChild> {
 	private Date testDate;		// 日期选择
 	private Date testDatetime;		// 日期时间
 	private User testUser;		// 用户选择
-	private Office testOffice;		// 部门选择
+	private Office testOffice;		// 机构选择
 	private String testAreaCode;		// 区域选择
 	private String testAreaName;		// 区域名称
 	

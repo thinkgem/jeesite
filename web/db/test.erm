@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>0</y>
+	<y>99</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -760,7 +760,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>5d32d32e3e7a7e115fe0ec3dff297801019dcd78</id>
+			<id>e2270df5e0974bf471fdfe36e29bc9a8aa1774cb</id>
 			<length>64</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -771,7 +771,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>部门选择</logical_name>
+			<logical_name>机构选择</logical_name>
 			<physical_name>test_office_code</physical_name>
 			<type>varchar(n)</type>
 		</word>
@@ -1438,7 +1438,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>5d32d32e3e7a7e115fe0ec3dff297801019dcd78</word_id>
+					<word_id>e2270df5e0974bf471fdfe36e29bc9a8aa1774cb</word_id>
 					<id>16121b5aa08fc170883408ec2d0487281a132d9d</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1997,7 +1997,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>5d32d32e3e7a7e115fe0ec3dff297801019dcd78</word_id>
+					<word_id>e2270df5e0974bf471fdfe36e29bc9a8aa1774cb</word_id>
 					<id>23041cb30875514136904ea11043c7ea1924f048</id>
 					<description></description>
 					<unique_key_name></unique_key_name>

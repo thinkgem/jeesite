@@ -74,15 +74,15 @@
 				<div class="form-group">
 					<label class="control-label">用户选择：</label>
 					<div class="control-inline width-120" >
-						<#form:treeselect id="testUser" title="用户"
+						<#form:treeselect id="testUser" title="用户选择"
 							path="testUser.userCode" labelPath="testUser.userName" 
 							url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">部门选择：</label>
+					<label class="control-label">机构选择：</label>
 					<div class="control-inline width-120" >
-						<#form:treeselect id="testOffice" title="部门"
+						<#form:treeselect id="testOffice" title="机构选择"
 							path="testOffice.officeCode" labelPath="testOffice.officeName" 
 							url="${ctx}/sys/office/treeData" allowClear="true"/>
 					</div>
@@ -90,7 +90,7 @@
 				<div class="form-group">
 					<label class="control-label">区域选择：</label>
 					<div class="control-inline width-120" >
-						<#form:treeselect id="testAreaCode" title="区域"
+						<#form:treeselect id="testAreaCode" title="区域选择"
 							path="testAreaCode" labelPath="testAreaName" 
 							url="${ctx}/sys/area/treeData" allowClear="true"/>
 					</div>
@@ -151,7 +151,7 @@ $('#dataGrid').dataGrid({
 		{header:'日期选择', name:'testDate', index:'a.test_date', width:150, align:"center"},
 		{header:'日期时间', name:'testDatetime', index:'a.test_datetime', width:150, align:"center"},
 		{header:'用户选择', name:'testUser.userName', index:'a.test_user_code', width:150, align:"center"},
-		{header:'部门选择', name:'testOffice.officeName', index:'a.test_office_code', width:150, align:"center"},
+		{header:'机构选择', name:'testOffice.officeName', index:'a.test_office_code', width:150, align:"center"},
 		{header:'区域选择', name:'testAreaName', index:'a.test_area_code', width:150, align:"center"},
 		{header:'区域名称', name:'testAreaName', index:'a.test_area_name', width:150, align:"left"},
 		{header:'状态', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){

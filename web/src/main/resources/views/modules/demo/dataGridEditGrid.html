@@ -74,15 +74,15 @@
 				<div class="form-group">
 					<label class="control-label">用户选择：</label>
 					<div class="control-inline width-120" >
-						<#form:treeselect id="testUser" title="用户"
+						<#form:treeselect id="testUser" title="用户选择"
 							path="testUser.userCode" labelPath="testUser.userName" 
 							url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">部门选择：</label>
+					<label class="control-label">机构选择：</label>
 					<div class="control-inline width-120" >
-						<#form:treeselect id="testOffice" title="部门"
+						<#form:treeselect id="testOffice" title="机构选择"
 							path="testOffice.officeCode" labelPath="testOffice.officeName" 
 							url="${ctx}/sys/office/treeData" allowClear="true"/>
 					</div>
@@ -90,7 +90,7 @@
 				<div class="form-group">
 					<label class="control-label">区域选择：</label>
 					<div class="control-inline width-120" >
-						<#form:treeselect id="testAreaCode" title="区域"
+						<#form:treeselect id="testAreaCode" title="区域选择"
 							path="testAreaCode" labelPath="testAreaName" 
 							url="${ctx}/sys/area/treeData" allowClear="true"/>
 					</div>
@@ -168,7 +168,7 @@ $('#dataGrid').dataGrid({
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
 					return js.template('treeselectTpl', {
-						id: 'user_'+editOptions.id, title: '用户', 
+						id: 'user_'+editOptions.id, title: '用户选择', 
 						name: 'testUser.userCode', value: val.split('|')[0], 
 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
@@ -176,13 +176,13 @@ $('#dataGrid').dataGrid({
 				}
 			}
 		},
-		{header:'部门选择', name:'testOffice', width:150,
+		{header:'机构选择', name:'testOffice', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
 					return js.template('treeselectTpl', {
-						id: 'office_'+editOptions.id, title: '部门', 
+						id: 'office_'+editOptions.id, title: '机构选择', 
 						name: 'testOffice.officeCode', value: val.split('|')[0], 
 						labelName: 'testOffice.officeName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: ''
@@ -196,7 +196,7 @@ $('#dataGrid').dataGrid({
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
 					return js.template('treeselectTpl', {
-						id: 'area_'+editOptions.id, title: '区域', 
+						id: 'area_'+editOptions.id, title: '区域选择', 
 						name: 'testAreaCode', value: val.split('|')[0], 
 						labelName: 'testAreaName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/area/treeData', cssClass: ''

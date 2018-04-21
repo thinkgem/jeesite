@@ -24,7 +24,7 @@ CREATE TABLE test_data
 	test_date datetime COMMENT '日期选择',
 	test_datetime datetime COMMENT '日期时间',
 	test_user_code varchar(64) COMMENT '用户选择',
-	test_office_code varchar(64) COMMENT '部门选择',
+	test_office_code varchar(64) COMMENT '机构选择',
 	test_area_code varchar(64) COMMENT '区域选择',
 	test_area_name varchar(100) COMMENT '区域名称',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
@@ -52,7 +52,7 @@ CREATE TABLE test_data_child
 	test_date datetime COMMENT '日期选择',
 	test_datetime datetime COMMENT '日期时间',
 	test_user_code varchar(64) COMMENT '用户选择',
-	test_office_code varchar(64) COMMENT '部门选择',
+	test_office_code varchar(64) COMMENT '机构选择',
 	test_area_code varchar(64) COMMENT '区域选择',
 	test_area_name varchar(100) COMMENT '区域名称',
 	PRIMARY KEY (id)
