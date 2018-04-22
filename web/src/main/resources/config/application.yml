@@ -1,3 +1,10 @@
+server:
+
+  port: 8980
+  context-path: /js
+  tomcat:
+    uri-encoding: UTF-8
+
 spring:
 
   profiles:
@@ -6,12 +13,4 @@ spring:
   main:
     banner-mode: "off"
 
-server:
-
-  port: 8980
-  context-path: /js
-  tomcat:
-    uri-encoding: UTF-8
-
 debug: true
-

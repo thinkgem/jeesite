@@ -11,13 +11,13 @@
 		</div>
 		<#form:form id="inputForm" model="${office}" action="${ctx}/sys/office/save" method="post" class="form-horizontal">
 			<div class="box-body">
-				<div class="form-unit">基本信息</div>
+				<div class="form-unit">${text('基本信息')}</div>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="control-label col-sm-4">上级机构：</label>
+							<label class="control-label col-sm-4">${text('上级机构')}：</label>
 							<div class="col-sm-8">
-								<#form:treeselect id="parent" title="上级机构"
+								<#form:treeselect id="parent" title="${text('上级机构')}"
 									path="parent.id" labelPath="parent.officeName" 
 									url="${ctx}/sys/office/treeData?excludeCode=${office.id}"
 									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
@@ -29,7 +29,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 机构名称：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('机构名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="officeName" maxlength="100" class="form-control required "/>
 							</div>
@@ -38,7 +38,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 机构代码：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('机构代码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:hidden path="isNewRecord"/>
 								<#form:hidden path="officeCode"/>
@@ -51,7 +51,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 机构全称：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('机构全称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="fullName" maxlength="200" class="form-control required "/>
 							</div>
@@ -60,7 +60,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 排序号：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('排序号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="treeSort" maxlength="10" class="form-control required digits"/>
 							</div>
@@ -71,19 +71,19 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 机构类型：<i class="fa icon-question hide"></i></label>
+								<span class="required ">*</span> ${text('机构类型')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:select path="officeType" dictType="sys_office_type" class="form-control required " />
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="form-unit">详细信息</div>
+				<div class="form-unit">${text('详细信息')}</div>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 负责人：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('负责人')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="leader" maxlength="100" class="form-control "/>
 							</div>
@@ -92,7 +92,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 办公电话：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('办公电话')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="phone" maxlength="100" class="form-control phone"/>
 							</div>
@@ -103,7 +103,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 联系地址：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('联系地址')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="address" maxlength="255" class="form-control "/>
 							</div>
@@ -112,7 +112,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 邮政编码：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('邮政编码')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="zipCode" maxlength="100" class="form-control zipCode"/>
 							</div>
@@ -123,7 +123,7 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 电子邮箱：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('电子邮箱')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="email" maxlength="300" class="form-control email"/>
 							</div>
@@ -132,7 +132,7 @@
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label class="control-label col-sm-2" title="">
-								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
 								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
 							</div>

@@ -19,25 +19,25 @@
 			<#form:form id="searchForm" model="${office}" action="${ctx}/sys/office/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">机构代码：</label>
+					<label class="control-label">${text('机构代码')}：</label>
 					<div class="control-inline">
 						<#form:input path="viewCode" maxlength="100" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">机构名称：</label>
+					<label class="control-label">${text('机构名称')}：</label>
 					<div class="control-inline">
 						<#form:input path="officeName" maxlength="100" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">机构全称：</label>
+					<label class="control-label">${text('机构全称')}：</label>
 					<div class="control-inline">
 						<#form:input path="fullName" maxlength="200" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">机构类型：</label>
+					<label class="control-label">${text('机构类型')}：</label>
 					<div class="control-inline width-90">
 						<#form:select path="officeType" dictType="sys_office_type" blankOption="true" class="form-control"/>
 					</div>
@@ -63,18 +63,18 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'机构名称', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+		{header:'${text('机构名称')}', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="${text('编辑机构')}">'+(val||row.id)+'</a>';
 		}},
-		{header:'机构全称', name:'fullName', index:'a.full_name', width:200, align:"left"},
-		{header:'排序号', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
-		{header:'机构类型', name:'officeType', index:'a.office_type', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_office_type')}, val, '未知', true);
+		{header:'${text('机构全称')}', name:'fullName', index:'a.full_name', width:200, align:"left"},
+		{header:'${text('排序号')}', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
+		{header:'${text('机构类型')}', name:'officeType', index:'a.office_type', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_office_type')}, val, '${text('未知')}', true);
 		}},
-		{header:'更新时间', name:'updateDate', index:'a.update_date', width:150, align:"center"},
-		{header:'备注信息', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text('更新时间')}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text('备注信息')}', name:'remarks', index:'a.remarks', width:200, align:"left"},
 		{header:'${text('状态')}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '${text('未知')}', true);
 		}},
 		{header:'${text('操作')}', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];

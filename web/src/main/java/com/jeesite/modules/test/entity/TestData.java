@@ -8,7 +8,6 @@ import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import javax.validation.constraints.NotNull;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.entity.Office;
 import java.util.List;
@@ -22,7 +21,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 /**
  * 测试数据Entity
  * @author ThinkGem
- * @version 2018-02-07
+ * @version 2018-04-22
  */
 @Table(name="test_data", alias="a", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
@@ -132,7 +131,6 @@ public class TestData extends DataEntity<TestData> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@NotNull(message="日期选择不能为空")
 	public Date getTestDate() {
 		return testDate;
 	}
@@ -142,7 +140,6 @@ public class TestData extends DataEntity<TestData> {
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@NotNull(message="日期时间不能为空")
 	public Date getTestDatetime() {
 		return testDatetime;
 	}

@@ -144,7 +144,7 @@ public class CompanyController extends BaseController {
 	@ResponseBody
 	public String save(@Validated Company company) {
 		companyService.save(company);
-		return renderResult(Global.TRUE, "保存公司'" + company.getCompanyName() + "'成功！");
+		return renderResult(Global.TRUE, text("保存公司''{0}''成功", company.getCompanyName()));
 	}
 	
 	/**
@@ -160,11 +160,11 @@ public class CompanyController extends BaseController {
 		where.setParentCodes("," + company.getId() + ",");
 		long count = companyService.findCount(where);
 		if (count > 0) {
-			return renderResult(Global.FALSE, "该公司包含未停用的子公司！");
+			return renderResult(Global.FALSE, text("该公司包含未停用的子公司！"));
 		}
 		company.setStatus(Company.STATUS_DISABLE);
 		companyService.updateStatus(company);
-		return renderResult(Global.TRUE, "停用公司" + company.getCompanyName() + "成功");
+		return renderResult(Global.TRUE, text("停用公司''{0}''成功", company.getCompanyName()));
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public class CompanyController extends BaseController {
 	public String enable(Company company) {
 		company.setStatus(Company.STATUS_NORMAL);
 		companyService.updateStatus(company);
-		return renderResult(Global.TRUE, "启用公司" + company.getCompanyName() + "成功");
+		return renderResult(Global.TRUE, text("启用公司''{0}''成功", company.getCompanyName()));
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class CompanyController extends BaseController {
 	@ResponseBody
 	public String delete(Company company) {
 		companyService.delete(company);
-		return renderResult(Global.TRUE, "删除公司成功！");
+		return renderResult(Global.TRUE, text("删除公司''{0}''成功", company.getCompanyName()));
 	}
 
 	/**

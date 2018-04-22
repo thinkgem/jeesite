@@ -149,7 +149,7 @@ public class OfficeController extends BaseController {
 	@ResponseBody
 	public String save(@Validated Office office, String cmd, Model model) {
 		officeService.save(office);
-		return renderResult(Global.TRUE, "保存机构'" + office.getOfficeName() + "'成功");
+		return renderResult(Global.TRUE, text("保存机构''{0}''成功", office.getOfficeName()));
 	}
 
 	/**
@@ -165,11 +165,11 @@ public class OfficeController extends BaseController {
 		where.setParentCodes("," + office.getId() + ",");
 		long count = officeService.findCount(where);
 		if (count > 0) {
-			return renderResult(Global.FALSE, "该机构包含未停用的子机构！");
+			return renderResult(Global.FALSE, text("该机构包含未停用的子机构！"));
 		}
 		office.setStatus(Office.STATUS_DISABLE);
 		officeService.updateStatus(office);
-		return renderResult(Global.TRUE, "停用机构" + office.getOfficeName() + "成功");
+		return renderResult(Global.TRUE, text("停用机构''{0}''成功", office.getOfficeName()));
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class OfficeController extends BaseController {
 	public String enable(Office office) {
 		office.setStatus(Office.STATUS_NORMAL);
 		officeService.updateStatus(office);
-		return renderResult(Global.TRUE, "启用机构" + office.getOfficeName() + "成功");
+		return renderResult(Global.TRUE, text("启用机构''{0}''成功", office.getOfficeName()));
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class OfficeController extends BaseController {
 	@ResponseBody
 	public String delete(Office office) {
 		officeService.delete(office);
-		return renderResult(Global.TRUE, "删除机构"+office.getOfficeName()+"成功");
+		return renderResult(Global.TRUE, text("删除机构''{0}''成功", office.getOfficeName()));
 	}
 
 	/**

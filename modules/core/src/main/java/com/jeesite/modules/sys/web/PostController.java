@@ -68,10 +68,10 @@ public class PostController extends BaseController {
 	@ResponseBody
 	public String save(@Validated Post post, String oldRoleName, Model model) {
 		if (!"true".equals(checkPostName(oldRoleName, post.getPostName()))) {
-			return renderResult(Global.FALSE, "保存岗位'" + post.getPostName() + "'失败, 岗位名已存在");
+			return renderResult(Global.FALSE, text("保存岗位失败，岗位名称''{0}''已存在", post.getPostName()));
 		}
 		postService.save(post);
-		return renderResult(Global.TRUE, "保存岗位'" + post.getPostName() + "'成功！");
+		return renderResult(Global.TRUE, text("保存岗位''{0}''成功", post.getPostName()));
 	}
 	
 	@RequiresPermissions("sys:post:edit")
@@ -80,7 +80,7 @@ public class PostController extends BaseController {
 	public String disable(Post post, HttpServletRequest request, HttpServletResponse response, Model model) {
 		post.setStatus(Post.STATUS_DISABLE);
 		postService.updateStatus(post);
-		return renderResult(Global.TRUE, "停用岗位'" + post.getPostName() + "'成功！");
+		return renderResult(Global.TRUE, text("停用岗位''{0}''成功", post.getPostName()));
 	}
 	
 	@RequiresPermissions("sys:post:edit")
@@ -89,7 +89,7 @@ public class PostController extends BaseController {
 	public String enable(Post post, HttpServletRequest request, HttpServletResponse response, Model model) {
 		post.setStatus(Post.STATUS_NORMAL);
 		postService.updateStatus(post);
-		return renderResult(Global.TRUE, "启用岗位'" + post.getPostName() + "'成功！");
+		return renderResult(Global.TRUE, text("启用岗位''{0}''成功", post.getPostName()));
 	}
 	
 	@RequiresPermissions("sys:post:edit")
@@ -97,7 +97,7 @@ public class PostController extends BaseController {
 	@ResponseBody
 	public String delete(Post post) {
 		postService.delete(post);
-		return renderResult(Global.TRUE, "删除岗位成功");
+		return renderResult(Global.TRUE, text("删除岗位''{0}''成功", post.getPostName()));
 	}
 	
 	/**

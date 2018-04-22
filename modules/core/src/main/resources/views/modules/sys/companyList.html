@@ -19,19 +19,19 @@
 			<#form:form id="searchForm" model="${company}" action="${ctx}/sys/company/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">公司代码：</label>
+					<label class="control-label">${text('公司代码')}：</label>
 					<div class="control-inline">
 						<#form:input path="viewCode" maxlength="100" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">公司名称：</label>
+					<label class="control-label">${text('公司名称')}：</label>
 					<div class="control-inline">
 						<#form:input path="companyName" maxlength="200" class="form-control width-120"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">公司全称：</label>
+					<label class="control-label">${text('公司全称')}：</label>
 					<div class="control-inline">
 						<#form:input path="fullName" maxlength="200" class="form-control width-120"/>
 					</div>
@@ -57,14 +57,14 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'公司名称', name:'companyName', index:'a.company_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+		{header:'${text('公司名称')}', name:'companyName', index:'a.company_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/company/form?companyCode='+row.companyCode+'" class="btnList" data-title="${text('编辑公司')}">'+(val||row.id)+'</a>';
 		}},
-		{header:'公司全称', name:'fullName', index:'a.full_name', width:200, align:"left"},
-		{header:'排序号', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
-		{header:'归属区域', name:'area.treeNames', index:'a.areaCode', width:200, align:"center"},
-		{header:'更新时间', name:'updateDate', index:'a.update_date', width:200, align:"center"},
-		{header:'备注信息', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text('公司全称')}', name:'fullName', index:'a.full_name', width:200, align:"left"},
+		{header:'${text('排序号')}', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
+		{header:'${text('归属区域')}', name:'area.treeNames', index:'a.areaCode', width:200, align:"center"},
+		{header:'${text('更新时间')}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text('备注信息')}', name:'remarks', index:'a.remarks', width:200, align:"left"},
 		{header:'${text('状态')}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
