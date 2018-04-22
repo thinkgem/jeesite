@@ -26,9 +26,15 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
    <https://my.oschina.net/thinkgem/blog/1561129>
 
-* **JeeSite 4.0 内置功能模块划分**
+* **JeeSite 4.0 内置功能模块介绍**
 
    <https://my.oschina.net/thinkgem/blog/1609852>
+   
+   <https://my.oschina.net/thinkgem/blog/1630671>
+
+* **JeeSite 4.0 开发文档**
+
+   <http://jeesite4.mydoc.io>
 
 # 快速体验
 
@@ -57,7 +63,7 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
 * 管理员账号system与admin的区别：system为开发者使用的最高级别管理员，主要用于开发和调试，有些修改会直接影响系统的正常运行；admin为客户方使用的系统管理员，用于一些基础数据配置，如机构、用户、权限、用户字典等。
 
-* 下载不到`jeesite-xxx.jar`依赖包：相关包已经发布到`Sonatype Repository`仓库，在`web`项目的`pom.xml`里已配置，由于相关`core`项目的`pom.xml`里没有配置仓库地址，你可以尝试执行 /web`/bin/package.bat` 脚本，预先下载jar包即可。
+* 下载不到`jeesite-xxx.jar`依赖包：相关包已经发布到`Sonatype Repository`快照仓库，在`web`项目的`pom.xml`里已配置，有可能是你的 Maven `setting.xml`里添加了`mirror`或`repository`导致的问题，请清理或追加添加`Sonatype Repository`仓库地址，再尝试执行 /web`/bin/package.bat` 脚本，预先下载依赖jar包即可。
 
 * IntelliJ IDEA中提示`NoClassDefFoundError: javax/servlet/ServletOutputStream `错误，你只需要修改web项目下的pom.xml,注释掉`spring-boot-starter-tomcat`的`<scope>provided</scope>`部分改为`<scope>compile</scope>`即可。
 
