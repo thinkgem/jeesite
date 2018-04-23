@@ -73,7 +73,7 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
 # 技术交流方式
 
-* QQ 群号： <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=1a1af37857283f4b9da4c9f3ae317a8df8e24611179c09942555af3c17a9f940">`127515876`</a>、<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=853cd1af011e3324cd56d110f88b7815933a3b2d40b67775da21bd1b0b1d4b03">`209330483`</a>、<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=bc1cdb06c093b18aebd05ad6ef2aea1bba2184a84f66b4d374772209eb3516d7">`223507718`</a>
+* QQ 群号： `127515876(已满)` `209330483(已满)` `223507718(已满)` `709534275` `730390092`
 * 入群须知：目前为付费群，刚入群会有5分钟禁言，腾讯预设置的，无法解除，稍等片刻即可正常发言；由于群容量有限，为了维持运营千人QQ群的所需支付的QQ年费会员费用，故开启付费入群模式，申请者只需支付少量金额即可加入，这样也可以保证只有真实交流需求的人进入，避免闲杂做广告人员的乱入；新手提问前，请先阅读此[【文章】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)。
 * Gitee：<https://gitee.com/thinkgem/jeesite4>
 * GitHub：<https://github.com/thinkgem/jeesite4>
