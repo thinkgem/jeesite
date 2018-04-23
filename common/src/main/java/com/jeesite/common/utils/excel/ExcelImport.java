@@ -194,6 +194,9 @@ public class ExcelImport {
 	 */
 	public Row getRow(int rownum){
 		Row row = this.sheet.getRow(rownum);
+		if (row == null){
+			return null;
+		}
 		// 验证是否是空行，如果空行返回null
 		short cellNum = 0;
 		short emptyNum = 0;
@@ -254,11 +257,15 @@ public class ExcelImport {
 				if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC){
 					val = cell.getNumericCellValue();
 					if (HSSFDateUtil.isCellDateFormatted(cell)) {
-				        val = DateUtil.getJavaDate((Double)val); // POI Excel 日期格式转换
-				    }else{
-				    	val = new DecimalFormat("0").format(val);
-				    }
-				}else if (cell.getCellType() == Cell.CELL_TYPE_STRING){
+						val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
+					}else{
+						if ((Double) val % 1 > 0){
+							val = new DecimalFormat("0.00").format(val);
+						}else{
+							val = new DecimalFormat("0").format(val);
+						}
+					}
+				}else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
 					val = cell.getStringCellValue();
 				}else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA){
 					try {
@@ -481,7 +488,7 @@ public class ExcelImport {
 //				Object val = ei.getCellValue(row, j);
 //				System.out.print(val+", ");
 //			}
-//			System.out.print("\n");
+//			System.out.println();
 //		}
 //		
 //	}
