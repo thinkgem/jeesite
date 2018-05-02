@@ -197,7 +197,7 @@ user:
 
   # 集团模式（多公司、多租户、SAAS模式）
   useCorpModel: false
-
+  
 # 任务调度
 job:
 
@@ -222,7 +222,7 @@ cms:
 
   # 内容管理主站点编码
   mainSiteCode: main
-
+  
 #============================#
 #==== Framework settings ====#
 #============================#
@@ -260,6 +260,9 @@ shiro:
     # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
     secretKey: thinkgem,jeesite,com
 
+  # 允许的请求方法设定，解决安全审计问题
+  allowRequestMethods: GET,POST
+  
   # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
   isAllowMultiAddrLogin: true
   
@@ -395,6 +398,11 @@ web:
   # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
   staticFileExcludeUri: /druid/
 
+  # 自定义正则表达式验证（主键、登录名）
+  validator:
+    id: '[a-zA-Z0-9_\-/\u4e00-\u9fa5]{0,64}'
+    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
+  
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
 error:
   page:
