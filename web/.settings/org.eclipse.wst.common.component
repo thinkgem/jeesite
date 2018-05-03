@@ -9,9 +9,6 @@
         <dependent-module archiveName="jeesite-framework-4.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-framework/jeesite-framework">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-module-devtools-4.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-devtools/jeesite-module-devtools">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="component.exclusion.patterns"/>
         <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>
         <property name="context-root" value="js"/>

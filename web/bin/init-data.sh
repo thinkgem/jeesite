@@ -29,4 +29,4 @@ read -s -n1 -p "请按任意键继续 ... "
 echo ""
 
 cd ..
-mvn test -Dtest=com.jeesite.test.InitCoreData,com.jeesite.test.InitGenData
+mvn test -Dtest=com.jeesite.test.InitCoreData

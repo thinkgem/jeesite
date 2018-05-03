@@ -35,6 +35,8 @@ public class InitCoreData extends com.jeesite.modules.sys.db.InitCoreData {
 		initCompany();
 		initPost();
 		initEmpUser();
+		initGenTestData();
+		initGenTreeData();
 	}
 	
 }
