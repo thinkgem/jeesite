@@ -194,7 +194,7 @@ jdbc:
 #      remarks: ""
 #    }]
 #
-#  # 集团模式（多公司、多租户、SAAS模式）
+#  # 多租户模式（SAAS模式）
 #  useCorpModel: false
 #
 ## 任务调度

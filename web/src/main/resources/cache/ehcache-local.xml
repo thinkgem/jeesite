@@ -18,7 +18,7 @@
 	<!-- 用户数据相关缓存 -->
 	<cache name="userCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
 	
-	<!-- 集团数据相关缓存 -->
+	<!-- 租户数据相关缓存 -->
 	<cache name="corpCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
 	
 	<!-- 内容管理模块缓存 -->

@@ -135,8 +135,8 @@ CREATE TABLE js_sys_company
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	extend_s1 varchar(500) COMMENT '扩展 String 1',
 	extend_s2 varchar(500) COMMENT '扩展 String 2',
 	extend_s3 varchar(500) COMMENT '扩展 String 3',
@@ -211,8 +211,8 @@ CREATE TABLE js_sys_dict_data
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	extend_s1 varchar(500) COMMENT '扩展 String 1',
 	extend_s2 varchar(500) COMMENT '扩展 String 2',
 	extend_s3 varchar(500) COMMENT '扩展 String 3',
@@ -271,8 +271,8 @@ CREATE TABLE js_sys_employee
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	PRIMARY KEY (emp_code)
 ) COMMENT = '员工表';
 
@@ -395,8 +395,8 @@ CREATE TABLE js_sys_log
 	device_name varchar(100) COMMENT '设备名称/操作系统',
 	browser_name varchar(100) COMMENT '浏览器名称',
 	execute_time decimal(19) COMMENT '执行时间',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	PRIMARY KEY (id)
 ) COMMENT = '操作日志表';
 
@@ -615,8 +615,8 @@ CREATE TABLE js_sys_office
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	extend_s1 varchar(500) COMMENT '扩展 String 1',
 	extend_s2 varchar(500) COMMENT '扩展 String 2',
 	extend_s3 varchar(500) COMMENT '扩展 String 3',
@@ -654,8 +654,8 @@ CREATE TABLE js_sys_post
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	PRIMARY KEY (post_code)
 ) COMMENT = '员工岗位表';
 
@@ -676,8 +676,8 @@ CREATE TABLE js_sys_role
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	PRIMARY KEY (role_code)
 ) COMMENT = '角色表';
 
@@ -742,8 +742,8 @@ CREATE TABLE js_sys_user
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '归属集团Code',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '归属集团Name',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	extend_s1 varchar(500) COMMENT '扩展 String 1',
 	extend_s2 varchar(500) COMMENT '扩展 String 2',
 	extend_s3 varchar(500) COMMENT '扩展 String 3',

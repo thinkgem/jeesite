@@ -25,7 +25,7 @@ public class EmpUtils {
 //	public static final String CACHE_OFFICE_LIST = "officeList";
 //	public static final String CACHE_COMPANY_LIST = "companyList";
 	
-	// 集团缓存常量
+	// 部门和公司缓存常量
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 	public static final String CACHE_COMPANY_ALL_LIST = "companyAllList";
 	

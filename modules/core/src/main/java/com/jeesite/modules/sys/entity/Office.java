@@ -41,19 +41,10 @@ import com.jeesite.modules.sys.utils.EmpUtils;
 	}, extWhereKeys="dsf", orderBy="a.tree_sort, a.office_code"
 )
 public class Office extends TreeEntity<Office> {
-
-	/** 机构类型（0：集团） */
-	public static final String TYPE_GROUP = "0";
-	/** 机构类型（1：公司） */
-	public static final String TYPE_COMPANY = "1";
-	/** 机构类型（2：部门） */
-	public static final String TYPE_DEPT = "2";
-	/** 机构类型（3：小组） */
-	public static final String TYPE_TEAM = "3";
-
+	
 	private static final long serialVersionUID = 1L;
 	private String officeCode;		// 机构编码
-	private String viewCode;		// 机构代码（作为显示用，集团内唯一）
+	private String viewCode;		// 机构代码（作为显示用，多租户内唯一）
 	private String officeName;		// 机构名称
 	private String fullName;		// 机构全称
 	private String officeType;		// 机构类型（1：公司；2：部门；3：小组）
@@ -195,7 +186,10 @@ public class Office extends TreeEntity<Office> {
 
 	/**
 	 * 根据类型查找上级部门
-	 * @param type 机构类型    0：集团TYPE_GROUP 1：公司TYPE_COMPANY 2：部门TYPE_DEPT 3：小组TYPE_TEAM
+	 * 1、例如当前机构类型为部门，你想获取部门所在的省公司名称
+	 * 2、例如当前机构类型为部门的子部门，你想获取部门所在省公司名称
+	 * 3、例如当前机构类型为小组，你想获取所在公司名称
+	 * @param type 机构类型
 	 * @return
 	 */
 	@JsonIgnore

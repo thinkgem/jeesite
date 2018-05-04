@@ -2,7 +2,7 @@
 <configuration debug="false" scan="false">
 
 	<!-- Log file path -->
-	<property name="log.path" value="${logPath:-../}/logs" />
+	<property name="log.path" value="${logPath:-..}/logs" />
 	
 	<!-- Spring boot default -->
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />

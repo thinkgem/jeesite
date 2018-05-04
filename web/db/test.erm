@@ -178,8 +178,8 @@
 			<binary>false</binary>
 			<args></args>
 			<char_semantics>false</char_semantics>
-			<description>归属集团公司Code</description>
-			<logical_name>归属集团Code</logical_name>
+			<description>租户代码</description>
+			<logical_name>租户代码</logical_name>
 			<physical_name>corp_code</physical_name>
 			<type>varchar(n)</type>
 		</word>
@@ -194,8 +194,8 @@
 			<binary>false</binary>
 			<args></args>
 			<char_semantics>false</char_semantics>
-			<description>归属集团公司Name</description>
-			<logical_name>归属集团Name</logical_name>
+			<description>租户名称</description>
+			<logical_name>租户名称</logical_name>
 			<physical_name>corp_name</physical_name>
 			<type>nvarchar(n)</type>
 		</word>

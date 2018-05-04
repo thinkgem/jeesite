@@ -169,15 +169,7 @@ public class LoginController extends BaseController{
 
 		// 非授权异常，登录失败，验证码加1。
 		if (!UnauthorizedException.class.getName().equals(exception)){
-//			// 如果使用了集团用户模式，则获取集团Code
-//			String corpCode = null;
-//			if (Global.isUseCorpModel()){
-//				corpCode = (String)paramMap.get("corpCode");
-//				if (StringUtils.isBlank(corpCode)){
-//					throw new AuthenticationException("msg:请选择您要登录的集团公司.");
-//				}
-//			}
-			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username, /*corpCode, */(String)paramMap.get("deviceType"), "failed"));
+			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username, (String)paramMap.get("deviceType"), "failed"));
 		}
 		
 		//获取当前会话对象

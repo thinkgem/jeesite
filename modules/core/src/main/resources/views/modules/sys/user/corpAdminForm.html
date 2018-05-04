@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${user.isNewRecord ? op == 'addCorp' ? '新增集团' : '新增管理员' : '编辑管理员'}
+				<i class="fa fa-list-alt"></i> ${user.isNewRecord ? op == 'addCorp' ? '新增租户' : '新增' : '编辑'}管理员
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -19,9 +19,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label" title="">
-								<span class="required">*</span> 集团代码：<i class="fa icon-question hide"></i></label>
+								<span class="required">*</span> 租户代码：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="corpCode_" placeholder="请输入集团代码" maxlength="20"
+								<#form:input path="corpCode_" placeholder="请输入租户代码" maxlength="20"
 									readonly="${!user.isNewRecord || op=='addAdmin'}" class="form-control abc required"/>
 							</div>
 						</div>
@@ -29,9 +29,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required">*</span> 集团名称：<i class="fa icon-question hide"></i></label>
+								<span class="required">*</span> 租户名称：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="corpName_" placeholder="请输入集团名称" maxlength="32"
+								<#form:input path="corpName_" placeholder="请输入租户名称" maxlength="32"
 									readonly="${!user.isNewRecord || op=='addAdmin'}" class="form-control required"/>
 							</div>
 						</div>

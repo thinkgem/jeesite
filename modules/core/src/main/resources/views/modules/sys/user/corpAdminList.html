@@ -9,7 +9,7 @@
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
 				<% if(hasPermi('sys:corpAdmin:edit')){ %>
 					<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
-					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title="新增集团"><i class="fa fa-plus"></i> 新增集团</a>
+					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title="新增租户管理员"><i class="fa fa-plus"></i> 新增租户管理员</a>
 					<% }else{ %>
 					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${user.currentUser.corpCode_}&corpName_=${user.currentUser.corpName_}&op=addAdmin" class="btn btn-default btnTool" title="新增管理员"><i class="fa fa-plus"></i> 新增管理员</a>
 					<% } %>
@@ -32,13 +32,13 @@
 					</div>
 				</div>
 				<div class="form-group ${@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))?'':'hide'}">
-					<label class="control-label">集团代码：</label>
+					<label class="control-label">租户代码：</label>
 					<div class="control-inline">
 						<#form:input path="corpCode_" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group ${@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))?'':'hide'}">
-					<label class="control-label">集团名称：</label>
+					<label class="control-label">租户名称：</label>
 					<div class="control-inline">
 						<#form:input path="corpName_" maxlength="100" class="form-control width-90"/>
 					</div>
@@ -70,10 +70,10 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
 		<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
-		{header:'集团代码', name:'corpCode_', index:'a.corp_code', width:200, align:"center", formatter: function(val, obj, row, act){
+		{header:'租户代码', name:'corpCode_', index:'a.corp_code', width:200, align:"center", formatter: function(val, obj, row, act){
 			return '<a href="javascript:" onclick="$(\'#corpCode_\').val(\''+val+'\');$(\'#searchForm\').submit()">'+val+'</a>';
 		}},
-		{header:'集团名称', name:'corpName_', index:'a.corp_name', width:200, align:"center"},
+		{header:'租户名称', name:'corpName_', index:'a.corp_name', width:200, align:"center"},
 		<% } %>
 		{header:'电子邮箱', name:'email', index:'a.email', width:200, align:"center"},
 		{header:'手机号码', name:'mobile', index:'a.mobile', width:200, align:"center"},
