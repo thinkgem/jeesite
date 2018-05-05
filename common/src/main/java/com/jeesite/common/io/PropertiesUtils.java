@@ -3,6 +3,7 @@
  */
 package com.jeesite.common.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
 import com.jeesite.common.collect.SetUtils;
@@ -35,7 +37,7 @@ public class PropertiesUtils {
 			"classpath:config/application.yml",
 			"classpath:application.yml"};
 
-	private static Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
+	private static Logger logger = PropertiesUtils.initLogger();
 	
 	private final Properties properties = new Properties();
 	
@@ -149,6 +151,27 @@ public class PropertiesUtils {
 	public String getProperty(String key, String defaultValue) {
 		String value = getProperty(key);
 		return value != null ? value : defaultValue;
+	}
+	
+	/**
+	 * 初始化日志路径
+	 */
+	private static Logger initLogger(){
+		String logPath = null;
+		try {
+			// 获取当前classes目录
+			logPath = new DefaultResourceLoader().getResource("/").getFile().getPath();
+		} catch (Exception e) {
+			// 取不到，取当前工作路径
+			logPath = System.getProperty("user.dir");
+		}
+		// 取当前日志路径下有classes目录，则使用classes目录
+		String classesLogPath = FileUtils.path(logPath + "/WEB-INF/classes");
+		if (new File(classesLogPath).exists()){
+			logPath = classesLogPath;
+		}
+		System.setProperty("logPath", FileUtils.path(logPath));
+		return LoggerFactory.getLogger(PropertiesUtils.class);
 	}
 	
 }

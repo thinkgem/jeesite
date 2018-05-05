@@ -12,5 +12,3 @@ spring:
     
   main:
     banner-mode: "off"
-
-debug: true
