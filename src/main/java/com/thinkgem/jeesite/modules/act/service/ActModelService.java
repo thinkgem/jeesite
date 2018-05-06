@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.act.service;
 
@@ -17,18 +17,19 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 
@@ -43,6 +44,10 @@ public class ActModelService extends BaseService {
 
 	@Autowired
 	private RepositoryService repositoryService;
+	
+//	@Autowired
+//	private ObjectMapper objectMapper;
+	protected ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
 	 * 流程模型列表
@@ -66,16 +71,19 @@ public class ActModelService extends BaseService {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@Transactional(readOnly = false)
-	public org.activiti.engine.repository.Model create(String name, String key, String description, String category) throws UnsupportedEncodingException {
-		ObjectMapper objectMapper = new ObjectMapper();
+	public Model create(String name, String key, String description, String category) throws UnsupportedEncodingException {
+		
 		ObjectNode editorNode = objectMapper.createObjectNode();
 		editorNode.put("id", "canvas");
 		editorNode.put("resourceId", "canvas");
-		ObjectNode stencilSetNode = objectMapper.createObjectNode();
-		stencilSetNode.put("namespace", "http://b3mn.org/stencilset/bpmn2.0#");
-		editorNode.put("stencilset", stencilSetNode);
-		org.activiti.engine.repository.Model modelData = repositoryService.newModel();
-
+		ObjectNode properties = objectMapper.createObjectNode();
+		properties.put("process_author", "jeesite");
+		editorNode.put("properties", properties);
+		ObjectNode stencilset = objectMapper.createObjectNode();
+		stencilset.put("namespace", "http://b3mn.org/stencilset/bpmn2.0#");
+		editorNode.put("stencilset", stencilset);
+		
+		Model modelData = repositoryService.newModel();
 		description = StringUtils.defaultString(description);
 		modelData.setKey(StringUtils.defaultString(key));
 		modelData.setName(name);
@@ -161,6 +169,7 @@ public class ActModelService extends BaseService {
 	/**
 	 * 更新Model分类
 	 */
+	@Transactional(readOnly = false)
 	public void updateCategory(String id, String category) {
 		org.activiti.engine.repository.Model modelData = repositoryService.getModel(id);
 		modelData.setCategory(category);
@@ -172,6 +181,7 @@ public class ActModelService extends BaseService {
 	 * @param id
 	 * @return
 	 */
+	@Transactional(readOnly = false)
 	public void delete(String id) {
 		repositoryService.deleteModel(id);
 	}

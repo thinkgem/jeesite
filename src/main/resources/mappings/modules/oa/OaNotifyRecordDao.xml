@@ -20,7 +20,7 @@
 	<select id="get" resultType="OaNotifyRecord">
 		SELECT 
 			<include refid="oaNotifyRecordColumns"/>
-		FROM OA_NOTIFY_RECORD a
+		FROM oa_notify_record a
 		<include refid="oaNotifyRecordJoins"/>
 		WHERE a.id = #{id}
 	</select>
@@ -28,7 +28,7 @@
 	<select id="findList" resultType="OaNotifyRecord">
 		SELECT 
 			<include refid="oaNotifyRecordColumns"/>
-		FROM OA_NOTIFY_RECORD a
+		FROM oa_notify_record a
 		<include refid="oaNotifyRecordJoins"/>
 		WHERE 1=1
 		<if test="oaNotify != null and oaNotify.id != null and oaNotify.id != ''">
@@ -40,14 +40,14 @@
 	<select id="findAllList" resultType="OaNotifyRecord">
 		SELECT 
 			<include refid="oaNotifyRecordColumns"/>
-		FROM OA_NOTIFY_RECORD a
+		FROM oa_notify_record a
 		<include refid="oaNotifyRecordJoins"/>
 		WHERE 1=1
 		ORDER BY a.read_flag ASC
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO OA_NOTIFY_RECORD(
+		INSERT INTO oa_notify_record(
 			ID,
 			OA_NOTIFY_ID,
 			USER_ID,
@@ -63,28 +63,35 @@
 	</insert>
 	
 	<insert id="insertAll" parameterType="List">
-		INSERT INTO OA_NOTIFY_RECORD(
+		INSERT INTO oa_notify_record(
 			ID,
 			OA_NOTIFY_ID,
 			USER_ID,
 			READ_FLAG,
 			READ_DATE
 		)
-		<foreach collection="list" item="e" separator=" UNION ALL ">
-			SELECT
-				#{e.id},
+		<if test="list.get(0).dbName == 'oracle'">
+			<foreach collection="list" item="e" separator=" union all ">
+				SELECT #{e.id},
 				#{e.oaNotify.id},
 				#{e.user.id},
 				#{e.readFlag},
-				#{e.readDate}
-			<if test="dbName != 'mssql'">
-			FROM dual
-			</if>
-		</foreach>
+				#{e.readDate} FROM dual
+			</foreach>
+		</if>
+		<if test="list.get(0).dbName == 'mssql' or list.get(0).dbName == 'mysql'"> VALUES  
+		    <foreach collection="list" item="e" open="" separator="," close="">  
+				(#{e.id},
+				#{e.oaNotify.id},
+				#{e.user.id},
+				#{e.readFlag},
+				#{e.readDate})
+			</foreach>
+	    </if>
 	</insert>
 	
 	<update id="update">
-		UPDATE OA_NOTIFY_RECORD SET 	
+		UPDATE oa_notify_record SET 	
 			READ_FLAG = #{readFlag},
 			READ_DATE = #{readDate}
 		WHERE OA_NOTIFY_ID = #{oaNotify.id}
@@ -93,12 +100,12 @@
 	</update>
 	
 	<delete id="delete">
-		UPDATE FROM OA_NOTIFY_RECORD 
+		UPDATE FROM oa_notify_record 
 		WHERE id = #{id}
 	</delete>
 	
 	<delete id="deleteByOaNotifyId">
-		DELETE FROM OA_NOTIFY_RECORD 
+		DELETE FROM oa_notify_record 
 		WHERE oa_notify_id = #{oaNotifyId}
 	</delete>
 	

@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.utils;
 
@@ -813,6 +813,24 @@ public class JedisUtils {
     	}else{
     		return ObjectUtils.serialize(object);
     	}
+	}
+	
+	/**
+	 * 获取byte[]类型Key
+	 * @param key
+	 * @return
+	 */
+	public static Object getObjectKey(byte[] key){
+		try{
+			return StringUtils.toString(key);
+		}catch(UnsupportedOperationException uoe){
+			try{
+				return JedisUtils.toObject(key);
+			}catch(UnsupportedOperationException uoe2){
+				uoe2.printStackTrace();
+			}
+		}
+		return null;
 	}
 	
 	/**

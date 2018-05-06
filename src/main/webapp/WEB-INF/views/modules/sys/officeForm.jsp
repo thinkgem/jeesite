@@ -82,7 +82,6 @@
 				<form:select path="useable">
 					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-				<span class="help-inline">“是”代表此账号允许登陆，“否”则表示此账号不允许登陆</span>
 			</div>
 		</div>
 		<div class="control-group">

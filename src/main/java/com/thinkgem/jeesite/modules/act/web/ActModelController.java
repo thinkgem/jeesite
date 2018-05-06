@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.act.web;
 
@@ -64,7 +64,7 @@ public class ActModelController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
 			org.activiti.engine.repository.Model modelData = actModelService.create(name, key, description, category);
-			response.sendRedirect(request.getContextPath() + "/act/rest/service/editor?id=" + modelData.getId());
+			response.sendRedirect(request.getContextPath() + "/act/process-editor/modeler.jsp?modelId=" + modelData.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("创建模型失败：", e);

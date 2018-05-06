@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.persistence.dialect.db;
 
@@ -75,7 +75,7 @@ public class SQLServer2005Dialect implements Dialect {
                 .append(") as __row_number__, ")
                 .append(pagingBuilder)
                 .append(") SELECT * FROM query WHERE __row_number__ BETWEEN ")
-                .append(offset).append(" AND ").append(offset + limit)
+                .append(offset + 1).append(" AND ").append(offset + limit)
                 .append(" ORDER BY __row_number__");
 
         return result.toString();

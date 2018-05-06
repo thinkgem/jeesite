@@ -5,27 +5,27 @@
 	
 	<groupId>com.thinkgem.jeesite</groupId>
 	<artifactId>jeesite</artifactId>
-	<version>1.2.6</version>
+	<version>1.2.7</version>
 	<packaging>war</packaging>
 	
 	<name>JeeSite</name>
 	<url>http://thinkgem.github.com/jeesite</url>
-	<inceptionYear>2012-2014</inceptionYear>
+	<inceptionYear>2012-2016</inceptionYear>
 	
 	<!-- 项目属性 -->
 	<properties>
 		
 		<!-- main version setting -->
-		<spring.version>4.0.8.RELEASE</spring.version>
-		<validator.version>5.1.1.Final</validator.version>
+		<spring.version>4.1.9.RELEASE</spring.version>
+		<validator.version>5.2.4.Final</validator.version>
 		<mybatis.version>3.2.8</mybatis.version>
-		<mybatis-spring.version>1.2.2</mybatis-spring.version>
-		<druid.version>1.0.11</druid.version>
-		<ehcache.version>2.6.9</ehcache.version>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
+		<druid.version>1.0.18</druid.version>
+		<ehcache.version>2.6.11</ehcache.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
 		<shiro.version>1.2.3</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
-		<activiti.version>5.15.1</activiti.version>
+		<activiti.version>5.21.0</activiti.version>
 		
 		<!-- tools version setting -->
 		<slf4j.version>1.7.7</slf4j.version>
@@ -64,65 +64,10 @@
 	         <url>http://nexus.110monitor.com:8081/nexus/content/groups/public/</url>
 	     </repository>
 	
-		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<repository>
-			<id>nexus-repos</id>
-			<name>Team Nexus Repository</name>
-			<url>http://192.168.11.36:8888/nexus/content/groups/public</url>
-		</repository> -->
-		
-		<repository>
-            <id>oschina-repos</id>
-            <name>Oschina Releases</name>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </repository>
-        
-        <repository>
-            <id>java-repos</id>
-            <name>Java Repository</name>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-        
-        <repository>
-            <id>springsource-repos</id>
-            <name>SpringSource Repository</name>
-            <url>http://repo.spring.io/release/</url>
-        </repository>
-        
-		<repository>
-			<id>central-repos</id>
-			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-		</repository>
-		
-		<repository>
-			<id>central-repos2</id>
-			<name>Central Repository 2</name>
-			<url>http://repo1.maven.org/maven2/</url>
-		</repository>
-		
-		<repository>
-			<id>activiti-repos</id>
-			<name>Activiti Repository</name>
-			<url>https://maven.alfresco.com/nexus/content/groups/public</url>
-		</repository>
-		
-		<repository>
-			<id>activiti-repos2</id>
-			<name>Activiti Repository 2</name>
-			<url>https://app.camunda.com/nexus/content/groups/public</url>
-		</repository>
-		
-		<repository> 
-			<id>thinkgem-repos</id> 
-			<name>ThinkGem Repository</name>
-			<url>http://git.oschina.net/thinkgem/repos/raw/master</url>
-		</repository>
-		
-		<repository> 
-			<id>thinkgem-repos2</id> 
-			<name>ThinkGem Repository 2</name>
-			<url>https://raw.github.com/thinkgem/repository/master</url>
+			<id>jeesite-repos</id>
+			<name>Jeesite Repository</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
 		
 	</repositories>
@@ -130,18 +75,11 @@
 	<!-- 设定插件仓库 -->
 	<pluginRepositories> 
 	
-		<!-- 如有Nexus私服, 取消注释并指向正确的服务器地址.
 		<pluginRepository>
-			<id>nexus-repos</id>
-			<name>Team Nexus Repository</name>
-			<url>http://192.168.11.36:8888/nexus/content/groups/public</url>
-		</pluginRepository> -->
-		
-		<pluginRepository>
-            <id>oschina-repos</id>
-            <name>Oschina Releases</name>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </pluginRepository>
+			<id>jeesite-repos</id>
+			<name>Jeesite Repository</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</pluginRepository>
 		
 	</pluginRepositories> 
 	
@@ -262,7 +200,8 @@
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc14</artifactId>
 			<version>${oracle.driver.version}</version>
-			<scope>runtime</scope>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc14-10.2.0.4.0.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
@@ -599,6 +538,8 @@
 			<groupId>org.wltea</groupId>
 			<artifactId>analyzer</artifactId>
 			<version>2012_u6</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/analyzer-2012_u6.jar</systemPath>
 		</dependency>
 		<!-- GENERAL UTILS end -->
 		
@@ -607,26 +548,36 @@
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/thumbnailator-0.4.2.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>apache-ant-zip</artifactId>
 			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/apache-ant-zip-2.3.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>ckfinder</artifactId>
 			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ckfinder-2.3.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>ckfinderplugin-fileeditor</artifactId>
 			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ckfinderplugin-fileeditor-2.3.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.ckfinder</groupId>
 			<artifactId>ckfinderplugin-imageresize</artifactId>
 			<version>2.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ckfinderplugin-imageresize-2.3.jar</systemPath>
 		</dependency>
 		<!-- CKFinder end -->
 		
@@ -648,6 +599,8 @@
 			<groupId>bitwalker</groupId>
 			<artifactId>UserAgentUtils</artifactId>
 			<version>1.13</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/UserAgentUtils-1.13.jar</systemPath>
 		</dependency>
 		
 		<!-- 自定义jar依赖包
@@ -685,7 +638,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>3.5.1</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
@@ -764,7 +717,7 @@
 			<plugin>
 				<groupId>com.github.wvengen</groupId>
 				<artifactId>proguard-maven-plugin</artifactId>
-				<version>2.0.6</version>
+				<version>2.0.11</version>
 				<executions>
 					<execution>
 						<phase>prepare-package</phase>
@@ -912,35 +865,35 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.7</version>
 			</plugin>
 			
 			<!-- install插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
-				<version>2.4</version>
+				<version>2.5.2</version>
 			</plugin>
 			
 			<!-- clean插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
+				<version>2.6.1</version>
 			</plugin>
 			
 			<!-- ant插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
+				<version>1.8</version>
 			</plugin>
 			
 			<!-- dependency插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.10</version>
 			</plugin>
 		</plugins>
 	</build>
