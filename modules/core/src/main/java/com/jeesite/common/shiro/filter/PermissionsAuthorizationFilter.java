@@ -16,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.common.web.http.wrapper.GetHttpServletRequestWrapper;
 
@@ -66,7 +67,11 @@ public class PermissionsAuthorizationFilter extends org.apache.shiro.web.filter.
 	public static void redirectToDefaultPath(ServletRequest request, ServletResponse response) throws IOException {
 		// AJAX不支持Redirect改用Forward
 		String loginUrl = Global.getProperty("shiro.defaultPath");
-		if (ServletUtils.isAjaxRequest((HttpServletRequest) request)) {
+		HttpServletRequest req = ((HttpServletRequest) request);
+		if (StringUtils.equals(req.getContextPath()+loginUrl, req.getRequestURI())){
+			loginUrl = Global.getProperty("shiro.loginUrl");
+		}
+		if (ServletUtils.isAjaxRequest(req)) {
 			try {
 				request.getRequestDispatcher(loginUrl).forward(
 						new GetHttpServletRequestWrapper(request), response);

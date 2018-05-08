@@ -28,7 +28,7 @@ import com.jeesite.modules.sys.entity.User;
  * @author ThinkGem
  * @version 2017年2月25日
  */
-public class DaoTest extends BaseSpringContextTests {
+public class DaoMapperTest extends BaseSpringContextTests {
 
 	@Autowired
 	private ConfigDao configDao;
