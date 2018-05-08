@@ -677,7 +677,7 @@ Class.pt.callback = function(){
   layero.find('.'+ doms[7]).on('click', cancel);
   
   //点遮罩关闭
-  if(config.shadeClose){
+  if(config.shadeClose || config.shadeClose == undefined){
     $('#layui-layer-shade'+ that.index).on('click', function(){
       layer.close(that.index);
     });
