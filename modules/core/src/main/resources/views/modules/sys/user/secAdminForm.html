@@ -136,9 +136,10 @@ for (var i=0; i<dataScopes.length; i++){
 	}
  	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
  		key: dataScope.ctrlType, label: dataScope.ctrlName_${lang()} || dataScope.ctrlName}));
+ 	var ctrlDataUrl = dataScope.ctrlDataUrl || '';
 	$.ajax({
 		type: 'POST',
-		url: "${ctx}" + dataScope.ctrlDataUrl,
+		url: "${ctx}" + ctrlDataUrl + (ctrlDataUrl.indexOf("?")!=-1?'&':'?') + "___t=" + new Date().getTime(),
 		data: {ctrlPermi: '2'},
 		dataType: 'json',
 		async: false,

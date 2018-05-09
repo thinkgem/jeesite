@@ -32,6 +32,7 @@
 		<!-- framework version setting -->
 		<mybatis.version>3.4.5</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<jsqlparser.version>1.1</jsqlparser.version>
 		<druid.version>1.1.3</druid.version>
 		<shiro.version>1.4.0</shiro.version>
 		<beetl.version>2.7-SNAPSHOT</beetl.version>
