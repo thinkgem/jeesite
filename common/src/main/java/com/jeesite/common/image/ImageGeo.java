@@ -3,11 +3,12 @@
  */
 package com.jeesite.common.image;
 
-import com.drew.metadata.*;
-import com.drew.metadata.exif.*;
-import com.drew.imaging.jpeg.*;
-import com.drew.lang.*;
-import java.io.*;
+import java.io.File;
+
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.lang.Rational;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.GpsDirectory;
 
 /**
  * 图片地理信息获取
