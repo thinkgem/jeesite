@@ -294,7 +294,7 @@ public class LoginController extends BaseController{
 	}
 	
 	/**
-	 * 获取当前用户权限字符串数据
+	 * 获取当前用户权限字符串数据（移动端用）
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "authInfo")
@@ -304,12 +304,15 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * 获取当前用户菜单数据
+	 * 获取当前用户菜单数据（移动端用）
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "menuTree")
 	@ResponseBody
 	public List<Menu> menuTree(String parentCode) {
+		if (StringUtils.isNotBlank(parentCode)){
+			return UserUtils.getMenuListByParentCode(parentCode);
+		}
 		return UserUtils.getMenuTree();
 	}
 
