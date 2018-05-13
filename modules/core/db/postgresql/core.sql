@@ -531,9 +531,9 @@ CREATE TABLE js_sys_msg_push
 	push_return_msg_id varchar(200),
 	push_return_content text,
 	push_status char(1),
-	push_date date,
+	push_date timestamp,
 	read_status char(1),
-	read_date date,
+	read_date timestamp,
 	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
@@ -560,9 +560,9 @@ CREATE TABLE js_sys_msg_pushed
 	push_return_code varchar(200),
 	push_return_msg_id varchar(200),
 	push_status char(1),
-	push_date date,
+	push_date timestamp,
 	read_status char(1),
-	read_date date,
+	read_date timestamp,
 	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 

@@ -1,76 +1,44 @@
 <li class="dropdown messages-menu">
 	<a href="javascript:" class="dropdown-toggle" data-hover="dropdown">
 		<i class="fa fa-envelope-o"></i>
-		<span class="label label-success">4</span>
+		<span class="label label-success" id="msgNum">0</span>
 	</a>
 	<ul class="dropdown-menu">
-		<li class="header">You have 4 messages</li>
+		<li class="header">${text('你有')} <span id="msgNum2">0</span> ${text('条消息')}</li>
 		<li>
-			<!-- inner menu: contains the actual data -->
-			<ul class="menu">
-				<li><!-- start message -->
-					<a href="#">
-						<div class="pull-left">
-							<img src="${ctxStatic}/images/user1.jpg" class="img-circle" alt="User Image">
-						</div>
-						<h4>
-							Support Team
-							<small><i class="fa fa-clock-o"></i> 5 mins</small>
-						</h4>
-						<p>Why not buy a new awesome theme?</p>
-					</a>
-				</li>
-				<!-- end message -->
-				<li>
-					<a href="#">
-						<div class="pull-left">
-							<img src="${ctxStatic}/images/user1.jpg" class="img-circle" alt="User Image">
-						</div>
-						<h4>
-							JeeSite Team
-							<small><i class="fa fa-clock-o"></i> 2 hours</small>
-						</h4>
-						<p>Why not buy a new awesome theme?</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="pull-left">
-							<img src="${ctxStatic}/images/user1.jpg" class="img-circle" alt="User Image">
-						</div>
-						<h4>
-							Developers
-							<small><i class="fa fa-clock-o"></i> Today</small>
-						</h4>
-						<p>Why not buy a new awesome theme?</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="pull-left">
-							<img src="${ctxStatic}/images/user1.jpg" class="img-circle" alt="User Image">
-						</div>
-						<h4>
-							Sales Department
-							<small><i class="fa fa-clock-o"></i> Yesterday</small>
-						</h4>
-						<p>Why not buy a new awesome theme?</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="pull-left">
-							<img src="${ctxStatic}/images/user1.jpg" class="img-circle" alt="User Image">
-						</div>
-						<h4>
-							Reviewers
-							<small><i class="fa fa-clock-o"></i> 2 days</small>
-						</h4>
-						<p>Why not buy a new awesome theme?</p>
-					</a>
-				</li>
-			</ul>
+			<ul class="menu" id="msgList"
+				data-mergeMsgLimit="${@Global.getConfig('sys.msg.mergeMsgLimit', '5')}"
+				data-mergeMsgTitle="${text('系统消息')}"
+				data-mergeMsgContent="${text('您有 {0\} 条新消息，由于消息太多，这里为您合并，请点击查看按钮看详情。')}"></ul>
 		</li>
-		<li class="footer"><a href="#">See All Messages</a></li>
+		<li class="footer"><a href="javascript:" data-href="${ctx}/msg/list"
+			data-title="${text('查看全部消息')}" class="addTabPage">${text('查看全部消息')}</a></li>
 	</ul>
+	<script src="${ctxStatic}/jquery-timeago/jquery.timeago.js"></script>
+	<script src="${ctxStatic}/jquery-timeago/i18n/jquery.timeago.${lang()}.js"></script>
+	<script src="${ctxStatic}/modules/msg/topMenuMsg.js"></script>
+	<script type="text/template" id="msgListTpl">
+		<li id="msg{{d.id}}"><a href="javascript:"
+				data-href="${ctx}/msg/readMsg?id={{d.id}}"
+				onclick="readMsg(this, '${text('查看消息')}', '{{d.id}}')" >
+			<div class="pull-left"><i class="img-circle bg-aqua icon-bubble"></i></div>
+			<h4>{{d.msgContentEntity.title}} <small><i class="fa fa-clock-o"></i>
+				<abbr class="timeago" title="{{d.sendDate}}">{{d.sendDate}}</abbr></small></h4>
+			<p>{{=d.msgContentEntity.content}}</p>
+		</a></li>
+	</script>
+	<script type="text/template" id="msgTipTpl">
+		<abbr class="timeago" title="{{d.sendDate}}">{{d.sendDate}}</abbr>
+			{{d.sendUserName}} <br/> {{=d.msgContentEntity.content}} 
+		<div style="margin:8px 0 0;float:right;">
+			{{# $.each(d.msgContentEntity.buttons, function(idx, item){ }}
+				<button class="btn btn-default btn-sm" type="button"
+					data-href="${ctxPath}{{d.item.href}}"
+					onclick="readMsg(this, '${text('查看消息')}', '{{d.item.id}}');">{{d.item.name}}</button>&nbsp;
+			{{# }); }}
+			<button type="button" class="btn btn-default btn-sm"
+				data-href="${ctx}/msg/readMsg?id={{d.id}}"
+				onclick="readMsg(this, '${text('消息详情')}', '{{d.id}}')">${text('查看')}</button>&nbsp;
+		</div>
+	</script>
 </li>

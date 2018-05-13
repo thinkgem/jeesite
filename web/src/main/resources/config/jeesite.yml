@@ -348,7 +348,8 @@ jdbc:
 #        ${adminPath}/sys/online/count,
 #        ${adminPath}/**/treeData,
 #        ${adminPath}/file/**,
-#        ${adminPath}/tags/*
+#        ${adminPath}/tags/*,
+#        ${adminPath}/msg/**
 #    
 #    # 前台自动切换到手机视图拦截器
 #    mobile:

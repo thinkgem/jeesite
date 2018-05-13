@@ -534,9 +534,9 @@ CREATE TABLE js_sys_msg_push
 	push_return_msg_id varchar(200) COMMENT '推送返回消息编号',
 	push_return_content text COMMENT '推送返回的内容信息',
 	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
-	push_date date COMMENT '推送时间',
+	push_date datetime COMMENT '推送时间',
 	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
-	read_date date COMMENT '读取时间',
+	read_date datetime COMMENT '读取时间',
 	PRIMARY KEY (id)
 ) COMMENT = '消息推送表';
 
@@ -563,9 +563,9 @@ CREATE TABLE js_sys_msg_pushed
 	push_return_code varchar(200) COMMENT '推送返回结果码',
 	push_return_msg_id varchar(200) COMMENT '推送返回消息编号',
 	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
-	push_date date COMMENT '推送时间',
+	push_date datetime COMMENT '推送时间',
 	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
-	read_date date COMMENT '读取时间',
+	read_date datetime COMMENT '读取时间',
 	PRIMARY KEY (id)
 ) COMMENT = '消息已推送表';
 
