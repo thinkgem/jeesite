@@ -81,9 +81,9 @@
 					<div class="col-xs-4">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 日期：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 日期：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate required"
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
 									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</div>
 						</div>
@@ -91,9 +91,9 @@
 					<div class="col-xs-4">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 时间：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate required"
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
 									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
 							</div>
 						</div>
@@ -241,14 +241,15 @@
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
-			if(data.result == Global.TRUE){
-				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.page();
-				});
-			}
-		}, "json");
+// 		js.ajaxSubmitForm($(form), function(data){
+//			js.showMessage(data.message);
+//			if(data.result == Global.TRUE){
+//				js.closeCurrentTabPage(function(contentWindow){
+//					contentWindow.page();
+//				});
+//			}
+//		}, "json");
+		js.showMessage('模拟保存成功');
     }
 });
 </script>

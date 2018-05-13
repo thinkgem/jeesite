@@ -79,9 +79,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate required"
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
 									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</div>
 						</div>
@@ -89,9 +89,9 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required ">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate required"
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
 									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
 							</div>
 						</div>
@@ -113,6 +113,20 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 用户多选：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testUser2" title="用户选择"
+									path="testUser.userCode" labelPath="testUser.userName"
+									url="${ctx}/sys/office/treeData?isLoadUser=true"
+									class="" allowClear="true" checkbox="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 机构选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:treeselect id="testOffice" title="机构选择"
@@ -122,8 +136,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
@@ -143,7 +155,7 @@
 							<label class="control-label col-sm-2" title="">
 								<span class="required hide">*</span> 备注信息：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-10">
-								<#form:ueditor path="remarks" maxlength="10000" height="200" class="required"
+								<#form:ueditor path="remarks" maxlength="10000" height="200" class=""
 									simpleToolbars="true" readonly="false" outline="false"/>
 							</div>
 						</div>
@@ -156,6 +168,20 @@
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
 									uploadType="image" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">返回路径：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadImage2" returnPath="true"
+									filePathInputId="uploadImage2Path" fileNameInputId="uploadImage2Name"
+									uploadType="image" readonly="false" maxUploadNum="3" isMini="false"/>
+								<#form:input name="uploadImage2Path" class="form-control"/>
+								<#form:input name="uploadImage2Name" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -243,7 +269,7 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'日期选择', name:'testDate', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate required', 'readonly':'true',
+			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate ', 'readonly':'true',
 				dataInit: function(element){ $(element).on('focus', function(){
 					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
 				});
@@ -251,7 +277,7 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'日期时间', name:'testDatetime', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate required', 'readonly':'true',
+			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate ', 'readonly':'true',
 				dataInit: function(element){ $(element).on('focus', function(){
 					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});
 				});
@@ -334,14 +360,15 @@ $("#testDataChildDataGrid").dataGrid({
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
-			if(data.result == Global.TRUE){
-				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.page();
-				});
-			}
-		}, "json");
+// 		js.ajaxSubmitForm($(form), function(data){
+// 			js.showMessage(data.message);
+// 			if(data.result == Global.TRUE){
+// 				js.closeCurrentTabPage(function(contentWindow){
+// 					contentWindow.page();
+// 				});
+// 			}
+// 		}, "json");
+		js.showMessage('模拟保存成功');
     }
 });
 </script>
