@@ -13,7 +13,7 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 
 /**
- * Servlet 配置
+ * Druid 配置
  * @author ThinkGem
  * @version 2017年11月30日
  */

@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>3295</x>
-	<y>1262</y>
+	<x>2167</x>
+	<y>478</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -7602,6 +7602,19 @@
 					<columns>
 						<column>
 							<id>18d4616b20d068ccad4ecb854b2073ca2458b8df</id>
+							<desc>false</desc>
+						</column>
+					</columns>
+				</inidex>
+				<inidex>
+					<full_text>false</full_text>
+					<non_unique>true</non_unique>
+					<name>idx_sys_menu_wt</name>
+					<type></type>
+					<description></description>
+					<columns>
+						<column>
+							<id>2f21e992c73004d22b4752787472c75e4ed6944e</id>
 							<desc>false</desc>
 						</column>
 					</columns>

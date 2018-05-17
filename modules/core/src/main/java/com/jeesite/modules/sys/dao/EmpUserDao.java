@@ -11,7 +11,7 @@ import com.jeesite.modules.sys.entity.EmpUser;
 /**
  * 员工管理DAO接口
  * @author ThinkGem
- * @version 2015-4-24
+ * @version 2017-03-25
  */
 @MyBatisDao(dataSourceName=DataSourceHolder.DEFAULT)
 public interface EmpUserDao extends CrudDao<EmpUser> {

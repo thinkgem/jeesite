@@ -250,8 +250,7 @@ CREATE TABLE js_sys_dict_type
 	update_by varchar(64) NOT NULL COMMENT '更新者',
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
-	PRIMARY KEY (id),
-	UNIQUE (dict_type)
+	PRIMARY KEY (id)
 ) COMMENT = '字典类型表';
 
 
@@ -854,6 +853,7 @@ CREATE INDEX idx_sys_menu_tss ON js_sys_menu (tree_sorts ASC);
 CREATE INDEX idx_sys_menu_sc ON js_sys_menu (sys_code ASC);
 CREATE INDEX idx_sys_menu_is ON js_sys_menu (is_show ASC);
 CREATE INDEX idx_sys_menu_mcs ON js_sys_menu (module_codes ASC);
+CREATE INDEX idx_sys_menu_wt ON js_sys_menu (weight ASC);
 CREATE INDEX idx_sys_module_status ON js_sys_module (status ASC);
 CREATE INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner (create_by ASC);
 CREATE INDEX idx_sys_msg_inner_status ON js_sys_msg_inner (status ASC);

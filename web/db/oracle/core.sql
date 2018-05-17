@@ -241,7 +241,7 @@ CREATE TABLE js_sys_dict_type
 (
 	id varchar2(64) NOT NULL,
 	dict_name nvarchar2(100) NOT NULL,
-	dict_type varchar2(100) NOT NULL UNIQUE,
+	dict_type varchar2(100) NOT NULL,
 	is_sys char(1) NOT NULL,
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,
@@ -851,6 +851,7 @@ CREATE INDEX idx_sys_menu_tss ON js_sys_menu (tree_sorts);
 CREATE INDEX idx_sys_menu_sc ON js_sys_menu (sys_code);
 CREATE INDEX idx_sys_menu_is ON js_sys_menu (is_show);
 CREATE INDEX idx_sys_menu_mcs ON js_sys_menu (module_codes);
+CREATE INDEX idx_sys_menu_wt ON js_sys_menu (weight);
 CREATE INDEX idx_sys_module_status ON js_sys_module (status);
 CREATE INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner (create_by);
 CREATE INDEX idx_sys_msg_inner_status ON js_sys_msg_inner (status);
