@@ -405,40 +405,18 @@ jdbc:
 #  realtime:
 #    # 是否开启
 #    enabled: true
-#    # 消息发送任务Bean名称
-#    sendTaskBeanName: msgLocalSendTask
+#    # 消息实时推送任务Bean名称
+#    beanName: msgLocalPushTask
 #
 #  # 邮件发送参数
 #  email:
+#    beanName: emailSendService
 #    fromAddress: test@163.com
 #    fromPassword: 123456
 #    fromHostName: smtp.163.com
 #    sslOnConnect: false
 #    sslSmtpPort: 994
 #
-#  # 短信网关
-#  sms:
-#    url: http://host:port/msg/sendSms
-#    data: account=demo&pswd=demo&product=
-#    suffix: 【JeeSite】
-#
-#  # 微信相关
-#  weixin:
-#    #微信应用ID
-#    appid: ~
-#    #微信应用密钥
-#    secret: ~
-#    # 微信服务器配置
-#    server:
-#      # 微信服务器配置Token
-#      token: ~
-#      # 微信服务器配置EncodingAESKey
-#      aeskey: ~
-#      # 微信服务器是否开启Debug模式，开启后发送未知消息时候会返回消息内容
-#      debug: true
-#    # 微信OAuth登录授权回调地址
-#    oauth:
-#      redirectUri: http://demo.jeesite.com/jeesite
 
 #============================#
 #===== Video settings =======#

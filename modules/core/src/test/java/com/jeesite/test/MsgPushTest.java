@@ -6,6 +6,7 @@ package com.jeesite.test;
 import java.util.Date;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,6 +18,8 @@ import com.jeesite.modules.msg.entity.content.AppMsgContent;
 import com.jeesite.modules.msg.entity.content.EmailMsgContent;
 import com.jeesite.modules.msg.entity.content.PcMsgContent;
 import com.jeesite.modules.msg.entity.content.SmsMsgContent;
+import com.jeesite.modules.msg.service.MsgPushService;
+import com.jeesite.modules.msg.task.MsgLocalPushTask;
 import com.jeesite.modules.msg.utils.MsgPushUtils;
 
 /**
@@ -28,8 +31,27 @@ import com.jeesite.modules.msg.utils.MsgPushUtils;
 @SpringBootTest(classes=ApplicationTest.class)
 @Rollback(false)
 public class MsgPushTest extends BaseSpringContextTests {
-	
+
 	@Test
+	public void testSend(){
+//		for (int i=0; i<1; i++){
+//			testPC();
+//			testApp();
+//			testSMS();
+//			testMail();
+//		}
+		testTask();
+	}
+	
+	@Autowired
+	private MsgPushService msgPushService;
+	
+	public void testTask(){
+		MsgLocalPushTask task = new MsgLocalPushTask();
+		task.setMsgPushService(msgPushService);
+		task.execute();
+	}
+	
 	public void testPC(){
 		PcMsgContent msgContent = new PcMsgContent();
 		msgContent.setTitle("提示信息");
@@ -43,7 +65,6 @@ public class MsgPushTest extends BaseSpringContextTests {
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
 	
-	@Test
 	public void testApp(){
 		AppMsgContent msgContent = new AppMsgContent();
 		msgContent.setTitle("提示信息");
@@ -56,7 +77,6 @@ public class MsgPushTest extends BaseSpringContextTests {
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
 	
-	@Test
 	public void testSMS(){
 		SmsMsgContent msgContent = new SmsMsgContent();
 		msgContent.setTitle("提示信息");
@@ -69,7 +89,6 @@ public class MsgPushTest extends BaseSpringContextTests {
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
 	
-	@Test
 	public void testMail(){
 		EmailMsgContent msgContent = new EmailMsgContent();
 		msgContent.setTitle("提示信息");
@@ -81,15 +100,5 @@ public class MsgPushTest extends BaseSpringContextTests {
 		// 延迟推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
-
-//	@Test
-//	public void test(){
-//		for (int i=0; i<5; i++){
-//			testPC();
-//			testApp();
-//			testSMS();
-//			testMail();
-//		}
-//	}
 	
 }

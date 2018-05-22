@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 员工用户Controller
@@ -131,7 +133,7 @@ public class EmpUserController extends BaseController {
 		return "modules/sys/user/empUserForm";
 	}
 
-	@RequiresPermissions("sys:empUser:edit")
+	@RequiresPermissions(value={"sys:empUser:edit","sys:empUser:authRole"}, logical=Logical.OR)
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated EmpUser empUser, String oldLoginCode, String op, HttpServletRequest request) {
@@ -144,12 +146,14 @@ public class EmpUserController extends BaseController {
 		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, empUser.getLoginCode()/*, null*/))) {
 			return renderResult(Global.FALSE, text("保存用户失败，登录账号''{0}''已存在", empUser.getLoginCode()));
 		}
-		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)){
+		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)
+				&& UserUtils.getSubject().isPermitted("sys:empUser:edit")){
 			empUser.setUserType(User.USER_TYPE_EMPLOYEE);
 			empUser.setMgrType(User.MGR_TYPE_NOT_ADMIN);
 			empUserService.save(empUser);
 		}
-		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH)){
+		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH)
+				&& UserUtils.getSubject().isPermitted("sys:empUser:authRole")){
 			userService.saveAuth(empUser);
 		}
 		return renderResult(Global.TRUE, text("保存用户''{0}''成功", empUser.getUserName()));
@@ -233,7 +237,7 @@ public class EmpUserController extends BaseController {
 	 * @param empUser
 	 * @return
 	 */
-	@RequiresPermissions("sys:empUser:edit")
+	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
 	@RequestMapping(value = "disable")
 	public String disable(EmpUser empUser) {
@@ -256,7 +260,7 @@ public class EmpUserController extends BaseController {
 	 * @param empUser
 	 * @return
 	 */
-	@RequiresPermissions("sys:empUser:edit")
+	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
 	@RequestMapping(value = "enable")
 	public String enable(EmpUser empUser) {
@@ -276,7 +280,7 @@ public class EmpUserController extends BaseController {
 	 * @param empUser
 	 * @return
 	 */
-	@RequiresPermissions("sys:empUser:edit")
+	@RequiresPermissions("sys:empUser:resetpwd")
 	@RequestMapping(value = "resetpwd")
 	@ResponseBody
 	public String resetpwd(EmpUser empUser) {
@@ -315,7 +319,7 @@ public class EmpUserController extends BaseController {
 	/** 
 	 * 用户授权数据权限
 	 */
-	@RequiresPermissions("sys:empUser:edit")
+	@RequiresPermissions("sys:empUser:authDataScope")
 	@RequestMapping(value = "formAuthDataScope")
 	public String formAuthDataScope(EmpUser empUser, Model model, HttpServletRequest request) {
 		UserDataScope userDataScope = new UserDataScope();
@@ -330,7 +334,7 @@ public class EmpUserController extends BaseController {
 	/** 
 	 * 保存用户授权数据权限
 	 */
-	@RequiresPermissions("sys:empUser:edit")
+	@RequiresPermissions("sys:empUser:authDataScope")
 	@RequestMapping(value = "saveAuthDataScope")
 	@ResponseBody
 	public String saveAuthDataScope(EmpUser empUser, HttpServletRequest request) {
