@@ -1,4 +1,12 @@
 
+# 产品或项目名称、版本、版权年份
+productName: JeeSite Demo
+productVersion: V4.0
+copyrightYear: 2018
+
+# 软件提供商公司或个人名称
+companyName: ThinkGem
+
 # 数据库连接
 jdbc: 
   
@@ -9,3 +17,4 @@ jdbc:
   username: root
   password: 123456
   testSql: SELECT 1
+

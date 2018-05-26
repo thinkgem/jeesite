@@ -19,7 +19,7 @@ import com.jeesite.modules.msg.entity.content.EmailMsgContent;
 import com.jeesite.modules.msg.entity.content.PcMsgContent;
 import com.jeesite.modules.msg.entity.content.SmsMsgContent;
 import com.jeesite.modules.msg.service.MsgPushService;
-import com.jeesite.modules.msg.task.MsgLocalPushTask;
+import com.jeesite.modules.msg.task.impl.MsgLocalPushTask;
 import com.jeesite.modules.msg.utils.MsgPushUtils;
 
 /**
@@ -34,13 +34,13 @@ public class MsgPushTest extends BaseSpringContextTests {
 
 	@Test
 	public void testSend(){
-//		for (int i=0; i<1; i++){
-//			testPC();
-//			testApp();
-//			testSMS();
-//			testMail();
-//		}
-		testTask();
+		for (int i=0; i<3; i++){
+			testPC();
+			testApp();
+			testSMS();
+			testMail();
+		}
+//		testTask();
 	}
 	
 	@Autowired

@@ -417,6 +417,13 @@ jdbc:
 #    sslOnConnect: false
 #    sslSmtpPort: 994
 #
+#  # 短信网关
+#  sms:
+#    beanName: smsSendService
+#    url: http://localhost:80/msg/sendSms
+#    data: account=demo&pswd=demo&product=
+#    prefix: ~
+#    suffix: 【JeeSite】
 
 #============================#
 #===== Video settings =======#

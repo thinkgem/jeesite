@@ -3,6 +3,7 @@
  */
 package com.jeesite.modules.sys.db;
 
+import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeesite.common.callback.MethodCallback;
@@ -13,6 +14,10 @@ import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.gen.entity.GenTable;
 import com.jeesite.modules.gen.entity.GenTableColumn;
 import com.jeesite.modules.gen.service.GenTableService;
+import com.jeesite.modules.job.entity.JobEntity;
+import com.jeesite.modules.job.service.JobService;
+import com.jeesite.modules.msg.task.impl.MsgLocalMergePushTask;
+import com.jeesite.modules.msg.task.impl.MsgLocalPushTask;
 import com.jeesite.modules.sys.dao.RoleMenuDao;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.entity.Company;
@@ -365,6 +370,30 @@ public class InitCoreData extends BaseInitDataTests {
 				return null;
 			}
 		});
+	}
+
+	@Autowired
+	private JobService jobService;
+	/**
+	 * 初始化消息推送服务
+	 */
+	public void initMsgPushJob(){
+		JobEntity job = new JobEntity(MsgLocalPushTask.class.getSimpleName(), "SYSTEM");
+		job.setDescription("消息推送服务 (实时推送)");
+		job.setInvokeTarget("msgLocalPushTask.execute()");
+		job.setCronExpression("0/3 * * * * ?");
+		job.setConcurrent(Global.NO);
+		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
+		job.setStatus(JobEntity.STATUS_PAUSED);
+		jobService.insert(job);
+		job = new JobEntity(MsgLocalMergePushTask.class.getSimpleName(), "SYSTEM");
+		job.setDescription("消息推送服务 (延迟推送)");
+		job.setInvokeTarget("msgLocalMergePushTask.execute()");
+		job.setCronExpression("0 0/30 * * * ?");
+		job.setConcurrent(Global.NO);
+		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
+		job.setStatus(JobEntity.STATUS_PAUSED);
+		jobService.insert(job);
 	}
 	
 	@Autowired
