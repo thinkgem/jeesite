@@ -11,4 +11,4 @@ echo ""
 
 cd ..
 MAVEN_OPTS="$MAVEN_OPTS -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
-mvn clean spring-boot:run -U
+mvn clean spring-boot:run -Dmaven.test.skip=true -U
