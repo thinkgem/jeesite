@@ -5,12 +5,15 @@ package com.jeesite.test;
 
 import java.util.Date;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.sys.dao.AreaDao;
 import com.jeesite.modules.sys.dao.CompanyDao;
@@ -28,6 +31,8 @@ import com.jeesite.modules.sys.entity.User;
  * @author ThinkGem
  * @version 2017年2月25日
  */
+@ActiveProfiles("test")
+@SpringBootTest(classes=ApplicationTest.class)
 public class DaoMapperTest extends BaseSpringContextTests {
 
 	@Autowired
@@ -45,35 +50,30 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	public void testTableAnnotation() throws Exception{
 		try{
 			
+			System.out.println("============ 插入、批量插入测试 ============");
 			Config config = new Config();
 			config.setId("1");
 			config.setConfigKey("test");
 			config.setConfigName("test");
 			config.setConfigValue("1");
 			config.setIsSys("1");
-			Config config2 = (Config)BeanUtils.cloneBean(config);
+			Config config2 = (Config)config.clone();
 			config2.setId("2");
-			Config config3 = (Config)BeanUtils.cloneBean(config);
+			Config config3 = (Config)config.clone();
 			config3.setId("3");
-			
 			System.out.println(configDao.insert(config));
 			System.out.println(configDao.insertBatch(ListUtils.newArrayList(config2, config3)));
-
-			User user = new User();
-			user.setUserType(User.USER_TYPE_NONE);
-			System.out.println(userDao.findList(user));
 			
+			System.out.println("============ 更新、删除测试 ============");
 			Area area = new Area();
 			area.setAreaCode("1");
 			area.setAreaName("你好");
 			area.setStatus("0");
-			
 			Area where = new Area();
 			where.setAreaCode("2");
 			where.setId_in(new String[]{"1","2"});
 			where.setAreaName("你好2");
 			where.setStatus("0");
-			
 			System.out.println(areaDao.update(area));
 			System.out.println(areaDao.updateByEntity(area, where));
 			System.out.println(areaDao.updateStatus(area));
@@ -83,6 +83,12 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			System.out.println(areaDao.deleteByEntity(where));
 			System.out.println(areaDao.findList(area));
 
+			System.out.println("============ 基本信息查询测试 ============");
+			User user = new User();
+			user.setUserType(User.USER_TYPE_NONE);
+			System.out.println(userDao.findList(user));
+			
+			System.out.println("============ 条件嵌套，日期范围，自定义sqlMap测试 ============");
 			Company company = new Company("1");
 			company.setCompanyName("a");
 			company.setCreateDate_gte(new Date());
@@ -91,7 +97,6 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company.getArea().setAreaName("a");
 			company.getArea().setCreateDate_gte(new Date());
 			company.getArea().setCreateDate_lte(new Date());
-
 			company.setFullName("a");
 			company.setViewCode("1");
 			company.setParentCode("0");
@@ -102,14 +107,22 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company.setTreeLeaf("1");
 			company.setTreeNames("a");
 			System.out.println(companyDao.insert(company));
-			
 			System.out.println(companyDao.get(company));
 			System.out.println(companyDao.findCount(company));
 			
+			System.out.println("============ 分页测试，查询子节点 ============");
 			company.setPage(new Page<Company>(1, 20));
 			company.setIsQueryChildren(true);
 			System.out.println(companyDao.findList(company));
 			
+			System.out.println("============ 扩展条件语句前带AND容错测试 ============");
+			Company company2 = new Company();
+			company2.getSqlMap().getWhere().disableAutoAddStatusWhere();
+			company2.getSqlMap().getDataScope().addFilter("dsf",
+					"Company", "a.company_code", DataScope.CTRL_PERMI_HAVE);
+			System.out.println(companyDao.findList(company2));
+			
+			System.out.println("============ 树结构基本查询测试 ============");
 			DictData dictData = new DictData();
 			dictData.setParentCodes("0,");
 			System.out.println(dictDataDao.findByParentCodesLike(dictData));
@@ -121,4 +134,45 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		}
 	}
 	
+	public static void main(String[] args) {
+		System.out.println("============ 基本测试 ============");
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.EQ, "abc").toSql());
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql());
+
+		System.out.println("============ 重复赋值测试 ============");
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.LIKE, "abc").and("name", QueryType.LIKE, "def").toSql());
+		
+		System.out.println("============ 带括号测试 ============");
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
+				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql());
+
+		System.out.println("============ 带括号空值测试 ============");
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
+				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql());
+		System.out.println(new Config("1").getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
+		
+		System.out.println("============ 实体嵌套测试 ============");
+		Company company = new Company("1");
+		company.setCreateDate_gte(new Date());
+		company.setCreateDate_lte(new Date());
+		company.setArea(new Area("2"));
+		company.getArea().setAreaName("a");
+		company.getArea().setCreateDate_gte(new Date());
+		company.getArea().setCreateDate_lte(new Date());
+		System.out.println(company.getSqlMap().getWhere().toSql());
+		
+	}
 }
