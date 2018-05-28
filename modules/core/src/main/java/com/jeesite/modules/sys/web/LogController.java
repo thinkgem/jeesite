@@ -3,6 +3,8 @@
  */
 package com.jeesite.modules.sys.web;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.service.LogService;
@@ -44,8 +47,15 @@ public class LogController extends BaseController {
      */
     @RequiresPermissions("sys:log:view")
     @RequestMapping(value = "list")
-    public String list(Log sysLog, Model model) {
-        model.addAttribute("sysLog", sysLog);
+    public String list(Log log, Model model) {
+        // 设置默认时间范围，默认当前月
+        if (log.getCreateDate_gte() == null){
+            log.setCreateDate_gte(DateUtils.setDays(new Date(), 1));
+        }
+        if (log.getCreateDate_lte() == null){
+            log.setCreateDate_lte(DateUtils.addDays(DateUtils.addMonths(log.getCreateDate_gte(), 1), -1));
+        }
+        model.addAttribute("log", log);
         return "modules/sys/logList";
     }
     
