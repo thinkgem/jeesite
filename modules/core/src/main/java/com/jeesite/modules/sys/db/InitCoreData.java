@@ -257,7 +257,6 @@ public class InitCoreData extends BaseInitDataTests {
 				if("save".equals(action)){
 					User entity = (User)params[1];
 					entity.setIsNewRecord(true);
-					entity.setPassword(UserService.encryptPassword(entity.getPassword()));
 					userService.save(entity);
 					return null;
 				}
