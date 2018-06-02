@@ -24,4 +24,7 @@
 	<!-- 内容管理模块缓存 -->
 	<cache name="cmsCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
 	
+	<!-- PC端消息推送缓存 -->
+	<cache name="msgPcPoolCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="false" diskPersistent="false" statistics="true"/>
+	
 </ehcache>
