@@ -20,6 +20,8 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.msg.entity.MsgPush;
+import com.jeesite.modules.msg.utils.MsgPushUtils;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -332,10 +334,11 @@ public class AccountController extends BaseController{
 	 */
 	private String sendEmailValidCode(User user, String code, String title){
 		try {
-			String contentTitle = user.getUserName() + "（" + user.getLoginCode() + "）"+title+"验证码";
-			String contentText = "尊敬的用户，您好!\n\n您的验证码是：" + code +"（请勿透露给其他人）\n\n"
+			title = user.getUserName() + "（" + user.getLoginCode() + "）"+title+"验证码";
+			String content = "尊敬的用户，您好!\n\n您的验证码是：" + code +"（请勿透露给其他人）\n\n"
 						+ "请复制后，填写在你的验证码窗口完成验证。\n\n本邮件由系统自动发出，请勿回复。\n\n感谢您的使用。";
-			String receiverCodes = user.getEmail(), receiverNames = user.getUserName();
+			String receiveUserCode = "[CODE]"+user.getEmail();
+			MsgPushUtils.push(MsgPush.TYPE_EMAIL, title, content, null, null, receiveUserCode);
 		} catch (Exception e) {
 			logger.error(title+"发送邮件错误。", e);
 			return renderResult(Global.FALSE, "系统出现了点问题，错误信息：" + e.getMessage());
@@ -348,9 +351,10 @@ public class AccountController extends BaseController{
 	 */
 	private String sendSmsValidCode(User user, String code, String title){
 		try {
-			String contentTitle = user.getUserName() + "（" + user.getLoginCode() + "）"+title+"验证码";
-			String contentText = "您好，您的验证码是：" + code +"（请勿透露给其他人）感谢您的使用。";
-			String receiverCodes = user.getMobile(), receiverNames = user.getUserName();
+			title = user.getUserName() + "（" + user.getLoginCode() + "）"+title+"验证码";
+			String content = "您好，您的验证码是：" + code +"（请勿透露给其他人）感谢您的使用。";
+			String receiveUserCode = "[CODE]"+user.getMobile();
+			MsgPushUtils.push(MsgPush.TYPE_SMS, title, content, null, null, receiveUserCode);
 		} catch (Exception e) {
 			logger.error(title+"发送短信错误。", e);
 			return renderResult(Global.FALSE, "系统出现了点问题，错误信息：" + e.getMessage());
