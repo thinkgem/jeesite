@@ -148,8 +148,6 @@ public class EmpUserController extends BaseController {
 		}
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)
 				&& UserUtils.getSubject().isPermitted("sys:empUser:edit")){
-			empUser.setUserType(User.USER_TYPE_EMPLOYEE);
-			empUser.setMgrType(User.MGR_TYPE_NOT_ADMIN);
 			empUserService.save(empUser);
 		}
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH)

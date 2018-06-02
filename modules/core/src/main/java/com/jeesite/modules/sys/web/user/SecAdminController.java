@@ -113,7 +113,7 @@ public class SecAdminController extends BaseController {
 		// 取消二级管理员身份
 		user.setMgrType(User.MGR_TYPE_NOT_ADMIN);
 		userService.updateMgrType(user);
-		return renderResult(Global.TRUE, "取消用户'" + user.getUserName() + "'二级管理员身份成功！");
+		return renderResult(Global.TRUE, "取消用户'" + user.getUserName() + "'管理员身份成功！");
 	}
 	
 }
