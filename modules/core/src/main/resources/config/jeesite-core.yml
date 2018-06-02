@@ -43,6 +43,10 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
+  
+  # JTA 分布式事务
+  jta:
+    enabled: false
 
   # 表名前缀
   tablePrefix: js_
