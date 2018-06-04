@@ -416,34 +416,40 @@ public class ExcelImport {
 					}
 					//log.debug("Import value type: ["+i+","+column+"] " + valType);
 					try {
-						if (val != null){
-							if (valType == String.class){
-								String s = String.valueOf(val.toString());
-								if(StringUtils.endsWith(s, ".0")){
-									val = StringUtils.substringBefore(s, ".0");
+						if (StringUtils.isNotBlank(ef.attrName())){
+							if (ef.fieldType() != Class.class){
+								val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val);
+							}
+						}else{
+							if (val != null){
+								if (valType == String.class){
+									String s = String.valueOf(val.toString());
+									if(StringUtils.endsWith(s, ".0")){
+										val = StringUtils.substringBefore(s, ".0");
+									}else{
+										val = String.valueOf(val.toString());
+									}
+								}else if (valType == Integer.class){
+									val = Double.valueOf(val.toString()).intValue();
+								}else if (valType == Long.class){
+									val = Double.valueOf(val.toString()).longValue();
+								}else if (valType == Double.class){
+									val = Double.valueOf(val.toString());
+								}else if (valType == Float.class){
+									val = Float.valueOf(val.toString());
+								}else if (valType == Date.class){
+									if (val instanceof String){
+										val = DateUtils.parseDate(val);
+									}else if (val instanceof Double){
+										val = DateUtil.getJavaDate((Double)val); // POI Excel 日期格式转换
+									}
 								}else{
-									val = String.valueOf(val.toString());
-								}
-							}else if (valType == Integer.class){
-								val = Double.valueOf(val.toString()).intValue();
-							}else if (valType == Long.class){
-								val = Double.valueOf(val.toString()).longValue();
-							}else if (valType == Double.class){
-								val = Double.valueOf(val.toString());
-							}else if (valType == Float.class){
-								val = Float.valueOf(val.toString());
-							}else if (valType == Date.class){
-								if (val instanceof String){
-									val = DateUtils.parseDate(val);
-								}else if (val instanceof Double){
-									val = DateUtil.getJavaDate((Double)val); // POI Excel 日期格式转换
-								}
-							}else{
-								if (ef.fieldType() != Class.class){
-									val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val.toString());
-								}else{
-									val = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
-											"fieldtype."+valType.getSimpleName()+"Type")).getMethod("getValue", String.class).invoke(null, val.toString());
+									if (ef.fieldType() != Class.class){
+										val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val.toString());
+									}else{
+										val = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
+												"fieldtype."+valType.getSimpleName()+"Type")).getMethod("getValue", String.class).invoke(null, val.toString());
+									}
 								}
 							}
 						}
@@ -454,14 +460,18 @@ public class ExcelImport {
 						exceptionCallback.execute(ex, i, column);
 					}
 					// set entity value
-					if (os[1] instanceof Field){
-						ReflectUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
-					}else if (os[1] instanceof Method){
-						String mthodName = ((Method)os[1]).getName();
-						if ("get".equals(mthodName.substring(0, 3))){
-							mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
+					if (StringUtils.isNotBlank(ef.attrName())){
+						ReflectUtils.invokeSetter(e, ef.attrName(), val);
+					}else{
+						if (os[1] instanceof Field){
+							ReflectUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
+						}else if (os[1] instanceof Method){
+							String mthodName = ((Method)os[1]).getName();
+							if ("get".equals(mthodName.substring(0, 3))){
+								mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
+							}
+							ReflectUtils.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
 						}
-						ReflectUtils.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
 					}
 				}
 				sb.append(val+", ");

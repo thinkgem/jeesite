@@ -3,6 +3,8 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
+import java.util.List;
+
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -15,11 +17,18 @@ import com.jeesite.modules.sys.utils.EmpUtils;
  */
 public class OfficeType {
 
+	private static ThreadLocal<List<Office>> cache = new ThreadLocal<>();
+	
 	/**
 	 * 获取对象值（导入）
 	 */
 	public static Object getValue(String val) {
-		for (Office e : EmpUtils.getOfficeAllList()){
+		List<Office> cacheList = cache.get();
+		if (cacheList == null){
+			cacheList = EmpUtils.getOfficeAllList();
+			cache.set(cacheList);
+		}
+		for (Office e : cacheList){
 			if (StringUtils.trimToEmpty(val).equals(e.getOfficeName())){
 				return e;
 			}

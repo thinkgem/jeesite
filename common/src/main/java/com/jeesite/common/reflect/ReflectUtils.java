@@ -69,7 +69,7 @@ public class ReflectUtils {
 			}
 		}
 	}
-
+	
 	/**
 	 * 直接读取对象属性值, 无视private/protected修饰符, 不经过getter函数.
 	 */
@@ -141,6 +141,9 @@ public class ReflectUtils {
 				if (args[i] != null && !args[i].getClass().equals(cs[i])){
 					if (cs[i] == String.class){
 						args[i] = ObjectUtils.toString(args[i]);
+						if(StringUtils.endsWith((String)args[i], ".0")){
+							args[i] = StringUtils.substringBefore((String)args[i], ".0");
+						}
 					}else if (cs[i] == Integer.class){
 						args[i] = ObjectUtils.toInteger(args[i]);
 					}else if (cs[i] == Long.class){

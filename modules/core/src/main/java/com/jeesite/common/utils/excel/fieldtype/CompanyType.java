@@ -3,6 +3,8 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
+import java.util.List;
+
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -15,11 +17,18 @@ import com.jeesite.modules.sys.utils.EmpUtils;
  */
 public class CompanyType {
 
+	private static ThreadLocal<List<Company>> cache = new ThreadLocal<>();
+
 	/**
 	 * 获取对象值（导入）
 	 */
 	public static Object getValue(String val) {
-		for (Company e : EmpUtils.getCompanyAllList()){
+		List<Company> cacheList = cache.get();
+		if (cacheList == null){
+			cacheList = EmpUtils.getCompanyAllList();
+			cache.set(cacheList);
+		}
+		for (Company e : cacheList){
 			if (StringUtils.trimToEmpty(val).equals(e.getCompanyName())){
 				return e;
 			}

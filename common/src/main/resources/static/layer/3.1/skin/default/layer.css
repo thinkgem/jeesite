@@ -183,7 +183,7 @@ html #layuicss-skinlayercss{display: none; position: absolute; width: 1989px;}
 /* ThinkGem */
 .layui-layer-title {font-weight:bold;font-size:15px;background:#fff;height:45px;line-height:45px;}
 .layui-layer-page .layui-layer-content {overflow-x:hidden;}
-.layui-layer-page .layui-layer-content .licFile{padding-top:6px;}
+.layui-layer-page .layui-layer-content .form-file{padding-top:4px;}
 .layui-layer-page .layui-layer-btn, .layui-layer-iframe .layui-layer-btn {
 	padding-top:3px;padding-bottom:10px;}
 .layui-layer-btn .layui-layer-btn0{border-color:#367fa9;background-color: #367fa9;}

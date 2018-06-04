@@ -359,7 +359,6 @@ public class InitCoreData extends BaseInitDataTests {
 				else if("save".equals(action)){
 					EmpUser entity = (EmpUser)params[1];
 					entity.setIsNewRecord(true);
-					entity.setPassword(UserService.encryptPassword(entity.getPassword()));
 					empUserService.save(entity);
 					// 设置当前为管理员，否则无法保存用户角色关系
 					entity.setCurrentUser(new User(User.SUPER_ADMIN_CODE));

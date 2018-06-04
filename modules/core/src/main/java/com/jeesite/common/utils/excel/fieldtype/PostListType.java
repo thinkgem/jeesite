@@ -27,13 +27,13 @@ public class PostListType {
 	 */
 	public static Object getValue(String val) {
 		List<Post> postList = ListUtils.newArrayList();
-		List<Post> allPostList = cache.get();
-		if (allPostList == null){
-			allPostList = postService.findList(new Post());
-			cache.set(allPostList); // 不知道会不会引起内存泄露，先这样用着
+		List<Post> cacheList = cache.get();
+		if (cacheList == null){
+			cacheList = postService.findList(new Post());
+			cache.set(cacheList);
 		}
 		for (String s : StringUtils.split(val, ",")) {
-			for (Post e : allPostList) {
+			for (Post e : cacheList) {
 				if (StringUtils.trimToEmpty(s).equals(e.getPostName())) {
 					postList.add(e);
 				}

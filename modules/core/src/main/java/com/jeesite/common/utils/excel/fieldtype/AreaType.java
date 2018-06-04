@@ -3,6 +3,8 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
+import java.util.List;
+
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.utils.AreaUtils;
@@ -15,11 +17,18 @@ import com.jeesite.modules.sys.utils.AreaUtils;
  */
 public class AreaType {
 
+	private static ThreadLocal<List<Area>> cache = new ThreadLocal<>();
+	
 	/**
 	 * 获取对象值（导入）
 	 */
 	public static Object getValue(String val) {
-		for (Area e : AreaUtils.getAreaAllList()){
+		List<Area> cacheList = cache.get();
+		if (cacheList == null){
+			cacheList = AreaUtils.getAreaAllList();
+			cache.set(cacheList);
+		}
+		for (Area e : cacheList){
 			if (StringUtils.trimToEmpty(val).equals(e.getAreaName())){
 				return e;
 			}
