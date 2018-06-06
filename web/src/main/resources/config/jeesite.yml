@@ -89,6 +89,10 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
+#  
+#  # JTA 分布式事务
+#  jta:
+#    enabled: false
 #
 #  # 表名前缀
 #  tablePrefix: js_
@@ -195,7 +199,7 @@ jdbc:
 #    }]
 #
 #  # 多租户模式（SAAS模式）
-#  useCorpModel: false
+#  useCorpModel: true
 #
 ## 任务调度
 #job:
