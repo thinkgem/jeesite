@@ -4,19 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-        <groupId>com.jeesite</groupId>
-        <artifactId>jeesite-parent</artifactId>
-        <version>4.0.4-SNAPSHOT</version>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-parent</artifactId>
+		<version>4.0.4-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 		
 		<!-- ====== 这是一个新增模块示例项目，你可以拷贝此项目，修改 artifactId 为您的模块即可 ====== -->
 		
-        <!-- <relativePath>../parent/pom.xml</relativePath>					/jeesite -->
-        <!-- <relativePath>../../parent/pom.xml</relativePath>				/jeesite/modules -->
-        <!-- <relativePath>../../jeesite/parent/pom.xml</relativePath>		/jeesite-xxx -->
-        <!-- <relativePath>../../../jeesite/parent/pom.xml</relativePath>	/jeesite-xxx/modules -->
+		<!-- <relativePath>../parent/pom.xml</relativePath>					/jeesite -->
+		<!-- <relativePath>../../parent/pom.xml</relativePath>				/jeesite/modules -->
+		<!-- <relativePath>../../jeesite/parent/pom.xml</relativePath>		/jeesite-xxx -->
+		<!-- <relativePath>../../../jeesite/parent/pom.xml</relativePath>	/jeesite-xxx/modules -->
 		
-    </parent>
+	</parent>
 	
 	<artifactId>jeesite-module-template</artifactId>
 	<packaging>jar</packaging>

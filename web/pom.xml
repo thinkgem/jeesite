@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-        <groupId>com.jeesite</groupId>
-        <artifactId>jeesite-parent</artifactId>
-        <version>4.0.4-SNAPSHOT</version>
-        <relativePath>../parent/pom.xml</relativePath>
-    </parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-parent</artifactId>
+		<version>4.0.4-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
 	
 	<artifactId>jeesite-web</artifactId>
 	<packaging>war</packaging>
@@ -132,7 +132,7 @@
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
 		<repository>
-            <id>sonatype-repos-s</id>
+		    <id>sonatype-repos-s</id>
 			<name>Sonatype Repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<releases><enabled>false</enabled></releases>
@@ -150,7 +150,7 @@
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
 		</pluginRepository>
-        
+		
 	</pluginRepositories>
 	
 </project>

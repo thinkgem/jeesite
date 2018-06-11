@@ -28,7 +28,7 @@ jdbc:
   username: root
   password: 123456
   testSql: SELECT 1
-#
+
 #  # Oracle 数据库配置
 #  type: oracle
 #  driver: oracle.jdbc.driver.OracleDriver
@@ -36,7 +36,7 @@ jdbc:
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1 FROM DUAL
-#
+
 #  # Sql Server 数据库配置
 #  type: mssql
 #  driver: net.sourceforge.jtds.jdbc.Driver
@@ -44,7 +44,7 @@ jdbc:
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
-#  
+
 #  # PostgreSql 数据库配置（注意：一定要创建的schema与username相同，否则将找不到数据表字典信息）
 #  type: postgresql
 #  driver: org.postgresql.Driver
@@ -52,7 +52,7 @@ jdbc:
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
-#
+
 #  # 连接信息加密
 #  encrypt:
 #  
@@ -70,7 +70,7 @@ jdbc:
 #    minIdle: 3
 #    # 最大连接数
 #    maxActive: 20
-#
+
 #  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2
 #  
@@ -89,20 +89,20 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-#  
-#  # JTA 分布式事务
+  
+#  # JTA 分布式事务（v4.0.4+）
 #  jta:
 #    enabled: false
-#
+
 #  # 表名前缀
 #  tablePrefix: js_
-#
+
 #  # Druid连接池监控
 #  druid:
 #    stat:
 #      enabled: true
-#  
-## Redis 配置
+
+# Redis 配置
 #redis: 
 #  
 #  # Redis 连接参数
@@ -119,7 +119,7 @@ jdbc:
 #    maxIdle: 3
 #    maxTotal: 20
 #
-#  # 是否启用Redis系统缓存及会话
+#  # 是否启用Redis系统缓存及会话（专业版）
 #  cacheAndSession: false
 #  
 #  # 定义Key的前缀标识
@@ -140,8 +140,8 @@ jdbc:
 #
 #  # 分页默认大小
 #  pageSize: 20
-#
-## 用户相关参数
+
+# 用户相关参数
 #user:
 #
 #  # 指定超级管理员编号（研发团队使用的账号）
@@ -197,11 +197,11 @@ jdbc:
 #      expandLevel: -1,
 #      remarks: ""
 #    }]
-#
-#  # 多租户模式（SAAS模式）
-#  useCorpModel: true
-#
-## 任务调度
+
+#  # 多租户模式（SAAS模式）（专业版）
+#  useCorpModel: false
+
+# 任务调度（个人版+）
 #job:
 #
 #  # 是否自动启动任务调度（可关闭）
@@ -379,7 +379,7 @@ jdbc:
 
 #file:
 #
-#  # 文件上传跟路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+#  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 ##  baseDir: D:/jeesite
 #
 #  # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
@@ -403,6 +403,7 @@ jdbc:
 #===== Message settings =====#
 #============================#
 
+# 消息提醒中心（专业版）
 #msg:
 #
 #  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。

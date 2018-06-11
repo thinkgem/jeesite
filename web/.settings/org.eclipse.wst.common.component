@@ -11,10 +11,10 @@
         </dependent-module>
         <property name="component.exclusion.patterns"/>
         <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>
-        <property name="context-root" value="js"/>
+        <property name="context-root" value="jeesite-web"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
   </wb-module>
 </project-modules>

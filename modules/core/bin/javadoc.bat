@@ -12,6 +12,6 @@ echo.
 cd %~dp0
 
 cd ..
-call mvn clean javadoc:jar
+call mvn clean package -Pjavadoc
 
 pause
