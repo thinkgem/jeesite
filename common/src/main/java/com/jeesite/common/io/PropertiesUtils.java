@@ -21,6 +21,7 @@ import org.springframework.core.io.Resource;
 
 import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.lang.StringUtils;
 
 /**
  * Properties工具类， 可载入多个properties、yml文件，
@@ -57,6 +58,16 @@ public class PropertiesUtils {
 			}
 			for (String configFile : DEFAULT_CONFIG_FILE){
 				configFiles.add(configFile);
+			}
+			String customConfig = System.getProperty("spring.config.location");
+			if (StringUtils.isNotBlank(customConfig)){
+				if (!customConfig.contains("$")){
+					customConfig = org.springframework.util.StringUtils.cleanPath(customConfig);
+					if (!ResourceUtils.isUrl(customConfig)){
+						customConfig = ResourceUtils.FILE_URL_PREFIX + customConfig;
+					}
+				}
+				configFiles.add(customConfig);
 			}
 			logger.debug("Loading jeesite config: {}", configFiles);
 			INSTANCE = new PropertiesUtils(configFiles.toArray(new String[configFiles.size()]));
