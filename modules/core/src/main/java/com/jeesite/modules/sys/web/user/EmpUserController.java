@@ -326,6 +326,7 @@ public class EmpUserController extends BaseController {
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
+		empUser.setMgrType(User.MGR_TYPE_NOT_ADMIN);
 		userService.saveAuthDataScope(empUser);
 		return renderResult(Global.TRUE, text("用户分配数据权限成功"));
 	}
