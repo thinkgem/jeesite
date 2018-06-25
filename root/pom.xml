@@ -3,14 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<parent>
-        <groupId>com.jeesite</groupId>
-        <artifactId>jeesite-parent</artifactId>
-        <version>4.0.4-SNAPSHOT</version>
-        <relativePath>parent/pom.xml</relativePath>
-    </parent>
-	
+	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-root</artifactId>
+	<version>4.0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite</name>
