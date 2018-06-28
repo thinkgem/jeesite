@@ -5,29 +5,29 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [��Ϣ] ��ʼ�����ݿ⣬�����������
+echo [信息] 初始化数据库，请谨慎操作。
 echo.
 pause
 echo.
-echo [��Ϣ] �˲�������������������ݱ������ָ���ʼ״̬��
+echo [信息] 此操作会清空您的现有数据表，并恢复初始状态。
 echo.
-echo [��Ϣ] ȷ�ϼ����𣿷�����رմ��ڡ���5��
-echo.
-pause
-echo.
-echo [��Ϣ] �����ȷ�ϼ����𣿷�����رմ��ڡ���4��
+echo [信息] 确认继续吗？否则请关闭窗口。（5）
 echo.
 pause
 echo.
-echo [��Ϣ] �����ȷ�ϼ����𣿷�����رմ��ڡ���3��
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（4）
 echo.
 pause
 echo.
-echo [��Ϣ] �����ȷ�ϼ����𣿷�����رմ��ڡ���2��
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（3）
 echo.
 pause
 echo.
-echo [��Ϣ] �����ȷ�ϼ����𣿷�����رմ��ڡ���1��
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（2）
+echo.
+pause
+echo.
+echo [信息] 您真的确认继续吗？否则请关闭窗口。（1）
 echo.
 pause
 echo.
@@ -36,6 +36,6 @@ echo.
 cd %~dp0
 
 cd ..
-call mvn test -Dtest=com.jeesite.test.InitCoreData -U
+call mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitCoreData -U
 
 pause
