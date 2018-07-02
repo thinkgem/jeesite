@@ -19,6 +19,7 @@
 	
 	<properties>
 		
+		<finalName>web</finalName><!-- war包的名称  ${project.artifactId} -->
 		<start-class>com.jeesite.modules.config.Application</start-class>
 		
 		<!-- environment setting -->
@@ -70,7 +71,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>${finalName}</finalName>
 		<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
 		<plugins>
 			
@@ -84,6 +85,21 @@
 				<artifactId>maven-shade-plugin</artifactId>
 			</plugin> -->
 			
+			<!-- 打包插件, war包名称不带版本号 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes></packagingExcludes>
+					<warSourceExcludes></warSourceExcludes>
+					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+					<warName>${finalName}</warName>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			
 			<!-- Eclipse插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -91,7 +107,7 @@
 				<configuration>
 					<downloadSources>${eclipse-plugin-download-sources}</downloadSources>
 					<downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
-					<wtpContextName>${project.artifactId}</wtpContextName>
+					<wtpContextName>${finalName}</wtpContextName>
 					<wtpversion>2.0</wtpversion>
 					<jeeversion>6.0</jeeversion>
 				</configuration>

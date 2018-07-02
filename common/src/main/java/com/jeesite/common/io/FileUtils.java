@@ -948,6 +948,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// 取不到，取当前工作路径
+		if (StringUtils.isBlank(projectPath)){
+			projectPath = System.getProperty("user.dir");
+		}
 		return projectPath;
     }
     
@@ -981,6 +985,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			;
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		// 取不到，取当前工作路径
+		if (StringUtils.isBlank(webappPath)){
+			webappPath = System.getProperty("user.dir");
 		}
 		return webappPath;
     }

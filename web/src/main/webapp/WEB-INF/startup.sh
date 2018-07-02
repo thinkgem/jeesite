@@ -17,4 +17,4 @@ else
   RUN_JAVA="$JAVA_HOME"/bin/java
 fi
 
-exec $RUN_JAVA -cp `dirname $0`/../ $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+exec $RUN_JAVA -cp $PWD/../ $JAVA_OPTS org.springframework.boot.loader.WarLauncher

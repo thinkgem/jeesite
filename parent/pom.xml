@@ -94,7 +94,7 @@
 						</goals> -->
 						<configuration>
 							<!-- <classesDirectory>${project.outputDirectory}</classesDirectory>
-							<finalName>jeesite</finalName>
+							<finalName>${finalName}</finalName>
 							<outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/lib</outputDirectory>
 							<includes>
 								<include>com/thinkgem/jeesite/**</include>
