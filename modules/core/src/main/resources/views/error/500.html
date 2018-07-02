@@ -9,12 +9,12 @@ if (isBlank(message)){
 	if (ex != null){
 		if (@StringUtils.startsWith(ex.message, "msg:")){
 			message = @StringUtils.replace(ex.message, "msg:", "");
-		}else if (@StringUtils.startsWith(ex.cause.message, "msg:")){
-			message = @StringUtils.replace(ex.cause.message, "msg:", "");
+		}else if (@StringUtils.startsWith(ex.cause.message!, "msg:")){
+			message = @StringUtils.replace(ex.cause.message!, "msg:", "");
 		}else if (ex.class.name == 'com.jeesite.common.service.ServiceException'){
 			message = ex.message;
-		}else if (ex.cause.class.name == 'com.jeesite.common.service.ServiceException'){
-			message = ex.cause.message;
+		}else if (ex.cause.class.name! == 'com.jeesite.common.service.ServiceException'){
+			message = ex.cause.message!;
 		}
 		@org.slf4j.LoggerFactory.getLogger("error/500").error(ex.message, ex);
 	}
