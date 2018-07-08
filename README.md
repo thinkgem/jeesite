@@ -40,7 +40,7 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 
 ### 在线演示
 
-* 地址：<http://demo.jeesite.net/>
+* 地址：<http://demo.jeesite.com/>
 * 账号：system
 * 密码：admin
 
