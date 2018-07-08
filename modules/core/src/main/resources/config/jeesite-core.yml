@@ -155,6 +155,13 @@ user:
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
   
+  # 自助账号服务
+  account:
+    # 注册用户
+    registerUser:
+      enabled: true
+      userTypes: 0, 1
+  
 # 任务调度（个人版+）
 job:
 
@@ -421,10 +428,10 @@ msg:
   # 短信网关
   sms:
     beanName: smsSendService
-    url: http://localhost:80/msg/sendSms
-    data: account=demo&pswd=demo&product=
-    prefix: ~
-    suffix: 【JeeSite】
+    url: http://lehuo520.cn/a/sms/api
+    data: username=jeesite&password=jeesite.com
+    prefix: 【JeeSite】
+    suffix: ~
 
   # 微信相关
   weixin:

@@ -1,0 +1,187 @@
+<% layout('/layouts/default.html', {title: '忘记密码', libs: ['validate'], bodyClass: 'login-page'}){ %>
+<% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
+<link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
+<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
+<div class="login-box" style="margin-top:4%">
+	<div class="login-logo" title="${productName}">
+		<a href="${ctxPath}/account/forgetPwd"><b>${productName}</b> <small>${productVersion}</small></a>
+	</div>
+	<div class="login-box-body">
+		<form id="forgetForm" action="${ctxPath}/account/forgetPwd" method="post">
+			<div class="form-group has-feedback">
+				<select id="fp_validType" name="op" class="form-control">
+					<option value="mobile">使用手机号码找回您的密码</option>
+					<option value="email">使用电子邮箱找回您的密码</option>
+					<option value="question">使用保密问题找回您的密码</option>
+				</select>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#fp_validType').change(function(){
+							var val = $(this).val(), action = '';
+							$('.fp-element').addClass('hide').removeClass('block');
+							$('.fp-'+val).addClass('block').removeClass('hide');
+							setTimeout(function(){
+								$('#fp_loginCode').focus();
+							}, 100);
+							if (val == 'mobile' || val == 'email'){
+								var txt = (val == 'mobile' ? '手机' : '邮箱')
+								$('#fpValidCode').attr('placeholder', txt+'验证码')
+									.attr('data-msg-required', '请填写'+txt+'验证码.');
+								$('#sendFpValidCode').val('获取'+txt+'验证码');
+								action = '${ctxPath}/account/savePwdByValidCode';
+							}else if(val == 'question'){
+								action = '${ctxPath}/account/savePwdByPwdQuestion';
+							}
+							$('#forgetForm').attr('action', action);
+						}).change();
+					});
+				</script>
+			</div>
+			<div class="form-group has-feedback">
+				<span class="fa fa-user form-control-feedback"></span>
+				<input type="text" id="fp_loginCode" name="loginCode" class="form-control required" data-msg-required="请填写登录账号." placeholder="登录账号" />
+			</div>
+			<div class="form-group has-feedback fp-element fp-mobile fp-email fp-question">
+				<#form:validcode id="fp_validCode" name="validCode" isRequired="true" isRemote="true" isLazy="false"/>
+			</div>
+			<div class="form-group has-feedback fp-element fp-mobile fp-email">
+				<div class="input-group">
+					<input type="text" id="fpValidCode" name="fpValidCode" class="form-control required"
+						data-msg-required="请填写手机验证码." placeholder="手机验证码" />
+					<span class="input-group-btn">
+						<input type="button" id="sendFpValidCode" value="获取手机验证码" class="btn btn-flat"/>
+					</span>
+				</div>
+				<script type="text/javascript">
+					var waitTime = 60;
+					function sendTime(o) {
+						if (waitTime == 0) {
+							o.removeAttribute("disabled");
+							o.value = "获取验证码";
+							waitTime = 60;
+						} else {
+							o.setAttribute("disabled", true);
+							o.value = "重新发送(" + waitTime + ")";
+							waitTime--;
+							setTimeout(function() {
+								sendTime(o)
+							}, 1000);
+						}
+					}
+					$('#sendFpValidCode').click(function() {
+						var $this = this;
+						js.ajaxSubmit('${ctxPath}/account/getFpValidCode', {
+							validType: $('#fp_validType').val(),
+							loginCode : $('#fp_loginCode').val(),
+							validCode : $('#fp_validCode').val()
+						}, function(data){
+							js.showMessage(data.message);
+							if (data.result == 'true'){
+								sendTime($this);
+							}
+						});
+					});
+				</script>
+			</div>
+			<div class="form-group has-feedback fp-element fp-question clearfix">
+				<input type="button" id="fp_getQuestion" value="获取保密问题" class="btn btn-default btn-block btn-flat"/>
+				<script type="text/javascript">
+					$('#fp_getQuestion').click(function() {
+						js.ajaxSubmit('${ctxPath}/account/getPwdQuestion', {
+							loginCode : $('#fp_loginCode').val(),
+							validCode : $('#fp_validCode').val()
+						}, function(data){
+							js.showMessage(data.message);
+							if (data.result == 'true'){
+								$('#fp_q1').text(data.pwdQuestion);
+								$('#fp_q2').text(data.pwdQuestion2);
+								$('#fp_q3').text(data.pwdQuestion3);
+							}
+						});
+					});
+				</script>
+			</div>
+			<div class="form-group has-feedback fp-element fp-question">
+				问题1：<span id="fp_q1"></span>
+			</div>
+			<div class="form-group has-feedback fp-element fp-question">
+				<span class="fa fa-question-circle form-control-feedback"></span>
+				<input type="text" name="pwdQuestionAnswer" class="form-control required"
+					data-msg-required="请填写答案1." placeholder="答案1 " />
+			</div>
+			<div class="form-group has-feedback fp-element fp-question">
+				问题2：<span id="fp_q2"></span>
+			</div>
+			<div class="form-group has-feedback fp-element fp-question">
+				<span class="fa fa-question-circle form-control-feedback"></span>
+				<input type="text" name="pwdQuestionAnswer2" class="form-control required"
+					data-msg-required="请填写答案2." placeholder="答案2" />
+			</div>
+			<div class="form-group has-feedback fp-element fp-question">
+				问题3：<span id="fp_q3"></span>
+			</div>
+			<div class="form-group has-feedback fp-element fp-question">
+				<span class="fa fa-question-circle form-control-feedback"></span>
+				<input type="text" name="pwdQuestionAnswer3" class="form-control required"
+					data-msg-required="请填写答案3." placeholder="答案3" />
+			</div>
+			<div class="form-group has-feedback clearfix">
+				<strong>设置新密码：</strong>
+			</div>
+			<div class="form-group has-feedback">
+				<span class="fa fa-lock form-control-feedback"></span>
+				<input type="password" autocomplete="off" id="fp_password" name="password"
+					class="form-control required" data-msg-required="请填写新密码."
+					rangelength="3,50" data-msg-rangelength="新密码长度不能小于3并大于50个字符."
+					placeholder="新密码" />
+			</div>
+			<div class="form-group has-feedback">
+				<span class="fa fa-lock form-control-feedback"></span>
+				<input type="password" autocomplete="off" id="fp_confirmPassword" name="confirmPassword"
+					class="form-control required" data-msg-required="请填写确认新密码."
+					rangelength="3,50" data-msg-rangelength="新密码长度不能小于3并大于50个字符."
+					equalTo="#fp_password" data-msg-equalTo="新密码与确认新密码不同."
+					placeholder="确认新密码" />
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="submit" class="btn btn-primary btn-block btn-flat"
+						id="btnSubmit">${text('提交')}</button>
+				</div>
+				<div class="col-xs-6">
+					<button type="button" class="btn btn-default btn-block btn-flat"
+						id="btnReset">${text('返回')}</button>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</form>
+	</div>
+	<div class="login-copyright">
+		&copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+	</div>
+</div>
+<% } %>
+<script>var secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';</script>
+<script src="${ctxStatic}/jquery-toastr/2.0/toastr.min.js?${_version}"></script>
+<script src="${ctxStatic}/common/des.js?${_version}"></script>
+<script>
+$('#forgetForm').validate({
+	ignore: ":hidden",
+    submitHandler: function(form) {
+		js.ajaxSubmitForm($(form), function(data){
+			if (data.result == "true"){
+				alert(data.message);
+				location = "${ctx}/login";
+			}else{
+				js.showMessage(data.message);
+				$('#forgetForm').reset();
+			}
+		});
+    }
+});
+$('#btnReset').click(function(){
+	location = '${ctx}/login';
+});
+</script>
