@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,17 +16,18 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.common.shiro.realm.CasAuthorizingRealm;
+import com.jeesite.common.shiro.realm.LoginInfo;
 
 /**
  * CAS过滤器
  * @author ThinkGem
- * @version 2017-03-22
+ * @version 2018-7-11
  */
 @SuppressWarnings("deprecation")
 public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
 
-	private BaseAuthorizingRealm authorizingRealm; // 安全认证类
+	private CasAuthorizingRealm authorizingRealm; // 安全认证类
 	
 	/**
 	 * 登录成功调用事件
@@ -34,8 +36,8 @@ public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 		
 		// 登录成功后初始化授权信息并处理登录后的操作
-		authorizingRealm.onLoginSuccess(subject.getPrincipals());
-				
+		authorizingRealm.onLoginSuccess((LoginInfo)subject.getPrincipal(), (HttpServletRequest)request);
+		
 		String url = request.getParameter("__url");
 		if (StringUtils.isNotBlank(url)) {
 			WebUtils.issueRedirect(request, response, url, null, true);
@@ -80,7 +82,7 @@ public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
 		}
 	}
 
-	public void setAuthorizingRealm(BaseAuthorizingRealm authorizingRealm) {
+	public void setAuthorizingRealm(CasAuthorizingRealm authorizingRealm) {
 		this.authorizingRealm = authorizingRealm;
 	}
 

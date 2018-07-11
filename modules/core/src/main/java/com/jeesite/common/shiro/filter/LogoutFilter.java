@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.utils.LogUtils;
@@ -28,6 +30,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
 	
 	private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);
+	private BaseAuthorizingRealm authorizingRealm; // 安全认证类
 	
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
@@ -36,9 +39,17 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	        String redirectUrl = getRedirectUrl(request, response, subject);
 	        //try/catch added for SHIRO-298:
 	        try {
-	        	// 记录用户退出日志
-	    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
-	    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
+	        	// 记录用户退出日志（@Deprecated v4.0.5支持setAuthorizingRealm，之后版本可删除此if子句）
+	        	if (authorizingRealm == null){
+		    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
+		    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
+	        	}
+	        	// 退出成功之前初始化授权信息并处理登录后的操作
+	        	else{
+	        		authorizingRealm.onLogoutSuccess((LoginInfo)subject.getPrincipal(),
+	        				(HttpServletRequest)request);
+	        	}
+	        	
 	    		// 退出登录	
 	    		subject.logout();
 	        } catch (SessionException ise) {
@@ -70,6 +81,10 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 			return url;
 		}
 		return super.getRedirectUrl(request, response, subject);
+	}
+
+	public void setAuthorizingRealm(BaseAuthorizingRealm authorizingRealm) {
+		this.authorizingRealm = authorizingRealm;
 	}
 	
 }

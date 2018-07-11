@@ -29,12 +29,13 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.http.ServletUtils;
 
 /**
  * 表单验证（包含验证码）过滤类
  * @author ThinkGem
- * @version 2017-03-22
+ * @version 2018-7-11
  */
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 	
@@ -215,7 +216,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 
 		// 登录成功后初始化授权信息并处理登录后的操作
-		authorizingRealm.onLoginSuccess(subject.getPrincipals());
+		authorizingRealm.onLoginSuccess((LoginInfo)subject.getPrincipal(), (HttpServletRequest) request);
 		
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
 		if (ServletUtils.isAjaxRequest((HttpServletRequest) request)) {

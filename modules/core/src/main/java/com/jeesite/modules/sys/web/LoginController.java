@@ -229,7 +229,7 @@ public class LoginController extends BaseController{
 		model.addAttribute("user", user); // 设置当前用户信息
 		
 		// 登录成功后，验证码计算器清零
-		BaseAuthorizingRealm.isValidCodeLogin(loginInfo.getId(), /*loginInfo.getParam("corpCode"), */loginInfo.getParam("deviceType"), "success");
+		BaseAuthorizingRealm.isValidCodeLogin(loginInfo.getId(), loginInfo.getParam("deviceType"), "success");
 
 		//获取当前会话对象
 		Session session = UserUtils.getSession();
