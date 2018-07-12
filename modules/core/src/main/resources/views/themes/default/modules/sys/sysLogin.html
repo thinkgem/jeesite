@@ -54,9 +54,10 @@
 		</#form:form>
 		<div class="row">
 			<div class="col-xs-12">
+				<a href="${ctxPath}/account/forgetPwd" class="pull-left">[ ${text('忘记密码')} ]</a>
 				<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.registerUser'))){ %>
-				<a href="${ctxPath}/account/registerUser" class="pull-right">${text('注册账号')}</a><% } %>
-				<a href="${ctxPath}/account/forgetPwd" class="pull-left">${text('忘记密码')}</a>
+					<a href="${ctxPath}/account/registerUser" class="pull-left ml10">[ ${text('注册账号')} ]</a>
+				<% } %>
 				<%
 				var langTypeList = @DictUtils.getDictList('sys_lang_type');
 				if (langTypeList.~size > 1){

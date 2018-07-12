@@ -227,14 +227,11 @@ public class LoginController extends BaseController{
 			return REDIRECT + adminPath + "/login";
 		}
 		model.addAttribute("user", user); // 设置当前用户信息
-		
-		// 登录成功后，验证码计算器清零
-		BaseAuthorizingRealm.isValidCodeLogin(loginInfo.getId(), loginInfo.getParam("deviceType"), "success");
 
 		//获取当前会话对象
 		Session session = UserUtils.getSession();
 		
-		// 设置共享SessionId的Cookie值，睿思BI使用。
+		// 设置共享SessionId的Cookie值（第三方系统使用）
 		String cookieName = Global.getProperty("session.shareSessionIdCookieName");
 		if (StringUtils.isNotBlank(cookieName)){
 			CookieUtils.setCookie((HttpServletResponse)response, cookieName, (String)session.getId());
