@@ -104,7 +104,7 @@ jdbc:
 
 # Redis 配置
 #redis: 
-#  enabled: true
+#  enabled: false
 #  
 #  # Redis 连接参数
 #  host: 127.0.0.1
@@ -219,6 +219,7 @@ jdbc:
 #  # 任务调度集群设置
 #  jobStore:
 #    isClustered: true
+#    dataSourceName: job
 #    clusterCheckinInterval: 1000
 #
 

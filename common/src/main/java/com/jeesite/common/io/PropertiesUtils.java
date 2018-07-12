@@ -34,9 +34,7 @@ public class PropertiesUtils {
 	
 	// 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
 	public static final String[] DEFAULT_CONFIG_FILE = new String[]{
-			"classpath:config/jeesite.yml",
-			"classpath:config/application.yml",
-			"classpath:application.yml"};
+			"classpath:config/application.yml", "classpath:application.yml"};
 
 	private static Logger logger = PropertiesUtils.initLogger();
 	
@@ -51,26 +49,53 @@ public class PropertiesUtils {
 			releadInstance();
 		}
 		public static void releadInstance(){
-			Set<String> configFiles = SetUtils.newLinkedHashSet();
+			// 获取平台及模块相关的配置文件
+			Set<String> configSet = SetUtils.newLinkedHashSet();
 			Resource[] resources = ResourceUtils.getResources("classpath*:/config/jeesite-*.*");
 			for(Resource resource : resources){
-				configFiles.add("classpath:/config/"+resource.getFilename());
+				configSet.add("classpath:config/"+resource.getFilename());
 			}
+			configSet.add("classpath:config/jeesite.yml");
+			// 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
+			Set<String> set = SetUtils.newLinkedHashSet();
 			for (String configFile : DEFAULT_CONFIG_FILE){
-				configFiles.add(configFile);
+				set.add(configFile);
 			}
-			String customConfig = System.getProperty("spring.config.location");
-			if (StringUtils.isNotBlank(customConfig)){
-				if (!customConfig.contains("$")){
-					customConfig = org.springframework.util.StringUtils.cleanPath(customConfig);
-					if (!ResourceUtils.isUrl(customConfig)){
-						customConfig = ResourceUtils.FILE_URL_PREFIX + customConfig;
+			// 获取 spring.config.location 外部自定义的配置文件
+			String customConfigs = System.getProperty("spring.config.location");
+			if (StringUtils.isNotBlank(customConfigs)){
+				for (String customConfig : StringUtils.split(customConfigs, ",")){
+					if (!customConfig.contains("$")){
+						customConfig = org.springframework.util.StringUtils.cleanPath(customConfig);
+						if (!ResourceUtils.isUrl(customConfig)){
+							customConfig = ResourceUtils.FILE_URL_PREFIX + customConfig;
+						}
+					}
+					set.add(customConfig);
+				}
+			}
+			// 获取 spring.profiles.active 活动环境名称的配置文件
+			String[] configFiles = set.toArray(new String[set.size()]);
+			String profiles = System.getProperty("spring.profiles.active");
+			if (StringUtils.isBlank(profiles)){
+				PropertiesUtils propsTemp = new PropertiesUtils(configFiles);
+				profiles = propsTemp.getProperty("spring.profiles.active");
+			}
+			for (String location : configFiles){
+				configSet.add(location);
+				if (StringUtils.isNotBlank(profiles) && !StringUtils.equals(profiles, "default")){
+					if (location.endsWith(".properties")){
+						configSet.add(StringUtils.substringBeforeLast(location, ".properties")
+								+ "-" + profiles + ".properties");
+					}else if (location.endsWith(".yml")){
+						configSet.add(StringUtils.substringBeforeLast(location, ".yml")
+								+ "-" + profiles + ".yml");
 					}
 				}
-				configFiles.add(customConfig);
 			}
-			logger.debug("Loading jeesite config: {}", configFiles);
-			INSTANCE = new PropertiesUtils(configFiles.toArray(new String[configFiles.size()]));
+			configFiles = configSet.toArray(new String[configSet.size()]);
+			logger.debug("Loading jeesite config: {}", (Object)configFiles);
+			INSTANCE = new PropertiesUtils(configFiles);
 		}
 	}
 
@@ -82,8 +107,7 @@ public class PropertiesUtils {
 			try {
 				Resource resource = ResourceUtils.getResource(location);
 				if (resource.exists()){
-        			String ext = FileUtils.getFileExtension(location);
-        			if ("properties".equals(ext)){
+        			if (location.endsWith(".properties")){
         				InputStreamReader is = null;
         				try {
 	    					is = new InputStreamReader(resource.getInputStream(), "UTF-8");
@@ -94,7 +118,7 @@ public class PropertiesUtils {
 	        				IOUtils.closeQuietly(is);
 	        			}
         			}
-        			else if ("yml".equals(ext)){
+        			else if (location.endsWith(".yml")){
         				YamlPropertiesFactoryBean bean = new YamlPropertiesFactoryBean();
         				bean.setResources(resource);
         				for (Map.Entry<Object,Object> entry : bean.getObject().entrySet()){
@@ -106,6 +130,8 @@ public class PropertiesUtils {
 			} catch (Exception e) {
     			logger.error("Load " + location + " failure. ", e);
 			}
+			// 存储当前加载的配置文件路径和名称
+			properties.setProperty("configFiles", StringUtils.join(configFiles, ","));
 		}
 	}
 	
