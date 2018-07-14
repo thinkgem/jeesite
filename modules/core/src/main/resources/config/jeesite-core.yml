@@ -160,7 +160,7 @@ user:
   account:
     # 注册用户
     registerUser:
-      enabled: true
+      enabled: false
       userTypes: 0, 1
   
 # 任务调度（个人版+）
@@ -369,7 +369,7 @@ web:
   validator:
     id: '[a-zA-Z0-9_\-/\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
-  
+   
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
 error:
   page:
