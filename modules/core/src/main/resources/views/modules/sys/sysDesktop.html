@@ -251,9 +251,8 @@
 	<!-- /.row -->
 </div>
 <footer class="main-footer m0">
-	<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
-	<div class="pull-right hidden-xs">当前版本： ${productVersion}</div>
-	&copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+	<div class="pull-right hidden-xs">当前版本： ${@Global.getConfig('productVersion')}</div>
+	&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a href="http://jeesite.com">JeeSite</a>
 </footer>
 <% } %>
 <script>

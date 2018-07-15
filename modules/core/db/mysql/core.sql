@@ -790,8 +790,8 @@ CREATE TABLE js_sys_user_role
 
 /* Create Indexes */
 
-CREATE INDEX idx_gen_table_ptn ON js_gen_table ();
-CREATE INDEX idx_gen_table_column_tn ON js_gen_table_column ();
+CREATE INDEX idx_gen_table_ptn ON js_gen_table (parent_table_name ASC);
+CREATE INDEX idx_gen_table_column_tn ON js_gen_table_column (table_name ASC);
 CREATE INDEX idx_sys_area_pc ON js_sys_area (parent_code ASC);
 CREATE INDEX idx_sys_area_ts ON js_sys_area (tree_sort ASC);
 CREATE INDEX idx_sys_area_status ON js_sys_area (status ASC);

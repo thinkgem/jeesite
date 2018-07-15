@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>2660</x>
-	<y>94</y>
+	<x>54</x>
+	<y>1963</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -12354,6 +12354,10 @@
 					<type></type>
 					<description></description>
 					<columns>
+						<column>
+							<id>abd5fc5f0bb213daae3de2abc362c5aea5276f4d</id>
+							<desc>false</desc>
+						</column>
 					</columns>
 				</inidex>
 			</indexes>
@@ -13783,6 +13787,10 @@
 					<type></type>
 					<description></description>
 					<columns>
+						<column>
+							<id>bc518c6e08246711da4ef4bbfd902690ebf6797d</id>
+							<desc>false</desc>
+						</column>
 					</columns>
 				</inidex>
 			</indexes>

@@ -49,8 +49,8 @@ else {
 			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button>
 	</div>
 	<div class="copyright">
-		<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
-		&copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
+			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
 	</div>
 </div>
 <% } %>

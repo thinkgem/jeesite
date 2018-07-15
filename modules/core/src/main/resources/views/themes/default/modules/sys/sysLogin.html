@@ -3,10 +3,10 @@
 <link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
-<% var productName = @Global.getConfig('productName'), productVersion = @Global.getConfig('productVersion'); %>
 <div class="login-box">
-	<div class="login-logo" title="${productName}">
-		<a href="${ctx}/login"><b>${productName}</b> <small>${productVersion}</small></a>
+	<div class="login-logo">
+		<a href="${ctx}/login"><b>${@Global.getConfig('productName')}</b>
+			<small>${@Global.getConfig('productVersion')}</small></a>
 	</div>
 	<div class="login-box-body">
 		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post">
@@ -79,7 +79,8 @@
 		</div>
 	</div>
 	<div class="login-copyright">
-		&copy; ${@DateUtils.getYear()} ${productName} - Powered By <a href="http://jeesite.com">JeeSite</a>.
+		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
+			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
 	</div>
 </div>
 <% } %>

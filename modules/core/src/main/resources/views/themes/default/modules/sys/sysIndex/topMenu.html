@@ -1,7 +1,6 @@
-<% var productName = @Global.getConfig('productName'); %>
 <nav class="navbar navbar-static-top">
-	<div class="logo" data-toggle="push-menu" title="${productName}">
-		<b>${productName}</b>
+	<div class="logo" data-toggle="push-menu">
+		<b>${@Global.getConfig('productName')}</b>
 		<small>&nbsp; &nbsp;<i class="fa fa-bars"></i></small>
 	</div>
 	<%/*<!--%><a href="javascript:" class="sidebar-toggle" data-toggle="push-menu" role="button">
