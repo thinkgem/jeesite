@@ -376,4 +376,16 @@ public class EmpUserController extends BaseController {
 		return mapList;
 	}
 	
+	/**
+	 * 选择员工对话框
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "empUserSelect")
+	public String empUserSelect(EmpUser empUser, String selectData, String checkbox, Model model) {
+		model.addAttribute("selectData", selectData); // 指定默认选中的ID
+		model.addAttribute("checkbox", checkbox); // 是否显示复选框，支持多选
+		model.addAttribute("empUser", empUser); // ModelAttribute
+		return "modules/sys/user/empUserSelect";
+	}
+	
 }
