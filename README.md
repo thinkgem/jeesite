@@ -67,6 +67,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * 缓存框架：Ehcache 2.6、Redis
 * 日志管理：SLF4J 1.7、Log4j
 * 工具类：Apache Commons、Jackson 2.2、Xstream 1.4、Dozer 5.3、POI 3.9
+* 短信网关：<http://www.lehuo520.cn> **乐云短信** SmsLeyunUtils.java
 
 2、前端
 
