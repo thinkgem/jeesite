@@ -1,1 +1,0 @@
-alter table SYS_MENU modify HREF VARCHAR2(2000);
