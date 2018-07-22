@@ -76,7 +76,9 @@ public class ReflectUtils {
 	public static Object getFieldValue(final Object obj, final String fieldName) {
 		Field field = getAccessibleField(obj, fieldName);
 		if (field == null) {
-			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			logger.warn("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			return null;
 		}
 		Object result = null;
 		try {
@@ -93,7 +95,9 @@ public class ReflectUtils {
 	public static void setFieldValue(final Object obj, final String fieldName, final Object value) {
 		Field field = getAccessibleField(obj, fieldName);
 		if (field == null) {
-			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			logger.warn("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			return;
 		}
 		try {
 			field.set(obj, value);
@@ -114,7 +118,9 @@ public class ReflectUtils {
 		}
 		Method method = getAccessibleMethod(obj, methodName, parameterTypes);
 		if (method == null) {
-			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			logger.warn("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			return null;
 		}
 		try {
 			return method.invoke(obj, args);
@@ -132,7 +138,10 @@ public class ReflectUtils {
 	public static Object invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
 		Method method = getAccessibleMethodByName(obj, methodName, args.length);
 		if (method == null) {
-			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			// 如果为空不报错，直接返回空。
+//			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			logger.warn("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			return null;
 		}
 		try {
 			// 类型转换（将参数数据类型转换为目标方法参数类型）
@@ -174,7 +183,11 @@ public class ReflectUtils {
 	 * 如向上转型到Object仍无法找到, 返回null.
 	 */
 	public static Field getAccessibleField(final Object obj, final String fieldName) {
-		Validate.notNull(obj, "object can't be null");
+		// 为空不报错。直接返回 null
+		// Validate.notNull(obj, "object can't be null");
+		if (obj == null){
+			return null;
+		}
 		Validate.notBlank(fieldName, "fieldName can't be blank");
 		for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass.getSuperclass()) {
 			try {
@@ -197,7 +210,11 @@ public class ReflectUtils {
 	 */
 	public static Method getAccessibleMethod(final Object obj, final String methodName,
 			final Class<?>... parameterTypes) {
-		Validate.notNull(obj, "object can't be null");
+		// 为空不报错。直接返回 null
+		// Validate.notNull(obj, "object can't be null");
+		if (obj == null){
+			return null;
+		}
 		Validate.notBlank(methodName, "methodName can't be blank");
 		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
 			try {
@@ -219,7 +236,11 @@ public class ReflectUtils {
 	 * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
 	 */
 	public static Method getAccessibleMethodByName(final Object obj, final String methodName, int argsNum) {
-		Validate.notNull(obj, "object can't be null");
+		// 为空不报错。直接返回 null
+		// Validate.notNull(obj, "object can't be null");
+		if (obj == null){
+			return null;
+		}
 		Validate.notBlank(methodName, "methodName can't be blank");
 		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
 			Method[] methods = searchType.getDeclaredMethods();
