@@ -231,28 +231,44 @@ public class LoginController extends BaseController{
 		//获取当前会话对象
 		Session session = UserUtils.getSession();
 		
-		// 设置共享SessionId的Cookie值（第三方系统使用）
-		String cookieName = Global.getProperty("session.shareSessionIdCookieName");
-		if (StringUtils.isNotBlank(cookieName)){
-			CookieUtils.setCookie((HttpServletResponse)response, cookieName, (String)session.getId());
-		}
-
-		// 如果是登录操作，则设置登录信息（移动端用）
-		model.addAttribute("result", Global.TRUE);
-		if (request.getParameter("username") != null && request.getParameter("password") != null){
+		// 是否是登录操作
+		boolean isLogin = "true".equals(loginInfo.getParam("__login"));
+		if (isLogin){
+			// 获取后接着清除，防止下次获取仍然认为是登录状态
+			loginInfo.getParams().remove("__login");
+			// 设置共享SessionId的Cookie值（第三方系统使用）
+			String cookieName = Global.getProperty("session.shareSessionIdCookieName");
+			if (StringUtils.isNotBlank(cookieName)){
+				CookieUtils.setCookie((HttpServletResponse)response, cookieName, (String)session.getId());
+			}
 			// 如果登录设置了语言，则切换语言
 			if (loginInfo.getParam("lang") != null){
 				Global.setLang(loginInfo.getParam("lang"), request, response);
 			}
-			model.addAttribute("message", text("sys.login.success"));
-		}else{
-			model.addAttribute("message", text("sys.login.getInfo"));
 		}
-		model.addAttribute("sessionid", (String)session.getId());
+
+		// 获取登录成功页面
+		String successUrl = Global.getProperty("shiro.successUrl");
+		if (!StringUtils.contains(successUrl, "://")){
+			successUrl = request.getContextPath() + successUrl;
+		}
 		
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
 		if (ServletUtils.isAjaxRequest(request)){
+			model.addAttribute("result", Global.TRUE);
+			// 如果是登录，则返回登录成功信息，否则返回获取成功信息
+			if (isLogin){
+				model.addAttribute("message", text("sys.login.success"));
+			}else{
+				model.addAttribute("message", text("sys.login.getInfo"));
+			}
+			model.addAttribute("sessionid", (String)session.getId());
+			model.addAttribute("__url", successUrl); // 告诉浏览器登录后跳转的页面
 			return ServletUtils.renderObject(response, model);
+		}
+		// 如果是登录操作，则跳转到登录成功页
+		else if (isLogin){
+			return REDIRECT + successUrl;
 		}
 		
 		// 是否允许刷新主页，如果已登录，再次访问主页，则退出原账号。

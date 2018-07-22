@@ -101,7 +101,7 @@ public class ShiroConfig {
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		bean.setSecurityManager(securityManager);
 		bean.setLoginUrl(Global.getProperty("shiro.loginUrl"));
-		bean.setSuccessUrl(Global.getProperty("shiro.successUrl"));
+		bean.setSuccessUrl(Global.getProperty("adminPath")+"/index");
 		Map<String, Filter> filters = bean.getFilters();
 		filters.put("cas", shiroCasFilter(casAuthorizingRealm));
 		filters.put("authc", shiroAuthcFilter(authorizingRealm));

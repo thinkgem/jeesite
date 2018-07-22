@@ -39,17 +39,19 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	        String redirectUrl = getRedirectUrl(request, response, subject);
 	        //try/catch added for SHIRO-298:
 	        try {
-	        	// 记录用户退出日志（@Deprecated v4.0.5支持setAuthorizingRealm，之后版本可删除此if子句）
-	        	if (authorizingRealm == null){
-		    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
-		    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
+	        	Object principal = subject.getPrincipal();
+	        	if (principal != null){
+	        		// 记录用户退出日志（@Deprecated v4.0.5支持setAuthorizingRealm，之后版本可删除此if子句）
+		        	if (authorizingRealm == null){
+			    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
+			    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
+		        	}
+		        	// 退出成功之前初始化授权信息并处理登录后的操作
+		        	else{
+		        		authorizingRealm.onLogoutSuccess((LoginInfo)subject.getPrincipal(),
+		        				(HttpServletRequest)request);
+		        	}
 	        	}
-	        	// 退出成功之前初始化授权信息并处理登录后的操作
-	        	else{
-	        		authorizingRealm.onLogoutSuccess((LoginInfo)subject.getPrincipal(),
-	        				(HttpServletRequest)request);
-	        	}
-	        	
 	    		// 退出登录	
 	    		subject.logout();
 	        } catch (SessionException ise) {
