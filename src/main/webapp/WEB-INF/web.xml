@@ -14,9 +14,16 @@
 	<listener>
 		<listener-class>com.thinkgem.jeesite.modules.sys.listener.WebContextListener</listener-class>
 	</listener>
+	
+	<!-- 
+			支持bean的另外3个作用域
+			ServletRequestListener接口，监听 HTTP请求事件，web服务器每次接受请求都会通知该监听器
+			如果spring容器中的bean需要request、session、globalsession等作用域的支持，spring容器本身就必须获得web容器的HTTP请求事件
+	 -->
 	<listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>  
 	</listener>
+	
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
