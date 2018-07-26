@@ -67,6 +67,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * 缓存框架：Ehcache 2.6、Redis
 * 日志管理：SLF4J 1.7、Log4j
 * 工具类：Apache Commons、Jackson 2.2、Xstream 1.4、Dozer 5.3、POI 3.9
+* 短信网关：<http://www.lehuo520.cn> **乐云短信** SmsLeyunUtils.java
 
 2、前端
 
@@ -121,7 +122,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 如何交流、反馈、参与贡献？
 
-* QQ Group：127515876 &nbsp; 209330483 &nbsp; 223507718 &nbsp; 苹果版QQ若不能加入请使用手机QQ最新版
+* QQ Group：`127515876(已满)` `209330483(已满)` `223507718(已满)` `709534275` `730390092`
 * E-mail：thinkgem@163.com
 * GitHub：<https://github.com/thinkgem/jeesite>
 * 开源中国：<http://git.oschina.net/thinkgem/jeesite>
