@@ -364,9 +364,9 @@ public class EmpUserController extends BaseController {
 		if (!(isAll != null && isAll)) {
 			empUserService.addDataScopeFilter(empUser);
 		}
-		List<User> list = userService.findList(empUser);
+		List<EmpUser> list = empUserService.findList(empUser);
 		for (int i = 0; i < list.size(); i++) {
-			User e = list.get(i);
+			EmpUser e = list.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
 			map.put("id", StringUtils.defaultIfBlank(idPrefix, "u_") + e.getId());
 			map.put("pId", StringUtils.defaultIfBlank(pId, "0"));
