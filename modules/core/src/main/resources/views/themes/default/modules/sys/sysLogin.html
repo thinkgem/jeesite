@@ -24,7 +24,7 @@
 				<#form:input type="password" name="password" class="form-control required"
 					data-msg-required="${text('请填写登录密码.')}" placeholder="${text('登录密码')}" autocomplete="off"/>
 			</div>
-			<%/*<!-- if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
+			<%/*<!-- if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
 			<div class="form-group has-feedback">
 				<select name="param_corpCode" class="form-control">
 					<% for(var user in @UserUtils.findCorpList()){ %>
@@ -55,7 +55,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<a href="${ctxPath}/account/forgetPwd" class="pull-left">[ ${text('忘记密码')} ]</a>
-				<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.registerUser'))){ %>
+				<% if(@Global.getConfigToBoolean('user.registerUser', 'false')){ %>
 					<a href="${ctxPath}/account/registerUser" class="pull-left ml10">[ ${text('注册账号')} ]</a>
 				<% } %>
 				<%

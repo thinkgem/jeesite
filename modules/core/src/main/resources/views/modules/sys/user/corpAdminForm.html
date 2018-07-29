@@ -15,7 +15,7 @@
 			<#form:hidden path="userCode"/>
 			<div class="box-body">
 				<div class="form-unit">基本信息</div>
-				<div class="row ${@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))?'':'hide'}">
+				<div class="row ${@Global.getConfigToBoolean('user.useCorpModel', 'false')?'':'hide'}">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label" title="">

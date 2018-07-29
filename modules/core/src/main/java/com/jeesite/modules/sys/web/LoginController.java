@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeesite.common.config.Global;
-import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
@@ -87,7 +86,7 @@ public class LoginController extends BaseController{
 		}
 
 		// 是否显示验证码
-		model.addAttribute("isValidCodeLogin", ObjectUtils.toInteger(Global.getConfig("sys.login.failedNumAfterValidCode", "200")) == 0);
+		model.addAttribute("isValidCodeLogin", Global.getConfigToInteger("sys.login.failedNumAfterValidCode", "200") == 0);
 
 		//获取当前会话对象
 		Session session = UserUtils.getSession();
@@ -272,7 +271,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 是否允许刷新主页，如果已登录，再次访问主页，则退出原账号。
-		if (!ObjectUtils.toBoolean(Global.getConfig("shiro.isAllowRefreshIndex", "true"))){
+		if (!Global.getConfigToBoolean("shiro.isAllowRefreshIndex", "true")){
 			String logined = CookieUtils.getCookie(request, "LOGINED");
 			if (StringUtils.isBlank(logined) || "false".equals(logined)){
 				CookieUtils.setCookie(response, "LOGINED", "true");

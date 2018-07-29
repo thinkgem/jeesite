@@ -8,7 +8,7 @@
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
 				<% if(hasPermi('sys:corpAdmin:edit')){ %>
-					<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
+					<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
 					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title="新增租户管理员"><i class="fa fa-plus"></i> 新增租户管理员</a>
 					<% }else{ %>
 					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${user.currentUser.corpCode_}&corpName_=${user.currentUser.corpName_}&op=addAdmin" class="btn btn-default btnTool" title="新增管理员"><i class="fa fa-plus"></i> 新增管理员</a>
@@ -31,13 +31,13 @@
 						<#form:input path="userName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
-				<div class="form-group ${@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))?'':'hide'}">
+				<div class="form-group ${@Global.getConfigToBoolean('user.useCorpModel', 'false')?'':'hide'}">
 					<label class="control-label">租户代码：</label>
 					<div class="control-inline">
 						<#form:input path="corpCode_" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
-				<div class="form-group ${@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))?'':'hide'}">
+				<div class="form-group ${@Global.getConfigToBoolean('user.useCorpModel', 'false')?'':'hide'}">
 					<label class="control-label">租户名称：</label>
 					<div class="control-inline">
 						<#form:input path="corpName_" maxlength="100" class="form-control width-90"/>
@@ -69,7 +69,7 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="编辑用户">'+(val||row.id)+'</a>';
 		}},
 		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
-		<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
+		<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
 		{header:'租户代码', name:'corpCode_', index:'a.corp_code', width:200, align:"center", formatter: function(val, obj, row, act){
 			return '<a href="javascript:" onclick="$(\'#corpCode_\').val(\''+val+'\');$(\'#searchForm\').submit()">'+val+'</a>';
 		}},
@@ -93,7 +93,7 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="启用用户" data-confirm="确认要启用该用户吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/corpAdmin/delete?userCode='+row.userCode+'" class="btnList" title="删除用户" data-confirm="确认要删除该用户吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				<% if(@ObjectUtils.toBoolean(@Global.getConfig('user.useCorpModel'))){ %>
+				<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
 				actions.push('<a href="${ctx}/sys/corpAdmin/form?corpCode_='+row.corpCode_+'&corpName_='+row.corpName_+'&op=addAdmin" class="btnList" title="新增管理员"><i class="fa fa-plus-square"></i></a>&nbsp;');
 				<% } %>
 				actions.push('<a href="javascript:" class="btnMore" title="更多操作"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
