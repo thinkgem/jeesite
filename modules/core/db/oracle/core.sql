@@ -175,7 +175,7 @@ CREATE TABLE js_sys_config
 	id varchar2(64) NOT NULL,
 	config_name nvarchar2(100) NOT NULL,
 	config_key varchar2(100) NOT NULL,
-	config_value nvarchar2(1000) NOT NULL,
+	config_value nvarchar2(1000),
 	is_sys char(1) NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
