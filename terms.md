@@ -8,8 +8,8 @@
 
 # 联系方式
 
-QQ：78112665
+QQ：1766571055
 
-**请认准唯一捐赠收款码账号**：ThinkGem（*震）
+**请认准唯一收款账号（其它付款均不作为有效凭证）**：
 
 ![ThinkGem的支付宝收款二维码](https://static.oschina.net/uploads/img/201803/16112020_sFWX.jpg "ThinkGem的支付宝收款二维码")
