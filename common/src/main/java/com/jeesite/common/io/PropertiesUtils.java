@@ -170,7 +170,7 @@ public class PropertiesUtils {
 	        while(m.find()) {
 	            String g = m.group();
 	            String keyChild = g.replaceAll("\\$\\{", "").replaceAll("\\}", "");
-	            value = value.replace(g, getProperty(keyChild));
+	            value = StringUtils.replace(value, g, getProperty(keyChild));
 	        }
 	        return value;
 	    }else{
