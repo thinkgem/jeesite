@@ -12,6 +12,7 @@ import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jeesite.common.lang.ByteUtils;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.service.BaseService;
@@ -61,10 +62,10 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		
 		// 打印JVM信息。
 		if (logger.isDebugEnabled()){
-	        logger.debug("计时结束: {}  用时: {}  URI: {}  最大内存: {}m  已分配内存: {}m  已分配内存中的剩余空间: {}m  最大可用内存: {}m",
-	        		DateUtils.formatDate(endTime, "hh:mm:ss.SSS"), TimeUtils.formatDateAgo(executeTime),
-					request.getRequestURI(), Runtime.getRuntime().maxMemory()/1024/1024, Runtime.getRuntime().totalMemory()/1024/1024, Runtime.getRuntime().freeMemory()/1024/1024, 
-					(Runtime.getRuntime().maxMemory()-Runtime.getRuntime().totalMemory()+Runtime.getRuntime().freeMemory())/1024/1024); 
+			Runtime runtime = Runtime.getRuntime();
+	        logger.debug("计时结束: {}  用时: {}  URI: {}  总内存: {}  已用内存: {}",
+	        		DateUtils.formatDate(endTime, "hh:mm:ss.SSS"), TimeUtils.formatDateAgo(executeTime), request.getRequestURI(), 
+					ByteUtils.formatByteSize(runtime.totalMemory()), ByteUtils.formatByteSize(runtime.totalMemory()-runtime.freeMemory())); 
 		}
 		
 	}

@@ -12,4 +12,17 @@
 		ORDER BY ${sqlMap.order.toSql()}
 	</select> -->
 	
+	<!-- 演示Map参数和返回值，支持分页 -->
+	<select id="findListForMap" resultType="map">
+		SELECT * FROM test_data a
+		<where>
+			<if test="testInput != null and testInput != ''">
+				AND a.test_input = #{testInput}
+			</if>
+		</where>
+		<if test="page != null and page.orderBy != null and page.orderBy != ''">
+			ORDER BY ${page.orderBy}
+		</if>
+	</select>
+	
 </mapper>

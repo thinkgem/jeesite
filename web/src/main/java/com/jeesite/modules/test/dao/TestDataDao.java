@@ -3,6 +3,9 @@
  */
 package com.jeesite.modules.test.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.test.entity.TestData;
@@ -14,5 +17,10 @@ import com.jeesite.modules.test.entity.TestData;
  */
 @MyBatisDao
 public interface TestDataDao extends CrudDao<TestData> {
+	
+	/**
+	 * 演示Map参数和返回值，支持分页
+	 */
+	public List<Map<String, Object>> findListForMap(Map<String, Object> params);
 	
 }
