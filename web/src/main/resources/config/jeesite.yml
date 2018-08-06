@@ -108,7 +108,7 @@ jdbc:
 #    stat:
 #      enabled: true
 
-# Redis 配置
+# Redis 配置（2.x/3.x）
 #redis: 
 #  enabled: false
 #  
