@@ -260,7 +260,7 @@ jdbc:
 #    # 是否加密单点登录安全Key
 #    encryptKey: true
 #
-#  # 登录提交信息加密
+#  # 登录提交信息加密（如果不需要加密，设置为空即可）
 #  loginSubmit:
 #    
 #    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
@@ -281,6 +281,9 @@ jdbc:
 #  # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
 ##  accessControlAllowOrigin: http://demo.jeesite.com
 ##  accessControlAllowOrigin: '*'
+#
+#  # 是否在登录后生成新的Session（默认false）
+#  isGenerateNewSessionAfterLogin: false
 #  
 #  # URI 权限过滤器定义
 #  filterChainDefinitions: |

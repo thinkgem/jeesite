@@ -31,6 +31,7 @@ import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 表单验证（包含验证码）过滤类
@@ -157,6 +158,9 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		return captcha;
 	}
 	
+	/**
+	 * 跳转登录页时，跳转到默认首页
+	 */
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
 		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
@@ -207,6 +211,18 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected boolean isLoginSubmission(ServletRequest request, ServletResponse response) {
 		boolean isLogin = WebUtils.isTrue(request, "__login");
 		return super.isLoginSubmission(request, response) || isLogin;
+	}
+	
+	/**
+	 * 执行登录方法
+	 */
+	@Override
+	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+		// 是否在登录后生成新的Session（默认false）
+		if (Global.getPropertyToBoolean("shiro.isGenerateNewSessionAfterLogin", "false")){
+			UserUtils.getSubject().logout();
+		}
+		return super.executeLogin(request, response);
 	}
 
 	/**
