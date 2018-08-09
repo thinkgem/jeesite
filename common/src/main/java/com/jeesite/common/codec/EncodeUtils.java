@@ -167,7 +167,9 @@ public class EncodeUtils {
 	 * URL 解码, Encode默认为UTF-8. 
 	 */
 	public static String decodeUrl(String part, String encoding) {
-
+		if (part == null){
+			return null;
+		}
 		try {
 			return URLDecoder.decode(part, encoding);
 		} catch (UnsupportedEncodingException e) {
