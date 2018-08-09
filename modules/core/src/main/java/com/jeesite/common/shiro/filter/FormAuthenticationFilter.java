@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jeesite.common.codec.DesUtils;
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -94,7 +95,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		// 登录成功后，判断是否需要记住用户名
 		if (WebUtils.isTrue(request, DEFAULT_REMEMBER_USERCODE_PARAM)) {
-			rememberUserCodeCookie.setValue(username);
+			rememberUserCodeCookie.setValue(EncodeUtils.xssFilter(username));
 			rememberUserCodeCookie.saveTo((HttpServletRequest)request, (HttpServletResponse)response);
 		} else {
 			rememberUserCodeCookie.removeFrom((HttpServletRequest)request, (HttpServletResponse)response);
