@@ -5,6 +5,8 @@ package com.jeesite.common.utils.excel.fieldtype;
 
 import java.util.List;
 
+import org.springframework.core.NamedThreadLocal;
+
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.utils.AreaUtils;
@@ -12,12 +14,12 @@ import com.jeesite.modules.sys.utils.AreaUtils;
 /**
  * 字段类型转换
  * @author ThinkGem
- * @version 2013-03-10
+ * @version 2018-08-11
  * @example fieldType = AreaType.class
  */
 public class AreaType {
 
-	private static ThreadLocal<List<Area>> cache = new ThreadLocal<>();
+	private static ThreadLocal<List<Area>> cache = new NamedThreadLocal<>("AreaType");
 	
 	/**
 	 * 获取对象值（导入）
@@ -45,4 +47,12 @@ public class AreaType {
 		}
 		return "";
 	}
+	
+	/**
+	 * 清理缓存
+	 */
+	public static void clearCache(){
+		cache.remove();
+	}
+	
 }

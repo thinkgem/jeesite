@@ -22,12 +22,12 @@ import com.jeesite.modules.sys.utils.UserUtils;
 /**
  * 日志拦截器
  * @author ThinkGem
- * @version 2014-8-19
+ * @version 2018-08-11
  */
 public class LogInterceptor extends BaseService implements HandlerInterceptor {
 
 	private static final ThreadLocal<Long> startTimeThreadLocal =
-			new NamedThreadLocal<Long>("ThreadLocal StartTime");
+			new NamedThreadLocal<Long>("LogInterceptor StartTime");
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 

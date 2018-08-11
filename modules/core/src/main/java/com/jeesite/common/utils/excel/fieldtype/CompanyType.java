@@ -5,6 +5,8 @@ package com.jeesite.common.utils.excel.fieldtype;
 
 import java.util.List;
 
+import org.springframework.core.NamedThreadLocal;
+
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -12,12 +14,12 @@ import com.jeesite.modules.sys.utils.EmpUtils;
 /**
  * 字段类型转换
  * @author ThinkGem
- * @version 2015-03-24
+ * @version 2018-08-11
  * @example fieldType = CompanyType.class
  */
 public class CompanyType {
 
-	private static ThreadLocal<List<Company>> cache = new ThreadLocal<>();
+	private static ThreadLocal<List<Company>> cache = new NamedThreadLocal<>("CompanyType");
 
 	/**
 	 * 获取对象值（导入）
@@ -44,5 +46,12 @@ public class CompanyType {
 			return ((Company)val).getCompanyName();
 		}
 		return "";
+	}
+	
+	/**
+	 * 清理缓存
+	 */
+	public static void clearCache(){
+		cache.remove();
 	}
 }

@@ -177,8 +177,9 @@ public class EmpUserController extends BaseController {
 		}
 		List<EmpUser> list = empUserService.findList(empUser);
 		String fileName = "用户数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
-		new ExcelExport("用户数据", EmpUser.class).setDataList(list)
-				.write(response, fileName).dispose();
+		try(ExcelExport ee = new ExcelExport("用户数据", EmpUser.class)){
+			ee.setDataList(list).write(response, fileName);
+		}
 	}
 
 	/**
@@ -196,8 +197,9 @@ public class EmpUserController extends BaseController {
 		}
 		List<EmpUser> list = ListUtils.newArrayList(empUser);
 		String fileName = "用户数据模板.xlsx";
-		new ExcelExport("用户数据", EmpUser.class, Type.IMPORT).setDataList(list)
-				.write(response, fileName).dispose();
+		try(ExcelExport ee = new ExcelExport("用户数据", EmpUser.class, Type.IMPORT)){
+			ee.setDataList(list).write(response, fileName);
+		}
 	}
 
 	/**

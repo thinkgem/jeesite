@@ -3,6 +3,7 @@
  */
 package com.jeesite.common.utils.excel;
 
+import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,8 +14,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.reflect.ReflectUtils;
@@ -47,9 +51,9 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
  * @author ThinkGem
- * @version 2013-04-21
+ * @version 2018-08-11
  */
-public class ExcelExport {
+public class ExcelExport implements Closeable{
 	
 	private static Logger log = LoggerFactory.getLogger(ExcelExport.class);
 			
@@ -76,7 +80,12 @@ public class ExcelExport {
 	/**
 	 * 注解列表（Object[]{ ExcelField, Field/Method }）
 	 */
-	List<Object[]> annotationList;
+	private List<Object[]> annotationList;
+	
+	/**
+	 * 用于清理缓存
+	 */
+	private Set<Class<?>> fieldTypes = SetUtils.newHashSet();
 	
 	/**
 	 * 构造函数
@@ -431,6 +440,7 @@ public class ExcelExport {
 			if(val == null){
 				cell.setCellValue("");
 			}else if(fieldType != Class.class){
+				fieldTypes.add(fieldType); // 先存起来，方便完成后清理缓存
 				cell.setCellValue((String)fieldType.getMethod("setValue", Object.class).invoke(null, val));
 				try{
 					defaultDataFormat = (String)fieldType.getMethod("getDataFormat").invoke(null);
@@ -456,8 +466,11 @@ public class ExcelExport {
 					cell.setCellValue((Date) val);
 					defaultDataFormat = "yyyy-MM-dd HH:mm";
 				}else {
-					cell.setCellValue((String)Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
-						"fieldtype."+val.getClass().getSimpleName()+"Type")).getMethod("setValue", Object.class).invoke(null, val));
+					// 如果没有指定 fieldType，切自行根据类型查找相应的转换类（com.jeesite.common.utils.excel.fieldtype.值的类名+Type）
+					Class<?> fieldType2 = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
+							"fieldtype."+val.getClass().getSimpleName()+"Type"));
+					fieldTypes.add(fieldType2); // 先存起来，方便完成后清理缓存
+					cell.setCellValue((String)fieldType2.getMethod("setValue", Object.class).invoke(null, val));
 				}
 			}
 //			if (val != null){
@@ -574,12 +587,31 @@ public class ExcelExport {
 	
 	/**
 	 * 清理临时文件
+	 * @deprecated see close()
 	 */
 	public ExcelExport dispose(){
+		try {
+			this.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
+	@Override
+	public void close() {
 		if (wb instanceof SXSSFWorkbook){
 			((SXSSFWorkbook)wb).dispose();
 		}
-		return this;
+		Iterator<Class<?>> it = fieldTypes.iterator();
+		while(it.hasNext()){
+			Class<?> clazz = it.next();
+			try {
+				clazz.getMethod("clearCache").invoke(null);
+			} catch (Exception e) {
+				// 报错忽略，有可能没实现此方法
+			}
+		}
 	}
 	
 //	/**

@@ -5,6 +5,8 @@ package com.jeesite.common.utils.excel.fieldtype;
 
 import java.util.List;
 
+import org.springframework.core.NamedThreadLocal;
+
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
@@ -14,13 +16,13 @@ import com.jeesite.modules.sys.service.PostService;
 /**
  * 字段类型转换
  * @author ThinkGem
- * @version 2015-03-24
+ * @version 2018-08-11
  * @example fieldType = PostListType.class
  */
 public class PostListType {
 
 	private static PostService postService = SpringUtils.getBean(PostService.class);
-	private static ThreadLocal<List<Post>> cache = new ThreadLocal<>();
+	private static ThreadLocal<List<Post>> cache = new NamedThreadLocal<>("PostListType");
 
 	/**
 	 * 获取对象值（导入）
@@ -52,5 +54,12 @@ public class PostListType {
 			return ListUtils.extractToString(postList, "postName", ", ");
 		}
 		return "";
+	}
+	
+	/**
+	 * 清理缓存
+	 */
+	public static void clearCache(){
+		cache.remove();
 	}
 }

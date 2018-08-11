@@ -116,8 +116,7 @@ public class EmpUserService extends CrudService<EmpUserDao, EmpUser> {
 		int successNum = 0; int failureNum = 0;
 		StringBuilder successMsg = new StringBuilder();
 		StringBuilder failureMsg = new StringBuilder();
-		try {
-			ExcelImport ei = new ExcelImport(file, 2, 0);
+		try(ExcelImport ei = new ExcelImport(file, 2, 0)){
 			List<EmpUser> list = ei.getDataList(EmpUser.class);
 			for (EmpUser user : list) {
 				try{

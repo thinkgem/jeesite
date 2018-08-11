@@ -37,4 +37,11 @@ public class MoneyType {
 		return "0.00";
 	}
 	
+	/**
+	 * 清理缓存
+	 */
+	public static void clearCache(){
+		
+	}
+	
 }
