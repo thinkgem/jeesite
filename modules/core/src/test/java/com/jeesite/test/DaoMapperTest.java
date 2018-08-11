@@ -29,7 +29,7 @@ import com.jeesite.modules.sys.entity.User;
 /**
  * Mapper测试
  * @author ThinkGem
- * @version 2017年2月25日
+ * @version 2018-08-11
  */
 @ActiveProfiles("test")
 @SpringBootTest(classes=ApplicationTest.class)
@@ -50,7 +50,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	public void testTableAnnotation() throws Exception{
 		try{
 			
-			System.out.println("============ 插入、批量插入测试 ============");
+			System.out.println("============ 插入和批量插入测试 ============");
 			Config config = new Config();
 			config.setId("1");
 			config.setConfigKey("test");
@@ -64,13 +64,13 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			System.out.println(configDao.insert(config));
 			System.out.println(configDao.insertBatch(ListUtils.newArrayList(config2, config3)));
 			
-			System.out.println("============ 更新、删除测试 ============");
+			System.out.println("============ 更新测试 ============");
 			Area area = new Area();
 			area.setAreaCode("1");
 			area.setAreaName("你好");
 			area.setStatus("0");
 			Area where = new Area();
-			where.setAreaCode("2");
+			where.setId("2");
 			where.setId_in(new String[]{"1","2"});
 			where.setAreaName("你好2");
 			where.setStatus("0");
@@ -78,12 +78,18 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			System.out.println(areaDao.updateByEntity(area, where));
 			System.out.println(areaDao.updateStatus(area));
 			System.out.println(areaDao.updateStatusByEntity(area, where));
+			
+			System.out.println("============ 逻辑删除测试 ============");
 			System.out.println(areaDao.delete(area));
-			System.out.println(areaDao.delete(where));
-			System.out.println(areaDao.deleteByEntity(where));
-			System.out.println(areaDao.findList(area));
+			System.out.println(areaDao.delete((Area)where.clone()));
+			System.out.println(areaDao.deleteByEntity((Area)where.clone()));
+
+			System.out.println("============ 物理删除测试 ============");
+			System.out.println(areaDao.phyDelete((Area)where.clone()));
+			System.out.println(areaDao.phyDeleteByEntity((Area)where.clone()));
 
 			System.out.println("============ 基本信息查询测试 ============");
+			System.out.println(areaDao.findList(area));
 			User user = new User();
 			user.setUserType(User.USER_TYPE_NONE);
 			System.out.println(userDao.findList(user));
