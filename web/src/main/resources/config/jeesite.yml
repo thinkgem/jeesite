@@ -364,6 +364,7 @@ jdbc:
 #        ${adminPath}/login,
 #        ${adminPath}/desktop,
 #        ${adminPath}/sys/online/count,
+#        ${adminPath}/state/server/rtInfo,
 #        ${adminPath}/**/treeData,
 #        ${adminPath}/file/**,
 #        ${adminPath}/tags/*,

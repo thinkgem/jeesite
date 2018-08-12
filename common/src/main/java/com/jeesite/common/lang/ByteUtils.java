@@ -17,6 +17,10 @@ public class ByteUtils {
      * @return
      */
     public static String formatByteSize(long byteSize) {
+    	
+    	if (byteSize <= -1){
+    		return String.valueOf(byteSize);
+    	}
 
         double size = 1.0 * byteSize;
 
