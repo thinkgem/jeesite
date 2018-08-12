@@ -14,9 +14,12 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
@@ -43,6 +46,20 @@ import com.jeesite.common.shiro.web.WebSecurityManager;
 @SuppressWarnings("deprecation")
 @Configuration
 public class ShiroConfig {
+	
+	/**
+	 * Apache Shiro Filter
+	 * @throws Exception 
+	 */
+	@Bean
+	@Order(3000)
+	@ConditionalOnMissingBean(name="shiroFilterProxy")
+	public FilterRegistrationBean shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
+		FilterRegistrationBean bean = new FilterRegistrationBean();
+		bean.setFilter((Filter) shiroFilter.getInstance());
+		bean.addUrlPatterns("/*");
+		return bean;
+	}
 	
 	/**
 	 * CAS登录过滤器

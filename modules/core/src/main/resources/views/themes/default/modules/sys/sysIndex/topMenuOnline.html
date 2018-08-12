@@ -5,7 +5,8 @@
 	</a>
 	<script>
 		function refreshOnlineCount(){
-			$.get('${ctx}/sys/online/count?__notUpdateSession=true&__t='+new Date().getTime(), function(data){
+			$.get('${ctx}/sys/online/count?__notUpdateSession=true&__t='
+					+ new Date().getTime(), function(data){
 				try{$('#onlineCount').html(Number(data))}catch(e){}
 			})
 		}
