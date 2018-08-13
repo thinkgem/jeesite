@@ -45,20 +45,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 内容管理模块 
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>-->
-		
-		<!-- 微信模块 
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-weixin</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>-->
-		
 		<!-- 自定义jar依赖包演示
 		<dependency>
 			<groupId>com.jeesite</groupId>
