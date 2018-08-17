@@ -314,8 +314,11 @@ jdbc:
 # MyBatis 相关
 #mybatis:
 #
-#  # 扫描基础包设置（Aliases、@MyBatisDao），如果多个，用“,”分隔
+#  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
 #  scanBasePackage: com.jeesite.modules
+#  
+#  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
+#  scanTypeHandlersPackage: ~
 #  
 #  # Mapper文件刷新线程
 #  mapper:
