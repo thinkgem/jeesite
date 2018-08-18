@@ -14,12 +14,6 @@ copyrightYear: 2018
 #是否演示模式
 demoMode: false
 
-#是否小程序
-miniService: true
-
-#是否小程序
-miniConfig: true
-
 #============================#
 #===== Database sttings =====#
 #============================#
