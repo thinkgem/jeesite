@@ -252,7 +252,12 @@ shiro:
     
     # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
     secretKey: thinkgem,jeesite,com
-
+  
+  # 记住我密钥设置（设置为空则使用默认）
+  rememberMe:
+    # 密钥必须通过 com.jeesite.common.shiro.web.RememberMeManager 的main方法生成
+    secretKey: ~
+  
   # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
   remoteAddrHeaderName: X-Forwarded-For
 
