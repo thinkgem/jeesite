@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,7 @@ import com.jeesite.modules.sys.service.LogService;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/log")
+@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
 public class LogController extends BaseController {
 
 	@Autowired

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +35,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/area")
+@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
 public class AreaController extends BaseController {
 
 	@Autowired

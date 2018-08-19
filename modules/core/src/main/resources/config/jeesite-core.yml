@@ -179,9 +179,19 @@ user:
     registerUser:
       enabled: false
       userTypes: 0, 1
+
+# 菜单管理
+menu:
+  # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
+  updateStatusByModuleStatus: true
+
+# 国际化管理（专业版+）
+lang:
+  enabled: true
   
 # 任务调度（个人版+）
 job:
+  enabled: true
 
   # 是否自动启动任务调度（可关闭）
   autoStartup: true
@@ -396,6 +406,10 @@ web:
   validator:
     id: '[a-zA-Z0-9_\-/\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
+
+  # 关闭核心模块的Web功能（仅作为微服务时设为false）
+  core: 
+    enabled: true
    
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
 error:

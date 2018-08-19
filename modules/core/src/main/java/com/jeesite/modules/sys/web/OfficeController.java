@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -35,6 +36,7 @@ import com.jeesite.modules.sys.web.user.EmpUserController;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/office")
+@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
 public class OfficeController extends BaseController {
 
 	@Autowired

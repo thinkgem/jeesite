@@ -17,6 +17,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/online")
+@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
 public class OnlineController extends BaseController{
 
 	@Autowired

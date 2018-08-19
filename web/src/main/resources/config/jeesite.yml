@@ -14,12 +14,6 @@ copyrightYear: 2018
 #是否演示模式
 demoMode: false
 
-#是否小程序
-miniService: true
-
-#是否小程序
-miniConfig: true
-
 #============================#
 #===== Database sttings =====#
 #============================#
@@ -208,8 +202,18 @@ jdbc:
 #  # 多租户模式（SAAS模式）（专业版）
 #  useCorpModel: false
 
+# 菜单管理
+#menu:
+#  # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
+#  updateStatusByModuleStatus: true
+
+# 国际化管理（专业版+）
+#lang:
+#  enabled: true
+  
 # 任务调度（个人版+）
 #job:
+#  enabled: true
 #
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true
@@ -385,6 +389,16 @@ jdbc:
 #  
 #  # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
 #  staticFileExcludeUri: /druid/
+#
+#  # 自定义正则表达式验证（主键、登录名）
+#  validator:
+#    id: '[a-zA-Z0-9_\-/\u4e00-\u9fa5]{0,64}'
+#    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
+#    
+#  # 关闭核心模块的Web功能（仅作为微服务时设为false）
+#  core: 
+#    enabled: true
+    
 #
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
 #error:
