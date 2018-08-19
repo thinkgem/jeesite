@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beust.jcommander.internal.Lists;
 import com.beust.jcommander.internal.Maps;
+import com.jeesite.common.cache.CacheUtils;
+import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.ObjectUtils;
@@ -145,6 +147,17 @@ public class OnlineController extends BaseController{
 	public String tickOut(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
+			@SuppressWarnings("unchecked")
+			Map<String, String> onlineTickOutMap = (Map<String, String>)CacheUtils.get("onlineTickOutMap");
+			if (onlineTickOutMap == null){
+				onlineTickOutMap = MapUtils.newConcurrentMap();
+			}
+			PrincipalCollection pc = (PrincipalCollection)session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+			LoginInfo principal = (pc != null ? (LoginInfo)pc.getPrimaryPrincipal() : null);
+			if (principal != null){
+				onlineTickOutMap.put(principal.getId()+"_"+principal.getParam("deviceType", "PC"), StringUtils.EMPTY);
+			}
+			CacheUtils.put("onlineTickOutMap", onlineTickOutMap);
 			sessionDAO.delete(session);
 			return renderResult(Global.TRUE, "踢出已成功！");
 		}

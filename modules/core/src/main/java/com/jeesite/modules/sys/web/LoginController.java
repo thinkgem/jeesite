@@ -231,10 +231,10 @@ public class LoginController extends BaseController{
 		Session session = UserUtils.getSession();
 		
 		// 是否是登录操作
-		boolean isLogin = "true".equals(loginInfo.getParam("__login"));
+		boolean isLogin = "true".equals(session.getAttribute("__login"));
 		if (isLogin){
 			// 获取后接着清除，防止下次获取仍然认为是登录状态
-			loginInfo.getParams().remove("__login");
+			session.removeAttribute("__login");
 			// 设置共享SessionId的Cookie值（第三方系统使用）
 			String cookieName = Global.getProperty("session.shareSessionIdCookieName");
 			if (StringUtils.isNotBlank(cookieName)){
