@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
   <wb-module deploy-name="web">
-        <dependent-module archiveName="jeesite-module-core-4.0.6-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-core/jeesite-module-core">
+        <dependent-module archiveName="jeesite-module-core-4.0.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-core/jeesite-module-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-common-4.0.6-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-common/jeesite-common">
+        <dependent-module archiveName="jeesite-common-4.0.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-common/jeesite-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-framework-4.0.6-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-framework/jeesite-framework">
+        <dependent-module archiveName="jeesite-framework-4.0.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-framework/jeesite-framework">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="component.exclusion.patterns"/>
