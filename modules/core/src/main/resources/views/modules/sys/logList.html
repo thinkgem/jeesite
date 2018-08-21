@@ -61,10 +61,10 @@
 					<label class="control-label">操作时间：</label>
 					<div class="control-inline">
 						<#form:input path="createDate_gte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,onpicked:function(){createDate_lte.click()}});"/>
+							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true,onpicked:function(){createDate_lte.click()}});"/>
 						&nbsp;--&nbsp;
 						<#form:input path="createDate_lte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
 					</div>
 				</div>
 				<div class="form-group">
