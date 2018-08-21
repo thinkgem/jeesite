@@ -46,7 +46,6 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 	private UserService userService;
 	private EmpUserService empUserService;
 	
-	///////////// CAS /////////////
 	private CasOutHandler casOutHandler;
 	private String casServerUrl; 			// CAS 服务器地址
     private String casServerCallbackUrl; 	// CAS 服务器回调地址
@@ -56,10 +55,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 		super();
 		this.setAuthenticationTokenClass(CasToken.class);
 	}
-
-	/*
-	 * 获取登录令牌
-	 */
+	
 	@Override
 	protected FormToken getFormToken(AuthenticationToken authcToken) {
 		
@@ -105,9 +101,6 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
         return token;
 	}
 	
-	/*
-	 * 获取用户信息
-	 */
 	@Override
 	protected User getUserInfo(FormToken token) {
 		
@@ -117,7 +110,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 			
 			// 如果允许客户端创建账号，则创建账号
 			if (ObjectUtils.toBoolean(attrs.get("isAllowClientCreateUser"))){
-	
+				
 				// 获取CAS传递过来的用户属性信息
 				user = new User(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("userCode"))));
 				user.setLoginCode(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("loginCode"))));
@@ -178,9 +171,6 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 		return user;
 	}
 	
-	/*
-	 * 认证密码匹配调用方法
-	 */
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken authcToken,
 			AuthenticationInfo info) throws AuthenticationException {

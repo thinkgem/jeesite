@@ -205,7 +205,7 @@ $('#btnImport').click(function(){
 		<div class="col-xs-12 col-xs-offset-1">
 			<input type="file" id="file" name="file" class="form-file"/>
 			<div class="mt10 pt5">
-				<#form:checkbox name="updateSupport" label="${text('否更新已经存在的用户数据')}" class="form-control"
+				<#form:checkbox name="updateSupport" label="${text('是否更新已经存在的用户数据')}" class="form-control"
 					title="${text('如果用户编码已经存在，更新这条数据。')}"/> &nbsp;
 				<a href="${ctx}/sys/empUser/importTemplate" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> ${text('下载模板')}</a>
 			</div>
