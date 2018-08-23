@@ -11,6 +11,7 @@ import java.util.TimeZone;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -46,6 +47,8 @@ public class JsonMapper extends ObjectMapper {
 	}
 	
 	public JsonMapper() {
+		// Spring ObjectMapper 初始化配置，支持 @JsonView
+		new Jackson2ObjectMapperBuilder().configure(this);
 		// 为Null时不序列化
 		this.setSerializationInclusion(Include.NON_NULL);
 		// 允许单引号
@@ -61,7 +64,7 @@ public class JsonMapper extends ObjectMapper {
 			@Override
 			public void serialize(Object value, JsonGenerator jgen,
 					SerializerProvider provider) throws IOException, JsonProcessingException {
-				jgen.writeString("");
+				jgen.writeString(StringUtils.EMPTY);
 			}
         });
 //		// 统一默认Date类型转换格式。如果设置，Bean中的@JsonFormat将失效
