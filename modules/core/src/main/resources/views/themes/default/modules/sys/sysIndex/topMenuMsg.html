@@ -33,8 +33,8 @@
 		<div style="margin:8px 0 0;float:right;">
 			{{# $.each(d.msgContentEntity.buttons, function(idx, item){ }}
 				<button class="btn btn-default btn-sm" type="button"
-					data-href="${ctxPath}{{d.item.href}}"
-					onclick="readMsg(this, '${text('查看消息')}', '{{d.item.id}}');">{{d.item.name}}</button>&nbsp;
+					data-href="${ctxPath}{{item.href}}"
+					onclick="readMsg(this, '${text('查看消息')}', '{{item.id}}');">{{item.name}}</button>&nbsp;
 			{{# }); }}
 			<button type="button" class="btn btn-default btn-sm"
 				data-href="${ctx}/msg/readMsg?id={{d.id}}"
