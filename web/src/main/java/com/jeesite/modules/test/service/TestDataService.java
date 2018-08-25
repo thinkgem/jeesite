@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.test.dao.TestDataChildDao;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
@@ -114,6 +116,14 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		TestDataChild testDataChild = new TestDataChild();
 		testDataChild.setTestData(testData);
 		testDataChildDao.delete(testDataChild);
+	}
+	
+	/**
+	 * 任务调度测试：testDataService.executeTestTask(userService, 1, 2L, 3F, 4D, 'abc')
+	 */
+	public void executeTestTask(UserService userService, Integer i, Long l, Float f, Double d, String s){
+		System.out.println(DateUtils.getTime() + " 任务执行了~~~  bean: " + userService + ", i: " + i
+				+ ", l: " + l + ", f: " + f + ", d: " + d + ", s: " + s);
 	}
 	
 }

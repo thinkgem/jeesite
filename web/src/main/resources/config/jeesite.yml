@@ -232,6 +232,21 @@ jdbc:
 #    dataSourceName: job
 #    clusterCheckinInterval: 1000
 #
+#  # 调度日志
+#  log:
+#    # 计划调度日志
+#    scheduler:
+#      enabled: true
+#      # 是否只保存错误日志
+#      errorLevel: true
+#    # 任务执行日志
+#    jobDetail:
+#      enabled: true
+#      # 是否只保存错误日志
+#      errorLevel: true
+#    # 计划触发日志
+#    trigger:
+#      enabled: false
 
 #============================#
 #==== Framework settings ====#
