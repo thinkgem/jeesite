@@ -383,7 +383,8 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	public static <T> List<T> listOrderBy(List<T> list, String orderBy){
 		if (list != null && StringUtils.isNotBlank(orderBy)){
 			final String[] ss = orderBy.trim().split(" ");
-			if (ss != null && ss.length == 2){
+			if (ss != null){
+				final String t = ss.length==2 ? ss[1] : "asc";
 				Collections.sort(list, new Comparator<T>() {
 					@Override
 					public int compare(T o1, T o2) {
@@ -395,12 +396,13 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 							s1 = ObjectUtils.toString(ReflectUtils.invokeGetter(o1, ss[0]));
 							s2 = ObjectUtils.toString(ReflectUtils.invokeGetter(o2, ss[0]));
 						}
-						if ("asc".equals(ss[1])){
+						if ("asc".equalsIgnoreCase(t)){
 							return s1.compareTo(s2);
 						}else{
 							return s2.compareTo(s1);
 						}
-					}});
+					}
+				});
 			}
 		}
 		return list;
