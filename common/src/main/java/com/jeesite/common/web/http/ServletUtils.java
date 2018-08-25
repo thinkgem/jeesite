@@ -79,6 +79,21 @@ public class ServletUtils {
 	}
 	
 	/**
+	 * 支持AJAX的页面跳转
+	 */
+	public static void redirectUrl(HttpServletRequest request, HttpServletResponse response, String url){
+		try {
+			if (ServletUtils.isAjaxRequest(request)){
+				request.getRequestDispatcher(url).forward(request, response); // AJAX不支持Redirect改用Forward
+			}else{
+				response.sendRedirect(request.getContextPath() + url);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 是否是Ajax异步请求
 	 * @param request
 	 */
@@ -173,9 +188,10 @@ public class ServletUtils {
 				resultMap.put("data", data);
 			}
 		}
-		HttpServletRequest request = ServletUtils.getRequest();
+		HttpServletRequest request = getRequest();
 		String uri = request.getRequestURI();
-		if (StringUtils.endsWithIgnoreCase(uri, ".xml")){
+		if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
+				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
 			return XmlMapper.toXml(resultMap);
 		}else{
 			String functionName = request.getParameter("__callback");
@@ -202,7 +218,7 @@ public class ServletUtils {
 	/**
 	 * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
 	 * @param response 渲染对象：{result:'true',message:'',data:{}}
-	 * @param result Global.TRUE or Globle.False
+	 * @param result 结果标识：Global.TRUE or Globle.False
 	 * @param message 执行消息
 	 * @param data 消息数据
 	 * @return null
@@ -212,16 +228,18 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 将对象转换为JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
+	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
 	 * @param response 渲染对象
 	 * @param object 待转换JSON并渲染的对象
 	 * @return null
 	 */
 	public static String renderObject(HttpServletResponse response, Object object) {
-		HttpServletRequest request = ServletUtils.getRequest();
+		HttpServletRequest request = getRequest();
 		String uri = request.getRequestURI();
-		if (StringUtils.endsWithIgnoreCase(uri, ".xml")){
-			return XmlMapper.toXml(object);
+		if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
+				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+			return renderString(response, XmlMapper.toXml(object));
 		}else{
 			String functionName = request.getParameter("__callback");
 			if (StringUtils.isNotBlank(functionName)){
@@ -250,8 +268,18 @@ public class ServletUtils {
 	 */
 	public static String renderString(HttpServletResponse response, String string, String type) {
 		try {
-//			response.reset(); // 先注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我Cookie
-	        response.setContentType(type == null ? "application/json" : type);
+//			response.reset(); // 注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我的Cookie信息
+			if (type == null){
+				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
+						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
+					type = "application/json";
+				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
+					type = "application/xml";
+				}else{
+					type = "text/html";
+				}
+			}
+			response.setContentType(type);
 	        response.setCharacterEncoding("utf-8");
 			response.getWriter().print(string);
 		} catch (IOException e) {

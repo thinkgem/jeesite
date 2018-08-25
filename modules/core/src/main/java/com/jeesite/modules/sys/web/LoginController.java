@@ -54,7 +54,8 @@ public class LoginController extends BaseController{
 		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
-			return REDIRECT + adminPath + "/login" + queryString;
+			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			return null;
 		}
 
 		LoginInfo loginInfo = UserUtils.getLoginInfo();
@@ -63,16 +64,8 @@ public class LoginController extends BaseController{
 		if(loginInfo != null){
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
-			String indexUrl = adminPath + "/index" + queryString;
-			if (ServletUtils.isAjaxRequest(request)){
-				try {
-					request.getRequestDispatcher(indexUrl).forward(request, response); // AJAX不支持Redirect改用Forward
-				} catch (Exception ex) {
-					logger.error(ex.getMessage(), ex);
-				}
-				return null;
-			}
-			return REDIRECT + indexUrl;
+			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+			return null;
 		}
 		
 		// 如果是登录操作，跳转到此，则认为是登录失败（支持GET登录时传递__login=true参数）
@@ -130,16 +123,8 @@ public class LoginController extends BaseController{
 		if(loginInfo != null){
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
-			String indexUrl = adminPath + "/index" + queryString;
-			if (ServletUtils.isAjaxRequest(request)){
-				try {
-					request.getRequestDispatcher(indexUrl).forward(request, response); // AJAX不支持Redirect改用Forward
-				} catch (Exception ex) {
-					logger.error(ex.getMessage(), ex);
-				}
-				return null;
-			}
-			return REDIRECT + indexUrl;
+			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+			return null;
 		}
 		
 		String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
@@ -202,12 +187,16 @@ public class LoginController extends BaseController{
 		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
-			return REDIRECT + adminPath + "/index" + queryString;
+			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+			return null;
 		}
 
 		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
 		if (!SecurityUtils.getSubject().isPermitted("user")){
-			return REDIRECT + adminPath + "/login";
+			String queryString = request.getQueryString();
+			queryString = queryString == null ? "" : "?" + queryString;
+			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			return null;
 		}
 
 		//获取登录用户信息
@@ -216,14 +205,20 @@ public class LoginController extends BaseController{
 		// 未加载shiro模块时会为空，直接访问则提示操作权限不足。
 		if(loginInfo == null){
 			UserUtils.getSubject().logout();
-			return REDIRECT + adminPath + "/login";
+			String queryString = request.getQueryString();
+			queryString = queryString == null ? "" : "?" + queryString;
+			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			return null;
 		}
 		
 		// 当前用户对象信息
 		User user = UserUtils.get(loginInfo.getId());
 		if (user == null){
 			UserUtils.getSubject().logout();
-			return REDIRECT + adminPath + "/login";
+			String queryString = request.getQueryString();
+			queryString = queryString == null ? "" : "?" + queryString;
+			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
+			return null;
 		}
 		model.addAttribute("user", user); // 设置当前用户信息
 
