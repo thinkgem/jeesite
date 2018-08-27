@@ -204,13 +204,19 @@ job:
     threadCount: 10
     threadPriority: 5
 
+  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+  # 每一个instanceId必须不同，设置AUTO则自动生成
+  scheduler:
+    instanceName: JeeSiteScheduler
+    instanceId: AUTO
+
   # 任务调度集群设置
   jobStore:
     isClustered: true
     dataSourceName: job
     clusterCheckinInterval: 1000
 
-  # 调度日志
+  # 调度日志配置
   log:
     # 计划调度日志
     scheduler:
