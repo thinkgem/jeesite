@@ -58,17 +58,14 @@
 				<% if(@Global.getConfigToBoolean('user.registerUser', 'false')){ %>
 					<a href="${ctxPath}/account/registerUser" class="pull-left ml10">[ ${text('注册账号')} ]</a>
 				<% } %>
-				<%
-				var langTypeList = @DictUtils.getDictList('sys_lang_type');
-				if (langTypeList.~size > 1){
-				%>
+				<% if (@com.jeesite.common.i18n.I18nLocaleResolver.enabled()){ %>
 				<div class="dropdown pull-right">
 					<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
 						<i class="fa icon-globe"></i> ${@DictUtils.getDictLabel('sys_lang_type', lang(), 'zh_CN')}
 					</a>
 					<ul class="dropdown-menu">
 						<li class="mt5"></li>
-						<% for(var dict in langTypeList){ %>
+						<% for(var dict in @DictUtils.getDictList('sys_lang_type')){ %>
 							<li><a href="${ctxPath}/lang/${dict.dictValue}">${dict.dictLabel}</a></li>
 						<% } %>
 						<li class="mt10"></li>
