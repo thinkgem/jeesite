@@ -162,4 +162,4 @@ Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hi
 
 上述纯属个人观点，欢迎指正（thinkgem@163.com）。
 
-如果你仍然喜欢Hibernate，请点击[下载JeeSite Hibernate版本](https://github.com/thinkgem/jeesite/tree/master_hibernate)。1
+如果你仍然喜欢Hibernate，请点击[下载JeeSite Hibernate版本](https://github.com/thinkgem/jeesite/tree/master_hibernate)。12
