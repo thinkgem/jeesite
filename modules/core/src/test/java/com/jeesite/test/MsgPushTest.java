@@ -5,6 +5,7 @@ package com.jeesite.test;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,8 @@ import com.jeesite.modules.msg.entity.content.SmsMsgContent;
 import com.jeesite.modules.msg.task.impl.MsgLocalMergePushTask;
 import com.jeesite.modules.msg.task.impl.MsgLocalPushTask;
 import com.jeesite.modules.msg.utils.MsgPushUtils;
+import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 消息推送测试类
@@ -34,6 +37,10 @@ public class MsgPushTest extends BaseSpringContextTests {
 
 	@Test
 	public void testSend(){
+		User user = UserUtils.get("system");
+		if (StringUtils.isAnyBlank(user.getMobile(), user.getEmail())){
+			throw new RuntimeException("请设置system用户的手机号码和邮箱地址");
+		}
 		for (int i=0; i<1; i++){
 			testPC();
 			testApp();
