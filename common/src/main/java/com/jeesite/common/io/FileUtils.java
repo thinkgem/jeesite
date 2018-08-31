@@ -814,14 +814,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				try {
 					out.close();
 				} catch (IOException e) {
-					logger.error(e.getMessage(), e);
+//					logger.error(e.getMessage(), e);
 				}
 			}
 			if (raf != null) {
 				try {
 					raf.close();
 				} catch (IOException e) {
-					logger.error(e.getMessage(), e);
+//					logger.error(e.getMessage(), e);
 				}
 			}
 		}
