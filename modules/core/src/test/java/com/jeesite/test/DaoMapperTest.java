@@ -156,12 +156,12 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
 				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql());
 		System.out.println(new Config().getSqlMap().getWhere()
-				.andBracket("name", QueryType.EQ, "val", 1)
-					.and("name", QueryType.NE, "val", 2).endBracket()
-				.orBracket("name", QueryType.NE, "val", 3)
-					.and("name", QueryType.NE, "val", 4).endBracket()
-				.orBracket("name", QueryType.NE, "val", 5)
-					.and("name", QueryType.EQ, "val", 6).endBracket().toSql());
+				.andBracket("name", QueryType.EQ, "val1", 1)
+					.and("name", QueryType.NE, "val2", 11).endBracket(1)
+				.orBracket("name", QueryType.NE, "val3", 2)
+					.and("name", QueryType.NE, "val4", 22).endBracket(2)
+				.orBracket("name", QueryType.NE, "val5", 3)
+					.and("name", QueryType.EQ, "val6", 33).endBracket(3).toSql());
 		
 		System.out.println("============ 带括号空值测试 ============");
 		System.out.println(new Config("1").getSqlMap().getWhere()
@@ -176,6 +176,9 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		System.out.println(new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
 				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
+		System.out.println(new Config().getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
 		
 		System.out.println("============ 实体嵌套测试 ============");
 		Company company = new Company("1");
@@ -186,7 +189,6 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		company.getArea().setCreateDate_gte(new Date());
 		company.getArea().setCreateDate_lte(new Date());
 		System.out.println(company.getSqlMap().getWhere().toSql());
-
 		
 	}
 }
