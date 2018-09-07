@@ -98,6 +98,7 @@ JeeSite的小版本（4.0.x）升级是非常便捷的，你只需要将 pom.xml
 * GitHub：<https://github.com/thinkgem/jeesite4>
 * 作者博客：<https://my.oschina.net/thinkgem>
 * 官方网站：<http://jeesite.com>
+* 官方论坛：<http://jeesite.net>
 * 微信公众号：
 
 ![https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
