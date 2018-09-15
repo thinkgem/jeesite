@@ -21,7 +21,7 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 * 视图层：Spring MVC 4.3、Beetl 2.7 替换JSP、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.0、zTree 3.5、jquery-validation
 * 工具组件：Apache Commons、Logback 1.1、Jackson 2.8、POI 3.14、Quartz 2.2
-* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite4-jflow> ：http://ccflow.org
+* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite4-jflow> ：<http://ccflow.org>
 * 技术选型详情：<http://jeesite4.mydoc.io/?t=273599>
 
 ## 内置功能菜单
