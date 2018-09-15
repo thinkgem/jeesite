@@ -73,7 +73,7 @@ jdbc:
     stat:
       enabled: true
   
-# Redis 配置（2.x/3.x）
+# Redis 配置
 redis: 
   enabled: false
   
@@ -90,7 +90,7 @@ redis:
   pool:
     maxIdle: 3
     maxTotal: 20
-
+  
   # 是否启用Redis系统缓存及会话（专业版）
   cacheAndSession: false
   

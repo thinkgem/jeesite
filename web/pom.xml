@@ -76,8 +76,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes></packagingExcludes>
-					<warSourceExcludes></warSourceExcludes>
+					<warSourceExcludes>
+						WEB-INF/classes/*.lic,
+						userfiles/**
+					</warSourceExcludes>
 					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 					<warName>${finalName}</warName>
 					<archive>
