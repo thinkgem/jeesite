@@ -24,12 +24,12 @@ public class EmailUtils {
 	 * @return
 	 */
 	public static boolean send(String toAddress, String subject, String content) {
-		PropertiesUtils loader = PropertiesUtils.getInstance();
-		String fromAddress = loader.getProperty("msg.email.fromAddress");
-		String fromPassword = loader.getProperty("msg.email.fromPassword");
-		String fromHostName = loader.getProperty("msg.email.fromHostName");
-		String sslOnConnect = loader.getProperty("msg.email.sslOnConnect", "false");
-		String sslSmtpPort = loader.getProperty("msg.email.sslSmtpPort");
+		PropertiesUtils props = PropertiesUtils.getInstance();
+		String fromAddress = props.getProperty("msg.email.fromAddress");
+		String fromPassword = props.getProperty("msg.email.fromPassword");
+		String fromHostName = props.getProperty("msg.email.fromHostName");
+		String sslOnConnect = props.getProperty("msg.email.sslOnConnect", "false");
+		String sslSmtpPort = props.getProperty("msg.email.sslSmtpPort");
 		return send(fromAddress, fromPassword, fromHostName, sslOnConnect, sslSmtpPort, toAddress, subject, content);
 	}
 	
