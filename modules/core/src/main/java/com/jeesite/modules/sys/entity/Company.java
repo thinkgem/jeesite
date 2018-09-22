@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>entity</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/entity/${subModuleName}</filePath>
+	<fileName>${ClassName}.java</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package ${packageName}.${moduleName}.entity${isNotBlank(subModuleName)?'.'+subModuleName:''};
+
+<% for(i in table.importList){ %>
+import ${i};
+<% } %>
+
+import com.jeesite.common.entity.DataEntity;
+<% if(table.isTreeEntity){ %>
+import com.jeesite.common.entity.TreeEntity;
+<% } %>
+import com.jeesite.common.mybatis.annotation.Column;
+import com.jeesite.common.mybatis.annotation.Table;
+import com.jeesite.common.mybatis.mapper.query.QueryType;
+
+/**
+ * ${functionName}Entity
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Table(name="${table.genTableName}", alias="a", columns={
+		<%
+		var isBase = false, isData = false,
+			isTree = false, isExtend = false;
+		// 生成字段属性
+		for(c in table.columnList){
+			// 如果是BaseEntity类属性
+			if(c.isBaseEntityColumn){
+				if(!isBase){
+					isBase = true;
+		%>
+		@Column(includeEntity=BaseEntity.class),
+		<%
+				}
+			// 如果是DataEntity类属性
+			}else if(c.isDataEntityColumn){
+				if(!isData){
+					isData = true;
+		%>
+		@Column(includeEntity=DataEntity.class),
+		<%
+				}
+			// 如果是TreeEntity类属性
+			}else if(c.isTreeEntityColumn){
+				if(!isTree){
+					isTree = true;
+		%>
+		@Column(includeEntity=TreeEntity.class),
+		<%
+				}
+			// 如果是Extend类属性
+			}else if(c.isExtendColumn){
+				if(!isExtend){
+					isExtend = true;
+		%>
+		@Column(includeEntity=Extend.class, attrName="extend"),
+		<%
+				}
+			// 其它情况下
+			}else{
+				// 容错，如果没有设置父表的主键属性，则设置
+				if(!@StringUtils.contains(c.attrName, ".")){
+					if (table.parentExists && table.parentTableFkName == c.columnName){
+						for (pk in table.parent.pkList){
+							c.fullAttrName = c.fullAttrName + '.' + pk.attrName;
+							break;
+						}
+					}
+				}
+		%>
+		@Column(name="${c.columnName}", attrName="${c.attrName}", label="${c.columnLabel}"<%
+				if (c.comments != c.columnLabel){
+					print(', comment="'+c.comments+'"');
+				}
+				if (c.isPk == @Global.YES){
+					print(', isPK=true');
+				}else{
+					if (c.isInsert == @Global.NO){
+						print(', isInsert=false');
+					}
+					if (c.isUpdate == @Global.NO){
+						print(', isUpdate=false');
+					}
+					if (c.isQuery == @Global.YES && @StringUtils.inString(c.queryType,
+							'NE', 'GT', 'GTE', 'LT', 'LTE', 'LIKE', 'LEFT_LIKE', 'RIGHT_LIKE')){
+						print(', queryType=QueryType.'+c.queryType);
+					}
+					if (c.isQuery == @Global.NO){
+						print(', isQuery=false');
+					}
+					if (c.attrName == table.treeViewNameAttrName){
+						print(', isTreeName=true');
+					}
+				}
+		%>),
+		<%
+			}
+		}
+		%>
+	}, <%
+		// 关联系统表
+		var joinTables = '';
+		for(c in table.columnList){
+			if (c.attrType == 'com.jeesite.modules.sys.entity.User'){
+				var joinTable = {
+	%>
+		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
+			on="u${cLP.index}.user_code = a.${c.columnName}", columns={
+				@Column(name="user_code", label="用户编码", isPK=true),
+				@Column(name="user_name", label="用户名称", isQuery=false),
+		}),
+	<%
+				};
+				joinTables = joinTables + joinTable;
+			}
+			else if (c.attrType == 'com.jeesite.modules.sys.entity.Office'){
+				var joinTable = {
+	%>
+		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, attrName="${c.simpleAttrName}", alias="u${cLP.index}",
+			on="u${cLP.index}.office_code = a.${c.columnName}", columns={
+				@Column(name="office_code", label="机构编码", isPK=true),
+				@Column(name="office_name", label="机构名称", isQuery=false),
+		}),
+	<%
+				};
+				joinTables = joinTables + joinTable;
+			}
+		}
+		if (isNotBlank(joinTables)){
+			print('joinTable={\n');
+			print(joinTables);
+			print('\t}, ');
+		}
+	%>orderBy="<% if (isTree){
+						%>a.tree_sorts<%
+							for(pk in table.pkList){
+								%>, a.${pk.columnName}<%
+							}
+					}else if(table.parentExists && table.createDateExists){
+						%>a.create_date ASC<%
+					}else if(table.updateDateExists){
+						%>a.update_date DESC<%
+					}else{
+						for(pk in table.pkList){
+							%>${pkLP.index!=1?', ':''}a.${pk.columnName} ${table.parentExists?'ASC':'DESC'}<%
+						}
+					} %>"
+)
+public class ${ClassName} extends ${table.isTreeEntity?'Tree':'Data'}Entity<${ClassName}> {
+	
+	private static final long serialVersionUID = 1L;
+	<%
+	isExtend = false;
+	// 生成字段属性
+	for(c in table.columnList){
+		// 如果是Extend类属性
+		if(c.isExtendColumn){
+			if(!isExtend){
+				isExtend = true;
+	%>
+	private Extend extend;		// 扩展字段
+	<%
+			}
+		}
+		// 如果不是基类属性
+		else if(c.columnName != 'id' && !c.isSuperColumn){
+			// 父类对象
+			if(table.parentExists && table.parentTableFkName == c.columnName){
+	%>
+	private ${@StringUtils.cap(table.parent.className)} ${c.simpleAttrName};		<% if (isNotBlank(c.comments)){ %>// ${c.comments} 父类<% } %>
+	<%
+			// 其它字段
+			}else{
+	%>
+	private ${c.simpleAttrType} ${c.simpleAttrName};		<%if(isNotBlank(c.comments)){%>// ${c.comments}<%}%>
+	<%
+			}
+		}
+	}
+	
+	// 生成子表列表字段
+	for(child in table.childList){
+	%>
+	private List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.className)}List = ListUtils.newArrayList();		// 子表列表
+	<%
+	}
+	
+	// 生成构造方法
+	%>
+	
+	public ${ClassName}() {
+		this(null);
+	}
+
+	<%
+	// 生成带主键参数的构造
+	if (!table.parentExists){
+		if (table.pkList.~size == 1){ %>
+	public ${ClassName}(String id){
+		super(id);
+	}
+	<%	}else{ %>
+	public ${ClassName}(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType} ${pk.simpleAttrName}<% } %>){
+		<% for(pk in table.pkList){ %>
+		this.${pk.simpleAttrName} = ${pk.simpleAttrName};
+		<% } %>
+	}
+	<%
+		}
+	}
+	
+	// 生成父表参数的构造
+	else{
+		for(c in table.columnList){
+			if(table.parentExists && table.parentTableFkName == c.columnName){
+	%>
+
+	public ${ClassName}(${@StringUtils.cap(table.parent.className)} ${c.simpleAttrName}){
+		this.${c.simpleAttrName} = ${c.simpleAttrName};
+	}
+	<%
+			}
+		}
+	}
+	
+	// 如果是树实体，则输出相应方法
+	if (table.isTreeEntity){
+	%>
+	
+	@Override
+	public ${ClassName} getParent() {
+		return parent;
+	}
+
+	@Override
+	public void setParent(${ClassName} parent) {
+		this.parent = parent;
+	}
+	<%
+	}
+	
+	// 生成属性的get和set方法 
+	isExtend = false;
+	for(c in table.columnList){
+		// 如果是Extend类属性
+		if(c.isExtendColumn){
+				if(!isExtend){
+					isExtend = true;
+	%>
+	
+	public Extend getExtend() {
+		return extend;
+	}
+
+	public void setExtend(Extend extend) {
+		this.extend = extend;
+	}
+	<%
+				}
+		// 如果不是基类属性
+		}else if(c.columnName != 'id' && !c.isSuperColumn){
+	%>
+	
+	<%
+			for(a in c.simpleAnnotationList){
+	%>
+	@${a}
+	<%
+			}
+			// 父类对象
+			if(table.parentExists && table.parentTableFkName == c.columnName){
+	%>
+	public ${@StringUtils.cap(table.parent.className)} get${@StringUtils.cap(c.simpleAttrName)}() {
+		return ${c.simpleAttrName};
+	}
+
+	public void set${@StringUtils.cap(c.simpleAttrName)}(${@StringUtils.cap(table.parent.className)} ${c.simpleAttrName}) {
+		this.${c.simpleAttrName} = ${c.simpleAttrName};
+	}
+	<%
+			// 其它字段
+			}else{
+	%>
+	public ${c.simpleAttrType} get${@StringUtils.cap(c.simpleAttrName)}() {
+		return ${c.simpleAttrName};
+	}
+
+	public void set${@StringUtils.cap(c.simpleAttrName)}(${c.simpleAttrType} ${c.simpleAttrName}) {
+		this.${c.simpleAttrName} = ${c.simpleAttrName};
+	}
+	<%
+			}
+		}
+	}
+	
+	// 生成条件字段get和set方法（范围类型）
+	for(c in table.columnList){
+		if(c.isQuery == "1" && c.queryType == "BETWEEN"){
+	%>
+	
+	public ${c.simpleAttrType} get${@StringUtils.cap(c.simpleAttrName)}_gte() {
+		return sqlMap.getWhere().getValue("${c.columnName}", QueryType.GTE);
+	}
+
+	public void set${@StringUtils.cap(c.simpleAttrName)}_gte(${c.simpleAttrType} ${c.simpleAttrName}) {
+		sqlMap.getWhere().and("${c.columnName}", QueryType.GTE, ${c.simpleAttrName});
+	}
+	
+	public ${c.simpleAttrType} get${@StringUtils.cap(c.simpleAttrName)}_lte() {
+		return sqlMap.getWhere().getValue("${c.columnName}", QueryType.LTE);
+	}
+
+	public void set${@StringUtils.cap(c.simpleAttrName)}_lte(${c.simpleAttrType} ${c.simpleAttrName}) {
+		sqlMap.getWhere().and("${c.columnName}", QueryType.LTE, ${c.simpleAttrName});
+	}
+	<%
+		}
+	}
+	
+	// 生成子表列表get和set方法
+	for(child in table.childList){
+	%>
+	
+	public List<${@StringUtils.cap(child.className)}> get${@StringUtils.cap(child.className)}List() {
+		return ${@StringUtils.uncap(child.className)}List;
+	}
+
+	public void set${@StringUtils.cap(child.className)}List(List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.className)}List) {
+		this.${@StringUtils.uncap(child.className)}List = ${@StringUtils.uncap(child.className)}List;
+	}
+	<% } %>
+	
+}]]>
+	</content>
+</template>

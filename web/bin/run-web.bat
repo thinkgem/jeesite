@@ -37,7 +37,7 @@ set RUN_JAVA=java
 goto runJava
 
 :gotJavaHome
-set RUN_JAVA="%JAVA_HOME%\bin\java"
+set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
@@ -22,7 +22,7 @@ import com.jeesite.modules.sys.interceptor.LogInterceptor;
 @Configuration
 @EnableWebMvc
 @ConditionalOnProperty(name="web.interceptor.log.enabled", havingValue="true", matchIfMissing=true)
-public class LogInterceptorConfig extends WebMvcConfigurerAdapter {
+public class LogInterceptorConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

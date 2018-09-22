@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>viewList</name>
+	<filePath>src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<fileName>${className}List.html</fileName>
+	<content><![CDATA[
+\<% layout('/layouts/default.html', {title: '${functionNameSimple}管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> \${text('${functionNameSimple}管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="\${text('查询')}"><i class="fa fa-filter"></i> \${text('查询')}</a>
+				<% if(table.isTreeEntity){ %>
+				<a href="#" class="btn btn-default" id="btnRefreshTree" title="\${text('刷新')}"><i class="fa fa-refresh"></i> \${text('刷新')}</a>
+				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="\${text('展开一级')}"><i class="fa fa-angle-double-down"></i> \${text('展开')}</a>
+				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="\${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> \${text('折叠')}</a>
+				<% } %>
+				\<% if(hasPermi('${permissionPrefix}:edit')){ %>
+					<a href="\${ctx}/${urlPrefix}/form" class="btn btn-default btnTool" title="\${text('新增${functionNameSimple}')}"><i class="fa fa-plus"></i> \${text('新增')}</a>
+				\<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<% include('/templates/modules/gen/include/searchForm.html'){} %>
+			<table id="dataGrid"></table>
+			<% if(!table.isTreeEntity){ %>
+			<div id="dataGridPage"></div>
+			<% } %>
+		</div>
+	</div>
+</div>
+\<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		<%
+		// 是否是第一列
+		var firstColumn = true;
+		// 获取到唯一ID的url参数字符串
+		var idParam = '';
+		for(pk in table.pkList){
+			idParam = idParam + (pkLP.index!=1?'&':'') + pk.attrName + '=\'+row.' + pk.attrName + '+\'';
+		}
+		// 生成树表的节点列
+		if(table.isTreeEntity){
+			for(c in table.columnList){
+				if(c.attrName == table.treeViewNameAttrName){
+		%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '( '+row.${table.treeViewCodeAttrName}+' ) '+'<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" data-title="\${text('编辑${functionNameSimple}')}">'+(val||row.id)+'</a>';
+		}},
+		<%
+					firstColumn = false;
+					break;
+				}
+			}
+		}
+		%>
+		<%
+		for(c in table.columnList){ 
+			if(c.isList == "1"){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+					'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+						&& c.attrName != table.treeViewCodeAttrName
+						&& c.attrName != table.treeViewNameAttrName){
+				}
+				// 如果是首列，则输出带链接的列
+				else if(firstColumn){
+					firstColumn = false;
+		%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" data-title="\${text('编辑${functionNameSimple}')}">'+(val||row.id)+'</a>';
+		}},
+				<% }else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(\${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}, val, '\${text('未知')}', true);
+		}},
+				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},
+				<% }else{
+						if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')){
+				%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center"},
+				<%
+						}else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){
+				%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+				<%
+						}else {
+				%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left"},
+				<%
+						}
+				}
+			}
+		}
+		%>
+		{header:'\${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			\<% if(hasPermi('${permissionPrefix}:edit')){ %>
+				actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text('编辑${functionNameSimple}')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+			<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="\${ctx}/${urlPrefix}/disable?${idParam}" class="btnList" title="\${text('停用${functionNameSimple}')}" data-confirm="\${text('确认要停用该${functionNameSimple}吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="\${ctx}/${urlPrefix}/enable?${idParam}" class="btnList" title="\${text('启用${functionNameSimple}')}" data-confirm="\${text('确认要启用该${functionNameSimple}吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+			<% } %>
+			<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDelete'])){ %>
+				actions.push('<a href="\${ctx}/${urlPrefix}/delete?${idParam}" class="btnList" title="\${text('删除${functionNameSimple}')}" data-confirm="\${text('确认要删除该${functionNameSimple}<% if(table.isTreeEntity){ %>及所有子${functionNameSimple}<% } %>吗？')}"<% if(table.isTreeEntity){ %> data-deltreenode="'+row.id+'"<% } %>><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			<% if(table.isTreeEntity){ %>
+				actions.push('<a href="\${ctx}/${urlPrefix}/form?parentCode='+row.id+'" class="btnList" title="\${text('新增下级${functionNameSimple}')}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+			<% } %>
+			\<% } %>
+			return actions.join('');
+		}}
+	],
+	<% if(table.isTreeEntity){ %>
+	treeGrid: true,			// 启用树结构表格
+	defaultExpandLevel: 0,	// 默认展开的层次
+	expandNodeClearPostData: '<%
+		for(c in table.columnList){
+			if(c.isQuery == "1" && !c.isTreeEntityColumn){
+				print(c.attrName + ',');
+			}
+		} %>', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
+	<% } %>
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>]]>
+	</content>
+</template>

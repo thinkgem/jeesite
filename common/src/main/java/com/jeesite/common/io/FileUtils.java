@@ -242,14 +242,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @author ThinkGem 2016-7-4
 	 */
 	public static String readFileToString(String classResourcePath){
-		InputStream in = null;
-		try {
-			in = new ClassPathResource(classResourcePath).getInputStream();
+		try (InputStream in = new ClassPathResource(classResourcePath).getInputStream()){
             return IOUtils.toString(in, Charsets.toCharset("UTF-8"));
 		} catch (IOException e) {
 			logger.warn("Error file convert: {}", e.getMessage());
-		}finally{
-            IOUtils.closeQuietly(in);
 		}
 		return null;
 	}
@@ -944,9 +940,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				projectPath = file.toString();
 			}
 		} catch (FileNotFoundException e) {
-			;
+			// 忽略异常
 		} catch (IOException e) {
-			e.printStackTrace();
+			// 忽略异常
 		}
 		// 取不到，取当前工作路径
 		if (StringUtils.isBlank(projectPath)){
@@ -982,9 +978,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				webappPath = file.toString();
 			}
 		} catch (FileNotFoundException e) {
-			;
+			// 忽略异常
 		} catch (IOException e) {
-			e.printStackTrace();
+			// 忽略异常
 		}
 		// 取不到，取当前工作路径
 		if (StringUtils.isBlank(webappPath)){

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>mapper</name>
+	<filePath>src/main/resources/mappings/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<fileName>${ClassName}Dao.xml</fileName>
+	<content><![CDATA[
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${packageName}.${moduleName}.dao${isNotBlank(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="${ClassName}">
+		SELECT \${sqlMap.column.toSql()}
+		FROM \${sqlMap.table.toSql()}
+		<where>
+			\${sqlMap.where.toSql()}
+		</where>
+		ORDER BY \${sqlMap.order.toSql()}
+	</select> -->
+	
+</mapper>]]>
+	</content>
+</template>

@@ -1,15 +1,539 @@
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
+
+# 产品或项目名称、软件开发公司名称
+productName: JeeSite Demo
+companyName: ThinkGem
+
+# 产品版本、版权年份
+productVersion: V4.0
+copyrightYear: 2018
+
+#是否演示模式
+demoMode: false
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
 server:
 
   port: 8980
-  context-path: /js
+  servlet:
+    context-path: /js
   tomcat:
     uri-encoding: UTF-8
+    
+#======================================#
+#========== Database sttings ==========#
+#======================================#
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+  username: root
+  password: 123456
+  testSql: SELECT 1
+
+#  # Oracle 数据库配置
+#  type: oracle
+#  driver: oracle.jdbc.driver.OracleDriver
+#  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1 FROM DUAL
+
+#  # Sql Server 数据库配置
+#  type: mssql
+#  driver: net.sourceforge.jtds.jdbc.Driver
+#  url: jdbc:jtds:sqlserver://127.0.0.1:1433/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#  # PostgreSql 数据库配置（注意：一定要创建的schema与username相同，否则将找不到数据表字典信息）
+#  type: postgresql
+#  driver: org.postgresql.Driver
+#  url: jdbc:postgresql://127.0.0.1:5432/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#  # 连接信息加密
+#  encrypt:
+#  
+#    # 加密连接用户名
+#    username: false
+#    # 加密连接密码
+#    password: true
+#
+#  # 数据库连接池配置
+#  pool:
+#  
+#    # 初始化连接数
+#    init: 1
+#    # 最小连接数
+#    minIdle: 3
+#    # 最大连接数
+#    maxActive: 20  # 数据库连接池配置
+#
+#    # 获取连接等待超时时间，单位毫秒（4.0.6+）
+#    maxWait: 60000
+#    
+#    # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个。（4.0.6+）
+#    testOnBorrow: false
+#    testOnReturn: false
+#    
+#    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（4.0.6+）
+#    timeBetweenEvictionRunsMillis: 60000
+#    
+#    # 一个连接在池中最小生存的时间，单位毫秒（4.0.6+）
+#    minEvictableIdleTimeMillis: 300000
+#    
+#    # 配置是否自动回收超时连接，超时时间，单位秒 （4.0.6+）
+#    removeAbandoned: true
+#    removeAbandonedTimeout: 1800
+
+#  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
+#  dataSourceNames: ds2
+#  
+#  # 多数据源配置：ds2
+#  ds2:
+#    type: oracle
+#    driver: oracle.jdbc.driver.OracleDriver
+#    url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+#    username: jeesite
+#    password: jeesite
+#    testSql: SELECT 1 FROM DUAL
+#    encrypt:
+#      username: false
+#      password: true
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
+  
+#  # JTA 分布式事务（v4.0.4+）
+#  jta:
+#    enabled: false
+
+#  # 表名前缀
+#  tablePrefix: js_
+
+#  # Druid连接池监控
+#  druid:
+#    stat:
+#      enabled: true
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
 
 spring:
+  
+  # 应用程序名称
+  application:
+    name: jeesite-web
 
   profiles:
-    # 当前激活环境名称，（注意：不可设置为 test 它是单元测试用的环境名称）
+    # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
     active: default
     
-  main:
-    banner-mode: "off"
+#  # Redis 连接参数 （RedisProperties）
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    ssl: false
+#    database: 0
+#    password: 1234
+#    timeout: 2000
+#    lettuce:
+#      pool:
+#        # 最大空闲连接数
+#        maxIdle: 3
+#        # 最大活动连接数
+#        maxActive: 20
+#  
+#  # 缓存配置
+#  cache:
+#    # 缓存及会话共享（专业版）
+#    isClusterMode: false
+#    # 清理全部缓存按钮所清理的缓存列表
+#    clearNames: sysCache,corpCache,userCache,cmsCache
+
+#======================================#
+#========== System settings ===========#
+#======================================#
+
+# 管理基础路径
+#adminPath: /a
+#
+# 前端基础路径
+#frontPath: /f
+#
+# 分页配置
+#page:
+#
+#  # 分页默认大小
+#  pageSize: 20
+
+# 用户相关参数
+#user:
+#
+#  # 指定超级管理员编号（研发团队使用的账号）
+#  superAdminCode: system
+#
+#  # 超级管理员获取菜单的最小权重（默认20；>=40二级管理员；>=60系统管理员；>=80超级管理员）
+#  superAdminGetMenuMinWeight: 40
+#
+#  # 系统管理员角色编号（客户方管理员使用的角色）
+#  corpAdminRoleCode: corpAdmin
+#
+#  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...）
+#  # JSON格式说明：{"用户类型":{"dao":"Dao的Bean名称","loginView":"登录视图","indexView":"主页框架面视图"}}
+#  userTypeMap: >
+#    {
+#      "employee":{"dao":"employeeDao","loginView":"","indexView":""},
+#      "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
+#      "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
+#      "persion":{"dao":"persionDao","loginView":"","indexView":"modules/sys/sysIndexPersion"},
+#      "expert":{"dao":"expertDao","loginView":"","indexView":"modules/sys/sysIndexExpert"}
+#    }
+#
+#  # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型, 0全部  1拥有权限  2管理权限
+#  dataScopes: >
+#    [{
+#      moduleCode: "core",
+#      ctrlPermi: "0",
+#      ctrlName: "机构权限",
+#      ctrlName_en: "Office",
+#      ctrlType: "Office",
+#      ctrlDataUrl: "/sys/office/treeData",
+#      chkboxType: {"Y":"ps","N":"ps"},
+#      expandLevel: -1,
+#      remarks: ""
+#    },{
+#      moduleCode: "core",
+#      ctrlName: "公司权限",
+#      ctrlName_en: "Company",
+#      ctrlType: "Company",
+#      ctrlPermi: "0",
+#      ctrlDataUrl: "/sys/company/treeData",
+#      chkboxType: {"Y":"ps","N":"ps"},
+#      expandLevel: -1,
+#      remarks: ""
+#    },{
+#      moduleCode: "core",
+#      ctrlName: "角色权限",
+#      ctrlName_en: "Role",
+#      ctrlType: "Role",
+#      ctrlPermi: "2",
+#      ctrlDataUrl: "/sys/role/treeData",
+#      chkboxType: {"Y":"ps","N":"ps"},
+#      expandLevel: -1,
+#      remarks: ""
+#    }]
+#
+#  # 多租户模式（SAAS模式）（专业版）
+#  useCorpModel: false
+
+# 菜单管理
+#menu:
+#  # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
+#  updateStatusByModuleStatus: true
+
+# 国际化管理（专业版+）
+#lang:
+#  enabled: true
+  
+# 任务调度（个人版+）
+#job:
+#  enabled: true
+#
+#  # 是否自动启动任务调度（可关闭）
+#  autoStartup: true
+#
+#  # 任务调度启动延迟设置（单位：秒）（建议设置项目启动完成后的时间）
+#  startupDelay: 60
+#  
+#  # 任务调度线程池
+#  threadPool:
+#    threadCount: 10
+#    threadPriority: 5
+#
+#  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+#  # 每一个instanceId必须不同，设置AUTO则自动生成
+#  scheduler:
+#    instanceName: JeeSiteScheduler
+#    instanceId: AUTO
+#
+#  # 任务调度集群设置
+#  jobStore:
+#    isClustered: true
+#    dataSourceName: job
+#    clusterCheckinInterval: 1000
+#
+#  # 调度日志
+#  log:
+#    # 计划调度日志
+#    scheduler:
+#      enabled: true
+#      # 是否只保存错误日志
+#      errorLevel: true
+#    # 任务执行日志
+#    jobDetail:
+#      enabled: true
+#      # 是否只保存错误日志
+#      errorLevel: true
+#    # 计划触发日志
+#    trigger:
+#      enabled: false
+
+#======================================#
+#========= Framework settings =========#
+#======================================#
+
+# Shiro 相关配置
+#shiro:
+#
+#  #索引页路径
+#  defaultPath: ${shiro.loginUrl}
+#
+#  # 登录相关设置
+#  loginUrl: ${adminPath}/login
+#  logoutUrl: ${shiro.loginUrl}
+#  successUrl: ${adminPath}/index
+#
+##  # Jasig CAS 相关配置
+##  casServerUrl: http://127.0.0.1:8981/cas
+##  casClientUrl: http://127.0.0.1:8980/js
+##  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
+##  logoutUrl: ${shiro.casServerUrl}/logout?service=${shiro.loginUrl}
+##  successUrl: ${shiro.casClientUrl}${adminPath}/index
+#
+#  # 简单 SSO 登录相关配置
+#  sso:
+#  
+#    # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
+#    secretKey: ~
+#
+#    # 是否加密单点登录安全Key
+#    encryptKey: true
+#
+#  # 登录提交信息加密（如果不需要加密，设置为空即可）
+#  loginSubmit:
+#    
+#    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
+#    secretKey: thinkgem,jeesite,com
+#  
+#  # 记住我密钥设置（设置为空则使用默认）
+#  rememberMe:
+#    # 密钥必须通过 com.jeesite.common.shiro.web.RememberMeManager 的main方法生成
+#    secretKey: ~
+#  
+#  # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
+#  remoteAddrHeaderName: X-Forwarded-For
+#  
+#  # 允许的请求方法设定，解决安全审计问题
+#  allowRequestMethods: GET,POST
+#  
+#  # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
+#  isAllowMultiAddrLogin: true
+#  
+#  # 是否允许刷新主框架页，如果设置为false，刷新主页将导致重新登录。如安全性比较高的，如银行个人首页不允许刷新。
+#  isAllowRefreshIndex: true
+#  
+#  # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
+#  isAllowExternalSiteIframe: true
+#  
+#  # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
+##  accessControlAllowOrigin: http://demo.jeesite.com
+##  accessControlAllowOrigin: '*'
+#
+#  # 是否在登录后生成新的Session（默认false）
+#  isGenerateNewSessionAfterLogin: false
+#  
+#  # URI 权限过滤器定义
+#  filterChainDefinitions: |
+#    /ReportServer/** = user
+#    ${adminPath}/** = user
+
+# Session 相关
+#session:
+#
+#  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+#  sessionTimeout: 1800000
+#  
+#  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
+#  mobileAppSessionTimeout: 43200000
+#  
+#  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
+#  sessionTimeoutClean: 1200000
+#  
+#  # 会话唯一标识SessionId在Cookie中的名称。
+#  sessionIdCookieName: jeesite.session.id
+#  
+#  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
+#  #shareSessionIdCookieName: ${session.sessionIdCookieName}
+
+# MyBatis 相关
+#mybatis:
+#
+#  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
+#  scanBasePackage: com.jeesite.modules
+#  
+#  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
+#  scanTypeHandlersPackage: ~
+#  
+#  # Mapper文件刷新线程
+#  mapper:
+#    refresh:
+#      enabled: true
+#      delaySeconds: 60
+#      sleepSeconds: 3
+#      mappingPath: mappings
+  
+# Web 相关
+#web:
+#  
+#  # MVC 视图相关
+#  view:
+#    
+#    # 系统主题名称，主题视图优先级最高，如果主题下无这个视图文件则访问默认视图
+#    # 引入页面头部：'/themes/'+themeName+'/include/header.html'
+#    # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
+#    themeName: default
+#
+#  # MVC 拦截器
+#  interceptor:
+#    
+#    # 后台管理日志记录拦截器
+#    log:
+#      enabled: true
+#      addPathPatterns: >
+#        ${adminPath}/**
+#      excludePathPatterns: >
+#        ${adminPath}/index,
+#        ${adminPath}/login,
+#        ${adminPath}/desktop,
+#        ${adminPath}/sys/online/count,
+#        ${adminPath}/state/server/rtInfo,
+#        ${adminPath}/**/treeData,
+#        ${adminPath}/file/**,
+#        ${adminPath}/tags/*,
+#        ${adminPath}/msg/**
+#    
+#    # 前台自动切换到手机视图拦截器
+#    mobile:
+#      enabled: false
+#      addPathPatterns: >
+#        ${frontPath}/**
+#      excludePathPatterns: ~
+#        
+#  # 静态文件后缀，过滤静态文件，以提高访问性能。
+#  staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
+#  
+#  # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
+#  staticFileExcludeUri: /druid/
+#
+#  # 自定义正则表达式验证（主键、登录名）
+#  validator:
+#    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
+#    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
+#    
+#  # 关闭核心模块的Web功能（仅作为微服务时设为false）
+#  core: 
+#    enabled: true
+
+# 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
+#error:
+#  page:
+#    printErrorInfo: true
+
+#======================================#
+#======== FileUpload settings =========#
+#======================================#
+
+#file:
+#  enabled: true
+#
+#  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+##  baseDir: D:/jeesite
+#
+#  # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
+#  uploadPath: '{yyyy}{MM}/'
+#  
+#  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等。
+#  maxFileSize: 500*1024*1024
+#  
+#  #设置允许上传的文件后缀
+#  imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,
+#  mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
+#  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.ipa,.apk,
+#  
+#  #允许上传的文件内容类型（图片、word、excel、ppt）防止修改后缀恶意上传文件（默认不启用验证）
+##  allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
+##    application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+##    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+##    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
+
+#======================================#
+#========== Message settings ==========#
+#======================================#
+
+# 消息提醒中心（专业版）
+#msg:
+#  enabled: true
+#  
+#  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
+#  realtime:
+#    # 是否开启
+#    enabled: true
+#    # 消息实时推送任务Bean名称
+#    beanName: msgLocalPushTask
+
+#  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
+#  pushFailNumber: 3
+  
+#  # 邮件发送参数
+#  email:
+#    beanName: emailSendService
+#    fromAddress: test@163.com
+#    fromPassword: 123456
+#    fromHostName: smtp.163.com
+#    sslOnConnect: false
+#    sslSmtpPort: 994
+#
+#  # 短信网关
+#  sms:
+#    beanName: smsSendService
+#    url: http://localhost:80/msg/sms/send
+#    data: username=jeesite&password=jeesite.com
+#    prefix: 【JeeSite】
+#    suffix: ~
+
+#======================================#
+#========== Video settings ============#
+#======================================#
+
+#video:
+#
+#  # 视频格式转换  ffmpeg.exe 所放的路径
+#  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
+##  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
+#  
+#  # 视频格式转换  mencoder.exe 所放的路径
+#  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
+#  
+#  # 将mp4视频的元数据信息转到视频第一帧
+#  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
+
+#======================================#
+#========== Project settings ==========#
+#======================================#

@@ -9,8 +9,6 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 
@@ -140,7 +138,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		try {
 			StringBuilder sb = new StringBuilder();
 			int currentLength = 0;
-			for (char c : stripHtml(StringEscapeUtils.unescapeHtml4(str)).toCharArray()) {
+			for (char c : stripHtml(EncodeUtils.decodeHtml(str)).toCharArray()) {
 				currentLength += String.valueOf(c).getBytes("GBK").length;
 				if (currentLength <= length - 3) {
 					sb.append(c);

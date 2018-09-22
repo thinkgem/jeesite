@@ -16,8 +16,6 @@ import org.nustaq.serialization.FSTConfiguration;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.NamedThreadLocal;
 
-import com.jeesite.common.io.IOUtils;
-
 /**
  * 对象操作工具类, 继承org.apache.commons.lang3.ObjectUtils类
  * @author ThinkGem
@@ -118,9 +116,13 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		if (source == null){
 			return null;
 		}
-    	Object target = BeanUtils.instantiate(source.getClass());
-	    BeanUtils.copyProperties(source, target, ignoreProperties);
-	    return target;
+		try {
+			Object target = source.getClass().newInstance();
+			BeanUtils.copyProperties(source, target, ignoreProperties);
+			return target;
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw ExceptionUtils.unchecked(e);
+		}
 	}
 
 	/**
@@ -162,18 +164,12 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long beginTime = System.currentTimeMillis();
 		byte[] bytes = null;
-		ObjectOutputStream oos = null;
-		ByteArrayOutputStream baos = null;
-		try {
-			baos = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream(baos);
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(baos);) {
 			oos.writeObject(object);
 			bytes = baos.toByteArray();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			IOUtils.closeQuietly(oos);
-			IOUtils.closeQuietly(baos);
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){
@@ -193,19 +189,13 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long beginTime = System.currentTimeMillis();
 		Object object = null;
-		ByteArrayInputStream bais = null;
-		ObjectInputStream ois = null;
-		try {
-			if (bytes.length > 0) {
-				bais = new ByteArrayInputStream(bytes);
-				ois = new ObjectInputStream(bais);
+		if (bytes.length > 0) {
+			try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+					ObjectInputStream ois = new ObjectInputStream(bais);) {
 				object = ois.readObject();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			IOUtils.closeQuietly(ois);
-			IOUtils.closeQuietly(bais);
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){

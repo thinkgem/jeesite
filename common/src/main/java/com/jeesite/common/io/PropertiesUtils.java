@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -37,7 +36,7 @@ public class PropertiesUtils {
 			"classpath:config/application.yml", "classpath:application.yml"};
 
 	private static Logger logger = PropertiesUtils.initLogger();
-	
+	private final Set<String> configSet = SetUtils.newLinkedHashSet();
 	private final Properties properties = new Properties();
 	
 	/**
@@ -55,7 +54,7 @@ public class PropertiesUtils {
 			for(Resource resource : resources){
 				configSet.add("classpath:config/"+resource.getFilename());
 			}
-			configSet.add("classpath:config/jeesite.yml");
+			//configSet.add("classpath:config/jeesite.yml");
 			// 获取全局设置默认的配置文件（以下是支持环境配置的属性文件）
 			Set<String> set = SetUtils.newLinkedHashSet();
 			for (String configFile : DEFAULT_CONFIG_FILE){
@@ -83,7 +82,7 @@ public class PropertiesUtils {
 			}
 			for (String location : configFiles){
 				configSet.add(location);
-				if (StringUtils.isNotBlank(profiles) && !StringUtils.equals(profiles, "default")){
+				if (StringUtils.isNotBlank(profiles)){
 					if (location.endsWith(".properties")){
 						configSet.add(StringUtils.substringBeforeLast(location, ".properties")
 								+ "-" + profiles + ".properties");
@@ -108,14 +107,11 @@ public class PropertiesUtils {
 				Resource resource = ResourceUtils.getResource(location);
 				if (resource.exists()){
         			if (location.endsWith(".properties")){
-        				InputStreamReader is = null;
-        				try {
-	    					is = new InputStreamReader(resource.getInputStream(), "UTF-8");
+        				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), "UTF-8")){
 	    					properties.load(is);
+	    					configSet.add(location);
 	        			} catch (IOException ex) {
 	            			logger.error("Load " + location + " failure. ", ex);
-	        			} finally {
-	        				IOUtils.closeQuietly(is);
 	        			}
         			}
         			else if (location.endsWith(".yml")){
@@ -125,18 +121,24 @@ public class PropertiesUtils {
         					properties.put(ObjectUtils.toString(entry.getKey()),
         							ObjectUtils.toString(entry.getValue()));
         				}
+    					configSet.add(location);
         			}
 				}
 			} catch (Exception e) {
     			logger.error("Load " + location + " failure. ", e);
 			}
-			// 存储当前加载的配置文件路径和名称
-			properties.setProperty("configFiles", StringUtils.join(configFiles, ","));
 		}
 	}
 	
 	/**
-	 * 获取当前加载的属性
+	 * 获取当前加载的属性文件
+	 */
+	public Set<String> getConfigSet() {
+		return configSet;
+	}
+	
+	/**
+	 * 获取当前加载的属性数据
 	 */
 	public Properties getProperties() {
 		return properties;

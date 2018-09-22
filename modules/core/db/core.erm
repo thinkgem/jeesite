@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>1503</x>
-	<y>1793</y>
+	<x>1547</x>
+	<y>1390</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -1464,8 +1464,8 @@
 			<type>nvarchar(n)</type>
 		</word>
 		<word>
-			<id>0bbe27dfbb4fb1be15148f1904053a2096f96af1</id>
-			<length>38</length>
+			<id>4f74582c7985a857816f60e5cb57e552173d6786</id>
+			<length>31</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -4910,7 +4910,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>0bbe27dfbb4fb1be15148f1904053a2096f96af1</word_id>
+					<word_id>4f74582c7985a857816f60e5cb57e552173d6786</word_id>
 					<id>db462e1b37a2d6bd5111a1ae2c1315cf186c5ded</id>
 					<description></description>
 					<unique_key_name></unique_key_name>

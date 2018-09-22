@@ -67,14 +67,10 @@ public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	 * @author ThinkGem
 	 */
 	public static String getResourceFileContent(String location){
-		InputStream is = null;
-		try{
-			is = ResourceUtils.getResourceFileStream(location);
+		try(InputStream is = ResourceUtils.getResourceFileStream(location)){
 			return IOUtils.toString(is, "UTF-8");
 		}catch (IOException e) {
 			throw ExceptionUtils.unchecked(e);
-		}finally{
-			IOUtils.closeQuietly(is);
 		}
 	}
 	

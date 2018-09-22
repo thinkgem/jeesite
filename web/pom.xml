@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.0.7-SNAPSHOT</version>
+		<version>4.1.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -20,10 +20,9 @@
 	<properties>
 		
 		<finalName>web</finalName><!-- war包的名称 ${project.artifactId} -->
-		<start-class>com.jeesite.modules.config.Application</start-class>
+		<start-class>com.jeesite.modules.Application</start-class>
 		
 		<!-- environment setting -->
-		<java.version>1.8</java.version>
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
@@ -42,6 +41,13 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- 在线API文档 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
@@ -76,10 +82,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<warSourceExcludes>
-						WEB-INF/classes/*.lic,
-						userfiles/**
-					</warSourceExcludes>
+					<packagingExcludes></packagingExcludes>
+					<warSourceExcludes></warSourceExcludes>
 					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 					<warName>${finalName}</warName>
 					<archive>

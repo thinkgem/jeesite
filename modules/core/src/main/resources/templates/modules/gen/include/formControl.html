@@ -1,0 +1,213 @@
+<% 
+	var rowFlag = -1, preGridRowCol;
+	for (c in table.columnList){
+		if (c.isEdit == '1'){
+			// 如果是树结构的字段，则自动忽略
+			if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+				'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')){
+			}
+			// 如果是隐藏域
+			else if (c.showType == 'hidden'){
+%>
+				<${'#'}form:hidden path="${c.attrName}"/>
+<%
+			}
+			// 输出表单字段
+			else{
+				// 栅格参数获取
+				var gridRowCol = @StringUtils.split(c.optionMap['gridRowCol'], '/');
+				if (isBlank(gridRowCol) || gridRowCol.~size != 3){
+					if (c.showType == 'textarea'){
+						gridRowCol = @StringUtils.split('12/2/10', '/');
+					}else{
+						gridRowCol = @StringUtils.split('6/4/8', '/');
+					}
+				}
+				// 是否强制新行获取，生成字段界面用户设定的
+				var isNewLine = @Global.YES.equals(c.optionMap['isNewLine']);
+				if (isBlank(c.optionMap['isNewLine'])){
+					if (c.showType == 'textarea'){
+						isNewLine = true;
+					}
+				}
+				// 如果上一个控件占12列，则强制新行算了
+				if (isNotEmpty(preGridRowCol) && preGridRowCol[0] == '12'){
+					isNewLine = true;
+				}
+				// 保存上一个控件输出栅格对象
+				preGridRowCol = gridRowCol;
+				// 如果完成输出2列，则换行
+				if(rowFlag == 2){
+					isNewLine = true;
+				}
+				// 如果是扩展字段，则输出子标题，并且强制换行
+				if (c.columnName == 'extend_s1'){
+					isNewLine = true;
+				}
+				// 如果是第一个控件
+				if (rowFlag == -1){
+%>
+				<div class="row">
+<%
+				}
+				// 如果不是第一个控件，并且是新行，或者是扩展字段，则输出结束符
+				else if(isNewLine){
+%>
+				</div>
+<%
+				}
+				// 如果是扩展字段，则输出子标题，并且强制换行
+				if (c.columnName == 'extend_s1'){
+%>
+				<div class="form-unit">\${text('扩展字段')}</div>
+<%
+				}
+				// 如果是新行，则换行
+				if(isNewLine){
+					rowFlag = 0; // 输出行标记清零
+%>
+				<div class="row">
+<%
+				}
+				// 开始输出控件
+%>
+					<div class="col-xs-${gridRowCol[0]}">
+						<div class="form-group">
+							<label class="control-label col-sm-${gridRowCol[1]}" title="">
+								<span class="required ${c.isNull == '1' ? 'hide' : ''}">*</span> \${text('${c.columnLabel}')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-${gridRowCol[2]}">
+							<%
+								var attrs = '';
+								if (c.dataLength != '0'){
+									var s = { %> maxlength="${c.dataLength}"<% };
+									attrs = attrs + s;
+								}
+								if (c.isPk == '1'){
+									var s = { %> readonly="\${!${className}.isNewRecord}"<% };
+									attrs = attrs + s;
+								}
+								var cssClass = '';
+								if (c.isRequired == '1'){ 
+									cssClass = cssClass + ' required';
+								}
+								var fieldValid = c.optionMap['fieldValid'];
+								if (isNotEmpty(fieldValid)){
+									if (type.name(fieldValid) == 'String[]'){
+										for (var fv in fieldValid){
+											cssClass = cssClass + ' ' + fv;
+										}
+									}else if(isNotBlank(fieldValid)){
+										cssClass = cssClass + ' ' + fieldValid;
+									}
+								}
+								if (c.showType == 'input'){
+									// 如果为自定义主键，则第一个pk字段需输出isNewRecord
+									if (c.isPk == '1' && table.pkList[0].columnName == c.columnName){
+							%>
+								<${'#'}form:hidden path="isNewRecord"/>
+							<%
+									}
+							%>
+								<${'#'}form:input path="${c.attrName}"${attrs} class="form-control${cssClass}"/>
+							<%
+								} else if (c.showType == 'textarea') {
+							%>
+								<${'#'}form:textarea path="${c.attrName}" rows="4"${attrs} class="form-control${cssClass}"/>
+							<%
+								} else if (c.showType == 'select' || c.showType == 'select_multiple') {
+									var isMultiple = (c.showType == 'select_multiple');
+							%>
+								<${'#'}form:select path="${c.attrName}" dictType="${c.optionMap['dictType']}"${isMultiple?' multiple="true"':''}${c.isRequired != '1'?' blankOption="true"':''} class="form-control${cssClass}" />
+							<%
+								} else if (c.showType == 'radio') {
+							%>
+								<${'#'}form:radio path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control${cssClass}" />
+							<%
+								} else if (c.showType == 'checkbox') {
+							%>
+								<${'#'}form:checkbox path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control${cssClass}" />
+							<%
+								} else if (c.showType == 'date' || c.showType == 'datetime') {
+									var isTime = (c.showType == 'datetime');
+							%>
+								<${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate${cssClass}"
+									dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});"/>
+							<%
+								} else if (c.showType == 'userselect') {
+							%>
+								<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('用户选择')}"
+									path="${c.attrName}" labelPath="${c.attrName2}"
+									url="\${ctx}/sys/office/treeData?isLoadUser=true"
+									class="${cssClass}" allowClear="true"/>
+							<%
+								} else if (c.showType == 'officeselect') {
+							%>
+								<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('机构选择')}"
+									path="${c.attrName}" labelPath="${c.attrName2}"
+									url="\${ctx}/sys/office/treeData"
+									class="${cssClass}" allowClear="true"/>
+							<%
+								} else if (c.showType == 'areaselect') {
+							%>
+								<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('区域选择')}"
+									path="${c.attrName}" labelPath="${c.attrName2}"
+									url="\${ctx}/sys/area/treeData"
+									class="${cssClass}" allowClear="true"/>
+							<%
+								}
+							%>
+							</div>
+						</div>
+					</div>
+<%
+				// 如果是第一个控件输出
+				if (rowFlag == -1){
+					rowFlag = 1;
+				}
+				// 行标记+1，代表完成输出1列
+				else{
+					rowFlag = rowFlag + 1;
+				}
+			}
+			// 输出控件 End
+		}
+	}
+	// 如果没有输出row结束符，则输出
+	if (rowFlag > 0){
+%>
+				</div>
+<%
+	}
+	// 输出上传图片控件
+	if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload'])){
+%>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">\${text('图片上传')}：</label>
+							<div class="col-sm-10">
+								<${'#'}form:fileupload id="uploadImage" bizKey="\${${className}.id}" bizType="${className}_image"
+									uploadType="image" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+<%
+	}
+	// 输出上传附件控件
+	if(@ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){
+%>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">\${text('附件上传')}：</label>
+							<div class="col-sm-10">
+								<${'#'}form:fileupload id="uploadFile" bizKey="\${${className}.id}" bizType="${className}_file"
+									uploadType="all" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+<%
+	}
+%>

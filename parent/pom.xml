@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.10.RELEASE</version>
+		<version>2.0.5.RELEASE</version>
 	</parent>
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>4.0.7-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Parent</name>
@@ -21,26 +21,37 @@
 	<properties>
 		
 		<!-- common version setting -->
-		<commons-lang3.version>3.4</commons-lang3.version>
-		<commons-io.version>2.5</commons-io.version>
-		<commons-fileupload.version>1.3.1</commons-fileupload.version>
-		<ruedigermoeller-fst.version>2.56</ruedigermoeller-fst.version>
-		<json.version>20170516</json.version>
-		<dozer.version>5.5.1</dozer.version>
+		<commons-io.version>2.6</commons-io.version>
+		<commons-fileupload.version>1.3.3</commons-fileupload.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
+		<commons-text.version>1.3</commons-text.version>
+		<ant.version>1.9.7</ant.version>
+		<fst.version>2.57</fst.version>
+		<json.version>20180130</json.version>
+		<jsoup.version>1.11.3</jsoup.version>
+		<commons-email.version>1.5</commons-email.version>
+		<activation.version>1.1.1</activation.version>
+		<UserAgentUtils.version>1.21</UserAgentUtils.version>
+		<metadata-extractor.version>2.11.0</metadata-extractor.version>
+		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<blade-patchca.version>1.1.0</blade-patchca.version>
+		<jmimemagic.version>0.1.5</jmimemagic.version>
+		<zxing.version>3.3.2</zxing.version>
 		<poi.version>3.14</poi.version>
+		<pinyin4j.version>2.5.1</pinyin4j.version>
 		
 		<!-- framework version setting -->
-		<mybatis.version>3.4.5</mybatis.version>
-		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<mybatis.version>3.4.6</mybatis.version>
+		<mybatis-spring.version>1.3.2</mybatis-spring.version>
 		<jsqlparser.version>1.1</jsqlparser.version>
 		<druid.version>1.1.10</druid.version>
 		<shiro.version>1.4.0</shiro.version>
+		<j2cache.version>2.7.0-release</j2cache.version>
 		<beetl.version>2.7-SNAPSHOT</beetl.version>
-		<ehcache-web.version>2.0.4</ehcache-web.version>
-		<quartz.version>2.2.3</quartz.version>
+		<swagger.version>1.5.20</swagger.version>
 		
 		<!-- environment setting -->
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<maven.test.skip>true</maven.test.skip> 
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
@@ -153,8 +164,10 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<configuration>
-						<packagingExcludes></packagingExcludes>
-						<warSourceExcludes></warSourceExcludes>
+						<warSourceExcludes>
+							WEB-INF/classes/*.lic,
+							userfiles/**
+						</warSourceExcludes>
 						<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 						<warName>${project.artifactId}</warName>
 						<archive>

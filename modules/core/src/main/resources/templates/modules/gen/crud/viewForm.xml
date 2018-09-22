@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>viewForm</name>
+	<filePath>src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<fileName>${className}Form.html</fileName>
+	<content><![CDATA[
+<%
+	var extLibs = '';
+	if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload']) || @ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){
+		extLibs = extLibs + ',\'fileupload\'';
+	}
+	if(table.childList.~size > 0){
+		extLibs = extLibs + ',\'dataGrid\'';
+	}
+%>
+\<% layout('/layouts/default.html', {title: '${functionNameSimple}管理', libs: ['validate'${extLibs}]}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> \${text(${className}.isNewRecord ? '新增${functionNameSimple}' : '编辑${functionNameSimple}')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<${'#'}form:form id="inputForm" model="\${${className}}" action="\${ctx}/${urlPrefix}/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">\${text('基本信息')}</div>
+			<% if(table.isTreeEntity){ %>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4">\${text('上级${functionNameSimple}')}：</label>
+							<div class="col-sm-8">
+								<${'#'}form:treeselect id="parent" title="\${text('上级${functionNameSimple}')}"
+									path="parent.id" labelPath="parent.${table.treeViewNameAttrName}"
+									url="\${ctx}/${urlPrefix}/treeData?excludeCode=\${${className}.id}"
+									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			<% } %>
+				<% include('/templates/modules/gen/include/formControl.html'){} %>
+				<% include('/templates/modules/gen/include/formChildTable.html'){} %>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						\<% if (hasPermi('${permissionPrefix}:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> \${text('保 存')}</button>&nbsp;
+						\<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> \${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</${'#'}form:form>
+	</div>
+</div>
+\<% } %>
+<% include('/templates/modules/gen/include/formChildTableScript.html'){} %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+				<% if(table.isTreeEntity){ %>
+					contentWindow.$('#dataGrid').dataGrid('refreshTreeChildren',
+							$('#parentCode').val(), '\${${className}.id}');
+				<% }else{ %>
+					contentWindow.page();
+				<% } %>
+				});
+			}
+		}, "json");
+    }
+});
+<% if(table.isTreeEntity){ %>
+
+// 选择父级菜单回调方法
+function treeselectCallback(id, act, index, layero){
+	if (id == 'parent' && (act == 'ok' || act == 'clear')){
+		// 创建并初始化下一个节点信息，如：排序号、默认值
+		$.get('\${ctx}/${urlPrefix}/createNextNode?parentCode='
+				+$('#parentCode').val(), function(data){
+			$('#treeSort').val(data.treeSort);
+		});
+	}
+}
+<% } %>
+</script>]]>
+	</content>
+</template>

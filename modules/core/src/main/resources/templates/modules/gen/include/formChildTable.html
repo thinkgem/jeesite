@@ -1,0 +1,14 @@
+<%
+	// 输出子表控件
+	for (child in table.childList){
+%>
+				<h4 class="form-unit">\${text('${child.comments}')}</h4>
+				<div class="ml10 mr10">
+					<table id="${@StringUtils.uncap(child.className)}DataGrid"></table>
+					\<% if (hasPermi('${permissionPrefix}:edit')){ %>
+						<a href="#" id="${@StringUtils.uncap(child.className)}DataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> \${text('增行')}</a>
+					\<% } %>
+				</div>
+<%
+	}
+%>

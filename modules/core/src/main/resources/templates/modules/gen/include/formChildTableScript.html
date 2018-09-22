@@ -1,0 +1,172 @@
+<% // 输出子表 Script脚本
+if (table.childList.~size > 0){ %>
+<script>
+<%
+var treeselectExists = false;
+for(child in table.childList){
+%>
+//初始化${child.comments}DataGrid对象
+$("#${@StringUtils.uncap(child.className)}DataGrid").dataGrid({
+
+	data: \${toJson(${className}.${@StringUtils.uncap(child.className)}List)},
+	datatype: "local", // 设置本地数据
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 设置数据表格列
+	columnModel: [
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'<% for(pk in child.pkList){ %>${pk.attrName}<% break; }%>', editable:true, hidden:true},
+<%
+// 遍历子表字段
+for (c in child.columnList){
+	// 如果不是编辑字段，则跳过
+	if (c.isEdit != '1'){
+		continue;
+	}
+	// 如果是外键，父级的主键
+	if(child.parentExists && child.parentTableFkName == c.columnName){
+%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', editable:true, hidden:true},
+<%
+		continue;
+	}
+	// 生成控件属性
+	var attrs = '';
+	if (c.dataLength != '0'){
+		var s = { %>'maxlength':'${c.dataLength}', <% };
+		attrs = attrs + s;
+	}
+	// 生成控件样式
+	var cssClass = '';
+	if (c.isNull != '1'){ 
+		cssClass = cssClass + ' required';
+	}
+	if (c.attrType == 'Long' || c.attrType == 'Integer'){ 
+		cssClass = cssClass + ' digits';
+	}
+	if (c.attrType == 'Double'){ 
+		cssClass = cssClass + ' number';
+	}
+	// 输出列字段
+	if(c.showType == 'input'){
+%>		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', width:150, editable:true, edittype:'text', editoptions:{${attrs}'class':'form-control${cssClass}'}},
+<% 
+	}else if(c.showType == 'textarea'){
+%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', width:150, editable:true, edittype:'textarea', editoptions:{${attrs}'class':'form-control${cssClass}', 'rows':'1'}},
+<% 
+	}else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'radio' || c.showType == 'checkbox'){
+%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', width:100, 
+			editable:true, edittype:'select', editoptions:{<%if (c.showType == 'select_multiple' || c.showType == 'checkbox'){ %>multiple:true, <% } %>'class':'form-control${cssClass}',
+				items: $.merge([<%if (!(c.showType == 'select_multiple' || c.showType == 'checkbox')){ %>{dictLabel:'&nbsp;',dictValue:''}<% } %>], \${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+<% 
+	}else if(c.showType == 'date' || c.showType == 'datetime'){
+		var isTime = (c.showType == 'datetime');
+%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', width:150, 
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d${isTime?' H:i:s':''}'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate${cssClass}', 'readonly':'true',
+				dataInit: function(element){ $(element).on('focus', function(){
+					WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});
+				});
+			}}
+		},
+<% 
+	}else if(c.showType == 'userselect'){
+		treeselectExists =  true; %>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.simpleAttrName}', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, '${c.attrName}')+'|'+js.val(row, '${c.attrName2}');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户选择', 
+						name: '${c.attrName}', value: val.split('|')[0], 
+						labelName: '${c.attrName2}', labelValue: val.split('|')[1],
+						url: '\${ctx}/sys/office/treeData?isLoadUser=true', cssClass: '${cssClass}'
+					});
+				}
+			}
+		},
+<% 
+	}else if(c.showType == 'officeselect'){
+		treeselectExists =  true;
+%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.simpleAttrName}', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, '${c.attrName}')+'|'+js.val(row, '${c.attrName2}');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'office_'+editOptions.id, title: '机构选择', 
+						name: '${c.attrName}', value: val.split('|')[0], 
+						labelName: '${c.attrName2}', labelValue: val.split('|')[1],
+						url: '\${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: '${cssClass}'
+					});
+				}
+			}
+		},
+<% 
+	}else if(c.showType == 'areaselect'){
+		treeselectExists =  true;
+%>
+		{header:'\${text('${c.columnLabel}')}', name:'${c.simpleAttrName}', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, '${c.attrName}')+'|'+js.val(row, '${c.attrName2}');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'area_'+editOptions.id, title: '区域选择', 
+						name: '${c.attrName}', value: val.split('|')[0], 
+						labelName: '${c.attrName2}', labelValue: val.split('|')[1],
+						url: '\${ctx}/sys/area/treeData', cssClass: '${cssClass}'
+					});
+				}
+			}
+		},
+<%
+	}
+}
+%>
+		{header:'\${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+			var actions = [];
+			if (val == 'new'){
+				actions.push('<a href="#" onclick="js.confirm(\'\${text('你确认要删除这条数据吗？')}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}else{
+				actions.push('<a href="#" onclick="js.confirm(\'\${text('你确认要删除这条数据吗？')}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}}
+	],
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#${@StringUtils.uncap(child.className)}DataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowInitData: {<% for(pk in child.pkList){ %>${pk.attrName}<% break; }%>: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: '${@StringUtils.uncap(child.className)}List', // 提交的数据列表名
+	editGridInputFormListAttrs: 'status,<% for(c in child.columnList){if(c.attrName!="status"){%>${c.attrName},<% }} %>', // 提交数据列表的属性字段
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+<% } %>
+</script>
+<% if(treeselectExists){ %>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<${'#'}form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
+<% } %>
+<% } %>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>dao</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/dao/${subModuleName}</filePath>
+	<fileName>${ClassName}Dao.java</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+
+import com.jeesite.common.dao.${table.isTreeEntity?'Tree':'Crud'}Dao;
+import com.jeesite.common.mybatis.annotation.MyBatisDao;
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+
+/**
+ * ${functionName}DAO接口
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@MyBatisDao
+public interface ${ClassName}Dao extends ${table.isTreeEntity?'Tree':'Crud'}Dao<${ClassName}> {
+	
+}]]>
+	</content>
+</template>

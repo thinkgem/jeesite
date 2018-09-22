@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.entity.BaseEntity;

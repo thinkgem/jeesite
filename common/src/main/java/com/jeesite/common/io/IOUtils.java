@@ -3,10 +3,13 @@
  */
 package com.jeesite.common.io;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 数据流工具类
@@ -80,4 +83,24 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
 		return fileOutputStream;
 	}
 
+	/**
+	 * Closes a <code>Closeable</code> unconditionally.
+	 */
+	public static void closeQuietly(final InputStream input) {
+        closeQuietly((Closeable) input);
+    }
+	
+	/**
+	 * Closes a <code>Closeable</code> unconditionally.
+	 */
+	public static void closeQuietly(final Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (final IOException ioe) {
+            // ignore
+        }
+    }
+	
 }

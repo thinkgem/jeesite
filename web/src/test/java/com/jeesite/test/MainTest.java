@@ -1,6 +1,6 @@
 package com.jeesite.test;
 
-public class Test {
+public class MainTest {
 
 	public static void main(String[] args) {
 		

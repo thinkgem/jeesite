@@ -76,13 +76,12 @@ public class Md5Utils {
 	
 	/**
 	 * 获取文件的MD5值，支持获取文件部分的MD5值
+	 * uploader.md5File(file, 0, 10 * 1024 * 1024)
 	 */
 	public static String md5File(File file, int size) {
 		if (file != null && file.exists()){
-			InputStream in = null;
-	        try {
+	        try (InputStream in = FileUtils.openInputStream(file)){
 	            byte[] bytes = null;
-	            in = FileUtils.openInputStream(file);
 	            if (size != -1 && file.length() >= size){
 	            	bytes = IOUtils.toByteArray(in, size);
 	            }else{
@@ -91,8 +90,6 @@ public class Md5Utils {
 	            return EncodeUtils.encodeHex(md5(bytes));
 	        } catch (IOException e) {
 				return StringUtils.EMPTY;
-			} finally {
-	            IOUtils.closeQuietly(in);
 	        }
 		}
 		return StringUtils.EMPTY;

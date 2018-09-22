@@ -4,9 +4,6 @@
 	<!-- Log file path -->
 	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
 	
-	<!-- Spring boot default -->
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
-
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>

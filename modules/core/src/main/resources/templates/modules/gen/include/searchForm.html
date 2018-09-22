@@ -1,0 +1,72 @@
+<% /* 查询表单 begin // 此行是为了去除空行 */ %>
+			<${'#'}form:form id="searchForm" model="\${${className}}" action="\${ctx}/${urlPrefix}/listData" method="post" class="form-inline hide"
+					data-page-no="\${parameter.pageNo}" data-page-size="\${parameter.pageSize}" data-order-by="\${parameter.orderBy}">
+		<% for(c in table.columnList){ %>
+			<% if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
+				<div class="form-group">
+					<label class="control-label">\${text('${c.columnLabel}')}：</label>
+				<% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+					<div class="control-inline">
+						<% if (c.queryType == 'BETWEEN'){ %>
+						<${'#'}form:input path="${c.attrName}_gte"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} class="form-control width-60"/>
+						&nbsp;--&nbsp;
+						<${'#'}form:input path="${c.attrName}_lte"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} class="form-control width-60"/>
+						<% } else { %>
+						<${'#'}form:input path="${c.attrName}"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} class="form-control width-120"/>
+						<% } %>
+					</div>
+				<% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
+						var isMultiple = (c.showType == 'select_multiple'); %>
+					<div class="control-inline width-120">
+						<${'#'}form:select path="${c.attrName}" dictType="${c.optionMap['dictType']}"${isMultiple?' multiple="true"':''} blankOption="true" class="form-control"/>
+					</div>
+				<% }else if(c.showType == 'radio'){ %>
+					<div class="control-inline">
+						<${'#'}form:radio path="${c.attrName}" dictType="${c.optionMap['dictType']}" blankOption="true" class="form-control"/>
+					</div>
+				<% }else if(c.showType == 'checkbox'){ %>
+					<div class="control-inline">
+						<${'#'}form:checkbox path="${c.attrName}" dictType="${c.optionMap['dictType']}" blankOption="true" class="form-control"/>
+					</div>
+				<% }else if(c.showType == 'date' || c.showType == 'datetime'){
+						var isTime = (c.showType == 'datetime'); %>
+					<div class="control-inline">
+						<% if (c.queryType == 'BETWEEN'){ %>
+						<${'#'}form:input path="${c.attrName}_gte" readonly="true" maxlength="20" class="form-control Wdate-date${isTime?'time':''}"
+							dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false,onpicked:function(){${c.attrName}_lte.click()}});"/>
+						&nbsp;--&nbsp;
+						<${'#'}form:input path="${c.attrName}_lte" readonly="true" maxlength="20" class="form-control Wdate-date${isTime?'time':''}"
+							dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});"/>
+						<% } else { %>
+						<${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate-date${isTime?'time':''}"
+							dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});"/>
+						<% } %>
+					</div>
+				<% }else if(c.showType == 'userselect'){ %>
+					<div class="control-inline width-120" >
+						<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('用户选择')}"
+							path="${c.attrName}" labelPath="${c.attrName2}" 
+							url="\${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
+					</div>
+				<% }else if(c.showType == 'officeselect'){ %>
+					<div class="control-inline width-120" >
+						<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('机构选择')}"
+							path="${c.attrName}" labelPath="${c.attrName2}" 
+							url="\${ctx}/sys/office/treeData" allowClear="true"/>
+					</div>
+				<% }else if(c.showType == 'areaselect'){ %>
+					<div class="control-inline width-120" >
+						<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('区域选择')}"
+							path="${c.attrName}" labelPath="${c.attrName2}" 
+							url="\${ctx}/sys/area/treeData" allowClear="true"/>
+					</div>
+				<% } %>
+				</div>
+			<% } %>
+		<% } %>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">\${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">\${text('重置')}</button>
+				</div>
+			</${'#'}form:form>
+<% /* 查询表单 end // 此行是为了去除空行 */ %>

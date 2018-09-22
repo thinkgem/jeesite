@@ -1,8 +1,8 @@
-# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到jeesite.yml里进行覆盖该参数值。
+# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
 
-#============================#
-#===== Database sttings =====#
-#============================#
+#======================================#
+#========== Database sttings ==========#
+#======================================#
 
 # 数据库连接
 jdbc: 
@@ -73,38 +73,46 @@ jdbc:
     stat:
       enabled: true
   
-# Redis 配置
-redis: 
-  enabled: false
-  
-  # Redis 连接参数
-  host: 127.0.0.1
-  port: 6379
-  isSSL: false
-  timeout: 2000
-  password: 1234
-  database: 0
-  clientName: ~
-  
-  # Redis 连接池配置
-  pool:
-    maxIdle: 3
-    maxTotal: 20
-  
-  # 是否启用Redis系统缓存及会话（专业版）
-  cacheAndSession: false
-  
-  # 定义Key的前缀标识
-  keyPrefix: ${jdbc.tablePrefix}
+#======================================#
+#========== Spring settings ===========#
+#======================================#
 
-#============================#
-#===== System settings ======#
-#============================#
+spring:
+    
+  # Redis 连接参数 （RedisProperties）
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    ssl: false
+    database: 0
+    password: 1234
+    timeout: 2000
+    lettuce:
+      pool:
+        # 最大空闲连接数
+        maxIdle: 3
+        # 最大活动连接数
+        maxActive: 20
+  
+  # 缓存配置
+  cache:
+    # 缓存及会话共享（专业版）
+    isClusterMode: false
+    # 清理全部缓存按钮所清理的缓存列表
+    clearNames: sysCache,corpCache,userCache,cmsCache
+    
+  # 关闭 Spring Boot Banner 打印
+  main:
+    bannerMode: "off"
+    
+#======================================#
+#========== System settings ===========#
+#======================================#
 
-#管理基础路径
+# 管理基础路径
 adminPath: /a
 
-#前端基础路径
+# 前端基础路径
 frontPath: /f
 
 # 分页配置
@@ -232,15 +240,15 @@ job:
     trigger:
       enabled: false
 
-# 内容管理
-cms:
-
-  # 内容管理主站点编码
-  mainSiteCode: main
+## 内容管理
+#cms:
+#
+#  # 内容管理主站点编码
+#  mainSiteCode: main
   
-#============================#
-#==== Framework settings ====#
-#============================#
+#======================================#
+#========= Framework settings =========#
+#======================================#
 
 # Shiro 相关配置
 shiro:
@@ -296,7 +304,7 @@ shiro:
   isAllowExternalSiteIframe: true
   
   # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
-#  accessControlAllowOrigin: http://demo.jeesite.net
+#  accessControlAllowOrigin: http://demo.jeesite.com
 #  accessControlAllowOrigin: '*'
   
   # 是否在登录后生成新的Session（默认false）
@@ -339,19 +347,19 @@ shiro:
 # Session 相关
 session:
 
-  #全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
   sessionTimeout: 1800000
   
-  #手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
+  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
   mobileAppSessionTimeout: 43200000
   
-  #定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
+  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
   sessionTimeoutClean: 1200000
   
-  #会话唯一标识SessionId在Cookie中的名称。
+  # 会话唯一标识SessionId在Cookie中的名称。
   sessionIdCookieName: jeesite.session.id
   
-  #共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
+  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
 
 # MyBatis 相关
@@ -370,21 +378,6 @@ mybatis:
       delaySeconds: 60
       sleepSeconds: 3
       mappingPath: mappings
-  
-# 缓存设置
-ehcache:
-
-  # 缓存配置文件路径
-  configFile: cache/ehcache-local.xml
-#  configFile: cache/ehcache-rmi.xml
-
-  # 清理缓存的缓存名称
-  clearNames: sysCache,userCache,corpCache,cmsCache,pageCachingFilter
-
-  # 页面缓存配置
-  pageCaching:
-    enabled: false
-    urlPatterns: "*.html"
   
 # Web 相关
 web:
@@ -431,21 +424,25 @@ web:
 
   # 自定义正则表达式验证（主键、登录名）
   validator:
-    id: '[a-zA-Z0-9_\-/\u4e00-\u9fa5]{0,64}'
+    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
 
   # 关闭核心模块的Web功能（仅作为微服务时设为false）
   core: 
     enabled: true
-   
+  
+  # 在线API文档工具
+  swagger: 
+    enabled: true
+  
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
 error:
   page:
     printErrorInfo: true
 
-#============================#
-#=== FileUpload settings ====#
-#============================#
+#======================================#
+#======== FileUpload settings =========#
+#======================================#
 
 file:
   enabled: true
@@ -470,13 +467,14 @@ file:
 #    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 #    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
 
-#============================#
-#===== Message settings =====#
-#============================#
+#======================================#
+#========== Message settings ==========#
+#======================================#
 
 # 消息提醒中心（专业版）
 msg:
-
+  enabled: true
+  
   # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
   realtime:
     # 是否开启
@@ -521,11 +519,11 @@ msg:
       debug: true
     # 微信OAuth登录授权回调地址
     oauth:
-      redirectUri: http://demo.jeesite.com/jeesite
+      redirectUri: http://demo.jeesite.com/js
 
-#============================#
-#===== Video settings =======#
-#============================#
+#======================================#
+#========== Video settings ============#
+#======================================#
 
 video:
 
@@ -538,8 +536,3 @@ video:
   
   # 将mp4视频的元数据信息转到视频第一帧
   qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
-
-#============================#
-#===== Project settings =====#
-#============================#
-

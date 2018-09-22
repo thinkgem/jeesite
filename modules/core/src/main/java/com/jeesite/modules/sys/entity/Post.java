@@ -4,7 +4,7 @@
 package com.jeesite.modules.sys.entity;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;

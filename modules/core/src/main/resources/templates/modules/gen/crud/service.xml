@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>service</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/service/${subModuleName}</filePath>
+	<fileName>${ClassName}Service.java</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+
+import java.util.List;
+
+<% if (table.childList.~size > 0){ %>
+import org.springframework.beans.factory.annotation.Autowired;
+<% } %>
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Crud'}Service;
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
+<% if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload']) || @ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){ %>
+import com.jeesite.modules.file.utils.FileUploadUtils;
+<% } %>
+<% for (child in table.childList){ %>
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)};
+import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)}Dao;
+<% } %>
+
+/**
+ * ${functionName}Service
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Service
+@Transactional(readOnly=true)
+public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Service<${ClassName}Dao, ${ClassName}> {
+	<% for (child in table.childList){ %>
+	
+	@Autowired
+	private ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+	<% } %>
+	
+	/**
+	 * 获取单条数据
+	 * @param ${className}
+	 * @return
+	 */
+	@Override
+	public ${ClassName} get(${ClassName} ${className}) {
+		<% if (table.childList.~size > 0){ %>
+		${ClassName} entity = super.get(${className});
+		if (entity != null){
+			<% for (child in table.childList){ %>
+			${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} = new ${@StringUtils.cap(child.className)}(entity);
+			${@StringUtils.uncap(child.className)}.setStatus(${@StringUtils.cap(child.className)}.STATUS_NORMAL);
+			entity.set${@StringUtils.cap(child.className)}List(${@StringUtils.uncap(child.className)}Dao.findList(${@StringUtils.uncap(child.className)}));
+			<% } %>
+		}
+		return entity;
+		<% }else{ %>
+		return super.get(${className});
+		<% } %>
+	}
+	<% if(!table.isTreeEntity){ %>
+	
+	/**
+	 * 查询分页数据
+	 * @param page 分页对象
+	 * @param ${className}
+	 * @return
+	 */
+	@Override
+	public Page<${ClassName}> findPage(Page<${ClassName}> page, ${ClassName} ${className}) {
+		return super.findPage(page, ${className});
+	}
+	<% }else{ %>
+	
+	/**
+	 * 查询列表数据
+	 * @param ${className}
+	 * @return
+	 */
+	@Override
+	public List<${ClassName}> findList(${ClassName} ${className}) {
+		return super.findList(${className});
+	}
+	<% } %>
+	
+	/**
+	 * 保存数据（插入或更新）
+	 * @param ${className}
+	 */
+	@Override
+	@Transactional(readOnly=false)
+	public void save(${ClassName} ${className}) {
+		super.save(${className});
+	<% if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload'])){ %>
+		// 保存上传图片
+		FileUploadUtils.saveFileUpload(${className}.getId(), "${className}_image");
+	<% } %>
+	<% if(@ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){ %>
+		// 保存上传附件
+		FileUploadUtils.saveFileUpload(${className}.getId(), "${className}_file");
+	<% } %>
+	<% for (child in table.childList) { %>
+		// 保存 ${ClassName}子表
+		for (${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} : ${className}.get${@StringUtils.cap(child.className)}List()){
+			if (!${@StringUtils.cap(child.className)}.STATUS_DELETE.equals(${@StringUtils.uncap(child.className)}.getStatus())){
+				<%
+				for(c in child.columnList){
+					if (child.parentExists && child.parentTableFkName == c.columnName){
+				%>
+				${@StringUtils.uncap(child.className)}.set${@StringUtils.cap(c.simpleAttrName)}(${className});
+				<%
+					}
+				}
+				%>
+				if (${@StringUtils.uncap(child.className)}.getIsNewRecord()){
+					${@StringUtils.uncap(child.className)}.preInsert();
+					${@StringUtils.uncap(child.className)}Dao.insert(${@StringUtils.uncap(child.className)});
+				}else{
+					${@StringUtils.uncap(child.className)}.preUpdate();
+					${@StringUtils.uncap(child.className)}Dao.update(${@StringUtils.uncap(child.className)});
+				}
+			}else{
+				${@StringUtils.uncap(child.className)}Dao.delete(${@StringUtils.uncap(child.className)});
+			}
+		}
+	<% } %>
+	}
+	
+	/**
+	 * 更新状态
+	 * @param ${className}
+	 */
+	@Override
+	@Transactional(readOnly=false)
+	public void updateStatus(${ClassName} ${className}) {
+		super.updateStatus(${className});
+	}
+	
+	/**
+	 * 删除数据
+	 * @param ${className}
+	 */
+	@Override
+	@Transactional(readOnly=false)
+	public void delete(${ClassName} ${className}) {
+		super.delete(${className});
+	<% for (child in table.childList) { %>
+		${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} = new ${@StringUtils.cap(child.className)}();
+		<%
+		for(c in child.columnList){
+			if (child.parentExists && child.parentTableFkName == c.columnName){
+		%>
+		${@StringUtils.uncap(child.className)}.set${@StringUtils.cap(c.simpleAttrName)}(${className});
+		<%
+			}
+		}
+		%>
+		${@StringUtils.uncap(child.className)}Dao.delete(${@StringUtils.uncap(child.className)});
+	<% } %>
+	}
+	
+}]]>
+	</content>
+</template>
