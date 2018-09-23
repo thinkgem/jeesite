@@ -41,8 +41,8 @@ public class EmployeeService extends CrudService<EmployeeDao, Employee> {
 	 * 查询分页数据
 	 */
 	@Override
-	public Page<Employee> findPage(Page<Employee> page, Employee employee) {
-		return super.findPage(page, employee);
+	public Page<Employee> findPage(Employee employee) {
+		return super.findPage(employee);
 	}
 	
 	/**

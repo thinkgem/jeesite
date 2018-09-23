@@ -65,7 +65,8 @@ public class LogController extends BaseController {
     @RequestMapping(value = "listData")
     @ResponseBody
     public Page<Log> listData(Log log, HttpServletRequest request, HttpServletResponse response) {
-        Page<Log> page = logService.findPage(new Page<Log>(request, response), log); 
+    	log.setPage(new Page<>(request, response));
+        Page<Log> page = logService.findPage(log); 
         return page;
     }
     

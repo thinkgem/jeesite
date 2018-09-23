@@ -68,8 +68,8 @@ public class EmpUserService extends CrudService<EmpUserDao, EmpUser> {
 	 * 分页查询数据
 	 */
 	@Override
-	public Page<EmpUser> findPage(Page<EmpUser> page, EmpUser empUser) {
-		return super.findPage(page, empUser);
+	public Page<EmpUser> findPage(EmpUser empUser) {
+		return super.findPage(empUser);
 	}
 
 	/**

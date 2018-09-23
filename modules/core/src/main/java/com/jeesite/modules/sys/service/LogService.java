@@ -25,7 +25,7 @@ public class LogService extends CrudService<LogDao, Log> {
 	 * 查询日志记录
 	 */
 	@Override
-	public Page<Log> findPage(Page<Log> page, Log log) {
+	public Page<Log> findPage(Log log) {
 //		// 设置默认时间范围，默认当前月
 //		if (log.getCreateDate_gte() == null){
 //			log.setCreateDate_gte(DateUtils.setDays(new Date(), 1));
@@ -37,7 +37,7 @@ public class LogService extends CrudService<LogDao, Log> {
 		if (!log.getCurrentUser().isAdmin()){
 			log.setCreateBy(log.getCurrentUser().getUserCode());
 		}
-		return super.findPage(page, log);
+		return super.findPage(log);
 		
 	}
 	

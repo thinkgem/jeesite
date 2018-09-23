@@ -100,7 +100,8 @@ public class ${ClassName}Controller extends BaseController {
 	}
 	<% }else{ %>
 	public Page<${ClassName}> listData(${ClassName} ${className}, HttpServletRequest request, HttpServletResponse response) {
-		Page<${ClassName}> page = ${className}Service.findPage(new Page<${ClassName}>(request, response), ${className}); 
+		${className}.setPage(new Page<>(request, response));
+		Page<${ClassName}> page = ${className}Service.findPage(${className}); 
 		return page;
 	}
 	<% } %>

@@ -98,7 +98,7 @@ public class EmpUserController extends BaseController {
 		if (!(isAll != null && isAll)){
 			empUserService.addDataScopeFilter(empUser, UserDataScope.CTRL_PERMI_MANAGE);
 		}
-		empUser.setPage(new Page<EmpUser>(request, response));
+		empUser.setPage(new Page<>(request, response));
 		Page<EmpUser> page = empUserService.findPage(empUser);
 		return page;
 	}

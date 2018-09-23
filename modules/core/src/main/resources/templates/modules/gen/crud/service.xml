@@ -68,13 +68,13 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	
 	/**
 	 * 查询分页数据
-	 * @param page 分页对象
-	 * @param ${className}
+	 * @param ${className} 查询条件
+	 * @param ${className}.page 分页对象
 	 * @return
 	 */
 	@Override
-	public Page<${ClassName}> findPage(Page<${ClassName}> page, ${ClassName} ${className}) {
-		return super.findPage(page, ${className});
+	public Page<${ClassName}> findPage(${ClassName} ${className}) {
+		return super.findPage(${className});
 	}
 	<% }else{ %>
 	

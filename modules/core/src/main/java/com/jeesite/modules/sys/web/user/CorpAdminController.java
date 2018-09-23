@@ -64,7 +64,8 @@ public class CorpAdminController extends BaseController {
 		user.getSqlMap().getWhere().disableAutoAddCorpCodeWhere()
 			.and("corp_code", QueryType.EQ, user.getCorpCode_())
 			.and("corp_name", QueryType.LIKE, user.getCorpName_());
-		Page<User> page = userService.findPage(new Page<User>(request, response), user);
+		user.setPage(new Page<>(request, response));
+		Page<User> page = userService.findPage(user);
 		return page;
 	}
 

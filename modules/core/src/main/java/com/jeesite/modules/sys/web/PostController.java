@@ -51,7 +51,8 @@ public class PostController extends BaseController {
 	@RequestMapping(value = {"listData"})
 	@ResponseBody
 	public Page<Post> listData(Post post, HttpServletRequest request, HttpServletResponse response) {
-		Page<Post> page = postService.findPage(new Page<Post>(request, response), post); 
+		post.setPage(new Page<>(request, response));
+		Page<Post> page = postService.findPage(post); 
 		return page;
 	}
 

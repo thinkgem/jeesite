@@ -55,7 +55,8 @@ public class SecAdminController extends BaseController {
 	@ResponseBody
 	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response) {
 		user.setMgrType(User.MGR_TYPE_SEC_ADMIN);	// 二级管理员
-		Page<User> page = userService.findPage(new Page<User>(request, response), user);
+		user.setPage(new Page<>(request, response));
+		Page<User> page = userService.findPage(user);
 		return page;
 	}
 

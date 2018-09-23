@@ -38,11 +38,11 @@ public class PostService extends CrudService<PostDao, Post> {
 	}
 
 	/**
-	 * 查询可分页的岗位列表
+	 * 查询岗位
 	 */
 	@Override
-	public Page<Post> findPage(Page<Post> page, Post post) {
-		return super.findPage(page, post);
+	public Page<Post> findPage(Post post) {
+		return super.findPage(post);
 	}
 
 	/**
