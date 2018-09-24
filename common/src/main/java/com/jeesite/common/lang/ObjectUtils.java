@@ -158,7 +158,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @param object
 	 * @return
 	 */
-	public static <T> byte[] serialize(T object) {
+	public static byte[] serialize(Object object) {
 		if (object == null){
 			return null;
 		}
@@ -183,17 +183,16 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @param bytes
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T unserialize(byte[] bytes) {
+	public static Object unserialize(byte[] bytes) {
 		if (bytes == null){
 			return null;
 		}
 		long beginTime = System.currentTimeMillis();
-		T object = null;
+		Object object = null;
 		if (bytes.length > 0) {
 			try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 					ObjectInputStream ois = new ObjectInputStream(bais);) {
-				object = (T)ois.readObject();
+				object = ois.readObject();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -217,7 +216,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @param object
 	 * @return
 	 */
-	public static <T> byte[] serializeFst(T object) {
+	public static byte[] serializeFst(Object object) {
 		if (object == null){
 			return null;
 		}
@@ -235,13 +234,12 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @param bytes
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T unserializeFst(byte[] bytes) {
+	public static Object unserializeFst(byte[] bytes) {
 		if (bytes == null){
 			return null;
 		}
 		long beginTime = System.currentTimeMillis();
-		T object = (T)fst.get().asObject(bytes);
+		Object object = fst.get().asObject(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){
 			System.out.println("Fst unserialize time: " + TimeUtils.formatDateAgo(totalTime));
@@ -253,12 +251,12 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * 克隆一个对象（完全拷贝）
 	 * @param source
 	 */
-	public static <T> T cloneBean(T source){
+	public static Object cloneBean(Object source){
 		if (source == null){
 			return null;
 		}
     	byte[] bytes = ObjectUtils.serializeFst(source);
-    	T target = ObjectUtils.unserializeFst(bytes);
+    	Object target = ObjectUtils.unserializeFst(bytes);
 	    return target;
 	}
 	
