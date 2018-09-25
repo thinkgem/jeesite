@@ -585,18 +585,18 @@ public class ExcelExport implements Closeable{
 		return this;
 	}
 	
-	/**
-	 * 清理临时文件
-	 * @deprecated see close()
-	 */
-	public ExcelExport dispose(){
-		try {
-			this.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return this;
-	}
+//	/**
+//	 * 清理临时文件
+//	 * @deprecated see close()
+//	 */
+//	public ExcelExport dispose(){
+//		try {
+//			this.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return this;
+//	}
 	
 	@Override
 	public void close() {
