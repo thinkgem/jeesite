@@ -18,9 +18,6 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.http.ServletUtils;
-import com.jeesite.modules.sys.entity.Log;
-import com.jeesite.modules.sys.utils.LogUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 登出过滤器
@@ -41,16 +38,16 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	        try {
 	        	Object principal = subject.getPrincipal();
 	        	if (principal != null){
-	        		// 记录用户退出日志（@Deprecated v4.0.5支持setAuthorizingRealm，之后版本可删除此if子句）
-		        	if (authorizingRealm == null){
-			    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
-			    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
-		        	}
-		        	// 退出成功之前初始化授权信息并处理登录后的操作
-		        	else{
+//	        		// 记录用户退出日志（@Deprecated v4.0.5支持setAuthorizingRealm，之后版本可删除此if子句）
+//		        	if (authorizingRealm == null){
+//			    		LogUtils.saveLog(UserUtils.getUser(), ServletUtils.getRequest(),
+//			    				"系统退出", Log.TYPE_LOGIN_LOGOUT);
+//		        	}
+//		        	else{
+		        		// 退出成功之前初始化授权信息并处理登录后的操作
 		        		authorizingRealm.onLogoutSuccess((LoginInfo)subject.getPrincipal(),
 		        				(HttpServletRequest)request);
-		        	}
+//		        	}
 	        	}
 	    		// 退出登录	
 	    		subject.logout();
