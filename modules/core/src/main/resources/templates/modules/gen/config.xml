@@ -103,4 +103,13 @@
 		<dict value="qq" label="QQ"/>
 		<dict value="idcard" label="身份证"/>
 	</fieldValid>
+	<!-- 栅格布局 -->
+	<gridRowCol>
+		<dict value="6/4/8" label="6/4/8  两列"/>
+		<dict value="12/2/10" label="12/2/10  一列"/>
+		<dict value="12/2/8" label="12/2/8  小一列"/>
+		<dict value="12/2/5" label="12/2/5  中一列"/>
+		<dict value="4/4/8" label="4/4/8  三列"/>
+		<dict value="3/4/8" label="3/4/8  四列"/>
+	</gridRowCol>
 </config>
