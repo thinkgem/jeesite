@@ -42,7 +42,7 @@ public class DemoController extends BaseController {
 	@RequiresPermissions("test:testData:view")
 	@RequestMapping(value = "dataGrid/{viewName}")
 	public String dataGrid(@PathVariable String viewName, TestData testData, Model model) {
-		return "modules/demo/dataGrid" + StringUtils.cap(viewName);
+		return "modules/demo/demoDataGrid" + StringUtils.cap(viewName);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class DemoController extends BaseController {
 	@RequiresPermissions("test:testData:view")
 	@RequestMapping(value = "form/{viewName}")
 	public String form(@PathVariable String viewName, TestData testData, Model model) {
-		return "modules/demo/form" + StringUtils.cap(viewName);
+		return "modules/demo/demoForm" + StringUtils.cap(viewName);
 	}
 	
 }
