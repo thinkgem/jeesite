@@ -42,25 +42,6 @@ jdbc:
     removeAbandoned: true
     removeAbandonedTimeout: 1800
 
-#  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
-#  dataSourceNames: ds2
-#  
-#  # 多数据源配置：ds2
-#  ds2:
-#    type: oracle
-#    driver: oracle.jdbc.driver.OracleDriver
-#    url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
-#    username: jeesite
-#    password: jeesite
-#    testSql: SELECT 1 FROM DUAL
-#    encrypt:
-#      username: false
-#      password: true
-#    pool:
-#      init: 1
-#      minIdle: 3
-#      maxActive: 20
-  
   # JTA 分布式事务（v4.0.4+）
   jta:
     enabled: false
@@ -78,21 +59,6 @@ jdbc:
 #======================================#
 
 spring:
-    
-  # Redis 连接参数 （RedisProperties）
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    ssl: false
-    database: 0
-    password: 1234
-    timeout: 2000
-    lettuce:
-      pool:
-        # 最大空闲连接数
-        maxIdle: 3
-        # 最大活动连接数
-        maxActive: 20
   
   # 缓存配置
   cache:
@@ -311,10 +277,6 @@ shiro:
   isGenerateNewSessionAfterLogin: false
   
   # URI 权限过滤器定义
-  filterChainDefinitions: |
-    /ReportServer/** = user
-    ${adminPath}/** = user
-  
 #  filterChainDefinitions: |
 #    /ReportServer/** = user
 #    ${adminPath}/file/** = anon
@@ -326,12 +288,18 @@ shiro:
 #    ${adminPath}/cms/article/* = anon
 #    ${adminPath}/cms/link/* = anon
 #    ${adminPath}/** = user
+  filterChainDefinitions: |
+    /ReportServer/** = user
+    ${adminPath}/** = user
   
   # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
   defaultFilterChainDefinitions: |
     /static/** = anon
     /userfiles/** = anon
     /druid/** = perms[sys:state:druid]
+    /v2/api-docs = perms[sys:swagger]
+    /swagger-ui.html = perms[sys:swagger]
+    /swagger-resources/** = perms[sys:swagger]
     ${adminPath}/login-cas = cas
     ${adminPath}/login = authc
     ${adminPath}/logout = logout
@@ -497,7 +465,7 @@ msg:
   # 短信网关
   sms:
     beanName: smsSendService
-    url: http://lehuo520.cn/a/sms/api
+    url: http://localhost:80/msg/sms/send
     data: username=jeesite&password=jeesite.com
     prefix: 【JeeSite】
     suffix: ~

@@ -18,7 +18,7 @@ import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subMod
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-@MyBatisDao
+@MyBatisDao<% if(table.dataSourceName != ''){ %>(dataSourceName="${table.dataSourceName}")<% } %>
 public interface ${ClassName}Dao extends ${table.isTreeEntity?'Tree':'Crud'}Dao<${ClassName}> {
 	
 }]]>

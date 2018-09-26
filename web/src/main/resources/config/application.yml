@@ -105,12 +105,12 @@ jdbc:
 #  
 #  # 多数据源配置：ds2
 #  ds2:
-#    type: oracle
-#    driver: oracle.jdbc.driver.OracleDriver
-#    url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
-#    username: jeesite
-#    password: jeesite
-#    testSql: SELECT 1 FROM DUAL
+#    type: mysql
+#    driver: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
 #    encrypt:
 #      username: false
 #      password: true
@@ -118,7 +118,7 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-  
+      
 #  # JTA 分布式事务（v4.0.4+）
 #  jta:
 #    enabled: false
@@ -159,7 +159,7 @@ spring:
 #        maxIdle: 3
 #        # 最大活动连接数
 #        maxActive: 20
-#  
+
 #  # 缓存配置
 #  cache:
 #    # 缓存及会话共享（专业版）
@@ -495,8 +495,6 @@ spring:
 #  realtime:
 #    # 是否开启
 #    enabled: true
-#    # 消息实时推送任务Bean名称
-#    beanName: msgLocalPushTask
 
 #  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
 #  pushFailNumber: 3

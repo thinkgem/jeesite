@@ -46,6 +46,7 @@ CREATE TABLE [js_gen_table]
 	[comments] nvarchar(500) NOT NULL,
 	[parent_table_name] varchar(64),
 	[parent_table_fk_name] varchar(64),
+	[data_source_name] varchar(64),
 	[tpl_category] varchar(200),
 	[package_name] varchar(500),
 	[module_name] varchar(30),
@@ -292,7 +293,7 @@ CREATE TABLE [js_sys_file_entity]
 	[file_path] nvarchar(1000) NOT NULL,
 	[file_content_type] varchar(200) NOT NULL,
 	[file_extension] varchar(100) NOT NULL,
-	[file_size] decimal(38) NOT NULL,
+	[file_size] decimal(31) NOT NULL,
 	PRIMARY KEY ([file_id])
 );
 

@@ -47,6 +47,7 @@ CREATE TABLE js_gen_table
 	comments varchar(500) NOT NULL COMMENT '表说明',
 	parent_table_name varchar(64) COMMENT '关联父表的表名',
 	parent_table_fk_name varchar(64) COMMENT '本表关联父表的外键名',
+	data_source_name varchar(64) COMMENT '数据源名称',
 	tpl_category varchar(200) COMMENT '使用的模板',
 	package_name varchar(500) COMMENT '生成包路径',
 	module_name varchar(30) COMMENT '生成模块名',
@@ -293,7 +294,7 @@ CREATE TABLE js_sys_file_entity
 	file_path varchar(1000) NOT NULL COMMENT '文件相对路径',
 	file_content_type varchar(200) NOT NULL COMMENT '文件内容类型',
 	file_extension varchar(100) NOT NULL COMMENT '文件后缀扩展名',
-	file_size decimal(38) NOT NULL COMMENT '文件大小(单位B)',
+	file_size decimal(31) NOT NULL COMMENT '文件大小(单位B)',
 	PRIMARY KEY (file_id),
 	UNIQUE (file_md5)
 ) COMMENT = '文件实体表';

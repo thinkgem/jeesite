@@ -46,6 +46,7 @@ CREATE TABLE js_gen_table
 	comments varchar(500) NOT NULL,
 	parent_table_name varchar(64),
 	parent_table_fk_name varchar(64),
+	data_source_name varchar(64),
 	tpl_category varchar(200),
 	package_name varchar(500),
 	module_name varchar(30),

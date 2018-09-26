@@ -46,6 +46,7 @@ CREATE TABLE js_gen_table
 	comments varchar(500) NOT NULL,
 	parent_table_name varchar(64),
 	parent_table_fk_name varchar(64),
+	data_source_name varchar(64),
 	tpl_category varchar(200),
 	package_name varchar(500),
 	module_name varchar(30),
@@ -292,7 +293,7 @@ CREATE TABLE js_sys_file_entity
 	file_path varchar(1000) NOT NULL,
 	file_content_type varchar(200) NOT NULL,
 	file_extension varchar(100) NOT NULL,
-	file_size decimal(38) NOT NULL,
+	file_size decimal(31) NOT NULL,
 	PRIMARY KEY (file_id)
 ) WITHOUT OIDS;
 
@@ -924,6 +925,7 @@ COMMENT ON COLUMN js_gen_table.class_name IS '实体类名称';
 COMMENT ON COLUMN js_gen_table.comments IS '表说明';
 COMMENT ON COLUMN js_gen_table.parent_table_name IS '关联父表的表名';
 COMMENT ON COLUMN js_gen_table.parent_table_fk_name IS '本表关联父表的外键名';
+COMMENT ON COLUMN js_gen_table.data_source_name IS '数据源名称';
 COMMENT ON COLUMN js_gen_table.tpl_category IS '使用的模板';
 COMMENT ON COLUMN js_gen_table.package_name IS '生成包路径';
 COMMENT ON COLUMN js_gen_table.module_name IS '生成模块名';
