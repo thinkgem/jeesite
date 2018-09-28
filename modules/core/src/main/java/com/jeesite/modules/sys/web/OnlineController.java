@@ -106,13 +106,15 @@ public class OnlineController extends BaseController{
 			map.put("startTimestamp", DateUtils.formatDateTime(session.getStartTimestamp()));
 			map.put("lastAccessTime", DateUtils.formatDateTime(session.getLastAccessTime()));
 			map.put("timeout", TimeUtils.formatDateAgo(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
-			PrincipalCollection pc = (PrincipalCollection)session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-			LoginInfo principal = (pc != null ? (LoginInfo)pc.getPrimaryPrincipal() : null);
-			if (principal != null){
-				map.put("userCode", session.getAttribute("userCode"));// principal.getId());
-				map.put("userName", session.getAttribute("userName"));// principal.getName());
-				map.put("userType", session.getAttribute("userType"));// ObjectUtils.toString(principal.getParam("userType")));
-				map.put("deviceType", ObjectUtils.toString(principal.getParam("deviceType")));
+			Object pc = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+			if (pc != null && pc instanceof PrincipalCollection){
+				LoginInfo loginInfo = (LoginInfo)((PrincipalCollection)pc).getPrimaryPrincipal();
+				if (loginInfo != null){
+					map.put("userCode", session.getAttribute("userCode"));// principal.getId());
+					map.put("userName", session.getAttribute("userName"));// principal.getName());
+					map.put("userType", session.getAttribute("userType"));// ObjectUtils.toString(principal.getParam("userType")));
+					map.put("deviceType", ObjectUtils.toString(loginInfo.getParam("deviceType")));
+				}
 			}
 			map.put("host", session.getHost());
 			list.add(map);

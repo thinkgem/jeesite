@@ -4,21 +4,26 @@
 package com.jeesite.modules.sys.web.user;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
@@ -215,6 +220,56 @@ public class CorpAdminController extends BaseController {
 			userService.updateMgrType(user);
 			return renderResult(Global.TRUE, "取消用户'" + user.getUserName() + "'管理员身份成功！");
 		}
+	}
+	
+	/**
+	 * 查询租户数据树格式
+	 * @param pId 父级编码，默认 -1
+	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "treeData")
+	@ResponseBody
+	public List<Map<String, Object>> treeData(String pId, String isShowCode) {
+		List<Map<String, Object>> mapList = ListUtils.newArrayList();
+		User where = new User();
+		List<User> list = userService.findCorpList(where);
+		for (int i = 0; i < list.size(); i++) {
+			User e = list.get(i);
+			Map<String, Object> map = MapUtils.newHashMap();
+			map.put("id", e.getCorpCode_());
+			map.put("pId", StringUtils.defaultIfBlank(pId, "-1"));
+			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getCorpCode_(), e.getCorpName_()));
+			mapList.add(map);
+		}
+		return mapList;
+	}
+
+	/**
+	 * 切换租户
+	 * @param user
+	 * @return
+	 */
+	@RequiresPermissions("sys:corpAdmin:edit")
+	@RequestMapping(value = "switch/{corpCode}")
+	@ResponseBody
+	public String switchCorp(@PathVariable String corpCode) {
+		if (UserUtils.getUser().isSuperAdmin()){
+			User where = new User();
+			where.setCorpCode_(corpCode);
+			List<User> list = userService.findCorpList(where);
+			if (list.size() > 0){
+				Session session = UserUtils.getSession();
+				User user = list.get(0);
+				session.setAttribute("corpCode", user.getCorpCode_());
+				session.setAttribute("corpName", user.getCorpName_());
+				return renderResult(Global.TRUE, "租户切换成功！");
+			}else{
+				return renderResult(Global.TRUE, "租户切换失败，没有这个租户！");
+			}
+		}
+		return renderResult(Global.FALSE, "租户切换失败，只有超级管理员才可以操作！");
 	}
 
 }

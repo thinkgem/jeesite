@@ -1,0 +1,28 @@
+<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false') && user.superAdmin){ %>
+<li>
+	<a href="javascript:" id="switchCorp">
+		<i class="fa icon-home"></i> 当前租户：(${session.corpCode}) ${session.corpName}
+	</a>
+	<div class="hide"><#form:treeselect id="switchCorpSelect" title="${text('租户切换')}" allowClear="false"
+		url="${ctx}/sys/corpAdmin/treeData?isShowCode=true" callbackFuncName="switchCorpSelectCallback"/>
+	</div>
+	<script>
+		$('#switchCorp').click(function(){
+			$('#switchCorpSelectButton').click();
+		});
+		function switchCorpSelectCallback(id, act, index, layero, nodes){
+			if (act == 'ok'){
+				var corpCode = $('#switchCorpSelectCode').val();
+				if (corpCode != ''){
+					js.ajaxSubmit("${ctx}/sys/corpAdmin/switch/"+corpCode, function(data){
+						js.showMessage(data.message);
+						top.location.reload();
+					});
+				}
+			}
+		}
+	</script>
+</li>
+<% }else if(__info_type == '0'){ %>
+<li><a href="http://jeesite.com" target="_blank"><i class="fa fa-diamond"></i> 官方网站</a></li>
+<% } %>
