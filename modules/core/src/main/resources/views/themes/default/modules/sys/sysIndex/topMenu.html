@@ -9,9 +9,7 @@
 	</a><%-->*/%>
 	<div class="navbar-custom-menu">
 		<ul class="nav navbar-nav">
-			<% if(__info_type == '0'){ %>
-			<li><a href="http://jeesite.com" target="_blank"><i class="fa fa-diamond"></i> 官方网站</a></li>
-			<% } %>
+			<% include('topMenuCorp.html'){} %>
 			<li><a href="javascript:" id="fullScreen" title="${text('全屏')}"><i class="fa fa-arrows-alt"></i></a></li>
 			<li><a href="javascript:" id="switchSkin" title="${text('切换主题')}" style="margin-top:-1px;"><i class="fa fa-dashboard"></i></a></li>
 			<% include('topMenuLang.html'){} %>
