@@ -7,6 +7,7 @@
 	<logger name="net.oschina.j2cache.caffeine.CaffeineProvider" level="ERROR" />
 	<logger name="org.springframework.boot.context.embedded" level="INFO" />
 	<logger name="org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer" level="INFO" />
+	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
 	
 <!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
 <!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
