@@ -16,7 +16,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
-		@Column(name="post_name", attrName="postName", label="岗位名称", queryType=QueryType.LIKE),
+		@Column(name="post_name", attrName="postName", label="岗位名称"),
 		@Column(name="post_type", attrName="postType", label="岗位分类", comment="岗位分类（高管、中层、基层）"),
 		@Column(name="post_sort", attrName="postSort", label="岗位排序", comment="岗位排序（升序）"),
 	}, orderBy="a.update_date DESC"
@@ -55,6 +55,14 @@ public class Post extends DataEntity<Post> {
 
 	public void setPostName(String postName) {
 		this.postName = postName;
+	}
+	
+	public String getPostName_like() {
+		return getSqlMap().getWhere().getValue("post_name", QueryType.LIKE);
+	}
+
+	public void setPostName_like(String roleName) {
+		getSqlMap().getWhere().and("post_name", QueryType.LIKE, roleName);
 	}
 	
 	@Length(min=0, max=100, message="岗位分类长度不能超过 100 个字符")
