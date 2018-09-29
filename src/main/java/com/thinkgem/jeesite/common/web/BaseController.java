@@ -49,12 +49,6 @@ public abstract class BaseController {
 	protected String adminPath;
 	
 	/**
-	 * 前端基础路径
-	 */
-	@Value("${frontPath}")
-	protected String frontPath;
-	
-	/**
 	 * 前端URL后缀
 	 */
 	@Value("${urlSuffix}")

@@ -99,13 +99,6 @@ public class Global {
 	}
 
 	/**
-	 * 获取前端根路径
-	 */
-	public static String getFrontPath() {
-		return getConfig("frontPath");
-	}
-
-	/**
 	 * 获取URL后缀
 	 */
 	public static String getUrlSuffix() {

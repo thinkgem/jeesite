@@ -82,10 +82,6 @@
 		<filter-name>sitemeshFilter</filter-name>
 		<url-pattern>/a/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>sitemeshFilter</filter-name>
-		<url-pattern>/f/*</url-pattern>
-	</filter-mapping>
 	
 	<!-- MVC Servlet -->
 	<servlet>
