@@ -754,7 +754,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		try {
 			response.addHeader("Content-Disposition", "attachment; filename=\"" + 
 					EncodeUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName) + "\"");
-			response.setContentType(getContentType(file.getName())); // set the MIME type.
+			response.setContentType(FileUtils.getContentType(file.getName())); // set the MIME type.
 			response.addHeader("Content-Length", String.valueOf(contentLength));
 			os = response.getOutputStream();
 			out = new BufferedOutputStream(os);
@@ -804,7 +804,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				logger.debug("提醒：向客户端传输时出现IO异常，但此异常是允许的，有可能客户端取消了下载，导致此异常，不用关心！");
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			logger.debug(e.getMessage(), e);
 		} finally {
 			if (out != null) {
 				try {
