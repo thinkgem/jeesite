@@ -334,8 +334,8 @@ public class LoginController extends BaseController{
 		if (user.isSuperAdmin() && StringUtils.isNotBlank(sysCode)){
 			if (!StringUtils.equals(principal.getParam("sysCode"), sysCode)){
 				principal.setParam("sysCode", sysCode);
+				UserUtils.removeCacheByKeyPrefix(UserUtils.CACHE_MENU_LIST);
 				UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO);
-				UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);
 			}
 		}
 		return REDIRECT + adminPath + "/index";
