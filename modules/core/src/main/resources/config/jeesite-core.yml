@@ -24,7 +24,7 @@ jdbc:
     minIdle: 3
     # 最大连接数
     maxActive: 20
-
+    
     # 获取连接等待超时时间，单位毫秒（4.0.6+）
     maxWait: 60000
     
@@ -81,13 +81,13 @@ adminPath: /a
 # 前端基础路径
 frontPath: /f
 
-# 分页配置
+# 分页相关
 page:
 
   # 分页默认大小
   pageSize: 20
 
-# 用户相关参数
+# 用户相关
 user:
 
   # 指定超级管理员编号（研发团队使用的账号）
@@ -143,7 +143,7 @@ user:
       expandLevel: -1,
       remarks: ""
     }]
-
+    
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
   
@@ -153,7 +153,47 @@ user:
     registerUser:
       enabled: false
       userTypes: 0, 1
-
+     
+# 角色管理 
+role: 
+  # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
+  # 如果 ctrlTypeClass 为 NONE，则代表是不控制该类型权限
+  extendDataScopes: >
+    {
+      3: {
+        Office: {
+          ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
+          ctrlDataAttrName: "currentUser.refObj.office.officeCode",
+          ctrlDataParentCodesAttrName: "currentUser.refObj.office.parentCodes"
+        },
+        Company: {
+          ctrlTypeClass: "NONE"
+        }
+      },
+      4: {
+        Office: {
+          ctrlTypeClass: "NONE"
+        },
+        Company: {
+          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
+          ctrlDataAttrName: "currentUser.refObj.company.companyCode",
+          ctrlDataParentCodesAttrName: "currentUser.refObj.company.parentCodes"
+        }
+      },
+      5: {
+        Office: {
+          ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
+          ctrlDataAttrName: "currentUser.refObj.office.officeCode",
+          ctrlDataParentCodesAttrName: "currentUser.refObj.office.parentCodes"
+        },
+        Company: {
+          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
+          ctrlDataAttrName: "currentUser.refObj.company.companyCode",
+          ctrlDataParentCodesAttrName: "currentUser.refObj.company.parentCodes"
+        }
+      }
+    }
+    
 # 菜单管理
 menu:
   # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）

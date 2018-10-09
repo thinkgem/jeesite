@@ -61,7 +61,9 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 					@Column(name="area_name", label="区域名称", isQuery=false),
 					@Column(name="area_type", label="区域类型"),
 		}),
-	}, extWhereKeys="dsfOffice, dsfCompany", orderBy="a.user_weight DESC, a.update_date DESC"
+	},
+	extWhereKeys="dsfOffice, dsfCompany",
+	orderBy="a.user_weight DESC, a.update_date DESC"
 )
 public class EmpUser extends User {
 	

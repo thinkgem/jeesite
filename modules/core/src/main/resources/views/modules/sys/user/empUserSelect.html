@@ -5,6 +5,7 @@
 			<#form:form id="searchForm" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}"/>
+				<#form:hidden name="isAll" value="${parameter.isAll}"/>
 				<div class="form-group">
 					<label class="control-label">${text('账号')}：</label>
 					<div class="control-inline">
@@ -102,7 +103,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		$('.tags-input').height($('.ui-jqgrid').height() - 10);
 		return height;
 	},
-	showCheckbox: ${checkbox! == 'true'},
+	showCheckbox: '${parameter.checkbox}' == 'true',
 	multiboxonly: false, // 单击复选框时再多选
 	ajaxSuccess: function(data){
 		$.each(selectData, function(key, value){
@@ -111,7 +112,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		initSelectTag();
 	},
 	onSelectRow: function(id, isSelect, event){
-		if (${checkbox! == 'true'}){
+		if ('${parameter.checkbox}' == 'true'){
 			if(isSelect){
 				selectData[id] = JSON.parse(dataGrid.dataGrid('getRowData', id).rowData);
 			}else{
@@ -124,7 +125,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		initSelectTag();
 	},
 	onSelectAll: function(ids, isSelect){
-		if (${checkbox! == 'true'}){
+		if ('${parameter.checkbox}' == 'true'){
 			for (var i=0; i<ids.length; i++){
 				if(isSelect){
 					selectData[ids[i]] = JSON.parse(dataGrid.dataGrid('getRowData', ids[i]).rowData);
@@ -136,7 +137,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		initSelectTag();
 	},
 	ondblClickRow: function(id, rownum, colnum, event){
-		if (${checkbox! != 'true'}){
+		if ('${parameter.checkbox}' != 'true'){
 			js.layer.$('#' + window.name).closest('.layui-layer')
 				.find(".layui-layer-btn0").trigger("click");
 		}

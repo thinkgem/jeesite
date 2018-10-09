@@ -24,7 +24,6 @@ import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Office;
-import com.jeesite.modules.sys.entity.UserDataScope;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.web.user.EmpUserController;
@@ -71,7 +70,7 @@ public class OfficeController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public List<Office> listData(Office office) {
+	public List<Office> listData(Office office, String ctrlPermi) {
 		if (StringUtils.isBlank(office.getParentCode())){
 			office.setParentCode(Office.ROOT_CODE);
 		}
@@ -80,7 +79,7 @@ public class OfficeController extends BaseController {
 				|| StringUtils.isNotBlank(office.getFullName())){
 			office.setParentCode(null);
 		}
-		officeService.addDataScopeFilter(office, UserDataScope.CTRL_PERMI_MANAGE);
+		officeService.addDataScopeFilter(office, ctrlPermi);
 		List<Office> list = officeService.findList(office);
 		return list;
 	}
@@ -204,7 +203,7 @@ public class OfficeController extends BaseController {
 	 * @param excludeCode		排除的ID
 	 * @param parentCode	上级Code
 	 * @param isAll			是否显示所有机构（true：不进行权限过滤）
-	 * @param officeTypes	机构类型（1：公司, 2：部门, 3：小组, 4：其它）
+	 * @param officeTypes	机构类型（1：省级公司；2：市级公司；3：部门）
 	 * @param companyCode	仅查询公司下的机构
 	 * @param isShowCode	是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @param isShowFullName 是否显示全机构名称
@@ -224,8 +223,7 @@ public class OfficeController extends BaseController {
 		where.setStatus(Office.STATUS_NORMAL);
 		where.setCompanyCode(companyCode);
 		if (!(isAll != null && isAll)){
-			officeService.addDataScopeFilter(where, StringUtils.defaultIfBlank(
-					ctrlPermi, UserDataScope.CTRL_PERMI_HAVE));
+			officeService.addDataScopeFilter(where, ctrlPermi);
 		}
 		List<Office> list = officeService.findList(where);
 		for (int i = 0; i < list.size(); i++) {
@@ -272,7 +270,7 @@ public class OfficeController extends BaseController {
 				map.put("isParent", true);
 				List<Map<String, Object>> userList;
 				userList = empUserController.treeData("u_", e.getOfficeCode(), e.getOfficeCode(), 
-						companyCode, postCode, roleCode, isAll, isShowCode);
+						companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
 				mapList.addAll(userList);
 			}
 			mapList.add(map);

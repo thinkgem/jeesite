@@ -47,7 +47,7 @@ public class Office extends TreeEntity<Office> {
 	private String viewCode;		// 机构代码（作为显示用，多租户内唯一）
 	private String officeName;		// 机构名称
 	private String fullName;		// 机构全称
-	private String officeType;		// 机构类型（1：公司；2：部门；3：小组）
+	private String officeType;		// 机构类型（1：省级公司；2：市级公司；3：部门）
 	private String leader;		// 负责人
 	private String phone;		// 电话
 	private String address;		// 联系地址

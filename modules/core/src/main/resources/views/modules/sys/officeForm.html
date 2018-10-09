@@ -19,7 +19,7 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="parent" title="${text('上级机构')}"
 									path="parent.id" labelPath="parent.officeName" 
-									url="${ctx}/sys/office/treeData?excludeCode=${office.id}"
+									url="${ctx}/sys/office/treeData?excludeCode=${office.id}&ctrlPermi=2"
 									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
