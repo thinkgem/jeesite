@@ -25,7 +25,6 @@
 		<ehcache-web.version>2.0.4</ehcache-web.version>
 		<shiro.version>1.2.3</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
-		<activiti.version>5.21.0</activiti.version>
 		
 		<!-- tools version setting -->
 		<slf4j.version>1.7.7</slf4j.version>
@@ -318,53 +317,7 @@
 		</dependency>
 		<!-- SECURITY end -->
 		
-		<!-- Activiti -->
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-engine</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-spring</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-explorer</artifactId>
-			<version>${activiti.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>vaadin</artifactId>
-					<groupId>com.vaadin</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>dcharts-widget</artifactId>
-					<groupId>org.vaadin.addons</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>activiti-simple-workflow</artifactId>
-					<groupId>org.activiti</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-modeler</artifactId>
-            <version>${activiti.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-diagram-rest</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
 		
-		<!-- 支持activiti缓存 -->
-		<!-- <dependency>
-			<groupId>org.infinispan</groupId>
-			<artifactId>infinispan-core</artifactId>
-			<version>5.1.7.Final</version>
-		</dependency> -->
 		
 		<!-- LOGGING begin -->
 		<dependency>
@@ -938,12 +891,6 @@
 									<transaction src="db/gen/jeesite_${jdbc.type}.sql"/>
 									<transaction src="db/gen/example_${jdbc.type}.sql"/>
 									<transaction src="db/test/jeesite_${jdbc.type}.sql"/>
-									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.engine.sql"/>
-									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.history.sql"/>
-									<transaction src="db/act/drop/activiti.${jdbc.type}.drop.identity.sql"/>
-									<transaction src="db/act/create/activiti.${jdbc.type}.create.engine.sql"/>
-									<transaction src="db/act/create/activiti.${jdbc.type}.create.history.sql"/>
-									<transaction src="db/act/create/activiti.${jdbc.type}.create.identity.sql"/>
 								</sql>
 								
 								<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />

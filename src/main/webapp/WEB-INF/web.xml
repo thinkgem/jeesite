@@ -55,25 +55,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- PageCache, cache .html suffix.
-	<filter>
-		<filter-name>PageCacheFilter</filter-name>
-		<filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter</filter-class>
-		<init-param>
-			<param-name>cacheName</param-name>
-			<param-value>pageCachingFilter</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>PageCacheFilter</filter-name>
-		<url-pattern>/</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>PageCacheFilter</filter-name>
-		<url-pattern>*.html</url-pattern>
-	</filter-mapping>-->
-
-	<!-- SiteMesh -->
 	<filter>
 		<filter-name>sitemeshFilter</filter-name>
 		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
@@ -97,16 +78,6 @@
 		<servlet-name>springServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<!-- Activiti diagram-view callback filter-->
-	<filter>
-		<filter-name>JSONPFilter</filter-name>
-		<filter-class>com.thinkgem.jeesite.modules.act.rest.servlet.JsonpCallbackFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>JSONPFilter</filter-name>
-		<url-pattern>/act/service/*</url-pattern>
-	</filter-mapping>
 
 	<!-- DruidStatView -->
 	<servlet>
@@ -181,28 +152,6 @@
 		<url-pattern>/servlet/validateCodeServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- FineReport 
-	<servlet>
-		<servlet-name>ReportServer</servlet-name>
-		<servlet-class>com.fr.web.ReportServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReportServer</servlet-name>
-		<url-pattern>/ReportServer</url-pattern>
-	</servlet-mapping>-->
-	
-	<!-- [INSERT FRAGMENT HERE] -->
-
-	<!-- Session configure, to "jeesite.properties" file "session.sessionTimeout" parameter.
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>-->
-
-	<!-- Error page -->
-	<!-- <error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/WEB-INF/views/error/500.jsp</location>
-	</error-page> -->
 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/error/500.jsp</location>
