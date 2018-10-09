@@ -78,10 +78,6 @@
 	</bean>
 
 	<!-- 自定义Session存储容器 -->
-<!-- 	<bean id="sessionDAO" class="com.thinkgem.jeesite.common.security.shiro.session.JedisSessionDAO"> -->
-<!-- 		<property name="sessionIdGenerator" ref="idGen" /> -->
-<!-- 		<property name="sessionKeyPrefix" value="${redis.keyPrefix}_session_" /> -->
-<!-- 	</bean> -->
 	<bean id="sessionDAO" class="com.thinkgem.jeesite.common.security.shiro.session.CacheSessionDAO">
 		<property name="sessionIdGenerator" ref="idGen" />
 		<property name="activeSessionsCacheName" value="activeSessionsCache" />
@@ -89,9 +85,6 @@
 	</bean>
 	
 	<!-- 自定义系统缓存管理器-->
-<!-- 	<bean id="shiroCacheManager" class="com.thinkgem.jeesite.common.security.shiro.cache.JedisCacheManager"> -->
-<!-- 		<property name="cacheKeyPrefix" value="${redis.keyPrefix}_cache_" /> -->
-<!-- 	</bean> -->
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManager" ref="cacheManager"/>
 	</bean>

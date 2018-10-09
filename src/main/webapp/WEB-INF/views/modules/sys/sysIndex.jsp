@@ -150,15 +150,17 @@
 		<div id="header" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="brand"><span id="productName">${fns:getConfig('productName')}</span></div>
+				
 				<ul id="userControl" class="nav pull-right">
+					
 					<li id="themeSwitch" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>
 						<ul class="dropdown-menu">
 							<c:forEach items="${fns:getDictList('theme')}" var="dict"><li><a href="#" onclick="location='${pageContext.request.contextPath}/theme/${dict.value}?url='+location.href">${dict.label}</a></li></c:forEach>
 							<li><a href="javascript:cookie('tabmode','${tabmode eq '1' ? '0' : '1'}');location=location.href">${tabmode eq '1' ? '关闭' : '开启'}页签模式</a></li>
 						</ul>
-						<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
 					</li>
+					
 					<li id="userInfo" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${fns:getUser().name}&nbsp;<span id="notifyNum" class="label label-info hide"></span></a>
 						<ul class="dropdown-menu">
@@ -167,19 +169,15 @@
 							<li><a href="${ctx}/oa/oaNotify/self" target="mainFrame"><i class="icon-bell"></i>&nbsp;  我的通知 <span id="notifyNum2" class="label label-info hide"></span></a></li>
 						</ul>
 					</li>
+					
 					<li><a href="${ctx}/logout" title="退出登录">退出</a></li>
+					
 					<li>&nbsp;</li>
+					
 				</ul>
-				<%-- <c:if test="${cookie.theme.value eq 'cerulean'}">
-					<div id="user" style="position:absolute;top:0;right:0;"></div>
-					<div id="logo" style="background:url(${ctxStatic}/images/logo_bg.jpg) right repeat-x;width:100%;">
-						<div style="background:url(${ctxStatic}/images/logo.jpg) left no-repeat;width:100%;height:70px;"></div>
-					</div>
-					<script type="text/javascript">
-						$("#productName").hide();$("#user").html($("#userControl"));$("#header").prepend($("#user, #logo"));
-					</script>
-				</c:if> --%>
+				
 				<div class="nav-collapse">
+				
 					<ul id="menu" class="nav" style="*white-space:nowrap;float:none;">
 						<c:set var="firstMenu" value="true"/>
 						<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">
@@ -197,17 +195,11 @@
 								</c:if>
 								<c:set var="firstMenu" value="false"/>
 							</c:if>
-						</c:forEach><%--
-						<shiro:hasPermission name="cms:site:select">
-						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fnc:getSite(fnc:getCurrentSiteId()).name}<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<c:forEach items="${fnc:getSiteList()}" var="site"><li><a href="${ctx}/cms/site/select?id=${site.id}&flag=1">${site.name}</a></li></c:forEach>
-							</ul>
-						</li>
-						</shiro:hasPermission> --%>
+						</c:forEach>
 					</ul>
-				</div><!--/.nav-collapse -->
+					
+				</div>
+				
 			</div>
 	    </div>
 	    <div class="container-fluid">

@@ -48,12 +48,6 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
  		Principal principal = UserUtils.getPrincipal();
-
-//		// 默认页签模式
-//		String tabmode = CookieUtils.getCookie(request, "tabmode");
-//		if (tabmode == null){
-//			CookieUtils.setCookie(response, "tabmode", "1");
-//		}
 		
 		if (logger.isDebugEnabled()){
 			logger.debug("login, active session size: {}", sessionDAO.getActiveSessions(false).size());
@@ -68,12 +62,7 @@ public class LoginController extends BaseController{
 		if(principal != null && !principal.isMobileLogin()){
 			return "redirect:" + adminPath;
 		}
-//		String view;
-//		view = "/WEB-INF/views/modules/sys/sysLogin.jsp";
-//		view = "classpath:";
-//		view += "jar:file:/D:/GitHub/jeesite/src/main/webapp/WEB-INF/lib/jeesite.jar!";
-//		view += "/"+getClass().getName().replaceAll("\\.", "/").replace(getClass().getSimpleName(), "")+"view/sysLogin";
-//		view += ".jsp";
+		
 		return "modules/sys/sysLogin";
 	}
 

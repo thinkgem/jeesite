@@ -91,23 +91,8 @@
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />
 		
-		<!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）
-		<property name="poolPreparedStatements" value="true" />
-		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
-		
 		<!-- 配置监控统计拦截的filters -->
 	    <property name="filters" value="stat" /> 
 	</bean>
-	
-	<!-- 数据源配置, 使用应用服务器的数据库连接池 
-	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/jeesite" />-->
-
-	<!-- 数据源配置, 不使用连接池 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>-->
 	
 </beans>
