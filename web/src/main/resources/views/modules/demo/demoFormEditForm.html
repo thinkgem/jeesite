@@ -127,6 +127,30 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 用户列表选择：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:listselect id="testUser3" title="用户选择"
+								    url="${ctx}/sys/empUser/empUserSelect" allowClear="false" 
+								    checkbox="false" itemCode="userCode" itemName="userName"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 用户列表多选：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:listselect id="testUser4" title="用户选择"
+								    url="${ctx}/sys/empUser/empUserSelect" allowClear="false" 
+								    checkbox="true" itemCode="userCode" itemName="userName"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 机构选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:treeselect id="testOffice" title="机构选择"
