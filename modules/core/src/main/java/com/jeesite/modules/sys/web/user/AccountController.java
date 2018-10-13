@@ -25,6 +25,7 @@ import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
 
@@ -201,9 +202,9 @@ public class AccountController extends BaseController{
 		// 验证三个密保问题是否正确。
 		User u = UserUtils.getByLoginCode(user.getLoginCode());
 		if (!(u != null && loginCode.equals(user.getLoginCode())
-				&& UserService.validatePassword(user.getPwdQuestionAnswer(), u.getPwdQuestionAnswer())
-				&& UserService.validatePassword(user.getPwdQuestionAnswer2(), u.getPwdQuestionAnswer2())
-				&& UserService.validatePassword(user.getPwdQuestionAnswer3(), u.getPwdQuestionAnswer3()))) {
+				&& PwdUtils.validatePassword(user.getPwdQuestionAnswer(), u.getPwdQuestionAnswer())
+				&& PwdUtils.validatePassword(user.getPwdQuestionAnswer2(), u.getPwdQuestionAnswer2())
+				&& PwdUtils.validatePassword(user.getPwdQuestionAnswer3(), u.getPwdQuestionAnswer3()))) {
 			return renderResult(Global.FALSE, "您填写的密保问题答案不正确！");
 		}
 		

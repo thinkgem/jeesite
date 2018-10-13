@@ -9,11 +9,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
- * Web Application
+ * Application
  * @author ThinkGem
- * @version 2018-9-9
+ * @version 2018-10-13
  */
-@SpringBootApplication(scanBasePackages={"com.jeesite.modules"})
+@SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {

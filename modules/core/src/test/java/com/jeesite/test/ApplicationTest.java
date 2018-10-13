@@ -15,7 +15,7 @@ import com.jeesite.common.io.PropertiesUtils;
  * @version 2018-1-8
  */
 @ActiveProfiles("test")
-@SpringBootApplication(scanBasePackages={"com.jeesite.modules"})
+@SpringBootApplication
 public class ApplicationTest {
 	
 	public static void main(String[] args) {

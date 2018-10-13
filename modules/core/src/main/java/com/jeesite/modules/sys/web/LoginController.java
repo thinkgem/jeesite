@@ -33,7 +33,7 @@ import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -280,7 +280,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 初始密码策略和密码修改策略验证（0：关闭；1：提醒用户；2：强制修改初始或旧密码）
-		String passwordModifyUrl = UserService.passwordModifyValid(user, model);
+		String passwordModifyUrl = PwdUtils.passwordModifyValid(user, model);
 		if (passwordModifyUrl != null){
 			try {
 				request.getRequestDispatcher(passwordModifyUrl).forward(request, response);
