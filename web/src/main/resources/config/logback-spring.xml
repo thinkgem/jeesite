@@ -55,4 +55,7 @@
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
 	
+	<!-- Project level setting -->
+<!-- 	<logger name="your.package" level="DEBUG" /> -->
+	
 </configuration>

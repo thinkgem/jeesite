@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
-
-	<!-- Spring boot default -->
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

@@ -1,13 +1,10 @@
 <included>
 	
-	<!-- https://github.com/spring-projects/spring-boot/blob/v2.0.4.RELEASE/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
+	<!-- https://github.com/spring-projects/spring-boot/blob/v2.0.5.RELEASE/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 	
-	<logger name="org.apache.catalina.webresources.Cache" level="ERROR" />
+	<logger name="org.springframework.boot.web.embedded" level="INFO" />
 	<logger name="net.oschina.j2cache.caffeine.CaffeineProvider" level="ERROR" />
-	<logger name="org.springframework.boot.context.embedded" level="INFO" />
-	<logger name="org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer" level="INFO" />
-	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
 	
 <!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
 <!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
@@ -16,6 +13,7 @@
 	<logger name="com.atomikos.icatch.config.UserTransactionServiceImp" level="ERROR" />
 	<logger name="com.atomikos.jdbc.AbstractDataSourceBean" level="ERROR" />
 	
+	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
 <!-- 	<logger name="io.swagger" level="DEBUG" /> -->
 <!-- 	<logger name="springfox" level="DEBUG" /> -->
 	
@@ -25,8 +23,6 @@
 	<logger name="com.jeesite.common.mybatis" level="INFO" />
 	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
-	<logger name="com.jeesite.common.cache.JedisUtils" level="INFO" />
 	<logger name="com.jeesite.common.web.view.JstlView" level="INFO" />
-	<logger name="com.jeesite.modules.job.service.JobService" level="INFO" />
-
+	
 </included>
