@@ -22,7 +22,7 @@
 	<logger name="com.jeesite.common.shiro" level="INFO" />
 	<logger name="com.jeesite.common.mybatis" level="INFO" />
 	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
+	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
-	<logger name="com.jeesite.common.web.view.JstlView" level="INFO" />
 	
 </included>
