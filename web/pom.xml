@@ -13,7 +13,7 @@
 	<artifactId>jeesite-web</artifactId>
 	<packaging>war</packaging>
 	
-	<name>JeeSite Boot</name>
+	<name>JeeSite Web</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
@@ -30,13 +30,6 @@
 
 	<dependencies>
 		
-		<!-- Spring Boot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
 		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -49,6 +42,13 @@
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		
 		<!-- 自定义jar依赖包演示

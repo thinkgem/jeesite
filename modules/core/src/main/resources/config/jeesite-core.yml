@@ -70,10 +70,6 @@ spring:
   # 关闭 Spring Boot Banner 打印
   main:
     bannerMode: "off"
-
-# 日志配置
-logging:
-  config: classpath:config/logback-spring.xml
   
 #======================================#
 #========== System settings ===========#
@@ -452,6 +448,10 @@ error:
   page:
     printErrorInfo: true
 
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
+  
 #======================================#
 #======== FileUpload settings =========#
 #======================================#
