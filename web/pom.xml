@@ -37,7 +37,7 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 在线API文档 -->
+		<!-- 在线文档 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
