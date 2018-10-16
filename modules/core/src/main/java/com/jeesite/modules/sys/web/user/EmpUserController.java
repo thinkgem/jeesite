@@ -367,7 +367,6 @@ public class EmpUserController extends BaseController {
 		empUser.setRoleCode(roleCode);
 		empUser.setStatus(User.STATUS_NORMAL);
 		empUser.setUserType(User.USER_TYPE_EMPLOYEE);
-		empUser.setMgrType(User.MGR_TYPE_NOT_ADMIN);
 		if (!(isAll != null && isAll)) {
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
