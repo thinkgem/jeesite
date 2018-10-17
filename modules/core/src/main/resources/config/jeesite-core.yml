@@ -199,11 +199,11 @@ menu:
   # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
   updateStatusByModuleStatus: true
 
-# 国际化管理（专业版+）
+# 国际化管理（专业版）
 lang:
   enabled: true
   
-# 任务调度（个人版+）
+# 任务调度（个人版）
 job:
   enabled: true
 
@@ -267,7 +267,7 @@ shiro:
   logoutUrl: ${shiro.loginUrl}
   successUrl: ${adminPath}/index
 
-#  # Jasig CAS 相关配置
+#  # Jasig CAS 相关配置（个人版）
 #  casServerUrl: http://127.0.0.1:8981/cas
 #  casClientUrl: http://127.0.0.1:8980/js
 #  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
