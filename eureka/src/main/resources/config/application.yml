@@ -1,0 +1,70 @@
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8970
+  servlet:
+    context-path: ~
+  tomcat:
+    uri-encoding: UTF-8
+    
+#======================================#
+#========== Cloud settings ===========#
+#======================================#
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例主机名称
+    hostname: 127.0.0.1
+    # 实例是否允许使用IP
+    preferIpAddress: false
+
+  # 服务端设置
+  server:
+    # 关闭自我保护，将出现故障的服务快速剔除
+    enableSelfPreservation: false
+    # 续期时间，即扫描失效服务的间隔时间，缺省 (1000*60)ms
+    evictionIntervalTimerInMs: 3000
+    # 当获取不到对应实例时，需要等待的时间，缺省 (1000*60*5)ms
+    waitTimeInMsWhenSyncEmpty: 3000
+  
+  # 客户端设置
+  client:
+    # 由于该应用为注册中心，所以设置为false，代表不向注册中心注册自己（注册中心集群时开启）
+    registerWithEureka: false
+    # 由于注册中心的职责就是维护服务实例，它不需要去检索服务，所以设置为false
+    fetchRegistry: false
+    # 注册中心地址（集群时指定另外一个注册中心地址）
+    serviceUrl.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+  
+  # 应用程序名称
+  application:
+    name: jeesite-cloud-eureka
+
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+  
+  # 关闭 Spring Boot Banner 打印
+  main:
+    bannerMode: "off"
+    
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
+  
+#======================================#
+#========== Project settings ==========#
+#======================================#

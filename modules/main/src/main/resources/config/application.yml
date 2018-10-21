@@ -1,0 +1,228 @@
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
+
+# 产品或项目名称、软件开发公司名称
+productName: JeeSite Demo
+companyName: ThinkGem
+
+# 产品版本、版权年份
+productVersion: V4.1
+copyrightYear: 2018
+
+#是否演示模式
+demoMode: false
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8981
+  servlet:
+    context-path: /js
+  tomcat:
+    uri-encoding: UTF-8
+    
+#======================================#
+#========== Cloud settings ============#
+#======================================#
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例主机名称
+    hostname: 127.0.0.1
+    # 实例是否允许使用IP
+    preferIpAddress: false
+    # 实例状态监控参数
+    statusPageUrlPath: ${server.servlet.context-path}
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+
+  # 客户端设置
+  client:
+    # 注册中心地址（集群时指定另外一个注册中心地址）
+    serviceUrl.defaultZone: http://${eureka.instance.hostname}:8970/eureka/
+    
+# 启用负载均衡
+ribbon:
+  eureka:
+    enabled: true
+    
+# 声明式服务
+feign:
+
+  # 开启okhttp客户端
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+    
+  # 启用容错保护、断路器
+  hystrix:
+    enabled: true
+    
+  # 请求和响应GZIP压缩支持
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+# 在调用线程中执行，通过信号量来限制并发量（不单独另起线程）
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000000
+
+#======================================#
+#========== Database sttings ==========#
+#======================================#
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+  username: root
+  password: 123456
+  testSql: SELECT 1
+
+  # 数据库连接池配置
+  pool:
+  
+    # 初始化连接数
+    init: 1
+    # 最小连接数
+    minIdle: 3
+    # 最大连接数
+    maxActive: 20  # 数据库连接池配置
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+  
+  # 应用程序名称
+  application:
+    name: jeesite-cloud-module-main
+
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+    
+  # Redis 连接参数 （RedisProperties）
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    ssl: false
+    database: 0
+    password: 1234
+    timeout: 2000
+    lettuce:
+      pool:
+        # 最大空闲连接数
+        maxIdle: 3
+        # 最大活动连接数
+        maxActive: 20
+
+  # 缓存配置
+  cache:
+    # 缓存及会话共享（专业版）
+    isClusterMode: true
+    # 清理全部缓存按钮所清理的缓存列表
+    clearNames: sysCache,corpCache,userCache,cmsCache
+    
+#======================================#
+#========== System settings ===========#
+#======================================#
+
+# 菜单管理
+menu:
+  # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
+  updateStatusByModuleStatus: false
+
+# 国际化管理（专业版+）
+lang:
+  enabled: false
+  
+# 任务调度（个人版+）
+job:
+  enabled: false
+
+#======================================#
+#========= Framework settings =========#
+#======================================#
+
+#管理基础路径
+adminPath: /a
+
+# Shiro 相关配置
+shiro:
+
+  #索引页路径
+  defaultPath: ${shiro.loginUrl}
+
+  # 登录相关设置
+  loginUrl: ${adminPath}/login
+  logoutUrl: ${shiro.loginUrl}
+  successUrl: ${adminPath}/index
+
+  # 登录提交信息加密（如果不需要加密，设置为空即可）
+  loginSubmit:
+    
+    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
+    secretKey: ~
+  
+  # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
+  accessControlAllowOrigin: '*'
+  
+  # URI 权限过滤器定义
+  filterChainDefinitions: |
+    /ReportServer/** = user
+    ${adminPath}/** = user
+    /api/** = user
+
+# MyBatis 相关
+mybatis:
+
+  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules
+  
+# Web 相关
+web:
+  
+  # 关闭核心模块的Web功能（仅作为微服务时设为false）
+  core: 
+    enabled: true
+
+# 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
+error:
+  page:
+    printErrorInfo: true
+
+#======================================#
+#======== FileUpload settings =========#
+#======================================#
+
+#file:
+#  enabled: true
+#
+#  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+##  baseDir: D:/jeesite
+
+#======================================#
+#========== Project settings ==========#
+#======================================#

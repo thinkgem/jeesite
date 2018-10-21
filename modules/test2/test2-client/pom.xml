@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-cloud-parent</artifactId>
+		<version>4.1.1-SNAPSHOT</version>
+		<relativePath>../../../parent/pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>jeesite-cloud-module-test2-client</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>JeeSite Cloud Module Test2 Client</name>
+	<url>http://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+	
+	<properties>
+		
+	</properties>
+	
+	<dependencies>
+		
+		<!-- 云客户端 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-feign</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-test2-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<plugins>
+			
+		</plugins>
+	</build>
+	
+	<developers>  
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>  
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>JeeSite</name>
+		<url>http://jeesite.com</url>
+	</organization>
+	
+</project>

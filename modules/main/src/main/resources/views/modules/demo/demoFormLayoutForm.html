@@ -1,0 +1,255 @@
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">一列</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> 单行文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> 多行文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="testTextarea" rows="4" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">两列</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 下拉框：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 下拉多选：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 单选框：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="testRadio" dictType="sys_menu_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 复选框：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:checkbox path="testCheckbox" dictType="sys_menu_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">三列</div>
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 日期：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
+									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 时间：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
+									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 用户：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testUser" title="用户选择"
+									path="testUser.userCode" labelPath="testUser.userName"
+									url="${ctx}/sys/office/treeData?isLoadUser=true"
+									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 机构：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testOffice" title="机构选择"
+									path="testOffice.officeCode" labelPath="testOffice.officeName"
+									url="${ctx}/sys/office/treeData"
+									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 区域：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testAreaCode" title="区域选择"
+									path="testAreaCode" labelPath="testAreaName"
+									url="${ctx}/sys/area/treeData"
+									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 备注：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="remarks" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">四列</div>
+				<div class="row">
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('test:testData:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> 保 存</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> 关 闭</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+// 		js.ajaxSubmitForm($(form), function(data){
+//			js.showMessage(data.message);
+//			if(data.result == Global.TRUE){
+//				js.closeCurrentTabPage(function(contentWindow){
+//					contentWindow.page();
+//				});
+//			}
+//		}, "json");
+		js.showMessage('模拟保存成功');
+    }
+});
+</script>
