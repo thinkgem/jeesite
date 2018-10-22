@@ -71,7 +71,7 @@ public class MsgPushTest extends BaseSpringContextTests {
 		// 即时推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system");
 		// 定时推送消息
-		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"), Global.YES);
+		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"));
 		// 延迟推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
@@ -83,7 +83,7 @@ public class MsgPushTest extends BaseSpringContextTests {
 		// 即时推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system");
 		// 定时推送消息
-		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"), Global.YES);
+		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"));
 		// 延迟推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
@@ -95,7 +95,7 @@ public class MsgPushTest extends BaseSpringContextTests {
 		// 即时推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system");
 		// 定时推送消息
-		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"), Global.YES);
+		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"));
 		// 延迟推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
@@ -107,7 +107,7 @@ public class MsgPushTest extends BaseSpringContextTests {
 		// 即时推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system");
 		// 定时推送消息
-		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"), Global.YES);
+		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", DateUtils.parseDate("2018-05-05 08:30"));
 		// 延迟推送消息
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
