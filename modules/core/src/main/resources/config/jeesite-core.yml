@@ -67,7 +67,7 @@ spring:
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,cmsCache
     
-  # 关闭 Spring Boot Banner 打印
+  # 打印横幅
   main:
     bannerMode: "off"
   

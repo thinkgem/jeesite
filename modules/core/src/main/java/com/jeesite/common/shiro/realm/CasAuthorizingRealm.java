@@ -19,8 +19,8 @@ import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import com.beust.jcommander.internal.Maps;
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.shiro.cas.CasCreateUser;
@@ -94,7 +94,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 		// 生成登录信息对象
 		FormToken token = new FormToken();
         token.setUsername(casPrincipal.getName());
-        Map<String, Object> params = Maps.newHashMap();
+        Map<String, Object> params = MapUtils.newHashMap();
         params.putAll(casPrincipal.getAttributes());
         params.put("ticket", ticket);
         token.setParams(params);
