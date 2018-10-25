@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
@@ -38,6 +39,7 @@ public class PropertiesUtils {
 	private static Logger logger = PropertiesUtils.initLogger();
 	private final Set<String> configSet = SetUtils.newLinkedHashSet();
 	private final Properties properties = new Properties();
+	private static Environment environment;
 	
 	/**
 	 * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
@@ -165,6 +167,12 @@ public class PropertiesUtils {
 	 * 获取属性值，取不到从System.getProperty()获取，都取不到返回null
 	 */
 	public String getProperty(String key) {
+		if (environment != null){
+			String value = environment.getProperty(key);
+			if (value != null){
+				return value;
+			}
+		}
         String value = properties.getProperty(key);
         if (value != null){
         	// 支持嵌套取值的问题  key=${xx}/yy
@@ -192,6 +200,14 @@ public class PropertiesUtils {
 		return value != null ? value : defaultValue;
 	}
 	
+	/**
+	 * 设置环境属性
+	 * @param environment
+	 */
+	public static void setEnvironment(Environment environment) {
+		PropertiesUtils.environment = environment;
+	}
+
 	/**
 	 * 初始化日志路径
 	 */
