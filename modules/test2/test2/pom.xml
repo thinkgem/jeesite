@@ -19,7 +19,7 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 ${project.artifactId} -->
+		<finalName>web</finalName><!-- war包的名称 -->
 		<start-class>com.jeesite.modules.TestApplication</start-class>
 		
 		<!-- environment setting -->
@@ -35,6 +35,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		
+		<!-- 配置中心 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		
 		<!-- 核心模块 -->
@@ -53,7 +59,7 @@
 		
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-test2-api</artifactId>
+			<artifactId>jeesite-cloud-module-test2-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

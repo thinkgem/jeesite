@@ -4,8 +4,8 @@
 package com.jeesite.modules.test.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jeesite.modules.cloud.feign.condition.ConditionalOnNotCurrentApplication;
 import com.jeesite.modules.test.api.TestDataServiceApi;
 
 /**
@@ -13,8 +13,8 @@ import com.jeesite.modules.test.api.TestDataServiceApi;
  * @author ThinkGem
  * @version 2018-10-18
  */
-@FeignClient(name="jeesite-cloud-module-test1")
-@RequestMapping(value = "/js/api/test1/testData")
+@FeignClient(name="${service.test1.name}", path="${service.test1.path}")
+@ConditionalOnNotCurrentApplication(name="${service.test1.name}")
 public interface TestDataServiceClient extends TestDataServiceApi {
 	
 }

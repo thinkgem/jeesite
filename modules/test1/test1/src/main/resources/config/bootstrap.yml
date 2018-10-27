@@ -1,0 +1,56 @@
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8982
+    
+#======================================#
+#========== Cloud settings ============#
+#======================================#
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例主机名称
+    hostname: 127.0.0.1
+    # 实例是否允许使用IP
+    preferIpAddress: false
+
+  # 客户端设置
+  client:
+    # 注册中心地址（集群时指定另外一个注册中心地址）
+    serviceUrl.defaultZone: http://${eureka.instance.hostname}:8970/eureka/
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+  
+  # 应用程序名称
+  application:
+    name: jeesite-cloud-module-test1
+
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+    
+  # 分布式配置中心
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: jeesite-cloud-config
+
+  # 打印横幅
+  main:
+    bannerMode: "off"
+    
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml

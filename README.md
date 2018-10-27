@@ -1,44 +1,49 @@
 ## 引言
 
-JeeSite Spring Cloud 是基于 Spring Cloud Finchley 完成的一个分布式系统套件的整合。
+JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套件的整合。
+
+**特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
 ## 技术选型
 
-* 分布式系统主框架：Spring Cloud Finchley.SR1
+* 分布式系统主框架：Spring Cloud Finchley
 * 服务治理注册与发现：Spring Cloud Netflix Eureka
+* 服务容错保护限流降级：Spring Cloud Netflix Hystrix
+* 分布式统一配置中心：Spring Cloud Config
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
-* 容错限流降级：Spring Cloud Netflix Hystrix
-* 统一配置管理：Spring Cloud Config【敬请期待】
 
 ## 子项目介绍
 
 * 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
+* 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js>
-* 主框架入口：jeesite-cloud-module-main ： <http://127.0.0.1:8981/js>
+* 基础项目：jeesite-cloud-module-base ： <http://127.0.0.1:8981/js>
 * 测试模块1：
-    - 入口项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
-    - 模块API接口：jeesite-cloud-module-test1-api
-    - 模块之间调用客户端：jeesite-cloud-module-test1-client
+    - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
+    - 模块1客户端项目提供其它模块调用：jeesite-cloud-module-test1-client
 * 测试模块2：
-    - 入口项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
-    - 模块API接口：jeesite-cloud-module-test2-api
-    - 模块之间调用客户端：jeesite-cloud-module-test2-client
+    - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
+    - 模块2客户端项目提供其它模块调用：jeesite-cloud-module-test2-client
 
 ## 快速运行
 
-* 配置每个项目的 application.yml的JDBC数据源和Redis地址
+* 初始化数据库（下载最新的mysql脚本）：
+     https://gitee.com/thinkgem/jeesite4/attach_files
+* 配置 `/jeesite-cloud-config/../cloud-config/application.yml`
+     分布式统一配置文件的 JDBC 数据源和 Redis 缓存服务地址等信息。
 * 按顺序运行以下启动类的main方法：
     - /jeesite-cloud-eureka/../EurekaApplication.java
+    - /jeesite-cloud-config/../ConfigApplication.java
     - /jeesite-cloud-gateway/../GatewayApplication.java
-    - /jeesite-cloud-module-main/../MainApplication.java
+    - /jeesite-cloud-module-base/../BaseApplication.java
     - /jeesite-cloud-module-test1/../Test1Application.java
     - /jeesite-cloud-module-test2/../Test2Application.java
-* 以上都启动成功后，浏览器访问网关地址即可：
+* 以上都启动成功后，浏览器访问网关项目地址即可：
     - 访问地址：<http://127.0.0.1:8980/js>   system   admin
-    - 若访问报错，请等待一会，可能服务注册未完成
+    - 若访问报错，请再等待一会，可能服务未完全启动完成
 
-## 调用演示示例
+## 调用实例演示
 
 ### 网关代理模块调用
 
@@ -72,9 +77,9 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 完成的一个分布式系
 # 技术交流方式
 
 * QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
-* GitHub：<https://github.com/thinkgem/jeesite4>
+* 问题反馈：<https://gitee.com/thinkgem/jeesite4-cloud/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite4-cloud>
+* GitHub：<https://github.com/thinkgem/jeesite4-cloud>
 * 作者博客：<https://my.oschina.net/thinkgem>
 * 官方网站：<http://jeesite.com>
 * 官方论坛：<http://jeesite.net>

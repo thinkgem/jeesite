@@ -1,0 +1,9 @@
+
+# 关闭横幅
+spring:
+  main:
+    bannerMode: "off"
+
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml

@@ -57,7 +57,7 @@ spring:
             - Path=/js/a/test2/**
         # 基础权限模块
         - id: main
-          uri: lb://jeesite-cloud-module-main/js
+          uri: lb://jeesite-cloud-module-base/js
           predicates:
             - Path=/js/**
   
@@ -69,14 +69,14 @@ spring:
   profiles:
     active: default
   
-  # 关闭 Spring Boot Banner 打印
+  # 打印横幅
   main:
     bannerMode: "off"
 
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
-    
+  
 #======================================#
 #========== Project settings ==========#
 #======================================#

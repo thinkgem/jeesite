@@ -29,11 +29,11 @@ eureka:
   server:
     # 关闭自我保护，将出现故障的服务快速剔除
     enableSelfPreservation: false
-    # 续期时间，即扫描失效服务的间隔时间，缺省 (1000*60)ms
-    evictionIntervalTimerInMs: 3000
+    # 清理无效节点的时间间隔，缺省 (1000*60)ms
+    evictionIntervalTimerInMs: 6000
     # 当获取不到对应实例时，需要等待的时间，缺省 (1000*60*5)ms
-    waitTimeInMsWhenSyncEmpty: 3000
-  
+    waitTimeInMsWhenSyncEmpty: 6000
+    
   # 客户端设置
   client:
     # 由于该应用为注册中心，所以设置为false，代表不向注册中心注册自己（注册中心集群时开启）
@@ -57,7 +57,7 @@ spring:
   profiles:
     active: default
   
-  # 关闭 Spring Boot Banner 打印
+  # 关闭横幅
   main:
     bannerMode: "off"
     

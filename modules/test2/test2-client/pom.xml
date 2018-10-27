@@ -30,12 +30,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-test2-api</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
 	</dependencies>
 	
 	<build>

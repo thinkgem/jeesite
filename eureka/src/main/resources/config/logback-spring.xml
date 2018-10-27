@@ -54,8 +54,13 @@
 	
 	<!-- Project level setting -->
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<logger name="com.netflix.config.sources.URLConfigurationSource" level="ERROR" />
+	<logger name="com.netflix.eureka.cluster.PeerEurekaNodes" level="ERROR" />
 	<logger name="org.springframework.boot.web.embedded" level="INFO" />
-<!-- 	<logger name="org.springframework.cloud" level="INFO" /> -->
+	<logger name="org.springframework.cloud" level="INFO" />
 	<logger name="com.jeesite" level="DEBUG" />
+<!-- 	<logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" /> -->
+<!-- 	<logger name="com.netflix.eureka.registry" level="INFO" /> -->
+	<logger name="com.netflix.eureka.resources.ApplicationResource" level="DEBUG" />
 	
 </configuration>
