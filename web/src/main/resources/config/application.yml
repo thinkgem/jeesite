@@ -145,6 +145,10 @@ spring:
   profiles:    
     active: default
     
+  # 打印横幅
+  main:
+    bannerMode: "off"
+    
 #  # Redis 连接参数 （RedisProperties）
 #  redis:
 #    host: 127.0.0.1
@@ -167,6 +171,10 @@ spring:
 #    # 清理全部缓存按钮所清理的缓存列表
 #    clearNames: sysCache,corpCache,userCache,cmsCache
 
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
+  
 #======================================#
 #========== System settings ===========#
 #======================================#

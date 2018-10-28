@@ -71,6 +71,10 @@ spring:
   main:
     bannerMode: "off"
   
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
+  
 #======================================#
 #========== System settings ===========#
 #======================================#
@@ -447,10 +451,6 @@ web:
 error:
   page:
     printErrorInfo: true
-
-# 日志配置
-logging:
-  config: classpath:config/logback-spring.xml
   
 #======================================#
 #======== FileUpload settings =========#

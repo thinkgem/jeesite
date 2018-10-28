@@ -19,7 +19,7 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 ${project.artifactId} -->
+		<finalName>web</finalName><!-- war包的名称 -->
 		<start-class>com.jeesite.modules.Application</start-class>
 		
 		<!-- environment setting -->
