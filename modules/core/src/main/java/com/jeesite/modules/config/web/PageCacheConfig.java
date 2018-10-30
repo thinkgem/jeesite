@@ -3,8 +3,6 @@
  */
 package com.jeesite.modules.config.web;
 
-import org.springframework.context.annotation.Configuration;
-
 /**
  * 页面缓存，如果需要，则加入如下依赖并取消下面注释
 
@@ -25,7 +23,7 @@ ehcache:
  * @author ThinkGem
  * @version 2017年11月30日
  */
-@Configuration
+//@Configuration
 public class PageCacheConfig {
 
 //	/**

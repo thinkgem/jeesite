@@ -49,11 +49,6 @@ jdbc:
   # 表名前缀
   tablePrefix: js_
 
-  # Druid连接池监控
-  druid:
-    stat:
-      enabled: true
-  
 #======================================#
 #========== Spring settings ===========#
 #======================================#
@@ -206,7 +201,7 @@ menu:
 # 国际化管理（专业版）
 lang:
   enabled: true
-  
+
 # 任务调度（个人版）
 job:
   enabled: true
@@ -249,6 +244,14 @@ job:
     # 计划触发日志
     trigger:
       enabled: false
+
+# 代码生成
+gen:
+  enabled: true
+
+# 系统监控
+state:
+  enabled: true
 
 ## 内容管理
 #cms:
