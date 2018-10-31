@@ -16,7 +16,7 @@
 // * @version 2018年10月13日
 // */
 //@Service
-//public class RoleServiceExtendImpl extends RoleServiceSupport {
+//public class RoleServiceImpl extends RoleServiceSupport {
 //
 //	public RoleServiceExtendImpl() {
 //		this.entityClass = Role.class;
