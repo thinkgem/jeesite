@@ -59,8 +59,8 @@ JeeSite 自开源以来已被广大爱好者用到了企业、政府、医疗、
 * 代码生成 / 快速入门 (Guide)：<http://jeesite4.mydoc.io/?t=316743>
 * 持久层 / 数据库操作 (MyBatis)：<http://jeesite4.mydoc.io/?t=267351>
 * 业务层 / 数据权限 (Service)：<http://jeesite4.mydoc.io/?t=267352>
-* 视图层 / 前端组件 (Beetl)：<http://jeesite4.mydoc.io/?t=267353>
-* 功能权限 / 基础 (Shiro)：<http://jeesite4.mydoc.io/?t=298473>
+* 视图层 / 表单组件 (Beetl)：<http://jeesite4.mydoc.io/?t=267353>
+* 功能权限基础文档 (Shiro)：<http://jeesite4.mydoc.io/?t=298473>
 * 常用JS类库API (jeesite.js)：<http://jeesite4.mydoc.io/?t=301473>
 * 数据表格API (DataGrid.js)：<http://jeesite4.mydoc.io/?t=301488>
 * 修改 (默认) 视图，新增主题：<http://jeesite4.mydoc.io/?t=267355>
