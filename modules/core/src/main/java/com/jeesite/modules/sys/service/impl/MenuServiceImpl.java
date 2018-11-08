@@ -18,7 +18,7 @@
 //@Service
 //public class MenuServiceImpl extends MenuServiceSupport {
 //
-//	public MenuServiceExtendImpl() {
+//	public MenuServiceImpl() {
 //		this.entityClass = Menu.class;
 //	}
 //	

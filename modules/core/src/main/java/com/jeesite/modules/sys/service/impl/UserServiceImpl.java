@@ -18,7 +18,7 @@
 //@Service
 //public class UserServiceImpl extends UserServiceSupport {
 //
-//	public UserServiceExtendImpl() {
+//	public UserServiceImpl() {
 //		this.entityClass = User.class;
 //	}
 //	

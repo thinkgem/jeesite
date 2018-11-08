@@ -216,7 +216,34 @@ public class EncodeUtils {
 					&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
 					&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
 				){
-				value = value.replaceAll("\"", "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < value.length(); i++) {
+					char c = value.charAt(i);
+					switch (c) {
+					case '>':
+						sb.append("＞");
+						break;
+					case '<':
+						sb.append("＜");
+						break;
+					case '\'':
+						sb.append("＇");
+						break;
+					case '\"':
+						sb.append("＂");
+						break;
+					case '&':
+						sb.append("＆");
+						break;
+					case '#':
+						sb.append("＃");
+						break;
+					default:
+						sb.append(c);
+						break;
+					}
+				}
+				value = sb.toString();
 			}
 			if (logger.isInfoEnabled() && !value.equals(oriValue)){
 				logger.info("xssFilter: {}   <=<=<=   {}", value, text);
@@ -250,33 +277,35 @@ public class EncodeUtils {
 	}
 	
 //	public static void main(String[] args) {
-//		xssFilter("你好，<script>alert(document.cookie)</script>我还在。");
-//		xssFilter("你好，<strong>加粗文字</strong>我还在。");
-//		xssFilter("<!--HTML-->你好，\"><strong>加粗文字</strong>我还在。");
-//		xssFilter("<!--HTML-->你好，<iframe src=\"abcdef\"></iframe><strong>加粗文字</strong>我还在。");
-//		xssFilter("<!--HTML-->你好，<iframe src=\"abcdef\"/><strong>加粗文字</strong>我还在。");
-//		xssFilter("<!--HTML-->你好，<iframe src=\"abcdef\"><strong>加粗文字</strong>我还在。");
-//		xssFilter("<!--HTML-->你好，<script type=\"text/javascript\">alert(document.cookie)</script>我还在。");
-//		xssFilter("<!--HTML-->你好，<script\n type=\"text/javascript\">\nalert(document.cookie)\n</script>我还在。");
-//		xssFilter("<!--HTML-->你好，<script src='' onerror='alert(document.cookie)'></script>我还在。");
-//		xssFilter("<!--HTML-->你好，<script type=text/javascript>alert()我还在。");
-//		xssFilter("<!--HTML-->你好，<script>alert(document.cookie)</script>我还在。");
-//		xssFilter("<!--HTML-->你好，<script>window.location='url'我还在。");
-//		xssFilter("<!--HTML-->你好，</script></iframe>我还在。");
-//		xssFilter("<!--HTML-->你好，eval(abc)我还在。");
-//		xssFilter("<!--HTML-->你好，xpression(abc)我还在。");
-//		xssFilter("<!--HTML-->你好，<img src='abc.jpg' onerror='location='';alert(document.cookie);'></img>我还在。");
-//		xssFilter("<!--HTML-->你好，<img src='abc.jpg' onerror='alert(document.cookie);'/>我还在。");
-//		xssFilter("<!--HTML-->你好，<img src='abc.jpg' onerror='alert(document.cookie);'>我还在。");
-//		xssFilter("<!--HTML-->你好，<a onload='alert(\"abc\")'>hello</a>我还在。");
-//		xssFilter("<!--HTML-->你好，<a href=\"/abc\">hello</a>我还在。");
-//		xssFilter("<!--HTML-->你好，<a href='/abc'>hello</a>我还在。");
-//		xssFilter("<!--HTML-->你好，<a href='vbscript:alert(\"abc\");'>hello</a>我还在。");
-//		xssFilter("<!--HTML-->你好，<a href='javascript:alert(\"abc\");'>hello</a>我还在。");
-//		xssFilter("<!--HTML-->你好，?abc=def&hello=123&world={\"a\":1}我还在。");
-//		sqlFilter("你好，select * from xxx where abc=def and 1=1我还在。");
-//		sqlFilter("你好，insert into xxx values(1,2,3,4,5)我还在。");
-//		sqlFilter("你好，delete from xxx我还在。");
+//		int i = 0;
+//		xssFilter((++i)+"你好，<script>alert(document.cookie)</script>我还在。");
+//		xssFilter((++i)+"你好，<strong>加粗文字</strong>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，\"><strong>加粗文字</strong>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<iframe src=\"abcdef\"></iframe><strong>加粗文字</strong>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<iframe src=\"abcdef\"/><strong>加粗文字</strong>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<iframe src=\"abcdef\"><strong>加粗文字</strong>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<script type=\"text/javascript\">alert(document.cookie)</script>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<script\n type=\"text/javascript\">\nalert(document.cookie)\n</script>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<script src='' onerror='alert(document.cookie)'></script>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<script type=text/javascript>alert()我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<script>alert(document.cookie)</script>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<script>window.location='url'我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，</script></iframe>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，eval(abc)我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，xpression(abc)我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<img src='abc.jpg' onerror='location='';alert(document.cookie);'></img>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<img src='abc.jpg' onerror='alert(document.cookie);'/>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<img src='abc.jpg' onerror='alert(document.cookie);'>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<a onload='alert(\"abc\")'>hello</a>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<a href=\"/abc\">hello</a>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<a href='/abc'>hello</a>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<a href='vbscript:alert(\"abc\");'>hello</a>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，<a href='javascript:alert(\"abc\");'>hello</a>我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，?abc=def&hello=123&world={\"a\":1}我还在。");
+//		xssFilter("<!--HTML-->"+(++i)+"你好，?abc=def&hello=123&world={'a':1}我还在。");
+//		sqlFilter((++i)+"你好，select * from xxx where abc=def and 1=1我还在。");
+//		sqlFilter((++i)+"你好，insert into xxx values(1,2,3,4,5)我还在。");
+//		sqlFilter((++i)+"你好，delete from xxx我还在。");
 //	}
 	
 }

@@ -18,7 +18,7 @@
 //@Service
 //public class RoleServiceImpl extends RoleServiceSupport {
 //
-//	public RoleServiceExtendImpl() {
+//	public RoleServiceImpl() {
 //		this.entityClass = Role.class;
 //	}
 //	
