@@ -3,8 +3,8 @@
 **/webapp/userfiles
 **/WEB-INF/classes
 **/logs/*.log*
-*.lic
 *.epoch
+*.lic
 
 .classpath
 .project
