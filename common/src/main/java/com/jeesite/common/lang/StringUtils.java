@@ -85,6 +85,14 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     	}
     	return false;
     }
+    
+    /**
+     * 去除左右空格（包含中文空格）
+     * @param str
+     */
+    public static String trim2(final String str) {
+        return str == null ? null : str.replaceAll("^[\\s|　| ]*|[\\s|　| ]*$", "");
+    }
 	
 	/**
 	 * 替换掉HTML标签方法
