@@ -86,7 +86,7 @@ public class InitCoreData extends BaseInitDataTests {
 	/**
 	 * 区域、行政区划表
 	 */
-	public void initArea() throws Exception{
+	public void initArea(String... prefixes) throws Exception{
 		clearTable(Area.class);
 		initExcelData(Area.class, new MethodCallback() {
 			@Override
@@ -95,7 +95,10 @@ public class InitCoreData extends BaseInitDataTests {
 				if("save".equals(action)){
 					Area entity = (Area)params[1];
 					entity.setIsNewRecord(true);
-					areaService.save(entity);
+					if (prefixes == null || prefixes.length == 0
+							|| StringUtils.startsWithAny(entity.getAreaCode(), prefixes)){
+						areaService.save(entity);
+					}
 					return null;
 				}
 				return null;

@@ -49,11 +49,6 @@ jdbc:
   # 表名前缀
   tablePrefix: js_
 
-  # Druid连接池监控
-  druid:
-    stat:
-      enabled: true
-  
 #======================================#
 #========== Spring settings ===========#
 #======================================#
@@ -67,9 +62,13 @@ spring:
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,cmsCache
     
-  # 关闭 Spring Boot Banner 打印
+  # 打印横幅
   main:
     bannerMode: "off"
+  
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
   
 #======================================#
 #========== System settings ===========#
@@ -202,7 +201,7 @@ menu:
 # 国际化管理（专业版）
 lang:
   enabled: true
-  
+
 # 任务调度（个人版）
 job:
   enabled: true
@@ -245,6 +244,14 @@ job:
     # 计划触发日志
     trigger:
       enabled: false
+
+# 代码生成
+gen:
+  enabled: true
+
+# 系统监控
+state:
+  enabled: true
 
 ## 内容管理
 #cms:
@@ -315,6 +322,9 @@ shiro:
   
   # 是否在登录后生成新的Session（默认false）
   isGenerateNewSessionAfterLogin: false
+  
+  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
+  innerFilter.allowIp: 127.0.0.1
   
   # URI 权限过滤器定义
 #  filterChainDefinitions: |
@@ -435,7 +445,7 @@ web:
     id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
 
-  # 关闭核心模块的Web功能（仅作为微服务时设为false）
+  # 核心模块的Web功能（仅作为微服务时设为false）
   core: 
     enabled: true
   
@@ -447,10 +457,6 @@ web:
 error:
   page:
     printErrorInfo: true
-
-# 日志配置
-logging:
-  config: classpath:config/logback-spring.xml
   
 #======================================#
 #======== FileUpload settings =========#

@@ -1,4 +1,4 @@
-/*!
+/*
  *   AdminLTE v2.4.0
  *   Author: Almsaeed Studio
  *	 Website: Almsaeed Studio <https://adminlte.io>
@@ -198,7 +198,7 @@ a:focus {
   margin-left: 230px;
   border: none;
   min-height: 50px;
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .layout-top-nav .main-header .navbar {
   margin-left: 0;
@@ -727,7 +727,7 @@ a:focus {
   border-left-width: 0;
 }
 .nav-tabs.control-sidebar-tabs > li > a {
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .nav-tabs.control-sidebar-tabs > li > a,
 .nav-tabs.control-sidebar-tabs > li > a:hover {
@@ -1233,7 +1233,7 @@ a:focus {
  * ---------------
  */
 .form-control {
-  border-radius: 0;
+  /*border-radius: 0;*/
   box-shadow: none;
   border-color: #d2d6de;
 }
@@ -1287,14 +1287,14 @@ a:focus {
 }
 /* Input group */
 .input-group .input-group-addon {
-  border-radius: 0;
+  /*border-radius: 0;*/
   border-color: #d2d6de;
   background-color: #fff;
 }
 /* button groups */
 .btn-group-vertical .btn.btn-flat:first-of-type,
 .btn-group-vertical .btn.btn-flat:last-of-type {
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .icheck > label {
   padding-left: 0;
@@ -2026,7 +2026,7 @@ a:focus {
 }
 .info-box .progress,
 .info-box .progress .progress-bar {
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .info-box .progress .progress-bar {
   background: #fff;
@@ -2177,7 +2177,7 @@ a:focus {
  * -----------------
  */
 .btn {
-  border-radius: 3px;
+  border-radius: 4px;
   -webkit-box-shadow: none;
   box-shadow: none;
   border: 1px solid transparent;
@@ -2186,7 +2186,7 @@ a:focus {
   text-transform: uppercase;
 }
 .btn.btn-flat {
-  border-radius: 0;
+  /*border-radius: 0;*/
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -2421,7 +2421,7 @@ a:focus {
 }
 /* NAV PILLS */
 .nav-pills > li > a {
-  border-radius: 0;
+  /*border-radius: 0;*/
   border-top: 3px solid transparent;
   color: #444;
 }
@@ -2440,7 +2440,7 @@ a:focus {
 }
 /* NAV STACKED */
 .nav-stacked > li > a {
-  border-radius: 0;
+  /*border-radius: 0;*/
   border-top: 0;
   border-left: 3px solid transparent;
   color: #444;
@@ -2482,7 +2482,7 @@ a:focus {
 }
 .nav-tabs-custom > .nav-tabs > li > a {
   color: #444;
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .nav-tabs-custom > .nav-tabs > li > a.text-muted {
   color: #999;
@@ -2630,7 +2630,7 @@ a:focus {
 .product-list-in-box > .item {
   -webkit-box-shadow: none;
   box-shadow: none;
-  border-radius: 0;
+  /*border-radius: 0;*/
   border-bottom: 1px solid #f4f4f4;
 }
 .product-list-in-box > .item:last-of-type {
@@ -2967,7 +2967,7 @@ table.text-center th {
   background: rgba(0, 0, 0, 0.3);
 }
 .modal-content {
-  border-radius: 0;
+  /*border-radius: 0;*/
   -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
   border: 0;
@@ -4232,7 +4232,7 @@ table.text-center th {
 .select2-container--default .select2-selection--single,
 .select2-selection .select2-selection--single {
   border: 1px solid #d2d6de;
-  border-radius: 0;
+  /*border-radius: 0;*/
   padding: 6px 12px;
   height: 34px;
 }
@@ -4241,7 +4241,7 @@ table.text-center th {
 }
 .select2-dropdown {
   border: 1px solid #d2d6de;
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: #3c8dbc;
@@ -4293,7 +4293,7 @@ table.text-center th {
 }
 .select2-container--default .select2-selection--multiple {
   border: 1px solid #d2d6de;
-  border-radius: 0;
+  /*border-radius: 0;*/
 }
 .select2-container--default .select2-selection--multiple:focus {
   border-color: #3c8dbc;
@@ -4662,7 +4662,7 @@ table.text-center th {
 .list-group-unbordered > .list-group-item {
   border-left: 0;
   border-right: 0;
-  border-radius: 0;
+  /*border-radius: 0;*/
   padding-left: 0;
   padding-right: 0;
 }

@@ -18,7 +18,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
  * @version 2017年11月30日
  */
 @Configuration
-@ConditionalOnProperty(name="druid.stat.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name="state.enabled", havingValue="true", matchIfMissing=true)
 public class DruidStatConfig {
 
 	/**

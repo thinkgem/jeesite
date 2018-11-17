@@ -98,7 +98,7 @@ ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height
 /* 树搜索相关 */
 .treeSearchInput {padding:13px 0 0 20px;}
 .treeSearchInput label {padding:5px 0 3px 0;font-size:13px;font-weight:normal;vertical-align:middle;}
-.treeSearchInput input {width:140px;vertical-align:middle;line-height:24px;height:26px;border:1px solid #bbb;padding:0 4px;}
+.treeSearchInput input {width:140px;vertical-align:middle;line-height:24px;height:26px;border:1px solid #bbb;padding:0 4px;border-radius:4px;}
 .treeSearchInput button {border:1px solid #bbb;vertical-align:middle;height:26px;height:26px\9;font-size:13px;background:#efefef;padding:0 8px;}
 .treeShowHideButton {position:absolute;right:8px;top:-3px;font-size:12px;color:#333;z-index:3;}
 .treeShowHideButton label {cursor:pointer;}

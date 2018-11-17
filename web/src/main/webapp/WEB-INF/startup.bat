@@ -3,7 +3,6 @@ rem /**
 rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
 rem  *
 rem  * Author: ThinkGem@163.com
-rem  * 
 rem  */
 echo.
 echo [信息] 运行Web工程。
@@ -15,6 +14,12 @@ rem echo.
 cd %~dp0
 
 title %cd%
+
+rem 设置JDK目录
+rem set JAVA_HOME=%cd%\jdk1.8.0_x64
+
+rem 设置类加载路径
+set CLASS_PATH=%cd%/../
 
 rem 优化JVM参数
 set JAVA_OPTS=-Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m
@@ -38,7 +43,7 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-call "%RUN_JAVA%" -cp %cd%/../ %JAVA_OPTS% org.springframework.boot.loader.WarLauncher
+call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.WarLauncher
 goto end
 
 :end

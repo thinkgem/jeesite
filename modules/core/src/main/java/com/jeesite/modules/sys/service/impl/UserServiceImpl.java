@@ -16,9 +16,9 @@
 // * @version 2018年10月13日
 // */
 //@Service
-//public class UserServiceExtendImpl extends UserServiceSupport {
+//public class UserServiceImpl extends UserServiceSupport {
 //
-//	public UserServiceExtendImpl() {
+//	public UserServiceImpl() {
 //		this.entityClass = User.class;
 //	}
 //	

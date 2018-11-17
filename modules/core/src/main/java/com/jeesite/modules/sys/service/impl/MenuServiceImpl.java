@@ -16,9 +16,9 @@
 // * @version 2018年10月13日
 // */
 //@Service
-//public class MenuServiceExtendImpl extends MenuServiceSupport {
+//public class MenuServiceImpl extends MenuServiceSupport {
 //
-//	public MenuServiceExtendImpl() {
+//	public MenuServiceImpl() {
 //		this.entityClass = Menu.class;
 //	}
 //	

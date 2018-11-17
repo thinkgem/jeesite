@@ -15,6 +15,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -192,7 +193,11 @@ public class LoginController extends BaseController{
 		}
 
 		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
-		if (!SecurityUtils.getSubject().isPermitted("user")){
+		Subject subject = SecurityUtils.getSubject();
+		if (subject == null || !subject.isPermitted("user")){
+			if (subject != null){
+				subject.logout();
+			}
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
