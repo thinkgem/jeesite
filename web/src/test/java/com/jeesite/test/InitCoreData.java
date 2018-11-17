@@ -24,7 +24,7 @@ public class InitCoreData extends com.jeesite.modules.sys.db.InitCoreData {
 	public void initCoreData() throws Exception{
 		createTable();
 		initLog();
-		initArea();//("3700","3701","3702");
+		initArea("3700","3701","3702");
 		initConfig();
 		initModule();
 		initDict();
