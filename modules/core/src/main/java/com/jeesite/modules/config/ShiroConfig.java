@@ -27,6 +27,7 @@ import com.jeesite.common.shiro.cas.CasOutHandler;
 import com.jeesite.common.shiro.config.FilterChainDefinitionMap;
 import com.jeesite.common.shiro.filter.CasAuthenticationFilter;
 import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
+import com.jeesite.common.shiro.filter.InnerFilter;
 import com.jeesite.common.shiro.filter.LogoutFilter;
 import com.jeesite.common.shiro.filter.PermissionsAuthorizationFilter;
 import com.jeesite.common.shiro.filter.RolesAuthorizationFilter;
@@ -59,6 +60,13 @@ public class ShiroConfig {
 		bean.setFilter((Filter) shiroFilter.getInstance());
 		bean.addUrlPatterns("/*");
 		return bean;
+	}
+
+	/**
+	 * 内部系统访问过滤器
+	 */
+	private InnerFilter shiroInnerFilter() {
+		return new InnerFilter();
 	}
 	
 	/**
@@ -120,6 +128,7 @@ public class ShiroConfig {
 		bean.setLoginUrl(Global.getProperty("shiro.loginUrl"));
 		bean.setSuccessUrl(Global.getProperty("adminPath")+"/index");
 		Map<String, Filter> filters = bean.getFilters();
+		filters.put("inner", shiroInnerFilter());
 		filters.put("cas", shiroCasFilter(casAuthorizingRealm));
 		filters.put("authc", shiroAuthcFilter(authorizingRealm));
 		filters.put("logout", shiroLogoutFilter(authorizingRealm));

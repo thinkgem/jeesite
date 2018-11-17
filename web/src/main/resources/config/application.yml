@@ -369,6 +369,9 @@ logging:
 #
 #  # 是否在登录后生成新的Session（默认false）
 #  isGenerateNewSessionAfterLogin: false
+#
+#  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
+#  innerFilter.allowIp: 127.0.0.1
 #  
 #  # URI 权限过滤器定义
 #  filterChainDefinitions: |
@@ -458,7 +461,7 @@ logging:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
 #    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
 #    
-#  # 关闭核心模块的Web功能（仅作为微服务时设为false）
+#  # 核心模块的Web功能（仅作为微服务时设为false）
 #  core: 
 #    enabled: true
 
