@@ -175,12 +175,11 @@ public class PropertiesUtils {
 		}
         String value = properties.getProperty(key);
         if (value != null){
-        	// 支持嵌套取值的问题  key=${xx}/yy
 	    	Matcher m = p1.matcher(value);
 	        while(m.find()) {
 	            String g = m.group();
-	            String keyChild = g.replaceAll("\\$\\{", "").replaceAll("\\}", "");
-	            value = StringUtils.replace(value, g, getProperty(keyChild));
+	            String childKey = g.replaceAll("\\$\\{|\\}", "");
+	            value = StringUtils.replace(value, g, getProperty(childKey));
 	        }
 	        return value;
 	    }else{
