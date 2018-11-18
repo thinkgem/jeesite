@@ -20,7 +20,7 @@
 	<properties>
 		
 		<finalName>web</finalName><!-- war包的名称 -->
-		<start-class>com.jeesite.modules.TestApplication</start-class>
+		<start-class>com.jeesite.modules.Test2Application</start-class>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
@@ -49,6 +49,11 @@
 			<artifactId>jeesite-module-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-core-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
 		
 		<!-- 在线文档 -->
 		<dependency>

@@ -4,9 +4,6 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="jeesite-cloud-module-core-4.1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-core/jeesite-cloud-module-core">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="jeesite-cloud-module-test1-client-4.1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-test1-client/jeesite-cloud-module-test1-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
