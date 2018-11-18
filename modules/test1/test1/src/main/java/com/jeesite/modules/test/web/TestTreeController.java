@@ -27,7 +27,7 @@ import com.jeesite.modules.test.client.TestTreeServiceClient;
 import com.jeesite.modules.test.entity.TestTree;
 
 /**
- * 测试树表Controller
+ * 测试树表Controller，调用 test2 服务
  * @author ThinkGem
  * @version 2018-04-22
  */

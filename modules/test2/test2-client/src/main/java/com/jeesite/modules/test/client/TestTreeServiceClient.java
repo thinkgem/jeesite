@@ -9,7 +9,7 @@ import com.jeesite.modules.cloud.feign.condition.ConditionalOnNotCurrentApplicat
 import com.jeesite.modules.test.api.TestTreeServiceApi;
 
 /**
- * TestDataClient
+ * TestTreeClient
  * @author ThinkGem
  * @version 2018-10-18
  */

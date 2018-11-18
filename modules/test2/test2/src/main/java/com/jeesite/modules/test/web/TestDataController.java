@@ -23,7 +23,7 @@ import com.jeesite.modules.test.client.TestDataServiceClient;
 import com.jeesite.modules.test.entity.TestData;
 
 /**
- * 测试数据Controller，调用 jeeiste-test 服务
+ * 测试数据Controller，调用 test1 服务
  * @author ThinkGem
  * @version 2018-10-20
  */
