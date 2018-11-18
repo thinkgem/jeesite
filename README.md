@@ -21,17 +21,17 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 * 基础项目：jeesite-cloud-module-base ： <http://127.0.0.1:8981/js>
 * 测试模块1：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
-    - 模块1客户端项目提供其它模块调用：jeesite-cloud-module-test1-client
+    - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
 * 测试模块2：
     - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
-    - 模块2客户端项目提供其它模块调用：jeesite-cloud-module-test2-client
+    - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
 
 ## 快速运行
 
 * 初始化数据库（下载最新的mysql脚本）：
      https://gitee.com/thinkgem/jeesite4/attach_files
 * 配置 `/jeesite-cloud-config/../cloud-config/application.yml`
-     分布式统一配置文件的 JDBC 数据源和 Redis 缓存服务地址等信息。
+     分布式统一配置文件 JDBC 和 Redis 等信息。
 * 按顺序运行以下启动类的main方法：
     - /jeesite-cloud-eureka/../EurekaApplication.java
     - /jeesite-cloud-config/../ConfigApplication.java
@@ -55,11 +55,11 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 ### 模块之间互相调用
 
 * test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/test1/testTree/list>
-    - 控制器位置：jeesite-cloud-module-test1/../web/TestTreeController.java
-    - 调用的服务API位置：/jeesite-cloud-module-test2/../web/api/TestTreeServiceApiController.java
+    - 服务消费者位置：jeesite-cloud-module-test1/../web/TestTreeController.java
+    - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
 * test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/test2/testData/list>
-    - 控制器位置：jeesite-cloud-module-test2/../web/TestDataController.java
-    - 调用的服务API位置：/jeesite-cloud-module-test1/../web/api/TestDataServiceApiController.java
+    - 服务消费者位置：jeesite-cloud-module-test2/../web/TestDataController.java
+    - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
 
 ## 授权协议声明
 
