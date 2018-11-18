@@ -16,8 +16,8 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 ## 子项目介绍
 
 * 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
-* 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971>
-* 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js>
+* 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
+* 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 基础项目：jeesite-cloud-module-base ： <http://127.0.0.1:8981/js>
 * 测试模块1：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
@@ -47,17 +47,17 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 
 ### 网关代理模块调用
 
-* 代理 test1 模块（单表）：<http://127.0.0.1:8980/js/test1/testData/list>
+* 代理 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test1/testData/list>
     - 控制器位置：jeesite-cloud-module-test1/../web/TestDataController.java
-* 代理 test2 模块（树表）：<http://127.0.0.1:8980/js/test2/testTree/list>
+* 代理 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test2/testTree/list>
     - 控制器位置：jeesite-cloud-module-test2/../web/TestTreeController.java
 
 ### 模块之间互相调用
 
-* test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/test1/testTree/list>
+* test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
     - 服务消费者位置：jeesite-cloud-module-test1/../web/TestTreeController.java
     - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
-* test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/test2/testData/list>
+* test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test2/testData/list>
     - 服务消费者位置：jeesite-cloud-module-test2/../web/TestDataController.java
     - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
 

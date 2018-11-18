@@ -25,7 +25,7 @@ eureka:
     # 实例是否允许使用IP
     preferIpAddress: false
     # 实例状态监控参数
-    statusPageUrlPath: ${server.servlet.context-path}/config/default
+    statusPageUrlPath: ${server.servlet.context-path}/project/default
     healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
 
   # 客户端设置
