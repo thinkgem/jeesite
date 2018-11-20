@@ -45,7 +45,7 @@ public class MobileAppTest {
 	private static String loginUrl = "/login"
 			+ "?username=" + DesUtils.encode("system", "thinkgem,jeesite,com")
 			+ "&password=" + DesUtils.encode("admin", "thinkgem,jeesite,com")
-			+ "&param_deviceType=mobileApp&__sid="; 
+			+ "&param_deviceType=mobileApp&param_lang=zh_CN&__sid="; 
 	
 	/**
 	 * 存储的会话编号，则通过getSid()获取。

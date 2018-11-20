@@ -26,12 +26,6 @@ public class CodeStatistic {
 		System.out.println("Path: " + path);
 		ArrayList<File> al = getFile(new File(path));
 		for (File f : al) {
-			if (!(f.getPath().contains("4.0\\jeesite\\")
-					|| f.getPath().contains("\\devtools\\")
-					|| f.getPath().contains("\\framework\\"))
-					|| f.getPath().contains("\\target\\")){
-				continue;
-			}
 			if (f.getName().matches(".*\\.java$") 
 					|| f.getName().matches(".*\\.html$")
 					|| f.getName().matches(".*\\.js$")){
