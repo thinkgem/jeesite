@@ -9,7 +9,7 @@
  */
 package ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''};
 
-import com.jeesite.common.dao.${table.isTreeEntity?'Tree':'Crud'}Dao;
+import com.jeesite.common.dao.${table.isTreeEntity?'Tree':'Query'}Dao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 
@@ -19,7 +19,7 @@ import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subMod
  * @version ${functionVersion}
  */
 @MyBatisDao<% if(isNotBlank(table.dataSourceName)){ %>(dataSourceName="${table.dataSourceName}")<% } %>
-public interface ${ClassName}Dao extends ${table.isTreeEntity?'Tree':'Crud'}Dao<${ClassName}> {
+public interface ${ClassName}Dao extends ${table.isTreeEntity?'Tree':'Query'}Dao<${ClassName}> {
 	
 }]]>
 	</content>

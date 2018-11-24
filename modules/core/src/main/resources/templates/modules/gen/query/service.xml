@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>service</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/service/${subModuleName}</filePath>
+	<fileName>${ClassName}Service.java</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+
+import java.util.List;
+
+<% if (table.childList.~size > 0){ %>
+import org.springframework.beans.factory.annotation.Autowired;
+<% } %>
+import org.springframework.stereotype.Service;
+
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Query'}Service;
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
+<% for (child in table.childList){ %>
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)};
+import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)}Dao;
+<% } %>
+
+/**
+ * ${functionName}Service
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Service
+public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Service<${ClassName}Dao, ${ClassName}> {
+	<% for (child in table.childList){ %>
+	
+	@Autowired
+	private ${@StringUtils.cap(child.className)}Dao ${@StringUtils.uncap(child.className)}Dao;
+	<% } %>
+	
+	/**
+	 * 获取单条数据
+	 * @param ${className}
+	 * @return
+	 */
+	@Override
+	public ${ClassName} get(${ClassName} ${className}) {
+		<% if (table.childList.~size > 0){ %>
+		${ClassName} entity = super.get(${className});
+		if (entity != null){
+			<% for (child in table.childList){ %>
+			${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} = new ${@StringUtils.cap(child.className)}(entity);
+			${@StringUtils.uncap(child.className)}.setStatus(${@StringUtils.cap(child.className)}.STATUS_NORMAL);
+			entity.set${@StringUtils.cap(child.className)}List(${@StringUtils.uncap(child.className)}Dao.findList(${@StringUtils.uncap(child.className)}));
+			<% } %>
+		}
+		return entity;
+		<% }else{ %>
+		return super.get(${className});
+		<% } %>
+	}
+	<% if(!table.isTreeEntity){ %>
+	
+	/**
+	 * 查询分页数据
+	 * @param ${className} 查询条件
+	 * @param ${className}.page 分页对象
+	 * @return
+	 */
+	@Override
+	public Page<${ClassName}> findPage(${ClassName} ${className}) {
+		return super.findPage(${className});
+	}
+	<% }else{ %>
+	
+	/**
+	 * 查询列表数据
+	 * @param ${className}
+	 * @return
+	 */
+	@Override
+	public List<${ClassName}> findList(${ClassName} ${className}) {
+		return super.findList(${className});
+	}
+	<% } %>
+	
+}]]>
+	</content>
+</template>

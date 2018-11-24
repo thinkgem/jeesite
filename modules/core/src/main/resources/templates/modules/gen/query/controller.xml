@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+	<name>controller</name>
+	<filePath>src/main/java/${packageName}/${moduleName}/web/${subModuleName}</filePath>
+	<fileName>${ClassName}Controller.java</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package ${packageName}.${moduleName}.web${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+<% if(table.isTreeEntity){ %>
+
+import java.util.List;
+import java.util.Map;
+<% }else{ %>
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+<% } %>
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jeesite.common.config.Global;
+<% if(table.isTreeEntity){ %>
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.idgen.IdGen;
+import com.jeesite.modules.sys.utils.UserUtils;
+<% }else{ %>
+import com.jeesite.common.entity.Page;
+<% } %>
+import com.jeesite.common.web.BaseController;
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+import ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Service;
+
+/**
+ * ${functionName}Controller
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Controller
+@RequestMapping(value = "\${adminPath}/${urlPrefix}")
+public class ${ClassName}Controller extends BaseController {
+
+	@Autowired
+	private ${ClassName}Service ${className}Service;
+	
+	/**
+	 * 获取数据
+	 */
+	@ModelAttribute
+	public ${ClassName} get(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType} ${pk.simpleAttrName}<% } %>, boolean isNewRecord) {
+		<% if (table.pkList.~size == 1){ %>
+		return ${className}Service.get(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrName}<% } %>, isNewRecord);
+		<% }else{ %>
+		return ${className}Service.get(new Class<?>[]{<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType}.class<% } %>},
+				new Object[]{<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrName}<% } %>}, isNewRecord);
+		<% } %>
+	}
+	
+	/**
+	 * 查询列表
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = {"list", ""})
+	public String list(${ClassName} ${className}, Model model) {
+		model.addAttribute("${className}", ${className});
+		return "${lastPackageName}/${viewPrefix}List";
+	}
+	
+	/**
+	 * 查询列表数据
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = "listData")
+	@ResponseBody
+	<% if(table.isTreeEntity){ %>
+	public List<${ClassName}> listData(${ClassName} ${className}) {
+		if (StringUtils.isBlank(${className}.getParentCode())) {
+			${className}.setParentCode(${ClassName}.ROOT_CODE);
+		}
+		<% for(c in table.columnList){ %>
+			<% if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
+		if (StringUtils.isNotBlank(${className}.${c.attrNameForGetMethod})){
+			${className}.setParentCode(null);
+		}
+			<% } %>
+		<% } %>
+		List<${ClassName}> list = ${className}Service.findList(${className});
+		return list;
+	}
+	<% }else{ %>
+	public Page<${ClassName}> listData(${ClassName} ${className}, HttpServletRequest request, HttpServletResponse response) {
+		${className}.setPage(new Page<>(request, response));
+		Page<${ClassName}> page = ${className}Service.findPage(${className}); 
+		return page;
+	}
+	<% } %>
+
+	/**
+	 * 查看编辑表单
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = "form")
+	public String form(${ClassName} ${className}, Model model) {
+		model.addAttribute("${className}", ${className});
+		return "${lastPackageName}/${viewPrefix}Form";
+	}
+	<% if(table.isTreeEntity){ %>
+	
+	/**
+	 * 获取树结构数据
+	 * @param excludeCode 排除的Code
+	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
+	 * @return
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = "treeData")
+	@ResponseBody
+	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode) {
+		List<Map<String, Object>> mapList = ListUtils.newArrayList();
+		List<${ClassName}> list = ${className}Service.findList(new ${ClassName}());
+		for (int i=0; i<list.size(); i++){
+			${ClassName} e = list.get(i);
+			// 过滤非正常的数据
+			if (!${ClassName}.STATUS_NORMAL.equals(e.getStatus())){
+				continue;
+			}
+			// 过滤被排除的编码（包括所有子级）
+			if (StringUtils.isNotBlank(excludeCode)){
+				if (e.getId().equals(excludeCode)){
+					continue;
+				}
+				if (e.getParentCodes().contains("," + excludeCode + ",")){
+					continue;
+				}
+			}
+			Map<String, Object> map = MapUtils.newHashMap();
+			map.put("id", e.getId());
+			map.put("pId", e.getParentCode());
+			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.get${@StringUtils.cap(table.treeViewCodeAttrName)}(), e.get${@StringUtils.cap(table.treeViewNameAttrName)}()));
+			mapList.add(map);
+		}
+		return mapList;
+	}
+	<% } %>
+	
+}]]>
+	</content>
+</template>
