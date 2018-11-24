@@ -118,8 +118,8 @@ public class BinaryUploader {
 						// 过滤掉gif图片，因为gif图片转换后会出现黑色背景的情况（gif基本也没有比较大的图片）。
 						if (StringUtils.inString(FileUtils.getFileExtension(physicalPath),
 								"png","jpg","jpeg","bmp","ico")){
-							Builder<File> file = Thumbnails.of(physicalPath);
 							BufferedImage bufferedImage = ImageIO.read(new File(physicalPath));
+							Builder<BufferedImage> file = Thumbnails.of(bufferedImage);
 							if (bufferedImage != null){
 								if (bufferedImage.getWidth() <= width){
 									file.width(bufferedImage.getWidth());

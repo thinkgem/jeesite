@@ -11,7 +11,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>4.1.1-SNAPSHOT</version>
+	<version>4.1.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Parent</name>
@@ -34,6 +34,7 @@
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<metadata-extractor.version>2.11.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<twelvemonkeys.version>3.4.1</twelvemonkeys.version>
 		<blade-patchca.version>1.1.0</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.3.2</zxing.version>
