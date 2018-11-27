@@ -232,12 +232,12 @@ public class EncodeUtils {
 					case '\"':
 						sb.append("＂");
 						break;
-					case '&':
-						sb.append("＆");
-						break;
-					case '#':
-						sb.append("＃");
-						break;
+//					case '&':
+//						sb.append("＆");
+//						break;
+//					case '#':
+//						sb.append("＃");
+//						break;
 					default:
 						sb.append(c);
 						break;
