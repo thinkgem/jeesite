@@ -13,8 +13,8 @@
 		
 		<!-- <relativePath>../parent/pom.xml</relativePath>					/jeesite -->
 		<!-- <relativePath>../../parent/pom.xml</relativePath>				/jeesite/modules -->
-		<!-- <relativePath>../../jeesite/parent/pom.xml</relativePath>		/jeesite-xxx -->
-		<!-- <relativePath>../../../jeesite/parent/pom.xml</relativePath>	/jeesite-xxx/modules -->
+		<!-- <relativePath>../../jeesite/parent/pom.xml</relativePath>		/jeesite- -->
+		<!-- <relativePath>../../../jeesite/parent/pom.xml</relativePath>	/jeesite-/modules -->
 		
 	</parent>
 	
