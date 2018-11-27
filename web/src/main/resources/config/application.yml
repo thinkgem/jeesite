@@ -497,7 +497,7 @@ logging:
 ##    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 ##    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
 #
-#  # 是否已文件流方式下载
+#  # 是否用文件流方式下载（支持断点续传）
 #  isFileStreamDown: true
   
 #======================================#
