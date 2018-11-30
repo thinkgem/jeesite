@@ -6,7 +6,6 @@ package com.jeesite.modules.sys.service.support;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.collect.ListUtils;
@@ -23,7 +22,6 @@ import com.jeesite.modules.sys.service.EmployeeService;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Service
 @Transactional(readOnly=true)
 public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		implements EmployeeService{

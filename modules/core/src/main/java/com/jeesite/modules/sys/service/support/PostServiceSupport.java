@@ -3,7 +3,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.entity.Page;
@@ -17,7 +16,6 @@ import com.jeesite.modules.sys.service.PostService;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Service
 @Transactional(readOnly=true)
 public class PostServiceSupport extends CrudService<PostDao, Post>
 		implements PostService{
