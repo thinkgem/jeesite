@@ -25,22 +25,24 @@ jdbc:
     # 最大连接数
     maxActive: 20
     
-    # 获取连接等待超时时间，单位毫秒（4.0.6+）
+    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
     maxWait: 60000
     
-    # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个。（4.0.6+）
+    # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
     testOnBorrow: false
     testOnReturn: false
     
-    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（4.0.6+）
+    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（1分钟）（4.0.6+）
     timeBetweenEvictionRunsMillis: 60000
     
-    # 一个连接在池中最小生存的时间，单位毫秒（4.0.6+）
-    minEvictableIdleTimeMillis: 300000
+    # 一个连接在池中最小空闲的时间，单位毫秒（20分钟）（4.0.6+）
+    minEvictableIdleTimeMillis: 1200000
+    # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
+    maxEvictableIdleTimeMillis: 1800000
     
-    # 配置是否自动回收超时连接，超时时间，单位秒 （4.0.6+）
+    # 是否自动回收泄露的连接和超时时间，单位秒（10分钟）（4.0.6+）
     removeAbandoned: true
-    removeAbandonedTimeout: 1800
+    removeAbandonedTimeout: 600
 
   # JTA 分布式事务（v4.0.4+）
   jta:
