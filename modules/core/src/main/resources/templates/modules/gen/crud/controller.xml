@@ -89,7 +89,7 @@ public class ${ClassName}Controller extends BaseController {
 			${className}.setParentCode(${ClassName}.ROOT_CODE);
 		}
 		<% for(c in table.columnList){ %>
-			<% if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
+			<% if(c.isQuery == "1" && !c.isTreeEntityColumn && c.attrName != 'status'){ %>
 		if (StringUtils.isNotBlank(${className}.${c.attrNameForGetMethod})){
 			${className}.setParentCode(null);
 		}

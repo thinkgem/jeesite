@@ -12,6 +12,7 @@
 				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a>
 				<% if(hasPermi('test:testTree:edit')){ %>
 					<a href="${ctx}/test/testTree/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="#" class="btn btn-default" id="btnFixTreeData" title="修复树表数据（包含字段：parentCodes、treeLeaf、treeLevel、treeSorts、treeNames）"><i class="fa fa-refresh"></i> 修复</a>
 				<% } %>
 			</div>
 		</div>
@@ -25,15 +26,15 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('状态')}：</label>
-					<div class="control-inline width-120">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label">${text('备注信息')}：</label>
 					<div class="control-inline">
 						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -79,9 +80,17 @@ $('#dataGrid').dataGrid({
 	],
 	treeGrid: true,			// 启用树结构表格
 	defaultExpandLevel: 0,	// 默认展开的层次
-	expandNodeClearPostData: 'treeName,status,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+	expandNodeClearPostData: 'treeName,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}
+});
+
+// 修复树表数据（包含字段：parentCodes、treeLeaf、treeLevel、treeSorts、treeNames）
+$("#btnFixTreeData").click(function(){ 
+	js.ajaxSubmit("${ctx}/test/testTree/fixTreeData", function(data){
+		js.showMessage(data.message);
+	});
+	return false;
 });
 </script>

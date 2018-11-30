@@ -111,7 +111,7 @@ $('#dataGrid').dataGrid({
 	defaultExpandLevel: 0,	// 默认展开的层次
 	expandNodeClearPostData: '<%
 		for(c in table.columnList){
-			if(c.isQuery == "1" && !c.isTreeEntityColumn){
+			if(c.isQuery == "1" && !c.isTreeEntityColumn && c.attrName != 'status'){
 				print(c.attrName + ',');
 			}
 		} %>', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）

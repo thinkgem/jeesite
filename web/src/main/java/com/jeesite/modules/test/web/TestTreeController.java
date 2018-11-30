@@ -69,9 +69,6 @@ public class TestTreeController extends BaseController {
 		if (StringUtils.isNotBlank(testTree.getTreeName())){
 			testTree.setParentCode(null);
 		}
-		if (StringUtils.isNotBlank(testTree.getStatus())){
-			testTree.setParentCode(null);
-		}
 		if (StringUtils.isNotBlank(testTree.getRemarks())){
 			testTree.setParentCode(null);
 		}
