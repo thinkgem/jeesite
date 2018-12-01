@@ -25,15 +25,15 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('状态')}：</label>
-					<div class="control-inline width-120">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label">${text('备注信息')}：</label>
 					<div class="control-inline">
 						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -79,7 +79,7 @@ $('#dataGrid').dataGrid({
 	],
 	treeGrid: true,			// 启用树结构表格
 	defaultExpandLevel: 0,	// 默认展开的层次
-	expandNodeClearPostData: 'treeName,status,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+	expandNodeClearPostData: 'treeName,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

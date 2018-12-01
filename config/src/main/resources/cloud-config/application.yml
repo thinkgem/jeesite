@@ -51,11 +51,11 @@ eureka:
 ribbon:
   eureka:
     enabled: true
-  readTimeout: 60000
-  connectTimeout: 60000
-  maxAutoRetries: 0
-  maxAutoRetriesNextServer: 1
-  okToRetryOnAllOperations: false
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 0
   
 # 声明式服务
 feign:
@@ -91,7 +91,7 @@ hystrix:
 # 微服务列表
 service:
   core:
-    name: jeesite-cloud-module-base
+    name: jeesite-cloud-module-core
     path: ${server.servlet.context-path}
   test1:
     name: jeesite-cloud-module-test1
@@ -123,8 +123,12 @@ jdbc:
     # 最小连接数
     minIdle: 3
     # 最大连接数
-    maxActive: 20  # 数据库连接池配置
+    maxActive: 20
 
+  # JTA 分布式事务
+  jta:
+    enabled: true
+    
 #======================================#
 #========== Spring settings ===========#
 #======================================#

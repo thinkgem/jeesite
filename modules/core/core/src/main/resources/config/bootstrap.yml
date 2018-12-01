@@ -5,11 +5,7 @@
 
 server:
 
-  port: 8980
-  servlet:
-    context-path: /js
-  tomcat:
-    uri-encoding: UTF-8
+  port: 8981
     
 #======================================#
 #========== Cloud settings ============#
@@ -24,9 +20,6 @@ eureka:
     hostname: 127.0.0.1
     # 实例是否允许使用IP
     preferIpAddress: false
-    # 实例状态监控参数
-    statusPageUrlPath: ${server.servlet.context-path}
-    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
 
   # 客户端设置
   client:
@@ -38,45 +31,26 @@ eureka:
 #======================================#
 
 spring:
-
-  # 网关路由配置
-  cloud:
-    gateway:
-      defaultFilters:
-        - PreserveHostHeader
-      routes:
-        # 测试模块1
-        - id: test
-          uri: lb://jeesite-cloud-module-test1/js/a/test1
-          predicates:
-            - Path=/js/a/test1/**
-        # 测试模块2
-        - id: test2
-          uri: lb://jeesite-cloud-module-test2/js/a/test2
-          predicates:
-            - Path=/js/a/test2/**
-        # 基础权限模块
-        - id: core
-          uri: lb://jeesite-cloud-module-core/js
-          predicates:
-            - Path=/js/**
   
   # 应用程序名称
   application:
-    name: jeesite-cloud-gateway
+    name: jeesite-cloud-module-core
 
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
     active: default
-  
+    
+  # 分布式配置中心
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: jeesite-cloud-config
+
   # 打印横幅
   main:
     bannerMode: "off"
-
+    
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
-  
-#======================================#
-#========== Project settings ==========#
-#======================================#

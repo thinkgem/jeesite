@@ -6,7 +6,7 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 
 ## 技术选型
 
-* 分布式系统主框架：Spring Cloud Finchley
+* 分布式系统套件版本：Spring Cloud Finchley
 * 服务治理注册与发现：Spring Cloud Netflix Eureka
 * 服务容错保护限流降级：Spring Cloud Netflix Hystrix
 * 分布式统一配置中心：Spring Cloud Config
@@ -18,7 +18,7 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 * 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
-* 基础项目：jeesite-cloud-module-base ： <http://127.0.0.1:8981/js>
+* 核心项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
 * 测试模块1：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
     - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
@@ -32,11 +32,11 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
      https://gitee.com/thinkgem/jeesite4/attach_files
 * 配置 `/jeesite-cloud-config/../cloud-config/application.yml`
      分布式统一配置文件 JDBC 和 Redis 等信息。
-* 按顺序运行以下启动类的main方法：
+* 按顺序运行以下启动类的main方法（启动完成一个再启下一个）：
     - /jeesite-cloud-eureka/../EurekaApplication.java
     - /jeesite-cloud-config/../ConfigApplication.java
     - /jeesite-cloud-gateway/../GatewayApplication.java
-    - /jeesite-cloud-module-base/../BaseApplication.java
+    - /jeesite-cloud-module-core/../CoreApplication.java
     - /jeesite-cloud-module-test1/../Test1Application.java
     - /jeesite-cloud-module-test2/../Test2Application.java
 * 以上都启动成功后，浏览器访问网关项目地址即可：
@@ -48,18 +48,18 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 ### 网关代理模块调用
 
 * 代理 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test1/testData/list>
-    - 控制器位置：jeesite-cloud-module-test1/../web/TestDataController.java
+    - 控制器位置：jeesite-cloud-module-test1/../web/TestData1Controller.java
 * 代理 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test2/testTree/list>
-    - 控制器位置：jeesite-cloud-module-test2/../web/TestTreeController.java
+    - 控制器位置：jeesite-cloud-module-test2/../web/TestTree2Controller.java
 
 ### 模块之间互相调用
 
-* test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
-    - 服务消费者位置：jeesite-cloud-module-test1/../web/TestTreeController.java
-    - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
 * test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test2/testData/list>
-    - 服务消费者位置：jeesite-cloud-module-test2/../web/TestDataController.java
+    - 服务消费者位置：jeesite-cloud-module-test2/../web/TestData2Controller.java
     - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
+* test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
+    - 服务消费者位置：jeesite-cloud-module-test1/../web/TestTree1Controller.java
+    - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
 
 ## 授权协议声明
 

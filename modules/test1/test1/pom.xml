@@ -46,14 +46,9 @@
 		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-core</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<!-- <dependency>
-			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-core-client</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency> -->
+		</dependency>
 		
 		<!-- 在线文档 -->
 		<dependency>

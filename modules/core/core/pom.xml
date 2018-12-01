@@ -7,20 +7,20 @@
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-cloud-parent</artifactId>
 		<version>4.1.1-SNAPSHOT</version>
-		<relativePath>../../../parent/pom.xml</relativePath>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-cloud-module-test2</artifactId>
+	<artifactId>jeesite-cloud-module-core</artifactId>
 	<packaging>war</packaging>
 	
-	<name>JeeSite Cloud Module Test2</name>
+	<name>JeeSite Cloud Module Core</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<properties>
 		
 		<finalName>web</finalName><!-- war包的名称 -->
-		<start-class>com.jeesite.modules.Test2Application</start-class>
+		<start-class>com.jeesite.modules.CoreApplication</start-class>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
@@ -46,7 +46,7 @@
 		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-core-client</artifactId>
+			<artifactId>jeesite-cloud-module-core-rest</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
@@ -54,12 +54,6 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-test2-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

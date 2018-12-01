@@ -28,8 +28,8 @@ public interface TestTreeServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
-	@GetMapping(value = "get")
-	public TestTree get(@RequestParam("id") String id, @RequestParam("isNewRecord") boolean isNewRecord);
+	@GetMapping(value = "getByPk")
+	public TestTree get(@RequestParam("id") String id);
 	
 	/**
 	 * 获取单条数据
@@ -37,8 +37,8 @@ public interface TestTreeServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
-	@GetMapping(value = "getByPk")
-	public TestTree get(@RequestParam("id") String id);
+	@GetMapping(value = "getByPkAndIsNewRecord")
+	public TestTree get(@RequestParam("id") String id, @RequestParam("isNewRecord") boolean isNewRecord);
 	
 	/**
 	 * 根据父节点单条数据
