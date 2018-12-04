@@ -148,15 +148,17 @@ public class OnlineController extends BaseController{
 	public String tickOut(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
-			@SuppressWarnings("unchecked")
-			Map<String, String> onlineTickOutMap = (Map<String, String>)CacheUtils.get("onlineTickOutMap");
+			Map<String, String> onlineTickOutMap = CacheUtils.get("onlineTickOutMap");
 			if (onlineTickOutMap == null){
 				onlineTickOutMap = MapUtils.newConcurrentMap();
 			}
-			PrincipalCollection pc = (PrincipalCollection)session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-			LoginInfo principal = (pc != null ? (LoginInfo)pc.getPrimaryPrincipal() : null);
-			if (principal != null){
-				onlineTickOutMap.put(principal.getId()+"_"+principal.getParam("deviceType", "PC"), StringUtils.EMPTY);
+			Object pc = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+			if (pc != null && pc instanceof PrincipalCollection){
+				LoginInfo loginInfo = (LoginInfo)((PrincipalCollection)pc).getPrimaryPrincipal();
+				if (loginInfo != null){
+					String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "PC");
+					onlineTickOutMap.put(key, StringUtils.EMPTY);
+				}
 			}
 			CacheUtils.put("onlineTickOutMap", onlineTickOutMap);
 			sessionDAO.delete(session);

@@ -40,9 +40,9 @@ jdbc:
     # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
     maxEvictableIdleTimeMillis: 1800000
     
-    # 是否自动回收泄露的连接和超时时间，单位秒（10分钟）（4.0.6+）
+    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
     removeAbandoned: true
-    removeAbandonedTimeout: 600
+    removeAbandonedTimeout: 2100
 
   # JTA 分布式事务（v4.0.4+）
   jta:
@@ -312,6 +312,9 @@ shiro:
   # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
   isAllowMultiAddrLogin: true
   
+  # 是否允许多账号多设备登录，如果设置为false，其它地点登录的相同账号全部登录设备将被踢下线
+  isAllowMultiDeviceLogin: true
+  
   # 是否允许刷新主框架页，如果设置为false，刷新主页将导致重新登录。如安全性比较高的，如银行个人首页不允许刷新。
   isAllowRefreshIndex: true
   
@@ -490,6 +493,19 @@ file:
   # 是否用文件流方式下载（支持断点续传）
   isFileStreamDown: true
   
+# 视频转码
+video:
+
+  # 视频格式转换  ffmpeg.exe 所放的路径
+  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
+#  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
+  
+  # 视频格式转换  mencoder.exe 所放的路径
+  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
+  
+  # 将mp4视频的元数据信息转到视频第一帧
+  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
+  
 #======================================#
 #========== Message settings ==========#
 #======================================#
@@ -544,18 +560,3 @@ msg:
     oauth:
       redirectUri: http://demo.jeesite.com/js
 
-#======================================#
-#========== Video settings ============#
-#======================================#
-
-video:
-
-  # 视频格式转换  ffmpeg.exe 所放的路径
-  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
-#  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
-  
-  # 视频格式转换  mencoder.exe 所放的路径
-  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
-  
-  # 将mp4视频的元数据信息转到视频第一帧
-  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
