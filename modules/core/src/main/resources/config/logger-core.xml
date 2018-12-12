@@ -11,7 +11,10 @@
 <!-- 	<logger name="org.springframework.jdbc" level="DEBUG" /> -->
 	<logger name="org.mybatis.spring.transaction" level="DEBUG" />
 	<logger name="com.atomikos.icatch.config.UserTransactionServiceImp" level="ERROR" />
+	<logger name="com.atomikos.icatch.provider.imp.AssemblerImp" level="ERROR" />
 	<logger name="com.atomikos.jdbc.AbstractDataSourceBean" level="ERROR" />
+	<logger name="com.atomikos.jdbc.AtomikosConnectionProxy" level="ERROR" />
+<!-- 	<logger name="org.springframework.transaction.support.TransactionSynchronizationManager" level="TRACE" /> -->
 	
 	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
 <!-- 	<logger name="io.swagger" level="DEBUG" /> -->
