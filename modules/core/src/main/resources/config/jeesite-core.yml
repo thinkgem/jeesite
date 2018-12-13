@@ -100,11 +100,11 @@ user:
   # 系统管理员角色编号（客户方管理员使用的角色）
   corpAdminRoleCode: corpAdmin
 
-  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...）
-  # JSON格式说明：{"用户类型":{"dao":"Dao的Bean名称","loginView":"登录视图","indexView":"主页框架面视图"}}
+  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...），JSON 格式说明如下：
+  # {"用户类型":{"dao":"Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
   userTypeMap: >
     {
-      "employee":{"dao":"employeeDao","loginView":"","indexView":""},
+      "employee":{"dao":"employeeDao","loginView":"","indexView":"modules/sys/sysIndex"},
       "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
       "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
       "persion":{"dao":"persionDao","loginView":"","indexView":"modules/sys/sysIndexPersion"},
