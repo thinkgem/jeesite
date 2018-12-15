@@ -30,7 +30,9 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.EmpUser;
+import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 
@@ -46,6 +48,8 @@ public class CorpAdminController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 
 	@ModelAttribute
 	public User get(String userCode, boolean isNewRecord) {
@@ -84,6 +88,10 @@ public class CorpAdminController extends BaseController {
 				user.setCorpName_(StringUtils.EMPTY);  // 租户名称
 			}
 		}
+		// 获取当前用户所拥有的角色
+		Role role = new Role();
+		role.setUserCode(user.getUserCode());
+		model.addAttribute("roleList", roleService.findListByUserCode(role));
 		// 操作类型：addCorp: 添加租户； addAdmin: 添加管理员； edit: 编辑
 		model.addAttribute("op", op);
 		model.addAttribute("user", user);
@@ -135,6 +143,7 @@ public class CorpAdminController extends BaseController {
 			}
 		}
 		userService.save(user);
+		userService.saveAuth(user);
 		// 如果修改的是当前用户，则清除当前用户缓存
 		if (user.getUserCode().equals(UserUtils.getUser().getUserCode())) {
 			UserUtils.clearCache();

@@ -120,6 +120,11 @@
 						</div>
 					</div>
 				</div>
+				<div class="form-unit">${text('分配角色')}</div>
+				<div class="pl10 pb20">
+					<table id="roleGrid"></table>
+					<#form:hidden name="userRoleString"/>
+				</div>
 				<#form:extend collapsed="true" />
 			</div>
 			<div class="box-footer">
@@ -146,6 +151,9 @@ $("#inputForm").validate({
 		}
 	},
 	submitHandler: function(form){
+		// 获取选中角色
+		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
+		// 提交表单
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
@@ -161,6 +169,31 @@ $('#corpCode_').change(function(){
 		$('#loginCode').valid();
 	}else{
 		$('#loginCode').val('admin'+$(this).val()).valid();
+	}
+});
+//加载角色列表
+var roleGrid = $("#roleGrid").dataGrid({
+	url: '${ctx}/sys/role/treeData',
+	postData: [
+<%// 	{name:'userType',value:'employee'}, // 指定用户类型的角色 %>
+<%// 	{name:'ctrlPermi',value:'2'} 		// 过滤可管理的角色 %>
+		{name:'isAll',value:'true'} 	<%  // 显示所有角色（与上方两个条件互斥） %>
+	],
+	columnModel: [
+		{header:'${text('角色名称')}', name:'name', sortable:false, width:100, align:"center"},
+		{header:'${text('角色编码')}', name:'id', sortable:false, width:100, align:"center"}  
+	],
+	showCheckbox: true,
+	autoGridHeight: function(){
+		return 'auto';
+	},
+	autoGridWidth: function(){
+		return $('#inputForm .box-body').width()-20;
+	},
+	ajaxSuccess: function(){
+		<% for (role in roleList!){ %>
+ 		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
+		<% } %>
 	}
 });
 </script>
