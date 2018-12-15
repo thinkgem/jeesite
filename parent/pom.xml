@@ -93,7 +93,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
+					<!-- <encoding>${project.build.sourceEncoding}</encoding> -->
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>

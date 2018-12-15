@@ -340,7 +340,8 @@ public class LoginController extends BaseController{
 			if (!StringUtils.equals(principal.getParam("sysCode"), sysCode)){
 				principal.setParam("sysCode", sysCode);
 				UserUtils.removeCacheByKeyPrefix(UserUtils.CACHE_MENU_LIST);
-				UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO);
+				Session session = UserUtils.getSession();
+				UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 			}
 		}
 		return REDIRECT + adminPath + "/index";
