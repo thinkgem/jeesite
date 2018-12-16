@@ -123,44 +123,44 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text('单行文本')}', name:'testInput', index:'a.test_input', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" data-title="${text('编辑数据')}">'+(val||row.id)+'</a>';
+		{header:'${text("单行文本")}', name:'testInput', index:'a.test_input', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'${text('多行文本')}', name:'testTextarea', index:'a.test_textarea', width:150, align:"left"},
-		{header:'${text('下拉框')}', name:'testSelect', index:'a.test_select', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text('未知')}', true);
+		{header:'${text("多行文本")}', name:'testTextarea', index:'a.test_textarea', width:150, align:"left"},
+		{header:'${text("下拉框")}', name:'testSelect', index:'a.test_select', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('下拉多选')}', name:'testSelectMultiple', index:'a.test_select_multiple', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text('未知')}', true);
+		{header:'${text("下拉多选")}', name:'testSelectMultiple', index:'a.test_select_multiple', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('单选框')}', name:'testRadio', index:'a.test_radio', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text('未知')}', true);
+		{header:'${text("单选框")}', name:'testRadio', index:'a.test_radio', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('复选框')}', name:'testCheckbox', index:'a.test_checkbox', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text('未知')}', true);
+		{header:'${text("复选框")}', name:'testCheckbox', index:'a.test_checkbox', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('日期选择')}', name:'testDate', index:'a.test_date', width:150, align:"center"},
-		{header:'${text('日期时间')}', name:'testDatetime', index:'a.test_datetime', width:150, align:"center"},
-		{header:'${text('用户选择')}', name:'testUser.userName', index:'a.test_user_code', width:150, align:"center"},
-		{header:'${text('机构选择')}', name:'testOffice.officeName', index:'a.test_office_code', width:150, align:"center"},
-		{header:'${text('区域选择')}', name:'testAreaName', index:'a.test_area_code', width:150, align:"center"},
-		{header:'${text('区域名称')}', name:'testAreaName', index:'a.test_area_name', width:150, align:"left"},
-		{header:'${text('状态')}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		{header:'${text("日期选择")}', name:'testDate', index:'a.test_date', width:150, align:"center"},
+		{header:'${text("日期时间")}', name:'testDatetime', index:'a.test_datetime', width:150, align:"center"},
+		{header:'${text("用户选择")}', name:'testUser.userName', index:'a.test_user_code', width:150, align:"center"},
+		{header:'${text("机构选择")}', name:'testOffice.officeName', index:'a.test_office_code', width:150, align:"center"},
+		{header:'${text("区域选择")}', name:'testAreaName', index:'a.test_area_code', width:150, align:"center"},
+		{header:'${text("区域名称")}', name:'testAreaName', index:'a.test_area_name', width:150, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
-		{header:'${text('备注信息')}', name:'remarks', index:'a.remarks', width:150, align:"left"},
-		{header:'${text('操作')}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('test:testData:edit')){ %>
-				actions.push('<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" title="${text('编辑数据')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/test/testData/disable?id='+row.id+'" class="btnList" title="${text('停用数据')}" data-confirm="${text('确认要停用该数据吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/test/testData/disable?id='+row.id+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
 				}
 				if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/test/testData/enable?id='+row.id+'" class="btnList" title="${text('启用数据')}" data-confirm="${text('确认要启用该数据吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/test/testData/enable?id='+row.id+'" class="btnList" title="${text("启用数据")}" data-confirm="${text("确认要启用该数据吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-				actions.push('<a href="${ctx}/test/testData/delete?id='+row.id+'" class="btnList" title="${text('删除数据')}" data-confirm="${text('确认要删除该数据吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/test/testData/delete?id='+row.id+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			<% } %>
 			return actions.join('');
 		}}

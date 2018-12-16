@@ -82,16 +82,16 @@ var selectData = ${isNotBlank(selectData!) ? selectData! : "{\}"},
 selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text('登录账号')}', name:'loginCode', index:'a.login_code', width:200, align:"center"},
-		{header:'${text('用户昵称')}', name:'userName', index:'a.user_name', width:200, align:"center"},
-		{header:'${text('员工姓名')}', name:'refName', index:'a.ref_name', width:200, align:"center"},
-		{header:'${text('归属机构')}', name:'employee.office.officeName', index:'o.office_name', width:200, align:"center"},
-		{header:'${text('归属公司')}', name:'employee.company.companyName', index:'c.company_name', width:200, align:"center"},
-		{header:'${text('电子邮箱')}', name:'email', index:'a.email', width:200, align:"center"},
-		{header:'${text('手机号码')}', name:'mobile', index:'a.mobile', width:200, align:"center"},
-		{header:'${text('办公电话')}', name:'phone', index:'a.phone', width:200, align:"center"},
-		{header:'${text('更新时间')}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
-		{header:'${text('状态')}', name:'status', index:'a.status', width:140, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center"},
+		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'${text("员工姓名")}', name:'refName', index:'a.ref_name', width:200, align:"center"},
+		{header:'${text("归属机构")}', name:'employee.office.officeName', index:'o.office_name', width:200, align:"center"},
+		{header:'${text("归属公司")}', name:'employee.company.companyName', index:'c.company_name', width:200, align:"center"},
+		{header:'${text("电子邮箱")}', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:140, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
 		{header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){

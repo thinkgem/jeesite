@@ -18,8 +18,8 @@ $('#dataGrid').dataGrid({
 			for(c in table.columnList){
 				if(c.attrName == table.treeViewNameAttrName){
 		%>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.${table.treeViewCodeAttrName}+' ) '+'<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" data-title="\${text('${isQueryTpl?'查看':'编辑'}${functionNameSimple}')}">'+(val||row.id)+'</a>';
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '( '+row.${table.treeViewCodeAttrName}+' ) '+'<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" data-title="\${text("${isQueryTpl?'查看':'编辑'}${functionNameSimple}")}">'+(val||row.id)+'</a>';
 		}},
 		<%
 					firstColumn = false;
@@ -41,55 +41,55 @@ $('#dataGrid').dataGrid({
 				else if(firstColumn){
 					firstColumn = false;
 		%>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" data-title="\${text('${isQueryTpl?'查看':'编辑'}${functionNameSimple}')}">'+(val||row.id)+'</a>';
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" data-title="\${text("${isQueryTpl?'查看':'编辑'}${functionNameSimple}")}">'+(val||row.id)+'</a>';
 		}},
 				<% }else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(\${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}, val, '\${text('未知')}', true);
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(\${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}, val, '\${text("未知")}', true);
 		}},
 				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},
 				<% }else{
 						if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')){
 				%>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center"},
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center"},
 				<%
 						}else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){
 				%>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"right", formatter: function(val, obj, row, act){
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"right", formatter: function(val, obj, row, act){
 			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
 		}},
 				<%
 						}else {
 				%>
-		{header:'\${text('${c.columnLabel}')}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left"},
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left"},
 				<%
 						}
 				}
 			}
 		}
 		%>
-		{header:'\${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'\${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(isQueryTpl){ %>
-			actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text('查看${functionNameSimple}')}"><i class="fa fa-file-text-o"></i></a>&nbsp;');
+			actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("查看${functionNameSimple}")}"><i class="fa fa-file-text-o"></i></a>&nbsp;');
 			<% }else{ %>
 			\<% if(hasPermi('${permissionPrefix}:edit')){ %>
-				actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text('编辑${functionNameSimple}')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("编辑${functionNameSimple}")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="\${ctx}/${urlPrefix}/disable?${idParam}" class="btnList" title="\${text('停用${functionNameSimple}')}" data-confirm="\${text('确认要停用该${functionNameSimple}吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="\${ctx}/${urlPrefix}/disable?${idParam}" class="btnList" title="\${text("停用${functionNameSimple}")}" data-confirm="\${text("确认要停用该${functionNameSimple}吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
 				}
 				if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="\${ctx}/${urlPrefix}/enable?${idParam}" class="btnList" title="\${text('启用${functionNameSimple}')}" data-confirm="\${text('确认要启用该${functionNameSimple}吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="\${ctx}/${urlPrefix}/enable?${idParam}" class="btnList" title="\${text("启用${functionNameSimple}")}" data-confirm="\${text("确认要启用该${functionNameSimple}吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				<% } %>
 				<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDelete'])){ %>
-				actions.push('<a href="\${ctx}/${urlPrefix}/delete?${idParam}" class="btnList" title="\${text('删除${functionNameSimple}')}" data-confirm="\${text('确认要删除该${functionNameSimple}<% if(table.isTreeEntity){ %>及所有子${functionNameSimple}<% } %>吗？')}"<% if(table.isTreeEntity){ %> data-deltreenode="'+row.id+'"<% } %>><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="\${ctx}/${urlPrefix}/delete?${idParam}" class="btnList" title="\${text("删除${functionNameSimple}")}" data-confirm="\${text("确认要删除该${functionNameSimple}<% if(table.isTreeEntity){ %>及所有子${functionNameSimple}<% } %>吗？")}"<% if(table.isTreeEntity){ %> data-deltreenode="'+row.id+'"<% } %>><i class="fa fa-trash-o"></i></a>&nbsp;');
 				<% } %>
 				<% if(table.isTreeEntity){ %>
-				actions.push('<a href="\${ctx}/${urlPrefix}/form?parentCode='+row.id+'" class="btnList" title="\${text('新增下级${functionNameSimple}')}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="\${ctx}/${urlPrefix}/form?parentCode='+row.id+'" class="btnList" title="\${text("新增下级${functionNameSimple}")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
 				<% } %>
 			\<% } %>
 			<% } %>
