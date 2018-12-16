@@ -73,7 +73,7 @@ for (c in child.columnList){
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d${isTime?' H:i:s':''}'},
 			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate${cssClass}', 'readonly':'true',
 				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});
+					WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:${c.isRequired != '1'}});
 				});
 			}}
 		},
@@ -133,6 +133,7 @@ for (c in child.columnList){
 <%
 	}
 }
+if (table.tplCategory != 'query'){
 %>
 		{header:'\${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
@@ -143,6 +144,9 @@ for (c in child.columnList){
 			}
 			return actions.join('');
 		}, editoptions: {defaultValue: 'new'}}
+<% }else{ %>
+		{header:'\${text('操作')}', name:'actions', hidden: true}
+<% } %>
 	],
 	
 	// 编辑表格参数
