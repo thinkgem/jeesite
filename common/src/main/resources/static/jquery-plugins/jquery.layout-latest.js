@@ -2610,7 +2610,13 @@ $.fn.layout = function (opts) {
 			}
 			// ensure no vertical scrollbar on pane - will mess up measurements
 			if ($P.css("overflowX").match(/(scroll|auto)/)) {
-				$P.css("overflow", "hidden");
+				// $P.css("overflow", "hidden");
+				// 优化IOS下iframe不支持滚动的问题   ThinkGem
+				if (navigator.userAgent.match(/iPad|iPhone/i) && $P.find('iframe').length > 0) {
+					$P.addClass('iframe-ios');
+				}else{
+					$P.css("overflow", "hidden");
+				}
 			}
 			state[pane].content = {}; // init content state
 			if (resize !== false) sizeContent(pane);
