@@ -23,7 +23,7 @@
 	<%-->*/%>
 	<ul class="sidebar-menu" data-widget="tree">
 		<%/*<!--%>
-		<% var menuSysCode = @UserUtils.getLoginInfo().getParam('sysCode', 'default'); %>
+		<% var menuSysCode = @ObjectUtils.toStringIgnoreNull(session.sysCode, 'default'); %>
 		<li class="header">${@DictUtils.getDictLabel('sys_menu_sys_code', menuSysCode, '')}</li>
 		<%-->*/%>
 		<% 

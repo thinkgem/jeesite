@@ -60,7 +60,7 @@ public class TestDataController extends BaseController {
 	@ResponseBody
 	public Page<TestData> listData(TestData testData, HttpServletRequest request, HttpServletResponse response) {
 		testData.setPage(new Page<>(request, response));
-		Page<TestData> page = testDataService.findPage(testData); 
+		Page<TestData> page = testDataService.findPage(testData);
 		return page;
 	}
 

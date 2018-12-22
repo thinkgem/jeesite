@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.1-SNAPSHOT</version>
+		<version>4.1.2-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -149,6 +149,12 @@
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
 			<version>${thumbnailator.version}</version>
+		</dependency>
+		<!-- 支持CMYK图片 -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-jpeg</artifactId>
+			<version>${twelvemonkeys.version}</version>
 		</dependency>
 		<!-- 图片验证码生成  -->
 		<dependency>

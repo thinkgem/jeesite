@@ -20,7 +20,7 @@
 		<% if(user.superAdmin){ %>
 			<li class="divider"></li>
 			<li class="dropdown-header mb5">${text('系统切换')}：</li>
-			<% var menuSysCode = @UserUtils.getLoginInfo().getParam('sysCode', 'default'); %>
+			<% var menuSysCode = @ObjectUtils.toStringIgnoreNull(session.sysCode, 'default'); %>
 			<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
 				<li>
 					<a href="${ctx}/switch/${dict.dictValue}">

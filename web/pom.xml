@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.1-SNAPSHOT</version>
+		<version>4.1.2-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -37,10 +37,17 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 在线文档 -->
+		<!-- 在线API文档 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- Office在线预览 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-weboffice</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
@@ -82,8 +89,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes></packagingExcludes>
-					<warSourceExcludes></warSourceExcludes>
+					<!-- <packagingExcludes></packagingExcludes>
+					<warSourceExcludes></warSourceExcludes> -->
 					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 					<warName>${finalName}</warName>
 					<archive>
@@ -124,41 +131,25 @@
 	</organization>
 	
 	<repositories>
-		
 		<repository>
 			<id>aliyun-repos</id>
-			<name>Aliyun Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<url>https://maven.aliyun.com/repository/public</url>
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
-		<repository>
-			<id>sonatype-repos</id>
-			<name>Sonatype Repository</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
-			<releases><enabled>true</enabled></releases>
-			<snapshots><enabled>false</enabled></snapshots>
-		</repository>
-		<repository>
+        <repository>
 		    <id>sonatype-repos-s</id>
 			<name>Sonatype Repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<releases><enabled>false</enabled></releases>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
-		
 	</repositories>
-	
 	<pluginRepositories>
-		
 		<pluginRepository>
 			<id>aliyun-repos</id>
-			<name>Aliyun Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
-			<releases><enabled>true</enabled></releases>
-			<snapshots><enabled>false</enabled></snapshots>
+			<url>https://maven.aliyun.com/repository/public</url>
 		</pluginRepository>
-		
 	</pluginRepositories>
 	
 </project>

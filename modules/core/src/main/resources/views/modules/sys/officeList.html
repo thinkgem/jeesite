@@ -64,31 +64,31 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text('机构名称')}', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="${text('编辑机构')}">'+(val||row.id)+'</a>';
+		{header:'${text("机构名称")}', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="${text("编辑机构")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'${text('机构全称')}', name:'fullName', index:'a.full_name', width:200, align:"left"},
-		{header:'${text('排序号')}', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
-		{header:'${text('机构类型')}', name:'officeType', index:'a.office_type', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_office_type')}, val, '${text('未知')}', true);
+		{header:'${text("机构全称")}', name:'fullName', index:'a.full_name', width:200, align:"left"},
+		{header:'${text("排序号")}', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
+		{header:'${text("机构类型")}', name:'officeType', index:'a.office_type', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_office_type')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('更新时间')}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
-		{header:'${text('备注信息')}', name:'remarks', index:'a.remarks', width:200, align:"left"},
-		{header:'${text('状态')}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '${text('未知')}', true);
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text('操作')}', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:office:edit')){ %>
-				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="${text('编辑机构')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="${text("编辑机构")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="${text('停用机构')}" data-confirm="${text('确认要停用该机构吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="${text("停用机构")}" data-confirm="${text("确认要停用该机构吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
 				}
 				if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="${text('启用机构')}" data-confirm="${text('确认要启用该机构吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="${text("启用机构")}" data-confirm="${text("确认要启用该机构吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-				actions.push('<a href="${ctx}/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="${text('删除机构')}" data-confirm="${text('确认要删除该机构及所有子机构吗？')}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/sys/office/form?parentCode='+row.id+'" class="btnList" title="${text('新增下级机构')}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="${text("删除机构")}" data-confirm="${text("确认要删除该机构及所有子机构吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/office/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级机构")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
 			<% } %>
 			return actions.join('');
 		}}

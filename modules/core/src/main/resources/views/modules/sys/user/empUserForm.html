@@ -198,8 +198,7 @@
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		<% if(op == 'add' || op == 'auth') {%>
-		// 获取选中角色
+		<% if(op == 'add' || op == 'auth') { // 获取选中角色  %>
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
 		<% } %>
 		js.ajaxSubmitForm($(form), function(data){
@@ -221,8 +220,8 @@ var roleGrid = $("#roleGrid").dataGrid({
 		{name:'ctrlPermi',value:'2'}
 	],
 	columnModel: [
-		{header:'${text('角色名称')}', name:'name', sortable:false, width:100, align:"center"},
-		{header:'${text('角色编码')}', name:'id', sortable:false, width:100, align:"center"}  
+		{header:'${text("角色名称")}', name:'name', sortable:false, width:100, align:"center"},
+		{header:'${text("角色编码")}', name:'id', sortable:false, width:100, align:"center"}  
 	],
 	showCheckbox: true,
 	autoGridHeight: function(){

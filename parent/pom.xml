@@ -11,7 +11,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>4.1.1-SNAPSHOT</version>
+	<version>4.1.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Parent</name>
@@ -34,6 +34,7 @@
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<metadata-extractor.version>2.11.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<twelvemonkeys.version>3.4.1</twelvemonkeys.version>
 		<blade-patchca.version>1.1.0</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.3.2</zxing.version>
@@ -92,7 +93,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
+					<!-- <encoding>${project.build.sourceEncoding}</encoding> -->
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
@@ -298,41 +299,25 @@
 	</organization>
 	
 	<repositories>
-		
 		<repository>
 			<id>aliyun-repos</id>
-			<name>Aliyun Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<url>https://maven.aliyun.com/repository/public</url>
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
-		<repository>
-			<id>sonatype-repos</id>
-			<name>Sonatype Repository</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
-			<releases><enabled>true</enabled></releases>
-			<snapshots><enabled>false</enabled></snapshots>
-		</repository>
-		<repository>
-			<id>sonatype-repos-s</id>
+        <repository>
+		    <id>sonatype-repos-s</id>
 			<name>Sonatype Repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<releases><enabled>false</enabled></releases>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
-		
 	</repositories>
-	
 	<pluginRepositories>
-		
 		<pluginRepository>
 			<id>aliyun-repos</id>
-			<name>Aliyun Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
-			<releases><enabled>true</enabled></releases>
-			<snapshots><enabled>false</enabled></snapshots>
+			<url>https://maven.aliyun.com/repository/public</url>
 		</pluginRepository>
-		
 	</pluginRepositories>
 	
 	<profiles>
@@ -342,7 +327,6 @@
 			<id>javadoc</id>
 			<build>
 				<plugins>
-					<!-- Java Document Generate -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
@@ -356,7 +340,6 @@
 			<id>package</id>
 			<build>
 				<plugins>
-					<!-- YUI Compressor (CSS/JS压缩) -->
 					<plugin>
 						<groupId>net.alchim31.maven</groupId>
 						<artifactId>yuicompressor-maven-plugin</artifactId>
@@ -370,7 +353,6 @@
 			<id>deploy</id>
 			<build>
 				<plugins>
-					<!-- YUI Compressor (CSS/JS压缩) -->
 					<plugin>
 						<groupId>net.alchim31.maven</groupId>
 						<artifactId>yuicompressor-maven-plugin</artifactId>
@@ -378,10 +360,6 @@
 				</plugins>
 			</build>
 			<distributionManagement>
-				<repository>
-					<id>sonatype-repos</id>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-				</repository>
 				<snapshotRepository>
 					<id>sonatype-repos-s</id>
 					<url>https://oss.sonatype.org/content/repositories/snapshots</url>

@@ -8,7 +8,6 @@ import java.util.List;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +33,6 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Service
 @Transactional(readOnly=true)
 public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		implements EmpUserService{

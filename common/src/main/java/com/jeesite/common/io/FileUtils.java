@@ -44,6 +44,7 @@ import net.sf.jmimemagic.MagicMatch;
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
+	private static MimetypesFileTypeMap mimetypesFileTypeMap;
 	
 	/**
 	 * 复制单个文件，如果目标文件存在，则不覆盖
@@ -654,7 +655,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 返回文件类型
 	 */
 	public static String getContentType(String fileName) {
-		return new MimetypesFileTypeMap().getContentType(fileName);
+		if (mimetypesFileTypeMap == null){
+			mimetypesFileTypeMap = new MimetypesFileTypeMap();
+		}
+		return mimetypesFileTypeMap.getContentType(fileName);
 	}
 	
 	/**

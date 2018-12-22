@@ -92,7 +92,7 @@
 								<span class="required hide">*</span> ${text('日期时间')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate"
-									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:true});"/>
 							</div>
 						</div>
 					</div>
@@ -154,7 +154,7 @@
 							<label class="control-label col-sm-2">${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
-									uploadType="image" class="" readonly="false"/>
+									uploadType="image" class="" readonly="false" preview="weboffice"/>
 							</div>
 						</div>
 					</div>
@@ -165,7 +165,7 @@
 							<label class="control-label col-sm-2">${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
-									uploadType="all" class="" readonly="false"/>
+									uploadType="all" class="" readonly="false" preview="weboffice"/>
 							</div>
 						</div>
 					</div>
@@ -204,11 +204,11 @@ $("#testDataChildDataGrid").dataGrid({
 	columnModel: [
 		{header:'状态', name:'status', editable:true, hidden:true},
 		{header:'主键', name:'id', editable:true, hidden:true},
-		{header:'${text('排序号')}', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
-		{header:'${text('父表主键')}', name:'testData.id', editable:true, hidden:true},
-		{header:'${text('单行文本')}', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text('多行文本')}', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
-		{header:'${text('下拉框')}', name:'testSelect', width:100, 
+		{header:'${text("排序号")}', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
+		{header:'${text("父表主键")}', name:'testData.id', editable:true, hidden:true},
+		{header:'${text("单行文本")}', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("多行文本")}', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
+		{header:'${text("下拉框")}', name:'testSelect', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -216,7 +216,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('下拉多选')}', name:'testSelectMultiple', width:100, 
+		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:100, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -224,7 +224,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('单选框')}', name:'testRadio', width:100, 
+		{header:'${text("单选框")}', name:'testRadio', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -232,7 +232,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('复选框')}', name:'testCheckbox', width:100, 
+		{header:'${text("复选框")}', name:'testCheckbox', width:100, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -240,23 +240,23 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('日期选择')}', name:'testDate', width:150, 
+		{header:'${text("日期选择")}', name:'testDate', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
 			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate', 'readonly':'true',
 				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
+					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});
 				});
 			}}
 		},
-		{header:'${text('日期时间')}', name:'testDatetime', width:150, 
+		{header:'${text("日期时间")}', name:'testDatetime', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
 			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate', 'readonly':'true',
 				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});
+					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:true});
 				});
 			}}
 		},
-		{header:'${text('用户选择')}', name:'testUser', width:150,
+		{header:'${text("用户选择")}', name:'testUser', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
 			}, editable: true, edittype: "custom", editoptions: {
@@ -270,7 +270,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('机构选择')}', name:'testOffice', width:150,
+		{header:'${text("机构选择")}', name:'testOffice', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
 			}, editable: true, edittype: "custom", editoptions: {
@@ -284,7 +284,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('区域选择')}', name:'testAreaCode', width:150,
+		{header:'${text("区域选择")}', name:'testAreaCode', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
 			}, editable: true, edittype: "custom", editoptions: {
@@ -298,12 +298,12 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text('操作')}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
-				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}else{
-				actions.push('<a href="#" onclick="js.confirm(\'${text('你确认要删除这条数据吗？')}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}
 			return actions.join('');
 		}, editoptions: {defaultValue: 'new'}}

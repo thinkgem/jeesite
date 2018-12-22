@@ -334,14 +334,11 @@ public class LoginController extends BaseController{
 	@RequiresPermissions("user")
 	@RequestMapping(value = "switch/{sysCode}")
 	public String switchSys(@PathVariable String sysCode) {
-		LoginInfo principal = UserUtils.getLoginInfo();
-		User user = UserUtils.get(principal.getId());
+		User user = UserUtils.getUser();
 		if (user.isSuperAdmin() && StringUtils.isNotBlank(sysCode)){
-			if (!StringUtils.equals(principal.getParam("sysCode"), sysCode)){
-				principal.setParam("sysCode", sysCode);
-				UserUtils.removeCacheByKeyPrefix(UserUtils.CACHE_MENU_LIST);
-				UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO);
-			}
+			Session session = UserUtils.getSession();
+			session.setAttribute("sysCode", sysCode);
+			UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		}
 		return REDIRECT + adminPath + "/index";
 	}

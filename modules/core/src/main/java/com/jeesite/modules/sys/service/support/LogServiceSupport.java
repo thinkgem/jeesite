@@ -3,7 +3,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,6 @@ import com.jeesite.modules.sys.service.LogService;
  * @author ThinkGem
  * @version 2014-05-16
  */
-@Service
 @Transactional(readOnly=true)
 public class LogServiceSupport extends CrudService<LogDao, Log>
 		implements LogService{

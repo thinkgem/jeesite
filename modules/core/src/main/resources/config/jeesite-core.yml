@@ -25,22 +25,24 @@ jdbc:
     # 最大连接数
     maxActive: 20
     
-    # 获取连接等待超时时间，单位毫秒（4.0.6+）
+    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
     maxWait: 60000
     
-    # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个。（4.0.6+）
+    # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
     testOnBorrow: false
     testOnReturn: false
     
-    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（4.0.6+）
+    # 间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒（1分钟）（4.0.6+）
     timeBetweenEvictionRunsMillis: 60000
     
-    # 一个连接在池中最小生存的时间，单位毫秒（4.0.6+）
-    minEvictableIdleTimeMillis: 300000
+    # 一个连接在池中最小空闲的时间，单位毫秒（20分钟）（4.0.6+）
+    minEvictableIdleTimeMillis: 1200000
+    # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
+    maxEvictableIdleTimeMillis: 1800000
     
-    # 配置是否自动回收超时连接，超时时间，单位秒 （4.0.6+）
+    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
     removeAbandoned: true
-    removeAbandonedTimeout: 1800
+    removeAbandonedTimeout: 2100
 
   # JTA 分布式事务（v4.0.4+）
   jta:
@@ -98,11 +100,11 @@ user:
   # 系统管理员角色编号（客户方管理员使用的角色）
   corpAdminRoleCode: corpAdmin
 
-  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...）
-  # JSON格式说明：{"用户类型":{"dao":"Dao的Bean名称","loginView":"登录视图","indexView":"主页框架面视图"}}
+  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...），JSON 格式说明如下：
+  # {"用户类型":{"dao":"Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
   userTypeMap: >
     {
-      "employee":{"dao":"employeeDao","loginView":"","indexView":""},
+      "employee":{"dao":"employeeDao","loginView":"","indexView":"modules/sys/sysIndex"},
       "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
       "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
       "persion":{"dao":"persionDao","loginView":"","indexView":"modules/sys/sysIndexPersion"},
@@ -310,6 +312,9 @@ shiro:
   # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
   isAllowMultiAddrLogin: true
   
+  # 是否允许多账号多设备登录，如果设置为false，其它地点登录的相同账号全部登录设备将被踢下线
+  isAllowMultiDeviceLogin: true
+  
   # 是否允许刷新主框架页，如果设置为false，刷新主页将导致重新登录。如安全性比较高的，如银行个人首页不允许刷新。
   isAllowRefreshIndex: true
   
@@ -485,8 +490,21 @@ file:
 #    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 #    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
 
-  # 是否已文件流方式下载
-  isFileStreamDown: false
+  # 是否用文件流方式下载（支持断点续传）
+  isFileStreamDown: true
+  
+# 视频转码
+video:
+
+  # 视频格式转换  ffmpeg.exe 所放的路径
+  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
+#  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
+  
+  # 视频格式转换  mencoder.exe 所放的路径
+  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
+  
+  # 将mp4视频的元数据信息转到视频第一帧
+  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
   
 #======================================#
 #========== Message settings ==========#
@@ -542,18 +560,3 @@ msg:
     oauth:
       redirectUri: http://demo.jeesite.com/js
 
-#======================================#
-#========== Video settings ============#
-#======================================#
-
-video:
-
-  # 视频格式转换  ffmpeg.exe 所放的路径
-  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
-#  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
-  
-  # 视频格式转换  mencoder.exe 所放的路径
-  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
-  
-  # 将mp4视频的元数据信息转到视频第一帧
-  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe

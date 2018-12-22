@@ -131,7 +131,7 @@
 									var isTime = (c.showType == 'datetime');
 							%>
 								<${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate${cssClass}"
-									dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});"/>
+									dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:${c.isRequired != '1'}});"/>
 							<%
 								} else if (c.showType == 'userselect') {
 							%>

@@ -224,7 +224,9 @@ public class PropertiesUtils {
 		if (new File(classesLogPath).exists()){
 			logPath = classesLogPath;
 		}
-		System.setProperty("logPath", FileUtils.path(logPath));
+		if (StringUtils.isBlank(System.getProperty("logPath"))){
+			System.setProperty("logPath", FileUtils.path(logPath));
+		}
 		return LoggerFactory.getLogger(PropertiesUtils.class);
 	}
 	

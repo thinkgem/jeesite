@@ -22,9 +22,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -112,105 +110,9 @@ public class ${ClassName}Controller extends BaseController {
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "form")
 	public String form(${ClassName} ${className}, Model model) {
-		<% if(table.isTreeEntity){ %>
-		// 创建并初始化下一个节点信息
-		${className} = createNextNode(${className});
-		<% } %>
 		model.addAttribute("${className}", ${className});
 		return "${lastPackageName}/${viewPrefix}Form";
 	}
-	<% if(table.isTreeEntity){ %>
-	
-	/**
-	 * 创建并初始化下一个节点信息，如：排序号、默认值
-	 */
-	@RequiresPermissions("${permissionPrefix}:edit")
-	@RequestMapping(value = "createNextNode")
-	@ResponseBody
-	public ${ClassName} createNextNode(${ClassName} ${className}) {
-		if (StringUtils.isNotBlank(${className}.getParentCode())){
-			${className}.setParent(${className}Service.get(${className}.getParentCode()));
-		}
-		if (${className}.getIsNewRecord()) {
-			${ClassName} where = new ${ClassName}();
-			where.setParentCode(${className}.getParentCode());
-			${ClassName} last = ${className}Service.getLastByParentCode(where);
-			// 获取到下级最后一个节点
-			if (last != null){
-				${className}.setTreeSort(last.getTreeSort() + 30);
-				<% if(table.isPkCustom){ %>
-				${className}.set${@StringUtils.cap(table.treeViewCodeAttrName)}(IdGen.nextCode(last.get${@StringUtils.cap(table.treeViewCodeAttrName)}()));
-			}else if (${className}.getParent() != null){
-				${className}.set${@StringUtils.cap(table.treeViewCodeAttrName)}(${className}.getParent().get${@StringUtils.cap(table.treeViewCodeAttrName)}() + "001");
-				<% } %>
-			}
-		}
-		// 以下设置表单默认数据
-		if (${className}.getTreeSort() == null){
-			${className}.setTreeSort(${ClassName}.DEFAULT_TREE_SORT);
-		}
-		return ${className};
-	}
-	<% } %>
-
-	/**
-	 * 保存${functionNameSimple}
-	 */
-	@RequiresPermissions("${permissionPrefix}:edit")
-	@PostMapping(value = "save")
-	@ResponseBody
-	public String save(@Validated ${ClassName} ${className}) {
-		${className}Service.save(${className});
-		return renderResult(Global.TRUE, text("保存${functionNameSimple}成功！"));
-	}
-	<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
-	
-	/**
-	 * 停用${functionNameSimple}
-	 */
-	@RequiresPermissions("${permissionPrefix}:edit")
-	@RequestMapping(value = "disable")
-	@ResponseBody
-	public String disable(${ClassName} ${className}) {
-		<% if(table.isTreeEntity){ %>
-		${ClassName} where = new ${ClassName}();
-		where.setStatus(${ClassName}.STATUS_NORMAL);
-		where.setParentCodes("," + ${className}.getId() + ",");
-		long count = ${className}Service.findCount(where);
-		if (count > 0) {
-			return renderResult(Global.FALSE, text("该${functionNameSimple}包含未停用的子${functionNameSimple}！"));
-		}
-		<% } %>
-		${className}.setStatus(${ClassName}.STATUS_DISABLE);
-		${className}Service.updateStatus(${className});
-		return renderResult(Global.TRUE, text("停用${functionNameSimple}成功"));
-	}
-	
-	/**
-	 * 启用${functionNameSimple}
-	 */
-	@RequiresPermissions("${permissionPrefix}:edit")
-	@RequestMapping(value = "enable")
-	@ResponseBody
-	public String enable(${ClassName} ${className}) {
-		${className}.setStatus(${ClassName}.STATUS_NORMAL);
-		${className}Service.updateStatus(${className});
-		return renderResult(Global.TRUE, text("启用${functionNameSimple}成功"));
-	}
-	<% } %>
-	<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDelete'])){ %>
-	
-	/**
-	 * 删除${functionNameSimple}
-	 */
-	@RequiresPermissions("${permissionPrefix}:edit")
-	@RequestMapping(value = "delete")
-	@ResponseBody
-	public String delete(${ClassName} ${className}) {
-		${className}Service.delete(${className});
-		return renderResult(Global.TRUE, text("删除${functionNameSimple}成功！"));
-	}
-	<% } %>
 	<% if(table.isTreeEntity){ %>
 	
 	/**
@@ -247,20 +149,6 @@ public class ${ClassName}Controller extends BaseController {
 			mapList.add(map);
 		}
 		return mapList;
-	}
-
-	/**
-	 * 修复表结构相关数据
-	 */
-	@RequiresPermissions("${permissionPrefix}:edit")
-	@RequestMapping(value = "fixTreeData")
-	@ResponseBody
-	public String fixTreeData(${ClassName} ${className}){
-		if (!UserUtils.getUser().isAdmin()){
-			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
-		}
-		${className}Service.fixTreeData();
-		return renderResult(Global.TRUE, "数据修复成功");
 	}
 	<% } %>
 	
