@@ -23,6 +23,7 @@
 	<logger name="com.jeesite" level="DEBUG" />
 	<logger name="com.jeesite.common.i18n" level="INFO" />
 	<logger name="com.jeesite.common.shiro" level="INFO" />
+	<logger name="com.jeesite.common.cache" level="INFO" />
 	<logger name="com.jeesite.common.j2cache" level="INFO" />
 	<logger name="com.jeesite.common.mybatis" level="INFO" />
 	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
