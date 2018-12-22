@@ -3,15 +3,21 @@
 
 	<!-- Log file path -->
 	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
-	
+
+	<!-- 彩色日志 -->
+	<!-- 彩色日志依赖的渲染类 -->
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{MM-dd HH:mm:ss.SSS} %-5level [%logger{50}] - %msg%n</pattern>
+			<pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %-5level %clr([%logger{50}]) - %msg%n</pattern>
 		</encoder>
 	</appender>
 
-	<!-- Log file debug output -->
+	<!-- Log file debug output dsf-->
 	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${log.path}/debug.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -44,18 +50,18 @@
 			<level>ERROR</level>
 		</filter>
 	</appender>
-	
+
 	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
 	<root level="WARN">
 		<appender-ref ref="console" />
 		<appender-ref ref="debug" />
 		<appender-ref ref="error" />
 	</root>
-	
+
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
-	
+
 	<!-- Project level setting -->
-<!-- 	<logger name="your.package" level="DEBUG" /> -->
-	
+	<!-- 	<logger name="your.package" level="DEBUG" /> -->
+
 </configuration>
