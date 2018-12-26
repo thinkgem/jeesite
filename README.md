@@ -123,7 +123,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 * QQ 群号： `127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`183903863(外包)`
 * GitHub：<https://github.com/thinkgem/jeesite>
-* 开源中国：<http://git.oschina.net/thinkgem/jeesite>
+* 开源中国：<https://gitee.com/thinkgem/jeesite>
 * 官方网址：<http://jeesite.com>  论坛：<http://www.jeesite.net>
 * 支持JeeSite发展：（加我好友）支付宝：thinkgem@163.com &nbsp; 微信：thinkgem
 
