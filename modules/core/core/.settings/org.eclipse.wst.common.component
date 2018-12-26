@@ -4,16 +4,16 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="jeesite-cloud-module-core-rest-4.1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-core-rest/jeesite-cloud-module-core-rest">
+        <dependent-module archiveName="jeesite-cloud-module-core-rest-4.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-core-rest/jeesite-cloud-module-core-rest">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-cloud-module-core-client-4.1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-core-client/jeesite-cloud-module-core-client">
+        <dependent-module archiveName="jeesite-cloud-module-core-client-4.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-core-client/jeesite-cloud-module-core-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-cloud-module-test1-client-4.1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-test1-client/jeesite-cloud-module-test1-client">
+        <dependent-module archiveName="jeesite-cloud-module-test1-client-4.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-test1-client/jeesite-cloud-module-test1-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-cloud-module-feign-4.1.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-feign/jeesite-cloud-module-feign">
+        <dependent-module archiveName="jeesite-cloud-module-feign-4.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-feign/jeesite-cloud-module-feign">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="web"/>
