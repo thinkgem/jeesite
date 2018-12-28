@@ -505,7 +505,7 @@ CREATE TABLE js_sys_msg_inner_record
 	msg_inner_id varchar(64) NOT NULL COMMENT '所属消息',
 	receive_user_code varchar(64) COMMENT '接受者用户编码',
 	receive_user_name varchar(100) NOT NULL COMMENT '接受者用户姓名',
-	read_status char(1) NOT NULL COMMENT '读取状态（0未送达 1未读 2已读）',
+	read_status char(1) NOT NULL COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '阅读时间',
 	is_star char(1) COMMENT '是否标星',
 	PRIMARY KEY (id)
@@ -535,7 +535,7 @@ CREATE TABLE js_sys_msg_push
 	push_return_content text COMMENT '推送返回的内容信息',
 	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
 	push_date datetime COMMENT '推送时间',
-	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
+	read_status char(1) COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '读取时间',
 	PRIMARY KEY (id)
 ) COMMENT = '消息推送表';
@@ -564,7 +564,7 @@ CREATE TABLE js_sys_msg_pushed
 	push_return_msg_id varchar(200) COMMENT '推送返回消息编号',
 	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
 	push_date datetime COMMENT '推送时间',
-	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
+	read_status char(1) COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '读取时间',
 	PRIMARY KEY (id)
 ) COMMENT = '消息已推送表';

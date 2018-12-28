@@ -3059,7 +3059,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description>推送成功后，如短信、微信、邮件没有回调，则自动设置为已读状态。有回调的，如PC通知，手机通知，设置为未读状态</description>
-			<logical_name>读取状态（0未送达 1未读 2已读）</logical_name>
+			<logical_name>读取状态（0未送达 1已读 2未读）</logical_name>
 			<physical_name>read_status</physical_name>
 			<type>character(n)</type>
 		</word>
