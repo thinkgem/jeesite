@@ -18,11 +18,11 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 * 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
-* 核心项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
-* 测试模块1：
+* 核心模块（统一授权认证）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
+* 测试模块1（单表增删改查示例）：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
     - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
-* 测试模块2：
+* 测试模块2（树表增删改查示例）：
     - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
     - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
 
@@ -70,7 +70,7 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
     需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
 5. 本项目仅用于学习和交流，未得到官方授权不得用于商业用途。
 
-### 获得技术服务支持：<http://jeesite4.mydoc.io/?t=267685>
+### 获得技术服务支持：<http://s.jeesite.com>
 
 * 随着JeeSite发展，我们也需要有相应的资金支持才能持续的开发和维护。支持我们，您可以得到一些回报，我们有了这些也会把开源事业做的更好，请给我们一些动力吧，谢谢您的支持！
 
