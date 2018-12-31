@@ -138,12 +138,12 @@
 			<version>${UserAgentUtils.version}</version>
 		</dependency>
 		
-		<!-- 图片Meta获取 -->
+		<!-- 图片Meta获取
 		<dependency>
 			<groupId>com.drewnoakes</groupId>
 			<artifactId>metadata-extractor</artifactId>
 			<version>${metadata-extractor.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- 缩略图工具  -->
 		<dependency>
 			<groupId>net.coobird</groupId>
