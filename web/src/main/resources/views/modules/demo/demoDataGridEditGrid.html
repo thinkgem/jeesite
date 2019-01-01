@@ -204,6 +204,22 @@ $('#dataGrid').dataGrid({
 				}
 			}
 		},
+		{header:'列表选择', name:'testListSelect', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testListSelectCode')+'|'+js.val(row, 'testListSelectName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('listselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户选择', 
+						name: 'testListSelectCode', value: val.split('|')[0], 
+						labelName: 'testListSelectName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/empUser/empUserSelect', 
+						itemCode: 'userCode', itemName: 'userName',
+						cssClass: ''
+					});
+				}
+			}
+		},
 		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
@@ -234,5 +250,11 @@ $('#dataGrid').dataGrid({
 <script id="treeselectTpl" type="text/template">//<!--<div>
 <#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
+<script id="listselectTpl" type="text/template">//<!--<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"
 	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
 </div>//--></script>
