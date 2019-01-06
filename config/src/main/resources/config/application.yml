@@ -31,7 +31,7 @@ eureka:
   # 客户端设置
   client:
     # 注册中心地址（集群时指定另外一个注册中心地址）
-    serviceUrl.defaultZone: http://${eureka.instance.hostname}:8970/eureka/
+    serviceUrl.defaultZone: http://127.0.0.1:8970/eureka/
 
 #======================================#
 #========== Spring settings ===========#
