@@ -210,4 +210,14 @@ public class StorageManager {
 
 		return new BaseState(true);
 	}
+	
+	/**
+	 * UEditor上传文件成功后调用事件
+	 * @param physicalPath 上传文件实际路径
+	 * @param storageState.url 返回到客户端的文件访问地址
+	 */
+	public static void uploadFileSuccess(String physicalPath, State storageState){
+		
+	}
+	
 }

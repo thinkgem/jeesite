@@ -39,6 +39,9 @@ public final class Base64Uploader {
 			storageState.putInfo("url", ctx + PathFormat.format(savePath));
 			storageState.putInfo("type", suffix);
 			storageState.putInfo("original", "");
+			
+			// UEditor上传文件成功后调用事件
+			StorageManager.uploadFileSuccess(physicalPath, storageState);
 		}
 
 		return storageState;

@@ -1,27 +1,20 @@
 package com.jeesite.common.media;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.image.ImageUtils;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.io.PropertiesUtils;
-import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
-
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.Thumbnails.Builder;
 
 /**
  * 视频工具类
@@ -114,34 +107,11 @@ public class VideoUtils {
 			try {
 				File imgfile = new File(imgFile);
 				if (imgfile.exists()){
-					// 过滤掉gif图片，因为gif图片转换后会出现黑色背景的情况（gif基本也没有比较大的图片）。
-					if (!StringUtils.inString(FileUtils.getFileExtension(imgFile), "gif")){
-						Integer w = 800;
-						Integer h = 600;
-						if (StringUtils.isNotBlank(width)){
-							w = ObjectUtils.toInteger(width);
-						}
-						if (StringUtils.isNotBlank(height)){
-							h = ObjectUtils.toInteger(height);
-						}
-						Builder<File> file = Thumbnails.of(imgFile);
-						BufferedImage bufferedImage = ImageIO.read(imgfile);
-						if (bufferedImage.getWidth() <= w){
-							file.width(bufferedImage.getWidth());
-						}else{
-							file.width(w);
-						}
-						if (bufferedImage.getHeight() <= h){
-							file.height(bufferedImage.getHeight());
-						}else{
-							file.height(h);
-						}
-						file.toFile(imgFile);
-					}
+					ImageUtils.thumbnails(imgfile, 800, 600, null);
 				}else{
 					statusTemp = false;
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				statusTemp = false;
 				log.error("视频剪切图片失败", e);
 			}

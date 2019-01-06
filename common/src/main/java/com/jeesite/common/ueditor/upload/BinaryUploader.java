@@ -1,6 +1,5 @@
 package com.jeesite.common.ueditor.upload;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItemIterator;
@@ -20,8 +18,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.jeesite.common.image.ImageUtils;
 import com.jeesite.common.io.FileUtils;
-import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.media.VideoUtils;
 import com.jeesite.common.ueditor.PathFormat;
 import com.jeesite.common.ueditor.define.ActionMap;
@@ -29,9 +27,6 @@ import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
 import com.jeesite.common.ueditor.define.FileType;
 import com.jeesite.common.ueditor.define.State;
-
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.Thumbnails.Builder;
 
 public class BinaryUploader {
 
@@ -114,21 +109,8 @@ public class BinaryUploader {
 					
 					// 如果开启了压缩图片
 					if ((Boolean)conf.get("imageCompressEnable")){
-						Integer width = (Integer)conf.get("imageCompressBorder");
-						// 过滤掉gif图片，因为gif图片转换后会出现黑色背景的情况（gif基本也没有比较大的图片）。
-						if (StringUtils.inString(FileUtils.getFileExtension(physicalPath),
-								"png","jpg","jpeg","bmp","ico")){
-							BufferedImage bufferedImage = ImageIO.read(new File(physicalPath));
-							Builder<BufferedImage> file = Thumbnails.of(bufferedImage);
-							if (bufferedImage != null){
-								if (bufferedImage.getWidth() <= width){
-									file.width(bufferedImage.getWidth());
-								}else{
-									file.width(width);
-								}
-								file.toFile(physicalPath);
-							}
-						}
+						Integer maxWidth = (Integer)conf.get("imageCompressBorder");
+						ImageUtils.thumbnails(new File(physicalPath), maxWidth, -1, null);
 					}
 					
 				}
@@ -153,12 +135,19 @@ public class BinaryUploader {
 						storageState.putInfo("url", ctx + PathFormat.format(savePath) + "." + v.getOutputFileExtension());
 						storageState.putInfo("type", "." + v.getOutputFileExtension());
 						storageState.putInfo("original", originFileName +"."+ v.getInputFileExtension());
+						
+						// Ueditor编辑器上传文件完成后调用事件
+						StorageManager.uploadFileSuccess(physicalPath, storageState);
+						
 						return storageState;
 					}
 				}
 				storageState.putInfo("url", ctx + PathFormat.format(savePath));
 				storageState.putInfo("type", suffix);
 				storageState.putInfo("original", originFileName + suffix);
+				
+				// UEditor上传文件成功后调用事件
+				StorageManager.uploadFileSuccess(physicalPath, storageState);
 			}
 
 			return storageState;
