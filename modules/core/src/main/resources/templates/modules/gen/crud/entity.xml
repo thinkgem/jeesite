@@ -31,41 +31,41 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		<%
 		var isBase = false, isData = false,
 			isTree = false, isExtend = false;
-		// 生成字段属性
+		// ◆ 生成字段属性
 		for(c in table.columnList){
-			// 如果是BaseEntity类属性
-			if(c.isBaseEntityColumn){
+			// ● 如果是BaseEntity类属性
+			if(table.isBaseEntity && c.isBaseEntityColumn){
 				if(!isBase){
 					isBase = true;
 		%>
 		@Column(includeEntity=BaseEntity.class),
 		<%
 				}
-			// 如果是DataEntity类属性
-			}else if(c.isDataEntityColumn){
+			// ● 如果是DataEntity类属性
+			}else if(table.isDataEntity && c.isDataEntityColumn){
 				if(!isData){
 					isData = true;
 		%>
 		@Column(includeEntity=DataEntity.class),
 		<%
 				}
-			// 如果是TreeEntity类属性
-			}else if(c.isTreeEntityColumn){
+			// ● 如果是TreeEntity类属性
+			}else if(table.isTreeEntity && c.isTreeEntityColumn){
 				if(!isTree){
 					isTree = true;
 		%>
 		@Column(includeEntity=TreeEntity.class),
 		<%
 				}
-			// 如果是Extend类属性
-			}else if(c.isExtendColumn){
+			// ● 如果是Extend类属性
+			}else if(table.isExtendEntity && c.isExtendColumn){
 				if(!isExtend){
 					isExtend = true;
 		%>
 		@Column(includeEntity=Extend.class, attrName="extend"),
 		<%
 				}
-			// 其它情况下
+			// ● 其它情况下
 			}else{
 				// 容错，如果没有设置父表的主键属性，则设置
 				if(!@StringUtils.contains(c.attrName, ".")){
@@ -84,17 +84,17 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 				if (c.isPk == @Global.YES){
 					print(', isPK=true');
 				}else{
-					if (c.isInsert == @Global.NO){
+					if (c.isInsert != @Global.YES){
 						print(', isInsert=false');
 					}
-					if (c.isUpdate == @Global.NO){
+					if (c.isUpdate != @Global.YES){
 						print(', isUpdate=false');
 					}
 					if (c.isQuery == @Global.YES && @StringUtils.inString(c.queryType,
 							'NE', 'GT', 'GTE', 'LT', 'LTE', 'LIKE', 'LEFT_LIKE', 'RIGHT_LIKE')){
 						print(', queryType=QueryType.'+c.queryType);
 					}
-					if (c.isQuery == @Global.NO){
+					if (c.isQuery != @Global.YES){
 						print(', isQuery=false');
 					}
 					if (c.attrName == table.treeViewNameAttrName){
@@ -107,7 +107,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		}
 		%>
 	}, <%
-		// 关联系统表
+		// ◆ 生成关联表
 		var joinTables = '';
 		for(c in table.columnList){
 			if (c.attrType == 'com.jeesite.modules.sys.entity.User'){
@@ -140,6 +140,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 			print(joinTables);
 			print('\t}, ');
 		}
+		// ◆ 生成排序字段
 	%>orderBy="<% if (isTree){
 						%>a.tree_sorts<%
 							for(pk in table.pkList){
@@ -163,7 +164,7 @@ public class ${ClassName} extends ${table.isTreeEntity?'Tree':'Data'}Entity<${Cl
 	// 生成字段属性
 	for(c in table.columnList){
 		// 如果是Extend类属性
-		if(c.isExtendColumn){
+		if(table.isExtendEntity && c.isExtendColumn){
 			if(!isExtend){
 				isExtend = true;
 	%>
