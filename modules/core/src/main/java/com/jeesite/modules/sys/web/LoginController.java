@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
@@ -135,6 +136,11 @@ public class LoginController extends BaseController{
 		String exception = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
 		String message = (String)request.getAttribute(FormAuthenticationFilter.DEFAULT_MESSAGE_PARAM);
 
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			username = DesUtils.decode(username, secretKey);
+		}
+		
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM, rememberMe);
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_REMEMBER_USERCODE_PARAM, rememberUserCode);
