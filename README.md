@@ -12,13 +12,14 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 * 分布式统一配置中心：Spring Cloud Config
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
+* 分布式链路追踪：Spring Cloud Zipkin
 
 ## 子项目介绍
 
 * 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
-* 核心模块（统一授权认证）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
+* 核心模块（**统一授权认证**）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
 * 测试模块1（单表增删改查示例）：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
     - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
@@ -32,7 +33,7 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
      https://gitee.com/thinkgem/jeesite4/attach_files
 * 配置 `/jeesite-cloud-config/../cloud-config/application.yml`
      分布式统一配置文件 JDBC 和 Redis 等信息。
-* 按顺序运行以下启动类的main方法（启动完成一个再启下一个）：
+* 按顺序运行以下启动类的main方法（**启动完成一个再启下一个**）：
     - /jeesite-cloud-eureka/../EurekaApplication.java
     - /jeesite-cloud-config/../ConfigApplication.java
     - /jeesite-cloud-gateway/../GatewayApplication.java

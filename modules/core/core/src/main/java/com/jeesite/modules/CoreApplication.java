@@ -15,7 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @version 2018-10-13
  */
 @SpringCloudApplication
-@EnableFeignClients
+@EnableFeignClients(basePackages={"com.jeesite.modules"})
 public class CoreApplication extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {
