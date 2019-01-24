@@ -140,7 +140,7 @@ if (table.tplCategory != 'query'){
 			if (val == 'new'){
 				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}else{
-				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}
 			return actions.join('');
 		}, editoptions: {defaultValue: 'new'}}
