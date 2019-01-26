@@ -255,11 +255,11 @@ logging:
 
 # 国际化管理（专业版）
 #lang:
-#  enabled: true
+#  enabled: false
   
 # 任务调度（个人版）
 #job:
-#  enabled: true
+#  enabled: false
 #
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true

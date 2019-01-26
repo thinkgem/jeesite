@@ -269,8 +269,8 @@ public class CorpAdminController extends BaseController {
 			where.setCorpCode_(corpCode);
 			List<User> list = userService.findCorpList(where);
 			if (list.size() > 0){
-				Session session = UserUtils.getSession();
 				User user = list.get(0);
+				Session session = UserUtils.getSession();
 				session.setAttribute("corpCode", user.getCorpCode_());
 				session.setAttribute("corpName", user.getCorpName_());
 				return renderResult(Global.TRUE, "租户切换成功！");
