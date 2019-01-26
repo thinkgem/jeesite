@@ -77,8 +77,12 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 		CompanyOffice where = new CompanyOffice();
 		where.setCompanyCode(company.getCompanyCode());
 		companyOfficeDao.deleteByEntity(where);
-		if (ListUtils.isNotEmpty(company.getCompanyOfficeList())){
-			companyOfficeDao.insertBatch(company.getCompanyOfficeList());
+		List<CompanyOffice> list = company.getCompanyOfficeList();
+		if (ListUtils.isNotEmpty(list)){
+			list.forEach(e -> {
+				e.setCompanyCode(company.getCompanyCode());
+			});
+			companyOfficeDao.insertBatch(list);
 		}
 		// 清理公司相关缓存
 		clearCompanyCache();
