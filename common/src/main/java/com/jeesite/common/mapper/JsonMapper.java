@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.io.PropertiesUtils;
 
 /**
  * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
@@ -55,8 +56,9 @@ public class JsonMapper extends ObjectMapper {
 		this.configure(Feature.ALLOW_SINGLE_QUOTES, true);
 		// 允许不带引号的字段名称
 		this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-		// 设置时区
-		this.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+		// 设置默认时区
+		this.setTimeZone(TimeZone.getTimeZone(PropertiesUtils.getInstance()
+					.getProperty("lang.defaultTimeZone", "GMT+08:00")));
 		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
 		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 遇到空值处理为空串

@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.jeesite.common.io.PropertiesUtils;
 
 /**
  * XML <-> Map、Object
@@ -49,8 +50,9 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	public XmlMapper() {
 		// Spring ObjectMapper 初始化配置，支持 @JsonView
 		new Jackson2ObjectMapperBuilder().configure(this);
-		// 设置时区
-		this.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+		// 设置默认时区
+		this.setTimeZone(TimeZone.getTimeZone(PropertiesUtils.getInstance()
+				.getProperty("lang.defaultTimeZone", "GMT+08:00")));
 	}
 	
 	/**

@@ -256,6 +256,11 @@ logging:
 # 国际化管理（专业版）
 #lang:
 #  enabled: false
+#  
+#  # 默认语言
+#  defaultLocale: zh_CN
+#  # 默认时区
+#  defaultTimeZone: GMT+08:00
   
 # 任务调度（个人版）
 #job:
