@@ -430,6 +430,7 @@ web:
         ${adminPath}/index,
         ${adminPath}/login,
         ${adminPath}/desktop,
+        ${adminPath}/index/menuTree,
         ${adminPath}/sys/online/count,
         ${adminPath}/state/server/rtInfo,
         ${adminPath}/**/treeData,

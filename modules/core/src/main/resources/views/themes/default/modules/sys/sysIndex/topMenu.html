@@ -20,4 +20,48 @@
 			<% include('topMenuUser.html'){} %>
 		</ul>
 	</div>
+	<% if(@Global.getConfig('sys.index.menuStyle', '1') == '2'){ %>
+	<div class="navbar-custom-menu pull-left">
+		<ul class="nav navbar-nav" id="topMenu">
+		<%
+			var p = {parentCode: '0', children: false};
+			menu.tree(p); print(p.html);
+		%>
+		</ul>
+		<script>
+			$(function(){
+				$('#topMenu').on('click', '.addTabPage', function (e) {
+					$('#topMenu li').removeClass('active');
+					$(this).closest('li').addClass('active');
+					var code = $(this).data("code");
+					js.cookie('currentMenuCode', code); // 保存当前菜单ID
+					if ($("#leftMenu-" + code).length > 0){
+						$("#leftMenu > ul").hide();
+						$("#leftMenu-" + code).show();	
+					}else{
+						js.ajaxSubmit('${ctx}/index/menuTree?parentCode=' + code
+									+ '&t=' + new Date().getTime(), function(data){
+							$("#leftMenu > ul").hide();
+							$("#leftMenu").append(data);
+							// 如果是初次加载，则选中上次打开的菜单
+							if($('.sidebar-menu').length == 1){
+								$(window).trigger("hashchange");
+							}
+						}, 'html');
+					}
+				});
+				// 激活存储的顶部当前菜单项
+				var currentMenuCode = js.cookie('currentMenuCode'), currentMenu;
+				if (currentMenuCode && currentMenuCode != ''){
+					currentMenu = $("#topMenu .addTabPage[data-code="+currentMenuCode+"]");
+				}
+				if (currentMenu && currentMenu.length > 0 && window.location.hash != ''){
+					currentMenu.click();
+				}else{
+					$("#topMenu .addTabPage:first").click(); 
+				}
+			});
+		</script>
+	</div>
+	<% } %>
 </nav>

@@ -312,6 +312,15 @@ public class LoginController extends BaseController{
 	}
 	
 	/**
+	 * 获取侧边栏菜单数据
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "index/menuTree")
+	public String indexMenuTree(String parentCode) {
+		return "modules/sys/sysIndex/menuTree";
+	}
+	
+	/**
 	 * 获取当前用户权限字符串数据（移动端用）
 	 */
 	@RequiresPermissions("user")

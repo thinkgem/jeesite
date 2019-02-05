@@ -803,7 +803,7 @@ CREATE INDEX [idx_sys_company_status] ON [js_sys_company] ([status]);
 CREATE INDEX [idx_sys_company_vc] ON [js_sys_company] ([view_code]);
 CREATE INDEX [idx_sys_company_pcs] ON [js_sys_company] ([parent_codes]);
 CREATE INDEX [idx_sys_company_tss] ON [js_sys_company] ([tree_sorts]);
-CREATE INDEX [idx_sys_config_key] ON [js_sys_config] ([config_key]);
+CREATE UNIQUE INDEX [idx_sys_config_key] ON [js_sys_config] ([config_key]);
 CREATE INDEX [idx_sys_dict_data_cc] ON [js_sys_dict_data] ([corp_code]);
 CREATE INDEX [idx_sys_dict_data_dt] ON [js_sys_dict_data] ([dict_type]);
 CREATE INDEX [idx_sys_dict_data_pc] ON [js_sys_dict_data] ([parent_code]);

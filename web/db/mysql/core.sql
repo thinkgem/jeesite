@@ -805,7 +805,7 @@ CREATE INDEX idx_sys_company_status ON js_sys_company (status ASC);
 CREATE INDEX idx_sys_company_vc ON js_sys_company (view_code ASC);
 CREATE INDEX idx_sys_company_pcs ON js_sys_company (parent_codes ASC);
 CREATE INDEX idx_sys_company_tss ON js_sys_company (tree_sorts ASC);
-CREATE INDEX idx_sys_config_key ON js_sys_config (config_key ASC);
+CREATE UNIQUE INDEX idx_sys_config_key ON js_sys_config (config_key ASC);
 CREATE INDEX idx_sys_dict_data_cc ON js_sys_dict_data (corp_code ASC);
 CREATE INDEX idx_sys_dict_data_dt ON js_sys_dict_data (dict_type ASC);
 CREATE INDEX idx_sys_dict_data_pc ON js_sys_dict_data (parent_code ASC);
