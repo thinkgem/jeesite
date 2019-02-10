@@ -204,9 +204,9 @@ menu:
 lang:
   enabled: false
   
-  # 默认语言
+  # 默认语言（4.1.3+）
   defaultLocale: zh_CN
-  # 默认时区
+  # 默认时区（4.1.3+）
   defaultTimeZone: GMT+08:00
   
 # 任务调度（个人版）
