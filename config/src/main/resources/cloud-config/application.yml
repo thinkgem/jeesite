@@ -198,7 +198,7 @@ shiro:
   accessControlAllowOrigin: '*'
   
   # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
-  innerFilterAllowRemoteAddrs: 127.0.0.1
+  innerFilterAllowRemoteAddrs: 127.0.0.1,10.,172.,192.
   
   # URI 权限过滤器定义
   filterChainDefinitions: |
