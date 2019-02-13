@@ -15,6 +15,9 @@
 		<li class="footer"><a href="javascript:" data-href="${ctx}/msg/list"
 			data-title="${text('查看全部消息')}" class="addTabPage">${text('查看全部消息')}</a></li>
 	</ul>
+	<audio id="audioMessage" controls="controls" preload="auto" hidden="hidden">
+		<source src="${ctxStatic}/modules/msg/message.mp3" type="audio/mpeg" />
+	</audio>
 	<script src="${ctxStatic}/jquery-timeago/jquery.timeago.js"></script>
 	<script src="${ctxStatic}/jquery-timeago/i18n/jquery.timeago.${lang()}.js"></script>
 	<script src="${ctxStatic}/modules/msg/topMenuMsg.js"></script>
