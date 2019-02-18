@@ -14,8 +14,8 @@ import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.gen.entity.GenTable;
 import com.jeesite.modules.gen.entity.GenTableColumn;
 import com.jeesite.modules.gen.service.GenTableService;
+import com.jeesite.modules.job.dao.JobDao;
 import com.jeesite.modules.job.entity.JobEntity;
-import com.jeesite.modules.job.service.JobService;
 import com.jeesite.modules.msg.task.impl.MsgLocalMergePushTask;
 import com.jeesite.modules.msg.task.impl.MsgLocalPushTask;
 import com.jeesite.modules.sys.dao.RoleMenuDao;
@@ -374,7 +374,7 @@ public class InitCoreData extends BaseInitDataTests {
 	}
 
 	@Autowired
-	private JobService jobService;
+	private JobDao jobDao; // 默认情况下job是关闭状态，需要注入jobDao
 	/**
 	 * 初始化消息推送服务
 	 */
@@ -386,7 +386,7 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setConcurrent(Global.NO);
 		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
 		job.setStatus(JobEntity.STATUS_PAUSED);
-		jobService.insert(job);
+		jobDao.insert(job);
 		job = new JobEntity(MsgLocalMergePushTask.class.getSimpleName(), "SYSTEM");
 		job.setDescription("消息推送服务 (延迟推送)");
 		job.setInvokeTarget("msgLocalMergePushTask.execute()");
@@ -394,7 +394,7 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setConcurrent(Global.NO);
 		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
 		job.setStatus(JobEntity.STATUS_PAUSED);
-		jobService.insert(job);
+		jobDao.insert(job);
 	}
 	
 	@Autowired
