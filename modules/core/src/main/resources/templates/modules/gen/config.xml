@@ -46,6 +46,7 @@
 		<dict value="Long" label="Long"/>
 		<dict value="Integer" label="Integer"/>
 		<dict value="Double" label="Double"/>
+		<dict value="java.math.BigDecimal" label="BigDecimal"/>
 		<dict value="java.util.Date" label="Date"/>
 		<dict value="com.jeesite.modules.sys.entity.User" label="User"/>
 		<dict value="com.jeesite.modules.sys.entity.Office" label="Office"/>
