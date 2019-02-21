@@ -328,7 +328,7 @@ logging:
 #  logoutUrl: ${shiro.loginUrl}
 #  successUrl: ${adminPath}/index
 #
-##  # Jasig CAS 相关配置（个人版）
+##  # Apereo CAS 相关配置（个人版）
 ##  casServerUrl: http://127.0.0.1:8981/cas
 ##  casClientUrl: http://127.0.0.1:8980/js
 ##  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
