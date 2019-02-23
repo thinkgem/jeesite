@@ -862,7 +862,6 @@ CREATE INDEX idx_sys_msg_inner_cl ON js_sys_msg_inner (content_level ASC);
 CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date ASC);
 CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id ASC);
-CREATE INDEX idx_sys_msg_inner_r_rc ON js_sys_msg_inner_record (receive_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record (read_status ASC);
 CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star ASC);
