@@ -329,6 +329,9 @@ shiro:
   # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
 #  accessControlAllowOrigin: http://demo.jeesite.com
 #  accessControlAllowOrigin: '*'
+
+  # 是否允许接收跨域的Cookie凭证数据
+#  accessControlAllowCredentials: true
   
   # 是否在登录后生成新的Session（默认false）
   isGenerateNewSessionAfterLogin: false
