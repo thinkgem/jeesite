@@ -289,7 +289,7 @@ CREATE TABLE [js_sys_employee_post]
 CREATE TABLE [js_sys_file_entity]
 (
 	[file_id] varchar(64) NOT NULL,
-	[file_md5] varchar(64) NOT NULL UNIQUE,
+	[file_md5] varchar(64) NOT NULL,
 	[file_path] nvarchar(1000) NOT NULL,
 	[file_content_type] varchar(200) NOT NULL,
 	[file_extension] varchar(100) NOT NULL,

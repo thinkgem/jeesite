@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>2606</x>
-	<y>1945</y>
+	<x>1129</x>
+	<y>1486</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -4664,7 +4664,7 @@
 					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>false</primary_key>
-					<unique_key>true</unique_key>
+					<unique_key>false</unique_key>
 					<character_set></character_set>
 					<collation></collation>
 					<sequence>
