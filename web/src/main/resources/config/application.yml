@@ -124,6 +124,8 @@ jdbc:
 #  # JTA 分布式事务（v4.0.4+）
 #  jta:
 #    enabled: false
+#    # 事务超时时间，单位毫秒（3分钟）
+#    transactionTimeout: 180000
 
 #  # 表名前缀
 #  tablePrefix: js_
