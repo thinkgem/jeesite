@@ -327,6 +327,7 @@ CREATE TABLE [js_sys_job]
 	[cron_expression] varchar(255) NOT NULL,
 	[misfire_instruction] decimal(1) NOT NULL,
 	[concurrent] char(1) NOT NULL,
+	[instance_name] varchar(64) DEFAULT 'JeeSiteScheduler' NOT NULL,
 	[status] char(1) NOT NULL,
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,
