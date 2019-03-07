@@ -37,8 +37,8 @@
         <!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
         <setting name="jdbcTypeForNull" value="NULL"/>
 		
-		<!-- 返回值为Map时，类型数据空值字段时，仍然需要返回 
-		<setting name="callSettersOnNulls" value="true"/>-->
+		<!-- 返回值为Map时，当返回空值字段时，仍然需要返回这个Key -->
+		<setting name="callSettersOnNulls" value="true"/>
 		
 	</settings>
 	
