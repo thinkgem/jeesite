@@ -295,6 +295,7 @@ CREATE TABLE js_sys_file_entity
 	file_content_type varchar(200) NOT NULL COMMENT '文件内容类型',
 	file_extension varchar(100) NOT NULL COMMENT '文件后缀扩展名',
 	file_size decimal(31) NOT NULL COMMENT '文件大小(单位B)',
+	file_meta varchar(255) COMMENT '文件信息(JSON格式)',
 	PRIMARY KEY (file_id)
 ) COMMENT = '文件实体表';
 
@@ -328,6 +329,7 @@ CREATE TABLE js_sys_job
 	cron_expression varchar(255) NOT NULL COMMENT 'Cron执行表达式',
 	misfire_instruction decimal(1) NOT NULL COMMENT '计划执行错误策略',
 	concurrent char(1) NOT NULL COMMENT '是否并发执行',
+	instance_name varchar(64) DEFAULT 'JeeSiteScheduler' NOT NULL COMMENT '集群的实例名字',
 	status char(1) NOT NULL COMMENT '状态（0正常 1删除 2暂停）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',

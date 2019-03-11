@@ -295,6 +295,7 @@ CREATE TABLE js_sys_file_entity
 	file_content_type varchar(200) NOT NULL COMMENT '文件内容类型',
 	file_extension varchar(100) NOT NULL COMMENT '文件后缀扩展名',
 	file_size decimal(31) NOT NULL COMMENT '文件大小(单位B)',
+	file_meta varchar(255) COMMENT '文件信息(JSON格式)',
 	PRIMARY KEY (file_id)
 ) COMMENT = '文件实体表';
 

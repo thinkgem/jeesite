@@ -294,6 +294,7 @@ CREATE TABLE [js_sys_file_entity]
 	[file_content_type] varchar(200) NOT NULL,
 	[file_extension] varchar(100) NOT NULL,
 	[file_size] decimal(31) NOT NULL,
+	[file_meta] varchar(255),
 	PRIMARY KEY ([file_id])
 );
 

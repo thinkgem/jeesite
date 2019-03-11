@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>0</x>
-	<y>2239</y>
+	<x>1232</x>
+	<y>988</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -1445,6 +1445,22 @@
 			<description>文件MD5</description>
 			<logical_name>文件MD5</logical_name>
 			<physical_name>file_md5</physical_name>
+			<type>varchar(n)</type>
+		</word>
+		<word>
+			<id>e2e0369af3191a268fc1d03ea0eef107d0392be0</id>
+			<length>255</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
+			<char_semantics>false</char_semantics>
+			<description></description>
+			<logical_name>文件信息(JSON格式)</logical_name>
+			<physical_name>file_meta</physical_name>
 			<type>varchar(n)</type>
 		</word>
 		<word>
@@ -4831,6 +4847,39 @@
 						<decimal_size>0</decimal_size>
 					</sequence>
 				</normal_column>
+				<normal_column>
+					<word_id>e2e0369af3191a268fc1d03ea0eef107d0392be0</word_id>
+					<id>c1a441e7ef57c97818f59db365d7162fda7cc0df</id>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>varchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>false</foreign_key>
+					<not_null>false</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
 			</columns>
 			<indexes>
 				<inidex>
@@ -4881,7 +4930,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>2e69f023ad8cecebbe06f5330a9d65c6524a5b39</id>
+					<id>21533fba2463605c6cca43bbbb642eeaa8530a5b</id>
 					<source>6ce90f0c465f8e4480cf489e2f1cfcb423be63d9</source>
 					<target>bee7bb4881e285bf50f380b8829edff3c2a1ddbf</target>
 						<source_xp>-1</source_xp>
@@ -4946,7 +4995,7 @@
 				<normal_column>
 					<id>fc44d466dd6009e48b5222d1d71e38d025194ff0</id>
 					<referenced_column>54b86f255d95078898534902087fb704b4265b60</referenced_column>
-					<relation>2e69f023ad8cecebbe06f5330a9d65c6524a5b39</relation>
+					<relation>21533fba2463605c6cca43bbbb642eeaa8530a5b</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>

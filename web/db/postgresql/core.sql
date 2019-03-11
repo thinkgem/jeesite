@@ -294,6 +294,7 @@ CREATE TABLE js_sys_file_entity
 	file_content_type varchar(200) NOT NULL,
 	file_extension varchar(100) NOT NULL,
 	file_size decimal(31) NOT NULL,
+	file_meta varchar(255),
 	PRIMARY KEY (file_id)
 ) WITHOUT OIDS;
 
@@ -327,6 +328,7 @@ CREATE TABLE js_sys_job
 	cron_expression varchar(255) NOT NULL,
 	misfire_instruction decimal(1) NOT NULL,
 	concurrent char(1) NOT NULL,
+	instance_name varchar(64) DEFAULT 'JeeSiteScheduler' NOT NULL,
 	status char(1) NOT NULL,
 	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -1112,6 +1114,7 @@ COMMENT ON COLUMN js_sys_file_entity.file_path IS '文件相对路径';
 COMMENT ON COLUMN js_sys_file_entity.file_content_type IS '文件内容类型';
 COMMENT ON COLUMN js_sys_file_entity.file_extension IS '文件后缀扩展名';
 COMMENT ON COLUMN js_sys_file_entity.file_size IS '文件大小(单位B)';
+COMMENT ON COLUMN js_sys_file_entity.file_meta IS '文件信息(JSON格式)';
 COMMENT ON TABLE js_sys_file_upload IS '文件上传表';
 COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';
@@ -1133,6 +1136,7 @@ COMMENT ON COLUMN js_sys_job.invoke_target IS '调用目标字符串';
 COMMENT ON COLUMN js_sys_job.cron_expression IS 'Cron执行表达式';
 COMMENT ON COLUMN js_sys_job.misfire_instruction IS '计划执行错误策略';
 COMMENT ON COLUMN js_sys_job.concurrent IS '是否并发执行';
+COMMENT ON COLUMN js_sys_job.instance_name IS '集群的实例名字';
 COMMENT ON COLUMN js_sys_job.status IS '状态（0正常 1删除 2暂停）';
 COMMENT ON COLUMN js_sys_job.create_by IS '创建者';
 COMMENT ON COLUMN js_sys_job.create_date IS '创建时间';

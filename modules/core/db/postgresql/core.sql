@@ -294,6 +294,7 @@ CREATE TABLE js_sys_file_entity
 	file_content_type varchar(200) NOT NULL,
 	file_extension varchar(100) NOT NULL,
 	file_size decimal(31) NOT NULL,
+	file_meta varchar(255),
 	PRIMARY KEY (file_id)
 ) WITHOUT OIDS;
 
@@ -1113,6 +1114,7 @@ COMMENT ON COLUMN js_sys_file_entity.file_path IS '文件相对路径';
 COMMENT ON COLUMN js_sys_file_entity.file_content_type IS '文件内容类型';
 COMMENT ON COLUMN js_sys_file_entity.file_extension IS '文件后缀扩展名';
 COMMENT ON COLUMN js_sys_file_entity.file_size IS '文件大小(单位B)';
+COMMENT ON COLUMN js_sys_file_entity.file_meta IS '文件信息(JSON格式)';
 COMMENT ON TABLE js_sys_file_upload IS '文件上传表';
 COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';
