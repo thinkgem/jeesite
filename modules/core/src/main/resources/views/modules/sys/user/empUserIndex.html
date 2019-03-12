@@ -37,7 +37,7 @@ var win = $("#mainFrame")[0].contentWindow;
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
-		win.$('input[type=reset]').click();
+		win.$('button[type=reset]').click();
 		win.$('#officeCode').val(treeNode.id);
 		win.$('#officeName').val(treeNode.name);
 		win.page();
