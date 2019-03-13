@@ -3,6 +3,9 @@
  */
 package com.jeesite.modules.sys.web;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,8 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Post;
 import com.jeesite.modules.sys.service.PostService;
@@ -121,6 +127,30 @@ public class PostController extends BaseController {
 			return Global.TRUE;
 		}
 		return Global.FALSE;
+	}
+
+	/**
+	 * 获取岗位树结构数据
+	 * @param isAll			是否显示所有机构（true：不进行权限过滤）
+	 * @param isShowCode	是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "treeData")
+	@ResponseBody
+	public List<Map<String, Object>> treeData(String userType, String isShowCode, String ctrlPermi) {
+		List<Map<String, Object>> mapList = ListUtils.newArrayList();
+		Post where = new Post();
+		where.setStatus(Post.STATUS_NORMAL);
+		List<Post> list = postService.findList(where);
+		list.forEach(e -> {
+			Map<String, Object> map = MapUtils.newHashMap();
+			map.put("id", e.getId());
+			map.put("pId", "0");
+			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getPostCode(), e.getPostName()));
+			mapList.add(map);
+		});
+		return mapList;
 	}
 	
 }
