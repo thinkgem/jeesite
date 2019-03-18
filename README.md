@@ -54,31 +54,9 @@ JeeSite 自 2013 年发布以来已被广大爱好者用到了企业、政府、
 1. 部署运行：<http://jeesite.com/?t=267354>
 2. 常见问题：<http://jeesite.com/?t=284210>
 
-## 开发手册 
+## 在线文档
 
-* 代码生成 / 快速入门 (Guide)：<http://jeesite.com/?t=316743>
-* 持久层 / 数据库操作 (MyBatis)：<http://jeesite.com/?t=267351>
-* 业务层 / 数据权限 (Service)：<http://jeesite.com/?t=267352>
-* 视图层 / 表单组件 (Beetl)：<http://jeesite.com/?t=267353>
-* 功能权限基础文档 (Shiro)：<http://jeesite.com/?t=298473>
-* 常用JS类库API (jeesite.js)：<http://jeesite.com/?t=301473>
-* 数据表格API (DataGrid.js)：<http://jeesite.com/?t=301488>
-* 修改 (默认) 视图，新增主题：<http://jeesite.com/?t=267355>
-* 手机 API 接口调用、前后分离：<http://jeesite.com/?t=270527>
-* 消息提醒中心使用手册：<http://jeesite.com/?t=323351>
-* 常见问题：<http://jeesite.com/?t=284210>
-
-## 今后如何升级？
-
-尽量不修改web项目以外的源码项目，如 jeesite-common、jeesite-modele-core，如果修改了，请 Pull Requests 上来，否则代码编码将与官方不同步，将对你的日后升级带来困难。
-
-JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml 文件中的 parent.version 版本修改到最新版本即可，同版本下你可进行Maven快照强制更新，即可将最新版的依赖jar更新到本地，下面介绍一下在Eclipse里如何操作：
-
-在web项目上右键，选择菜单 -> Maven -> Update Project...（或按Alt+F5） -> 点击 Select All 按钮 -> 选择 Force Update of Snapshots/Releases 复选框 -> 点击OK按钮即可。
-
-如果您修改了其它依赖模块代码，这时你需要与官方Git仓库代码进行同步。
-
-如果进行相对大的版本（4.x.x）升级这里我们会附加一个声明，帮助你进行迁移操作。
+* <http://docs.jeesite.com>
 
 ## 授权协议声明
 
@@ -89,11 +67,13 @@ JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml
 5. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
 6. 您可以应用于商业软件，但必须遵循以上条款原则（请协助改进本作品）。
 7. 关系平台的发展战略考虑，底层部分代码暂未开源，但这不影响您的二次开发。
-8. 请知悉社区版，用户数不可超过100个，最大允许10个用户同时在线（不含匿名）。
+8. 请知悉社区版，用户数不可超过100个，最大允许20个用户同时在线（不含匿名）。
 
-### 获得技术服务支持：<http://s.jeesite.com>
+## 技术服务与支持
 
-* 我们深知，没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把开源事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* **联系方式（官方商务）QQ：[1766571055](http://sighttp.qq.com/msgrd?v=1&uin=1766571055)**
+* 技术服务支持网页：<http://s.jeesite.com>
 
 # 技术交流方式
 
@@ -107,6 +87,18 @@ JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml
 * 微信公众号：
 
 ![JeeSite4微信公众号](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
+
+## 今后如何升级？
+
+尽量不修改web项目以外的源码项目，如 jeesite-common、jeesite-modele-core，如果修改了，请 Pull Requests 上来，否则代码编码将与官方不同步，将对你的日后升级带来困难。
+
+JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml 文件中的 parent.version 版本修改到最新版本即可，同版本下你可进行Maven快照强制更新，即可将最新版的依赖jar更新到本地，下面介绍一下在Eclipse里如何操作：
+
+在web项目上右键，选择菜单 -> Maven -> Update Project...（或按Alt+F5） -> 点击 Select All 按钮 -> 选择 Force Update of Snapshots/Releases 复选框 -> 点击OK按钮即可。
+
+如果您修改了其它依赖模块代码，这时你需要与官方Git仓库代码进行同步。
+
+如果进行相对大的版本（4.x.x）升级这里我们会附加一个声明，帮助你进行迁移操作。
 
 # Git 全局设置技巧
 
