@@ -75,6 +75,34 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	}
 
 	/**
+	 * 查询全部用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserList(EmpUser empUser){
+		return dao.findUserList(empUser);
+	}
+	
+	/**
+	 * 根据部门编码查询用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserListByOfficeCodes(EmpUser empUser){
+		return dao.findUserListByOfficeCodes(empUser);
+	}
+	
+	/**
+	 * 根据角色编码查询用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserListByRoleCodes(EmpUser empUser){
+		return dao.findUserListByRoleCodes(empUser);
+	}
+	
+	/**
+	 * 根据岗位编码查询用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserListByPostCodes(EmpUser empUser){
+		return dao.findUserListByPostCodes(empUser);
+	}
+	
+	/**
 	 * 保存用户员工
 	 */
 	@Override

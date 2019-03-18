@@ -68,7 +68,9 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 public class EmpUser extends User {
 	
 	private static final long serialVersionUID = 1L;
-
+	
+	private String[] codes; // 查询用
+	
 	public EmpUser() {
 		this(null);
 	}
@@ -102,6 +104,14 @@ public class EmpUser extends User {
 	
 	public void setEmployee(Employee employee){
 		super.setRefObj(employee);
+	}
+
+	public String[] getCodes() {
+		return codes;
+	}
+
+	public void setCodes(String[] codes) {
+		this.codes = codes;
 	}
 	
 }
