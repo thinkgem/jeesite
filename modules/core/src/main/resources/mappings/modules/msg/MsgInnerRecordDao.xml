@@ -12,4 +12,13 @@
 		ORDER BY ${sqlMap.order.toSql()}
 	</select> -->
 	
+	<update id="updateReadStatus">
+		UPDATE ${_prefix}sys_msg_inner_record SET
+			read_status = #{readStatus},
+			read_date = #{readDate}
+		WHERE msg_inner_id = #{msgInnerId}
+			AND receive_user_code = #{receiveUserCode}
+			AND read_date is null
+	</update>
+	
 </mapper>
