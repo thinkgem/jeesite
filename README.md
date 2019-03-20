@@ -4,19 +4,17 @@ JeeSite 是一个 Java EE 企业级快速开发平台，基于经典技术组合
 
 JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能（经典架构会的人多），让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
 
-JeeSite 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 依架构简单精良、易于扩展、大众思维的设计模式，深入开发者的内心，并得到一致好评，于[2016](http://www.oschina.net/project/top_cn_2016?sort=1)和[2017](http://www.oschina.net/project/top_cn_2017?sort=1)连续两年获得开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生作为入门教材，快速的去实践。
+JeeSite 1.x 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 依架构简单精良、易于扩展、大众思维的设计模式，深入开发者的内心，并得到一致好评，于[2016](http://www.oschina.net/project/top_cn_2016?sort=1)和[2017](http://www.oschina.net/project/top_cn_2017?sort=1)连续两年获得开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生作为入门教材，快速的去实践。
 
-4.x 的升级，作者结合了多年总结和经验，以及各方面的应用案例，对架构完成了一次全部重构，也纳入很多新的思想。不管是从开发者模式、底层架构、逻辑处理还是到用户界面，用户交互体验上都有很大的进步，在不忘学习成本、提高开发效率的情况下，安全方面也做和很多工作，包括：身份认证、密码策略、安全审计、日志收集。
+JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面的应用案例，对架构完成了一次全部重构，也纳入很多新的思想。不管是从开发者模式、底层架构、逻辑处理还是到用户界面，用户交互体验上都有很大的进步，在不忘学习成本、提高开发效率的情况下，安全方面也做和很多工作，包括：身份认证、密码策略、安全审计、日志收集。
 
-### 4.x 新特性：<http://jeesite.com/?t=281645>
-
-* **我们的优势：** 整体架构清晰、稳定技术先进、入门简单、易于维护、易于扩展、安全稳定。
+### 4.x 的新特性及优势：<http://jeesite.com/?t=281645>
 
 ## 技术选型
 
 * 主框架：Spring Boot 2.0、Spring Framework 5.0、Apache Shiro 1.4、J2Cache
 * 持久层：Apache MyBatis 3.4、Hibernate Validation 6.0、Alibaba Druid 1.1
-* 视图层：Spring MVC 5.0、Beetl 2.7 替换JSP、Bootstrap 3.3、AdminLTE 2.4
+* 视图层：Spring MVC 5.0、Beetl 2.9 替换JSP、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.0、zTree 3.5、jquery-validation
 * 工具组件：Apache Commons、Logback 1.1、Jackson 2.8、POI 3.14、Quartz 2.2
 * 技术选型详情：<http://jeesite.com/?t=273599>
@@ -82,6 +80,7 @@ JeeSite 自 2013 年发布以来已被广大爱好者用到了企业、政府、
 * 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
 * GitHub：<https://github.com/thinkgem/jeesite4>
 * 作者博客：<https://my.oschina.net/thinkgem>
+* **技术服务：**<http://s.jeesite.com>
 * 官方网站：<http://jeesite.com>
 * 官方论坛：<http://jeesite.net>
 * 微信公众号：
