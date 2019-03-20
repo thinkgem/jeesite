@@ -48,7 +48,7 @@
 		<druid.version>1.1.10</druid.version>
 		<shiro.version>1.4.0</shiro.version>
 		<j2cache.version>2.7.0-release</j2cache.version>
-		<beetl.version>2.7-SNAPSHOT</beetl.version>
+		<beetl.version>2.9-SNAPSHOT</beetl.version>
 		<swagger.version>1.5.20</swagger.version>
 		
 		<!-- environment setting -->
