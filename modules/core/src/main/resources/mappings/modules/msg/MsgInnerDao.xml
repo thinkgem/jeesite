@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.msg.dao.MsgInnerDao">
+	
+	<!-- 查询数据 -->
+	<select id="findList" resultType="MsgInner">
+		SELECT distinct ${sqlMap.column.toSql()}
+		<if test="record != null and record.receiveUserCode != null and record.receiveUserCode != ''">,
+			r.read_status AS "record.readStatus",
+			r.read_date AS "record.readDate",
+			r.is_star AS "record.isStar"
+		</if>
+		FROM ${sqlMap.table.toSql()}
+		<if test="record != null and record.receiveUserCode != null and record.receiveUserCode != ''">
+			LEFT JOIN ${_prefix}sys_msg_inner_record r ON r.msg_inner_id = a.id
+				AND r.receive_user_code = #{record.receiveUserCode}
+		</if>
+		<where>
+			${sqlMap.where.toSql()}
+			<if test="record != null and record.receiveUserCode != null and record.receiveUserCode != ''">
+				AND ((a.status = #{STATUS_NORMAL} AND r.receive_user_code = #{record.receiveUserCode})
+						 OR a.create_by = #{currentUser.userCode})
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+	
+</mapper>

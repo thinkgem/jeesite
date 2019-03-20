@@ -4,19 +4,17 @@ JeeSite 是一个 Java EE 企业级快速开发平台，基于经典技术组合
 
 JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能（经典架构会的人多），让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
 
-JeeSite 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 依架构简单精良、易于扩展、大众思维的设计模式，深入开发者的内心，并得到一致好评，于[2016](http://www.oschina.net/project/top_cn_2016?sort=1)和[2017](http://www.oschina.net/project/top_cn_2017?sort=1)连续两年获得开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生作为入门教材，快速的去实践。
+JeeSite 1.x 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 依架构简单精良、易于扩展、大众思维的设计模式，深入开发者的内心，并得到一致好评，于[2016](http://www.oschina.net/project/top_cn_2016?sort=1)和[2017](http://www.oschina.net/project/top_cn_2017?sort=1)连续两年获得开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生作为入门教材，快速的去实践。
 
-4.x 的升级，作者结合了多年总结和经验，以及各方面的应用案例，对架构完成了一次全部重构，也纳入很多新的思想。不管是从开发者模式、底层架构、逻辑处理还是到用户界面，用户交互体验上都有很大的进步，在不忘学习成本、提高开发效率的情况下，安全方面也做和很多工作，包括：身份认证、密码策略、安全审计、日志收集。
+JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面的应用案例，对架构完成了一次全部重构，也纳入很多新的思想。不管是从开发者模式、底层架构、逻辑处理还是到用户界面，用户交互体验上都有很大的进步，在不忘学习成本、提高开发效率的情况下，安全方面也做和很多工作，包括：身份认证、密码策略、安全审计、日志收集。
 
-### 4.x 新特性：<http://jeesite.com/?t=281645>
-
-* **我们的优势：** 整体架构清晰、稳定技术先进、入门简单、易于维护、易于扩展、安全稳定。
+### 4.x 的新特性及优势：<http://jeesite.com/?t=281645>
 
 ## 技术选型
 
 * 主框架：Spring Boot 2.0、Spring Framework 5.0、Apache Shiro 1.4、J2Cache
 * 持久层：Apache MyBatis 3.4、Hibernate Validation 6.0、Alibaba Druid 1.1
-* 视图层：Spring MVC 5.0、Beetl 2.7 替换JSP、Bootstrap 3.3、AdminLTE 2.4
+* 视图层：Spring MVC 5.0、Beetl 2.9 替换JSP、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.0、zTree 3.5、jquery-validation
 * 工具组件：Apache Commons、Logback 1.1、Jackson 2.8、POI 3.14、Quartz 2.2
 * 技术选型详情：<http://jeesite.com/?t=273599>
@@ -54,19 +52,40 @@ JeeSite 自 2013 年发布以来已被广大爱好者用到了企业、政府、
 1. 部署运行：<http://jeesite.com/?t=267354>
 2. 常见问题：<http://jeesite.com/?t=284210>
 
-## 开发手册 
+## 在线文档
 
-* 代码生成 / 快速入门 (Guide)：<http://jeesite.com/?t=316743>
-* 持久层 / 数据库操作 (MyBatis)：<http://jeesite.com/?t=267351>
-* 业务层 / 数据权限 (Service)：<http://jeesite.com/?t=267352>
-* 视图层 / 表单组件 (Beetl)：<http://jeesite.com/?t=267353>
-* 功能权限基础文档 (Shiro)：<http://jeesite.com/?t=298473>
-* 常用JS类库API (jeesite.js)：<http://jeesite.com/?t=301473>
-* 数据表格API (DataGrid.js)：<http://jeesite.com/?t=301488>
-* 修改 (默认) 视图，新增主题：<http://jeesite.com/?t=267355>
-* 手机 API 接口调用、前后分离：<http://jeesite.com/?t=270527>
-* 消息提醒中心使用手册：<http://jeesite.com/?t=323351>
-* 常见问题：<http://jeesite.com/?t=284210>
+* <http://docs.jeesite.com>
+
+## 授权协议声明
+
+1. 已开源的代码，授权协议采用 AGPL v3 + Apache Licence v2 进行发行。
+2. 您可以免费使用、修改和衍生代码，但不允许修改后和衍生的代码做为闭源软件发布。
+3. 修改后和衍生的代码必须也按照AGPL协议进行流通，对修改后和衍生的代码必须向社会公开。
+4. 如果您修改了代码，需要在被修改的文件中进行说明，并遵守代码格式规范，帮助他人更好的理解您的用意。
+5. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
+6. 您可以应用于商业软件，但必须遵循以上条款原则（请协助改进本作品）。
+7. 关系平台的发展战略考虑，底层部分代码暂未开源，但这不影响您的二次开发。
+8. 请知悉社区版，用户数不可超过100个，最大允许20个用户同时在线（不含匿名）。
+
+## 技术服务与支持
+
+* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* **联系方式（官方商务）QQ：[1766571055](http://sighttp.qq.com/msgrd?v=1&uin=1766571055)**
+* 技术服务支持网页：<http://s.jeesite.com>
+
+# 技术交流方式
+
+* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`183903863(外包)`
+* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
+* GitHub：<https://github.com/thinkgem/jeesite4>
+* 作者博客：<https://my.oschina.net/thinkgem>
+* **技术服务：**<http://s.jeesite.com>
+* 官方网站：<http://jeesite.com>
+* 官方论坛：<http://jeesite.net>
+* 微信公众号：
+
+![JeeSite4微信公众号](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
 
 ## 今后如何升级？
 
@@ -79,34 +98,6 @@ JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml
 如果您修改了其它依赖模块代码，这时你需要与官方Git仓库代码进行同步。
 
 如果进行相对大的版本（4.x.x）升级这里我们会附加一个声明，帮助你进行迁移操作。
-
-## 授权协议声明
-
-1. 已开源的代码，授权协议采用 AGPL v3 + Apache Licence v2 进行发行。
-2. 您可以免费使用、修改和衍生代码，但不允许修改后和衍生的代码做为闭源软件发布。
-3. 修改后和衍生的代码必须也按照AGPL协议进行流通，对修改后和衍生的代码必须向社会公开。
-4. 如果您修改了代码，需要在被修改的文件中进行说明，并遵守代码格式规范，帮助他人更好的理解您的用意。
-5. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
-6. 您可以应用于商业软件，但必须遵循以上条款原则（请协助改进本作品）。
-7. 关系平台的发展战略考虑，底层部分代码暂未开源，但这不影响您的二次开发。
-8. 请知悉社区版，用户数不可超过100个，最大允许10个用户同时在线（不含匿名）。
-
-### 获得技术服务支持：<http://s.jeesite.com>
-
-* 我们深知，没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把开源事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-
-# 技术交流方式
-
-* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
-* GitHub：<https://github.com/thinkgem/jeesite4>
-* 作者博客：<https://my.oschina.net/thinkgem>
-* 官方网站：<http://jeesite.com>
-* 官方论坛：<http://jeesite.net>
-* 微信公众号：
-
-![JeeSite4微信公众号](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
 
 # Git 全局设置技巧
 

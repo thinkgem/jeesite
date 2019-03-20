@@ -1,0 +1,50 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved. */ %>
+<% layout('/layouts/default.html', {title: '查看消息', libs: ['validate','fileupload']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border hide">
+			<div class="box-title">
+				<i class="fa icon-envelope-letter"></i> ${text('查看消息')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<div class="box-body article-view">
+			<h2 class="article-title">${msgInner.msgTitle}</h2>
+			<div class="content-text">
+<!-- 				<blockquote>摘要：</blockquote> -->
+				${msgInner.msgContent}
+				<% if(msgInner.isAttac == @Global.YES){ %>
+					<div class="form-group pt20">
+						<#form:fileupload id="uploadFile" bizKey="${msgInner.id}" bizType="msgInner_file"
+							uploadType="all" class="" readonly="true" preview="weboffice"/>
+					</div>
+				<% } %>
+			</div>
+			<ul class="content-info">
+				<li><i class="fa fa-user"></i> 发送者：${msgInner.sendUserName}</li>
+				<li><i class="fa fa-calendar"></i> 发送时间：${msgInner.sendDate, 'yyyy-MM-dd HH:mm'}</li>
+				<li><i class="fa icon-envelope-letter"></i> 读取时间：${msgInner.sendDate, 'yyyy-MM-dd HH:mm'}</li>
+				<li><i class="fa fa-bookmark-o"></i> 等级：${@DictUtils.getDictLabel('msg_inner_content_level', msgInner.contentLevel, '普通')}</li>
+				<li><i class="fa fa-bookmark-o"></i> 类型：${@DictUtils.getDictLabel('msg_inner_content_type', msgInner.contentType, '其它')}</li>
+			</ul>
+			<% if (readList! != null && readList.~size > 0){ %>
+			<div class="content-info">已读用户：<% for (e in readList){ %>
+				<span class="label bg-green" title="${e.readDate,dateFormat='yyyy-MM-dd HH:mm:ss'}" data-code="${e.receiveUserName}">${e.receiveUserName}</span><% } %>
+			</div><% } %>
+			<% if (unReadList! != null && unReadList.~size > 0){ %>
+			<div class="content-info">未读用户：<% for (e in unReadList){ %>
+				<span class="label bg-yellow" data-code="${e.receiveUserName}">${e.receiveUserName}</span><% } %>
+			</div><% } %>
+		</div>
+		<div class="box-footer">
+			<div class="row">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>

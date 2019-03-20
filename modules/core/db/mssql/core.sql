@@ -289,11 +289,12 @@ CREATE TABLE [js_sys_employee_post]
 CREATE TABLE [js_sys_file_entity]
 (
 	[file_id] varchar(64) NOT NULL,
-	[file_md5] varchar(64) NOT NULL UNIQUE,
+	[file_md5] varchar(64) NOT NULL,
 	[file_path] nvarchar(1000) NOT NULL,
 	[file_content_type] varchar(200) NOT NULL,
 	[file_extension] varchar(100) NOT NULL,
 	[file_size] decimal(31) NOT NULL,
+	[file_meta] varchar(255),
 	PRIMARY KEY ([file_id])
 );
 
@@ -327,6 +328,7 @@ CREATE TABLE [js_sys_job]
 	[cron_expression] varchar(255) NOT NULL,
 	[misfire_instruction] decimal(1) NOT NULL,
 	[concurrent] char(1) NOT NULL,
+	[instance_name] varchar(64) DEFAULT 'JeeSiteScheduler' NOT NULL,
 	[status] char(1) NOT NULL,
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,
@@ -479,13 +481,13 @@ CREATE TABLE [js_sys_msg_inner]
 	[content_type] char(1),
 	[msg_content] text NOT NULL,
 	[receive_type] char(1) NOT NULL,
-	[receive_codes] text NOT NULL,
-	[receive_names] text NOT NULL,
-	[send_user_code] varchar(64) NOT NULL,
-	[send_user_name] varchar(100) NOT NULL,
-	[send_date] datetime NOT NULL,
+	[receive_codes] text,
+	[receive_names] text,
+	[send_user_code] varchar(64),
+	[send_user_name] varchar(100),
+	[send_date] datetime,
 	[is_attac] char(1),
-	[notify_types] varchar(100) NOT NULL,
+	[notify_types] varchar(100),
 	[status] char(1) NOT NULL,
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,

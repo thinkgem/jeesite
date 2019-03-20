@@ -289,11 +289,12 @@ CREATE TABLE js_sys_employee_post
 CREATE TABLE js_sys_file_entity
 (
 	file_id varchar2(64) NOT NULL,
-	file_md5 varchar2(64) NOT NULL UNIQUE,
+	file_md5 varchar2(64) NOT NULL,
 	file_path nvarchar2(1000) NOT NULL,
 	file_content_type varchar2(200) NOT NULL,
 	file_extension varchar2(100) NOT NULL,
 	file_size number(31) NOT NULL,
+	file_meta varchar2(255),
 	PRIMARY KEY (file_id)
 );
 
@@ -327,6 +328,7 @@ CREATE TABLE js_sys_job
 	cron_expression varchar2(255) NOT NULL,
 	misfire_instruction number(1) NOT NULL,
 	concurrent char(1) NOT NULL,
+	instance_name varchar2(64) DEFAULT 'JeeSiteScheduler' NOT NULL,
 	status char(1) NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -479,13 +481,13 @@ CREATE TABLE js_sys_msg_inner
 	content_type char(1),
 	msg_content clob NOT NULL,
 	receive_type char(1) NOT NULL,
-	receive_codes clob NOT NULL,
-	receive_names clob NOT NULL,
-	send_user_code varchar2(64) NOT NULL,
-	send_user_name varchar2(100) NOT NULL,
-	send_date timestamp NOT NULL,
+	receive_codes clob,
+	receive_names clob,
+	send_user_code varchar2(64),
+	send_user_name varchar2(100),
+	send_date timestamp,
 	is_attac char(1),
-	notify_types varchar2(100) NOT NULL,
+	notify_types varchar2(100),
 	status char(1) NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -1112,6 +1114,7 @@ COMMENT ON COLUMN js_sys_file_entity.file_path IS '文件相对路径';
 COMMENT ON COLUMN js_sys_file_entity.file_content_type IS '文件内容类型';
 COMMENT ON COLUMN js_sys_file_entity.file_extension IS '文件后缀扩展名';
 COMMENT ON COLUMN js_sys_file_entity.file_size IS '文件大小(单位B)';
+COMMENT ON COLUMN js_sys_file_entity.file_meta IS '文件信息(JSON格式)';
 COMMENT ON TABLE js_sys_file_upload IS '文件上传表';
 COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';
@@ -1133,6 +1136,7 @@ COMMENT ON COLUMN js_sys_job.invoke_target IS '调用目标字符串';
 COMMENT ON COLUMN js_sys_job.cron_expression IS 'Cron执行表达式';
 COMMENT ON COLUMN js_sys_job.misfire_instruction IS '计划执行错误策略';
 COMMENT ON COLUMN js_sys_job.concurrent IS '是否并发执行';
+COMMENT ON COLUMN js_sys_job.instance_name IS '集群的实例名字';
 COMMENT ON COLUMN js_sys_job.status IS '状态（0正常 1删除 2暂停）';
 COMMENT ON COLUMN js_sys_job.create_by IS '创建者';
 COMMENT ON COLUMN js_sys_job.create_date IS '创建时间';
@@ -1248,7 +1252,7 @@ COMMENT ON COLUMN js_sys_msg_inner.msg_title IS '消息标题';
 COMMENT ON COLUMN js_sys_msg_inner.content_level IS '内容级别（1普通 2一般 3紧急）';
 COMMENT ON COLUMN js_sys_msg_inner.content_type IS '内容类型（1公告 2新闻 3会议 4其它）';
 COMMENT ON COLUMN js_sys_msg_inner.msg_content IS '消息内容';
-COMMENT ON COLUMN js_sys_msg_inner.receive_type IS '接受者类型（1用户 2部门 3角色 4岗位）';
+COMMENT ON COLUMN js_sys_msg_inner.receive_type IS '接受者类型（0全部 1用户 2部门 3角色 4岗位）';
 COMMENT ON COLUMN js_sys_msg_inner.receive_codes IS '接受者字符串';
 COMMENT ON COLUMN js_sys_msg_inner.receive_names IS '接受者名称字符串';
 COMMENT ON COLUMN js_sys_msg_inner.send_user_code IS '发送者用户编码';

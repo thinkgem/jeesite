@@ -3,6 +3,8 @@
  */
 package com.jeesite.modules.sys.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeesite.common.entity.Page;
@@ -35,6 +37,26 @@ public interface EmpUserService extends CrudServiceApi<EmpUser> {
 	 */
 	@Override
 	public Page<EmpUser> findPage(EmpUser empUser);
+	
+	/**
+	 * 查询全部用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserList(EmpUser empUser);
+	
+	/**
+	 * 根据部门编码查询用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserListByOfficeCodes(EmpUser empUser);
+	
+	/**
+	 * 根据角色编码查询用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserListByRoleCodes(EmpUser empUser);
+	
+	/**
+	 * 根据岗位编码查询用户，仅返回基本信息
+	 */
+	public List<EmpUser> findUserListByPostCodes(EmpUser empUser);
 
 	/**
 	 * 保存用户员工

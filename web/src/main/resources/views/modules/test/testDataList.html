@@ -167,7 +167,9 @@ $('#dataGrid').dataGrid({
 	],
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+// 		if (data.count == 0){
+// 			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
+// 		}
 	}
 });
 </script>

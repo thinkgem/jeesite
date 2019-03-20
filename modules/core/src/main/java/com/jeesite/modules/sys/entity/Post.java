@@ -19,7 +19,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="post_name", attrName="postName", label="岗位名称"),
 		@Column(name="post_type", attrName="postType", label="岗位分类", comment="岗位分类（高管、中层、基层）"),
 		@Column(name="post_sort", attrName="postSort", label="岗位排序", comment="岗位排序（升序）"),
-	}, orderBy="a.update_date DESC"
+	}, orderBy="a.post_sort ASC"
 )
 public class Post extends DataEntity<Post> {
 	

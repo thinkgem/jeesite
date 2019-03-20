@@ -252,10 +252,10 @@ public class LoginController extends BaseController{
 			}
 		}
 
-		// 获取登录成功页面
-		String successUrl = Global.getProperty("shiro.successUrl");
-		if (!StringUtils.contains(successUrl, "://")){
-			successUrl = request.getContextPath() + successUrl;
+		// 获取登录成功后跳转的页面
+		String successUrl = request.getParameter("__url");
+		if (StringUtils.isBlank(successUrl)){
+			successUrl = Global.getProperty("shiro.successUrl");
 		}
 		
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
@@ -268,6 +268,9 @@ public class LoginController extends BaseController{
 				model.addAttribute("message", text("sys.login.getInfo"));
 			}
 			model.addAttribute("sessionid", (String)session.getId());
+			if (!StringUtils.contains(successUrl, "://")){
+				successUrl = request.getContextPath() + successUrl;
+			}
 			model.addAttribute("__url", successUrl); // 告诉浏览器登录后跳转的页面
 			return ServletUtils.renderObject(response, model);
 		}
@@ -300,6 +303,11 @@ public class LoginController extends BaseController{
 			}
 			return null;
 		}
+		
+		// 非无类型用户，自动根据用户类型设置默认菜单的归属系统（个性化示例）
+		//if (!User.USER_TYPE_NONE.equals(user.getUserType())){
+		//	session.setAttribute("sysCode", user.getUserType());
+		//}
 		
 		// 返回指定用户类型的首页视图
 		String view = UserUtils.getUserTypeValue(user.getUserType(), "indexView");

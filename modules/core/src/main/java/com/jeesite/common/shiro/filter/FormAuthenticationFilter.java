@@ -95,7 +95,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		// 登录成功后，判断是否需要记住用户名
 		if (WebUtils.isTrue(request, DEFAULT_REMEMBER_USERCODE_PARAM)) {
-			rememberUserCodeCookie.setValue(EncodeUtils.xssFilter(username));
+			rememberUserCodeCookie.setValue(EncodeUtils.encodeUrl(EncodeUtils.xssFilter(username)));
 			rememberUserCodeCookie.saveTo((HttpServletRequest)request, (HttpServletResponse)response);
 		} else {
 			rememberUserCodeCookie.removeFrom((HttpServletRequest)request, (HttpServletResponse)response);
@@ -235,19 +235,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		// 登录成功后初始化授权信息并处理登录后的操作
 		authorizingRealm.onLoginSuccess((LoginInfo)subject.getPrincipal(), (HttpServletRequest) request);
 		
-		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
-		if (ServletUtils.isAjaxRequest((HttpServletRequest) request)) {
-			request.getRequestDispatcher(getSuccessUrl()).forward(request, response); // AJAX不支持Redirect改用Forward
-		}
-		// 登录成功直接返回到首页
-		else {
-			String url = request.getParameter("__url");
-			if (StringUtils.isNotBlank(url)) {
-				WebUtils.issueRedirect(request, response, url, null, true);
-			} else {
-				WebUtils.issueRedirect(request, response, getSuccessUrl(), null, true);
-			}
-		}
+		// AJAX不支持Redirect改用Forward
+		request.getRequestDispatcher(getSuccessUrl()).forward(request, response);
 		return false;
 	}
 

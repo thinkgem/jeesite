@@ -38,12 +38,8 @@ public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
 		// 登录成功后初始化授权信息并处理登录后的操作
 		authorizingRealm.onLoginSuccess((LoginInfo)subject.getPrincipal(), (HttpServletRequest)request);
 		
-		String url = request.getParameter("__url");
-		if (StringUtils.isNotBlank(url)) {
-			WebUtils.issueRedirect(request, response, url, null, true);
-		} else {
-			WebUtils.issueRedirect(request, response, getSuccessUrl(), null, true);
-		}
+		// AJAX不支持Redirect改用Forward
+		request.getRequestDispatcher(getSuccessUrl()).forward(request, response);
 		return false;
 	}
 	
@@ -55,12 +51,8 @@ public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
 		Subject subject = getSubject(request, response);
 		if (subject.isAuthenticated() || subject.isRemembered()) {
 			try {
-				String url = request.getParameter("__url");
-				if (StringUtils.isNotBlank(url)) {
-					WebUtils.issueRedirect(request, response, url, null, true);
-				} else {
-					WebUtils.issueRedirect(request, response, getSuccessUrl(), null, true);
-				}
+				// AJAX不支持Redirect改用Forward
+				request.getRequestDispatcher(getSuccessUrl()).forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

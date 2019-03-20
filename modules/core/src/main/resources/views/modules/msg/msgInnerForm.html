@@ -1,0 +1,177 @@
+<% layout('/layouts/default.html', {title: '站内消息', libs: ['validate','fileupload','ueditor']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-speech"></i> ${text(msgInner.isNewRecord ? '发送消息' : '编辑消息')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${msgInner}" action="${ctx}/msg/msgInner/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<#form:hidden path="status"/>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('标题')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:input path="msgTitle" maxlength="200" class="form-control required text-ruler"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('等级')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="contentLevel" dictType="msg_inner_content_level" class="form-control required" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('类型')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="contentType" dictType="msg_inner_content_type" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('内容')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:ueditor path="msgContent" rows="4" class="form-control required" simpleToolbars="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">${text('附件')}：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadFile" bizKey="${msgInner.id}" bizType="msgInner_file"
+									uploadType="all" class="" readonly="false"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">${text('接受者信息')}</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('接受者')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:radio path="receiveType" dictType="msg_inner_receiver_type" class="form-control required" />
+								<#form:treeselect id="receive" title="${text('接受者选择')}"
+									path="receiveCodes" labelPath="receiveNames"
+									url="${ctx}/sys/office/treeData?isLoadUser=true"
+									class=" required" allowClear="true" checkbox="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('通知')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:checkbox path="notifyTypes" dictType="sys_msg_type" class="form-control required" />
+								<% if(__info_type == '0'){ %>（专业版功能）<% } %>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% if(!msgInner.isNewRecord){ %>
+				<div class="form-unit">${text('发送者信息')}</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('发送者')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="sendUserName" readonly="true" maxlength="100" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('发送时间')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="sendDate" dataFormat="datetime" readonly="true" maxlength="20" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('msg:msgInner:edit')){ %>
+							<% if (msgInner.status == null || msgInner.status == '9'){ %>
+								<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit" onclick="$('#status').val(9)"><i class="fa fa-save"></i> ${text('保存草稿')}</button>&nbsp;
+								<button type="submit" class="btn btn-sm btn-info" id="btnRelease" onclick="$('#status').val(0)"><i class="fa fa-send"></i> ${text('发布消息')}</button>&nbsp;
+							<% } %>
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$('#receiveType input').on('ifCreated ifChecked', function(event){
+	if ($(this).is(':checked')){
+		var url, val = $(this).val(); // 接受者类型（1用户 2部门 3角色 4岗位）
+		if (val == '0'){
+			$('#receiveDiv').hide();
+			$('#receiveName').removeClass('required');
+		}else{
+			$('#receiveDiv').show();
+			$('#receiveName').addClass('required');
+			if (val == '1'){
+				url = '${ctx}/sys/office/treeData?isLoadUser=true&isAll=true';
+			}else if (val == '2'){
+				url = '${ctx}/sys/office/treeData?isAll=true';
+			}else if (val == '3'){
+				url = '${ctx}/sys/role/treeData?isAll=true';
+			}else if (val == '4'){
+				url = '${ctx}/sys/post/treeData?isAll=true';
+			}
+			$('#receiveDiv').attr('data-url', url);
+		}
+		if (event.type != 'ifCreated'){
+			$('#receiveCode,#receiveName').val('');
+		}
+	}
+});
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

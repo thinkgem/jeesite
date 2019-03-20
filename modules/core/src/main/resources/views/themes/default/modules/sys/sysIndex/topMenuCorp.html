@@ -1,7 +1,7 @@
 <% if(@Global.getConfigToBoolean('user.useCorpModel', 'false') && user.superAdmin){ %>
 <li>
 	<a href="javascript:" id="switchCorp">
-		<i class="fa icon-home"></i> 当前租户：(${session.corpCode}) ${session.corpName}
+		<i class="fa icon-home"></i> ${text('当前租户')}：(${session.corpCode}) ${session.corpName}
 	</a>
 	<div class="hide"><#form:treeselect id="switchCorpSelect" title="${text('租户切换')}" allowClear="false"
 		url="${ctx}/sys/corpAdmin/treeData?isShowCode=true" callbackFuncName="switchCorpSelectCallback"/>

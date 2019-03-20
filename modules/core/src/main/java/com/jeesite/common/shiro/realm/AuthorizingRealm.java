@@ -5,8 +5,6 @@ package com.jeesite.common.shiro.realm;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.codec.Sha1Utils;
 import com.jeesite.common.utils.SpringUtils;
@@ -31,10 +29,10 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	
 	public AuthorizingRealm() {
 		super();
-		// 设定密码校验的Hash算法与迭代次数
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(HASH_ALGORITHM);
-		matcher.setHashIterations(HASH_INTERATIONS);
-		this.setCredentialsMatcher(matcher);
+//		// 设定密码校验的Hash算法与迭代次数（V4.1.4及以上版本不需要了，统一使用validatePassword验证密码）
+//		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(HASH_ALGORITHM);
+//		matcher.setHashIterations(HASH_INTERATIONS);
+//		this.setCredentialsMatcher(matcher);
 	}
 	
 	/**
