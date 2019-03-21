@@ -159,8 +159,8 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 					if (MsgPush.TYPE_PC.equals(type)){
 						msgContent = new PcMsgContent();
 						msgContent.setContent("你有一条内部消息，点击“详情”进行查阅。");
-						((PcMsgContent)msgContent).addButton(new String[]{
-								"详情", "/a/msg/msgInner/view?id="+msgInner.getId()});
+						((PcMsgContent)msgContent).addButton(new String[]{"详情", 
+								Global.getAdminPath()+"/msg/msgInner/view?id="+msgInner.getId()});
 					}else if (MsgPush.TYPE_APP.equals(type)){
 						msgContent = new AppMsgContent();
 					}else if (MsgPush.TYPE_SMS.equals(type)){
