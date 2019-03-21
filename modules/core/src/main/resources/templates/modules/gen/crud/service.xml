@@ -162,7 +162,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 			}
 		}
 		%>
-		${@StringUtils.uncap(child.className)}Dao.delete(${@StringUtils.uncap(child.className)});
+		${@StringUtils.uncap(child.className)}Dao.deleteByEntity(${@StringUtils.uncap(child.className)});
 	<% } %>
 	}
 	

@@ -115,7 +115,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		super.delete(testData);
 		TestDataChild testDataChild = new TestDataChild();
 		testDataChild.setTestData(testData);
-		testDataChildDao.delete(testDataChild);
+		testDataChildDao.deleteByEntity(testDataChild);
 	}
 	
 	/**
