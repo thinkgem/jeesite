@@ -4,7 +4,7 @@
 	
 	<!-- 查询数据 -->
 	<select id="findList" resultType="MsgInner">
-		SELECT distinct ${sqlMap.column.toSql()}
+		SELECT ${sqlMap.column.toSql()}
 		<if test="record != null and record.receiveUserCode != null and record.receiveUserCode != ''">,
 			r.read_status AS "record.readStatus",
 			r.read_date AS "record.readDate",
