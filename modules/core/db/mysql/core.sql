@@ -504,7 +504,7 @@ CREATE TABLE js_sys_msg_inner_record
 (
 	id varchar(64) NOT NULL COMMENT '编号',
 	msg_inner_id varchar(64) NOT NULL COMMENT '所属消息',
-	receive_user_code varchar(64) COMMENT '接受者用户编码',
+	receive_user_code varchar(64) NOT NULL COMMENT '接受者用户编码',
 	receive_user_name varchar(100) NOT NULL COMMENT '接受者用户姓名',
 	read_status char(1) NOT NULL COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '阅读时间',

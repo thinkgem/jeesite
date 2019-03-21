@@ -59,8 +59,10 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			config.setIsSys("1");
 			Config config2 = (Config)config.clone();
 			config2.setId("2");
+			config.setConfigKey("test2");
 			Config config3 = (Config)config.clone();
 			config3.setId("3");
+			config.setConfigKey("test3");
 			System.out.println(configDao.insert(config));
 			System.out.println(configDao.insertBatch(ListUtils.newArrayList(config2, config3)));
 			

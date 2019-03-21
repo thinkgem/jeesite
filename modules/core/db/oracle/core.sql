@@ -503,7 +503,7 @@ CREATE TABLE js_sys_msg_inner_record
 (
 	id varchar2(64) NOT NULL,
 	msg_inner_id varchar2(64) NOT NULL,
-	receive_user_code varchar2(64),
+	receive_user_code varchar2(64) NOT NULL,
 	receive_user_name varchar2(100) NOT NULL,
 	read_status char(1) NOT NULL,
 	read_date timestamp,
