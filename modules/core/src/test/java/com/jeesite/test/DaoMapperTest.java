@@ -5,6 +5,7 @@ package com.jeesite.test;
 
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
+import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.sys.dao.AreaDao;
 import com.jeesite.modules.sys.dao.CompanyDao;
 import com.jeesite.modules.sys.dao.ConfigDao;
@@ -143,44 +145,76 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	}
 	
 	public static void main(String[] args) {
+		String a = null, b = null;
 		System.out.println("============ 基本测试 ============");
-		System.out.println(new Config("1").getSqlMap().getWhere()
-				.and("name", QueryType.EQ, "abc").toSql());
-		System.out.println(new Config("1").getSqlMap().getWhere()
-				.and("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql());
+		a = new Config("1").getSqlMap()
+				.getWhere().and("name", QueryType.EQ, "abc").toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND a.name = #{sqlMap.where.name#EQ1.val}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		a = new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND a.name IN ( #{sqlMap.where.name#IN1.val[0]},"
+				+ " #{sqlMap.where.name#IN1.val[1]}, #{sqlMap.where.name#IN1.val[2]} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 
 		System.out.println("============ 重复赋值测试 ============");
-		System.out.println(new Config("1").getSqlMap().getWhere()
-				.and("name", QueryType.LIKE, "abc").and("name", QueryType.LIKE, "def").toSql());
+		a = new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.LIKE, "abc").and("name", QueryType.LIKE, "def").toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND a.name LIKE #{sqlMap.where.name#LIKE1.val}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
 		System.out.println("============ 带括号测试 ============");
-		System.out.println(new Config("1").getSqlMap().getWhere()
+		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
-				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql());
-		System.out.println(new Config().getSqlMap().getWhere()
-				.andBracket("name", QueryType.EQ, "val1", 1)
-					.and("name", QueryType.NE, "val2", 11).endBracket(1)
-				.orBracket("name", QueryType.NE, "val3", 2)
-					.and("name", QueryType.NE, "val4", 22).endBracket(2)
-				.orBracket("name", QueryType.NE, "val5", 3)
-					.and("name", QueryType.EQ, "val6", 33).endBracket(3).toSql());
+					.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ1.val}"
+				+ " OR a.name = #{sqlMap.where.name#EQ2.val} OR a.name = #{sqlMap.where.name#EQ3.val} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
-		System.out.println("============ 带括号空值测试 ============");
-		System.out.println(new Config("1").getSqlMap().getWhere()
+		a = new Config().getSqlMap().getWhere()
+				.andBracket("name", QueryType.EQ, "val1", 1).and("name", QueryType.NE, "val2", 11).endBracket(1)
+				.orBracket("name", QueryType.NE, "val3", 2).and("name", QueryType.NE, "val4", 22).endBracket(2)
+				.orBracket("name", QueryType.NE, "val5", 3).and("name", QueryType.EQ, "val6", 33).endBracket(3)
+				.toSql();
+		b = "( a.name = #{sqlMap.where.name#EQ1.val} AND a.name != #{sqlMap.where.name#NE11.val} )"
+				+ " OR ( a.name != #{sqlMap.where.name#NE2.val} AND a.name != #{sqlMap.where.name#NE22.val} )"
+				+ " OR ( a.name != #{sqlMap.where.name#NE3.val} AND a.name = #{sqlMap.where.name#EQ33.val} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		System.out.println("============ 带括号部分空值测试 ============");
+		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
-				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
-		System.out.println(new Config("1").getSqlMap().getWhere()
+					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ2.val} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
-				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
-		System.out.println(new Config("1").getSqlMap().getWhere()
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ1.val}"
+				+ " OR a.name = #{sqlMap.where.name#EQ2.val} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
-				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql());
-		System.out.println(new Config("1").getSqlMap().getWhere()
+				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ2.val}"
+				+ " OR a.name = #{sqlMap.where.name#EQ3.val} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+
+		System.out.println("============ 带括号全部空值测试 ============");
+		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
-				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
-		System.out.println(new Config().getSqlMap().getWhere()
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} ";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		a = new Config().getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
-				.or("name", QueryType.EQ, "", 3).endBracket().toSql());
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
+		b = "";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
 		System.out.println("============ 实体嵌套测试 ============");
 		Company company = new Company("1");
@@ -190,7 +224,25 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		company.getArea().setAreaName("a");
 		company.getArea().setCreateDate_gte(new Date());
 		company.getArea().setCreateDate_lte(new Date());
-		System.out.println(company.getSqlMap().getWhere().toSql());
+		company.getSqlMap().getWhere().disableAutoAddStatusWhere();
+		a = company.getSqlMap().getWhere().toSql();
+		b = "a.company_code = #{sqlMap.where#company_code#EQ1}"
+				+ " AND a.area_code = #{sqlMap.where#area_code#EQ1}"
+				+ " AND a.create_date >= #{sqlMap.where.create_date#GTE1.val}"
+				+ " AND a.create_date <= #{sqlMap.where.create_date#LTE1.val}"
+				+ " AND b.area_code = #{area.sqlMap.where#area_code#EQ1}"
+				+ " AND b.create_date >= #{area.sqlMap.where.create_date#GTE1.val}"
+				+ " AND b.create_date <= #{area.sqlMap.where.create_date#LTE1.val}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+
+		System.out.println("============ 联合查询返回到当前实体测试 ============");
+		FileUpload fileUpload = new FileUpload();
+		fileUpload.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
+		a = fileUpload.getSqlMap().getWhere().toSql();
+		b = "a.status != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
+				+ " #{sqlMap.where.create_by#IN1.val[1]} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
 		
 	}
 }
