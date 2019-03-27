@@ -54,6 +54,13 @@ spring:
         native:
           searchLocations: classpath:cloud-config
   
+  # 消息队列服务
+#  rabbitmq:
+#    host: 192.168.56.106
+#    port: 5672
+#    username: admin
+#    password: admin123
+
   # 关闭横幅
   main:
     bannerMode: "off"

@@ -43,6 +43,12 @@
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		
+		<!-- 自动更新配置支持 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>-->
+		
 		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>

@@ -161,6 +161,13 @@ spring:
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,cmsCache
   
+  # 消息队列服务
+#  rabbitmq:
+#    host: 192.168.11.103
+#    port: 8976
+#    username: admin
+#    password: admin123
+    
 #======================================#
 #========== System settings ===========#
 #======================================#
