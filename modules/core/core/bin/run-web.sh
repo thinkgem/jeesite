@@ -18,11 +18,11 @@ cd target
 # 优化JVM参数
 JAVA_OPTS="$MAVEN_OPTS -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
 
-# 方式一、配置环境名称
-# JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=prod"
-
-# 方式二、配置外部属性文件（建议）
+# 方式一、配置外部自定义的属性文件（建议）
 # JAVA_OPTS="$JAVA_OPTS -Dspring.config.location=$PWD\app.yml"
+
+# 方式二、配置环境名称，加载不同的属性文件
+# JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=prod"
 
 if [ -z "$JAVA_HOME" ]; then
   RUN_JAVA=java

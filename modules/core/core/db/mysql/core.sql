@@ -295,8 +295,8 @@ CREATE TABLE js_sys_file_entity
 	file_content_type varchar(200) NOT NULL COMMENT '文件内容类型',
 	file_extension varchar(100) NOT NULL COMMENT '文件后缀扩展名',
 	file_size decimal(31) NOT NULL COMMENT '文件大小(单位B)',
-	PRIMARY KEY (file_id),
-	UNIQUE (file_md5)
+	file_meta varchar(255) COMMENT '文件信息(JSON格式)',
+	PRIMARY KEY (file_id)
 ) COMMENT = '文件实体表';
 
 
@@ -329,6 +329,7 @@ CREATE TABLE js_sys_job
 	cron_expression varchar(255) NOT NULL COMMENT 'Cron执行表达式',
 	misfire_instruction decimal(1) NOT NULL COMMENT '计划执行错误策略',
 	concurrent char(1) NOT NULL COMMENT '是否并发执行',
+	instance_name varchar(64) DEFAULT 'JeeSiteScheduler' NOT NULL COMMENT '集群的实例名字',
 	status char(1) NOT NULL COMMENT '状态（0正常 1删除 2暂停）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',
@@ -480,14 +481,14 @@ CREATE TABLE js_sys_msg_inner
 	content_level char(1) NOT NULL COMMENT '内容级别（1普通 2一般 3紧急）',
 	content_type char(1) COMMENT '内容类型（1公告 2新闻 3会议 4其它）',
 	msg_content text NOT NULL COMMENT '消息内容',
-	receive_type char(1) NOT NULL COMMENT '接受者类型（1用户 2部门 3角色 4岗位）',
-	receive_codes text NOT NULL COMMENT '接受者字符串',
-	receive_names text NOT NULL COMMENT '接受者名称字符串',
-	send_user_code varchar(64) NOT NULL COMMENT '发送者用户编码',
-	send_user_name varchar(100) NOT NULL COMMENT '发送者用户姓名',
-	send_date datetime NOT NULL COMMENT '发送时间',
+	receive_type char(1) NOT NULL COMMENT '接受者类型（0全部 1用户 2部门 3角色 4岗位）',
+	receive_codes text COMMENT '接受者字符串',
+	receive_names text COMMENT '接受者名称字符串',
+	send_user_code varchar(64) COMMENT '发送者用户编码',
+	send_user_name varchar(100) COMMENT '发送者用户姓名',
+	send_date datetime COMMENT '发送时间',
 	is_attac char(1) COMMENT '是否有附件',
-	notify_types varchar(100) NOT NULL COMMENT '通知类型（PC APP 短信 邮件 微信）多选',
+	notify_types varchar(100) COMMENT '通知类型（PC APP 短信 邮件 微信）多选',
 	status char(1) NOT NULL COMMENT '状态（0正常 1删除 4审核 5驳回 9草稿）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',
@@ -503,9 +504,9 @@ CREATE TABLE js_sys_msg_inner_record
 (
 	id varchar(64) NOT NULL COMMENT '编号',
 	msg_inner_id varchar(64) NOT NULL COMMENT '所属消息',
-	receive_user_code varchar(64) COMMENT '接受者用户编码',
+	receive_user_code varchar(64) NOT NULL COMMENT '接受者用户编码',
 	receive_user_name varchar(100) NOT NULL COMMENT '接受者用户姓名',
-	read_status char(1) NOT NULL COMMENT '读取状态（0未送达 1未读 2已读）',
+	read_status char(1) NOT NULL COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '阅读时间',
 	is_star char(1) COMMENT '是否标星',
 	PRIMARY KEY (id)
@@ -535,7 +536,7 @@ CREATE TABLE js_sys_msg_push
 	push_return_content text COMMENT '推送返回的内容信息',
 	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
 	push_date datetime COMMENT '推送时间',
-	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
+	read_status char(1) COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '读取时间',
 	PRIMARY KEY (id)
 ) COMMENT = '消息推送表';
@@ -564,7 +565,7 @@ CREATE TABLE js_sys_msg_pushed
 	push_return_msg_id varchar(200) COMMENT '推送返回消息编号',
 	push_status char(1) COMMENT '推送状态（0未推送 1成功  2失败）',
 	push_date datetime COMMENT '推送时间',
-	read_status char(1) COMMENT '读取状态（0未送达 1未读 2已读）',
+	read_status char(1) COMMENT '读取状态（0未送达 1已读 2未读）',
 	read_date datetime COMMENT '读取时间',
 	PRIMARY KEY (id)
 ) COMMENT = '消息已推送表';
@@ -805,7 +806,7 @@ CREATE INDEX idx_sys_company_status ON js_sys_company (status ASC);
 CREATE INDEX idx_sys_company_vc ON js_sys_company (view_code ASC);
 CREATE INDEX idx_sys_company_pcs ON js_sys_company (parent_codes ASC);
 CREATE INDEX idx_sys_company_tss ON js_sys_company (tree_sorts ASC);
-CREATE INDEX idx_sys_config_key ON js_sys_config (config_key ASC);
+CREATE UNIQUE INDEX idx_sys_config_key ON js_sys_config (config_key ASC);
 CREATE INDEX idx_sys_dict_data_cc ON js_sys_dict_data (corp_code ASC);
 CREATE INDEX idx_sys_dict_data_dt ON js_sys_dict_data (dict_type ASC);
 CREATE INDEX idx_sys_dict_data_pc ON js_sys_dict_data (parent_code ASC);
@@ -862,7 +863,6 @@ CREATE INDEX idx_sys_msg_inner_cl ON js_sys_msg_inner (content_level ASC);
 CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date ASC);
 CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id ASC);
-CREATE INDEX idx_sys_msg_inner_r_rc ON js_sys_msg_inner_record (receive_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record (read_status ASC);
 CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star ASC);

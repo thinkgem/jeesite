@@ -36,6 +36,6 @@ echo.
 cd %~dp0
 
 cd ..
-call mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitCoreData -Djeesite.initdata=true -U
+call mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitCoreData -Djeesite.initdata=true -Djdbc.jta.enabled=false -U
 
 pause
