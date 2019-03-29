@@ -29,4 +29,4 @@ read -s -n1 -p "请按任意键继续 ... "
 echo ""
 
 cd ..
-mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitCoreData -Djeesite.initdata=true -U
+mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitCoreData -Djeesite.initdata=true -Djdbc.jta.enabled=false -U
