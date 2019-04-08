@@ -110,7 +110,8 @@ public class ServletUtils {
 		}
 		
 		String uri = request.getRequestURI();
-		if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")){
+		if (StringUtils.endsWithIgnoreCase(uri, ".json")
+				|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
 			return true;
 		}
 		
