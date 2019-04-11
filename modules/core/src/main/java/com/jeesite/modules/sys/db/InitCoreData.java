@@ -61,8 +61,7 @@ public class InitCoreData extends BaseInitDataTests {
 
 	@Override
 	public void begin() {
-		super.begin();
-		excelFile = InitCoreData.class.getName().replaceAll("\\.", "/")+".xlsx";
+		super.begin(InitCoreData.class);
 	}
 	
 	/**
