@@ -5,8 +5,11 @@ package com.jeesite.common.shiro.realm;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authc.AuthenticationToken;
+
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.codec.Sha1Utils;
+import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
@@ -33,6 +36,22 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 //		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(HASH_ALGORITHM);
 //		matcher.setHashIterations(HASH_INTERATIONS);
 //		this.setCredentialsMatcher(matcher);
+	}
+	
+	/**
+	 * 获取登录令牌
+	 */
+	@Override
+	protected FormToken getFormToken(AuthenticationToken authcToken) {
+		return super.getFormToken(authcToken);
+	}
+	
+	/**
+	 * 获取用户信息
+	 */
+	@Override
+	protected User getUserInfo(FormToken token) {
+		return super.getUserInfo(token);
 	}
 	
 	/**
