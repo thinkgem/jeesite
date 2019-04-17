@@ -472,6 +472,9 @@ logging:
 #  
 #  # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
 #  staticFileExcludeUri: /druid/
+#  
+#  # 静态资源路径前缀，可做CDN加速优化
+#  staticPrefix: /static
 #
 #  # 自定义正则表达式验证（主键、登录名）
 #  validator:
