@@ -96,7 +96,7 @@ public class EmpUser extends User {
 	public Employee getEmployee(){
 		Employee employee = (Employee)super.getRefObj();
 		if (employee == null){
-			employee = new Employee();
+			employee = new Employee(getRefCode());
 			super.setRefObj(employee);
 		}
 		return employee;
