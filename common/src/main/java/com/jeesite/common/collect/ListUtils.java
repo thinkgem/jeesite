@@ -356,7 +356,7 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	 * @param totalPage 总页码数
 	 * @author ThinkGem
 	 */
-	private static <T> List<T> getPageList(List<T> list, int pageNo, int pageSize, int totalPage) {
+	public static <T> List<T> getPageList(List<T> list, int pageNo, int pageSize, int totalPage) {
 		int fromIndex = 0; // 从哪里开始截取
 		int toIndex = 0; // 截取几个
 		if (list == null || list.size() == 0){
