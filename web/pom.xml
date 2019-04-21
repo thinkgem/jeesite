@@ -44,17 +44,17 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 文件管理 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-filemanager</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
 		<!-- Office在线预览 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-weboffice</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- 文件管理 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

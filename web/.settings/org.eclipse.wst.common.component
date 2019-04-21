@@ -12,10 +12,10 @@
         <dependent-module archiveName="jeesite-module-swagger-4.1.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-swagger/jeesite-module-swagger">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-module-filemanager-4.1.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-filemanager/jeesite-module-filemanager">
+        <dependent-module archiveName="jeesite-module-weboffice-4.1.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-weboffice/jeesite-module-weboffice">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-module-weboffice-4.1.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-weboffice/jeesite-module-weboffice">
+        <dependent-module archiveName="jeesite-module-filemanager-4.1.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-filemanager/jeesite-module-filemanager">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>

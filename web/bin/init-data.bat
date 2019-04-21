@@ -36,6 +36,7 @@ echo.
 cd %~dp0
 
 cd ..
-call mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitCoreData -Djeesite.initdata=true -Djdbc.jta.enabled=false -U
+set "MAVEN_OPTS=%MAVEN_OPTS% -Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
+call mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitFilemanagerData,com.jeesite.test.InitCoreData -Djeesite.initdata=true -Djdbc.jta.enabled=false -U
 
 pause

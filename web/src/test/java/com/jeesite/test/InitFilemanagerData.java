@@ -21,8 +21,9 @@ import com.jeesite.modules.Application;
 public class InitFilemanagerData extends com.jeesite.modules.filemanager.db.InitFilemanagerData {
 	
 	@Test
-	public void initCoreData() throws Exception{
+	public void initFilemanagerData() throws Exception{
 		createTable();
+		initFilemanagerFolder();
 	}
 	
 }
