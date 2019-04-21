@@ -53,7 +53,8 @@
 		
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
-		<maven.test.skip>true</maven.test.skip> 
+		<maven.test.skip>true</maven.test.skip>
+		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 降级到该版本，新版本可能会出现VM崩溃 -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
@@ -61,13 +62,11 @@
 	
 	<dependencies>
 		
-		<!-- WEB begin -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- WEB end -->
 		
 	</dependencies>
 	
@@ -141,7 +140,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 			</plugin>
-			
+			 
 			<!-- ant插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -152,6 +151,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			
+			<!-- 测试用例插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 			
 		</plugins>
