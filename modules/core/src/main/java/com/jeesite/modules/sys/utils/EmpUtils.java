@@ -45,7 +45,7 @@ public class EmpUtils {
 		User user = UserUtils.getUser();
 		Employee employee = null;
 		if (User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
-			employee = (Employee)UserUtils.getUser().getRefObj();
+			employee = (Employee)user.getRefObj();
 		}
 		if (employee == null){
 			employee = new Employee();
