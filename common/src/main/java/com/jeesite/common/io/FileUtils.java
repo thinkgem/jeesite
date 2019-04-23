@@ -756,7 +756,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		}
 		
 		try {
-			response.addHeader("Content-Disposition", "attachment; filename=\"" + 
+			boolean isPreview = "preview".equalsIgnoreCase(request.getParameter("source"));
+			response.addHeader("Content-Disposition", (!isPreview ? "attachment; " : "") + "filename=\"" + 
 					EncodeUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName) + "\"");
 			response.setContentType(FileUtils.getContentType(file.getName())); // set the MIME type.
 			response.addHeader("Content-Length", String.valueOf(contentLength));
