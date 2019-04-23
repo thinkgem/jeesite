@@ -81,7 +81,7 @@ $("#inputForm").validate({
 });
 <% if(table.isTreeEntity){ %>
 
-// 选择父级菜单回调方法
+// 选择上级节点回调方法
 function treeselectCallback(id, act, index, layero){
 	if (id == 'parent' && (act == 'ok' || act == 'clear')){
 		// 创建并初始化下一个节点信息，如：排序号、默认值
