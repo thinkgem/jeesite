@@ -211,7 +211,8 @@ jQuery.extend = jQuery.fn.extend = function() {
 				copy = options[ name ];
 
 				// Prevent never-ending loop
-				if ( target === copy ) {
+//				if ( target === copy ) {
+				if (name === "__proto__" || target === copy) { // 修复jQuery原型污染漏洞  ThinkGem
 					continue;
 				}
 
