@@ -51,9 +51,17 @@ spring:
   cloud:
     config:
       server:
+        # 使用本地配置文件
         native:
           searchLocations: classpath:cloud-config
-  
+        # 使用Git储存配置文件
+        git: 
+          uri: https://gitee.com/thinkgem/config.git
+          username: ~
+          password: ~
+          default-label: master
+          search-paths: cloud-config
+          
   # 消息队列服务
 #  rabbitmq:
 #    host: 192.168.56.106

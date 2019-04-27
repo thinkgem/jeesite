@@ -1,0 +1,64 @@
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例是否允许使用IP
+    preferIpAddress: true
+
+  # 客户端设置
+  client:
+    # 注册中心地址（集群时指定另外一个注册中心地址）
+    serviceUrl.defaultZone: http://172.17.0.2:8970/eureka/
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: mysql
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://192.168.56.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+  username: jeesite
+  password: jeesite
+  testSql: SELECT 1
+
+  # 数据库连接池配置
+  pool:
+  
+    # 初始化连接数
+    init: 1
+    # 最小连接数
+    minIdle: 3
+    # 最大连接数
+    maxActive: 20
+
+  # JTA 分布式事务
+  jta:
+    enabled: true
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+    
+  # Redis 连接参数 （RedisProperties）
+  redis:
+    host: 192.168.56.1
+    port: 6379
+    ssl: false
+    database: 0
+    password: 1234
+    timeout: 2000
+    lettuce:
+      pool:
+        # 最大空闲连接数
+        maxIdle: 3
+        # 最大活动连接数
+        maxActive: 20
+
+file:
+
+  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+  baseDir: /root/jeesite

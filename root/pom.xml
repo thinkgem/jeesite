@@ -13,6 +13,7 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
+		<!--<module>../../jeesite/root</module>-->
         <module>../parent</module>
         <module>../eureka</module>
         <module>../config</module>
