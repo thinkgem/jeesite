@@ -38,9 +38,17 @@ eureka:
 #======================================#
 
 spring:
-
-  # 网关路由配置
   cloud:
+    
+    # Consul 服务发现
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+        healthCheckInterval: 15s
+      
+    # 网关路由配置
     gateway:
       defaultFilters:
         - PreserveHostHeader

@@ -46,7 +46,12 @@ spring:
       discovery:
         enabled: true
         serviceId: jeesite-cloud-config
-
+        
+    # Consul 服务发现
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      
   # 打印横幅
   main:
     bannerMode: "off"
