@@ -1,4 +1,4 @@
-/* Electron */ if(typeof module==='object'){window.module=module;module=undefined;}
+if(typeof module==='object'){window.module=module;module=undefined;}/* Electron Support */
 /*!
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/

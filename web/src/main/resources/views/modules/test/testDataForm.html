@@ -321,8 +321,9 @@ $("#testDataChildDataGrid").dataGrid({
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		$('#jqgh_testDataChildDataGrid_rn').append('<a href="javascript:$(\'#testDataChildDataGridAddRowBtn'
-				+ '\').click();"><i class="fa fa-plus"></i></a>');
+		$('#jqgh_testDataChildDataGrid_rn').append('<a href="javascript:" onclick="'
+				+ '$(\'#testDataChildDataGridAddRowBtn\').click();">'
+				+ '<i class="fa fa-plus"></i></a>');
 	}
 });
 </script>
