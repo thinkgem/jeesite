@@ -63,7 +63,7 @@ public class AreaController extends BaseController {
 	 * 查询区域数据
 	 * @param area
 	 */
-	@RequiresPermissions("user")
+	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public List<Area> listData(Area area) {

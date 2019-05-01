@@ -476,6 +476,9 @@ logging:
 #  # 静态资源路径前缀，可做CDN加速优化
 #  staticPrefix: /static
 #  
+#  # 严格模式（更严格的数据安全验证）
+#  strictMode: false
+#  
 #  # 自定义正则表达式验证（主键、登录名）
 #  validator:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'

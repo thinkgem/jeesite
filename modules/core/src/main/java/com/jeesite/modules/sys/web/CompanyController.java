@@ -70,7 +70,7 @@ public class CompanyController extends BaseController {
 	 * 查询公司数据
 	 * @param company
 	 */
-	@RequiresPermissions("user")
+	@RequiresPermissions("sys:company:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public List<Company> listData(Company company, String ctrlPermi) {
@@ -209,7 +209,7 @@ public class CompanyController extends BaseController {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		Company where = new Company();
 		where.setStatus(Company.STATUS_NORMAL);
-		if (!(isAll != null && isAll)){
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			companyService.addDataScopeFilter(where, ctrlPermi);
 		}
 		List<Company> list = companyService.findList(where);

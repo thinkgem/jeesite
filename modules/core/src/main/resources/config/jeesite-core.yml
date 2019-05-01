@@ -414,7 +414,7 @@ mybatis:
   
 # Web 相关
 web:
-  
+
   # MVC 视图相关
   view:
     
@@ -463,7 +463,7 @@ web:
   validator:
     id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
-
+  
   # 核心模块的Web功能（仅作为微服务时设为false）
   core: 
     enabled: true

@@ -67,7 +67,7 @@ public class OfficeController extends BaseController {
 	 * 查询机构数据
 	 * @param office
 	 */
-	@RequiresPermissions("user")
+	@RequiresPermissions("sys:company:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public List<Office> listData(Office office, String ctrlPermi) {
@@ -222,7 +222,7 @@ public class OfficeController extends BaseController {
 		Office where = new Office();
 		where.setStatus(Office.STATUS_NORMAL);
 		where.setCompanyCode(companyCode);
-		if (!(isAll != null && isAll)){
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			officeService.addDataScopeFilter(where, ctrlPermi);
 		}
 		List<Office> list = officeService.findList(where);

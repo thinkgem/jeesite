@@ -95,7 +95,7 @@ public class EmpUserController extends BaseController {
 	public Page<EmpUser> listData(EmpUser empUser, Boolean isAll, String ctrlPermi, HttpServletRequest request, HttpServletResponse response) {
 		empUser.getEmployee().getOffice().setIsQueryChildren(true);
 		empUser.getEmployee().getCompany().setIsQueryChildren(true);
-		if (!(isAll != null && isAll)){
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		empUser.setPage(new Page<>(request, response));
@@ -175,7 +175,7 @@ public class EmpUserController extends BaseController {
 	public void exportData(EmpUser empUser, Boolean isAll, String ctrlPermi, HttpServletResponse response) {
 		empUser.getEmployee().getOffice().setIsQueryChildren(true);
 		empUser.getEmployee().getCompany().setIsQueryChildren(true);
-		if (!(isAll != null && isAll)){
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		List<EmpUser> list = empUserService.findList(empUser);
@@ -367,7 +367,7 @@ public class EmpUserController extends BaseController {
 		empUser.setRoleCode(roleCode);
 		empUser.setStatus(User.STATUS_NORMAL);
 		empUser.setUserType(User.USER_TYPE_EMPLOYEE);
-		if (!(isAll != null && isAll)) {
+		if (!(isAll != null && isAll) || Global.isStrictMode()) {
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		List<EmpUser> list = empUserService.findList(empUser);
