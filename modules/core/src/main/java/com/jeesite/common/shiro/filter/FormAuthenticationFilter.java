@@ -70,7 +70,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
 		String username = getUsername(request, response);	// 用户名
 		String password = getPassword(request);				// 登录密码
-		boolean rememberMe = isRememberMe(request);			// 记住我（记住密码）
+		boolean rememberMe = isRememberMe(request);			// 记住我（自动登录）
 		String host = getHost(request);						// 登录主机
 		String captcha = getCaptcha(request);				// 登录验证码
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);	// 登录附加参数
