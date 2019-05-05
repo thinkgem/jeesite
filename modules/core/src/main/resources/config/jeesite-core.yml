@@ -160,7 +160,9 @@ user:
 # 角色管理 
 role: 
   # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
-  # 如果 ctrlTypeClass 为 NONE，则代表是不控制该类型权限
+  # ctrlTypeClass 控制的 Class 类，如果为 NONE，则代表是不控制该类型权限；
+  # ctrlDataAttrName 控制的数据，返回当前用户有权限的数据值，可以接受 String 或  String[] 的类型；
+  # ctrlDataParentCodesAttrName 控制的数据所有上级，用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 长度相同。
   extendDataScopes: >
     {
       3: {
