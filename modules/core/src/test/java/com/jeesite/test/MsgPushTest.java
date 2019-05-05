@@ -116,6 +116,7 @@ public class MsgPushTest extends BaseSpringContextTests {
 	private MsgTemplateService msgTemplateService;
 	
 	public void testMailTpl(){
+		// 创建消息模板
 		MsgTemplate msgTemplate = new MsgTemplate();
 		msgTemplate.setTplKey("mail_send_test");
 		List<MsgTemplate> tplList = msgTemplateService.findList(msgTemplate);
@@ -125,12 +126,13 @@ public class MsgPushTest extends BaseSpringContextTests {
 			msgTemplate.setTplType("email");
 			msgTemplateService.save(msgTemplate);
 		}
+		// 根据模板发送消息
 		EmailMsgContent msgContent = new EmailMsgContent();
 		msgContent.setTitle("邮件提示信息");
 		msgContent.setTplKey("mail_send_test");
 		msgContent.addTplData("keyword1", "小王");
 		msgContent.addTplData("keyword2", "2018-8-28 20:00");
-		msgContent.addTplData("keyword3", "ERP项目方案讨论视频会议");
+		msgContent.addTplData("keyword3", "OA项目方案讨论视频会议");
 		// 即时推送模板消息，模板内容：你好，${keyword1}，请于 ${keyword2}，准时参加${keyword3}
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system");
 	}
