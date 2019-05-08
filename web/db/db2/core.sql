@@ -4,6 +4,7 @@
 DROP TABLE js_gen_table_column;
 DROP TABLE js_gen_table;
 DROP TABLE js_sys_company_office;
+DROP TABLE js_sys_employee_office;
 DROP TABLE js_sys_employee_post;
 DROP TABLE js_sys_user_data_scope;
 DROP TABLE js_sys_user_role;
@@ -273,6 +274,17 @@ CREATE TABLE js_sys_employee
 	corp_code varchar(64) DEFAULT '0' NOT NULL,
 	corp_name vargraphic(100) DEFAULT 'JeeSite' NOT NULL,
 	PRIMARY KEY (emp_code)
+);
+
+
+-- 员工附属机构关系表
+CREATE TABLE js_sys_employee_office
+(
+	id varchar(64) NOT NULL UNIQUE,
+	emp_code varchar(64) NOT NULL,
+	office_code varchar(64) NOT NULL,
+	post_code varchar(64),
+	PRIMARY KEY (emp_code, office_code)
 );
 
 

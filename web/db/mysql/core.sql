@@ -5,6 +5,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS js_gen_table_column;
 DROP TABLE IF EXISTS js_gen_table;
 DROP TABLE IF EXISTS js_sys_company_office;
+DROP TABLE IF EXISTS js_sys_employee_office;
 DROP TABLE IF EXISTS js_sys_employee_post;
 DROP TABLE IF EXISTS js_sys_user_data_scope;
 DROP TABLE IF EXISTS js_sys_user_role;
@@ -275,6 +276,18 @@ CREATE TABLE js_sys_employee
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
 	PRIMARY KEY (emp_code)
 ) COMMENT = '员工表';
+
+
+-- 员工附属机构关系表
+CREATE TABLE js_sys_employee_office
+(
+	id varchar(64) NOT NULL COMMENT '编号',
+	emp_code varchar(64) NOT NULL COMMENT '员工编码',
+	office_code varchar(64) NOT NULL COMMENT '机构编码',
+	post_code varchar(64) COMMENT '岗位编码',
+	PRIMARY KEY (emp_code, office_code),
+	UNIQUE (id)
+) COMMENT = '员工附属机构关系表';
 
 
 -- 员工与岗位关联表

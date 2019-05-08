@@ -107,7 +107,7 @@ for (c in child.columnList){
 						id: 'office_'+editOptions.id, title: '机构选择', 
 						name: '${c.attrName}', value: val.split('|')[0], 
 						labelName: '${c.attrName2}', labelValue: val.split('|')[1],
-						url: '\${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: '${cssClass}'
+						url: '\${ctx}/sys/office/treeData', cssClass: '${cssClass}'
 					});
 				}
 			}

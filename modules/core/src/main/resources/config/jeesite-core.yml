@@ -160,16 +160,18 @@ user:
 # 角色管理 
 role: 
   # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
-  # ctrlTypeClass 控制的 Class 类，如果为 NONE，则代表是不控制该类型权限；
-  # ctrlDataAttrName 控制的数据，返回当前用户有权限的数据值，可以接受 String 或  String[] 的类型；
-  # ctrlDataParentCodesAttrName 控制的数据所有上级，用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 长度相同。
   extendDataScopes: >
     {
       3: {
         Office: {
+          #控制类型的类名 : "用来获取控制表名和主键，如果为 NONE，则代表是不控制该类型权限；",
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
-          ctrlDataAttrName: "currentUser.refObj.office.officeCode",
-          ctrlDataParentCodesAttrName: "currentUser.refObj.office.parentCodes"
+          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前部门编码、公司编码",
+          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+          #控制数据的类名下的属性名 : "可看做类下的 get 方法，如：EmpUtils.getOffices()，支持返回字符串或字符串数组类型",
+          ctrlDataAttrName: "officeCodes",
+          #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
+          ctrlDataParentCodesAttrName: "officeParentCodess"
         },
         Company: {
           ctrlTypeClass: "NONE"
@@ -181,20 +183,23 @@ role:
         },
         Company: {
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
-          ctrlDataAttrName: "currentUser.refObj.company.companyCode",
-          ctrlDataParentCodesAttrName: "currentUser.refObj.company.parentCodes"
+          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+          ctrlDataAttrName: "company.companyCode",
+          ctrlDataParentCodesAttrName: "company.parentCodes"
         }
       },
       5: {
         Office: {
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
-          ctrlDataAttrName: "currentUser.refObj.office.officeCode",
-          ctrlDataParentCodesAttrName: "currentUser.refObj.office.parentCodes"
+          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+          ctrlDataAttrName: "officeCodes",
+          ctrlDataParentCodesAttrName: "officeParentCodess"
         },
         Company: {
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
-          ctrlDataAttrName: "currentUser.refObj.company.companyCode",
-          ctrlDataParentCodesAttrName: "currentUser.refObj.company.parentCodes"
+          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+          ctrlDataAttrName: "company.companyCode",
+          ctrlDataParentCodesAttrName: "company.parentCodes"
         }
       }
     }

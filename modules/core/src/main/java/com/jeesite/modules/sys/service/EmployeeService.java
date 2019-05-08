@@ -8,6 +8,7 @@ import java.util.List;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.api.CrudServiceApi;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.EmployeePost;
 
 /**
@@ -45,5 +46,10 @@ public interface EmployeeService extends CrudServiceApi<Employee> {
 	 * 查询当前员工关联的岗位信息
 	 */
 	public List<EmployeePost> findEmployeePostList(Employee employee);
+	
+	/**
+	 * 查询当前员工关联的附属机构信息
+	 */
+	public List<EmployeeOffice> findEmployeeOfficeList(Employee employee);
 
 }

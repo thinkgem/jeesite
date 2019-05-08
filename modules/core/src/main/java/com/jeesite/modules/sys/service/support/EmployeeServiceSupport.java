@@ -12,8 +12,10 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.EmployeeDao;
+import com.jeesite.modules.sys.dao.EmployeeOfficeDao;
 import com.jeesite.modules.sys.dao.EmployeePostDao;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.EmployeePost;
 import com.jeesite.modules.sys.service.EmployeeService;
 
@@ -25,9 +27,11 @@ import com.jeesite.modules.sys.service.EmployeeService;
 @Transactional(readOnly=true)
 public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		implements EmployeeService{
-	
+
 	@Autowired
 	private EmployeePostDao employeePostDao;
+	@Autowired
+	private EmployeeOfficeDao employeeOfficeDao;
 	
 	/**
 	 * 获取单条数据
@@ -85,5 +89,14 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		EmployeePost employeePost = new EmployeePost();
 		employeePost.setEmpCode(employee.getEmpCode());
 		return employeePostDao.findList(employeePost);
+	}
+	
+	/**
+	 * 查询当前员工关联的附属机构信息
+	 */
+	public List<EmployeeOffice> findEmployeeOfficeList(Employee employee){
+		EmployeeOffice employeeOffice = new EmployeeOffice();
+		employeeOffice.setEmpCode(employee.getEmpCode());
+		return employeeOfficeDao.findList(employeeOffice);
 	}
 }

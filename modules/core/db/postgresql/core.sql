@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS js_gen_table_column;
 DROP TABLE IF EXISTS js_gen_table;
 DROP TABLE IF EXISTS js_sys_company_office;
+DROP TABLE IF EXISTS js_sys_employee_office;
 DROP TABLE IF EXISTS js_sys_employee_post;
 DROP TABLE IF EXISTS js_sys_user_data_scope;
 DROP TABLE IF EXISTS js_sys_user_role;
@@ -273,6 +274,17 @@ CREATE TABLE js_sys_employee
 	corp_code varchar(64) DEFAULT '0' NOT NULL,
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL,
 	PRIMARY KEY (emp_code)
+) WITHOUT OIDS;
+
+
+-- 员工附属机构关系表
+CREATE TABLE js_sys_employee_office
+(
+	id varchar(64) NOT NULL UNIQUE,
+	emp_code varchar(64) NOT NULL,
+	office_code varchar(64) NOT NULL,
+	post_code varchar(64),
+	PRIMARY KEY (emp_code, office_code)
 ) WITHOUT OIDS;
 
 
@@ -1104,6 +1116,11 @@ COMMENT ON COLUMN js_sys_employee.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_employee.remarks IS '备注信息';
 COMMENT ON COLUMN js_sys_employee.corp_code IS '租户代码';
 COMMENT ON COLUMN js_sys_employee.corp_name IS '租户名称';
+COMMENT ON TABLE js_sys_employee_office IS '员工附属机构关系表';
+COMMENT ON COLUMN js_sys_employee_office.id IS '编号';
+COMMENT ON COLUMN js_sys_employee_office.emp_code IS '员工编码';
+COMMENT ON COLUMN js_sys_employee_office.office_code IS '机构编码';
+COMMENT ON COLUMN js_sys_employee_office.post_code IS '岗位编码';
 COMMENT ON TABLE js_sys_employee_post IS '员工与岗位关联表';
 COMMENT ON COLUMN js_sys_employee_post.emp_code IS '员工编码';
 COMMENT ON COLUMN js_sys_employee_post.post_code IS '岗位编码';

@@ -123,9 +123,11 @@ public class EmpUserController extends BaseController {
 		Post post = new Post();
 		model.addAttribute("postList", postService.findList(post));
 		
-		// 获取当前用户所拥有的岗位
 		if (StringUtils.isNotBlank(employee.getEmpCode())){
+			// 获取当前用户所拥有的岗位
 			employee.setEmployeePostList(employeeService.findEmployeePostList(employee));
+			// 获取当前员工关联的附属机构信息
+			employee.setEmployeeOfficeList(employeeService.findEmployeeOfficeList(employee));
 		}
 		
 		// 获取当前编辑用户的角色和权限

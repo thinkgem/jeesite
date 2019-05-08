@@ -19,8 +19,10 @@ import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.utils.excel.ExcelImport;
 import com.jeesite.common.validator.ValidatorUtils;
 import com.jeesite.modules.sys.dao.EmpUserDao;
+import com.jeesite.modules.sys.dao.EmployeeOfficeDao;
 import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.EmployeeService;
@@ -39,9 +41,10 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private EmployeeOfficeDao employeeOfficeDao;
 	
 	/**
 	 * 获取单条数据
@@ -131,6 +134,17 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		// 3、保存员工
 		employee.setIsNewRecord(user.getIsNewRecord());
 		employeeService.save(employee);
+		// 4、保存附属机构
+		EmployeeOffice employeeOfficeWhere = new EmployeeOffice();
+		employeeOfficeWhere.setEmpCode(employee.getEmpCode());
+		employeeOfficeDao.deleteByEntity(employeeOfficeWhere);
+		if (employee.getEmployeeOfficeList().size() > 0){
+			employee.getEmployeeOfficeList().forEach(employeeOffice -> {
+				employeeOffice.setId(IdGen.nextId());
+				employeeOffice.setEmpCode(employee.getEmpCode());
+			});
+			employeeOfficeDao.insertBatch(employee.getEmployeeOfficeList());
+		}
 	}
 
 	/**

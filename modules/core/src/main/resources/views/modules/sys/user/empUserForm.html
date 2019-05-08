@@ -143,8 +143,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('所在岗位')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-							<#form:select multiple="true" path="employee.employeePosts" items="${postList}"
-								itemLabel="postName" itemValue="postCode" class="form-control"/>
+								<#form:select multiple="true" path="employee.employeePosts" items="${postList}"
+									itemLabel="postName" itemValue="postCode" class="form-control"/>
 							</div>
 						</div>
 					</div>
@@ -154,6 +154,20 @@
 								<span class="required hide">*</span> ${text('英文名')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="employee.empNameEn" maxlength="32" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('附属机构')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<table id="empOfficeGrid"></table>
+								<% if (hasPermi('sys:empUser:edit')){ %>
+									<a href="#" id="empOfficeGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+								<% } %>
 							</div>
 						</div>
 					</div>
@@ -195,21 +209,59 @@
 	</div>
 </div>
 <% } %>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
+</div>//--></script>
 <script>
-$("#inputForm").validate({
-	submitHandler: function(form){
-		<% if(op == 'add' || op == 'auth') { // 获取选中角色  %>
-		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
-		<% } %>
-		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
-			if(data.result == Global.TRUE){
-				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.page();
-				});
+$("#empOfficeGrid").dataGrid({
+	data: ${toJson(empUser.employee.employeeOfficeList)},
+	datatype: "local", // 设置本地数据
+	columnModel: [
+		{header:'${text("附属机构")}', name:'officeName', sortable:false, width:100,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'officeCode')+'|'+js.val(row, 'officeName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'office_'+editOptions.id, title: '机构选择', 
+						name: 'officeCode', value: val.split('|')[0], 
+						labelName: 'officeName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/office/treeData', cssClass: 'required'
+					});
+				}
 			}
-		}, "json");
-    }
+		},
+		{header:'${text("附属岗位")}', name:'postCode', sortable:false, width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{postName:'&nbsp;',postCode:''}], ${toJson(postList)}),
+				itemLabel: 'postName', itemValue: 'postCode', dataInit: function(element){
+					$(element).select2().on("change",function(){$(this).valid()});
+				}
+			}
+		},
+		{header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+			var actions = [];
+			actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#empOfficeGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}}
+	],
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 0,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#empOfficeGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: 'employee.employeeOfficeList', // 提交的数据列表名
+	editGridInputFormListAttrs: 'officeCode,officeName,postCode,postName,', // 提交数据列表的属性字段
+	
+	ajaxSuccess: function(){
+		
+	}
 });
 <% if(op == 'add' || op == 'auth') {%>
 // 加载角色列表
@@ -237,4 +289,19 @@ var roleGrid = $("#roleGrid").dataGrid({
 	}
 });
 <% } %>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		<% if(op == 'add' || op == 'auth') { // 获取选中角色  %>
+		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
+		<% } %>
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
 </script>

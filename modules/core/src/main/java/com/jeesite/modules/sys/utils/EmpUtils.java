@@ -5,13 +5,16 @@ package com.jeesite.modules.sys.utils;
 
 import java.util.List;
 
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.CompanyService;
+import com.jeesite.modules.sys.service.EmployeeOfficeService;
 import com.jeesite.modules.sys.service.OfficeService;
 
 /**
@@ -35,6 +38,7 @@ public class EmpUtils {
 	private static final class Static {
 		private static OfficeService officeService = SpringUtils.getBean(OfficeService.class);
 		private static CompanyService companyService = SpringUtils.getBean(CompanyService.class);
+		private static EmployeeOfficeService employeeOfficeService = SpringUtils.getBean(EmployeeOfficeService.class);
 	}
 	
 	/**
@@ -54,10 +58,45 @@ public class EmpUtils {
 	}
 
 	/**
-	 * 获取当前部门对象
+	 * 获取当前附属部门对象列表
 	 */
-	public static Office getOffice(){
-		return getEmployee().getOffice();
+	public static List<EmployeeOffice> getEmployeeOfficeList(){
+		List<EmployeeOffice> list = UserUtils.getCache("employeeOfficeList");
+		if (list == null){
+			EmployeeOffice where = new EmployeeOffice();
+			where.setEmpCode(getEmployee().getEmpCode());
+			list = Static.employeeOfficeService.findList(where);
+			UserUtils.putCache("employeeOfficeList", list);
+		}
+		return list;
+	}
+	
+	/**
+	 * 获取所有部门编码，包括附属部门（数据权限用）
+	 * @return
+	 * @author ThinkGem
+	 */
+	public static String[] getOfficeCodes(){
+		List<String> list = ListUtils.newArrayList();
+		list.add(getOffice().getOfficeCode());
+		getEmployeeOfficeList().forEach(e -> {
+			list.add(e.getOfficeCode());
+		});
+		return list.toArray(new String[list.size()]);
+	}
+	
+	/**
+	 * 获取所有部门编码，包括附属部门（数据权限用）
+	 * @return
+	 * @author ThinkGem
+	 */
+	public static String[] getOfficeParentCodess(){
+		List<String> list = ListUtils.newArrayList();
+		list.add(getOffice().getParentCodes());
+		getEmployeeOfficeList().forEach(e -> {
+			list.add(e.getParentCodes());
+		});
+		return list.toArray(new String[list.size()]);
 	}
 	
 	/**
@@ -73,6 +112,13 @@ public class EmpUtils {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 获取当前员工附属部门
+	 */
+	public static Office getOffice(){
+		return getEmployee().getOffice();
 	}
 //	
 //	/**
