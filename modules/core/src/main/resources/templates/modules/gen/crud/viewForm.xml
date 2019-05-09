@@ -65,7 +65,11 @@
 $("#inputForm").validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
+			if(data.result == Global.FALSE){
+				js.showMessage(data.message,"错误","error");
+			}else{
+				js.showMessage(data.message);
+			}
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){
 				<% if(table.isTreeEntity){ %>
