@@ -1,40 +1,11 @@
 ﻿/**
-
  @Name：layer v3.0.3 Web弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：MIT
-    
  */
-
 ;!function(window, undefined){
 "use strict";
-
-var i18n = {
-	btnOk: '确定',
-	btnCancel: '取消',
-	title: '信息',
-	promptTipA: '最多输入',
-	promptTipB: '个字符',
-	noPicture: '没有图片',
-	photoError: '当前图片地址异常<br>是否继续查看下一张？',
-	photoNextPage: '下一张',
-	photoClose: '不看了'
-};
-
-if (window.lang == 'en'){
-	i18n = {
-		btnOk: 'Ok',
-		btnCancel: 'Cancle',
-		title: 'Information',
-		promptTipA: 'Enter ',
-		promptTipB: 'character at most.',
-		noPicture: 'No picture',
-		photoError: 'Current image address error.<br>Next slide?',
-		photoNextPage: 'The next',
-		photoClose: 'Close'
-	};
-}
 
 var isLayui = window.layui && layui.define, $, win, ready = {
   getPath: function(){
@@ -44,7 +15,7 @@ var isLayui = window.layui && layui.define, $, win, ready = {
   }(),
 
   config: {}, end: {}, minIndex: 0, minLeft: [],
-  btn: [i18n.btnOk, i18n.btnCancel],
+  //btn: [layer.i18n.btnOk, layer.i18n.btnCancel], // ThinkGem
 
   //五种原始层模式
   type: ['dialog', 'page', 'iframe', 'loading', 'tips']
@@ -53,6 +24,17 @@ var isLayui = window.layui && layui.define, $, win, ready = {
 //默认内置方法。
 var layer = {
   v: '3.0.3',
+  i18n: { // ThinkGem 国际化支持
+	btnOk: '确定',
+	btnCancel: '取消',
+	title: '信息',
+	promptTipA: '最多输入',
+	promptTipB: '个字符',
+	noPicture: '没有图片',
+	photoError: '当前图片地址异常<br>是否继续查看下一张？',
+	photoNextPage: '下一张',
+	photoClose: '不看了'
+  },
   ie: function(){ //ie版本
     var agent = navigator.userAgent.toLowerCase();
     return (!!window.ActiveXObject || "ActiveXObject" in window) ? (
@@ -133,7 +115,8 @@ var layer = {
     }
     return layer.open($.extend({
       content: content,
-      btn: ready.btn,
+      //btn: ready.btn,
+      btn: [layer.i18n.btnOk, layer.i18n.btnCancel],
       yes: yes,
       btn2: cancel
     }, type ? {} : options));
@@ -210,7 +193,7 @@ Class.pt.config = {
   shade: 0.3,
   fixed: true,
   move: doms[1],
-  title: i18n.title,
+//  title: layer.i18n.title, // ThinkGem 替换 config.title 为  layer.i18n.title，支持国际化
   offset: 'auto',
   area: 'auto',
   closeBtn: 1,
@@ -229,10 +212,10 @@ Class.pt.config = {
 //容器
 Class.pt.vessel = function(conType, callback){
   var that = this, times = that.index, config = that.config;
-  var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
+  var zIndex = config.zIndex + times, titype = typeof layer.i18n.title === 'object';
   var ismax = config.maxmin && (config.type === 1 || config.type === 2);
-  var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
-    + (titype ? config.title[0] : config.title) 
+  var titleHTML = (layer.i18n.title ? '<div class="layui-layer-title" style="'+ (titype ? layer.i18n.title[1] : '') +'">' 
+    + (titype ? layer.i18n.title[0] : layer.i18n.title) 
   + '</div>' : '');
   
   config.zIndex = zIndex;
@@ -249,7 +232,7 @@ Class.pt.vessel = function(conType, callback){
       + '</div>'
       + '<span class="layui-layer-setwin">'+ function(){
         var closebtn = ismax ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a><a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
-        config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (config.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
+        config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (layer.i18n.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
         return closebtn;
       }() + '</span>'
       + (config.btn ? function(){
@@ -292,7 +275,8 @@ Class.pt.creat = function(){
   
   switch(config.type){
     case 0:
-      config.btn = ('btn' in config) ? config.btn : ready.btn[0];
+      //config.btn = ('btn' in config) ? config.btn : ready.btn[0]; ThinkGem
+      config.btn = ('btn' in config) ? config.btn : layer.i18n.btnOk;// ThinkGem
       layer.closeAll('dialog');
     break;
     case 2:
@@ -309,7 +293,7 @@ Class.pt.creat = function(){
 			+ doms[4] + '' + times +'">';
     break;
     case 3:
-      delete config.title;
+      delete layer.i18n.title;
       delete config.closeBtn;
       config.icon === -1 && (config.icon === 0);
       layer.closeAll('loading');
@@ -318,7 +302,7 @@ Class.pt.creat = function(){
       conType || (config.content = [config.content, 'body']);
       config.follow = config.content[1];
       config.content = config.content[0] + '<i class="layui-layer-TipsG"></i>';
-      delete config.title;
+      delete layer.i18n.title;
       config.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
       config.tipsMore || layer.closeAll('tips');
     break;
@@ -1020,7 +1004,7 @@ layer.prompt = function(options, yes){
   
   return layer.open($.extend({
     type: 1
-    ,btn: [i18n.btnOk,i18n.btnCancel]
+    ,btn: [layer.i18n.btnOk,layer.i18n.btnCancel]
     ,content: content
     ,skin: 'layui-layer-prompt' + skin('prompt')
     ,maxWidth: win.width()
@@ -1035,7 +1019,7 @@ layer.prompt = function(options, yes){
       if(value === ''){
         prompt.focus();
       } else if(value.length > (options.maxlength||500)) {
-        layer.tips(i18n.promptTipA + (options.maxlength || 500) + i18n.promptTipB, prompt, {tips: 1});
+        layer.tips(layer.i18n.promptTipA + (options.maxlength || 500) + layer.i18n.promptTipB, prompt, {tips: 1});
       } else {
         yes && yes(value, index, prompt);
       }
@@ -1287,9 +1271,9 @@ layer.photos = function(options, loop, key){
     }, options));
   }, function(){
     layer.close(dict.loadi);
-    layer.msg(i18n.photoError, {
+    layer.msg(layer.i18n.photoError, {
       time: 30000, 
-      btn: [i18n.photoNextPage, i18n.photoClose], 
+      btn: [layer.i18n.photoNextPage, layer.i18n.photoClose], 
       yes: function(){
         data.length > 1 && dict.imgnext(true,true);
       }
