@@ -34,6 +34,18 @@ if (window.lang == 'en'){
 		photoNextPage: 'The next',
 		photoClose: 'Close'
 	};
+}else if (window.lang == 'jp_JP'){
+	i18n = {
+		btnOk: '確定',
+		btnCancel: 'キャンセル',
+		title: 'メッセージ',
+		promptTipA: '最大入力',
+		promptTipB: '個文字',
+		noPicture: '画像が存在しません',
+		photoError: 'この画像が表示できません<br>次の画像へ遷移しますか？',
+		photoNextPage: '次へ',
+		photoClose: '閉じる'
+	};
 }
 
 var isLayui = window.layui && layui.define, $, win, ready = {
