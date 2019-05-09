@@ -24,9 +24,10 @@ if (isBlank(message)){
 	message = text('sys.error.500.message');
 }
 
-// 如果是异步请求或是手机端，则直接返回信息
+// 如果是异步请求或是手机端，则直接返回完整错误堆栈信息
 if (@ServletUtils.isAjaxRequest(request)) {
-	print(@ServletUtils.renderResult(@Global.FALSE, message));
+	//print(@ServletUtils.renderResult(@Global.FALSE, message));
+	print(@ServletUtils.renderResult(@Global.FALSE, @ExceptionUtils.getStackTraceAsString(ex)));
 }
 
 // 输出异常信息页面
