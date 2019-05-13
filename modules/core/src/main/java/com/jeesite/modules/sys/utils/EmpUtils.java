@@ -14,7 +14,7 @@ import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.CompanyService;
-import com.jeesite.modules.sys.service.EmployeeOfficeService;
+import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
 
 /**
@@ -31,6 +31,7 @@ public class EmpUtils {
 	// 部门和公司缓存常量
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 	public static final String CACHE_COMPANY_ALL_LIST = "companyAllList";
+	public static final String CACHE_COMPANY_OFFICE_LIST = "employeeOfficeList";
 	
 	/**
 	 * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
@@ -38,7 +39,7 @@ public class EmpUtils {
 	private static final class Static {
 		private static OfficeService officeService = SpringUtils.getBean(OfficeService.class);
 		private static CompanyService companyService = SpringUtils.getBean(CompanyService.class);
-		private static EmployeeOfficeService employeeOfficeService = SpringUtils.getBean(EmployeeOfficeService.class);
+		private static EmployeeService employeeService = SpringUtils.getBean(EmployeeService.class);
 	}
 	
 	/**
@@ -61,12 +62,10 @@ public class EmpUtils {
 	 * 获取当前附属部门对象列表
 	 */
 	public static List<EmployeeOffice> getEmployeeOfficeList(){
-		List<EmployeeOffice> list = UserUtils.getCache("employeeOfficeList");
+		List<EmployeeOffice> list = UserUtils.getCache(CACHE_COMPANY_OFFICE_LIST);
 		if (list == null){
-			EmployeeOffice where = new EmployeeOffice();
-			where.setEmpCode(getEmployee().getEmpCode());
-			list = Static.employeeOfficeService.findList(where);
-			UserUtils.putCache("employeeOfficeList", list);
+			list = Static.employeeService.findEmployeeOfficeList(getEmployee());
+			UserUtils.putCache(CACHE_COMPANY_OFFICE_LIST, list);
 		}
 		return list;
 	}

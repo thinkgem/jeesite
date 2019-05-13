@@ -255,7 +255,7 @@ public class EncodeUtils {
 	
 	// 预编译SQL过滤正则表达式
 	private static Pattern sqlPattern = Pattern.compile("(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute)\\b)", Pattern.CASE_INSENSITIVE);
-			
+	
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
 	 * @author ThinkGem
@@ -263,7 +263,7 @@ public class EncodeUtils {
 	public static String sqlFilter(String text){
 		if (text != null){
 			String value = text;
-			Matcher matcher = sqlPattern.matcher(text);
+			Matcher matcher = sqlPattern.matcher(value);
 			if (matcher.find()) {
 				value = matcher.replaceAll(StringUtils.EMPTY);
 			}
