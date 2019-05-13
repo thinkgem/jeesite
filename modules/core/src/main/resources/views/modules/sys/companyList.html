@@ -18,7 +18,7 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${company}" action="${ctx}/sys/company/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<#form:hidden name="ctrlPermi" value="2"/>
+				<#form:hidden name="ctrlPermi" value="${@Global.getConfig('user.adminCtrlPermi', '2')}"/>
 				<div class="form-group">
 					<label class="control-label">${text('公司代码')}：</label>
 					<div class="control-inline">

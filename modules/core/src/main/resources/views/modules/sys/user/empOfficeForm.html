@@ -21,7 +21,7 @@
 							<div class="col-sm-5">
 								<#form:treeselect id="office" title="${text('机构选择')}"
 									path="officeCode" labelPath="officeName" readonly="${!employeeOffice.isNewRecord}"
-									url="${ctx}/sys/office/treeData?ctrlPermi=2" class="required" allowClear="false"/>
+									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" class="required" allowClear="false"/>
 							</div>
 						</div>
 					</div>

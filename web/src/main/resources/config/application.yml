@@ -125,7 +125,7 @@ jdbc:
 #  jta:
 #    enabled: false
 
-#  # 事务超时时间，单位秒（30分钟）
+#  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
 #  transactionTimeout: 1800
 
 #  # 表名前缀
@@ -247,6 +247,9 @@ logging:
 #      expandLevel: -1,
 #      remarks: ""
 #    }]
+#    
+#  # 管理功能的控制权限类型（1拥有的权限 2管理的权限）（v4.1.5+）
+#  adminCtrlPermi: 2
 #
 #  # 多租户模式（SAAS模式）（专业版）
 #  useCorpModel: false
