@@ -134,7 +134,7 @@ $('#dataGrid').dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -142,7 +142,7 @@ $('#dataGrid').dataGrid({
 // 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 // 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 // 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-// 					$(element).select2().on("change",function(){$(this).valid()});
+// 					$(element).select2().on("change",function(){$(this).resetValid()});
 // 				}
 // 			}
 // 		},

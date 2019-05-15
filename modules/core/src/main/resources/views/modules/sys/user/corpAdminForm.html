@@ -166,9 +166,9 @@ $("#inputForm").validate({
 });
 $('#corpCode_').change(function(){
 	if ($('#loginCode').val() != ''){
-		$('#loginCode').valid();
+		$('#loginCode').resetValid();
 	}else{
-		$('#loginCode').val('admin'+$(this).val()).valid();
+		$('#loginCode').val('admin'+$(this).val()).resetValid();
 	}
 });
 //加载角色列表

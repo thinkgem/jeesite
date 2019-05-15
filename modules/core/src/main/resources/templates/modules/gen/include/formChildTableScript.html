@@ -61,7 +61,7 @@ for (c in child.columnList){
 			editable:true, edittype:'select', editoptions:{<%if (c.showType == 'select_multiple' || c.showType == 'checkbox'){ %>multiple:true, <% } %>'class':'form-control${cssClass}',
 				items: $.merge([<%if (!(c.showType == 'select_multiple' || c.showType == 'checkbox')){ %>{dictLabel:'&nbsp;',dictValue:''}<% } %>], \${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},

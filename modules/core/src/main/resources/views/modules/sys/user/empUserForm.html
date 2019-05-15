@@ -237,7 +237,7 @@ $("#empOfficeGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{postName:'&nbsp;',postCode:''}], ${toJson(postList)}),
 				itemLabel: 'postName', itemValue: 'postCode', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
