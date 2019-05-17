@@ -4,7 +4,6 @@
 package com.jeesite.modules.sys.dao;
 
 import com.jeesite.common.dao.TreeDao;
-import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.sys.entity.Office;
 
@@ -13,7 +12,7 @@ import com.jeesite.modules.sys.entity.Office;
  * @author ThinkGem
  * @version 2017-03-23
  */
-@MyBatisDao(dataSourceName=DataSourceHolder.DEFAULT)
+@MyBatisDao
 public interface OfficeDao extends TreeDao<Office> {
 	
 }
