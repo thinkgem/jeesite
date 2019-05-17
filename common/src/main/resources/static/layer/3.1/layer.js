@@ -193,7 +193,7 @@ Class.pt.config = {
   shade: 0.3,
   fixed: true,
   move: doms[1],
-//  title: layer.i18n.title, // ThinkGem 替换 config.title 为  layer.i18n.title，支持国际化
+  title: layer.i18n.title,
   offset: 'auto',
   area: 'auto',
   closeBtn: 1,
@@ -212,10 +212,10 @@ Class.pt.config = {
 //容器
 Class.pt.vessel = function(conType, callback){
   var that = this, times = that.index, config = that.config;
-  var zIndex = config.zIndex + times, titype = typeof layer.i18n.title === 'object';
+  var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
   var ismax = config.maxmin && (config.type === 1 || config.type === 2);
-  var titleHTML = (layer.i18n.title ? '<div class="layui-layer-title" style="'+ (titype ? layer.i18n.title[1] : '') +'">' 
-    + (titype ? layer.i18n.title[0] : layer.i18n.title) 
+  var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
+    + (titype ? config.title[0] : layer.i18n.title) 
   + '</div>' : '');
   
   config.zIndex = zIndex;
@@ -231,8 +231,9 @@ Class.pt.vessel = function(conType, callback){
         + (config.type == 1 && conType ? '' : (config.content||''))
       + '</div>'
       + '<span class="layui-layer-setwin">'+ function(){
-        var closebtn = ismax ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a><a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
-        config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (layer.i18n.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
+        var closebtn = ismax && config.title ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a>' : ''; // ThinkGem 必须有标题的清空下才能最小化
+        	closebtn += ismax ? '<a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
+        config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (config.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
         return closebtn;
       }() + '</span>'
       + (config.btn ? function(){
@@ -293,7 +294,7 @@ Class.pt.creat = function(){
 			+ doms[4] + '' + times +'">';
     break;
     case 3:
-      delete layer.i18n.title;
+      delete config.title;
       delete config.closeBtn;
       config.icon === -1 && (config.icon === 0);
       layer.closeAll('loading');
@@ -302,7 +303,7 @@ Class.pt.creat = function(){
       conType || (config.content = [config.content, 'body']);
       config.follow = config.content[1];
       config.content = config.content[0] + '<i class="layui-layer-TipsG"></i>';
-      delete layer.i18n.title;
+      delete config.title;
       config.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
       config.tipsMore || layer.closeAll('tips');
     break;
