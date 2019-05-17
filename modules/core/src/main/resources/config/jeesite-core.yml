@@ -47,6 +47,11 @@ jdbc:
   # JTA 分布式事务（v4.0.4+）
   jta:
     enabled: false
+#  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
+#  grant select on sys.dba_pending_transactions to jeesite;
+#  grant select on sys.pending_trans$ to jeesite;
+#  grant select on sys.dba_2pc_pending to jeesite;
+#  grant execute on sys.dbms_system to jeesite;
     
   # 事务超时时间，单位秒（30分钟）（v4.1.5+）
   transactionTimeout: 1800
