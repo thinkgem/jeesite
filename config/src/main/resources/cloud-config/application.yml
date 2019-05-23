@@ -173,6 +173,11 @@ spring:
 # 管理基础路径
 adminPath: /a
 
+# 用户相关
+user:
+  # 多租户模式（SAAS模式）（专业版）
+  useCorpModel: false
+  
 # 菜单管理
 menu:
   # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
