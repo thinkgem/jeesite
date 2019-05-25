@@ -102,7 +102,7 @@ jdbc:
 #    removeAbandoned: true
 #    removeAbandonedTimeout: 2100
 
-#  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
+#  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2
 #  
 #  # 多数据源配置：ds2
@@ -215,7 +215,6 @@ logging:
 #      "employee":{"dao":"employeeDao","loginView":"","indexView":"modules/sys/sysIndex"},
 #      "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
 #      "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
-#      "persion":{"dao":"persionDao","loginView":"","indexView":"modules/sys/sysIndexPersion"},
 #      "expert":{"dao":"expertDao","loginView":"","indexView":"modules/sys/sysIndexExpert"}
 #    }
 #

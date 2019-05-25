@@ -115,7 +115,6 @@ user:
       "employee":{"dao":"employeeDao","loginView":"","indexView":"modules/sys/sysIndex"},
       "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
       "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
-      "persion":{"dao":"persionDao","loginView":"","indexView":"modules/sys/sysIndexPersion"},
       "expert":{"dao":"expertDao","loginView":"","indexView":"modules/sys/sysIndexExpert"}
     }
 
