@@ -12,6 +12,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -42,14 +43,19 @@ public class ReflectUtils {
 	/**
 	 * 调用Getter方法，
 	 * 支持多级，如：对象名.对象名.方法，
-	 * 支持静态类及方法调用
+	 * 支持静态类及方法调用，
+	 * 支持Map
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeGetter(Object obj, String propertyName) {
 		Object object = obj;
 		for (String name : StringUtils.split(propertyName, ".")){
-			String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
-			object = invokeMethod(object, getterMethodName, new Class[] {}, new Object[] {});
+			if (obj instanceof Map){
+				object = ((Map)obj).get(name);
+			}else{
+				String methodName = GETTER_PREFIX + StringUtils.capitalize(name);
+				object = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
+			}
 		}
 		return (E)object;
 	}
@@ -57,18 +63,28 @@ public class ReflectUtils {
 	/**
 	 * 调用Setter方法，仅匹配方法名，
 	 * 支持多级，如：对象名.对象名.方法，
-	 * 支持静态类及方法调用
+	 * 支持静态类及方法调用，
+	 * 支持Map
 	 */
+	@SuppressWarnings("unchecked")
 	public static <E> void invokeSetter(Object obj, String propertyName, E value) {
 		Object object = obj;
 		String[] names = StringUtils.split(propertyName, ".");
 		for (int i=0; i<names.length; i++){
 			if(i<names.length-1){
-				String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
-				object = invokeMethod(object, getterMethodName, new Class[] {}, new Object[] {});
+				if (obj instanceof Map){
+					object = ((Map)obj).get(names[i]);
+				}else{
+					String methodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
+					object = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
+				}
 			}else{
-				String setterMethodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
-				invokeMethodByName(object, setterMethodName, new Object[] { value });
+				if (obj instanceof Map){
+					((Map)obj).put(names[i], value);
+				}else{
+					String methodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
+					invokeMethodByName(object, methodName, new Object[] { value });
+				}
 			}
 		}
 	}
