@@ -186,9 +186,16 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode) {
+	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode, String parentCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		List<Area> list = AreaUtils.getAreaAllList();
+		List<Area> list = null;
+		if (StringUtils.isNotBlank(parentCode)){
+			Area where = new Area();
+			where.setParentCode(parentCode);
+			list = areaService.findList(where);
+		}else{
+			list = AreaUtils.getAreaAllList();
+		}
 		for (int i=0; i<list.size(); i++){
 			Area e = list.get(i);
 			// 过滤非正常的数据
@@ -208,6 +215,7 @@ public class AreaController extends BaseController {
 			map.put("id", e.getId());
 			map.put("pId", e.getParentCode());
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getId(), e.getAreaName()));
+			map.put("isParent", !e.getIsTreeLeaf());
 			mapList.add(map);
 		}
 		return mapList;
