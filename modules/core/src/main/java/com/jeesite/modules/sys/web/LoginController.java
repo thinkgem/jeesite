@@ -308,6 +308,7 @@ public class LoginController extends BaseController{
 		// 非无类型用户，自动根据用户类型设置默认菜单的归属系统（个性化示例）
 		//if (!User.USER_TYPE_NONE.equals(user.getUserType())){
 		//	session.setAttribute("sysCode", user.getUserType());
+		//	UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		//}
 		
 		// 返回指定用户类型的首页视图
