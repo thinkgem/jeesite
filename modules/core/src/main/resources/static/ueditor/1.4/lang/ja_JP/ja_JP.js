@@ -307,7 +307,7 @@ UE.I18N['ja_JP'] = {
         'imageUrlError':"不允许的图片格式或者图片域！",
         'imageLoadError':"图片加载失败！请检查链接地址或网络状态！",
         'searchRemind':"请输入搜索关键词",
-        'searchLoading':"图片加载中，请稍后……",
+        'searchLoading':"图片加载中，请稍候……",
         'searchRetry':" :( ，抱歉，没有找到图片！请重试一次！"
     },
     'attachment':{
