@@ -193,7 +193,7 @@ Class.pt.config = {
   shade: 0.3,
   fixed: true,
   move: doms[1],
-  title: layer.i18n.title,
+  title: function(){return layer.i18n.title},
   offset: 'auto',
   area: 'auto',
   closeBtn: 1,
@@ -215,7 +215,7 @@ Class.pt.vessel = function(conType, callback){
   var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
   var ismax = config.maxmin && (config.type === 1 || config.type === 2);
   var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
-    + (titype ? config.title[0] : layer.i18n.title) 
+    + (titype ? config.title[0] : (typeof config.title === 'function' ? config.title() : config.title))
   + '</div>' : '');
   
   config.zIndex = zIndex;
