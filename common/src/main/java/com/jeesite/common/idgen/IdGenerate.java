@@ -42,6 +42,13 @@ public class IdGenerate {
 		random.nextBytes(randomBytes);
 		return EncodeUtils.encodeBase62(randomBytes);
 	}
+
+	/**
+	 * 使用SecureRandom随机生成指定范围的Integer. 
+	 */
+	public static int randomInt(int min, int max) {
+		return random.nextInt(max) % (max - min + 1) + min;
+	}
 	
 	/**
 	 * 获取新唯一编号（18为数值）
