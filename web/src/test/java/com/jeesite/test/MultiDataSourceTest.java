@@ -55,7 +55,7 @@ public class MultiDataSourceTest extends BaseSpringContextTests {
 					e.printStackTrace();
 				} finally {
 					latch.countDown();
-                }
+				}
 			}
 		};
 		for (int i = 0; i < latch.getCount(); i++) {
