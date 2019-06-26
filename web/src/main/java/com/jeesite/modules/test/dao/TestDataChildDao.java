@@ -12,7 +12,7 @@ import com.jeesite.modules.test.entity.TestDataChild;
  * @author ThinkGem
  * @version 2018-04-22
  */
-@MyBatisDao
+@MyBatisDao//(dataSourceName="ds2")
 public interface TestDataChildDao extends CrudDao<TestDataChild> {
 	
 }
