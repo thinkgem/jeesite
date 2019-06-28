@@ -6,7 +6,7 @@ set global read_only=0;
 
 create user 'jeesite'@'%' identified by 'jeesite';
 
-create database jeesite DEFAULT CHARSET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; 
+create database jeesite DEFAULT CHARSET 'utf8' COLLATE 'utf8_unicode_ci'; 
 
 grant all privileges on jeesite.* to 'jeesite'@'%' identified by 'jeesite';
 

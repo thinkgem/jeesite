@@ -1,0 +1,8 @@
+
+# 数据库连接
+jdbc: 
+  
+  # JTA 分布式事务
+  jta:
+    enabled: false
+    
