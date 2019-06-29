@@ -57,7 +57,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
-		
+
+
+		<!-- Zipkin 追踪服务 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
 		<!-- 自动更新配置支持 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
