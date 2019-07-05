@@ -74,6 +74,13 @@
 			<version>${json.version}</version>
 		</dependency>
 		
+		<!-- Fast json -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		
 		<!-- Jackson json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
