@@ -22,7 +22,10 @@ import com.jeesite.modules.test.entity.TestDataChild;
 import com.jeesite.modules.test.service.TestDataService;
 
 /**
- * 多数据源并发测试，将 TestDataChildDao 的数据源设置为 ds2
+ * 多数据源并发测试<br>
+ * 1、将 TestDataChildDao 的数据源设置为 ds2<br>
+ * 2、将 TestDataChild 的表名设置为 test_data_child2<br>
+ * 3、配置 ds2 数据源，并创建 test_data_child2 表
  * @author ThinkGem
  * @version 2019-6-26
  */
@@ -47,12 +50,12 @@ public class MultiDataSourceTest extends BaseSpringContextTests {
 							new TestDataChild(), new TestDataChild(), new TestDataChild()));
 					testDataService.save(testData);
 					List<TestData> list = testDataService.findList(new TestData());
-					System.out.println(list.size());
+					System.out.println("size: " + list.size());
 					list.forEach(e -> {
-						System.out.println(testDataService.get(e));
+						System.out.println("get: " + testDataService.get(e));
 					});
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.err.println(e.getMessage());
 				} finally {
 					latch.countDown();
 				}

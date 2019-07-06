@@ -10,6 +10,7 @@
 				<% if(hasPermi('test:testData:edit')){ %>
 					<a href="${ctx}/test/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
+				<a href="#" class="btn btn-default" id="btnTrunsTest" title="事务测试"><i class="fa fa-refresh"></i> 事务测试</a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -175,5 +176,12 @@ $('#dataGrid').dataGrid({
 // 			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
 // 		}
 	}
+});
+$("#btnTrunsTest").click(function(){ 
+	js.ajaxSubmit("${ctx}/test/testData/transTest", function(data){
+		js.showMessage(data.message);
+		page();
+	});
+	return false;
 });
 </script>

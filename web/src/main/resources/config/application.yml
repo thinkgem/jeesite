@@ -99,7 +99,7 @@ jdbc:
 #    maxEvictableIdleTimeMillis: 1800000
 #    
 #    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
-#    removeAbandoned: true
+#    removeAbandoned: false
 #    removeAbandonedTimeout: 2100
 #
 #    # Oracle 下会自动开启 PSCache，并指定每个连接上 PSCache 大小。若不指定，则与 maxActive 相同（4.1.5+）
@@ -124,9 +124,10 @@ jdbc:
 #      minIdle: 3
 #      maxActive: 20
       
-#  # JTA 分布式事务（v4.0.4+）
+#  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
 #  jta:
 #    enabled: false
+
 #  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
 #  grant select on sys.dba_pending_transactions to jeesite;
 #  grant select on sys.pending_trans$ to jeesite;
