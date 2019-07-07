@@ -360,12 +360,29 @@ public class LoginController extends BaseController{
 	@RequiresPermissions("user")
 	@RequestMapping(value = "switch/{sysCode}")
 	public String switchSys(@PathVariable String sysCode) {
-		User user = UserUtils.getUser();
-		if (user.isSuperAdmin() && StringUtils.isNotBlank(sysCode)){
-			Session session = UserUtils.getSession();
+		Session session = UserUtils.getSession();
+		if (StringUtils.isNotBlank(sysCode)){
 			session.setAttribute("sysCode", sysCode);
-			UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		}else{
+			session.removeAttribute("sysCode");
 		}
+		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		return REDIRECT + adminPath + "/index";
+	}
+
+	/**
+	 * 切换角色菜单（仅超级管理员有权限）
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = {"switchRole","switchRole/{roleCode}"})
+	public String switchRole(@PathVariable(required=false) String roleCode) {
+		Session session = UserUtils.getSession();
+		if (StringUtils.isNotBlank(roleCode)){
+			session.setAttribute("roleCode", roleCode);
+		}else{
+			session.removeAttribute("roleCode");
+		}
+		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		return REDIRECT + adminPath + "/index";
 	}
 	
