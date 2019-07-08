@@ -32,6 +32,7 @@ public class DruidStatConfig {
 				+ "*.jpg,*.gif,*.jpeg,*.bmp,*.ico,*.swf,*.psd,*.htc,*.htm,*.html,"
 				+ "*.crx,*.xpi,*.exe,*.ipa,*.apk,*.otf,*.eot,*.svg,*.ttf,*.woff,"
 				+ "/druid/*");
+		bean.addInitParameter("sessionStatEnable", "false");
 		bean.addUrlPatterns("/*");
 		return bean;
 	}
