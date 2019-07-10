@@ -413,6 +413,7 @@ logging:
 #session:
 #
 #  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+#  # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
 #  sessionTimeout: 1800000
 #  
 #  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效

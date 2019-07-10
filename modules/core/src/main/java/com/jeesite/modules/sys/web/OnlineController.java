@@ -28,7 +28,6 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.DateUtils;
-import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.shiro.realm.LoginInfo;
@@ -105,16 +104,10 @@ public class OnlineController extends BaseController{
 			map.put("startTimestamp", DateUtils.formatDateTime(session.getStartTimestamp()));
 			map.put("lastAccessTime", DateUtils.formatDateTime(session.getLastAccessTime()));
 			map.put("timeout", TimeUtils.formatDateAgo(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
-			Object pc = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-			if (pc != null && pc instanceof PrincipalCollection){
-				LoginInfo loginInfo = (LoginInfo)((PrincipalCollection)pc).getPrimaryPrincipal();
-				if (loginInfo != null){
-					map.put("userCode", session.getAttribute("userCode"));// principal.getId());
-					map.put("userName", session.getAttribute("userName"));// principal.getName());
-					map.put("userType", session.getAttribute("userType"));// ObjectUtils.toString(principal.getParam("userType")));
-					map.put("deviceType", ObjectUtils.toString(loginInfo.getParam("deviceType")));
-				}
-			}
+			map.put("userCode", session.getAttribute("userCode"));
+			map.put("userName", session.getAttribute("userName"));
+			map.put("userType", session.getAttribute("userType"));
+			map.put("deviceType", session.getAttribute("deviceType"));
 			map.put("host", session.getHost());
 			list.add(map);
 		}
