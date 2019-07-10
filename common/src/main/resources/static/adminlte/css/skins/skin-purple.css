@@ -131,7 +131,8 @@
 
 .sidebar-menu .treeview-item.active > a {color:#fff;background-color:#605ca8;}
 
-a, a:hover, a:active, a:focus, .form-unit {color:#605ca8;}
+a, a:hover, a:active, a:focus, .form-unit,
+th[aria-selected=true] .ui-jqgrid-sortable {color:#605ca8;}
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
 .btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover,
@@ -139,5 +140,5 @@ a, a:hover, a:active, a:focus, .form-unit {color:#605ca8;}
 .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus,
 .open>.dropdown-toggle.btn-primary:hover, .layui-layer-btn .layui-layer-btn0,
 .select2-container--default .select2-selection--multiple .select2-selection__choice,
-.select2-container--default .select2-results__option--highlighted[aria-selected]
- {background-color:#605ca8!important;border-color:#605ca8;}
+.select2-container--default .select2-results__option--highlighted[aria-selected],
+.wup_container .placeholder .webuploader-pick {background-color:#605ca8!important;border-color:#605ca8;}
