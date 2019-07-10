@@ -2,6 +2,7 @@
 **/target
 **/webapp/userfiles
 **/WEB-INF/classes
+**/transaction-logs
 **/logs/*.log*
 *.epoch
 *.lic
