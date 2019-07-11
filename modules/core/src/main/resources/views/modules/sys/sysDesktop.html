@@ -110,6 +110,7 @@
 									            type : 'value'
 									        }
 									    ],
+									    color: ['#FAD860','#F3A43B','#60C0DD','#C6E579'],
 									    series : [
 									        {
 									            name:'成交',
@@ -212,7 +213,7 @@
         <section class="col-lg-7 connectedSortable">
         
           <!-- Chat box -->
-          <div class="nav-tabs-custom" style="cursor: move;">
+          <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right ui-sortable-handle">
               <li class=""><a href="#revenue-chart" data-toggle="tab" aria-expanded="false">面积图</a></li>
@@ -230,8 +231,9 @@
 				</div></div></div>
               <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 300px;"><svg height="300" version="1.1" width="687.945" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path fill="none" stroke="#3c8dbc" d="M343.9725,243.33333333333331A93.33333333333333,93.33333333333333,0,0,0,432.2002551949771,180.44625304313007" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#3c8dbc" stroke="#ffffff" d="M343.9725,246.33333333333331A96.33333333333333,96.33333333333333,0,0,0,435.0361473262442,181.4248826052307L471.58764590702043,194.03833029452744A135,135,0,0,1,343.9725,285Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#f56954" d="M432.2002551949771,180.44625304313007A93.33333333333333,93.33333333333333,0,0,0,260.2573462783141,108.73398312817662" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#f56954" stroke="#ffffff" d="M435.0361473262442,181.4248826052307A96.33333333333333,96.33333333333333,0,0,0,257.5665020515457,107.40757544301087L222.88450979541864,90.31165416754118A135,135,0,0,1,471.58764590702043,194.03833029452744Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#00a65a" d="M260.2573462783141,108.73398312817662A93.33333333333333,93.33333333333333,0,0,0,343.94317846904886,243.333328727518" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path><path fill="#00a65a" stroke="#ffffff" d="M257.5665020515457,107.40757544301087A96.33333333333333,96.33333333333333,0,0,0,343.94223599126826,246.3333285794739L343.9285177035733,289.999993091277A140,140,0,0,1,218.3997694174712,88.10097469226493Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="343.9725" y="140" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="15px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 15px; font-weight: 800;" font-weight="800" transform="matrix(1.2407,0,0,1.2407,-82.8045,-36.1969)" stroke-width="0.8059895833333334"><tspan dy="5.7734375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">当前总量</tspan></text><text x="343.9725" y="160" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 14px;" transform="matrix(2.0235,0,0,2.0235,-352.0475,-155.8898)" stroke-width="0.49419642857142865"><tspan dy="4.625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">98</tspan></text></svg></div>
             </div>
-          </div><div class="box box-success" style="position: relative; left: 0px; top: 0px;">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
+          </div>
+          <div class="box box-success box-widget">
+            <div class="box-header ui-sortable-handle">
               <i class="fa fa-comments-o"></i>
               <h3 class="box-title">沟通</h3>
               <div class="box-tools pull-right" data-toggle="tooltip" title="" data-original-title="Status">
@@ -329,8 +331,8 @@
           <!-- /.box (chat box) -->
 
           <!-- TO DO List -->
-          <div class="box box-primary">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
+          <div class="box box-widget">
+            <div class="box-header ui-sortable-handle">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">任务列表</h3>
               <div class="box-tools pull-right">
@@ -443,8 +445,8 @@
         <section class="col-lg-5 connectedSortable ui-sortable">
 
           <!-- Map box -->
-          <div class="box box-solid bg-light-blue-gradient" style="position: relative; left: 0px; top: 0px;">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
+          <div class="box box-solid bg-light-blue-gradient">
+            <div class="box-header ui-sortable-handle">
               <!-- tools box -->
               <div class="pull-right box-tools">
                 <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="" data-original-title="Date range">
@@ -491,7 +493,7 @@
 
           <!-- solid sales graph -->
           <div class="box box-solid bg-teal-gradient">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
+            <div class="box-header ui-sortable-handle">
               <i class="fa fa-th"></i>
 
               <h3 class="box-title">销售图表</h3>
@@ -536,7 +538,7 @@
 
           <!-- Calendar -->
           <div class="box box-solid bg-green-gradient">
-            <div class="box-header ui-sortable-handle" style="cursor: move;">
+            <div class="box-header ui-sortable-handle">
               <i class="fa fa-calendar"></i>
               <h3 class="box-title">日程表</h3>
               <!-- tools box -->
