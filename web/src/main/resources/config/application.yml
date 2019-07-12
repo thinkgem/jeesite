@@ -482,7 +482,7 @@ logging:
 #      addPathPatterns: >
 #        ${frontPath}/**
 #      excludePathPatterns: ~
-#        
+#      
 #  # 静态文件后缀，过滤静态文件，以提高访问性能。
 #  staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
 #  
