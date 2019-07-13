@@ -23,6 +23,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -50,6 +51,15 @@ public class OfficeController extends BaseController {
 	@ModelAttribute
 	public Office get(String officeCode, boolean isNewRecord) {
 		return officeService.get(officeCode, isNewRecord);
+	}
+
+	/**
+	 * 机构管理主页面
+	 */
+	@RequiresPermissions("sys:office:view")
+	@RequestMapping(value = "index")
+	public String index(EmpUser empUser, Model model) {
+		return "modules/sys/officeIndex";
 	}
 
 	/**
