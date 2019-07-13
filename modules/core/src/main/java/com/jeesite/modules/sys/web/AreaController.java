@@ -6,6 +6,9 @@ package com.jeesite.modules.sys.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
@@ -76,6 +80,22 @@ public class AreaController extends BaseController {
 		}
 		List<Area> list = areaService.findList(area);
 		return list;
+	}
+	
+	@RequiresPermissions("sys:area:view")
+	@RequestMapping(value = "listPageData")
+	@ResponseBody
+	public Page<Area> listPageData(Area area, HttpServletRequest request, HttpServletResponse response) {
+		if (StringUtils.isBlank(area.getParentCode())) {
+			area.setParentCode(Area.ROOT_CODE);
+		}
+		if (StringUtils.isNotBlank(area.getAreaCode())
+				|| StringUtils.isNotBlank(area.getAreaName())){
+			area.setParentCode(null);
+		}
+		area.setPage(new Page<>(request, response, !area.getIsRoot() ? Page.PAGE_SIZE_NOT_PAGING : null));
+		Page<Area> page = areaService.findPage(area);
+		return page;
 	}
 	
 	/**
