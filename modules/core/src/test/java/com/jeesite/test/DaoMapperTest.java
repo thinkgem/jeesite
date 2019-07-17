@@ -243,6 +243,15 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " #{sqlMap.where.create_by#IN1.val[1]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
+		System.out.println("============ 联合查询属性为this时也可作为查询条件 ============");
+		FileUpload fileUpload2 = new FileUpload();
+		fileUpload2.setCreateByName("ThinkGem/JeeSite");
+		fileUpload2.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
+		a = fileUpload2.getSqlMap().getWhere().toSql();
+		b = "a.status != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
+				+ " #{sqlMap.where.create_by#IN1.val[1]} ) AND u.user_name LIKE #{sqlMap.where#user_name#LIKE1}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
+		System.exit(0);
 	}
 }
