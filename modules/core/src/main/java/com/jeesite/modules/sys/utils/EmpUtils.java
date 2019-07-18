@@ -24,10 +24,6 @@ import com.jeesite.modules.sys.service.OfficeService;
  */
 public class EmpUtils {
 
-//	// 用户缓存常量
-//	public static final String CACHE_OFFICE_LIST = "officeList";
-//	public static final String CACHE_COMPANY_LIST = "companyList";
-	
 	// 部门和公司缓存常量
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 	public static final String CACHE_COMPANY_ALL_LIST = "companyAllList";
@@ -43,15 +39,51 @@ public class EmpUtils {
 	}
 	
 	/**
+	 * 根据员工编码获取员工
+	 * @author ThinkGem
+	 */
+	public static Employee get(String empCode){
+		return Static.employeeService.get(empCode);
+	}
+	
+	/**
+	 * 根据用户对象获取员工，不是员工返回null
+	 * @author ThinkGem
+	 */
+	public static Employee get(User user){
+		if (user != null && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
+			return (Employee)user.getRefObj();
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据用户编码获取员工，找不到或不是员工返回null
+	 * @author ThinkGem
+	 */
+	public static Employee getByUserCode(String userCode){
+		User user = UserUtils.get(userCode);
+		Employee employee = get(user);
+		return employee;
+	}
+	
+	/**
+	 * 根据登录账号获取员工，找不到或不是员工返回null
+	 * @author ThinkGem
+	 */
+	public static Employee getByLoginCode(String loginCode){
+		User user = UserUtils.getByLoginCode(loginCode);
+		Employee employee = get(user);
+		return employee;
+	}
+	
+	/**
 	 * 获取当前登录的员工
 	 * @author ThinkGem
 	 */
 	public static Employee getEmployee(){
 		User user = UserUtils.getUser();
-		Employee employee = null;
-		if (User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
-			employee = (Employee)user.getRefObj();
-		}
+		Employee employee = get(user);
 		if (employee == null){
 			employee = new Employee();
 		}
@@ -119,28 +151,6 @@ public class EmpUtils {
 	public static Office getOffice(){
 		return getEmployee().getOffice();
 	}
-//	
-//	/**
-//	 * 获取当前用户有权限访问的机构
-//	 * @return
-//	 */
-//	public static List<Office> getOfficeList(){
-//		@SuppressWarnings("unchecked")
-//		List<Office> officeList = (List<Office>)UserUtils.getCache(CACHE_OFFICE_LIST);
-//		if (officeList == null){
-//			User user = UserUtils.getUser();
-//			if (user.isAdmin()){
-//				officeList = officeService.findList(new Office());
-//			}else{
-//				Office office = new Office();
-//				// 添加数据权限过滤条件
-//				officeService.addDataScopeFilter(office);
-//				officeList = officeService.findList(office);
-//			}
-//			UserUtils.putCache(CACHE_OFFICE_LIST, officeList);
-//		}
-//		return officeList;
-//	}
 
 	/**
 	 * 获取所有的机构
@@ -179,29 +189,6 @@ public class EmpUtils {
 		}
 		return null;
 	}
-//	
-//	/**
-//	 * 获取当前用户授权的公司
-//	 * @return
-//	 */
-//	public static List<Company> getCompanyList(){
-//		@SuppressWarnings("unchecked")
-//		List<Company> companyList = (List<Company>)UserUtils.getCache(CACHE_COMPANY_LIST);
-//		if (companyList == null){
-//			User user = UserUtils.getUser();
-//			if (user.isAdmin()){
-//				companyList = companyService.findList(new Company());
-//			}else{
-//				Company company = new Company();
-//				// 添加数据权限过滤条件
-//				companyService.addDataScopeFilter(company);
-//				companyList = companyService.findList(company);
-//			}
-//			UserUtils.putCache(CACHE_COMPANY_LIST, companyList);
-//		}
-//		
-//		return companyList;
-//	}
 	
 	/**
 	 * 获取所有的公司
@@ -224,9 +211,6 @@ public class EmpUtils {
 	 * @param user
 	 */
 	public static void removeCache(String key){
-//		if (StringUtils.inString(key, CACHE_OFFICE_LIST, CACHE_COMPANY_LIST)){
-//			UserUtils.removeCache(key);
-//		}else 
 		if (StringUtils.inString(key, CACHE_OFFICE_ALL_LIST, CACHE_COMPANY_ALL_LIST)){
 			CorpUtils.removeCache(key);
 		}
