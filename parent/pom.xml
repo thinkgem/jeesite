@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.6.RELEASE</version>
+		<version>2.0.8.RELEASE</version>
 	</parent>
 	
 	<groupId>com.jeesite</groupId>
@@ -210,9 +210,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<configuration>
-				        <aggregate>true</aggregate>
-					</configuration>
 					<executions>
 						<execution>
 							<phase>prepare-package</phase>
@@ -220,7 +217,7 @@
 								<goal>jar</goal>
 							</goals>
 							<configuration>
-								<additionalparam>-Xdoclint:none</additionalparam>
+								<doclint>none</doclint>
 							</configuration>  
 						</execution>
 					</executions>
@@ -284,6 +281,9 @@
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>rebel.xml</exclude>
+				</excludes>
 			</resource>
 		</resources>
 		
