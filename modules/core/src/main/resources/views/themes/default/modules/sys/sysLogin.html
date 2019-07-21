@@ -1,6 +1,6 @@
 <% layout('/layouts/default.html', {title: '登录', libs: ['validate'], bodyClass: 'login-page'}){ %>
 <% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
-<link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
+<!-- <link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}"> -->
 <link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <div class="login-box">
@@ -40,10 +40,10 @@
 				<div class="mt5 icheck">
 					<label title="${text('公共场所慎用,下次不需要再填写帐号')}"><input type="checkbox"
 						name="rememberUserCode"${isNotBlank(cookie('rememberUserCode'))?' checked':''}
-						class="form-control" data-style="square-blue"> ${text('记住账号')}</label> &nbsp; 
+						class="form-control" data-style="minimal-grey"> ${text('记住账号')}</label> &nbsp; 
 					<label title="${text('公共场所慎用,下次不需要再填写帐号和密码')}"><input type="checkbox"
 						name="rememberMe"${isNotBlank(cookie('rememberMe'))?' checked':''}
-						class="form-control" data-style="square-blue"> ${text('自动登录')}</label>
+						class="form-control" data-style="minimal-grey"> ${text('自动登录')}</label>
 				</div>
 			</div>
 			<div class="form-group">
