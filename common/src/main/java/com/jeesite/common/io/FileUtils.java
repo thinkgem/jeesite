@@ -720,8 +720,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 			}
 			response.setContentType(FileUtils.getContentType(file.getName()));
 			boolean isPreview = "preview".equalsIgnoreCase(request.getParameter("source"));
-			String fileNameEncode = EncodeUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName);
-			response.addHeader("Content-Disposition", (!isPreview ? "attachment; " : "") + "filename=\"" + fileNameEncode + "\"");
+			response.addHeader("Content-Disposition", (!isPreview ? "attachment; " : "") + "filename*=utf-8'zh_cn'"
+					+ EncodeUtils.encodeUrl(StringUtils.isBlank(fileName) ? file.getName() : fileName));
 			response.setHeader("Accept-Ranges", "bytes");
 			// 第一次请求只返回 content length 来让客户端请求多次实际数据
 			if (range == null) {
