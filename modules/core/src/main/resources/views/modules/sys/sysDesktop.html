@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<section class="col-md-12 connectedSortable">
+		<section class="col-md-12 ui-sortable">
 			<div class="box box-widget">
 				<div class="box-header with-border">
 					<h3 class="box-title">月度报告</h3>
@@ -210,7 +210,7 @@
 				</div>
 			</div>
 		</section>
-        <section class="col-lg-7 connectedSortable">
+        <section class="col-md-7 ui-sortable">
         
           <!-- Chat box -->
           <div class="nav-tabs-custom">
@@ -442,7 +442,7 @@
           <!-- /.box -->
 
         </section>
-        <section class="col-lg-5 connectedSortable ui-sortable">
+        <section class="col-md-5 ui-sortable ui-sortable">
 
           <!-- Map box -->
           <div class="box box-solid bg-light-blue-gradient">
@@ -625,9 +625,9 @@ $(window).resize(function(){
 	var windowHeight  = $(window).height();
 	$('.content').css('min-height', windowHeight - footerHeight)
 }).resize();
-$('.connectedSortable').sortable({
+$('.ui-sortable').sortable({
   placeholder         : 'sort-highlight',
-  connectWith         : '.connectedSortable',
+  connectWith         : '.ui-sortable',
   handle              : '.box-header, .nav-tabs',
   forcePlaceholderSize: true,  zIndex : 999999
 }).find('.box-header, .nav-tabs').css('cursor', 'move');
