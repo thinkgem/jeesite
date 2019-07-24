@@ -39,8 +39,9 @@ public class CacheController extends BaseController {
 	@PostConstruct
 	public void postConstruct(){
 		String rebel = System.getProperty("rebel.base");
-		if (StringUtils.isNotBlank(rebel)){
-			logger.debug("JRebel: 清理系统缓存...");
+		if (StringUtils.isNotBlank(rebel) && Global
+				.getPropertyToBoolean("spring.cache.isClusterMode", "false")){
+			logger.info("JRebel: Cache clear...");
 			CacheUtils.clearCache();
 		}
 	}
