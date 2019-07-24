@@ -333,7 +333,7 @@ shiro:
   remoteAddrHeaderName: X-Forwarded-For
 
   # 允许的请求方法设定，解决安全审计问题
-  allowRequestMethods: GET,POST
+  allowRequestMethods: GET,POST,OPTIONS,PUT,DELETE
   
   # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
   isAllowMultiAddrLogin: true
