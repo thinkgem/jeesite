@@ -38,16 +38,6 @@ eureka:
     statusPageUrlPath: ${server.servlet.context-path}
     healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
     
-# 启用负载均衡
-ribbon:
-  eureka:
-    enabled: true
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
-  OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 1
-  MaxAutoRetries: 0
-  
 # 声明式服务
 feign:
 
@@ -69,6 +59,16 @@ feign:
       min-request-size: 2048
     response:
       enabled: true
+
+# 启用负载均衡
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 0
 
 # 客户端调用熔断降级的线程超时时间
 hystrix:
