@@ -348,10 +348,7 @@ public class LoginController extends BaseController{
 	@ResponseBody
 	@JsonView(Menu.SimpleView.class)
 	public List<Menu> menuTree(String parentCode) {
-		if (StringUtils.isNotBlank(parentCode)){
-			return UserUtils.getMenuListByParentCode(parentCode);
-		}
-		return UserUtils.getMenuTree();
+		return UserUtils.getMenuTreeByParentCode(parentCode);
 	}
 
 	/**
