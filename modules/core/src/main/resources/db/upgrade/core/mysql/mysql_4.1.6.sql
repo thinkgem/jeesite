@@ -1,4 +1,8 @@
 
+-- 菜单表增加菜单标题（页签的名字）
+ALTER TABLE `${_prefix}sys_menu` 
+ADD COLUMN `menu_title` varchar(100) NULL COMMENT '菜单标题' AFTER `menu_color`;
+
 -- 角色表增加适应业务范围
 ALTER TABLE `${_prefix}sys_role` 
 ADD COLUMN `biz_scope` varchar(255) NULL COMMENT '适应业务范围（不同的功能，不同的数据权限支持）' AFTER `data_scope`;
