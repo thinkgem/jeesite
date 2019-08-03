@@ -16,6 +16,7 @@ import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
+import com.jeesite.modules.file.dao.FileUploadDao;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.sys.dao.AreaDao;
 import com.jeesite.modules.sys.dao.CompanyDao;
@@ -47,6 +48,8 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	private CompanyDao companyDao;
 	@Autowired
 	private DictDataDao dictDataDao;
+	@Autowired
+	private FileUploadDao fileUploadDao;
 	
 	@Test
 	public void testTableAnnotation() throws Exception{
@@ -131,6 +134,10 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company2.getSqlMap().getDataScope().addFilter("dsf",
 					"Company", "a.company_code", DataScope.CTRL_PERMI_HAVE);
 			System.out.println(companyDao.findList(company2));
+
+			System.out.println("============ 联合查询未设定columns和attrName为this时测试 ============");
+			FileUpload fileUpload = new FileUpload();
+			System.out.println(fileUploadDao.findList(fileUpload));
 			
 			System.out.println("============ 树结构基本查询测试 ============");
 			DictData dictData = new DictData();
