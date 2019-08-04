@@ -112,21 +112,25 @@ public class OnlineController extends BaseController{
 			list.add(map);
 		}
 		// 本地排序
-		if (StringUtils.isNotBlank(orderBy)){
-			final String[] ss = orderBy.trim().split(" ");
-			if (ss != null && ss.length == 2){
-				Collections.sort(list, new Comparator<Map<String, Object>>() {
-					@Override
-					public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-						String s1 = (String)o1.get(ss[0]);
-						String s2 = (String)o2.get(ss[0]);
-						if ("asc".equals(ss[1])){
-							return s1.compareTo(s2);
-						}else{
-							return s2.compareTo(s1);
-						}
-					}});
-			}
+		if (StringUtils.isBlank(orderBy)){
+			orderBy = "lastAccessTime desc";
+		}
+		final String[] ss = orderBy.trim().split(" ");
+		if (ss != null && ss.length == 2){
+			Collections.sort(list, new Comparator<Map<String, Object>>() {
+				@Override
+				public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+					String s1 = (String)o1.get(ss[0]);
+					String s2 = (String)o2.get(ss[0]);
+					if (s1 == null || s2 == null){
+						return -1;
+					}
+					if ("asc".equals(ss[1])){
+						return s1.compareTo(s2);
+					}else{
+						return s2.compareTo(s1);
+					}
+				}});
 		}
 		return list;
 	}

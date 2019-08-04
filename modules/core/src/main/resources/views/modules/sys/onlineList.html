@@ -28,7 +28,7 @@
 				</div>
 				<div class="form-group">
 					<div class="control-inline" title="包含未登录的用户">
-						<#form:checkbox name="isVisitor" value="false" label="查询游客用户"
+						<#form:checkbox name="isVisitor" value="false" label="包含游客用户"
 							class="form-control"/>
 					</div>
 				</div>
@@ -50,8 +50,8 @@ $('#dataGrid').dataGrid({
 		{header:'用户名称', name:'userName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
 			return '<span title="账号：'+(row.userCode||'')+'">'+(val||'游客');
 		}},
-		{header:'创建时间', name:'startTimestamp', width:100, align:'center'},
-		{header:'最后访问', name:'lastAccessTime', width:100, align:'center'},
+		{header:'创建时间', name:'startTimestamp', firstsortorder:'desc', width:100, align:'center'},
+		{header:'最后访问', name:'lastAccessTime', firstsortorder:'desc', width:100, align:'center'},
 		{header:'超时时间', name:'timeout', width:100, align:'center'},
 		{header:'客户主机', name:'host', width:70, align:'center'},
 		{header:'用户类型', name:'userType', width:50, align:'center', formatter: function(val, obj, row, act){
