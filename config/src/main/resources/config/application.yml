@@ -69,6 +69,8 @@ spring:
       host: 127.0.0.1
       port: 8500
       discovery:
+        hostname: 127.0.0.1
+        preferIpAddress: false
         healthCheckPath: ${server.servlet.context-path}/actuator/health
         healthCheckInterval: 15s
           

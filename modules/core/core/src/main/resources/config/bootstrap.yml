@@ -51,6 +51,9 @@ spring:
     consul:
       host: 127.0.0.1
       port: 8500
+      discovery:
+        hostname: 127.0.0.1
+        preferIpAddress: false
       
   # 打印横幅
   main:
