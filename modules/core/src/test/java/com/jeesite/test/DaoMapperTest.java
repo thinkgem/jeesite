@@ -137,6 +137,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 
 			System.out.println("============ 联合查询未设定columns和attrName为this时测试 ============");
 			FileUpload fileUpload = new FileUpload();
+			fileUpload.getSqlMap().getWhere().and("u.user_name", QueryType.EQ, "user1");
 			System.out.println(fileUploadDao.findList(fileUpload));
 			
 			System.out.println("============ 树结构基本查询测试 ============");
@@ -255,8 +256,13 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " AND b.create_date >= #{area.sqlMap.where.create_date#GTE1.val}"
 				+ " AND b.create_date <= #{area.sqlMap.where.create_date#LTE1.val}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+
+		System.out.println("============ 联合查询，属性名支持指定别名 ============");
+		a = new FileUpload().getSqlMap().getWhere().and("u.user_name", QueryType.EQ, "user1").toSql();
+		b = "a.status != #{STATUS_DELETE} AND u.user_name = #{sqlMap.where.u#user_name#EQ1.val}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
-		System.out.println("============ 联合查询返回到当前实体测试 ============");
+		System.out.println("============ 联合查询，返回到当前实体测试 ============");
 		FileUpload fileUpload = new FileUpload();
 		fileUpload.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
 		a = fileUpload.getSqlMap().getWhere().toSql();
@@ -264,7 +270,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " #{sqlMap.where.create_by#IN1.val[1]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
-		System.out.println("============ 联合查询属性为this时也可作为查询条件 ============");
+		System.out.println("============ 联合查询，属性为this时也可作为查询条件 ============");
 		FileUpload fileUpload2 = new FileUpload();
 		fileUpload2.setCreateByName("ThinkGem/JeeSite");
 		fileUpload2.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
