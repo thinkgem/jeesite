@@ -155,7 +155,7 @@ public class EmpUserController extends BaseController {
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
-		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, empUser.getLoginCode()/*, null*/))) {
+		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, empUser.getLoginCode()))) {
 			return renderResult(Global.FALSE, text("保存用户失败，登录账号''{0}''已存在", empUser.getLoginCode()));
 		}
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)

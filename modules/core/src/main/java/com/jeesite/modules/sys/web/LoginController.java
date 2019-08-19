@@ -161,7 +161,8 @@ public class LoginController extends BaseController{
 
 		// 非授权异常，登录失败，验证码加1。
 		if (!UnauthorizedException.class.getName().equals(exception)){
-			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username, (String)paramMap.get("deviceType"), "failed"));
+			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username,
+					(String)paramMap.get("corpCode"), (String)paramMap.get("deviceType"), "failed"));
 		}
 		
 		//获取当前会话对象

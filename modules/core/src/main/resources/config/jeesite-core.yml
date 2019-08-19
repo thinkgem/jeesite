@@ -162,6 +162,9 @@ user:
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
   
+  # 登录账号是否租户内唯一，否则全局唯一
+  loginCodeCorpUnique: false
+  
   # 自助账号服务
   account:
     # 注册用户
@@ -375,6 +378,7 @@ shiro:
 #    ${adminPath}/cms/category/* = anon
 #    ${adminPath}/cms/article/* = anon
 #    ${adminPath}/cms/link/* = anon
+#    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/** = user
   filterChainDefinitions: |
     /ReportServer/** = user

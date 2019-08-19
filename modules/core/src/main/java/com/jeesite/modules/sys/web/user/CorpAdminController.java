@@ -114,7 +114,7 @@ public class CorpAdminController extends BaseController {
 		if (StringUtils.isBlank(user.getCorpCode_())){
 			return renderResult(Global.FALSE, "租户代码不能为空！");
 		}
-		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, user.getLoginCode()/*, user.getCorpCode_()*/))) {
+		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, user.getLoginCode()))) {
 			return renderResult(Global.FALSE, "保存用户'" + user.getLoginCode() + "'失败，登录账号已存在");
 		}
 		if (user.getIsNewRecord()){
@@ -237,7 +237,7 @@ public class CorpAdminController extends BaseController {
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @return
 	 */
-	@RequiresPermissions("user")
+	//@RequiresPermissions("user") // 注释掉，允许配置URI控制权限
 	@RequestMapping(value = "treeData")
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String pId, String isShowCode) {
