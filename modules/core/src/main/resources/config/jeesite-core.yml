@@ -279,6 +279,9 @@ job:
 # 代码生成
 gen:
   enabled: true
+  
+  # 表名字段名是否强制小写
+  forceLowerCase: true
 
 # 系统监控
 state:
