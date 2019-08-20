@@ -3,6 +3,8 @@
  */
 package com.jeesite.modules.test.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.entity.TestDataChild;
 import com.jeesite.modules.test.service.TestDataService;
 
 /**
@@ -62,6 +65,16 @@ public class TestDataController extends BaseController {
 		testData.setPage(new Page<>(request, response));
 		Page<TestData> page = testDataService.findPage(testData);
 		return page;
+	}
+	
+	/**
+	 * 查询子表列表数据
+	 */
+	@RequiresPermissions("test:testData:view")
+	@RequestMapping(value = "subListData")
+	@ResponseBody
+	public List<TestDataChild> subListData(TestDataChild testDataChild) {
+		return testDataService.findSubList(testDataChild);
 	}
 
 	/**

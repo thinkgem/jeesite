@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${text('数据管理')}
+				<i class="fa icon-notebook"></i> ${text('数据管理')}
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
@@ -170,6 +170,45 @@ $('#dataGrid').dataGrid({
 	ondblClickRow: function(id, rownum, colnum, event){
 		js.addTabPage(null, '编辑数据', '${ctx}/test/testData/form?id='+id);
 	},
+	
+	// 子表格支持演示
+	subGrid: true,
+	subGridRowExpanded: function (subgridId, rowId) {
+		$('#'+subgridId).html('<h5><i class="icon-docs"></i> 子表数据</h5>'
+				+'<table id="'+subgridId+'_subgrid"></table>');
+		$('#'+subgridId+'_subgrid').dataGrid({
+			url: '${ctx}/test/testData/subListData',
+			postData: {'testData.id': rowId},
+			autoGridHeight: function(){return 'auto'}, // 设置自动高度
+			autoGridWidth:  function(){return $("#"+subgridId).width();}, // 设置自动高度
+			// 设置数据表格列
+			columnModel: [
+				{header:'${text("单行文本")}', name:'testInput', width:150},
+				{header:'${text("多行文本")}', name:'testTextarea', width:150},
+				{header:'${text("下拉框")}', name:'testSelect', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("下拉多选")}', name:'testSelectMultiple', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("单选框")}', name:'testRadio', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("复选框")}', name:'testCheckbox', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("日期时间")}', name:'testDatetime', width:150, align:"center"},
+				{header:'${text("用户名称")}', name:'testUser.userName', width:150, align:"center"},
+				{header:'${text("机构名称")}', name:'testOffice.officeName', width:150, align:"center"},
+				{header:'${text("区域名称")}', name:'testAreaName', width:150, align:"center"}
+			],
+			// 加载成功后执行事件
+			ajaxSuccess: function(data){
+				
+			}
+		});
+	},
+	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 // 		if (data.count == 0){
