@@ -3,6 +3,8 @@
  */
 package com.jeesite.modules.test.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +67,16 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 //		System.out.println(pageMap.getCount());
 		
 		return super.findPage(testData);
+	}
+	
+	/**
+	 * 查询子表分页数据
+	 * @param page 分页对象
+	 * @param testData
+	 * @return
+	 */
+	public List<TestDataChild> findSubList(TestDataChild testData) {
+		return testDataChildDao.findList(testData);
 	}
 	
 	/**

@@ -193,4 +193,10 @@ th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .box-main>.box-header .box-title .fa {color:#1890ff;}
 .form-control:focus,.select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field {border-color:#66afe9!important;}
+.table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#f6f6f6;}
+.ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {border-color: #eaeaea;}
+.ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
+.ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
+.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e5f3ff;}
 .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;}
+.ui-jqgrid tr.ui-row-ltr td:last-child {border-right:1px solid #eaeaea!important;}

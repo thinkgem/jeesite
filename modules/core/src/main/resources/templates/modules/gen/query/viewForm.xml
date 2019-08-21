@@ -19,7 +19,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> \${text(${className}.isNewRecord ? '新增${functionNameSimple}' : '详情${functionNameSimple}')}
+				<i class="fa icon-note"></i> \${text(${className}.isNewRecord ? '新增${functionNameSimple}' : '详情${functionNameSimple}')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>

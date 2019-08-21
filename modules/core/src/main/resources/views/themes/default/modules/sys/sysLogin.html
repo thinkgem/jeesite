@@ -24,15 +24,12 @@
 				<#form:input type="password" name="password" class="form-control required"
 					data-msg-required="${text('请填写登录密码.')}" placeholder="${text('登录密码')}" autocomplete="off"/>
 			</div>
-			<%/*<!-- if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
+			<% if(@Global.getConfigToBoolean('user.loginCodeCorpUnique', 'false')){ %>
 			<div class="form-group has-feedback">
-				<select name="param_corpCode" class="form-control">
-					<% for(var user in @UserUtils.findCorpList()){ %>
-						<option value="${user.corpCode}">(${user.corpCode}) ${user.corpName}</option>
-					<% } %>
-				</select>
+				<#form:treeselect id="switchCorpSelect" title="${text('登录租户')}" allowClear="false"
+					name="param_corpCode" url="${ctx}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
 			</div>
-			<% } -->*/%>
+			<% } %>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
 				<#form:validcode name="validCode" isRequired="true" isRemote="true" isLazy="true"/>
 			</div>

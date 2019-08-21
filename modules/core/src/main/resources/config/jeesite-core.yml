@@ -162,6 +162,9 @@ user:
   # 多租户模式（SAAS模式）（专业版）
   useCorpModel: false
   
+  # 登录账号是否租户内唯一，否则全局唯一
+  loginCodeCorpUnique: false
+  
   # 自助账号服务
   account:
     # 注册用户
@@ -176,7 +179,7 @@ role:
     {
       3: {
         Office: {
-          #控制类型的类名 : "用来获取控制表名和主键，如果为 NONE，则代表是不控制该类型权限；",
+          #控制类型的类名 : "用来获取控制表名和主键字段名，如果为 NONE，则代表是不控制该类型权限",
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
           #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前部门编码、公司编码",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
@@ -276,6 +279,9 @@ job:
 # 代码生成
 gen:
   enabled: true
+  
+  # 表名字段名是否强制小写
+  forceLowerCase: true
 
 # 系统监控
 state:
@@ -375,6 +381,7 @@ shiro:
 #    ${adminPath}/cms/category/* = anon
 #    ${adminPath}/cms/article/* = anon
 #    ${adminPath}/cms/link/* = anon
+#    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/** = user
   filterChainDefinitions: |
     /ReportServer/** = user
@@ -415,6 +422,7 @@ session:
   
   # 会话唯一标识SessionId在Cookie中的名称。
   sessionIdCookieName: jeesite.session.id
+  #sessionIdCookiePath: ${server.servlet.context-path}
   
   # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
@@ -560,7 +568,7 @@ video:
 
 # 消息提醒中心（专业版）
 msg:
-  enabled: true
+  enabled: false
   
   # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
   realtime:
