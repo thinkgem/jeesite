@@ -183,11 +183,11 @@ th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .tabpanel_mover li .closer:hover {background:none;}
 .tabpanel_tab_content {border-bottom-color:#eeeeee;}
 
-.main-content {padding:10px;}
+/* .main-content {padding:10px;}
 .ui-layout-container {padding:10px;}
 .ui-layout-pane>.main-content {padding:0;}
 .ui-layout-resizer {background:transparent;}
-.ui-layout-content>.wrapper>.main-content {padding:0;}
+.ui-layout-content>.wrapper>.main-content {padding:0;} */
 .box-main,.nav-main{border-radius:3px;box-shadow:0 0 5px #e0e0e0;}
 .box-main>.box-header {border-bottom-color:#cae6ff;}
 .box-main>.box-header .box-title .fa {color:#1890ff;}
