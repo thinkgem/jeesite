@@ -184,7 +184,7 @@ $('#btnImport').click(function(){
 				file: layero.find('#file').val()
 			};
 		    if (form.file == '' || (!js.endWith(form.file, '.xls') && !js.endWith(form.file, '.xlsx'))){
-		    	js.showMessage("${text('文件不正确，请选择后缀为 “xls”或“xlsx”的文件。')}", null, 'warning');
+		    	js.showMessage("${text('文件不正确，请选择后缀为“xls”或“xlsx”的文件。')}", null, 'warning');
 		        return false;
 		    }
 			js.ajaxSubmitForm(form.inputForm, function(data){
