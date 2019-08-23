@@ -215,7 +215,7 @@
           <!-- Chat box -->
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right ui-sortable-handle">
+            <ul class="nav nav-tabs pull-right">
               <li class=""><a href="#revenue-chart" data-toggle="tab" aria-expanded="false">面积图</a></li>
               <li class="active"><a href="#sales-chart" data-toggle="tab" aria-expanded="true">饼图</a></li>
               <li class="pull-left header"><i class="fa fa-inbox"></i> 销售</li>
@@ -233,7 +233,7 @@
             </div>
           </div>
           <div class="box box-success box-widget">
-            <div class="box-header ui-sortable-handle">
+            <div class="box-header">
               <i class="fa fa-comments-o"></i>
               <h3 class="box-title">沟通</h3>
               <div class="box-tools pull-right" data-toggle="tooltip" title="" data-original-title="Status">
@@ -244,8 +244,7 @@
                 </div>
               </div>
             </div>
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; ">
-            	<div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; ">
+            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; ">
               <!-- chat item -->
               <div class="item">
                 <img src="${ctxStatic}/images/user1.jpg" alt="user image" class="online2">
@@ -295,7 +294,7 @@
                 </p>
               </div>
               <!-- /.item -->
-            </div><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 188.822px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+            </div>
             <!-- /.chat -->
             <div class="box-footer">
               <div class="input-group">
@@ -310,7 +309,7 @@
 
           <!-- TO DO List -->
           <div class="box box-widget">
-            <div class="box-header ui-sortable-handle">
+            <div class="box-header">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">任务列表</h3>
               <div class="box-tools pull-right">
@@ -329,7 +328,7 @@
               <ul class="todo-list ui-sortable">
                 <li>
                   <!-- drag handle -->
-                  <span class="handle ui-sortable-handle">
+                  <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                   </span>
@@ -346,7 +345,7 @@
                   </div>
                 </li>
                 <li>
-                  <span class="handle ui-sortable-handle">
+                  <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                   </span>
@@ -359,7 +358,7 @@
                   </div>
                 </li>
                 <li>
-                  <span class="handle ui-sortable-handle">
+                  <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                   </span>
@@ -372,7 +371,7 @@
                   </div>
                 </li>
                 <li>
-                  <span class="handle ui-sortable-handle">
+                  <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                   </span>
@@ -385,7 +384,7 @@
                   </div>
                 </li>
                 <li>
-                  <span class="handle ui-sortable-handle">
+                  <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                   </span>
@@ -398,7 +397,7 @@
                   </div>
                 </li>
                 <li>
-                  <span class="handle ui-sortable-handle">
+                  <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                   </span>
@@ -424,7 +423,7 @@
 
           <!-- Map box -->
           <div class="box box-solid bg-light-blue-gradient">
-            <div class="box-header ui-sortable-handle">
+            <div class="box-header">
               <!-- tools box -->
               <div class="pull-right box-tools">
                 <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="" data-original-title="Date range">
@@ -471,7 +470,7 @@
 
           <!-- solid sales graph -->
           <div class="box box-solid bg-teal-gradient">
-            <div class="box-header ui-sortable-handle">
+            <div class="box-header">
               <i class="fa fa-th"></i>
 
               <h3 class="box-title">销售图表</h3>
@@ -516,7 +515,7 @@
 
           <!-- Calendar -->
           <div class="box box-solid bg-green-gradient">
-            <div class="box-header ui-sortable-handle">
+            <div class="box-header">
               <i class="fa fa-calendar"></i>
               <h3 class="box-title">日程表</h3>
               <!-- tools box -->
@@ -599,14 +598,15 @@
 <script src="${ctxStatic}/jquery/jquery-ui-sortable-1.12.1.min.js"></script>
 <script>
 $(window).resize(function(){
-	var footerHeight  = $('.main-footer').outerHeight() || 0;
-	var windowHeight  = $(window).height();
+	var footerHeight = $('.main-footer').outerHeight() || 0;
+	var windowHeight = $(window).height();
 	$('.content').css('min-height', windowHeight - footerHeight)
 }).resize();
 $('.ui-sortable').sortable({
-  placeholder         : 'sort-highlight',
-  connectWith         : '.ui-sortable',
-  handle              : '.box-header, .nav-tabs',
-  forcePlaceholderSize: true,  zIndex : 999999
+	connectWith : '.ui-sortable',
+	handle      : '.box-header, .nav-tabs',
+	placeholder : 'sort-highlight',
+	forcePlaceholderSize: true,
+	zIndex : 999999
 }).find('.box-header, .nav-tabs').css('cursor', 'move');
 </script>
