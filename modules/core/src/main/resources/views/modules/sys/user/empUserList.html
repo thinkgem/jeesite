@@ -169,15 +169,15 @@ $('#btnImport').click(function(){
 	js.layer.open({
 		type: 1,
 		area: ['400px'],
-		title: '导入用户数据',
+		title: '${text("导入用户数据")}',
 		resize: false,
 		scrollbar: true,
 		content: js.template('importTpl'),
 		success: function(layero, index){
 			layero.find('input[type="checkbox"]').iCheck();
 		},
-		btn: ['<i class="fa fa-check"></i> 导入',
-			'<i class="fa fa-remove"></i> 取消'],
+		btn: ['<i class="fa fa-check"></i> ${text("导入")}',
+			'<i class="fa fa-remove"></i> ${text("关闭")}'],
 		btn1: function(index, layero){
 			var form = {
 				inputForm: layero.find('#inputForm'),
