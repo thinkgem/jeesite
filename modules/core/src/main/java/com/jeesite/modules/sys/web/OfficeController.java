@@ -77,7 +77,7 @@ public class OfficeController extends BaseController {
 	 * 查询机构数据
 	 * @param office
 	 */
-	@RequiresPermissions("sys:company:view")
+	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public List<Office> listData(Office office, String ctrlPermi) {
