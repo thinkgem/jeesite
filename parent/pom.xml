@@ -40,7 +40,7 @@
 		<blade-patchca.version>1.1.0</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.3.2</zxing.version>
-		<poi.version>3.14</poi.version>
+		<poi.version>3.16</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		
 		<!-- framework version setting -->
