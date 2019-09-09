@@ -1,29 +1,77 @@
 ﻿/**
- @Name：layer v3.0.3 Web弹层组件
+ @Name：layer v3.1.1 Web弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：MIT
+    
  */
+
 ;!function(window, undefined){
 "use strict";
 
 var isLayui = window.layui && layui.define, $, win, ready = {
   getPath: function(){
-    var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
-    if(script.getAttribute('merge')) return;
-    return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
+    var jsPath = document.currentScript ? document.currentScript.src : function(){
+      var js = document.scripts
+      ,last = js.length - 1
+      ,src;
+      for(var i = last; i > 0; i--){
+        if(js[i].readyState === 'interactive'){
+          src = js[i].src;
+          break;
+        }
+      }
+      return src || js[last].src;
+    }();
+    return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
   }(),
 
   config: {}, end: {}, minIndex: 0, minLeft: [],
   //btn: [layer.i18n.btnOk, layer.i18n.btnCancel], // ThinkGem
 
   //五种原始层模式
-  type: ['dialog', 'page', 'iframe', 'loading', 'tips']
+  type: ['dialog', 'page', 'iframe', 'loading', 'tips'],
+  
+  //获取节点的style属性值
+  getStyle: function(node, name){
+    var style = node.currentStyle ? node.currentStyle : window.getComputedStyle(node, null);
+    return style[style.getPropertyValue ? 'getPropertyValue' : 'getAttribute'](name);
+  },
+  
+  //载入CSS配件
+  link: function(href, fn, cssname){
+    
+    //未设置路径，则不主动加载css
+    if(!layer.path) return;
+    
+    var head = document.getElementsByTagName("head")[0], link = document.createElement('link');
+    if(typeof fn === 'string') cssname = fn;
+    var app = (cssname || href).replace(/\.|\//g, '');
+    var id = 'layuicss-'+ app, timeout = 0;
+    
+    link.rel = 'stylesheet';
+    link.href = layer.path + href;
+    link.id = id;
+    
+    if(!document.getElementById(id)){
+      head.appendChild(link);
+    }
+    
+    if(typeof fn !== 'function') return;
+    
+    //轮询css是否加载完毕
+    (function poll() {
+      if(++timeout > 8 * 1000 / 100){
+        return window.console && console.error('layer.css: Invalid');
+      };
+      parseInt(ready.getStyle(document.getElementById(id), 'width')) === 1989 ? fn() : setTimeout(poll, 100);
+    }());
+  }
 };
 
 //默认内置方法。
 var layer = {
-  v: '3.0.3',
+  v: '3.1.1',
   i18n: { // ThinkGem 国际化支持
 	btnOk: '确定',
 	btnCancel: '取消',
@@ -55,45 +103,16 @@ var layer = {
     
     isLayui 
       ? layui.addcss('modules/layer/' + options.extend)
-    : layer.link('skin/' + options.extend);
+    : ready.link('skin/' + options.extend);
     
     return this;
   },
-  
-  //载入CSS配件
-  link: function(href, fn, cssname){
-    
-    //未设置路径，则不主动加载css
-    if(!layer.path) return;
-    
-    var head = $('head')[0], link = document.createElement('link');
-    if(typeof fn === 'string') cssname = fn;
-    var app = (cssname || href).replace(/\.|\//g, '');
-    var id = 'layuicss-'+app, timeout = 0;
-    
-    link.rel = 'stylesheet';
-    link.href = layer.path + href;
-    link.id = id;
-    
-    if(!$('#'+ id)[0]){
-      head.appendChild(link);
-    }
-    
-    if(typeof fn !== 'function') return;
-    
-    //轮询css是否加载完毕
-    (function poll() {
-      if(++timeout > 8 * 1000 / 100){
-        return window.console && console.error('layer.css: Invalid');
-      };
-      parseInt($('#'+id).css('width')) === 1989 ? fn() : setTimeout(poll, 100);
-    }());
-  },
-  
+
+  //主体CSS等待事件
   ready: function(callback){
-    var cssname = 'skinlayercss', ver = '303';
-    isLayui ? layui.addcss('modules/layer/default/layer.css?v='+layer.v+ver, callback, cssname)
-    : layer.link('skin/default/layer.css?v='+layer.v+ver, callback, cssname);
+    var cssname = 'layer', ver = ''
+    ,path = (isLayui ? 'modules/layer/' : 'skin/') + 'default/layer.css?v='+ layer.v + ver;
+    isLayui ? layui.addcss(path, callback, cssname) : ready.link(path, callback, cssname);
     return this;
   },
   
@@ -185,7 +204,7 @@ Class.pt = Class.prototype;
 
 //缓存常用字符
 var doms = ['layui-layer', '.layui-layer-title', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe', 'layui-layer-content', 'layui-layer-btn', 'layui-layer-close'];
-doms.anim = ['layer-anim', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06'];
+doms.anim = ['layer-anim-00', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06'];
 
 //默认配置
 Class.pt.config = {
@@ -221,7 +240,7 @@ Class.pt.vessel = function(conType, callback){
   config.zIndex = zIndex;
   callback([
     //遮罩
-    config.shade ? ('<div class="layui-layer-shade" id="layui-layer-shade'+ times +'" times="'+ times +'" style="'+ ('z-index:'+ (zIndex-1) +'; background-color:'+ (config.shade[1]||'#000') +'; opacity:'+ (config.shade[0]||config.shade) +'; filter:alpha(opacity='+ (config.shade[0]*100||config.shade*100) +');') +'"></div>') : '',
+    config.shade ? ('<div class="layui-layer-shade" id="layui-layer-shade'+ times +'" times="'+ times +'" style="'+ ('z-index:'+ (zIndex-1) +'; ') +'"></div>') : '',
     
     //主体
     '<div class="'+ doms[0] + (' layui-layer-'+ready.type[config.type]) + (((config.type == 0 || config.type == 2) && !config.shade) ? ' layui-layer-border' : '') + ' ' + (config.skin||'') +'" id="'+ doms[0] + times +'" type="'+ ready.type[config.type] +'" times="'+ times +'" showtime="'+ config.time +'" conType="'+ (conType ? 'object' : 'string') +'" style="z-index: '+ zIndex +'; width:'+ config.area[0] + ';height:' + config.area[1] + (config.fixed ? '' : ';position:absolute;') +'">'
@@ -291,7 +310,7 @@ Class.pt.creat = function(){
 			+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times 
 			+ '" onload="this.className=\'\';" class="layui-layer-load" frameborder="0"></iframe><form id="'
 			+ doms[4] + '-form' + times+'" action="' + config.content[0] + '" method="post" target="'
-			+ doms[4] + '' + times +'">';
+			+ doms[4] + '' + times +'"></form>';
     break;
     case 3:
       delete config.title;
@@ -326,6 +345,12 @@ Class.pt.creat = function(){
     that.layero = $('#'+ doms[0] + times);
     config.scrollbar || doms.html.css('overflow', 'hidden').attr('layer-full', times);
   }).auto(times);
+  
+  //遮罩
+  $('#layui-layer-shade'+ that.index).css({
+    'background-color': config.shade[1] || '#000'
+    ,'opacity': config.shade[0]||config.shade
+  });
 
   //config.type == 2 && layer.ie == 6 && that.layero.find('iframe').attr('src', content[0]); // ThinkGem 不需要ie6
   
@@ -337,7 +362,6 @@ Class.pt.creat = function(){
 	}
 	form.submit();
   }
-
   //坐标自适应浏览器窗口尺寸
   config.type == 4 ? that.tips() : that.offset();
   if(config.fixed){
@@ -355,7 +379,10 @@ Class.pt.creat = function(){
   
   //为兼容jQuery3.0的css动画影响元素尺寸计算
   if(doms.anim[config.anim]){
-    that.layero.addClass(doms.anim[config.anim]);
+    var animClass = 'layer-anim '+ doms.anim[config.anim];
+    that.layero.addClass(animClass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $(this).removeClass(animClass);
+    });
   };
   
   //记录关闭动画
@@ -367,6 +394,7 @@ Class.pt.creat = function(){
 //自适应
 Class.pt.auto = function(index){
   var that = this, config = that.config, layero = $('#'+ doms[0] + index);
+  
   if(config.area[0] === '' && config.maxWidth > 0){
     //为了修复IE7下一个让人难以理解的bug
     if(layer.ie && layer.ie < 8 && config.btn){
@@ -374,20 +402,25 @@ Class.pt.auto = function(index){
     }
     layero.outerWidth() > config.maxWidth && layero.width(config.maxWidth);
   }
-  var area = [layero.innerWidth(), layero.innerHeight()];
-  var titHeight = layero.find(doms[1]).outerHeight() || 0;
-  var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
-  function setHeight(elem){
+  
+  var area = [layero.innerWidth(), layero.innerHeight()]
+  ,titHeight = layero.find(doms[1]).outerHeight() || 0
+  ,btnHeight = layero.find('.'+doms[6]).outerHeight() || 0
+  ,setHeight = function(elem){
     elem = layero.find(elem);
     elem.height(area[1] - titHeight - btnHeight - 2*(parseFloat(elem.css('padding-top'))|0));
-  }
+  };
+
   switch(config.type){
     case 2: 
       setHeight('iframe');
     break;
     default:
       if(config.area[1] === ''){
-        if(config.fixed && area[1] >= win.height()){
+        if(config.maxHeight > 0 && layero.outerHeight() > config.maxHeight){
+          area[1] = config.maxHeight;
+          setHeight('.'+doms[5]);
+        } else if(config.fixed && area[1] >= win.height()){
           area[1] = win.height();
           setHeight('.'+doms[5]);
         }
@@ -395,7 +428,8 @@ Class.pt.auto = function(index){
         setHeight('.'+doms[5]);
       }
     break;
-  }
+  };
+  
   return that;
 };
 
@@ -454,7 +488,7 @@ Class.pt.offset = function(){
     that.offsetLeft = layero.css('left');
   }
 
-  that.offsetTop = that.offsetTop>0?that.offsetTop:0; // 2017-5-8 ThinkGem Top值不小于0
+  that.offsetTop = that.offsetTop > 0 ? that.offsetTop : 0; // 2017-5-8 ThinkGem Top值不小于0
   
   layero.css({top: that.offsetTop, left: that.offsetLeft});
 };
@@ -944,7 +978,7 @@ layer.close = function(index){
   };
   
   if(layero.data('isOutAnim')){
-    layero.addClass(closeAnim);
+    layero.addClass('layer-anim '+ closeAnim);
   }
   
   $('#layui-layer-moves, #layui-layer-shade' + index).remove();
@@ -975,9 +1009,7 @@ layer.closeAll = function(type){
 };
 
 /** 
-
   拓展模块，layui开始合并在一起
-
  */
 
 var cache = layer.cache||{}, skin = function(type){
@@ -1033,6 +1065,7 @@ layer.tab = function(options){
   options = options || {};
   
   var tab = options.tab || {}
+  ,THIS = 'layui-this'
   ,success = options.success;
   
   delete options.success;
@@ -1044,7 +1077,7 @@ layer.tab = function(options){
     title: function(){
       var len = tab.length, ii = 1, str = '';
       if(len > 0){
-        str = '<span class="layui-layer-tabnow">'+ tab[0].title +'</span>';
+        str = '<span class="'+ THIS +'">'+ tab[0].title +'</span>';
         for(; ii < len; ii++){
           str += '<span>'+ tab[ii].title +'</span>';
         }
@@ -1054,7 +1087,7 @@ layer.tab = function(options){
     content: '<ul class="layui-layer-tabmain">'+ function(){
       var len = tab.length, ii = 1, str = '';
       if(len > 0){
-        str = '<li class="layui-layer-tabli xubox_tab_layer">'+ (tab[0].content || 'no content') +'</li>';
+        str = '<li class="layui-layer-tabli '+ THIS +'">'+ (tab[0].content || 'no content') +'</li>';
         for(; ii < len; ii++){
           str += '<li class="layui-layer-tabli">'+ (tab[ii].content || 'no  content') +'</li>';
         }
@@ -1067,7 +1100,7 @@ layer.tab = function(options){
       btn.on('mousedown', function(e){
         e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
         var othis = $(this), index = othis.index();
-        othis.addClass('layui-layer-tabnow').siblings().removeClass('layui-layer-tabnow');
+        othis.addClass(THIS).siblings().removeClass(THIS);
         main.eq(index).show().siblings().hide();
         typeof options.change === 'function' && options.change(index);
       });
@@ -1127,7 +1160,7 @@ layer.photos = function(options, loop, key){
     if(!loop) return;
     
   } else if (data.length === 0){
-    return layer.msg(message.noPicture);
+    return layer.msg(layer.i18n.noPicture);
   }
   
   //上一张
@@ -1298,7 +1331,7 @@ window.layui && layui.define ? (
   layer.ready()
   ,layui.define('jquery', function(exports){ //layui加载
     layer.path = layui.cache.dir;
-    ready.run(layui.jquery);
+    ready.run(layui.$);
 
     //暴露模块
     window.layer = layer;
