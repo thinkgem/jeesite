@@ -4,6 +4,7 @@
 package com.jeesite.test;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,11 +23,13 @@ import com.jeesite.modules.sys.dao.AreaDao;
 import com.jeesite.modules.sys.dao.CompanyDao;
 import com.jeesite.modules.sys.dao.ConfigDao;
 import com.jeesite.modules.sys.dao.DictDataDao;
+import com.jeesite.modules.sys.dao.EmpUserDao;
 import com.jeesite.modules.sys.dao.UserDao;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.entity.Config;
 import com.jeesite.modules.sys.entity.DictData;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.User;
 
 /**
@@ -50,6 +53,8 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	private DictDataDao dictDataDao;
 	@Autowired
 	private FileUploadDao fileUploadDao;
+	@Autowired
+	private EmpUserDao empUserDao;
 	
 	@Test
 	public void testTableAnnotation() throws Exception{
@@ -145,6 +150,13 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			dictData.setParentCodes("0,");
 			System.out.println(dictDataDao.findByParentCodesLike(dictData));
 			System.out.println(dictDataDao.findList(dictData));
+
+			System.out.println("============ 分页情况下foreach测试 ============");
+			EmpUser empUser = new EmpUser();
+			empUser.setCodes(new String[]{"SDJN01","SDJN02"});
+			empUser.setPage(new Page<>(1, 3));
+			List<EmpUser> list = empUserDao.findUserListByOfficeCodes(empUser);
+			System.out.println(list);
 			
 		}catch(Exception e){
 			e.printStackTrace();
