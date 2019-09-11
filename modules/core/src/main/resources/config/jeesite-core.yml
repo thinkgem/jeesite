@@ -384,11 +384,11 @@ shiro:
 #    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/** = user
   filterChainDefinitions: |
-    /ReportServer/** = user
     ${adminPath}/** = user
   
   # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
   defaultFilterChainDefinitions: |
+    /validCode = anon
     /static/** = anon
     /userfiles/** = anon
     /druid/** = perms[sys:state:druid]

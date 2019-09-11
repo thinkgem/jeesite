@@ -11,7 +11,7 @@ if (isBlank(message)){
 			if (@StringUtils.startsWith(e.message!, "msg:")){
 				message = @StringUtils.replace(e.message!, "msg:", "");
 				break;
-			}else if (e.class.name! == 'com.jeesite.common.service.ServiceException'){
+			}else if (type.name(e) == 'ServiceException'){
 				message = e.message!;
 				break;
 			}

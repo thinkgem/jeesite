@@ -406,7 +406,6 @@ logging:
 #  
 #  # URI 权限过滤器定义
 #  filterChainDefinitions: |
-#    /ReportServer/** = user
 #    ${adminPath}/** = user
 
 # Session 相关
