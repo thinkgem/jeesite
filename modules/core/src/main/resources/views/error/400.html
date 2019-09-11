@@ -8,14 +8,14 @@ if (isBlank(message)){
 	if (ex != null){
 		if(@StringUtils.startsWith(@ex.getMessage(), 'msg:')){
 			message = @StringUtils.replace(@ex.getMessage(), 'msg:', '');
-		}else if (ex.class.name == 'org.springframework.validation.BindException'){
+		}else if (type.fullName(ex) == 'org.springframework.validation.BindException'){
 			for (var e in ex.globalErrors){
 				message = message + '☆' + e.defaultMessage + '(' + e.objectName + ')<br/>';
 			}
 			for (var e in ex.fieldErrors){
 				message = message + '☆' + e.defaultMessage + '(' + e.field + ')<br/>';
 			}
-		}else if (ex.class.name == 'javax.validation.ConstraintViolationException'){
+		}else if (type.fullName(ex) == 'javax.validation.ConstraintViolationException'){
 			for (var v in ex.constraintViolations) {
 				message = message + '☆' + v.message + '(' + v.propertyPath + ')<br/>';
 			}
