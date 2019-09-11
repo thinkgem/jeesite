@@ -28,7 +28,7 @@
 		<ant.version>1.9.7</ant.version>
 		<fst.version>2.57</fst.version>
 		<json.version>20180130</json.version>
-		<fastjson.version>1.2.58</fastjson.version>
+		<fastjson.version>1.2.60</fastjson.version>
 		<jackson.version>2.10.0.pr1</jackson.version>
 		<jsoup.version>1.11.3</jsoup.version>
 		<commons-email.version>1.5</commons-email.version>
