@@ -209,13 +209,14 @@ $('#dataGrid').dataGrid({
 		});
 	},
 
-	multiSort: true,	// 是否支持多列排序，给列指定 firstsortorder 可设定初次排序方式
+	multiSort: true,		// 是否支持多列排序，给列指定 firstsortorder 可设定初次排序方式
+	emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 // 		if (data.count == 0){
-// 			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
-// 		}
+//			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
+//		}
 	}
 });
 $("#btnTrunsTest").click(function(){ 
