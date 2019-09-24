@@ -528,7 +528,7 @@ file:
   # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等，此设置会覆盖 spring.http.multipart.maxFileSize 设置
   maxFileSize: 500*1024*1024
   
-  # 设置允许上传的文件后缀
+  # 设置允许上传的文件后缀（全局设置）
   imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,
   mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
   fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.ipa,.apk,
@@ -538,6 +538,10 @@ file:
 #    application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
 #    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 #    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
+  
+  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
+  imageMaxWidth: 1024
+  imageMaxHeight: 768
   
   # 是否开启分片上传
   chunked: false
