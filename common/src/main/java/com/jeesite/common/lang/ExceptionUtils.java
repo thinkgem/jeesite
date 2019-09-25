@@ -31,6 +31,28 @@ public class ExceptionUtils {
 		}
 		return ex;
 	}
+	
+	public static String getExceptionMessage(Throwable ex){
+		String message = null;
+		Throwable e = ex;
+		while (true){
+			if (e == null){
+				break;
+			}
+			if (StringUtils.startsWith(e.getMessage(), "msg:")){
+				message = StringUtils.replace(e.getMessage(), "msg:", "");
+				break;
+			}else if ("com.jeesite.common.service.ServiceException"
+					.equals(e.getClass().getName())){
+				message = e.getMessage();
+				break;
+			}
+			if (StringUtils.isBlank(message)){
+				e = e.getCause();
+			}
+		}
+		return message;
+	}
 
 	/**
 	 * 将ErrorStack转化为String.
