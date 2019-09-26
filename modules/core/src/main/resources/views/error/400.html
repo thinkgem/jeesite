@@ -10,14 +10,14 @@ if (isBlank(message)){
 			message = @StringUtils.replace(@ex.getMessage(), 'msg:', '');
 		}else if (type.fullName(ex) == 'org.springframework.validation.BindException'){
 			for (var e in ex.globalErrors){
-				message = message + '☆' + e.defaultMessage + '(' + e.objectName + ')<br/>';
+				message = message + '☆ ' + text(e.defaultMessage) + ' (' + e.objectName + ')<br/>';
 			}
 			for (var e in ex.fieldErrors){
-				message = message + '☆' + e.defaultMessage + '(' + e.field + ')<br/>';
+				message = message + '☆ ' + text(e.defaultMessage) + ' (' + e.field + ')<br/>';
 			}
 		}else if (type.fullName(ex) == 'javax.validation.ConstraintViolationException'){
 			for (var v in ex.constraintViolations) {
-				message = message + '☆' + v.message + '(' + v.propertyPath + ')<br/>';
+				message = message + '☆ ' + text(v.message) + ' (' + v.propertyPath + ')<br/>';
 			}
 		}else{
 			message = message + ex.message;
