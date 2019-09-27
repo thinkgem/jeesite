@@ -5,12 +5,14 @@ package com.jeesite.modules.sys.service.support;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
@@ -185,9 +187,9 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 					failureNum++;
 					String msg = "<br/>" + failureNum + "、账号 " + user.getLoginCode() + " 导入失败：";
 					if (e instanceof ConstraintViolationException){
-						List<String> messageList = ValidatorUtils.extractPropertyAndMessageAsList((ConstraintViolationException)e, ": ");
-						for (String message : messageList) {
-							msg += message + "; ";
+						ConstraintViolationException cve = (ConstraintViolationException)e;
+						for (ConstraintViolation<?> violation : cve.getConstraintViolations()) {
+							msg += Global.getText(violation.getMessage()) + " ("+violation.getPropertyPath()+")";
 						}
 					}else{
 						msg += e.getMessage();
