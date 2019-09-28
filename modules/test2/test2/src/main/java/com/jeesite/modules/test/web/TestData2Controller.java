@@ -39,6 +39,7 @@ public class TestData2Controller extends BaseController {
 	 */
 	@ModelAttribute
 	public TestData get(String id, boolean isNewRecord) {
+		//System.out.println("s1: "+UserUtils.getSession().getId());
 		return testDataServiceClient.get(id, isNewRecord);
 	}
 	

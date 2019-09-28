@@ -54,7 +54,7 @@ spring:
       discovery:
         hostname: 127.0.0.1
         preferIpAddress: false
-      
+
   # 打印横幅
   main:
     bannerMode: "off"

@@ -43,6 +43,7 @@ public class TestTree1Controller extends BaseController {
 	 */
 	@ModelAttribute
 	public TestTree get(String treeCode, boolean isNewRecord) {
+		//System.out.println("s1: "+UserUtils.getSession().getId());
 		return testTreeService.get(treeCode, isNewRecord);
 	}
 	
