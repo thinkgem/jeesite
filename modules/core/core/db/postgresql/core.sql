@@ -318,6 +318,7 @@ CREATE TABLE js_sys_file_upload
 	file_id varchar(64) NOT NULL,
 	file_name varchar(500) NOT NULL,
 	file_type varchar(20) NOT NULL,
+	file_sort decimal(10),
 	biz_key varchar(64),
 	biz_type varchar(64),
 	status char(1) DEFAULT '0' NOT NULL,
@@ -430,6 +431,7 @@ CREATE TABLE js_sys_menu
 	menu_target varchar(20),
 	menu_icon varchar(100),
 	menu_color varchar(50),
+	menu_title varchar(100),
 	permission varchar(1000),
 	weight decimal(4),
 	is_show char(1) NOT NULL,
@@ -682,6 +684,7 @@ CREATE TABLE js_sys_role
 	is_sys char(1),
 	user_type varchar(16),
 	data_scope char(1),
+	biz_scope varchar(255),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -690,6 +693,26 @@ CREATE TABLE js_sys_role
 	remarks varchar(500),
 	corp_code varchar(64) DEFAULT '0' NOT NULL,
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL,
+	extend_s1 varchar(500),
+	extend_s2 varchar(500),
+	extend_s3 varchar(500),
+	extend_s4 varchar(500),
+	extend_s5 varchar(500),
+	extend_s6 varchar(500),
+	extend_s7 varchar(500),
+	extend_s8 varchar(500),
+	extend_i1 decimal(19),
+	extend_i2 decimal(19),
+	extend_i3 decimal(19),
+	extend_i4 decimal(19),
+	extend_f1 decimal(19,4),
+	extend_f2 decimal(19,4),
+	extend_f3 decimal(19,4),
+	extend_f4 decimal(19,4),
+	extend_d1 timestamp,
+	extend_d2 timestamp,
+	extend_d3 timestamp,
+	extend_d4 timestamp,
 	PRIMARY KEY (role_code)
 ) WITHOUT OIDS;
 
@@ -1137,6 +1160,7 @@ COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';
 COMMENT ON COLUMN js_sys_file_upload.file_name IS '文件名称';
 COMMENT ON COLUMN js_sys_file_upload.file_type IS '文件分类（image、media、file）';
+COMMENT ON COLUMN js_sys_file_upload.file_sort IS '文件排序（升序）';
 COMMENT ON COLUMN js_sys_file_upload.biz_key IS '业务主键';
 COMMENT ON COLUMN js_sys_file_upload.biz_type IS '业务类型';
 COMMENT ON COLUMN js_sys_file_upload.status IS '状态（0正常 1删除 2停用）';
@@ -1219,6 +1243,7 @@ COMMENT ON COLUMN js_sys_menu.menu_href IS '链接';
 COMMENT ON COLUMN js_sys_menu.menu_target IS '目标';
 COMMENT ON COLUMN js_sys_menu.menu_icon IS '图标';
 COMMENT ON COLUMN js_sys_menu.menu_color IS '颜色';
+COMMENT ON COLUMN js_sys_menu.menu_title IS '菜单标题';
 COMMENT ON COLUMN js_sys_menu.permission IS '权限标识';
 COMMENT ON COLUMN js_sys_menu.weight IS '菜单权重';
 COMMENT ON COLUMN js_sys_menu.is_show IS '是否显示（1显示 0隐藏）';
@@ -1417,6 +1442,7 @@ COMMENT ON COLUMN js_sys_role.role_sort IS '角色排序（升序）';
 COMMENT ON COLUMN js_sys_role.is_sys IS '系统内置（1是 0否）';
 COMMENT ON COLUMN js_sys_role.user_type IS '用户类型（employee员工 member会员）';
 COMMENT ON COLUMN js_sys_role.data_scope IS '数据范围设置（0未设置  1全部数据 2自定义数据）';
+COMMENT ON COLUMN js_sys_role.biz_scope IS '适应业务范围（不同的功能，不同的数据权限支持）';
 COMMENT ON COLUMN js_sys_role.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_role.create_by IS '创建者';
 COMMENT ON COLUMN js_sys_role.create_date IS '创建时间';
@@ -1425,6 +1451,26 @@ COMMENT ON COLUMN js_sys_role.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_role.remarks IS '备注信息';
 COMMENT ON COLUMN js_sys_role.corp_code IS '租户代码';
 COMMENT ON COLUMN js_sys_role.corp_name IS '租户名称';
+COMMENT ON COLUMN js_sys_role.extend_s1 IS '扩展 String 1';
+COMMENT ON COLUMN js_sys_role.extend_s2 IS '扩展 String 2';
+COMMENT ON COLUMN js_sys_role.extend_s3 IS '扩展 String 3';
+COMMENT ON COLUMN js_sys_role.extend_s4 IS '扩展 String 4';
+COMMENT ON COLUMN js_sys_role.extend_s5 IS '扩展 String 5';
+COMMENT ON COLUMN js_sys_role.extend_s6 IS '扩展 String 6';
+COMMENT ON COLUMN js_sys_role.extend_s7 IS '扩展 String 7';
+COMMENT ON COLUMN js_sys_role.extend_s8 IS '扩展 String 8';
+COMMENT ON COLUMN js_sys_role.extend_i1 IS '扩展 Integer 1';
+COMMENT ON COLUMN js_sys_role.extend_i2 IS '扩展 Integer 2';
+COMMENT ON COLUMN js_sys_role.extend_i3 IS '扩展 Integer 3';
+COMMENT ON COLUMN js_sys_role.extend_i4 IS '扩展 Integer 4';
+COMMENT ON COLUMN js_sys_role.extend_f1 IS '扩展 Float 1';
+COMMENT ON COLUMN js_sys_role.extend_f2 IS '扩展 Float 2';
+COMMENT ON COLUMN js_sys_role.extend_f3 IS '扩展 Float 3';
+COMMENT ON COLUMN js_sys_role.extend_f4 IS '扩展 Float 4';
+COMMENT ON COLUMN js_sys_role.extend_d1 IS '扩展 Date 1';
+COMMENT ON COLUMN js_sys_role.extend_d2 IS '扩展 Date 2';
+COMMENT ON COLUMN js_sys_role.extend_d3 IS '扩展 Date 3';
+COMMENT ON COLUMN js_sys_role.extend_d4 IS '扩展 Date 4';
 COMMENT ON TABLE js_sys_role_data_scope IS '角色数据权限表';
 COMMENT ON COLUMN js_sys_role_data_scope.role_code IS '控制角色编码';
 COMMENT ON COLUMN js_sys_role_data_scope.ctrl_type IS '控制类型';

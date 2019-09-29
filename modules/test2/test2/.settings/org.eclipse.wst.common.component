@@ -6,19 +6,10 @@
         <dependent-module archiveName="jeesite-cloud-module-feign-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-feign/jeesite-cloud-module-feign">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="jeesite-module-core-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-module-core/jeesite-module-core">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jeesite-framework-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-framework/jeesite-framework">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="jeesite-cloud-module-test2-client-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-test2-client/jeesite-cloud-module-test2-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="jeesite-cloud-module-test1-client-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-cloud-module-test1-client/jeesite-cloud-module-test1-client">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jeesite-common-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-common/jeesite-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>
