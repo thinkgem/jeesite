@@ -7,12 +7,13 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud Finchley
-* 服务治理注册与发现：Spring Cloud Netflix Eureka
-* 服务容错保护限流降级：Spring Cloud Netflix Hystrix
+* 服务治理注册与发现：Spring Cloud Eureka / Consul
+* 服务容错保护限流降级：Spring Cloud Hystrix
 * 分布式统一配置中心：Spring Cloud Config
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
-* 分布式链路追踪：Spring Cloud Zipkin
+* 分布式链路追踪：Spring Cloud Zipkin (可选组件)
+* 微服务监控平台：Spring Cloud Admin (可选组件)
 
 ## 子项目介绍
 
@@ -26,6 +27,8 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 * 测试模块2（树表增删改查示例）：
     - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
     - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
+* 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
+* 服务监控：jeesite-cloud-admin ： <http://127.0.0.1:9511>
 
 ## 快速运行
 
