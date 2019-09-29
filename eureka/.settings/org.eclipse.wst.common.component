@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
   <wb-module deploy-name="web">
+        <dependent-module archiveName="jeesite-common-4.1.7-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeesite-common/jeesite-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/src/main/webapp/WEB-INF/classes"/>
         <property name="context-root" value="web"/>
         <property name="component.exclusion.patterns" value="WEB-INF/classes/*.lic,userfiles/**"/>

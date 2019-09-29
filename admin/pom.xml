@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.jeesite</groupId>
         <artifactId>jeesite-cloud-parent</artifactId>
-        <version>4.1.6-SNAPSHOT</version>
+        <version>4.1.7-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
@@ -17,7 +17,14 @@
     <url>http://www.jeesite.com</url>
     <inceptionYear>2019-Now</inceptionYear>
 
+	<properties>
+		
+		<spring-boot-admin.version>2.0.6</spring-boot-admin.version>
+		
+	</properties>
+	
     <dependencies>
+    	
         <!-- Spring Boot Begin -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,19 +53,22 @@
         </dependency>
 
         <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId>
-        </dependency>
-
-        <dependency>
-        <groupId>de.codecentric</groupId>
-        <artifactId>spring-boot-admin-server-ui</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-server-cloud</artifactId>
-        </dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-server</artifactId>
+			<version>${spring-boot-admin.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server-ui</artifactId>
+			<version>${spring-boot-admin.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server-cloud</artifactId>
+			<version>${spring-boot-admin.version}</version>
+		</dependency>
         <!-- Spring Boot End -->
 
         <!-- Spring Cloud Begin -->
@@ -71,6 +81,7 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <!-- Spring Cloud End -->
+        
     </dependencies>
 
     <build>

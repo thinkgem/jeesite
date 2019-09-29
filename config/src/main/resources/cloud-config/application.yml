@@ -35,8 +35,13 @@ eureka:
   # 实例设置
   instance:
     # 实例状态监控参数
-    statusPageUrlPath: ${server.servlet.context-path}
+    homePageUrl: ${server.servlet.context-path}
+    statusPageUrlPath: ${server.servlet.context-path}/actuator
     healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+    
+  # 从服务器注册表中获取注册信息的时间间隔（秒）
+  client:
+    registryFetchIntervalSeconds: 5
     
 # 声明式服务
 feign:
@@ -60,6 +65,9 @@ feign:
     response:
       enabled: true
 
+  # 调试模式
+  debug: false
+
 # 启用负载均衡
 ribbon:
   eureka:
@@ -70,12 +78,15 @@ ribbon:
   MaxAutoRetriesNextServer: 1
   MaxAutoRetries: 0
 
-# 客户端调用熔断降级的线程超时时间
+# 延迟容错机制
 hystrix:
   command:
     default:
       execution:
         isolation:
+          # 隔离策略（THREAD、SEMAPHORE）
+          strategy: THREAD
+          # 线程超时时间（毫秒）
           thread:
             timeoutInMilliseconds: 60000
 
@@ -101,9 +112,9 @@ jdbc:
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite-cloud?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
   username: root
-  password: ruoshu123
+  password: 123456
   testSql: SELECT 1
 
   # 数据库连接池配置
@@ -136,15 +147,21 @@ spring:
       discovery:
         healthCheckPath: ${server.servlet.context-path}/actuator/health
         healthCheckInterval: 15s
-  # Spring Boot Admin 服务监控中心
+        
+  # Spring Boot Admin 服务监控中心：https://codecentric.github.io/spring-boot-admin/2.0.6
   boot:
     admin:
       client:
-        url: http://localhost:9511
+        url: http://127.0.0.1:9511
+        instance:
+          prefer-ip: true
+          management:
+            context-path: ${server.servlet.context-path}
+        
   # Zipkin 服务链路追踪
-  spring:
-    zipkin:
-      base-url: http://localhost:9411
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    
   # Redis 连接参数 （RedisProperties）
   redis:
     host: 127.0.0.1
@@ -220,10 +237,9 @@ shiro:
   
   # URI 权限过滤器定义
   filterChainDefinitions: |
-    /ReportServer/** = user
-    ${adminPath}/** = user
     /inner/api/** = inner
     /api/** = user
+    ${adminPath}/** = user
   
 # Web 相关
 web:
@@ -232,6 +248,23 @@ web:
   core: 
     enabled: false
 
+# Session 相关
+session:
+
+  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+  # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
+  sessionTimeout: 1800000
+  
+  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
+  mobileAppSessionTimeout: 43200000
+  
+  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
+  sessionTimeoutClean: 1200000
+  
+  # 会话唯一标识SessionId在Cookie中的名称。
+  sessionIdCookieName: jeesite.session.id
+  sessionIdCookiePath: ${server.servlet.context-path}
+  
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
 error:
   page:

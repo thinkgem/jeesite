@@ -4,6 +4,7 @@
 IF OBJECT_ID('[js_gen_table_column]') IS NOT NULL DROP TABLE [js_gen_table_column];
 IF OBJECT_ID('[js_gen_table]') IS NOT NULL DROP TABLE [js_gen_table];
 IF OBJECT_ID('[js_sys_company_office]') IS NOT NULL DROP TABLE [js_sys_company_office];
+IF OBJECT_ID('[js_sys_employee_office]') IS NOT NULL DROP TABLE [js_sys_employee_office];
 IF OBJECT_ID('[js_sys_employee_post]') IS NOT NULL DROP TABLE [js_sys_employee_post];
 IF OBJECT_ID('[js_sys_user_data_scope]') IS NOT NULL DROP TABLE [js_sys_user_data_scope];
 IF OBJECT_ID('[js_sys_user_role]') IS NOT NULL DROP TABLE [js_sys_user_role];
@@ -273,6 +274,17 @@ CREATE TABLE [js_sys_employee]
 	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
 	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
 	PRIMARY KEY ([emp_code])
+);
+
+
+-- 员工附属机构关系表
+CREATE TABLE [js_sys_employee_office]
+(
+	[id] varchar(64) NOT NULL UNIQUE,
+	[emp_code] varchar(64) NOT NULL,
+	[office_code] varchar(64) NOT NULL,
+	[post_code] varchar(64),
+	PRIMARY KEY ([emp_code], [office_code])
 );
 
 

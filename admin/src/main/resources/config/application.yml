@@ -1,11 +1,14 @@
+server:
+  port: 9511
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8970/eureka/
+  
 spring:
   application:
     name: jeesite-cloud-admin
-  zipkin:
-    base-url: http://localhost:9411
-
-server:
-  port: 9511
 
 management:
   endpoint:
@@ -16,7 +19,5 @@ management:
       exposure:
         include: health,info
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8970/eureka/
+logging:
+  config: classpath:config/logback-spring.xml
