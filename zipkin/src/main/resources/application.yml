@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: jeesite-cloud-zipkin
+
+server:
+  port: 9411
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8970/eureka/
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
