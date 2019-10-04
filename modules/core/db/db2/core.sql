@@ -318,6 +318,7 @@ CREATE TABLE js_sys_file_upload
 	file_id varchar(64) NOT NULL,
 	file_name vargraphic(500) NOT NULL,
 	file_type varchar(20) NOT NULL,
+	file_sort decimal(10),
 	biz_key varchar(64),
 	biz_type varchar(64),
 	status char(1) DEFAULT '0' NOT NULL,

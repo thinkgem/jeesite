@@ -320,6 +320,7 @@ CREATE TABLE js_sys_file_upload
 	file_id varchar(64) NOT NULL COMMENT '文件编号',
 	file_name varchar(500) NOT NULL COMMENT '文件名称',
 	file_type varchar(20) NOT NULL COMMENT '文件分类（image、media、file）',
+	file_sort decimal(10) COMMENT '文件排序（升序）',
 	biz_key varchar(64) COMMENT '业务主键',
 	biz_type varchar(64) COMMENT '业务类型',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',

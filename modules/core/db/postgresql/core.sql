@@ -318,6 +318,7 @@ CREATE TABLE js_sys_file_upload
 	file_id varchar(64) NOT NULL,
 	file_name varchar(500) NOT NULL,
 	file_type varchar(20) NOT NULL,
+	file_sort decimal(10),
 	biz_key varchar(64),
 	biz_type varchar(64),
 	status char(1) DEFAULT '0' NOT NULL,
@@ -1159,6 +1160,7 @@ COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';
 COMMENT ON COLUMN js_sys_file_upload.file_name IS '文件名称';
 COMMENT ON COLUMN js_sys_file_upload.file_type IS '文件分类（image、media、file）';
+COMMENT ON COLUMN js_sys_file_upload.file_sort IS '文件排序（升序）';
 COMMENT ON COLUMN js_sys_file_upload.biz_key IS '业务主键';
 COMMENT ON COLUMN js_sys_file_upload.biz_type IS '业务类型';
 COMMENT ON COLUMN js_sys_file_upload.status IS '状态（0正常 1删除 2停用）';
