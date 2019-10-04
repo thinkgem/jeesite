@@ -23,7 +23,12 @@ if (isBlank(message)){
 
 // 如果是异步请求或是手机端，则直接返回信息
 if (@ServletUtils.isAjaxRequest(request)) {
-	print(@ServletUtils.renderResult(@Global.FALSE, message));
+	if (@Global.getConfigToBoolean('error.page.printErrorInfo', 'true')
+			&& !@StringUtils.equals(message, "演示模式，不允许操作！") && ex != null){
+		print(@ServletUtils.renderResult(@Global.FALSE, message, @ExceptionUtils.getStackTraceAsString(ex)));
+	}else{
+		print(@ServletUtils.renderResult(@Global.FALSE, message));
+	}
 }
 
 // 输出异常信息页面
