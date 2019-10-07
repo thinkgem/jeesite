@@ -14,9 +14,9 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 
 * 主框架：Spring Boot 2.0、Spring Framework 5.0、Apache Shiro 1.4、J2Cache
 * 持久层：Apache MyBatis 3.4、Hibernate Validation 6.0、Alibaba Druid 1.1
-* 视图层：Spring MVC 5.0、Beetl 2.9 替换JSP、Bootstrap 3.3、AdminLTE 2.4
-* 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.0、zTree 3.5、jquery-validation
-* 工具组件：Apache Commons、Logback 1.1、Jackson 2.8、POI 3.14、Quartz 2.2
+* 视图层：Spring MVC 5.0、Beetl 3.0 替换JSP、Bootstrap 3.3、AdminLTE 2.4
+* 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.1、zTree 3.5、jquery-validation
+* 工具组件：Apache Commons、Logback 1.1、Jackson 2.10、POI 3.16、Quartz 2.3
 * 技术选型详情：<http://jeesite.com/?t=273599>
 
 ## 内置功能
