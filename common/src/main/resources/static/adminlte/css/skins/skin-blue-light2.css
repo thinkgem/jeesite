@@ -160,7 +160,7 @@
 
 .sidebar-menu .treeview-item.active > a {color:#1890ff;background-color:#e1f1ff;border-right:solid #57a6ee;}
 
-.content-wrapper, .right-side, body {background-color:#f5f5f5;}
+.content-wrapper, .right-side, body {background-color:#f8f8f8;}
 
 a, a:hover, a:active, a:focus, .form-unit,
 th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
