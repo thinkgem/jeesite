@@ -157,7 +157,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	@Transactional(readOnly=false)
 	public String importData(MultipartFile file, Boolean isUpdateSupport) {
 		if (file == null){
-			throw new ServiceException("请选择导入的数据文件！");
+			throw new ServiceException(text("请选择导入的数据文件！"));
 		}
 		int successNum = 0; int failureNum = 0;
 		StringBuilder successMsg = new StringBuilder();

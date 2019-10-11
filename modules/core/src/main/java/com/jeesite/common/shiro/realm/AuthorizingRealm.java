@@ -5,6 +5,8 @@ package com.jeesite.common.shiro.realm;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 
 import com.jeesite.common.codec.EncodeUtils;
@@ -52,6 +54,14 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	@Override
 	protected User getUserInfo(FormToken token) {
 		return super.getUserInfo(token);
+	}
+	
+	/**
+	 * 校验登录凭证
+	 */
+	@Override
+	protected void assertCredentialsMatch(AuthenticationToken authcToken, AuthenticationInfo authcInfo) throws AuthenticationException {
+		super.assertCredentialsMatch(authcToken, authcInfo);
 	}
 	
 	/**
