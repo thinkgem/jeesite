@@ -47,7 +47,7 @@ public class SsoController extends BaseController{
 	 */
 	@RequestMapping(value = "sso/{username}/{token}")
 	public String sso(@PathVariable String username, @PathVariable String token,
-			@RequestParam(defaultValue="${adminPath}") String url, String relogin,
+			@RequestParam(defaultValue="${adminPath}/index") String url, String relogin,
 			HttpServletRequest request, HttpServletResponse response, Model model){
 		// 如果已经登录，并且是同一个人，并且不强制重新登录，则直接跳转到目标页
 		User user = UserUtils.getUser();
