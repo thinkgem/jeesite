@@ -217,7 +217,9 @@ public class LoginController extends BaseController{
 		
 		// 未加载shiro模块时会为空，直接访问则提示操作权限不足。
 		if(loginInfo == null){
-			UserUtils.getSubject().logout();
+			if (subject != null){
+				subject.logout();
+			}
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
