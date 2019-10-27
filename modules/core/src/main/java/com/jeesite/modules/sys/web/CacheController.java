@@ -35,7 +35,7 @@ public class CacheController extends BaseController {
 		CacheUtils.clearCache();
 		MapperHelper.clearCache();
 		UserUtils.clearCache();
-		return renderResult(Global.TRUE, "清理缓存成功！");
+		return renderResult(Global.TRUE, text("清理缓存成功"));
 	}
 	
 	@PostConstruct

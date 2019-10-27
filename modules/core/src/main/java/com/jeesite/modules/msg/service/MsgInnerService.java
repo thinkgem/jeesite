@@ -183,11 +183,9 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 			}
 		});
 		ListUtils.pageList(recordList, 100, new MethodCallback() {
-			@Override
 			@SuppressWarnings("unchecked")
 			public Object execute(Object... objs) {
-				msgInnerRecordDao.insertBatch((List<MsgInnerRecord>)objs[0]);
-				return null;
+				return msgInnerRecordDao.insertBatch((List<MsgInnerRecord>)objs[0]);
 			}
 		});
 		// 手动触发消息推送任务
