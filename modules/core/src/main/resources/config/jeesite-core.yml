@@ -181,9 +181,9 @@ role:
         Office: {
           #控制类型的类名 : "用来获取控制表名和主键字段名，如果为 NONE，则代表是不控制该类型权限",
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
-          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前部门编码、公司编码",
+          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前机构编码、当前公司编码、当前行业编码等",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-          #控制数据的类名下的属性名 : "可看做类下的 get 方法，如：EmpUtils.getOffices()，支持返回字符串或字符串数组类型",
+          #控制数据的类名下的属性名 : "可看做 ctrlDataClass 下的 get 方法，如：EmpUtils.getOfficeCodes()，支持返回字符串或字符串数组类型",
           ctrlDataAttrName: "officeCodes",
           #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
           ctrlDataParentCodesAttrName: "officeParentCodess"

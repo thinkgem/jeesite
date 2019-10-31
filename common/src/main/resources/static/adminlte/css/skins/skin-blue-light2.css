@@ -200,4 +200,4 @@ th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
 .ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e5f3ff;}
 /* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} */
-.ui-jqgrid tr.ui-row-ltr td:last-child {border-right:1px solid #eaeaea!important;}
+.ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea!important;}
