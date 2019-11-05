@@ -158,8 +158,8 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 					BaseMsgContent msgContent = null;
 					if (MsgPush.TYPE_PC.equals(type)){
 						msgContent = new PcMsgContent();
-						msgContent.setContent("你有一条内部消息，点击“详情”进行查阅。");
-						((PcMsgContent)msgContent).addButton(new String[]{"详情", 
+						msgContent.setContent(text("你有一条内部消息，点击“详情”进行查阅。"));
+						((PcMsgContent)msgContent).addButton(new String[]{text("详情"), 
 								Global.getAdminPath()+"/msg/msgInner/view?id="+msgInner.getId()});
 					}else if (MsgPush.TYPE_APP.equals(type)){
 						msgContent = new AppMsgContent();
@@ -171,7 +171,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 					if (msgContent != null){
 						msgContent.setTitle(msgInner.getMsgTitle());
 						if (msgContent.getContent() == null){
-							msgContent.setContent("你有一条内部消息请查阅："
+							msgContent.setContent(text("你有一条内部消息请查阅：")
 									+ StringUtils.abbr(msgInner.getMsgTitle(), 30));
 						}
 						msgContent.setMsgPush(new MsgPush());
