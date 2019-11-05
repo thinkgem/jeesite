@@ -61,7 +61,7 @@ for (c in child.columnList){
 			editable:true, edittype:'select', editoptions:{<%if (c.showType == 'select_multiple' || c.showType == 'checkbox'){ %>multiple:true, <% } %>'class':'form-control${cssClass}',
 				items: $.merge([<%if (!(c.showType == 'select_multiple' || c.showType == 'checkbox')){ %>{dictLabel:'&nbsp;',dictValue:''}<% } %>], \${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -107,7 +107,7 @@ for (c in child.columnList){
 						id: 'office_'+editOptions.id, title: '机构选择', 
 						name: '${c.attrName}', value: val.split('|')[0], 
 						labelName: '${c.attrName2}', labelValue: val.split('|')[1],
-						url: '\${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: '${cssClass}'
+						url: '\${ctx}/sys/office/treeData', cssClass: '${cssClass}'
 					});
 				}
 			}

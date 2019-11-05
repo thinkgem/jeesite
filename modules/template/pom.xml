@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.4-SNAPSHOT</version>
+		<version>4.1.7-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 		
 		<!-- ====== 这是一个新增模块示例项目，你可以拷贝此项目，修改 artifactId 为您的模块即可 ====== -->

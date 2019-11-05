@@ -7,8 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.jeesite.common.io.PropertiesUtils;
-
 /**
  * JeeSite Web
  * @author ThinkGem
@@ -19,9 +17,7 @@ import com.jeesite.common.io.PropertiesUtils;
 public class ApplicationTest {
 	
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(ApplicationTest.class);
-		app.setDefaultProperties(PropertiesUtils.getInstance().getProperties());
-		app.run(args);
+		SpringApplication.run(ApplicationTest.class, args);
 	}
 	
 }

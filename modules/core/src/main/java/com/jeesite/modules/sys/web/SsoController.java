@@ -4,6 +4,7 @@
 package com.jeesite.modules.sys.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.web.BaseController;
@@ -46,13 +48,17 @@ public class SsoController extends BaseController{
 	@RequestMapping(value = "sso/{username}/{token}")
 	public String sso(@PathVariable String username, @PathVariable String token,
 			@RequestParam(defaultValue="${adminPath}") String url, String relogin,
-			HttpServletRequest request, Model model){
-		User user = UserUtils.getUser();
+			HttpServletRequest request, HttpServletResponse response, Model model){
 		// 如果已经登录，并且是同一个人，并且不强制重新登录，则直接跳转到目标页
+		User user = UserUtils.getUser();
 		if(StringUtils.isNotBlank(user.getUserCode())
 				&& StringUtils.equals(user.getLoginCode(), username)
 				&& !ObjectUtils.toBoolean(relogin)){
-			return REDIRECT + EncodeUtils.decodeUrl2(url);
+			if (ServletUtils.isAjaxRequest(request)){
+				return ServletUtils.renderResult(response, Global.TRUE, text("账号已登录"));
+			}else{
+				return REDIRECT + EncodeUtils.decodeUrl2(url);
+			}
 		}
 		// 通过令牌登录系统
 		if (token != null){
@@ -62,7 +68,11 @@ public class SsoController extends BaseController{
 				upToken.setSsoToken(token); 	// 单点登录令牌
 				upToken.setParams(ServletUtils.getExtParams(request)); // 登录附加参数
 				UserUtils.getSubject().login(upToken);
-				return REDIRECT + EncodeUtils.decodeUrl2(url);
+				if (ServletUtils.isAjaxRequest(request)){
+					return ServletUtils.renderResult(response, Global.TRUE, text("账号登录成功"));
+				}else{
+					return REDIRECT + EncodeUtils.decodeUrl2(url);
+				}
 	        } catch (AuthenticationException e) {
 	        	if (!e.getMessage().startsWith("msg:")){
 	        		throw new AuthenticationException("msg:登录失败，请联系管理员。", e);

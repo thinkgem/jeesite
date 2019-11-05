@@ -120,10 +120,8 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 				}
 				%>
 				if (${@StringUtils.uncap(child.className)}.getIsNewRecord()){
-					${@StringUtils.uncap(child.className)}.preInsert();
 					${@StringUtils.uncap(child.className)}Dao.insert(${@StringUtils.uncap(child.className)});
 				}else{
-					${@StringUtils.uncap(child.className)}.preUpdate();
 					${@StringUtils.uncap(child.className)}Dao.update(${@StringUtils.uncap(child.className)});
 				}
 			}else{

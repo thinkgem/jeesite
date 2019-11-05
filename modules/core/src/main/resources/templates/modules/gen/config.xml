@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<!-- 该文件可自定义，复制 config.xml 到  config-custom.xml 相同目录下，即可生效。 -->
 <config>
 	<!-- 模板分类 -->
 	<tplCategory>

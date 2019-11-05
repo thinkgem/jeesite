@@ -3,6 +3,8 @@
  */
 package com.jeesite.modules.test.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.entity.TestDataChild;
 import com.jeesite.modules.test.service.TestDataService;
 
 /**
@@ -62,6 +65,16 @@ public class TestDataController extends BaseController {
 		testData.setPage(new Page<>(request, response));
 		Page<TestData> page = testDataService.findPage(testData);
 		return page;
+	}
+	
+	/**
+	 * 查询子表列表数据
+	 */
+	@RequiresPermissions("test:testData:view")
+	@RequestMapping(value = "subListData")
+	@ResponseBody
+	public List<TestDataChild> subListData(TestDataChild testDataChild) {
+		return testDataService.findSubList(testDataChild);
 	}
 
 	/**
@@ -118,6 +131,22 @@ public class TestDataController extends BaseController {
 	public String delete(TestData testData) {
 		testDataService.delete(testData);
 		return renderResult(Global.TRUE, text("删除数据成功！"));
+	}
+	
+	/**
+	 * 事务测试
+	 */
+	@RequiresPermissions("test:testData:edit")
+	@RequestMapping(value = "transTest")
+	@ResponseBody
+	public String transTest(TestData testData) {
+		try{
+			testDataService.transTest(testData);
+		}catch (Exception e) {
+			logger.debug("事务测试信息，报错回滚：" + e.getMessage());
+		}
+		boolean bl = testDataService.transValid(testData);
+		return renderResult(Global.TRUE, "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！");
 	}
 	
 }

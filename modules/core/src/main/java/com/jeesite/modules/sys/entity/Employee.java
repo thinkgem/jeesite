@@ -61,6 +61,7 @@ public class Employee extends DataEntity<Employee> {
 	private String postCode;	// 根据职位查询
 
 	private List<EmployeePost> employeePostList = ListUtils.newArrayList(); // 关联岗位信息
+	private List<EmployeeOffice> employeeOfficeList = ListUtils.newArrayList(); // 关联附属机构信息
 	
 	public Employee() {
 		this(null);
@@ -149,6 +150,14 @@ public class Employee extends DataEntity<Employee> {
 				this.employeePostList.add(e);
 			}
 		}
+	}
+
+	public List<EmployeeOffice> getEmployeeOfficeList() {
+		return employeeOfficeList;
+	}
+
+	public void setEmployeeOfficeList(List<EmployeeOffice> employeeOfficeList) {
+		this.employeeOfficeList = employeeOfficeList;
 	}
 	
 }

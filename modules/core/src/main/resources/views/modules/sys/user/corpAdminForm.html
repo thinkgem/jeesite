@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${user.isNewRecord ? op == 'addCorp' ? '新增租户' : '新增' : '编辑'}管理员
+				<i class="fa icon-badge"></i> ${user.isNewRecord ? op == 'addCorp' ? '新增租户' : '新增' : '编辑'}管理员
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -166,9 +166,9 @@ $("#inputForm").validate({
 });
 $('#corpCode_').change(function(){
 	if ($('#loginCode').val() != ''){
-		$('#loginCode').valid();
+		$('#loginCode').resetValid();
 	}else{
-		$('#loginCode').val('admin'+$(this).val()).valid();
+		$('#loginCode').val('admin'+$(this).val()).resetValid();
 	}
 });
 //加载角色列表
@@ -176,7 +176,7 @@ var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
 	postData: [
 <%// 	{name:'userType',value:'employee'}, // 指定用户类型的角色 %>
-<%// 	{name:'ctrlPermi',value:'2'} 		// 过滤可管理的角色 %>
+<%// 	{name:'ctrlPermi',value:'${@Global.getConfig("user.adminCtrlPermi", "2")}'} 		// 过滤可管理的角色 %>
 		{name:'isAll',value:'true'} 	<%  // 显示所有角色（与上方两个条件互斥） %>
 	],
 	columnModel: [

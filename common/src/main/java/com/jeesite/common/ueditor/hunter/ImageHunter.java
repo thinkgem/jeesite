@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
+
 import com.jeesite.common.ueditor.PathFormat;
 import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
@@ -103,6 +105,10 @@ public class ImageHunter {
 			
 		} catch ( Exception e ) {
 			return new BaseState( false, AppInfo.REMOTE_FAIL );
+		} finally {
+			if (connection != null){
+				IOUtils.close(connection);
+			}
 		}
 		
 	}

@@ -3,13 +3,14 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${text('数据管理')}
+				<i class="fa icon-notebook"></i> ${text('数据管理')}
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('test:testData:edit')){ %>
 					<a href="${ctx}/test/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
+				<a href="#" class="btn btn-default" id="btnTrunsTest" title="事务测试"><i class="fa fa-refresh"></i> 事务测试</a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -148,7 +149,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},
-		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', firstsortorder:'desc', width:150, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
@@ -165,11 +166,64 @@ $('#dataGrid').dataGrid({
 			return actions.join('');
 		}}
 	],
+	// 双击表格行时调用
+	ondblClickRow: function(id, rownum, colnum, event){
+		js.addTabPage(null, '编辑数据', '${ctx}/test/testData/form?id='+id);
+	},
+	
+	// 子表格支持演示
+	subGrid: true,
+	subGridRowExpanded: function (subgridId, rowId) {
+		$('#'+subgridId).html('<h5><i class="icon-docs"></i> 子表数据</h5>'
+				+'<table id="'+subgridId+'_subgrid"></table>');
+		$('#'+subgridId+'_subgrid').dataGrid({
+			url: '${ctx}/test/testData/subListData',
+			postData: {'testData.id': rowId},
+			autoGridHeight: function(){return 'auto'}, // 设置自动高度
+			autoGridWidth:  function(){return $("#"+subgridId).width();}, // 设置自动高度
+			// 设置数据表格列
+			columnModel: [
+				{header:'${text("单行文本")}', name:'testInput', width:150},
+				{header:'${text("多行文本")}', name:'testTextarea', width:150},
+				{header:'${text("下拉框")}', name:'testSelect', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("下拉多选")}', name:'testSelectMultiple', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("单选框")}', name:'testRadio', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("复选框")}', name:'testCheckbox', width:150, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+				}},
+				{header:'${text("日期时间")}', name:'testDatetime', width:150, align:"center"},
+				{header:'${text("用户名称")}', name:'testUser.userName', sortable:false, width:150, align:"center"},
+				{header:'${text("机构名称")}', name:'testOffice.officeName', sortable:false, width:150, align:"center"},
+				{header:'${text("区域名称")}', name:'testAreaName', width:150, align:"center"}
+			],
+			// 加载成功后执行事件
+			ajaxSuccess: function(data){
+				
+			}
+		});
+	},
+
+	multiSort: true,		// 是否支持多列排序，给列指定 firstsortorder 可设定初次排序方式
+	emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
+	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 // 		if (data.count == 0){
-// 			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
-// 		}
+//			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
+//		}
 	}
+});
+$("#btnTrunsTest").click(function(){ 
+	js.ajaxSubmit("${ctx}/test/testData/transTest", function(data){
+		js.showMessage(data.message);
+		page();
+	});
+	return false;
 });
 </script>

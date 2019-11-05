@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
+				<i class="fa icon-notebook"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -239,7 +239,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -247,7 +247,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -255,7 +255,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -263,7 +263,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},

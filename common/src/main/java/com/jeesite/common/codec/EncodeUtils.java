@@ -254,8 +254,8 @@ public class EncodeUtils {
 	}
 	
 	// 预编译SQL过滤正则表达式
-	private static Pattern sqlPattern = Pattern.compile("(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute)\\b)", Pattern.CASE_INSENSITIVE);
-			
+	private static Pattern sqlPattern = Pattern.compile("(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when)\\b)", Pattern.CASE_INSENSITIVE);
+	
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
 	 * @author ThinkGem
@@ -263,7 +263,7 @@ public class EncodeUtils {
 	public static String sqlFilter(String text){
 		if (text != null){
 			String value = text;
-			Matcher matcher = sqlPattern.matcher(text);
+			Matcher matcher = sqlPattern.matcher(value);
 			if (matcher.find()) {
 				value = matcher.replaceAll(StringUtils.EMPTY);
 			}
@@ -306,6 +306,7 @@ public class EncodeUtils {
 //		sqlFilter((++i)+"你好，select * from xxx where abc=def and 1=1我还在。");
 //		sqlFilter((++i)+"你好，insert into xxx values(1,2,3,4,5)我还在。");
 //		sqlFilter((++i)+"你好，delete from xxx我还在。");
+//		sqlFilter((++i)+"a.audit_result asc,case when 1 like case when length(database())=6 then 1 else exp(11111111111111111) end then 1 else 1/0 end");
 //	}
 	
 }

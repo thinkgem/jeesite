@@ -50,7 +50,7 @@ public class SecAdminController extends BaseController {
 		return "modules/sys/user/secAdminList";
 	}
 
-	@RequiresPermissions("user")
+	@RequiresPermissions("sys:secAdmin:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response) {

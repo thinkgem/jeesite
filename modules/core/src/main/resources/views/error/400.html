@@ -8,16 +8,16 @@ if (isBlank(message)){
 	if (ex != null){
 		if(@StringUtils.startsWith(@ex.getMessage(), 'msg:')){
 			message = @StringUtils.replace(@ex.getMessage(), 'msg:', '');
-		}else if (ex.class.name == 'org.springframework.validation.BindException'){
+		}else if (type.fullName(ex) == 'org.springframework.validation.BindException'){
 			for (var e in ex.globalErrors){
-				message = message + '☆' + e.defaultMessage + '(' + e.objectName + ')<br/>';
+				message = message + '☆ ' + text(e.defaultMessage) + ' (' + e.objectName + ')<br/>';
 			}
 			for (var e in ex.fieldErrors){
-				message = message + '☆' + e.defaultMessage + '(' + e.field + ')<br/>';
+				message = message + '☆ ' + text(e.defaultMessage) + ' (' + e.field + ')<br/>';
 			}
-		}else if (ex.class.name == 'javax.validation.ConstraintViolationException'){
+		}else if (type.fullName(ex) == 'javax.validation.ConstraintViolationException'){
 			for (var v in ex.constraintViolations) {
-				message = message + '☆' + v.message + '(' + v.propertyPath + ')<br/>';
+				message = message + '☆ ' + text(v.message) + ' (' + v.propertyPath + ')<br/>';
 			}
 		}else{
 			message = message + ex.message;
@@ -43,7 +43,7 @@ else {
 <div class="error-page">
 	<div class="headline text-yellow">400</div>
 	<div class="error-content">
-		<h3><i class="fa fa-warning text-yellow"></i> ${text('sys.error.400.title')}</h3>
+		<h3>${text('sys.error.400.title')}</h3>
 		<p>${message}</p>
 		<button type="button" class="btn btn-warning btn-sm" onclick="history.go(-1);"><i
 			class="fa fa-reply-all"></i> ${text('sys.error.returnButton')}</button>

@@ -7,7 +7,6 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 
 /**
@@ -24,7 +23,7 @@ public class IdGenerate {
 	 * 生成UUID, 中间无-分割.
 	 */
 	public static String uuid() {
-		return UUID.randomUUID().toString().replaceAll("-", "");
+		return StringUtils.replace(UUID.randomUUID().toString(),"-", "");
 	}
 	
 	/**
@@ -42,6 +41,13 @@ public class IdGenerate {
 		random.nextBytes(randomBytes);
 		return EncodeUtils.encodeBase62(randomBytes);
 	}
+
+	/**
+	 * 使用SecureRandom随机生成指定范围的Integer. 
+	 */
+	public static int randomInt(int min, int max) {
+		return random.nextInt(max) % (max - min + 1) + min;
+	}
 	
 	/**
 	 * 获取新唯一编号（18为数值）
@@ -58,58 +64,59 @@ public class IdGenerate {
 	public static String nextCode(String code){
 		if (code != null){
 			String str = code.trim();
+			int lastNotNumIndex = -1;
 			int len = str.length() - 1;
-			int lastNotNumIndex = 0;
 			for (int i = len; i >= 0; i--) {
-				if (!(str.charAt(i) >= '0' && str.charAt(i) <= '9')) {
+				if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
 					lastNotNumIndex = i;
+				}else{
 					break;
 				}
 			}
-			// 如果最后一位是数字，并且last索引位置还在最后，则代表是纯数字，则最后一个不是数字的索引为-1
-			if ((str.charAt(len) >= '0' && str.charAt(len) <= '9') && (lastNotNumIndex == len)) {
-				lastNotNumIndex = -1;
+			String prefix = str;
+			String prevNum = "000";
+			if (lastNotNumIndex != -1){
+				prefix = str.substring(0, lastNotNumIndex);
+				prevNum = str.substring(lastNotNumIndex, str.length());
 			}
-			String prefix = str.substring(0, lastNotNumIndex + 1);
-			String numStr = str.substring(lastNotNumIndex + 1, str.length());
-			long num = ObjectUtils.toLong(numStr);
-//			System.out.println("处理前："+str);
-			str = prefix + StringUtils.leftPad(String.valueOf(num + 1), numStr.length(), "0");
-//			System.out.println("处理后："+str);
+			String nextNum = String.valueOf(Long.valueOf(prevNum) + 1);
+			str = prefix + StringUtils.leftPad(nextNum, prevNum.length(), "0");
 			return str;
 		}
 		return null;
 	}
 	
 //	public static void main(String[] args) {
+//		System.out.println(nextCode("8") + " = 9");
+//		System.out.println(nextCode("09") + " = 10");
+//		System.out.println(nextCode("009") + " = 010");
+//		System.out.println(nextCode("T09") + " = T10");
+//		System.out.println(nextCode("TG09") + " = TG10");
+//		System.out.println(nextCode("TG0101") + " = TG0102");
+//		System.out.println(nextCode("TG0109") + " = TG0110");
+//		System.out.println(nextCode("TG02T03") + " = TG02T04");
+//		System.out.println(nextCode("TG02T099") + " = TG02T100");
+//		System.out.println(nextCode("TG02T100") + " = TG02T101");
+//		System.out.println(nextCode("TG02T10A") + " = TG02T10A001");
+//		System.out.println(nextCode("1123117153417957377") + " = 1123117153417957379");
+//		System.out.println(nextCode("0040009") + " = 0040010");
 //		System.out.println(uuid());
 //		System.out.println(nextId());
-//		System.out.println(nextCode("8"));
-//		System.out.println(nextCode("09"));
-//		System.out.println(nextCode("009"));
-//		System.out.println(nextCode("E09"));
-//		System.out.println(nextCode("EC09"));
-//		System.out.println(nextCode("EC0101"));
-//		System.out.println(nextCode("EC0109"));
-//		System.out.println(nextCode("EC02T03"));
-//		System.out.println(nextCode("EC02T099"));
-//		System.out.println(nextCode("EC02T100"));
-//		System.out.println(nextCode("EC02T10A"));
-////		// 数值型ID重复验证测试
-////		Set<String> set = SetUtils.newHashSet();
-////		try{
-////			for (int i=0; i<100; i++){
-////				String id = String.valueOf(nextId());
-////				if (set.contains(id)){
-////					throw new Exception(id + " exists");
-////				}
-////				set.add(id);
-////				System.out.println(id);
-////				Thread.sleep(100);
-////			}
-////		}catch (Exception e) {
-////			e.printStackTrace();
-////		}
+//		// 数值型ID重复验证测试
+//		Set<String> set = SetUtils.newHashSet();
+//		try{
+//			for (int i=0; i<100; i++){
+//				String id = String.valueOf(nextId());
+//				if (set.contains(id)){
+//					throw new Exception(id + " exists");
+//				}
+//				set.add(id);
+//				System.out.println(id);
+//				Thread.sleep(100);
+//			}
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
 //	}
 
 }

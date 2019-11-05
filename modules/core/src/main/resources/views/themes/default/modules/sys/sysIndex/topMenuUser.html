@@ -33,5 +33,20 @@
 		<% }else{ %>
 		<li class="mt10"></li>
 		<% } %>
+		<% if(user.roleList.~size > 0){ %>
+			<li class="divider"></li>
+			<% var roleCode = @ObjectUtils.toStringIgnoreNull(session.roleCode, ''); %>
+			<li class="dropdown-header mb5">${text('选择身份')}：<% if(isNotBlank(roleCode)){ %>
+			<i class="fa fa-close pointer" title="${text('清除设置')}" onclick="location='${ctx}/switchRole'"></i><% } %></li>
+			<% for(var role in user.roleList){ %>
+				<li>
+					<a href="${ctx}/switchRole/${role.roleCode}">
+						<i class="fa fa-${roleCode == role.roleCode 
+							? 'check-' : ''}circle-o"></i> ${role.roleName}
+					</a>
+				</li>
+			<% } %>
+		<% } %>
+		<li class="mt10"></li>
 	</ul>
 </li>

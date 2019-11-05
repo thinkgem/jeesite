@@ -12,6 +12,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -40,39 +41,56 @@ public class ReflectUtils {
 	private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
 
 	/**
-	 * 调用Getter方法.
-	 * 支持多级，如：对象名.对象名.方法
+	 * 调用Getter方法，
+	 * 支持多级，如：对象名.对象名.方法，
+	 * 支持静态类及方法调用，
+	 * 支持Map
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeGetter(Object obj, String propertyName) {
 		Object object = obj;
 		for (String name : StringUtils.split(propertyName, ".")){
-			String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
-			object = invokeMethod(object, getterMethodName, new Class[] {}, new Object[] {});
+			if (obj instanceof Map){
+				object = ((Map)obj).get(name);
+			}else{
+				String methodName = GETTER_PREFIX + StringUtils.capitalize(name);
+				object = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
+			}
 		}
 		return (E)object;
 	}
 
 	/**
-	 * 调用Setter方法, 仅匹配方法名。
-	 * 支持多级，如：对象名.对象名.方法
+	 * 调用Setter方法，仅匹配方法名，
+	 * 支持多级，如：对象名.对象名.方法，
+	 * 支持静态类及方法调用，
+	 * 支持Map
 	 */
+	@SuppressWarnings("unchecked")
 	public static <E> void invokeSetter(Object obj, String propertyName, E value) {
 		Object object = obj;
 		String[] names = StringUtils.split(propertyName, ".");
 		for (int i=0; i<names.length; i++){
 			if(i<names.length-1){
-				String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
-				object = invokeMethod(object, getterMethodName, new Class[] {}, new Object[] {});
+				if (obj instanceof Map){
+					object = ((Map)obj).get(names[i]);
+				}else{
+					String methodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
+					object = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
+				}
 			}else{
-				String setterMethodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
-				invokeMethodByName(object, setterMethodName, new Object[] { value });
+				if (obj instanceof Map){
+					((Map)obj).put(names[i], value);
+				}else{
+					String methodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
+					invokeMethodByName(object, methodName, new Object[] { value });
+				}
 			}
 		}
 	}
 	
 	/**
-	 * 直接读取对象属性值, 无视private/protected修饰符, 不经过getter函数.
+	 * 直接读取对象属性值，无视private/protected修饰符，不经过getter函数
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E getFieldValue(final Object obj, final String fieldName) {
@@ -92,7 +110,7 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 直接设置对象属性值, 无视private/protected修饰符, 不经过setter函数.
+	 * 直接设置对象属性值，无视private/protected修饰符，不经过setter函数
 	 */
 	public static <E> void setFieldValue(final Object obj, final String fieldName, final E value) {
 		Field field = getAccessibleField(obj, fieldName);
@@ -109,9 +127,10 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 直接调用对象方法, 无视private/protected修饰符.
-	 * 用于一次性调用的情况，否则应使用getAccessibleMethod()函数获得Method后反复调用.
+	 * 直接调用对象方法，无视private/protected修饰符，
+	 * 用于一次性调用的情况，否则应使用getAccessibleMethod()函数获得Method后反复调用，
 	 * 同时匹配方法名+参数类型，
+	 * 支持静态类及方法调用
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes,
@@ -122,11 +141,11 @@ public class ReflectUtils {
 		Method method = getAccessibleMethod(obj, methodName, parameterTypes);
 		if (method == null) {
 			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
-			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
 			return null;
 		}
 		try {
-			return (E)method.invoke(obj, args);
+			return (E)method.invoke(obj.getClass() == Class.class ? null : obj, args);
 		} catch (Exception e) {
 			String msg = "method: "+method+", obj: "+obj+", args: "+args+"";
 			throw convertReflectionExceptionToUnchecked(msg, e);
@@ -134,9 +153,10 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 直接调用对象方法, 无视private/protected修饰符，
-	 * 用于一次性调用的情况，否则应使用getAccessibleMethodByName()函数获得Method后反复调用.
-	 * 只匹配函数名，如果有多个同名函数调用第一个。
+	 * 直接调用对象方法，无视private/protected修饰符，
+	 * 用于一次性调用的情况，否则应使用getAccessibleMethodByName()函数获得Method后反复调用，
+	 * 只匹配函数名，如果有多个同名函数调用第一个，
+	 * 支持静态类及方法调用
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
@@ -144,7 +164,7 @@ public class ReflectUtils {
 		if (method == null) {
 			// 如果为空不报错，直接返回空。
 //			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
-			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
+			logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
 			return null;
 		}
 		try {
@@ -175,7 +195,7 @@ public class ReflectUtils {
 					}
 				}
 			}
-			return (E)method.invoke(obj, args);
+			return (E)method.invoke(obj.getClass() == Class.class ? null : obj, args);
 		} catch (Exception e) {
 			String msg = "method: "+method+", obj: "+obj+", args: "+args+"";
 			throw convertReflectionExceptionToUnchecked(msg, e);
@@ -183,8 +203,8 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 循环向上转型, 获取对象的DeclaredField, 并强制设置为可访问.
-	 * 如向上转型到Object仍无法找到, 返回null.
+	 * 循环向上转型，获取对象的DeclaredField，并强制设置为可访问，
+	 * 如向上转型到Object仍无法找到，返回null
 	 */
 	public static Field getAccessibleField(final Object obj, final String fieldName) {
 		// 为空不报错。直接返回 null
@@ -207,10 +227,10 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问.
-	 * 如向上转型到Object仍无法找到, 返回null.
+	 * 循环向上转型，获取对象的DeclaredMethod,并强制设置为可访问，
+	 * 如向上转型到Object仍无法找到，返回null，
 	 * 匹配函数名+参数类型。
-	 * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
+	 * 用于方法需要被多次调用的情况，先使用本函数先取得Method，然后调用Method.invoke(Object obj, Object... args)
 	 */
 	public static Method getAccessibleMethod(final Object obj, final String methodName,
 			final Class<?>... parameterTypes) {
@@ -219,8 +239,12 @@ public class ReflectUtils {
 		if (obj == null){
 			return null;
 		}
+		Class<?> clazz = obj.getClass();
+		if (clazz == Class.class){
+			clazz = (Class) obj;
+		}
 		Validate.notBlank(methodName, "methodName can't be blank");
-		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
+		for (Class<?> searchType = clazz; searchType != Object.class; searchType = searchType.getSuperclass()) {
 			try {
 				Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
 				makeAccessible(method);
@@ -234,10 +258,10 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问.
-	 * 如向上转型到Object仍无法找到, 返回null.
+	 * 循环向上转型，获取对象的DeclaredMethod，并强制设置为可访问，
+	 * 如向上转型到Object仍无法找到，返回null，
 	 * 只匹配函数名。
-	 * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
+	 * 用于方法需要被多次调用的情况，先使用本函数先取得Method，然后调用Method.invoke(Object obj, Object... args)
 	 */
 	public static Method getAccessibleMethodByName(final Object obj, final String methodName, int argsNum) {
 		// 为空不报错。直接返回 null
@@ -245,8 +269,12 @@ public class ReflectUtils {
 		if (obj == null){
 			return null;
 		}
+		Class<?> clazz = obj.getClass();
+		if (clazz == Class.class){
+			clazz = (Class) obj;
+		}
 		Validate.notBlank(methodName, "methodName can't be blank");
-		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
+		for (Class<?> searchType = clazz; searchType != Object.class; searchType = searchType.getSuperclass()) {
 			Method[] methods = searchType.getDeclaredMethods();
 			for (Method method : methods) {
 				if (method.getName().equals(methodName) && method.getParameterTypes().length == argsNum) {
@@ -279,10 +307,9 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 通过反射, 获得Class定义中声明的泛型参数的类型, 注意泛型必须定义在父类处
-	 * 如无法找到, 返回Object.class.
-	 * eg.
-	 * public UserDao extends HibernateDao<User>
+	 * 通过反射，获得Class定义中声明的泛型参数的类型，注意泛型必须定义在父类处，
+	 * 如无法找到，返回Object.class，
+	 * 如 public UserDao extends CrudDao<User>
 	 * @param clazz The class to introspect
 	 * @return the first generic declaration, or Object.class if cannot be determined
 	 */
@@ -292,9 +319,9 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * 通过反射, 获得Class定义中声明的父类的泛型参数的类型.
-	 * 如无法找到, 返回Object.class.
-	 * 如public UserDao extends HibernateDao<User,Long>
+	 * 通过反射，获得Class定义中声明的父类的泛型参数的类型，
+	 * 如无法找到，返回Object.class，
+	 * 如 public UserDao extends CrudDao<User, Long>
 	 * @param clazz clazz The class to introspect
 	 * @param index the Index of the generic ddeclaration,start from 0.
 	 * @return the index generic declaration, or Object.class if cannot be determined
@@ -323,6 +350,9 @@ public class ReflectUtils {
 		return (Class) params[index];
 	}
 	
+	/**
+	 * 获取类的Class，如果为内部类，则返回上级类Class
+	 */
 	public static Class<?> getUserClass(Object instance) {
 		if (instance == null){
 			throw new RuntimeException("Instance must not be null");
@@ -339,7 +369,7 @@ public class ReflectUtils {
 	}
 	
 	/**
-	 * 将反射时的checked exception转换为unchecked exception.
+	 * 将反射时的checked exception转换为unchecked exception
 	 */
 	public static RuntimeException convertReflectionExceptionToUnchecked(String msg, Exception e) {
 		if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException

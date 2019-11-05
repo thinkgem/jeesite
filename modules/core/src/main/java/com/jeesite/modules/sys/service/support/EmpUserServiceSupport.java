@@ -5,12 +5,14 @@ package com.jeesite.modules.sys.service.support;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
@@ -19,8 +21,10 @@ import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.utils.excel.ExcelImport;
 import com.jeesite.common.validator.ValidatorUtils;
 import com.jeesite.modules.sys.dao.EmpUserDao;
+import com.jeesite.modules.sys.dao.EmployeeOfficeDao;
 import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.EmployeeService;
@@ -39,9 +43,10 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private EmployeeOfficeDao employeeOfficeDao;
 	
 	/**
 	 * 获取单条数据
@@ -59,10 +64,10 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	@Override
 	public void addDataScopeFilter(EmpUser empUser, String ctrlPermi) {
 		empUser.getSqlMap().getDataScope().addFilter("dsfOffice",
-				"Office", "e.office_code", "a.create_by", ctrlPermi);
+				"Office", "e.office_code", "a.create_by", ctrlPermi, "office_user");
 		if (StringUtils.isNotBlank(EmpUtils.getCompany().getCompanyCode())){
 			empUser.getSqlMap().getDataScope().addFilter("dsfCompany",
-					"Company", "e.company_code", "a.create_by", ctrlPermi);
+					"Company", "e.company_code", "a.create_by", ctrlPermi, "office_user");
 		}
 	}
 
@@ -131,6 +136,17 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		// 3、保存员工
 		employee.setIsNewRecord(user.getIsNewRecord());
 		employeeService.save(employee);
+		// 4、保存附属机构
+		EmployeeOffice employeeOfficeWhere = new EmployeeOffice();
+		employeeOfficeWhere.setEmpCode(employee.getEmpCode());
+		employeeOfficeDao.deleteByEntity(employeeOfficeWhere);
+		if (employee.getEmployeeOfficeList().size() > 0){
+			employee.getEmployeeOfficeList().forEach(employeeOffice -> {
+				employeeOffice.setId(IdGen.nextId());
+				employeeOffice.setEmpCode(employee.getEmpCode());
+			});
+			employeeOfficeDao.insertBatch(employee.getEmployeeOfficeList());
+		}
 	}
 
 	/**
@@ -141,7 +157,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	@Transactional(readOnly=false)
 	public String importData(MultipartFile file, Boolean isUpdateSupport) {
 		if (file == null){
-			throw new ServiceException("请选择导入的数据文件！");
+			throw new ServiceException(text("请选择导入的数据文件！"));
 		}
 		int successNum = 0; int failureNum = 0;
 		StringBuilder successMsg = new StringBuilder();
@@ -171,9 +187,9 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 					failureNum++;
 					String msg = "<br/>" + failureNum + "、账号 " + user.getLoginCode() + " 导入失败：";
 					if (e instanceof ConstraintViolationException){
-						List<String> messageList = ValidatorUtils.extractPropertyAndMessageAsList((ConstraintViolationException)e, ": ");
-						for (String message : messageList) {
-							msg += message + "; ";
+						ConstraintViolationException cve = (ConstraintViolationException)e;
+						for (ConstraintViolation<?> violation : cve.getConstraintViolations()) {
+							msg += Global.getText(violation.getMessage()) + " ("+violation.getPropertyPath()+")";
 						}
 					}else{
 						msg += e.getMessage();

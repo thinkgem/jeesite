@@ -14,9 +14,9 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 
 * 主框架：Spring Boot 2.0、Spring Framework 5.0、Apache Shiro 1.4、J2Cache
 * 持久层：Apache MyBatis 3.4、Hibernate Validation 6.0、Alibaba Druid 1.1
-* 视图层：Spring MVC 5.0、Beetl 2.9 替换JSP、Bootstrap 3.3、AdminLTE 2.4
-* 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.0、zTree 3.5、jquery-validation
-* 工具组件：Apache Commons、Logback 1.1、Jackson 2.8、POI 3.14、Quartz 2.2
+* 视图层：Spring MVC 5.0、Beetl 3.0 替换JSP、Bootstrap 3.3、AdminLTE 2.4
+* 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.1、zTree 3.5、jquery-validation
+* 工具组件：Apache Commons、Logback 1.1、Jackson 2.10、POI 3.16、Quartz 2.3
 * 技术选型详情：<http://jeesite.com/?t=273599>
 
 ## 内置功能
@@ -91,13 +91,13 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 
 尽量不修改web项目以外的源码项目，如 jeesite-common、jeesite-modele-core，如果修改了，请 Pull Requests 上来，否则代码编码将与官方不同步，将对你的日后升级带来困难。
 
-JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml 文件中的 parent.version 版本修改到最新版本即可，同版本下你可进行Maven快照强制更新，即可将最新版的依赖jar更新到本地，下面介绍一下在Eclipse里如何操作：
+JeeSite的小版本（4.1.x）升级是非常便捷的，你只需要将 pom.xml 文件中的 parent.version 版本修改到最新版本即可，同版本下你可进行 Maven 快照强制更新，即可将最新版的依赖 jar 更新到本地，下面以 Eclipse 举例，介绍如何操作：
 
-在web项目上右键，选择菜单 -> Maven -> Update Project...（或按Alt+F5） -> 点击 Select All 按钮 -> 选择 Force Update of Snapshots/Releases 复选框 -> 点击OK按钮即可。
+在 web 项目上右键，选择菜单 -> Maven -> Update Project...（或按Alt+F5） -> 点击 Select All 按钮 -> 选择 Force Update of Snapshots/Releases 复选框 -> 点击OK按钮即可。
 
-如果您修改了其它依赖模块代码，这时你需要与官方Git仓库代码进行同步。
+如果您修改了其它依赖模块代码，这时你需要利用 Git 版本控制工具，与官方仓库代码进行同步，合并代码即可。
 
-如果进行相对大的版本（4.x.x）升级这里我们会附加一个声明，帮助你进行迁移操作。
+如果进行相对大的版本（4.x.x）升级这里我们会附加一个声明，帮助你进行迁移操作，更新日志：<http://jeesite.com/?t=273830>。
 
 # Git 全局设置技巧
 

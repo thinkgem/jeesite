@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${text(testData.isNewRecord ? '新增数据' : '编辑数据')}
+				<i class="fa icon-note"></i> ${text(testData.isNewRecord ? '新增数据' : '编辑数据')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -170,7 +170,7 @@
 						</div>
 					</div>
 				</div>
-				<h4 class="form-unit">${text('测试数据子表')}</h4>
+				<h4 class="form-unit">${text('子表数据')}</h4>
 				<div class="ml10 mr10">
 					<table id="testDataChildDataGrid"></table>
 					<% if (hasPermi('test:testData:edit')){ %>
@@ -212,7 +212,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -220,7 +220,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -228,7 +228,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -236,7 +236,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -313,6 +313,7 @@ $("#testDataChildDataGrid").dataGrid({
 	editGrid: true,				// 是否是编辑表格
 	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
 	editGridAddRowBtn: $('#testDataChildDataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上 v4.1.7
 	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
 	
 	// 编辑表格的提交数据参数
@@ -321,7 +322,9 @@ $("#testDataChildDataGrid").dataGrid({
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+// 		$('#jqgh_testDataChildDataGrid_rn').append('<a href="javascript:" onclick="'
+// 				+ '$(\'#testDataChildDataGridAddRowBtn\').click();">'
+// 				+ '<i class="fa fa-plus"></i></a>');
 	}
 });
 </script>

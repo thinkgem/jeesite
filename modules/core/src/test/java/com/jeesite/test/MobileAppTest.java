@@ -21,7 +21,7 @@ public class MobileAppTest {
 		String url = null;
 		
 		// 获取权限信息
-		url = "/index?permi=true";
+		url = "/index";
 		System.out.println("result: " + post(url, null));
 
 		// 获取部门列表数据

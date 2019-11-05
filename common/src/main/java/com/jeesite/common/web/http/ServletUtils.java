@@ -110,7 +110,8 @@ public class ServletUtils {
 		}
 		
 		String uri = request.getRequestURI();
-		if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")){
+		if (StringUtils.endsWithIgnoreCase(uri, ".json")
+				|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
 			return true;
 		}
 		
@@ -189,19 +190,22 @@ public class ServletUtils {
 			}
 		}
 		HttpServletRequest request = getRequest();
-		String uri = request.getRequestURI();
-		if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
-				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
-			return XmlMapper.toXml(resultMap);
-		}else{
-			String functionName = request.getParameter("__callback");
-			if (StringUtils.isNotBlank(functionName)){
-				return JsonMapper.toJsonp(functionName, resultMap);
+		if (request != null){
+			String uri = request.getRequestURI();
+			if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
+					.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+				return XmlMapper.toXml(resultMap);
 			}else{
-				return JsonMapper.toJson(resultMap);
+				String functionName = request.getParameter("__callback");
+				if (StringUtils.isNotBlank(functionName)){
+					return JsonMapper.toJsonp(functionName, resultMap);
+				}else{
+					return JsonMapper.toJson(resultMap);
+				}
 			}
+		}else{
+			return JsonMapper.toJson(resultMap);
 		}
-		
 	}
 	
 	/**

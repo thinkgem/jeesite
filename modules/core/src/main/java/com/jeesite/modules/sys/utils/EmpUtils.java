@@ -5,13 +5,16 @@ package com.jeesite.modules.sys.utils;
 
 import java.util.List;
 
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.entity.Employee;
+import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.CompanyService;
+import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
 
 /**
@@ -21,13 +24,10 @@ import com.jeesite.modules.sys.service.OfficeService;
  */
 public class EmpUtils {
 
-//	// 用户缓存常量
-//	public static final String CACHE_OFFICE_LIST = "officeList";
-//	public static final String CACHE_COMPANY_LIST = "companyList";
-	
 	// 部门和公司缓存常量
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 	public static final String CACHE_COMPANY_ALL_LIST = "companyAllList";
+	public static final String CACHE_COMPANY_OFFICE_LIST = "employeeOfficeList";
 	
 	/**
 	 * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
@@ -35,6 +35,46 @@ public class EmpUtils {
 	private static final class Static {
 		private static OfficeService officeService = SpringUtils.getBean(OfficeService.class);
 		private static CompanyService companyService = SpringUtils.getBean(CompanyService.class);
+		private static EmployeeService employeeService = SpringUtils.getBean(EmployeeService.class);
+	}
+	
+	/**
+	 * 根据员工编码获取员工
+	 * @author ThinkGem
+	 */
+	public static Employee get(String empCode){
+		return Static.employeeService.get(empCode);
+	}
+	
+	/**
+	 * 根据用户对象获取员工，不是员工返回null
+	 * @author ThinkGem
+	 */
+	public static Employee get(User user){
+		if (user != null && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
+			return (Employee)user.getRefObj();
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据用户编码获取员工，找不到或不是员工返回null
+	 * @author ThinkGem
+	 */
+	public static Employee getByUserCode(String userCode){
+		User user = UserUtils.get(userCode);
+		Employee employee = get(user);
+		return employee;
+	}
+	
+	/**
+	 * 根据登录账号获取员工，找不到或不是员工返回null
+	 * @author ThinkGem
+	 */
+	public static Employee getByLoginCode(String loginCode){
+		User user = UserUtils.getByLoginCode(loginCode);
+		Employee employee = get(user);
+		return employee;
 	}
 	
 	/**
@@ -43,10 +83,7 @@ public class EmpUtils {
 	 */
 	public static Employee getEmployee(){
 		User user = UserUtils.getUser();
-		Employee employee = null;
-		if (User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
-			employee = (Employee)UserUtils.getUser().getRefObj();
-		}
+		Employee employee = get(user);
 		if (employee == null){
 			employee = new Employee();
 		}
@@ -54,10 +91,43 @@ public class EmpUtils {
 	}
 
 	/**
-	 * 获取当前部门对象
+	 * 获取当前附属部门对象列表
 	 */
-	public static Office getOffice(){
-		return getEmployee().getOffice();
+	public static List<EmployeeOffice> getEmployeeOfficeList(){
+		List<EmployeeOffice> list = UserUtils.getCache(CACHE_COMPANY_OFFICE_LIST);
+		if (list == null){
+			list = Static.employeeService.findEmployeeOfficeList(getEmployee());
+			UserUtils.putCache(CACHE_COMPANY_OFFICE_LIST, list);
+		}
+		return list;
+	}
+	
+	/**
+	 * 获取所有部门编码，包括附属部门（数据权限用）
+	 * @return
+	 * @author ThinkGem
+	 */
+	public static String[] getOfficeCodes(){
+		List<String> list = ListUtils.newArrayList();
+		list.add(getOffice().getOfficeCode());
+		getEmployeeOfficeList().forEach(e -> {
+			list.add(e.getOfficeCode());
+		});
+		return list.toArray(new String[list.size()]);
+	}
+	
+	/**
+	 * 获取所有部门编码，包括附属部门（数据权限用）
+	 * @return
+	 * @author ThinkGem
+	 */
+	public static String[] getOfficeParentCodess(){
+		List<String> list = ListUtils.newArrayList();
+		list.add(getOffice().getParentCodes());
+		getEmployeeOfficeList().forEach(e -> {
+			list.add(e.getParentCodes());
+		});
+		return list.toArray(new String[list.size()]);
 	}
 	
 	/**
@@ -74,28 +144,13 @@ public class EmpUtils {
 		}
 		return null;
 	}
-//	
-//	/**
-//	 * 获取当前用户有权限访问的机构
-//	 * @return
-//	 */
-//	public static List<Office> getOfficeList(){
-//		@SuppressWarnings("unchecked")
-//		List<Office> officeList = (List<Office>)UserUtils.getCache(CACHE_OFFICE_LIST);
-//		if (officeList == null){
-//			User user = UserUtils.getUser();
-//			if (user.isAdmin()){
-//				officeList = officeService.findList(new Office());
-//			}else{
-//				Office office = new Office();
-//				// 添加数据权限过滤条件
-//				officeService.addDataScopeFilter(office);
-//				officeList = officeService.findList(office);
-//			}
-//			UserUtils.putCache(CACHE_OFFICE_LIST, officeList);
-//		}
-//		return officeList;
-//	}
+	
+	/**
+	 * 获取当前员工附属部门
+	 */
+	public static Office getOffice(){
+		return getEmployee().getOffice();
+	}
 
 	/**
 	 * 获取所有的机构
@@ -134,29 +189,6 @@ public class EmpUtils {
 		}
 		return null;
 	}
-//	
-//	/**
-//	 * 获取当前用户授权的公司
-//	 * @return
-//	 */
-//	public static List<Company> getCompanyList(){
-//		@SuppressWarnings("unchecked")
-//		List<Company> companyList = (List<Company>)UserUtils.getCache(CACHE_COMPANY_LIST);
-//		if (companyList == null){
-//			User user = UserUtils.getUser();
-//			if (user.isAdmin()){
-//				companyList = companyService.findList(new Company());
-//			}else{
-//				Company company = new Company();
-//				// 添加数据权限过滤条件
-//				companyService.addDataScopeFilter(company);
-//				companyList = companyService.findList(company);
-//			}
-//			UserUtils.putCache(CACHE_COMPANY_LIST, companyList);
-//		}
-//		
-//		return companyList;
-//	}
 	
 	/**
 	 * 获取所有的公司
@@ -179,9 +211,6 @@ public class EmpUtils {
 	 * @param user
 	 */
 	public static void removeCache(String key){
-//		if (StringUtils.inString(key, CACHE_OFFICE_LIST, CACHE_COMPANY_LIST)){
-//			UserUtils.removeCache(key);
-//		}else 
 		if (StringUtils.inString(key, CACHE_OFFICE_ALL_LIST, CACHE_COMPANY_ALL_LIST)){
 			CorpUtils.removeCache(key);
 		}

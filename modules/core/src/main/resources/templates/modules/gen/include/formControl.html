@@ -3,7 +3,7 @@
 	for (c in table.columnList){
 		if (c.isEdit == '1'){
 			// 如果是树结构的字段，则自动忽略
-			if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+			if(table.isTreeEntity && @StringUtils.inStringIgnoreCase(c.columnName, 'parent_code',
 				'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')){
 			}
 			// 如果是隐藏域
@@ -41,7 +41,7 @@
 					isNewLine = true;
 				}
 				// 如果是扩展字段，则输出子标题，并且强制换行
-				if (c.columnName == 'extend_s1'){
+				if (@StringUtils.equalsIgnoreCase(c.columnName, 'extend_s1')){
 					isNewLine = true;
 				}
 				// 如果是第一个控件
@@ -57,7 +57,7 @@
 <%
 				}
 				// 如果是扩展字段，则输出子标题，并且强制换行
-				if (c.columnName == 'extend_s1'){
+				if (@StringUtils.equalsIgnoreCase(c.columnName, 'extend_s1')){
 %>
 				<div class="form-unit">\${text('扩展字段')}</div>
 <%

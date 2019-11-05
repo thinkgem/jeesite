@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${text(testTree.isNewRecord ? '新增数据' : '编辑数据')}
+				<i class="fa icon-note"></i> ${text(testTree.isNewRecord ? '新增数据' : '编辑数据')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -118,7 +118,7 @@ $("#inputForm").validate({
     }
 });
 
-// 选择父级菜单回调方法
+// 选择上级节点回调方法
 function treeselectCallback(id, act, index, layero){
 	if (id == 'parent' && (act == 'ok' || act == 'clear')){
 		// 创建并初始化下一个节点信息，如：排序号、默认值

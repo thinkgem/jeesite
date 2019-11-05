@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
 import com.jeesite.common.collect.SetUtils;
@@ -215,7 +214,7 @@ public class PropertiesUtils {
 		String logPath = null;
 		try {
 			// 获取当前classes目录
-			logPath = new DefaultResourceLoader().getResource("/").getFile().getPath();
+			logPath = ResourceUtils.getResource("/").getFile().getPath();
 		} catch (Exception e) {
 			// 取不到，取当前工作路径
 			logPath = System.getProperty("user.dir");

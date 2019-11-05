@@ -26,7 +26,7 @@ public class TimeUtils {
 		long minute = (ms - day * dd - hour * hh) / mi;
 		long second = (ms - day * dd - hour * hh - minute * mi) / ss;
 		StringBuilder sb = new StringBuilder();
-		if (ms < 1000) {
+		if (ms >= 0 && ms < 1000) {
 			sb.append(ms).append("毫秒");
 		} else {
 			if (day > 0) {

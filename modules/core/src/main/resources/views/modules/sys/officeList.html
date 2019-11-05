@@ -18,23 +18,24 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${office}" action="${ctx}/sys/office/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<#form:hidden name="ctrlPermi" value="2"/>
+				<#form:hidden name="ctrlPermi" value="${@Global.getConfig('user.adminCtrlPermi', '2')}"/>
+				<#form:hidden path="officeCode" class="isReset"/>
 				<div class="form-group">
 					<label class="control-label">${text('机构代码')}：</label>
 					<div class="control-inline">
-						<#form:input path="viewCode" maxlength="100" class="form-control width-120"/>
+						<#form:input path="viewCode" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('机构名称')}：</label>
 					<div class="control-inline">
-						<#form:input path="officeName" maxlength="100" class="form-control width-120"/>
+						<#form:input path="officeName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('机构全称')}：</label>
 					<div class="control-inline">
-						<#form:input path="fullName" maxlength="200" class="form-control width-120"/>
+						<#form:input path="fullName" maxlength="200" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -64,7 +65,7 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text("机构名称")}', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+		{header:'${text("机构名称")}', name:'officeName', index:'a.office_name', width:300, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="${text("编辑机构")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("机构全称")}', name:'fullName', index:'a.full_name', width:200, align:"left"},
@@ -73,7 +74,7 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_office_type')}, val, '${text("未知")}', true);
 		}},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
-		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:100, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '${text("未知")}', true);
 		}},
@@ -97,7 +98,10 @@ $('#dataGrid').dataGrid({
 	defaultExpandLevel: 0,	// 默认展开的层次
 	expandNodeClearPostData: 'viewCode,officeName,fullName,officeType,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+		if ($('#officeCode').val() != ''){
+			$('#officeCode').val('');
+			$('#btnExpandTreeNode').click();
+		}
 	}
 });
 </script>

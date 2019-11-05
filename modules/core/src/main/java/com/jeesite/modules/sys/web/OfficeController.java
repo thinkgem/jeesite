@@ -23,6 +23,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -53,6 +54,15 @@ public class OfficeController extends BaseController {
 	}
 
 	/**
+	 * 机构管理主页面
+	 */
+	@RequiresPermissions("sys:office:view")
+	@RequestMapping(value = "index")
+	public String index(EmpUser empUser, Model model) {
+		return "modules/sys/officeIndex";
+	}
+
+	/**
 	 * 机构列表
 	 * @param office
 	 */
@@ -67,7 +77,7 @@ public class OfficeController extends BaseController {
 	 * 查询机构数据
 	 * @param office
 	 */
-	@RequiresPermissions("user")
+	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public List<Office> listData(Office office, String ctrlPermi) {
@@ -222,7 +232,7 @@ public class OfficeController extends BaseController {
 		Office where = new Office();
 		where.setStatus(Office.STATUS_NORMAL);
 		where.setCompanyCode(companyCode);
-		if (!(isAll != null && isAll)){
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			officeService.addDataScopeFilter(where, ctrlPermi);
 		}
 		List<Office> list = officeService.findList(where);

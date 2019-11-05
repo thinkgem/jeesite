@@ -61,8 +61,7 @@ public class InitCoreData extends BaseInitDataTests {
 
 	@Override
 	public void begin() {
-		super.begin();
-		excelFile = InitCoreData.class.getName().replaceAll("\\.", "/")+".xlsx";
+		super.begin(InitCoreData.class);
 	}
 	
 	/**
@@ -388,7 +387,7 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setStatus(JobEntity.STATUS_PAUSED);
 		jobDao.insert(job);
 		job = new JobEntity(MsgLocalMergePushTask.class.getSimpleName(), "SYSTEM");
-		job.setDescription("消息推送服务 (延迟推送)");
+		job.setDescription("消息推送服务 (合并推送)");
 		job.setInvokeTarget("msgLocalMergePushTask.execute()");
 		job.setCronExpression("0 0/30 * * * ?");
 		job.setConcurrent(Global.NO);

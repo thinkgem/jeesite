@@ -1,6 +1,5 @@
 ﻿/**
-
- @Name：layer v3.0.3 Web弹层组件
+ @Name：layer v3.1.1 Web弹层组件
  @Author：贤心
  @Site：http://layer.layui.com
  @License：MIT
@@ -10,7 +9,70 @@
 ;!function(window, undefined){
 "use strict";
 
-var i18n = {
+var isLayui = window.layui && layui.define, $, win, ready = {
+  getPath: function(){
+    var jsPath = document.currentScript ? document.currentScript.src : function(){
+      var js = document.scripts
+      ,last = js.length - 1
+      ,src;
+      for(var i = last; i > 0; i--){
+        if(js[i].readyState === 'interactive'){
+          src = js[i].src;
+          break;
+        }
+      }
+      return src || js[last].src;
+    }();
+    return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
+  }(),
+
+  config: {}, end: {}, minIndex: 0, minLeft: [],
+  //btn: [layer.i18n.btnOk, layer.i18n.btnCancel], // ThinkGem
+
+  //五种原始层模式
+  type: ['dialog', 'page', 'iframe', 'loading', 'tips'],
+  
+  //获取节点的style属性值
+  getStyle: function(node, name){
+    var style = node.currentStyle ? node.currentStyle : window.getComputedStyle(node, null);
+    return style[style.getPropertyValue ? 'getPropertyValue' : 'getAttribute'](name);
+  },
+  
+  //载入CSS配件
+  link: function(href, fn, cssname){
+    
+    //未设置路径，则不主动加载css
+    if(!layer.path) return;
+    
+    var head = document.getElementsByTagName("head")[0], link = document.createElement('link');
+    if(typeof fn === 'string') cssname = fn;
+    var app = (cssname || href).replace(/\.|\//g, '');
+    var id = 'layuicss-'+ app, timeout = 0;
+    
+    link.rel = 'stylesheet';
+    link.href = layer.path + href;
+    link.id = id;
+    
+    if(!document.getElementById(id)){
+      head.appendChild(link);
+    }
+    
+    if(typeof fn !== 'function') return;
+    
+    //轮询css是否加载完毕
+    (function poll() {
+      if(++timeout > 8 * 1000 / 100){
+        return window.console && console.error('layer.css: Invalid');
+      };
+      parseInt(ready.getStyle(document.getElementById(id), 'width')) === 1989 ? fn() : setTimeout(poll, 100);
+    }());
+  }
+};
+
+//默认内置方法。
+var layer = {
+  v: '3.1.1',
+  i18n: { // ThinkGem 国际化支持
 	btnOk: '确定',
 	btnCancel: '取消',
 	title: '信息',
@@ -20,39 +82,7 @@ var i18n = {
 	photoError: '当前图片地址异常<br>是否继续查看下一张？',
 	photoNextPage: '下一张',
 	photoClose: '不看了'
-};
-
-if (window.lang == 'en'){
-	i18n = {
-		btnOk: 'Ok',
-		btnCancel: 'Cancle',
-		title: 'Information',
-		promptTipA: 'Enter ',
-		promptTipB: 'character at most.',
-		noPicture: 'No picture',
-		photoError: 'Current image address error.<br>Next slide?',
-		photoNextPage: 'The next',
-		photoClose: 'Close'
-	};
-}
-
-var isLayui = window.layui && layui.define, $, win, ready = {
-  getPath: function(){
-    var js = document.scripts, script = js[js.length - 1], jsPath = script.src;
-    if(script.getAttribute('merge')) return;
-    return jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
-  }(),
-
-  config: {}, end: {}, minIndex: 0, minLeft: [],
-  btn: [i18n.btnOk, i18n.btnCancel],
-
-  //五种原始层模式
-  type: ['dialog', 'page', 'iframe', 'loading', 'tips']
-};
-
-//默认内置方法。
-var layer = {
-  v: '3.0.3',
+  },
   ie: function(){ //ie版本
     var agent = navigator.userAgent.toLowerCase();
     return (!!window.ActiveXObject || "ActiveXObject" in window) ? (
@@ -73,45 +103,16 @@ var layer = {
     
     isLayui 
       ? layui.addcss('modules/layer/' + options.extend)
-    : layer.link('skin/' + options.extend);
+    : ready.link('skin/' + options.extend);
     
     return this;
   },
-  
-  //载入CSS配件
-  link: function(href, fn, cssname){
-    
-    //未设置路径，则不主动加载css
-    if(!layer.path) return;
-    
-    var head = $('head')[0], link = document.createElement('link');
-    if(typeof fn === 'string') cssname = fn;
-    var app = (cssname || href).replace(/\.|\//g, '');
-    var id = 'layuicss-'+app, timeout = 0;
-    
-    link.rel = 'stylesheet';
-    link.href = layer.path + href;
-    link.id = id;
-    
-    if(!$('#'+ id)[0]){
-      head.appendChild(link);
-    }
-    
-    if(typeof fn !== 'function') return;
-    
-    //轮询css是否加载完毕
-    (function poll() {
-      if(++timeout > 8 * 1000 / 100){
-        return window.console && console.error('layer.css: Invalid');
-      };
-      parseInt($('#'+id).css('width')) === 1989 ? fn() : setTimeout(poll, 100);
-    }());
-  },
-  
+
+  //主体CSS等待事件
   ready: function(callback){
-    var cssname = 'skinlayercss', ver = '303';
-    isLayui ? layui.addcss('modules/layer/default/layer.css?v='+layer.v+ver, callback, cssname)
-    : layer.link('skin/default/layer.css?v='+layer.v+ver, callback, cssname);
+    var cssname = 'layer', ver = ''
+    ,path = (isLayui ? 'modules/layer/' : 'skin/') + 'default/layer.css?v='+ layer.v + ver;
+    isLayui ? layui.addcss(path, callback, cssname) : ready.link(path, callback, cssname);
     return this;
   },
   
@@ -133,7 +134,8 @@ var layer = {
     }
     return layer.open($.extend({
       content: content,
-      btn: ready.btn,
+      //btn: ready.btn,
+      btn: [layer.i18n.btnOk, layer.i18n.btnCancel],
       yes: yes,
       btn2: cancel
     }, type ? {} : options));
@@ -202,7 +204,7 @@ Class.pt = Class.prototype;
 
 //缓存常用字符
 var doms = ['layui-layer', '.layui-layer-title', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe', 'layui-layer-content', 'layui-layer-btn', 'layui-layer-close'];
-doms.anim = ['layer-anim', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06'];
+doms.anim = ['layer-anim-00', 'layer-anim-01', 'layer-anim-02', 'layer-anim-03', 'layer-anim-04', 'layer-anim-05', 'layer-anim-06'];
 
 //默认配置
 Class.pt.config = {
@@ -210,7 +212,7 @@ Class.pt.config = {
   shade: 0.3,
   fixed: true,
   move: doms[1],
-  title: i18n.title,
+  title: function(){return layer.i18n.title},
   offset: 'auto',
   area: 'auto',
   closeBtn: 1,
@@ -232,13 +234,13 @@ Class.pt.vessel = function(conType, callback){
   var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
   var ismax = config.maxmin && (config.type === 1 || config.type === 2);
   var titleHTML = (config.title ? '<div class="layui-layer-title" style="'+ (titype ? config.title[1] : '') +'">' 
-    + (titype ? config.title[0] : config.title) 
+    + (titype ? config.title[0] : (typeof config.title === 'function' ? config.title() : config.title))
   + '</div>' : '');
   
   config.zIndex = zIndex;
   callback([
     //遮罩
-    config.shade ? ('<div class="layui-layer-shade" id="layui-layer-shade'+ times +'" times="'+ times +'" style="'+ ('z-index:'+ (zIndex-1) +'; background-color:'+ (config.shade[1]||'#000') +'; opacity:'+ (config.shade[0]||config.shade) +'; filter:alpha(opacity='+ (config.shade[0]*100||config.shade*100) +');') +'"></div>') : '',
+    config.shade ? ('<div class="layui-layer-shade" id="layui-layer-shade'+ times +'" times="'+ times +'" style="'+ ('z-index:'+ (zIndex-1) +'; ') +'"></div>') : '',
     
     //主体
     '<div class="'+ doms[0] + (' layui-layer-'+ready.type[config.type]) + (((config.type == 0 || config.type == 2) && !config.shade) ? ' layui-layer-border' : '') + ' ' + (config.skin||'') +'" id="'+ doms[0] + times +'" type="'+ ready.type[config.type] +'" times="'+ times +'" showtime="'+ config.time +'" conType="'+ (conType ? 'object' : 'string') +'" style="z-index: '+ zIndex +'; width:'+ config.area[0] + ';height:' + config.area[1] + (config.fixed ? '' : ';position:absolute;') +'">'
@@ -248,7 +250,8 @@ Class.pt.vessel = function(conType, callback){
         + (config.type == 1 && conType ? '' : (config.content||''))
       + '</div>'
       + '<span class="layui-layer-setwin">'+ function(){
-        var closebtn = ismax ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a><a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
+        var closebtn = ismax && config.title ? '<a class="layui-layer-min" href="javascript:;"><cite></cite></a>' : ''; // ThinkGem 必须有标题的清空下才能最小化
+        	closebtn += ismax ? '<a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>' : '';
         config.closeBtn && (closebtn += '<a class="layui-layer-ico '+ doms[7] +' '+ doms[7] + (config.title ? config.closeBtn : (config.type == 4 ? '1' : '2')) +'" href="javascript:;"></a>');
         return closebtn;
       }() + '</span>'
@@ -292,7 +295,8 @@ Class.pt.creat = function(){
   
   switch(config.type){
     case 0:
-      config.btn = ('btn' in config) ? config.btn : ready.btn[0];
+      //config.btn = ('btn' in config) ? config.btn : ready.btn[0]; ThinkGem
+      config.btn = ('btn' in config) ? config.btn : layer.i18n.btnOk;// ThinkGem
       layer.closeAll('dialog');
     break;
     case 2:
@@ -306,7 +310,7 @@ Class.pt.creat = function(){
 			+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times 
 			+ '" onload="this.className=\'\';" class="layui-layer-load" frameborder="0"></iframe><form id="'
 			+ doms[4] + '-form' + times+'" action="' + config.content[0] + '" method="post" target="'
-			+ doms[4] + '' + times +'">';
+			+ doms[4] + '' + times +'"></form>';
     break;
     case 3:
       delete config.title;
@@ -341,6 +345,12 @@ Class.pt.creat = function(){
     that.layero = $('#'+ doms[0] + times);
     config.scrollbar || doms.html.css('overflow', 'hidden').attr('layer-full', times);
   }).auto(times);
+  
+  //遮罩
+  $('#layui-layer-shade'+ that.index).css({
+    'background-color': config.shade[1] || '#000'
+    ,'opacity': config.shade[0]||config.shade
+  });
 
   //config.type == 2 && layer.ie == 6 && that.layero.find('iframe').attr('src', content[0]); // ThinkGem 不需要ie6
   
@@ -352,7 +362,6 @@ Class.pt.creat = function(){
 	}
 	form.submit();
   }
-
   //坐标自适应浏览器窗口尺寸
   config.type == 4 ? that.tips() : that.offset();
   if(config.fixed){
@@ -370,7 +379,10 @@ Class.pt.creat = function(){
   
   //为兼容jQuery3.0的css动画影响元素尺寸计算
   if(doms.anim[config.anim]){
-    that.layero.addClass(doms.anim[config.anim]);
+    var animClass = 'layer-anim '+ doms.anim[config.anim];
+    that.layero.addClass(animClass).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $(this).removeClass(animClass);
+    });
   };
   
   //记录关闭动画
@@ -382,6 +394,7 @@ Class.pt.creat = function(){
 //自适应
 Class.pt.auto = function(index){
   var that = this, config = that.config, layero = $('#'+ doms[0] + index);
+  
   if(config.area[0] === '' && config.maxWidth > 0){
     //为了修复IE7下一个让人难以理解的bug
     if(layer.ie && layer.ie < 8 && config.btn){
@@ -389,20 +402,25 @@ Class.pt.auto = function(index){
     }
     layero.outerWidth() > config.maxWidth && layero.width(config.maxWidth);
   }
-  var area = [layero.innerWidth(), layero.innerHeight()];
-  var titHeight = layero.find(doms[1]).outerHeight() || 0;
-  var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
-  function setHeight(elem){
+  
+  var area = [layero.innerWidth(), layero.innerHeight()]
+  ,titHeight = layero.find(doms[1]).outerHeight() || 0
+  ,btnHeight = layero.find('.'+doms[6]).outerHeight() || 0
+  ,setHeight = function(elem){
     elem = layero.find(elem);
     elem.height(area[1] - titHeight - btnHeight - 2*(parseFloat(elem.css('padding-top'))|0));
-  }
+  };
+
   switch(config.type){
     case 2: 
       setHeight('iframe');
     break;
     default:
       if(config.area[1] === ''){
-        if(config.fixed && area[1] >= win.height()){
+        if(config.maxHeight > 0 && layero.outerHeight() > config.maxHeight){
+          area[1] = config.maxHeight;
+          setHeight('.'+doms[5]);
+        } else if(config.fixed && area[1] >= win.height()){
           area[1] = win.height();
           setHeight('.'+doms[5]);
         }
@@ -410,7 +428,8 @@ Class.pt.auto = function(index){
         setHeight('.'+doms[5]);
       }
     break;
-  }
+  };
+  
   return that;
 };
 
@@ -469,7 +488,7 @@ Class.pt.offset = function(){
     that.offsetLeft = layero.css('left');
   }
 
-  that.offsetTop = that.offsetTop>0?that.offsetTop:0; // 2017-5-8 ThinkGem Top值不小于0
+  that.offsetTop = that.offsetTop > 0 ? that.offsetTop : 0; // 2017-5-8 ThinkGem Top值不小于0
   
   layero.css({top: that.offsetTop, left: that.offsetLeft});
 };
@@ -959,7 +978,7 @@ layer.close = function(index){
   };
   
   if(layero.data('isOutAnim')){
-    layero.addClass(closeAnim);
+    layero.addClass('layer-anim '+ closeAnim);
   }
   
   $('#layui-layer-moves, #layui-layer-shade' + index).remove();
@@ -990,9 +1009,7 @@ layer.closeAll = function(type){
 };
 
 /** 
-
   拓展模块，layui开始合并在一起
-
  */
 
 var cache = layer.cache||{}, skin = function(type){
@@ -1020,7 +1037,7 @@ layer.prompt = function(options, yes){
   
   return layer.open($.extend({
     type: 1
-    ,btn: [i18n.btnOk,i18n.btnCancel]
+    ,btn: [layer.i18n.btnOk,layer.i18n.btnCancel]
     ,content: content
     ,skin: 'layui-layer-prompt' + skin('prompt')
     ,maxWidth: win.width()
@@ -1035,7 +1052,7 @@ layer.prompt = function(options, yes){
       if(value === ''){
         prompt.focus();
       } else if(value.length > (options.maxlength||500)) {
-        layer.tips(i18n.promptTipA + (options.maxlength || 500) + i18n.promptTipB, prompt, {tips: 1});
+        layer.tips(layer.i18n.promptTipA + (options.maxlength || 500) + layer.i18n.promptTipB, prompt, {tips: 1});
       } else {
         yes && yes(value, index, prompt);
       }
@@ -1048,6 +1065,7 @@ layer.tab = function(options){
   options = options || {};
   
   var tab = options.tab || {}
+  ,THIS = 'layui-this'
   ,success = options.success;
   
   delete options.success;
@@ -1059,7 +1077,7 @@ layer.tab = function(options){
     title: function(){
       var len = tab.length, ii = 1, str = '';
       if(len > 0){
-        str = '<span class="layui-layer-tabnow">'+ tab[0].title +'</span>';
+        str = '<span class="'+ THIS +'">'+ tab[0].title +'</span>';
         for(; ii < len; ii++){
           str += '<span>'+ tab[ii].title +'</span>';
         }
@@ -1069,7 +1087,7 @@ layer.tab = function(options){
     content: '<ul class="layui-layer-tabmain">'+ function(){
       var len = tab.length, ii = 1, str = '';
       if(len > 0){
-        str = '<li class="layui-layer-tabli xubox_tab_layer">'+ (tab[0].content || 'no content') +'</li>';
+        str = '<li class="layui-layer-tabli '+ THIS +'">'+ (tab[0].content || 'no content') +'</li>';
         for(; ii < len; ii++){
           str += '<li class="layui-layer-tabli">'+ (tab[ii].content || 'no  content') +'</li>';
         }
@@ -1082,7 +1100,7 @@ layer.tab = function(options){
       btn.on('mousedown', function(e){
         e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
         var othis = $(this), index = othis.index();
-        othis.addClass('layui-layer-tabnow').siblings().removeClass('layui-layer-tabnow');
+        othis.addClass(THIS).siblings().removeClass(THIS);
         main.eq(index).show().siblings().hide();
         typeof options.change === 'function' && options.change(index);
       });
@@ -1142,7 +1160,7 @@ layer.photos = function(options, loop, key){
     if(!loop) return;
     
   } else if (data.length === 0){
-    return layer.msg(message.noPicture);
+    return layer.msg(layer.i18n.noPicture);
   }
   
   //上一张
@@ -1287,9 +1305,9 @@ layer.photos = function(options, loop, key){
     }, options));
   }, function(){
     layer.close(dict.loadi);
-    layer.msg(i18n.photoError, {
+    layer.msg(layer.i18n.photoError, {
       time: 30000, 
-      btn: [i18n.photoNextPage, i18n.photoClose], 
+      btn: [layer.i18n.photoNextPage, layer.i18n.photoClose], 
       yes: function(){
         data.length > 1 && dict.imgnext(true,true);
       }
@@ -1313,7 +1331,7 @@ window.layui && layui.define ? (
   layer.ready()
   ,layui.define('jquery', function(exports){ //layui加载
     layer.path = layui.cache.dir;
-    ready.run(layui.jquery);
+    ready.run(layui.$);
 
     //暴露模块
     window.layer = layer;

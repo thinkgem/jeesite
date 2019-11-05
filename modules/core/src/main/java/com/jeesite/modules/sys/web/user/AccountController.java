@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +30,11 @@ import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 账号自助服务Controller
  * @author ThinkGem
@@ -37,6 +43,7 @@ import com.jeesite.modules.sys.utils.ValidCodeUtils;
 @Controller
 @RequestMapping(value = "/account")
 @ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@Api(tags = "Account / 账号自助服务、找回密码、账号注册")
 public class AccountController extends BaseController{
 
 	@Autowired
@@ -45,9 +52,9 @@ public class AccountController extends BaseController{
 	/**
 	 * 忘记密码页面
 	 */
-	@RequestMapping(value = "forgetPwd")
+	@GetMapping(value = "forgetPwd")
+	@ApiOperation(value = "忘记密码页面")
 	public String forgetPwd(Model model) {
-		model.addAttribute("message", "正在研发中，敬请期待！");
 		return "modules/sys/account/forgetPwd";
 	}
 	
@@ -58,6 +65,12 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "getFpValidCode")
 	@ResponseBody
+	@ApiOperation(value = "获取找回密码的短信或邮件验证码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
+		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
+	})
 	public String getFpValidCode(User user, String validCode, String validType, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
 		if (!ValidCodeUtils.validate(request, validCode)){
@@ -99,10 +112,16 @@ public class AccountController extends BaseController{
 	}
 	
 	/**
-	 * 根据短信或邮件验证码保存密码
+	 * 根据短信或邮件验证码重置密码
 	 */
 	@PostMapping(value = "savePwdByValidCode")
 	@ResponseBody
+	@ApiOperation(value = "根据短信或邮件验证码重置密码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "fpValidCode", value = "手机或邮箱接受的验证码", required = true),
+		@ApiImplicitParam(name = "password", value = "新密码", required = true, paramType="query", type="String"),
+	})
 	public String savePwdByValidCode(User user, String fpValidCode, HttpServletRequest request) {
 		String userCode = (String)UserUtils.getCache("fpUserCode");
 		String loginCode = (String)UserUtils.getCache("fpLoginCode");
@@ -140,11 +159,16 @@ public class AccountController extends BaseController{
 	}
 
 	/**
-	 * 获取保密问题
+	 * 获取找回密码的保密问题
 	 * @param validCode 图片验证码，防止重复机器人。
 	 */
 	@PostMapping(value = "getPwdQuestion")
 	@ResponseBody
+	@ApiOperation(value = "获取找回密码的保密问题")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
+	})
 	public String getPwdQuestion(User user, String validCode, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
 		if (!ValidCodeUtils.validate(request, validCode)){
@@ -186,6 +210,14 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "savePwdByPwdQuestion")
 	@ResponseBody
+	@ApiOperation(value = "根据保密问题重置密码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "pwdQuestionAnswer", value = "保密问题答案（1）", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "pwdQuestionAnswer2", value = "保密问题答案（2）", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "pwdQuestionAnswer3", value = "保密问题答案（3）", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "password", value = "新密码", required = true, paramType="query", type="String"),
+	})
 	public String savePwdByPwdQuestion(User user, HttpServletRequest request) {
 		String userCode = (String)UserUtils.getCache("fpUserCode");
 		String loginCode = (String)UserUtils.getCache("fpLoginCode");
@@ -221,7 +253,8 @@ public class AccountController extends BaseController{
 	 * 用户注册页面
 	 * @param user 用户信息参数
 	 */
-	@RequestMapping(value = "registerUser")
+	@GetMapping(value = "registerUser")
+	@ApiOperation(value = "用户注册页面")
 	public String registerUser(User user, HttpServletRequest request) {
 		return "modules/sys/account/registerUser";
 	}
@@ -233,6 +266,18 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "getRegValidCode")
 	@ResponseBody
+	@ApiOperation(value = "获取注册用户短信或邮件验证码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "email", value = "电子邮箱", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "mobile", value = "手机号码", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "corpCode", value = "租户编号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "corpName", value = "租户名称", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "userType", value = "用户类型（employee）", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
+		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
+	})
 	public String getRegValidCode(User user, String validCode, String validType, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
 		if (!ValidCodeUtils.validate(request, validCode)){
@@ -295,6 +340,13 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "saveRegByValidCode")
 	@ResponseBody
+	@ApiOperation(value = "根据短信或邮件验证码注册用户")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "password", value = "登录密码", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "regValidCode", value = "手机或邮箱接受的验证码", required = true),
+	})
 	public String saveRegByValidCode(User user, String regValidCode, HttpServletRequest request) {
 		if (!"true".equals(Global.getConfig("sys.account.registerUser"))){
 			return renderResult(Global.FALSE, "当前系统没有开启注册功能！");

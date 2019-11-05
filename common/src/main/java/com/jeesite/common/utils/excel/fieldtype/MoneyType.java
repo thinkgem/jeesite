@@ -6,6 +6,8 @@ package com.jeesite.common.utils.excel.fieldtype;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import org.apache.commons.lang3.StringUtils;
+
 
 /**
  * 金额类型转换（保留两位）
@@ -19,7 +21,7 @@ public class MoneyType {
 	 * 获取对象值（导入）
 	 */
 	public static Object getValue(String val) {
-		return val == null ? "" : val.replaceAll(",", "");
+		return val == null ? "" : StringUtils.replace(val, ",", "");
 	}
 
 	/**
