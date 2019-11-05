@@ -45,7 +45,7 @@ import eu.bitwalker.useragentutils.UserAgent;
  */
 public class LogUtils {
 
-	//采用线程池优化性能
+	// 采用线程池优化性能
 	private static ExecutorService logThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
 			new DefaultThreadFactory("log-save"));
@@ -113,19 +113,19 @@ public class LogUtils {
         }
 
 		// 异步保存日志
-		logThreadPool.submit(new SaveLogTask(log, handler, request.getContextPath(), throwable));
+		logThreadPool.submit(new SaveLogThread(log, handler, request.getContextPath(), throwable));
 	}
 	/**
 	 * 保存日志线程
 	 */
-	public static class SaveLogTask extends Thread{
+	public static class SaveLogThread extends Thread{
 		
 		private Log log;
 		private Object handler;
 		private String contextPath;
 		private Throwable throwable;
 		
-		public SaveLogTask(Log log, Object handler, String contextPath, Throwable throwable){
+		public SaveLogThread(Log log, Object handler, String contextPath, Throwable throwable){
 			this.log = log;
 			this.handler = handler;
 			this.contextPath = contextPath;

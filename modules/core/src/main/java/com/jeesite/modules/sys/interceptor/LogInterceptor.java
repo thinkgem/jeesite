@@ -53,9 +53,9 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, 
 			Object handler, Exception ex) throws Exception {
-		long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
+		Long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
 		long endTime = System.currentTimeMillis(); 	// 2、结束时间
-		long executeTime = endTime - beginTime;	// 3、获取执行时间
+		long executeTime = beginTime == null ? 0 : endTime - beginTime;	// 3、获取执行时间
 		startTimeThreadLocal.remove(); // 用完之后销毁线程变量数据
 		
 		// 保存日志
