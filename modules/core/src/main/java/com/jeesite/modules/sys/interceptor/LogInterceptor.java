@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jeesite.common.lang.ByteUtils;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.TimeUtils;
+import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -35,8 +36,8 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		long beginTime = System.currentTimeMillis();// 1、开始时间  
 		startTimeThreadLocal.set(beginTime);		// 线程绑定变量（该数据只有当前请求的线程可见）  
 		if (logger.isDebugEnabled()){
-	        logger.debug("开始计时: {}  URI: {}", new SimpleDateFormat("hh:mm:ss.SSS")
-	        	.format(beginTime), request.getRequestURI());
+	        logger.debug("开始计时: {}  URI: {}  IP: {}", new SimpleDateFormat("hh:mm:ss.SSS")
+	        	.format(beginTime), request.getRequestURI(), IpUtils.getRemoteAddr(request));
 		}
 		return true;
 	}
@@ -52,9 +53,9 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, 
 			Object handler, Exception ex) throws Exception {
-		long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
+		Long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
 		long endTime = System.currentTimeMillis(); 	// 2、结束时间
-		long executeTime = endTime - beginTime;	// 3、获取执行时间
+		long executeTime = beginTime == null ? 0 : endTime - beginTime;	// 3、获取执行时间
 		startTimeThreadLocal.remove(); // 用完之后销毁线程变量数据
 		
 		// 保存日志
