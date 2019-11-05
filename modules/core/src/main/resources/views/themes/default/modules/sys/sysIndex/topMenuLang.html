@@ -6,7 +6,7 @@
 	<ul class="dropdown-menu">
 		<li class="mt5"></li>
 		<% for(var dict in @DictUtils.getDictList('sys_lang_type')){ %>
-			<li><a href="${ctxPath}/lang/${dict.dictValue}">${dict.dictLabel}</a></li>
+			<li><a href="${ctxPath}/lang/${dict.dictValue}" onclick="location=this.href+'?url='+location.href;return false;">${dict.dictLabel}</a></li>
 		<% } %>
 		<li class="mt10"></li>
 	</ul>

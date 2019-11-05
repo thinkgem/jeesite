@@ -6,18 +6,14 @@
 	
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
-
-	<!-- Spring boot default -->
-	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	
 	<!-- Project level setting -->
 <!-- 	<logger name="your.package" level="DEBUG" /> -->
 	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<!--<pattern>%d{MM-dd HH:mm:ss.SSS} %clr(%-5p) %clr([%-39logger{39}]){cyan} - %m%n%wEx</pattern>-->
-			<!--使用springboot官方的打印样式，在idea中具有比较好的彩色显示与排版-->
-			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<pattern>%d{MM-dd HH:mm:ss.SSS} %clr(%-5p) %clr([%-39logger{39}]){cyan} - %m%n%wEx</pattern>
 		</encoder>
 	</appender>
 

@@ -1,6 +1,6 @@
 <% layout('/layouts/default.html', {title: '登录', libs: ['validate'], bodyClass: 'login-page'}){ %>
 <% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
-<link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
+<!-- <link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}"> -->
 <link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <div class="login-box">
@@ -24,15 +24,12 @@
 				<#form:input type="password" name="password" class="form-control required"
 					data-msg-required="${text('请填写登录密码.')}" placeholder="${text('登录密码')}" autocomplete="off"/>
 			</div>
-			<%/*<!-- if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
+			<% if(@Global.getConfigToBoolean('user.loginCodeCorpUnique', 'false')){ %>
 			<div class="form-group has-feedback">
-				<select name="param_corpCode" class="form-control">
-					<% for(var user in @UserUtils.findCorpList()){ %>
-						<option value="${user.corpCode}">(${user.corpCode}) ${user.corpName}</option>
-					<% } %>
-				</select>
+				<#form:treeselect id="switchCorpSelect" title="${text('登录租户')}" allowClear="false"
+					name="param_corpCode" url="${ctx}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
 			</div>
-			<% } -->*/%>
+			<% } %>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
 				<#form:validcode name="validCode" isRequired="true" isRemote="true" isLazy="true"/>
 			</div>
@@ -40,10 +37,10 @@
 				<div class="mt5 icheck">
 					<label title="${text('公共场所慎用,下次不需要再填写帐号')}"><input type="checkbox"
 						name="rememberUserCode"${isNotBlank(cookie('rememberUserCode'))?' checked':''}
-						class="form-control" data-style="square-blue"> ${text('记住账号')}</label> &nbsp; 
+						class="form-control" data-style="minimal-grey"> ${text('记住账号')}</label> &nbsp; 
 					<label title="${text('公共场所慎用,下次不需要再填写帐号和密码')}"><input type="checkbox"
 						name="rememberMe"${isNotBlank(cookie('rememberMe'))?' checked':''}
-						class="form-control" data-style="square-blue"> ${text('自动登录')}</label>
+						class="form-control" data-style="minimal-grey"> ${text('自动登录')}</label>
 				</div>
 			</div>
 			<div class="form-group">

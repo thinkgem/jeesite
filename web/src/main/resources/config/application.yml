@@ -99,10 +99,13 @@ jdbc:
 #    maxEvictableIdleTimeMillis: 1800000
 #    
 #    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
-#    removeAbandoned: true
+#    removeAbandoned: false
 #    removeAbandonedTimeout: 2100
+#
+#    # Oracle 下会自动开启 PSCache，并指定每个连接上 PSCache 大小。若不指定，则与 maxActive 相同（4.1.5+）
+#    maxPoolPreparedStatementPerConnectionSize: ~
 
-#  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
+#  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2
 #  
 #  # 多数据源配置：ds2
@@ -121,11 +124,18 @@ jdbc:
 #      minIdle: 3
 #      maxActive: 20
       
-#  # JTA 分布式事务（v4.0.4+）
+#  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
 #  jta:
 #    enabled: false
-#    # 事务超时时间，单位毫秒（3分钟）
-#    transactionTimeout: 180000
+
+#  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
+#  grant select on sys.dba_pending_transactions to jeesite;
+#  grant select on sys.pending_trans$ to jeesite;
+#  grant select on sys.dba_2pc_pending to jeesite;
+#  grant execute on sys.dbms_system to jeesite;
+
+#  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
+#  transactionTimeout: 1800
 
 #  # 表名前缀
 #  tablePrefix: js_
@@ -168,7 +178,7 @@ spring:
 #    # 缓存及会话共享（专业版）
 #    isClusterMode: false
 #    # 清理全部缓存按钮所清理的缓存列表
-#    clearNames: sysCache,corpCache,userCache,cmsCache
+#    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache
 
 # 日志配置
 logging:
@@ -209,7 +219,6 @@ logging:
 #      "employee":{"dao":"employeeDao","loginView":"","indexView":"modules/sys/sysIndex"},
 #      "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
 #      "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
-#      "persion":{"dao":"persionDao","loginView":"","indexView":"modules/sys/sysIndexPersion"},
 #      "expert":{"dao":"expertDao","loginView":"","indexView":"modules/sys/sysIndexExpert"}
 #    }
 #
@@ -246,6 +255,9 @@ logging:
 #      expandLevel: -1,
 #      remarks: ""
 #    }]
+#    
+#  # 管理功能的控制权限类型（1拥有的权限 2管理的权限）（v4.1.5+）
+#  adminCtrlPermi: 2
 #
 #  # 多租户模式（SAAS模式）（专业版）
 #  useCorpModel: false
@@ -361,7 +373,7 @@ logging:
 #  remoteAddrHeaderName: X-Forwarded-For
 #  
 #  # 允许的请求方法设定，解决安全审计问题
-#  allowRequestMethods: GET,POST
+#  allowRequestMethods: GET,POST,OPTIONS,PUT,DELETE
 #  
 #  # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
 #  isAllowMultiAddrLogin: true
@@ -382,6 +394,10 @@ logging:
 #  # 是否允许接收跨域的Cookie凭证数据
 ##  accessControlAllowCredentials: true
 #
+#  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造CSRF）
+#  allowReferers: http://127.0.0.1,http://localhost
+#  allowReferers: ~
+#
 #  # 是否在登录后生成新的Session（默认false）
 #  isGenerateNewSessionAfterLogin: false
 #
@@ -390,13 +406,13 @@ logging:
 #  
 #  # URI 权限过滤器定义
 #  filterChainDefinitions: |
-#    /ReportServer/** = user
 #    ${adminPath}/** = user
 
 # Session 相关
 #session:
 #
 #  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+#  # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
 #  sessionTimeout: 1800000
 #  
 #  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
@@ -407,6 +423,7 @@ logging:
 #  
 #  # 会话唯一标识SessionId在Cookie中的名称。
 #  sessionIdCookieName: jeesite.session.id
+#  #sessionIdCookiePath: ${server.servlet.context-path}
 #  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  #shareSessionIdCookieName: ${session.sessionIdCookieName}
@@ -465,7 +482,7 @@ logging:
 #      addPathPatterns: >
 #        ${frontPath}/**
 #      excludePathPatterns: ~
-#        
+#      
 #  # 静态文件后缀，过滤静态文件，以提高访问性能。
 #  staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
 #  
@@ -512,7 +529,7 @@ logging:
 #  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等。
 #  maxFileSize: 500*1024*1024
 #  
-#  # 设置允许上传的文件后缀
+#  # 设置允许上传的文件后缀（全局设置）
 #  imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,
 #  mediaAllowSuffixes: .flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,
 #  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.ipa,.apk,
@@ -523,6 +540,10 @@ logging:
 ##    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 ##    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
 #
+#  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
+#  imageMaxWidth: 1024
+#  imageMaxHeight: 768
+#  
 #  # 是否开启分片上传
 #  chunked: false
 #  # 分片大小，单位字节（10M）
@@ -552,7 +573,7 @@ logging:
 
 # 消息提醒中心（专业版）
 #msg:
-#  enabled: true
+#  enabled: false
 #  
 #  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
 #  realtime:

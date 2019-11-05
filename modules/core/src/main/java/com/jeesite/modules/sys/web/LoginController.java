@@ -161,7 +161,8 @@ public class LoginController extends BaseController{
 
 		// 非授权异常，登录失败，验证码加1。
 		if (!UnauthorizedException.class.getName().equals(exception)){
-			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username, (String)paramMap.get("deviceType"), "failed"));
+			model.addAttribute("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username,
+					(String)paramMap.get("corpCode"), (String)paramMap.get("deviceType"), "failed"));
 		}
 		
 		//获取当前会话对象
@@ -216,7 +217,9 @@ public class LoginController extends BaseController{
 		
 		// 未加载shiro模块时会为空，直接访问则提示操作权限不足。
 		if(loginInfo == null){
-			UserUtils.getSubject().logout();
+			if (subject != null){
+				subject.logout();
+			}
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
@@ -308,6 +311,7 @@ public class LoginController extends BaseController{
 		// 非无类型用户，自动根据用户类型设置默认菜单的归属系统（个性化示例）
 		//if (!User.USER_TYPE_NONE.equals(user.getUserType())){
 		//	session.setAttribute("sysCode", user.getUserType());
+		//	UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		//}
 		
 		// 返回指定用户类型的首页视图
@@ -347,10 +351,7 @@ public class LoginController extends BaseController{
 	@ResponseBody
 	@JsonView(Menu.SimpleView.class)
 	public List<Menu> menuTree(String parentCode) {
-		if (StringUtils.isNotBlank(parentCode)){
-			return UserUtils.getMenuListByParentCode(parentCode);
-		}
-		return UserUtils.getMenuTree();
+		return UserUtils.getMenuTreeByParentCode(parentCode);
 	}
 
 	/**
@@ -359,12 +360,29 @@ public class LoginController extends BaseController{
 	@RequiresPermissions("user")
 	@RequestMapping(value = "switch/{sysCode}")
 	public String switchSys(@PathVariable String sysCode) {
-		User user = UserUtils.getUser();
-		if (user.isSuperAdmin() && StringUtils.isNotBlank(sysCode)){
-			Session session = UserUtils.getSession();
+		Session session = UserUtils.getSession();
+		if (StringUtils.isNotBlank(sysCode)){
 			session.setAttribute("sysCode", sysCode);
-			UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		}else{
+			session.removeAttribute("sysCode");
 		}
+		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		return REDIRECT + adminPath + "/index";
+	}
+
+	/**
+	 * 切换角色菜单（仅超级管理员有权限）
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = {"switchRole","switchRole/{roleCode}"})
+	public String switchRole(@PathVariable(required=false) String roleCode) {
+		Session session = UserUtils.getSession();
+		if (StringUtils.isNotBlank(roleCode)){
+			session.setAttribute("roleCode", roleCode);
+		}else{
+			session.removeAttribute("roleCode");
+		}
+		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		return REDIRECT + adminPath + "/index";
 	}
 	

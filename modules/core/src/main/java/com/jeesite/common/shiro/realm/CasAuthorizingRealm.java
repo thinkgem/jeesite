@@ -114,6 +114,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 				// 获取CAS传递过来的用户属性信息
 				user = new User(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("userCode"))));
 				user.setLoginCode(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("loginCode"))));
+				user.setCorpCode_(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("corpCode"))));
 				user.setPassword(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("password"))));
 				user.setUserName(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("userName"))));
 				user.setEmail(EncodeUtils.decodeUrl(ObjectUtils.toString(attrs.get("email"))));
@@ -145,7 +146,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 					}
 					
 					// 重新获取用户登录
-					user = UserUtils.getByLoginCode(token.getUsername()/*, corpCode*/);
+					user = UserUtils.getByLoginCode(token.getUsername(), user.getCorpCode_());
 					if (user != null) {
 						return user;
 					}

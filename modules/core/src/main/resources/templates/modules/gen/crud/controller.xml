@@ -164,7 +164,7 @@ public class ${ClassName}Controller extends BaseController {
 		${className}Service.save(${className});
 		return renderResult(Global.TRUE, text("保存${functionNameSimple}成功！"));
 	}
-	<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+	<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 	
 	/**
 	 * 停用${functionNameSimple}
@@ -199,7 +199,7 @@ public class ${ClassName}Controller extends BaseController {
 		return renderResult(Global.TRUE, text("启用${functionNameSimple}成功"));
 	}
 	<% } %>
-	<% if(@ObjectUtils.toBoolean(table.optionMap['isHaveDelete'])){ %>
+	<% if(toBoolean(table.optionMap['isHaveDelete'])){ %>
 	
 	/**
 	 * 删除${functionNameSimple}

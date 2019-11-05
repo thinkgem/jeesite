@@ -130,8 +130,7 @@ for (var i=0; i<dataScopes.length; i++){
 		continue;
 	}
 	// 控制权限 ctrlPermi: 0全部  1拥有权限  2管理权限
-	if (!(dataScope.ctrlPermi == '0'
-			|| dataScope.ctrlPermi == '1')){
+	if (!(dataScope.ctrlPermi == '0' || dataScope.ctrlPermi == '1')){
 		continue;
 	}
  	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
@@ -140,7 +139,7 @@ for (var i=0; i<dataScopes.length; i++){
 	$.ajax({
 		type: 'POST',
 		url: "${ctx}" + ctrlDataUrl + (ctrlDataUrl.indexOf("?")!=-1?'&':'?') + "___t=" + new Date().getTime(),
-		data: {ctrlPermi: '2'},
+		data: {ctrlPermi: '${@Global.getConfig("user.adminCtrlPermi", "2")}'},
 		dataType: 'json',
 		async: false,
 		error: function(data){

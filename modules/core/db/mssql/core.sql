@@ -4,6 +4,7 @@
 IF OBJECT_ID('[js_gen_table_column]') IS NOT NULL DROP TABLE [js_gen_table_column];
 IF OBJECT_ID('[js_gen_table]') IS NOT NULL DROP TABLE [js_gen_table];
 IF OBJECT_ID('[js_sys_company_office]') IS NOT NULL DROP TABLE [js_sys_company_office];
+IF OBJECT_ID('[js_sys_employee_office]') IS NOT NULL DROP TABLE [js_sys_employee_office];
 IF OBJECT_ID('[js_sys_employee_post]') IS NOT NULL DROP TABLE [js_sys_employee_post];
 IF OBJECT_ID('[js_sys_user_data_scope]') IS NOT NULL DROP TABLE [js_sys_user_data_scope];
 IF OBJECT_ID('[js_sys_user_role]') IS NOT NULL DROP TABLE [js_sys_user_role];
@@ -276,6 +277,17 @@ CREATE TABLE [js_sys_employee]
 );
 
 
+-- 员工附属机构关系表
+CREATE TABLE [js_sys_employee_office]
+(
+	[id] varchar(64) NOT NULL UNIQUE,
+	[emp_code] varchar(64) NOT NULL,
+	[office_code] varchar(64) NOT NULL,
+	[post_code] varchar(64),
+	PRIMARY KEY ([emp_code], [office_code])
+);
+
+
 -- 员工与岗位关联表
 CREATE TABLE [js_sys_employee_post]
 (
@@ -306,6 +318,7 @@ CREATE TABLE [js_sys_file_upload]
 	[file_id] varchar(64) NOT NULL,
 	[file_name] nvarchar(500) NOT NULL,
 	[file_type] varchar(20) NOT NULL,
+	[file_sort] decimal(10),
 	[biz_key] varchar(64),
 	[biz_type] varchar(64),
 	[status] char(1) DEFAULT '0' NOT NULL,
@@ -418,6 +431,7 @@ CREATE TABLE [js_sys_menu]
 	[menu_target] varchar(20),
 	[menu_icon] varchar(100),
 	[menu_color] varchar(50),
+	[menu_title] varchar(100),
 	[permission] varchar(1000),
 	[weight] decimal(4),
 	[is_show] char(1) NOT NULL,
@@ -670,6 +684,7 @@ CREATE TABLE [js_sys_role]
 	[is_sys] char(1),
 	[user_type] varchar(16),
 	[data_scope] char(1),
+	[biz_scope] varchar(255),
 	[status] char(1) DEFAULT '0' NOT NULL,
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,
@@ -678,6 +693,26 @@ CREATE TABLE [js_sys_role]
 	[remarks] nvarchar(500),
 	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
 	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
+	[extend_s1] nvarchar(500),
+	[extend_s2] nvarchar(500),
+	[extend_s3] nvarchar(500),
+	[extend_s4] nvarchar(500),
+	[extend_s5] nvarchar(500),
+	[extend_s6] nvarchar(500),
+	[extend_s7] nvarchar(500),
+	[extend_s8] nvarchar(500),
+	[extend_i1] decimal(19),
+	[extend_i2] decimal(19),
+	[extend_i3] decimal(19),
+	[extend_i4] decimal(19),
+	[extend_f1] decimal(19,4),
+	[extend_f2] decimal(19,4),
+	[extend_f3] decimal(19,4),
+	[extend_f4] decimal(19,4),
+	[extend_d1] datetime,
+	[extend_d2] datetime,
+	[extend_d3] datetime,
+	[extend_d4] datetime,
 	PRIMARY KEY ([role_code])
 );
 

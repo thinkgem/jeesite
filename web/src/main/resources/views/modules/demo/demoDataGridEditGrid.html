@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> 数据管理
+				<i class="fa icon-notebook"></i> 数据管理
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
@@ -134,7 +134,7 @@ $('#dataGrid').dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -142,7 +142,7 @@ $('#dataGrid').dataGrid({
 // 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 // 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 // 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-// 					$(element).select2().on("change",function(){$(this).valid()});
+// 					$(element).select2().on("change",function(){$(this).resetValid()});
 // 				}
 // 			}
 // 		},

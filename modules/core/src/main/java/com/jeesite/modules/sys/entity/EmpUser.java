@@ -88,10 +88,11 @@ public class EmpUser extends User {
 		@ExcelField(title="电子邮箱", attrName="email", align=Align.LEFT, sort=50),
 		@ExcelField(title="手机号码", attrName="mobile", align=Align.CENTER, sort=60),
 		@ExcelField(title="办公电话", attrName="phone", align=Align.CENTER, sort=70),
+		@ExcelField(title="性别", attrName="sex", dictType="sys_user_sex", width=10*256, align=Align.CENTER, sort=75),
 		@ExcelField(title="员工编码", attrName="employee.empCode", align=Align.CENTER, sort=80),
 		@ExcelField(title="员工姓名", attrName="employee.empName", align=Align.CENTER, sort=95),
 		@ExcelField(title="拥有角色编号", attrName="userRoleString", align=Align.LEFT, sort=800, type=ExcelField.Type.IMPORT),
-		@ExcelField(title="最后登录日期", attrName="lastLoginDate", align=Align.CENTER, sort=900, type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd HH:mm"),
+		@ExcelField(title="最后登录日期", attrName="lastLoginDate", width=20*256, align=Align.CENTER, sort=900, type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd HH:mm"),
 	})
 	public Employee getEmployee(){
 		Employee employee = (Employee)super.getRefObj();

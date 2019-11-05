@@ -1,0 +1,33 @@
+(function ($) {
+	$.extend($.validator.messages, {
+		required: "必填信息",
+		remote: "请修正该信息",
+		email: "请输入正确格式的电子邮件",
+		url: "请输入合法的网址",
+		date: "请输入合法的日期",
+		dateISO: "请输入合法的日期 (YYYY-MM-DD).",
+		number: "请输入合法的数值",
+		digits: "请输入一个正整数",
+		equalTo: "请再次输入相同的值",
+		maxlength: $.validator.format("最多可以输入 {0} 个字符"),
+		minlength: $.validator.format("最少要输入 {0} 个字符"),
+		rangelength: $.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),
+		range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
+		max: $.validator.format("请输入不大于 {0} 的数值"),
+		min: $.validator.format("请输入不小于 {0} 的数值"),
+		errorMessage: "您填写的信息有误，请根据提示修正。",
+		userName: "登录账号只能包括中文字、英文字母、数字和下划线",
+		realName: "姓名只能为2-30个汉字",
+		abc: "请输入字母数字或下划线",
+		noEqualTo: "请再次输入不同的值",
+		mobile: "请正确填写您的手机号码，只能是13,14,15,16,17,18,19号段",
+		simplePhone: "请正确填写您的电话号码，固话为区号(3-4位)号码(7-9位)",
+		phone: "请正确填写您的电话号码，固话为区号(3-4位)号码(7-9位),手机为13,14,15,16,17,18,19号段",
+		zipCode: "请正确填写您的邮政编码",
+		integer: "请输入一个整数",
+		ipv4: "请输入一个有效的 IP v4 地址",
+		ipv6: "请输入一个有效的 IP v6 地址",
+		qq: "请正确填写您的QQ号码",
+		idcard: "请输入正确的身份证号码(15-18位)"
+	});
+}(jQuery));

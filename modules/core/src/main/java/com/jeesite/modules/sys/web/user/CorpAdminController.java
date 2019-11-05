@@ -103,19 +103,19 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	public String save(@Validated User user, String oldLoginCode, String op) {
 		if (!user.getCurrentUser().isSuperAdmin()){
-			return renderResult(Global.FALSE, "越权操作，只有超级管理员才能修改此数据！");
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
 		}
 		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
+			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
+			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (StringUtils.isBlank(user.getCorpCode_())){
-			return renderResult(Global.FALSE, "租户代码不能为空！");
+			return renderResult(Global.FALSE, text("租户代码不能为空！"));
 		}
-		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, user.getLoginCode()/*, user.getCorpCode_()*/))) {
-			return renderResult(Global.FALSE, "保存用户'" + user.getLoginCode() + "'失败，登录账号已存在");
+		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, user.getLoginCode()))) {
+			return renderResult(Global.FALSE, text("保存管理员''{0}''失败，登录账号已存在", user.getLoginCode()));
 		}
 		if (user.getIsNewRecord()){
 			user.setUserType(User.USER_TYPE_NONE); // 仅登录用户
@@ -129,7 +129,7 @@ public class CorpAdminController extends BaseController {
 			if (list.size() > 0){
 				// 新增租户，如果已存在，则不能保存
 				if ("addCorp".equals(op)){
-					return renderResult(Global.FALSE, "保存用户失败，租户代码已存在");
+					return renderResult(Global.FALSE, text("保存租户失败，租户代码已存在"));
 				}
 				// 新增管理员，则使用已有的租户代码和名称
 				else if ("addAdmin".equals(op)){
@@ -138,7 +138,7 @@ public class CorpAdminController extends BaseController {
 				}
 				// 非法操作
 				else{
-					return renderResult(Global.FALSE, "非法操作，参数错误。");
+					return renderResult(Global.FALSE, text("非法操作，参数错误。"));
 				}
 			}
 		}
@@ -148,7 +148,7 @@ public class CorpAdminController extends BaseController {
 		if (user.getUserCode().equals(UserUtils.getUser().getUserCode())) {
 			UserUtils.clearCache();
 		}
-		return renderResult(Global.TRUE, "保存管理员'" + user.getUserCode() + "'成功");
+		return renderResult(Global.TRUE, text("保存管理员''{0}''成功", user.getLoginCode()));
 	}
 
 	/**
@@ -161,14 +161,14 @@ public class CorpAdminController extends BaseController {
 	@RequestMapping(value = "disable")
 	public String disable(User user) {
 		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
+			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (user.getCurrentUser().getUserCode().equals(user.getUserCode())) {
-			return renderResult(Global.FALSE, "停用用户失败, 不允许停用当前用户");
+			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
 		}
 		user.setStatus(User.STATUS_DISABLE);
 		userService.updateStatus(user);
-		return renderResult(Global.TRUE, "停用用户成功");
+		return renderResult(Global.TRUE, text("停用管理员''{0}''成功", user.getLoginCode()));
 	}
 	
 	/**
@@ -181,11 +181,11 @@ public class CorpAdminController extends BaseController {
 	@RequestMapping(value = "enable")
 	public String enable(User user) {
 		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
+			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		user.setStatus(User.STATUS_NORMAL);
 		userService.updateStatus(user);
-		return renderResult(Global.TRUE, "启用用户成功");
+		return renderResult(Global.TRUE, text("启用管理员''{0}''成功", user.getLoginCode()));
 	}
 	
 	/**
@@ -198,10 +198,10 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	public String resetpwd(User user) {
 		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
+			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		userService.updatePassword(user.getUserCode(), null);
-		return renderResult(Global.TRUE, "重置用户密码成功");
+		return renderResult(Global.TRUE, text("重置管理员''{0}''密码成功", user.getLoginCode()));
 	}
 
 	/**
@@ -214,20 +214,20 @@ public class CorpAdminController extends BaseController {
 	@ResponseBody
 	public String delete(User user) {
 		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
+			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
 		if (user.getCurrentUser().getUserCode().equals(user.getUserCode())) {
-			return renderResult(Global.FALSE, "删除用户失败，不允许删除当前用户");
+			return renderResult(Global.FALSE, text("删除用户失败，不允许删除当前用户"));
 		}
 		if (User.USER_TYPE_NONE.equals(user.getUserType())){
 			// 删除系统管理员
 			userService.delete(user);
-			return renderResult(Global.TRUE, "删除用户'" + user.getUserName() + "'成功！");
+			return renderResult(Global.TRUE, text("删除管理员''{0}''成功", user.getLoginCode()));
 		}else{
 			// 取消系统管理员身份
 			user.setMgrType(User.MGR_TYPE_NOT_ADMIN);
 			userService.updateMgrType(user);
-			return renderResult(Global.TRUE, "取消用户'" + user.getUserName() + "'管理员身份成功！");
+			return renderResult(Global.TRUE, text("取消管理员''{0}''身份成功", user.getLoginCode()));
 		}
 	}
 	
@@ -237,7 +237,7 @@ public class CorpAdminController extends BaseController {
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @return
 	 */
-	@RequiresPermissions("user")
+	//@RequiresPermissions("user") // 注释掉，允许配置URI控制权限
 	@RequestMapping(value = "treeData")
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String pId, String isShowCode) {
@@ -273,12 +273,12 @@ public class CorpAdminController extends BaseController {
 				Session session = UserUtils.getSession();
 				session.setAttribute("corpCode", user.getCorpCode_());
 				session.setAttribute("corpName", user.getCorpName_());
-				return renderResult(Global.TRUE, "租户切换成功！");
+				return renderResult(Global.TRUE, text("租户切换成功！"));
 			}else{
-				return renderResult(Global.TRUE, "租户切换失败，没有这个租户！");
+				return renderResult(Global.TRUE, text("租户切换失败，没有这个租户！"));
 			}
 		}
-		return renderResult(Global.FALSE, "租户切换失败，只有超级管理员才可以操作！");
+		return renderResult(Global.FALSE, text("租户切换失败，只有超级管理员才可以操作！"));
 	}
 
 }

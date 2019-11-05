@@ -1,5 +1,7 @@
 package com.jeesite.modules.sys.web;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mybatis.mapper.MapperHelper;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.UserUtils;
 
@@ -27,10 +31,21 @@ public class CacheController extends BaseController {
 	@RequestMapping(value = "clearAll")
 	@ResponseBody
 	public String clearAll() {
-		CacheUtils.clearCache();
-		UserUtils.clearCache();
 		Global.clearCache();
-		return renderResult(Global.TRUE, "清理缓存成功！");
+		CacheUtils.clearCache();
+		MapperHelper.clearCache();
+		UserUtils.clearCache();
+		return renderResult(Global.TRUE, text("清理缓存成功"));
+	}
+	
+	@PostConstruct
+	public void postConstruct(){
+		String rebel = System.getProperty("rebel.base");
+		if (StringUtils.isNotBlank(rebel) && Global
+				.getPropertyToBoolean("spring.cache.isClusterMode", "false")){
+			logger.info("JRebel: Cache clear...");
+			CacheUtils.clearCache();
+		}
 	}
 
 }

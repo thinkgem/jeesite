@@ -4,6 +4,7 @@
 package com.jeesite.test;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,16 +17,19 @@ import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
+import com.jeesite.modules.file.dao.FileUploadDao;
 import com.jeesite.modules.file.entity.FileUpload;
 import com.jeesite.modules.sys.dao.AreaDao;
 import com.jeesite.modules.sys.dao.CompanyDao;
 import com.jeesite.modules.sys.dao.ConfigDao;
 import com.jeesite.modules.sys.dao.DictDataDao;
+import com.jeesite.modules.sys.dao.EmpUserDao;
 import com.jeesite.modules.sys.dao.UserDao;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.entity.Config;
 import com.jeesite.modules.sys.entity.DictData;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.User;
 
 /**
@@ -47,6 +51,10 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	private CompanyDao companyDao;
 	@Autowired
 	private DictDataDao dictDataDao;
+	@Autowired
+	private FileUploadDao fileUploadDao;
+	@Autowired
+	private EmpUserDao empUserDao;
 	
 	@Test
 	public void testTableAnnotation() throws Exception{
@@ -131,12 +139,24 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company2.getSqlMap().getDataScope().addFilter("dsf",
 					"Company", "a.company_code", DataScope.CTRL_PERMI_HAVE);
 			System.out.println(companyDao.findList(company2));
+
+			System.out.println("============ 联合查询未设定columns和attrName为this时测试 ============");
+			FileUpload fileUpload = new FileUpload();
+			fileUpload.getSqlMap().getWhere().and("u.user_name", QueryType.EQ, "user1");
+			System.out.println(fileUploadDao.findList(fileUpload));
 			
 			System.out.println("============ 树结构基本查询测试 ============");
 			DictData dictData = new DictData();
 			dictData.setParentCodes("0,");
 			System.out.println(dictDataDao.findByParentCodesLike(dictData));
 			System.out.println(dictDataDao.findList(dictData));
+
+			System.out.println("============ 分页情况下foreach测试 ============");
+			EmpUser empUser = new EmpUser();
+			empUser.setCodes(new String[]{"SDJN01","SDJN02"});
+			empUser.setPage(new Page<>(1, 3));
+			List<EmpUser> list = empUserDao.findUserListByOfficeCodes(empUser);
+			System.out.println(list);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -157,11 +177,25 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.id = #{sqlMap.where#id#EQ1} AND a.name IN ( #{sqlMap.where.name#IN1.val[0]},"
 				+ " #{sqlMap.where.name#IN1.val[1]}, #{sqlMap.where.name#IN1.val[2]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-
+		
 		System.out.println("============ 重复赋值测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.and("name", QueryType.LIKE, "abc").and("name", QueryType.LIKE, "def").toSql();
 		b = "a.id = #{sqlMap.where#id#EQ1} AND a.name LIKE #{sqlMap.where.name#LIKE1.val}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		System.out.println("============ IN、NOT IN 测试 ============");
+		a = new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.IN, new String[]{"abc","def"})
+				.and("name2", QueryType.NOT_IN, ListUtils.newArrayList("abc","def")).toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1} AND a.name IN ( #{sqlMap.where.name#IN1.val[0]}, #{sqlMap.where.name#IN1.val[1]} )"
+				+ " AND a.name2 NOT IN ( #{sqlMap.where.name2#NOT_IN1.val[0]}, #{sqlMap.where.name2#NOT_IN1.val[1]} )";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		a = new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.IN, null).and("name2", QueryType.IN, new String[]{})
+				.and("name3", QueryType.NOT_IN, ListUtils.newArrayList()).toSql();
+		b = "a.id = #{sqlMap.where#id#EQ1}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
 		System.out.println("============ 带括号测试 ============");
@@ -202,7 +236,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.id = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ2.val}"
 				+ " OR a.name = #{sqlMap.where.name#EQ3.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-
+		
 		System.out.println("============ 带括号全部空值测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
@@ -235,7 +269,12 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " AND b.create_date <= #{area.sqlMap.where.create_date#LTE1.val}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 
-		System.out.println("============ 联合查询返回到当前实体测试 ============");
+		System.out.println("============ 联合查询，属性名支持指定别名 ============");
+		a = new FileUpload().getSqlMap().getWhere().and("u.user_name", QueryType.EQ, "user1").toSql();
+		b = "a.status != #{STATUS_DELETE} AND u.user_name = #{sqlMap.where.u#user_name#EQ1.val}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		
+		System.out.println("============ 联合查询，返回到当前实体测试 ============");
 		FileUpload fileUpload = new FileUpload();
 		fileUpload.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
 		a = fileUpload.getSqlMap().getWhere().toSql();
@@ -243,6 +282,15 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " #{sqlMap.where.create_by#IN1.val[1]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
+		System.out.println("============ 联合查询，属性为this时也可作为查询条件 ============");
+		FileUpload fileUpload2 = new FileUpload();
+		fileUpload2.setCreateByName("ThinkGem/JeeSite");
+		fileUpload2.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
+		a = fileUpload2.getSqlMap().getWhere().toSql();
+		b = "a.status != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
+				+ " #{sqlMap.where.create_by#IN1.val[1]} ) AND u.user_name LIKE #{sqlMap.where#user_name#LIKE1}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
+		System.exit(0);
 	}
 }

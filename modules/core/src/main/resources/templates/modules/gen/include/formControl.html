@@ -3,7 +3,7 @@
 	for (c in table.columnList){
 		if (c.isEdit == '1'){
 			// 如果是树结构的字段，则自动忽略
-			if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+			if(table.isTreeEntity && @StringUtils.inStringIgnoreCase(c.columnName, 'parent_code',
 				'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')){
 			}
 			// 如果是隐藏域
@@ -41,7 +41,7 @@
 					isNewLine = true;
 				}
 				// 如果是扩展字段，则输出子标题，并且强制换行
-				if (c.columnName == 'extend_s1'){
+				if (@StringUtils.equalsIgnoreCase(c.columnName, 'extend_s1')){
 					isNewLine = true;
 				}
 				// 如果是第一个控件
@@ -57,7 +57,7 @@
 <%
 				}
 				// 如果是扩展字段，则输出子标题，并且强制换行
-				if (c.columnName == 'extend_s1'){
+				if (@StringUtils.equalsIgnoreCase(c.columnName, 'extend_s1')){
 %>
 				<div class="form-unit">\${text('扩展字段')}</div>
 <%
@@ -76,7 +76,7 @@
 							<label class="control-label col-sm-${gridRowCol[1]}" title="">
 								<span class="required ${c.isNull == '1' ? 'hide' : ''}">*</span> \${text('${c.columnLabel}')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-${gridRowCol[2]}">
-							<%
+								<%
 								var attrs = '';
 								if (c.dataLength != '0'){
 									var s = { %> maxlength="${c.dataLength}"<% };
@@ -103,60 +103,49 @@
 								if (c.showType == 'input'){
 									// 如果为自定义主键，则第一个pk字段需输出isNewRecord
 									if (c.isPk == '1' && table.pkList[0].columnName == c.columnName){
-							%>
-								<${'#'}form:hidden path="isNewRecord"/>
+							%><${'#'}form:hidden path="isNewRecord"/>
 							<%
 									}
-							%>
-								<${'#'}form:input path="${c.attrName}"${attrs} class="form-control${cssClass}"/>
+							%><${'#'}form:input path="${c.attrName}"${attrs} class="form-control${cssClass}"/>
 							<%
 								} else if (c.showType == 'textarea') {
-							%>
-								<${'#'}form:textarea path="${c.attrName}" rows="4"${attrs} class="form-control${cssClass}"/>
+							%><${'#'}form:textarea path="${c.attrName}" rows="4"${attrs} class="form-control${cssClass}"/>
 							<%
 								} else if (c.showType == 'select' || c.showType == 'select_multiple') {
 									var isMultiple = (c.showType == 'select_multiple');
-							%>
-								<${'#'}form:select path="${c.attrName}" dictType="${c.optionMap['dictType']}"${isMultiple?' multiple="true"':''}${c.isRequired != '1'?' blankOption="true"':''} class="form-control${cssClass}" />
+							%><${'#'}form:select path="${c.attrName}" dictType="${c.optionMap['dictType']}"${isMultiple?' multiple="true"':''}${c.isRequired != '1'?' blankOption="true"':''} class="form-control${cssClass}" />
 							<%
 								} else if (c.showType == 'radio') {
-							%>
-								<${'#'}form:radio path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control${cssClass}" />
+							%><${'#'}form:radio path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control${cssClass}" />
 							<%
 								} else if (c.showType == 'checkbox') {
-							%>
-								<${'#'}form:checkbox path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control${cssClass}" />
+							%><${'#'}form:checkbox path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control${cssClass}" />
 							<%
 								} else if (c.showType == 'date' || c.showType == 'datetime') {
 									var isTime = (c.showType == 'datetime');
-							%>
-								<${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate${cssClass}"
+							%><${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate${cssClass}"
 									dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:${c.isRequired != '1'}});"/>
 							<%
 								} else if (c.showType == 'userselect') {
-							%>
-								<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('用户选择')}"
+							%><${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('用户选择')}"
 									path="${c.attrName}" labelPath="${c.attrName2}"
 									url="\${ctx}/sys/office/treeData?isLoadUser=true"
 									class="${cssClass}" allowClear="true"/>
 							<%
 								} else if (c.showType == 'officeselect') {
-							%>
-								<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('机构选择')}"
+							%><${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('机构选择')}"
 									path="${c.attrName}" labelPath="${c.attrName2}"
 									url="\${ctx}/sys/office/treeData"
 									class="${cssClass}" allowClear="true"/>
 							<%
 								} else if (c.showType == 'areaselect') {
-							%>
-								<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('区域选择')}"
+							%><${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('区域选择')}"
 									path="${c.attrName}" labelPath="${c.attrName2}"
 									url="\${ctx}/sys/area/treeData"
 									class="${cssClass}" allowClear="true"/>
 							<%
 								}
-							%>
-							</div>
+							%></div>
 						</div>
 					</div>
 <%
@@ -179,7 +168,7 @@
 <%
 	}
 	// 输出上传图片控件
-	if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload'])){
+	if(toBoolean(table.optionMap['isImageUpload'])){
 %>
 				<div class="row">
 					<div class="col-xs-12">
@@ -195,7 +184,7 @@
 <%
 	}
 	// 输出上传附件控件
-	if(@ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){
+	if(toBoolean(table.optionMap['isFileUpload'])){
 %>
 				<div class="row">
 					<div class="col-xs-12">

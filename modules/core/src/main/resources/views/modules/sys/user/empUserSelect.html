@@ -2,7 +2,7 @@
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-body">
-			<#form:form id="searchForm" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
+			<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}"/>
 				<#form:hidden name="isAll" value="${parameter.isAll}"/>
@@ -150,9 +150,9 @@ function initSelectTag(){
 	$.each(selectData, function(key, value){
 		selectNum ++;
 		html.push('<span class="tag" id="'+key+'_tags-input"><span>'+value.userName+' </span>'
-			+ '<a href="#" onclick="removeSelectTag(\''+key+'\');" title="取消选择">x</a></span>');
+			+ '<a href="#" onclick="removeSelectTag(\''+key+'\');" title="${text("取消选择")}">x</a></span>');
 	});
-	html.unshift('<div class="title">当前已选择<span id="selectNum">'+selectNum+'</span>项：</div>');
+	html.unshift('<div class="title">${text("当前已选择 {0\} 项", "<span id=\"selectNum\">'+selectNum+'</span>")}：</div>');
 	$('#selectData').empty().append(html.join(''));
 }
 function removeSelectTag(key){

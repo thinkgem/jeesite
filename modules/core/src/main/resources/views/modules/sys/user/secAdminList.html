@@ -3,55 +3,55 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-user"></i> 二级管理员
+				<i class="fa icon-user-female"></i> ${text('二级管理员')}
 			</div>
 			<div class="box-tools pull-right">
-				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
-				<a href="#" class="btn btn-default" id="btnAddAdmin" title="新增"><i class="fa fa-plus"></i> 新增</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="#" class="btn btn-default" id="btnAddAdmin" title="${text('新增')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 			</div>
 		</div>
 		<div class="box-body">
 			<#form:form id="searchForm" model="${user}" action="${ctx}/sys/secAdmin/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">账号：</label>
+					<label class="control-label">${text('账号')}：</label>
 					<div class="control-inline">
 						<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">昵称：</label>
+					<label class="control-label">${text('昵称')}：</label>
 					<div class="control-inline">
 						<#form:input path="userName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">邮箱：</label>
+					<label class="control-label">${text('邮箱')}：</label>
 					<div class="control-inline">
 						<#form:input path="email" maxlength="300" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">手机：</label>
+					<label class="control-label">${text('手机')}：</label>
 					<div class="control-inline">
 						<#form:input path="mobile" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">电话：</label>
+					<label class="control-label">${text('电话')}：</label>
 					<div class="control-inline">
 						<#form:input path="phone" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">状态：</label>
+					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-90">
 						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm">查询</button>
-					<button type="reset" class="btn btn-default btn-sm">重置</button>
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
 				</div>
 			</#form:form>			
 			<table id="dataGrid"></table>
@@ -60,7 +60,7 @@
 	</div>
 </div>
 <% var userType = isNotBlank(parameter.userType)?parameter.userType:'employee'; %>
-<div class="hide"><#form:listselect id="userSelect" title="用户选择"
+<div class="hide"><#form:listselect id="userSelect" title="${text('用户选择')}"
 	url="${ctx}/sys/user/userSelect?userType=${userType}" allowClear="false" 
 	checkbox="false" itemCode="userCode" itemName="userName"/></div>
 <% } %>
@@ -69,22 +69,22 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'登录账号', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" data-title="管理数据权限">'+(val||row.id)+'</a>';
+		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" data-title="${text("管理数据权限")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
-		{header:'电子邮箱', name:'email', index:'a.email', width:200, align:"center"},
-		{header:'手机号码', name:'mobile', index:'a.mobile', width:200, align:"center"},
-		{header:'办公电话', name:'phone', index:'a.phone', width:200, align:"center"},
-		{header:'更新时间', name:'updateDate', index:'a.update_date', width:200, align:"center"},
-		{header:'状态', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'${text("电子邮箱")}', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		{header:'操作', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:secAdmin:edit')){ %>
-				actions.push('<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" title="管理数据权限"><i class="fa fa-pencil"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/sys/secAdmin/delete?userCode='+row.userCode+'" class="btnList" title="取消二级管理员身份" data-confirm="确认要取消该用户的二级管理员身份吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" title="${text("管理数据权限")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/secAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("取消二级管理员身份")}" data-confirm="${text("确认要取消该用户的二级管理员身份吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			<% } %>
 			return actions.join('');
 		}}

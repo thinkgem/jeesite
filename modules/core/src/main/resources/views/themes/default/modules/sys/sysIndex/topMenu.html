@@ -10,8 +10,8 @@
 	<div class="navbar-custom-menu">
 		<ul class="nav navbar-nav">
 			<% include('topMenuCorp.html'){} %>
-			<li><a href="javascript:" id="fullScreen" title="${text('全屏')}"><i class="fa fa-arrows-alt"></i></a></li>
-			<li><a href="javascript:" id="switchSkin" title="${text('切换主题')}" style="margin-top:-1px;"><i class="fa fa-dashboard"></i></a></li>
+			<li><a href="javascript:" id="fullScreen" title="${text('全屏')}" data-placement="bottom" data-container="body"><i class="fa fa-arrows-alt"></i></a></li>
+			<li><a href="javascript:" id="switchSkin" title="${text('切换主题')}" style="margin-top:-1px;" data-placement="bottom" data-container="body"><i class="fa fa-dashboard"></i></a></li>
 			<% include('topMenuLang.html'){} %>
 			<% include('topMenuOnline.html'){} %>
 			<% include('topMenuMsg.html'){} %>
@@ -37,7 +37,8 @@
 					js.cookie('currentMenuCode', code); // 保存当前菜单ID
 					if ($("#leftMenu-" + code).length > 0){
 						$("#leftMenu > ul").hide();
-						$("#leftMenu-" + code).show();	
+						$("#leftMenu-" + code).show();
+						refreshSidebar(code);
 					}else{
 						js.ajaxSubmit('${ctx}/index/menuTree?parentCode=' + code
 									+ '&t=' + new Date().getTime(), function(data){
@@ -48,12 +49,24 @@
 								if($('.sidebar-menu').length == 1){
 									$(window).trigger("hashchange");
 								}
+								refreshSidebar(code);
 							}else{
 								location = '${ctx}/login';
 							}
 						}, 'html');
 					}
 				});
+				var refreshSidebar = function(code){
+					if(js.trim($("#leftMenu-" + code).text()) == ''){
+						$('.main-sidebar').hide();
+						$('.content-wrapper').css("cssText","margin-left:0!important;");
+						$(window).resize();
+					}else{
+						$('.main-sidebar').show();
+						$('.content-wrapper').css('margin-left', '');
+						$(window).resize();
+					}
+				}
 				// 激活存储的顶部当前菜单项
 				var currentMenuCode = js.cookie('currentMenuCode'), currentMenu;
 				if (currentMenuCode && currentMenuCode != ''){

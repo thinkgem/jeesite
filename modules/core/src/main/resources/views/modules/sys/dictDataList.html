@@ -64,7 +64,8 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'字典标签', name:'dictLabelOrig', index:'a.dict_label', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/dictData/form?dictCode='+row.dictCode+'" class="btnList" data-title="编辑字典数据">'+(val||row.id)+'</a>';
+			return '<a href="${ctx}/sys/dictData/form?dictCode='+row.dictCode+'" class="btnList '+row.cssClass
+					+'" data-title="编辑字典数据" style="'+row.cssStyle+'">'+(val||row.id)+'</a>';
 		}},
 		{header:'字典键值', name:'dictValue', index:'a.dict_value', width:200, align:"left"},
 		{header:'排序号', name:'treeSort', width:63, align:"center", fixed:true},

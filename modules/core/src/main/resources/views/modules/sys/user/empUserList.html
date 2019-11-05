@@ -24,7 +24,7 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<#form:hidden name="ctrlPermi" value="2"/>
+				<#form:hidden name="ctrlPermi" value="${@Global.getConfig('user.adminCtrlPermi', '2')}"/>
 				<div class="form-group">
 					<label class="control-label">${text('账号')}：</label>
 					<div class="control-inline">
@@ -67,7 +67,7 @@
 					<div class="control-inline width-90">
 						<#form:treeselect id="office" title="${text('机构选择')}"
 								path="employee.office.officeCode" labelPath="employee.office.officeName" 
-								url="${ctx}/sys/office/treeData?ctrlPermi=2" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+								url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -75,7 +75,7 @@
 					<div class="control-inline width-90">
 						<#form:treeselect id="company" title="${text('公司选择')}"
 								path="employee.company.companyCode" labelPath="employee.company.companyName" 
-								url="${ctx}/sys/company/treeData?ctrlPermi=2" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+								url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -169,22 +169,22 @@ $('#btnImport').click(function(){
 	js.layer.open({
 		type: 1,
 		area: ['400px'],
-		title: '导入用户数据',
+		title: '${text("导入用户数据")}',
 		resize: false,
 		scrollbar: true,
 		content: js.template('importTpl'),
 		success: function(layero, index){
 			layero.find('input[type="checkbox"]').iCheck();
 		},
-		btn: ['<i class="fa fa-check"></i> 导入',
-			'<i class="fa fa-remove"></i> 取消'],
+		btn: ['<i class="fa fa-check"></i> ${text("导入")}',
+			'<i class="fa fa-remove"></i> ${text("关闭")}'],
 		btn1: function(index, layero){
 			var form = {
 				inputForm: layero.find('#inputForm'),
 				file: layero.find('#file').val()
 			};
 		    if (form.file == '' || (!js.endWith(form.file, '.xls') && !js.endWith(form.file, '.xlsx'))){
-		    	js.showMessage("${text('文件不正确，请选择后缀为 “xls”或“xlsx”的文件。')}", null, 'warning');
+		    	js.showMessage("${text('文件不正确，请选择后缀为“xls”或“xlsx”的文件。')}", null, 'warning');
 		        return false;
 		    }
 			js.ajaxSubmitForm(form.inputForm, function(data){

@@ -4,7 +4,6 @@
 package com.jeesite.modules.sys.dao;
 
 import com.jeesite.common.dao.CrudDao;
-import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.sys.entity.Post;
 
@@ -13,7 +12,7 @@ import com.jeesite.modules.sys.entity.Post;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@MyBatisDao(dataSourceName=DataSourceHolder.DEFAULT)
+@MyBatisDao
 public interface PostDao extends CrudDao<Post> {
 	
 }
