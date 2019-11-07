@@ -202,6 +202,7 @@ $('#dataGrid').dataGrid({
 				{header:'${text("机构名称")}', name:'testOffice.officeName', sortable:false, width:150, align:"center"},
 				{header:'${text("区域名称")}', name:'testAreaName', width:150, align:"center"}
 			],
+			emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
 			// 加载成功后执行事件
 			ajaxSuccess: function(data){
 				
