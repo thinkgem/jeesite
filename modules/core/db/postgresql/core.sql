@@ -280,11 +280,11 @@ CREATE TABLE js_sys_employee
 -- 员工附属机构关系表
 CREATE TABLE js_sys_employee_office
 (
-	id varchar(64) NOT NULL UNIQUE,
+	id varchar(64) NOT NULL,
 	emp_code varchar(64) NOT NULL,
 	office_code varchar(64) NOT NULL,
 	post_code varchar(64),
-	PRIMARY KEY (emp_code, office_code)
+	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
 

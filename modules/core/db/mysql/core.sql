@@ -285,8 +285,7 @@ CREATE TABLE js_sys_employee_office
 	emp_code varchar(64) NOT NULL COMMENT '员工编码',
 	office_code varchar(64) NOT NULL COMMENT '机构编码',
 	post_code varchar(64) COMMENT '岗位编码',
-	PRIMARY KEY (emp_code, office_code),
-	UNIQUE (id)
+	PRIMARY KEY (id)
 ) COMMENT = '员工附属机构关系表';
 
 
