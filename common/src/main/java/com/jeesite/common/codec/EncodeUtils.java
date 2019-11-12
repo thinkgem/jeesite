@@ -67,6 +67,9 @@ public class EncodeUtils {
 	 * Base64编码.
 	 */
 	public static String encodeBase64(String input) {
+		if (StringUtils.isBlank(input)){
+			return StringUtils.EMPTY;
+		}
 		try {
 			return new String(Base64.encodeBase64(input.getBytes(DEFAULT_URL_ENCODING)));
 		} catch (UnsupportedEncodingException e) {
@@ -92,10 +95,13 @@ public class EncodeUtils {
 	 * Base64解码.
 	 */
 	public static String decodeBase64String(String input) {
+		if (StringUtils.isBlank(input)){
+			return StringUtils.EMPTY;
+		}
 		try {
 			return new String(Base64.decodeBase64(input.getBytes()), DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			return "";
+			return StringUtils.EMPTY;
 		}
 	}
 
