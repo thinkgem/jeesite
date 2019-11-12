@@ -98,6 +98,9 @@ jdbc:
 #    # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
 #    maxEvictableIdleTimeMillis: 1800000
 #    
+#    #连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作（4.1.8+）
+#    keepAlive: false
+#    
 #    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
 #    removeAbandoned: false
 #    removeAbandonedTimeout: 2100
