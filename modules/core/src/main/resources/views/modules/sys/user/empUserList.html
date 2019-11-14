@@ -88,7 +88,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-90">
-						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="isQuick form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -129,8 +129,7 @@ $('#dataGrid').dataGrid({
 			<% if(hasPermi('sys:empUser:updateStatus')){ %>
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}
-				if (row.status == Global.STATUS_DISABLE){
+				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_FREEZE){
 					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 			<% } %>

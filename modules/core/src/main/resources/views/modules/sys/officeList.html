@@ -47,7 +47,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-60">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="isQuick form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -84,8 +84,7 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="${ctx}/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="${text("编辑机构")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="${text("停用机构")}" data-confirm="${text("确认要停用该机构吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}
-				if (row.status == Global.STATUS_DISABLE){
+				} else if (row.status == Global.STATUS_DISABLE){
 					actions.push('<a href="${ctx}/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="${text("启用机构")}" data-confirm="${text("确认要启用该机构吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="${text("删除机构")}" data-confirm="${text("确认要删除该机构及所有子机构吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');

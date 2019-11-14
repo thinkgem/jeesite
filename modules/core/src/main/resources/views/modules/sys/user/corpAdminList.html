@@ -46,7 +46,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-90">
-						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="isQuick form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -88,8 +88,7 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/corpAdmin/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}
-				if (row.status == Global.STATUS_DISABLE){
+				} else if (row.status == Global.STATUS_DISABLE){
 					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/corpAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("删除用户")}" data-confirm="${text("确认要删除该用户吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');

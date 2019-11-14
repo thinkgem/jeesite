@@ -33,7 +33,7 @@
 				<div class="form-group">
 					<label class="control-label">状态：</label>
 					<div class="control-inline width-60">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="isQuick form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -70,8 +70,7 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="${ctx}/sys/area/form?areaCode='+row.areaCode+'" class="btnList" title="编辑区域"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/area/disable?areaCode='+row.areaCode+'" class="btnList" title="停用区域" data-confirm="确认要停用该区域吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}
-				if (row.status == Global.STATUS_DISABLE){
+				} else if (row.status == Global.STATUS_DISABLE){
 					actions.push('<a href="${ctx}/sys/area/enable?areaCode='+row.areaCode+'" class="btnList" title="启用区域" data-confirm="确认要启用该区域吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/area/delete?areaCode='+row.areaCode+'" class="btnList" title="删除区域" data-confirm="确认要删除该区域及所有子区域吗？" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
