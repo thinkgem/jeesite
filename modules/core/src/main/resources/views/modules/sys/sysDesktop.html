@@ -69,75 +69,73 @@
 					<div class="row">
 						<div class="col-md-8">
 							<div class="chart">
-								<div id="myChart" style="height:230px;width:99%"></div>
-								<script src="${ctxStatic}/echarts/4.2/echarts.simple.min.js"></script>
-								<script>
-									var option = {
-									    title : {
-									        text: '2017-5'
-									    },
-									    tooltip : {
-									        trigger: 'axis'
-									    },
-									    legend: {
-									        data:['意向','预购','成交']
-									    },
-									    toolbox: {
-									        show : true,
-									        feature : {
-									            mark : {show: true},
-									            dataView : {show: true, readOnly: false},
-									            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-									            restore : {show: true},
-									            saveAsImage : {show: true}
-									        }
-									    },
-									    calculable : true,
-									    grid : {
-									    	top: '49',
-									    	right: '20',
-									    	bottom: '30'
-									    },
-									    xAxis : [
-									        {
-									            type : 'category',
-									            boundaryGap : false,
-									            data : ['周一','周二','周三','周四','周五','周六','周日']
-									        }
-									    ],
-									    yAxis : [
-									        {
-									            type : 'value'
-									        }
-									    ],
-									    //color: ['#FAD860','#F3A43B','#60C0DD','#C6E579'],
-									    series : [
-									        {
-									            name:'成交',
-									            type:'line',
-									            smooth:true,
-									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-									            data:[10, 12, 21, 54, 260, 830, 710]
-									        },
-									        {
-									            name:'预购',
-									            type:'line',
-									            smooth:true,
-									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-									            data:[30, 182, 434, 791, 390, 30, 10]
-									        },
-									        {
-									            name:'意向',
-									            type:'line',
-									            smooth:true,
-									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-									            data:[1320, 1132, 601, 234, 120, 90, 20]
-									        }
-									     ]
-									};
-									// 基于准备好的dom，初始化echarts实例
-							        var myChart = echarts.init(document.getElementById('myChart'));
-							        myChart.setOption(option);
+								<div id="myChart" style="height:230px;width:100%"></div><script>
+									$(function(){
+										myChart1 = echarts.init(document.getElementById('myChart'), 'default');
+										myChart1.setOption({
+										    title : {
+										        text: js.formatDate(new Date(), 'yyyy-MM')
+										    },
+										    tooltip : {
+										        trigger: 'axis'
+										    },
+										    legend: {
+										        data:['意向','预购','成交']
+										    },
+										    toolbox: {
+										        show : true,
+										        feature : {
+										            mark : {show: true},
+										            dataView : {show: true, readOnly: false},
+										            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+										            restore : {show: true},
+										            saveAsImage : {show: true}
+										        }
+										    },
+										    calculable : true,
+										    grid : {
+										    	top: '49',
+										    	right: '20',
+										    	bottom: '30'
+										    },
+										    xAxis : [
+										        {
+										            type : 'category',
+										            boundaryGap : false,
+										            data : ['周一','周二','周三','周四','周五','周六','周日']
+										        }
+										    ],
+										    yAxis : [
+										        {
+										            type : 'value'
+										        }
+										    ],
+										    //color: ['#FAD860','#F3A43B','#60C0DD','#C6E579'],
+										    series : [
+										        {
+										            name:'成交',
+										            type:'line',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[10, 12, 21, 54, 260, 830, 710]
+										        },
+										        {
+										            name:'预购',
+										            type:'line',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[30, 182, 434, 791, 390, 30, 10]
+										        },
+										        {
+										            name:'意向',
+										            type:'line',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[1320, 1132, 601, 234, 120, 90, 20]
+										        }
+										     ]
+										});
+									});
 								</script>
 							</div>
 						</div>
@@ -216,20 +214,144 @@
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">
-              <li class=""><a href="#revenue-chart" data-toggle="tab" aria-expanded="false">面积图</a></li>
-              <li class="active"><a href="#sales-chart" data-toggle="tab" aria-expanded="true">饼图</a></li>
-              <li class="pull-left header"><i class="fa fa-inbox"></i> 销售</li>
+              <li class=""><a href="#chart-2" data-toggle="tab" aria-expanded="false">面积图</a></li>
+              <li class="active"><a href="#chart-1" data-toggle="tab" aria-expanded="true">饼图</a></li>
+              <li class="pull-left header"><i class="fa fa-inbox"></i> 图表</li>
             </ul>
             <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-              <div class="chart tab-pane" id="revenue-chart" style="position: relative; height: 300px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg height="300" version="1.1" width="717.945" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -8.98655e-06px; top: -0.899049px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="12.5" y="275" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="275" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,275H692.945" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="212.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="212.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">7,500</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,212.5H692.945" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="150" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="150" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">15,000</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,150H692.945" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="87.5" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="87.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">22,500</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,87.5H692.945" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="12.5" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="25" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">30,000</tspan></text><path fill="none" stroke="#aaaaaa" d="M25,25H692.945" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="570.3937302551641" y="287.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,0)"><tspan dy="287.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2013</tspan></text><path fill="#74a5c2" stroke="none" d="M25,230.56666666666666C43.666749696233296,231.10833333333335,81.00024908869989,234.346875,99.66699878493318,232.73333333333335C118.33374848116648,231.11979166666669,155.66724787363307,220.05887978142076,174.33399756986637,217.65833333333333C192.79784781287975,215.28387978142075,229.72554829890646,215.553125,248.18939854191984,213.63333333333333C266.6532487849332,211.71354166666666,303.58094927095993,204.99249772313297,322.0447995139733,202.3C340.7115492102066,199.57791438979964,378.0450486026732,191.86145833333333,396.7117982989065,191.975C415.3785479951398,192.08854166666666,452.7120473876064,214.80992714025498,471.3787970838397,203.20833333333331C489.842647326853,191.73284380692166,526.7703478128798,106.50842541436462,545.2341980558931,99.66666666666666C563.4951488456866,92.9000920810313,600.0170504252734,141.67163461538462,618.2780012150669,148.775C636.9447509113002,156.03621794871796,674.2782503037668,155.0375,692.945,157.125L692.945,275L25,275Z" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></path><path fill="none" stroke="#3c8dbc" d="M25,230.56666666666666C43.666749696233296,231.10833333333335,81.00024908869989,234.346875,99.66699878493318,232.73333333333335C118.33374848116648,231.11979166666669,155.66724787363307,220.05887978142076,174.33399756986637,217.65833333333333C192.79784781287975,215.28387978142075,229.72554829890646,215.553125,248.18939854191984,213.63333333333333C266.6532487849332,211.71354166666666,303.58094927095993,204.99249772313297,322.0447995139733,202.3C340.7115492102066,199.57791438979964,378.0450486026732,191.86145833333333,396.7117982989065,191.975C415.3785479951398,192.08854166666666,452.7120473876064,214.80992714025498,471.3787970838397,203.20833333333331C489.842647326853,191.73284380692166,526.7703478128798,106.50842541436462,545.2341980558931,99.66666666666666C563.4951488456866,92.9000920810313,600.0170504252734,141.67163461538462,618.2780012150669,148.775C636.9447509113002,156.03621794871796,674.2782503037668,155.0375,692.945,157.125" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="25" cy="230.56666666666666" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="99.66699878493318" cy="232.73333333333335" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="174.33399756986637" cy="217.65833333333333" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="248.18939854191984" cy="213.63333333333333" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="322.0447995139733" cy="202.3" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="396.7117982989065" cy="191.975" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="471.3787970838397" cy="203.20833333333331" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="545.2341980558931" cy="99.66666666666666" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="618.2780012150669" cy="148.775" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="692.945" cy="157.125" r="4" fill="#3c8dbc" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><path fill="#eaf3f6" stroke="none" d="M25,252.78333333333333C43.666749696233296,252.55,81.00024908869989,254.18958333333333,99.66699878493318,251.85C118.33374848116648,249.51041666666666,155.66724787363307,235.10250455373406,174.33399756986637,234.06666666666666C192.79784781287975,233.0420878870674,229.72554829890646,245.58541666666667,248.18939854191984,243.60833333333335C266.6532487849332,241.63125000000002,303.58094927095993,220.22145947176685,322.0447995139733,218.25C340.7115492102066,216.2568761384335,378.0450486026732,225.67708333333334,396.7117982989065,227.75C415.3785479951398,229.82291666666666,452.7120473876064,244.68164845173044,471.3787970838397,234.83333333333334C489.842647326853,225.0920651183971,526.7703478128798,155.53688996316757,545.2341980558931,149.39166666666665C563.4951488456866,143.3139732965009,600.0170504252734,179.0999771062271,618.2780012150669,185.94166666666666C636.9447509113002,192.93539377289378,674.2782503037668,200.03541666666666,692.945,204.73333333333335L692.945,275L25,275Z" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></path><path fill="none" stroke="#a0d0e0" d="M25,252.78333333333333C43.666749696233296,252.55,81.00024908869989,254.18958333333333,99.66699878493318,251.85C118.33374848116648,249.51041666666666,155.66724787363307,235.10250455373406,174.33399756986637,234.06666666666666C192.79784781287975,233.0420878870674,229.72554829890646,245.58541666666667,248.18939854191984,243.60833333333335C266.6532487849332,241.63125000000002,303.58094927095993,220.22145947176685,322.0447995139733,218.25C340.7115492102066,216.2568761384335,378.0450486026732,225.67708333333334,396.7117982989065,227.75C415.3785479951398,229.82291666666666,452.7120473876064,244.68164845173044,471.3787970838397,234.83333333333334C489.842647326853,225.0920651183971,526.7703478128798,155.53688996316757,545.2341980558931,149.39166666666665C563.4951488456866,143.3139732965009,600.0170504252734,179.0999771062271,618.2780012150669,185.94166666666666C636.9447509113002,192.93539377289378,674.2782503037668,200.03541666666666,692.945,204.73333333333335" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="25" cy="252.78333333333333" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="99.66699878493318" cy="251.85" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="174.33399756986637" cy="234.06666666666666" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="248.18939854191984" cy="243.60833333333335" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="322.0447995139733" cy="218.25" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="396.7117982989065" cy="227.75" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="471.3787970838397" cy="234.83333333333334" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="545.2341980558931" cy="149.39166666666665" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="618.2780012150669" cy="185.94166666666666" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="692.945" cy="204.73333333333335" r="4" fill="#a0d0e0" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="left: 547.691px; top: 74px; display: none;"><div class="morris-hover-row-label">2013 Q1</div><div class="morris-hover-point" style="color: #a0d0e0">
-				  Item 1:
-				  10,687
-				</div><div class="morris-hover-point" style="color: #3c8dbc">
-				  Item 2:
-				  4,460
-				</div></div></div>
-              <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 300px;"><svg height="300" version="1.1" width="687.945" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path fill="none" stroke="#3c8dbc" d="M343.9725,243.33333333333331A93.33333333333333,93.33333333333333,0,0,0,432.2002551949771,180.44625304313007" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#3c8dbc" stroke="#ffffff" d="M343.9725,246.33333333333331A96.33333333333333,96.33333333333333,0,0,0,435.0361473262442,181.4248826052307L471.58764590702043,194.03833029452744A135,135,0,0,1,343.9725,285Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#f56954" d="M432.2002551949771,180.44625304313007A93.33333333333333,93.33333333333333,0,0,0,260.2573462783141,108.73398312817662" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#f56954" stroke="#ffffff" d="M435.0361473262442,181.4248826052307A96.33333333333333,96.33333333333333,0,0,0,257.5665020515457,107.40757544301087L222.88450979541864,90.31165416754118A135,135,0,0,1,471.58764590702043,194.03833029452744Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#00a65a" d="M260.2573462783141,108.73398312817662A93.33333333333333,93.33333333333333,0,0,0,343.94317846904886,243.333328727518" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path><path fill="#00a65a" stroke="#ffffff" d="M257.5665020515457,107.40757544301087A96.33333333333333,96.33333333333333,0,0,0,343.94223599126826,246.3333285794739L343.9285177035733,289.999993091277A140,140,0,0,1,218.3997694174712,88.10097469226493Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="343.9725" y="140" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="15px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 15px; font-weight: 800;" font-weight="800" transform="matrix(1.2407,0,0,1.2407,-82.8045,-36.1969)" stroke-width="0.8059895833333334"><tspan dy="5.7734375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">当前总量</tspan></text><text x="343.9725" y="160" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 14px;" transform="matrix(2.0235,0,0,2.0235,-352.0475,-155.8898)" stroke-width="0.49419642857142865"><tspan dy="4.625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">98</tspan></text></svg></div>
+              <div class="chart tab-pane active" id="chart-1">
+            	<div id="myChart2" style="height:300px;width:100%"></div><script>
+	            	$(function(){
+						myChart2 = echarts.init(document.getElementById('myChart2'), 'light');
+						myChart2.setOption({
+							tooltip: {
+						        trigger: 'item',
+						        formatter: "{a} <br/>{b}: {c} ({d}%)"
+						    },
+						    series: [
+						    	{
+						            name:'访问来源',
+						            type:'pie',
+						            radius: ['15%', '70%'],
+						            roseType : 'radius',
+						            avoidLabelOverlap: false,
+						            label: {
+						                normal: {
+						                    show: true
+						                },
+						                emphasis: {
+						                    show: true,
+						                    textStyle: {
+						                        fontSize: '10',
+						                        fontWeight: 'bold'
+						                    }
+						                }
+						            },
+						            labelLine: {
+						                normal: {
+						                    show: true
+						                }
+						            },
+						            data:[
+						                {value:135, name:'视频广告'},
+						                {value:358, name:'搜索引擎'},
+						                {value:335, name:'直接访问'},
+						                {value:310, name:'邮件营销'},
+						                {value:234, name:'联盟广告'},
+						            ]
+						        }
+						    ]
+						});
+					});
+              	</script>
+              </div>
+              <div class="chart tab-pane" id="chart-2">
+              	<div id="myChart3" style="height:300px;width:100%"></div><script>
+	              	$(function(){
+						myChart3 = echarts.init(document.getElementById('myChart3'), 'light');
+						myChart3.setOption({
+						    tooltip : {
+						        trigger: 'axis',
+						        axisPointer: {
+						            type: 'cross',
+						            label: {
+						                backgroundColor: '#6a7985'
+						            }
+						        }
+						    },
+						    legend: {
+						        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+						    },
+						    toolbox: {
+						        feature: {
+						            saveAsImage: {}
+						        }
+						    },
+						    grid: {
+						        left: '3%',
+						        right: '4%',
+						        bottom: '3%',
+						        containLabel: true
+						    },
+						    xAxis : [
+						        {
+						            type : 'category',
+						            boundaryGap : false,
+						            data : ['周一','周二','周三','周四','周五','周六','周日']
+						        }
+						    ],
+						    yAxis : [
+						        {
+						            type : 'value'
+						        }
+						    ],
+						    series : [
+						        {
+						            name:'邮件营销',
+						            type:'line',
+						            stack: '总量',
+						            areaStyle: {},
+						            data:[120, 132, 101, 134, 90, 230, 210]
+						        },
+						        {
+						            name:'联盟广告',
+						            type:'line',
+						            stack: '总量',
+						            areaStyle: {},
+						            data:[220, 182, 191, 234, 290, 330, 310]
+						        },
+						        {
+						            name:'视频广告',
+						            type:'line',
+						            stack: '总量',
+						            areaStyle: {},
+						            data:[150, 232, 201, 154, 190, 330, 410]
+						        },
+						        {
+						            name:'直接访问',
+						            type:'line',
+						            stack: '总量',
+						            areaStyle: {normal: {}},
+						            data:[320, 332, 301, 334, 390, 330, 320]
+						        },
+						        {
+						            name:'搜索引擎',
+						            type:'line',
+						            stack: '总量',
+						            label: {
+						                normal: {
+						                    show: true,
+						                    position: 'top'
+						                }
+						            },
+						            areaStyle: {normal: {}},
+						            data:[820, 932, 901, 934, 1290, 1330, 1320]
+						        }
+						    ]
+						});
+					});
+              	</script>
+              </div>
             </div>
           </div>
           <div class="box box-success box-widget">
@@ -596,17 +718,24 @@
 </footer>
 <% } %>
 <script src="${ctxStatic}/jquery/jquery-ui-sortable-1.12.1.min.js"></script>
+<script src="${ctxStatic}/echarts/4.2/echarts.min.js"></script>
 <script>
-$(window).resize(function(){
-	var footerHeight = $('.main-footer').outerHeight() || 0;
-	var windowHeight = $(window).height();
-	$('.content').css('min-height', windowHeight - footerHeight)
-}).resize();
-$('.ui-sortable').sortable({
-	connectWith : '.ui-sortable',
-	handle      : '.box-header, .nav-tabs',
-	placeholder : 'sort-highlight',
-	forcePlaceholderSize: true,
-	zIndex : 999999
-}).find('.box-header, .nav-tabs').css('cursor', 'move');
+$(function(){
+	$(window).resize(function(){
+		var footerHeight = $('.main-footer').outerHeight() || 0;
+		var windowHeight = $(window).height();
+		$('.content').css('min-height', windowHeight - footerHeight);
+		myChart1.resize(); myChart2.resize(); myChart3.resize();
+	}).resize();
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		$(window).resize();
+	});
+	$('.ui-sortable').sortable({
+		connectWith : '.ui-sortable',
+		handle      : '.box-header, .nav-tabs',
+		placeholder : 'sort-highlight',
+		forcePlaceholderSize: true,
+		zIndex : 999999
+	}).find('.box-header, .nav-tabs').css('cursor', 'move');
+});
 </script>
