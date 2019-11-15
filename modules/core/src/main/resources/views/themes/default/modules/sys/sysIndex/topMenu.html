@@ -60,12 +60,13 @@
 					if(js.trim($("#leftMenu-" + code).text()) == ''){
 						$('.main-sidebar').hide();
 						$('.content-wrapper').css("cssText","margin-left:0!important;");
-						$(window).resize();
 					}else{
 						$('.main-sidebar').show();
 						$('.content-wrapper').css('margin-left', '');
-						$(window).resize();
 					}
+					setTimeout(function(){
+						$(window).resize();
+					},200);
 				}
 				// 激活存储的顶部当前菜单项
 				var currentMenuCode = js.cookie('currentMenuCode'), currentMenu;
