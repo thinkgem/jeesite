@@ -61,6 +61,14 @@ public class InitCoreData extends BaseInitDataTests {
 
 	@Override
 	public void begin() {
+		StringBuilder info = new StringBuilder("\r\n");
+		info.append("\r\n================ 数据库连接信息 ================\r\n\r\n");
+		info.append("类型: " + Global.getProperty("jdbc.type")+"\r\n");
+		info.append("驱动: " + Global.getProperty("jdbc.driver")+"\r\n");
+		info.append("地址: " + Global.getProperty("jdbc.url")+"\r\n");
+		info.append("用户: " + Global.getProperty("jdbc.username")+"\r\n");
+		info.append("\r\n================================================\r\n");
+		logger.info(info);
 		super.begin(InitCoreData.class);
 	}
 	

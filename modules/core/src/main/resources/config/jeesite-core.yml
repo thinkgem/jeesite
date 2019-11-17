@@ -399,6 +399,7 @@ shiro:
     /v2/api-docs = perms[sys:swagger]
     /swagger-ui.html = perms[sys:swagger]
     /swagger-resources/** = perms[sys:swagger]
+    /bpm/modeler/** = perms[bpm:modeler]
     ${adminPath}/login-cas = cas
     ${adminPath}/login = authc
     ${adminPath}/logout = logout
