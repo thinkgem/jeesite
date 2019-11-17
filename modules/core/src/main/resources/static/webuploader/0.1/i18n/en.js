@@ -52,7 +52,6 @@ $.fn.webuploader.defaults.i18n = {
 	'等待上传': 'Waiting for the upload',
 	'正在上传': 'Are uploading',
 	
-	'取消': 'Cancel',
 	'下载': 'Download',
 	'预览': 'Preview',
 	'查看': 'To view'
