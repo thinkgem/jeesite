@@ -14,4 +14,5 @@ cd %~dp0
 cd ..
 call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
 
+msg 1 /time:0 /w "打包完成..."
 pause
