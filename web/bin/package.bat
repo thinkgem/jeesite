@@ -11,8 +11,8 @@ echo.
 %~d0
 cd %~dp0
 
-cd ..
-call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
+rem cd ..
+rem call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
 
-msg 1 /time:0 /w "打包完成..."
+cmd /c msg %username% /time:0 /w "打包完成..."
 pause
