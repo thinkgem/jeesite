@@ -9,7 +9,7 @@
 	 
 	    // public method for encoding
 	    this.encode = function (input) {
-	        var output = "";
+	        var output = ""; if (!input || input==''){return output};
 	        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
 	        var i = 0;
 	        input = _utf8_encode(input);
@@ -35,7 +35,7 @@
 	 
 	    // public method for decoding
 	    this.decode = function (input) {
-	        var output = "";
+	        var output = ""; if (!input || input==''){return output};
 	        var chr1, chr2, chr3;
 	        var enc1, enc2, enc3, enc4;
 	        var i = 0;
