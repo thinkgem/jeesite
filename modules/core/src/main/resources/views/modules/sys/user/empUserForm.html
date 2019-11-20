@@ -25,7 +25,8 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="office" title="${text('机构选择')}"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
-									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" class="required" allowClear="false"/>
+									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									class="required" allowClear="false" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
 					</div>
@@ -36,7 +37,8 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="company" title="${text('公司选择')}"
 									path="employee.company.companyCode" labelPath="employee.company.companyName" 
-									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" btnClass="" allowClear="true"/>
+									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									btnClass="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
 					</div>

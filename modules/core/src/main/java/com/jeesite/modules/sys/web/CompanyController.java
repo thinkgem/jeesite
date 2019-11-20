@@ -247,10 +247,10 @@ public class CompanyController extends BaseController {
 	@ResponseBody
 	public String fixTreeData() {
 		if (!UserUtils.getUser().isAdmin()){
-			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
+			return renderResult(Global.FALSE, text("操作失败，只有管理员才能进行修复！"));
 		}
 		companyService.fixTreeData();
-		return renderResult(Global.TRUE, "数据修复成功");
+		return renderResult(Global.TRUE, text("数据修复成功"));
 	}
 
 }

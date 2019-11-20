@@ -306,7 +306,7 @@ public class AccountController extends BaseController{
 		}
 		// 验证用户编码是否存在。
 		if (UserUtils.getByLoginCode(user.getLoginCode()) != null){
-			return renderResult(Global.FALSE, text("登录账号已存在！"));
+			return renderResult(Global.FALSE, text("登录账号已存在"));
 		}
 		// 生成验证码，并缓存。
 		String code = StringUtils.getRandomNum(6);

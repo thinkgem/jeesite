@@ -18,22 +18,6 @@ jdbc:
   password: 123456
   testSql: SELECT 1
   
-#  # DB2 数据库配置
-#  type: db2
-#  driver: com.ibm.db2.jcc.DB2Driver
-#  url: jdbc:db2://127.0.0.1:50000/jeesite
-#  username: jeesite
-#  password: jeesite
-#  testSql: SELECT 1 FROM DUAL
-  
-#  # H2 数据库配置
-#  type: h2
-#  driver: org.h2.Driver
-#  url: jdbc:h2:~/jeesite-db/jeesite
-#  username: jeesite
-#  password: jeesite
-#  testSql: SELECT 1
-
 # 日志配置
 logging:
   config: classpath:logback-test.xml
