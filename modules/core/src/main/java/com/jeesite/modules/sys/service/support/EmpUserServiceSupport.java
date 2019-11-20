@@ -125,6 +125,10 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		if (StringUtils.isBlank(employee.getEmpCode())){
 			employee.setEmpCode(user.getUserCode());
 		}
+		// 如果员工工号为空，则使用员工编码
+		if (StringUtils.isBlank(employee.getEmpNo())){
+			employee.setEmpNo(employee.getEmpCode());
+		}
 		// 如果员工姓名为空，则使用昵称名
 		if (StringUtils.isBlank(employee.getEmpName())){
 			employee.setEmpName(user.getUserName());

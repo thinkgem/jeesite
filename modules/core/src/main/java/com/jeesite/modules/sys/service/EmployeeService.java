@@ -25,6 +25,11 @@ public interface EmployeeService extends CrudServiceApi<Employee> {
 	public Employee get(Employee employee);
 	
 	/**
+	 * 根据工号获取数据
+	 */
+	public Employee getByEmpNo(Employee employee);
+	
+	/**
 	 * 查询分页数据
 	 */
 	@Override

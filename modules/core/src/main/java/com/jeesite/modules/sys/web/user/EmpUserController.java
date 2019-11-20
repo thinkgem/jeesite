@@ -20,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -149,15 +150,22 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions(value={"sys:empUser:edit","sys:empUser:authRole"}, logical=Logical.OR)
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated EmpUser empUser, String oldLoginCode, String op, HttpServletRequest request) {
+	public String save(@Validated EmpUser empUser, String op, HttpServletRequest request) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
-		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, empUser.getLoginCode()))) {
+		EmpUser old = super.getWebDataBinderSource(request);
+		if (!Global.TRUE.equals(userService.checkLoginCode(old != null ? old.getLoginCode() : "", empUser.getLoginCode()))) {
 			return renderResult(Global.FALSE, text("保存用户失败，登录账号''{0}''已存在", empUser.getLoginCode()));
+		}
+		if (StringUtils.isBlank(empUser.getEmployee().getEmpNo())){
+			empUser.getEmployee().setEmpNo(empUser.getLoginCode());
+		}
+		if (!Global.TRUE.equals(checkEmpNo(old != null ? old.getEmployee().getEmpNo() : "", empUser.getEmployee().getEmpNo()))) {
+			return renderResult(Global.FALSE, text("保存用户失败，员工工号''{0}''已存在", empUser.getEmployee().getEmpNo()));
 		}
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)
 				&& UserUtils.getSubject().isPermitted("sys:empUser:edit")){
@@ -168,6 +176,26 @@ public class EmpUserController extends BaseController {
 			userService.saveAuth(empUser);
 		}
 		return renderResult(Global.TRUE, text("保存用户''{0}''成功", empUser.getUserName()));
+	}
+	
+	/**
+	 * 验证工号是否有效
+	 * @param oldName
+	 * @param name
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "checkEmpNo")
+	@ResponseBody
+	public String checkEmpNo(String oldEmpNo, @RequestParam("employee.empNo") String empNo) {
+		Employee employee = new Employee();
+		employee.setEmpNo(empNo);
+		if (empNo != null && empNo.equals(oldEmpNo)) {
+			return Global.TRUE;
+		} else if (empNo != null && employeeService.getByEmpNo(employee) == null) {
+			return Global.TRUE;
+		}
+		return Global.FALSE;
 	}
 
 	/**
