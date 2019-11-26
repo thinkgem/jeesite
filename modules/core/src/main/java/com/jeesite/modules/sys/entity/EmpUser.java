@@ -27,7 +27,12 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 		@JoinTable(type=Type.JOIN, entity=Employee.class, alias="e",
 			on="e.emp_code=a.ref_code AND a.user_type=#{USER_TYPE_EMPLOYEE}",
 			attrName="employee", columns={
-					@Column(includeEntity=Employee.class)
+				////解决修改部门或公司名称后，用户列表所属机构没有修改的问题。
+				@Column(includeEntity=BaseEntity.class),
+				@Column(includeEntity=DataEntity.class),
+				@Column(name="emp_code", 	attrName="empCode", 			label="员工编码", isPK=true),
+				@Column(name="emp_name", 	attrName="empName", 			label="员工姓名", queryType=QueryType.LIKE),
+				@Column(name="emp_name_en", attrName="empNameEn", 			label="英文名", queryType=QueryType.LIKE),
 			}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
 			on="o.office_code=e.office_code", attrName="employee.office",
