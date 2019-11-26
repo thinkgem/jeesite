@@ -432,6 +432,9 @@ session:
   # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
 
+  # 设置接收SessionId请求参数的名称
+  sessionIdParamName: __sid
+  
 # MyBatis 相关
 mybatis:
 
