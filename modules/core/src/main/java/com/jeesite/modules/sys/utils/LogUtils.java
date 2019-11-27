@@ -107,8 +107,8 @@ public class LogUtils {
         log.preInsert();
         
         // 获取异常对象
-        Throwable throwable = null;
-        if (ex != null){
+        Throwable throwable = ex;
+        if (throwable == null){
         	throwable = ExceptionUtils.getThrowable(request);
         }
 

@@ -78,19 +78,6 @@
 						</div>
 					</div>
 				</div>
-				<% if(@Global.YES.equals(log.isException)){ %>
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="form-group">
-							<label class="control-label col-sm-2" title="">
-								<span class="required hide">*</span> 异常信息：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-10">
-								<#form:textarea path="exceptionInfo" rows="10" class="form-control "/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<% } %>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
@@ -173,6 +160,12 @@
 						</div>
 					</div>
 				</div>
+				<% if(@Global.YES.equals(log.isException)){ %>
+				<div class="form-unit">${text('异常信息')}</div>
+				<div class="ml10 mr10 mb10">
+					<#form:textarea path="exceptionInfo" rows="20" class="form-control autoHeight"/>
+				</div>
+				<% } %>
 			</div>
 			<div class="box-footer">
 				<div class="row">
