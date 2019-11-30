@@ -18,7 +18,7 @@
 				<% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
 						var isMultiple = (c.showType == 'select_multiple'); %>
 					<div class="control-inline width-120">
-						<${'#'}form:select path="${c.attrName}" dictType="${c.optionMap['dictType']}"${isMultiple?' multiple="true"':''} blankOption="true" class="${c.attrName=='status'?'isQuick ':''}form-control"/>
+						<${'#'}form:select path="${c.attrName}" dictType="${c.optionMap['dictType']}"${isMultiple?' multiple="true"':''} blankOption="true" class="form-control${c.attrName=='status'?' isQuick':''}"/>
 					</div>
 				<% }else if(c.showType == 'radio'){ %>
 					<div class="control-inline">
