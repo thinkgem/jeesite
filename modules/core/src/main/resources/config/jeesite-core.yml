@@ -225,7 +225,7 @@ role:
 # 菜单管理
 menu:
   # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
-  updateStatusByModuleStatus: true
+  updateStatusByModuleStatus: false
 
 # 国际化管理（专业版）
 lang:
