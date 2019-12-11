@@ -188,7 +188,7 @@
 					</div>
 				</div>
 				<% } %>
-				<% if(op == 'add' || op == 'auth') { %>
+				<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 				<div class="form-unit">${text('分配角色')}</div>
 				<div class="pl10 pb20">
 					<table id="roleGrid"></table>
@@ -202,7 +202,7 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('sys:empUser:edit')){ %>
+						<% if (hasPermi('sys:empUser:edit,sys:empUser:authRole', 'or')){ %>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
@@ -267,7 +267,7 @@ $("#empOfficeGrid").dataGrid({
 		
 	}
 });
-<% if(op == 'add' || op == 'auth') {%>
+<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) {%>
 // 加载角色列表
 var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
@@ -295,7 +295,7 @@ var roleGrid = $("#roleGrid").dataGrid({
 <% } %>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		<% if(op == 'add' || op == 'auth') { // 获取选中角色  %>
+		<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { // 获取选中角色  %>
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
 		<% } %>
 		var empNo = $('#employee_empNo').val();
