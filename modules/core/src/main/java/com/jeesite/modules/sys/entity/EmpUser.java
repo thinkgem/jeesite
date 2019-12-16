@@ -5,6 +5,8 @@ package com.jeesite.modules.sys.entity;
 
 import javax.validation.Valid;
 
+import com.jeesite.common.entity.BaseEntity;
+import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
@@ -27,7 +29,6 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 		@JoinTable(type=Type.JOIN, entity=Employee.class, alias="e",
 			on="e.emp_code=a.ref_code AND a.user_type=#{USER_TYPE_EMPLOYEE}",
 			attrName="employee", columns={
-				////解决修改部门或公司名称后，用户列表所属机构没有修改的问题。
 				@Column(includeEntity=BaseEntity.class),
 				@Column(includeEntity=DataEntity.class),
 				@Column(name="emp_code", 	attrName="empCode", 			label="员工编码", isPK=true),
