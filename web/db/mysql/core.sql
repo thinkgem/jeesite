@@ -261,7 +261,8 @@ CREATE TABLE js_sys_employee
 (
 	emp_code varchar(64) NOT NULL COMMENT '员工编码',
 	emp_name varchar(100) NOT NULL COMMENT '员工姓名',
-	emp_name_en varchar(100) COMMENT '英文名',
+	emp_name_en varchar(100) COMMENT '员工英文名',
+	emp_no varchar(100) COMMENT '员工工号',
 	office_code varchar(64) NOT NULL COMMENT '机构编码',
 	office_name varchar(100) NOT NULL COMMENT '机构名称',
 	company_code varchar(64) COMMENT '公司编码',
@@ -899,7 +900,7 @@ CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code ASC);
 CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date ASC);
 CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id ASC);
 CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code ASC);
-CREATE INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record (read_status ASC);
+CREATE INDEX idx_sys_msg_inner_r_stat ON js_sys_msg_inner_record (read_status ASC);
 CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star ASC);
 CREATE INDEX idx_sys_msg_push_type ON js_sys_msg_push (msg_type ASC);
 CREATE INDEX idx_sys_msg_push_rc ON js_sys_msg_push (receive_code ASC);
