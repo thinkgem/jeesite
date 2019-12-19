@@ -14,4 +14,5 @@ cd %~dp0
 cd ..
 call mvn clean deploy -Dmaven.test.skip=true -Pdeploy
 
+cmd /c msg %username% /time:0 /w "²¿ÊğÍê³É..."
 pause
