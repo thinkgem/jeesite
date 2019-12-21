@@ -1,6 +1,9 @@
 /*
  * http://jeesite.com
  */
+a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {
+  color:#1890ff;
+}
 .main-header .navbar {
   background-color: #1890ff;
 }
@@ -91,6 +94,7 @@
 .sidebar-menu > li.active > a {
   font-weight: 600;
 }
+.sidebar-menu > li.menu-open > a,
 .sidebar-menu > li > .treeview-menu {
   background: #ffffff;
 }
@@ -141,11 +145,6 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
 }
-@media (min-width: 768px) {
-  .skin-blue-light.sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
-    border-left: 1px solid #d2d6de;
-  }
-}
 .main-footer {
   border-top-color: #d2d6de;
 }
@@ -162,8 +161,6 @@
 
 .content-wrapper, .right-side, body {background-color:#f8f8f8;}
 
-a, a:hover, a:active, a:focus, .form-unit,
-th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
 .btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover,
@@ -173,6 +170,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .select2-container--default .select2-selection--multiple .select2-selection__choice,
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .wup_container .placeholder .webuploader-pick {background-color:#1890ff!important;border-color:#1890ff;}
+.form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .form-unit {border-bottom: 1px solid #eee;}
 
 .tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;

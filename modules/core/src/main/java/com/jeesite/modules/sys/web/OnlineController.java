@@ -142,7 +142,7 @@ public class OnlineController extends BaseController{
 	@RequiresPermissions("sys:online:edit")
 	@RequestMapping(value = "tickOut")
 	@ResponseBody
-	public String tickOut(String sessionId) {
+	public String kickOut(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
 			Map<String, String> onlineTickOutMap = CacheUtils.get("onlineTickOutMap");

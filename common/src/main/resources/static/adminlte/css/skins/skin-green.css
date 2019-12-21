@@ -77,8 +77,8 @@
   background: #2c3b41;
 /*   border-left-color: #00a65a; */
 }
+.sidebar-menu > li.menu-open > a,
 .sidebar-menu > li > .treeview-menu {
-  margin: 0 1px;
   background: #2c3b41;
 }
 .sidebar a {
