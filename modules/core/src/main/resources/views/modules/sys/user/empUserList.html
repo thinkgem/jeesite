@@ -38,9 +38,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('邮箱')}：</label>
+					<label class="control-label">${text('姓名')}：</label>
 					<div class="control-inline">
-						<#form:input path="email" maxlength="300" class="form-control width-90"/>
+						<#form:input path="refName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -50,52 +50,55 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('电话')}：</label>
-					<div class="control-inline">
-						<#form:input path="phone" maxlength="100" class="form-control width-90"/>
-					</div>
-				</div>
-				<div class="form-row"></div>
-				<div class="form-group">
-					<label class="control-label">${text('姓名')}：</label>
-					<div class="control-inline">
-						<#form:input path="refName" maxlength="100" class="form-control width-90"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('机构')}：</label>
-					<div class="control-inline width-90">
-						<#form:treeselect id="office" title="${text('机构选择')}"
-								path="employee.office.officeCode" labelPath="employee.office.officeName" 
-								url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
-								btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('公司')}：</label>
-					<div class="control-inline width-90">
-						<#form:treeselect id="company" title="${text('公司选择')}"
-								path="employee.company.companyCode" labelPath="employee.company.companyName" 
-								url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
-								btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('岗位')}：</label>
-					<div class="control-inline width-90">
-						<#form:select name="employee.postCode" items="${postList}"
-							itemLabel="postName" itemValue="postCode" blankOption="true" class="form-control"/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-90">
 						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
+				<!-- <div class="form-row"></div> -->
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
 					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+					<button type="button" class="btn btn-default btn-sm btnFormMore">${text('更多')}<i class="fa fa-angle-double-down"></i></button>
+				</div>
+				<div class="form-more">
+					<div class="form-group">
+						<label class="control-label">${text('机构')}：</label>
+						<div class="control-inline width-90">
+							<#form:treeselect id="office" title="${text('机构选择')}"
+									path="employee.office.officeCode" labelPath="employee.office.officeName" 
+									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('公司')}：</label>
+						<div class="control-inline width-90">
+							<#form:treeselect id="company" title="${text('公司选择')}"
+									path="employee.company.companyCode" labelPath="employee.company.companyName" 
+									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('邮箱')}：</label>
+						<div class="control-inline">
+							<#form:input path="email" maxlength="300" class="form-control width-90"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('岗位')}：</label>
+						<div class="control-inline width-90">
+							<#form:select name="employee.postCode" items="${postList}"
+								itemLabel="postName" itemValue="postCode" blankOption="true" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('电话')}：</label>
+						<div class="control-inline">
+							<#form:input path="phone" maxlength="100" class="form-control width-90"/>
+						</div>
+					</div>
 				</div>
 			</#form:form>
 			<table id="dataGrid"></table>
