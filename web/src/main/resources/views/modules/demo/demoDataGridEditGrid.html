@@ -7,9 +7,8 @@
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
-				<% if(hasPermi('test:testData:edit')){ %>
-					<a href="#" id="dataGridAddRowBtn" class="btn btn-default"><i class="fa fa-plus"></i> 增行</a>
-				<% } %>
+				<a href="#" id="dataGridAddRowBtn" class="btn btn-default"><i class="fa fa-plus"></i> 增行</a>
+				<a href="#" id="btnGetData" class="btn btn-default"><i class="fa fa-hand-lizard-o"></i> 获取表格数据</a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -126,17 +125,17 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	// 设置数据表格列
 	columnModel: [
-		{header:'状态', name:'status', editable:true, hidden:true},
-		{header:'主键', name:'id', editable:true, hidden:true},
-		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
+		{header:'状态', name:'status', editable:true, hidden:true, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
+		{header:'主键', name:'id', editable:true, hidden:true, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
+		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
+		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}},
 		{header:'下拉框', name:'testSelect', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
-			}
+			}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
 		},
 // 		{header:'下拉多选', name:'testSelectMultiple', width:100, 
 // 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
@@ -144,7 +143,7 @@ $('#dataGrid').dataGrid({
 // 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 // 					$(element).select2().on("change",function(){$(this).resetValid()});
 // 				}
-// 			}
+// 			}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
 // 		},
 		{header:'日期选择', name:'testDate', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
@@ -152,7 +151,7 @@ $('#dataGrid').dataGrid({
 				dataInit: function(element){ $(element).on('focus', function(){
 					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
 				});
-			}}
+			}}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
 		},
 		{header:'日期时间', name:'testDatetime', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
@@ -160,7 +159,7 @@ $('#dataGrid').dataGrid({
 				dataInit: function(element){ $(element).on('focus', function(){
 					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});
 				});
-			}}
+			}}, unformat: function(val, obj, cell){return $('#'+obj.rowId+'_'+obj.colModel.name, cell).val();}
 		},
 		{header:'用户选择', name:'testUser', width:150,
 			formatter: function(val, obj, row, act){
@@ -174,7 +173,7 @@ $('#dataGrid').dataGrid({
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
 					});
 				}
-			}
+			}, unformat: function(val, obj, cell){return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
 		},
 		{header:'机构选择', name:'testOffice', width:150,
 			formatter: function(val, obj, row, act){
@@ -188,7 +187,7 @@ $('#dataGrid').dataGrid({
 						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: ''
 					});
 				}
-			}
+			}, unformat: function(val, obj, cell){return $('#office_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
 		},
 		{header:'区域选择', name:'testAreaCode', width:150,
 			formatter: function(val, obj, row, act){
@@ -202,7 +201,7 @@ $('#dataGrid').dataGrid({
 						url: '${ctx}/sys/area/treeData', cssClass: ''
 					});
 				}
-			}
+			}, unformat: function(val, obj, cell){return $('#area_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
 		},
 		{header:'列表选择', name:'testListSelect', width:150,
 			formatter: function(val, obj, row, act){
@@ -218,7 +217,7 @@ $('#dataGrid').dataGrid({
 						cssClass: ''
 					});
 				}
-			}
+			}, unformat: function(val, obj, cell){return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();}
 		},
 		{header:'操作', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
@@ -228,7 +227,7 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="#" onclick="js.confirm(\'你确认要删除这条数据吗？\', function(){$(\'#dataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'})});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}
 			return actions.join('');
-		}, editoptions: {defaultValue: 'new'}}
+		}, editoptions: {defaultValue: 'new'}, unformat: function(val, obj, cell){return '';}}
 	],
 	
 	// 编辑表格参数
@@ -245,6 +244,11 @@ $('#dataGrid').dataGrid({
 	ajaxSuccess: function(data){
 		
 	}
+});
+$('#btnGetData').click(function(){
+	var data = $('#dataGrid').dataGrid('getRowData');
+	log(data)
+	js.showMessage('请按 F12 打开控制台，查看数据');
 });
 </script>
 <script id="treeselectTpl" type="text/template">//<!--<div>
