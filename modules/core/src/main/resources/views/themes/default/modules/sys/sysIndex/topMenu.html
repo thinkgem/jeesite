@@ -60,10 +60,17 @@
 					if(js.trim($("#leftMenu-" + code).text()) == ''){
 						$('.main-sidebar').hide();
 						$('.content-wrapper').css("cssText","margin-left:0!important;");
+						if (window.initMenu && $(window).width() <= 767 && $('body').hasClass('sidebar-open')){
+							$('[data-toggle="push-menu"]').click();
+						}
 					}else{
 						$('.main-sidebar').show();
 						$('.content-wrapper').css('margin-left', '');
+						if (window.initMenu && $(window).width() <= 767 && !$('body').hasClass('sidebar-open')){
+							$('[data-toggle="push-menu"]').click();
+						}
 					}
+					window.initMenu = true;
 					setTimeout(function(){
 						$(window).resize();
 					},200);
