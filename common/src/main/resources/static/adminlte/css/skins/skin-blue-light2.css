@@ -177,7 +177,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 	border-radius:3px;box-shadow:0 0 8px #e0e0e0;background:#fff;box-shadow:0 0 5px #e6e6e6;}
 .tabpanel_mover li.active {background-color:#3aa0ff;}
 .tabpanel_mover li.active div {color:#fff;}
-.tabpanel_mover li .closer {font:6px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.8}
+.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.8}
 .tabpanel_mover li .closer:before {content:"\f00d";}
 .tabpanel_mover li .closer:hover {background:none;}
 .tabpanel_tab_content {border-bottom-color:#eeeeee;background-color:#fafafa;}

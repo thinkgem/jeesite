@@ -312,8 +312,12 @@
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
-        <repository>
-		    <id>sonatype-repos-s</id>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
+		</repository>
+		<repository>
+			<id>sonatype-repos-s</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<releases><enabled>false</enabled></releases>
 			<snapshots><enabled>true</enabled></snapshots>
@@ -328,7 +332,7 @@
 	
 	<profiles>
 		
-		<!-- 打包项目 -->
+		<!-- 生成文档 -->
 		<profile>
 			<id>javadoc</id>
 			<build>
