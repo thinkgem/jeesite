@@ -73,7 +73,8 @@ public class LogUtils {
 	 * @param executeTime 
 	 */
 	public static void saveLog(User user, HttpServletRequest request, Object handler, Exception ex, String logTitle, String logType, long executeTime){
-		if (user == null || StringUtils.isBlank(user.getUserCode()) || request == null){
+		if (user == null || StringUtils.isBlank(user.getUserCode()) || request == null
+				|| !Global.getPropertyToBoolean("web.interceptor.log.enabled", "true")){
 			return;
 		}
 		Log log = new Log();
