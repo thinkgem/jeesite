@@ -80,7 +80,7 @@ public class FileManager {
 			// ThinkGem 将绝对路径转换为虚拟路径
 			String url = PathFormat.format( this.getPath( file ) );
 			int index = url.indexOf(USERFILES_BASE_URL);
-			if(index > 0) {
+			if(index >= 0) {
 				url = url.substring(index + USERFILES_BASE_URL.length());
 			}
 			fileState.putInfo( "url", request.getContextPath() + USERFILES_BASE_URL + url );
