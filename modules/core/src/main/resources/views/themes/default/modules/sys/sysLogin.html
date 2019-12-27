@@ -10,6 +10,7 @@
 	</div>
 	<div class="login-box-body">
 		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post">
+			<h4 class="login-box-msg">${text('欢迎回来')}！</h4>
 			<div class="form-group has-feedback">
 				<span class="glyphicon glyphicon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
