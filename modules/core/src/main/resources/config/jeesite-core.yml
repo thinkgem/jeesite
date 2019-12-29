@@ -62,8 +62,13 @@ jdbc:
     
   # 事务超时时间，单位秒（30分钟）（v4.1.5+）
   transactionTimeout: 1800
+  
+#  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
+#  tableAndColumn: 
+#    prefixSuffix: "`|`"
+#    forceUpperCase: true
 
-  # 表名前缀
+  # 表名前缀（Schema）
   tablePrefix: js_
 
 #======================================#
