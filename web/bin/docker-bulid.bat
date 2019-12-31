@@ -14,5 +14,6 @@ cd %~dp0
 cd ..
 call mvn clean package docker:build -Dmaven.test.skip=true -U -Pdocker
 
+cd bin
 cmd /c msg %username% /time:0 /w "打包完成..."
 pause

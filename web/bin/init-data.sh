@@ -30,4 +30,6 @@ echo ""
 
 cd ..
 MAVEN_OPTS="$MAVEN_OPTS -Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
-mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitFilemanagerData,com.jeesite.test.InitCoreData -Djeesite.initdata=true -Djdbc.jta.enabled=false -U
+mvn clean test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData -Djeesite.initdata=true -Djdbc.jta.enabled=false -U
+
+cd bin

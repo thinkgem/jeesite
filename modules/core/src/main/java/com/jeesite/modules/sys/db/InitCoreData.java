@@ -3,8 +3,12 @@
  */
 package com.jeesite.modules.sys.db;
 
+import javax.annotation.PostConstruct;
+
 import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.config.Global;
@@ -55,21 +59,15 @@ import com.jeesite.modules.sys.service.UserService;
 /**
  * 初始化核心表数据
  * @author ThinkGem
- * @version 2017-10-22
+ * @version 2019-12-30
  */
+@Component
+@ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitCoreData extends BaseInitDataTests {
 
-	@Override
-	public void begin() {
-		StringBuilder info = new StringBuilder("\r\n");
-		info.append("\r\n================ 数据库连接信息 ================\r\n\r\n");
-		info.append("类型: " + Global.getProperty("jdbc.type")+"\r\n");
-		info.append("驱动: " + Global.getProperty("jdbc.driver")+"\r\n");
-		info.append("地址: " + Global.getProperty("jdbc.url")+"\r\n");
-		info.append("用户: " + Global.getProperty("jdbc.username")+"\r\n");
-		info.append("\r\n================================================\r\n");
-		logger.info(info);
-		super.begin(InitCoreData.class);
+	@PostConstruct
+	public void initialize() {
+		super.initialize(InitCoreData.class);
 	}
 	
 	/**
