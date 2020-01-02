@@ -69,6 +69,10 @@
 						if (window.initMenu && $(window).width() <= 767 && !$('body').hasClass('sidebar-open')){
 							$('[data-toggle="push-menu"]').click();
 						}
+						var li = $("#leftMenu-" + code + " > li");
+						if (!li.hasClass('menu-open')){
+							li = li.eq(0).find('> a').click();
+						}
 					}
 					window.initMenu = true;
 					setTimeout(function(){
