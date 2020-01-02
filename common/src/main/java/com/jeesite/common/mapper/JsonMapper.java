@@ -164,13 +164,13 @@ public class JsonMapper extends ObjectMapper {
 	/**
 	 * 当JSON里只含有Bean的部分属性時，更新一个已存在Bean，只覆盖该部分的属性.
 	 */
-	@SuppressWarnings({ "unchecked", "hiding" })
+	@SuppressWarnings({ "unchecked" })
 	public <T> T update(String jsonString, T object) {
 		try {
 			return (T) this.readerForUpdating(object).readValue(jsonString);
 		} catch (JsonProcessingException e) {
 			logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.warn("update json string:" + jsonString + " to object:" + object + " error.", e);
 		}
 		return null;

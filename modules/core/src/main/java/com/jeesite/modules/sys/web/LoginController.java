@@ -217,7 +217,9 @@ public class LoginController extends BaseController{
 		
 		// 未加载shiro模块时会为空，直接访问则提示操作权限不足。
 		if(loginInfo == null){
-			UserUtils.getSubject().logout();
+			if (subject != null){
+				subject.logout();
+			}
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
@@ -311,6 +313,11 @@ public class LoginController extends BaseController{
 		//	session.setAttribute("sysCode", user.getUserType());
 		//	UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		//}
+		
+		// 登录切换角色身份（个性化示例）
+		//String roleCode = "dept";
+		//session.setAttribute("roleCode", roleCode);
+		//UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		
 		// 返回指定用户类型的首页视图
 		String view = UserUtils.getUserTypeValue(user.getUserType(), "indexView");

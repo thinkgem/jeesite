@@ -25,7 +25,8 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="office" title="${text('机构选择')}"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
-									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" class="required" allowClear="false"/>
+									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									class="required" allowClear="false" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
 					</div>
@@ -36,7 +37,8 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="company" title="${text('公司选择')}"
 									path="employee.company.companyCode" labelPath="employee.company.companyName" 
-									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}" btnClass="" allowClear="true"/>
+									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									btnClass="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
 					</div>
@@ -121,9 +123,11 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> ${text('员工编号')}：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> ${text('员工工号')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="employee.empCode" maxlength="32" readonly="${!empUser.isNewRecord}" class="form-control userName"/>
+								<#form:input path="employee.empNo" maxlength="32" class="form-control userName"
+									remote="${ctx}/sys/empUser/checkEmpNo?oldEmpNo=${empUser.employee.empNo}"
+									data-msg-remote="${text('员工工号已存在')}"/>
 							</div>
 						</div>
 					</div>
@@ -184,7 +188,7 @@
 					</div>
 				</div>
 				<% } %>
-				<% if(op == 'add' || op == 'auth') { %>
+				<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 				<div class="form-unit">${text('分配角色')}</div>
 				<div class="pl10 pb20">
 					<table id="roleGrid"></table>
@@ -198,7 +202,7 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('sys:empUser:edit')){ %>
+						<% if (hasPermi('sys:empUser:edit,sys:empUser:authRole', 'or')){ %>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
@@ -263,7 +267,7 @@ $("#empOfficeGrid").dataGrid({
 		
 	}
 });
-<% if(op == 'add' || op == 'auth') {%>
+<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) {%>
 // 加载角色列表
 var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
@@ -291,9 +295,13 @@ var roleGrid = $("#roleGrid").dataGrid({
 <% } %>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		<% if(op == 'add' || op == 'auth') { // 获取选中角色  %>
+		<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { // 获取选中角色  %>
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
 		<% } %>
+		var empNo = $('#employee_empNo').val();
+		if (empNo == ''){
+			$('#employee_empNo').val($('#loginCode').val());
+		}
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){

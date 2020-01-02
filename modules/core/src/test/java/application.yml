@@ -17,7 +17,12 @@ jdbc:
   username: root
   password: 123456
   testSql: SELECT 1
-
+  
 # 日志配置
 logging:
   config: classpath:logback-test.xml
+
+# 消息推送
+msg:
+  enabled: true
+  

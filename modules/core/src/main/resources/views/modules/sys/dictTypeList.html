@@ -3,12 +3,12 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-social-dropbox"></i> 字典管理
+				<i class="fa icon-social-dropbox"></i> ${text('字典管理')}
 			</div>
 			<div class="box-tools pull-right">
-				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:dictType:edit')){ %>
-					<a href="${ctx}/sys/dictType/form" class="btn btn-default btnTool" title="新增字典类型"><i class="fa fa-plus"></i> 新增</a>
+					<a href="${ctx}/sys/dictType/form" class="btn btn-default btnTool" title="${text('新增字典类型')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 			</div>
 		</div>
@@ -16,32 +16,32 @@
 			<#form:form id="searchForm" model="${dictType}" action="${ctx}/sys/dictType/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">字典名称：</label>
+					<label class="control-label">${text('字典名称')}：</label>
 					<div class="control-inline">
 						<#form:input path="dictName" maxlength="100" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">字典类型：</label>
+					<label class="control-label">${text('字典类型')}：</label>
 					<div class="control-inline">
 						<#form:input path="dictType_like" maxlength="100" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">是否系统：</label>
+					<label class="control-label">${text('系统字典')}：</label>
 					<div class="control-inline width-60">
 						<#form:select path="isSys" dictType="sys_yes_no" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">状态：</label>
+					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-60">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm">查询</button>
-					<button type="reset" class="btn btn-default btn-sm">重置</button>
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
 				</div>
 			</#form:form>			
 			<table id="dataGrid"></table>
@@ -55,34 +55,33 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'字典名称', name:'dictName', index:'a.dict_name', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/dictType/form?id='+row.id+'" class="btnList" data-title="编辑字典类型">'+(val||row.id)+'</a>';
+		{header:'${text("字典名称")}', name:'dictName', index:'a.dict_name', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/dictType/form?id='+row.id+'" class="btnList" data-title="${text("编辑字典类型")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'字典类型', name:'dictType', index:'a.dict_type', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/dictData/list?dictType='+row.dictType+'" class="btnList" data-title="编辑字典数据">'+(val||row.id)+'</a>';
+		{header:'${text("字典类型")}', name:'dictType', index:'a.dict_type', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/dictData/list?dictType='+row.dictType+'" class="btnList" data-title="${text("字典数据")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'系统字典', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("系统字典")}', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);
 		}},
-		{header:'更新时间', name:'updateDate', index:'a.update_date', width:150, align:"center"},
-		{header:'备注信息', name:'remarks', index:'a.remarks', width:200, align:"left"},
-		{header:'状态', name:'status', index:'a.status', width:60, fixed:true, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:60, fixed:true, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		{header:'操作', name:'actions', width:130, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:130, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:dictType:edit')){ %>
-				actions.push('<a href="${ctx}/sys/dictType/form?id='+row.id+'" class="btnList" title="编辑字典类型"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/dictType/form?id='+row.id+'" class="btnList" title="${text("编辑字典类型")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 			<% } %>
-			actions.push('<a href="${ctx}/sys/dictData/list?dictType='+row.dictType+'" class="btnList" title="字典数据"><i class="fa fa-navicon"></i></a>&nbsp;');
+			actions.push('<a href="${ctx}/sys/dictData/list?dictType='+row.dictType+'" class="btnList" title="${text("字典数据")}"><i class="fa fa-navicon"></i></a>&nbsp;');
 			<% if(hasPermi('sys:dictType:edit')){ %>
-			if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/dictType/disable?id='+row.id+'" class="btnList" title="停用字典类型" data-confirm="确认要停用该字典类型吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/sys/dictType/disable?id='+row.id+'" class="btnList" title="${text("停用字典类型")}" data-confirm="${text("确认要停用该字典类型吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/sys/dictType/enable?id='+row.id+'" class="btnList" title="${text("启用字典类型")}" data-confirm="${text("确认要启用该字典类型吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-				if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/dictType/enable?id='+row.id+'" class="btnList" title="启用字典类型" data-confirm="确认要启用该字典类型吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
-				}
-				actions.push('<a href="${ctx}/sys/dictType/delete?id='+row.id+'" class="btnList" title="删除字典类型" data-confirm="确认要删除该字典类型吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/dictType/delete?id='+row.id+'" class="btnList" title="${text("删除字典类型")}" data-confirm="${text("确认要删除该字典类型吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			<% } %>
 			return actions.join('');
 		}}

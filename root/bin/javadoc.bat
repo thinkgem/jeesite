@@ -14,4 +14,5 @@ cd %~dp0
 cd ..
 call mvn clean package -Pjavadoc
 
+cd bin
 pause

@@ -142,7 +142,7 @@ public class OnlineController extends BaseController{
 	@RequiresPermissions("sys:online:edit")
 	@RequestMapping(value = "tickOut")
 	@ResponseBody
-	public String tickOut(String sessionId) {
+	public String kickOut(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
 			Map<String, String> onlineTickOutMap = CacheUtils.get("onlineTickOutMap");
@@ -159,9 +159,9 @@ public class OnlineController extends BaseController{
 			}
 			CacheUtils.put("onlineTickOutMap", onlineTickOutMap);
 			sessionDAO.delete(session);
-			return renderResult(Global.TRUE, "踢出已成功！");
+			return renderResult(Global.TRUE, text("踢出已成功！"));
 		}
-		return renderResult(Global.FALSE, "踢出失败，没有找到该在线用户！");
+		return renderResult(Global.FALSE, text("踢出失败，没有找到该在线用户！"));
 	}
 	
 }

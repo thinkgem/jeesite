@@ -125,6 +125,10 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		if (StringUtils.isBlank(employee.getEmpCode())){
 			employee.setEmpCode(user.getUserCode());
 		}
+		// 如果员工工号为空，则使用员工编码
+		if (StringUtils.isBlank(employee.getEmpNo())){
+			employee.setEmpNo(employee.getEmpCode());
+		}
 		// 如果员工姓名为空，则使用昵称名
 		if (StringUtils.isBlank(employee.getEmpName())){
 			employee.setEmpName(user.getUserName());
@@ -172,11 +176,13 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 					User u = UserUtils.getByLoginCode(user.getLoginCode());
 					if (u == null){
 						this.save(user);
+						userService.saveAuth(user);
 						successNum++;
 						successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginCode() + " 导入成功");
 					} else if (isUpdateSupport){
 						user.setUserCode(u.getUserCode());
 						this.save(user);
+						userService.saveAuth(user);
 						successNum++;
 						successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginCode() + " 更新成功");
 					} else {

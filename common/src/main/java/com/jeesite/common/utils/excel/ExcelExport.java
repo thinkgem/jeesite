@@ -566,7 +566,7 @@ public class ExcelExport implements Closeable{
 	public ExcelExport write(HttpServletResponse response, String fileName){
 		response.reset();
         response.setContentType("application/octet-stream; charset=utf-8");
-        response.setHeader("Content-Disposition", "attachment; filename="+EncodeUtils.encodeUrl(fileName));
+		response.addHeader("Content-Disposition", "attachment; filename*=utf-8'zh_cn'"+EncodeUtils.encodeUrl(fileName));
 		try {
 			write(response.getOutputStream());
 		} catch (IOException ex) {

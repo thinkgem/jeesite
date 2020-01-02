@@ -40,7 +40,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-60">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -75,8 +75,7 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="${ctx}/sys/company/form?companyCode='+row.companyCode+'" class="btnList" title="${text("编辑公司")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/company/disable?companyCode='+row.companyCode+'" class="btnList" title="${text("停用公司")}" data-confirm="${text("确认要停用该公司吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}
-				if (row.status == Global.STATUS_DISABLE){
+				} else if (row.status == Global.STATUS_DISABLE){
 					actions.push('<a href="${ctx}/sys/company/enable?companyCode='+row.companyCode+'" class="btnList" title="${text("启用公司")}" data-confirm="${text("确认要启用该公司吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/company/delete?companyCode='+row.companyCode+'" class="btnList" title="${text("删除公司")}" data-confirm="${text("确认要删除该公司及所有子公司吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');

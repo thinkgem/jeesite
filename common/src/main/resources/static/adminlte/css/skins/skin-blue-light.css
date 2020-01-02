@@ -92,6 +92,7 @@
 .sidebar-menu > li.active > a {
   font-weight: 600;
 }
+.sidebar-menu > li.menu-open > a,
 .sidebar-menu > li > .treeview-menu {
   background: #EAEDF1;
 }
@@ -141,11 +142,6 @@
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 0;
-}
-@media (min-width: 768px) {
-  .skin-blue-light.sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
-    border-left: 1px solid #d2d6de;
-  }
 }
 .main-footer {
   border-top-color: #d2d6de;

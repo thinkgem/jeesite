@@ -99,6 +99,16 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 	 * @param pattern
 	 */
 	public static String formatNumber(Object data, String pattern) {
+		if (data == null){
+			return StringUtils.EMPTY;
+		}
+		if (data instanceof String){
+			if (StringUtils.isBlank((String)data)){
+				return StringUtils.EMPTY;
+			}else{
+				data = ObjectUtils.toDouble(data);
+			}
+		}
 		DecimalFormat df = null;
 		if (pattern == null) {
 			df = new DecimalFormat();

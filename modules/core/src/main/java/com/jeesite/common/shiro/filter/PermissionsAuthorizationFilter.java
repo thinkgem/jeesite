@@ -73,14 +73,15 @@ public class PermissionsAuthorizationFilter extends org.apache.shiro.web.filter.
 		}
 		if (ServletUtils.isAjaxRequest(req)) {
 			try {
-				String uri = req.getRequestURI();
-				if (StringUtils.endsWithIgnoreCase(uri, ".json")
-						&& !StringUtils.endsWithIgnoreCase(loginUrl, ".json")){
-					loginUrl += ".json";
-				}else if (StringUtils.endsWithIgnoreCase(uri, ".xml")
-						&& !StringUtils.endsWithIgnoreCase(loginUrl, ".xml")){
-					loginUrl += ".xml";
-				}
+//				String uri = req.getRequestURI();
+//				if (StringUtils.endsWithIgnoreCase(uri, ".json")
+//						&& !StringUtils.endsWithIgnoreCase(loginUrl, ".json")){
+//					loginUrl += ".json";
+//				}else if (StringUtils.endsWithIgnoreCase(uri, ".xml")
+//						&& !StringUtils.endsWithIgnoreCase(loginUrl, ".xml")){
+//					loginUrl += ".xml";
+//				}
+				loginUrl = Global.getAdminPath() + "/login";
 				request.getRequestDispatcher(loginUrl).forward(
 						new GetHttpServletRequestWrapper(request), response);
 			} catch (ServletException e) {

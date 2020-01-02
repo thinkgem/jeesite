@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.Validate;
+import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -100,7 +101,7 @@ public class ServletUtils {
 	public static boolean isAjaxRequest(HttpServletRequest request){
 		
 		String accept = request.getHeader("accept");
-		if (accept != null && accept.indexOf("application/json") != -1){
+		if (accept != null && accept.indexOf(MediaType.APPLICATION_JSON_VALUE) != -1){
 			return true;
 		}
 
@@ -189,13 +190,20 @@ public class ServletUtils {
 				resultMap.put("data", data);
 			}
 		}
+		HttpServletResponse response = getResponse();
 		HttpServletRequest request = getRequest();
 		if (request != null){
 			String uri = request.getRequestURI();
 			if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
 					.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+				if (response != null){
+					response.setContentType(MediaType.APPLICATION_XML_VALUE);
+				}
 				return XmlMapper.toXml(resultMap);
 			}else{
+				if (response != null){
+					response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+				}
 				String functionName = request.getParameter("__callback");
 				if (StringUtils.isNotBlank(functionName)){
 					return JsonMapper.toJsonp(functionName, resultMap);
@@ -204,6 +212,9 @@ public class ServletUtils {
 				}
 			}
 		}else{
+			if (response != null){
+				response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+			}
 			return JsonMapper.toJson(resultMap);
 		}
 	}
@@ -273,18 +284,21 @@ public class ServletUtils {
 	public static String renderString(HttpServletResponse response, String string, String type) {
 		try {
 //			response.reset(); // 注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我的Cookie信息
-			if (type == null){
+			if (type == null && StringUtils.isBlank(response.getContentType())){
 				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
 						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
-					type = "application/json";
+					type = MediaType.APPLICATION_JSON_UTF8_VALUE;
 				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
-					type = "application/xml";
+					if (StringUtils.startsWith(string, "<!DOCTYPE")){
+						type = MediaType.TEXT_HTML_VALUE+";charset=UTF-8";
+					}else{
+						type = MediaType.APPLICATION_XML_VALUE;
+					}
 				}else{
-					type = "text/html";
+					type = MediaType.TEXT_PLAIN_VALUE;
 				}
 			}
 			response.setContentType(type);
-	        response.setCharacterEncoding("utf-8");
 			response.getWriter().print(string);
 		} catch (IOException e) {
 			e.printStackTrace();

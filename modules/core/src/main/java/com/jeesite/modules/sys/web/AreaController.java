@@ -149,7 +149,7 @@ public class AreaController extends BaseController {
 	@ResponseBody
 	public String save(@Validated Area area, Model model) {
 		areaService.save(area);
-		return renderResult(Global.TRUE, "保存区域'" + area.getAreaName() + "'成功");
+		return renderResult(Global.TRUE, text("保存区域成功"));
 	}
 
 	/**
@@ -165,11 +165,11 @@ public class AreaController extends BaseController {
 		where.setParentCodes("," + area.getId() + ",");
 		long count = areaService.findCount(where);
 		if (count > 0) {
-			return renderResult(Global.FALSE, "该区域包含未停用的子区域！");
+			return renderResult(Global.FALSE, text("该区域包含未停用的子区域！"));
 		}
 		area.setStatus(Area.STATUS_DISABLE);
 		areaService.updateStatus(area);
-		return renderResult(Global.TRUE, "停用区域" + area.getAreaName() + "成功");
+		return renderResult(Global.TRUE, text("停用区域成功"));
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class AreaController extends BaseController {
 	public String enable(Area area) {
 		area.setStatus(Area.STATUS_NORMAL);
 		areaService.updateStatus(area);
-		return renderResult(Global.TRUE, "启用区域" + area.getAreaName() + "成功");
+		return renderResult(Global.TRUE, text("启用区域成功"));
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class AreaController extends BaseController {
 	@ResponseBody
 	public String delete(Area area) {
 		areaService.delete(area);
-		return renderResult(Global.TRUE, "删除区域成功");
+		return renderResult(Global.TRUE, text("删除区域成功"));
 	}
 
 	/**
@@ -246,9 +246,9 @@ public class AreaController extends BaseController {
 	@ResponseBody
 	public String fixTreeData(){
 		if (!UserUtils.getUser().isAdmin()){
-			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
+			return renderResult(Global.FALSE, text("操作失败，只有管理员才能进行修复！"));
 		}
 		areaService.fixTreeData();
-		return renderResult(Global.TRUE, "数据修复成功");
+		return renderResult(Global.TRUE, text("数据修复成功"));
 	}
 }

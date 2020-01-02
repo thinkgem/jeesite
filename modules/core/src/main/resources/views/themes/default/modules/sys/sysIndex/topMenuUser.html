@@ -17,11 +17,12 @@
 			<a href="${ctx}/logout">
 			<i class="fa fa-sign-out"></i> ${text('退出登录')}</a>
 		</li>
-		<% if(user.superAdmin){ %>
+		<% var sysDictList = @DictUtils.getDictList('sys_menu_sys_code');
+			if(sysDictList.~size > 1){
+				var menuSysCode = @ObjectUtils.toStringIgnoreNull(session.sysCode, 'default'); %>
 			<li class="divider"></li>
 			<li class="dropdown-header mb5">${text('系统切换')}：</li>
-			<% var menuSysCode = @ObjectUtils.toStringIgnoreNull(session.sysCode, 'default'); %>
-			<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
+			<% for(var dict in sysDictList){ %>
 				<li>
 					<a href="${ctx}/switch/${dict.dictValue}">
 						<i class="fa fa-${menuSysCode == dict.dictValue 

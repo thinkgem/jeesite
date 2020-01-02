@@ -114,7 +114,6 @@ public class MsgPushTest extends BaseSpringContextTests {
 
 	@Autowired
 	private MsgTemplateService msgTemplateService;
-	
 	public void testMailTpl(){
 		// 创建消息模板
 		MsgTemplate msgTemplate = new MsgTemplate();

@@ -5,7 +5,7 @@
 		<span class="label label-success" id="msgNum">0</span>
 	</a>
 	<ul class="dropdown-menu">
-		<li class="header">${text('你有')} <span id="msgNum2">0</span> ${text('条消息')}</li>
+		<li class="header">${text('你有 {0\} 条消息', '<span id="msgNum2">0</span>')}</li>
 		<li>
 			<ul class="menu" id="msgList"
 				data-mergeMsgLimit="${@Global.getConfig('sys.msg.mergeMsgLimit', '5')}"

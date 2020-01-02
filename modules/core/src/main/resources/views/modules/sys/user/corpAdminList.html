@@ -3,15 +3,15 @@
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-badge"></i> ${@Global.getConfigToBoolean('user.useCorpModel', 'false') ? '租户' : '系统'}管理员
+				<i class="fa icon-badge"></i> ${text('系统管理员')}
 			</div>
 			<div class="box-tools pull-right">
-				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:corpAdmin:edit')){ %>
 					<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
-					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title="新增租户管理员"><i class="fa fa-plus"></i> 新增租户管理员</a>
+					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title=" ${text('新增租户管理员')}"><i class="fa fa-plus"></i> ${text('新增租户管理员')}</a>
 					<% }else{ %>
-					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${user.currentUser.corpCode_}&corpName_=${user.currentUser.corpName_}&op=addAdmin" class="btn btn-default btnTool" title="新增管理员"><i class="fa fa-plus"></i> 新增管理员</a>
+					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${user.currentUser.corpCode_}&corpName_=${user.currentUser.corpName_}&op=addAdmin" class="btn btn-default btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增管理员')}</a>
 					<% } %>
 				<% } %>
 			</div>
@@ -20,38 +20,38 @@
 			<#form:form id="searchForm" model="${user}" action="${ctx}/sys/corpAdmin/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">登录账号：</label>
+					<label class="control-label">${text('登录账号')}：</label>
 					<div class="control-inline">
 						<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">用户昵称：</label>
+					<label class="control-label">${text('用户昵称')}：</label>
 					<div class="control-inline">
 						<#form:input path="userName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group ${@Global.getConfigToBoolean('user.useCorpModel', 'false')?'':'hide'}">
-					<label class="control-label">租户代码：</label>
+					<label class="control-label">${text('租户代码')}：</label>
 					<div class="control-inline">
 						<#form:input path="corpCode_" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group ${@Global.getConfigToBoolean('user.useCorpModel', 'false')?'':'hide'}">
-					<label class="control-label">租户名称：</label>
+					<label class="control-label">${text('租户名称')}：</label>
 					<div class="control-inline">
 						<#form:input path="corpName_" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">状态：</label>
+					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-90">
-						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm">查询</button>
-					<button type="reset" class="btn btn-default btn-sm">重置</button>
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
 				</div>
 			</#form:form>			
 			<table id="dataGrid"></table>
@@ -65,40 +65,39 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'登录账号', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="编辑用户">'+(val||row.id)+'</a>';
+		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text("编辑用户")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'用户昵称', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},
 		<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
-		{header:'租户代码', name:'corpCode_', index:'a.corp_code', width:200, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("租户代码")}', name:'corpCode_', index:'a.corp_code', width:200, align:"center", formatter: function(val, obj, row, act){
 			return '<a href="javascript:" onclick="$(\'#corpCode_\').val(\''+val+'\');$(\'#searchForm\').submit()">'+val+'</a>';
 		}},
-		{header:'租户名称', name:'corpName_', index:'a.corp_name', width:200, align:"center"},
+		{header:'${text("租户名称")}', name:'corpName_', index:'a.corp_name', width:200, align:"center"},
 		<% } %>
-		{header:'电子邮箱', name:'email', index:'a.email', width:200, align:"center"},
-		{header:'手机号码', name:'mobile', index:'a.mobile', width:200, align:"center"},
-		{header:'办公电话', name:'phone', index:'a.phone', width:200, align:"center"},
-		{header:'更新时间', name:'updateDate', index:'a.update_date', width:200, align:"center"},
-		{header:'状态', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("电子邮箱")}', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		{header:'操作', name:'actions', width:250, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:250, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:corpAdmin:edit')){ %>
-				actions.push('<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" title="编辑用户"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/corpAdmin/disable?userCode='+row.userCode+'" class="btnList" title="停用用户" data-confirm="确认要停用该用户吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/corpAdmin/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-				if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="启用用户" data-confirm="确认要启用该用户吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
-				}
-				actions.push('<a href="${ctx}/sys/corpAdmin/delete?userCode='+row.userCode+'" class="btnList" title="删除用户" data-confirm="确认要删除该用户吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/corpAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("删除用户")}" data-confirm="${text("确认要删除该用户吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 				<% if(@Global.getConfigToBoolean('user.useCorpModel', 'false')){ %>
-				actions.push('<a href="${ctx}/sys/corpAdmin/form?corpCode_='+row.corpCode_+'&corpName_='+row.corpName_+'&op=addAdmin" class="btnList" title="新增管理员"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/corpAdmin/form?corpCode_='+row.corpCode_+'&corpName_='+row.corpName_+'&op=addAdmin" class="btnList" title="${text("新增管理员")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
 				<% } %>
-				actions.push('<a href="javascript:" class="btnMore" title="更多操作"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
 				actions.push('<div class="moreItems">');
-				actions.push('<a href="${ctx}/sys/corpAdmin/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="用户密码重置" data-confirm="确认要将该用户密码重置到初始状态吗？"><i class="fa fa-reply-all"></i> 重置密码</a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/corpAdmin/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户密码重置")}" data-confirm="${text("确认要将该用户密码重置到初始状态吗？")}"><i class="fa fa-reply-all"></i> ${text("重置密码")}</a>&nbsp;');
 				actions.push('</div>');
 			<% } %>
 			return actions.join('');

@@ -29,7 +29,7 @@
 <script>
 // 初始化布局
 $('body').layout({
-	west__initClosed: false, // 是否默认关闭
+	west__initClosed: $(window).width() <= 767, // 是否默认关闭
 	west__size: 200
 });
 // 主页框架
@@ -38,7 +38,7 @@ var win = $("#mainFrame")[0].contentWindow;
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
-		win.$('button[type=reset]').click();
+		//win.$('button[type=reset]').click();
 		win.$('#officeCode').val(treeNode.id);
 		win.$('#officeName').val(treeNode.name);
 		win.page();

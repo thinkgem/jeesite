@@ -22,7 +22,7 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Crud'}Service;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
-<% if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload']) || @ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){ %>
+<% if(toBoolean(table.optionMap['isImageUpload']) || toBoolean(table.optionMap['isFileUpload'])){ %>
 import com.jeesite.modules.file.utils.FileUploadUtils;
 <% } %>
 <% for (child in table.childList){ %>
@@ -98,11 +98,11 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	@Transactional(readOnly=false)
 	public void save(${ClassName} ${className}) {
 		super.save(${className});
-	<% if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload'])){ %>
+	<% if(toBoolean(table.optionMap['isImageUpload'])){ %>
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(${className}.getId(), "${className}_image");
 	<% } %>
-	<% if(@ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){ %>
+	<% if(toBoolean(table.optionMap['isFileUpload'])){ %>
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(${className}.getId(), "${className}_file");
 	<% } %>

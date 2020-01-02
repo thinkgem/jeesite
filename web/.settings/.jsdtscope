@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="WebContent"/>
-	<classpathentry kind="output" path=""/>
-</classpath>

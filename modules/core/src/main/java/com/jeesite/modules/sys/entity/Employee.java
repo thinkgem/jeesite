@@ -28,6 +28,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="emp_code", 	attrName="empCode", 			label="员工编码", isPK=true),
+		@Column(name="emp_no", 		attrName="empNo", 				label="员工工号"),
 		@Column(name="emp_name", 	attrName="empName", 			label="员工姓名", queryType=QueryType.LIKE),
 		@Column(name="emp_name_en", attrName="empNameEn", 			label="英文名", queryType=QueryType.LIKE),
 		@Column(name="office_code", attrName="office.officeCode", 	label="机构编码", isQuery=false),
@@ -37,15 +38,35 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 	}, joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
 			on="o.office_code = a.office_code",
-			columns={@Column(includeEntity=Office.class)}),
+			columns={
+					@Column(name="office_code", label="机构编码", isPK=true),
+					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
+					@Column(name="view_code", 	label="机构代码"),
+					@Column(name="office_name", label="机构名称", isQuery=false),
+					@Column(name="full_name", 	label="机构全称"),
+					@Column(name="office_type", label="机构类型"),
+					@Column(name="leader", 		label="负责人"),
+					@Column(name="phone", 		label="电话"),
+					@Column(name="address", 	label="联系地址"),
+					@Column(name="zip_code", 	label="邮政编码"),
+					@Column(name="email", 		label="邮箱"),
+			}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
 			on="c.company_code = a.company_code",
-			columns={@Column(includeEntity=Company.class)}),
+			columns={
+					@Column(name="company_code", label="公司编码", isPK=true),
+					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
+					@Column(name="view_code", 	label="公司代码"),
+					@Column(name="company_name", label="公司名称", isQuery=false),
+					@Column(name="full_name", 	label="公司全称"),
+					@Column(name="area_code", attrName="area.areaCode", label="区域编码"),
+			}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
 			on="ar.area_code = c.area_code", attrName="company.area",
 			columns={
-				@Column(name="area_name", label="区域名称"),
-				@Column(name="area_type", label="区域类型"),
+					@Column(name="area_code", label="区域代码", isPK=true),
+					@Column(name="area_name", label="区域名称", isQuery=false),
+					@Column(name="area_type", label="区域类型"),
 		}),
 	}, orderBy="a.update_date DESC"
 )
@@ -53,6 +74,7 @@ public class Employee extends DataEntity<Employee> {
 	
 	private static final long serialVersionUID = 1L;
 	private String empCode;		// 员工编码
+	private String empNo;		// 员工工号
 	private String empName;		// 员工姓名
 	private String empNameEn;	// 员工英文名
 	private Office office;		// 机构编码
@@ -78,7 +100,16 @@ public class Employee extends DataEntity<Employee> {
 	public void setEmpCode(String empCode) {
 		this.empCode = empCode;
 	}
-	
+
+	@Length(min=0, max=100, message="工号长度不能超过 100 个字符")
+	public String getEmpNo() {
+		return empNo;
+	}
+
+	public void setEmpNo(String empNo) {
+		this.empNo = empNo;
+	}
+
 	@Length(min=0, max=100, message="名称长度不能超过 100 个字符")
 	public String getEmpName() {
 		return empName;

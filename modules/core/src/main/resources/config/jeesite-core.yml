@@ -40,6 +40,9 @@ jdbc:
     # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
     maxEvictableIdleTimeMillis: 1800000
     
+    #连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作（4.1.8+）
+    keepAlive: false
+    
     # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
     removeAbandoned: false
     removeAbandonedTimeout: 2100
@@ -59,8 +62,13 @@ jdbc:
     
   # 事务超时时间，单位秒（30分钟）（v4.1.5+）
   transactionTimeout: 1800
+  
+#  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
+#  tableAndColumn: 
+#    prefixSuffix: "`|`"
+#    forceUpperCase: true
 
-  # 表名前缀
+  # 表名前缀（Schema）
   tablePrefix: js_
 
 #======================================#
@@ -181,9 +189,9 @@ role:
         Office: {
           #控制类型的类名 : "用来获取控制表名和主键字段名，如果为 NONE，则代表是不控制该类型权限",
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
-          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前部门编码、公司编码",
+          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前机构编码、当前公司编码、当前行业编码等",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-          #控制数据的类名下的属性名 : "可看做类下的 get 方法，如：EmpUtils.getOffices()，支持返回字符串或字符串数组类型",
+          #控制数据的类名下的属性名 : "可看做 ctrlDataClass 下的 get 方法，如：EmpUtils.getOfficeCodes()，支持返回字符串或字符串数组类型",
           ctrlDataAttrName: "officeCodes",
           #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
           ctrlDataParentCodesAttrName: "officeParentCodess"
@@ -222,7 +230,7 @@ role:
 # 菜单管理
 menu:
   # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
-  updateStatusByModuleStatus: true
+  updateStatusByModuleStatus: false
 
 # 国际化管理（专业版）
 lang:
@@ -317,22 +325,18 @@ shiro:
 
   # 简单 SSO 登录相关配置
   sso:
-  
     # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
     secretKey: ~
-
     # 是否加密单点登录安全Key
     encryptKey: true
 
   # 登录提交信息加密（如果不需要加密，设置为空即可）
   loginSubmit:
-    
     # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
     secretKey: thinkgem,jeesite,com
   
-  # 记住我密钥设置（设置为空则使用默认）
+  # 记住我密钥设置，为空则自动生成一个新密钥，也可以通过 com.jeesite.test.RememberMeKeyGen 生成
   rememberMe:
-    # 密钥必须通过 com.jeesite.common.shiro.web.RememberMeManager 的main方法生成
     secretKey: ~
   
   # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
@@ -356,6 +360,10 @@ shiro:
   # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
 #  accessControlAllowOrigin: http://demo.jeesite.com
 #  accessControlAllowOrigin: '*'
+
+  # 允许跨域访问时，可以使用的方法和响应头
+#  accessControlAllowMethods: GET, POST, OPTIONS
+#  accessControlAllowHeaders: Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With
 
   # 是否允许接收跨域的Cookie凭证数据
 #  accessControlAllowCredentials: true
@@ -396,6 +404,7 @@ shiro:
     /v2/api-docs = perms[sys:swagger]
     /swagger-ui.html = perms[sys:swagger]
     /swagger-resources/** = perms[sys:swagger]
+    /bpm/modeler/** = perms[bpm:modeler]
     ${adminPath}/login-cas = cas
     ${adminPath}/login = authc
     ${adminPath}/logout = logout
@@ -428,6 +437,9 @@ session:
   # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
 
+  # 设置接收SessionId请求参数的名称
+  sessionIdParamName: __sid
+  
 # MyBatis 相关
 mybatis:
 

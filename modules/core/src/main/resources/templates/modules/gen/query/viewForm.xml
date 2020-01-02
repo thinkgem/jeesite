@@ -7,7 +7,7 @@
 	<content><![CDATA[
 <%
 	var extLibs = '';
-	if(@ObjectUtils.toBoolean(table.optionMap['isImageUpload']) || @ObjectUtils.toBoolean(table.optionMap['isFileUpload'])){
+	if(toBoolean(table.optionMap['isImageUpload']) || toBoolean(table.optionMap['isFileUpload'])){
 		extLibs = extLibs + ',\'fileupload\'';
 	}
 	if(table.childList.~size > 0){

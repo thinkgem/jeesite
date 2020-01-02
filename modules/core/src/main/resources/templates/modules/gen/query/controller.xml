@@ -89,9 +89,15 @@ public class ${ClassName}Controller extends BaseController {
 		}
 		<% for(c in table.columnList){ %>
 			<% if(c.isQuery == "1" && !c.isTreeEntityColumn && c.attrName != 'status'){ %>
+				<% if(c.attrType == 'String'){ %>
 		if (StringUtils.isNotBlank(${className}.${c.attrNameForGetMethod})){
 			${className}.setParentCode(null);
 		}
+				<% }else{ %>
+		if (${className}.${c.attrNameForGetMethod} != null){
+			${className}.setParentCode(null);
+		}
+				<% } %>
 			<% } %>
 		<% } %>
 		List<${ClassName}> list = ${className}Service.findList(${className});

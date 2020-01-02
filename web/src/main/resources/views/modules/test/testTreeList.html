@@ -34,7 +34,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-120">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -68,8 +68,7 @@ $('#dataGrid').dataGrid({
 				actions.push('<a href="${ctx}/test/testTree/form?treeCode='+row.treeCode+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/test/testTree/disable?treeCode='+row.treeCode+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}
-				if (row.status == Global.STATUS_DISABLE){
+				} else if (row.status == Global.STATUS_DISABLE){
 					actions.push('<a href="${ctx}/test/testTree/enable?treeCode='+row.treeCode+'" class="btnList" title="${text("启用数据")}" data-confirm="${text("确认要启用该数据吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/test/testTree/delete?treeCode='+row.treeCode+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据及所有子数据吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');

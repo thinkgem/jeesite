@@ -3,8 +3,12 @@
  */
 package com.jeesite.modules.sys.db;
 
+import javax.annotation.PostConstruct;
+
 import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.config.Global;
@@ -55,13 +59,15 @@ import com.jeesite.modules.sys.service.UserService;
 /**
  * 初始化核心表数据
  * @author ThinkGem
- * @version 2017-10-22
+ * @version 2019-12-30
  */
+@Component
+@ConditionalOnProperty(name="jeesite.initdata", havingValue="true", matchIfMissing=false)
 public class InitCoreData extends BaseInitDataTests {
 
-	@Override
-	public void begin() {
-		super.begin(InitCoreData.class);
+	@PostConstruct
+	public void initialize() {
+		super.initialize(InitCoreData.class);
 	}
 	
 	/**

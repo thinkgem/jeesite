@@ -1,0 +1,373 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved. */ %>
+<% layout('/layouts/default.html', {title: '个人中心', libs: ['validate']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/jquery-plugins/jquery.strength.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/modules/sys/userInfo.css?${_version}">
+<div class="main-content">
+	<div class="nav-tabs-custom nav-main">
+		<ul class="nav nav-tabs pull-right">
+			<li class="${op == 'pqa' ? 'active' : ''}"><a href="#tab-3" data-toggle="tab">${text('修改密保')}</a></li>
+			<li class="${op == 'pwd' ? 'active' : ''}"><a href="#tab-2" data-toggle="tab">${text('修改密码')}</a></li>
+			<% if(!(isNotBlank(parameter.msg) && op == 'pwd')){ %>
+				<li class="${op == 'base' ? 'active' : ''}"><a href="#tab-1" data-toggle="tab">${text('个人信息')}</a></li>
+			<% } %>
+			<li class="pull-left header">
+				<i class="fa icon-user" style="vertical-align:-1px;"></i>${text('个人中心')}
+			</li>
+		</ul>
+		<div class="tab-content p0">
+			<div class="tab-pane ${op == 'base' ? 'active' : ''}" id="tab-1">
+				<#form:form id="inputFormBase" model="${user}" action="${ctx}/sys/user/infoSaveBase" method="post" class="form-horizontal">
+					<div class="box-body"><br/>
+						<div class="col-sm-offset-1 col-sm-3"><br/>
+							<div class="box-body box-profile">
+								<img id="avatarImg" class="profile-user-img img-responsive img-circle"
+									src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}">
+								<h3 class="profile-username text-center">${user.userName}</h3>
+								<p class="text-muted text-center">
+									<#form:radio path="sex" dictType="sys_user_sex" class="form-control required"/>
+								</p>
+								<#form:imageclip name="avatarBase64" btnText="${text('修改头像')}" btnClass="btn-block"
+									imageId="avatarImg" imageDefaultSrc="${ctxStatic+'/images/user'+(isNotBlank(user.sex)?user.sex:1)+'.jpg'}"
+									circle="true"/>
+							</div>
+						</div>
+						<div class="col-sm-7"><br/>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-3">
+											<span class="required">*</span> ${text('用户昵称')}：</label>
+										<div class="col-sm-9">
+											<div class="input-group">
+												<#form:input path="userName" maxlength="32" class="form-control required"/>
+												<span class="input-group-addon"><i class="fa fa-fw fa-user" style="margin-top:-2px;display:block;"></i></span>
+							                </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-3" title="">
+											<span class="required hide">*</span> ${text('电子邮箱')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-9">
+											<div class="input-group">
+												<#form:input path="email" maxlength="300" class="form-control email"/>
+												<span class="input-group-addon"><i class="fa fa-fw fa-envelope" style="margin-top:-2px;display:block;"></i></span>
+							                </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-3" title="">
+											<span class="required hide">*</span> ${text('手机号码')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-9">
+											<div class="input-group">
+												<#form:input path="mobile" maxlength="100" class="form-control mobile"/>
+												<span class="input-group-addon"><i class="fa fa-fw fa-mobile" style="margin-top:-2px;display:block;"></i></span>
+							                </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-3" title="">
+											<span class="required hide">*</span> ${text('办公电话')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-9">
+											<div class="input-group">
+												<#form:input path="phone" maxlength="100" class="form-control phone"/>
+												<span class="input-group-addon"><i class="fa fa-fw fa-phone"></i></span>
+							                </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-3" title="">
+											<span class="required hide">*</span> ${text('个性签名')}：<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-9">
+											<#form:textarea path="sign" rows="3" maxlength="100" class="form-control "/>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-3">${text('上次登录')}：</label>
+										<div class="col-sm-9 pt3">
+											<% if(user.lastLoginDate != null){ %>
+											${text('时间')}：${user.lastLoginDate,dateFormat='yyyy-MM-dd HH:mm'}
+											&nbsp; &nbsp; IP：${user.lastLoginIp}
+											<% }else{ %>${text('首次登录')}<% } %>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br/>
+						</div>
+					</div>
+					<div class="box-footer">
+						<div class="row mr20 pr20">
+							<div class="text-center mr20 pr20">
+								<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+								<button type="button" class="btn btn-sm btn-default" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+							</div>
+						</div>
+					</div>
+				</#form:form>
+			</div>
+			<div class="tab-pane ${op == 'pwd' ? 'active' : ''}" id="tab-2">
+				<#form:form id="inputFormPwd" model="${user}" action="${ctx}/sys/user/infoSavePwd" method="post" class="form-horizontal">
+					<div class="box-body">
+						<% if(isNotBlank(parameter.msg)){ %>
+						<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<p><i class="icon fa fa-info"></i> ${parameter.msg}</p>
+						</div><br/>
+						<% }else{ %>
+						<div class="form-unit">${text('修改密码')}</div>
+						<% } %>
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密码')}：</label>
+									<div class="col-sm-8">
+										<input id="oldPassword" name="oldPassword" type="password" autocomplete="off" value="" maxlength="50" minlength="3" class="form-control required"/>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密码')}：</label>
+									<div class="col-sm-8">
+										<div class="strength strength-loose">
+											<input id="newPassword" name="newPassword" type="password" autocomplete="off" value="" maxlength="50" minlength="3" class="form-control required"/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('确认新密码')}：</label>
+									<div class="col-sm-8">
+										<input id="confirmNewPassword" name="confirmNewPassword" type="password" autocomplete="off" value="" maxlength="50" minlength="3" class="form-control required" equalTo="#newPassword"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-footer">
+						<div class="row">
+							<div class="col-sm-offset-3 col-sm-10">
+								<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+								<button type="button" class="btn btn-sm btn-default" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+							</div>
+						</div>
+					</div>
+				</#form:form>
+			</div>
+			<div class="tab-pane ${op == 'pqa' ? 'active' : ''}" id="tab-3">
+				<#form:form id="inputFormPqa" model="${user}" action="${ctx}/sys/user/infoSavePqa" method="post" class="form-horizontal">
+					<div class="box-body">
+						<% if(isBlank(user.pwdQuestion) && isBlank(user.pwdQuestion2) && isBlank(user.pwdQuestion3)){ %>
+						<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<p><i class="icon fa fa-info"></i> ${text('您还未设置过密保问题，您可以根据登录密码设置新的密保问题及答案。')}</p>
+						</div><br/>
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('登录密码')}：</label>
+									<div class="col-sm-8">
+										<input id="validPassword" name="validPassword" type="password" autocomplete="off" value="" maxlength="50" minlength="3" class="form-control required"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<% }else{ %>
+						<div class="form-unit">${text('旧的密保问题及答案')}</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密保问题')}（1）</label>
+									<div class="col-sm-8">
+										<input id="oldPwdQuestion" name="oldPwdQuestion" type="text" value="${user.pwdQuestion}" maxlength="50" minlength="3" readonly="readonly" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密保问题答案')}（1）</label>
+									<div class="col-sm-8">
+										<input id="oldPwdQuestionAnswer" name="oldPwdQuestionAnswer" type="text" value="" maxlength="50" minlength="1" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密保问题')}（2）</label>
+									<div class="col-sm-8">
+										<input id="oldPwdQuestion2" name="oldPwdQuestion2" type="text" value="${user.pwdQuestion2}" maxlength="50" minlength="3" readonly="readonly" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密保问题答案')}（2）</label>
+									<div class="col-sm-8">
+										<input id="oldPwdQuestionAnswer2" name="oldPwdQuestionAnswer2" type="text" value="" maxlength="50" minlength="1" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密保问题')}（3）</label>
+									<div class="col-sm-8">
+										<input id="oldPwdQuestion3" name="oldPwdQuestion3" type="text" value="${user.pwdQuestion3}" maxlength="50" minlength="3" readonly="readonly" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('旧密保问题答案')}（3）</label>
+									<div class="col-sm-8">
+										<input id="oldPwdQuestionAnswer3" name="oldPwdQuestionAnswer3" type="text" value="" maxlength="50" minlength="1" class="form-control required"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<% } %>
+						<div class="form-unit">${text('新的密保问题及答案')}</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密保问题')}（1）：</label>
+									<div class="col-sm-8">
+										<input id="pwdQuestion" name="pwdQuestion" type="text" value="${user.pwdQuestion}" maxlength="50" minlength="3" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密保问题答案')}（1）：</label>
+									<div class="col-sm-8">
+										<input id="pwdQuestionAnswer" name="pwdQuestionAnswer" type="text" value="" maxlength="50" minlength="1" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密保问题')}（2）：</label>
+									<div class="col-sm-8">
+										<input id="pwdQuestion2" name="pwdQuestion2" type="text" value="${user.pwdQuestion2}" maxlength="50" minlength="3" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密保问题答案')}（2）：</label>
+									<div class="col-sm-8">
+										<input id="pwdQuestionAnswer2" name="pwdQuestionAnswer2" type="text" value="" maxlength="50" minlength="1" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密保问题')}（3）：</label>
+									<div class="col-sm-8">
+										<input id="pwdQuestion3" name="pwdQuestion3" type="text" value="${user.pwdQuestion3}" maxlength="50" minlength="3" class="form-control required"/>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">${text('新密保问题答案')}（3）：</label>
+									<div class="col-sm-8">
+										<input id="pwdQuestionAnswer3" name="pwdQuestionAnswer3" type="text" value="" maxlength="50" minlength="1" class="form-control required"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-footer">
+						<div class="row">
+							<div class="col-sm-offset-3 col-sm-10">
+								<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+								<button type="button" class="btn btn-sm btn-default" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+							</div>
+						</div>
+					</div>
+				</#form:form>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/common/des.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-plugins/jquery.strength.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-plugins/jquery.strength_i18n.js?${_version}"></script>
+<script>
+// 个人信息
+$("#inputFormBase").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				location = '${ctx}/sys/user/info?op=base';
+			}
+		}, "json");
+    }
+});
+$('#sex input').on('ifCreated ifChecked', function(){
+	if ($(this).is(':checked')){
+		var s = $('#avatarImg').attr('src');
+		var m = "${ctxStatic}/images/user1.jpg";
+		var w = "${ctxStatic}/images/user2.jpg";
+		if (s == m || s == w){
+			$('#avatarImg').attr('src', "${ctxStatic}/images/user"+$(this).val()+".jpg");
+		}
+	}
+});
+// 修改密码
+$("#newPassword").strength();
+$("#inputFormPwd").validate({
+	submitHandler: function(form){
+		var oldPassword = $('#oldPassword').val(),
+			newPassword = $('#newPassword').val(),
+			confirmNewPassword = $('#confirmNewPassword').val(),
+			secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';
+		if (secretKey != ''){
+			$('#oldPassword').val(DesUtils.encode(oldPassword, secretKey));
+			$('#newPassword').val(DesUtils.encode(newPassword, secretKey));
+			$('#confirmNewPassword').val(DesUtils.encode(confirmNewPassword, secretKey));
+		}
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				if ('${parameter.url}'!=''){
+					location = '${ctxPath}${parameter.url}';
+				}else{
+					location = '${ctx}/sys/user/info?op=pwd';
+				}
+			}
+		}, "json");
+		$('#oldPassword').val(oldPassword);
+		$('#newPassword').val(newPassword);
+		$('#confirmNewPassword').val(confirmNewPassword);
+    }
+});
+// 密保问题
+$("#inputFormPqa").validate({
+	submitHandler: function(form){
+		var validPassword = $('#validPassword').val(),
+			oldPwdQuestionAnswer = $('#oldPwdQuestionAnswer').val(),
+			oldPwdQuestionAnswer2 = $('#oldPwdQuestionAnswer2').val(),
+			oldPwdQuestionAnswer3 = $('#oldPwdQuestionAnswer3').val(),
+			pwdQuestionAnswer = $('#pwdQuestionAnswer').val(),
+			pwdQuestionAnswer2 = $('#pwdQuestionAnswer2').val(),
+			pwdQuestionAnswer3 = $('#pwdQuestionAnswer3').val(),
+			secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';
+		if (secretKey != ''){
+			$('#validPassword').val(DesUtils.encode(validPassword, secretKey));
+			$('#oldPwdQuestionAnswer').val(DesUtils.encode(oldPwdQuestionAnswer, secretKey));
+			$('#oldPwdQuestionAnswer2').val(DesUtils.encode(oldPwdQuestionAnswer2, secretKey));
+			$('#oldPwdQuestionAnswer3').val(DesUtils.encode(oldPwdQuestionAnswer3, secretKey));
+			$('#pwdQuestionAnswer').val(DesUtils.encode(pwdQuestionAnswer, secretKey));
+			$('#pwdQuestionAnswer2').val(DesUtils.encode(pwdQuestionAnswer2, secretKey));
+			$('#pwdQuestionAnswer3').val(DesUtils.encode(pwdQuestionAnswer3, secretKey));
+		}
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				location = '${ctx}/sys/user/info?op=pqa';
+			}
+		}, "json");
+		$('#validPassword').val(validPassword);
+		$('#oldPwdQuestionAnswer').val(oldPwdQuestionAnswer);
+		$('#oldPwdQuestionAnswer2').val(oldPwdQuestionAnswer2);
+		$('#oldPwdQuestionAnswer3').val(oldPwdQuestionAnswer3);
+		$('#pwdQuestionAnswer').val(pwdQuestionAnswer);
+		$('#pwdQuestionAnswer2').val(pwdQuestionAnswer2);
+		$('#pwdQuestionAnswer3').val(pwdQuestionAnswer3);
+    }
+});
+</script>

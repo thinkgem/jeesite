@@ -261,6 +261,7 @@ CREATE TABLE js_sys_employee
 	emp_code varchar(64) NOT NULL,
 	emp_name varchar(100) NOT NULL,
 	emp_name_en varchar(100),
+	emp_no varchar(100),
 	office_code varchar(64) NOT NULL,
 	office_name varchar(100) NOT NULL,
 	company_code varchar(64),
@@ -280,11 +281,11 @@ CREATE TABLE js_sys_employee
 -- 员工附属机构关系表
 CREATE TABLE js_sys_employee_office
 (
-	id varchar(64) NOT NULL UNIQUE,
+	id varchar(64) NOT NULL,
 	emp_code varchar(64) NOT NULL,
 	office_code varchar(64) NOT NULL,
 	post_code varchar(64),
-	PRIMARY KEY (emp_code, office_code)
+	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
 
@@ -898,7 +899,7 @@ CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code);
 CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date);
 CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id);
 CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code);
-CREATE INDEX idx_sys_msg_inner_r_status ON js_sys_msg_inner_record (read_status);
+CREATE INDEX idx_sys_msg_inner_r_stat ON js_sys_msg_inner_record (read_status);
 CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star);
 CREATE INDEX idx_sys_msg_push_type ON js_sys_msg_push (msg_type);
 CREATE INDEX idx_sys_msg_push_rc ON js_sys_msg_push (receive_code);
@@ -1126,7 +1127,8 @@ COMMENT ON COLUMN js_sys_dict_type.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_employee IS '员工表';
 COMMENT ON COLUMN js_sys_employee.emp_code IS '员工编码';
 COMMENT ON COLUMN js_sys_employee.emp_name IS '员工姓名';
-COMMENT ON COLUMN js_sys_employee.emp_name_en IS '英文名';
+COMMENT ON COLUMN js_sys_employee.emp_name_en IS '员工英文名';
+COMMENT ON COLUMN js_sys_employee.emp_no IS '员工工号';
 COMMENT ON COLUMN js_sys_employee.office_code IS '机构编码';
 COMMENT ON COLUMN js_sys_employee.office_name IS '机构名称';
 COMMENT ON COLUMN js_sys_employee.company_code IS '公司编码';
