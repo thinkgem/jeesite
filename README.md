@@ -32,11 +32,10 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 
 ## 快速运行
 
-* 初始化数据库（下载最新的mysql脚本）：
-     https://gitee.com/thinkgem/jeesite4/attach_files
-* 配置 `/jeesite-cloud-config/../cloud-config/application.yml`
-     分布式统一配置文件 JDBC 和 Redis 等信息。
-* 按顺序运行以下启动类的main方法（**启动完成一个再启下一个**）：
+* 初始化数据库：[下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite4/attach_files)
+     或者使用 [init-db.bat](https://jeesite.gitee.io/docs/install-deploy/#初始化数据库) 命令
+* 修改分布式统一配置文件 `/jeesite-cloud-config/../cloud-config/application.yml` 的 JDBC 和 Redis 信息
+* 按顺序运行以下启动类的main方法：（因为服务直接有依赖，请启动完成一个再启下一个）
     - /jeesite-cloud-eureka/../EurekaApplication.java
     - /jeesite-cloud-config/../ConfigApplication.java
     - /jeesite-cloud-gateway/../GatewayApplication.java
