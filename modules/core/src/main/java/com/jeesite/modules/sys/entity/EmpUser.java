@@ -32,6 +32,7 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 				@Column(includeEntity=BaseEntity.class),
 				@Column(includeEntity=DataEntity.class),
 				@Column(name="emp_code", 	attrName="empCode", 			label="员工编码", isPK=true),
+				@Column(name="emp_no", 		attrName="empNo", 				label="员工工号"),
 				@Column(name="emp_name", 	attrName="empName", 			label="员工姓名", queryType=QueryType.LIKE),
 				@Column(name="emp_name_en", attrName="empNameEn", 			label="英文名", queryType=QueryType.LIKE),
 			}),
