@@ -1,7 +1,6 @@
 <% layout('/layouts/default.html', {title: '', bodyClass: ''}){ %>
 <!-- <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysDesktop.css?${_version}"> -->
 <div class="content pb0">
-	<!-- Info boxes -->
 	<div class="row">
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="info-box">
@@ -21,10 +20,7 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- fix for small devices only -->
 		<div class="clearfix visible-sm-block"></div>
-
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="info-box">
 				<span class="info-box-icon bg-green"><i class="fa fa-internet-explorer"></i></span>
@@ -54,22 +50,22 @@
 				<div class="box-body">
 					<table class="table table-bordered">
 						<tr>
-							<th class="text-center">#</th>
+							<th class="text-center width-30">#</th>
 							<th>网关代理模块调用</th>
 							<th>模块之间互相调用</th>
 						</tr>
 						<tr>
 							<td class="text-center">1</td>
-							<td class="treeview"><a href="javascript:" data-href="${ctx}/test1/testData/list" class="btn btn-default addTabPage">
+							<td class="treeview"><a href="${ctx}/test1/testData/list" class="btn btn-default addTabPage">
 								代理 test1 模块（单表）：${ctx}/test1/testData/list</a></td>
-							<td class="treeview"><a href="javascript:" data-href="${ctx}/test2/testData/list" class="btn btn-default addTabPage">
+							<td class="treeview"><a href="${ctx}/test2/testData/list" class="btn btn-default addTabPage">
 								test2 模块调用 test1 模块（单表）：${ctx}/test2/testData/list</a></td>
 						</tr>
 						<tr>
 							<td class="text-center">2</td>
-							<td class="treeview"><a href="javascript:" data-href="${ctx}/test2/testTree/list" class="btn btn-default addTabPage">
+							<td class="treeview"><a href="${ctx}/test2/testTree/list" class="btn btn-default addTabPage">
 								代理 test2 模块（树表）：${ctx}/test2/testTree/list</a></td>
-							<td class="treeview"><a href="javascript:" data-href="${ctx}/test1/testTree/list" class="btn btn-default addTabPage">
+							<td class="treeview"><a href="${ctx}/test1/testTree/list" class="btn btn-default addTabPage">
 								test1 模块调用 test2 模块（树表）：${ctx}/test1/testTree/list</a></td>
 						</tr>
 					</table>
@@ -77,9 +73,54 @@
 			</div>
 		</div>
 	</div>
-	<!-- Chart boxes -->
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-sm-12">
+			<div class="box box-widget">
+				<div class="box-header with-border">
+					<h3 class="box-title">系统监控</h3>
+				</div>
+				<div class="box-body">
+					<table class="table table-bordered">
+						<tr>
+							<th class="text-center width-30">#</th>
+							<th>core 模块</th>
+							<th>test1 模块</th>
+							<th>test2 模块</th>
+						</tr>
+						<tr>
+							<td class="text-center">1</td>
+							<td class="treeview">
+								<a href="${ctx}/jeesite-cloud-module-core/state/server/index" class="btn btn-default addTabPage">
+									服务器监控</a>
+								<a href="${ctx}/jeesite-cloud-module-core/state/cache/index" class="btn btn-default addTabPage">
+									缓存监控</a>
+								<a href="${ctx}/jeesite-cloud-module-core/job/list" class="btn btn-default addTabPage">
+									作业监控</a>
+							</td>
+							<td class="treeview">
+								<a href="${ctx}/jeesite-cloud-module-test1/state/server/index" class="btn btn-default addTabPage">
+									服务器监控</a>
+								<a href="${ctx}/jeesite-cloud-module-test1/state/cache/index" class="btn btn-default addTabPage">
+									缓存监控</a>
+								<a href="${ctx}/jeesite-cloud-module-test1/job/list" class="btn btn-default addTabPage">
+									作业监控</a>
+							</td>
+							<td class="treeview">
+								<a href="${ctx}/jeesite-cloud-module-test2/state/server/index" class="btn btn-default addTabPage">
+									服务器监控</a>
+								<a href="${ctx}/jeesite-cloud-module-test2/state/cache/index" class="btn btn-default addTabPage">
+									缓存监控</a>
+								<a href="${ctx}/jeesite-cloud-module-test2/job/list" class="btn btn-default addTabPage">
+									作业监控</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<section class="col-md-12 ui-sortable">
 			<div class="box box-widget">
 				<div class="box-header with-border">
 					<h3 class="box-title">月度报告</h3>
@@ -106,74 +147,73 @@
 					<div class="row">
 						<div class="col-md-8">
 							<div class="chart">
-								<div id="myChart" style="height:230px;width:99%"></div>
-								<script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
-								<script>
-									var option = {
-									    title : {
-									        text: '2017-5'
-									    },
-									    tooltip : {
-									        trigger: 'axis'
-									    },
-									    legend: {
-									        data:['意向','预购','成交']
-									    },
-									    toolbox: {
-									        show : true,
-									        feature : {
-									            mark : {show: true},
-									            dataView : {show: true, readOnly: false},
-									            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-									            restore : {show: true},
-									            saveAsImage : {show: true}
-									        }
-									    },
-									    calculable : true,
-									    grid : {
-									    	top: '49',
-									    	right: '20',
-									    	bottom: '30'
-									    },
-									    xAxis : [
-									        {
-									            type : 'category',
-									            boundaryGap : false,
-									            data : ['周一','周二','周三','周四','周五','周六','周日']
-									        }
-									    ],
-									    yAxis : [
-									        {
-									            type : 'value'
-									        }
-									    ],
-									    series : [
-									        {
-									            name:'成交',
-									            type:'line',
-									            smooth:true,
-									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-									            data:[10, 12, 21, 54, 260, 830, 710]
-									        },
-									        {
-									            name:'预购',
-									            type:'line',
-									            smooth:true,
-									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-									            data:[30, 182, 434, 791, 390, 30, 10]
-									        },
-									        {
-									            name:'意向',
-									            type:'line',
-									            smooth:true,
-									            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-									            data:[1320, 1132, 601, 234, 120, 90, 20]
-									        }
-									     ]
-									};
-									// 基于准备好的dom，初始化echarts实例
-							        var myChart = echarts.init(document.getElementById('myChart'));
-							        myChart.setOption(option);
+								<div id="myChart" style="height:230px;width:100%"></div><script>
+									$(function(){
+										myChart1 = echarts.init(document.getElementById('myChart'), 'default');
+										myChart1.setOption({
+										    title : {
+										        text: js.formatDate(new Date(), 'yyyy-MM')
+										    },
+										    tooltip : {
+										        trigger: 'axis'
+										    },
+										    legend: {
+										        data:['意向','预购','成交']
+										    },
+										    toolbox: {
+										        show : true,
+										        feature : {
+										            mark : {show: true},
+										            dataView : {show: true, readOnly: false},
+										            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+										            restore : {show: true},
+										            saveAsImage : {show: true}
+										        }
+										    },
+										    calculable : true,
+										    grid : {
+										    	top: '49',
+										    	right: '20',
+										    	bottom: '30'
+										    },
+										    xAxis : [
+										        {
+										            type : 'category',
+										            boundaryGap : false,
+										            data : ['周一','周二','周三','周四','周五','周六','周日']
+										        }
+										    ],
+										    yAxis : [
+										        {
+										            type : 'value'
+										        }
+										    ],
+										    //color: ['#FAD860','#F3A43B','#60C0DD','#C6E579'],
+										    series : [
+										        {
+										            name:'成交',
+										            type:'line',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[10, 12, 21, 54, 260, 830, 710]
+										        },
+										        {
+										            name:'预购',
+										            type:'line',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[30, 182, 434, 791, 390, 30, 10]
+										        },
+										        {
+										            name:'意向',
+										            type:'line',
+										            smooth:true,
+										            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+										            data:[1320, 1132, 601, 234, 120, 90, 20]
+										        }
+										     ]
+										});
+									});
 								</script>
 							</div>
 						</div>
@@ -245,7 +285,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	</div>
 </div>
 <footer class="main-footer m0">
@@ -253,10 +293,17 @@
 	&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a href="http://jeesite.com">JeeSite</a>
 </footer>
 <% } %>
+<script src="${ctxStatic}/echarts/4.2/echarts.min.js"></script>
 <script>
-$(window).resize(function(){
-	var footerHeight  = $('.main-footer').outerHeight() || 0;
-	var windowHeight  = $(window).height();
-	$('.content').css('min-height', windowHeight - footerHeight)
-}).resize();
+$(function(){
+	$(window).resize(function(){
+		var footerHeight = $('.main-footer').outerHeight() || 0;
+		var windowHeight = $(window).height();
+		$('.content').css('min-height', windowHeight - footerHeight);
+		myChart1.resize();
+	}).resize();
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		$(window).resize();
+	});
+});
 </script>
