@@ -130,6 +130,7 @@ public class PropertiesUtils {
     			logger.error("Load " + location + " failure. ", e);
 			}
 		}
+		properties.put("configFiles", StringUtils.join(configFiles, ","));
 	}
 	
 	/**
