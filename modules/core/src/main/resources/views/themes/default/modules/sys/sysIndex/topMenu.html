@@ -71,7 +71,10 @@
 						}
 						var li = $("#leftMenu-" + code + " > li");
 						if (!li.hasClass('menu-open')){
-							li = li.eq(0).find('> a').click();
+							li = li.eq(0).find('> a');
+							if (li.data('href') == 'blank'){
+								li.click();
+							}
 						}
 					}
 					window.initMenu = true;

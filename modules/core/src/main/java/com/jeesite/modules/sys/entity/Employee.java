@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
+import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
@@ -39,6 +40,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
 			on="o.office_code = a.office_code",
 			columns={
+					@Column(includeEntity=DataEntity.class),
+					@Column(includeEntity=TreeEntity.class),
 					@Column(name="office_code", label="机构编码", isPK=true),
 					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
 					@Column(name="view_code", 	label="机构代码"),
@@ -54,6 +57,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
 			on="c.company_code = a.company_code",
 			columns={
+					@Column(includeEntity=DataEntity.class),
+					@Column(includeEntity=TreeEntity.class),
 					@Column(name="company_code", label="公司编码", isPK=true),
 					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
 					@Column(name="view_code", 	label="公司代码"),
@@ -64,6 +69,8 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
 			on="ar.area_code = c.area_code", attrName="company.area",
 			columns={
+					@Column(includeEntity=DataEntity.class),
+					@Column(includeEntity=TreeEntity.class),
 					@Column(name="area_code", label="区域代码", isPK=true),
 					@Column(name="area_name", label="区域名称", isQuery=false),
 					@Column(name="area_type", label="区域类型"),

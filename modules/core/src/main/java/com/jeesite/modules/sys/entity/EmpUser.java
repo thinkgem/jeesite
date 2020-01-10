@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
+import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
@@ -39,7 +40,10 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
 			on="o.office_code=e.office_code", attrName="employee.office",
 			columns={
+					@Column(includeEntity=DataEntity.class),
+					@Column(includeEntity=TreeEntity.class),
 					@Column(name="office_code", label="机构编码", isPK=true),
+					@Column(name="parent_code", label="机构编码", isPK=true),
 					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
 					@Column(name="view_code", 	label="机构代码"),
 					@Column(name="office_name", label="机构名称", isQuery=false),
@@ -54,6 +58,8 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
 			on="c.company_code=e.company_code", attrName="employee.company",
 			columns={
+					@Column(includeEntity=DataEntity.class),
+					@Column(includeEntity=TreeEntity.class),
 					@Column(name="company_code", label="公司编码", isPK=true),
 					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
 					@Column(name="view_code", 	label="公司代码"),
@@ -64,6 +70,8 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
 			on="ar.area_code = c.area_code", attrName="employee.company.area",
 			columns={
+					@Column(includeEntity=DataEntity.class),
+					@Column(includeEntity=TreeEntity.class),
 					@Column(name="area_code", label="区域代码", isPK=true),
 					@Column(name="area_name", label="区域名称", isQuery=false),
 					@Column(name="area_type", label="区域类型"),
