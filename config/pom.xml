@@ -36,12 +36,6 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
-		<!-- 配置中心 -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
-		</dependency>
-		
 		<!-- 服务发现 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -57,6 +51,18 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
+		
+		<!-- 配置中心 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+		
+		<!-- 自动更新配置支持 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>-->
 
 		<!-- 微服务监控
 		<dependency>
@@ -64,12 +70,6 @@
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 			<version>${spring-boot-admin.version}</version>
 		</dependency> -->
-		
-		<!-- 自动更新配置支持 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>-->
 		
 	</dependencies>
 	

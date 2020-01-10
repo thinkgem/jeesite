@@ -52,6 +52,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
+		
+		<!-- 自动更新配置支持 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>-->
 
 		<!-- 微服务监控
 		<dependency>
@@ -66,23 +72,17 @@
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency>
 		
-		<!-- 自动更新配置支持 
+		<!-- 在线文档 -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>-->
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
 		
 		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-core-rest</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<!-- 在线文档 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
