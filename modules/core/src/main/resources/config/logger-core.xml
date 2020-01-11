@@ -24,6 +24,8 @@
 	<logger name="org.flowable.ui.modeler.domain" level="DEBUG" />
 	<logger name="org.flowable.idm.engine.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.task.service.impl.persistence" level="DEBUG" />
+	<logger name="org.flowable.identitylink.service.impl.persistence" level="DEBUG" />
+	<logger name="org.flowable.variable.service.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.engine.impl.persistence" level="DEBUG" />
 	
 	<logger name="com.jeesite" level="DEBUG" />
