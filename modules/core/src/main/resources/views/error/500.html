@@ -23,7 +23,7 @@ if (isBlank(message)){
 
 // 如果是异步请求或是手机端，则直接返回信息
 if (@ServletUtils.isAjaxRequest(request)) {
-	if (@Global.getConfigToBoolean('error.page.printErrorInfo', 'true')
+	if (@Global.getPropertyToBoolean('error.page.printErrorInfo', 'true')
 			&& !@StringUtils.equals(message, "演示模式，不允许操作！") && ex != null){
 		print(@ServletUtils.renderResult(@Global.FALSE, message, @ExceptionUtils.getStackTraceAsString(ex)));
 	}else{
@@ -49,7 +49,7 @@ else {
 			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
 	</div>
 </div>
-<% if (@Global.getConfigToBoolean('error.page.printErrorInfo', 'true')
+<% if (@Global.getPropertyToBoolean('error.page.printErrorInfo', 'true')
 	&& !@StringUtils.equals(message, "演示模式，不允许操作！")){ %>
 <div class="box mt20">
 	${@StringUtils.toHtml(@ExceptionUtils.getStackTraceAsString(ex))}<br/>

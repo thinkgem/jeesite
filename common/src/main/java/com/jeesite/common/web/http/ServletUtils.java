@@ -23,6 +23,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.io.PropertiesUtils;
+import com.jeesite.common.lang.ExceptionUtils;
+import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
@@ -184,7 +186,16 @@ public class ServletUtils {
 		resultMap.put("result", result);
 		resultMap.put("message", message);
 		if (data != null){
-			if (data instanceof Map){
+			if (data instanceof Throwable){
+				Throwable ex = (Throwable)data;
+				String exMsg = ExceptionUtils.getExceptionMessage(ex);
+				if (StringUtils.isNotBlank(exMsg)){
+					resultMap.put("message", message + "，" + exMsg);
+				}else if (ObjectUtils.toBoolean(PropertiesUtils.getInstance()
+							.getProperty("error.page.printErrorInfo", "true"))){
+					resultMap.put("message", message + "，" + ex.getMessage());
+				}
+			}else if (data instanceof Map){
 				resultMap.putAll((Map<String, Object>)data);
 			}else{
 				resultMap.put("data", data);
