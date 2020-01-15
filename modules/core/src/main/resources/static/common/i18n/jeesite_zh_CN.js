@@ -12,7 +12,7 @@
 		'loading.message':'正在加载，请稍候...',
 		'loading.submitMessage':'正在提交，请稍候...',
 		'showMessage.error':'失败,错误,未完成',
-		'showMessage.success':'成功,完成',
-		'showMessage.warning':'不能,不允许,必须,已存在,不需要,不正确'
+		'showMessage.warning':'不能,不允许,必须,已存在,不需要,不正确',
+		'showMessage.success':'成功,完成'
 	});
 })(jQuery);

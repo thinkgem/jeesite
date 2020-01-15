@@ -12,8 +12,8 @@
 		'loading.message':'Loading ...',
 		'loading.submitMessage':'Submission ...',
 		'showMessage.error':'failure,error',
-		'showMessage.success':'success,completion',
-		'showMessage.warning':'no'
+		'showMessage.warning':'no,not,Not,already exists',
+		'showMessage.success':'success,completion'
 	});
 	// ============ layer ============
 	window.layer = window.layer || {};

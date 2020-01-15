@@ -12,8 +12,8 @@
 		'loading.message':'ローディング...お待ちください...',
 		'loading.submitMessage':'送信中...お待ちください...',
 		'showMessage.error':'失敗,エラー,未完了',
-		'showMessage.success':'成功,完了',
-		'showMessage.warning':'不可,不許可,必須,既に存在,不要,不正確'
+		'showMessage.warning':'不可,不許可,必須,既に存在,不要,不正確',
+		'showMessage.success':'成功,完了'
 	});
 	// ============ layer ============
 	window.layer = window.layer || {};
