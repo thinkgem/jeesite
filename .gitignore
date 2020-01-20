@@ -5,6 +5,7 @@
 **/transaction-logs
 **/logs/*.log*
 *.epoch
+*.mv.db
 *.lic
 
 **/.settings/**/*

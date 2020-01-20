@@ -13,7 +13,7 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
 * 分布式链路追踪：Spring Cloud Zipkin (可选组件)
-* 微服务监控平台：Spring Cloud Admin (可选组件)
+* 分布式事务框架：Codingapi TX-LCN (可选组件)
 
 ## 子项目介绍
 
@@ -28,7 +28,6 @@ JeeSite Spring Cloud 是基于 Spring Cloud Finchley 的一个分布式系统套
     - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
     - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
 * 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
-* 服务监控：jeesite-cloud-admin ： <http://127.0.0.1:9511>
 
 ## 快速运行
 
