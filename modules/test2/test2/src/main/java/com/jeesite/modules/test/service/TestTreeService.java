@@ -51,6 +51,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree>
 	 * @param testTree
 	 */
 	@Override
+//	@LcnTransaction
 	@Transactional(readOnly=false)
 	public void save(TestTree testTree) {
 		super.save(testTree);

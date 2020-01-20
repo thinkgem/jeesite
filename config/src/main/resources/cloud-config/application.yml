@@ -75,7 +75,7 @@ ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
   OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 1
+  MaxAutoRetriesNextServer: 0
   MaxAutoRetries: 0
 
 # 延迟容错机制
@@ -101,7 +101,7 @@ service:
   test2:
     name: jeesite-cloud-module-test2
     path: ${server.servlet.context-path}
-
+  
 #======================================#
 #========== Database sttings ==========#
 #======================================#
@@ -126,10 +126,71 @@ jdbc:
     minIdle: 3
     # 最大连接数
     maxActive: 20
+  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
+  dataSourceNames: ds2
+  
+  # 多数据源配置：ds2
+  ds2:
+    type: mysql
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: 123456
+    testSql: SELECT 1
+    encrypt:
+      username: false
+      password: true
+    pool:
+      init: 1
+      minIdle: 3
+      maxActive: 20
 
   # JTA 分布式事务
   jta:
+    enabled: false
+    
+  # LCN 分布式事务
+  lcn:
     enabled: true
+    
+# 分布式事务管理地址
+tx-lcn:
+  client:
+    # tx-manager 的配置地址，可以指定TM集群中的任何一个或多个地址
+    # tx-manager 下集群策略，每个TC都会从始至终<断线重连>与TM集群保持集群大小个连接。
+    # TM方，每有TM进入集群，会找到所有TC并通知其与新TM建立连接。
+    # TC方，启动时按配置与集群建立连接，成功后，会再与集群协商，查询集群大小并保持与所有TM的连接
+    manager-address: 127.0.0.1:8070
+    # 调用链长度等级，默认值为3（优化选项。系统中每个请求大致调用链平均长度，估算值。）
+    chain-level: 3
+    # 该参数为事务方法注解切面的orderNumber，默认值为0.
+    dtx-aspect-order: 0
+    # 该参数为事务连接资源方法切面的orderNumber，默认值为0.
+    resource-order: 0
+  
+  # 开启TX-LCN重写的负载策略
+  springcloud.loadbalance.enabled: true
+    
+  # 是否启动LCN负载均衡策略(优化选项，开启与否，功能不受影响)
+  ribbon.loadbalancer.dtx.enabled: true
+  
+  # 该参数是分布式事务框架存储的业务切面信息。采用的是h2数据库。绝对路径。该参数默认的值为{user.dir}/.txlcn/{application.name}-{application.port}
+  # aspect.log.file-path: ${user.dir}/.txlcn/${spring.application.name}-${server.port}
+  
+  # RpcConfig
+  message.netty:
+    # 断线重连次数，默认值为8.
+    reconnect-count: 100
+    # 重连延迟时间(ms)，默认值为6000.
+    reconnect-delay: 10000
+    
+  # 是否开启日志记录。当开启以后需要配置对应logger的数据库连接配置信息。
+  logger:
+    enabled: true
+    driver-class-name: ${jdbc.driver}
+    jdbc-url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
     
 #======================================#
 #========== Spring settings ===========#
@@ -190,7 +251,13 @@ spring:
 #    port: 8976
 #    username: admin
 #    password: admin123
-    
+
+# 日志配置
+logging:
+  level:
+    root: warn
+    com.codingapi.txlcn: debug
+
 #======================================#
 #========== System settings ===========#
 #======================================#

@@ -68,6 +68,20 @@
 							<td class="treeview"><a href="${ctx}/test1/testTree/list" class="btn btn-default addTabPage">
 								test1 模块调用 test2 模块（树表）：${ctx}/test1/testTree/list</a></td>
 						</tr>
+						<tr>
+							<td class="text-center">3</td>
+							<td class="treeview" colspan="1">
+								<a href="${ctx}/trans/test" id="btnTrunsTest" class="btn btn-default">
+									分布式事务测试地址</a>
+								<script>
+									$("#btnTrunsTest").click(function(){ 
+										js.ajaxSubmit($(this).attr('href'), function(data){
+											js.showMessage(data.message);
+										});
+										return false;
+									});
+								</script></td>
+						</tr>
 					</table>
 				</div>
 			</div>
