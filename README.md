@@ -76,7 +76,7 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 # 技术交流方式
 
 * QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
+* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)
 * 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
 * GitHub：<https://github.com/thinkgem/jeesite4>
 * 作者博客：<https://my.oschina.net/thinkgem>
