@@ -26,6 +26,9 @@ server:
   tomcat:
     uri-encoding: UTF-8
     
+  # 将请求协议转换为 https
+  schemeHttps: false
+    
 #======================================#
 #========== Database sttings ==========#
 #======================================#
