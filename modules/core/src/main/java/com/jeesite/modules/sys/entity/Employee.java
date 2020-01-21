@@ -12,7 +12,6 @@ import org.hibernate.validator.constraints.Length;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
-import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
@@ -39,42 +38,13 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 	}, joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
 			on="o.office_code = a.office_code",
-			columns={
-					@Column(includeEntity=DataEntity.class),
-					@Column(includeEntity=TreeEntity.class),
-					@Column(name="office_code", label="机构编码", isPK=true),
-					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
-					@Column(name="view_code", 	label="机构代码"),
-					@Column(name="office_name", label="机构名称", isQuery=false),
-					@Column(name="full_name", 	label="机构全称"),
-					@Column(name="office_type", label="机构类型"),
-					@Column(name="leader", 		label="负责人"),
-					@Column(name="phone", 		label="电话"),
-					@Column(name="address", 	label="联系地址"),
-					@Column(name="zip_code", 	label="邮政编码"),
-					@Column(name="email", 		label="邮箱"),
-			}),
+			columns={@Column(includeEntity=Office.class)}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
 			on="c.company_code = a.company_code",
-			columns={
-					@Column(includeEntity=DataEntity.class),
-					@Column(includeEntity=TreeEntity.class),
-					@Column(name="company_code", label="公司编码", isPK=true),
-					@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
-					@Column(name="view_code", 	label="公司代码"),
-					@Column(name="company_name", label="公司名称", isQuery=false),
-					@Column(name="full_name", 	label="公司全称"),
-					@Column(name="area_code", attrName="area.areaCode", label="区域编码"),
-			}),
+			columns={@Column(includeEntity=Company.class)}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
 			on="ar.area_code = c.area_code", attrName="company.area",
-			columns={
-					@Column(includeEntity=DataEntity.class),
-					@Column(includeEntity=TreeEntity.class),
-					@Column(name="area_code", label="区域代码", isPK=true),
-					@Column(name="area_name", label="区域名称", isQuery=false),
-					@Column(name="area_type", label="区域类型"),
-		}),
+			columns={@Column(includeEntity=Area.class)}),
 	}, orderBy="a.update_date DESC"
 )
 public class Employee extends DataEntity<Employee> {
