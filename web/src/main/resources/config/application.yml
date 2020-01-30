@@ -46,7 +46,7 @@ jdbc:
 
 #  # Oracle 数据库配置
 #  type: oracle
-#  driver: oracle.jdbc.driver.OracleDriver
+#  driver: oracle.jdbc.OracleDriver
 #  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
 #  username: jeesite
 #  password: jeesite

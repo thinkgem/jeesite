@@ -371,8 +371,8 @@
 			</build>
 			<distributionManagement>
 				<snapshotRepository>
-					<id>sonatype-repos-s</id>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+					<id>jeesite-repos-s</id>
+					<url>http://maven.jeesite.net/repository/maven-snapshots</url>
 				</snapshotRepository>
 			</distributionManagement>
 		</profile>
