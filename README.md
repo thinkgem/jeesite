@@ -1,6 +1,6 @@
 ## 引言
 
-JeeSite 是一个 Java EE 企业级快速开发平台，基于经典技术组合（Spring Boot、Spring MVC、Apache Shiro、MyBatis、Beetl、Bootstrap、AdminLTE）采用经典开发模式，让初学者能够更快的入门并投入到团队开发中去。在线代码生成功能，包括核心模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计；界面无刷新，一键换肤；众多账号安全设置，密码策略；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持微服务。
+JeeSite 是一个 Java EE 企业级快速开发平台，基于经典技术组合（Spring Boot、Spring MVC、Apache Shiro、MyBatis、Beetl、Bootstrap、AdminLTE）采用经典开发模式，让初学者能够更快的入门并投入到团队开发中去。在线代码生成功能，包括核心模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计；界面无刷新，一键换肤；众多账号安全设置，密码策略；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务。
 
 JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能（经典架构会的人多），让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
 
@@ -16,7 +16,8 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 * 持久层：Apache MyBatis 3.4、Hibernate Validation 6.0、Alibaba Druid 1.1
 * 视图层：Spring MVC 5.0、Beetl 3.0（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 1.12、jqGrid 4.7、layer 3.1、zTree 3.5、jquery-validation
-* 工具组件：Apache Commons、Jackson 2.10、POI 3.16、Quartz 2.3、Flowable 6.4
+* 工具组件：Apache Commons、Jackson 2.10、POI 3.16、Quartz 2.3
+* 工作流引擎：Flowable 6.5、符合 BPMN 规范、在线流程设计器、中国式工作流
 * 技术选型详情：<http://jeesite.com/?t=273599>
 
 ## 内置功能
