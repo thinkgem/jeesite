@@ -105,18 +105,19 @@ public class PropertiesUtils {
 	 */
 	public PropertiesUtils(String... configFiles) {
 		for (String location : configFiles) {
-			try {
-				Resource resource = ResourceUtils.getResource(location);
-				if (resource.exists()){
-        			if (location.endsWith(".properties")){
-        				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), "UTF-8")){
-	    					properties.load(is);
-	    					configSet.add(location);
-	        			} catch (IOException ex) {
-	            			logger.error("Load " + location + " failure. ", ex);
-	        			}
+			Resource resource = ResourceUtils.getResource(location);
+			if (resource.exists()){
+    			if (location.endsWith(".properties")){
+    				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), "UTF-8")){
+    					properties.load(is);
+    					configSet.add(location);
+        			} catch (IOException e) {
+            			System.err.println("Load " + location + " failure.");
+            			e.printStackTrace();
         			}
-        			else if (location.endsWith(".yml")){
+    			}
+    			else if (location.endsWith(".yml")){
+    				try {
         				YamlPropertiesFactoryBean bean = new YamlPropertiesFactoryBean();
         				bean.setResources(resource);
         				for (Map.Entry<Object,Object> entry : bean.getObject().entrySet()){
@@ -124,10 +125,11 @@ public class PropertiesUtils {
         							ObjectUtils.toString(entry.getValue()));
         				}
     					configSet.add(location);
-        			}
-				}
-			} catch (Exception e) {
-    			logger.error("Load " + location + " failure. ", e);
+    				} catch (Exception e) {
+    	    			System.err.println("Load " + location + " failure.");
+    	    			e.printStackTrace();
+    				}
+    			}
 			}
 		}
 		properties.put("configFiles", StringUtils.join(configFiles, ","));
