@@ -80,7 +80,22 @@
 										});
 										return false;
 									});
-								</script></td>
+								</script>
+							</td>
+							<td class="treeview" colspan="1">
+								<a href="${ctx}/test1/testData/bpmTest" id="btnBpmTest" class="btn btn-default">
+									业务流程测试地址</a>
+								<script>
+									$("#btnBpmTest").click(function(){ 
+										js.ajaxSubmit($(this).attr('href'), function(data){
+											js.showMessage(data.message);
+										});
+										return false;
+									});
+								</script>
+								<a href="${ctx}/bpm/bpmTask/list" class="btn btn-default addTabPage ml5">
+									业务流程任务管理</a>
+							</td>
 						</tr>
 					</table>
 				</div>
