@@ -7,9 +7,7 @@
 *.epoch
 *.lic
 
-**/.settings/**/*
-!**/.settings/org.eclipse.core.resources.prefs
-!**/.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings
 .apt_generated
 .factorypath
 .classpath
