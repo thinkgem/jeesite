@@ -58,16 +58,6 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 	public Page<TestData> findPage(TestData testData) {
-		
-//		// 演示Map参数和返回值，支持分页
-//		Page<Map<String, Object>> pageMap = new Page<>();
-//		Map<String, Object> params = MapUtils.newHashMap();
-//		params.put("testInput", "123");
-//		params.put("page", pageMap);
-//		pageMap.setList(dao.findListForMap(params));
-//		System.out.println(pageMap.getList());
-//		System.out.println(pageMap.getCount());
-		
 		return super.findPage(testData);
 	}
 	
