@@ -105,11 +105,12 @@ public class LoginController extends BaseController{
 		
 		// 返回指定用户类型的登录页视图
 		String userType = (String)paramMap.get("userType");
-		if (StringUtils.isNotBlank(userType)){
-			String view = UserUtils.getUserTypeValue(userType, "loginView");
-			if(StringUtils.isNotBlank(view)){
-				return view;
-			}
+		if (StringUtils.isBlank(userType)){
+			userType = User.USER_TYPE_EMPLOYEE;
+		}
+		String view = UserUtils.getUserTypeValue(userType, "loginView");
+		if(StringUtils.isNotBlank(view)){
+			return view;
 		}
 		
 		return "modules/sys/sysLogin";
@@ -177,11 +178,12 @@ public class LoginController extends BaseController{
 		
 		// 返回指定用户类型的登录页视图
 		String userType = (String)paramMap.get("userType");
-		if (StringUtils.isNotBlank(userType)){
-			String view = UserUtils.getUserTypeValue(userType, "loginView");
-			if(StringUtils.isNotBlank(view)){
-				return view;
-			}
+		if (StringUtils.isBlank(userType)){
+			userType = User.USER_TYPE_EMPLOYEE;
+		}
+		String view = UserUtils.getUserTypeValue(userType, "loginView");
+		if(StringUtils.isNotBlank(view)){
+			return view;
 		}
 		
 		return "modules/sys/sysLogin";
