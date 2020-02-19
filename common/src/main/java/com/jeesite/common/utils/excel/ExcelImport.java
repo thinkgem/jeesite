@@ -23,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.formula.eval.ErrorEval;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -48,7 +49,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 /**
  * 导入Excel文件（支持“XLS”和“XLSX”格式）
  * @author ThinkGem
- * @version 2018-08-11
+ * @version 2020-2-19
  */
 public class ExcelImport implements Closeable {
 	
@@ -262,7 +263,7 @@ public class ExcelImport implements Closeable {
 		try{
 			Cell cell = row.getCell(column);
 			if (cell != null){
-				if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC){
+				if (cell.getCellTypeEnum() == CellType.NUMERIC){
 					val = cell.getNumericCellValue();
 					if (HSSFDateUtil.isCellDateFormatted(cell)) {
 						val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
@@ -273,36 +274,36 @@ public class ExcelImport implements Closeable {
 							val = new DecimalFormat("0").format(val);
 						}
 					}
-				}else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+				}else if (cell.getCellTypeEnum() == CellType.STRING) {
 					val = cell.getStringCellValue();
-				}else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA){
+				}else if (cell.getCellTypeEnum() == CellType.FORMULA){
 					try {
 						val = cell.getStringCellValue();
 					} catch (Exception e) {
 						FormulaEvaluator evaluator = cell.getSheet().getWorkbook()
 								.getCreationHelper().createFormulaEvaluator();
-						evaluator.evaluateFormulaCell(cell);
+						evaluator.evaluateFormulaCellEnum(cell);
 						CellValue cellValue = evaluator.evaluate(cell);
-						switch (cellValue.getCellType()) {
-						case Cell.CELL_TYPE_NUMERIC:
+						switch (cellValue.getCellTypeEnum()) {
+						case NUMERIC:
 							val = cellValue.getNumberValue();
 							break;
-						case Cell.CELL_TYPE_STRING:
+						case STRING:
 							val = cellValue.getStringValue();
 							break;
-						case Cell.CELL_TYPE_BOOLEAN:
+						case BOOLEAN:
 							val = cellValue.getBooleanValue();
 							break;
-						case Cell.CELL_TYPE_ERROR:
+						case ERROR:
 							val = ErrorEval.getText(cellValue.getErrorValue());
 							break;
 						default:
 							val = cell.getCellFormula();
 						}
 					}
-				}else if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN){
+				}else if (cell.getCellTypeEnum() == CellType.BOOLEAN){
 					val = cell.getBooleanCellValue();
-				}else if (cell.getCellType() == Cell.CELL_TYPE_ERROR){
+				}else if (cell.getCellTypeEnum() == CellType.ERROR){
 					val = cell.getErrorCellValue();
 				}
 			}
