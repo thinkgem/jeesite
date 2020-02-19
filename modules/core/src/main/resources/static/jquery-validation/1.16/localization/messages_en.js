@@ -28,6 +28,7 @@
 		ipv4: "Please enter a valid IP v4 address",
 		ipv6: "Please enter a valid IP v6 address",
 		qq: "Please fill in your qq number correctly",
+		isBlank: "Cannot input full spaces",
 		idcard: "Please enter the correct id number (15-18)"
 	});
 }(jQuery));
