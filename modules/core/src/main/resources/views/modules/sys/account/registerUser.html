@@ -1,0 +1,173 @@
+<% layout('/layouts/default.html', {title: '账号注册', libs: ['validate'], bodyClass: 'login-page'}){ %>
+<% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
+<link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
+<div class="login-box" style="margin-top:3%">
+	<div class="login-logo">
+		<a href="${ctxPath}/account/forgetPwd"><b>${@Global.getConfig('productName')}</b>
+			<small>${@Global.getConfig('productVersion')}</small></a>
+	</div>
+	<div class="login-box-body">
+		<form id="registerForm" action="${ctxPath}/account/saveRegByValidCode" method="post">
+			<div class="form-group has-feedback">
+				<select id="reg_validType" name="op" class="form-control">
+					<option value="email">使用电子邮箱找注册账号</option>
+					<option value="mobile">使用手机号码注册账号</option>
+				</select>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#reg_validType').change(function(){
+							var val = $(this).val(), action = '';
+							$('.reg-element').addClass('hide').removeClass('block');
+							$('.reg-'+val).addClass('block').removeClass('hide');
+							setTimeout(function(){
+								$('#reg_loginCode').focus();
+							}, 100);
+							if (val == 'mobile' || val == 'email'){
+								var txt = (val == 'mobile' ? '手机' : '邮箱')
+								$('#regValidCode').attr('placeholder', txt+'验证码')
+									.attr('data-msg-required', '请填写'+txt+'验证码.');
+								$('#sendRegValidCode').val('获取'+txt+'验证码');
+								action = '${ctxPath}/account/saveRegByValidCode';
+							}else if(val == 'question'){
+								action = '${ctxPath}/account/savePwdByPwdQuestion';
+							}
+							$('#registerForm').attr('action', action);
+						}).change();
+					});
+				</script>
+			</div>
+			<% if(@Global.isUseCorpModel()){ %>
+			<div class="form-group has-feedback">
+				<#form:treeselect id="reg_corp" title="${text('选择租户')}" allowClear="true"
+					name="corpCode" value="0" labelName="corpName" labelValue="JeeSite" 
+					url="${ctx}/sys/corpAdmin/treeData?isShowCode=true"
+					class="required" data-msg-required="请选择所属租户."
+					placeholder="${text('所属租户')}"/>
+			</div>
+			<% } %>
+			<div class="form-group has-feedback">
+				<span class="fa fa-user form-control-feedback"></span>
+				<input type="text" id="reg_loginCode" name="loginCode" class="form-control required" data-msg-required="请填写登录账号." placeholder="登录账号" />
+			</div>
+			<div class="form-group has-feedback">
+				<span class="fa fa-info form-control-feedback"></span>
+				<input type="text" id="reg_userName" name="userName" class="form-control required" data-msg-required="请填写用户姓名." placeholder="用户姓名" />
+			</div>
+			<div class="form-group has-feedback reg-element reg-email">
+				<span class="fa fa-envelope form-control-feedback"></span>
+				<input type="text" id="reg_email" name="email" class="form-control required" data-msg-required="请填写邮箱地址." placeholder="邮箱地址" />
+			</div>
+			<div class="form-group has-feedback reg-element reg-mobile">
+				<span class="fa fa-phone-square form-control-feedback"></span>
+				<input type="text" id="reg_mobile" name="mobile" class="form-control required" data-msg-required="请填写手机号码." placeholder="手机号码" />
+			</div>
+			<input type="hidden" id="reg_userType" name="mobile" value="member" />
+			<div class="form-group has-feedback reg-element reg-mobile reg-email">
+				<#form:validcode id="reg_validCode" name="validCode" isRequired="true" isRemote="true" isLazy="false"/>
+			</div>
+			<div class="form-group has-feedback reg-element reg-mobile reg-email">
+				<div class="input-group">
+					<input type="text" id="regValidCode" name="regValidCode" class="form-control required"
+							data-msg-required="请填写手机验证码." placeholder="手机验证码" />
+					<span class="input-group-btn">
+						<input type="button" id="sendRegValidCode" value="获取手机验证码" class="btn btn-flat"/>
+					</span>
+				</div>
+				<script type="text/javascript">
+					var waitTime = 60;
+					function sendTime(o) {
+						if (waitTime == 0) {
+							o.removeAttribute("disabled");
+							o.value = "获取验证码";
+							waitTime = 60;
+						} else {
+							o.setAttribute("disabled", true);
+							o.value = "重新发送(" + waitTime + ")";
+							waitTime--;
+							setTimeout(function() {
+								sendTime(o)
+							}, 1000);
+						}
+					}
+					$('#sendRegValidCode').click(function() {
+						var $this = this;
+						js.ajaxSubmit('${ctxPath}/account/getRegValidCode', {
+							validType: $('#reg_validType').val(),
+							corpCode_ : $('#reg_corpCode').val(),
+							corpName_ : $('#reg_corpName').val(),
+							loginCode : $('#reg_loginCode').val(),
+							userName : $('#reg_userName').val(),
+							email : $('#reg_email').val(),
+							mobile : $('#reg_mobile').val(),
+							userType: $('#reg_userType').val(),
+							validCode : $('#reg_validCode').val()
+						}, function(data){
+							js.showMessage(data.message);
+							if (data.result == 'true'){
+								sendTime($this);
+							}
+						});
+					});
+				</script>
+			</div>
+			<div class="form-group has-feedback">
+				<span class="fa fa-lock form-control-feedback"></span>
+				<input type="password" autocomplete="off" id="reg_password" name="password"
+					class="form-control required" data-msg-required="请填写登录密码."
+					rangelength="3,50" data-msg-rangelength="登录密码长度不能小于3并大于50个字符."
+					placeholder="登录密码" />
+			</div>
+			<div class="form-group has-feedback">
+				<span class="fa fa-lock form-control-feedback"></span>
+				<input type="password" autocomplete="off" id="reg_confirmPassword" name="confirmPassword"
+					class="form-control required" data-msg-required="请再填一次登录密码."
+					rangelength="3,50" data-msg-rangelength="登录密码长度不能小于3并大于50个字符."
+					equalTo="#reg_password" data-msg-equalTo="填写的密码与登录密码不同."
+					placeholder="再填一次登录密码" />
+			</div>
+			<div class="form-group has-feedback icheck">
+				<label title="${text('公共场所慎用,下次不需要再填写帐号')}"><input type="checkbox" name="reg_terms" 
+					class="form-control required" data-msg-required="请阅读并同意我们的服务条款."> 我已阅读并同意协议内容 </label> &nbsp; 
+				<a href="https://gitee.com/thinkgem/jeesite4/blob/master/README.md" target="_blank">查看协议</a>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<button type="submit" class="btn btn-primary btn-block btn-flat"
+						id="btnSubmit">${text('提交')}</button>
+				</div>
+				<div class="col-xs-6">
+					<button type="button" class="btn btn-default btn-block btn-flat"
+						id="btnReset">${text('返回')}</button>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</form>
+	</div>
+	<div class="login-copyright">
+		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
+			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
+	</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/jquery-toastr/2.0/toastr.min.js?${_version}"></script>
+<script>
+$('#registerForm').validate({
+	ignore: ":hidden",
+    submitHandler: function(form) {
+		js.ajaxSubmitForm($(form), function(data){
+			if (data.result == "true"){
+				alert(data.message);
+				location = "${ctx}/login";
+			}else{
+				js.showMessage(data.message);
+				$('#registerForm').reset();
+			}
+		});
+    }
+});
+$('#btnReset').click(function(){
+	location = '${ctx}/login';
+});
+</script>

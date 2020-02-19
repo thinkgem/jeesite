@@ -173,13 +173,6 @@ user:
   # 登录账号是否租户内唯一，否则全局唯一
   loginCodeCorpUnique: false
   
-  # 自助账号服务
-  account:
-    # 注册用户
-    registerUser:
-      enabled: false
-      userTypes: 0, 1
-     
 # 角色管理 
 role: 
   # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
@@ -392,6 +385,7 @@ shiro:
 #    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/** = user
   filterChainDefinitions: |
+    ${adminPath}/sys/corpAdmin/treeData = anon
     ${adminPath}/** = user
   
   # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
@@ -603,8 +597,8 @@ msg:
     fromAddress: jeesite_demo@163.com
     fromPassword: jeesitedemo1234
     fromHostName: smtp.163.com
-    sslOnConnect: false
-    sslSmtpPort: 994
+    sslOnConnect: true
+    sslSmtpPort: 465
 
   # 短信网关
   sms:

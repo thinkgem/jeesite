@@ -36,7 +36,7 @@ public class SmsUtils {
 //		conn.data("mobile", mobile);
 //		// 短信内容
 //		conn.data("content", prefix + content + suffix);
-		logger.warn("模拟发送短信成功！请实现 "+SmsUtils.class+" 的 send 方法。");
+		logger.warn("模拟发送短信成功！请实现 "+SmsUtils.class+" 的 send 方法。内容："+content);
 		return "{result:0,message:\"模拟发送短信成功！\"}";
 	}
 	

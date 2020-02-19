@@ -100,12 +100,10 @@ public class AccountController extends BaseController{
 		UserUtils.putCache("fpUserCode", u.getUserCode());
 		UserUtils.putCache("fpLoginCode", u.getLoginCode());
 		UserUtils.putCache("fpValidCode", fpValidCode);
-		// 发送短信消息。
+		// 发送邮箱或短信验证码
 		if("mobile".equals(validType)){
 			return sendSmsValidCode(u, fpValidCode, text("找回密码"));
-		}
-		// 发送邮件消息。
-		else if("email".equals(validType)){
+		}else if("email".equals(validType)){
 			return sendEmailValidCode(u, fpValidCode, text("找回密码"));
 		}
 		return null;
@@ -272,8 +270,8 @@ public class AccountController extends BaseController{
 		@ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "email", value = "电子邮箱", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "mobile", value = "手机号码", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "corpCode", value = "租户编号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "corpName", value = "租户名称", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "corpCode_", value = "租户编号", required = true, paramType="query", type="String"),
+		@ApiImplicitParam(name = "corpName_", value = "租户名称", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "userType", value = "用户类型（employee）", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
 		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
@@ -287,6 +285,9 @@ public class AccountController extends BaseController{
 			return renderResult(Global.FALSE, text("非法操作。"));
 		}
 		// 非空数据校验。
+		if (Global.isUseCorpModel() && StringUtils.isBlank(user.getCorpCode_())) {
+			return renderResult(Global.FALSE, text("请选择注册到的租户！"));
+		}
 		if (!(StringUtils.isNotBlank(user.getLoginCode()) && StringUtils.isNotBlank(user.getUserName()))){
 			return renderResult(Global.FALSE, text("登录账号和用户姓名不能为空！"));
 		}
@@ -305,30 +306,31 @@ public class AccountController extends BaseController{
 			UserUtils.putCache("regLastDate", new Date());
 		}
 		// 验证用户编码是否存在。
-		if (UserUtils.getByLoginCode(user.getLoginCode()) != null){
+		if (UserUtils.getByLoginCode(user.getLoginCode(), user.getCorpCode_()) != null){
 			return renderResult(Global.FALSE, text("登录账号已存在"));
 		}
 		// 生成验证码，并缓存。
-		String code = StringUtils.getRandomNum(6);
-		UserUtils.putCache("regCorpCode", user.getCorpCode());
-		UserUtils.putCache("regCorpName", user.getCorpName());
+		String regValidCode = StringUtils.getRandomNum(6);
+		UserUtils.putCache("regCorpCode", user.getCorpCode_());
+		UserUtils.putCache("regCorpName", user.getCorpName_());
 		UserUtils.putCache("regLoginCode", user.getLoginCode());
+		UserUtils.putCache("regUserName", user.getUserName());
 		// 账号注册类型
 		String[] userTypes = StringUtils.split(Global.getConfig(
-				"sys.account.registerUser.userTypes.userTypes", "-1"), ",");
+				"sys.account.registerUser.userTypes", "-1"), ",");
 		if (StringUtils.inString(user.getUserType(), userTypes)){
 			UserUtils.putCache("regUserType", user.getUserType());
 		}else{
-			return renderResult(Global.FALSE, text("非法的用户类型！"));
+			return renderResult(Global.FALSE, text("请在参数设置里设定允许自助注册的用户类型")+"："+user.getUserType());
 		}
 		UserUtils.putCache("regEmail", user.getEmail());
 		UserUtils.putCache("regMobile", user.getMobile());
-		UserUtils.putCache("regValidCode", code);
+		UserUtils.putCache("regValidCode", regValidCode);
 		// 发送邮箱或短信验证码
-		if("send_email".equals(validType)){
-			return sendEmailValidCode(user, code, text("注册账号"));
-		}else if("send_mobile".equals(validType)){
-			return sendSmsValidCode(user, code, text("注册账号"));
+		if("email".equals(validType)){
+			return sendEmailValidCode(user, regValidCode, text("注册账号"));
+		}else if("mobile".equals(validType)){
+			return sendSmsValidCode(user, regValidCode, text("注册账号"));
 		}
 		return null;
 	}
@@ -343,7 +345,6 @@ public class AccountController extends BaseController{
 	@ApiOperation(value = "根据短信或邮件验证码注册用户")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "password", value = "登录密码", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "regValidCode", value = "手机或邮箱接受的验证码", required = true),
 	})
@@ -355,6 +356,7 @@ public class AccountController extends BaseController{
 		String corpName = (String)UserUtils.getCache("regCorpName");
 		String userType = (String)UserUtils.getCache("regUserType");
 		String loginCode = (String)UserUtils.getCache("regLoginCode");
+		String userName = (String)UserUtils.getCache("regUserName");
 		String email = (String)UserUtils.getCache("regEmail");
 		String mobile = (String)UserUtils.getCache("regMobile");
 		String validCode = (String)UserUtils.getCache("regValidCode");
@@ -384,21 +386,25 @@ public class AccountController extends BaseController{
 		User u = new User();
 		u.setIsNewRecord(true);
 		if (StringUtils.isNotBlank(corpCode)){
-			u.setCorpCode(corpCode);
-			u.setCorpName(corpName);
+			u.setCorpCode_(corpCode);
+			u.setCorpName_(corpName);
 		}
 		u.setLoginCode(loginCode);
-		u.setUserName(user.getUserName());
+		u.setUserName(userName);
 		u.setPassword(user.getPassword());
 		u.setEmail(email);
 		u.setMobile(mobile);
 		u.setUserType(userType);
 		u.setMgrType(User.MGR_TYPE_NOT_ADMIN);
+		u.setStatus(User.STATUS_AUDIT); // 待审核状态
 		userService.save(u);
 		
 		// 验证成功后清理验证码，验证码只允许使用一次。
+		UserUtils.removeCache("regCorpCode");
+		UserUtils.removeCache("regCorpName");
 		UserUtils.removeCache("regUserType");
 		UserUtils.removeCache("regLoginCode");
+		UserUtils.removeCache("regUserName");
 		UserUtils.removeCache("regValidCode");
 		UserUtils.removeCache("regLastDate");
 	
