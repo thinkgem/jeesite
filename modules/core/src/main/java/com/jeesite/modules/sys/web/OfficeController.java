@@ -235,6 +235,15 @@ public class OfficeController extends BaseController {
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			officeService.addDataScopeFilter(where, ctrlPermi);
 		}
+		// 根据父节点过滤数据
+		if (StringUtils.isNotBlank(parentCode)){
+			where.setParentCode(parentCode);
+			where.setParentCodes(","+parentCode+",");
+		}
+		// 根据部门类型过滤数据
+		if (StringUtils.isNotBlank(officeTypes)){
+			where.setOfficeType_in(officeTypes.split(","));
+		}
 		List<Office> list = officeService.findList(where);
 		for (int i = 0; i < list.size(); i++) {
 			Office e = list.get(i);
@@ -248,21 +257,6 @@ public class OfficeController extends BaseController {
 					continue;
 				}
 				if (e.getParentCodes().contains("," + excludeCode + ",")){
-					continue;
-				}
-			}
-			// 根据父节点过滤数据
-			if (StringUtils.isNotBlank(parentCode)){
-				if (!e.getOfficeCode().equals(parentCode)){
-					continue;
-				}
-				if (!e.getParentCodes().contains("," + parentCode + ",")){
-					continue;
-				}
-			}
-			// 根据部门类型过滤数据
-			if (StringUtils.isNotBlank(officeTypes)){
-				if (!StringUtils.inString(e.getOfficeType(), officeTypes.split(","))){
 					continue;
 				}
 			}

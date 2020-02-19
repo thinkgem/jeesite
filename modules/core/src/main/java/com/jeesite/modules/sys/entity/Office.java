@@ -123,6 +123,14 @@ public class Office extends TreeEntity<Office> {
 		this.officeType = officeType;
 	}
 	
+	public String[] getOfficeType_in(){
+		return sqlMap.getWhere().getValue("office_type", QueryType.IN);
+	}
+	
+	public void setOfficeType_in(String[] officeTypes){
+		sqlMap.getWhere().and("office_type", QueryType.IN, officeTypes);
+	}
+	
 	@Length(min=0, max=100, message="负责人长度不能超过 100 个字符")
 	public String getLeader() {
 		return leader;
