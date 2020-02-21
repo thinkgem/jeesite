@@ -607,23 +607,3 @@ msg:
     data: username=jeesite&password=jeesite.com
     prefix: 【JeeSite】
     suffix: ~
-
-  # 微信相关
-  weixin:
-    beanName: weixinSendService
-    #微信应用ID
-    appid: ~
-    #微信应用密钥
-    secret: ~
-    # 微信服务器配置
-    server:
-      # 微信服务器配置Token
-      token: ~
-      # 微信服务器配置EncodingAESKey
-      aeskey: ~
-      # 微信服务器是否开启Debug模式，开启后发送未知消息时候会返回消息内容
-      debug: true
-    # 微信OAuth登录授权回调地址
-    oauth:
-      redirectUri: http://demo.jeesite.com/js
-
