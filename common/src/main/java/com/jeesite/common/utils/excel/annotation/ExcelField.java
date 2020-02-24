@@ -82,7 +82,7 @@ public @interface ExcelField {
 	Class<?> fieldType() default Class.class;
 	
 	/**
-	 * 数值格式（例如：0.00，yyyy-MM-dd）
+	 * 数值格式（例如：数值：0.00；日期：yyyy-MM-dd；金额：￥#,##0.00）
 	 */
 	String dataFormat() default "@";
 	

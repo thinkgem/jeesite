@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -466,6 +467,8 @@ public class ExcelExport implements Closeable{
 				}else if(val instanceof Float) {
 					cell.setCellValue((Float) val);
 					defaultDataFormat = "0.00";
+				}else if(val instanceof BigDecimal) {
+					cell.setCellValue(((BigDecimal)val).doubleValue());
 				}else if(val instanceof Date) {
 					cell.setCellValue((Date) val);
 					defaultDataFormat = "yyyy-MM-dd HH:mm";
