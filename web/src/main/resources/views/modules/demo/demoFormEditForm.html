@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid','inputmask']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
@@ -174,6 +174,36 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 金额格式：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-rmb"></i></span>
+									<#form:input path="testInput_money" maxlength="200" class="form-control inputmask"
+											data-inputmask-alias="money" data-inputmask="'digits':'2'"/>
+									<span class="input-group-addon">(千分位，右对齐，保留2位小数)</span>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 电子邮箱格式：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
+									<#form:input path="testInput_regex" maxlength="200" class="form-control inputmask"
+											data-inputmask-regex="[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,4}"/>
+									<span class="input-group-addon">(正则表达式)</span>
+				                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label class="control-label col-sm-2" title="">
@@ -321,6 +351,21 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
+		{header:'${text("用户列表选择")}', name:'testUser2', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('listselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户选择', 
+						name: 'testUser.userCode', value: val.split('|')[0], 
+						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/empUser/empUserSelect', cssClass: '',
+						itemCode: 'userCode', itemName: 'userName'
+					});
+				}
+			}
+		},
 		{header:'机构选择', name:'testOffice', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
@@ -381,9 +426,19 @@ $("#testDataChildDataGrid").dataGrid({
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
 	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
 </div>//--></script>
+<script id="listselectTpl" type="text/template">//<!--<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
+</div>//--></script>
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
+		
+		// 数据格式化恢复（表单提交之前调用）
+		$('.inputmask').inputmask('remove');
+		
 // 		js.ajaxSubmitForm($(form), function(data){
 // 			js.showMessage(data.message);
 // 			if(data.result == Global.TRUE){
@@ -392,7 +447,15 @@ $("#inputForm").validate({
 // 				});
 // 			}
 // 		}, "json");
+		log($(form).serializeArray());
 		js.showMessage('模拟保存成功');
+		
+		// 数据格式化（初始化完成表单后调用）
+		$(".inputmask").inputmask();
     }
 });
+
+//数据格式化（初始化完成表单后调用）
+$(".inputmask").inputmask();
+
 </script>
