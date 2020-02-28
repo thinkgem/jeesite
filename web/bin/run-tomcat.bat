@@ -14,6 +14,6 @@ cd %~dp0
 cd ..
 title %cd%
 set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
-call mvn clean spring-boot:run -Dmaven.test.skip=true -U
+call mvn clean spring-boot:run -Dmaven.test.skip=true
 
 pause
