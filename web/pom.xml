@@ -187,12 +187,6 @@
 			<id>jeesite-repos</id>
 			<url>http://maven.jeesite.net/repository/maven-public</url>
 		</repository>
-		<repository>
-			<id>sonatype-repos-s</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases><enabled>false</enabled></releases>
-			<snapshots><enabled>true</enabled></snapshots>
-		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
