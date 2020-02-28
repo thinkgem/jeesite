@@ -172,6 +172,13 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 				try{
 					// 验证数据文件
 					ValidatorUtils.validateWithException(user);
+					// 部门为空验证
+					if (StringUtils.isBlank(user.getEmployee().getOffice().getOfficeCode())) {
+						failureNum++;
+						failureMsg.append("<br/>" + failureNum + "、账号 " + user.getLoginCode()
+							+ " 导入失败：归属机构不能为空");
+						continue;
+					}
 					// 验证是否存在这个用户
 					User u = UserUtils.getByLoginCode(user.getLoginCode());
 					if (u == null){
