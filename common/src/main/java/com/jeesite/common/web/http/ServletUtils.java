@@ -215,12 +215,13 @@ public class ServletUtils {
 				if (response != null){
 					response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 				}
-				String functionName = request.getParameter("__callback");
-				if (StringUtils.isNotBlank(functionName)){
-					return JsonMapper.toJsonp(functionName, resultMap);
-				}else{
-					return JsonMapper.toJson(resultMap);
+				if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
+					String functionName = request.getParameter("__callback");
+					if (StringUtils.isNotBlank(functionName)){
+						return JsonMapper.toJsonp(functionName, resultMap);
+					}
 				}
+				return JsonMapper.toJson(resultMap);
 			}
 		}else{
 			if (response != null){
@@ -267,12 +268,13 @@ public class ServletUtils {
 				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
 			return renderString(response, XmlMapper.toXml(object));
 		}else{
-			String functionName = request.getParameter("__callback");
-			if (StringUtils.isNotBlank(functionName)){
-				return renderString(response, JsonMapper.toJsonp(functionName, object));
-			}else{
-				return renderString(response, JsonMapper.toJson(object));
+			if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
+				String functionName = request.getParameter("__callback");
+				if (StringUtils.isNotBlank(functionName)){
+					return renderString(response, JsonMapper.toJsonp(functionName, object));
+				}
 			}
+			return renderString(response, JsonMapper.toJson(object));
 		}
 	}
 	

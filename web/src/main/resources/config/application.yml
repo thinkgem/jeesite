@@ -389,14 +389,18 @@ shiro:
 #  # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
 #  isAllowExternalSiteIframe: true
 #  
-#  # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
+#  # 是否允许跨域访问 CORS，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
 ##  accessControlAllowOrigin: http://demo.jeesite.com
 ##  accessControlAllowOrigin: '*'
 #
-#  # 是否允许接收跨域的Cookie凭证数据
+# # 允许跨域访问时 CORS，可以使用的方法和响应头
+#  accessControlAllowMethods: GET, POST, OPTIONS
+#  accessControlAllowHeaders: Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With
+#
+#  # 是否允许接收跨域的Cookie凭证数据 CORS
 ##  accessControlAllowCredentials: true
 #
-#  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造CSRF）
+#  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF）
 #  allowReferers: http://127.0.0.1,http://localhost
 #  allowReferers: ~
 #
