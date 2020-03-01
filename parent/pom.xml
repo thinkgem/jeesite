@@ -27,8 +27,7 @@
 		<commons-text.version>1.8</commons-text.version>
 		<ant.version>1.10.7</ant.version>
 		<fst.version>2.57</fst.version>
-		<!-- <json.version>20180130</json.version> -->
-		<fastjson.version>1.2.62</fastjson.version>
+		<fastjson.version>1.2.66</fastjson.version>
 		<jackson.version>2.10.2</jackson.version>
 		<dom4j.version>2.1.1</dom4j.version>
 		<jsoup.version>1.12.2</jsoup.version>
