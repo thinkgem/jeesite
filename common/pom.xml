@@ -67,12 +67,12 @@
 			<version>${fst.version}</version>
 		</dependency>
 		
-		<!-- Json in java -->
+		<!-- Json in java
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>${json.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Fast json -->
 		<dependency>
@@ -97,8 +97,9 @@
 		
 		<!-- Java xml -->
 		<dependency>
-			<groupId>dom4j</groupId>
+			<groupId>org.dom4j</groupId>
 			<artifactId>dom4j</artifactId>
+			<version>${dom4j.version}</version>
 		</dependency>
 		
 		<!-- XPath xml -->

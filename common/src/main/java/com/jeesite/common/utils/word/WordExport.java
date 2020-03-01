@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.poi.POIXMLDocument;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -44,10 +45,11 @@ public class WordExport {
 	 */
 	public void setTemplate(String templatePath) {
 		try {
-			this.document = new XWPFDocument(POIXMLDocument.openPackage(templatePath));
-
+			this.document = new XWPFDocument(OPCPackage.open(templatePath));
 			bookMarks = new BookMarks(document);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
 			e.printStackTrace();
 		}
 	}
