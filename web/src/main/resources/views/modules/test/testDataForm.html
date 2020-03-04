@@ -151,7 +151,8 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2">${text('图片上传')}：</label>
+							<label class="control-label col-sm-2">
+								<span class="required hide">*</span> ${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
 									uploadType="image" class="" readonly="false" preview="weboffice"/>
@@ -162,7 +163,8 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2">${text('附件上传')}：</label>
+							<label class="control-label col-sm-2">
+								<span class="required hide">*</span> ${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
 									uploadType="all" class="" readonly="false" preview="weboffice"/>

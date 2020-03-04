@@ -179,7 +179,7 @@ $('#dataGrid').dataGrid({
 			url: '${ctx}/test/testData/subListData',
 			postData: {'testData.id': rowId},
 			autoGridHeight: function(){return 'auto'}, // 设置自动高度
-			autoGridWidth:  function(){return $("#"+subgridId).width();}, // 设置自动高度
+			autoGridWidth:  function(){return $("#"+subgridId).width()}, // 设置自动高度
 			// 设置数据表格列
 			columnModel: [
 				{header:'${text("单行文本")}', name:'testInput', width:150},
@@ -204,7 +204,7 @@ $('#dataGrid').dataGrid({
 			emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
 			// 加载成功后执行事件
 			ajaxSuccess: function(data){
-				
+				$(window).resize();
 			}
 		});
 	},
