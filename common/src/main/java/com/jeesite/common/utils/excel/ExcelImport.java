@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -16,9 +17,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.formula.eval.ErrorEval;
@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.SetUtils;
+import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -45,11 +45,12 @@ import com.jeesite.common.reflect.ReflectUtils;
 import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
+import com.jeesite.common.utils.excel.fieldtype.FieldType;
 
 /**
  * 导入Excel文件（支持“XLS”和“XLSX”格式）
  * @author ThinkGem
- * @version 2020-2-19
+ * @version 2020-3-5
  */
 public class ExcelImport implements Closeable {
 	
@@ -71,9 +72,9 @@ public class ExcelImport implements Closeable {
 	private int headerNum;
 	
 	/**
-	 * 用于清理缓存
+	 * 存储字段类型临时数据
 	 */
-	private Set<Class<?>> fieldTypes = SetUtils.newHashSet();
+	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
 	
 	/**
 	 * 构造函数
@@ -263,9 +264,9 @@ public class ExcelImport implements Closeable {
 		try{
 			Cell cell = row.getCell(column);
 			if (cell != null){
-				if (cell.getCellTypeEnum() == CellType.NUMERIC){
+				if (cell.getCellType() == CellType.NUMERIC){
 					val = cell.getNumericCellValue();
-					if (HSSFDateUtil.isCellDateFormatted(cell)) {
+					if (DateUtil.isCellDateFormatted(cell)) {
 						val = DateUtil.getJavaDate((Double) val); // POI Excel 日期格式转换
 					}else{
 						if ((Double) val % 1 > 0){
@@ -274,17 +275,17 @@ public class ExcelImport implements Closeable {
 							val = new DecimalFormat("0").format(val);
 						}
 					}
-				}else if (cell.getCellTypeEnum() == CellType.STRING) {
+				}else if (cell.getCellType() == CellType.STRING) {
 					val = cell.getStringCellValue();
-				}else if (cell.getCellTypeEnum() == CellType.FORMULA){
+				}else if (cell.getCellType() == CellType.FORMULA){
 					try {
 						val = cell.getStringCellValue();
 					} catch (Exception e) {
 						FormulaEvaluator evaluator = cell.getSheet().getWorkbook()
 								.getCreationHelper().createFormulaEvaluator();
-						evaluator.evaluateFormulaCellEnum(cell);
+						evaluator.evaluateFormulaCell(cell);
 						CellValue cellValue = evaluator.evaluate(cell);
-						switch (cellValue.getCellTypeEnum()) {
+						switch (cellValue.getCellType()) {
 						case NUMERIC:
 							val = cellValue.getNumberValue();
 							break;
@@ -301,9 +302,9 @@ public class ExcelImport implements Closeable {
 							val = cell.getCellFormula();
 						}
 					}
-				}else if (cell.getCellTypeEnum() == CellType.BOOLEAN){
+				}else if (cell.getCellType() == CellType.BOOLEAN){
 					val = cell.getBooleanCellValue();
-				}else if (cell.getCellTypeEnum() == CellType.ERROR){
+				}else if (cell.getCellType() == CellType.ERROR){
 					val = cell.getErrorCellValue();
 				}
 			}
@@ -348,6 +349,7 @@ public class ExcelImport implements Closeable {
 	 * @param isThrowException 遇见错误是否抛出异常
 	 * @param groups 导入分组
 	 */
+	@SuppressWarnings("unchecked")
 	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws InstantiationException, IllegalAccessException{
 		List<Object[]> annotationList = ListUtils.newArrayList();
 		// Get annotation field 
@@ -426,9 +428,9 @@ public class ExcelImport implements Closeable {
 					//log.debug("Import value type: ["+i+","+column+"] " + valType);
 					try {
 						if (StringUtils.isNotBlank(ef.attrName())){
-							if (ef.fieldType() != Class.class){
-								fieldTypes.add(ef.fieldType()); // 先存起来，方便完成后清理缓存
-								val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val);
+							if (ef.fieldType() != FieldType.class){
+								FieldType ft = getFieldType(ef.fieldType());
+								val = ft.getValue(ObjectUtils.toString(val));
 							}
 						}else{
 							if (val != null){
@@ -454,15 +456,15 @@ public class ExcelImport implements Closeable {
 										val = DateUtil.getJavaDate((Double)val); // POI Excel 日期格式转换
 									}
 								}else{
-									if (ef.fieldType() != Class.class){
-										fieldTypes.add(ef.fieldType()); // 先存起来，方便完成后清理缓存
-										val = ef.fieldType().getMethod("getValue", String.class).invoke(null, val.toString());
+									if (ef.fieldType() != FieldType.class){
+										FieldType ft = getFieldType(ef.fieldType());
+										val = ft.getValue(ObjectUtils.toString(val));
 									}else{
 										// 如果没有指定 fieldType，切自行根据类型查找相应的转换类（com.jeesite.common.utils.excel.fieldtype.值的类名+Type）
-										Class<?> fieldType2 = Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
+										Class<? extends FieldType> fieldType = (Class<? extends FieldType>)Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(), 
 												"fieldtype."+valType.getSimpleName()+"Type"));
-										fieldTypes.add(fieldType2); // 先存起来，方便完成后清理缓存
-										val = fieldType2.getMethod("getValue", String.class).invoke(null, val.toString());
+										FieldType ft = getFieldType(fieldType);
+										val = ft.getValue(ObjectUtils.toString(val));
 									}
 								}
 							}
@@ -496,16 +498,22 @@ public class ExcelImport implements Closeable {
 		return dataList;
 	}
 	
+	private FieldType getFieldType(Class<? extends FieldType> fieldType) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		FieldType ft = fieldTypes.get(fieldType);
+		if (ft == null) {
+			ft = fieldType.getDeclaredConstructor().newInstance();
+			fieldTypes.put(fieldType, ft);
+		}
+		return ft;
+	}
+	
 	@Override
-	public void close() {
-		Iterator<Class<?>> it = fieldTypes.iterator();
-		while(it.hasNext()){
-			Class<?> clazz = it.next();
-			try {
-				clazz.getMethod("clearCache").invoke(null);
-			} catch (Exception e) {
-				// 报错忽略，有可能没实现此方法
-			}
+	public void close() throws IOException {
+		fieldTypes.clear();
+		try {
+			wb.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

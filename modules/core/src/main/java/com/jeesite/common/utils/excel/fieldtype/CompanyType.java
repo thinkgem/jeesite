@@ -5,8 +5,6 @@ package com.jeesite.common.utils.excel.fieldtype;
 
 import java.util.List;
 
-import org.springframework.core.NamedThreadLocal;
-
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -14,23 +12,22 @@ import com.jeesite.modules.sys.utils.EmpUtils;
 /**
  * 字段类型转换
  * @author ThinkGem
- * @version 2018-08-11
+ * @version 2020-3-5
  * @example fieldType = CompanyType.class
  */
-public class CompanyType {
+public class CompanyType implements FieldType {
 
-	private static ThreadLocal<List<Company>> cache = new NamedThreadLocal<>("CompanyType");
+	private List<Company> list;
+	
+	public CompanyType() {
+		list = EmpUtils.getCompanyAllList();
+	}
 
 	/**
 	 * 获取对象值（导入）
 	 */
-	public static Object getValue(String val) {
-		List<Company> cacheList = cache.get();
-		if (cacheList == null){
-			cacheList = EmpUtils.getCompanyAllList();
-			cache.set(cacheList);
-		}
-		for (Company e : cacheList){
+	public Object getValue(String val) {
+		for (Company e : list){
 			if (StringUtils.trimToEmpty(val).equals(e.getCompanyName())){
 				return e;
 			}
@@ -41,17 +38,11 @@ public class CompanyType {
 	/**
 	 * 设置对象值（导出）
 	 */
-	public static String setValue(Object val) {
+	public String setValue(Object val) {
 		if (val != null && ((Company)val).getCompanyName() != null){
 			return ((Company)val).getCompanyName();
 		}
-		return "";
+		return StringUtils.EMPTY;
 	}
 	
-	/**
-	 * 清理缓存
-	 */
-	public static void clearCache(){
-		cache.remove();
-	}
 }
