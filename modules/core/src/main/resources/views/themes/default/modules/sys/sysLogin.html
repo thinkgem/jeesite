@@ -1,7 +1,7 @@
 <% layout('/layouts/default.html', {title: '登录', libs: ['validate'], bodyClass: 'login-page'}){ %>
 <% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
 <!-- <link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}"> -->
-<link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.0/toastr.min.css?${_version}">
+<link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.1/toastr.min.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <div class="login-box">
 	<div class="login-logo">
@@ -81,6 +81,6 @@
 </div>
 <% } %>
 <script>var secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';</script>
-<script src="${ctxStatic}/jquery-toastr/2.0/toastr.min.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-toastr/2.1/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/common/des.js?${_version}"></script>
 <script src="${ctxStatic}/modules/sys/sysLogin.js?${_version}"></script>
