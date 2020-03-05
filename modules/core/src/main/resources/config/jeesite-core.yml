@@ -222,7 +222,7 @@ role:
     
 # 菜单管理
 menu:
-  # 根据模块状态去更新相连的菜单状态（仅作为微服务时设为false）
+  # 根据模块状态去更新相连的菜单状态
   updateStatusByModuleStatus: false
 
 # 国际化管理（专业版）
@@ -325,7 +325,7 @@ shiro:
 
   # 登录提交信息加密（如果不需要加密，设置为空即可）
   loginSubmit:
-    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
+    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）默认加密方式：DES
     secretKey: thinkgem,jeesite,com
   
   # 记住我密钥设置，为空则自动生成一个新密钥，也可以通过 com.jeesite.test.RememberMeKeyGen 生成
