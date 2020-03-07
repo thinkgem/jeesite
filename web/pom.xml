@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.8-SNAPSHOT</version>
+		<version>4.2.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -38,27 +38,6 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<!-- 在线API文档 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<!-- Office在线预览 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-weboffice</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<!-- 文件管理 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

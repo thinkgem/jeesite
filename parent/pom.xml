@@ -11,7 +11,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>4.1.8-SNAPSHOT</version>
+	<version>4.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Parent</name>
@@ -225,7 +225,7 @@
 					</executions>
 				</plugin>
 				
-				<!-- YUI Compressor (CSS/JS压缩) -->
+				<!-- JavaScript CSS Compress -->
 				<plugin>
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>yuicompressor-maven-plugin</artifactId>
@@ -252,20 +252,6 @@
 							<exclude>**/*.min.js</exclude>
 							<exclude>**/*.min.css</exclude>
 						</excludes>
-<!-- 					<aggregations> -->
-<!-- 						<aggregation> -->
-<!-- 							<removeIncluded>true</removeIncluded> -->
-<!-- 							<insertNewLine>true</insertNewLine> -->
-<!-- 							<inputDir>${project.build.directory}/${project.build.finalName}</inputDir> -->
-<!-- 							<output>${project.build.directory}/${project.build.finalName}/app/js/app.pack.js</output> -->
-<!-- 							<includes> -->
-<!-- 								<include>app/js/app*.js</include> -->
-<!-- 							</includes> -->
-<!-- 							<excludes> -->
-<!-- 								<exclude>**/**min.js</exclude> -->
-<!-- 							</excludes> -->
-<!-- 						</aggregation> -->
-<!-- 					</aggregations> -->
 					</configuration>
 				</plugin>
 				
