@@ -22,11 +22,11 @@
 					</div>
 				<% }else if(c.showType == 'radio'){ %>
 					<div class="control-inline">
-						<${'#'}form:radio path="${c.attrName}" dictType="${c.optionMap['dictType']}" blankOption="true" class="form-control"/>
+						<${'#'}form:radio path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control"/>
 					</div>
 				<% }else if(c.showType == 'checkbox'){ %>
 					<div class="control-inline">
-						<${'#'}form:checkbox path="${c.attrName}" dictType="${c.optionMap['dictType']}" blankOption="true" class="form-control"/>
+						<${'#'}form:checkbox path="${c.attrName}" dictType="${c.optionMap['dictType']}" class="form-control"/>
 					</div>
 				<% }else if(c.showType == 'date' || c.showType == 'datetime'){
 						var isTime = (c.showType == 'datetime'); %>
