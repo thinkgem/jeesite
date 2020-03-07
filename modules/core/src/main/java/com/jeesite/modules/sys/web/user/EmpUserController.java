@@ -73,7 +73,10 @@ public class EmpUserController extends BaseController {
 
 	@ModelAttribute
 	public EmpUser get(String userCode, boolean isNewRecord) {
-		return empUserService.get(userCode, isNewRecord);
+		EmpUser empUser = new EmpUser();
+		empUser.setUserCode(userCode);
+		empUser.setIsNewRecord(isNewRecord);
+		return empUserService.getAndValid(empUser);
 	}
 
 	@RequiresPermissions("sys:empUser:view")

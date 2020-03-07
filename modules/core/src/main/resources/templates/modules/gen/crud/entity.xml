@@ -199,7 +199,7 @@ public class ${ClassName} extends ${table.isTreeEntity?'Tree':'Data'}Entity<${Cl
 	%>
 	
 	public ${ClassName}() {
-		this(null);
+		this(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}null<% } %>);
 	}
 
 	<%

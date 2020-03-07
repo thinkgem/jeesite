@@ -61,8 +61,12 @@ public class ${ClassName}Controller extends BaseController {
 		<% if (table.pkList.~size == 1){ %>
 		return ${className}Service.get(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrName}<% } %>, isNewRecord);
 		<% }else{ %>
-		return ${className}Service.get(new Class<?>[]{<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType}.class<% } %>},
-				new Object[]{<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrName}<% } %>}, isNewRecord);
+		${ClassName} ${className} = new ${ClassName}();
+		<% for(pk in table.pkList){ %>
+		${className}.set${@StringUtils.cap(pk.simpleAttrName)}(${pk.simpleAttrName});
+		<% } %>
+		${className}.setIsNewRecord(isNewRecord);
+		return ${className}Service.getAndValid(${className});
 		<% } %>
 	}
 	
