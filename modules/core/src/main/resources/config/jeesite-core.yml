@@ -461,6 +461,11 @@ web:
     # 引入页面头部：'/themes/'+themeName+'/include/header.html'
     # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
     themeName: default
+    
+    # 使用 .json、.xml 后缀匹配视图（不推荐使用，推荐使用 favorParameter）
+    favorPathExtension: false
+    # 使用 __ajax=json、__ajax=xml 参数名匹配视图
+    favorParameter: true
 
   # MVC 拦截器
   interceptor:
