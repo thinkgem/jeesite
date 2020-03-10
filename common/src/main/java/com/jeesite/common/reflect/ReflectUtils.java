@@ -104,7 +104,7 @@ public class ReflectUtils {
 		try {
 			result = (E)field.get(obj);
 		} catch (IllegalAccessException e) {
-			logger.error("不可能抛出的异常{}", e.getMessage());
+			logger.error("不可能抛出的异常: {}", e.getMessage());
 		}
 		return result;
 	}

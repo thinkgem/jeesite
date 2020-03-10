@@ -53,6 +53,9 @@
 		<beetl.version>3.0.19-SNAPSHOT</beetl.version>
 		<swagger.version>1.6.0</swagger.version>
 		
+		<!-- jdbc setting -->
+		<mysql.version>8.0.11</mysql.version>
+		
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
 		<!-- <tomcat.version>9.0.31</tomcat.version> -->
@@ -227,9 +230,9 @@
 				
 				<!-- JavaScript CSS Compress -->
 				<plugin>
-					<groupId>net.alchim31.maven</groupId>
-					<artifactId>yuicompressor-maven-plugin</artifactId>
-					<version>1.5.1</version>
+					<groupId>com.jeesite.maven</groupId>
+					<artifactId>compressor-maven-plugin</artifactId>
+					<version>1.0.0-SNAPSHOT</version>
 					<executions>
 						<execution>
 							<phase>prepare-package</phase>
@@ -356,8 +359,8 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>net.alchim31.maven</groupId>
-						<artifactId>yuicompressor-maven-plugin</artifactId>
+						<groupId>com.jeesite.maven</groupId>
+						<artifactId>compressor-maven-plugin</artifactId>
 					</plugin>
 				</plugins>
 			</build>
@@ -369,8 +372,8 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>net.alchim31.maven</groupId>
-						<artifactId>yuicompressor-maven-plugin</artifactId>
+						<groupId>com.jeesite.maven</groupId>
+						<artifactId>compressor-maven-plugin</artifactId>
 					</plugin>
 				</plugins>
 			</build>
