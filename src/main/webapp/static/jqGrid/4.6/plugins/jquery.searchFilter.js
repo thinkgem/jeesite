@@ -405,7 +405,7 @@ jQuery.fn.searchFilter = function(fields, options) {
                 }
                 if (opts.datepickerFix === true && jQuery.fn.datepicker !== undefined) { // using $.data to associate data with document elements is Not Good
                     row.find(".hasDatepicker").each(function() {
-                        var settings = jQuery.data(this, "datepicker").settings;
+                        var settings = this.data("datepicker").settings;
                         newRow.find("#" + this.id).unbind().removeAttr("id").removeClass("hasDatepicker").datepicker(settings);
                     });
                 }
@@ -462,7 +462,7 @@ jQuery.fn.searchFilter = function(fields, options) {
                 newRow.find("select[name='field']").focus();
                 if (opts.datepickerFix === true && jQuery.fn.datepicker !== undefined) { // using $.data to associate data with document elements is Not Good
                     row.find(".hasDatepicker").each(function() {
-                        var settings = jQuery.data(this, "datepicker").settings;
+                        var settings = this.data("datepicker").settings;
                         newRow.find("#" + this.id).unbind().removeAttr("id").removeClass("hasDatepicker").datepicker(settings);
                     });
                 }
