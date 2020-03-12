@@ -18,6 +18,9 @@
 	 */
 	this.DesUtils.encode = function(data, secretKey){
 		if (data && secretKey){
+			if (secretKey === 'Base64'){
+				return Base64.encode(data);
+			}
 			var ks = secretKey.split(',');
 			if (ks.length >= 3){
 				return strEnc(data, ks[0], ks[1], ks[2]);
@@ -32,6 +35,9 @@
 	 */
 	this.DesUtils.decode = function(data, secretKey){
 		if (data && secretKey){
+			if (secretKey === 'Base64'){
+				return Base64.decode(data);
+			}
 			var ks = secretKey.split(',');
 			if (ks.length >= 3){
 				return strDec(data, ks[0], ks[1], ks[2]);

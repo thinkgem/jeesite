@@ -76,11 +76,11 @@
 	</div>
 	<div class="login-copyright">
 		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
-			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
+			id="loginKey" data-key="${@Global.getConfig('shiro.loginSubmit.secretKey')}"
+			href="http://jeesite.com" >JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
 	</div>
 </div>
 <% } %>
-<script>var secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';</script>
-<script src="${ctxStatic}/jquery-toastr/2.1/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/common/des.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-toastr/2.1/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/modules/sys/sysLogin.js?${_version}"></script>
