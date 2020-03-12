@@ -62,13 +62,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 业务流程管理 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-bpm</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
 		<!-- Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
