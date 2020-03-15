@@ -97,12 +97,12 @@ public class EmpUser extends User {
 		@ExcelField(title="电子邮箱", attrName="email", align=Align.LEFT, sort=50),
 		@ExcelField(title="手机号码", attrName="mobile", align=Align.CENTER, sort=60),
 		@ExcelField(title="办公电话", attrName="phone", align=Align.CENTER, sort=70),
-		@ExcelField(title="性别", attrName="sex", dictType="sys_user_sex", words=10, align=Align.CENTER, sort=75),
+		@ExcelField(title="性别", attrName="sex", dictType="sys_user_sex", align=Align.CENTER, words=10, sort=75),
 		@ExcelField(title="员工编码", attrName="employee.empCode", align=Align.CENTER, sort=80),
 		@ExcelField(title="员工姓名", attrName="employee.empName", align=Align.CENTER, sort=95),
 		@ExcelField(title="拥有角色编号", attrName="userRoleString", align=Align.LEFT, sort=800, type=ExcelField.Type.IMPORT),
-		@ExcelField(title="建档日期", attrName="createDate", words=15, align=Align.CENTER, sort=900, type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd"),
-		@ExcelField(title="最后登录", attrName="lastLoginDate", words=20, align=Align.CENTER, sort=900, type=ExcelField.Type.EXPORT),
+		@ExcelField(title="建档日期", attrName="createDate", align=Align.CENTER, words=15, sort=900, type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd"),
+		@ExcelField(title="最后登录", attrName="lastLoginDate", align=Align.CENTER, words=20, sort=900, type=ExcelField.Type.EXPORT),
 	})
 	public Employee getEmployee(){
 		Employee employee = (Employee)super.getRefObj();
