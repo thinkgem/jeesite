@@ -235,9 +235,15 @@ public class Log extends DataEntity<Log> {
 		}
 		StringBuilder params = new StringBuilder();
 		for (Map.Entry<String, String[]> param : ((Map<String, String[]>)paramsMap).entrySet()){
-			params.append(("".equals(params.toString()) ? "" : "&") + param.getKey() + "=");
-			String paramValue = (param.getValue() != null && param.getValue().length > 0 ? param.getValue()[0] : "");
-			params.append(StringUtils.abbr(StringUtils.endsWithIgnoreCase(param.getKey(), "password") ? "*" : paramValue, 1000));
+			if (params.length() != 0) {
+				params.append("&");
+			}
+			params.append(param.getKey() + "=");
+			if (StringUtils.endsWithIgnoreCase(param.getKey(), "password")){
+				params.append("*");
+			}else if (param.getValue() != null) {
+				params.append(StringUtils.abbr(StringUtils.join(param.getValue(), ","), 1000));
+			}
 			this.paramsMap.put(param.getKey(), param.getValue());
 		}
 		this.requestParams = params.toString();
