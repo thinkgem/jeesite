@@ -110,6 +110,9 @@ jdbc:
 #
 #    # Oracle 下会自动开启 PSCache，并指定每个连接上 PSCache 大小。若不指定，则与 maxActive 相同（4.1.5+）
 #    maxPoolPreparedStatementPerConnectionSize: ~
+#    
+#    # 设置连接属性，可获取到表的 remark (备注)
+#    remarksReporting: false
 
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2

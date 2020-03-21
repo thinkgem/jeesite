@@ -340,7 +340,6 @@
 	
 	<profiles>
 		
-		<!-- 生成文档 -->
 		<profile>
 			<id>javadoc</id>
 			<build>
@@ -353,7 +352,6 @@
 			</build>
 		</profile>
 		
-		<!-- 打包项目 -->
 		<profile>
 			<id>package</id>
 			<build>
@@ -366,7 +364,6 @@
 			</build>
 		</profile>
 		
-		<!-- 部署项目 -->
 		<profile>
 			<id>deploy</id>
 			<build>
