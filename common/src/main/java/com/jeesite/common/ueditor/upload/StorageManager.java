@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.jeesite.common.idgen.IdGenerate;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -174,7 +174,7 @@ public class StorageManager {
 		File tmpDir = new File(System.getProperty("java.io.tmpdir"));
 //		String tmpFileName = (Math.random() * 10000 + "").replace(".", "");
 //		return new File(tmpDir, tmpFileName);
-		return new File(tmpDir, IdGenerate.randomBase62(10));
+		return new File(tmpDir, IdGen.randomBase62(10));
 	}
 
 	private static State saveTmpFile(File tmpFile, String path) {

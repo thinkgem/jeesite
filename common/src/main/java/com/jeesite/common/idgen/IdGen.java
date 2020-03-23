@@ -14,7 +14,7 @@ import com.jeesite.common.lang.StringUtils;
  * @author ThinkGem
  * @version 2014-8-19
  */
-public class IdGenerate {
+public class IdGen {
 
 	private static SecureRandom random = new SecureRandom();
 	private static IdWorker idWorker = new IdWorker(-1, -1);
