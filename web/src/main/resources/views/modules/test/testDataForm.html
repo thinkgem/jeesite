@@ -272,15 +272,15 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("用户列表选择")}', name:'testUser2', width:150,
+		{header:'${text("列表选择")}', name:'testUser2', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
 			}, editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
 					return js.template('listselectTpl', {
 						id: 'user_'+editOptions.id, title: '用户选择', 
-						name: 'testUser.userCode', value: val.split('|')[0], 
-						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+						name: 'testUser2.userCode', value: val.split('|')[0], 
+						labelName: 'testUser2.userName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/empUser/empUserSelect', cssClass: '',
 						itemCode: 'userCode', itemName: 'userName'
 					});
@@ -301,7 +301,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("区域选择")}', name:'testAreaCode', width:150,
+		{header:'${text("区域选择")}', name:'testAreaCode', width:150, title:false,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
 			}, editable: true, edittype: "custom", editoptions: {
@@ -315,6 +315,16 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
+// 		{header:'${text("文件上传")}', name:'id', width:250,
+// 			editable: true, edittype: "custom", editoptions: {
+// 				custom_element: function(val, editOptions) {
+// 					return js.template('fileuploadTpl', {
+// 						id: 'fileupload_'+editOptions.id, title: '区域选择', 
+// 						bizKey: val, bizType: 'testDataChild_file', cssClass: ''
+// 					});
+// 				}
+// 			}
+// 		},
 		{header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
@@ -335,7 +345,9 @@ $("#testDataChildDataGrid").dataGrid({
 	
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
-	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,testAreaCode,testAreaName,', // 提交数据列表的属性字段
+	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,'
+			+'testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,'
+			+'testAreaCode,testAreaName,testDataChild_file,testDataChild_file__del', // 提交数据列表的属性字段
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
@@ -355,6 +367,10 @@ $("#testDataChildDataGrid").dataGrid({
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
 	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"
 	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
+</div>//--></script>
+<script id="fileuploadTpl" type="text/template">//<!--<div>
+<#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}"
+	uploadType="all" class="{{d.cssClass}}" isMini="true" preview="weboffice"/>
 </div>//--></script>
 <script>
 $("#inputForm").validate({

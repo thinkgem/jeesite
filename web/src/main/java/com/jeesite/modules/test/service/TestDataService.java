@@ -92,6 +92,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(testData.getId(), "testData_file");
 		// 保存 TestData子表
+		int index = 0;
 		for (TestDataChild testDataChild : testData.getTestDataChildList()){
 			if (!TestDataChild.STATUS_DELETE.equals(testDataChild.getStatus())){
 				testDataChild.setTestData(testData);
@@ -105,6 +106,10 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 			}else{
 				testDataChildDao.delete(testDataChild);
 			}
+			// 保存上传附件
+			FileUploadUtils.saveFileUpload(testDataChild.getId(),
+					"testDataChildList["+index+"].testDataChild_file");
+			index++;
 		}
 	}
 	
