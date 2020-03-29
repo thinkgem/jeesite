@@ -120,8 +120,8 @@ jdbc:
 #  # 多数据源配置：ds2
 #  ds2:
 #    type: mysql
-#    driver: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC
 #    username: root
 #    password: 123456
 #    testSql: SELECT 1
@@ -132,10 +132,10 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-      
-  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
-  jta:
-    enabled: true
+#      
+#  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
+#  jta:
+#    enabled: false
 
 #  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
 #  grant select on sys.dba_pending_transactions to jeesite;
@@ -167,27 +167,27 @@ spring:
   main:
     bannerMode: "off"
     
-  # Redis 连接参数 （RedisProperties）
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    ssl: false
-    database: 0
-    password: 1234
-    timeout: 2000
-    lettuce:
-      pool:
-        # 最大空闲连接数
-        maxIdle: 3
-        # 最大活动连接数
-        maxActive: 20
-
-  # 缓存配置
-  cache:
-    # 缓存及会话共享（专业版）
-    isClusterMode: true
-    # 清理全部缓存按钮所清理的缓存列表
-    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache
+#  # Redis 连接参数 （RedisProperties）
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    ssl: false
+#    database: 0
+#    password: 1234
+#    timeout: 2000
+#    lettuce:
+#      pool:
+#        # 最大空闲连接数
+#        maxIdle: 3
+#        # 最大活动连接数
+#        maxActive: 20
+#
+#  # 缓存配置
+#  cache:
+#    # 缓存及会话共享（专业版）
+#    isClusterMode: false
+#    # 清理全部缓存按钮所清理的缓存列表
+#    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache
 
 # 日志配置
 logging:
@@ -210,8 +210,8 @@ logging:
 #  pageSize: 20
 
 # 用户相关
-user:
-
+#user:
+#  
 #  # 指定超级管理员编号（研发团队使用的账号）
 #  superAdminCode: system
 #
@@ -267,9 +267,9 @@ user:
 #    
 #  # 管理功能的控制权限类型（1拥有的权限 2管理的权限）（v4.1.5+）
 #  adminCtrlPermi: 2
-
-  # 多租户模式（SAAS模式）（专业版）
-  useCorpModel: true
+#
+#  # 多租户模式（SAAS模式）（专业版）
+#  useCorpModel: false
 
 # 菜单管理
 #menu:
@@ -277,18 +277,18 @@ user:
 #  updateStatusByModuleStatus: false
 
 # 国际化管理（专业版）
-lang:
-  enabled: true
-  
+#lang:
+#  enabled: false
+#  
 #  # 默认语言（4.1.3+）
 #  defaultLocale: zh_CN
 #  # 默认时区（4.1.3+）
 #  defaultTimeZone: GMT+08:00
   
 # 任务调度（个人版）
-job:
-  enabled: true
-
+#job:
+#  enabled: false
+#  
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true
 #
@@ -342,7 +342,7 @@ job:
 
 # Shiro 相关配置
 shiro:
-
+  
 #  #索引页路径
 #  defaultPath: ${shiro.loginUrl}
 #
@@ -420,7 +420,7 @@ shiro:
 
 # Session 相关
 #session:
-#
+#  
 #  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
 #  # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
 #  sessionTimeout: 1800000
@@ -440,7 +440,7 @@ shiro:
 
 # MyBatis 相关
 #mybatis:
-#
+#  
 #  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
 #  scanBasePackage: com.jeesite.modules
 #  
@@ -529,10 +529,10 @@ shiro:
 
 #file:
 #  enabled: true
-#
+#  
 #  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 ##  baseDir: D:/jeesite
-#
+#  
 #  # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
 #  uploadPath: '{yyyy}{MM}/'
 #  
@@ -549,7 +549,7 @@ shiro:
 ##    application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
 ##    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 ##    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
-#
+#  
 #  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
 #  imageMaxWidth: 1024
 #  imageMaxHeight: 768
@@ -566,7 +566,7 @@ shiro:
   
 #视频转码
 #video:
-#
+#  
 #  # 视频格式转换  ffmpeg.exe 所放的路径
 #  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
 ##  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
@@ -582,14 +582,14 @@ shiro:
 #======================================#
 
 # 消息提醒中心（专业版）
-msg:
-  enabled: true
-  
+#msg:
+#  enabled: false
+#  
 #  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
 #  realtime:
 #    # 是否开启
 #    enabled: true
-
+  
 #  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
 #  pushFailNumber: 3
   
@@ -601,7 +601,7 @@ msg:
 #    fromHostName: smtp.163.com
 #    sslOnConnect: false
 #    sslSmtpPort: 994
-#
+#  
 #  # 短信网关
 #  sms:
 #    beanName: smsSendService

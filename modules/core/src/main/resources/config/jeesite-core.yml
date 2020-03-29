@@ -107,13 +107,13 @@ frontPath: /f
 
 # 分页相关
 page:
-
+  
   # 分页默认大小
   pageSize: 20
 
 # 用户相关
 user:
-
+  
   # 指定超级管理员编号（研发团队使用的账号）
   superAdminCode: system
 
@@ -240,7 +240,7 @@ lang:
 # 任务调度（个人版）
 job:
   enabled: false
-
+  
   # 是否自动启动任务调度（可关闭）
   autoStartup: true
 
@@ -303,7 +303,7 @@ state:
 
 # Shiro 相关配置
 shiro:
-
+  
   #索引页路径
   defaultPath: ${shiro.loginUrl}
 
@@ -417,7 +417,7 @@ shiro:
   
 # Session 相关
 session:
-
+  
   # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
   # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
   sessionTimeout: 1800000
@@ -440,7 +440,7 @@ session:
   
 # MyBatis 相关
 mybatis:
-
+  
   # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
   scanBasePackage: com.jeesite.modules
   
@@ -538,10 +538,10 @@ error:
 
 file:
   enabled: true
-
+  
   # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 #  baseDir: D:/jeesite
-
+  
   # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
   uploadPath: '{yyyy}{MM}/'
   
@@ -575,7 +575,7 @@ file:
   
 # 视频转码
 video:
-
+  
   # 视频格式转换  ffmpeg.exe 所放的路径
   ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
 #  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
@@ -603,7 +603,7 @@ msg:
   
   # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
   pushFailNumber: 3
-
+  
   # 邮件发送参数
   email:
     beanName: emailSendService
@@ -612,7 +612,7 @@ msg:
     fromHostName: smtp.163.com
     sslOnConnect: true
     sslSmtpPort: 465
-
+  
   # 短信网关
   sms:
     beanName: smsSendService
