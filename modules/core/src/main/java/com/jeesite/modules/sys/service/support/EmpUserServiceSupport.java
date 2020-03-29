@@ -5,6 +5,7 @@ package com.jeesite.modules.sys.service.support;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -47,6 +48,16 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	private EmployeeService employeeService;
 	@Autowired
 	private EmployeeOfficeDao employeeOfficeDao;
+	
+	/**
+	 * 租户功能验证
+	 */
+	@PostConstruct
+	private void corpModelValid() throws Exception{
+		if (Global.isUseCorpModel() != Global.getPropertyToBoolean("user.useCorpModel", "false")){
+			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，视乎你的当前版本不是JeeSite专业版。\n");
+		}
+	}
 	
 	/**
 	 * 获取单条数据

@@ -4,6 +4,7 @@
 package com.jeesite.common.lang;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
@@ -72,7 +73,7 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 		}
 		BigDecimal b1 = new BigDecimal(Double.toString(v1));
 		BigDecimal b2 = new BigDecimal(Double.toString(v2));
-		return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+		return b1.divide(b2, scale, RoundingMode.HALF_UP).doubleValue();
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 	 */
 	public static String formatDouble(Double b) {
 		BigDecimal bg = new BigDecimal(b);
-		return bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+		return bg.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	/**
@@ -90,7 +91,7 @@ public class NumberUtils extends org.apache.commons.lang3.math.NumberUtils {
 	 */
 	public static String formatScale(double one, long total) {
 		BigDecimal bg = new BigDecimal(one * 100 / total);
-		return bg.setScale(0, BigDecimal.ROUND_HALF_UP).toString();
+		return bg.setScale(0, RoundingMode.HALF_UP).toString();
 	}
 	
 	/**

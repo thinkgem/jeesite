@@ -167,7 +167,6 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	 * @param element
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private static Object xmlToMap(Element element) {
 		// System.out.println(element.getName());
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -212,7 +211,6 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	 * @param element
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private static Object xmlToMapWithAttr(Element element) {
 		// System.out.println(element.getName());
 		Map<String, Object> map = new LinkedHashMap<String, Object>();

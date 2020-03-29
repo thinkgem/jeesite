@@ -319,7 +319,7 @@ public class ExcelImport implements Closeable {
 	 * @param cls 导入对象类型
 	 * @param groups 导入分组
 	 */
-	public <E> List<E> getDataList(Class<E> cls, String... groups) throws InstantiationException, IllegalAccessException{
+	public <E> List<E> getDataList(Class<E> cls, String... groups) throws Exception{
 		return getDataList(cls, false, groups);
 	}
 	
@@ -329,7 +329,7 @@ public class ExcelImport implements Closeable {
 	 * @param isThrowException 遇见错误是否抛出异常
 	 * @param groups 导入分组
 	 */
-	public <E> List<E> getDataList(Class<E> cls, final boolean isThrowException, String... groups) throws InstantiationException, IllegalAccessException{
+	public <E> List<E> getDataList(Class<E> cls, final boolean isThrowException, String... groups) throws Exception{
 		return getDataList(cls, new MethodCallback() {
 			@Override
 			public Object execute(Object... params) {
@@ -350,7 +350,7 @@ public class ExcelImport implements Closeable {
 	 * @param groups 导入分组
 	 */
 	@SuppressWarnings("unchecked")
-	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws InstantiationException, IllegalAccessException{
+	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws Exception{
 		List<Object[]> annotationList = ListUtils.newArrayList();
 		// Get annotation field 
 		Field[] fs = cls.getDeclaredFields();
@@ -380,15 +380,15 @@ public class ExcelImport implements Closeable {
 		Collections.sort(annotationList, new Comparator<Object[]>() {
 			@Override
 			public int compare(Object[] o1, Object[] o2) {
-				return new Integer(((ExcelField)o1[0]).sort()).compareTo(
-						new Integer(((ExcelField)o2[0]).sort()));
+				return Integer.valueOf(((ExcelField)o1[0]).sort()).compareTo(
+						Integer.valueOf(((ExcelField)o2[0]).sort()));
 			};
 		});
 		//log.debug("Import column count:"+annotationList.size());
 		// Get excel data
 		List<E> dataList = ListUtils.newArrayList();
 		for (int i = this.getDataRowNum(); i < this.getLastDataRowNum(); i++) {
-			E e = (E)cls.newInstance();
+			E e = (E)cls.getDeclaredConstructor().newInstance();
 			Row row = this.getRow(i);
 			if (row == null){
 				continue;

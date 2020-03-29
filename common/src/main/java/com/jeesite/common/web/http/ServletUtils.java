@@ -213,7 +213,7 @@ public class ServletUtils {
 				return XmlMapper.toXml(resultMap);
 			}else{
 				if (response != null){
-					response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 				}
 				if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
 					String functionName = request.getParameter("__callback");
@@ -225,7 +225,7 @@ public class ServletUtils {
 			}
 		}else{
 			if (response != null){
-				response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+				response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			}
 			return JsonMapper.toJson(resultMap);
 		}
@@ -300,7 +300,7 @@ public class ServletUtils {
 			if (type == null && StringUtils.isBlank(response.getContentType())){
 				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
 						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
-					type = MediaType.APPLICATION_JSON_UTF8_VALUE;
+					type = MediaType.APPLICATION_JSON_VALUE;
 				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
 					if (StringUtils.startsWith(string, "<!DOCTYPE")){
 						type = MediaType.TEXT_HTML_VALUE+";charset=UTF-8";

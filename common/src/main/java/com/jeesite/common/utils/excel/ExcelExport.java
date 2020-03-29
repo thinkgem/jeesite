@@ -230,8 +230,8 @@ public class ExcelExport implements Closeable{
 		Collections.sort(annotationList, new Comparator<Object[]>() {
 			@Override
 			public int compare(Object[] o1, Object[] o2) {
-				return new Integer(((ExcelField)o1[0]).sort()).compareTo(
-						new Integer(((ExcelField)o2[0]).sort()));
+				return Integer.valueOf(((ExcelField)o1[0]).sort()).compareTo(
+						Integer.valueOf(((ExcelField)o2[0]).sort()));
 			};
 		});
 		// Initialize

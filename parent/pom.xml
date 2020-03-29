@@ -42,6 +42,7 @@
 		<zxing.version>3.4.0</zxing.version>
 		<poi.version>4.1.2</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<groovy.version>3.0.2</groovy.version>
 		
 		<!-- framework version setting -->
 		<mybatis.version>3.5.4</mybatis.version>

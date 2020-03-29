@@ -55,9 +55,6 @@ public class ShiroConfig {
 	@Order(3000)
 	@ConditionalOnMissingBean(name="shiroFilterProxy")
 	public FilterRegistrationBean<Filter> shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
-		if (Global.isUseCorpModel() != Global.getPropertyToBoolean("user.useCorpModel", "false")){
-			throw new Exception("\n\nuser.useCorpModel=true? 你是否开启了多租户模式？视乎你的当前版本不是JeeSite专业版。\n");
-		}
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
 		bean.setFilter((Filter) shiroFilter.getInstance());
 		bean.addUrlPatterns("/*");
