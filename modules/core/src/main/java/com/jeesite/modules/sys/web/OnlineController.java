@@ -23,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -33,6 +32,7 @@ import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.shiro.session.SessionDAO;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.utils.SysUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -145,7 +145,7 @@ public class OnlineController extends BaseController{
 	public String kickOut(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
-			Map<String, String> onlineTickOutMap = CacheUtils.get("onlineTickOutMap");
+			Map<String, String> onlineTickOutMap = SysUtils.getCache("onlineTickOutMap");
 			if (onlineTickOutMap == null){
 				onlineTickOutMap = MapUtils.newConcurrentMap();
 			}
@@ -157,7 +157,7 @@ public class OnlineController extends BaseController{
 					onlineTickOutMap.put(key, StringUtils.EMPTY);
 				}
 			}
-			CacheUtils.put("onlineTickOutMap", onlineTickOutMap);
+			SysUtils.putCache("onlineTickOutMap", onlineTickOutMap);
 			sessionDAO.delete(session);
 			return renderResult(Global.TRUE, text("踢出已成功！"));
 		}
