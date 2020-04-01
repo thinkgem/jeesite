@@ -6,6 +6,17 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
+## 优势（只写别人没有的）
+
+1. 在 JeeSite 单应用基础之上，完成的 Cloud 功能，使用经典开发模式，就像开发单应用一样开发分布式应用
+2. 它提供了微服务模块的代码生成工具，快速生成开发微服务功能，包含微服务的发布和调用接口
+3. 我们将 api 和 client 合体为一个工程，自动适应自己调用自己 client 的影响，简化工程数量
+4. 如一些通用操作（增删改查）的微服务接口和调用基类实现，这些都不用自己写了，简化代码书写
+5. 统一的授权认证、基础数据微服务，都已经提供查询 client 接口，其他微服务应用模块中可直接获取用户、组织、权限、字典等基础数据。微服务之间调用中，出现的会话及缓存的一致性统一得到解决。
+6. 如 UserUtils、EmpUtils、EmpUserService、OfficeService 等等众多的基础服务工具类，都可以直接从基础数据的微服务中获取数据，你不必考虑跨 web 服务的数据交互，我们已经帮你做了。
+7. 写一个别人有的，使用柔性事务解决，跨 web 服务的情况，入侵性非常小哦。
+8. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
+
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud Finchley
@@ -23,6 +34,7 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 * 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
+* 分布式事务管理服务：jeesite-cloud-module-txlcn ： <http://127.0.0.1:7970>
 * 核心模块（**统一授权认证**）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
 * 测试模块1（单表增删改查示例）：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
@@ -67,6 +79,76 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 * test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
     - 服务消费者位置：jeesite-cloud-module-test1/../web/TestTree1Controller.java
     - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
+
+## 新增微服务方法
+
+举例新增一个微服务模块模块叫 `test3`，该模块的所有映射地址均在 `${adminPath}/test3/**` 这个路径下，该模块可以参照 `test1` 进行，步骤如下：
+
+1、在 jeesite-cloud-gateway 配置文件中新增网关路由
+
+```yml
+spring:
+  cloud:
+    gateway:
+      routes:
+      	# 测试模块3
+        - id: test3
+          uri: lb://jeesite-cloud-module-test3/js/a/test3
+          predicates:
+            - Path=/js/a/test3/**
+        # 基础权限模块
+        - id: core
+          uri: lb://jeesite-cloud-module-core/js
+          predicates:
+            - Path=/js/**
+```
+注意：新增的配置请放到 core 基础权限模块之上。
+
+2、在 jeesite-cloud-config 配置文件的微服务列表中，新增微服务：
+
+```yml
+# 微服务列表
+service:
+  test3:
+    name: jeesite-cloud-module-test3
+    path: ${server.servlet.context-path}
+```
+
+3、拷贝 jeesite-cloud-module-test1 项目为 jeesite-cloud-module-test3 文件夹：
+
+1）修改 pom.xml 中的应用名：
+
+```xml
+<artifactId>jeesite-cloud-module-test1</artifactId>
+替换为：
+<artifactId>jeesite-cloud-module-test3</artifactId>
+```
+
+```xml
+<artifactId>jeesite-cloud-module-test1-client</artifactId>
+替换为：
+<artifactId>jeesite-cloud-module-test3-client</artifactId>
+```
+
+2）修改 application.yml 中的应用名：
+
+```yml
+spring:
+  application:
+    name: jeesite-cloud-module-test3
+```
+
+3）修改 *Client.java 里的应用名：
+
+```
+service.test1 替换为 service.test3
+```
+
+4）修改 *Controller.java 里的映射路径：
+
+```
+${adminPath}/test1 替换为 ${adminPath}/test3
+```
 
 ## 授权协议声明
 
