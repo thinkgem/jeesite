@@ -20,9 +20,9 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud Finchley
-* 服务治理注册与发现：Spring Cloud Eureka / Consul
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos
+* 分布式统一配置中心：Spring Cloud Config / Nacos
 * 服务容错保护限流降级：Spring Cloud Hystrix
-* 分布式统一配置中心：Spring Cloud Config
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
 * 分布式链路追踪：Spring Cloud Zipkin (可选组件)
@@ -31,8 +31,9 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 
 ## 子项目介绍
 
-* 服务治理：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
+* 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
+* 服务注册和配置中心 **Nacos** 版本 ：<http://127.0.0.1:8848/nacos/index.html>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 分布式事务管理服务：jeesite-cloud-module-txlcn ： <http://127.0.0.1:7970>
 * 核心模块（**统一授权认证**）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
@@ -46,18 +47,47 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 
 ## 快速运行
 
-* 初始化数据库：[下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite4/attach_files)
-     或者使用 [init-db.bat](https://jeesite.gitee.io/docs/install-deploy/#初始化数据库) 命令
-* 修改分布式统一配置文件 `/jeesite-cloud-config/../cloud-config/application.yml` 的 JDBC 和 Redis 信息
+### 初始化数据库
+
+JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，你可以 [下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite4/attach_files)
+     或者使用 [init-data.bat(sh)](http://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种数据库）。
+
+### 安装 Redis
+
+Redis 是一个缓存数据库，主要用来集中式管理共享会话和系统缓存的，如果你已安装 Redis，可以忽略这个步骤。
+
+由于 Windows 版本的 Redis 安装不太方便，所以我们提供了该版本的安装文件和安装脚本。
+
+下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `Redis-x64-4.0.2.2.zip` 下载文件。
+
+解压  `Redis-x64-4.0.2.2.zip` 压缩包，运行 `service-install.bat` 安装 Windows 系统服务。
+
+默认地址：127.0.0.1；默认端口：6379；默认密码：1234，可根据自己需要修改 conf 文件。
+
+### 部署 Nacos 服务
+
+Nacos 包含 服务注册 和 配置中心，如果使用 Nacos 就不用部署 `jeesite-cloud-eureka` 和 `jeesite-cloud-config` 了。
+
+下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `nacos-server-1.2.1.zip` 下载文件。
+
+解压 `nacos-server-1.2.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+
+启动完成后，访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
+
+登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/cloud-config/nacos_config_export.zip` 上传文件。
+
+然后编辑 Data Id 为 `application.yml` 的文件里的 JDBC 和 Redis 信息。
+
+### 启动微服务项目
+
+* 在每个微服务中可以找的 `config/bootstrap.yml` 配置服务注册和配置中心地址。
 * 按顺序运行以下启动类的main方法：（因为服务直接有依赖，请启动完成一个再启下一个）
-    - /jeesite-cloud-eureka/../EurekaApplication.java
-    - /jeesite-cloud-config/../ConfigApplication.java
     - /jeesite-cloud-gateway/../GatewayApplication.java
     - /jeesite-cloud-module-core/../CoreApplication.java
     - /jeesite-cloud-module-test1/../Test1Application.java
     - /jeesite-cloud-module-test2/../Test2Application.java
 * 以上都启动成功后，浏览器访问网关项目地址即可：
-    - 访问地址：<http://127.0.0.1:8980/js>   system   admin
+    - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
     - 若访问报错，请再等待一会，可能服务未完全启动完成
 
 ![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
