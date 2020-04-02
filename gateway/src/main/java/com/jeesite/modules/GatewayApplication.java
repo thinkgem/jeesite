@@ -5,6 +5,7 @@ package com.jeesite.modules;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * Gateway Application
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 2018-10-13
  */
 @SpringBootApplication
+@EnableDiscoveryClient
 public class GatewayApplication {
 	
 	public static void main(String[] args) {

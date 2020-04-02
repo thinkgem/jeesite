@@ -47,6 +47,11 @@ spring:
       discovery:
         healthCheckPath: ${server.servlet.context-path}/actuator/health
         healthCheckInterval: 15s
+        
+    # 服务注册和配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
       
     # 网关路由配置
     gateway:

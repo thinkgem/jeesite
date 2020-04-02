@@ -54,6 +54,18 @@ spring:
       discovery:
         hostname: 127.0.0.1
         preferIpAddress: false
+        
+    # 服务注册和配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        group: jeesite-cloud
+        ext-config:
+          - data-id: application.yml
+            group: jeesite-cloud
 
   # 打印横幅
   main:
