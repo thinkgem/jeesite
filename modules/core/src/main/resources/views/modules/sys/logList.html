@@ -26,7 +26,7 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">日志类型：</label>
-					<div class="control-inline width-90">
+					<div class="control-inline Wdate-date nobg">
 						<#form:select path="logType" dictType="sys_log_type" blankOption="true" class="form-control required " />
 					</div>
 				</div>
@@ -61,10 +61,15 @@
 					<label class="control-label">操作时间：</label>
 					<div class="control-inline">
 						<#form:input path="createDate_gte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true,onpicked:function(){createDate_lte.click()}});"/>
-						&nbsp;--&nbsp;
+							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true,onpicked:function(){createDate_lte.click()}});"/> -
 						<#form:input path="createDate_lte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
 							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+					</div>
+					<div class="control-inline" style="width:75px;">
+						<select onchange="js.quickSelectDate(this.value, 'createDate_gte', 'createDate_lte');" class="form-control">
+							<option value="0">常用</option><option value="1">今日</option><option value="2">本周</option>
+							<option value="3">本月</option><option value="4">本季度</option><option value="5">上月</option>
+						</select>
 					</div>
 				</div>
 				<div class="form-group">
