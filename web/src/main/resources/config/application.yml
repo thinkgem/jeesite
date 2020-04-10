@@ -301,9 +301,11 @@ logging:
 #    threadPriority: 5
 #
 #  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+#  # 在微服务模式情况下，请将instanceName名称设置为当前微服务的名称
 #  # 每一个instanceId必须不同，设置AUTO则自动生成
 #  scheduler:
 #    instanceName: JeeSiteScheduler
+#    #instanceName: ${spring.application.name}
 #    instanceId: AUTO
 #
 #  # 任务调度集群设置
@@ -368,7 +370,7 @@ shiro:
 #  # 登录提交信息加密（如果不需要加密，设置为空即可）
 #  loginSubmit:
 #    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）默认加密方式：DES、Base64
-#    secretKey: thinkgem,jeesite,com
+#    #secretKey: thinkgem,jeesite,com
 #    secretKey: Base64
   
   # 记住我密钥设置，为空则自动生成一个新密钥，也可以通过 com.jeesite.test.RememberMeKeyGen 生成
