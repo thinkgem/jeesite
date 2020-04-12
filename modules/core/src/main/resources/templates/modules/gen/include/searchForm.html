@@ -9,7 +9,7 @@
 					<div class="control-inline">
 						<% if (c.queryType == 'BETWEEN'){ %>
 						<${'#'}form:input path="${c.attrName}_gte"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} class="form-control width-60"/>
-						&nbsp;--&nbsp;
+						&nbsp;-&nbsp;
 						<${'#'}form:input path="${c.attrName}_lte"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} class="form-control width-60"/>
 						<% } else { %>
 						<${'#'}form:input path="${c.attrName}"${c.dataLength != "0" ? ' maxlength="'+c.dataLength+'"' : ''} class="form-control width-120"/>
@@ -32,14 +32,14 @@
 						var isTime = (c.showType == 'datetime'); %>
 					<div class="control-inline">
 						<% if (c.queryType == 'BETWEEN'){ %>
-						<${'#'}form:input path="${c.attrName}_gte" readonly="true" maxlength="20" class="form-control Wdate-date${isTime?'time':''}"
-							dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false,onpicked:function(){${c.attrName}_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<${'#'}form:input path="${c.attrName}_lte" readonly="true" maxlength="20" class="form-control Wdate-date${isTime?'time':''}"
-							dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});"/>
+						<${'#'}form:input path="${c.attrName}_gte" readonly="true" maxlength="20" class="form-control laydate width-date${isTime?'time':''}"
+							dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}" data-done="${c.attrName}_lte.focus()"/>
+						&nbsp;-&nbsp;
+						<${'#'}form:input path="${c.attrName}_lte" readonly="true" maxlength="20" class="form-control laydate width-date${isTime?'time':''}"
+							dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}"/>
 						<% } else { %>
-						<${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate-date${isTime?'time':''}"
-							dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:false});"/>
+						<${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control laydate width-date${isTime?'time':''}"
+							dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}"/>
 						<% } %>
 					</div>
 				<% }else if(c.showType == 'userselect'){ %>

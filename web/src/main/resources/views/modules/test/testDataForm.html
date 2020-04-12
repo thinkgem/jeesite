@@ -81,8 +81,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('日期选择')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate"
-									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control laydate"
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
 					</div>
@@ -91,8 +91,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('日期时间')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate"
-									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:true});"/>
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control laydate"
+									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
 							</div>
 						</div>
 					</div>
@@ -151,8 +151,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2">
-								<span class="required hide">*</span> ${text('图片上传')}：</label>
+							<label class="control-label col-sm-2">${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
 									uploadType="image" class="" readonly="false" preview="weboffice"/>
@@ -163,8 +162,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2">
-								<span class="required hide">*</span> ${text('附件上传')}：</label>
+							<label class="control-label col-sm-2">${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
 									uploadType="all" class="" readonly="false" preview="weboffice"/>
@@ -244,19 +242,19 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'${text("日期选择")}', name:'testDate', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'date', format:'yyyy-MM-dd'});
+				}
+			}
 		},
 		{header:'${text("日期时间")}', name:'testDatetime', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:true});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'datetime', format:'yyyy-MM-dd HH:mm'});
+				}
+			}
 		},
 		{header:'${text("用户选择")}', name:'testUser', width:150,
 			formatter: function(val, obj, row, act){
@@ -287,7 +285,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("机构选择")}', name:'testOffice', width:150,
+		{header:'${text("机构选择")}', name:'testOffice', width:150, title:false,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
 			}, editable: true, edittype: "custom", editoptions: {
@@ -301,7 +299,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("区域选择")}', name:'testAreaCode', width:150, title:false,
+		{header:'${text("区域选择")}', name:'testAreaCode', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
 			}, editable: true, edittype: "custom", editoptions: {
@@ -316,15 +314,15 @@ $("#testDataChildDataGrid").dataGrid({
 			}
 		},
 // 		{header:'${text("文件上传")}', name:'id', width:250,
-// 			editable: true, edittype: "custom", editoptions: {
-// 				custom_element: function(val, editOptions) {
-// 					return js.template('fileuploadTpl', {
-// 						id: 'fileupload_'+editOptions.id, title: '区域选择', 
-// 						bizKey: val, bizType: 'testDataChild_file', cssClass: ''
-// 					});
-// 				}
-// 			}
-// 		},
+//			editable: true, edittype: "custom", editoptions: {
+//				custom_element: function(val, editOptions) {
+//					return js.template('fileuploadTpl', {
+//						id: 'fileupload_'+editOptions.id, title: '区域选择', 
+//						bizKey: val, bizType: 'testDataChild_file', cssClass: ''
+//					});
+//				}
+//			}
+//		},
 		{header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
@@ -346,8 +344,8 @@ $("#testDataChildDataGrid").dataGrid({
 	// 编辑表格的提交数据参数
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
 	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,'
-			+'testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,'
-			+'testAreaCode,testAreaName,testDataChild_file,testDataChild_file__del', // 提交数据列表的属性字段
+		+'testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,'
+		+'testAreaCode,testAreaName,testDataChild_file,testDataChild_file__del', // 提交数据列表的属性字段
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){

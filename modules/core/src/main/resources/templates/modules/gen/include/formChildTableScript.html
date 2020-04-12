@@ -71,11 +71,11 @@ for (c in child.columnList){
 %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d${isTime?' H:i:s':''}'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate${cssClass}', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:${c.isRequired != '1'}});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate${cssClass}', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'date${isTime?'time':''}', format:'yyyy-MM-dd${isTime?' HH:mm':''}'});
+				}
+			}
 		},
 <% 
 	}else if(c.showType == 'userselect'){

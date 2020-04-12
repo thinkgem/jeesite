@@ -11,11 +11,10 @@
 					<a href="${ctx}/test/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 				<a href="#" class="btn btn-default" id="btnTrunsTest" title="事务测试"><i class="fa fa-refresh"></i> 事务测试</a>
-				<a href="#" class="btn btn-default" id="btnExport" title="导出数据"><i class="glyphicon glyphicon-export"></i> 导出数据</a>
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${testData}" action="${ctx}/test/testData/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${testData}" action="${ctx}/test/testData/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('单行文本')}：</label>
@@ -36,82 +35,79 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">${text('下拉多选')}：</label>
-					<div class="control-inline width-120">
-						<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('单选框')}：</label>
-					<div class="control-inline">
-						<#form:radio path="testRadio" dictType="sys_menu_type" blankOption="true" class="form-control"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('复选框')}：</label>
-					<div class="control-inline">
-						<#form:checkbox path="testCheckbox" dictType="sys_menu_type" blankOption="true" class="form-control"/>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label">${text('日期选择')}：</label>
 					<div class="control-inline">
-						<#form:input path="testDate_gte" readonly="true" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,onpicked:function(){testDate_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<#form:input path="testDate_lte" readonly="true" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('日期时间')}：</label>
-					<div class="control-inline">
-						<#form:input path="testDatetime_gte" readonly="true" maxlength="20" class="form-control Wdate-datetime"
-							dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,onpicked:function(){testDatetime_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<#form:input path="testDatetime_lte" readonly="true" maxlength="20" class="form-control Wdate-datetime"
-							dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('用户选择')}：</label>
-					<div class="control-inline width-120" >
-						<#form:treeselect id="testUser" title="${text('用户选择')}"
-							path="testUser.userCode" labelPath="testUser.userName" 
-							url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('机构选择')}：</label>
-					<div class="control-inline width-120" >
-						<#form:treeselect id="testOffice" title="${text('机构选择')}"
-							path="testOffice.officeCode" labelPath="testOffice.officeName" 
-							url="${ctx}/sys/office/treeData" allowClear="true"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('区域选择')}：</label>
-					<div class="control-inline width-120" >
-						<#form:treeselect id="testAreaCode" title="${text('区域选择')}"
-							path="testAreaCode" labelPath="testAreaName" 
-							url="${ctx}/sys/area/treeData" allowClear="true"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('状态')}：</label>
-					<div class="control-inline width-120">
-						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('备注信息')}：</label>
-					<div class="control-inline">
-						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+						<#form:input path="testDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="testDate_lte.focus()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="testDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
 					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+					<button type="button" class="btn btn-default btn-sm btnFormMore">${text('更多')}<i class="fa fa-angle-double-down"></i></button>
+				</div>
+				<div class="form-more">
+					<div class="form-group">
+						<label class="control-label">${text('日期时间')}：</label>
+						<div class="control-inline">
+							<#form:input path="testDatetime_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+								dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="testDatetime_lte.focus()"/>
+							&nbsp;-&nbsp;
+							<#form:input path="testDatetime_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+								dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('用户选择')}：</label>
+						<div class="control-inline width-120" >
+							<#form:treeselect id="testUser" title="${text('用户选择')}"
+								path="testUser.userCode" labelPath="testUser.userName" 
+								url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('机构选择')}：</label>
+						<div class="control-inline width-120" >
+							<#form:treeselect id="testOffice" title="${text('机构选择')}"
+								path="testOffice.officeCode" labelPath="testOffice.officeName" 
+								url="${ctx}/sys/office/treeData" allowClear="true"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('区域选择')}：</label>
+						<div class="control-inline width-120" >
+							<#form:treeselect id="testAreaCode" title="${text('区域选择')}"
+								path="testAreaCode" labelPath="testAreaName" 
+								url="${ctx}/sys/area/treeData" allowClear="true"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('下拉多选')}：</label>
+						<div class="control-inline width-120">
+							<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('数据状态')}：</label>
+						<div class="control-inline width-120">
+							<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('单选框')}：</label>
+						<div class="control-inline">
+							<#form:radio path="testRadio" dictType="sys_menu_type" blankOption="true" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label">${text('复选框')}：</label>
+						<div class="control-inline">
+							<#form:checkbox path="testCheckbox" dictType="sys_menu_type" blankOption="true" class="form-control"/>
+						</div>
+					</div>
 				</div>
 			</#form:form>
 			<table id="dataGrid"></table>
@@ -120,7 +116,6 @@
 	</div>
 </div>
 <% } %>
-<script src="${ctxStatic}/jszip/2.5/jszip.min.js?${_version}"></script>
 <script>
 // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
@@ -220,7 +215,6 @@ $('#dataGrid').dataGrid({
 // 		if (data.count == 0){
 //			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
 //		}
-		window.dataList = data.list;
 	}
 });
 $("#btnTrunsTest").click(function(){ 
@@ -230,10 +224,4 @@ $("#btnTrunsTest").click(function(){
 	});
 	return false;
 });
-$("#btnExport").on("click", function(){
-	$('#dataGrid').dataGrid('setParam', {data: dataList}).dataGrid("exportToExcel",{
-		fileName: "数据列表.xlsx",
-		maxlength: 40
-	});
-})
 </script>
