@@ -1,0 +1,115 @@
+<% layout('/layouts/default.html', {title: '多表格联动示例', libs: ['layout', 'dataGrid']}){ %>
+<div class="ui-layout-north">
+	<div class="main-content">
+		<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<i class="fa icon-trophy"></i> ${text('岗位列表')}（多表格联动示例）
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<#form:form id="searchForm" model="${post!}" action="${ctx}/sys/post/listData" method="post" class="form-inline hide"
+						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize!3}"
+						data-order-by="${parameter.orderBy!'postCode desc'}">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+						<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+					</div>
+				</#form:form>
+				<table id="dataGrid"></table>
+				<div id="dataGridPage"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ui-layout-center">
+	<div class="main-content">
+		<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<i class="fa icon-user"></i> ${text('用户列表')}（点击岗位查询对应用户）
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<#form:form id="searchForm2" model="${empUser!}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline hide"
+						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize!6}"
+						data-order-by="${parameter.orderBy}">
+					<div class="form-group">
+						<label class="control-label">${text('岗位')}：</label>
+						<div class="control-inline width-90">
+							<#form:input name="employee.postCode" id="postCode" class="form-control"/>
+						</div>
+					</div>
+				</#form:form>
+				<table id="dataGrid2"></table>
+				<div id="dataGrid2Page"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% } %>
+<script>
+// 初始化布局
+$('body').layout({
+	north__size: 300,
+	onresize: function(){
+		$(window).resize();
+	}
+});
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	dataGridPage: $('#dataGridPage'),
+	autoGridHeight: function(){
+		return $('#searchForm').parent().height() - $('#dataGridPage').height() - 45;
+	},
+	columnModel: [
+		{header:'${text("岗位名称")}', name:'postName', index:'a.post_name', width:200, align:"center"},
+		{header:'${text("岗位编码")}', name:'postCode', index:'a.post_code', width:200, align:"center"},
+		{header:'${text("排序号")}', name:'postSort', index:'a.post_sort', width:80, align:"center"},
+		{header:'${text("岗位分类")}', name:'postType', index:'a.post_type', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_post_type')}, val, '未知', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+		}}
+	],
+	onSelectRow: function(id, isSelect, event){
+		$('#postCode').val(id);
+		$('#dataGrid2').dataGrid('refresh');
+	},
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+// 初始化DataGrid对象
+$('#dataGrid2').dataGrid({
+	searchForm: $("#searchForm2"),
+	dataGridPage: $('#dataGrid2Page'),
+	autoGridHeight: function(){
+		return $('#searchForm2').parent().height() - $('#dataGrid2Page').height() - 45;
+	},
+	columnModel: [
+		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center"},
+		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'${text("员工姓名")}', name:'refName', index:'a.ref_name', width:200, align:"center"},
+		{header:'${text("归属机构")}', name:'employee.office.officeName', index:'o.office_name', width:200, align:"center"},
+		{header:'${text("归属公司")}', name:'employee.company.companyName', index:'c.company_name', width:200, align:"center"},
+		{header:'${text("电子邮箱")}', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:140, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
