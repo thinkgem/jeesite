@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${log}" action="${ctx}/sys/log/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${log}" action="${ctx}/sys/log/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">日志标题：</label>
@@ -26,7 +26,7 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">日志类型：</label>
-					<div class="control-inline width-90">
+					<div class="control-inline width-date">
 						<#form:select path="logType" dictType="sys_log_type" blankOption="true" class="form-control required " />
 					</div>
 				</div>
@@ -60,11 +60,16 @@
 				<div class="form-group">
 					<label class="control-label">操作时间：</label>
 					<div class="control-inline">
-						<#form:input path="createDate_gte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true,onpicked:function(){createDate_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<#form:input path="createDate_lte" readonly="readonly" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+						<#form:input path="createDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="createDate_lte.focus()"/> -
+						<#form:input path="createDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+					<div class="control-inline" style="width:75px;">
+						<select onchange="js.quickSelectDate(this.value, 'createDate_gte', 'createDate_lte');" class="form-control">
+							<option value="0">&nbsp;</option><option value="1">今日</option><option value="2">本周</option>
+							<option value="3">本月</option><option value="4">本季度</option><option value="5">上月</option>
+						</select>
 					</div>
 				</div>
 				<div class="form-group">

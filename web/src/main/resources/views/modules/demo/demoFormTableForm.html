@@ -81,8 +81,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
-									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control laydate "
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
 					</div>
@@ -91,8 +91,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
-									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control laydate "
+									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
 							</div>
 						</div>
 					</div>
@@ -269,19 +269,19 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'日期选择', name:'testDate', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate ', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate ', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'date', format:'yyyy-MM-dd'});
+				}
+			}
 		},
 		{header:'日期时间', name:'testDatetime', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate ', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate ', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'datetime', format:'yyyy-MM-dd HH:mm'});
+				}
+			}
 		},
 		{header:'用户选择', name:'testUser', width:150,
 			formatter: function(val, obj, row, act){

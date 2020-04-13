@@ -123,8 +123,8 @@
 							<%
 								} else if (c.showType == 'date' || c.showType == 'datetime') {
 									var isTime = (c.showType == 'datetime');
-							%><${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control Wdate${cssClass}"
-									dataFormat="date${isTime?'time':''}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd${isTime?' HH:mm':''}',isShowClear:${c.isRequired != '1'}});"/>
+							%><${'#'}form:input path="${c.attrName}" readonly="true" maxlength="20" class="form-control laydate${cssClass}"
+									dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}"/>
 							<%
 								} else if (c.showType == 'userselect') {
 							%><${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('用户选择')}"
@@ -173,7 +173,8 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2">\${text('图片上传')}：</label>
+							<label class="control-label col-sm-2">
+								<span class="required hide">*</span> \${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<${'#'}form:fileupload id="uploadImage" bizKey="\${${className}.id}" bizType="${className}_image"
 									uploadType="image" class="" readonly="false"/>
@@ -189,7 +190,8 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2">\${text('附件上传')}：</label>
+							<label class="control-label col-sm-2">
+								<span class="required hide">*</span> \${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<${'#'}form:fileupload id="uploadFile" bizKey="\${${className}.id}" bizType="${className}_file"
 									uploadType="all" class="" readonly="false"/>

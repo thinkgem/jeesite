@@ -36,11 +36,11 @@
 				<div class="form-group">
 					<label class="control-label">${text('发送时间')}：</label>
 					<div class="control-inline">
-						<#form:input path="sendDate_gte" readonly="true" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,onpicked:function(){sendDate_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<#form:input path="sendDate_lte" readonly="true" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+						<#form:input path="sendDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="sendDate_lte.focus()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="sendDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
 				<div class="form-group">
