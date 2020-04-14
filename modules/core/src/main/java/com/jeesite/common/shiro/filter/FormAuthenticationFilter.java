@@ -46,11 +46,9 @@ import com.jeesite.modules.sys.utils.UserUtils;
  */
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 	
-	public static final String DEFAULT_CAPTCHA_PARAM = "validCode"; // 验证码
-	public static final String DEFAULT_PARAMS_PARAM = ServletUtils.DEFAULT_PARAMS_PARAM; // 登录附加参数（JSON字符串）优先级高于附加参数前缀
-	public static final String DEFAULT_PARAM_PREFIX_PARAM = ServletUtils.DEFAULT_PARAM_PREFIX_PARAM; // 附加参数前缀
-	public static final String DEFAULT_MESSAGE_PARAM = "message"; // 登录返回消息
-	public static final String DEFAULT_REMEMBER_USERCODE_PARAM = "rememberUserCode"; // 记住用户名
+	public static final String CAPTCHA_PARAM = "validCode"; // 验证码
+	public static final String MESSAGE_PARAM = "message"; // 登录返回消息
+	public static final String REMEMBER_USERCODE_PARAM = "rememberUserCode"; // 记住用户名
 	
 	private static final Logger logger = LoggerFactory.getLogger(FormAuthenticationFilter.class);
 	
@@ -63,7 +61,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	 */
 	public FormAuthenticationFilter() {
 		super();
-		rememberUserCodeCookie = new SimpleCookie(DEFAULT_REMEMBER_USERCODE_PARAM);
+		rememberUserCodeCookie = new SimpleCookie(REMEMBER_USERCODE_PARAM);
 		rememberUserCodeCookie.setHttpOnly(true);
         rememberUserCodeCookie.setMaxAge(Cookie.ONE_YEAR);
 	}
@@ -99,7 +97,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 			}
 		}
 		// 登录成功后，判断是否需要记住用户名
-		if (WebUtils.isTrue(request, DEFAULT_REMEMBER_USERCODE_PARAM)) {
+		if (WebUtils.isTrue(request, REMEMBER_USERCODE_PARAM)) {
 			rememberUserCodeCookie.setValue(EncodeUtils.encodeUrl(EncodeUtils.xssFilter(username)));
 			rememberUserCodeCookie.saveTo((HttpServletRequest)request, (HttpServletResponse)response);
 		} else {
@@ -152,9 +150,9 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	 * 获取登录验证码
 	 */
 	protected String getCaptcha(ServletRequest request) {
-		String captcha = WebUtils.getCleanParam(request, DEFAULT_CAPTCHA_PARAM);
+		String captcha = WebUtils.getCleanParam(request, CAPTCHA_PARAM);
 		if (StringUtils.isBlank(captcha)){
-			captcha = ObjectUtils.toString(request.getAttribute(DEFAULT_CAPTCHA_PARAM), StringUtils.EMPTY);
+			captcha = ObjectUtils.toString(request.getAttribute(CAPTCHA_PARAM), StringUtils.EMPTY);
 		}
 		// 登录用户名解密（解决登录用户名明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
@@ -268,7 +266,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 			logger.error(message, e); // 输出到日志文件
 		}
 		request.setAttribute(getFailureKeyAttribute(), className);
-		request.setAttribute(DEFAULT_MESSAGE_PARAM, message);
+		request.setAttribute(MESSAGE_PARAM, message);
 		
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
 		if (ServletUtils.isAjaxRequest(((HttpServletRequest) request))){
@@ -290,7 +288,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		// 获取登录参数
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);
 		for (Entry<String, Object> entry : paramMap.entrySet()){
-			data.put(DEFAULT_PARAM_PREFIX_PARAM + entry.getKey(), entry.getValue());
+			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
 
 		// 如果已登录，再次访问主页，则退出原账号。
@@ -319,10 +317,9 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		
 		String username = WebUtils.getCleanParam(request, DEFAULT_USERNAME_PARAM);
 		boolean rememberMe = WebUtils.isTrue(request, DEFAULT_REMEMBER_ME_PARAM);
-		boolean rememberUserCode = WebUtils.isTrue(request, DEFAULT_REMEMBER_USERCODE_PARAM);
-		String params = WebUtils.getCleanParam(request, DEFAULT_PARAMS_PARAM);
+		boolean rememberUserCode = WebUtils.isTrue(request, REMEMBER_USERCODE_PARAM);
 		String exception = (String)request.getAttribute(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-		String message = (String)request.getAttribute(DEFAULT_MESSAGE_PARAM);
+		String message = (String)request.getAttribute(MESSAGE_PARAM);
 
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
 		if (StringUtils.isNotBlank(secretKey)){
@@ -331,14 +328,13 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		
 		data.put(DEFAULT_USERNAME_PARAM, username);
 		data.put(DEFAULT_REMEMBER_ME_PARAM, rememberMe);
-		data.put(DEFAULT_REMEMBER_USERCODE_PARAM, rememberUserCode);
-		data.put(DEFAULT_PARAMS_PARAM, params);
+		data.put(REMEMBER_USERCODE_PARAM, rememberUserCode);
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);
 		for (Entry<String, Object> entry : paramMap.entrySet()){
-			data.put(DEFAULT_PARAM_PREFIX_PARAM + entry.getKey(), entry.getValue());
+			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
-		data.put(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME, exception);
-		data.put(DEFAULT_MESSAGE_PARAM, message);
+//		data.put(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME, exception);
+		data.put(MESSAGE_PARAM, message);
 
 		// 非授权异常，登录失败，验证码加1。
 		if (!UnauthorizedException.class.getName().equals(exception)){

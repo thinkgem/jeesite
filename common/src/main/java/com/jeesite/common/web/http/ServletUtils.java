@@ -36,8 +36,7 @@ import com.jeesite.common.mapper.XmlMapper;
  */
 public class ServletUtils {
 
-	public static final String DEFAULT_PARAMS_PARAM = "params";			// 登录扩展参数（JSON字符串）优先级高于扩展参数前缀
-	public static final String DEFAULT_PARAM_PREFIX_PARAM = "param_";	// 扩展参数前缀
+	public static final String EXT_PARAMS_PREFIX = "param_";	// 扩展参数前缀
 	
 	// 定义静态文件后缀；静态文件排除URI地址
 	private static String[] staticFiles;
@@ -404,14 +403,14 @@ public class ServletUtils {
 	 * @return 返回Map对象
 	 */
 	public static Map<String, Object> getExtParams(ServletRequest request) {
-		Map<String, Object> paramMap = null;
-		String params =  StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
-		if (StringUtils.isNotBlank(params) && StringUtils.startsWith(params, "{")) {
-			paramMap = JsonMapper.fromJson(params, Map.class);
-		} else {
-			paramMap = getParametersStartingWith(ServletUtils.getRequest(), DEFAULT_PARAM_PREFIX_PARAM);
-		}
-		return paramMap;
+//		Map<String, Object> paramMap = null;
+//		String params = StringUtils.trim(request.getParameter(DEFAULT_PARAMS_PARAM));
+//		if (StringUtils.isNotBlank(params) && StringUtils.startsWith(params, "{")) {
+//			paramMap = JsonMapper.fromJson(params, Map.class);
+//		} else {
+//			paramMap = getParametersStartingWith(request, DEFAULT_PARAM_PREFIX_PARAM);
+//		}
+		return getParametersStartingWith(request, EXT_PARAMS_PREFIX);
 	}
 	
 	/**
