@@ -1,5 +1,5 @@
 /*!
- * jQuery Migrate - v3.1.0 - 2019-06-08
+ * jQuery Migrate - v3.2.0 - 2020-04-10
  * Copyright OpenJS Foundation and other contributors
  */
 ;( function( factory ) {
@@ -23,7 +23,7 @@
 "use strict";
 
 
-jQuery.migrateVersion = "3.1.0";
+jQuery.migrateVersion = "3.2.0";
 
 /* exported jQueryVersionSince, compareVersions */
 
@@ -67,14 +67,17 @@ function jQueryVersionSince( version ) {
 		window.console.log( "JQMIGRATE: Migrate plugin loaded multiple times" );
 	}
 
-	// Show a message on the console so devs know we're active
-	//window.console.log( "JQMIGRATE: Migrate is installed" +
-	//	( jQuery.migrateMute ? "" : " with logging active" ) +
-	//	", version " + jQuery.migrateVersion );
+//	// Show a message on the console so devs know we're active ThinkGem
+//	window.console.log( "JQMIGRATE: Migrate is installed" +
+//		( jQuery.migrateMute ? "" : " with logging active" ) +
+//		", version " + jQuery.migrateVersion );
 
 } )();
 
 var warnedAbout = {};
+
+// By default each warning is only reported once.
+jQuery.migrateDeduplicateWarnings = true;
 
 // List of warnings already given; public read only
 jQuery.migrateWarnings = [];
@@ -92,7 +95,7 @@ jQuery.migrateReset = function() {
 
 function migrateWarn( msg ) {
 	var console = window.console;
-	if ( !warnedAbout[ msg ] ) {
+	if ( !jQuery.migrateDeduplicateWarnings || !warnedAbout[ msg ] ) {
 		warnedAbout[ msg ] = true;
 		jQuery.migrateWarnings.push( msg );
 		if ( console && console.warn && !jQuery.migrateMute ) {
@@ -134,10 +137,13 @@ if ( window.document.compatMode === "BackCompat" ) {
 
 
 var oldInit = jQuery.fn.init,
-	oldIsNumeric = jQuery.isNumeric,
 	oldFind = jQuery.find,
 	rattrHashTest = /\[(\s*[-\w]+\s*)([~|^$*]?=)\s*([-\w#]*?#[-\w#]*)\s*\]/,
-	rattrHashGlob = /\[(\s*[-\w]+\s*)([~|^$*]?=)\s*([-\w#]*?#[-\w#]*)\s*\]/g;
+	rattrHashGlob = /\[(\s*[-\w]+\s*)([~|^$*]?=)\s*([-\w#]*?#[-\w#]*)\s*\]/g,
+
+	// Support: Android <=4.0 only
+	// Make sure we trim BOM and NBSP
+	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
 jQuery.fn.init = function( arg1 ) {
 	var args = Array.prototype.slice.call( arguments );
@@ -195,42 +201,15 @@ for ( findProp in oldFind ) {
 }
 
 // The number of elements contained in the matched element set
-jQuery.fn.size = function() {
-	migrateWarn( "jQuery.fn.size() is deprecated and removed; use the .length property" );
+migrateWarnFunc( jQuery.fn, "size", function() {
 	return this.length;
-};
+},
+"jQuery.fn.size() is deprecated and removed; use the .length property" );
 
-jQuery.parseJSON = function() {
-	migrateWarn( "jQuery.parseJSON is deprecated; use JSON.parse" );
+migrateWarnFunc( jQuery, "parseJSON", function() {
 	return JSON.parse.apply( null, arguments );
-};
-
-jQuery.isNumeric = function( val ) {
-
-	// The jQuery 2.2.3 implementation of isNumeric
-	function isNumeric2( obj ) {
-		var realStringObj = obj && obj.toString();
-		return !jQuery.isArray( obj ) && ( realStringObj - parseFloat( realStringObj ) + 1 ) >= 0;
-	}
-
-	var newValue = oldIsNumeric( val ),
-		oldValue = isNumeric2( val );
-
-	if ( newValue !== oldValue ) {
-		migrateWarn( "jQuery.isNumeric() should not be called on constructed objects" );
-	}
-
-	return oldValue;
-};
-
-if ( jQueryVersionSince( "3.3.0" ) ) {
-	migrateWarnFunc( jQuery, "isWindow",
-		function( obj ) {
-			return obj != null && obj === obj.window;
-		},
-		"jQuery.isWindow() is deprecated"
-	);
-}
+},
+"jQuery.parseJSON is deprecated; use JSON.parse" );
 
 migrateWarnFunc( jQuery, "holdReady", jQuery.holdReady,
 	"jQuery.holdReady is deprecated" );
@@ -244,10 +223,78 @@ migrateWarnProp( jQuery.expr, "filters", jQuery.expr.pseudos,
 migrateWarnProp( jQuery.expr, ":", jQuery.expr.pseudos,
 	"jQuery.expr[':'] is deprecated; use jQuery.expr.pseudos" );
 
+// Prior to jQuery 3.1.1 there were internal refs so we don't warn there
+if ( jQueryVersionSince( "3.1.1" ) ) {
+	migrateWarnFunc( jQuery, "trim", function( text ) {
+		return text == null ?
+			"" :
+			( text + "" ).replace( rtrim, "" );
+	},
+	"jQuery.trim is deprecated; use String.prototype.trim" );
+}
+
 // Prior to jQuery 3.2 there were internal refs so we don't warn there
 if ( jQueryVersionSince( "3.2.0" ) ) {
-	migrateWarnFunc( jQuery, "nodeName", jQuery.nodeName,
+	migrateWarnFunc( jQuery, "nodeName", function( elem, name ) {
+		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
+	},
 	"jQuery.nodeName is deprecated" );
+}
+
+if ( jQueryVersionSince( "3.3.0" ) ) {
+
+	migrateWarnFunc( jQuery, "isNumeric", function( obj ) {
+
+			// As of jQuery 3.0, isNumeric is limited to
+			// strings and numbers (primitives or objects)
+			// that can be coerced to finite numbers (gh-2662)
+			var type = typeof obj;
+			return ( type === "number" || type === "string" ) &&
+
+				// parseFloat NaNs numeric-cast false positives ("")
+				// ...but misinterprets leading-number strings, e.g. hex literals ("0x...")
+				// subtraction forces infinities to NaN
+				!isNaN( obj - parseFloat( obj ) );
+		},
+		"jQuery.isNumeric() is deprecated"
+	);
+
+	// Populate the class2type map
+	var class2type = {};
+	jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".
+		split( " " ),
+	function( _, name ) {
+		class2type[ "[object " + name + "]" ] = name.toLowerCase();
+	} );
+
+	migrateWarnFunc( jQuery, "type", function( obj ) {
+		if ( obj == null ) {
+			return obj + "";
+		}
+
+		// Support: Android <=2.3 only (functionish RegExp)
+		return typeof obj === "object" || typeof obj === "function" ?
+			class2type[ Object.prototype.toString.call( obj ) ] || "object" :
+			typeof obj;
+	},
+	"jQuery.type is deprecated" );
+
+	migrateWarnFunc( jQuery, "isFunction",
+		function( obj ) {
+			return typeof obj === "function";
+		},
+		"jQuery.isFunction() is deprecated" );
+
+	migrateWarnFunc( jQuery, "isWindow",
+		function( obj ) {
+			return obj != null && obj === obj.window;
+		},
+		"jQuery.isWindow() is deprecated"
+	);
+
+	migrateWarnFunc( jQuery, "isArray", Array.isArray,
+		"jQuery.isArray is deprecated; use Array.isArray"
+	);
 }
 
 
@@ -363,7 +410,23 @@ jQuery.swap = function( elem, options, callback, args ) {
 	return ret;
 };
 
+if ( jQueryVersionSince( "3.4.0" ) && typeof Proxy !== "undefined" ) {
+
+	jQuery.cssProps = new Proxy( jQuery.cssProps || {}, {
+		set: function() {
+			migrateWarn( "JQMIGRATE: jQuery.cssProps is deprecated" );
+			return Reflect.set.apply( this, arguments );
+		}
+	} );
+}
+
 var oldData = jQuery.data;
+
+var camelCase = function( string ) {
+	return string.replace( /-([a-z])/g, function( _, letter ) {
+		return letter.toUpperCase();
+	} );
+};
 
 jQuery.data = function( elem, name, value ) {
 	var curData;
@@ -373,7 +436,7 @@ jQuery.data = function( elem, name, value ) {
 		curData = jQuery.hasData( elem ) && oldData.call( this, elem );
 		var sameKeys = {};
 		for ( var key in name ) {
-			if ( key !== jQuery.camelCase( key ) ) {
+			if ( key !== camelCase( key ) ) {
 				migrateWarn( "jQuery.data() always sets/gets camelCased names: " + key );
 				curData[ key ] = name[ key ];
 			} else {
@@ -387,7 +450,7 @@ jQuery.data = function( elem, name, value ) {
 	}
 
 	// If the name is transformed, look for the un-transformed name in the data object
-	if ( name && typeof name === "string" && name !== jQuery.camelCase( name ) ) {
+	if ( name && typeof name === "string" && name !== camelCase( name ) ) {
 		curData = jQuery.hasData( elem ) && oldData.call( this, elem );
 		if ( curData && name in curData ) {
 			migrateWarn( "jQuery.data() always sets/gets camelCased names: " + name );
@@ -571,23 +634,31 @@ jQuery.fn.extend( {
 	}
 } );
 
+var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+
+jQuery.UNSAFE_restoreLegacyHtmlPrefilter = function() {
+	jQuery.htmlPrefilter = function( html ) {
+		return html.replace( rxhtmlTag, "<$1></$2>" );
+	};
+};
+
 
 var oldOffset = jQuery.fn.offset;
 
 jQuery.fn.offset = function() {
 	var docElem,
 		elem = this[ 0 ],
-		origin = { top: 0, left: 0 };
+		bogus = { top: 0, left: 0 };
 
 	if ( !elem || !elem.nodeType ) {
 		migrateWarn( "jQuery.fn.offset() requires a valid DOM element" );
-		return origin;
+		return undefined;
 	}
 
 	docElem = ( elem.ownerDocument || window.document ).documentElement;
 	if ( !jQuery.contains( docElem, elem ) ) {
 		migrateWarn( "jQuery.fn.offset() requires an element connected to a document" );
-		return origin;
+		return bogus;
 	}
 
 	return oldOffset.apply( this, arguments );
@@ -639,14 +710,14 @@ jQuery.Deferred = function( func ) {
 
 		return jQuery.Deferred( function( newDefer ) {
 			jQuery.each( tuples, function( i, tuple ) {
-				var fn = jQuery.isFunction( fns[ i ] ) && fns[ i ];
+				var fn = typeof fns[ i ] === "function" && fns[ i ];
 
 				// Deferred.done(function() { bind to newDefer or newDefer.resolve })
 				// deferred.fail(function() { bind to newDefer or newDefer.reject })
 				// deferred.progress(function() { bind to newDefer or newDefer.notify })
 				deferred[ tuple[ 1 ] ]( function() {
 					var returned = fn && fn.apply( this, arguments );
-					if ( returned && jQuery.isFunction( returned.promise ) ) {
+					if ( returned && typeof returned.promise === "function" ) {
 						returned.promise()
 							.done( newDefer.resolve )
 							.fail( newDefer.reject )
