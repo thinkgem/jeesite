@@ -47,7 +47,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 	
 	public static final String DEFAULT_CAPTCHA_PARAM = "validCode"; // 验证码
-	public static final String DEFAULT_PARAMS_PARAM = ServletUtils.DEFAULT_PARAMS_PARAM; // 登录附加参数（JSON字符串）优先级高于附加参数前缀
+//	public static final String DEFAULT_PARAMS_PARAM = ServletUtils.DEFAULT_PARAMS_PARAM; // 登录附加参数（JSON字符串）优先级高于附加参数前缀
 	public static final String DEFAULT_PARAM_PREFIX_PARAM = ServletUtils.DEFAULT_PARAM_PREFIX_PARAM; // 附加参数前缀
 	public static final String DEFAULT_MESSAGE_PARAM = "message"; // 登录返回消息
 	public static final String DEFAULT_REMEMBER_USERCODE_PARAM = "rememberUserCode"; // 记住用户名
@@ -320,7 +320,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		String username = WebUtils.getCleanParam(request, DEFAULT_USERNAME_PARAM);
 		boolean rememberMe = WebUtils.isTrue(request, DEFAULT_REMEMBER_ME_PARAM);
 		boolean rememberUserCode = WebUtils.isTrue(request, DEFAULT_REMEMBER_USERCODE_PARAM);
-		String params = WebUtils.getCleanParam(request, DEFAULT_PARAMS_PARAM);
+//		String params = WebUtils.getCleanParam(request, DEFAULT_PARAMS_PARAM);
 		String exception = (String)request.getAttribute(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
 		String message = (String)request.getAttribute(DEFAULT_MESSAGE_PARAM);
 
@@ -332,7 +332,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		data.put(DEFAULT_USERNAME_PARAM, username);
 		data.put(DEFAULT_REMEMBER_ME_PARAM, rememberMe);
 		data.put(DEFAULT_REMEMBER_USERCODE_PARAM, rememberUserCode);
-		data.put(DEFAULT_PARAMS_PARAM, params);
+//		data.put(DEFAULT_PARAMS_PARAM, params);
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);
 		for (Entry<String, Object> entry : paramMap.entrySet()){
 			data.put(DEFAULT_PARAM_PREFIX_PARAM + entry.getKey(), entry.getValue());

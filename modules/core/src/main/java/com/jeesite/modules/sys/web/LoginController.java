@@ -4,7 +4,6 @@
 package com.jeesite.modules.sys.web;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,9 +71,8 @@ public class LoginController extends BaseController{
 			return loginFailure(request, response, model);
 		}
 
-		// 获取登录失败数据
-		Map<String, Object> data = FormAuthenticationFilter.getLoginData(request, response);
-		model.addAllAttributes(data);
+		// 获取登录数据
+		model.addAllAttributes(FormAuthenticationFilter.getLoginData(request, response));
 		
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
@@ -83,7 +81,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 返回指定用户类型的登录页视图
-		String userType = (String)data.get(FormAuthenticationFilter.DEFAULT_PARAM_PREFIX_PARAM + "userType");
+		String userType = (String)model.asMap().get(ServletUtils.DEFAULT_PARAM_PREFIX_PARAM + "userType");
 		if (StringUtils.isBlank(userType)){
 			userType = User.USER_TYPE_EMPLOYEE;
 		}
@@ -111,8 +109,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 获取登录失败数据
-		Map<String, Object> data = FormAuthenticationFilter.getLoginFailureData(request, response);
-		model.addAllAttributes(data);
+		model.addAllAttributes(FormAuthenticationFilter.getLoginFailureData(request, response));
 		
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest(request)){
@@ -120,7 +117,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 返回指定用户类型的登录页视图
-		String userType = (String)data.get(FormAuthenticationFilter.DEFAULT_PARAM_PREFIX_PARAM + "userType");
+		String userType = (String)model.asMap().get(ServletUtils.DEFAULT_PARAM_PREFIX_PARAM + "userType");
 		if (StringUtils.isBlank(userType)){
 			userType = User.USER_TYPE_EMPLOYEE;
 		}
