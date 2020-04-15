@@ -396,10 +396,11 @@ shiro:
   
   # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
   defaultFilterChainDefinitions: |
-    /validCode = anon
+    /lang/** = anon
     /account/* = anon
-    /static/** = anon
     /userfiles/** = anon
+    /validCode = anon
+    /static/** = anon
     /druid/** = perms[sys:state:druid]
     /v2/api-docs = perms[sys:swagger]
     /swagger-ui.html = perms[sys:swagger]
