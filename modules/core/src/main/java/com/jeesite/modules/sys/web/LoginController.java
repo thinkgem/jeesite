@@ -344,7 +344,7 @@ public class LoginController extends BaseController{
 			CookieUtils.setCookie(response, "skinName_" + loginInfo.getId(), skinName);
 			return REDIRECT + adminPath + "/index";
 		}
-		return "modules/sys/sysSwitchSkin";
+		return "modules/sys/switchSkin";
 	}
 	
 	/**
