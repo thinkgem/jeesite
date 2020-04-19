@@ -367,7 +367,7 @@ shiro:
   # 是否允许接收跨域的Cookie凭证数据 CORS
 #  accessControlAllowCredentials: true
   
-  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF）
+  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
 #  allowReferers: http://127.0.0.1,http://localhost
 #  allowReferers: ~
   
