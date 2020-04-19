@@ -79,6 +79,7 @@ video/mp4                             mp4
 video/mpeg                            mpeg mpg
 video/quicktime                       mov
 video/webm                            webm
+video/mkv                             mkv
 video/x-flv                           flv
 video/x-m4v                           m4v
 video/x-mng                           mng
