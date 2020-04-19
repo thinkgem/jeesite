@@ -154,7 +154,7 @@
 							<label class="control-label col-sm-2">${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
-									uploadType="image" class="" readonly="false" preview="weboffice"/>
+									uploadType="image" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>
@@ -165,7 +165,7 @@
 							<label class="control-label col-sm-2">${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
-									uploadType="all" class="" readonly="false" preview="weboffice"/>
+									uploadType="all" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>
@@ -368,7 +368,7 @@ $("#testDataChildDataGrid").dataGrid({
 </div>//--></script>
 <script id="fileuploadTpl" type="text/template">//<!--<div>
 <#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}"
-	uploadType="all" class="{{d.cssClass}}" isMini="true" preview="weboffice"/>
+	uploadType="all" class="{{d.cssClass}}" isMini="true" preview="true"/>
 </div>//--></script>
 <script>
 $("#inputForm").validate({
