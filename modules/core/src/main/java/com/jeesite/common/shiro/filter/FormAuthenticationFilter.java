@@ -37,6 +37,9 @@ import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.sys.entity.Log;
+import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -45,10 +48,11 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 2020-4-13
  */
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
-	
+
 	public static final String CAPTCHA_PARAM = "validCode"; // 验证码
 	public static final String MESSAGE_PARAM = "message"; // 登录返回消息
 	public static final String REMEMBER_USERCODE_PARAM = "rememberUserCode"; // 记住用户名
+	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; // 异常类属性名
 	
 	private static final Logger logger = LoggerFactory.getLogger(FormAuthenticationFilter.class);
 	
@@ -256,8 +260,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	 */
 	@Override
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-		String className = e.getClass().getName(), message = "";
-		if (IncorrectCredentialsException.class.getName().equals(className) || UnknownAccountException.class.getName().equals(className)) {
+		String message = StringUtils.EMPTY;
+		if (e instanceof IncorrectCredentialsException || e instanceof UnknownAccountException) {
 			message = Global.getText("sys.login.failure");
 		} else if (e.getMessage() != null && StringUtils.startsWith(e.getMessage(), "msg:")) {
 			message = StringUtils.replace(e.getMessage(), "msg:", "");
@@ -265,7 +269,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 			message = Global.getText("sys.login.error");
 			logger.error(message, e); // 输出到日志文件
 		}
-		request.setAttribute(getFailureKeyAttribute(), className);
+		request.setAttribute(EXCEPTION_ATTRIBUTE_NAME, e);
 		request.setAttribute(MESSAGE_PARAM, message);
 		
 		// 登录操作如果是Ajax操作，直接返回登录信息字符串。
@@ -318,7 +322,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		String username = WebUtils.getCleanParam(request, DEFAULT_USERNAME_PARAM);
 		boolean rememberMe = WebUtils.isTrue(request, DEFAULT_REMEMBER_ME_PARAM);
 		boolean rememberUserCode = WebUtils.isTrue(request, REMEMBER_USERCODE_PARAM);
-		String exception = (String)request.getAttribute(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+		Exception exception = (Exception)request.getAttribute(EXCEPTION_ATTRIBUTE_NAME);
 		String message = (String)request.getAttribute(MESSAGE_PARAM);
 
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
@@ -333,14 +337,18 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		for (Entry<String, Object> entry : paramMap.entrySet()){
 			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
-//		data.put(DEFAULT_ERROR_KEY_ATTRIBUTE_NAME, exception);
 		data.put(MESSAGE_PARAM, message);
-
-		// 非授权异常，登录失败，验证码加1。
-		if (!UnauthorizedException.class.getName().equals(exception)){
+		
+		// 非授权异常，登录失败，验证码加 1。
+		if (!(exception instanceof UnauthorizedException)){
 			data.put("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username,
 					(String)paramMap.get("corpCode"), (String)paramMap.get("deviceType"), "failed"));
 		}
+
+		// 记录用户登录失败日志
+		String corpCode = (String)paramMap.get("corpCode");
+		User user = UserUtils.getByLoginCode(username, corpCode);
+		LogUtils.saveLog(user, request, "登录失败", Log.TYPE_LOGIN_LOGOUT);
 		
 		//获取当前会话对象
 		Session session = UserUtils.getSession();
