@@ -405,7 +405,7 @@ public class ExcelImport implements Closeable {
 					if (StringUtils.isNotBlank(ef.dictType())){
 						try{
 							Class<?> dictUtils = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
-							val = dictUtils.getMethod("getDictValue", String.class, String.class,
+							val = dictUtils.getMethod("getDictValues", String.class, String.class,
 										String.class).invoke(null, ef.dictType(), val.toString(), "");
 						} catch (Exception ex) {
 							log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
