@@ -274,7 +274,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
 		}
 		empUser.setStatus(User.STATUS_DISABLE);
-		userService.updateStatus(empUser);
+		empUserService.updateStatus(empUser);
 		return renderResult(Global.TRUE, text("停用用户''{0}''成功", empUser.getUserName()));
 	}
 	
@@ -294,7 +294,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		empUser.setStatus(User.STATUS_NORMAL);
-		userService.updateStatus(empUser);
+		empUserService.updateStatus(empUser);
 		AuthorizingRealm.isValidCodeLogin(empUser.getLoginCode(), empUser.getCorpCode_(), null, "success");
 		return renderResult(Global.TRUE, text("启用用户''{0}''成功", empUser.getUserName()));
 	}

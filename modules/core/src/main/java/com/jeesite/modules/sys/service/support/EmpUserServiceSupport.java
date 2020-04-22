@@ -241,8 +241,8 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	@Override
 	@Transactional(readOnly=false)
 	public void updateStatus(EmpUser empUser) {
-		userService.delete(empUser);
-		employeeService.delete(empUser.getEmployee());
+		userService.updateStatus(empUser);
+		employeeService.updateStatus(empUser.getEmployee());
 	}
 	
 	/**
