@@ -52,7 +52,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1 FROM DUAL
 
-#  # Sql Server 数据库配置
+#  # Sql Server 数据库配置（2008）
 #  type: mssql
 #  driver: net.sourceforge.jtds.jdbc.Driver
 #  url: jdbc:jtds:sqlserver://127.0.0.1:1433/jeesite
@@ -60,6 +60,14 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
+#  # Sql Server 数据库配置（2012）
+#  type: mssql2012
+#  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+  
 #  # PostgreSql 数据库配置
 #  type: postgresql
 #  driver: org.postgresql.Driver
@@ -444,9 +452,6 @@ shiro:
 #  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  #shareSessionIdCookieName: ${session.sessionIdCookieName}
-#
-#  # 设置接收SessionId请求参数的名称
-#  sessionIdParamName: __sid
   
 # 系统缓存配置
 #j2cache:
