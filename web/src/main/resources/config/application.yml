@@ -159,8 +159,8 @@ spring:
   application:
     name: jeesite-web
     
-  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
-  profiles:    
+  # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
     active: default
     
   # 打印横幅
@@ -333,6 +333,9 @@ logging:
 # 代码生成
 #gen:
 #  enabled: true
+#  
+#  # 表名字段名是否强制小写
+#  forceLowerCase: true
 
 # 系统监控
 #state:
@@ -369,11 +372,13 @@ shiro:
 #
 #  # 登录提交信息加密（如果不需要加密，设置为空即可）
 #  loginSubmit:
-#    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）默认加密方式：DES、Base64
+#    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）加密方式：DES
+#    # v4.2.0+ 支持 Base64 加密方式，方便移动端及第三方系统处理认证，可直接设置 Key 为 Base64
 #    #secretKey: thinkgem,jeesite,com
 #    secretKey: Base64
   
-  # 记住我密钥设置，为空则自动生成一个新密钥，也可以通过 com.jeesite.test.RememberMeKeyGen 生成
+  # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
+  # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
   rememberMe:
     secretKey: ~
   
@@ -416,7 +421,7 @@ shiro:
 #  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
 #  innerFilter.allowIp: 127.0.0.1
 #  
-#  # URI 权限过滤器定义
+#  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
 #  filterChainDefinitions: |
 #    ${adminPath}/** = user
 
@@ -424,7 +429,7 @@ shiro:
 #session:
 #  
 #  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
-#  # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
+#  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
 #  sessionTimeout: 1800000
 #  
 #  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
@@ -439,6 +444,36 @@ shiro:
 #  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  #shareSessionIdCookieName: ${session.sessionIdCookieName}
+#
+#  # 设置接收SessionId请求参数的名称
+#  sessionIdParamName: __sid
+  
+# 系统缓存配置
+#j2cache:
+#
+#  # 一级缓存
+#  caffeine:
+#    region:
+#      #[cacheName]: size, xxxx[s|m|h|d]
+#      default: 10000, 1h
+#      sessionCache: 100000, 12h
+#    
+#  # 二级缓存
+#  redis:
+#    # 存储模式 （generic|hash）
+#    storage: hash
+#    # 通知订阅的通道名
+#    channel: j2cache
+#    # 缓存命名空间名
+#    namespace: jeesite
+#  
+#  # 通知订阅
+#  broadcast:
+#    # 缓存清理模式
+#    # passive -> 被动清除，一级缓存过期进行通知各节点清除一二级缓存
+#    # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
+#    # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
+#    cache_clean_mode: passive
 
 # MyBatis 相关
 #mybatis:
