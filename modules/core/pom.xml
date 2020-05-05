@@ -23,22 +23,21 @@
 	
 	<dependencies>
 		
-		<!-- JDBC device begin -->
-		<!-- MySQL 5.5、8.0 -->
+		<!-- MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- Oracle 11g -->
+		<!-- Oracle 11g
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3</version>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency> -->
 		<!-- Oracle 12c -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.oracle.ojdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<scope>runtime</scope>
@@ -47,8 +46,8 @@
 			<groupId>com.oracle.ojdbc</groupId>
 			<artifactId>orai18n</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
-		<!-- SqlServer 2008 -->
+		</dependency>
+		<!-- SqlServer 2008+ -->
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
@@ -66,7 +65,6 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- JDBC device end -->
 		
 		<!-- Common -->
 		<dependency>

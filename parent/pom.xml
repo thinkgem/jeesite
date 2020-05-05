@@ -55,6 +55,7 @@
 		<swagger.version>1.6.0</swagger.version>
 		
 		<!-- jdbc setting -->
+		<!-- <mysql.version>5.1.47</mysql.version> -->
 		<mysql.version>8.0.11</mysql.version>
 		
 		<!-- environment setting -->
