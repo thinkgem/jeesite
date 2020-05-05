@@ -10,7 +10,7 @@
 			<div class="ui-layout-content">
 				<#form:form id="searchForm" model="${post!}" action="${ctx}/sys/post/listData" method="post" class="form-inline hide"
 						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize!3}"
-						data-order-by="${parameter.orderBy!'postCode desc'}">
+						data-order-by="${parameter.orderBy!'post_code desc'}">
 					<div class="form-group">
 						<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
 						<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
