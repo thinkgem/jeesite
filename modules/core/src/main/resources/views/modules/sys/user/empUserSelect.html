@@ -2,8 +2,16 @@
 <div class="ui-layout-west">
 	<div class="box box-main">
 		<div class="box-header">
-			<div class="box-title">
-				<i class="fa icon-grid"></i> ${text('组织机构')}
+			<div class="box-title dropdown">
+				<div class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+					<i class="fa icon-grid"></i> <span id="queryTypeName">${text('按组织查询')}</span> <b class="caret"></b>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="javascript:" onclick="loadTree('office');"> <i class="fa fa-angle-right"></i> ${text('按组织查询')}</a></li>
+					<li><a href="javascript:" onclick="loadTree('post');"> <i class="fa fa-angle-right"></i> ${text('按岗位查询')}</a></li>
+					<li><a href="javascript:" onclick="loadTree('role');"> <i class="fa fa-angle-right"></i> ${text('按角色查询')}</a></li>
+					<li><a href="javascript:" onclick="loadTree('userType');"> <i class="fa fa-angle-right"></i> ${text('按用户类型')}</a></li>
+				</ul>
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" id="btnExpand" title="${text('展开')}" style="display:none;"><i class="fa fa-chevron-up"></i></button>
@@ -22,8 +30,11 @@
 			<div class="box-body pb0">
 				<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-					<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}"/>
-					<#form:hidden name="isAll" value="${parameter.isAll}"/>
+					<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}" class="isReset"/>
+					<#form:hidden name="isAll" value="${parameter.isAll}" class="isReset"/>
+					<#form:hidden id="postCode" name="employee.postCode" class="isReset"/>
+					<#form:hidden id="roleCode" name="roleCode" class="isReset"/>
+					<#form:hidden id="userType" name="userType" class="isReset"/>
 					<div class="form-group">
 						<label class="control-label">${text('账号')}：</label>
 						<div class="control-inline">
@@ -90,29 +101,64 @@ $('body').layout({
 	}
 });
 //树结构初始化加载
-var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
+var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
 		//$('button[type=reset]').click();
-		$('#officeCode').val(treeNode.id);
-		$('#officeName').val(treeNode.name);
+		$('input.isReset').val('');
+		if (queryType == 'userType'){
+			$('#userType').val(treeNode.id);
+			if (treeNode.id == 'employee'){
+				$('#searchForm').attr('action', '${ctx}/sys/empUser/listData');
+			}else{
+				$('#searchForm').attr('action', '${ctx}/sys/user/listData');
+			}
+		}else{
+			if (!queryType || queryType == 'office'){
+				$('#officeCode').val(treeNode.id);
+				$('#officeName').val(treeNode.name);
+			} else if (queryType == 'post'){
+				$('#postCode').val(treeNode.id);
+			} else if (queryType == 'role'){
+				$('#roleCode').val(treeNode.id);
+			} 
+		}
 		page(1);
 	}}
-}, tree, loadTree = function(){
-	js.ajaxSubmit("${ctx}/sys/office/treeData?___t=" + new Date().getTime(),
-			{ctrlPermi:'${@Global.getConfig("user.adminCtrlPermi", "2")}'/*1拥有的权限 2管理的权限*/}, function(data){
-		tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
-		// 展开第一级节点
-		var nodes = tree.getNodesByParam("level", 0);
-		for(var i=0; i<nodes.length; i++) {
-			tree.expandNode(nodes[i], true, false, false);
+}, queryType, url, tree, loadTree = function(queryType){
+	window.queryType = queryType;
+	if (queryType == 'userType'){
+		$('#queryTypeName').text('${text("按用户类型")}');
+		tree = $.fn.zTree.init($("#tree"), setting, [
+			{id: 'employee', name: '${text("员工类型")}'},
+			{id: 'none', name: '${text("系统管理员")}'}
+		]);
+		tree.expandAll(true);
+	}else{
+		if (!queryType || queryType == 'office'){
+			$('#queryTypeName').text('${text("按组织查询")}');
+			url = "${ctx}/sys/office/treeData?___t=" + new Date().getTime();
+		} else if (queryType == 'post'){
+			$('#queryTypeName').text('${text("按岗位查询")}');
+			url = "${ctx}/sys/post/treeData?___t=" + new Date().getTime();
+		} else if (queryType == 'role'){
+			$('#queryTypeName').text('${text("按角色查询")}');
+			url = "${ctx}/sys/role/treeData?___t=" + new Date().getTime();
 		}
-		// 展开第二级节点
-// 		nodes = tree.getNodesByParam("level", 1);
-// 		for(var i=0; i<nodes.length; i++) {
-// 			tree.expandNode(nodes[i], true, false, false);
-// 		}
-	}, null, null, js.text('loading.message'));
+		js.ajaxSubmit(url, {ctrlPermi:'1'/*1拥有的权限 2管理的权限*/}, function(data){
+			tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
+			// 展开第一级节点
+			var nodes = tree.getNodesByParam("level", 0);
+			for(var i=0; i<nodes.length; i++) {
+				tree.expandNode(nodes[i], true, false, false);
+			}
+			// 展开第二级节点
+//	 		nodes = tree.getNodesByParam("level", 1);
+//	 		for(var i=0; i<nodes.length; i++) {
+//	 			tree.expandNode(nodes[i], true, false, false);
+//	 		}
+		}, null, null, js.text('loading.message'));
+	}
 };loadTree();
 // 工具栏按钮绑定
 $('#btnExpand').click(function(){

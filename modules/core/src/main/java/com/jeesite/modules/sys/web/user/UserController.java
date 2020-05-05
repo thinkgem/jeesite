@@ -53,9 +53,9 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response) {
-		if (User.USER_TYPE_NONE.equals(user.getUserType())){
-			return new Page<User>(request, response);
-		}
+//		if (User.USER_TYPE_NONE.equals(user.getUserType())){
+//			return new Page<User>(request, response);
+//		}
 		if (Global.isStrictMode() && !user.getCurrentUser().isAdmin()){
 			return new Page<User>(request, response);
 		}
