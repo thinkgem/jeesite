@@ -2,11 +2,18 @@
 **/target
 **/webapp/userfiles
 **/WEB-INF/classes
+**/transaction-logs
 **/logs/*.log*
 *.epoch
+*.mv.db
+*.lic
 
+.settings
+.apt_generated
+.factorypath
 .classpath
 .project
+.vscode
 
 .idea
 *.ipr
@@ -15,3 +22,4 @@
 
 .DS_Store
 Thumbs.db
+rebel.xml

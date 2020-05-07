@@ -120,4 +120,20 @@ public class TestData1Controller extends BaseController {
 		return renderResult(Global.TRUE, text("删除数据成功！"));
 	}
 	
+	/**
+	 * 事务测试
+	 */
+	@RequiresPermissions("test:testData:edit")
+	@RequestMapping(value = "transTest")
+	@ResponseBody
+	public String transTest(TestData testData) {
+		try{
+			testDataService.transTest(testData);
+		}catch (Exception e) {
+			logger.debug("事务测试信息，报错回滚：" + e.getMessage());
+		}
+		boolean bl = testDataService.transValid(testData);
+		return renderResult(Global.TRUE, "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！");
+	}
+	
 }

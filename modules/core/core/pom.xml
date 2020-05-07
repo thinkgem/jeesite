@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-cloud-parent</artifactId>
-		<version>4.1.7-SNAPSHOT</version>
+		<version>4.1.9-SNAPSHOT</version>
 		<relativePath>../../../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -38,32 +38,27 @@
 		</dependency>
 		
 		<!-- 服务发现 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency> -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
 		
 		<!-- 配置中心 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-
-		<!-- 微服务监控
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-client</artifactId>
-			<version>${spring-boot-admin.version}</version>
 		</dependency> -->
-		
-		<!-- 链路追踪服务 -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
 		
 		<!-- 自动更新配置支持 
@@ -71,12 +66,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>-->
-		
-		<!-- 核心模块 -->
+
+		<!-- 链路追踪服务 -->
 		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-core-rest</artifactId>
-			<version>${project.parent.version}</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
 		</dependency>
 		
 		<!-- 在线文档 -->
@@ -86,9 +80,36 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
+		<!-- 分布式事务
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-txlcn-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
+		<!-- 核心模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-core-rest</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- 业务流程
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-bpm-rest</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-test1-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-test2-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

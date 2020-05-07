@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<template>
+	<name>controller</name>
+	<filePath>${moduleName}-client/src/main/java/${packageName}/${moduleName}/api/${subModuleName}</filePath>
+	<fileName>${ClassName}ServiceApi.java</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+package ${packageName}.${moduleName}.api${isNotEmpty(subModuleName)?'.'+subModuleName:''};
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jeesite.common.service.rest.CrudServiceRest;
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+
+/**
+ * ${functionName}API
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@RequestMapping(value = "/inner/api/${urlPrefix}")
+public interface ${ClassName}ServiceApi extends ${table.isTreeEntity?'Tree':'Crud'}ServiceRest<${ClassName}> {
+	
+}]]>
+	</content>
+</template>

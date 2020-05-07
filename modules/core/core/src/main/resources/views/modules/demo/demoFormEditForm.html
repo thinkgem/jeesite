@@ -1,9 +1,9 @@
-<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid','inputmask']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
+				<i class="fa icon-notebook"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -81,8 +81,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 日期选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
-									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control laydate "
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
 					</div>
@@ -91,8 +91,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 日期时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
-									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control laydate "
+									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
 							</div>
 						</div>
 					</div>
@@ -163,12 +163,42 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 区域选择：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 区域选择（异步）：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:treeselect id="testAreaCode" title="区域选择"
 									path="testAreaCode" labelPath="testAreaName"
-									url="${ctx}/sys/area/treeData"
+									url="${ctx}/sys/area/treeData?parentCode=0"
 									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 金额格式：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-rmb"></i></span>
+									<#form:input path="testInput_money" maxlength="200" class="form-control inputmask"
+											data-inputmask-alias="money" data-inputmask="'digits':'2'"/>
+									<span class="input-group-addon">(千分位，右对齐，保留2位小数)</span>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 电子邮箱格式：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
+									<#form:input path="testInput_regex" maxlength="200" class="form-control inputmask"
+											data-inputmask-regex="[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,4}"/>
+									<span class="input-group-addon">(正则表达式)</span>
+				                </div>
 							</div>
 						</div>
 					</div>
@@ -263,7 +293,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -271,7 +301,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -279,7 +309,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
@@ -287,25 +317,25 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).valid()});
+					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
 		{header:'日期选择', name:'testDate', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate ', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate ', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'date', format:'yyyy-MM-dd'});
+				}
+			}
 		},
 		{header:'日期时间', name:'testDatetime', width:150, 
 			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control Wdate ', 'readonly':'true',
-				dataInit: function(element){ $(element).on('focus', function(){
-					WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});
-				});
-			}}
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate ', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'datetime', format:'yyyy-MM-dd HH:mm'});
+				}
+			}
 		},
 		{header:'用户选择', name:'testUser', width:150,
 			formatter: function(val, obj, row, act){
@@ -317,6 +347,21 @@ $("#testDataChildDataGrid").dataGrid({
 						name: 'testUser.userCode', value: val.split('|')[0], 
 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
+					});
+				}
+			}
+		},
+		{header:'${text("用户列表选择")}', name:'testUser2', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('listselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户选择', 
+						name: 'testUser.userCode', value: val.split('|')[0], 
+						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/empUser/empUserSelect', cssClass: '',
+						itemCode: 'userCode', itemName: 'userName'
 					});
 				}
 			}
@@ -381,9 +426,19 @@ $("#testDataChildDataGrid").dataGrid({
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
 	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"/>
 </div>//--></script>
+<script id="listselectTpl" type="text/template">//<!--<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true"
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
+</div>//--></script>
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
+		
+		// 数据格式化恢复（表单提交之前调用）
+		$('.inputmask').inputmask('remove');
+		
 // 		js.ajaxSubmitForm($(form), function(data){
 // 			js.showMessage(data.message);
 // 			if(data.result == Global.TRUE){
@@ -392,7 +447,15 @@ $("#inputForm").validate({
 // 				});
 // 			}
 // 		}, "json");
+		log($(form).serializeArray());
 		js.showMessage('模拟保存成功');
+		
+		// 数据格式化（初始化完成表单后调用）
+		$(".inputmask").inputmask();
     }
 });
+
+//数据格式化（初始化完成表单后调用）
+$(".inputmask").inputmask();
+
 </script>

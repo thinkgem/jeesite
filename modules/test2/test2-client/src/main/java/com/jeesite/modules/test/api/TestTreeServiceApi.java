@@ -15,7 +15,7 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.modules.test.entity.TestTree;
 
 /**
- * 测试数据Service
+ * 测试数据API
  * @author ThinkGem
  * @version 2018-10-18
  */

@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-cloud-root</artifactId>
-	<version>4.1.7-SNAPSHOT</version>
+	<version>4.1.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Cloud</name>

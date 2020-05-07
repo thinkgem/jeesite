@@ -3,7 +3,7 @@
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa fa-list-alt"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
+				<i class="fa icon-notebook"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -83,8 +83,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 日期：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control Wdate "
-									dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control laydate "
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 							</div>
 						</div>
 					</div>
@@ -93,8 +93,8 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 时间：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control Wdate "
-									dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control laydate "
+									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
 							</div>
 						</div>
 					</div>

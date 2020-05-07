@@ -10,6 +10,7 @@
 				<% if(hasPermi('test:testData:edit')){ %>
 					<a href="${ctx}/test1/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
+				<a href="#" class="btn btn-default" id="btnTrunsTest" title="事务测试"><i class="fa fa-refresh"></i> 事务测试</a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -54,21 +55,21 @@
 				<div class="form-group">
 					<label class="control-label">${text('日期选择')}：</label>
 					<div class="control-inline">
-						<#form:input path="testDate_gte" readonly="true" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,onpicked:function(){testDate_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<#form:input path="testDate_lte" readonly="true" maxlength="20" class="form-control Wdate-date"
-							dataFormat="date" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+						<#form:input path="testDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="testDate_lte.focus()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="testDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('日期时间')}：</label>
 					<div class="control-inline">
-						<#form:input path="testDatetime_gte" readonly="true" maxlength="20" class="form-control Wdate-datetime"
-							dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,onpicked:function(){testDatetime_lte.click()}});"/>
-						&nbsp;--&nbsp;
-						<#form:input path="testDatetime_lte" readonly="true" maxlength="20" class="form-control Wdate-datetime"
-							dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+						<#form:input path="testDatetime_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="testDatetime_lte.focus()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="testDatetime_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -169,5 +170,12 @@ $('#dataGrid').dataGrid({
 	ajaxSuccess: function(data){
 		
 	}
+});
+$("#btnTrunsTest").click(function(){ 
+	js.ajaxSubmit("${ctx}/test1/testData/transTest", function(data){
+		js.showMessage(data.message);
+		page();
+	});
+	return false;
 });
 </script>

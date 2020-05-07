@@ -2,5 +2,19 @@
 #productName: JeeSite Test2
 
 #======================================#
+#========== System settings ===========#
+#======================================#
+
+# 任务调度（个人版）
+job:
+  enabled: true
+
+  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+  # 每一个instanceId必须不同，设置AUTO则自动生成
+  scheduler:
+    instanceName: JeeSiteScheduler2
+    instanceId: AUTO
+
+#======================================#
 #========== Project settings ==========#
 #======================================#

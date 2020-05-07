@@ -15,7 +15,7 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.modules.test.entity.TestData;
 
 /**
- * 测试数据Service
+ * 测试数据API
  * @author ThinkGem
  * @version 2018-10-18
  */
@@ -58,6 +58,15 @@ public interface TestDataServiceApi {
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findPage")
 	public Page<TestData> findPage(TestData testData);
+	
+	/**
+	 * 查询数据总数
+	 * @param testData
+	 * @return
+	 */
+	@RequiresPermissions("test:testData:view")
+	@PostMapping(value = "findCount")
+	public long findCount(TestData testData);
 	
 	/**
 	 * 保存数据（插入或更新）

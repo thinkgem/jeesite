@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
@@ -57,16 +58,6 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 	public Page<TestData> findPage(TestData testData) {
-		
-//		// 演示Map参数和返回值，支持分页
-//		Page<Map<String, Object>> pageMap = new Page<>();
-//		Map<String, Object> params = MapUtils.newHashMap();
-//		params.put("testInput", "123");
-//		params.put("page", pageMap);
-//		pageMap.setList(dao.findListForMap(params));
-//		System.out.println(pageMap.getList());
-//		System.out.println(pageMap.getCount());
-		
 		return super.findPage(testData);
 	}
 	
@@ -75,6 +66,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
+//	@LcnTransaction
 	@Transactional(readOnly=false)
 	public void save(TestData testData) {
 		super.save(testData);
@@ -128,6 +120,32 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	public void executeTestTask(UserService userService, Integer i, Long l, Float f, Double d, String s){
 		System.out.println(DateUtils.getTime() + " 任务执行了~~~  bean: " + userService + ", i: " + i
 				+ ", l: " + l + ", f: " + f + ", d: " + d + ", s: " + s);
+	}
+	
+	/**
+	 * 事务测试，若 Child 报错，则回滚
+	 */
+	@Transactional(readOnly=false/*, propagation=Propagation.NOT_SUPPORTED*/)
+	public void transTest(TestData testData) {
+		testData.setTestInput("transTest");
+		testData.setTestTextarea(IdGen.randomBase62(5));
+		dao.insert(testData);
+		TestDataChild testDataChild = new TestDataChild();
+		testDataChild.setTestData(testData);
+		// 设置一个超出数据库范围的值，抛出数据库异常
+		StringBuilder sb = new StringBuilder();
+		for (int i=0; i<500; i++){
+			sb.append("transTest" + i);
+		}
+		testDataChild.setTestInput(sb.toString());
+		testDataChildDao.insert(testDataChild);
+	}
+	
+	/**
+	 * 事务验证，返回空，则事务回滚成功
+	 */
+	public boolean transValid(TestData testData) {
+		return dao.get(testData) == null;
 	}
 	
 }

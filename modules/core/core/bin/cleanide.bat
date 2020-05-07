@@ -17,4 +17,5 @@ call mvn -Declipse.workspace=%cd% eclipse:clean eclipse:eclipse
 del .classpath
 del .project
 
+cd bin
 pause

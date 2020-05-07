@@ -9,7 +9,6 @@
 	
 	<!-- Project level setting -->
 <!-- 	<logger name="your.package" level="DEBUG" /> -->
-	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
 	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
