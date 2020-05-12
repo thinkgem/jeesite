@@ -190,7 +190,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 		});
 		// 手动触发消息推送任务
 		if (Global.TRUE.equals(Global.getProperty("msg.realtime.enabled"))){
-			new Thread(){
+			Thread thread = new Thread("msg-push-task-execute"){
 				public void run() {
 					try{
 						MsgPushUtils.getMsgPushTask().execute();
@@ -198,7 +198,9 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 						logger.error("实时消息发送失败，推送服务配置不正确。", ex);
 					}
 				}
-			}.start();
+			};
+			thread.setDaemon(true);
+			thread.start();
 		}
 	}
 	
