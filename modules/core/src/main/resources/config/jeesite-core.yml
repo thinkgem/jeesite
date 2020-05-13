@@ -167,6 +167,12 @@ user:
       remarks: ""
     }]
     
+  # 数据权限调试模式（会输出一些日志）
+  dataScopeDebug: false
+    
+  # 数据权限使用 API 方式实现（适应 Cloud 环境，基础用户表与业务数据表跨库的情况）
+  dataScopeApiMode: false
+  
   # 管理功能的控制权限类型（1拥有的权限 2管理的权限）（v4.1.5+）
   adminCtrlPermi: 2
   
@@ -188,9 +194,9 @@ role:
           #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前机构编码、当前公司编码、当前行业编码等",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
           #控制数据的类名下的属性名 : "可看做 ctrlDataClass 下的 get 方法，如：EmpUtils.getOfficeCodes()，支持返回字符串或字符串数组类型",
-          ctrlDataAttrName: "officeCodes",
+          ctrlDataAttrName: "officeCodesAndChildren",
           #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
-          ctrlDataParentCodesAttrName: "officeParentCodess"
+          ctrlDataParentCodesAttrName: ""
         },
         Company: {
           ctrlTypeClass: "NONE"

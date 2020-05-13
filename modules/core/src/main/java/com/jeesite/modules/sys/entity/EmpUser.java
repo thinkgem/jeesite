@@ -71,6 +71,8 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 					@Column(name="area_type", 	label="区域类型"),
 		}),
 	},
+//	extFromKeys="dsfOfficeFrom, dsfCompanyFrom",
+//	extWhereKeys="dsfOfficeWhere, dsfCompanyWhere",
 	extWhereKeys="dsfOffice, dsfCompany",
 	orderBy="a.user_weight DESC, a.update_date DESC"
 )
