@@ -71,12 +71,12 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 ## 技术服务与支持
 
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系方式（官方商务）QQ：[1766571055](http://sighttp.qq.com/msgrd?v=1&uin=1766571055)**
+* **联系方式（官方商务）QQ：[1766571055](http://wpa.qq.com/msgrd?v=3&uin=1766571055&site=qq&menu=yes)**
 * 技术服务支持网页：<http://s.jeesite.com>
 
 # 技术交流方式
 
-* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`183903863(外包)`
+* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 * 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)
 * 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
 * GitHub：<https://github.com/thinkgem/jeesite4>
@@ -84,7 +84,7 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 * **技术服务：**<http://s.jeesite.com>
 * 官方网站：<http://jeesite.com>
 * 官方论坛：<http://jeesite.net>
-* 微信公众号：
+* 微信公众号（关注动态）：
 
 ![JeeSite4微信公众号](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
 
