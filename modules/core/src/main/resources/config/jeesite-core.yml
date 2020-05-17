@@ -122,6 +122,15 @@ user:
 
   # 系统管理员角色编号（客户方管理员使用的角色）
   corpAdminRoleCode: corpAdmin
+  
+  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
+  adminCtrlPermi: 2
+  
+  # 多租户模式（SAAS模式）（专业版）
+  useCorpModel: false
+  
+  # 登录账号是否租户内唯一，否则全局唯一
+  loginCodeCorpUnique: false
 
   # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...），JSON 格式说明如下：
   # {"用户类型":{"dao":"Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
@@ -133,7 +142,7 @@ user:
       "expert":{"dao":"expertDao","loginView":"","indexView":"modules/sys/sysIndexExpert"}
     }
 
-  # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型, 0全部  1拥有权限  2管理权限
+  # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型（0全部  1拥有权限  2管理权限）
   dataScopes: >
     [{
       moduleCode: "core",
@@ -171,16 +180,10 @@ user:
   dataScopeDebug: false
     
   # 数据权限使用 API 方式实现（适应 Cloud 环境，基础用户表与业务数据表跨库的情况）
+  # 开启后设置 ctrlDataAttrName 加 AndChildren 后缀，ctrlDataParentCodesAttrName 清空
+  # 以方便读取树结构数据权限的表时包含子节点，举例如下：
+  # ctrlDataAttrName: "officeCodesAndChildren", ctrlDataParentCodesAttrName: ""
   dataScopeApiMode: false
-  
-  # 管理功能的控制权限类型（1拥有的权限 2管理的权限）（v4.1.5+）
-  adminCtrlPermi: 2
-  
-  # 多租户模式（SAAS模式）（专业版）
-  useCorpModel: false
-  
-  # 登录账号是否租户内唯一，否则全局唯一
-  loginCodeCorpUnique: false
   
 # 角色管理 
 role: 
@@ -194,9 +197,9 @@ role:
           #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前机构编码、当前公司编码、当前行业编码等",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
           #控制数据的类名下的属性名 : "可看做 ctrlDataClass 下的 get 方法，如：EmpUtils.getOfficeCodes()，支持返回字符串或字符串数组类型",
-          ctrlDataAttrName: "officeCodesAndChildren",
+          ctrlDataAttrName: "officeCodes",
           #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
-          ctrlDataParentCodesAttrName: ""
+          ctrlDataParentCodesAttrName: "officeParentCodess"
         },
         Company: {
           ctrlTypeClass: "NONE"
