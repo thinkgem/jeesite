@@ -20,9 +20,9 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
 
 /**
- * 员工工具类
+ * 员工部门工具类
  * @author ThinkGem
- * @version 2016年11月2日
+ * @version 2020-5-20
  */
 public class EmpUtils {
 
@@ -158,7 +158,7 @@ public class EmpUtils {
 	}
 	
 	/**
-	 * 获取当前员工所有机构编码，包括附属机构以及子机构（数据权限用）
+	 * 获取当前员工所有机构编码，包括附属机构以及子机构（数据权限用）V4.2.0
 	 * @author ThinkGem
 	 */
 	public static String[] getOfficeCodesAndChildren(){
@@ -295,7 +295,7 @@ public class EmpUtils {
 	}
 	
 	/**
-	 * 获取当前员工所有公司编码，包括子公司（数据权限用）
+	 * 获取当前员工所有公司编码，包括子公司（数据权限用）V4.2.0
 	 * @author ThinkGem
 	 */
 	public static String[] getCompanyCodesAndChildren(){

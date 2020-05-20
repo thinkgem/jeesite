@@ -68,6 +68,18 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	}
 	
 	/**
+	 * Object可以是POJO，也可以是Collection或数组。（根据 JsonView 渲染）
+	 */
+	public String toXmlString(Object object, Class<?> jsonView) {
+		try {
+			return this.writerWithView(jsonView).writeValueAsString(object);
+		} catch (IOException e) {
+			logger.warn("write to xml string error:" + object, e);
+			return null;
+		}
+	}
+	
+	/**
 	 * 反序列化POJO或简单Collection如List<String>.
 	 * @see #fromJson(String, JavaType)
 	 */
@@ -95,6 +107,13 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	 */
 	public static String toXml(Object object){
 		return XmlMapper.getInstance().toXmlString(object);
+	}
+	
+	/**
+	 * 对象转换为XML字符串（根据 JsonView 渲染）
+	 */
+	public static String toXml(Object object, Class<?> jsonView){
+		return XmlMapper.getInstance().toXmlString(object, jsonView);
 	}
 	
 	/**

@@ -108,6 +108,20 @@ public class JsonMapper extends ObjectMapper {
 			return null;
 		}
 	}
+	
+	/**
+	 * Object可以是POJO，也可以是Collection或数组。
+	 * 如果对象为Null, 返回"null".
+	 * 如果集合为空集合, 返回"[]".（根据 JsonView 渲染）
+	 */
+	public String toJsonString(Object object, Class<?> jsonView) {
+		try {
+			return this.writerWithView(jsonView).writeValueAsString(object);
+		} catch (IOException e) {
+			logger.warn("write to json string error:" + object, e);
+			return null;
+		}
+	}
 
 	/**
 	 * 输出JSONP格式数据.
@@ -216,6 +230,13 @@ public class JsonMapper extends ObjectMapper {
 	 */
 	public static String toJson(Object object){
 		return JsonMapper.getInstance().toJsonString(object);
+	}
+	
+	/**
+	 * 对象转换为JSON字符串（根据 JsonView 渲染）
+	 */
+	public static String toJson(Object object, Class<?> jsonView){
+		return JsonMapper.getInstance().toJsonString(object, jsonView);
 	}
 	
 	/**

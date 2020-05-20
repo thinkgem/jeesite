@@ -31,10 +31,10 @@ public class AreaUtils {
 	 * @return
 	 */
 	public static List<Area> getAreaAllList(){
-		List<Area> areaList = SysUtils.getCache(CACHE_AREA_ALL_LIST);
+		List<Area> areaList = SysCacheUtils.get(CACHE_AREA_ALL_LIST);
 		if (areaList == null){
 			areaList = Static.areaService.findList(new Area());
-			SysUtils.putCache(CACHE_AREA_ALL_LIST, areaList);
+			SysCacheUtils.put(CACHE_AREA_ALL_LIST, areaList);
 		}
 		return areaList;
 	}
@@ -43,7 +43,7 @@ public class AreaUtils {
 	 * 清理区域缓存
 	 */
 	public static void clearCache(){
-		SysUtils.removeCache(CACHE_AREA_ALL_LIST);
+		SysCacheUtils.remove(CACHE_AREA_ALL_LIST);
 	}
 	
 }

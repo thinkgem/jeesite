@@ -32,7 +32,7 @@ import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.shiro.session.SessionDAO;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.utils.SysUtils;
+import com.jeesite.modules.sys.utils.SysCacheUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -145,7 +145,7 @@ public class OnlineController extends BaseController{
 	public String kickOut(String sessionId) {
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
-			Map<String, String> onlineTickOutMap = SysUtils.getCache("onlineTickOutMap");
+			Map<String, String> onlineTickOutMap = SysCacheUtils.get("onlineTickOutMap");
 			if (onlineTickOutMap == null){
 				onlineTickOutMap = MapUtils.newConcurrentMap();
 			}
@@ -157,7 +157,7 @@ public class OnlineController extends BaseController{
 					onlineTickOutMap.put(key, StringUtils.EMPTY);
 				}
 			}
-			SysUtils.putCache("onlineTickOutMap", onlineTickOutMap);
+			SysCacheUtils.put("onlineTickOutMap", onlineTickOutMap);
 			sessionDAO.delete(session);
 			return renderResult(Global.TRUE, text("踢出已成功！"));
 		}

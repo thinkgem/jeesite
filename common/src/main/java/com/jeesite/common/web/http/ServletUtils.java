@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.ExceptionUtils;
@@ -179,8 +180,20 @@ public class ServletUtils {
 	 * @param data 消息数据
 	 * @return JSON字符串：{result:'true',message:'', if map then key:value,key2:value2... else data:{} }
 	 */
-	@SuppressWarnings("unchecked")
 	public static String renderResult(String result, String message, Object data) {
+		return renderResult(result, message, data, null);
+	}
+	
+	/**
+	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+	 * @param result Global.TRUE or Globle.False
+	 * @param message 执行消息
+	 * @param data 消息数据
+	 * @param jsonView 根据 JsonView 过滤
+	 * @return JSON字符串：{result:'true',message:'', if map then key:value,key2:value2... else data:{} }
+	 */
+	@SuppressWarnings("unchecked")
+	public static String renderResult(String result, String message, Object data, Class<?> jsonView) {
 		Map<String, Object> resultMap = MapUtils.newHashMap();
 		resultMap.put("result", result);
 		resultMap.put("message", message);
@@ -200,6 +213,7 @@ public class ServletUtils {
 				resultMap.put("data", data);
 			}
 		}
+		Object object = null;
 		HttpServletResponse response = getResponse();
 		HttpServletRequest request = getRequest();
 		if (request != null){
@@ -209,24 +223,29 @@ public class ServletUtils {
 				if (response != null){
 					response.setContentType(MediaType.APPLICATION_XML_VALUE);
 				}
-				return XmlMapper.toXml(resultMap);
-			}else{
-				if (response != null){
-					response.setContentType(MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8");
+				if (jsonView != null) {
+					return XmlMapper.toXml(resultMap, jsonView);
+				}else {
+					return XmlMapper.toXml(resultMap);
 				}
-				if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
-					String functionName = request.getParameter("__callback");
-					if (StringUtils.isNotBlank(functionName)){
-						return JsonMapper.toJsonp(functionName, resultMap);
-					}
+			}
+			if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
+				String functionName = request.getParameter("__callback");
+				if (StringUtils.isNotBlank(functionName)){
+					object = new JSONPObject(functionName, resultMap);
 				}
-				return JsonMapper.toJson(resultMap);
 			}
-		}else{
-			if (response != null){
-				response.setContentType(MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8");
-			}
-			return JsonMapper.toJson(resultMap);
+		}
+		if (response != null){
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8");
+		}
+		if (object == null) {
+			object = resultMap;
+		}
+		if (jsonView != null) {
+			return JsonMapper.toJson(object, jsonView);
+		}else {
+			return JsonMapper.toJson(object);
 		}
 	}
 	
@@ -254,6 +273,19 @@ public class ServletUtils {
 	}
 	
 	/**
+	 * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+	 * @param response 渲染对象：{result:'true',message:'',data:{}}
+	 * @param result 结果标识：Global.TRUE or Globle.False
+	 * @param message 执行消息
+	 * @param data 消息数据
+	 * @param jsonView 根据 JsonView 过滤
+	 * @return null
+	 */
+	public static String renderResult(HttpServletResponse response, String result, String message, Object data, Class<?> jsonView) {
+		return renderString(response, renderResult(result, message, data, jsonView), null);
+	}
+	
+	/**
 	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
 	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
 	 * @param response 渲染对象
@@ -261,18 +293,33 @@ public class ServletUtils {
 	 * @return null
 	 */
 	public static String renderObject(HttpServletResponse response, Object object) {
+		return renderObject(response, object, null);
+	}
+	
+	/**
+	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
+	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
+	 * @param response 渲染对象
+	 * @param object 待转换JSON并渲染的对象
+	 * @param jsonView 根据 JsonView 过滤
+	 * @return null
+	 */
+	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
 		String uri = request.getRequestURI();
 		if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
 				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
 			return renderString(response, XmlMapper.toXml(object));
-		}else{
-			if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
-				String functionName = request.getParameter("__callback");
-				if (StringUtils.isNotBlank(functionName)){
-					return renderString(response, JsonMapper.toJsonp(functionName, object));
-				}
+		}
+		if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
+			String functionName = request.getParameter("__callback");
+			if (StringUtils.isNotBlank(functionName)){
+				object = new JSONPObject(functionName, object);
 			}
+		}
+		if (jsonView != null) {
+			return renderString(response, JsonMapper.toJson(object, jsonView));
+		}else {
 			return renderString(response, JsonMapper.toJson(object));
 		}
 	}

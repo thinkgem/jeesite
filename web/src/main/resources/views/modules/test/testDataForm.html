@@ -267,7 +267,14 @@ $("#testDataChildDataGrid").dataGrid({
 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
 					});
+				},
+				custom_value: function(element, act){
+					return {userCode: element.find('[type=hidden]').val(),
+						userName: element.find('[type=text]').val()};
 				}
+			}, 
+			unformat: function(val, obj, cell){
+				return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();
 			}
 		},
 		{header:'${text("列表选择")}', name:'testUser2', width:150,
