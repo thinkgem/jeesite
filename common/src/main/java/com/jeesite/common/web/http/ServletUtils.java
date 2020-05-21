@@ -103,23 +103,28 @@ public class ServletUtils {
 	public static boolean isAjaxRequest(HttpServletRequest request){
 		
 		String accept = request.getHeader("accept");
-		if (accept != null && accept.indexOf(MediaType.APPLICATION_JSON_VALUE) != -1){
+		if (StringUtils.contains(accept, MediaType.APPLICATION_JSON_VALUE)){
 			return true;
 		}
-
+		
 		String xRequestedWith = request.getHeader("X-Requested-With");
-		if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1){
+		if (StringUtils.contains(xRequestedWith, "XMLHttpRequest")){
+			return true;
+		}
+		
+		String ajaxHeader = request.getHeader("__ajax");
+		if (StringUtils.inStringIgnoreCase(ajaxHeader, "json", "xml")){
+			return true;
+		}
+		
+		String ajaxParameter = request.getParameter("__ajax");
+		if (StringUtils.inStringIgnoreCase(ajaxParameter, "json", "xml")){
 			return true;
 		}
 		
 		String uri = request.getRequestURI();
 		if (StringUtils.endsWithIgnoreCase(uri, ".json")
 				|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
-			return true;
-		}
-		
-		String ajax = request.getParameter("__ajax");
-		if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")){
 			return true;
 		}
 		
