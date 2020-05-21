@@ -500,6 +500,9 @@ web:
     # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
     themeName: default
     
+    # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
+    smartMethodArgumentResolver: true
+    
     # 使用 .json、.xml 后缀匹配视图（不推荐使用，推荐使用 favorParameter）
     favorPathExtension: false
     # 使用 __ajax=json、__ajax=xml 参数名匹配视图
