@@ -95,7 +95,7 @@ public class PropertiesUtils {
 				}
 			}
 			configFiles = configSet.toArray(new String[configSet.size()]);
-			logger.debug("Loading config: {}", (Object)configFiles);
+			logger.debug("Trying: {}", (Object)configFiles);
 			INSTANCE = new PropertiesUtils(configFiles);
 		}
 	}
