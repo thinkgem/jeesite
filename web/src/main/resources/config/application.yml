@@ -8,7 +8,7 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V4.1
+productVersion: V4.2
 copyrightYear: 2020
 
 #是否演示模式
@@ -20,7 +20,7 @@ demoMode: false
 
 server:
 
-  port: 8981
+  port: 8980
   servlet:
     context-path: /js
   tomcat:

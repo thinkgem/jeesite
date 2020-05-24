@@ -19,7 +19,7 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 -->
+		<finalName>web</finalName><!-- war or jar 包的名称 -->
 		<start-class>com.jeesite.modules.Application</start-class>
 		
 		<!-- environment setting -->
@@ -28,7 +28,7 @@
 		
 		<!-- docker service -->
 		<docker.registryUrl>http://192.168.56.102:2375</docker.registryUrl>
-		<docker.imageName>${project.groupId}/${project.artifactId}:4.1</docker.imageName>
+		<docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
 		
 	</properties>
 
