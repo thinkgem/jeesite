@@ -55,12 +55,12 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 文件管理 -->
+		<!-- 文件管理
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Spring Boot -->
 		<dependency>
