@@ -10,7 +10,6 @@ import org.springframework.test.context.ActiveProfiles;
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.Application;
-import com.jeesite.modules.filemanager.db.InitFilemanagerData;
 import com.jeesite.modules.sys.db.InitCoreData;
 
 /**
@@ -59,9 +58,9 @@ public class InitData extends BaseInitDataTests {
 	 * 初始化文件管理模块表及数据
 	 */
 	public void initFilemanagerData() throws Exception{
-		InitFilemanagerData data = SpringUtils.getBean(InitFilemanagerData.class);
-		data.createTable();
-		data.initFilemanagerFolder();
+//		InitFilemanagerData data = SpringUtils.getBean(InitFilemanagerData.class);
+//		data.createTable();
+//		data.initFilemanagerFolder();
 	}
 
 }
