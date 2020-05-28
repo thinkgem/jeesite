@@ -1,75 +1,83 @@
 
+/* Drop Tables */
+
+DROP TABLE IF EXISTS test_data;
+DROP TABLE IF EXISTS test_data_child;
+DROP TABLE IF EXISTS test_tree;
+
+
+
 
 /* Create Tables */
 
 -- 测试数据
 CREATE TABLE test_data
 (
-	id varchar2(64) NOT NULL,
-	test_input varchar2(200),
-	test_textarea nvarchar2(200),
-	test_select varchar2(10),
-	test_select_multiple varchar2(200),
-	test_radio varchar2(10),
-	test_checkbox varchar2(200),
+	id varchar(64) NOT NULL,
+	test_input varchar(200),
+	test_textarea varchar(200),
+	test_select varchar(10),
+	test_select_multiple varchar(200),
+	test_radio varchar(10),
+	test_checkbox varchar(200),
 	test_date timestamp,
 	test_datetime timestamp,
-	test_user_code varchar2(64),
-	test_office_code varchar2(64),
-	test_area_code varchar2(64),
-	test_area_name nvarchar2(100),
+	test_user_code varchar(64),
+	test_office_code varchar(64),
+	test_area_code varchar(64),
+	test_area_name varchar(100),
 	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar2(64) NOT NULL,
+	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,
-	update_by varchar2(64) NOT NULL,
+	update_by varchar(64) NOT NULL,
 	update_date timestamp NOT NULL,
-	remarks nvarchar2(500),
+	remarks varchar(500),
 	PRIMARY KEY (id)
-);
+) WITHOUT OIDS;
 
 
 -- 测试数据子表
 CREATE TABLE test_data_child
 (
-	id varchar2(64) NOT NULL,
-	test_sort number(10,0),
-	test_data_id varchar2(64),
-	test_input varchar2(200),
-	test_textarea nvarchar2(200),
-	test_select varchar2(10),
-	test_select_multiple varchar2(200),
-	test_radio varchar2(10),
-	test_checkbox varchar2(200),
+	id varchar(64) NOT NULL,
+	test_sort int,
+	test_data_id varchar(64),
+	test_input varchar(200),
+	test_textarea varchar(200),
+	test_select varchar(10),
+	test_select_multiple varchar(200),
+	test_radio varchar(10),
+	test_checkbox varchar(200),
 	test_date timestamp,
 	test_datetime timestamp,
-	test_user_code varchar2(64),
-	test_office_code varchar2(64),
-	test_area_code varchar2(64),
-	test_area_name nvarchar2(100),
+	test_user_code varchar(64),
+	test_office_code varchar(64),
+	test_area_code varchar(64),
+	test_area_name varchar(100),
 	PRIMARY KEY (id)
-);
+) WITHOUT OIDS;
 
 
 -- 测试树表
 CREATE TABLE test_tree
 (
-	tree_code varchar2(64) NOT NULL,
-	parent_code varchar2(64) NOT NULL,
-	parent_codes varchar2(1000) NOT NULL,
-	tree_sort number(10) NOT NULL,
-	tree_sorts varchar2(1000) NOT NULL,
+	tree_code varchar(64) NOT NULL,
+	parent_code varchar(64) NOT NULL,
+	parent_codes varchar(1000) NOT NULL,
+	tree_sort decimal(10) NOT NULL,
+	tree_sorts varchar(1000) NOT NULL,
 	tree_leaf char(1) NOT NULL,
-	tree_level number(4) NOT NULL,
-	tree_names varchar2(1000) NOT NULL,
-	tree_name nvarchar2(200) NOT NULL,
+	tree_level decimal(4) NOT NULL,
+	tree_names varchar(1000) NOT NULL,
+	tree_name varchar(200) NOT NULL,
 	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar2(64) NOT NULL,
+	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,
-	update_by varchar2(64) NOT NULL,
+	update_by varchar(64) NOT NULL,
 	update_date timestamp NOT NULL,
-	remarks nvarchar2(500),
+	remarks varchar(500),
 	PRIMARY KEY (tree_code)
-);
+) WITHOUT OIDS;
 
 
 

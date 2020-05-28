@@ -3,19 +3,7 @@
 -- In your Quartz properties file, you'll need to set 
 -- org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
 
-drop table js_job_fired_triggers;
-DROP TABLE js_job_PAUSED_TRIGGER_GRPS;
-DROP TABLE js_job_SCHEDULER_STATE;
-DROP TABLE js_job_LOCKS;
-drop table js_job_simple_triggers;
-drop table js_job_cron_triggers;
-drop table js_job_simprop_triggers;
-DROP TABLE js_job_BLOB_TRIGGERS;
-drop table js_job_triggers;
-drop table js_job_job_details;
-drop table js_job_calendars;
-
-CREATE TABLE js_job_job_details
+CREATE TABLE ${_prefix}job_job_details
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     JOB_NAME  VARCHAR(200) NOT NULL,
@@ -30,7 +18,7 @@ CREATE TABLE js_job_job_details
     PRIMARY KEY (SCHED_NAME,JOB_NAME,JOB_GROUP)
 );
 
-CREATE TABLE js_job_triggers
+CREATE TABLE ${_prefix}job_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -50,10 +38,10 @@ CREATE TABLE js_job_triggers
     JOB_DATA BYTEA NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,JOB_NAME,JOB_GROUP) 
-	REFERENCES js_job_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP) 
+	REFERENCES ${_prefix}job_JOB_DETAILS(SCHED_NAME,JOB_NAME,JOB_GROUP) 
 );
 
-CREATE TABLE js_job_simple_triggers
+CREATE TABLE ${_prefix}job_simple_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -63,10 +51,10 @@ CREATE TABLE js_job_simple_triggers
     TIMES_TRIGGERED BIGINT NOT NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-	REFERENCES js_job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+	REFERENCES ${_prefix}job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE js_job_cron_triggers
+CREATE TABLE ${_prefix}job_cron_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -75,10 +63,10 @@ CREATE TABLE js_job_cron_triggers
     TIME_ZONE_ID VARCHAR(80),
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-	REFERENCES js_job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+	REFERENCES ${_prefix}job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE js_job_simprop_triggers
+CREATE TABLE ${_prefix}job_simprop_triggers
   (          
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -96,10 +84,10 @@ CREATE TABLE js_job_simprop_triggers
     BOOL_PROP_2 BOOL NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-    REFERENCES js_job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+    REFERENCES ${_prefix}job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE js_job_blob_triggers
+CREATE TABLE ${_prefix}job_blob_triggers
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_NAME VARCHAR(200) NOT NULL,
@@ -107,10 +95,10 @@ CREATE TABLE js_job_blob_triggers
     BLOB_DATA BYTEA NULL,
     PRIMARY KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP),
     FOREIGN KEY (SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP) 
-        REFERENCES js_job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
+        REFERENCES ${_prefix}job_TRIGGERS(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE js_job_calendars
+CREATE TABLE ${_prefix}job_calendars
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     CALENDAR_NAME  VARCHAR(200) NOT NULL, 
@@ -119,14 +107,14 @@ CREATE TABLE js_job_calendars
 );
 
 
-CREATE TABLE js_job_paused_trigger_grps
+CREATE TABLE ${_prefix}job_paused_trigger_grps
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     TRIGGER_GROUP  VARCHAR(200) NOT NULL, 
     PRIMARY KEY (SCHED_NAME,TRIGGER_GROUP)
 );
 
-CREATE TABLE js_job_fired_triggers 
+CREATE TABLE ${_prefix}job_fired_triggers 
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     ENTRY_ID VARCHAR(95) NOT NULL,
@@ -144,7 +132,7 @@ CREATE TABLE js_job_fired_triggers
     PRIMARY KEY (SCHED_NAME,ENTRY_ID)
 );
 
-CREATE TABLE js_job_scheduler_state 
+CREATE TABLE ${_prefix}job_scheduler_state 
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     INSTANCE_NAME VARCHAR(200) NOT NULL,
@@ -153,35 +141,35 @@ CREATE TABLE js_job_scheduler_state
     PRIMARY KEY (SCHED_NAME,INSTANCE_NAME)
 );
 
-CREATE TABLE js_job_locks
+CREATE TABLE ${_prefix}job_locks
   (
     SCHED_NAME VARCHAR(120) NOT NULL,
     LOCK_NAME  VARCHAR(40) NOT NULL, 
     PRIMARY KEY (SCHED_NAME,LOCK_NAME)
 );
 
-create index idx_qrtz_j_req_recovery on js_job_job_details(SCHED_NAME,REQUESTS_RECOVERY);
-create index idx_qrtz_j_grp on js_job_job_details(SCHED_NAME,JOB_GROUP);
+create index idx_qrtz_j_req_recovery on ${_prefix}job_job_details(SCHED_NAME,REQUESTS_RECOVERY);
+create index idx_qrtz_j_grp on ${_prefix}job_job_details(SCHED_NAME,JOB_GROUP);
 
-create index idx_qrtz_t_j on js_job_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_qrtz_t_jg on js_job_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_qrtz_t_c on js_job_triggers(SCHED_NAME,CALENDAR_NAME);
-create index idx_qrtz_t_g on js_job_triggers(SCHED_NAME,TRIGGER_GROUP);
-create index idx_qrtz_t_state on js_job_triggers(SCHED_NAME,TRIGGER_STATE);
-create index idx_qrtz_t_n_state on js_job_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_qrtz_t_n_g_state on js_job_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
-create index idx_qrtz_t_next_fire_time on js_job_triggers(SCHED_NAME,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_st on js_job_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_misfire on js_job_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
-create index idx_qrtz_t_nft_st_misfire on js_job_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
-create index idx_qrtz_t_nft_st_misfire_grp on js_job_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_qrtz_t_j on ${_prefix}job_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_qrtz_t_jg on ${_prefix}job_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_qrtz_t_c on ${_prefix}job_triggers(SCHED_NAME,CALENDAR_NAME);
+create index idx_qrtz_t_g on ${_prefix}job_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_qrtz_t_state on ${_prefix}job_triggers(SCHED_NAME,TRIGGER_STATE);
+create index idx_qrtz_t_n_state on ${_prefix}job_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_qrtz_t_n_g_state on ${_prefix}job_triggers(SCHED_NAME,TRIGGER_GROUP,TRIGGER_STATE);
+create index idx_qrtz_t_next_fire_time on ${_prefix}job_triggers(SCHED_NAME,NEXT_FIRE_TIME);
+create index idx_qrtz_t_nft_st on ${_prefix}job_triggers(SCHED_NAME,TRIGGER_STATE,NEXT_FIRE_TIME);
+create index idx_qrtz_t_nft_misfire on ${_prefix}job_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME);
+create index idx_qrtz_t_nft_st_misfire on ${_prefix}job_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_STATE);
+create index idx_qrtz_t_nft_st_misfire_grp on ${_prefix}job_triggers(SCHED_NAME,MISFIRE_INSTR,NEXT_FIRE_TIME,TRIGGER_GROUP,TRIGGER_STATE);
 
-create index idx_qrtz_ft_trig_inst_name on js_job_fired_triggers(SCHED_NAME,INSTANCE_NAME);
-create index idx_qrtz_ft_inst_job_req_rcvry on js_job_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
-create index idx_qrtz_ft_j_g on js_job_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
-create index idx_qrtz_ft_jg on js_job_fired_triggers(SCHED_NAME,JOB_GROUP);
-create index idx_qrtz_ft_t_g on js_job_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
-create index idx_qrtz_ft_tg on js_job_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
+create index idx_qrtz_ft_trig_inst_name on ${_prefix}job_fired_triggers(SCHED_NAME,INSTANCE_NAME);
+create index idx_qrtz_ft_inst_job_req_rcvry on ${_prefix}job_fired_triggers(SCHED_NAME,INSTANCE_NAME,REQUESTS_RECOVERY);
+create index idx_qrtz_ft_j_g on ${_prefix}job_fired_triggers(SCHED_NAME,JOB_NAME,JOB_GROUP);
+create index idx_qrtz_ft_jg on ${_prefix}job_fired_triggers(SCHED_NAME,JOB_GROUP);
+create index idx_qrtz_ft_t_g on ${_prefix}job_fired_triggers(SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP);
+create index idx_qrtz_ft_tg on ${_prefix}job_fired_triggers(SCHED_NAME,TRIGGER_GROUP);
 
 
 commit;

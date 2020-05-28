@@ -44,7 +44,7 @@
 				<output_path>db\core.sql</output_path>
 				<encoding>UTF-8</encoding>
 				<line_feed>CR+LF</line_feed>
-				<is_open_after_saved>true</is_open_after_saved>
+				<is_open_after_saved>false</is_open_after_saved>
 				<environment_id>7be191506f9daa8070b3ac14921dffd44063d2bb</environment_id>
 				<category_id>null</category_id>
 				<ddl_target>
@@ -58,7 +58,7 @@
 					<create_view>false</create_view>
 					<drop_index>false</drop_index>
 					<drop_sequence>false</drop_sequence>
-					<drop_table>true</drop_table>
+					<drop_table>false</drop_table>
 					<drop_tablespace>false</drop_tablespace>
 					<drop_trigger>false</drop_trigger>
 					<drop_view>false</drop_view>

@@ -3,7 +3,7 @@
 /* Create Tables */
 
 -- 代码生成表
-CREATE TABLE js_gen_table
+CREATE TABLE ${_prefix}gen_table
 (
 	table_name varchar(64) NOT NULL,
 	class_name varchar(100) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE js_gen_table
 
 
 -- 代码生成表列
-CREATE TABLE js_gen_table_column
+CREATE TABLE ${_prefix}gen_table_column
 (
 	id varchar(64) NOT NULL,
 	table_name varchar(64) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE js_gen_table_column
 
 
 -- 行政区划
-CREATE TABLE js_sys_area
+CREATE TABLE ${_prefix}sys_area
 (
 	area_code varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE js_sys_area
 
 
 -- 公司表
-CREATE TABLE js_sys_company
+CREATE TABLE ${_prefix}sys_company
 (
 	company_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE js_sys_company
 
 
 -- 公司部门关联表
-CREATE TABLE js_sys_company_office
+CREATE TABLE ${_prefix}sys_company_office
 (
 	company_code varchar(64) NOT NULL,
 	office_code varchar(64) NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE js_sys_company_office
 
 
 -- 参数配置表
-CREATE TABLE js_sys_config
+CREATE TABLE ${_prefix}sys_config
 (
 	id varchar(64) NOT NULL,
 	config_name vargraphic(100) NOT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE js_sys_config
 
 
 -- 字典数据表
-CREATE TABLE js_sys_dict_data
+CREATE TABLE ${_prefix}sys_dict_data
 (
 	dict_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE js_sys_dict_data
 
 
 -- 字典类型表
-CREATE TABLE js_sys_dict_type
+CREATE TABLE ${_prefix}sys_dict_type
 (
 	id varchar(64) NOT NULL,
 	dict_name vargraphic(100) NOT NULL,
@@ -219,7 +219,7 @@ CREATE TABLE js_sys_dict_type
 
 
 -- 员工表
-CREATE TABLE js_sys_employee
+CREATE TABLE ${_prefix}sys_employee
 (
 	emp_code varchar(64) NOT NULL,
 	emp_name vargraphic(100) NOT NULL,
@@ -242,7 +242,7 @@ CREATE TABLE js_sys_employee
 
 
 -- 员工附属机构关系表
-CREATE TABLE js_sys_employee_office
+CREATE TABLE ${_prefix}sys_employee_office
 (
 	id varchar(64) NOT NULL,
 	emp_code varchar(64) NOT NULL,
@@ -253,7 +253,7 @@ CREATE TABLE js_sys_employee_office
 
 
 -- 员工与岗位关联表
-CREATE TABLE js_sys_employee_post
+CREATE TABLE ${_prefix}sys_employee_post
 (
 	emp_code varchar(64) NOT NULL,
 	post_code varchar(64) NOT NULL,
@@ -262,7 +262,7 @@ CREATE TABLE js_sys_employee_post
 
 
 -- 文件实体表
-CREATE TABLE js_sys_file_entity
+CREATE TABLE ${_prefix}sys_file_entity
 (
 	file_id varchar(64) NOT NULL,
 	file_md5 varchar(64) NOT NULL,
@@ -277,7 +277,7 @@ CREATE TABLE js_sys_file_entity
 
 
 -- 文件上传表
-CREATE TABLE js_sys_file_upload
+CREATE TABLE ${_prefix}sys_file_upload
 (
 	id varchar(64) NOT NULL,
 	file_id varchar(64) NOT NULL,
@@ -297,7 +297,7 @@ CREATE TABLE js_sys_file_upload
 
 
 -- 作业调度表
-CREATE TABLE js_sys_job
+CREATE TABLE ${_prefix}sys_job
 (
 	job_name varchar(64) NOT NULL,
 	job_group varchar(64) NOT NULL,
@@ -318,7 +318,7 @@ CREATE TABLE js_sys_job
 
 
 -- 作业调度日志表
-CREATE TABLE js_sys_job_log
+CREATE TABLE ${_prefix}sys_job_log
 (
 	id varchar(64) NOT NULL,
 	job_name varchar(64) NOT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE js_sys_job_log
 
 
 -- 国际化语言
-CREATE TABLE js_sys_lang
+CREATE TABLE ${_prefix}sys_lang
 (
 	id varchar(64) NOT NULL,
 	module_code varchar(64) NOT NULL,
@@ -351,7 +351,7 @@ CREATE TABLE js_sys_lang
 
 
 -- 操作日志表
-CREATE TABLE js_sys_log
+CREATE TABLE ${_prefix}sys_log
 (
 	id varchar(64) NOT NULL,
 	log_type varchar(50) NOT NULL,
@@ -380,7 +380,7 @@ CREATE TABLE js_sys_log
 
 
 -- 菜单表
-CREATE TABLE js_sys_menu
+CREATE TABLE ${_prefix}sys_menu
 (
 	menu_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
@@ -433,7 +433,7 @@ CREATE TABLE js_sys_menu
 
 
 -- 模块表
-CREATE TABLE js_sys_module
+CREATE TABLE ${_prefix}sys_module
 (
 	module_code varchar(64) NOT NULL,
 	module_name varchar(100) NOT NULL,
@@ -452,7 +452,7 @@ CREATE TABLE js_sys_module
 
 
 -- 内部消息
-CREATE TABLE js_sys_msg_inner
+CREATE TABLE ${_prefix}sys_msg_inner
 (
 	id varchar(64) NOT NULL,
 	msg_title varchar(200) NOT NULL,
@@ -478,7 +478,7 @@ CREATE TABLE js_sys_msg_inner
 
 
 -- 内部消息发送记录表
-CREATE TABLE js_sys_msg_inner_record
+CREATE TABLE ${_prefix}sys_msg_inner_record
 (
 	id varchar(64) NOT NULL,
 	msg_inner_id varchar(64) NOT NULL,
@@ -492,7 +492,7 @@ CREATE TABLE js_sys_msg_inner_record
 
 
 -- 消息推送表
-CREATE TABLE js_sys_msg_push
+CREATE TABLE ${_prefix}sys_msg_push
 (
 	id varchar(64) NOT NULL,
 	msg_type varchar(16) NOT NULL,
@@ -521,7 +521,7 @@ CREATE TABLE js_sys_msg_push
 
 
 -- 消息已推送表
-CREATE TABLE js_sys_msg_pushed
+CREATE TABLE ${_prefix}sys_msg_pushed
 (
 	id varchar(64) NOT NULL,
 	msg_type varchar(16) NOT NULL,
@@ -550,7 +550,7 @@ CREATE TABLE js_sys_msg_pushed
 
 
 -- 消息模板
-CREATE TABLE js_sys_msg_template
+CREATE TABLE ${_prefix}sys_msg_template
 (
 	id varchar(64) NOT NULL,
 	module_code varchar(64),
@@ -569,7 +569,7 @@ CREATE TABLE js_sys_msg_template
 
 
 -- 组织机构表
-CREATE TABLE js_sys_office
+CREATE TABLE ${_prefix}sys_office
 (
 	office_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
@@ -621,7 +621,7 @@ CREATE TABLE js_sys_office
 
 
 -- 员工岗位表
-CREATE TABLE js_sys_post
+CREATE TABLE ${_prefix}sys_post
 (
 	post_code varchar(64) NOT NULL,
 	post_name varchar(100) NOT NULL,
@@ -640,7 +640,7 @@ CREATE TABLE js_sys_post
 
 
 -- 角色表
-CREATE TABLE js_sys_role
+CREATE TABLE ${_prefix}sys_role
 (
 	role_code varchar(64) NOT NULL,
 	role_name varchar(100) NOT NULL,
@@ -683,7 +683,7 @@ CREATE TABLE js_sys_role
 
 
 -- 角色数据权限表
-CREATE TABLE js_sys_role_data_scope
+CREATE TABLE ${_prefix}sys_role_data_scope
 (
 	role_code varchar(64) NOT NULL,
 	ctrl_type varchar(20) NOT NULL,
@@ -694,7 +694,7 @@ CREATE TABLE js_sys_role_data_scope
 
 
 -- 角色与菜单关联表
-CREATE TABLE js_sys_role_menu
+CREATE TABLE ${_prefix}sys_role_menu
 (
 	role_code varchar(64) NOT NULL,
 	menu_code varchar(64) NOT NULL,
@@ -703,7 +703,7 @@ CREATE TABLE js_sys_role_menu
 
 
 -- 用户表
-CREATE TABLE js_sys_user
+CREATE TABLE ${_prefix}sys_user
 (
 	user_code varchar(100) NOT NULL,
 	login_code varchar(100) NOT NULL,
@@ -769,7 +769,7 @@ CREATE TABLE js_sys_user
 
 
 -- 用户数据权限表
-CREATE TABLE js_sys_user_data_scope
+CREATE TABLE ${_prefix}sys_user_data_scope
 (
 	user_code varchar(100) NOT NULL,
 	ctrl_type varchar(20) NOT NULL,
@@ -780,7 +780,7 @@ CREATE TABLE js_sys_user_data_scope
 
 
 -- 用户与角色关联表
-CREATE TABLE js_sys_user_role
+CREATE TABLE ${_prefix}sys_user_role
 (
 	user_code varchar(100) NOT NULL,
 	role_code varchar(64) NOT NULL,
@@ -791,130 +791,130 @@ CREATE TABLE js_sys_user_role
 
 /* Create Indexes */
 
-CREATE INDEX idx_gen_table_ptn ON js_gen_table (parent_table_name);
-CREATE INDEX idx_gen_table_column_tn ON js_gen_table_column (table_name);
-CREATE INDEX idx_sys_area_pc ON js_sys_area (parent_code);
-CREATE INDEX idx_sys_area_ts ON js_sys_area (tree_sort);
-CREATE INDEX idx_sys_area_status ON js_sys_area (status);
-CREATE INDEX idx_sys_area_pcs ON js_sys_area (parent_codes);
-CREATE INDEX idx_sys_area_tss ON js_sys_area (tree_sorts);
-CREATE INDEX idx_sys_company_cc ON js_sys_company (corp_code);
-CREATE INDEX idx_sys_company_pc ON js_sys_company (parent_code);
-CREATE INDEX idx_sys_company_ts ON js_sys_company (tree_sort);
-CREATE INDEX idx_sys_company_status ON js_sys_company (status);
-CREATE INDEX idx_sys_company_vc ON js_sys_company (view_code);
-CREATE INDEX idx_sys_company_pcs ON js_sys_company (parent_codes);
-CREATE INDEX idx_sys_company_tss ON js_sys_company (tree_sorts);
-CREATE UNIQUE INDEX idx_sys_config_key ON js_sys_config (config_key);
-CREATE INDEX idx_sys_dict_data_cc ON js_sys_dict_data (corp_code);
-CREATE INDEX idx_sys_dict_data_dt ON js_sys_dict_data (dict_type);
-CREATE INDEX idx_sys_dict_data_pc ON js_sys_dict_data (parent_code);
-CREATE INDEX idx_sys_dict_data_status ON js_sys_dict_data (status);
-CREATE INDEX idx_sys_dict_data_pcs ON js_sys_dict_data (parent_codes);
-CREATE INDEX idx_sys_dict_data_ts ON js_sys_dict_data (tree_sort);
-CREATE INDEX idx_sys_dict_data_tss ON js_sys_dict_data (tree_sorts);
-CREATE INDEX idx_sys_dict_data_dv ON js_sys_dict_data (dict_value);
-CREATE INDEX idx_sys_dict_type_is ON js_sys_dict_type (is_sys);
-CREATE INDEX idx_sys_dict_type_status ON js_sys_dict_type (status);
-CREATE INDEX idx_sys_employee_cco ON js_sys_employee (company_code);
-CREATE INDEX idx_sys_employee_cc ON js_sys_employee (corp_code);
-CREATE INDEX idx_sys_employee_ud ON js_sys_employee (update_date);
-CREATE INDEX idx_sys_employee_oc ON js_sys_employee (office_code);
-CREATE INDEX idx_sys_employee_status ON js_sys_employee (status);
-CREATE INDEX idx_sys_file_entity_md5 ON js_sys_file_entity (file_md5);
-CREATE INDEX idx_sys_file_entity_size ON js_sys_file_entity (file_size);
-CREATE INDEX idx_sys_file_biz_ft ON js_sys_file_upload (file_type);
-CREATE INDEX idx_sys_file_biz_fi ON js_sys_file_upload (file_id);
-CREATE INDEX idx_sys_file_biz_status ON js_sys_file_upload (status);
-CREATE INDEX idx_sys_file_biz_cb ON js_sys_file_upload (create_by);
-CREATE INDEX idx_sys_file_biz_ud ON js_sys_file_upload (update_date);
-CREATE INDEX idx_sys_file_biz_bt ON js_sys_file_upload (biz_type);
-CREATE INDEX idx_sys_file_biz_bk ON js_sys_file_upload (biz_key);
-CREATE INDEX idx_sys_job_status ON js_sys_job (status);
-CREATE INDEX idx_sys_job_log_jn ON js_sys_job_log (job_name);
-CREATE INDEX idx_sys_job_log_jg ON js_sys_job_log (job_group);
-CREATE INDEX idx_sys_job_log_t ON js_sys_job_log (job_type);
-CREATE INDEX idx_sys_job_log_e ON js_sys_job_log (job_event);
-CREATE INDEX idx_sys_job_log_ie ON js_sys_job_log (is_exception);
-CREATE INDEX idx_sys_lang_code ON js_sys_lang (lang_code);
-CREATE INDEX idx_sys_lang_type ON js_sys_lang (lang_type);
-CREATE INDEX idx_sys_log_cb ON js_sys_log (create_by);
-CREATE INDEX idx_sys_log_cc ON js_sys_log (corp_code);
-CREATE INDEX idx_sys_log_lt ON js_sys_log (log_type);
-CREATE INDEX idx_sys_log_bk ON js_sys_log (biz_key);
-CREATE INDEX idx_sys_log_bt ON js_sys_log (biz_type);
-CREATE INDEX idx_sys_log_ie ON js_sys_log (is_exception);
-CREATE INDEX idx_sys_log_cd ON js_sys_log (create_date);
-CREATE INDEX idx_sys_menu_pc ON js_sys_menu (parent_code);
-CREATE INDEX idx_sys_menu_ts ON js_sys_menu (tree_sort);
-CREATE INDEX idx_sys_menu_status ON js_sys_menu (status);
-CREATE INDEX idx_sys_menu_mt ON js_sys_menu (menu_type);
-CREATE INDEX idx_sys_menu_pss ON js_sys_menu (parent_codes);
-CREATE INDEX idx_sys_menu_tss ON js_sys_menu (tree_sorts);
-CREATE INDEX idx_sys_menu_sc ON js_sys_menu (sys_code);
-CREATE INDEX idx_sys_menu_is ON js_sys_menu (is_show);
-CREATE INDEX idx_sys_menu_mcs ON js_sys_menu (module_codes);
-CREATE INDEX idx_sys_menu_wt ON js_sys_menu (weight);
-CREATE INDEX idx_sys_module_status ON js_sys_module (status);
-CREATE INDEX idx_sys_msg_inner_cb ON js_sys_msg_inner (create_by);
-CREATE INDEX idx_sys_msg_inner_status ON js_sys_msg_inner (status);
-CREATE INDEX idx_sys_msg_inner_cl ON js_sys_msg_inner (content_level);
-CREATE INDEX idx_sys_msg_inner_sc ON js_sys_msg_inner (send_user_code);
-CREATE INDEX idx_sys_msg_inner_sd ON js_sys_msg_inner (send_date);
-CREATE INDEX idx_sys_msg_inner_r_mi ON js_sys_msg_inner_record (msg_inner_id);
-CREATE INDEX idx_sys_msg_inner_r_ruc ON js_sys_msg_inner_record (receive_user_code);
-CREATE INDEX idx_sys_msg_inner_r_stat ON js_sys_msg_inner_record (read_status);
-CREATE INDEX idx_sys_msg_inner_r_star ON js_sys_msg_inner_record (is_star);
-CREATE INDEX idx_sys_msg_push_type ON js_sys_msg_push (msg_type);
-CREATE INDEX idx_sys_msg_push_rc ON js_sys_msg_push (receive_code);
-CREATE INDEX idx_sys_msg_push_uc ON js_sys_msg_push (receive_user_code);
-CREATE INDEX idx_sys_msg_push_suc ON js_sys_msg_push (send_user_code);
-CREATE INDEX idx_sys_msg_push_pd ON js_sys_msg_push (plan_push_date);
-CREATE INDEX idx_sys_msg_push_ps ON js_sys_msg_push (push_status);
-CREATE INDEX idx_sys_msg_push_rs ON js_sys_msg_push (read_status);
-CREATE INDEX idx_sys_msg_push_bk ON js_sys_msg_push (biz_key);
-CREATE INDEX idx_sys_msg_push_bt ON js_sys_msg_push (biz_type);
-CREATE INDEX idx_sys_msg_push_imp ON js_sys_msg_push (is_merge_push);
-CREATE INDEX idx_sys_msg_pushed_type ON js_sys_msg_pushed (msg_type);
-CREATE INDEX idx_sys_msg_pushed_rc ON js_sys_msg_pushed (receive_code);
-CREATE INDEX idx_sys_msg_pushed_uc ON js_sys_msg_pushed (receive_user_code);
-CREATE INDEX idx_sys_msg_pushed_suc ON js_sys_msg_pushed (send_user_code);
-CREATE INDEX idx_sys_msg_pushed_pd ON js_sys_msg_pushed (plan_push_date);
-CREATE INDEX idx_sys_msg_pushed_ps ON js_sys_msg_pushed (push_status);
-CREATE INDEX idx_sys_msg_pushed_rs ON js_sys_msg_pushed (read_status);
-CREATE INDEX idx_sys_msg_pushed_bk ON js_sys_msg_pushed (biz_key);
-CREATE INDEX idx_sys_msg_pushed_bt ON js_sys_msg_pushed (biz_type);
-CREATE INDEX idx_sys_msg_pushed_imp ON js_sys_msg_pushed (is_merge_push);
-CREATE INDEX idx_sys_msg_tpl_key ON js_sys_msg_template (tpl_key);
-CREATE INDEX idx_sys_msg_tpl_type ON js_sys_msg_template (tpl_type);
-CREATE INDEX idx_sys_msg_tpl_status ON js_sys_msg_template (status);
-CREATE INDEX idx_sys_office_cc ON js_sys_office (corp_code);
-CREATE INDEX idx_sys_office_pc ON js_sys_office (parent_code);
-CREATE INDEX idx_sys_office_pcs ON js_sys_office (parent_codes);
-CREATE INDEX idx_sys_office_status ON js_sys_office (status);
-CREATE INDEX idx_sys_office_ot ON js_sys_office (office_type);
-CREATE INDEX idx_sys_office_vc ON js_sys_office (view_code);
-CREATE INDEX idx_sys_office_ts ON js_sys_office (tree_sort);
-CREATE INDEX idx_sys_office_tss ON js_sys_office (tree_sorts);
-CREATE INDEX idx_sys_post_cc ON js_sys_post (corp_code);
-CREATE INDEX idx_sys_post_status ON js_sys_post (status);
-CREATE INDEX idx_sys_post_ps ON js_sys_post (post_sort);
-CREATE INDEX idx_sys_role_cc ON js_sys_role (corp_code);
-CREATE INDEX idx_sys_role_is ON js_sys_role (is_sys);
-CREATE INDEX idx_sys_role_status ON js_sys_role (status);
-CREATE INDEX idx_sys_role_rs ON js_sys_role (role_sort);
-CREATE INDEX idx_sys_user_lc ON js_sys_user (login_code);
-CREATE INDEX idx_sys_user_email ON js_sys_user (email);
-CREATE INDEX idx_sys_user_mobile ON js_sys_user (mobile);
-CREATE INDEX idx_sys_user_wo ON js_sys_user (wx_openid);
-CREATE INDEX idx_sys_user_imei ON js_sys_user (mobile_imei);
-CREATE INDEX idx_sys_user_rt ON js_sys_user (user_type);
-CREATE INDEX idx_sys_user_rc ON js_sys_user (ref_code);
-CREATE INDEX idx_sys_user_mt ON js_sys_user (mgr_type);
-CREATE INDEX idx_sys_user_us ON js_sys_user (user_weight);
-CREATE INDEX idx_sys_user_ud ON js_sys_user (update_date);
-CREATE INDEX idx_sys_user_status ON js_sys_user (status);
-CREATE INDEX idx_sys_user_cc ON js_sys_user (corp_code);
+CREATE INDEX idx_gen_table_ptn ON ${_prefix}gen_table (parent_table_name);
+CREATE INDEX idx_gen_table_column_tn ON ${_prefix}gen_table_column (table_name);
+CREATE INDEX idx_sys_area_pc ON ${_prefix}sys_area (parent_code);
+CREATE INDEX idx_sys_area_ts ON ${_prefix}sys_area (tree_sort);
+CREATE INDEX idx_sys_area_status ON ${_prefix}sys_area (status);
+CREATE INDEX idx_sys_area_pcs ON ${_prefix}sys_area (parent_codes);
+CREATE INDEX idx_sys_area_tss ON ${_prefix}sys_area (tree_sorts);
+CREATE INDEX idx_sys_company_cc ON ${_prefix}sys_company (corp_code);
+CREATE INDEX idx_sys_company_pc ON ${_prefix}sys_company (parent_code);
+CREATE INDEX idx_sys_company_ts ON ${_prefix}sys_company (tree_sort);
+CREATE INDEX idx_sys_company_status ON ${_prefix}sys_company (status);
+CREATE INDEX idx_sys_company_vc ON ${_prefix}sys_company (view_code);
+CREATE INDEX idx_sys_company_pcs ON ${_prefix}sys_company (parent_codes);
+CREATE INDEX idx_sys_company_tss ON ${_prefix}sys_company (tree_sorts);
+CREATE UNIQUE INDEX idx_sys_config_key ON ${_prefix}sys_config (config_key);
+CREATE INDEX idx_sys_dict_data_cc ON ${_prefix}sys_dict_data (corp_code);
+CREATE INDEX idx_sys_dict_data_dt ON ${_prefix}sys_dict_data (dict_type);
+CREATE INDEX idx_sys_dict_data_pc ON ${_prefix}sys_dict_data (parent_code);
+CREATE INDEX idx_sys_dict_data_status ON ${_prefix}sys_dict_data (status);
+CREATE INDEX idx_sys_dict_data_pcs ON ${_prefix}sys_dict_data (parent_codes);
+CREATE INDEX idx_sys_dict_data_ts ON ${_prefix}sys_dict_data (tree_sort);
+CREATE INDEX idx_sys_dict_data_tss ON ${_prefix}sys_dict_data (tree_sorts);
+CREATE INDEX idx_sys_dict_data_dv ON ${_prefix}sys_dict_data (dict_value);
+CREATE INDEX idx_sys_dict_type_is ON ${_prefix}sys_dict_type (is_sys);
+CREATE INDEX idx_sys_dict_type_status ON ${_prefix}sys_dict_type (status);
+CREATE INDEX idx_sys_employee_cco ON ${_prefix}sys_employee (company_code);
+CREATE INDEX idx_sys_employee_cc ON ${_prefix}sys_employee (corp_code);
+CREATE INDEX idx_sys_employee_ud ON ${_prefix}sys_employee (update_date);
+CREATE INDEX idx_sys_employee_oc ON ${_prefix}sys_employee (office_code);
+CREATE INDEX idx_sys_employee_status ON ${_prefix}sys_employee (status);
+CREATE INDEX idx_sys_file_entity_md5 ON ${_prefix}sys_file_entity (file_md5);
+CREATE INDEX idx_sys_file_entity_size ON ${_prefix}sys_file_entity (file_size);
+CREATE INDEX idx_sys_file_biz_ft ON ${_prefix}sys_file_upload (file_type);
+CREATE INDEX idx_sys_file_biz_fi ON ${_prefix}sys_file_upload (file_id);
+CREATE INDEX idx_sys_file_biz_status ON ${_prefix}sys_file_upload (status);
+CREATE INDEX idx_sys_file_biz_cb ON ${_prefix}sys_file_upload (create_by);
+CREATE INDEX idx_sys_file_biz_ud ON ${_prefix}sys_file_upload (update_date);
+CREATE INDEX idx_sys_file_biz_bt ON ${_prefix}sys_file_upload (biz_type);
+CREATE INDEX idx_sys_file_biz_bk ON ${_prefix}sys_file_upload (biz_key);
+CREATE INDEX idx_sys_job_status ON ${_prefix}sys_job (status);
+CREATE INDEX idx_sys_job_log_jn ON ${_prefix}sys_job_log (job_name);
+CREATE INDEX idx_sys_job_log_jg ON ${_prefix}sys_job_log (job_group);
+CREATE INDEX idx_sys_job_log_t ON ${_prefix}sys_job_log (job_type);
+CREATE INDEX idx_sys_job_log_e ON ${_prefix}sys_job_log (job_event);
+CREATE INDEX idx_sys_job_log_ie ON ${_prefix}sys_job_log (is_exception);
+CREATE INDEX idx_sys_lang_code ON ${_prefix}sys_lang (lang_code);
+CREATE INDEX idx_sys_lang_type ON ${_prefix}sys_lang (lang_type);
+CREATE INDEX idx_sys_log_cb ON ${_prefix}sys_log (create_by);
+CREATE INDEX idx_sys_log_cc ON ${_prefix}sys_log (corp_code);
+CREATE INDEX idx_sys_log_lt ON ${_prefix}sys_log (log_type);
+CREATE INDEX idx_sys_log_bk ON ${_prefix}sys_log (biz_key);
+CREATE INDEX idx_sys_log_bt ON ${_prefix}sys_log (biz_type);
+CREATE INDEX idx_sys_log_ie ON ${_prefix}sys_log (is_exception);
+CREATE INDEX idx_sys_log_cd ON ${_prefix}sys_log (create_date);
+CREATE INDEX idx_sys_menu_pc ON ${_prefix}sys_menu (parent_code);
+CREATE INDEX idx_sys_menu_ts ON ${_prefix}sys_menu (tree_sort);
+CREATE INDEX idx_sys_menu_status ON ${_prefix}sys_menu (status);
+CREATE INDEX idx_sys_menu_mt ON ${_prefix}sys_menu (menu_type);
+CREATE INDEX idx_sys_menu_pss ON ${_prefix}sys_menu (parent_codes);
+CREATE INDEX idx_sys_menu_tss ON ${_prefix}sys_menu (tree_sorts);
+CREATE INDEX idx_sys_menu_sc ON ${_prefix}sys_menu (sys_code);
+CREATE INDEX idx_sys_menu_is ON ${_prefix}sys_menu (is_show);
+CREATE INDEX idx_sys_menu_mcs ON ${_prefix}sys_menu (module_codes);
+CREATE INDEX idx_sys_menu_wt ON ${_prefix}sys_menu (weight);
+CREATE INDEX idx_sys_module_status ON ${_prefix}sys_module (status);
+CREATE INDEX idx_sys_msg_inner_cb ON ${_prefix}sys_msg_inner (create_by);
+CREATE INDEX idx_sys_msg_inner_status ON ${_prefix}sys_msg_inner (status);
+CREATE INDEX idx_sys_msg_inner_cl ON ${_prefix}sys_msg_inner (content_level);
+CREATE INDEX idx_sys_msg_inner_sc ON ${_prefix}sys_msg_inner (send_user_code);
+CREATE INDEX idx_sys_msg_inner_sd ON ${_prefix}sys_msg_inner (send_date);
+CREATE INDEX idx_sys_msg_inner_r_mi ON ${_prefix}sys_msg_inner_record (msg_inner_id);
+CREATE INDEX idx_sys_msg_inner_r_ruc ON ${_prefix}sys_msg_inner_record (receive_user_code);
+CREATE INDEX idx_sys_msg_inner_r_stat ON ${_prefix}sys_msg_inner_record (read_status);
+CREATE INDEX idx_sys_msg_inner_r_star ON ${_prefix}sys_msg_inner_record (is_star);
+CREATE INDEX idx_sys_msg_push_type ON ${_prefix}sys_msg_push (msg_type);
+CREATE INDEX idx_sys_msg_push_rc ON ${_prefix}sys_msg_push (receive_code);
+CREATE INDEX idx_sys_msg_push_uc ON ${_prefix}sys_msg_push (receive_user_code);
+CREATE INDEX idx_sys_msg_push_suc ON ${_prefix}sys_msg_push (send_user_code);
+CREATE INDEX idx_sys_msg_push_pd ON ${_prefix}sys_msg_push (plan_push_date);
+CREATE INDEX idx_sys_msg_push_ps ON ${_prefix}sys_msg_push (push_status);
+CREATE INDEX idx_sys_msg_push_rs ON ${_prefix}sys_msg_push (read_status);
+CREATE INDEX idx_sys_msg_push_bk ON ${_prefix}sys_msg_push (biz_key);
+CREATE INDEX idx_sys_msg_push_bt ON ${_prefix}sys_msg_push (biz_type);
+CREATE INDEX idx_sys_msg_push_imp ON ${_prefix}sys_msg_push (is_merge_push);
+CREATE INDEX idx_sys_msg_pushed_type ON ${_prefix}sys_msg_pushed (msg_type);
+CREATE INDEX idx_sys_msg_pushed_rc ON ${_prefix}sys_msg_pushed (receive_code);
+CREATE INDEX idx_sys_msg_pushed_uc ON ${_prefix}sys_msg_pushed (receive_user_code);
+CREATE INDEX idx_sys_msg_pushed_suc ON ${_prefix}sys_msg_pushed (send_user_code);
+CREATE INDEX idx_sys_msg_pushed_pd ON ${_prefix}sys_msg_pushed (plan_push_date);
+CREATE INDEX idx_sys_msg_pushed_ps ON ${_prefix}sys_msg_pushed (push_status);
+CREATE INDEX idx_sys_msg_pushed_rs ON ${_prefix}sys_msg_pushed (read_status);
+CREATE INDEX idx_sys_msg_pushed_bk ON ${_prefix}sys_msg_pushed (biz_key);
+CREATE INDEX idx_sys_msg_pushed_bt ON ${_prefix}sys_msg_pushed (biz_type);
+CREATE INDEX idx_sys_msg_pushed_imp ON ${_prefix}sys_msg_pushed (is_merge_push);
+CREATE INDEX idx_sys_msg_tpl_key ON ${_prefix}sys_msg_template (tpl_key);
+CREATE INDEX idx_sys_msg_tpl_type ON ${_prefix}sys_msg_template (tpl_type);
+CREATE INDEX idx_sys_msg_tpl_status ON ${_prefix}sys_msg_template (status);
+CREATE INDEX idx_sys_office_cc ON ${_prefix}sys_office (corp_code);
+CREATE INDEX idx_sys_office_pc ON ${_prefix}sys_office (parent_code);
+CREATE INDEX idx_sys_office_pcs ON ${_prefix}sys_office (parent_codes);
+CREATE INDEX idx_sys_office_status ON ${_prefix}sys_office (status);
+CREATE INDEX idx_sys_office_ot ON ${_prefix}sys_office (office_type);
+CREATE INDEX idx_sys_office_vc ON ${_prefix}sys_office (view_code);
+CREATE INDEX idx_sys_office_ts ON ${_prefix}sys_office (tree_sort);
+CREATE INDEX idx_sys_office_tss ON ${_prefix}sys_office (tree_sorts);
+CREATE INDEX idx_sys_post_cc ON ${_prefix}sys_post (corp_code);
+CREATE INDEX idx_sys_post_status ON ${_prefix}sys_post (status);
+CREATE INDEX idx_sys_post_ps ON ${_prefix}sys_post (post_sort);
+CREATE INDEX idx_sys_role_cc ON ${_prefix}sys_role (corp_code);
+CREATE INDEX idx_sys_role_is ON ${_prefix}sys_role (is_sys);
+CREATE INDEX idx_sys_role_status ON ${_prefix}sys_role (status);
+CREATE INDEX idx_sys_role_rs ON ${_prefix}sys_role (role_sort);
+CREATE INDEX idx_sys_user_lc ON ${_prefix}sys_user (login_code);
+CREATE INDEX idx_sys_user_email ON ${_prefix}sys_user (email);
+CREATE INDEX idx_sys_user_mobile ON ${_prefix}sys_user (mobile);
+CREATE INDEX idx_sys_user_wo ON ${_prefix}sys_user (wx_openid);
+CREATE INDEX idx_sys_user_imei ON ${_prefix}sys_user (mobile_imei);
+CREATE INDEX idx_sys_user_rt ON ${_prefix}sys_user (user_type);
+CREATE INDEX idx_sys_user_rc ON ${_prefix}sys_user (ref_code);
+CREATE INDEX idx_sys_user_mt ON ${_prefix}sys_user (mgr_type);
+CREATE INDEX idx_sys_user_us ON ${_prefix}sys_user (user_weight);
+CREATE INDEX idx_sys_user_ud ON ${_prefix}sys_user (update_date);
+CREATE INDEX idx_sys_user_status ON ${_prefix}sys_user (status);
+CREATE INDEX idx_sys_user_cc ON ${_prefix}sys_user (corp_code);
 
 
 

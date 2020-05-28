@@ -1,41 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE js_gen_table_column CASCADE CONSTRAINTS;
-DROP TABLE js_gen_table CASCADE CONSTRAINTS;
-DROP TABLE js_sys_company_office CASCADE CONSTRAINTS;
-DROP TABLE js_sys_employee_office CASCADE CONSTRAINTS;
-DROP TABLE js_sys_employee_post CASCADE CONSTRAINTS;
-DROP TABLE js_sys_user_data_scope CASCADE CONSTRAINTS;
-DROP TABLE js_sys_user_role CASCADE CONSTRAINTS;
-DROP TABLE js_sys_user CASCADE CONSTRAINTS;
-DROP TABLE js_sys_employee CASCADE CONSTRAINTS;
-DROP TABLE js_sys_company CASCADE CONSTRAINTS;
-DROP TABLE js_sys_area CASCADE CONSTRAINTS;
-DROP TABLE js_sys_config CASCADE CONSTRAINTS;
-DROP TABLE js_sys_dict_data CASCADE CONSTRAINTS;
-DROP TABLE js_sys_dict_type CASCADE CONSTRAINTS;
-DROP TABLE js_sys_file_upload CASCADE CONSTRAINTS;
-DROP TABLE js_sys_file_entity CASCADE CONSTRAINTS;
-DROP TABLE js_sys_job_log CASCADE CONSTRAINTS;
-DROP TABLE js_sys_job CASCADE CONSTRAINTS;
-DROP TABLE js_sys_lang CASCADE CONSTRAINTS;
-DROP TABLE js_sys_log CASCADE CONSTRAINTS;
-DROP TABLE js_sys_role_menu CASCADE CONSTRAINTS;
-DROP TABLE js_sys_menu CASCADE CONSTRAINTS;
-DROP TABLE js_sys_module CASCADE CONSTRAINTS;
-DROP TABLE js_sys_msg_inner_record CASCADE CONSTRAINTS;
-DROP TABLE js_sys_msg_inner CASCADE CONSTRAINTS;
-DROP TABLE js_sys_msg_push CASCADE CONSTRAINTS;
-DROP TABLE js_sys_msg_pushed CASCADE CONSTRAINTS;
-DROP TABLE js_sys_msg_template CASCADE CONSTRAINTS;
-DROP TABLE js_sys_office CASCADE CONSTRAINTS;
-DROP TABLE js_sys_post CASCADE CONSTRAINTS;
-DROP TABLE js_sys_role_data_scope CASCADE CONSTRAINTS;
-DROP TABLE js_sys_role CASCADE CONSTRAINTS;
-
-
-
 
 /* Create Tables */
 
@@ -308,6 +271,7 @@ CREATE TABLE js_sys_file_entity
 	file_extension varchar2(100) NOT NULL,
 	file_size number(31) NOT NULL,
 	file_meta varchar2(255),
+	file_preview char(1),
 	PRIMARY KEY (file_id)
 );
 
@@ -744,7 +708,7 @@ CREATE TABLE js_sys_user
 	user_code varchar2(100) NOT NULL,
 	login_code varchar2(100) NOT NULL,
 	user_name varchar2(100) NOT NULL,
-	password varchar2(100) NOT NULL,
+	password varchar2(200) NOT NULL,
 	email varchar2(300),
 	mobile varchar2(100),
 	phone varchar2(100),
@@ -1157,6 +1121,7 @@ COMMENT ON COLUMN js_sys_file_entity.file_content_type IS '文件内容类型';
 COMMENT ON COLUMN js_sys_file_entity.file_extension IS '文件后缀扩展名';
 COMMENT ON COLUMN js_sys_file_entity.file_size IS '文件大小(单位B)';
 COMMENT ON COLUMN js_sys_file_entity.file_meta IS '文件信息(JSON格式)';
+COMMENT ON COLUMN js_sys_file_entity.file_preview IS '文件预览标记';
 COMMENT ON TABLE js_sys_file_upload IS '文件上传表';
 COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';

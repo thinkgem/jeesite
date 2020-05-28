@@ -48,19 +48,19 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 文件在线预览 -->
+		<!-- 文件在线预览
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filepreview</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 		
-		<!-- 文件管理共享 -->
+		<!-- 文件管理与共享
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Spring Boot -->
 		<dependency>
