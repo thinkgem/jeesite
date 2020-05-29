@@ -177,7 +177,7 @@
 								<span class="required hide">*</span> \${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<${'#'}form:fileupload id="uploadImage" bizKey="\${${className}.id}" bizType="${className}_image"
-									uploadType="image" class="" readonly="false"/>
+									uploadType="image" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>
@@ -194,7 +194,7 @@
 								<span class="required hide">*</span> \${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<${'#'}form:fileupload id="uploadFile" bizKey="\${${className}.id}" bizType="${className}_file"
-									uploadType="all" class="" readonly="false"/>
+									uploadType="all" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>

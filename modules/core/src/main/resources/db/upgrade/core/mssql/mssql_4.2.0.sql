@@ -6,6 +6,10 @@ VALUES ('1238121573028433920', '0', '0,', 9810, '0000009810,', '1', 0, '安全�
 -- 文件表增加文件预览标记
 ALTER TABLE ${_prefix}sys_file_entity ADD file_preview char(1) NULL;
 
+-- 新增 UReport 模块
+INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
+VALUES ('ureport', '统计报表', '高性能报表引擎，通过迭代单元格可以实现，任意复杂的中国式报表', 'com.jeesite.modules.ureport.config.UreportConfig', '4.2.0', NULL, '0', 'system', getdate(), 'system', getdate(), NULL);
+
 -- 新增 Visual 模块
 INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
 VALUES ('visual', '数据大屏', '可视化数据大屏、拖拽搭建、多种图表组件', 'com.jeesite.modules.visual.web.VisualDataController', '4.2.0', NULL, '0', 'system', getdate(), 'system', getdate(), NULL);

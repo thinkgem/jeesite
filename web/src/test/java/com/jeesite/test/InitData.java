@@ -23,5 +23,10 @@ public class InitData extends BaseInitDataTests {
 	public void initData01() throws Exception{
 		logger.info("数据库初始化完成。");
 	}
+
+	@Override
+	public void initProperty() {
+		System.setProperty("jeesite.initdata", "true");
+	}
 	
 }

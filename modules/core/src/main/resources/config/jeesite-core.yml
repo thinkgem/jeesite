@@ -90,7 +90,7 @@ spring:
   # 打印横幅
   main:
     bannerMode: "off"
-  
+    
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml

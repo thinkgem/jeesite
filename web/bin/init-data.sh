@@ -22,7 +22,7 @@ echo "[信息] 依赖下载完成，下面开始初始化数据库。"
 echo ""
 read -s -n1 -p "请按任意键继续 ... "
 
-MAVEN_OPTS="$MAVEN_OPTS -Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
-mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData -Djeesite.initdata=true
+MAVEN_OPTS="$MAVEN_OPTS -Xms512m -Xmx1024m"
+mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData
 
 cd bin

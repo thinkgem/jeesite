@@ -24,8 +24,8 @@ echo [信息] 依赖下载完成，下面开始初始化数据库。
 echo.
 pause
 
-set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
-call mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData -Djeesite.initdata=true
+set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m"
+call mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData
 
 cd bin
 cmd /c msg %username% /time:0 /w "初始化数据库完成..."
