@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.9-SNAPSHOT</version>
+		<version>4.2.0-SNAPSHOT</version>
 		<!--<relativePath>../../jeesite/parent/pom.xml</relativePath>-->
 	</parent>
 	
@@ -20,12 +20,12 @@
 	<properties>
 		
 		<!-- Spring Cloud -->
-		<spring-cloud.version>Finchley.SR3</spring-cloud.version>
-		<spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
+		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+		<spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
 		
         <!-- docker service -->
         <docker.registryUrl>http://192.168.56.102:2375</docker.registryUrl>
-        <docker.imageName>${project.groupId}/${project.artifactId}:4.1</docker.imageName>
+        <docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
 		
 	</properties>
 	
