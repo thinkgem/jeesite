@@ -12,6 +12,14 @@
 			</div>
 		</div>
 		<div class="box-body">
+			<% if(@Global.getConfig('user.adminCtrlPermi', '2') == '1'){ %>
+			<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<p><i class="icon fa fa-info"></i> 当前二级管理员的控制权限类型为拥有的权限。你可以在用户管理里设置数据权限和角色管理设置数据权限。
+					对应的管理权限功能，如用户管理、机构管理、公司管理，将启用为拥有权限的数据过滤，因此二级管理设置的管理权限将没有意义。
+					若启用该功能，请打开 application.yml 设置为管理的权限：user.adminCtrlPermi=2</p>
+			</div>
+			<% } %>
 			<#form:form id="searchForm" model="${user}" action="${ctx}/sys/secAdmin/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
