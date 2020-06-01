@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.jeesite</groupId>
+        <artifactId>jeesite-cloud-parent</artifactId>
+        <version>4.2.0-SNAPSHOT</version>
+        <relativePath>../parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>jeesite-cloud-nacos</artifactId>
+    <packaging>jar</packaging>
+
+    <name>JeeSite Cloud Nacos</name>
+    <url>http://www.jeesite.com</url>
+    <inceptionYear>2019-Now</inceptionYear>
+
+	<properties>
+		
+		<finalName>web</finalName><!-- jar or war 包的名称 -->
+		<start-class>com.jeesite.modules.NacosApplication</start-class>
+		
+		<nacos.version>1.2.1</nacos.version>
+		
+		<!-- environment setting -->
+		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+	</properties>
+	
+    <dependencies>
+
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-core</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-config</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-naming</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-istio</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+	
+		<!-- log -->
+		<!-- log4j通过slf4j来代理 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<!-- apache commons logging通过slf4j来代理 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<!-- java.util.logging 通过slf4j来代理 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+		<!-- log -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.10.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.10.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.10.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+    </dependencies>
+
+    <build>
+		<finalName>${finalName}</finalName>
+		<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>static/console-fe/.vscode/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <developers>
+        <developer>
+            <id>thinkgem</id>
+            <name>WangZhen</name>
+            <email>thinkgem at 163.com</email>
+            <roles><role>Project lead</role></roles>
+            <timezone>+8</timezone>
+        </developer>
+        <developer>
+            <id>长春叭哥</id>
+            <name>YaoHailu</name>
+            <email>admin at jeegit.com</email>
+            <roles><role>Project member</role></roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>jeesite</name>
+        <url>http://www.jeesite.com</url>
+    </organization>
+    
+	<repositories>
+		<repository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+</project>
