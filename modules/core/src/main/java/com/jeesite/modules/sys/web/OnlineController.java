@@ -151,10 +151,13 @@ public class OnlineController extends BaseController{
 			}
 			Object pc = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
 			if (pc != null && pc instanceof PrincipalCollection){
-				LoginInfo loginInfo = (LoginInfo)((PrincipalCollection)pc).getPrimaryPrincipal();
-				if (loginInfo != null){
-					String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "PC");
-					onlineTickOutMap.put(key, StringUtils.EMPTY);
+				Object pp = ((PrincipalCollection)pc).getPrimaryPrincipal();
+				if (pp != null) {
+					if (pp instanceof LoginInfo){
+						LoginInfo loginInfo = ((LoginInfo)pp);
+						String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "PC");
+						onlineTickOutMap.put(key, StringUtils.EMPTY);
+					}
 				}
 			}
 			SysCacheUtils.put("onlineTickOutMap", onlineTickOutMap);
