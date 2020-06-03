@@ -1,13 +1,11 @@
+#*************** Config Module Related Configurations ***************#
+### If user MySQL as datasource:
+spring.datasource.platform: mysql
 
-# 服务注册
-eureka:
+### Count of DB:
+db.num: 1
 
-  # 实例设置
-  instance:
-    # 实例是否允许使用IP
-    preferIpAddress: true
-    
-  # 客户端设置
-  client:
-    # 注册中心地址（集群时指定另外一个注册中心地址）
-    serviceUrl.defaultZone: http://172.17.0.2:8970/eureka/
+### Connect URL of DB:
+db.url.0: jdbc:mysql://192.168.56.1:3306/nacos?useSSL=false&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
+db.user: root
+db.password: 123456

@@ -23,10 +23,6 @@
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
 		<spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
 		
-        <!-- docker service -->
-        <docker.registryUrl>http://192.168.56.102:2375</docker.registryUrl>
-        <docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
-		
 	</properties>
 	
 	<dependencyManagement>
@@ -58,38 +54,6 @@
 		</dependency>
 		
 	</dependencies>
-
-	<profiles>
-		<!-- Docker 插件 -->
-		<profile>
-			<id>docker</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.spotify</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-						<version>1.1.0</version>
-						<configuration>
-							<serverId>docker-hub</serverId>
-							<registryUrl>${docker.registryUrl}</registryUrl>
-							<dockerHost>${docker.registryUrl}</dockerHost>
-							<imageName>${docker.imageName}</imageName>
-							<dockerDirectory>${project.basedir}/bin/docker</dockerDirectory>
-							<resources>
-								<resource>
-									<targetPath>/</targetPath>
-									<directory>${project.build.directory}</directory>
-									<include>web.war</include>
-								</resource>
-							</resources>
-							<forceTags>true</forceTags>
-							<pushImage>false</pushImage>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 	
 	<developers>  
 		<developer>

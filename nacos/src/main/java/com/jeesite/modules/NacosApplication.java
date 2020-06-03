@@ -31,6 +31,7 @@ public class NacosApplication {
 
 	public static void main(String[] args) {
 		System.setProperty("nacos.standalone", "true");
+		System.setProperty("derby.stream.error.file","target/derby.log");
 	    new SpringApplicationBuilder(NacosApplication.class).run(args);
 	}
 
