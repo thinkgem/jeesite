@@ -66,6 +66,10 @@
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
+		<!-- docker setting -->
+        <docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
+        <docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
+        
 	</properties>
 	
 	<dependencies>
@@ -224,7 +228,7 @@
 								<goal>jar</goal>
 							</goals>
 							<configuration>
-								<doclint>none</doclint>
+								<additionalparam>-Xdoclint:none</additionalparam>
 							</configuration>  
 						</execution>
 					</executions>
@@ -284,6 +288,35 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin> -->
+				
+				<!-- Docker 插件 -->
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.33.0</version>
+					<configuration>
+						<dockerHost>${docker.dockerHost}</dockerHost>
+						<verbose>true</verbose>
+						<images>
+							<image>
+								<name>${docker.imageName}</name>
+								<alias>${project.artifactId}</alias>
+								<build>
+									<dockerFile>${project.basedir}/bin/docker/Dockerfile</dockerFile>
+									<assembly>
+										<descriptorRef>artifact</descriptorRef>
+									</assembly>
+								</build>
+								<run>
+									<ports>
+										<port>${docker.run.port}</port>
+									</ports>
+								</run>
+							</image>
+						</images>
+					</configuration>
+				</plugin>
+				
 			</plugins>
 			
 		</pluginManagement>
