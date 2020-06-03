@@ -20,7 +20,7 @@ rem 打包Web工程（结束）
 title %cd%
 
 rem 优化JVM参数
-set "JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
+set "JAVA_OPTS=-Xms512m -Xmx1024m"
 
 rem 方式一、配置外部自定义的属性文件（建议）
 rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml"
@@ -41,8 +41,8 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-rem 根据情况修改 web.war 为您的 war 包名称
-call "%RUN_JAVA%" %JAVA_OPTS% -jar web.war
+rem 根据情况修改 web.jar 为您的 jar 包名称
+call "%RUN_JAVA%" %JAVA_OPTS% -jar web.jar
 goto end
 
 :end

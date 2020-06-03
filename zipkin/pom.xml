@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.jeesite</groupId>
         <artifactId>jeesite-cloud-parent</artifactId>
-        <version>4.1.9-SNAPSHOT</version>
+        <version>4.2.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
@@ -19,40 +19,25 @@
 
 	<properties>
 		
-		<zipkin.version>2.10.1</zipkin.version>
+		<finalName>web</finalName><!-- jar or war 包的名称 -->
+		<start-class>com.jeesite.modules.ZipkinApplication</start-class>
 		
+		<!-- version setting -->
+		<zipkin.version>2.19.3</zipkin.version>
+		
+		<!-- environment setting -->
+		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+		<!-- docker setting -->
+        <docker.run.port>9411:9411</docker.run.port>
+        
 	</properties>
 	
     <dependencies>
-	
-		<!-- Spring Boot Begin -->
+		
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- Spring Boot End -->
-	
-		<!-- Spring Cloud Begin -->
-		<dependency>
-			<groupId>io.zipkin.java</groupId>
-			<artifactId>zipkin</artifactId>
-			<version>${zipkin.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.zipkin.java</groupId>
+			<groupId>io.zipkin</groupId>
 			<artifactId>zipkin-server</artifactId>
 			<version>${zipkin.version}</version>
 			<exclusions>
@@ -62,38 +47,20 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>io.zipkin.java</groupId>
-			<artifactId>zipkin-autoconfigure-ui</artifactId>
-			<version>${zipkin.version}</version>
-		</dependency>
-		<!-- Spring Cloud End -->
-		
-		<!-- 服务发现 -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-		</dependency>
 		
     </dependencies>
 
     <build>
+		<finalName>${finalName}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.jeesite.modules.ZipkinApplication</mainClass>
-                </configuration>
             </plugin>
+            <plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+			</plugin>
         </plugins>
     </build>
 
@@ -108,8 +75,8 @@
         <developer>
             <id>长春叭哥</id>
             <name>YaoHailu</name>
-            <email>admin at jeegti.com</email>
-            <roles><role>Project lead</role></roles>
+            <email>admin at jeegit.com</email>
+            <roles><role>Project member</role></roles>
             <timezone>+8</timezone>
         </developer>
     </developers>
@@ -118,42 +85,24 @@
         <name>jeesite</name>
         <url>http://www.jeesite.com</url>
     </organization>
-
-    <repositories>
-
-        <repository>
-            <id>aliyun-repos</id>
-            <name>Aliyun Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-        <repository>
-            <id>sonatype-repos</id>
-            <name>Sonatype Repository</name>
-            <url>https://oss.sonatype.org/content/groups/public</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-        <repository>
-            <id>sonatype-repos-s</id>
-            <name>Sonatype Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases><enabled>false</enabled></releases>
-            <snapshots><enabled>true</enabled></snapshots>
-        </repository>
-
-    </repositories>
-
-    <pluginRepositories>
-
-        <pluginRepository>
-            <id>aliyun-repos</id>
-            <name>Aliyun Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </pluginRepository>
-
-    </pluginRepositories>
+    
+	<repositories>
+		<repository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
 </project>

@@ -5,18 +5,14 @@ ENV LANG C.UTF-8
 VOLUME /tmp
 
 WORKDIR /app
-ADD web.war .
-RUN jar -xvf web.war
-# RUN chmod -R 755 ./*
+ADD ./maven/web.jar ./app.jar
+ADD ./app.yml ./app.yml
 
-WORKDIR /app/WEB-INF
-# ENV JAVA_OPTS "-Xms256m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
-ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=prod"
+#ENV JAVA_OPTS "-Xms256m -Xmx1024m"
+ENV JAVA_OPTS "$JAVA_OPTS -Dspring.config.location=/app/app.yml"
 
-ADD application-prod.yml ./classes/config
+ENTRYPOINT java $JAVA_OPTS -jar app.jar
 
-ENTRYPOINT java -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+EXPOSE 9411
 
-EXPOSE 8970
-
-# docker run -p 8970:8970 com.jeesite/jeesite-cloud-eureka:4.1
+#docker run -p 9411:9411 com.jeesite/jeesite-cloud-zipkin:4.2
