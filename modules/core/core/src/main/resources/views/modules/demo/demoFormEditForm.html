@@ -221,7 +221,7 @@
 							<label class="control-label col-sm-2">图片上传：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
-									uploadType="image" class="" readonly="false"/>
+									uploadType="image" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>
@@ -233,7 +233,7 @@
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage2" returnPath="true"
 									filePathInputId="uploadImage2Path" fileNameInputId="uploadImage2Name"
-									uploadType="image" readonly="false" maxUploadNum="3" isMini="false"/>
+									uploadType="image" readonly="false" preview="true" maxUploadNum="3" isMini="false"/>
 								<#form:input name="uploadImage2Path" value="/js/userfiles/fileupload/201812/1073024549485039616.png|/js/userfiles/fileupload/201812/1073043095867133952.png" class="form-control"/>
 								<#form:input name="uploadImage2Name" value="0 (1).png|0 (2).png" class="form-control"/>
 							</div>
@@ -246,7 +246,7 @@
 							<label class="control-label col-sm-2">附件上传：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
-									uploadType="all" class="" readonly="false"/>
+									uploadType="all" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>

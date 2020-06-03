@@ -22,7 +22,7 @@ rem 设置类加载路径
 set "CLASS_PATH=%cd%/../"
 
 rem 优化JVM参数
-set "JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=512m"
+set "JAVA_OPTS=-Xms512m -Xmx1024m"
 
 rem 方式一、配置外部自定义的属性文件（建议）
 rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml"

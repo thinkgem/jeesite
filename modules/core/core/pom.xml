@@ -19,12 +19,16 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 -->
+		<finalName>web</finalName><!-- war or jar 包的名称 -->
 		<start-class>com.jeesite.modules.CoreApplication</start-class>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+		<!-- docker service -->
+		<docker.registryUrl>http://192.168.56.102:2375</docker.registryUrl>
+		<docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
 		
 	</properties>
 
@@ -133,6 +137,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
 			</plugin>
 			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -154,7 +161,7 @@
 				</configuration>
 			</plugin>
 			
-			<!-- Eclipse插件 -->
+			<!-- Eclipse 插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -169,6 +176,38 @@
 			
 		</plugins>
 	</build>
+	
+	<profiles>
+		<!-- Docker 插件 -->
+		<profile>
+			<id>docker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.spotify</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>1.1.0</version>
+						<configuration>
+							<serverId>docker-hub</serverId>
+							<registryUrl>${docker.registryUrl}</registryUrl>
+							<dockerHost>${docker.registryUrl}</dockerHost>
+							<imageName>${docker.imageName}</imageName>
+							<dockerDirectory>${project.basedir}/bin/docker</dockerDirectory>
+							<resources>
+								<resource>
+									<targetPath>/</targetPath>
+									<directory>${project.build.directory}</directory>
+									<include>web.war</include>
+								</resource>
+							</resources>
+							<forceTags>true</forceTags>
+							<pushImage>false</pushImage>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	
 	<developers>  
 		<developer>
@@ -192,11 +231,9 @@
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
-        <repository>
-		    <id>sonatype-repos-s</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases><enabled>false</enabled></releases>
-			<snapshots><enabled>true</enabled></snapshots>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
