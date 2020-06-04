@@ -54,7 +54,7 @@ spring:
       
         # 使用本地配置文件
         native:
-          searchLocations: classpath:cloud-config
+          searchLocations: classpath:jeesite-cloud-42
           
         # 使用Git储存配置文件
         git: 
@@ -62,7 +62,7 @@ spring:
           username: ~
           password: ~
           default-label: master
-          search-paths: cloud-config
+          search-paths: jeesite-cloud-42
     
     # Consul 服务发现
     consul:

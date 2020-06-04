@@ -22,12 +22,12 @@
 		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 		
-		<!-- version setting -->
-		<nacos.version>1.2.1</nacos.version>
-		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+		<!-- version setting -->
+		<nacos.version>1.2.1</nacos.version>
 		
 		<!-- docker setting -->
         <docker.run.port>8848:8848</docker.run.port>
@@ -131,25 +131,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<configuration>
-					<images>
-						<image>
-							<run>
-								<links>
-<!-- 									<link>jeesite-cloud-nacos-1:nacos</link> -->
-								</links>
-								<network>
-									<name>testnet</name>
-									<alias>testnet-1</alias>
-								</network>
-							</run>
-						</image>
-					</images>
-				</configuration>
-			</plugin>
         </plugins>
     </build>
 	

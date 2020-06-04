@@ -22,12 +22,12 @@
 		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.ZipkinApplication</start-class>
 		
-		<!-- version setting -->
-		<zipkin.version>2.19.3</zipkin.version>
-		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+		<!-- version setting -->
+		<zipkin.version>2.19.3</zipkin.version>
 		
 		<!-- docker setting -->
         <docker.run.port>9411:9411</docker.run.port>

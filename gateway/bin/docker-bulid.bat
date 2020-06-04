@@ -12,8 +12,7 @@ echo.
 cd %~dp0
 
 cd ..
-call mvn clean package docker:build -Dmaven.test.skip=true -U -Pdocker
+call mvn clean package docker:stop docker:remove docker:build docker:run -Dmaven.test.skip=true -U
 
 cd bin
-cmd /c msg %username% /time:0 /w "打包完成..."
 pause

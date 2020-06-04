@@ -11,7 +11,7 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 1. 在 JeeSite 单应用基础之上，完成的 Cloud 功能，使用经典开发模式，就像开发单应用一样开发分布式应用
 2. 它提供了微服务模块的代码生成工具，快速生成开发微服务功能，包含微服务的发布和调用接口
 3. 我们将 api 和 client 合体为一个工程，自动适应自己调用自己 client 的影响，简化工程数量
-4. 如一些通用操作（增删改查）的微服务接口和调用基类实现，这些都不用自己写了，简化代码书写
+4. 解决 Feign 接口不能多重继承问题，如一些通用操作（增删改查）的微服务接口基类实现，这些都不用自己写了
 5. 统一的授权认证、基础数据微服务，都已经提供查询 client 接口，其他微服务应用模块中可直接获取用户、组织、权限、字典等基础数据。微服务之间调用中，出现的会话及缓存的一致性统一得到解决。
 6. 如 UserUtils、EmpUtils、EmpUserService、OfficeService 等等众多的基础服务工具类，都可以直接从基础数据的微服务中获取数据，你不必考虑跨 web 服务的数据交互，我们已经帮你做了。
 7. 写一个别人有的，使用柔性事务解决，跨 web 服务的情况，入侵性非常小哦。
@@ -19,10 +19,10 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud Finchley
+* 分布式系统套件版本：Spring Cloud Finchley / Hoxton
 * 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos
 * 分布式统一配置中心：Spring Cloud Config / Nacos
-* 服务容错保护限流降级：Spring Cloud Hystrix
+* 容错保护限流降级：Spring Cloud Hystrix / Sentinel
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
 * 分布式链路追踪：Spring Cloud Zipkin (可选组件)
@@ -64,17 +64,47 @@ Redis 是一个缓存数据库，主要用来集中式管理共享会话和系�
 
 默认地址：127.0.0.1；默认端口：6379；默认密码：1234，可根据自己需要修改 conf 文件。
 
-### 部署 Nacos 服务
+### 启动 Nacos 服务
 
 Nacos 包含 服务注册 和 配置中心，如果使用 Nacos 就不用部署 `jeesite-cloud-eureka` 和 `jeesite-cloud-config` 了。
 
-下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `nacos-server-1.2.1.zip` 下载文件。
+JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src 方式运行：
 
-解压 `nacos-server-1.2.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+**jar 方式：**
 
-启动完成后，访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
+1. 下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `nacos-server-1.2.1.zip` 下载文件。
+2. 解压 `nacos-server-1.2.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
-登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/cloud-config/nacos_config_export.zip` 上传文件。
+**src 方式：**
+
+1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-nacos 项目。
+2. 运行 NacosApplication 类的 main 方法，即可启动服务。
+
+**配置 mysql 存储：**
+
+1. 默认情况 Nacos 采用 Derby 数据库，你可以将数据库切换到 MySQL 下。
+2. 找到 /nacos/src/main/resources/config/nacos-mysql.sql 文件导入数据表。
+3. 找到 Nacos 的配置文件（application.properties 或 application.yml）如下：
+
+```yml
+spring.datasource.platform: mysql
+
+### Count of DB:
+db.num: 1
+
+### Connect URL of DB:
+db.url.0: jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
+db.user: root
+db.password: 123456
+
+# 如果是 application.properties 文件，将 key 后的冒号换为等号即可。
+```
+
+**启动完成后：**
+
+浏览器访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
+
+登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-42.zip` 上传文件。
 
 然后编辑 Data Id 为 `application.yml` 的文件里的 JDBC 和 Redis 信息。
 

@@ -19,12 +19,15 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 ${project.artifactId} -->
+		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.GatewayApplication</start-class>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+		<!-- docker setting -->
+        <docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 

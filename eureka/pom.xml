@@ -26,6 +26,9 @@
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
+		<!-- docker setting -->
+        <docker.run.port>8970:8970</docker.run.port>
+		
 	</properties>
 
 	<dependencies>

@@ -5,18 +5,20 @@ ENV LANG C.UTF-8
 VOLUME /tmp
 
 WORKDIR /app
-ADD web.war .
-RUN jar -xvf web.war
-# RUN chmod -R 755 ./*
+ADD ./maven/web.war ./app.war
+
+RUN jar -xvf app.war
+#RUN chmod -R 755 ./*
 
 WORKDIR /app/WEB-INF
-# ENV JAVA_OPTS "-Xms256m -Xmx1024m"
-ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=native"
+ADD ./app.yml ./classes/config/bootstrap-git.yml
+#ADD jeesite.lic ./
 
-ADD application-native.yml ./classes/config
+#ENV JAVA_OPTS "-Xms256m -Xmx1024m"
+ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=git"
 
-ENTRYPOINT java -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+ENTRYPOINT java $JAVA_OPTS -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
 
 EXPOSE 8971
 
-# docker run -p 8971:8971 com.jeesite/jeesite-cloud-config:4.1
+#docker run -p 8971:8971 com.jeesite/jeesite-cloud-module-config:4.2

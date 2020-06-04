@@ -26,9 +26,8 @@
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
-		<!-- docker service -->
-		<docker.registryUrl>http://192.168.56.102:2375</docker.registryUrl>
-		<docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
+		<!-- docker setting -->
+        <docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 
@@ -71,11 +70,11 @@
 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>-->
 
-		<!-- 链路追踪服务 -->
+		<!-- 链路追踪服务
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!-- 在线文档接口 -->
 		<dependency>
