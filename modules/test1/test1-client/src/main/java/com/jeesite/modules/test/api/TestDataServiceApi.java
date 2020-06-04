@@ -29,7 +29,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@GetMapping(value = "getByPk")
-	public TestData get(@RequestParam("id") String id);
+	public TestData get(@RequestParam(name = "id", required = false) String id);
 	
 	/**
 	 * 获取单条数据
@@ -38,7 +38,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@GetMapping(value = "getByPkAndIsNewRecord")
-	public TestData get(@RequestParam("id") String id, @RequestParam("isNewRecord") boolean isNewRecord);
+	public TestData get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
 	
 	/**
 	 * 查询分页数据
