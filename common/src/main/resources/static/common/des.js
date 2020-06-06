@@ -1,4 +1,4 @@
-/*!
+/*
  * Des加密解密
  * 加密：DesUtils.encode('admin', '1,2,3')
  * 解密：DesUtils.decode('012C2C9BA925FAF8045B2FD9B02A2664', '1,2,3')
