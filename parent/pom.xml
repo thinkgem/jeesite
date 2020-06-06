@@ -311,6 +311,9 @@
 									<ports>
 										<port>${docker.run.port}</port>
 									</ports>
+									<network>
+										<mode>host</mode>
+									</network>
 								</run>
 							</image>
 						</images>
