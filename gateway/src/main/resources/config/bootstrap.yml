@@ -70,7 +70,7 @@ spring:
         server-addr: 127.0.0.1:8848
         file-extension: yml
         group: jeesite-cloud-42
-
+      
   # 打印横幅
   main:
     bannerMode: "off"
