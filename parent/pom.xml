@@ -20,7 +20,7 @@
 	<properties>
 		
 		<!-- Spring Cloud -->
-		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+		<spring-cloud.version>Hoxton.SR5</spring-cloud.version>
 		<spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
 		
 	</properties>
