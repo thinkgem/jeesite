@@ -26,7 +26,7 @@
 		<!-- 云客户端 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-feign</artifactId>
+			<artifactId>jeesite-cloud-framework</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		

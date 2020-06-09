@@ -54,7 +54,7 @@ feign:
     
   # 容错限流断路器
   hystrix:
-    enabled: true
+    enabled: false
   sentinel:
     enabled: true
     
