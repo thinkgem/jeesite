@@ -39,7 +39,7 @@
 	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
 	
-	<!-- Production profile -->
+	<!-- Production profile
 	<springProfile name="prod">
 		<logger name="org.mybatis" level="WARN" />
 		<logger name="org.mybatis.spring.transaction" level="WARN" />
@@ -55,6 +55,6 @@
 		<logger name="com.jeesite.common.mybatis.mapper" level="WARN" />
 		<logger name="com.jeesite.common.reflect.ReflectUtils" level="WARN" />
 		<logger name="com.jeesite.common.io.FileUtils" level="WARN" />
-	</springProfile>
+	</springProfile> -->
 	
 </included>
