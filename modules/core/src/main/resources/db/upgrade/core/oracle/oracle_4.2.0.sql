@@ -11,6 +11,14 @@ COMMENT ON COLUMN ${_prefix}sys_file_entity.file_preview IS '文件预览标记'
 INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
 VALUES ('ureport', '统计报表', '高性能报表引擎，通过迭代单元格可以实现，任意复杂的中国式报表', 'com.jeesite.modules.ureport.config.UreportConfig', '4.2.0', NULL, '0', 'system', sysdate, 'system', sysdate, NULL);
 
+-- 新增 Oauth2 模块
+INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
+VALUES ('oauth2', '第三方登录', '第三方登录模块、如：QQ、微信、Gitee、钉钉等', 'com.jeesite.modules.oauth2.web.Oauth2Controller', '4.2.0', NULL, '0', 'system', sysdate, 'system', sysdate, NULL);
+
+-- 新增 Weixin 模块
+INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
+VALUES ('weixin', '微信接入', '微信公众号绑定、消息推送、微信其它接口调用', 'com.jeesite.modules.weixin.mp.web.WeixinLoginController', '4.2.0', NULL, '0', 'system', sysdate, 'system', sysdate, NULL);
+
 -- 新增 Visual 模块
 INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
 VALUES ('visual', '数据大屏', '可视化数据大屏、拖拽搭建、多种图表组件', 'com.jeesite.modules.visual.web.VisualDataController', '4.2.0', NULL, '0', 'system', sysdate, 'system', sysdate, NULL);
