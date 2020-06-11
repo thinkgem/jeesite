@@ -15,16 +15,17 @@
 	<modules>
 		<!--<module>../../jeesite/root</module>-->
         <module>../parent</module>
+        <module>../nacos</module>
         <module>../eureka</module>
         <module>../config</module>
+        <module>../sentinel</module>
+		<module>../zipkin</module>
         <module>../gateway</module>
         <module>../modules/core/core</module>
         <module>../modules/test1/test1-client</module>
         <module>../modules/test1/test1</module>
         <module>../modules/test2/test2-client</module>
         <module>../modules/test2/test2</module>
-		<module>../zipkin</module>
-	    <module>../admin</module>
     </modules>
 	
 	<developers>  
