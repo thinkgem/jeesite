@@ -11,6 +11,14 @@
 	<div class="login-box-body">
 		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post">
 			<h4 class="login-box-msg">${isNotBlank(message!)?message:text('欢迎回来')+'！'}</h4>
+			<!-- <ul class="nav nav-tabs mb20">
+				<li class="active"><a href="#tab-1" data-toggle="tab">账号登录</a></li>
+				<li><a href="#tab-2" data-toggle="tab">邮箱登录</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab-1"></div>
+				<div class="tab-pane" id="tab-2"></div>
+			</div> -->
 			<div class="form-group has-feedback">
 				<span class="glyphicon glyphicon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
