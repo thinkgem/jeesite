@@ -522,7 +522,7 @@ web:
         ${adminPath}/desktop,
         ${adminPath}/index/menuTree,
         ${adminPath}/sys/online/count,
-        ${adminPath}/state/server/rtInfo,
+        ${adminPath}/**/server/rtInfo,
         ${adminPath}/**/treeData,
         ${adminPath}/file/**,
         ${adminPath}/tags/*,
