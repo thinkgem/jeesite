@@ -28,6 +28,7 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 * 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 1.2
 * 分布式统一配置中心：Spring Cloud Config / Nacos 1.2
 * 熔断隔离限流降级：Spring Cloud Hystrix / Sentinel 1.7
+* 集成阿里云组件：Nacos 注册与配置、Sentinel 流量防卫兵
 * 网关路由代理调用：Spring Cloud Gateway
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud Ribbon
@@ -159,17 +160,17 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 ### 网关代理模块调用
 
 * 代理 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test1/testData/list>
-    - 控制器位置：jeesite-cloud-module-test1/../web/TestData1Controller.java
+    - 控制器位置：/jeesite-cloud-module-test1/../web/TestData1Controller.java
 * 代理 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test2/testTree/list>
-    - 控制器位置：jeesite-cloud-module-test2/../web/TestTree2Controller.java
+    - 控制器位置：/jeesite-cloud-module-test2/../web/TestTree2Controller.java
 
 ### 模块之间互相调用
 
 * test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test2/testData/list>
-    - 服务消费者位置：jeesite-cloud-module-test2/../web/TestData2Controller.java
+    - 服务消费者位置：/jeesite-cloud-module-test2/../web/TestData2Controller.java
     - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
 * test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
-    - 服务消费者位置：jeesite-cloud-module-test1/../web/TestTree1Controller.java
+    - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
     - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
 
 ## 新增微服务方法
