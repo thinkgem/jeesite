@@ -456,7 +456,7 @@ class DefaultVFS extends VFS {
 						// Some versions of JBoss VFS might give a JAR stream even if the resource
 						// referenced by the URL isn't actually a JAR
 						is = url.openStream();
-						@SuppressWarnings("resource")
+//						@SuppressWarnings("resource")
 						JarInputStream jarInput = new JarInputStream(is);
 						log.debug("Listing " + url);
 						for (JarEntry entry; (entry = jarInput.getNextJarEntry()) != null;) {
@@ -473,21 +473,22 @@ class DefaultVFS extends VFS {
 						 * then we assume the current resource is not a directory.
 						 */
 						is = url.openStream();
-						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-						List<String> lines = new ArrayList<String>();
-						for (String line; (line = reader.readLine()) != null;) {
-							log.debug("Reader entry: " + line);
-							lines.add(line);
-							if (getResources(path + "/" + line).isEmpty()) {
-								lines.clear();
-								break;
+						try(BufferedReader reader = new BufferedReader(new InputStreamReader(is))){
+							List<String> lines = new ArrayList<String>();
+							for (String line; (line = reader.readLine()) != null;) {
+								log.debug("Reader entry: " + line);
+								lines.add(line);
+								if (getResources(path + "/" + line).isEmpty()) {
+									lines.clear();
+									break;
+								}
 							}
-						}
-
-						if (!lines.isEmpty()) {
-							log.debug("Listing " + url);
-							children.addAll(lines);
-						}
+	
+							if (!lines.isEmpty()) {
+								log.debug("Listing " + url);
+								children.addAll(lines);
+							}
+						};
 					}
 				} catch (FileNotFoundException e) {
 					/*
