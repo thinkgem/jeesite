@@ -261,7 +261,10 @@ public class EncodeUtils {
 	}
 	
 	// 预编译SQL过滤正则表达式
-	private static Pattern sqlPattern = Pattern.compile("(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when)\\b)", Pattern.CASE_INSENSITIVE);
+	private static Pattern sqlPattern = Pattern.compile(
+			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml)([\\s]*?)\\()|"
+			+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when)\\b)",
+			Pattern.CASE_INSENSITIVE);
 	
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
