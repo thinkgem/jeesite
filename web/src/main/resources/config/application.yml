@@ -76,6 +76,14 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
+#  # H2 数据库配置
+#  type: h2
+#  driver: org.h2.Driver
+#  url: jdbc:h2:~/jeesite-db/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
 #  # 连接信息加密
 #  encrypt:
 #  
