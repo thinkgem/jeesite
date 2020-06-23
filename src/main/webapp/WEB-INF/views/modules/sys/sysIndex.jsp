@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<!--
+Last-Updated :dandelion
+Last-Updation :2019.05.06 22:58
+-->
 <html>
 <head>
 	<title>${fns:getConfig('productName')}</title>
@@ -13,6 +17,12 @@
 		#footer {margin:8px 0 0 0;padding:3px 0 0 0;font-size:11px;text-align:center;border-top:2px solid #0663A2;}
 		#footer, #footer a {color:#999;} #left{overflow-x:hidden;overflow-y:auto;} #left .collapse{position:static;}
 		#userControl>li>a{/*color:#fff;*/text-shadow:none;} #userControl>li>a:hover, #user #userControl>li.open>a{background:transparent;}
+		.round_icon{width: 30px;height: 30px;display: flex;border-radius: 50%;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+           		 margin-top: 30%;
+		}
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -159,6 +169,9 @@
 							<li><a href="javascript:cookie('tabmode','${tabmode eq '1' ? '0' : '1'}');location=location.href">${tabmode eq '1' ? '关闭' : '开启'}页签模式</a></li>
 						</ul>
 						<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
+					</li>
+					<li>
+						<img class="round_icon" src="${fns:getUser().photo}" alt="logo" onerror="this.src='${ctxStatic}/images/default_head_ico.jpg;this.onerror=null'"/>
 					</li>
 					<li id="userInfo" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${fns:getUser().name}&nbsp;<span id="notifyNum" class="label label-info hide"></span></a>
