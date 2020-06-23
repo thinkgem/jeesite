@@ -379,7 +379,7 @@
     ,value: null //默认日期，支持传入new Date()，或者符合format参数设定的日期格式字符
     ,min: '1900-1-1' //有效最小日期，年月日必须用“-”分割，时分秒必须用“:”分割。注意：它并不是遵循 format 设定的格式。
     ,max: '2099-12-31' //有效最大日期，同上
-    ,trigger: 'click' //呼出控件的事件
+    ,trigger: 'focus' //呼出控件的事件
     ,show: false //是否直接显示，如果设置true，则默认直接显示控件
     ,showBottom: true //是否显示底部栏
     ,btns: ['clear', 'now', 'confirm'] //右下角显示的按钮，会按照数组顺序排列
@@ -1804,7 +1804,13 @@
     ,showEvent = function(elem, bind){
       elem.on(options.trigger, function(){
         bind && (that.bindElem = this);
-        that.render();
+        if(options.trigger === 'focus'){ // ThinkGem 冒泡事件优先处理时，可能会呼不出，增加延迟。
+        	setTimeout(function(){
+        		that.render();
+        	},100);
+        }else{
+        	that.render();
+        }
       });
     };
     
