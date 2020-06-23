@@ -16,6 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.tests.BaseSpringContextTests;
+import com.jeesite.common.utils.SpringUtils;
+import com.jeesite.modules.msg.entity.MsgPush;
 import com.jeesite.modules.msg.entity.MsgTemplate;
 import com.jeesite.modules.msg.entity.content.AppMsgContent;
 import com.jeesite.modules.msg.entity.content.EmailMsgContent;
@@ -41,6 +43,8 @@ public class MsgPushTest extends BaseSpringContextTests {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MsgTemplateService msgTemplateService;
 	
 	@Test
 	public void testSend(){
@@ -51,19 +55,19 @@ public class MsgPushTest extends BaseSpringContextTests {
 			userService.updateUserInfo(user);
 		}
 		for (int i=0; i<1; i++){
-			testPC();
+			testPc();
 			testApp();
 			testSMS();
 			testMail();
 			testMailTpl();
 		}
 		for (int j=0; j<3; j++){
-			testTaskMergePush();
 			testTaskPush();
+			testTaskMergePush();
 		}
 	}
 	
-	public void testPC(){
+	public void testPc(){
 		PcMsgContent msgContent = new PcMsgContent();
 		msgContent.setTitle("提示信息");
 		msgContent.setContent("您有1条新的任务");
@@ -112,8 +116,6 @@ public class MsgPushTest extends BaseSpringContextTests {
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system", new Date(), Global.YES);
 	}
 
-	@Autowired
-	private MsgTemplateService msgTemplateService;
 	public void testMailTpl(){
 		// 创建消息模板
 		MsgTemplate msgTemplate = new MsgTemplate();
@@ -122,7 +124,7 @@ public class MsgPushTest extends BaseSpringContextTests {
 		if (tplList.size() == 0){
 			msgTemplate.setTplName("邮件提示信息");
 			msgTemplate.setTplContent("你好，${keyword1}，请于 ${keyword2}，准时参加${keyword3}");
-			msgTemplate.setTplType("email");
+			msgTemplate.setTplType(MsgPush.TYPE_EMAIL);
 			msgTemplateService.save(msgTemplate);
 		}
 		// 根据模板发送消息
@@ -132,20 +134,17 @@ public class MsgPushTest extends BaseSpringContextTests {
 		msgContent.addTplData("keyword1", "小王");
 		msgContent.addTplData("keyword2", "2018-8-28 20:00");
 		msgContent.addTplData("keyword3", "OA项目方案讨论视频会议");
+		msgContent.setCc("thinkgem@163.com"); // 抄送地址，模板附加参数
 		// 即时推送模板消息，模板内容：你好，${keyword1}，请于 ${keyword2}，准时参加${keyword3}
 		MsgPushUtils.push(msgContent, "BizKey", "BizType", "system");
 	}
 	
-	@Autowired
-	private MsgLocalMergePushTask msgLocalMergePushTask;
-	public void testTaskMergePush(){
-		msgLocalMergePushTask.execute();
+	public void testTaskPush(){
+		SpringUtils.getBean(MsgLocalPushTask.class).execute();
 	}
 	
-	@Autowired
-	private MsgLocalPushTask msgLocalPushTask;
-	public void testTaskPush(){
-		msgLocalPushTask.execute();
+	public void testTaskMergePush(){
+		SpringUtils.getBean(MsgLocalMergePushTask.class).execute();
 	}
 	
 }
