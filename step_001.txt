@@ -1,0 +1,159 @@
+手把手教你进行源码跟踪：
+
+1、改变表名 cms_article => cms_article1，最后添加了一个 1
+/jeesite/src/main/resources/mappings/modules/cms/ArticleDao.xml
+
+	<select id="get" resultType="Article">
+		SELECT 
+			<include refid="cmsArticleColumns"/>
+		FROM cms_article a
+		<include refid="cmsArticleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+==>
+
+	<select id="get" resultType="Article">
+		SELECT 
+			<include refid="cmsArticleColumns"/>
+		FROM cms_article1 a
+		<include refid="cmsArticleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+2、提示
+Refresh file: mappings\modules\cms\ArticleDao.xml	
+（有空研究一下，这个是哪里打印出来的日志）
+
+3、访问
+http://127.0.0.1:8999/jeesite/a/cms/article/form?id=6
+
+提示 500 错误。
+
+3.1 500 错误的配置页面：
+/jeesite/src/main/webapp/WEB-INF/web.xml
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/error/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error/404.jsp</location>
+	</error-page>
+
+3.1.1 查看了一下 500.jsp，没发现有价值的内容。
+
+3.2 错误内容
+参见 F:\soft\jeesite0419\zch\step_001_01.txt
+
+3.2.1 URI: /jeesite/a/cms/article/form
+
+第一行显示 URI:
+2017-04-21 15:50:20,446 DEBUG com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor.preHandle(LogInterceptor.java:35) [jeesite.modules.sys.interceptor.LogInterceptor] - 开始计时: 03:50:20.446  URI: /jeesite/a/cms/article/form
+
+3.2.1.1 查看 ArticleController.java
+/jeesite/src/main/java/com/thinkgem/jeesite/modules/cms/web/ArticleController.java
+
+	@RequiresPermissions("cms:article:view")
+	@RequestMapping(value = "form")
+	public String form(Article article, Model model) {
+		//...
+	}
+
+/jeesite/a/cms/article/form 对应着 form 方法。
+
+3.2.1.2 在 LogInterceptor.java:35 里打印日志
+
+在 LogInterceptor.java 里添加 Thread.dumpStack() 查看程序流程
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
+			Object handler) throws Exception {
+		if (logger.isDebugEnabled()){
+			long beginTime = System.currentTimeMillis();//1、开始时间  
+	        startTimeThreadLocal.set(beginTime);		//线程绑定变量（该数据只有当前请求的线程可见）  
+	        logger.debug("开始计时: {}  URI: {}", new SimpleDateFormat("hh:mm:ss.SSS")
+	        	.format(beginTime), request.getRequestURI());
+	        Thread.dumpStack(); //37 行，添加
+		}
+		return true;
+	}
+
+3.2.1.2.1 日志内容
+参见 F:\soft\jeesite0419\zch\step_001_02.txt
+
+把日志里异常信息拷贝到 step_001_02_01.txt 、 step_001_02_02.txt 和 step_001_02_03.txt 里
+（共三段）
+
+3.2.1.2.1.1 
+
+先比对 step_001_02_01.txt 、 step_001_02_02.txt：
+
+用 《Beyond Compare 3》进行比对，如下三行起不一致（从下往上看）：
+
+	at com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor$$EnhancerBySpringCGLIB$$7e60dab1.preHandle(<generated>)
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:134)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:954)
+
+3.2.1.2.1.2 LogInterceptor 的配置
+在如下目录里搜索 LogInterceptor ：
+ F:\soft\jeesite0419\jeesite-master\src\main\resources
+
+FILE:     F:\soft\jeesite0419\jeesite-master\src\main\resources\spring-mvc.xml
+      93  			<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
+
+可以发现，LogInterceptor 在 spring-mvc.xml 配置的。
+
+
+3.2.1.2.2.1
+
+1、查看 step_001_02_03.txt：
+
+是从 SqlSessionTemplate.java:386 开始的
+at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:386)
+
+2、在 step_001_02_02.txt 里查找 SqlSessionTemplate：
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:231)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:74)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:399)
+	at com.sun.proxy.$Proxy26.selectOne(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:165)
+
+查看 SqlSessionTemplate.java 的源码：
+很明显，SqlSessionTemplate.java:386 执行出错，SqlSessionTemplate.java:399 抛出异常
+
+3.3 ErrorContext.java
+以上已经获得很多有价值的内容了。
+
+下面我们回到 F:\soft\jeesite0419\zch\step_001_01.txt
+
+看这一段日志：
+2017-04-21 15:50:20,456 ERROR org.apache.jsp.WEB_002dINF.views.error._500_jsp._jspService(_500_jsp.java:87) [500.jsp] - 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'jeesite.cms_article1' doesn't exist
+### The error may exist in F:\soft\jeesite0419\jeesite-master\src\main\webapp\WEB-INF\classes\mappings\modules\cms\ArticleDao.xml
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+
+这一句我最感兴趣：### The error may exist in F:\soft\jeesite0419\jeesite-master\src\main\webapp\WEB-INF\classes\mappings\modules\cms\ArticleDao.xml
+
+因为指出了文件名。
+
+这个文件是 mybatis 的，可以猜测这段是从 mybatis 里输出的。
+
+搜索 mybatis 源码，关键字：The error may exist in
+
+找到这个：
+
+FILE:     F:\soft\jeesite0419\zch\mybatis-3.2.8-sources\org\apache\ibatis\executor\ErrorContext.java
+     114        description.append("### The error may exist in ");
+     
+    // resource
+    if (resource != null) {
+      description.append(LINE_SEPARATOR);
+      description.append("### The error may exist in "); //114 行。
+      description.append(resource);
+    }
+
+大家有兴趣的话，可以在这里添加 Thread.dumpStack() 进行进一步跟踪（需要建立一个 java 项目）。目前没太大必要，因为这个貌似不是特别重要。
