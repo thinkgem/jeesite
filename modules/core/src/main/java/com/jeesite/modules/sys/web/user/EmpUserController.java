@@ -82,6 +82,7 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:view")
 	@RequestMapping(value = "index")
 	public String index(EmpUser empUser, Model model) {
+		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserIndex";
 	}
 	
@@ -91,6 +92,7 @@ public class EmpUserController extends BaseController {
 		// 获取岗位列表
 		Post post = new Post();
 		model.addAttribute("postList", postService.findList(post));
+		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserList";
 	}
 

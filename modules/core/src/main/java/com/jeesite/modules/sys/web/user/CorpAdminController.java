@@ -61,6 +61,7 @@ public class CorpAdminController extends BaseController {
 	public String list(User user, Model model) {
 		user.setCorpCode(null);
 		user.setCorpName(null);
+		model.addAttribute("user", user);
 		return "modules/sys/user/corpAdminList";
 	}
 

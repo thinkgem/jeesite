@@ -47,6 +47,7 @@ public class SecAdminController extends BaseController {
 	@RequiresPermissions("sys:secAdmin:view")
 	@RequestMapping(value = "list")
 	public String list(User user, Model model) {
+		model.addAttribute("user", user);
 		return "modules/sys/user/secAdminList";
 	}
 

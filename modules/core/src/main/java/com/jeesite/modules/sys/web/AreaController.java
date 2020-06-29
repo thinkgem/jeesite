@@ -60,6 +60,7 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "list")
 	public String list(Area area, Model model) {
+		model.addAttribute("area", area);
 		return "modules/sys/areaList";
 	}
 	
