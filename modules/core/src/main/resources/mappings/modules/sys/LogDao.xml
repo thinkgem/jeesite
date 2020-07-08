@@ -12,4 +12,12 @@
 		ORDER BY ${sqlMap.order.toSql()}
 	</select> -->
 	
+	<!-- 判断数据库类型例子
+	<select id="findList" resultType="Log">
+		<if test="global.dbName == 'mysql'"></if>
+		<if test="global.dbName == 'oracle'"></if>
+		<if test="global.dbName == 'mssql'"></if>
+		<if test="global.dbName == 'postgresql'"></if>
+	</select> -->
+	
 </mapper>
