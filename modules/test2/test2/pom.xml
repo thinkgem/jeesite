@@ -134,8 +134,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes></packagingExcludes>
-					<warSourceExcludes></warSourceExcludes>
+					<!-- <packagingExcludes></packagingExcludes>
+					<warSourceExcludes></warSourceExcludes> -->
 					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 					<warName>${finalName}</warName>
 					<archive>
@@ -174,7 +174,7 @@
 		<name>JeeSite</name>
 		<url>http://jeesite.com</url>
 	</organization>
-	
+
 	<repositories>
 		<repository>
 			<id>aliyun-repos</id>
@@ -182,11 +182,9 @@
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
-        <repository>
-		    <id>sonatype-repos-s</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases><enabled>false</enabled></releases>
-			<snapshots><enabled>true</enabled></snapshots>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
