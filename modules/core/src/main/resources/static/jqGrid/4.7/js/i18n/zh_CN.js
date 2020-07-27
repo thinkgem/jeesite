@@ -23,21 +23,21 @@ $.extend($.jgrid,{
         emptyrecords: "无数据显示",
         loadtext: "正在加载...",
         pgtext : " {0} 共 {1} 页",
-		pgfirst : "First Page",
-		pglast : "Last Page",
-		pgnext : "Next Page",
-		pgprev : "Previous Page",
-		pgrecs : "Records per Page",
-		showhide: "Toggle Expand Collapse Grid"
+		pgfirst : "第一页",
+		pglast : "最后一页",
+		pgnext : "下一页",
+		pgprev : "上一页",
+		pgrecs : "每页记录数",
+		showhide: "切换 展开 折叠 表格",
     },
     search : {
         caption: "搜索...",
         Find: "查找",
         Reset: "重置",
-        odata: [{ oper:'eq', text:'等于\u3000\u3000'},{ oper:'ne', text:'不等\u3000\u3000'},{ oper:'lt', text:'小于\u3000\u3000'},{ oper:'le', text:'小于等于'},{ oper:'gt', text:'大于\u3000\u3000'},{ oper:'ge', text:'大于等于'},{ oper:'bw', text:'开始于'},{ oper:'bn', text:'不开始于'},{ oper:'in', text:'属于\u3000\u3000'},{ oper:'ni', text:'不属于'},{ oper:'ew', text:'结束于'},{ oper:'en', text:'不结束于'},{ oper:'cn', text:'包含\u3000\u3000'},{ oper:'nc', text:'不包含'},{ oper:'nu', text:'不存在'},{ oper:'nn', text:'存在'}],
-        groupOps: [ { op: "AND", text: "所有" },    { op: "OR",  text: "任一" } ],
-		operandTitle : "Click to select search operation.",
-		resetTitle : "Reset Search Value"
+        odata: [{ oper:'eq', text:'等于\u3000\u3000'},{ oper:'ne', text:'不等于\u3000'},{ oper:'lt', text:'小于\u3000\u3000'},{ oper:'le', text:'小于等于'},{ oper:'gt', text:'大于\u3000\u3000'},{ oper:'ge', text:'大于等于'},{ oper:'bw', text:'开始于'},{ oper:'bn', text:'不开始于'},{ oper:'in', text:'属于\u3000\u3000'},{ oper:'ni', text:'不属于'},{ oper:'ew', text:'结束于'},{ oper:'en', text:'不结束于'},{ oper:'cn', text:'包含\u3000\u3000'},{ oper:'nc', text:'不包含'},{ oper:'nu', text:'不存在'},{ oper:'nn', text:'存在'}],
+        groupOps: [ { op: "AND", text: "满足所有条件" },    { op: "OR",  text: "满足任一条件" } ],
+		operandTitle : "单击进行搜索。",
+		resetTitle : "重置搜索条件"
     },
     edit : {
         addCaption: "添加记录",
@@ -45,7 +45,7 @@ $.extend($.jgrid,{
         bSubmit: "提交",
         bCancel: "取消",
         bClose: "关闭",
-        saveData: "数据已改变，是否保存？",
+        saveData: "数据已修改，是否保存？",
         bYes : "是",
         bNo : "否",
         bExit : "取消",
@@ -98,7 +98,7 @@ $.extend($.jgrid,{
     errors : {
         errcap : "错误",
         nourl : "没有设置url",
-        norecords: "没有要处理的记录",
+        norecords: "没有需要处理的记录",
         model : "colNames 和 colModel 长度不等！"
     },
     formatter : {

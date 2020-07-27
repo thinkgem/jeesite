@@ -1,41 +1,4 @@
 
-/* Drop Tables */
-
-IF OBJECT_ID('[js_gen_table_column]') IS NOT NULL DROP TABLE [js_gen_table_column];
-IF OBJECT_ID('[js_gen_table]') IS NOT NULL DROP TABLE [js_gen_table];
-IF OBJECT_ID('[js_sys_company_office]') IS NOT NULL DROP TABLE [js_sys_company_office];
-IF OBJECT_ID('[js_sys_employee_office]') IS NOT NULL DROP TABLE [js_sys_employee_office];
-IF OBJECT_ID('[js_sys_employee_post]') IS NOT NULL DROP TABLE [js_sys_employee_post];
-IF OBJECT_ID('[js_sys_user_data_scope]') IS NOT NULL DROP TABLE [js_sys_user_data_scope];
-IF OBJECT_ID('[js_sys_user_role]') IS NOT NULL DROP TABLE [js_sys_user_role];
-IF OBJECT_ID('[js_sys_user]') IS NOT NULL DROP TABLE [js_sys_user];
-IF OBJECT_ID('[js_sys_employee]') IS NOT NULL DROP TABLE [js_sys_employee];
-IF OBJECT_ID('[js_sys_company]') IS NOT NULL DROP TABLE [js_sys_company];
-IF OBJECT_ID('[js_sys_area]') IS NOT NULL DROP TABLE [js_sys_area];
-IF OBJECT_ID('[js_sys_config]') IS NOT NULL DROP TABLE [js_sys_config];
-IF OBJECT_ID('[js_sys_dict_data]') IS NOT NULL DROP TABLE [js_sys_dict_data];
-IF OBJECT_ID('[js_sys_dict_type]') IS NOT NULL DROP TABLE [js_sys_dict_type];
-IF OBJECT_ID('[js_sys_file_upload]') IS NOT NULL DROP TABLE [js_sys_file_upload];
-IF OBJECT_ID('[js_sys_file_entity]') IS NOT NULL DROP TABLE [js_sys_file_entity];
-IF OBJECT_ID('[js_sys_job_log]') IS NOT NULL DROP TABLE [js_sys_job_log];
-IF OBJECT_ID('[js_sys_job]') IS NOT NULL DROP TABLE [js_sys_job];
-IF OBJECT_ID('[js_sys_lang]') IS NOT NULL DROP TABLE [js_sys_lang];
-IF OBJECT_ID('[js_sys_log]') IS NOT NULL DROP TABLE [js_sys_log];
-IF OBJECT_ID('[js_sys_role_menu]') IS NOT NULL DROP TABLE [js_sys_role_menu];
-IF OBJECT_ID('[js_sys_menu]') IS NOT NULL DROP TABLE [js_sys_menu];
-IF OBJECT_ID('[js_sys_module]') IS NOT NULL DROP TABLE [js_sys_module];
-IF OBJECT_ID('[js_sys_msg_inner_record]') IS NOT NULL DROP TABLE [js_sys_msg_inner_record];
-IF OBJECT_ID('[js_sys_msg_inner]') IS NOT NULL DROP TABLE [js_sys_msg_inner];
-IF OBJECT_ID('[js_sys_msg_push]') IS NOT NULL DROP TABLE [js_sys_msg_push];
-IF OBJECT_ID('[js_sys_msg_pushed]') IS NOT NULL DROP TABLE [js_sys_msg_pushed];
-IF OBJECT_ID('[js_sys_msg_template]') IS NOT NULL DROP TABLE [js_sys_msg_template];
-IF OBJECT_ID('[js_sys_office]') IS NOT NULL DROP TABLE [js_sys_office];
-IF OBJECT_ID('[js_sys_post]') IS NOT NULL DROP TABLE [js_sys_post];
-IF OBJECT_ID('[js_sys_role_data_scope]') IS NOT NULL DROP TABLE [js_sys_role_data_scope];
-IF OBJECT_ID('[js_sys_role]') IS NOT NULL DROP TABLE [js_sys_role];
-
-
-
 
 /* Create Tables */
 
@@ -308,6 +271,7 @@ CREATE TABLE [js_sys_file_entity]
 	[file_extension] varchar(100) NOT NULL,
 	[file_size] decimal(31) NOT NULL,
 	[file_meta] varchar(255),
+	[file_preview] char(1),
 	PRIMARY KEY ([file_id])
 );
 
@@ -744,7 +708,7 @@ CREATE TABLE [js_sys_user]
 	[user_code] varchar(100) NOT NULL,
 	[login_code] varchar(100) NOT NULL,
 	[user_name] varchar(100) NOT NULL,
-	[password] varchar(100) NOT NULL,
+	[password] varchar(200) NOT NULL,
 	[email] varchar(300),
 	[mobile] varchar(100),
 	[phone] varchar(100),

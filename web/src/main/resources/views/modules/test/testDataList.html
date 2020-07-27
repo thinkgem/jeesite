@@ -38,7 +38,7 @@
 					<label class="control-label">${text('日期选择')}：</label>
 					<div class="control-inline">
 						<#form:input path="testDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
-							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="testDate_lte.focus()"/>
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="testDate_lte.click()"/>
 						&nbsp;-&nbsp;
 						<#form:input path="testDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
 							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
@@ -54,7 +54,7 @@
 						<label class="control-label">${text('日期时间')}：</label>
 						<div class="control-inline">
 							<#form:input path="testDatetime_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
-								dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="testDatetime_lte.focus()"/>
+								dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="testDatetime_lte.click()"/>
 							&nbsp;-&nbsp;
 							<#form:input path="testDatetime_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
 								dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
@@ -122,7 +122,6 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'${text("单行文本")}', name:'testInput', index:'a.test_input', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			if (obj.exporttype == "excel") { return val||'' };
 			return '<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("多行文本")}', name:'testTextarea', index:'a.test_textarea', width:150, align:"left"},
@@ -150,7 +149,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', firstsortorder:'desc', width:150, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:200, sortable:false, title:false, formatter: function(val, obj, row, act){
-			var actions = []; if (obj.exporttype == "excel") { return val||'' };
+			var actions = [];
 			<% if(hasPermi('test:testData:edit')){ %>
 				actions.push('<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){

@@ -1,12 +1,4 @@
 
-/* Drop Tables */
-
-IF OBJECT_ID('[test_data]') IS NOT NULL DROP TABLE [test_data];
-IF OBJECT_ID('[test_data_child]') IS NOT NULL DROP TABLE [test_data_child];
-IF OBJECT_ID('[test_tree]') IS NOT NULL DROP TABLE [test_tree];
-
-
-
 
 /* Create Tables */
 

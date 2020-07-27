@@ -50,7 +50,6 @@ public class ShiroConfig {
 	
 	/**
 	 * Apache Shiro Filter
-	 * @throws Exception 
 	 */
 	@Bean
 	@Order(3000)

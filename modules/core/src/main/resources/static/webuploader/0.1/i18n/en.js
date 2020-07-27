@@ -1,6 +1,6 @@
 (function($) {
 $.fn.webuploader.defaults.i18n = {
-			
+	
 	'安装失败！': 'Installation failed!',
 	'安装已成功，请刷新！': 'Installation successful, please refresh!',
 	'文件上传组件不支持您的浏览器，请使用高版本浏览器！': 'Does not support your browser, please use the high version browser!',

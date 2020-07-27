@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.ExceptionUtils;
@@ -36,8 +37,7 @@ import com.jeesite.common.mapper.XmlMapper;
  */
 public class ServletUtils {
 
-//	public static final String DEFAULT_PARAMS_PARAM = "params";			// 登录扩展参数（JSON字符串）优先级高于扩展参数前缀
-	public static final String DEFAULT_PARAM_PREFIX_PARAM = "param_";	// 扩展参数前缀
+	public static final String EXT_PARAMS_PREFIX = "param_";	// 扩展参数前缀
 	
 	// 定义静态文件后缀；静态文件排除URI地址
 	private static String[] staticFiles;
@@ -103,23 +103,28 @@ public class ServletUtils {
 	public static boolean isAjaxRequest(HttpServletRequest request){
 		
 		String accept = request.getHeader("accept");
-		if (accept != null && accept.indexOf(MediaType.APPLICATION_JSON_VALUE) != -1){
+		if (StringUtils.contains(accept, MediaType.APPLICATION_JSON_VALUE)){
 			return true;
 		}
-
+		
 		String xRequestedWith = request.getHeader("X-Requested-With");
-		if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1){
+		if (StringUtils.contains(xRequestedWith, "XMLHttpRequest")){
+			return true;
+		}
+		
+		String ajaxHeader = request.getHeader("__ajax");
+		if (StringUtils.inStringIgnoreCase(ajaxHeader, "json", "xml")){
+			return true;
+		}
+		
+		String ajaxParameter = request.getParameter("__ajax");
+		if (StringUtils.inStringIgnoreCase(ajaxParameter, "json", "xml")){
 			return true;
 		}
 		
 		String uri = request.getRequestURI();
 		if (StringUtils.endsWithIgnoreCase(uri, ".json")
 				|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
-			return true;
-		}
-		
-		String ajax = request.getParameter("__ajax");
-		if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")){
 			return true;
 		}
 		
@@ -180,8 +185,20 @@ public class ServletUtils {
 	 * @param data 消息数据
 	 * @return JSON字符串：{result:'true',message:'', if map then key:value,key2:value2... else data:{} }
 	 */
-	@SuppressWarnings("unchecked")
 	public static String renderResult(String result, String message, Object data) {
+		return renderResult(result, message, data, null);
+	}
+	
+	/**
+	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
+	 * @param result Global.TRUE or Globle.False
+	 * @param message 执行消息
+	 * @param data 消息数据
+	 * @param jsonView 根据 JsonView 过滤
+	 * @return JSON字符串：{result:'true',message:'', if map then key:value,key2:value2... else data:{} }
+	 */
+	@SuppressWarnings("unchecked")
+	public static String renderResult(String result, String message, Object data, Class<?> jsonView) {
 		Map<String, Object> resultMap = MapUtils.newHashMap();
 		resultMap.put("result", result);
 		resultMap.put("message", message);
@@ -201,6 +218,7 @@ public class ServletUtils {
 				resultMap.put("data", data);
 			}
 		}
+		Object object = null;
 		HttpServletResponse response = getResponse();
 		HttpServletRequest request = getRequest();
 		if (request != null){
@@ -210,23 +228,29 @@ public class ServletUtils {
 				if (response != null){
 					response.setContentType(MediaType.APPLICATION_XML_VALUE);
 				}
-				return XmlMapper.toXml(resultMap);
-			}else{
-				if (response != null){
-					response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+				if (jsonView != null) {
+					return XmlMapper.toXml(resultMap, jsonView);
+				}else {
+					return XmlMapper.toXml(resultMap);
 				}
+			}
+			if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
 				String functionName = request.getParameter("__callback");
 				if (StringUtils.isNotBlank(functionName)){
-					return JsonMapper.toJsonp(functionName, resultMap);
-				}else{
-					return JsonMapper.toJson(resultMap);
+					object = new JSONPObject(functionName, resultMap);
 				}
 			}
-		}else{
-			if (response != null){
-				response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-			}
-			return JsonMapper.toJson(resultMap);
+		}
+		if (response != null){
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8");
+		}
+		if (object == null) {
+			object = resultMap;
+		}
+		if (jsonView != null) {
+			return JsonMapper.toJson(object, jsonView);
+		}else {
+			return JsonMapper.toJson(object);
 		}
 	}
 	
@@ -254,6 +278,19 @@ public class ServletUtils {
 	}
 	
 	/**
+	 * 直接将结果JSON字符串渲染到客户端（支持JsonP，请求参数加：__callback=回调函数名）
+	 * @param response 渲染对象：{result:'true',message:'',data:{}}
+	 * @param result 结果标识：Global.TRUE or Globle.False
+	 * @param message 执行消息
+	 * @param data 消息数据
+	 * @param jsonView 根据 JsonView 过滤
+	 * @return null
+	 */
+	public static String renderResult(HttpServletResponse response, String result, String message, Object data, Class<?> jsonView) {
+		return renderString(response, renderResult(result, message, data, jsonView), null);
+	}
+	
+	/**
 	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
 	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
 	 * @param response 渲染对象
@@ -261,18 +298,34 @@ public class ServletUtils {
 	 * @return null
 	 */
 	public static String renderObject(HttpServletResponse response, Object object) {
+		return renderObject(response, object, null);
+	}
+	
+	/**
+	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
+	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
+	 * @param response 渲染对象
+	 * @param object 待转换JSON并渲染的对象
+	 * @param jsonView 根据 JsonView 过滤
+	 * @return null
+	 */
+	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
 		String uri = request.getRequestURI();
 		if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
 				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
 			return renderString(response, XmlMapper.toXml(object));
-		}else{
+		}
+		if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
 			String functionName = request.getParameter("__callback");
 			if (StringUtils.isNotBlank(functionName)){
-				return renderString(response, JsonMapper.toJsonp(functionName, object));
-			}else{
-				return renderString(response, JsonMapper.toJson(object));
+				object = new JSONPObject(functionName, object);
 			}
+		}
+		if (jsonView != null) {
+			return renderString(response, JsonMapper.toJson(object, jsonView));
+		}else {
+			return renderString(response, JsonMapper.toJson(object));
 		}
 	}
 	
@@ -298,7 +351,7 @@ public class ServletUtils {
 			if (type == null && StringUtils.isBlank(response.getContentType())){
 				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
 						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
-					type = MediaType.APPLICATION_JSON_UTF8_VALUE;
+					type = MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8";
 				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
 					if (StringUtils.startsWith(string, "<!DOCTYPE")){
 						type = MediaType.TEXT_HTML_VALUE+";charset=UTF-8";
@@ -409,7 +462,7 @@ public class ServletUtils {
 //		} else {
 //			paramMap = getParametersStartingWith(request, DEFAULT_PARAM_PREFIX_PARAM);
 //		}
-		return getParametersStartingWith(request, DEFAULT_PARAM_PREFIX_PARAM);
+		return getParametersStartingWith(request, EXT_PARAMS_PREFIX);
 	}
 	
 	/**

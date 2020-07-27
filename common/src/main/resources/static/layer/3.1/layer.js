@@ -356,11 +356,15 @@ Class.pt.creat = function(){
   
   // 2017-5-13 ThinkGem 支持post方式提交iframe
   if (config.type == 2){
-	var form = that.layero.find('#' + doms[4] + '-form' + times), formData = config.contentFormData;
-	for(var key in formData || {}){
-		form.append('<input type="hidden" name="'+key+'" value="'+formData[key]+'"/>');
+	if (config.method == 'GET' || config.method == 'get'){
+		that.layero.find('iframe').attr('src', content[0]);
+	}else{
+		var form = that.layero.find('#' + doms[4] + '-form' + times), formData = config.contentFormData;
+		for(var key in formData || {}){
+			form.append('<input type="hidden" name="'+key+'" value="'+formData[key]+'"/>');
+		}
+		form.submit();
 	}
-	form.submit();
   }
   //坐标自适应浏览器窗口尺寸
   config.type == 4 ? that.tips() : that.offset();
@@ -854,7 +858,8 @@ layer.style = function(index, options, limit){
   }
   
   layero.css(options);
-  btnHeight = layero.find('.'+doms[6]).outerHeight();
+//  btnHeight = layero.find('.'+doms[6]).outerHeight();
+  btnHeight = layero.find('.'+doms[6]).outerHeight() || 0; // ThinkGem 兼容 jQuery 3.5
   
   if(type === ready.type[2]){
     layero.find('iframe').css({

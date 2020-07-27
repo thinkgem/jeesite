@@ -12,38 +12,32 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 金额类型转换（保留两位）
  * @author ThinkGem
- * @version 2015-9-29
+ * @version 2020-3-5
  * @example fieldType = MoneyType.class
  */
-public class MoneyType {
+public class MoneyType implements FieldType {
+	
+	private NumberFormat nf = new DecimalFormat(",##0.00");
 
 	/**
 	 * 获取对象值（导入）
 	 */
-	public static Object getValue(String val) {
-		return val == null ? "" : StringUtils.replace(val, ",", "");
+	public Object getValue(String val) {
+		return val == null ? StringUtils.EMPTY : StringUtils.replace(val, ",", StringUtils.EMPTY);
 	}
 
 	/**
 	 * 获取对象值（导出）
 	 */
-	public static String setValue(Object val) {
-		NumberFormat nf = new DecimalFormat(",##0.00"); 
-		return val == null ? "" : nf.format(val);
+	public String setValue(Object val) {
+		return val == null ? StringUtils.EMPTY : nf.format(val);
 	}
 	
 	/**
 	 * 获取对象值格式（导出）
 	 */
-	public static String getDataFormat() {
+	public String getDataFormat() {
 		return "0.00";
-	}
-	
-	/**
-	 * 清理缓存
-	 */
-	public static void clearCache(){
-		
 	}
 	
 }

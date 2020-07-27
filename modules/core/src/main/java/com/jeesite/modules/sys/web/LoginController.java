@@ -81,7 +81,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 返回指定用户类型的登录页视图
-		String userType = (String)model.asMap().get(ServletUtils.DEFAULT_PARAM_PREFIX_PARAM + "userType");
+		String userType = (String)model.asMap().get(ServletUtils.EXT_PARAMS_PREFIX + "userType");
 		if (StringUtils.isBlank(userType)){
 			userType = User.USER_TYPE_EMPLOYEE;
 		}
@@ -117,7 +117,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 返回指定用户类型的登录页视图
-		String userType = (String)model.asMap().get(ServletUtils.DEFAULT_PARAM_PREFIX_PARAM + "userType");
+		String userType = (String)model.asMap().get(ServletUtils.EXT_PARAMS_PREFIX + "userType");
 		if (StringUtils.isBlank(userType)){
 			userType = User.USER_TYPE_EMPLOYEE;
 		}
@@ -344,7 +344,7 @@ public class LoginController extends BaseController{
 			CookieUtils.setCookie(response, "skinName_" + loginInfo.getId(), skinName);
 			return REDIRECT + adminPath + "/index";
 		}
-		return "modules/sys/sysSwitchSkin";
+		return "modules/sys/switchSkin";
 	}
 	
 	/**

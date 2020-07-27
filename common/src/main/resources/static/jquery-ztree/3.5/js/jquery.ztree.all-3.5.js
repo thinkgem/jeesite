@@ -1640,7 +1640,7 @@
 			if (root[childKey] && root[childKey].length > 0) {
 				view.createNodes(setting, 0, root[childKey]);
 			} else if (setting.async.enable && setting.async.url && setting.async.url !== '') {
-				view.asyncNode(setting);
+//				view.asyncNode(setting);
 			}
 			return zTreeTools;
 		}

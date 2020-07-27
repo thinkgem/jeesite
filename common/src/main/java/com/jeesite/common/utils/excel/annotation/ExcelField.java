@@ -8,10 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.jeesite.common.utils.excel.fieldtype.FieldType;
+
 /**
  * Excel注解定义
  * @author ThinkGem
- * @version 2013-03-10
+ * @version 2020-3-5
  */
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -60,6 +62,11 @@ public @interface ExcelField {
 	int width() default -1;
 	
 	/**
+	 * 指定导出列宽可以显示的字符个数（words*256=width，1个汉字占2个字符） v4.2.0
+	 */
+	int words() default -1;
+	
+	/**
 	 * 导出字段字段排序（升序）
 	 */
 	int sort() default 0;
@@ -79,12 +86,12 @@ public @interface ExcelField {
 	 * MoneyType.class 金额类型转换（保留两位）
 	 * DateTimeType.class 日期时间类型转换 yyyy-MM-dd HH:mm:ss
 	 */
-	Class<?> fieldType() default Class.class;
+	Class<? extends FieldType> fieldType() default FieldType.class;
 	
 	/**
 	 * 数值格式（例如：数值：0.00；日期：yyyy-MM-dd；金额：￥#,##0.00）
 	 */
-	String dataFormat() default "@";
+	String dataFormat() default "";
 	
 	/**
 	 * 字段归属组（针对每一种业务的导入、导出） imp、exp

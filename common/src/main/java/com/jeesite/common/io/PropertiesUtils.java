@@ -33,8 +33,11 @@ public class PropertiesUtils {
 	
 	// 默认加载的文件，可通过继承覆盖（若有相同Key，优先加载后面的）
 	public static final String[] DEFAULT_CONFIG_FILE = new String[]{
-			"classpath:config/bootstrap.yml", "classpath:bootstrap.yml",
-			"classpath:config/application.yml", "classpath:application.yml"};
+		"classpath:application.yml", "classpath:config/application.yml",
+		"classpath:bootstrap.yml", "classpath:config/bootstrap.yml",
+		"file:application.yml", "file:config/application.yml",
+		"file:bootstrap.yml", "file:config/bootstrap.yml",
+	};
 
 	private static Logger logger = PropertiesUtils.initLogger();
 	private final Set<String> configSet = SetUtils.newLinkedHashSet();
@@ -95,7 +98,7 @@ public class PropertiesUtils {
 				}
 			}
 			configFiles = configSet.toArray(new String[configSet.size()]);
-			logger.debug("Loading jeesite config: {}", (Object)configFiles);
+			logger.debug("Trying: {}", (Object)configFiles);
 			INSTANCE = new PropertiesUtils(configFiles);
 		}
 	}

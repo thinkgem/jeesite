@@ -1,4 +1,4 @@
-/*!
+/*
  * Des加密解密
  * 加密：DesUtils.encode('admin', '1,2,3')
  * 解密：DesUtils.decode('012C2C9BA925FAF8045B2FD9B02A2664', '1,2,3')
@@ -18,6 +18,9 @@
 	 */
 	this.DesUtils.encode = function(data, secretKey){
 		if (data && secretKey){
+			if (secretKey === 'Base64'){
+				return Base64.encode(data);
+			}
 			var ks = secretKey.split(',');
 			if (ks.length >= 3){
 				return strEnc(data, ks[0], ks[1], ks[2]);
@@ -32,6 +35,9 @@
 	 */
 	this.DesUtils.decode = function(data, secretKey){
 		if (data && secretKey){
+			if (secretKey === 'Base64'){
+				return Base64.decode(data);
+			}
 			var ks = secretKey.split(',');
 			if (ks.length >= 3){
 				return strDec(data, ks[0], ks[1], ks[2]);

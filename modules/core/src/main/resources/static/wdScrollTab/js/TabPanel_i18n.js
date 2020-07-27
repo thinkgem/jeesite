@@ -7,7 +7,8 @@
 			refreshTab: 'Refresh',
 			closeOther: 'Close Other',
 			closeLeft: 'Close Left',
-			closeRight: 'Close Right'
+			closeRight: 'Close Right',
+			detachTab: 'Detach Tab'
 		});
 	} else if (window.lang == 'ja_JP'){
 		TabPanel.i18n = $.extend({}, TabPanel.i18n, {
@@ -15,7 +16,8 @@
 			refreshTab: '更新',
 			closeOther: '他を閉じる',
 			closeLeft: '左側を閉じる',
-			closeRight: '右側を閉じる'
+			closeRight: '右側を閉じる',
+			detachTab: '新しい窓が'
 		});
 	}
 	

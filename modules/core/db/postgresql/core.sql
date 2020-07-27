@@ -1,41 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE IF EXISTS js_gen_table_column;
-DROP TABLE IF EXISTS js_gen_table;
-DROP TABLE IF EXISTS js_sys_company_office;
-DROP TABLE IF EXISTS js_sys_employee_office;
-DROP TABLE IF EXISTS js_sys_employee_post;
-DROP TABLE IF EXISTS js_sys_user_data_scope;
-DROP TABLE IF EXISTS js_sys_user_role;
-DROP TABLE IF EXISTS js_sys_user;
-DROP TABLE IF EXISTS js_sys_employee;
-DROP TABLE IF EXISTS js_sys_company;
-DROP TABLE IF EXISTS js_sys_area;
-DROP TABLE IF EXISTS js_sys_config;
-DROP TABLE IF EXISTS js_sys_dict_data;
-DROP TABLE IF EXISTS js_sys_dict_type;
-DROP TABLE IF EXISTS js_sys_file_upload;
-DROP TABLE IF EXISTS js_sys_file_entity;
-DROP TABLE IF EXISTS js_sys_job_log;
-DROP TABLE IF EXISTS js_sys_job;
-DROP TABLE IF EXISTS js_sys_lang;
-DROP TABLE IF EXISTS js_sys_log;
-DROP TABLE IF EXISTS js_sys_role_menu;
-DROP TABLE IF EXISTS js_sys_menu;
-DROP TABLE IF EXISTS js_sys_module;
-DROP TABLE IF EXISTS js_sys_msg_inner_record;
-DROP TABLE IF EXISTS js_sys_msg_inner;
-DROP TABLE IF EXISTS js_sys_msg_push;
-DROP TABLE IF EXISTS js_sys_msg_pushed;
-DROP TABLE IF EXISTS js_sys_msg_template;
-DROP TABLE IF EXISTS js_sys_office;
-DROP TABLE IF EXISTS js_sys_post;
-DROP TABLE IF EXISTS js_sys_role_data_scope;
-DROP TABLE IF EXISTS js_sys_role;
-
-
-
 
 /* Create Tables */
 
@@ -308,6 +271,7 @@ CREATE TABLE js_sys_file_entity
 	file_extension varchar(100) NOT NULL,
 	file_size decimal(31) NOT NULL,
 	file_meta varchar(255),
+	file_preview char(1),
 	PRIMARY KEY (file_id)
 ) WITHOUT OIDS;
 
@@ -744,7 +708,7 @@ CREATE TABLE js_sys_user
 	user_code varchar(100) NOT NULL,
 	login_code varchar(100) NOT NULL,
 	user_name varchar(100) NOT NULL,
-	password varchar(100) NOT NULL,
+	password varchar(200) NOT NULL,
 	email varchar(300),
 	mobile varchar(100),
 	phone varchar(100),
@@ -1157,6 +1121,7 @@ COMMENT ON COLUMN js_sys_file_entity.file_content_type IS '文件内容类型';
 COMMENT ON COLUMN js_sys_file_entity.file_extension IS '文件后缀扩展名';
 COMMENT ON COLUMN js_sys_file_entity.file_size IS '文件大小(单位B)';
 COMMENT ON COLUMN js_sys_file_entity.file_meta IS '文件信息(JSON格式)';
+COMMENT ON COLUMN js_sys_file_entity.file_preview IS '文件预览标记';
 COMMENT ON TABLE js_sys_file_upload IS '文件上传表';
 COMMENT ON COLUMN js_sys_file_upload.id IS '编号';
 COMMENT ON COLUMN js_sys_file_upload.file_id IS '文件编号';

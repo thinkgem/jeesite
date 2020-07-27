@@ -857,22 +857,23 @@ S2.define('select2/results',[
   };
 
   Results.prototype.highlightFirstItem = function () {
-    var $options = this.$results
-      .find('.select2-results__option[aria-selected]');
-
-    var $selected = $options.filter('[aria-selected=true]');
-
-    // Check if there are any selected options
-    if ($selected.length > 0) {
-      // If there are selected options, highlight the first
-      $selected.first().trigger('mouseenter');
-    } else {
-      // If there are no selected options, highlight the first option
-      // in the dropdown
-      $options.first().trigger('mouseenter');
-    }
-
-    this.ensureHighlightVisible();
+//    var $options = this.$results
+//      .find('.select2-results__option[aria-selected]');
+//
+//    var $selected = $options.filter('[aria-selected=true]');
+//
+//    // Check if there are any selected options
+//    if ($selected.length > 0) {
+//      // If there are selected options, highlight the first
+//      $selected.first().trigger('mouseenter');
+//    } else {
+//      // If there are no selected options, highlight the first option
+//      // in the dropdown
+//      $options.first().trigger('mouseenter');
+//    }
+//
+//    this.ensureHighlightVisible();
+//	  ThinkGem 禁用 First Item 高亮
   };
 
   Results.prototype.setClasses = function () {

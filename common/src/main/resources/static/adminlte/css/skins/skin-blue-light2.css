@@ -50,7 +50,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   border-bottom: 0 solid transparent;
 }
 .main-header .logo:hover {
-  background-color: #1681e5;
+  background-color: #1890ff;
 }
 .main-header li.user-header {
   background-color: #1890ff;
@@ -174,29 +174,41 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit {border-bottom: 1px solid #eee;}
 
 .tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;
-	border-radius:3px;box-shadow:0 0 8px #e0e0e0;background:#fff;box-shadow:0 0 5px #e6e6e6;}
+	border-radius:3px;background:#fff;box-shadow:0 0 5px #e6e6e6;}
 .tabpanel_mover li.active {background-color:#3aa0ff;}
 .tabpanel_mover li.active div {color:#fff;}
-.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.8}
+.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
 .tabpanel_mover li .closer:before {content:"\f00d";}
-.tabpanel_mover li .closer:hover {background:none;}
-.tabpanel_tab_content {border-bottom-color:#eeeeee;background-color:#fafafa;}
+.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2); 
+     -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
+.tabpanel_mover li.active .closer:hover {color:#fff;opacity:0.9;}
+.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;}
+/* .tabpanel_mover li {background:#fff;border-right:1px solid #eee;padding:8px 16px 8px 5px;}
+.tabpanel_mover li.active {background-color:#fff;border-bottom:3px solid #3aa0ff;}
+.tabpanel_mover li.active div {color:#0975d9;}
+.tabpanel_mover li .closer {background:none;font:11px/1 FontAwesome;opacity:0.7;}
+.tabpanel_mover li .closer:before {content:"\f00d";}
+.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
+.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;} 替换上面 tab 样式，改变 tab 风格。*/
 
 /* .main-content {padding:10px;}
 .ui-layout-container {padding:10px;}
-.ui-layout-pane>.main-content {padding:0;}
 .ui-layout-resizer {background:transparent;}
-.ui-layout-content>.wrapper>.main-content {padding:0;} */
-.box-main,.nav-main{border-radius:3px;box-shadow:0 0 5px #e0e0e0;}
+.ui-layout-pane {box-shadow:0 0 5px #e0e0e0;}
+.ui-layout-pane>.main-content {padding:0;}
+.ui-layout-content>.wrapper>.main-content {padding:0;}
+.box-main,.nav-main{border-radius:3px;box-shadow:0 0 5px #e0e0e0;} 解开注释，可给内容页面，添加内边距样式 */
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title .fa {color:#1890ff;}
 .nav-tabs-custom>.nav-tabs>li.active {border-top-color:#3aa0ff;}
 .form-control:focus,.select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field {border-color:#66afe9!important;}
 .table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#f6f6f6;}
-.ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {border-color: #eaeaea;}
+.ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column,
+.ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid .ui-widget-content, .ui-jqgrid tr.ui-row-ltr td,
+.ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
 .ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e5f3ff;}
-/* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} */
-.ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea!important;}
+/* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} 解开注释，可去除表格单元格的竖边框线 */

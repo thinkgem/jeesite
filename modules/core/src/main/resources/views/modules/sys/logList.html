@@ -34,7 +34,7 @@
 					<label class="control-label">操作用户：</label>
 					<div class="control-inline width-120">
 						<#form:listselect id="userSelect" title="用户选择" path="createBy"
-							url="${ctx}/sys/user/userSelect?userType=" allowClear="false" 
+							url="${ctx}/sys/empUser/empUserSelect" allowClear="false" 
 							checkbox="false" itemCode="userCode" itemName="userName"/>
 					</div>
 				</div>
@@ -61,14 +61,16 @@
 					<label class="control-label">操作时间：</label>
 					<div class="control-inline">
 						<#form:input path="createDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
-							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="createDate_lte.focus()"/> -
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="createDate_lte.click()"/> -
 						<#form:input path="createDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
 							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 					<div class="control-inline" style="width:75px;">
 						<select onchange="js.quickSelectDate(this.value, 'createDate_gte', 'createDate_lte');" class="form-control">
 							<option value="0">&nbsp;</option><option value="1">今日</option><option value="2">本周</option>
-							<option value="3">本月</option><option value="4">本季度</option><option value="5">上月</option>
+							<option value="3">本月</option><option value="4">本季度</option>
+							<option value="5">上个月</option><option value="5|3">上3个月</option>
+							<option value="6">前1个月</option><option value="6|3">前3个月</option>
 						</select>
 					</div>
 				</div>

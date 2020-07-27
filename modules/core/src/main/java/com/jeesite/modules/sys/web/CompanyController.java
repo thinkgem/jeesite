@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,8 @@ public class CompanyController extends BaseController {
 	 */
 	@RequiresPermissions("sys:company:view")
 	@RequestMapping(value = "list")
-	public String list(Company company, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String list(Company company, Model model) {
+		model.addAttribute("company", company);
 		return "modules/sys/companyList";
 	}
 

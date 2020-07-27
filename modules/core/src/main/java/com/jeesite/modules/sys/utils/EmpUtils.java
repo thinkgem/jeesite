@@ -4,8 +4,10 @@
 package com.jeesite.modules.sys.utils;
 
 import java.util.List;
+import java.util.Set;
 
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Company;
@@ -18,9 +20,9 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
 
 /**
- * 员工工具类
+ * 员工部门工具类
  * @author ThinkGem
- * @version 2016年11月2日
+ * @version 2020-5-20
  */
 public class EmpUtils {
 
@@ -156,6 +158,33 @@ public class EmpUtils {
 	}
 	
 	/**
+	 * 获取当前员工所有机构编码，包括附属机构以及子机构（数据权限用）V4.2.0
+	 * @author ThinkGem
+	 */
+	public static String[] getOfficeCodesAndChildren(){
+		Set<String> list = SetUtils.newLinkedHashSet();
+		Set<String> parentCodess = SetUtils.newHashSet();
+		Office currentOffice = getOffice();
+		list.add(currentOffice.getOfficeCode());
+		parentCodess.add(currentOffice.getParentCodes() + currentOffice.getOfficeCode() + ",");
+		// 添加附属机构
+		getEmployeeOfficeList().forEach(e -> {
+			list.add(e.getOfficeCode());
+			parentCodess.add(e.getParentCodes() + e.getOfficeCode() + ",");
+		});
+		// 查找并添加子机构
+		getOfficeAllList().forEach(e -> {
+			for (String parentCodes : parentCodess) {
+				if (e.getParentCodes().startsWith(parentCodes)) {
+					list.add(e.getOfficeCode());
+					break;
+				}
+			}
+		});
+		return list.toArray(new String[list.size()]);
+	}
+
+	/**
 	 * 根据机构类型，获取当前员工所有机构编码，包括附属机构（数据权限用）
 	 * @author ThinkGem
 	 */
@@ -263,6 +292,28 @@ public class EmpUtils {
 			CorpUtils.putCache(CACHE_COMPANY_ALL_LIST, companyList);
 		}
 		return companyList;
+	}
+	
+	/**
+	 * 获取当前员工所有公司编码，包括子公司（数据权限用）V4.2.0
+	 * @author ThinkGem
+	 */
+	public static String[] getCompanyCodesAndChildren(){
+		Set<String> list = SetUtils.newLinkedHashSet();
+		Set<String> parentCodess = SetUtils.newHashSet();
+		Company currentCompany = getCompany();
+		list.add(currentCompany.getCompanyCode());
+		parentCodess.add(currentCompany.getParentCodes() + currentCompany.getCompanyCode() + ",");
+		// 查找并添加子公司
+		getCompanyAllList().forEach(e -> {
+			for (String parentCodes : parentCodess) {
+				if (e.getParentCodes().startsWith(parentCodes)) {
+					list.add(e.getCompanyCode());
+					break;
+				}
+			}
+		});
+		return list.toArray(new String[list.size()]);
 	}
 	
 	/**

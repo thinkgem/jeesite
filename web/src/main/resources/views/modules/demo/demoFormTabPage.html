@@ -34,9 +34,9 @@
 	js.initTabPage('tabpanel1', {
 		height: function () {
 			var windowHeight = $(window).height(),
-				headerHeight = $('.box-header').outerHeight(),
-				footerHeight = $('.box-footer').outerHeight(),
-				height = windowHeight - headerHeight - footerHeight - 3;
+				headerHeight = $('.box-header').outerHeight() || 0,
+				footerHeight = $('.box-footer').outerHeight() || 0,
+				height = windowHeight - headerHeight - footerHeight - 13;
 			return height < 300 ? 300 : height;
 		}
 	});
@@ -53,9 +53,10 @@
 	b.initTabPage('tabpanel2', {
 		height: function () {
 			var windowHeight = $(window).height(),
-				headerHeight = $('.box-header').outerHeight(),
-				footerHeight = $('.box-footer').outerHeight(),
-				height = windowHeight - headerHeight - footerHeight - 3;
+				headerHeight = $('.box-header').outerHeight() || 0,
+				footerHeight = $('.box-footer').outerHeight() || 0,
+				height = windowHeight - headerHeight - footerHeight - 13;
+			log(height)
 			return height < 300 ? 300 : height;
 		}
 	});

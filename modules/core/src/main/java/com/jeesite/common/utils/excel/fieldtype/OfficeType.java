@@ -5,8 +5,6 @@ package com.jeesite.common.utils.excel.fieldtype;
 
 import java.util.List;
 
-import org.springframework.core.NamedThreadLocal;
-
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -14,23 +12,22 @@ import com.jeesite.modules.sys.utils.EmpUtils;
 /**
  * 字段类型转换
  * @author ThinkGem
- * @version 2018-08-11
+ * @version 2020-3-5
  * @example fieldType = OfficeType.class
  */
-public class OfficeType {
+public class OfficeType implements FieldType {
 
-	private static ThreadLocal<List<Office>> cache = new NamedThreadLocal<>("OfficeType");
+	private List<Office> list;
+	
+	public OfficeType() {
+		list = EmpUtils.getOfficeAllList();
+	}
 	
 	/**
 	 * 获取对象值（导入）
 	 */
-	public static Object getValue(String val) {
-		List<Office> cacheList = cache.get();
-		if (cacheList == null){
-			cacheList = EmpUtils.getOfficeAllList();
-			cache.set(cacheList);
-		}
-		for (Office e : cacheList){
+	public Object getValue(String val) {
+		for (Office e : list){
 			if (StringUtils.trimToEmpty(val).equals(e.getOfficeName())){
 				return e;
 			}
@@ -41,17 +38,11 @@ public class OfficeType {
 	/**
 	 * 设置对象值（导出）
 	 */
-	public static String setValue(Object val) {
+	public String setValue(Object val) {
 		if (val != null && ((Office)val).getOfficeName() != null){
 			return ((Office)val).getOfficeName();
 		}
-		return "";
+		return StringUtils.EMPTY;
 	}
 	
-	/**
-	 * 清理缓存
-	 */
-	public static void clearCache(){
-		cache.remove();
-	}
 }

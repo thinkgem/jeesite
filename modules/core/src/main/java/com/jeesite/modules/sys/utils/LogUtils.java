@@ -207,7 +207,12 @@ public class LogUtils {
 			}
 			// 如果有异常，设置异常信息（将异常对象转换为字符串）
 			log.setIsException(throwable != null ? Global.YES : Global.NO);
-			log.setExceptionInfo(ExceptionUtils.getStackTraceAsString(throwable));
+			String message = ExceptionUtils.getExceptionMessage(throwable);
+			if (message != null) {
+				log.setExceptionInfo(message);
+			} else {
+				log.setExceptionInfo(ExceptionUtils.getStackTraceAsString(throwable));
+			}
 			// 如果无地址并无异常日志，则不保存信息
 			if (StringUtils.isBlank(log.getRequestUri()) && StringUtils.isBlank(log.getExceptionInfo())){
 				return;

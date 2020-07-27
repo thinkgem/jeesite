@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.9-SNAPSHOT</version>
+		<version>4.2.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -67,20 +67,6 @@
 			<version>${fst.version}</version>
 		</dependency>
 		
-		<!-- Json in java -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>${json.version}</version>
-		</dependency>
-		
-		<!-- Fast json -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
-		</dependency>
-		
 		<!-- Jackson json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -95,10 +81,18 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 		
+		<!-- Fast json -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		
 		<!-- Java xml -->
 		<dependency>
-			<groupId>dom4j</groupId>
+			<groupId>org.dom4j</groupId>
 			<artifactId>dom4j</artifactId>
+			<version>${dom4j.version}</version>
 		</dependency>
 		
 		<!-- XPath xml -->
@@ -301,39 +295,6 @@
 		<plugins>
 			
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!-- YUI Compressor (CSS/JS压缩) -->
-				<plugin>
-					<groupId>net.alchim31.maven</groupId>
-					<artifactId>yuicompressor-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<phase>prepare-package</phase>
-							<goals>
-								<goal>compress</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<encoding>UTF-8</encoding>
-						<jswarn>false</jswarn>
-						<nosuffix>true</nosuffix>
-						<linebreakpos>30000</linebreakpos>
-						<force>true</force>
-						<includes>
-							<include>**/*.js</include>
-							<include>**/*.css</include>
-						</includes>
-						<excludes>
-							<exclude>**/*.min.js</exclude>
-							<exclude>**/*.min.css</exclude>
-							<exclude>**/jquery-*.js</exclude>
-						</excludes>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 	
 	<developers>  

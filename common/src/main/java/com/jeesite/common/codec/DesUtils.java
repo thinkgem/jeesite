@@ -25,6 +25,9 @@ public class DesUtils {
 		if (StringUtils.isBlank(data)){
 			return "";
 		}
+		if ("Base64".equals(secretKey)) {
+			return EncodeUtils.encodeBase64(data);
+		}
 		String[] ks = StringUtils.split(secretKey, ",");
 		if (ks.length >= 3){
 			return desCore.strEnc(data, ks[0], ks[1], ks[2]);
@@ -38,6 +41,9 @@ public class DesUtils {
 	public static String decode(String data, String secretKey) {
 		if (StringUtils.isBlank(data)){
 			return "";
+		}
+		if ("Base64".equals(secretKey)) {
+			return EncodeUtils.decodeBase64String(data);
 		}
 		String[] ks = StringUtils.split(secretKey, ",");
 		if (ks.length >= 3){

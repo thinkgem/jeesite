@@ -1,62 +1,90 @@
-<% layout('/layouts/default.html', {title: '用户选择', libs: ['dataGrid']}){ %>
-<div class="main-content">
+<% layout('/layouts/default.html', {title: '用户选择', libs: ['layout', 'zTree', 'dataGrid']}){ %>
+<div class="ui-layout-west">
 	<div class="box box-main">
-		<div class="box-body">
-			<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
-					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}"/>
-				<#form:hidden name="isAll" value="${parameter.isAll}"/>
-				<div class="form-group">
-					<label class="control-label">${text('账号')}：</label>
-					<div class="control-inline">
-						<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
+		<div class="box-header">
+			<div class="box-title dropdown">
+				<div class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+					<i class="fa icon-grid"></i> <span id="queryTypeName">${text('按组织查询')}</span> <b class="caret"></b>
+				</div>
+				<ul class="dropdown-menu">
+					<li><a href="javascript:" onclick="loadTree('office');"> <i class="fa fa-angle-right"></i> ${text('按组织查询')}</a></li>
+					<li><a href="javascript:" onclick="loadTree('post');"> <i class="fa fa-angle-right"></i> ${text('按岗位查询')}</a></li>
+					<li><a href="javascript:" onclick="loadTree('role');"> <i class="fa fa-angle-right"></i> ${text('按角色查询')}</a></li>
+					<li><a href="javascript:" onclick="loadTree('userType');"> <i class="fa fa-angle-right"></i> ${text('按用户类型')}</a></li>
+				</ul>
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" id="btnExpand" title="${text('展开')}" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+				<button type="button" class="btn btn-box-tool" id="btnCollapse" title="${text('折叠')}"><i class="fa fa-chevron-down"></i></button>
+				<button type="button" class="btn btn-box-tool" id="btnRefresh" title="${text('刷新')}"><i class="fa fa-refresh"></i></button>
+			</div>
+		</div>
+		<div class="ui-layout-content">
+			<div id="tree" class="ztree"></div>
+		</div>
+	</div>
+</div>
+<div class="ui-layout-center">
+	<div class="main-content">
+		<div class="box box-main">
+			<div class="box-body pb0">
+				<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
+						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+					<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}" class="isReset"/>
+					<#form:hidden name="isAll" value="${parameter.isAll}" class="isReset"/>
+					<#form:hidden id="postCode" name="employee.postCode" class="isReset"/>
+					<#form:hidden id="roleCode" name="roleCode" class="isReset"/>
+					<#form:hidden id="userType" name="userType" class="isReset"/>
+					<div class="form-group">
+						<label class="control-label">${text('账号')}：</label>
+						<div class="control-inline">
+							<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('昵称')}：</label>
-					<div class="control-inline">
-						<#form:input path="userName" maxlength="100" class="form-control width-90"/>
+					<div class="form-group">
+						<label class="control-label">${text('昵称')}：</label>
+						<div class="control-inline">
+							<#form:input path="userName" maxlength="100" class="form-control width-90"/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('姓名')}：</label>
-					<div class="control-inline">
-						<#form:input path="refName" maxlength="100" class="form-control width-90"/>
+					<div class="form-group">
+						<label class="control-label">${text('姓名')}：</label>
+						<div class="control-inline">
+							<#form:input path="refName" maxlength="100" class="form-control width-90"/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('机构')}：</label>
-					<div class="control-inline width-90">
-						<#form:treeselect id="office" title="${text('机构选择')}"
-								path="employee.office.officeCode" labelPath="employee.office.officeName" 
-								url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+					<div class="form-group">
+						<label class="control-label">${text('机构')}：</label>
+						<div class="control-inline width-90">
+							<#form:treeselect id="office" title="${text('机构选择')}"
+									path="employee.office.officeCode" labelPath="employee.office.officeName" 
+									url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('公司')}：</label>
-					<div class="control-inline width-90">
-						<#form:treeselect id="company" title="${text('公司选择')}"
-								path="employee.company.companyCode" labelPath="employee.company.companyName" 
-								url="${ctx}/sys/company/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+					<div class="form-group">
+						<label class="control-label">${text('公司')}：</label>
+						<div class="control-inline width-90">
+							<#form:treeselect id="company" title="${text('公司选择')}"
+									path="employee.company.companyCode" labelPath="employee.company.companyName" 
+									url="${ctx}/sys/company/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label">${text('手机')}：</label>
-					<div class="control-inline">
-						<#form:input path="mobile" maxlength="100" class="form-control width-90"/>
+					<div class="form-group">
+						<label class="control-label">${text('手机')}：</label>
+						<div class="control-inline">
+							<#form:input path="mobile" maxlength="100" class="form-control width-90"/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm">查询</button>
-					<button type="reset" class="btn btn-default btn-sm">重置</button>
-				</div>
-			</#form:form>	
-			<div class="row">
-				<div class="col-xs-10 pr10">
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-sm">查询</button>
+						<button type="reset" class="btn btn-default btn-sm">重置</button>
+					</div>
+				</#form:form>
+				<div class="col-xs-10 p0 pr10">
 					<table id="dataGrid"></table>
 					<div id="dataGridPage"></div>
 				</div>
-				<div class="col-xs-2 pl0">
+				<div class="col-xs-2 p0">
 					<div id="selectData" class="tags-input"></div>
 				</div>
 			</div>
@@ -65,6 +93,88 @@
 </div>
 <% } %>
 <script>
+// 初始化布局
+$('body').layout({
+	west__size: 200,
+	onresize_end: function(){
+		$('#dataGrid').dataGrid('resize');
+	}
+});
+//树结构初始化加载
+var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
+	callback:{onClick:function(event, treeId, treeNode){
+		tree.expandNode(treeNode);
+		//$('button[type=reset]').click();
+		$('input.isReset').val('');
+		if (queryType == 'userType'){
+			$('#userType').val(treeNode.id);
+			if (treeNode.id == 'employee'){
+				$('#searchForm').attr('action', '${ctx}/sys/empUser/listData');
+			}else{
+				$('#searchForm').attr('action', '${ctx}/sys/user/listData');
+			}
+		}else{
+			if (!queryType || queryType == 'office'){
+				$('#officeCode').val(treeNode.id);
+				$('#officeName').val(treeNode.name);
+			} else if (queryType == 'post'){
+				$('#postCode').val(treeNode.id);
+			} else if (queryType == 'role'){
+				$('#roleCode').val(treeNode.id);
+			} 
+		}
+		page(1);
+	}}
+}, queryType, url, tree, loadTree = function(queryType){
+	window.queryType = queryType;
+	if (queryType == 'userType'){
+		$('#queryTypeName').text('${text("按用户类型")}');
+		tree = $.fn.zTree.init($("#tree"), setting, [
+			{id: 'employee', name: '${text("员工类型")}'},
+			{id: 'none', name: '${text("系统管理员")}'}
+		]);
+		tree.expandAll(true);
+	}else{
+		if (!queryType || queryType == 'office'){
+			$('#queryTypeName').text('${text("按组织查询")}');
+			url = "${ctx}/sys/office/treeData?___t=" + new Date().getTime();
+		} else if (queryType == 'post'){
+			$('#queryTypeName').text('${text("按岗位查询")}');
+			url = "${ctx}/sys/post/treeData?___t=" + new Date().getTime();
+		} else if (queryType == 'role'){
+			$('#queryTypeName').text('${text("按角色查询")}');
+			url = "${ctx}/sys/role/treeData?___t=" + new Date().getTime();
+		}
+		js.ajaxSubmit(url, {ctrlPermi:'1'/*1拥有的权限 2管理的权限*/}, function(data){
+			tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
+			// 展开第一级节点
+			var nodes = tree.getNodesByParam("level", 0);
+			for(var i=0; i<nodes.length; i++) {
+				tree.expandNode(nodes[i], true, false, false);
+			}
+			// 展开第二级节点
+//	 		nodes = tree.getNodesByParam("level", 1);
+//	 		for(var i=0; i<nodes.length; i++) {
+//	 			tree.expandNode(nodes[i], true, false, false);
+//	 		}
+		}, null, null, js.text('loading.message'));
+	}
+};loadTree();
+// 工具栏按钮绑定
+$('#btnExpand').click(function(){
+	tree.expandAll(true);
+	$(this).hide();
+	$('#btnCollapse').show();
+});
+$('#btnCollapse').click(function(){
+	tree.expandAll(false);
+	$(this).hide();
+	$('#btnExpand').show();
+});
+$('#btnRefresh').click(function(){
+	loadTree();
+});
+// 加载用户列表
 var selectData = ${isNotBlank(selectData!) ? selectData! : "{\}"},
 selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
@@ -83,8 +193,9 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 			return JSON.stringify(row);
 		}}
 	],
+// 	autoGridWidthFix: 100,
 	autoGridHeight: function(){
-		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 75;
+		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 70;
 		$('.tags-input').height($('.ui-jqgrid').height() - 10);
 		return height;
 	},

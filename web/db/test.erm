@@ -58,7 +58,7 @@
 					<create_view>false</create_view>
 					<drop_index>false</drop_index>
 					<drop_sequence>false</drop_sequence>
-					<drop_table>true</drop_table>
+					<drop_table>false</drop_table>
 					<drop_tablespace>false</drop_tablespace>
 					<drop_trigger>false</drop_trigger>
 					<drop_view>false</drop_view>

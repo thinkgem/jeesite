@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.9-SNAPSHOT</version>
+		<version>4.2.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -19,16 +19,15 @@
 	
 	<properties>
 		
-		<finalName>web</finalName><!-- war包的名称 -->
+		<finalName>web</finalName><!-- war or jar 包的名称 -->
 		<start-class>com.jeesite.modules.Application</start-class>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
-		<!-- docker service -->
-		<docker.registryUrl>http://192.168.56.102:2375</docker.registryUrl>
-		<docker.imageName>${project.groupId}/${project.artifactId}:4.1</docker.imageName>
+		<!-- docker setting -->
+        <docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 
@@ -41,24 +40,24 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 在线API文档 -->
+		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- Office在线预览 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-weboffice</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<!-- 文件管理
+		<!-- 文件管理与共享
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-filemanager</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
+		<!-- 文件在线预览
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filepreview</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 		
@@ -128,38 +127,6 @@
 			
 		</plugins>
 	</build>
-	
-	<profiles>
-		<!-- Docker 插件 -->
-		<profile>
-			<id>docker</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.spotify</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-						<version>1.1.0</version>
-						<configuration>
-							<serverId>docker-hub</serverId>
-							<registryUrl>${docker.registryUrl}</registryUrl>
-							<dockerHost>${docker.registryUrl}</dockerHost>
-							<imageName>${docker.imageName}</imageName>
-							<dockerDirectory>${project.basedir}/bin/docker</dockerDirectory>
-							<resources>
-								<resource>
-									<targetPath>/</targetPath>
-									<directory>${project.build.directory}</directory>
-									<include>web.war</include>
-								</resource>
-							</resources>
-							<forceTags>true</forceTags>
-							<pushImage>false</pushImage>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 	
 	<developers>  
 		<developer>

@@ -154,7 +154,7 @@
 							<label class="control-label col-sm-2">${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
-									uploadType="image" class="" readonly="false" preview="weboffice"/>
+									uploadType="image" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>
@@ -165,7 +165,7 @@
 							<label class="control-label col-sm-2">${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
-									uploadType="all" class="" readonly="false" preview="weboffice"/>
+									uploadType="all" class="" readonly="false" preview="true"/>
 							</div>
 						</div>
 					</div>
@@ -204,10 +204,10 @@ $("#testDataChildDataGrid").dataGrid({
 	columnModel: [
 		{header:'状态', name:'status', editable:true, hidden:true},
 		{header:'主键', name:'id', editable:true, hidden:true},
-		{header:'${text("排序号")}', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
+		{header:'${text("排序号")}', name:'testSort', width:130, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
 		{header:'${text("父表主键")}', name:'testData.id', editable:true, hidden:true},
-		{header:'${text("单行文本")}', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
-		{header:'${text("多行文本")}', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
+		{header:'${text("单行文本")}', name:'testInput', width:130, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("多行文本")}', name:'testTextarea', width:130, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
 		{header:'${text("下拉框")}', name:'testSelect', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
@@ -216,7 +216,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:100, 
+		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:120, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -267,7 +267,14 @@ $("#testDataChildDataGrid").dataGrid({
 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: ''
 					});
+				},
+				custom_value: function(element, act){
+					return {userCode: element.find('[type=hidden]').val(),
+						userName: element.find('[type=text]').val()};
 				}
+			}, 
+			unformat: function(val, obj, cell){
+				return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();
 			}
 		},
 		{header:'${text("列表选择")}', name:'testUser2', width:150,
@@ -313,17 +320,17 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-// 		{header:'${text("文件上传")}', name:'id', width:250,
-//			editable: true, edittype: "custom", editoptions: {
-//				custom_element: function(val, editOptions) {
-//					return js.template('fileuploadTpl', {
-//						id: 'fileupload_'+editOptions.id, title: '区域选择', 
-//						bizKey: val, bizType: 'testDataChild_file', cssClass: ''
-//					});
-//				}
-//			}
-//		},
-		{header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+		{header:'${text("文件上传")}', name:'id', width:200,
+			editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('fileuploadTpl', {
+						id: 'fileupload_'+editOptions.id, title: '区域选择', 
+						bizKey: val, bizType: 'testDataChild_file', cssClass: ''
+					});
+				}
+			}
+		},
+		{header:'${text("操作")}', name:'actions', width:60, sortable:false, fixed:true, formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
 				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
@@ -368,7 +375,7 @@ $("#testDataChildDataGrid").dataGrid({
 </div>//--></script>
 <script id="fileuploadTpl" type="text/template">//<!--<div>
 <#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}"
-	uploadType="all" class="{{d.cssClass}}" isMini="true" preview="weboffice"/>
+	uploadType="all" class="{{d.cssClass}}" isMini="true" preview="true"/>
 </div>//--></script>
 <script>
 $("#inputForm").validate({

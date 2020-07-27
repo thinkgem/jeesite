@@ -73,12 +73,16 @@ public class EmpUserController extends BaseController {
 
 	@ModelAttribute
 	public EmpUser get(String userCode, boolean isNewRecord) {
-		return empUserService.get(userCode, isNewRecord);
+		EmpUser empUser = new EmpUser();
+		empUser.setUserCode(userCode);
+		empUser.setIsNewRecord(isNewRecord);
+		return empUserService.getAndValid(empUser);
 	}
 
 	@RequiresPermissions("sys:empUser:view")
 	@RequestMapping(value = "index")
 	public String index(EmpUser empUser, Model model) {
+		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserIndex";
 	}
 	
@@ -88,6 +92,7 @@ public class EmpUserController extends BaseController {
 		// 获取岗位列表
 		Post post = new Post();
 		model.addAttribute("postList", postService.findList(post));
+		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserList";
 	}
 
@@ -271,7 +276,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
 		}
 		empUser.setStatus(User.STATUS_DISABLE);
-		userService.updateStatus(empUser);
+		empUserService.updateStatus(empUser);
 		return renderResult(Global.TRUE, text("停用用户''{0}''成功", empUser.getUserName()));
 	}
 	
@@ -291,7 +296,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		empUser.setStatus(User.STATUS_NORMAL);
-		userService.updateStatus(empUser);
+		empUserService.updateStatus(empUser);
 		AuthorizingRealm.isValidCodeLogin(empUser.getLoginCode(), empUser.getCorpCode_(), null, "success");
 		return renderResult(Global.TRUE, text("启用用户''{0}''成功", empUser.getUserName()));
 	}

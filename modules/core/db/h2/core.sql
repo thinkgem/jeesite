@@ -1,41 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE js_gen_table_column;
-DROP TABLE js_gen_table;
-DROP TABLE js_sys_company_office;
-DROP TABLE js_sys_employee_office;
-DROP TABLE js_sys_employee_post;
-DROP TABLE js_sys_user_data_scope;
-DROP TABLE js_sys_user_role;
-DROP TABLE js_sys_user;
-DROP TABLE js_sys_employee;
-DROP TABLE js_sys_company;
-DROP TABLE js_sys_area;
-DROP TABLE js_sys_config;
-DROP TABLE js_sys_dict_data;
-DROP TABLE js_sys_dict_type;
-DROP TABLE js_sys_file_upload;
-DROP TABLE js_sys_file_entity;
-DROP TABLE js_sys_job_log;
-DROP TABLE js_sys_job;
-DROP TABLE js_sys_lang;
-DROP TABLE js_sys_log;
-DROP TABLE js_sys_role_menu;
-DROP TABLE js_sys_menu;
-DROP TABLE js_sys_module;
-DROP TABLE js_sys_msg_inner_record;
-DROP TABLE js_sys_msg_inner;
-DROP TABLE js_sys_msg_push;
-DROP TABLE js_sys_msg_pushed;
-DROP TABLE js_sys_msg_template;
-DROP TABLE js_sys_office;
-DROP TABLE js_sys_post;
-DROP TABLE js_sys_role_data_scope;
-DROP TABLE js_sys_role;
-
-
-
 
 /* Create Tables */
 
@@ -308,6 +271,7 @@ CREATE TABLE js_sys_file_entity
 	file_extension varchar(100) NOT NULL,
 	file_size decimal(31) NOT NULL,
 	file_meta varchar(255),
+	file_preview char(1),
 	PRIMARY KEY (file_id)
 );
 
@@ -744,7 +708,7 @@ CREATE TABLE js_sys_user
 	user_code varchar(100) NOT NULL,
 	login_code varchar(100) NOT NULL,
 	user_name varchar(100) NOT NULL,
-	password varchar(100) NOT NULL,
+	password varchar(200) NOT NULL,
 	email varchar(300),
 	mobile varchar(100),
 	phone varchar(100),

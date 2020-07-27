@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>4.1.9-SNAPSHOT</version>
+		<version>4.2.0-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -23,29 +23,54 @@
 	
 	<dependencies>
 		
-		<!-- JDBC device begin -->
+		<!-- MySQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Oracle 11g -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Oracle 12c
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>orai18n</artifactId>
+			<scope>runtime</scope>
+		</dependency> -->
+		<!-- SqlServer 2008 -->
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- SqlServer 2012
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<scope>runtime</scope>
+		</dependency> -->
+		<!-- PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- JDBC device end -->
+		<!-- H2 DB -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		
 		<!-- Common -->
 		<dependency>
@@ -60,6 +85,13 @@
 			<artifactId>jeesite-framework</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		
+		<!-- Core Extend
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-core-extend</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
 		
 	</dependencies>
 	

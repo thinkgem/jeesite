@@ -1,7 +1,7 @@
 
 -- 新增文件管理模块
 INSERT INTO ${_prefix}sys_module(module_code, module_name, description, main_class_name, current_version, upgrade_info, status, create_by, create_date, update_by, update_date, remarks)
-VALUES ('filemanager', '文件管理', '公共文件柜、个人文件柜、文件分享', 'com.jeesite.modules.filemanager.web.FilemanagerController', '4.1.4', NULL, '0', 'system', now(), 'system', now(), NULL);
+VALUES ('filemanager', '文件管理', '公共文件柜、个人文件柜、文件分享', 'com.jeesite.modules.filemanager.web.FilemanagerController', '4.1.x', NULL, '0', 'system', now(), 'system', now(), NULL);
 
 -- 员工附属机构关系表
 CREATE TABLE ${_prefix}sys_employee_office

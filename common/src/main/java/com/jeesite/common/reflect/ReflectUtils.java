@@ -97,14 +97,16 @@ public class ReflectUtils {
 		Field field = getAccessibleField(obj, fieldName);
 		if (field == null) {
 			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
-			logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			if (obj != null) {
+				logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
+			}
 			return null;
 		}
 		E result = null;
 		try {
 			result = (E)field.get(obj);
 		} catch (IllegalAccessException e) {
-			logger.error("不可能抛出的异常{}", e.getMessage());
+			logger.error("不可能抛出的异常: {}", e.getMessage());
 		}
 		return result;
 	}
@@ -141,7 +143,9 @@ public class ReflectUtils {
 		Method method = getAccessibleMethod(obj, methodName, parameterTypes);
 		if (method == null) {
 			//throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
-			logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
+			if (obj != null) {
+				logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
+			}
 			return null;
 		}
 		try {
@@ -164,7 +168,9 @@ public class ReflectUtils {
 		if (method == null) {
 			// 如果为空不报错，直接返回空。
 //			throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
-			logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
+			if (obj != null) {
+				logger.debug("在 [" + (obj.getClass() == Class.class ? obj : obj.getClass()) + "] 中，没有找到 [" + methodName + "] 方法 ");
+			}
 			return null;
 		}
 		try {

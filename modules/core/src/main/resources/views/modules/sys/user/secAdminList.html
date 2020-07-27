@@ -1,3 +1,4 @@
+<% var userType = isNotBlank(parameter.userType)?parameter.userType:'employee'; %>
 <% layout('/layouts/default.html', {title: '二级管理员', libs: ['dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
@@ -11,6 +12,14 @@
 			</div>
 		</div>
 		<div class="box-body">
+			<% if(@Global.getConfig('user.adminCtrlPermi', '2') == '1'){ %>
+			<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<p><i class="icon fa fa-info"></i> 当前二级管理员的控制权限类型为拥有的权限。你可以在用户管理里设置数据权限和角色管理设置数据权限。
+					对应的管理权限功能，如用户管理、机构管理、公司管理，将启用为拥有权限的数据过滤，因此二级管理设置的管理权限将没有意义。
+					若启用该功能，请打开 application.yml 设置为管理的权限：user.adminCtrlPermi=2</p>
+			</div>
+			<% } %>
 			<#form:form id="searchForm" model="${user}" action="${ctx}/sys/secAdmin/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
@@ -59,7 +68,6 @@
 		</div>
 	</div>
 </div>
-<% var userType = isNotBlank(parameter.userType)?parameter.userType:'employee'; %>
 <div class="hide"><#form:listselect id="userSelect" title="${text('用户选择')}"
 	url="${ctx}/sys/user/userSelect?userType=${userType}" allowClear="false" 
 	checkbox="false" itemCode="userCode" itemName="userName"/></div>
@@ -95,7 +103,13 @@ $('#dataGrid').dataGrid({
 	}
 });
 $('#btnAddAdmin').click(function(){
-	$('#userSelectName').click();
+	if ('${userType}' == 'employee'){
+		$('#userSelectDiv').attr('data-url', '${ctx}/sys/empUser/empUserSelect');
+	}else{
+		$('#userSelectDiv').attr('data-url', '${ctx}/sys/user/userSelect?userType=${userType}');
+	}
+	$('#userSelectCode').val('');
+	$('#userSelectName').val('').click();
 });
 function listselectCallback(id, action, index, layero){
 	if (id == 'userSelect' && action == 'ok'){

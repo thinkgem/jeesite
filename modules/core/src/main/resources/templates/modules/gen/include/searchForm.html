@@ -33,7 +33,7 @@
 					<div class="control-inline">
 						<% if (c.queryType == 'BETWEEN'){ %>
 						<${'#'}form:input path="${c.attrName}_gte" readonly="true" maxlength="20" class="form-control laydate width-date${isTime?'time':''}"
-							dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}" data-done="${c.attrName}_lte.focus()"/>
+							dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}" data-done="${c.attrName}_lte.click()"/>
 						&nbsp;-&nbsp;
 						<${'#'}form:input path="${c.attrName}_lte" readonly="true" maxlength="20" class="form-control laydate width-date${isTime?'time':''}"
 							dataFormat="date${isTime?'time':''}" data-type="date${isTime?'time':''}" data-format="yyyy-MM-dd${isTime?' HH:mm':''}"/>

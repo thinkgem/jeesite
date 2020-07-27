@@ -8,7 +8,7 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V4.1
+productVersion: V4.2
 copyrightYear: 2020
 
 #是否演示模式
@@ -38,8 +38,8 @@ jdbc:
   
   # Mysql 数据库配置
   type: mysql
-  driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
   username: root
   password: 123456
   testSql: SELECT 1
@@ -52,7 +52,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1 FROM DUAL
 
-#  # Sql Server 数据库配置
+#  # Sql Server 数据库配置（2008）
 #  type: mssql
 #  driver: net.sourceforge.jtds.jdbc.Driver
 #  url: jdbc:jtds:sqlserver://127.0.0.1:1433/jeesite
@@ -60,10 +60,26 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
+#  # Sql Server 数据库配置（2012）
+#  type: mssql2012
+#  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+  
 #  # PostgreSql 数据库配置
 #  type: postgresql
 #  driver: org.postgresql.Driver
 #  url: jdbc:postgresql://127.0.0.1:5432/jeesite
+#  username: jeesite
+#  password: jeesite
+#  testSql: SELECT 1
+
+#  # H2 数据库配置
+#  type: h2
+#  driver: org.h2.Driver
+#  url: jdbc:h2:~/jeesite-db/jeesite
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
@@ -110,6 +126,9 @@ jdbc:
 #
 #    # Oracle 下会自动开启 PSCache，并指定每个连接上 PSCache 大小。若不指定，则与 maxActive 相同（4.1.5+）
 #    maxPoolPreparedStatementPerConnectionSize: ~
+#    
+#    # 设置连接属性，可获取到表的 remark (备注)
+#    remarksReporting: false
 
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds2
@@ -117,8 +136,8 @@ jdbc:
 #  # 多数据源配置：ds2
 #  ds2:
 #    type: mysql
-#    driver: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
 #    username: root
 #    password: 123456
 #    testSql: SELECT 1
@@ -129,7 +148,7 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-      
+#      
 #  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
 #  jta:
 #    enabled: false
@@ -156,8 +175,8 @@ spring:
   application:
     name: jeesite-web
     
-  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
-  profiles:    
+  # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
     active: default
     
   # 打印横幅
@@ -178,7 +197,7 @@ spring:
 #        maxIdle: 3
 #        # 最大活动连接数
 #        maxActive: 20
-
+#
 #  # 缓存配置
 #  cache:
 #    # 缓存及会话共享（专业版）
@@ -208,7 +227,7 @@ logging:
 
 # 用户相关
 #user:
-#
+#  
 #  # 指定超级管理员编号（研发团队使用的账号）
 #  superAdminCode: system
 #
@@ -217,15 +236,24 @@ logging:
 #
 #  # 系统管理员角色编号（客户方管理员使用的角色）
 #  corpAdminRoleCode: corpAdmin
+#  
+#  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
+#  adminCtrlPermi: 2
+#  
+#  # 多租户模式（SAAS模式）（专业版）
+#  useCorpModel: false
+#  
+#  # 登录账号是否租户内唯一，否则全局唯一
+#  loginCodeCorpUnique: false
 #
 #  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...），JSON 格式说明如下：
-#  # {"用户类型":{"dao":"Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
+#  # {"用户类型":{"beanName":"Service或Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
 #  userTypeMap: >
 #    {
-#      "employee":{"dao":"employeeDao","loginView":"","indexView":"modules/sys/sysIndex"},
-#      "member":{"dao":"memberDao","loginView":"","indexView":"modules/sys/sysIndexMember"},
-#      "btype":{"dao":"btypeInfoDao","loginView":"","indexView":"modules/sys/sysIndexBtype"},
-#      "expert":{"dao":"expertDao","loginView":"","indexView":"modules/sys/sysIndexExpert"}
+#      "employee":{"beanName":"employeeService","loginView":"","indexView":"modules/sys/sysIndex"},
+#      "member":{"beanName":"memberService","loginView":"","indexView":"modules/sys/sysIndexMember"},
+#      "btype":{"beanName":"btypeInfoService","loginView":"","indexView":"modules/sys/sysIndexBtype"},
+#      "expert":{"beanName":"expertService","loginView":"","indexView":"modules/sys/sysIndexExpert"}
 #    }
 #
 #  # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型, 0全部  1拥有权限  2管理权限
@@ -262,11 +290,61 @@ logging:
 #      remarks: ""
 #    }]
 #    
-#  # 管理功能的控制权限类型（1拥有的权限 2管理的权限）（v4.1.5+）
-#  adminCtrlPermi: 2
-#
-#  # 多租户模式（SAAS模式）（专业版）
-#  useCorpModel: false
+#  # 数据权限调试模式（会输出一些日志）
+#  dataScopeDebug: false
+#    
+#  # 数据权限使用 API 方式实现（适应 Cloud 环境，基础用户表与业务数据表跨库的情况）
+#  # 开启后设置 ctrlDataAttrName 加 AndChildren 后缀，ctrlDataParentCodesAttrName 清空
+#  # 以方便读取树结构数据权限的表时包含子节点，举例如下：
+#  # ctrlDataAttrName: "officeCodesAndChildren", ctrlDataParentCodesAttrName: ""
+#  dataScopeApiMode: false
+
+# 角色管理 
+#role: 
+#  # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
+#  extendDataScopes: >
+#    {
+#      3: {
+#        Office: {
+#          #控制类型的类名 : "用来获取控制表名和主键字段名，如果为 NONE，则代表是不控制该类型权限",
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
+#          #控制数据的类名: "指定一个静态类名，方便 ctrlDataAttrName 得到权限数据，如：当前机构编码、当前公司编码、当前行业编码等",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          #控制数据的类名下的属性名 : "可看做 ctrlDataClass 下的 get 方法，如：EmpUtils.getOfficeCodes()，支持返回字符串或字符串数组类型",
+#          ctrlDataAttrName: "officeCodes",
+#          #控制数据的所有上级编码 : "用于控制数据为树表的情况，为数组时，必须与 ctrlDataAttrName 返回的长度相同，不是树表设置为空",
+#          ctrlDataParentCodesAttrName: "officeParentCodess"
+#        },
+#        Company: {
+#          ctrlTypeClass: "NONE"
+#        }
+#      },
+#      4: {
+#        Office: {
+#          ctrlTypeClass: "NONE"
+#        },
+#        Company: {
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          ctrlDataAttrName: "company.companyCode",
+#          ctrlDataParentCodesAttrName: "company.parentCodes"
+#        }
+#      },
+#      5: {
+#        Office: {
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Office",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          ctrlDataAttrName: "officeCodes",
+#          ctrlDataParentCodesAttrName: "officeParentCodess"
+#        },
+#        Company: {
+#          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
+#          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
+#          ctrlDataAttrName: "company.companyCode",
+#          ctrlDataParentCodesAttrName: "company.parentCodes"
+#        }
+#      }
+#    }
 
 # 菜单管理
 #menu:
@@ -285,7 +363,7 @@ logging:
 # 任务调度（个人版）
 #job:
 #  enabled: false
-#
+#  
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true
 #
@@ -298,9 +376,11 @@ logging:
 #    threadPriority: 5
 #
 #  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+#  # 在微服务模式情况下，请将instanceName名称设置为当前微服务的名称
 #  # 每一个instanceId必须不同，设置AUTO则自动生成
 #  scheduler:
 #    instanceName: JeeSiteScheduler
+#    #instanceName: ${spring.application.name}
 #    instanceId: AUTO
 #
 #  # 任务调度集群设置
@@ -328,6 +408,9 @@ logging:
 # 代码生成
 #gen:
 #  enabled: true
+#  
+#  # 表名字段名是否强制小写
+#  forceLowerCase: true
 
 # 系统监控
 #state:
@@ -339,7 +422,7 @@ logging:
 
 # Shiro 相关配置
 shiro:
-
+  
 #  #索引页路径
 #  defaultPath: ${shiro.loginUrl}
 #
@@ -364,10 +447,13 @@ shiro:
 #
 #  # 登录提交信息加密（如果不需要加密，设置为空即可）
 #  loginSubmit:
-#    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）默认加密方式：DES
-#    secretKey: thinkgem,jeesite,com
+#    # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）加密方式：DES
+#    # v4.2.0+ 支持 Base64 加密方式，方便移动端及第三方系统处理认证，可直接设置 Key 为 Base64
+#    #secretKey: thinkgem,jeesite,com
+#    secretKey: Base64
   
-  # 记住我密钥设置，为空则自动生成一个新密钥，也可以通过 com.jeesite.test.RememberMeKeyGen 生成
+  # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
+  # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
   rememberMe:
     secretKey: ~
   
@@ -389,14 +475,18 @@ shiro:
 #  # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
 #  isAllowExternalSiteIframe: true
 #  
-#  # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
+#  # 是否允许跨域访问 CORS，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
 ##  accessControlAllowOrigin: http://demo.jeesite.com
 ##  accessControlAllowOrigin: '*'
 #
-#  # 是否允许接收跨域的Cookie凭证数据
+# # 允许跨域访问时 CORS，可以使用的方法和响应头
+#  accessControlAllowMethods: GET, POST, OPTIONS
+#  accessControlAllowHeaders: Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With
+#
+#  # 是否允许接收跨域的Cookie凭证数据 CORS
 ##  accessControlAllowCredentials: true
 #
-#  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造CSRF）
+#  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF）
 #  allowReferers: http://127.0.0.1,http://localhost
 #  allowReferers: ~
 #
@@ -406,15 +496,15 @@ shiro:
 #  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
 #  innerFilter.allowIp: 127.0.0.1
 #  
-#  # URI 权限过滤器定义
+#  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
 #  filterChainDefinitions: |
 #    ${adminPath}/** = user
 
 # Session 相关
 #session:
-#
+#  
 #  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
-#  # 注意：如果超时超过30m，你还需要同步修改 j2cache.properties 文件的 caffeine.region.sessionCache 超时时间，大于这个值。
+#  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
 #  sessionTimeout: 1800000
 #  
 #  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
@@ -429,10 +519,37 @@ shiro:
 #  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  #shareSessionIdCookieName: ${session.sessionIdCookieName}
+  
+# 系统缓存配置
+#j2cache:
+#
+#  # 一级缓存
+#  caffeine:
+#    region:
+#      #[cacheName]: size, xxxx[s|m|h|d]
+#      default: 10000, 1h
+#      sessionCache: 100000, 12h
+#    
+#  # 二级缓存
+#  redis:
+#    # 存储模式 （generic|hash）
+#    storage: hash
+#    # 通知订阅的通道名
+#    channel: j2cache
+#    # 缓存命名空间名
+#    namespace: jeesite
+#  
+#  # 通知订阅
+#  broadcast:
+#    # 缓存清理模式
+#    # passive -> 被动清除，一级缓存过期进行通知各节点清除一二级缓存
+#    # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
+#    # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
+#    cache_clean_mode: passive
 
 # MyBatis 相关
 #mybatis:
-#
+#  
 #  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
 #  scanBasePackage: com.jeesite.modules
 #  
@@ -521,10 +638,10 @@ shiro:
 
 #file:
 #  enabled: true
-#
+#  
 #  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 ##  baseDir: D:/jeesite
-#
+#  
 #  # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
 #  uploadPath: '{yyyy}{MM}/'
 #  
@@ -541,7 +658,7 @@ shiro:
 ##    application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
 ##    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
 ##    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
-#
+#  
 #  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
 #  imageMaxWidth: 1024
 #  imageMaxHeight: 768
@@ -558,7 +675,7 @@ shiro:
   
 #视频转码
 #video:
-#
+#  
 #  # 视频格式转换  ffmpeg.exe 所放的路径
 #  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
 ##  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
@@ -581,7 +698,7 @@ shiro:
 #  realtime:
 #    # 是否开启
 #    enabled: true
-
+  
 #  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
 #  pushFailNumber: 3
   
@@ -593,7 +710,7 @@ shiro:
 #    fromHostName: smtp.163.com
 #    sslOnConnect: false
 #    sslSmtpPort: 994
-#
+#  
 #  # 短信网关
 #  sms:
 #    beanName: smsSendService
