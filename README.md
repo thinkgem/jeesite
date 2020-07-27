@@ -1,14 +1,14 @@
 ## 引言
 
-JeeSite 是一个 Java EE 企业级快速开发平台，基于经典技术组合（Spring Boot、Spring MVC、Apache Shiro、MyBatis、Beetl、Bootstrap、AdminLTE）采用经典开发模式，让初学者能够更快的入门并投入到团队开发中去。在线代码生成功能，包括核心模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计；界面无刷新，一键换肤；众多账号安全设置，密码策略；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务。
+JeeSite 是一个 Java EE 企业级快速开发平台，基于经典技术组合（Spring Boot、Spring MVC、Apache Shiro、MyBatis、Beetl、Bootstrap、AdminLTE）采用经典开发模式，让初学者能够更快的入门并投入到团队开发中去。在线代码生成功能，包括模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计，模块增减便捷；界面无刷新，一键换肤；众多账号安全设置，密码策略；文件在线预览；消息推送；多元化第三方登录；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务应用。
 
 JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能（经典架构会的人多），让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
 
-JeeSite 1.x 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 依架构简单精良、易于扩展、大众思维的设计模式，深入开发者的内心，并荣获开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生，作为入门教材，快速的去实践。
+JeeSite 1.x 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 架构精良、易于扩展、大众思维的设计模式、工匠精神打磨每一个细节，深入开发者的内心，并荣获开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生，教师作为入门教材，快速的去实践。
 
 JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面的应用案例，对架构完成了一次全部重构，也纳入很多新的思想。不管是从开发者模式、底层架构、逻辑处理还是到用户界面，用户交互体验上都有很大的进步，在不忘学习成本、提高开发效率的情况下，安全方面也做和很多工作，包括：身份认证、密码策略、安全审计、日志收集。
 
-### 4.x 的新特性及优势：<http://jeesite.com/?t=281645>
+### 4.x 的新特性及优势：<http://jeesite.com/docs/feature/>
 
 ## 技术选型
 
@@ -17,17 +17,18 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 * 视图层：Spring MVC 5.2、Beetl 3.1（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.4、jqGrid 4.7、layer 3.1、zTree 3.5、jquery validation
 * 工作流引擎：Flowable 6.5、符合 BPMN 规范、在线流程设计器、中国式工作流
-* 技术选型详情：<http://jeesite.com/?t=273599>
+* 技术选型详情：<http://jeesite.com/docs/technology/>
 
 ## 内置功能
 
-* <http://jeesite.com/?t=270187>
+* <http://jeesite.com/docs/function/>
 
 ## 生态系统
 
 * 分布式微服务系统（Spring Cloud）：<https://gitee.com/thinkgem/jeesite4-cloud>
 * JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite4-jflow> ：<http://ccflow.org>
-* 内容管理模块（CMS）：<https://gitee.com/thinkgem/jeesite4-cms>【敬请期待】
+* Flowable业务流程模块（BPM）：<http://jeesite.com/docs/bpm/>
+* 内容管理模块（CMS）：<https://gitee.com/thinkgem/jeesite4-cms>
 
 ## 快速体验
 
@@ -40,21 +41,21 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11`、`Maven 3.6+`、`MySQL 5.7 or 8.0`
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/attach_files>
-3. 打开文件：/web`/src/main/resources/config/application.yml` 配置JDBC连接
-4. 执行脚本：/web`/bin/init-data.bat` 初始化数据库
-5. 执行脚本：/web`/bin/run-tomcat.bat` 启动服务即可
+2. 执行命令：`git clone https://gitee.com/thinkgem/jeesite4.git` 下载源码
+3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
+4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
+5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
-7. 部署常见问题：<http://jeesite.com/?t=284210>
+7. 部署常见问题：<http://jeesite.com/docs/faq/>
 
 ### 开发环境
 
-1. 部署运行：<http://jeesite.com/?t=267354>
-2. 常见问题：<http://jeesite.com/?t=284210>
+1. 部署运行文档：<http://jeesite.com/docs/install-deploy/>
+2. 部署常见问题：<http://jeesite.com/docs/faq/>
 
 ## 在线文档
 
-* <http://docs.jeesite.com>
+* 在线文档学习地址：<http://docs.jeesite.com>
 
 ## 授权协议声明
 
@@ -86,7 +87,7 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 * 官方论坛：<http://jeesite.net>
 * 微信公众号（关注动态）：
 
-![JeeSite4微信公众号](https://static.oschina.net/uploads/space/2018/0302/145133_OGZf_941661.jpg "JeeSite4微信公众号")
+![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite4微信公众号")
 
 ## 今后如何升级？
 
@@ -94,7 +95,7 @@ JeeSite 4.x 的升级，作者结合了多年总结和经验，以及各方面�
 
 如果您修改了依赖模块代码，也没关系，这时你需要利用 Git 版本控制工具，与官方仓库代码进行同步，合并代码即可。
 
-每个版本升级，我们都会附带详细更新日志：<http://jeesite.com/?t=273830>。
+每个版本升级，我们都会附带详细更新日志：<http://jeesite.com/docs/upgrade/>。
 
 在这里，你可以看到 JeeSite 新增哪些新功能和改进，在每个版本下都有对应升级方法。
 
