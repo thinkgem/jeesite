@@ -46,6 +46,27 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
     	return false;
     }
     
+	/**
+     * 是否包含字符串
+     * @param strs 验证字符串组
+     * @param strs2 字符串组
+     * @return 包含返回true
+     */ 	
+    public static boolean inString(List<String> strs, List<String> strs2){
+		if (strs != null && strs2 != null){
+        	for (String s : strs){
+        		if (s != null) {
+        			for (String s2 : strs2){
+        				if (StringUtils.trim(s).equals(StringUtils.trim(s2))){
+        					return true;
+        				}
+        			}
+        		}
+        	}
+    	}
+    	return false;
+    }
+    
 	public static <E> ArrayList<E> newArrayList() {
 		return new ArrayList<E>();
 	}

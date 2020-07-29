@@ -7,6 +7,9 @@
 <% if (@ListUtils.inString('zTree', libs!)){ %>
 <script src="${ctxStatic}/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js?${_version}"></script>
 <% } %>
+<% if (@ListUtils.inString(['tabPage', 'dataGrid', 'fileupload'], libs!)){ %>
+<script src="${ctxStatic}/jquery/jquery-ui-sortable-1.12.1.min.js"></script>
+<% } %>
 <% if (@ListUtils.inString('tabPage', libs!)){ %>
 <script src="${ctxStatic}/wdScrollTab/js/TabPanel.js?${_version}"></script>
 <script src="${ctxStatic}/wdScrollTab/js/TabPanel.extend.js?${_version}"></script>
@@ -34,7 +37,6 @@
 <script src="${ctxStatic}/webuploader/0.1/webuploader.js?${_version}"></script>
 <script src="${ctxStatic}/webuploader/0.1/webuploader.extend.js?${_version}"></script>
 <script src="${ctxStatic}/webuploader/0.1/i18n/${lang()}.js?${_version}"></script>
-<script src="${ctxStatic}/jquery/jquery-ui-sortable-1.12.1.min.js"></script>
 <% } %>
 <% if (@ListUtils.inString('ueditor', libs!)){ %>
 <script src="${ctxStatic}/ueditor/1.4/ueditor.config.js?${_version}"></script>

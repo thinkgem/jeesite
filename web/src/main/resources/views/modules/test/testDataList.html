@@ -11,6 +11,7 @@
 					<a href="${ctx}/test/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 				<a href="#" class="btn btn-default" id="btnTrunsTest" title="事务测试"><i class="fa fa-refresh"></i> 事务测试</a>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -123,7 +124,9 @@ $('#dataGrid').dataGrid({
 	columnModel: [
 		{header:'${text("单行文本")}', name:'testInput', index:'a.test_input', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
-		}},
+		}, searchoptions: { dataInit: function (element) {
+			$(element).attr('form', 'searchForm').attr('name', 'testInput2');
+		}}},
 		{header:'${text("多行文本")}', name:'testTextarea', index:'a.test_textarea', width:150, align:"left"},
 		{header:'${text("下拉框")}', name:'testSelect', index:'a.test_select', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
@@ -215,6 +218,12 @@ $('#dataGrid').dataGrid({
 //			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
 //		}
 	}
+})
+// 开启表头下放搜索工具条
+//.jqGrid('filterToolbar')
+// 列表设置显示隐藏或排序后的事件（可用于设置持久化）
+.on('jqGridRemapColumns',function(){
+	log($('#dataGrid').dataGrid('getParam', 'columnModel'));
 });
 $("#btnTrunsTest").click(function(){ 
 	js.ajaxSubmit("${ctx}/test/testData/transTest", function(data){
