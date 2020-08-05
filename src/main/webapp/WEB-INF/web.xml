@@ -178,6 +178,17 @@
 		<url-pattern>/servlet/validateCodeServlet</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Apache CXF WebService -->
+	<servlet>    
+        <servlet-name>CXFServlet</servlet-name>    
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>    
+    </servlet> 
+     
+    <servlet-mapping>    
+        <servlet-name>CXFServlet</servlet-name>    
+        <url-pattern>/webservice/*</url-pattern>    
+    </servlet-mapping>    
+	
 	<!-- FineReport 
 	<servlet>
 		<servlet-name>ReportServer</servlet-name>
