@@ -1,4 +1,4 @@
-## 关注 JeeSite 4.0 请移步: <https://gitee.com/thinkgem/jeesite4>
+### 关注 JeeSite 4.0 请移步: <https://gitee.com/thinkgem/jeesite4>
 
 # JeeSite 企业信息化快速开发平台
 
