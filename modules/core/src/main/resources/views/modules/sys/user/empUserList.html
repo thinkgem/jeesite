@@ -17,6 +17,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="javascript:" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a></li>
 						<li><a href="javascript:" id="btnImport"><i class="glyphicon glyphicon-import"></i> ${text('导入')}</a></li>
+						<li><a href="javascript:" id="btnSetting"><i class="fa fa-navicon"></i> ${text('设置')}</a></li>
 					</ul>
 				</div>
 			</div>
@@ -126,7 +127,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:140, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:260, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:270, sortable:false, title:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:empUser:edit')){ %>
 				actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');

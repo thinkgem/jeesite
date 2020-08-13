@@ -22,6 +22,7 @@
 				\<% if(hasPermi('${permissionPrefix}:edit')){ %>
 					<a href="\${ctx}/${urlPrefix}/form" class="btn btn-default btnTool" title="\${text('新增${functionNameSimple}')}"><i class="fa fa-plus"></i> \${text('新增')}</a>
 				\<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="\${text('设置')}"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
 		<div class="box-body">

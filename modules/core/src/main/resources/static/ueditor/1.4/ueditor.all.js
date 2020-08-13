@@ -24454,6 +24454,7 @@ UE.plugin.register('simpleupload', function (){
         var w = containerBtn.offsetWidth || 20,
             h = containerBtn.offsetHeight || 20,
             btnIframe = document.createElement('iframe'),
+            btnIframe2 = document.createElement('iframe'), // ThinkGem
             btnStyle = 'display:block;width:' + w + 'px;height:' + h + 'px;overflow:hidden;border:0;margin:0;padding:0;position:absolute;top:0;left:0;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity: 0;opacity: 0;cursor:pointer;';
 
         domUtils.on(btnIframe, 'load', function(){
@@ -24471,9 +24472,13 @@ UE.plugin.register('simpleupload', function (){
             'style="' + btnStyle + '">' +
             '<input id="edui_input_' + timestrap + '" type="file" accept="image/*" name="' + me.options.imageFieldName + '" ' +
             'style="' + btnStyle + '">' +
-            '</form>' +
-            '<iframe id="edui_iframe_' + timestrap + '" name="edui_iframe_' + timestrap + '" style="display:none;width:0;height:0;border:0;margin:0;padding:0;position:absolute;"></iframe>';
+            '</form>';// +
+            //'<iframe id="edui_iframe_' + timestrap + '" name="edui_iframe_' + timestrap + '" style="display:none;width:0;height:0;border:0;margin:0;padding:0;position:absolute;"></iframe>';
 
+            // 解决因 iframe 嵌套问题 session 丢失 ThinkGem
+            btnIframe2.id = 'edui_iframe_' + timestrap;
+            btnIframe2.name = 'edui_iframe_' + timestrap;
+            
             wrapper.className = 'edui-' + me.options.theme;
             wrapper.id = me.ui.id + '_iframeupload';
             btnIframeBody.style.cssText = btnStyle;
@@ -24488,7 +24493,7 @@ UE.plugin.register('simpleupload', function (){
 
             var form = btnIframeDoc.getElementById('edui_form_' + timestrap);
             var input = btnIframeDoc.getElementById('edui_input_' + timestrap);
-            var iframe = btnIframeDoc.getElementById('edui_iframe_' + timestrap);
+            var iframe = btnIframe2;//btnIframeDoc.getElementById('edui_iframe_' + timestrap);
 
             domUtils.on(input, 'change', function(){
                 if(!input.value) return;
@@ -24573,6 +24578,10 @@ UE.plugin.register('simpleupload', function (){
 
         btnIframe.style.cssText = btnStyle;
         containerBtn.appendChild(btnIframe);
+        
+        // 解决因 iframe 嵌套问题 session 丢失 ThinkGem
+        btnIframe2.style.cssText = 'display:none;width:0;height:0;border:0;margin:0;padding:0;position:absolute;';
+        containerBtn.appendChild(btnIframe2);
     }
 
     return {

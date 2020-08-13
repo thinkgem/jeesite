@@ -6,7 +6,8 @@
 				<i class="fa fa-bug"></i> 访问日志
 			</div>
 			<div class="box-tools pull-right">
-				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -67,10 +68,12 @@
 					</div>
 					<div class="control-inline" style="width:75px;">
 						<select onchange="js.quickSelectDate(this.value, 'createDate_gte', 'createDate_lte');" class="form-control">
-							<option value="0">&nbsp;</option><option value="1">今日</option><option value="2">本周</option>
+							<option value="0">&nbsp;</option><option value="1">今日</option>
+							<option value="2">本周</option><option value="2|7">上周</option>
 							<option value="3">本月</option><option value="4">本季度</option>
-							<option value="5">上个月</option><option value="5|3">上3个月</option>
-							<option value="6">前1个月</option><option value="6|3">前3个月</option>
+							<option value="5">上1个月</option><option value="5|3">上3个月</option>
+							<option value="1|7">近1个周</option><option value="6">近1个月</option>
+							<option value="6|3">近3个月</option>
 						</select>
 					</div>
 				</div>

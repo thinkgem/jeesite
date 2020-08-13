@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeesite.common.callback.MethodCallback;
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.DateUtils;
@@ -477,6 +478,10 @@ public class ExcelImport implements Closeable {
 						val = null;
 						// 参数：Exception ex, int rowNum, int columnNum
 						exceptionCallback.execute(ex, i, column);
+					}
+					// 导入的数据进行 xss 过滤
+					if (val != null && val instanceof String) {
+						val = EncodeUtils.xssFilter(val.toString());
 					}
 					// set entity value
 					if (StringUtils.isNotBlank(ef.attrName())){

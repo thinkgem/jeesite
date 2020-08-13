@@ -43,7 +43,11 @@ public class DesUtils {
 			return "";
 		}
 		if ("Base64".equals(secretKey)) {
-			return EncodeUtils.decodeBase64String(data);
+			try {
+				return EncodeUtils.decodeBase64String(data);
+			}catch (IllegalArgumentException e) {
+				return "";
+			}
 		}
 		String[] ks = StringUtils.split(secretKey, ",");
 		if (ks.length >= 3){
