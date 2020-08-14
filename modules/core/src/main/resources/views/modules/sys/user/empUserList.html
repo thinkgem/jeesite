@@ -135,7 +135,7 @@ $('#dataGrid').dataGrid({
 			<% if(hasPermi('sys:empUser:updateStatus')){ %>
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_FREEZE){
+				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_FREEZE || row.status == Global.STATUS_AUDIT){
 					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 			<% } %>
