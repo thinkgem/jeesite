@@ -95,7 +95,7 @@
 			<version>${dom4j.version}</version>
 		</dependency>
 		
-		<!-- jdk11 JAXB module -->
+		<!-- jdk11 JAXB module
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
@@ -103,7 +103,7 @@
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!-- XPath xml -->
 		<dependency>
