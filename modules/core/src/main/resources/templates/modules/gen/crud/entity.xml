@@ -136,9 +136,9 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 			}
 		}
 		if (isNotBlank(joinTables)){
-			print('joinTable={\n');
+			print('joinTable={');
 			print(joinTables);
-			print('\t}, ');
+			print('}, ');
 		}
 		// ◆ 生成排序字段
 	%>orderBy="<% if (isTree){
