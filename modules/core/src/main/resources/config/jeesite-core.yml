@@ -397,6 +397,7 @@ shiro:
 #    ${adminPath}/cms/article/* = anon
 #    ${adminPath}/cms/link/* = anon
 #    ${adminPath}/sys/corpAdmin/treeData = anon
+#    ${adminPath}/${spring.application.name}/swagger/** = anon
 #    ${adminPath}/** = user
   filterChainDefinitions: |
     ${adminPath}/sys/corpAdmin/treeData = anon
