@@ -18,7 +18,21 @@
 				AND ur.role_code = #{roleCode}
 			</if>
 			<if test="employee.postCode != null and employee.postCode != ''">
-				AND ep.post_code = #{employee.postCode}
+				AND (
+					ep.post_code = #{employee.postCode}
+					OR EXISTS (
+						SELECT 1 FROM ${_prefix}sys_employee_office
+						WHERE emp_code = e.emp_code
+							AND post_code = #{employee.postCode}
+					)
+				)
+			</if>
+			<if test="employee.office.officeCode != null and employee.office.officeCode != ''">
+				OR EXISTS (
+					SELECT 1 FROM ${_prefix}sys_employee_office
+					WHERE emp_code = e.emp_code
+						AND office_code = #{employee.office.officeCode}
+				)
 			</if>
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
