@@ -268,6 +268,7 @@ public class CorpAdminController extends BaseController {
 		if (UserUtils.getUser().isSuperAdmin()){
 			User where = new User();
 			where.setCorpCode_(corpCode);
+			where.setPage(new Page<>(1, 1, -1));
 			List<User> list = userService.findCorpList(where);
 			if (list.size() > 0){
 				User user = list.get(0);
