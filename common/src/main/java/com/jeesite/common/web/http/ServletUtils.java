@@ -362,7 +362,9 @@ public class ServletUtils {
 					type = MediaType.TEXT_PLAIN_VALUE;
 				}
 			}
-			response.setContentType(type);
+			if (type != null) {
+				response.setContentType(type);
+			}
 			response.getWriter().print(string);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -6,11 +6,9 @@ var message = @ObjectUtils.toString(@request.getAttribute("message"));
 if (isBlank(message)){
 	var ex = @ExceptionUtils.getThrowable(request);
 	if (ex != null){
-		for (e in [ex, ex.cause!, ex.cause.cause!]){
-			if (@StringUtils.startsWith(e.message!, "msg:")){
-				message = @StringUtils.replace(e.message!, "msg:", "");
-				break;
-			}
+		var m = @ExceptionUtils.getExceptionMessage(ex);
+		if (isNotBlank(m)){
+			message = m;
 		}
 	}
 }

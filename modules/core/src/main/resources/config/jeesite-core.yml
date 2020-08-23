@@ -505,10 +505,12 @@ web:
     # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
     smartMethodArgumentResolver: true
     
-    # 使用 .json、.xml 后缀匹配视图（不推荐使用，推荐使用 favorParameter）
+    # 使用 .json、.xml 后缀匹配返回视图数据（Spring官方已不推荐使用）
     favorPathExtension: false
-    # 使用 __ajax=json、__ajax=xml 参数名匹配视图
+    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
     favorParameter: true
+    # 使用 __ajax=json、__ajax=xml 请求头匹配返回视图数据
+    favorHeader: true
 
   # MVC 拦截器
   interceptor:
