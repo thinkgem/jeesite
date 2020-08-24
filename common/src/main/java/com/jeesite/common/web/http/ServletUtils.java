@@ -42,7 +42,11 @@ public class ServletUtils {
 	// 定义静态文件后缀；静态文件排除URI地址
 	private static String[] staticFiles;
 	private static String[] staticFileExcludeUri;
-	
+	private static Boolean favorPathExtension;
+	private static Boolean favorParameter;
+	private static Boolean favorHeader;
+	private static Boolean jsonp;
+
 	/**
 	 * 获取当前请求对象
 	 * web.xml: <listener><listener-class>
@@ -97,45 +101,10 @@ public class ServletUtils {
 	}
 	
 	/**
-	 * 是否是Ajax异步请求
-	 * @param request
-	 */
-	public static boolean isAjaxRequest(HttpServletRequest request){
-		
-		String accept = request.getHeader("accept");
-		if (StringUtils.contains(accept, MediaType.APPLICATION_JSON_VALUE)){
-			return true;
-		}
-		
-		String xRequestedWith = request.getHeader("X-Requested-With");
-		if (StringUtils.contains(xRequestedWith, "XMLHttpRequest")){
-			return true;
-		}
-		
-		String ajaxHeader = request.getHeader("__ajax");
-		if (StringUtils.inStringIgnoreCase(ajaxHeader, "json", "xml")){
-			return true;
-		}
-		
-		String ajaxParameter = request.getParameter("__ajax");
-		if (StringUtils.inStringIgnoreCase(ajaxParameter, "json", "xml")){
-			return true;
-		}
-		
-		String uri = request.getRequestURI();
-		if (StringUtils.endsWithIgnoreCase(uri, ".json")
-				|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
-			return true;
-		}
-		
-		return false;
-	}
-
-	/**
-     * 判断访问URI是否是静态文件请求
+	 * 判断访问URI是否是静态文件请求
 	 * @throws Exception 
-     */
-    public static boolean isStaticFile(String uri){
+	 */
+	public static boolean isStaticFile(String uri){
 		if (staticFiles == null){
 			PropertiesUtils pl = PropertiesUtils.getInstance();
 			try{
@@ -165,7 +134,64 @@ public class ServletUtils {
 			return true;
 		}
 		return false;
-    }
+	}
+
+	/**
+	 * 初始化一些个性化配置
+	 * @author ThinkGem
+	 */
+	private static void initWebViewConfig() {
+		if (favorPathExtension == null || favorParameter == null || favorHeader == null || jsonp == null) {
+			PropertiesUtils props = PropertiesUtils.getInstance();
+			favorPathExtension = ObjectUtils.toBoolean(props.getProperty("web.view.favorPathExtension", "false"));
+			favorParameter = ObjectUtils.toBoolean(props.getProperty("web.view.favorParameter", "true"));
+			favorHeader = ObjectUtils.toBoolean(props.getProperty("web.view.favorHeader", "true"));
+			jsonp = ObjectUtils.toBoolean(props.getProperty("web.jsonp.enabled", "false"));
+		}
+	}
+
+	/**
+	 * 是否是Ajax异步请求
+	 * @param request
+	 */
+	public static boolean isAjaxRequest(HttpServletRequest request){
+		
+		String accept = request.getHeader("accept");
+		if (StringUtils.contains(accept, MediaType.APPLICATION_JSON_VALUE)){
+			return true;
+		}
+		
+		String xRequestedWith = request.getHeader("X-Requested-With");
+		if (StringUtils.contains(xRequestedWith, "XMLHttpRequest")){
+			return true;
+		}
+		
+		initWebViewConfig();
+		
+		if (favorPathExtension) {
+			String uri = request.getRequestURI();
+			if (StringUtils.endsWithIgnoreCase(uri, ".json")
+					|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
+				return true;
+			}
+		}
+		
+		if (favorParameter) {
+			String ajaxParameter = request.getParameter("__ajax");
+			if (StringUtils.inStringIgnoreCase(ajaxParameter, "json", "xml")){
+				return true;
+			}
+		}
+		
+		if (favorHeader) {
+			String ajaxHeader = request.getHeader("__ajax");
+			if (StringUtils.inStringIgnoreCase(ajaxHeader, "json", "xml")){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	/**
 	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
@@ -222,9 +248,9 @@ public class ServletUtils {
 		HttpServletResponse response = getResponse();
 		HttpServletRequest request = getRequest();
 		if (request != null){
-			String uri = request.getRequestURI();
-			if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
-					.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+			String uri = request.getRequestURI(); initWebViewConfig();
+			if ((favorPathExtension && StringUtils.endsWithIgnoreCase(uri, ".xml"))
+					|| (favorParameter && StringUtils.equalsIgnoreCase(request.getParameter("__ajax"), "xml"))){
 				if (response != null){
 					response.setContentType(MediaType.APPLICATION_XML_VALUE);
 				}
@@ -234,7 +260,7 @@ public class ServletUtils {
 					return XmlMapper.toXml(resultMap);
 				}
 			}
-			if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
+			if (jsonp) {
 				String functionName = request.getParameter("__callback");
 				if (StringUtils.isNotBlank(functionName)){
 					object = new JSONPObject(functionName, resultMap);
@@ -311,12 +337,12 @@ public class ServletUtils {
 	 */
 	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
-		String uri = request.getRequestURI();
-		if (StringUtils.endsWithIgnoreCase(uri, ".xml") || StringUtils
-				.equalsIgnoreCase(request.getParameter("__ajax"), "xml")){
+		String uri = request.getRequestURI(); initWebViewConfig();
+		if ((favorPathExtension && StringUtils.endsWithIgnoreCase(uri, ".xml"))
+				|| (favorParameter && StringUtils.equalsIgnoreCase(request.getParameter("__ajax"), "xml"))){
 			return renderString(response, XmlMapper.toXml(object));
 		}
-		if (ObjectUtils.toBoolean(PropertiesUtils.getInstance().getProperty("web.jsonp.enabled"))) {
+		if (jsonp) {
 			String functionName = request.getParameter("__callback");
 			if (StringUtils.isNotBlank(functionName)){
 				object = new JSONPObject(functionName, object);
