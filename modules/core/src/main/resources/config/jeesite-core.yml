@@ -431,8 +431,11 @@ session:
   # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
   sessionTimeout: 1800000
   
+  # PC设备会话超时参数设置，登录请求参数加 param_deviceType=pc 时有效
+  #pcSessionTimeout: 1800000
+  
   # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
-  mobileAppSessionTimeout: 43200000
+  #mobileAppSessionTimeout: 43200000
   
   # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
   sessionTimeoutClean: 1200000
