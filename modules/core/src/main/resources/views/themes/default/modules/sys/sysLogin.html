@@ -20,16 +20,18 @@
 				<div class="tab-pane" id="tab-2"></div>
 			</div> -->
 			<div class="form-group has-feedback">
-				<span class="glyphicon glyphicon-user form-control-feedback" title="${text('登录账号')}"></span>
+				<span class="icon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
 					data-msg-required="${text('请填写登录账号.')}" placeholder="${text('登录账号')}"
 					value="${cookie('rememberUserCode')}"/>
 			</div>
 			<div class="form-group has-feedback">
-				<span class="glyphicon glyphicon-lock form-control-feedback"
+				<span class="icon-lock form-control-feedback"
 					title="${text('登录密码，鼠标按下显示密码')}"
 					onmousedown="$('#password').attr('type','text')"
-					onmouseup="$('#password').attr('type','password')"></span>
+					onmouseup="$('#password').attr('type','password')"
+					onmouseenter="$(this).removeClass('icon-lock').addClass('icon-eye')"
+					onmouseout="$(this).removeClass('icon-eye').addClass('icon-lock')"></span>
 				<#form:input type="password" name="password" class="form-control required"
 					data-msg-required="${text('请填写登录密码.')}" placeholder="${text('登录密码')}" autocomplete="off"/>
 			</div>
