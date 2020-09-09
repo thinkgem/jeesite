@@ -238,10 +238,12 @@ public class ${ClassName}Controller extends BaseController {
 		List<${ClassName}> list = ${className}Service.findList(new ${ClassName}());
 		for (int i=0; i<list.size(); i++){
 			${ClassName} e = list.get(i);
+			<% if (table.statusExists){ %>
 			// 过滤非正常的数据
 			if (!${ClassName}.STATUS_NORMAL.equals(e.getStatus())){
 				continue;
 			}
+			<% } %>
 			// 过滤被排除的编码（包括所有子级）
 			if (StringUtils.isNotBlank(excludeCode)){
 				if (e.getId().equals(excludeCode)){
