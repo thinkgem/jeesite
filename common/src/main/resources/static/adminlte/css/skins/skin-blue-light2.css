@@ -45,7 +45,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   }
 }
 .main-header .logo {
-  background-color: #1890ff;
+  background-color: transparent;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }

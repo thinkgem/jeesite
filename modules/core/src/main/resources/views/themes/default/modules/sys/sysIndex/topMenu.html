@@ -1,7 +1,7 @@
 <nav class="navbar navbar-static-top">
 	<div class="logo" data-toggle="push-menu">
 		<b>${@Global.getConfig('productName')}</b>
-		<small>&nbsp; &nbsp;<i class="fa fa-bars"></i></small>
+		<small title="${text('点击缩小侧边栏，右键隐藏侧边栏')}">&nbsp; &nbsp;<i class="fa fa-bars"></i></small>
 	</div>
 	<%/*<!--%><a href="javascript:" class="sidebar-toggle" data-toggle="push-menu" role="button">
 		<span class="sr-only">菜单切换</span><span class="icon-bar"></span>
@@ -58,13 +58,13 @@
 				});
 				var refreshSidebar = function(code){
 					if(js.trim($("#leftMenu-" + code).text()) == ''){
-						$('.main-sidebar').hide();
+						$('.main-sidebar,.logo small,.tabpanel_tab_content').hide();
 						$('.content-wrapper').css("cssText","margin-left:0!important;");
 						if (window.initMenu && $(window).width() <= 767 && $('body').hasClass('sidebar-open')){
 							$('[data-toggle="push-menu"]').click();
 						}
 					}else{
-						$('.main-sidebar').show();
+						$('.main-sidebar,.logo small,.tabpanel_tab_content').show();
 						$('.content-wrapper').css('margin-left', '');
 						if (window.initMenu && $(window).width() <= 767 && !$('body').hasClass('sidebar-open')){
 							$('[data-toggle="push-menu"]').click();
@@ -78,9 +78,7 @@
 						}
 					}
 					window.initMenu = true;
-					setTimeout(function(){
-						$(window).resize();
-					},200);
+					$(window).resize();
 				}
 				// 激活存储的顶部当前菜单项
 				var currentMenuCode = js.cookie('currentMenuCode'), currentMenu;
