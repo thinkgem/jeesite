@@ -11,6 +11,8 @@ echo [ÐÅÏ¢] ±¾²Ù×÷Ö÷ÒªÓÃÓÚÊ×´Î°²×° JeeSite »òºó°²×° Module µÄÊý¾Ý±í³õÊ¼»¯£¬ÈôÄ£¿
 echo.
 echo [ÐÅÏ¢] ÔÚ v4.2 °æ±¾ÒÔºó£¬¹Ù·½³õÊ¼»¯Êý¾Ý¿âÊÇ±È½Ï°²È«µÄ£¬¹Ù·½´úÂëÖÐ²»»á°üº¬ÈÎºÎÉ¾³ýÊý¾Ý±í¼°Êý¾ÝµÄ½Å±¾¡£
 echo.
+echo [ÐÅÏ¢] Èç¹ûÄãÊÇÉý¼¶µ½ v4.2 µÄ°æ±¾£¬ÎÞ·¨ÅÅ³ýÄãÊÇ·ñÉý¼¶ÍêÕû£¬Îª°²È«ÆÚ¼ä£¬»¹ÊÇ½¨ÒéÏÈ±¸·ÝÊý¾Ý¿âºóÔÙ²Ù×÷¡£
+echo.
 pause
 
 %~d0

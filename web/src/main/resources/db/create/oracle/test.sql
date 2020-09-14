@@ -1,12 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE test_data CASCADE CONSTRAINTS;
-DROP TABLE test_data_child CASCADE CONSTRAINTS;
-DROP TABLE test_tree CASCADE CONSTRAINTS;
-
-
-
 
 /* Create Tables */
 

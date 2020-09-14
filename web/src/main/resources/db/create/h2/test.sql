@@ -1,12 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE test_data;
-DROP TABLE test_data_child;
-DROP TABLE test_tree;
-
-
-
 
 /* Create Tables */
 

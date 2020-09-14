@@ -1,17 +1,5 @@
 -- tables_db2_v95.sql
 
-DROP TABLE ${_prefix}job_FIRED_TRIGGERS;
-DROP TABLE ${_prefix}job_PAUSED_TRIGGER_GRPS;
-DROP TABLE ${_prefix}job_SCHEDULER_STATE;
-DROP TABLE ${_prefix}job_LOCKS;
-DROP TABLE ${_prefix}job_SIMPLE_TRIGGERS;
-DROP TABLE ${_prefix}job_SIMPROP_TRIGGERS;
-DROP TABLE ${_prefix}job_CRON_TRIGGERS;
-DROP TABLE ${_prefix}job_TRIGGERS;
-DROP TABLE ${_prefix}job_JOB_DETAILS;
-DROP TABLE ${_prefix}job_CALENDARS;
-DROP TABLE ${_prefix}job_BLOB_TRIGGERS;
-
 create table ${_prefix}job_job_details(
 sched_name varchar(120) not null,
 job_name varchar(80) not null,

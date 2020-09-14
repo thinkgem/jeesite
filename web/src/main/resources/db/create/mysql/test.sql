@@ -1,13 +1,5 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
-/* Drop Tables */
-
-DROP TABLE IF EXISTS test_data;
-DROP TABLE IF EXISTS test_data_child;
-DROP TABLE IF EXISTS test_tree;
-
-
-
 
 /* Create Tables */
 
