@@ -53,12 +53,12 @@
 		    <version>${commons-text.version}</version>
 		</dependency>
 		
-		<!-- Apache Tools Ant Tar Zip  -->
+		<!-- Apache Zip Tools
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
 			<version>${ant.version}</version>
-		</dependency>
+		</dependency>  -->
 		
 		<!-- Java serialization -->
 		<dependency>
@@ -88,12 +88,12 @@
 			<version>${fastjson.version}</version>
 		</dependency>
 		
-		<!-- Java xml -->
+		<!-- Java xml
 		<dependency>
 			<groupId>org.dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>${dom4j.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- jdk11 JAXB module
 		<dependency>
@@ -123,12 +123,12 @@
 			<artifactId>httpclient</artifactId>
 		</dependency>
 		
-		<!-- Jsoup HTTP -->
+		<!-- Jsoup HTTP
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Email -->
 		<dependency>
@@ -136,11 +136,11 @@
 			<artifactId>commons-email</artifactId>
 			<version>${commons-email.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
 			<version>${activation.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- User Agent -->
 		<dependency>
@@ -210,7 +210,7 @@
 			<version>${zxing.version}</version>
 		</dependency>
 		
-		<!-- POI Office Tools -->
+		<!-- Office Tools -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>

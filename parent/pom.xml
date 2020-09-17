@@ -21,22 +21,22 @@
 	<properties>
 		
 		<!-- common version setting -->
-		<commons-io.version>2.6</commons-io.version>
+		<commons-io.version>2.7</commons-io.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
-		<commons-text.version>1.8</commons-text.version>
-		<ant.version>1.10.7</ant.version>
+		<commons-text.version>1.9</commons-text.version>
+		<!-- <ant.version>1.10.7</ant.version> -->
 		<fst.version>2.57</fst.version>
-		<fastjson.version>1.2.70</fastjson.version>
-		<jackson.version>2.11.0</jackson.version>
-		<dom4j.version>2.1.1</dom4j.version>
-		<jsoup.version>1.12.2</jsoup.version>
+		<fastjson.version>1.2.73</fastjson.version>
+		<jackson.version>2.11.2</jackson.version>
+		<!-- <dom4j.version>2.1.1</dom4j.version> -->
+		<!-- <jsoup.version>1.12.2</jsoup.version> -->
 		<commons-email.version>1.5</commons-email.version>
 		<activation.version>1.1.1</activation.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<!-- <metadata-extractor.version>2.11.0</metadata-extractor.version> -->
-		<thumbnailator.version>0.4.11</thumbnailator.version>
-		<twelvemonkeys.version>3.5</twelvemonkeys.version>
+		<thumbnailator.version>0.4.12</thumbnailator.version>
+		<twelvemonkeys.version>3.6</twelvemonkeys.version>
 		<blade-patchca.version>1.1.2</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.4.0</zxing.version>
@@ -47,8 +47,8 @@
 		<!-- framework version setting -->
 		<mybatis.version>3.5.5</mybatis.version>
 		<mybatis-spring.version>2.0.5</mybatis-spring.version>
-		<jsqlparser.version>3.1</jsqlparser.version>
-		<druid.version>1.1.22</druid.version>
+		<jsqlparser.version>3.2</jsqlparser.version>
+		<druid.version>1.1.23</druid.version>
 		<shiro.version>1.6.0</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<beetl.version>3.1-SNAPSHOT</beetl.version>

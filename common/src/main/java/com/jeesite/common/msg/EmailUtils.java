@@ -77,4 +77,9 @@ public class EmailUtils {
 		return false;
 	}
 	
+//	public static void main(String[] args) {
+//		EmailUtils.send("jeesite_demo@163.com", "jeesitedemo1234", "smtp.163.com", 
+//				"false", "465", "jeesite_demo@163.com", "测试邮件", "测试<b>邮件</b>的内容");
+//	}
+	
 }
