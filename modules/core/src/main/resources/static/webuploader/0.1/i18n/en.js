@@ -34,6 +34,7 @@ $.fn.webuploader.defaults.i18n = {
 	'向右旋转': 'Rotate right',
 	'向左旋转': 'Rotate left',
 	
+	'不能上传空文件': 'Empty file error',
 	'文件类型不对': 'File type error',
 	'文件大小超出': 'File size exceeded',
 	'文件传输中断': 'File transfer interrupt',
