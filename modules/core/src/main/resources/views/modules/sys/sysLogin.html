@@ -9,27 +9,23 @@
 			<small>${@Global.getConfig('productVersion')}</small></a>
 	</div>
 	<div class="login-box-body">
-		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post">
-			<h4 class="login-box-msg">${isNotBlank(message!)?message:text('欢迎回来')+'！'}</h4>
-			<!-- <ul class="nav nav-tabs mb20">
-				<li class="active"><a href="#tab-1" data-toggle="tab">账号登录</a></li>
-				<li><a href="#tab-2" data-toggle="tab">邮箱登录</a></li>
-			</ul>
-			<div class="tab-content">
-				<div class="tab-pane active" id="tab-1"></div>
-				<div class="tab-pane" id="tab-2"></div>
-			</div> -->
+		<ul id="loginTab" class="nav nav-tabs ${@Global.getConfigToBoolean('user.loginByValidCode','true')?'':'hide'}">
+			<li class="active"><a href="#tab-1" data-toggle="tab" action="${ctx}/login">${text('账号登录')}</a></li>
+			<li><a href="#tab-2" data-toggle="tab" action="${ctxPath}/account/loginByValidCode">${text('手机登录')}</a></li>
+		</ul>
+		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post" class="tab-content">
+			<% if(isNotBlank(message!)){ %>
+				<h5 class="login-box-msg text-red">${message}</h5>
+			<% } %>
 			<div class="form-group has-feedback">
 				<span class="icon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
 					data-msg-required="${text('请填写登录账号.')}" placeholder="${text('登录账号')}"
 					value="${cookie('rememberUserCode')}"/>
 			</div>
-			<div class="form-group has-feedback">
-				<span class="icon-lock form-control-feedback"
-					title="${text('登录密码，鼠标按下显示密码')}"
-					onmousedown="$('#password').attr('type','text')"
-					onmouseup="$('#password').attr('type','password')"
+			<div class="form-group has-feedback tab-pane tab-1 active">
+				<span class="icon-lock form-control-feedback" title="${text('登录密码，鼠标按下显示密码')}"
+					onmousedown="$('#password').attr('type','text')" onmouseup="$('#password').attr('type','password')"
 					onmouseenter="$(this).removeClass('icon-lock').addClass('icon-eye')"
 					onmouseout="$(this).removeClass('icon-eye').addClass('icon-lock')"></span>
 				<#form:input type="password" name="password" class="form-control required"
@@ -43,6 +39,15 @@
 			<% } %>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
 				<#form:validcode name="validCode" isRequired="true" isRemote="true" isLazy="${!isValidCodeLogin}"/>
+			</div>
+			<div class="form-group has-feedback tab-pane tab-2">
+				<div class="input-group">
+					<input type="text" id="loginValidCode" name="loginValidCode" class="form-control required"
+						data-msg-required="${text('请填写手机验证码.')}" placeholder="${text('手机验证码')}" />
+					<span class="input-group-btn">
+						<input type="button" id="sendLoginValidCode" value="${text('获取手机验证码')}" class="btn btn-flat"/>
+					</span>
+				</div>
 			</div>
 			<div class="form-group">
 				<div class="mt5 icheck">

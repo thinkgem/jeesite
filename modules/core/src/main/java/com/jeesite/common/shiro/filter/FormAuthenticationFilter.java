@@ -101,7 +101,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		// 登录用户名解密（解决登录用户名明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
-		if (StringUtils.isNotBlank(secretKey)){
+		if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(secretKey)){
 			username = DesUtils.decode(username, secretKey);
 			if (StringUtils.isBlank(username)){
 				logger.info("登录账号为空或解码错误.");
@@ -128,7 +128,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		// 登录密码解密（解决登录密码明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
-		if (StringUtils.isNotBlank(secretKey)){
+		if (StringUtils.isNotBlank(password) && StringUtils.isNotBlank(secretKey)){
 			password = DesUtils.decode(password, secretKey);
 			if (StringUtils.isBlank(password)){
 				logger.info("登录密码为空或解码错误.");
@@ -167,7 +167,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		// 登录用户名解密（解决登录用户名明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
-		if (StringUtils.isNotBlank(secretKey)){
+		if (StringUtils.isNotBlank(captcha) && StringUtils.isNotBlank(secretKey)){
 			captcha = DesUtils.decode(captcha, secretKey);
 		}
 		return captcha;

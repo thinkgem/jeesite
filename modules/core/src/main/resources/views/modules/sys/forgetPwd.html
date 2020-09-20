@@ -16,28 +16,6 @@
 					<option value="email">使用电子邮箱找回您的密码</option>
 					<option value="question">使用保密问题找回您的密码</option>
 				</select>
-				<script type="text/javascript">
-					$(document).ready(function(){
-						$('#fp_validType').change(function(){
-							var val = $(this).val(), action = '';
-							$('.fp-element').addClass('hide').removeClass('block');
-							$('.fp-'+val).addClass('block').removeClass('hide');
-							setTimeout(function(){
-								$('#fp_loginCode').focus();
-							}, 100);
-							if (val == 'mobile' || val == 'email'){
-								var txt = (val == 'mobile' ? '手机' : '邮箱')
-								$('#fpValidCode').attr('placeholder', txt+'验证码')
-									.attr('data-msg-required', '请填写'+txt+'验证码.');
-								$('#sendFpValidCode').val('获取'+txt+'验证码');
-								action = '${ctxPath}/account/savePwdByValidCode';
-							}else if(val == 'question'){
-								action = '${ctxPath}/account/savePwdByPwdQuestion';
-							}
-							$('#forgetForm').attr('action', action);
-						}).change();
-					});
-				</script>
 			</div>
 			<div class="form-group has-feedback">
 				<span class="fa fa-user form-control-feedback"></span>
@@ -54,54 +32,9 @@
 						<input type="button" id="sendFpValidCode" value="获取手机验证码" class="btn btn-flat"/>
 					</span>
 				</div>
-				<script type="text/javascript">
-					var waitTime = 60;
-					function sendTime(o) {
-						if (waitTime == 0) {
-							o.removeAttribute("disabled");
-							o.value = "获取验证码";
-							waitTime = 60;
-						} else {
-							o.setAttribute("disabled", true);
-							o.value = "重新发送(" + waitTime + ")";
-							waitTime--;
-							setTimeout(function() {
-								sendTime(o)
-							}, 1000);
-						}
-					}
-					$('#sendFpValidCode').click(function() {
-						var $this = this;
-						js.ajaxSubmit('${ctxPath}/account/getFpValidCode', {
-							validType: $('#fp_validType').val(),
-							loginCode : $('#fp_loginCode').val(),
-							validCode : $('#fp_validCode').val()
-						}, function(data){
-							js.showMessage(data.message);
-							if (data.result == 'true'){
-								sendTime($this);
-							}
-						});
-					});
-				</script>
 			</div>
 			<div class="form-group has-feedback fp-element fp-question clearfix">
 				<input type="button" id="fp_getQuestion" value="获取保密问题" class="btn btn-default btn-block btn-flat"/>
-				<script type="text/javascript">
-					$('#fp_getQuestion').click(function() {
-						js.ajaxSubmit('${ctxPath}/account/getPwdQuestion', {
-							loginCode : $('#fp_loginCode').val(),
-							validCode : $('#fp_validCode').val()
-						}, function(data){
-							js.showMessage(data.message);
-							if (data.result == 'true'){
-								$('#fp_q1').text(data.pwdQuestion);
-								$('#fp_q2').text(data.pwdQuestion2);
-								$('#fp_q3').text(data.pwdQuestion3);
-							}
-						});
-					});
-				</script>
 			</div>
 			<div class="form-group has-feedback fp-element fp-question">
 				问题1：<span id="fp_q1"></span>
@@ -167,22 +100,4 @@
 <script>var secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';</script>
 <script src="${ctxStatic}/jquery-toastr/2.1/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/common/des.js?${_version}"></script>
-<script>
-$('#forgetForm').validate({
-	ignore: ":hidden",
-    submitHandler: function(form) {
-		js.ajaxSubmitForm($(form), function(data){
-			if (data.result == "true"){
-				alert(data.message);
-				location = "${ctx}/login";
-			}else{
-				js.showMessage(data.message);
-				$('#forgetForm').reset();
-			}
-		});
-    }
-});
-$('#btnReset').click(function(){
-	location = '${ctx}/login';
-});
-</script>
+<script src="${ctxStatic}/modules/sys/forgetPwd.js?${_version}"></script>

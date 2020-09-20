@@ -246,6 +246,9 @@ logging:
 #  # 登录账号是否租户内唯一，否则全局唯一
 #  loginCodeCorpUnique: false
 #
+#  # 是否启用验证码登录（手机、邮箱）
+#  loginByValidCode: true
+#
 #  # 用户类型配置信息（employee员工，member会员，btype往来单位，persion个人，expert专家，...），JSON 格式说明如下：
 #  # {"用户类型":{"beanName":"Service或Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
 #  userTypeMap: >
