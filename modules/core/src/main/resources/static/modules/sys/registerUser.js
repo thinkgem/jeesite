@@ -73,7 +73,6 @@ $(function(){
 					location = ctx + '/login';
 				}else{
 					js.showMessage(data.message);
-					$('#registerForm').reset();
 				}
 			});
 	    }

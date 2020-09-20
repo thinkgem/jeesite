@@ -140,13 +140,14 @@ public class AccountController extends BaseController{
 		@ApiImplicitParam(name = "password", value = "新密码", required = true, paramType="query", type="String"),
 	})
 	public String savePwdByValidCode(User user, String fpValidCode, HttpServletRequest request) {
+		String userCode = UserUtils.getCache("fp" + "UserCode");
 		String s = validValidCode("fp", user.getLoginCode(), fpValidCode, request);
 		if (s != null) {
 			return s;
 		}
 		// 更新为新密码
 		try{
-			userService.updatePassword(user.getUserCode(), user.getPassword());
+			userService.updatePassword(userCode, user.getPassword());
 		}catch(ServiceException se){
 			return renderResult(Global.FALSE, se.getMessage());
 		}
@@ -200,9 +201,9 @@ public class AccountController extends BaseController{
 	 * @author ThinkGem
 	 */
 	private String validValidCode(String type, String loginCode, String loginValidCode, HttpServletRequest request) {
-		String userCode = (String)UserUtils.getCache(type + "UserCode");
-		String loginCode2 = (String)UserUtils.getCache(type + "LoginCode");
-		String validCode = (String)UserUtils.getCache(type + "ValidCode");
+		String userCode = UserUtils.getCache(type + "UserCode");
+		String loginCode2 = UserUtils.getCache(type + "LoginCode");
+		String validCode = UserUtils.getCache(type + "ValidCode");
 		Date date = (Date)UserUtils.getCache(type + "LastDate");
 		
 		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
@@ -290,8 +291,8 @@ public class AccountController extends BaseController{
 		@ApiImplicitParam(name = "password", value = "新密码", required = true, paramType="query", type="String"),
 	})
 	public String savePwdByPwdQuestion(User user, HttpServletRequest request) {
-		String userCode = (String)UserUtils.getCache("fpUserCode");
-		String loginCode = (String)UserUtils.getCache("fpLoginCode");
+		String userCode = UserUtils.getCache("fpUserCode");
+		String loginCode = UserUtils.getCache("fpLoginCode");
 		
 		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
 		if (!(userCode != null && loginCode != null && loginCode.equals(user.getLoginCode()))){
@@ -426,14 +427,14 @@ public class AccountController extends BaseController{
 		if (!"true".equals(Global.getConfig("sys.account.registerUser"))){
 			return renderResult(Global.FALSE, text("当前系统没有开启注册功能！"));
 		}
-		String corpCode = (String)UserUtils.getCache("regCorpCode");
-		String corpName = (String)UserUtils.getCache("regCorpName");
-		String userType = (String)UserUtils.getCache("regUserType");
-		String loginCode = (String)UserUtils.getCache("regLoginCode");
-		String userName = (String)UserUtils.getCache("regUserName");
-		String email = (String)UserUtils.getCache("regEmail");
-		String mobile = (String)UserUtils.getCache("regMobile");
-		String validCode = (String)UserUtils.getCache("regValidCode");
+		String corpCode = UserUtils.getCache("regCorpCode");
+		String corpName = UserUtils.getCache("regCorpName");
+		String userType = UserUtils.getCache("regUserType");
+		String loginCode = UserUtils.getCache("regLoginCode");
+		String userName = UserUtils.getCache("regUserName");
+		String email = UserUtils.getCache("regEmail");
+		String mobile = UserUtils.getCache("regMobile");
+		String validCode = UserUtils.getCache("regValidCode");
 		Date date = (Date)UserUtils.getCache("regLastDate");
 
 		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
