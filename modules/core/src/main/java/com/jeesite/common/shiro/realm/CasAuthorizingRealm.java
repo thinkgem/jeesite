@@ -38,7 +38,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 /**
  * 系统安全认证实现类
  * @author ThinkGem
- * @version 2018-7-11
+ * @version 2020-9-19
  */
 @SuppressWarnings("deprecation")
 public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
@@ -92,7 +92,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 		casToken.setUserId(casPrincipal.getName());
 		
 		// 生成登录信息对象
-		FormToken token = new FormToken();
+		FormToken token = new FormToken(request);
         token.setUsername(casPrincipal.getName());
         Map<String, Object> params = MapUtils.newHashMap();
         params.putAll(casPrincipal.getAttributes());

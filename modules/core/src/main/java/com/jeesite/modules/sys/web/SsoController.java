@@ -18,6 +18,7 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.shiro.authc.FormToken;
+import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.User;
@@ -26,7 +27,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 /**
  * 单点登录Controller
  * @author ThinkGem
- * @version 2017-03-25
+ * @version 2020-9-19
  */
 @Controller
 public class SsoController extends BaseController{
@@ -63,24 +64,20 @@ public class SsoController extends BaseController{
 		// 通过令牌登录系统
 		if (token != null){
 			try {
-				FormToken upToken = new FormToken();
-				upToken.setUsername(username);	// 登录用户名
-				upToken.setSsoToken(token); 	// 单点登录令牌
-				upToken.setParams(ServletUtils.getExtParams(request)); // 登录附加参数
-				UserUtils.getSubject().login(upToken);
-				if (ServletUtils.isAjaxRequest(request)){
-					return ServletUtils.renderResult(response, Global.TRUE, text("账号登录成功"));
-				}else{
-					return REDIRECT + EncodeUtils.decodeUrl2(url);
-				}
+				// FormToken 构造方法的三个参数：登录名、单点登录的令牌秘钥、请求对象
+				UserUtils.getSubject().login(new FormToken(username, token, request));
+				request.setAttribute("__url", EncodeUtils.decodeUrl2(url));
+				FormAuthenticationFilter.onLoginSuccess(request, response);
 	        } catch (AuthenticationException e) {
-	        	if (!e.getMessage().startsWith("msg:")){
-	        		throw new AuthenticationException("msg:登录失败，请联系管理员。", e);
-	        	}
-	        	throw e;
+	        	FormAuthenticationFilter.onLoginFailure(e, request, response);
 	        }
+			return null;
 		}
 		return "error/403";
 	}
+	
+//	public static void main(String[] args) {
+//		System.out.println(UserUtils.getSsoToken("system"));
+//	}
 	
 }
