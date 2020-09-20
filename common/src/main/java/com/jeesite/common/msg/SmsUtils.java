@@ -21,23 +21,23 @@ public class SmsUtils {
 //		String data = props.getProperty("msg.sms.data");
 //		String prefix = props.getProperty("msg.sms.prefix", "");
 //		String suffix = props.getProperty("msg.sms.suffix", "");
-//		Connection conn = Jsoup.connect(url);
-//		conn.postDataCharset("UTF-8");
-//		conn.method(Method.POST);
+//		Map<String, String> dataMap = MapUtils.newHashMap();
 //		for (String param : StringUtils.split(data, "&")){
 //			String[] ss = StringUtils.split(param, "=");
 //			if (ss.length == 1){
-//				conn.data(ss[0], "");
+//				dataMap.put(ss[0], "");
 //			}else if (ss.length == 2){
-//				conn.data(ss[0], ss[1]);
+//				dataMap.put(ss[0], ss[1]);
 //			}
 //		}
 //		// 手机号码
-//		conn.data("mobile", mobile);
+//		dataMap.put("mobile", mobile);
 //		// 短信内容
-//		conn.data("content", prefix + content + suffix);
-		logger.warn("模拟发送短信成功！请实现 "+SmsUtils.class+" 的 send 方法。内容："+content);
-		return "{result:0,message:\"模拟发送短信成功！\"}";
+//		dataMap.put("content", prefix + content + suffix);
+//		HttpClientUtils.post(url, dataMap, "UTF-8");
+		logger.debug("短信内容：" + content + "    手机号码：" + mobile);
+		logger.warn("短信模拟发送成功！实际并未发送到手机，请实现 " + SmsUtils.class + " 的 send 方法。");
+		return "{result:0,message:\"短信模拟发送成功！\"}";
 	}
 	
 }
