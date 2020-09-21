@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -73,10 +74,7 @@ public class EmpUserController extends BaseController {
 
 	@ModelAttribute
 	public EmpUser get(String userCode, boolean isNewRecord) {
-		EmpUser empUser = new EmpUser();
-		empUser.setUserCode(userCode);
-		empUser.setIsNewRecord(isNewRecord);
-		return empUserService.getAndValid(empUser);
+		return empUserService.get(userCode, isNewRecord);
 	}
 
 	@RequiresPermissions("sys:empUser:view")
@@ -172,12 +170,11 @@ public class EmpUserController extends BaseController {
 		if (!Global.TRUE.equals(checkEmpNo(old != null ? old.getEmployee().getEmpNo() : "", empUser.getEmployee().getEmpNo()))) {
 			return renderResult(Global.FALSE, text("保存用户失败，员工工号''{0}''已存在", empUser.getEmployee().getEmpNo()));
 		}
-		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT)
-				&& UserUtils.getSubject().isPermitted("sys:empUser:edit")){
+		Subject subject = UserUtils.getSubject();
+		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT) && subject.isPermitted("sys:empUser:edit")){
 			empUserService.save(empUser);
 		}
-		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH)
-				&& UserUtils.getSubject().isPermitted("sys:empUser:authRole")){
+		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH) && subject.isPermitted("sys:empUser:authRole")){
 			userService.saveAuth(empUser);
 		}
 		return renderResult(Global.TRUE, text("保存用户''{0}''成功", empUser.getUserName()));
