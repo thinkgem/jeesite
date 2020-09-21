@@ -45,13 +45,38 @@
 			<% } %>
 				<% include('/templates/modules/gen/include/formControl.html'){} %>
 				<% include('/templates/modules/gen/include/formChildTable.html'){} %>
+			<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+				\<% if(isNotBlank(${className}.bpm.taskId)){ %>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-xs-2">${text('审批意见')}：</label>
+							<div class="col-xs-10">
+								<${'#'}bpm:comment bpmEntity="\${${className}}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				\<% } %>
+				<${'#'}bpm:nextTaskInfo bpmEntity="\${${className}}" />
+			<% } %>
 			</div>
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
+					<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+						\<% if (hasPermi('${permissionPrefix}:edit')){ %>
+							<${'#'}form:hidden path="status"/>
+							\<% if (${className}.isNewRecord || ${className}.status == '9'){ %>
+								<button type="submit" class="btn btn-sm btn-info" id="btnDraft"><i class="fa fa-save"></i> ${text('暂 存')}</button>&nbsp;
+							\<% } %>
+							<${'#'}bpm:button bpmEntity="\${${className}}" formKey="${table.optionMap['bpmFormKey']}" completeText="${text('提 交')}"/>
+						\<% } %>
+					<% }else{ %>
 						\<% if (hasPermi('${permissionPrefix}:edit')){ %>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> \${text('保 存')}</button>&nbsp;
 						\<% } %>
+					<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> \${text('关 闭')}</button>
 					</div>
 				</div>
@@ -62,6 +87,19 @@
 \<% } %>
 <% include('/templates/modules/gen/include/formChildTableScript.html'){} %>
 <script>
+<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+// 业务实现草稿按钮
+$('#btnDraft').click(function(){
+	$('#status').val(Global.STATUS_DRAFT);
+});
+// 流程按钮操作事件
+BpmButton = window.BpmButton || {};
+BpmButton.init = function(task){ }
+BpmButton.complete = function($this, task){
+	$('#status').val(Global.STATUS_AUDIT);
+};
+// 表单验证提交事件
+<% } %>
 $("#inputForm").validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){

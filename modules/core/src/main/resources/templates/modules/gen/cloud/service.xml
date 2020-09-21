@@ -17,17 +17,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 <% } %>
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Crud'}Service;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
+import ${packageName}.${moduleName}.api${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}ServiceApi;
 <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 import java.util.Map;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.service.ServiceException;
-import com.jeesite.modules.bpm.utils.BpmUtils;
+import com.jeesite.modules.bpm.utils.client.BpmUtils;
 <% } %>
 <% if(toBoolean(table.optionMap['isImageUpload']) || toBoolean(table.optionMap['isFileUpload'])){ %>
 import com.jeesite.modules.file.utils.FileUploadUtils;
@@ -43,8 +45,10 @@ import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModule
  * @version ${functionVersion}
  */
 @Service
+@RestController
 @Transactional(readOnly=true)
-public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Service<${ClassName}Dao, ${ClassName}> {
+public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Service<${ClassName}Dao, ${ClassName}>
+		implements ${ClassName}ServiceApi {
 	<% for (child in table.childList){ %>
 	
 	@Autowired
