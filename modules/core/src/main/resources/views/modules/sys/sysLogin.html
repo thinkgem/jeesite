@@ -9,13 +9,18 @@
 			<small>${@Global.getConfig('productVersion')}</small></a>
 	</div>
 	<div class="login-box-body">
-		<ul id="loginTab" class="nav nav-tabs ${@Global.getConfigToBoolean('user.loginByValidCode','true')?'':'hide'}">
-			<li class="active"><a href="#tab-1" data-toggle="tab" action="${ctx}/login">${text('账号登录')}</a></li>
-			<li><a href="#tab-2" data-toggle="tab" action="${ctxPath}/account/loginByValidCode">${text('手机登录')}</a></li>
-		</ul>
+		<% var isLoginByValidCode = @Global.getConfigToBoolean('user.loginByValidCode', 'true'); %>
+		<% if(isLoginByValidCode){ %>
+			<ul id="loginTab" class="nav nav-tabs">
+				<li class="active"><a href="#tab-1" data-toggle="tab" action="${ctx}/login">${text('账号登录')}</a></li>
+				<li><a href="#tab-2" data-toggle="tab" action="${ctxPath}/account/loginByValidCode">${text('手机登录')}</a></li>
+			</ul>
+		<% } %>
 		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post" class="tab-content">
-			<% if(isNotBlank(message!)){ %>
-				<h5 class="login-box-msg text-red">${message}</h5>
+			<% if(!isLoginByValidCode && isBlank(message!)){ %>
+				<h4 class="login-box-msg">${text('欢迎回来')+'！'}</h4>
+			<% }else if(isNotBlank(message!)){ %>
+				<h4 class="login-box-msg text-red">${message}</h4>
 			<% } %>
 			<div class="form-group has-feedback">
 				<span class="icon-user form-control-feedback" title="${text('登录账号')}"></span>
