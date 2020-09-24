@@ -7131,7 +7131,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 this.iframe.parentNode.style.height = height + 'px';
             }
             !notSetHeight && (this.options.minFrameHeight = this.options.initialFrameHeight = height);
-            this.body.style.height = height + 'px';
+            //this.body.style.height = height + 'px'; // 设置高的时候会出现多余的垂直滚动条
             !notSetHeight && this.trigger('setHeight')
         },
 
