@@ -129,4 +129,17 @@
 		<dict value="4/4/8" label="4/4/8  三列"/>
 		<dict value="3/4/8" label="3/4/8  四列"/>
 	</gridRowCol>
+	<!-- 模块生成模板分类 -->
+	<moduleTplCategory>
+		<category value="module" label="生成模块代码">
+			<template>module/pom.xml</template>
+			<template>module/db/erm.xml</template>
+			<template>module/bin/deploy.bat.xml</template>
+			<template>module/bin/package.bat.xml</template>
+			<template>module/src/main/java/package.xml</template>
+			<template>module/src/main/resources/db/versions.xml</template>
+			<template>module/src/main/resources/config/jeesite.xml</template>
+			<template>module/src/main/resources/static/static.xml</template>
+		</category>
+	</moduleTplCategory>
 </config>

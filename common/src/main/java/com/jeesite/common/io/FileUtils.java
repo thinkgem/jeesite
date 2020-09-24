@@ -878,8 +878,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 					if (f.exists()){
 						break;
 					}
-					if (file.getParentFile() != null){
-						file = file.getParentFile();
+					File p = file.getParentFile();
+					if (p != null){
+						file = p;
 					}else{
 						break;
 					}
@@ -916,8 +917,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 					if (f.exists()){
 						return f.getPath();
 					}
-					if (file.getParentFile() != null){
-						file = file.getParentFile();
+					File p = file.getParentFile();
+					if (p != null){
+						file = p;
 					}else{
 						break;
 					}

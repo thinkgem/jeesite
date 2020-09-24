@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<template>
+	<name>static</name>
+	<filePath>${module.moduleCode}/src/main/resources/static/modules/${module.moduleCode}</filePath>
+	<fileName></fileName>
+	<content><![CDATA[
+
+]]>
+	</content>
+</template>

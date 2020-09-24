@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
 <template>
-	<name>controller</name>
+	<name>client</name>
 	<filePath>${moduleName}-client/src/main/java/${packageName}/${moduleName}/client/${subModuleName}</filePath>
 	<fileName>${ClassName}ServiceClient.java</fileName>
 	<content><![CDATA[
