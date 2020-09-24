@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -32,7 +33,6 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
@@ -424,7 +424,7 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "empUserSelect")
 	public String empUserSelect(EmpUser empUser, String selectData, Model model) {
 		String selectDataJson = EncodeUtils.decodeUrl(selectData);
-		if (JsonMapper.fromJson(selectDataJson, Map.class) != null){
+		if (JSONValidator.from(selectDataJson).validate()){
 			model.addAttribute("selectData", selectDataJson);
 		}
 		model.addAttribute("empUser", empUser);
