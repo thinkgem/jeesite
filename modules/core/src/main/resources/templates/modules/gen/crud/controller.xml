@@ -39,6 +39,10 @@ import com.jeesite.modules.sys.utils.UserUtils;
 <% }else{ %>
 import com.jeesite.common.entity.Page;
 <% } %>
+<% if (table.tplCategory == 'crud_select'){ %>
+import com.alibaba.fastjson.JSONValidator;
+import com.jeesite.common.codec.EncodeUtils;
+<% } %>
 import com.jeesite.common.web.BaseController;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 import ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Service;
@@ -274,6 +278,22 @@ public class ${ClassName}Controller extends BaseController {
 		}
 		${className}Service.fixTreeData();
 		return renderResult(Global.TRUE, "数据修复成功");
+	}
+	<% } %>
+	<% if (table.tplCategory == 'crud_select'){ %>
+	
+	/**
+	 * 列表选择对话框
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = "${className}Select")
+	public String empUserSelect(${ClassName} ${className}, String selectData, Model model) {
+		String selectDataJson = EncodeUtils.decodeUrl(selectData);
+		if (selectDataJson != null && JSONValidator.from(selectDataJson).validate()){
+			model.addAttribute("selectData", selectDataJson);
+		}
+		model.addAttribute("${ClassName}", ${className});
+		return "${lastPackageName}/${viewPrefix}Select";
 	}
 	<% } %>
 	

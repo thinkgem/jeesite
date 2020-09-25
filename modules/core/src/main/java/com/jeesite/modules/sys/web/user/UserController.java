@@ -200,7 +200,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "userSelect")
 	public String userSelect(User user, String selectData, Model model) {
 		String selectDataJson = EncodeUtils.decodeUrl(selectData);
-		if (JSONValidator.from(selectDataJson).validate()){
+		if (selectDataJson != null && JSONValidator.from(selectDataJson).validate()){
 			model.addAttribute("selectData", selectDataJson);
 		}
 		model.addAttribute("user", user);

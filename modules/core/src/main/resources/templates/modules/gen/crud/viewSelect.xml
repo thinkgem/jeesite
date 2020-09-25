@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<template>
+	<name>viewSelect</name>
+	<filePath>src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<fileName>${className}Select.html</fileName>
+	<content><![CDATA[
+\<% layout('/layouts/default.html', {title: '${functionNameSimple}管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-body">
+			<% include('/templates/modules/gen/include/searchForm.html'){} %>
+			<div class="row">
+				<div class="col-xs-10 pr10">
+					<table id="dataGrid"></table>
+					<% if(!table.isTreeEntity){ %>
+					<div id="dataGridPage"></div>
+					<% } %>
+				</div>
+				<div class="col-xs-2 pl0">
+					<div id="selectData" class="tags-input"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+\<% } %>
+<% include('/templates/modules/gen/include/dataGridSelectScript.html'){} %>]]>
+	</content>
+</template>

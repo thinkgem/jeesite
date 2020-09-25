@@ -1,0 +1,149 @@
+<script>
+var selectData = \${isNotBlank(selectData!) ? selectData! : "{\}"},
+selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		<%
+		// 是否是第一列
+		var firstColumn = true;
+		var firstColumnName = "";
+		// 生成树表的节点列
+		if(table.isTreeEntity){
+			for(c in table.columnList){
+				if(c.attrName == table.treeViewNameAttrName){
+		%>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '( '+row.${table.treeViewCodeAttrName}+' ) '+(val||row.id);
+		}},
+		<%
+					firstColumn = false;
+					firstColumnName = c.attrName;
+					break;
+				}
+			}
+		}
+		%>
+		<%
+		for(c in table.columnList){ 
+			if(c.isList == "1"){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+					'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+						&& c.attrName != table.treeViewCodeAttrName
+						&& c.attrName != table.treeViewNameAttrName){
+				}
+				// 如果是首列，则输出带链接的列
+				else if(firstColumn){
+					firstColumn = false;
+					firstColumnName = c.attrName;
+		%>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return (val||row.id);
+		}},
+				<% }else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(\${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}, val, '\${text("未知")}', true);
+		}},
+				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},
+				<% }else{
+						if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')){
+				%>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center"},
+				<%
+						}else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){
+				%>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"right", formatter: function(val, obj, row, act){
+			return js.formatNumber(val, 2, false, ''); // 数值类型格式化 (原始数值, 小数位数, 是否千分位, 默认值，金额情况下设置0.00);
+		}},
+				<%
+						}else {
+				%>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"left"},
+				<%
+						}
+				}
+			}
+		}
+		%>
+		{header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){
+			return JSON.stringify(row);
+		}}
+	],
+	<% if(table.isTreeEntity){ %>
+	treeGrid: true,			// 启用树结构表格
+	defaultExpandLevel: 0,	// 默认展开的层次
+	expandNodeClearPostData: '<%
+		for(c in table.columnList){
+			if(c.isQuery == "1" && !c.isTreeEntityColumn && c.attrName != 'status'){
+				print(c.attrName + ',');
+			}
+		} %>', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
+	<% } %>
+	autoGridHeight: function(){
+		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 74;
+		$('.tags-input').height($('.ui-jqgrid').height() - 10);
+		return height;
+	},
+	showCheckbox: '\${parameter.checkbox}' == 'true',
+	multiboxonly: false, // 单击复选框时再多选
+	ajaxSuccess: function(data){
+		$.each(selectData, function(key, value){
+			dataGrid.dataGrid('setSelectRow', key);
+		});
+		initSelectTag();
+	},
+	onSelectRow: function(id, isSelect, event){
+		if ('\${parameter.checkbox}' == 'true'){
+			if(isSelect){
+				selectData[id] = JSON.parse(dataGrid.dataGrid('getRowData', id).rowData);
+			}else{
+				delete selectData[id];
+			}
+		}else{
+			selectData = {};
+			selectData[id] = JSON.parse(dataGrid.dataGrid('getRowData', id).rowData);
+		}
+		initSelectTag();
+	},
+	onSelectAll: function(ids, isSelect){
+		if ('\${parameter.checkbox}' == 'true'){
+			for (var i=0; i<ids.length; i++){
+				if(isSelect){
+					selectData[ids[i]] = JSON.parse(dataGrid.dataGrid('getRowData', ids[i]).rowData);
+				}else{
+					delete selectData[ids[i]];
+				}
+			}
+		}
+		initSelectTag();
+	},
+	ondblClickRow: function(id, rownum, colnum, event){
+		if ('\${parameter.checkbox}' != 'true'){
+			js.layer.$('#' + window.name).closest('.layui-layer')
+				.find(".layui-layer-btn0").trigger("click");
+		}
+		initSelectTag();
+	}
+});
+function initSelectTag(){
+	selectNum = 0;
+	var html = [];
+	$.each(selectData, function(key, value){
+		selectNum ++;
+		html.push('<span class="tag" id="'+key+'_tags-input"><span>'+(value.${firstColumnName}||value.id)+' </span>'
+			+ '<a href="#" onclick="removeSelectTag(\''+key+'\');" title="\${text("取消选择")}">x</a></span>');
+	});
+	html.unshift('<div class="title">\${text("当前已选择 {0\} 项", "<span id=\"selectNum\">'+selectNum+'</span>")}：</div>');
+	$('#selectData').empty().append(html.join(''));
+}
+function removeSelectTag(key){
+	delete selectData[key];
+	dataGrid.dataGrid('resetSelection', key);
+	$('#selectNum').html(--selectNum);
+	$('#'+key+'_tags-input').remove();
+}
+function getSelectData(){
+	return selectData;
+}
+</script>
