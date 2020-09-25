@@ -16,17 +16,17 @@
 		</category>
 		<category value="crud_cloud" label="单表/主子表 （增删改查 Cloud）">
 			<template>crud/mapper.xml</template>
-			<template>cloud/entity.xml</template>
+			<template>crud_cloud/entity.xml</template>
 			<template>crud/dao.xml</template>
-			<template>cloud/api.xml</template>
-			<template>cloud/client.xml</template>
-			<template>cloud/service.xml</template>
+			<template>crud_cloud/api.xml</template>
+			<template>crud_cloud/client.xml</template>
+			<template>crud_cloud/service.xml</template>
 			<template>crud/controller.xml</template>
 			<template>crud/viewList.xml</template>
 			<template>crud/viewForm.xml</template>
 			<childTable>
 				<template>crud/mapper.xml</template>
-				<template>cloud/entity.xml</template>
+				<template>crud_cloud/entity.xml</template>
 				<template>crud/dao.xml</template>
 			</childTable>
 		</category>
@@ -132,14 +132,39 @@
 	<!-- 模块生成模板分类 -->
 	<moduleTplCategory>
 		<category value="module" label="生成模块代码">
-			<template>module/pom.xml</template>
-			<template>module/db/erm.xml</template>
 			<template>module/bin/deploy.bat.xml</template>
+			<template>module/bin/deploy.sh.xml</template>
 			<template>module/bin/package.bat.xml</template>
+			<template>module/bin/package.sh.xml</template>
+			<template>module/db/erm.xml</template>
 			<template>module/src/main/java/package.xml</template>
-			<template>module/src/main/resources/db/versions.xml</template>
 			<template>module/src/main/resources/config/jeesite.xml</template>
+			<template>module/src/main/resources/db/versions.xml</template>
 			<template>module/src/main/resources/static/static.xml</template>
+			<template>module/pom.xml</template>
+		</category>
+		<category value="module_cloud" label="生成微服务模块代码（Cloud）">
+			<template>module_cloud/client/bin/deploy.bat.xml</template>
+			<template>module_cloud/client/bin/deploy.sh.xml</template>
+			<template>module_cloud/client/bin/package.bat.xml</template>
+			<template>module_cloud/client/bin/package.sh.xml</template>
+			<template>module_cloud/client/src/main/java/package.xml</template>
+			<template>module_cloud/client/pom.xml</template>
+			<template>module_cloud/web/bin/docker-bulid.bat.xml</template>
+			<template>module_cloud/web/bin/docker-bulid.sh.xml</template>
+			<template>module_cloud/web/bin/package.bat.xml</template>
+			<template>module_cloud/web/bin/package.sh.xml</template>
+			<template>module_cloud/web/bin/run-tomcat.bat.xml</template>
+			<template>module_cloud/web/bin/run-tomcat.sh.xml</template>
+			<template>module_cloud/web/bin/run-web.bat.xml</template>
+			<template>module_cloud/web/bin/run-web.sh.xml</template>
+			<template>module_cloud/web/db/erm.xml</template>
+			<template>module_cloud/web/src/main/java/package.xml</template>
+			<template>module_cloud/web/src/main/java/startClass.xml</template>
+			<template>module_cloud/web/src/main/resources/config/bootstrap.xml</template>
+			<template>module_cloud/web/src/main/resources/config/logback-spring.xml</template>
+			<template>module_cloud/web/src/main/resources/static/static.xml</template>
+			<template>module_cloud/web/pom.xml</template>
 		</category>
 	</moduleTplCategory>
 </config>

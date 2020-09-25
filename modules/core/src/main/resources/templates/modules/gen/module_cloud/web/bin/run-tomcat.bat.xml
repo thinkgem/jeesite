@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<template>
+	<name>run-tomcat</name>
+	<filePath>${module.moduleCode}/${module.moduleCode}/bin</filePath>
+	<fileName>run-tomcat.bat</fileName>
+	<charset>GBK</charset>
+	<content><![CDATA[@echo off
+rem /**
+rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+rem  *
+rem  * Author: ThinkGem@163.com
+rem  */
+echo.
+echo [信息] 使用 Spring Boot Tomcat 运行 Web 工程。
+echo.
+
+%~d0
+cd %~dp0
+
+cd ..
+title %cd%
+set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m"
+call mvn clean spring-boot:run -Dmaven.test.skip=true
+
+pause]]>
+	</content>
+</template>
