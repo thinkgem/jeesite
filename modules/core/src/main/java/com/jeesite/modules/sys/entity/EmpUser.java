@@ -107,7 +107,7 @@ public class EmpUser extends User {
 		@ExcelField(title="最后登录", attrName="lastLoginDate", align=Align.CENTER, words=20, sort=900, type=ExcelField.Type.EXPORT),
 	})
 	public Employee getEmployee(){
-		Employee employee = (Employee)super.getRefObj();
+		Employee employee = super.getRefObj();
 		if (employee == null){
 			employee = new Employee(getRefCode());
 			super.setRefObj(employee);

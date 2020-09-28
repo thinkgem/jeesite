@@ -54,7 +54,7 @@ public class EmpUtils {
 	 */
 	public static Employee get(User user){
 		if (user != null && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
-			return (Employee)user.getRefObj();
+			return user.getRefObj();
 		}
 		return null;
 	}
