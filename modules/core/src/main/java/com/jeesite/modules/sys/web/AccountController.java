@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
@@ -145,13 +146,17 @@ public class AccountController extends BaseController{
 		if (s != null) {
 			return s;
 		}
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			user.setPassword(DesUtils.decode(user.getPassword(), secretKey));
+		}
 		// 更新为新密码
 		try{
 			userService.updatePassword(userCode, user.getPassword());
 		}catch(ServiceException se){
 			return renderResult(Global.FALSE, se.getMessage());
 		}
-		return renderResult(Global.TRUE, text("恭喜你，您的账号 {0} 密码修改成功！", user.getUserCode()));
+		return renderResult(Global.TRUE, text("恭喜你，您的账号 {0} 密码找回成功！", user.getLoginCode()));
 	}
 
 	/**
@@ -299,6 +304,14 @@ public class AccountController extends BaseController{
 			return renderResult(Global.FALSE, text("请重新获取保密问题！"));
 		}
 		
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			user.setPwdQuestionAnswer(DesUtils.decode(user.getPwdQuestionAnswer(), secretKey));
+			user.setPwdQuestionAnswer2(DesUtils.decode(user.getPwdQuestionAnswer2(), secretKey));
+			user.setPwdQuestionAnswer3(DesUtils.decode(user.getPwdQuestionAnswer3(), secretKey));
+			user.setPassword(DesUtils.decode(user.getPassword(), secretKey));
+		}
+		
 		// 验证三个密保问题是否正确。
 		User u = UserUtils.getByLoginCode(user.getLoginCode());
 		if (!(u != null && loginCode.equals(user.getLoginCode())
@@ -318,8 +331,8 @@ public class AccountController extends BaseController{
 		// 更新密码后，清理缓存
 		UserUtils.removeCache("fpUserCode");
 		UserUtils.removeCache("fpLoginCode");
-		
-		return renderResult(Global.TRUE, text("验证通过"));
+
+		return renderResult(Global.TRUE, text("恭喜你，您的账号 {0} 密码找回成功！", user.getLoginCode()));
 	}
 	
 	/**
@@ -466,6 +479,10 @@ public class AccountController extends BaseController{
 		}
 		u.setLoginCode(loginCode);
 		u.setUserName(userName);
+		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
+		if (StringUtils.isNotBlank(secretKey)){
+			user.setPassword(DesUtils.decode(user.getPassword(), secretKey));
+		}
 		u.setPassword(user.getPassword());
 		u.setEmail(email);
 		u.setMobile(mobile);
@@ -483,7 +500,7 @@ public class AccountController extends BaseController{
 		UserUtils.removeCache("regValidCode");
 		UserUtils.removeCache("regLastDate");
 	
-		return renderResult(Global.TRUE, text("恭喜你，您的账号 "+u.getLoginCode()+" 注册成功！"));
+		return renderResult(Global.TRUE, text("恭喜你，您的账号 {0} 注册成功！", u.getLoginCode()));
 	}
 	
 	/**

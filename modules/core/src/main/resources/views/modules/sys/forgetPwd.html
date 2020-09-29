@@ -41,24 +41,24 @@
 			</div>
 			<div class="form-group has-feedback fp-element fp-question">
 				<span class="fa fa-question-circle form-control-feedback"></span>
-				<input type="text" name="pwdQuestionAnswer" class="form-control required"
-					data-msg-required="请填写答案1." placeholder="答案1 " />
+				<input type="text" id="fp_pwdQuestionAnswer" name="pwdQuestionAnswer"
+					class="form-control required" data-msg-required="请填写答案1." placeholder="答案1 " />
 			</div>
 			<div class="form-group has-feedback fp-element fp-question">
 				问题2：<span id="fp_q2"></span>
 			</div>
 			<div class="form-group has-feedback fp-element fp-question">
 				<span class="fa fa-question-circle form-control-feedback"></span>
-				<input type="text" name="pwdQuestionAnswer2" class="form-control required"
-					data-msg-required="请填写答案2." placeholder="答案2" />
+				<input type="text" id="fp_pwdQuestionAnswer2" name="pwdQuestionAnswer2"
+					class="form-control required" data-msg-required="请填写答案2." placeholder="答案2" />
 			</div>
 			<div class="form-group has-feedback fp-element fp-question">
 				问题3：<span id="fp_q3"></span>
 			</div>
 			<div class="form-group has-feedback fp-element fp-question">
 				<span class="fa fa-question-circle form-control-feedback"></span>
-				<input type="text" name="pwdQuestionAnswer3" class="form-control required"
-					data-msg-required="请填写答案3." placeholder="答案3" />
+				<input type="text" id="fp_pwdQuestionAnswer3" name="pwdQuestionAnswer3"
+					class="form-control required" data-msg-required="请填写答案3." placeholder="答案3" />
 			</div>
 			<div class="form-group has-feedback clearfix">
 				<strong>设置新密码：</strong>
@@ -93,11 +93,11 @@
 	</div>
 	<div class="login-copyright">
 		&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a
-			href="http://jeesite.com">JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
+			id="loginKey" data-key="${@Global.getConfig('shiro.loginSubmit.secretKey')}"
+			href="http://jeesite.com" >JeeSite ${@Global.getProperty('jeesiteVersion')}</a>
 	</div>
 </div>
 <% } %>
-<script>var secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';</script>
-<script src="${ctxStatic}/jquery-toastr/2.1/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/common/des.js?${_version}"></script>
+<script src="${ctxStatic}/jquery-toastr/2.1/toastr.min.js?${_version}"></script>
 <script src="${ctxStatic}/modules/sys/forgetPwd.js?${_version}"></script>

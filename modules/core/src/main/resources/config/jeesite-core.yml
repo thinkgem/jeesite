@@ -371,7 +371,7 @@ shiro:
 #  accessControlAllowOrigin: http://demo.jeesite.com
 #  accessControlAllowOrigin: '*'
 
-  # 允许跨域访问时 CORS，可以使用的方法和响应头
+  # 允许跨域访问时 CORS，可以使用的方法和标头
 #  accessControlAllowMethods: GET, POST, OPTIONS
 #  accessControlAllowHeaders: Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With
 

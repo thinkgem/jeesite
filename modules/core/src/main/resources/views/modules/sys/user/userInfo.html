@@ -311,16 +311,22 @@ $('#sex input').on('ifCreated ifChecked', function(){
 $("#newPassword").strength();
 $("#inputFormPwd").validate({
 	submitHandler: function(form){
-		var oldPassword = $('#oldPassword').val(),
-			newPassword = $('#newPassword').val(),
-			confirmNewPassword = $('#confirmNewPassword').val(),
-			secretKey = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';
-		if (secretKey != ''){
-			$('#oldPassword').val(DesUtils.encode(oldPassword, secretKey));
-			$('#newPassword').val(DesUtils.encode(newPassword, secretKey));
-			$('#confirmNewPassword').val(DesUtils.encode(confirmNewPassword, secretKey));
+		var $form = $(form),
+			action = $form.attr('action'),
+			data = $form.serializeArray(),
+			key = '${@Global.getConfig("shiro.loginSubmit.secretKey")}';
+		if (key != ''){
+			for (var i=0, l=data.length; i<l; i++){
+				if (data[i].name == 'oldPassword'){
+					data[i].value = DesUtils.encode($('#oldPassword').val(), key);
+				}else if (data[i].name == 'newPassword'){
+					data[i].value = DesUtils.encode($('#newPassword').val(), key);
+				}else if (data[i].name == 'confirmNewPassword'){
+					data[i].value = DesUtils.encode($('#confirmNewPassword').val(), key);
+				}
+			}
 		}
-		js.ajaxSubmitForm($(form), function(data){
+		js.ajaxSubmit(action, data, function(data, status, xhr){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				if ('${parameter.url}'!=''){
@@ -330,9 +336,6 @@ $("#inputFormPwd").validate({
 				}
 			}
 		}, "json");
-		$('#oldPassword').val(oldPassword);
-		$('#newPassword').val(newPassword);
-		$('#confirmNewPassword').val(confirmNewPassword);
     }
 });
 // 密保问题

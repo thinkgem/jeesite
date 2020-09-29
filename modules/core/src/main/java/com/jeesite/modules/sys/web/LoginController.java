@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -46,7 +45,7 @@ public class LoginController extends BaseController{
 	/**
 	 * 登录页面
 	 */
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@RequestMapping(value = "login")
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
 		// 地址中如果包含JSESSIONID，则跳转一次，去掉JSESSIONID信息。
 		if (StringUtils.containsIgnoreCase(request.getRequestURI(), ";JSESSIONID=")){

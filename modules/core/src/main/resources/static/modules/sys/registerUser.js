@@ -67,7 +67,18 @@ $(function(){
 	$('#registerForm').validate({
 		ignore: ":hidden",
 	    submitHandler: function(form) {
-			js.ajaxSubmitForm($(form), function(data){
+	    	var $form = $(form),
+				action = $form.attr('action'),
+				data = $form.serializeArray(),
+				key = window.secretKey||$('#loginKey').data('key');
+			if (key != ''){
+				for (var i=0, l=data.length; i<l; i++){
+					if (data[i].name == 'password'){
+						data[i].value = DesUtils.encode($('#reg_password').val(), key);
+					}
+				}
+			}
+			js.ajaxSubmit(action, data, function(data, status, xhr){
 				if (data.result == "true"){
 					alert(data.message);
 					location = ctx + '/login';
