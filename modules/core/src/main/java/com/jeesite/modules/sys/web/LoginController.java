@@ -189,7 +189,7 @@ public class LoginController extends BaseController{
 			// 设置共享SessionId的Cookie值（第三方系统使用）
 			String cookieName = Global.getProperty("session.shareSessionIdCookieName");
 			if (StringUtils.isNotBlank(cookieName)){
-				CookieUtils.setCookie((HttpServletResponse)response, cookieName, (String)session.getId());
+				CookieUtils.setCookie(response, cookieName, (String)session.getId(), "/");
 			}
 			// 如果登录设置了语言，则切换语言
 			if (loginInfo.getParam("lang") != null){
