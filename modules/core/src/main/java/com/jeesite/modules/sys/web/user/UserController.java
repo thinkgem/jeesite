@@ -82,7 +82,7 @@ public class UserController extends BaseController {
 			op = "base";
 		}
 		model.addAttribute("op", op);
-		model.addAttribute("user", user.getCurrentUser());
+		model.addAttribute("user", UserUtils.getUser());
 		return "modules/sys/user/userInfo";
 	}
 
