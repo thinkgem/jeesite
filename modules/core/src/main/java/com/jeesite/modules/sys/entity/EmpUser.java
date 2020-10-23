@@ -36,7 +36,7 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 				@Column(name="emp_no", 		attrName="empNo", 		label="员工工号"),
 				@Column(name="emp_name", 	attrName="empName", 	label="员工姓名", queryType=QueryType.LIKE),
 				@Column(name="emp_name_en", attrName="empNameEn", 	label="英文名", queryType=QueryType.LIKE),
-			}),
+		}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Office.class, alias="o", 
 			on="o.office_code=e.office_code", attrName="employee.office",
 			columns={
@@ -52,7 +52,7 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 					@Column(name="address", 	label="联系地址"),
 					@Column(name="zip_code", 	label="邮政编码"),
 					@Column(name="email", 		label="邮箱"),
-			}),
+		}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Company.class, alias="c", 
 			on="c.company_code=e.company_code", attrName="employee.company",
 			columns={
@@ -62,7 +62,7 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 					@Column(name="view_code", 	label="公司代码"),
 					@Column(name="company_name", label="公司名称", isQuery=false),
 					@Column(name="full_name", 	label="公司全称"),
-			}),
+		}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="ar",
 			on="ar.area_code = c.area_code", attrName="employee.company.area",
 			columns={
@@ -70,6 +70,10 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 					@Column(name="area_name", 	label="区域名称", isQuery=false),
 					@Column(name="area_type", 	label="区域类型"),
 		}),
+//		@JoinTable(type=Type.LEFT_JOIN, entity=User.class, attrName="this", alias="u",
+//			on="u.user_code = a.create_by", columns={
+//				@Column(name="user_name", attrName="createByName", label="用户名称", isQuery=false),
+//		}),
 	},
 //	extFromKeys="dsfOfficeFrom, dsfCompanyFrom",
 //	extWhereKeys="dsfOfficeWhere, dsfCompanyWhere",
