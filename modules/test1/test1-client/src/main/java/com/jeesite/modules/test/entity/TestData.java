@@ -67,6 +67,12 @@ public class TestData extends DataEntity<TestData> {
 	private String testAreaCode;		// 区域选择
 	private String testAreaName;		// 区域名称
 	private List<TestDataChild> testDataChildList = ListUtils.newArrayList();		// 子表列表
+
+	// 表单图片上传和附件上传的接受参数
+	private String testData_image;
+	private String testData_image__del;
+	private String testData_file;
+	private String testData_file__del;
 	
 	public TestData() {
 		this(null);
@@ -222,4 +228,35 @@ public class TestData extends DataEntity<TestData> {
 		this.testDataChildList = testDataChildList;
 	}
 	
+	public String getTestData_image() {
+		return testData_image;
+	}
+
+	public void setTestData_image(String testData_image) {
+		this.testData_image = testData_image;
+	}
+
+	public String getTestData_image__del() {
+		return testData_image__del;
+	}
+
+	public void setTestData_image__del(String testData_image__del) {
+		this.testData_image__del = testData_image__del;
+	}
+
+	public String getTestData_file() {
+		return testData_file;
+	}
+
+	public void setTestData_file(String testData_file) {
+		this.testData_file = testData_file;
+	}
+
+	public String getTestData_file__del() {
+		return testData_file__del;
+	}
+
+	public void setTestData_file__del(String testData_file__del) {
+		this.testData_file__del = testData_file__del;
+	}
 }
