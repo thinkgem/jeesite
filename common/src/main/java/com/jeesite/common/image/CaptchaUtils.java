@@ -31,7 +31,7 @@ import org.patchca.word.RandomWordFactory;
 public class CaptchaUtils {
 
 	private static Random random = new Random();
-	private static ConfigurableCaptchaService ccs;
+	private volatile static ConfigurableCaptchaService ccs;
 	private static WobbleRippleFilterFactory wrff; 	// 摆波纹
 	private static DoubleRippleFilterFactory doff; 	// 双波纹
 	private static CurvesRippleFilterFactory crff; 	// 曲线波纹
