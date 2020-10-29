@@ -9,15 +9,15 @@
 	</a><%-->*/%>
 	<div class="navbar-custom-menu">
 		<ul class="nav navbar-nav">
-			<% include('topMenuCorp.html'){} %>
+			<% include('/include/sysIndex/topMenuCorp.html'){} %>
 			<li><a href="javascript:" id="fullScreen" title="${text('全屏')}" data-placement="bottom" data-container="body"><i class="fa fa-arrows-alt"></i></a></li>
 			<li><a href="javascript:" id="switchSkin" title="${text('切换主题')}" style="margin-top:-1px;" data-placement="bottom" data-container="body" data-layer-width="560" data-layer-height="290"><i class="fa fa-dashboard"></i></a></li>
-			<% include('topMenuLang.html'){} %>
-			<% include('topMenuOnline.html'){} %>
-			<% include('topMenuMsg.html'){} %>
-			<% //include('topMenuNotify.html'){} %>
-			<% //include('topMenuTask.html'){} %>
-			<% include('topMenuUser.html'){} %>
+			<% include('/include/sysIndex/topMenuLang.html'){} %>
+			<% include('/include/sysIndex/topMenuOnline.html'){} %>
+			<% include('/include/sysIndex/topMenuMsg.html'){} %>
+			<% //include('/include/sysIndex/topMenuNotify.html'){} %>
+			<% //include('/include/sysIndex/topMenuTask.html'){} %>
+			<% include('/include/sysIndex/topMenuUser.html'){} %>
 		</ul>
 	</div>
 	<% if(@Global.getConfig('sys.index.menuStyle', '1') == '2'){ %>
