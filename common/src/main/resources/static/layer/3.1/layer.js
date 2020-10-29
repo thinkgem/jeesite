@@ -307,7 +307,7 @@ Class.pt.creat = function(){
 //      	+ config.content[0] + '"></iframe>';
       // 2017-5-13 ThinkGem 支持post方式提交iframe
       config.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'
-			+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times 
+			+ doms[4] + times +'" name="'+ doms[4] +''+ times 
 			+ '" onload="this.className=\'\';" class="layui-layer-load" frameborder="0"></iframe><form id="'
 			+ doms[4] + '-form' + times+'" action="' + config.content[0] + '" method="post" target="'
 			+ doms[4] + '' + times +'"></form>';
@@ -357,7 +357,12 @@ Class.pt.creat = function(){
   // 2017-5-13 ThinkGem 支持post方式提交iframe
   if (config.type == 2){
 	if (config.method == 'GET' || config.method == 'get'){
-		that.layero.find('iframe').attr('src', content[0]);
+		var iframeSrc = content[0] || '', formData = config.contentFormData;
+		for(var key in formData || {}){
+			iframeSrc += iframeSrc.indexOf('?') == -1 ? '?' : '&';
+			iframeSrc += key + '=' + formData[key];
+		}
+		that.layero.find('#' + doms[4] + times).attr('src', iframeSrc);
 	}else{
 		var form = that.layero.find('#' + doms[4] + '-form' + times), formData = config.contentFormData;
 		for(var key in formData || {}){
