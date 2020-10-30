@@ -107,17 +107,7 @@ var setting = {
 			tree.checkNode(treeNode, !treeNode.checked, true, true);
 			return false;
 		},
-		onCheck: function (event, treeId, treeNode){
-			var tid = treeNode.tId;
-			if(!treeNode.checked){
-				$(".checkall[value="+treeId+"]").each(function(){
-					if(this.checked){
-					    $(this).removeAttr("checked").iCheck('update');
-					}
-					return false;
-				}); 
-			}
-		}
+		onCheck: function (event, treeId, treeNode){ }
 	}
 },
 moduleCodes = '${toJson(@ModuleUtils.getEnableModuleCodes())}';
