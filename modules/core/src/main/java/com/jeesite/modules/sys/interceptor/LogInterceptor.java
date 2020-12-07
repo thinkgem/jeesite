@@ -8,12 +8,15 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.MDC;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.ByteUtils;
 import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.service.BaseService;
@@ -27,12 +30,16 @@ import com.jeesite.modules.sys.utils.UserUtils;
  */
 public class LogInterceptor extends BaseService implements HandlerInterceptor {
 
+	private static final String TRACE_ID = "TRACE_ID";
 	private static final ThreadLocal<Long> startTimeThreadLocal =
 			new NamedThreadLocal<Long>("LogInterceptor StartTime");
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
 			Object handler) throws Exception {
+		if (StringUtils.isBlank(MDC.get(TRACE_ID))) {
+            MDC.put(TRACE_ID, IdGen.nextId());
+        }
 		long beginTime = System.currentTimeMillis();// 1、开始时间  
 		startTimeThreadLocal.set(beginTime);		// 线程绑定变量（该数据只有当前请求的线程可见）  
 		if (logger.isDebugEnabled()){
@@ -77,7 +84,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	        		DateUtils.formatDate(endTime, "hh:mm:ss.SSS"), TimeUtils.formatDateAgo(executeTime), request.getRequestURI(), 
 					ByteUtils.formatByteSize(runtime.totalMemory()), ByteUtils.formatByteSize(runtime.totalMemory()-runtime.freeMemory())); 
 		}
-		
+		MDC.remove(TRACE_ID);
 	}
 
 }

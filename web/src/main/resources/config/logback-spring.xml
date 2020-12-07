@@ -26,7 +26,7 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] - %m%n%wEx</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] [%X{TRACE_ID}] - %m%n%wEx</pattern>
 		</encoder>
 		<!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>ERROR</level>
@@ -44,7 +44,7 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] - %m%n%wEx</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] [%X{TRACE_ID}] - %m%n%wEx</pattern>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>ERROR</level>
