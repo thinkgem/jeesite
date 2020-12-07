@@ -3,6 +3,7 @@
  */
 package com.jeesite.common.idgen;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.UUID;
 
@@ -79,7 +80,7 @@ public class IdGen {
 				prefix = str.substring(0, lastNotNumIndex);
 				prevNum = str.substring(lastNotNumIndex, str.length());
 			}
-			String nextNum = String.valueOf(Long.valueOf(prevNum) + 1);
+			String nextNum = new BigDecimal(prevNum).add(BigDecimal.ONE).toString();
 			str = prefix + StringUtils.leftPad(nextNum, prevNum.length(), "0");
 			return str;
 		}
