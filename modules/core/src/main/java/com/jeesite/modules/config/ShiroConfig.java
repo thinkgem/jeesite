@@ -45,7 +45,7 @@ import com.jeesite.common.shiro.web.WebSecurityManager;
  * @version 2018-7-11
  */
 @SuppressWarnings("deprecation")
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ShiroConfig {
 	
 	/**

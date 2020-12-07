@@ -17,7 +17,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
  * @author ThinkGem
  * @version 2017年11月30日
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name="state.enabled", havingValue="true", matchIfMissing=true)
 public class DruidStatConfig {
 

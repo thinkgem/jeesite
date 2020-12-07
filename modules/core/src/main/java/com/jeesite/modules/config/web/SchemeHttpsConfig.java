@@ -25,7 +25,7 @@ import org.springframework.core.Ordered;
  * @author ThinkGem
  * @version 2020年1月21日
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name="server.schemeHttps", havingValue="true", matchIfMissing=false)
 public class SchemeHttpsConfig {
 

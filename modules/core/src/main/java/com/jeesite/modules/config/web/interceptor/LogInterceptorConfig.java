@@ -19,9 +19,9 @@ import com.jeesite.modules.sys.interceptor.LogInterceptor;
  * @author ThinkGem
  * @version 2018年1月10日
  */
-@Configuration
-@EnableWebMvc
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name="web.interceptor.log.enabled", havingValue="true", matchIfMissing=true)
+@EnableWebMvc
 public class LogInterceptorConfig implements WebMvcConfigurer {
 
 	@Override
