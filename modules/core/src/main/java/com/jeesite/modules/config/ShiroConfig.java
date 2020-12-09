@@ -13,6 +13,7 @@ import org.apache.shiro.cas.CasSubjectFactory;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.web.filter.InvalidRequestFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -115,6 +116,15 @@ public class ShiroConfig {
 	private UserFilter shiroUserFilter() {
 		return new UserFilter();
 	}
+	
+	/**
+	 * 非法请求过滤器
+	 */
+	private InvalidRequestFilter invalidRequestFilter() {
+		InvalidRequestFilter bean = new InvalidRequestFilter();
+		bean.setBlockNonAscii(false);
+		return bean;
+	}
 
 	/**
 	 * Shiro认证过滤器
@@ -134,6 +144,7 @@ public class ShiroConfig {
 		filters.put("perms", shiroPermsFilter());
 		filters.put("roles", shiroRolesFilter());
 		filters.put("user", shiroUserFilter());
+		filters.put("invalidRequest", invalidRequestFilter());
 		FilterChainDefinitionMap chains = new FilterChainDefinitionMap();
 		chains.setFilterChainDefinitions(Global.getProperty("shiro.filterChainDefinitions"));
 		chains.setDefaultFilterChainDefinitions(Global.getProperty("shiro.defaultFilterChainDefinitions"));
