@@ -9,12 +9,11 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  */
 package ${packageName}.${moduleName}.web${isNotEmpty(subModuleName)?'.'+subModuleName:''};
-<% if(table.isTreeEntity){ %>
 
+<% if (table.isTreeEntity){ %>
 import java.util.List;
 import java.util.Map;
 <% }else{ %>
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 <% } %>
@@ -45,6 +44,9 @@ import com.jeesite.common.codec.EncodeUtils;
 <% } %>
 import com.jeesite.common.web.BaseController;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
+<% for (child in table.childList){ %>
+import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)};
+<% } %>
 import ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Service;
 
 /**
@@ -117,6 +119,20 @@ public class ${ClassName}Controller extends BaseController {
 	public Page<${ClassName}> listData(${ClassName} ${className}, HttpServletRequest request, HttpServletResponse response) {
 		${className}.setPage(new Page<>(request, response));
 		Page<${ClassName}> page = ${className}Service.findPage(${className});
+		return page;
+	}
+	<% } %>
+	<% for (child in table.childList){ %>
+	
+	/**
+	 * 查询子表数据
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = "${@StringUtils.uncap(child.className)}ListData")
+	@ResponseBody
+	public Page<${@StringUtils.cap(child.className)}> subListData(${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)}, HttpServletRequest request, HttpServletResponse response) {
+		${@StringUtils.uncap(child.className)}.setPage(new Page<>(request, response));
+		Page<${@StringUtils.cap(child.className)}> page = ${className}Service.findSubPage(${@StringUtils.uncap(child.className)});
 		return page;
 	}
 	<% } %>
@@ -287,12 +303,12 @@ public class ${ClassName}Controller extends BaseController {
 	 */
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "${className}Select")
-	public String empUserSelect(${ClassName} ${className}, String selectData, Model model) {
+	public String ${className}Select(${ClassName} ${className}, String selectData, Model model) {
 		String selectDataJson = EncodeUtils.decodeUrl(selectData);
 		if (selectDataJson != null && JSONValidator.from(selectDataJson).validate()){
 			model.addAttribute("selectData", selectDataJson);
 		}
-		model.addAttribute("${ClassName}", ${className});
+		model.addAttribute("${className}", ${className});
 		return "${lastPackageName}/${viewPrefix}Select";
 	}
 	<% } %>

@@ -10,14 +10,18 @@
  */
 package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};
 
+<% if (table.isTreeEntity){ %>
 import java.util.List;
+<% } %>
 
 <% if (table.childList.~size > 0){ %>
 import org.springframework.beans.factory.annotation.Autowired;
 <% } %>
 import org.springframework.stereotype.Service;
 
+<% if (!table.isTreeEntity){ %>
 import com.jeesite.common.entity.Page;
+<% } %>
 import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Query'}Service;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
@@ -82,6 +86,20 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 	@Override
 	public List<${ClassName}> findList(${ClassName} ${className}) {
 		return super.findList(${className});
+	}
+	<% } %>
+	<% for (child in table.childList){ %>
+	
+	/**
+	 * 查询子表分页数据
+	 * @param ${@StringUtils.uncap(child.className)}
+	 * @param ${@StringUtils.uncap(child.className)}.page 分页对象
+	 * @return
+	 */
+	public Page<${@StringUtils.cap(child.className)}> findSubPage(${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)}) {
+		Page<${@StringUtils.cap(child.className)}> page = ${@StringUtils.uncap(child.className)}.getPage();
+		page.setList(${@StringUtils.uncap(child.className)}Dao.findList(${@StringUtils.uncap(child.className)}));
+		return page;
 	}
 	<% } %>
 	
