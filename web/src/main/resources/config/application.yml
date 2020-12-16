@@ -26,9 +26,9 @@ server:
   tomcat:
     uri-encoding: UTF-8
     
-  # 将请求协议转换为 https
+  # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
   schemeHttps: false
-    
+  
 #======================================#
 #========== Database sttings ==========#
 #======================================#
