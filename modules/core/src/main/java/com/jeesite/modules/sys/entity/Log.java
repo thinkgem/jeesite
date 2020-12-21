@@ -36,6 +36,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="request_uri", 	attrName="requestUri", 		label="请求URI", queryType=QueryType.LIKE),
 		@Column(name="request_method", 	attrName="requestMethod", 	label="操作方式"),
 		@Column(name="request_params", 	attrName="requestParams", 	label="操作提交的数据", queryType=QueryType.LIKE),
+		@Column(name="diff_modify_data",attrName="diffModifyData", 	label="差异修改数据", queryType=QueryType.LIKE),
 		@Column(name="biz_key", 		attrName="bizKey", 			label="业务主键"),
 		@Column(name="biz_type", 		attrName="bizType", 		label="业务类型"),
 		@Column(name="remote_addr", 	attrName="remoteAddr", 		label="操作IP地址"),
@@ -63,6 +64,7 @@ public class Log extends DataEntity<Log> {
 	private String requestUri;		// 请求URI
 	private String requestMethod;	// 操作方式
 	private String requestParams;	// 操作提交的数据
+	private String diffModifyData;	// 差异修改数据
 	private String bizKey;			// 业务主键
 	private String bizType;			// 业务类型
 	private String remoteAddr;		// 操作IP地址
@@ -130,6 +132,14 @@ public class Log extends DataEntity<Log> {
 		this.requestParams = requestParams;
 	}
 	
+	public String getDiffModifyData() {
+		return diffModifyData;
+	}
+
+	public void setDiffModifyData(String diffModifyData) {
+		this.diffModifyData = diffModifyData;
+	}
+
 	@Length(min=0, max=64, message="业务主键长度不能超过 64 个字符")
 	public String getBizKey() {
 		return bizKey;
@@ -220,6 +230,9 @@ public class Log extends DataEntity<Log> {
 	}
 	
 	public String getExecuteTimeFormat(){
+		if (executeTime == null) {
+			executeTime = 0L;
+		}
 		return TimeUtils.formatDateAgo(executeTime);
 	}
 
