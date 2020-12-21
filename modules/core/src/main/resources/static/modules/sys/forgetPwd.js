@@ -71,6 +71,10 @@ $(function(){
 			}
 		});
 	});
+
+	if ($.fn.strength){
+		$("#fp_password").strength();
+	}
 	
 	$('#forgetForm').validate({
 		ignore: ":hidden",

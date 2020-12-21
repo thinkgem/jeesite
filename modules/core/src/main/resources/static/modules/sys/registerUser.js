@@ -64,6 +64,10 @@ $(function(){
 		});
 	});
 	
+	if ($.fn.strength){
+		$("#reg_password").strength();
+	}
+	
 	$('#registerForm').validate({
 		ignore: ":hidden",
 	    submitHandler: function(form) {
