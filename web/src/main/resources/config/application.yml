@@ -25,6 +25,7 @@ server:
     context-path: /js
   tomcat:
     uri-encoding: UTF-8
+    #maxHttpFormPostSize: -1
     
   # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
   schemeHttps: false
