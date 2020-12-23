@@ -327,13 +327,16 @@ $("#inputFormPwd").validate({
 			}
 		}
 		js.ajaxSubmit(action, data, function(data, status, xhr){
-			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
-				if ('${parameter.url}'!=''){
-					location = '${ctxPath}${parameter.url}';
-				}else{
-					location = '${ctx}/sys/user/info?op=pwd';
-				}
+				js.alert(data.message, function(){
+					if ('${parameter.url}'!=''){
+						location = '${ctxPath}${parameter.url}';
+					}else{
+						location = '${ctx}/sys/user/info?op=pwd';
+					}
+				});
+			}else{
+				js.showMessage(data.message);
 			}
 		}, "json");
     }
