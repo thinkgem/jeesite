@@ -198,7 +198,7 @@
             if (!node[_disabled]) {
 
               // Click
-              if (type == _click) {
+              if (type == _click || type == 'touchend') {
                 if ($(event.target).is('a')) {
                   return;
                 }
