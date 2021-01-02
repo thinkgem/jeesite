@@ -85,6 +85,7 @@ $.extend($.jgrid,{
 		viewtitle: "View selected row"
 	},
 	col : {
+    	all: "全テーマ",
 	    caption: "\u5217\u3092\u8868\u793a\uff0f\u96a0\u3059",
 	    bSubmit: "\u9001\u4fe1",
 	    bCancel: "\u30ad\u30e3\u30f3\u30bb\u30eb"	

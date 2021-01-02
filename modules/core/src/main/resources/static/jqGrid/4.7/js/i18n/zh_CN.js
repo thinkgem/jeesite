@@ -91,6 +91,7 @@ $.extend($.jgrid,{
         viewtitle: "查看所选记录"
     },
     col : {
+    	all: "全选",
         caption: "选择列",
         bSubmit: "确定",
         bCancel: "取消"
