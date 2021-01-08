@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.persistence.interceptor;
 
@@ -110,6 +110,7 @@ public class PaginationInterceptor extends BaseInterceptor {
         builder.parameterMap(ms.getParameterMap());
         builder.resultMaps(ms.getResultMaps());
         builder.cache(ms.getCache());
+        builder.useCache(ms.isUseCache());
         return builder.build();
     }
 

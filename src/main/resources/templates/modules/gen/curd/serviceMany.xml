@@ -5,7 +5,7 @@
 	<fileName>${ClassName}Service.java</fileName>
 	<content><![CDATA[
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package ${packageName}.${moduleName}.service<#if subModuleName != "">.${subModuleName}</#if>;
 

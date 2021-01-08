@@ -3,29 +3,31 @@
 
 	<diskStore path="../temp/jeesite/ehcache" />
 
-	<!-- 默认缓存配置. -->
-	<defaultCache maxEntriesLocalHeap="100" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
-		overflowToDisk="true" maxEntriesLocalDisk="100000" />
+	<!-- 默认缓存配置. 自动失效：最后一次访问时间间隔300秒失效，若没有访问过自创建时间600秒失效。-->
+	<defaultCache maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+		overflowToDisk="true" statistics="true"/>
 	
 	<!-- 系统缓存 -->
-	<cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	<cache name="sysCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
 	
 	<!-- 用户缓存 -->
-	<cache name="userCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	<cache name="userCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
 	
+	<!-- 集团缓存 -->
+	<cache name="corpCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
+	
+	<!-- 内容管理模块缓存 -->
+	<cache name="cmsCache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true"/>
+    
 	<!-- 工作流模块缓存 -->
-	<cache name="actCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+	<cache name="actCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true" statistics="true"/>
 	
-	<!-- 内容管理模块缓存
-	<cache name="cmsCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/> -->
+    <!-- 简单页面缓存 -->
+    <cache name="pageCachingFilter" maxEntriesLocalHeap="1000" eternal="false" timeToIdleSeconds="120"
+    	timeToLiveSeconds="120" overflowToDisk="true" memoryStoreEvictionPolicy="LFU" statistics="true"/>
 	
 	<!-- 系统活动会话缓存 -->
-    <cache name="activeSessionsCache" maxEntriesLocalHeap="10000" overflowToDisk="true"
-           eternal="true" timeToLiveSeconds="0" timeToIdleSeconds="0"
-           diskPersistent="true" diskExpiryThreadIntervalSeconds="600"/>
-    
-    <!-- 简单页面缓存
-    <cache name="SimplePageCachingFilter" maxEntriesLocalHeap="100" eternal="false" overflowToDisk="true"
-    	timeToIdleSeconds="120" timeToLiveSeconds="120" memoryStoreEvictionPolicy="LFU"/> -->
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="10000" eternal="true" overflowToDisk="true"
+           diskPersistent="true" diskExpiryThreadIntervalSeconds="600" statistics="true"/>
     	
 </ehcache>

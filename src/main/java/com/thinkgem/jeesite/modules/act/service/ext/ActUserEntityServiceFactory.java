@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.modules.act.service.ext;
 
@@ -24,7 +24,7 @@ public class ActUserEntityServiceFactory implements SessionFactory {
 	}
 
 	public Session openSession() {
-		// 返回自定义的GroupEntityManager实例
+		// 返回自定义的UserEntityManager实例
 		return actUserEntityService;
 	}
 

@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.persistence;
 
@@ -87,13 +87,24 @@ public class Page<T> {
 			CookieUtils.setCookie(response, "pageSize", size);
 			this.setPageSize(Integer.parseInt(size));
 		}else if (request.getParameter("repage")!=null){
-			no = CookieUtils.getCookie(request, "pageSize");
+			size = CookieUtils.getCookie(request, "pageSize");
 			if (StringUtils.isNumeric(size)){
 				this.setPageSize(Integer.parseInt(size));
 			}
 		}else if (defaultPageSize != -2){
 			this.pageSize = defaultPageSize;
 		}
+		// 设置页面分页函数
+        String funcName = request.getParameter("funcName");
+        if (StringUtils.isNotBlank(funcName)){
+            CookieUtils.setCookie(response, "funcName", funcName);
+            this.setFuncName(funcName);
+        }else if (request.getParameter("repage")!=null){
+            funcName = CookieUtils.getCookie(request, "funcName");
+            if (StringUtils.isNotBlank(funcName)){
+                this.setFuncName(funcName);
+            }
+        }
 		// 设置排序参数
 		String orderBy = request.getParameter("orderBy");
 		if (StringUtils.isNotBlank(orderBy)){
@@ -255,9 +266,9 @@ public class Page<T> {
 		}
 
 		sb.append("<li class=\"disabled controls\"><a href=\"javascript:\">当前 ");
-		sb.append("<input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+		sb.append("<input type=\"text\" value=\""+pageNo+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
 		sb.append(funcName+"(this.value,"+pageSize+",'"+funcParam+"');\" onclick=\"this.select();\"/> / ");
-		sb.append("<input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||this;var c=e.keyCode||e.which;if(c==13)");
+		sb.append("<input type=\"text\" value=\""+pageSize+"\" onkeypress=\"var e=window.event||event;var c=e.keyCode||e.which;if(c==13)");
 		sb.append(funcName+"("+pageNo+",this.value,'"+funcParam+"');\" onclick=\"this.select();\"/> 条，");
 		sb.append("共 " + count + " 条"+(message!=null?message:"")+"</a></li>\n");
 
@@ -434,8 +445,8 @@ public class Page<T> {
 	@JsonIgnore
 	public String getOrderBy() {
 		// SQL过滤，防止注入 
-		String reg = "(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|"
-					+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute)\\b)";
+		String reg = "(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml)([\\s]*?)\\()|"
+					+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when)\\b)";
 		Pattern sqlPattern = Pattern.compile(reg, Pattern.CASE_INSENSITIVE);
 		if (sqlPattern.matcher(orderBy).find()) {
 			return "";

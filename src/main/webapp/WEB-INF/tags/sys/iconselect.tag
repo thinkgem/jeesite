@@ -11,6 +11,7 @@
             buttons:{"确定":"ok", "清除":"clear", "关闭":true}, submit:function(v, h, f){
                 if (v=="ok"){
                 	var icon = h.find("iframe")[0].contentWindow.$("#icon").val();
+                	icon = $.trim(icon).substr(5);
                 	$("#${id}Icon").attr("class", "icon-"+icon);
 	                $("#${id}IconLabel").text(icon);
 	                $("#${id}").val(icon);

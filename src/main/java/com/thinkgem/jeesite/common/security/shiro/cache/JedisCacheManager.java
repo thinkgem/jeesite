@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
+ * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
 package com.thinkgem.jeesite.common.security.shiro.cache;
 
@@ -175,7 +175,10 @@ public class JedisCacheManager implements CacheManager {
 				jedis = JedisUtils.getResource();
 				Set<byte[]> set = jedis.hkeys(JedisUtils.getBytesKey(cacheKeyName));
 				for(byte[] key : set){
-					keys.add((K)key);
+					Object obj = (K)JedisUtils.getObjectKey(key);
+					if (obj != null){
+						keys.add((K) obj);
+					}
 	        	}
 				logger.debug("keys {} {} ", cacheKeyName, keys);
 				return keys;
@@ -196,7 +199,10 @@ public class JedisCacheManager implements CacheManager {
 				jedis = JedisUtils.getResource();
 				Collection<byte[]> col = jedis.hvals(JedisUtils.getBytesKey(cacheKeyName));
 				for(byte[] val : col){
-					vals.add((V)val);
+					Object obj = JedisUtils.toObject(val);
+					if (obj != null){
+						vals.add((V) obj);
+					}
 	        	}
 				logger.debug("values {} {} ", cacheKeyName, vals);
 				return vals;

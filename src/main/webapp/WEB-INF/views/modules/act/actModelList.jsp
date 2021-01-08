@@ -22,6 +22,7 @@
 			style="text-align:center;" class="form-search" onsubmit="loading('正在分类，请稍等...');"><br/>
 			<input id="categoryBoxId" type="hidden" name="id" value="" />
 			<select id="categoryBoxCategory" name="category">
+				<option value="">无分类</option>
 				<c:forEach items="${fns:getDictList('act_category')}" var="dict">
 					<option value="${dict.value}">${dict.label}</option>
 				</c:forEach>
@@ -46,7 +47,7 @@
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form>
 	<sys:message content="${message}"/>
-	<table class="table table-striped table-bordered table-condensed">
+	<table class="table table-striped table-bordered table-condensed table-nowrap">
 		<thead>
 			<tr>
 				<th>流程分类</th>
@@ -70,7 +71,7 @@
 					<td><fmt:formatDate value="${model.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td><fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td>
-						<a href="${pageContext.request.contextPath}/act/rest/service/editor?id=${model.id}" target="_blank">编辑</a>
+						<a href="${pageContext.request.contextPath}/act/process-editor/modeler.jsp?modelId=${model.id}" target="_blank">编辑</a>
 						<a href="${ctx}/act/model/deploy?id=${model.id}" onclick="return confirmx('确认要部署该模型吗？', this.href)">部署</a>
 						<a href="${ctx}/act/model/export?id=${model.id}" target="_blank">导出</a>
 	                    <a href="${ctx}/act/model/delete?id=${model.id}" onclick="return confirmx('确认要删除该模型吗？', this.href)">删除</a>
