@@ -32,14 +32,7 @@
 	</properties>
 
 	<dependencies>
-		
-		<!-- Spring Boot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
+
 		<!-- 服务发现 -->
 		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -109,7 +102,14 @@
 			<artifactId>jeesite-cloud-module-bpm-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
-		
+
+		<!-- Spring Boot Tomcat
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+
 		<!-- 自定义jar依赖包演示
 		<dependency>
 			<groupId>com.jeesite</groupId>
