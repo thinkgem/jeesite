@@ -59,6 +59,7 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 	@Transactional(readOnly=false)
 	public void save(Office office) {
 		if (office.getIsNewRecord()){
+			// 生成主键，并验证改主键是否存在，如存在则抛出验证信息
 			genIdAndValid(office, office.getViewCode());
 			// 当前新数据授权，如果用户有上级数据权限，则当前数据也有相应的数据权限
 			dataScopeService.insertIfParentExists(office, "Office");
