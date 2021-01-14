@@ -13,7 +13,6 @@ package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subM
 <% if (table.isTreeEntity){ %>
 import java.util.List;
 <% } %>
-
 <% if (table.childList.~size > 0){ %>
 import org.springframework.beans.factory.annotation.Autowired;
 <% } %>
