@@ -5,6 +5,7 @@ package com.jeesite.modules.sys.entity;
 
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
@@ -121,6 +122,12 @@ public class EmpUser extends User {
 	
 	public void setEmployee(Employee employee){
 		super.setRefObj(employee);
+	}
+	
+	@Override
+	@JsonIgnore
+	public <E> E getRefObj() {
+		return super.getRefObj();
 	}
 
 	public String[] getCodes() {
