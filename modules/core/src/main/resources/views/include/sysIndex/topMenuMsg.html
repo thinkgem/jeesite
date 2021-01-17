@@ -10,7 +10,10 @@
 			<ul class="menu" id="msgList"
 				data-mergeMsgLimit="${@Global.getConfig('sys.msg.mergeMsgLimit', '5')}"
 				data-mergeMsgTitle="${text('系统消息')}"
-				data-mergeMsgContent="${text('您有 {0\} 条新消息，由于消息太多，这里为您合并，请点击查看按钮看详情。')}"></ul>
+				data-mergeMsgContent="${text('您有 {0\} 条新消息，由于消息太多，这里为您合并，请点击查看按钮看详情。')}"
+				data-loginTimeout="${text('您当前的会话已超时，请重新登录。')}"
+				data-pullMsgPollingInterval="1000*60"
+				data-showMsgCloseTimeout="1000*60"></ul>
 		</li>
 		<li class="footer"><a href="javascript:" data-href="${ctx}/msg/list"
 			data-title="${text('查看全部消息')}" class="addTabPage">${text('查看全部消息')}</a></li>
