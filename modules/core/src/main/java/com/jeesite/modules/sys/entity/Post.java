@@ -12,7 +12,7 @@ import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 
-@Table(name="${_prefix}sys_post", alias="a", columns={
+@Table(name="${_prefix}sys_post", alias="a", label="岗位信息", columns={
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),

@@ -25,7 +25,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2017-03-19
  */
-@Table(name="${_prefix}sys_log", alias="a", columns={
+@Table(name="${_prefix}sys_log", alias="a", label="操作日志", columns={
 		@Column(includeEntity=BaseEntity.class),
 		@Column(name="id", 				attrName="id", 				label="编码", isPK=true),
 		@Column(name="log_type", 		attrName="logType", 		label="日志类型"),

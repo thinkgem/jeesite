@@ -25,7 +25,7 @@ import com.jeesite.common.utils.excel.fieldtype.OfficeType;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Table(name="${_prefix}sys_user", alias="a", columns={
+@Table(name="${_prefix}sys_user", alias="a", label="员工信息", columns={
 		@Column(includeEntity=User.class),
 	}, joinTable={
 		@JoinTable(type=Type.JOIN, entity=Employee.class, alias="e",

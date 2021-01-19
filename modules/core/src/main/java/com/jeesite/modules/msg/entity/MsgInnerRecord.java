@@ -20,7 +20,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Table(name="${_prefix}sys_msg_inner_record", alias="a", columns={
+@Table(name="${_prefix}sys_msg_inner_record", alias="a", label="消息发送记录", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
 		@Column(name="msg_inner_id", attrName="msgInnerId", label="所属消息"),
 		@Column(name="receive_user_code", attrName="receiveUserCode", label="接受者用户编码"),
