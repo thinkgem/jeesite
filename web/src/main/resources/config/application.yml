@@ -9,7 +9,7 @@ companyName: ThinkGem
 
 # 产品版本、版权年份
 productVersion: V4.2
-copyrightYear: 2020
+copyrightYear: 2021
 
 #是否演示模式
 demoMode: false
@@ -223,8 +223,11 @@ logging:
 # 分页相关
 #page:
 #
-#  # 分页默认大小
+#  # 默认每页显示的数据条数
 #  pageSize: 20
+#  
+#  # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
+#  maxPageSize: 999
 
 # 用户相关
 #user:
