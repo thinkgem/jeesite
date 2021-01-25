@@ -13,8 +13,8 @@
 		<form id="registerForm" action="${ctxPath}/account/saveRegByValidCode" method="post">
 			<div class="form-group has-feedback">
 				<select id="reg_validType" name="op" class="form-control">
-					<option value="email">使用电子邮箱注册账号</option>
-					<option value="mobile">使用手机号码注册账号</option>
+					<option value="email" class="${@Global.getConfigToBoolean('msg.email.enabled','true')?'':'hide'}">使用电子邮箱注册账号</option>
+					<option value="mobile" class="${@Global.getConfigToBoolean('msg.sms.enabled','true')?'':'hide'}">使用手机号码注册账号</option>
 				</select>
 			</div>
 			<% if(@Global.isUseCorpModel()){ %>
