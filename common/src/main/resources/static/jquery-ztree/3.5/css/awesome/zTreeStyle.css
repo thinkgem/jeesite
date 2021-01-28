@@ -60,12 +60,12 @@ ul.ztree.zTreeDragUL {margin:0;padding:0;position:absolute;width:auto;height:aut
 .ztree li span.button[class$="Page"] {width:15px;}
 .ztree li a span.button[style="width:0px;height:0px;"]:before,
 .ztree li a span.button[style^="background"]:before {content:"";}
-.ztree li span.button.roots_docu,
-.ztree li span.button.center_docu,
-.ztree li span.button.bottom_docu {position:relative;height:24px;padding:0;}
+.ztree li span.button.roots_docu, .ztree li span.button.center_docu, .ztree li span.button.bottom_docu {position:relative;height:24px;padding:0;}
+.ztree li span.button.roots_docu:before {content:"";display:block;width:18px;height:11px;border-left:1px dotted #aaa;position:absolute;top:10px;left:9px;}
+.ztree li span.button.roots_docu:after {content:"";display:block;width:9px;height:0;border-top:1px dotted #aaa;position:absolute;top:10px;left:9px;}
 .ztree li span.button.center_docu:before {content:"";display:block;width:0;height:25px;border-left:1px dotted #aaa;position:absolute;top:-3px;left:9px;}
 .ztree li span.button.center_docu:after {content:"";display:block;width:9px;height:0;border-top:1px dotted #aaa;position:absolute;top:10px;left:9px;}
-.ztree li span.button.bottom_docu:before {content:"";display:block;width:18px;height:11px;border-left:1px dotted #aaa;position:absolute;top:-2px;left:9px;}
+.ztree li span.button.bottom_docu:before {content:"";display:block;width:0;height:12px;border-left:1px dotted #aaa;position:absolute;top:-3px;left:9px;}
 .ztree li span.button.bottom_docu:after {content:"";display:block;width:9px;height:0;border-top:1px dotted #aaa;position:absolute;top:10px;left:9px;}
 .ztree li span.button:before {display:block;line-height:20px;text-align:left;padding-left:4px;color:#666;}
 .ztree li span.button.root_open:before,
