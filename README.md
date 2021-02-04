@@ -25,14 +25,14 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 ## 技术选型
 
 * 分布式系统套件版本：Spring Cloud Hoxton 2.2
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 1.3
-* 分布式统一配置中心：Spring Cloud Config / Nacos 1.3
-* 熔断隔离限流降级：Spring Cloud Hystrix / Sentinel 1.7
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 1.4
+* 分布式统一配置中心：Spring Cloud Config / Nacos 1.4
+* 熔断隔离限流降级：Spring Cloud Hystrix / Sentinel 1.8
 * 集成阿里云组件：Nacos 注册与配置、Sentinel 流量防卫兵
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud Ribbon
-* 分布式链路追踪：Spring Cloud Zipkin 2.19 (可选组件)
+* 分布式链路追踪：Spring Cloud Zipkin 2.23 (可选组件)
 * 分布式事务框架：Codingapi TX-LCN 5.0 (可选组件)
 * 工作流引擎框架：Flowable 6.5 (可选组件)
 
@@ -40,7 +40,7 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 
 * 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
-* 服务注册和配置中心 **Nacos** 版本 ：<http://127.0.0.1:8848/nacos/index.html>
+* 服务注册和配置中心 **Nacos** 版本（推荐） ：<http://127.0.0.1:8848/nacos/index.html>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 核心模块（**统一授权认证**）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
 * 测试模块1（单表增删改查示例）：
