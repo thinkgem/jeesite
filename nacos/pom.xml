@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.jeesite</groupId>
         <artifactId>jeesite-cloud-parent</artifactId>
-        <version>4.2.2-SNAPSHOT</version>
+        <version>4.2.3-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
@@ -27,7 +27,7 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- version setting -->
-		<nacos.version>1.3.2</nacos.version>
+		<nacos.version>1.4.1</nacos.version>
 		
 		<!-- docker setting -->
         <docker.run.port>8848:8848</docker.run.port>
@@ -36,12 +36,6 @@
 	
     <dependencies>
 
-		<dependency>
-			<groupId>com.alibaba.nacos</groupId>
-			<artifactId>nacos-core</artifactId>
-			<version>${nacos.version}</version>
-		</dependency>
-	
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-config</artifactId>
@@ -87,23 +81,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>0.10.5</version>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
-			<version>0.10.5</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>0.10.5</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- FastJSON -->
