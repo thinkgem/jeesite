@@ -27,7 +27,7 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- version setting -->
-		<zipkin.version>2.19.3</zipkin.version>
+		<zipkin.version>2.23.2</zipkin.version>
 		
 		<!-- docker setting -->
         <docker.run.port>9411:9411</docker.run.port>
