@@ -42,7 +42,11 @@ public class TransTestController extends BaseController {
 			logger.debug("事务测试信息，报错回滚：" + e.getMessage(), e);
 		}
 		boolean bl = transTestService.transValid(testData);
-		return renderResult(Global.TRUE, "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！");
+		String message = "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！";
+		if (!bl) {
+			message += "请全局搜索“@LcnTransaction”关键词，是否将前面的“//”注释去掉？";
+		}
+		return renderResult(Global.TRUE, message);
 	}
 
 }
