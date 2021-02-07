@@ -214,10 +214,18 @@ $('#dataGrid').dataGrid({
 	
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
+//		// 无数据显示，v4.1.7 之前版本
 // 		if (data.count == 0){
 //			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
 //		}
+//		// 分页控件后面追加附加信息实例
 // 		$('#dataGridPage ul:last').after('<ul class="pagination"><li class="disabled controls">分页附加信息</li></ul>');
+// 		// 根据数据状态，高亮行，变色行，着色行
+// 		$.each(data.list, function(k, v){
+// 			if (v.status == Global.STATUS_DISABLE){
+// 				$('#'+v.id+' td').css('background', '#e4fda8');
+// 			}
+// 		});
 	}
 })
 // 开启表头下放搜索工具条
