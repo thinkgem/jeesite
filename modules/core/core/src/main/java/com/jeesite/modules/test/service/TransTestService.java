@@ -33,6 +33,7 @@ public class TransTestService extends BaseService{
 	 * 事务测试，第二个接口调用故意抛出异常
 	 */
 //	@LcnTransaction
+//	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void transTest(TestData testData) {
 		

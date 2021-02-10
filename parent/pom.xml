@@ -22,6 +22,7 @@
 		<!-- Spring Cloud -->
 		<spring-cloud.version>Hoxton.SR9</spring-cloud.version>
 		<spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
+		<seata.version>1.4.1</seata.version>
 		
 	</properties>
 	
@@ -40,6 +41,11 @@
 				<version>${spring-cloud-alibaba.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.seata</groupId>
+				<artifactId>seata-spring-boot-starter</artifactId>
+				<version>${seata.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
