@@ -492,6 +492,9 @@ mybatis:
   # TypeHandlers 扫描基础包，如果多个，用“,”分隔
   scanTypeHandlersPackage: ~
   
+  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
+  jdbcTransaction: false
+  
   # Mapper文件刷新线程
   mapper:
     refresh:
