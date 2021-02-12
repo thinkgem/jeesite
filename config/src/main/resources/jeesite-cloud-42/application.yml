@@ -103,6 +103,9 @@ service:
   test2:
     name: jeesite-cloud-module-test2
     path: ${server.servlet.context-path}
+  bpm:
+    name: jeesite-cloud-module-bpm
+    path: ${server.servlet.context-path}
   
 #======================================#
 #========== Database sttings ==========#
