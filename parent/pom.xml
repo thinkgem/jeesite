@@ -259,6 +259,7 @@
 							<include>**/*.css</include>
 						</includes>
 						<excludes>
+							<exclude>**/WEB-INF/classes/**</exclude>
 							<exclude>**/*.min.js</exclude>
 							<exclude>**/*.min.css</exclude>
 						</excludes>
