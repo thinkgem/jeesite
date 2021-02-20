@@ -40,6 +40,7 @@ import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import com.jeesite.modules.sys.utils.ValidCodeUtils;
 
 /**
  * 表单验证（包含验证码）过滤类
@@ -243,7 +244,21 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
 		// 是否在登录后生成新的Session（默认false）
 		if (Global.getPropertyToBoolean("shiro.isGenerateNewSessionAfterLogin", "false")){
+			String[] keys = new String[] {ValidCodeUtils.VALID_CODE};
+			Map<String, Object> map = MapUtils.newHashMap();
+			final Session sessionOld = UserUtils.getSession();
+			for (String key : keys) {
+				Object value = sessionOld.getAttribute(key);
+				if (value != null) {
+					map.put(key, value);
+				}
+			}
 			UserUtils.getSubject().logout();
+			// 恢复生成新的Session之前的Session数据
+			final Session sessionNew = UserUtils.getSession();
+			map.forEach((key, value) -> {
+				sessionNew.setAttribute(key, value);
+			});
 		}
 		return super.executeLogin(request, response);
 	}
