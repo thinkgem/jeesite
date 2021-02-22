@@ -9,7 +9,7 @@ companyName: ThinkGem
 
 # 产品版本、版权年份
 productVersion: V4.2
-copyrightYear: 2020
+copyrightYear: 2021
 
 #是否演示模式
 demoMode: false
@@ -25,10 +25,11 @@ server:
     context-path: /js
   tomcat:
     uri-encoding: UTF-8
+    #maxHttpFormPostSize: -1
     
-  # 将请求协议转换为 https
+  # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
   schemeHttps: false
-    
+  
 #======================================#
 #========== Database sttings ==========#
 #======================================#
@@ -97,9 +98,9 @@ jdbc:
 #  
 #    # 初始化连接数
 #    init: 1
-#    # 最小连接数
+#    # 最小空闲连接数
 #    minIdle: 3
-#    # 最大连接数
+#    # 最大激活连接数
 #    maxActive: 20
 #
 #    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
@@ -222,8 +223,11 @@ logging:
 # 分页相关
 #page:
 #
-#  # 分页默认大小
+#  # 默认每页显示的数据条数
 #  pageSize: 20
+#  
+#  # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
+#  maxPageSize: 999
 
 # 用户相关
 #user:

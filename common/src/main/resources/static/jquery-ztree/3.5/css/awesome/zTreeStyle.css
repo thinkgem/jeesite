@@ -1,0 +1,113 @@
+/*-------------------------------------
+zTree Style 3.4 author: Hunter.z、ThinkGem
+-------------------------------------*/
+
+.ztree * {padding:0;margin:0;font-size:13px;}
+.ztree {margin:0;padding:5px;color:#333}
+.ztree li{padding:0;margin:0;list-style:none;line-height:21px;text-align:left;white-space:nowrap;outline:0}
+.ztree li ul{ margin:0;padding:0 0 0 18px}
+
+.ztree li a {padding-right:3px;margin:0;cursor:pointer;height:23px;color:#333;background-color: transparent;text-decoration:none;display: inline-block;vertical-align: middle;}
+.ztree li a:hover {text-decoration:underline}
+.ztree li a.curSelectedNode {padding-top:0px;background-color:#e5e5e5;color:black;height:23px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.ztree li a.curSelectedNode_Edit {padding-top:0px;background-color:#e5e5e5;color:black;height:23px;border:1px #666 solid;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.ztree li a.tmpTargetNode_inner {padding-top:0px;background-color:#aaa;color:white;height:21px;border:1px #666 solid;
+    opacity:0.8;filter:alpha(opacity=80)}
+.ztree li a.tmpTargetNode_prev {}
+.ztree li a.tmpTargetNode_next {}
+.ztree li a input.rename {height:14px;width:80px;padding:0;margin:0;
+    font-size:12px;border:1px #7EC4CC solid;*border:0px}
+.ztree li span {line-height:23px;margin-right:2px}
+.ztree li span.button {line-height:0;margin:0;width:21px;height:21px;display: inline-block;vertical-align:middle;
+    border:0 none;cursor: pointer;outline:none;}
+.ztree li span.button.ico_loading{margin-right:2px;background:url(./img/loading.gif) no-repeat scroll 0 0 transparent;vertical-align:top;*vertical-align:middle}
+
+ul.tmpTargetzTree {background-color:#FFE6B0;opacity:0.8;filter:alpha(opacity=80)}
+
+span.tmpzTreeMove_arrow {width:16px;height:21px;display: inline-block;padding:0;margin:2px 0 0 1px;border:0 none;position:absolute;
+    background-color:transparent;background-repeat:no-repeat;background-attachment: scroll;}
+
+ul.ztree.zTreeDragUL {margin:0;padding:0;position:absolute;width:auto;height:auto;overflow:hidden;background-color:#cfcfcf;border:1px #00B83F dotted;opacity:0.8;filter:alpha(opacity=80)}
+.zTreeMask {z-index:10000;background-color:#cfcfcf;opacity:0.0;filter:alpha(opacity=0);position:absolute}
+
+/* 树搜索相关 */
+.treeSearchInput {padding:13px 0 0 20px;}
+.treeSearchInput label {padding:5px 0 3px 0;font-size:13px;font-weight:normal;vertical-align:middle;}
+.treeSearchInput input {width:140px;vertical-align:middle;line-height:24px;height:26px;border:1px solid #aaa;padding:0 4px;border-radius:4px;}
+.treeSearchInput button {border:1px solid #aaa;vertical-align:middle;height:26px;height:26px\9;font-size:13px;background:#efefef;padding:0 8px;}
+.treeShowHideButton {position:absolute;right:8px;top:-3px;font-size:12px;color:#333;z-index:3;}
+.treeShowHideButton label {cursor:pointer;}
+.treeExpandCollapse {float:right;margin:6px 5px;padding:5px;font-size:12px;color:#333;position:relative;z-index:2;background:#fff;}
+.treeExpandCollapse a {text-decoration:none;color:#333}
+.treeselect.ztree {padding:10px 20px;}
+
+/* 字体图标风格 */
+.ztree * {box-sizing:content-box;}
+.ztree li li {padding-left:9px;}
+.ztree li ul.line {content:"";border-left:1px dotted #aaa;top:0px;left:0px;margin-top:-2px;padding-top:2px;}
+.ztree li ul {position:relative;background:none;margin-left:9px;padding-left:0;}
+.ztree li ul.line {background:none;}
+.ztree li .noline_open + a + ul:before {border-left:none;}
+.ztree li .noline_open + a + ul li:before {border-top:none;}
+.ztree li a {height:26px;padding-left:3px;}
+.ztree li span {height:26px;margin-left:4px;}
+.ztree li span.node_name {margin-right:6px;}
+.ztree li span.button.switch,
+.ztree li span.button.chk,
+.ztree li a span.button,
+.ztree li span.button[class$="Page"] {position:relative;width:18px;height:22px;background:none;background-position:center center !important;padding:2px 0;
+	display:inline-block;font:normal normal normal 15px/1 FontAwesome;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.ztree li span.button[class$="Page"] {width:15px;}
+.ztree li a span.button[style="width:0px;height:0px;"]:before,
+.ztree li a span.button[style^="background"]:before {content:"";}
+.ztree li span.button.roots_docu, .ztree li span.button.center_docu, .ztree li span.button.bottom_docu {position:relative;height:24px;padding:0;}
+.ztree li span.button.roots_docu:before {content:"";display:block;width:18px;height:11px;border-left:1px dotted #aaa;position:absolute;top:10px;left:9px;}
+.ztree li span.button.roots_docu:after {content:"";display:block;width:9px;height:0;border-top:1px dotted #aaa;position:absolute;top:10px;left:9px;}
+.ztree li span.button.center_docu:before {content:"";display:block;width:0;height:25px;border-left:1px dotted #aaa;position:absolute;top:-3px;left:9px;}
+.ztree li span.button.center_docu:after {content:"";display:block;width:9px;height:0;border-top:1px dotted #aaa;position:absolute;top:10px;left:9px;}
+.ztree li span.button.bottom_docu:before {content:"";display:block;width:0;height:12px;border-left:1px dotted #aaa;position:absolute;top:-3px;left:9px;}
+.ztree li span.button.bottom_docu:after {content:"";display:block;width:9px;height:0;border-top:1px dotted #aaa;position:absolute;top:10px;left:9px;}
+.ztree li span.button:before {display:block;line-height:20px;text-align:left;padding-left:4px;color:#666;}
+.ztree li span.button.root_open:before,
+.ztree li span.button.roots_open:before,
+.ztree li span.button.center_open:before,
+.ztree li span.button.bottom_open:before,
+.ztree li span.button.noline_open:before {content:"\f147";}
+.ztree li span.button.root_close:before,
+.ztree li span.button.roots_close:before,
+.ztree li span.button.center_close:before,
+.ztree li span.button.bottom_close:before,
+.ztree li span.button.noline_close:before {content:"\f196";}
+.ztree li span.button.chk.checkbox_true_full:before,
+.ztree li span.button.chk.checkbox_true_disable:before,
+.ztree li span.button.chk.checkbox_true_full_focus:before {content:"\f046";}
+.ztree li span.button.chk.checkbox_false_full:before,
+.ztree li span.button.chk.checkbox_false_disable:before,
+.ztree li span.button.chk.checkbox_false_full_focus:before {content:"\f096";}
+.ztree li span.button.chk.checkbox_true_part:before,
+.ztree li span.button.chk.checkbox_true_part_focus:before,
+.ztree li span.button.chk.checkbox_false_part:before,
+.ztree li span.button.chk.checkbox_false_part_focus:before {content:"\f14a";}
+.ztree li span.button.chk.radio_true_full:before,
+.ztree li span.button.chk.radio_true_disable:before,
+.ztree li span.button.chk.radio_true_full_focus:before {content:"\f05d";}
+.ztree li span.button.chk.radio_false_full:before,
+.ztree li span.button.chk.radio_false_disable:before,
+.ztree li span.button.chk.radio_false_full_focus:before {content:"\f10c";}
+.ztree li span.button.chk.radio_true_part:before,
+.ztree li span.button.chk.radio_true_part_focus:before,
+.ztree li span.button.chk.radio_false_part:before,
+.ztree li span.button.chk.radio_false_part_focus:before {content:"\f192";}
+.ztree li span.button.ico_open:before {content:"\f115";}
+.ztree li span.button.ico_close:before {content:"\f114";}
+.ztree li span.button.ico_docu:before {content:"\f016";}
+.ztree li span.button.add:before {content:"\f196";}
+.ztree li span.button.edit:before {content:"\f044";}
+.ztree li span.button.remove:before {content:"\f014";}
+.ztree li span.button.firstPage:before {content:"\f100";}
+.ztree li span.button.prevPage:before {content:"\f104";}
+.ztree li span.button.nextPage:before {content:"\f105";}
+.ztree li span.button.lastPage:before {content:"\f101";}
+.ztree li span.button.chk[class$="focus"]:before {font-weight:bold;}
+.ztree li span.button.chk[class$="disable"]:before {color:#aaa;}
+.ztree li a.curSelectedNode, .ztree li a.tmpTargetNode_inner {height:26px;}

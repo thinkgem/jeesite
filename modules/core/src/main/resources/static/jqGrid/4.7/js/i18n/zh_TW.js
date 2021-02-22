@@ -84,6 +84,7 @@ $.extend($.jgrid,{
 		viewtitle: "檢視已選列"
 	},
 	col : {
+    	all: "全選",
 		caption: "選擇欄",
 		bSubmit: "確定",
 		bCancel: "取消"

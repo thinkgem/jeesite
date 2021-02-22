@@ -23,7 +23,7 @@ import com.jeesite.modules.sys.utils.EmpUtils;
  * @author ThinkGem
  * @version 2017-03-23
  */
-@Table(name="${_prefix}sys_office", alias="a", columns={
+@Table(name="${_prefix}sys_office", alias="a", label="组织机构", columns={
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
 		@Column(includeEntity=TreeEntity.class),

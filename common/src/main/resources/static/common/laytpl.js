@@ -90,7 +90,6 @@ Tpl.pt.render = function(data, callback){
   var that = this, tpl;
   if(!data) return tool.error('no data');
   tpl = that.cache ? that.cache(data, tool.escape) : that.parse(that.tpl, data);
-  console.log()
   if(!callback) return tpl;
   callback(tpl);
 };

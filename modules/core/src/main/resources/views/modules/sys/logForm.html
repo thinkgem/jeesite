@@ -166,6 +166,12 @@
 					<#form:textarea path="exceptionInfo" rows="20" class="form-control autoHeight"/>
 				</div>
 				<% } %>
+				<% if(isNotBlank(log.diffModifyData)){ %>
+				<div class="form-unit">${text('差异修改数据')}</div>
+				<div class="ml10 mr10 mb10" style="word-break:break-all;">
+					${log.diffModifyData}
+				</div>
+				<% } %>
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -178,6 +184,10 @@
 	</div>
 </div>
 <% } %>
+<style>
+table.table td {width:30%;vertical-align:middle!important;}
+table.table th:first-child, table.table td:first-child {width:10%;}
+</style>
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){

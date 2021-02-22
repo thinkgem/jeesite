@@ -264,7 +264,11 @@ public class LoginController extends BaseController{
 		//UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		
 		// 返回指定用户类型的首页视图
-		String view = UserUtils.getUserTypeValue(user.getUserType(), "indexView");
+		String userType = user.getUserType();
+		if (User.USER_TYPE_NONE.equals(userType)){
+			userType = User.USER_TYPE_EMPLOYEE;
+		}
+		String view = UserUtils.getUserTypeValue(userType, "indexView");
 		if(StringUtils.isNotBlank(view)){
 			return view;
 		}

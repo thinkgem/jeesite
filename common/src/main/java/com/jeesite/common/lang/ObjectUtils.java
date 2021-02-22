@@ -13,6 +13,8 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.nustaq.serialization.FSTConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.NamedThreadLocal;
 
@@ -23,6 +25,8 @@ import org.springframework.core.NamedThreadLocal;
  */
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
+	private static Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
+	
 	/**
 	 * 转换为 Double 类型
 	 */
@@ -170,7 +174,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){
-			System.out.println("Serialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatDateAgo(totalTime));
 		}
 		return bytes;
 	}
@@ -196,7 +200,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){
-			System.out.println("Unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatDateAgo(totalTime));
 		}
 		return object;
 	}
@@ -221,7 +225,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		byte[] bytes = fstConfiguration.get().asByteArray(object);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){
-			System.out.println("Fst serialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatDateAgo(totalTime));
 		}
 		return bytes;
 	}
@@ -239,7 +243,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		Object object = fstConfiguration.get().asObject(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 3000){
-			System.out.println("Fst unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatDateAgo(totalTime));
 		}
 		return object;
 	}

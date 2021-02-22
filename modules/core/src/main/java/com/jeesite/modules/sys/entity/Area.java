@@ -17,7 +17,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2017-03-22
  */
-@Table(name="${_prefix}sys_area", alias="a", columns={
+@Table(name="${_prefix}sys_area", alias="a", label="区域信息", columns={
 		@Column(includeEntity=DataEntity.class),
 		@Column(includeEntity=TreeEntity.class),
 		@Column(name="area_code", attrName="areaCode", label="区域代码", isPK=true),

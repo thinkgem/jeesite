@@ -34,7 +34,7 @@ import com.jeesite.modules.bpm.entity.BpmEntity;
  * @author ${functionAuthor}
  * @version ${functionVersion}
  */
-@Table(name="${table.genTableName}", alias="a", columns={
+@Table(name="${table.genTableName}", alias="a", label="${functionNameSimple}信息", columns={
 		<%
 		var isBase = false, isData = false,
 			isTree = false, isExtend = false;

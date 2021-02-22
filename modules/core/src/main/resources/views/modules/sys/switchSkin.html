@@ -170,7 +170,7 @@ $('#formLayerModel')
 	$('#tabPageModel').iCheck('uncheck');
 }).on('ifClicked', function(){
 	setTimeout(function(){
-		top.location.reload();
+		top.location.reload(true);
 	},500);
 });
 
@@ -183,7 +183,7 @@ $('#tabPageModel')
 	js.cookie('tabPageModel', 'false');
 }).on('ifClicked', function(){
 	setTimeout(function(){
-		top.location.reload();
+		top.location.reload(true);
 	},500);
 });
 </script>

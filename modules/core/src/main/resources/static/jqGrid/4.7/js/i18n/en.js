@@ -92,6 +92,7 @@ $.extend($.jgrid,{
 		viewtitle: "View selected row"
 	},
 	col : {
+    	all: "Check all",
 		caption: "Select columns",
 		bSubmit: "Ok",
 		bCancel: "Cancel"

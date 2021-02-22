@@ -21,7 +21,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Table(name="${_prefix}sys_msg_inner", alias="a", columns={
+@Table(name="${_prefix}sys_msg_inner", alias="a", label="内部消息", columns={
 		@Column(name="id", attrName="id", label="编号", isPK=true),
 		@Column(name="msg_title", attrName="msgTitle", label="消息标题", queryType=QueryType.LIKE),
 		@Column(name="content_level", attrName="contentLevel", label="内容等级", comment="内容等级（1普通 2一般 3紧急）"),

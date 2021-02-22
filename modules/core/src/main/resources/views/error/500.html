@@ -10,8 +10,7 @@ if (isBlank(message)){
 		var m = @ExceptionUtils.getExceptionMessage(ex);
 		if (isNotBlank(m)){
 			message = m;
-		}
-		if (!@StringUtils.equals(message, "演示模式，不允许操作！")){
+		}else{
 			@org.slf4j.LoggerFactory.getLogger("error/500").error('', ex);
 		}
 	}

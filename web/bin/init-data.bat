@@ -30,5 +30,4 @@ set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m"
 call mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData
 
 cd bin
-cmd /c msg %username% /time:0 /w "初始化数据库完成..."
 pause

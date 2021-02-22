@@ -26,7 +26,7 @@ import com.jeesite.common.web.http.ServletUtils;
  */
 public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter {
 	
-	private static final Logger log = LoggerFactory.getLogger(LogoutFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogoutFilter.class);
 	private BaseAuthorizingRealm authorizingRealm; // 安全认证类
 	
 	@Override
@@ -53,7 +53,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	    		// 退出登录	
 	    		subject.logout();
 	        } catch (SessionException ise) {
-	            log.debug("Encountered session exception during logout.  This can generally safely be ignored.", ise);
+	            logger.debug("Encountered session exception during logout.  This can generally safely be ignored.", ise);
 	        }
 	        
 	        // 如果是Ajax请求，返回Json字符串。
@@ -65,7 +65,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
 	     	
 	        issueRedirect(request, response, redirectUrl);
 		}catch(Exception e){
-			log.debug("Encountered session exception during logout.  This can generally safely be ignored.", e);
+			logger.debug("Encountered session exception during logout.  This can generally safely be ignored.", e);
 		}
 		return false;
 	}

@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-root</artifactId>
-	<version>4.2.2-SNAPSHOT</version>
+	<version>4.2.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite</name>

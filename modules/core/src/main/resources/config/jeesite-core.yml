@@ -20,9 +20,9 @@ jdbc:
   
     # 初始化连接数
     init: 1
-    # 最小连接数
+    # 最小活动连接数
     minIdle: 3
-    # 最大连接数
+    # 最大激活连接数
     maxActive: 20
     
     # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
@@ -108,8 +108,11 @@ frontPath: /f
 # 分页相关
 page:
   
-  # 分页默认大小
+  # 默认每页显示的数据条数
   pageSize: 20
+  
+  # 每页最大条数，防止分页过大导致系统缓慢或内存溢出
+  maxPageSize: 999
 
 # 用户相关
 user:
@@ -488,6 +491,9 @@ mybatis:
   
   # TypeHandlers 扫描基础包，如果多个，用“,”分隔
   scanTypeHandlersPackage: ~
+  
+  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
+  jdbcTransaction: false
   
   # Mapper文件刷新线程
   mapper:
