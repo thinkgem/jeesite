@@ -33,7 +33,7 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud Ribbon
 * 分布式链路追踪：Spring Cloud Zipkin 2.23 (可选组件)
-* 分布式事务框架：Codingapi TX-LCN 5.0 (可选组件)
+* 分布式事务框架：TX-LCN 5.0 / Seata 1.4 (可选组件)
 * 工作流引擎框架：Flowable 6.5 (可选组件)
 
 ## 子项目介绍
