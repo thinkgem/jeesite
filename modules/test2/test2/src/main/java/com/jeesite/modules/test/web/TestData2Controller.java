@@ -81,6 +81,7 @@ public class TestData2Controller extends BaseController {
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
+//	@GlobalTransactional
 	public String save(@Validated TestData testData) {
 		testDataServiceClient.save(testData);
 		return renderResult(Global.TRUE, text("保存数据成功！"));

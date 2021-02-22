@@ -103,6 +103,9 @@ service:
   test2:
     name: jeesite-cloud-module-test2
     path: ${server.servlet.context-path}
+  bpm:
+    name: jeesite-cloud-module-bpm
+    path: ${server.servlet.context-path}
   
 #======================================#
 #========== Database sttings ==========#
@@ -195,6 +198,24 @@ tx-lcn:
     username: ${jdbc.username}
     password: ${jdbc.password}
     
+# Seata 分布式事务
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: jeesite_tx_group
+  service:
+    vgroup-mapping:
+      jeesite_tx_group: default
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group : "SEATA_GROUP"
+      namespace: ""
+      username: "nacos"
+      password: "nacos"
+      
 #======================================#
 #========== Spring settings ===========#
 #======================================#

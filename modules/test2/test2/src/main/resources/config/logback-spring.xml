@@ -9,6 +9,8 @@
 
 	<!-- Project level setting -->
 	<!-- 	<logger name="your.package" level="DEBUG" /> -->
+	<logger name="io.seata" level="INFO" />
+	<logger name="zipkin2.reporter.AsyncReporter$BoundedAsyncReporter" level="ERROR" />
 	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
 
 	<!-- Console log output -->

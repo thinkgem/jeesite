@@ -27,7 +27,7 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- version setting -->
-		<sentinel.version>1.7.2</sentinel.version>
+		<sentinel.version>1.8.1</sentinel.version>
         <curator.version>4.0.1</curator.version>
         
 		<!-- docker setting -->
@@ -112,7 +112,7 @@
         </dependency>
         <!-- <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <artifactI	d>fastjson</artifactId>
         </dependency> -->
 
         <!-- for Nacos rule publisher sample -->

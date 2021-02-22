@@ -67,6 +67,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 //	@LcnTransaction
+//	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void save(TestData testData) {
 		super.save(testData);

@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>jeesite-cloud-nacos</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>JeeSite Cloud Nacos</name>
     <url>http://www.jeesite.com</url>
@@ -94,6 +94,7 @@
 
     <build>
 		<finalName>${finalName}</finalName>
+		<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -103,10 +104,45 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            
+			<!-- Spring Boot -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin> -->
+			
+			<!-- 打包插件, war包名称不带版本号 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes></packagingExcludes>
+					<warSourceExcludes></warSourceExcludes>
+					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+					<warName>${finalName}</warName>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<!-- Eclipse插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>${eclipse-plugin-download-sources}</downloadSources>
+					<downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
+					<wtpContextName>${finalName}</wtpContextName>
+					<wtpversion>2.0</wtpversion>
+					<jeeversion>6.0</jeeversion>
+				</configuration>
+			</plugin>
+			
         </plugins>
     </build>
 	

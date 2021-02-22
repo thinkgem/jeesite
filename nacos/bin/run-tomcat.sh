@@ -10,5 +10,5 @@ echo "[信息] 使用 Spring Boot Tomcat 运行 Web 工程。"
 echo ""
 
 cd ..
-MAVEN_OPTS="$MAVEN_OPTS -Xms512m -Xmx1024m"
-mvn clean spring-boot:run -Dmaven.test.skip=true -U
+MAVEN_OPTS="$MAVEN_OPTS -Xms512m -Xmx1024m -Dfile.encoding=utf-8"
+mvn clean spring-boot:run -Dmaven.test.skip=true

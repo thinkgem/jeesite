@@ -124,6 +124,7 @@ public class TestTree1Controller extends BaseController {
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
+//	@GlobalTransactional
 	public String save(@Validated TestTree testTree) {
 		testTreeService.save(testTree);
 		return renderResult(Global.TRUE, text("保存数据成功！"));

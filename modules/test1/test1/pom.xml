@@ -75,6 +75,11 @@
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-txlcn-client</artifactId>
 			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-seata-client</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency> -->
 		
 		<!-- 核心模块 -->
