@@ -10,7 +10,7 @@ echo "[信息] 运行Web工程。"
 echo ""
 
 # 优化JVM参数
-JAVA_OPTS="$MAVEN_OPTS -Xms256m -Xmx1024m"
+JAVA_OPTS="$MAVEN_OPTS -Xms256m -Xmx1024m -Dfile.encoding=utf-8"
 
 # 方式一、配置外部自定义的属性文件（建议）
 # JAVA_OPTS="$JAVA_OPTS -Dspring.config.location=$PWD\app.yml"
