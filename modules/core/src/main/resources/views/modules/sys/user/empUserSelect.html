@@ -130,7 +130,9 @@ var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 	if (queryType == 'userType'){
 		$('#queryTypeName').text('${text("按用户类型")}');
 		tree = $.fn.zTree.init($("#tree"), setting, [
-			{id: 'employee', name: '${text("员工类型")}'},
+			<% for(dict in @DictUtils.getDictList('sys_user_type')){ %>
+			{id: '${dict.dictValue}', name: '${text(dict.dictLabel + "类型")}'},
+			<% } %>
 			{id: 'none', name: '${text("系统管理员")}'}
 		]);
 		tree.expandAll(true);
@@ -143,7 +145,7 @@ var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 			url = "${ctx}/sys/post/treeData?___t=" + new Date().getTime();
 		} else if (queryType == 'role'){
 			$('#queryTypeName').text('${text("按角色查询")}');
-			url = "${ctx}/sys/role/treeData?___t=" + new Date().getTime();
+			url = "${ctx}/sys/role/treeData?userType=__all&___t=" + new Date().getTime();
 		}
 		js.ajaxSubmit(url, {ctrlPermi:'1'/*1拥有的权限 2管理的权限*/}, function(data){
 			tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
