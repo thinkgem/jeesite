@@ -72,7 +72,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		}},
 		<% if(isBlank(user.userType)){ %>
 		{header:'${text("类型")}', name:'userType', index:'a.user_type', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_user_type')}, val, '未知', true);
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_user_type')}, val, '无', true);
 		}},
 		<% } %>
 		{header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){

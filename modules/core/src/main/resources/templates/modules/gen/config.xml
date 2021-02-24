@@ -41,7 +41,7 @@
 			<template>category-ref:crud</template>
 		</category>
 		<category value="treeGrid_cloud" label="树表/树结构表（增删改查  Cloud，生成 Api/Client）">
-			<template>category-ref:crud</template>
+			<template>category-ref:crud_cloud</template>
 		</category>
 		<category value="service" label="业务层和持久层（dao/service，不含控制器和视图）">
 			<template>category-ref:dao</template>
