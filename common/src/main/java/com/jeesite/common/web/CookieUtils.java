@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.http.ServletUtils;
 
 /**
  * Cookie工具类
@@ -46,8 +45,7 @@ public class CookieUtils {
 	 * @param uri 路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
-		HttpServletRequest request = ServletUtils.getRequest();
-		setCookie(response, name, value, request != null ? request.getContextPath() : "", maxAge);
+		setCookie(response, name, value, "/", maxAge);
 	}
 	
 	/**
