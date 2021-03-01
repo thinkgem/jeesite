@@ -370,7 +370,7 @@ shiro:
   # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
   isAllowExternalSiteIframe: true
   
-  # 是否允许跨域访问 CORS，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
+  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。当设置'*'号全部域名时，accessControlAllowCredentials应该设置为false。
 #  accessControlAllowOrigin: http://demo.jeesite.com
 #  accessControlAllowOrigin: '*'
 
@@ -378,8 +378,8 @@ shiro:
 #  accessControlAllowMethods: GET, POST, OPTIONS
 #  accessControlAllowHeaders: Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With
 
-  # 是否允许接收跨域的Cookie凭证数据 CORS
-#  accessControlAllowCredentials: true
+  # 是否允许接收跨域的Cookie凭证数据 CORS，当设置为true时，accessControlAllowOrigin不能设置为'*'。
+#  accessControlAllowCredentials: false
   
   # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
 #  allowReferers: http://127.0.0.1,http://localhost
@@ -406,11 +406,11 @@ shiro:
 #    ${adminPath}/${spring.application.name}/swagger/** = anon
 #    ${adminPath}/** = user
   filterChainDefinitions: |
-    ${adminPath}/sys/corpAdmin/treeData = anon
     ${adminPath}/** = user
   
   # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
   defaultFilterChainDefinitions: |
+    /tags/* = anon
     /lang/** = anon
     /account/* = anon
     /userfiles/** = anon
@@ -422,6 +422,7 @@ shiro:
     ${adminPath}/login = authc
     ${adminPath}/logout = logout
     ${adminPath}/file/** = user
+    ${adminPath}/sys/corpAdmin/treeData = anon
     ${adminPath}/cms/* = perms[cms:view]
     ${adminPath}/cms/site/select = user
     ${adminPath}/cms/site/* = perms[cms:site:view]
