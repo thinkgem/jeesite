@@ -130,10 +130,10 @@ public class ShiroConfig {
 	 * Shiro认证过滤器
 	 */
 	@Bean
-	public ShiroFilterFactoryBean shiroFilter(WebSecurityManager securityManager,
+	public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager,
 			AuthorizingRealm authorizingRealm, CasAuthorizingRealm casAuthorizingRealm) {
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-		bean.setSecurityManager(securityManager);
+		bean.setSecurityManager(webSecurityManager);
 		bean.setLoginUrl(Global.getProperty("shiro.loginUrl"));
 		bean.setSuccessUrl(Global.getProperty("adminPath")+"/index");
 		Map<String, Filter> filters = bean.getFilters();
@@ -187,7 +187,7 @@ public class ShiroConfig {
 	 * 定义Shiro安全管理配置
 	 */
 	@Bean
-	public WebSecurityManager securityManager(AuthorizingRealm authorizingRealm,
+	public WebSecurityManager webSecurityManager(AuthorizingRealm authorizingRealm,
 			CasAuthorizingRealm casAuthorizingRealm, SessionManager sessionManager,
 			CacheManager shiroCacheManager) {
 		WebSecurityManager bean = new WebSecurityManager();
@@ -226,20 +226,20 @@ public class ShiroConfig {
 	 * 启用Shrio授权注解拦截方式，AOP式方法级权限检查
 	 */
 	@Bean
-	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(WebSecurityManager securityManager) {
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(WebSecurityManager webSecurityManager) {
 		AuthorizationAttributeSourceAdvisor bean = new AuthorizationAttributeSourceAdvisor();
-		bean.setSecurityManager(securityManager);
+		bean.setSecurityManager(webSecurityManager);
 		return bean;
 	}
 	
 //	/**
-//	 * 在方法中 注入 securityManager 进行代理控制
+//	 * 在方法中 注入 webSecurityManager 进行代理控制
 //	 */
 //	@Bean
-//	public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
+//	public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager webSecurityManager) {
 //		MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
 //		bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-//		bean.setArguments(new Object[] { securityManager });
+//		bean.setArguments(new Object[] { webSecurityManager });
 //		return bean;
 //	}
 	
