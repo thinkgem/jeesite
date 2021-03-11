@@ -371,6 +371,7 @@ shiro:
   isAllowExternalSiteIframe: true
   
   # 是否允许跨域访问 CORS，如果允许，设置允许的域名。当设置'*'号全部域名时，accessControlAllowCredentials应该设置为false。
+  # v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
 #  accessControlAllowOrigin: http://demo.jeesite.com
 #  accessControlAllowOrigin: '*'
 
@@ -453,6 +454,10 @@ session:
   
   # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
+
+  # 仅在 HTTPS 下通信 Cookie 数据
+  #session.sessionIdCookieSecure: false
+  #session.sessionIdCookieHttpOnly: true
 
   # 设置接收SessionId请求参数的名称
   sessionIdParamName: __sid

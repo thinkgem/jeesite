@@ -484,6 +484,7 @@ shiro:
 #  isAllowExternalSiteIframe: true
 #  
 #  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。当设置'*'号全部域名时，accessControlAllowCredentials应该设置为false。
+#  # v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
 ##  accessControlAllowOrigin: http://demo.jeesite.com
 ##  accessControlAllowOrigin: '*'
 #
