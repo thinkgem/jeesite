@@ -16,7 +16,7 @@
 				if (corpCode != ''){
 					js.ajaxSubmit("${ctx}/sys/corpAdmin/switch/"+corpCode, function(data){
 						js.showMessage(data.message);
-						top.location.reload();
+						js.window.location.reload();
 					});
 				}
 			}

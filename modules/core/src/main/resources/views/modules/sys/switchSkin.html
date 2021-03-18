@@ -158,7 +158,7 @@
 <% } %>
 <script>
 $('.full-opacity-hover').click(function(){
-	top.location = '${ctx}/switchSkin/' + $(this).data('skin');
+	js.window.location = '${ctx}/switchSkin/' + $(this).data('skin');
 });
 
 $('#formLayerModel')
@@ -170,7 +170,7 @@ $('#formLayerModel')
 	$('#tabPageModel').iCheck('uncheck');
 }).on('ifClicked', function(){
 	setTimeout(function(){
-		top.location.reload(true);
+		js.window.location.reload(true);
 	},500);
 });
 
@@ -183,7 +183,7 @@ $('#tabPageModel')
 	js.cookie('tabPageModel', 'false');
 }).on('ifClicked', function(){
 	setTimeout(function(){
-		top.location.reload(true);
+		js.window.location.reload(true);
 	},500);
 });
 </script>
