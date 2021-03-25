@@ -23,7 +23,7 @@ import com.jeesite.common.lang.StringUtils;
  * @author ThinkGem
  * @version 2020-10-26
  */
-public class PropertyLoader extends PropertiesPropertySourceLoader implements org.springframework.boot.env.PropertySourceLoader, Ordered{
+public class PropertyLoader implements org.springframework.boot.env.PropertySourceLoader, Ordered{
 	
 	private static boolean isLoadJeeSitePropertySource = false;
 	private PropertiesPropertySourceLoader propertiesPropertySourceLoader = new PropertiesPropertySourceLoader();
