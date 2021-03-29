@@ -44,7 +44,7 @@ spring:
           predicates:
             - Path=/js/a/test2/**
         # 测试模块2（系统监控）
-        - id: test1_def
+        - id: test2_def
           uri: lb://jeesite-cloud-module-test2/js/a/jeesite-cloud-module-test2
           predicates:
             - Path=/js/a/jeesite-cloud-module-test2/**
