@@ -1,8 +1,8 @@
 ## 引言
 
-JeeSite Spring Cloud 具备 [JeeSite 4.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 4.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x 的开发便利性巧妙地简化了分布式系统开发。
+JeeSite Cloud 具备 [JeeSite 4.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 4.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x 的开发便利性巧妙地简化了分布式系统开发。
 
-JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
+JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
 
 集成阿里优秀组件 Nacos 服务治理与配置中心、集成 Sentinel 流量卫兵；集成 Zipkin 链路追踪；集成 LCN 分布式事务等，详见技术选型章节。
 
@@ -40,7 +40,7 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 
 * 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
-* 服务注册和配置中心 **Nacos** 版本（推荐） ：<http://127.0.0.1:8848/nacos/index.html>
+* 服务注册和配置中心 **Nacos** 版本 ：<http://127.0.0.1:8848/nacos/index.html>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 核心模块（**统一授权认证**）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
 * 测试模块1（单表增删改查示例）：
@@ -49,7 +49,9 @@ JeeSite Spring Cloud 并没有重复制造轮子，它只是将目前比较成�
 * 测试模块2（树表增删改查示例）：
     - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
     - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
-* 分布式事务管理服务：jeesite-cloud-module-txlcn ： <http://127.0.0.1:7970>
+* 业务流程基础服务：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
+* 分布式事务 LCN 服务：jeesite-cloud-module-txlcn ： <http://127.0.0.1:7970>
+* 分布式事务 Seata 服务：jeesite-cloud-module-seata ： <http://127.0.0.1:8091>
 * 熔断限流：jeesite-cloud-sentinel ： <http://127.0.0.1:9311>
 * 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
 
@@ -153,7 +155,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
     - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
     - 若访问报错，请再等待一会，可能服务未完全启动完成
 
-![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
+<img src="../../imgs/cloud-desktop.png" />
 
 ## 调用实例演示
 
@@ -173,41 +175,26 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
     - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
     - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
 
-## 新增微服务方法
+## 新增微服务工程
 
-举例新增一个微服务模块模块叫 `test3`，该模块的所有映射地址均在 `${adminPath}/test3/**` 这个路径下，该模块可以参照 `test1` 进行，步骤如下：
+### 1、新建模块
 
-1、在 jeesite-cloud-gateway 配置文件中新增网关路由
+1）进入菜单：系统管理 -> 系统设置 -> 模块管理，新建一个模块，填写：
 
-```yml
-spring:
-  cloud:
-    gateway:
-      routes:
-      	# 测试模块3
-        - id: test3
-          uri: lb://jeesite-cloud-module-test3/js/a/test3
-          predicates:
-            - Path=/js/a/test3/**
-        # 基础权限模块
-        - id: core
-          uri: lb://jeesite-cloud-module-core/js
-          predicates:
-            - Path=/js/**
-```
-注意：新增的配置请放到 core 基础权限模块之上。
+- 模块名称：测试模块
+- 模块编码：test3
+- 生成基础路径：填写新建模块的根目录
+- 代码生成模板：生成微服务模块代码（Cloud）
 
-2、在 jeesite-cloud-config 配置文件的微服务列表中，新增微服务：
+点击 “保存并生成代码” 按钮，即可完成微服务模块的工程代码新建。
 
-```yml
-# 微服务列表
-service:
-  test3:
-    name: jeesite-cloud-module-test3
-    path: ${server.servlet.context-path}
-```
+2）新建微服务功能，进入代码生成器功能菜单，生成时选择 Cloud 的代码生成模板即可。
 
-3、拷贝 jeesite-cloud-module-test1 项目为 jeesite-cloud-module-test3 文件夹：
+**v4.2.2之前版本：**
+
+由于之前版本没有微服务模块生成器功能，所以需要参考其它模块。举例新增一个微服务模块模块叫 `test3`，该模块的所有映射地址均在 `${adminPath}/test3/**` 这个路径下，该模块可以参照 `test1` 进行，步骤如下：
+
+拷贝 jeesite-cloud-module-test1 项目为 jeesite-cloud-module-test3 文件夹：
 
 1）修改 pom.xml 中的应用名：
 
@@ -243,40 +230,40 @@ service.test1 替换为 service.test3
 ${adminPath}/test1 替换为 ${adminPath}/test3
 ```
 
-## 授权协议声明
+### 2、配置服务参数
 
-1. 您可以免费使用、修改和衍生代码，但不允许修改后和衍生的代码做为闭源软件发布。
-2. 修改后和衍生的代码必须也按照当前协议进行流通，对修改后和衍生的代码必须向社会公开。
-3. 如果您修改了代码，需要在被修改的文件中进行说明，并遵守代码格式规范，帮助他人更好的理解您的用意。
-4. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者规定
-    需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
-5. 本项目仅用于学习和交流，未得到官方授权不得用于商业用途。
+在 jeesite-config 或 Nacos 的微服务配置文件 application.yml 中，新增微服务：
 
-### 获得技术服务支持：<http://s.jeesite.com>
-
-* 我们深知，没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把开源事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-
-# 技术交流方式
-
-* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite4-cloud/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite4-cloud>
-* GitHub：<https://github.com/thinkgem/jeesite4-cloud>
-* 作者博客：<https://my.oschina.net/thinkgem>
-* 官方网站：<http://jeesite.com>
-* 官方论坛：<http://jeesite.net>
-* 微信公众号：
-
-![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0120/235836_3018847b_6732.jpeg "JeeSite4微信公众号")
-
-# Git 全局设置技巧
-
+```yml
+# 微服务列表
+service:
+  test3:
+    name: jeesite-cloud-module-test3
+    path: ${server.servlet.context-path}
 ```
-1、提交检出均不转换换行符
 
-git config --global core.autocrlf false
+### 3、配置网关映射
 
-2、拒绝提交包含混合换行符的文件
+在 jeesite-cloud-gateway 配置文件中新增网关路由
 
-git config --global core.safecrlf true
+```yml
+spring:
+  cloud:
+    gateway:
+      routes:
+        # 测试模块3
+        - id: test3
+          uri: lb://jeesite-cloud-module-test3/js/a/test3
+          predicates:
+            - Path=/js/a/test3/**
+        # 测试模块3（系统监控）
+        - id: test3_def
+          uri: lb://jeesite-cloud-module-test3/js/a/jeesite-cloud-module-test3
+          predicates:
+            - Path=/js/a/jeesite-cloud-module-test3/**
 ```
+注意：新增的配置请放到 core 基础权限模块之上。
+
+## 微服务增删改查
+
+进入 “代码生成器” 菜单，同单机版使用方法，只需在生成代码时，选择 Cloud 版本的生成模板即可。
