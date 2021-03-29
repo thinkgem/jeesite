@@ -3,7 +3,7 @@
 <template>
 	<name>logback-spring</name>
 	<filePath>${module.moduleCode}/${module.moduleCode}/src/main/resources/config</filePath>
-	<fileName>logback-spring.yml</fileName>
+	<fileName>logback-spring.xml</fileName>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
 

@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
 <template>
 	<name>service</name>
-	<filePath>src/main/java/${packageName}/${moduleName}/service/${subModuleName}</filePath>
+	<filePath>${moduleName}/src/main/java/${packageName}/${moduleName}/service/${subModuleName}</filePath>
 	<fileName>${ClassName}Service.java</fileName>
 	<content><![CDATA[
 /**

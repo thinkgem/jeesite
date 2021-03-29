@@ -22,19 +22,19 @@
 			</childTable>
 		</category>
 		<category value="crud_cloud" label="单表/主子表 （增删改查 Cloud，生成 Api/Client）">
-			<template>crud/mapper.xml</template>
+			<template>crud_cloud/mapper.xml</template>
 			<template>crud_cloud/entity.xml</template>
-			<template>crud/dao.xml</template>
+			<template>crud_cloud/dao.xml</template>
 			<template>crud_cloud/api.xml</template>
 			<template>crud_cloud/client.xml</template>
 			<template>crud_cloud/service.xml</template>
-			<template>crud/controller.xml</template>
-			<template>crud/viewList.xml</template>
-			<template>crud/viewForm.xml</template>
+			<template>crud_cloud/controller.xml</template>
+			<template>crud_cloud/viewList.xml</template>
+			<template>crud_cloud/viewForm.xml</template>
 			<childTable>
-				<template>crud/mapper.xml</template>
+				<template>crud_cloud/mapper.xml</template>
 				<template>crud_cloud/entity.xml</template>
-				<template>crud/dao.xml</template>
+				<template>crud_cloud/dao.xml</template>
 			</childTable>
 		</category>
 		<category value="treeGrid" label="树表/树结构表（增删改查）">

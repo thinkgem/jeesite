@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
 <template>
 	<name>pom</name>
-	<filePath>${module.moduleCode}</filePath>
+	<filePath>${module.moduleCode}/${module.moduleCode}</filePath>
 	<fileName>pom.xml</fileName>
 	<charset></charset>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -12,41 +12,165 @@
 	
 	<parent>
 		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-parent</artifactId>
+		<artifactId>jeesite-cloud-parent</artifactId>
 		<version>${jeesiteVersion}-SNAPSHOT</version>
-		<relativePath>../../parent/pom.xml</relativePath>
+		<relativePath>../../../parent/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-module-${module.moduleCode}</artifactId>
-	<packaging>jar</packaging>
+	<artifactId>jeesite-cloud-module-${module.moduleCode}</artifactId>
+	<packaging>war</packaging>
 	
-	<name>JeeSite Module ${module.moduleName}</name>
+	<name>JeeSite Cloud Module ${module.moduleName}</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<properties>
 		
+		<finalName>web</finalName><!-- war包的名称 -->
+		<start-class>com.jeesite.modules.${@StringUtils.cap(module.moduleCode)}Application</start-class>
+		
+		<!-- environment setting -->
+		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		
+		<!-- docker setting -->
+        <docker.run.port>8989:8989</docker.run.port>
+        
 	</properties>
-	
+
 	<dependencies>
-			
+
+		<!-- 服务发现 -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		
+		<!-- 配置中心 -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		
+		<!-- 链路追踪服务 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		
+		<!-- 在线文档 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-core</artifactId>
+			<artifactId>jeesite-module-swagger</artifactId>
 			<version>\${project.parent.version}</version>
 		</dependency>
+		
+		<!-- 分布式事务
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-txlcn-client</artifactId>
+			<version>\${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-seata-client</artifactId>
+			<version>\${project.parent.version}</version>
+		</dependency> -->
+		
+		<!-- 核心模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-core-client</artifactId>
+			<version>\${project.parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-${module.moduleCode}-client</artifactId>
+			<version>\${project.parent.version}</version>
+		</dependency>
+		
+		<!-- 业务流程
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-bpm-client</artifactId>
+			<version>\${project.parent.version}</version>
+		</dependency> -->
+
+		<!-- Spring Boot Tomcat
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+
+		<!-- 自定义jar依赖包演示
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>test-core</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>\${project.basedir}/src/main/webapp/WEB-INF/lib/test-core-1.0.jar</systemPath>
+		</dependency> -->
 		
 	</dependencies>
 	
 	<build>
+		<finalName>\${finalName}</finalName>
+		<outputDirectory>\${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
 		<plugins>
 			
+			<!-- Spring Boot -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin> -->
+			
+			<!-- 打包插件, war包名称不带版本号 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- <packagingExcludes></packagingExcludes>
+					<warSourceExcludes></warSourceExcludes> -->
+					<webappDirectory>\${project.build.directory}/\${project.artifactId}</webappDirectory>
+					<warName>\${finalName}</warName>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<!-- Eclipse插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>\${eclipse-plugin-download-sources}</downloadSources>
+					<downloadJavadocs>\${eclipse-plugin-download-javadocs}</downloadJavadocs>
+					<wtpContextName>\${finalName}</wtpContextName>
+					<wtpversion>2.0</wtpversion>
+					<jeeversion>6.0</jeeversion>
+				</configuration>
+			</plugin>
+			
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				
-			</plugins>
-		</pluginManagement>
 	</build>
 	
 	<developers>  
@@ -63,6 +187,25 @@
 		<name>JeeSite</name>
 		<url>http://jeesite.com</url>
 	</organization>
+
+	<repositories>
+		<repository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+		</pluginRepository>
+	</pluginRepositories>
 	
 </project>
 ]]>
