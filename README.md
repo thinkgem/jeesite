@@ -155,7 +155,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
     - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
     - 若访问报错，请再等待一会，可能服务未完全启动完成
 
-<img src="../../imgs/cloud-desktop.png" />
+![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
 
 ## 调用实例演示
 
@@ -267,3 +267,41 @@ spring:
 ## 微服务增删改查
 
 进入 “代码生成器” 菜单，同单机版使用方法，只需在生成代码时，选择 Cloud 版本的生成模板即可。
+
+## 授权协议声明
+
+1. 您可以免费使用、修改和衍生代码，但不允许修改后和衍生的代码做为闭源软件发布。
+2. 修改后和衍生的代码必须也按照当前协议进行流通，对修改后和衍生的代码必须向社会公开。
+3. 如果您修改了代码，需要在被修改的文件中进行说明，并遵守代码格式规范，帮助他人更好的理解您的用意。
+4. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者规定
+    需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`@author`信息）。
+5. 本项目仅用于学习和交流，未得到官方授权不得用于商业用途。
+
+### 获得技术服务支持：<http://s.jeesite.com>
+
+* 我们深知，没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把开源事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+
+# 技术交流方式
+
+* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* 问题反馈：<https://gitee.com/thinkgem/jeesite4-cloud/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite4-cloud>
+* GitHub：<https://github.com/thinkgem/jeesite4-cloud>
+* 作者博客：<https://my.oschina.net/thinkgem>
+* 官方网站：<http://jeesite.com>
+* 官方论坛：<http://jeesite.net>
+* 微信公众号：
+
+![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0120/235836_3018847b_6732.jpeg "JeeSite4微信公众号")
+
+# Git 全局设置技巧
+
+```
+1、提交检出均不转换换行符
+
+git config --global core.autocrlf false
+
+2、拒绝提交包含混合换行符的文件
+
+git config --global core.safecrlf true
+```
