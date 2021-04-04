@@ -563,7 +563,7 @@ web:
   # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
   staticFileExcludeUri: /druid/
   
-  # 静态资源路径前缀，可做CDN加速优化
+  # 静态资源路径前缀，可做 CDN 加速优化，默认前面增加 ctxPath 前缀，如果前面写 “//” 两个斜杠 或 包含 “://” 不加 ctxPath。
   staticPrefix: /static
   
   # 严格模式（更严格的数据安全验证）
