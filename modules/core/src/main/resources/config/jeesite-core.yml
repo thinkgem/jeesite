@@ -455,10 +455,11 @@ session:
   # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
   #shareSessionIdCookieName: ${session.sessionIdCookieName}
 
-  # 仅在 HTTPS 下通信 Cookie 数据
-  #session.sessionIdCookieSecure: false
-  #session.sessionIdCookieHttpOnly: true
-
+  # 其它 SimpleCookie 参数（v4.2.3）
+  #sessionIdCookieSecure: false
+  #sessionIdCookieHttpOnly: true
+  #sessionIdCookieSameSite: LAX
+  
   # 设置接收SessionId请求参数的名称
   sessionIdParamName: __sid
   

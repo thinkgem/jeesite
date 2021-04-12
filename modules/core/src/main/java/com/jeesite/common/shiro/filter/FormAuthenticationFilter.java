@@ -21,6 +21,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.servlet.Cookie.SameSiteOptions;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		rememberUserCodeCookie.setName(REMEMBER_USERCODE_PARAM);
 		rememberUserCodeCookie.setPath(Global.getProperty("session.sessionIdCookiePath"));
 		rememberUserCodeCookie.setSecure(Global.getPropertyToBoolean("session.sessionIdCookieSecure", "false"));
+		rememberUserCodeCookie.setHttpOnly(Global.getPropertyToBoolean("session.sessionIdCookieHttpOnly", "true"));
+		rememberUserCodeCookie.setSameSite(SameSiteOptions.valueOf(Global.getProperty("session.sessionIdCookieSameSite", "LAX")));
         instance = this;
 	}
 	
