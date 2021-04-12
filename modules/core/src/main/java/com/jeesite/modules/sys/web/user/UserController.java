@@ -94,7 +94,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public String infoSaveBase(User user, HttpServletRequest request) {
 		if (StringUtils.isBlank(user.getUserName())){
-			return renderResult(Global.TRUE, text("sys.user.userNameNotBlank"));
+			return renderResult(Global.FALSE, text("sys.user.userNameNotBlank"));
 		}
 		Global.assertDemoMode();
 		User currentUser = UserUtils.getUser();
