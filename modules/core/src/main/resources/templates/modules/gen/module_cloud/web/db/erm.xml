@@ -47,7 +47,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path>db\${module.moduleCode}.sql</output_path>
+				<output_path>db${'\\'}${module.moduleCode}.sql</output_path>
 				<encoding>UTF-8</encoding>
 				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>false</is_open_after_saved>
@@ -79,7 +79,7 @@
 			</export_ddl_setting>
 			<export_excel_setting>
 				<category_id>null</category_id>
-				<output_path>db\${module.moduleCode}.xls</output_path>
+				<output_path>db${'\\'}${module.moduleCode}.xls</output_path>
 				<template></template>
 				<template_path></template_path>
 				<used_default_template_lang>en</used_default_template_lang>
@@ -95,7 +95,7 @@
 				<is_open_after_saved>true</is_open_after_saved>
 			</export_html_setting>
 			<export_image_setting>
-				<output_file_path>db\${module.moduleCode}.png</output_file_path>
+				<output_file_path>db${'\\'}${module.moduleCode}.png</output_file_path>
 				<category_dir_path></category_dir_path>
 				<with_category_image>true</with_category_image>
 				<is_open_after_saved>true</is_open_after_saved>
