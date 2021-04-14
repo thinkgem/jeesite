@@ -10,6 +10,7 @@
 				<% if(hasPermi('test:testData:edit')){ %>
 					<a href="${ctx}/test/testData/form" class="btn btn-default btnTool" title="新增数据"><i class="fa fa-plus"></i> 新增</a>
 				<% } %>
+				<a href="${ctx}/demo/dataGrid/stateGrid" class="btn btn-default btnTool" title="统计表样例"><i class="fa fa-hand-lizard-o"></i> 统计表样例</a>
 			</div>
 		</div>
 		<div class="box-body">
@@ -174,6 +175,7 @@ $('#dataGrid').dataGrid({
 		}}
 	],
 	
+	shrinkToFit: false, // 是否按百分比自动调整列宽，当列比较多时，开启水平滚动，可设置为false
 	frozenCols: true, 	// 启用冻结列，并在colModel中设置frozen:true
 	showRownum: true,	// 是否显示行号，默认true
 	showFooter: true,	// 是否显示底部合计行，数据载入详见 ajaxSuccess

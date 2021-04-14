@@ -285,7 +285,14 @@ $("#testDataChildDataGrid").dataGrid({
 	columnModel: [
 		{header:'状态', name:'status', editable:true, hidden:true},
 		{header:'主键', name:'id', editable:true, hidden:true},
-		{header:'排序号', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
+		{header:'排序号', name:'testSort', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits', 
+// 			'data-inputmask-alias':"money", 'data-inputmask': "'digits':'2'",
+			dataInit: function(element){
+// 				$(element).addClass('inputmask').attr('data-inputmask-alias', "money").attr('data-inputmask', "'digits':'2'").inputmask()
+				$(element).addClass('inputmask').attr({'data-inputmask-alias': "money", 'data-inputmask': "'digits':'2'"}).inputmask()
+// 				$(element).inputmask();
+			}
+		}},
 		{header:'父表主键', name:'testData.id', editable:true, hidden:true},
 		{header:'单行文本', name:'testInput', width:150, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
 		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
