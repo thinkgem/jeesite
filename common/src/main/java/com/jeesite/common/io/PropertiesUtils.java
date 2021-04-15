@@ -218,21 +218,24 @@ public class PropertiesUtils {
 	 */
 	private static Logger initLogger(){
 		String logPath = null;
-		try {
-			// 获取当前classes目录
-			logPath = ResourceUtils.getResource("/").getFile().getPath();
-		} catch (Exception e) {
-			// 取不到，取当前工作路径
-			logPath = System.getProperty("user.dir");
+		if (StringUtils.isNotBlank(System.getProperty("customLogPath"))){
+			// 如果 Tomcat 下部署多个项目的时候 logPath 会出现项目之间串用问题，所以启用 customLogPath 名字
+			logPath = System.getProperty("customLogPath");
+		}else{
+			try {
+				// 获取当前classes目录
+				logPath = ResourceUtils.getResource("/").getFile().getPath();
+			} catch (Exception e) {
+				// 取不到，取当前工作路径
+				logPath = System.getProperty("user.dir");
+			}
+			// 取当前日志路径下有classes目录，则使用classes目录
+			String classesLogPath = FileUtils.path(logPath + "/WEB-INF/classes");
+			if (new File(classesLogPath).exists()){
+				logPath = classesLogPath;
+			}
 		}
-		// 取当前日志路径下有classes目录，则使用classes目录
-		String classesLogPath = FileUtils.path(logPath + "/WEB-INF/classes");
-		if (new File(classesLogPath).exists()){
-			logPath = classesLogPath;
-		}
-		if (StringUtils.isBlank(System.getProperty("logPath"))){
-			System.setProperty("logPath", FileUtils.path(logPath));
-		}
+		System.setProperty("logPath", FileUtils.path(logPath));
 		return LoggerFactory.getLogger(PropertiesUtils.class);
 	}
 	
