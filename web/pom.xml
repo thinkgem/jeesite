@@ -61,6 +61,13 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 		
+		<!-- 内容管理模块
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
 		<!-- Spring Boot Tomcat
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

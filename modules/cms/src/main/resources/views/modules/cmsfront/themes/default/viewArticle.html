@@ -1,0 +1,9 @@
+<% layout('layouts/default.html', {title:'文章查看',libs: []}){ %>
+<% include('include/banner.html'){} %>
+<div class="row article-view">
+	<h3 class="article-title">${article.title}</h3>
+	<blockquote class="article-desc">摘要：${article.description}</blockquote>
+	<div class="article-content uparse">${article.articleData.content}</div>
+	<div class="article-info">发布者：${article.createBy} &nbsp; 点击数：${article.hits} &nbsp; 发布时间：${article.createDate,"yyyy-MM-dd HH:mm"} &nbsp; 更新时间：${article.updateDate,"yyyy-MM-dd HH:mm"}</div>
+</div>
+<% } %>

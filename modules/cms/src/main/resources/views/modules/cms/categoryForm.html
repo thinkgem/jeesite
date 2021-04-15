@@ -1,0 +1,278 @@
+<% layout('/layouts/default.html', {title: '栏目添加', libs: ['validate','fileupload']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-organization"></i> ${text(category.isNewRecord ? '新增栏目' : '编辑栏目')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${category}" action="${ctx}/cms/category/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4">${text('上级栏目')}：</label>
+							<div class="col-sm-8">
+								<#form:treeselect id="parent" title="${text('上级栏目')}"
+									path="parent.id" labelPath="parent.categoryName"
+									url="${ctx}/cms/category/treeData?excludeCode=${category.id}"
+									class="" allowClear="true" canSelectRoot="true"
+									canSelectParent="true" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span>${text('归属站点')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="site.siteCode" items="${@CmsUtils.getSiteList()}" itemLabel="siteName" itemValue="siteCode" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('栏目编码')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord" />
+								<#form:input path="categoryCode" maxlength="64" readonly="${!category.isNewRecord}"
+									class="form-control required abc" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('内容模型')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="moduleType" dictType="cms_module_type" blankOption="true" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span>${text('栏目名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="categoryName" maxlength="100" class="form-control required" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('本级排序号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="treeSort" class="form-control required digits" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('栏目图片')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadImage" bizKey="${category.id}" bizType="category_image"
+									returnPath="true" filePathInputId="image" uploadType="image" readonly="false"
+									maxUploadNum="1" isMini="false" />
+								<#form:input path="image" maxlength="255" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('外部链接')}：<i class="fa icon-question " title="栏目超链接地址，优先级“高”"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="href" maxlength="255" placeholder="栏目超链接地址，优先级“高”" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('超链接目标窗口')}：<i class="fa icon-question "
+									title="栏目超链接打开的目标窗口，如：“_blank”"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="target" maxlength="20" placeholder="栏目超链接打开的目标窗口，新窗口打开，请填写：“_blank”" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('栏目描述信息')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="description" maxlength="500" placeholder="填写描述，有助于搜搜引擎优化" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('栏目关键字')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="keywords" maxlength="500" placeholder="填写关键词，有助于搜索引擎优化" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-unit">${text('栏目配置')}</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="是否在导航中显示该栏目">
+							<span class="required hide">*</span> ${text('是否在导航中显示')}：<i class="fa icon-question"></i></label>
+						<div class="col-sm-8">
+							<#form:radio path="inMenu" dictType="sys_show_hide" class="form-control" />
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="">
+							<span class="required hide">*</span> ${text('是否允许评论')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-8">
+							<#form:radio path="isCanComment" dictType="sys_yes_no" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="是否在分类页中显示该栏目的文章列表">
+							<span class="required hide">*</span> ${text('是否在分类页中显示')}：<i class="fa icon-question" ></i></label>
+						<div class="col-sm-8">
+							<#form:radio path="inList" dictType="sys_show_hide" class="form-control" />
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title=""> <span class="required hide">*</span>
+							${text('是否需要审核')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-8">
+							<#form:radio path="isNeedAudit" dictType="sys_yes_no" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="默认展现方式,首栏目内容列表,栏目第一条内容">
+							<span class="required hide">*</span> ${text('内容展现模式')}：<i class="fa icon-question" ></i></label>
+						<div class="col-sm-8">
+							<#form:radio path="showModes" dictType="cms_show_modes" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="自定义内容视图名称必须以'${category_DEFAULT_TEMPLATE}'开始">
+							${text('自定义列表视图')}：<i class="fa icon-question "></i></label>
+						<div class="col-sm-8">
+							<#form:select path="customListView" items="${listViewList}" itemLabel="id" itemValue="id" blankOption="true" class="form-control " />
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="自定义内容视图名称必须以'${article_DEFAULT_TEMPLATE}'开始"> <span class="required hide">*</span>
+							${text('自定义内容视图')}：<i class="fa icon-question "></i></label>
+						<div class="col-sm-8">
+							<#form:select path="customContentView" items="${contentViewList}" itemLabel="id" itemValue="id" blankOption="true" class="form-control " />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-2" title="视图参数例如: {count:2, title_show:'yes'} 则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}">
+							${text('视图参数配置')}：<i class="fa icon-question"></i></label>
+						<div class="col-sm-10">
+							<#form:input path="viewConfig" maxlength="1000" class="form-control"
+								placeholder="视图参数例如: {count:2, title_show:'yes'} 则在视图文件中的获取方法是：${'${'}viewConfig_count}、${'${'}viewConfig_titleShow}" />
+							<br />
+							<ul class="text-muted  well well-lg no-shadow">
+								<li>例如视图参数设置为：count:2,titleShow:'yes'则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}。</li>
+								<li>设置栏目的管理地址：若设置【adminUrl:false】表示无管理地址，在内容发布栏目列表中不显示该栏目；</li>
+								<li>设置【adminUrl:'/cms/guestbook'】表示有管理地址，在内容发布栏目列表中点击该栏目链接到该地址。</li>
+								<!-- <li>管理地址参数：若设置【adminUrlParam:'fileDownload=true'】则代表链接模型为文件下载的栏目，新增链接的时候出现文件上传对话框。</li>
+								<li>管理地址参数：若设置【adminUrlParam:'outlineView=true'】则代表文章模型开启大纲视图编辑，在线编辑器左侧显示大纲视图。</li> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-unit">${text('其他信息')}</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-2" title="">
+							<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-10">
+							<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<#form:extend collapsed="true" />
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('cms:category:edit')){ %>
+						<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler : function(form) {
+		js.ajaxSubmitForm($(form), function(data) {
+			js.showMessage(data.message);
+			if (data.result == Global.TRUE) {
+				js.closeCurrentTabPage(function(contentWindow) {
+					contentWindow.$('#dataGrid').dataGrid('refreshTreeChildren',
+							$('#parentCode').val(), '${category.id}');
+				});
+			}
+		}, "json");
+	}
+});
+// 选择父级回调方法
+function treeselectCallback(id, act, index, layero) {
+	if (id == 'parent' && (act == 'ok' || act == 'clear')) {
+		// 创建并初始化下一个节点信息，如：排序号、默认值
+		$.get('${ctx}/cms/category/createNextNode?parentCode='
+				+ $('#parentCode').val(), function(data) {
+			$('#treeSort').val(data.treeSort);
+		});
+	}
+}
+</script>

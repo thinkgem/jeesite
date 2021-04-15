@@ -1,0 +1,94 @@
+<% layout('/layouts/default.html', {title: '内容管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text('内容管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="${ctxFront}/index" target="_blank" class="btn btn-default" title="${text('访问站点')}"><i class="fa fa-globe"></i> ${text('访问网站')}</a>
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('cms:article:edit')){ %>
+					<a href="${ctx}/cms/article/form" onclick="$(this).data('href', this.href+'?category.categoryCode='+$('#categoryCode').val())" class="btn btn-default btnTool" title="${text('新增文章')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${article}" action="${ctx}/cms/article/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('栏目编码')}：</label>
+					<div class="control-inline">
+						<#form:input id="categoryCode" path="category.categoryCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('内容标题')}：</label>
+					<div class="control-inline">
+						<#form:input path="title" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('关键字')}：</label>
+					<div class="control-inline">
+						<#form:input path="keywords" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("标题")}', name:'title', index:'a.category_code', width:350, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/cms/article/form?id='+row.id+'" class="btnList" data-title="${text("编辑文章")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("栏目")}', name:'category.categoryName', index:'c.category_name', width:130, align:'center'},
+		{header:'${text("权重")}', name:'weight', index:'a.weight', width:100, align:"center"},
+		{header:'${text("点击数")}', name:'hits', index:'a.hits', width:100, align:"center"},
+		{header:'${text("字数")}', name:'wordCount', index:'a.word_count', width:100, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+// 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('cms:article:edit')){ %>
+				actions.push('<a href="${ctx}/cms/article/form?id='+row.id+'" class="btnList" title="${text("编辑文章")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/cms/article/disable?id='+row.id+'" class="btnList" title="${text("停用文章")}" data-confirm="${text("确认要停用该文章吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/cms/article/enable?id='+row.id+'" class="btnList" title="${text("启用文章")}" data-confirm="${text("确认要启用该文章吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/cms/article/delete?id='+row.id+'" class="btnList" title="${text("删除文章")}" data-confirm="${text("确认要删除该文章吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctxFront}/view-'+row.category.categoryCode+'-'+row.id+'" target="_blank" title="${text("预览文章")}"><i class="fa fa-globe"></i></a>&nbsp;');
+				}
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

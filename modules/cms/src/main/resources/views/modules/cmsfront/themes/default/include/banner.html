@@ -1,0 +1,15 @@
+<div class="row"><br/>
+	<ul class="breadcrumb">
+		<li><span style="color:#999;">当前位置：</span><a href="${ctx}/index-${site.siteCode}">首页</a></li>
+		<%
+			var pcs = @StringUtils.split(category.parentCodes, ',');
+			var tns = @StringUtils.split(category.treeNames, '/');
+			for(var i = 0; i < pcs.~size - 1; i++){
+		%>
+		<li><a href="${ctx}/list-${pcs[i+1]}">${tns[i]}</a></li>
+		<%
+			}
+		%>
+		<li><a href="${ctx}/list-${category.categoryCode}">${category.categoryName}</a></li>
+	</ul>
+</div>

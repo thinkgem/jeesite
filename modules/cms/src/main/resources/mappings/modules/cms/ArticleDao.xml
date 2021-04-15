@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeesite.modules.cms.dao.ArticleDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="CmsArticle">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+	
+	<update id="updateExpiredWeight">
+		update ${_prefix}cms_article SET weight = 0
+		WHERE weight &gt; 0 AND weight_date &lt; #{weightDate}
+	</update>
+	
+	<update id="updateHitsAddOne">
+		update ${_prefix}cms_article set
+			 hits = hits + 1
+		 WHERE id = #{id}
+	</update>
+	
+</mapper>

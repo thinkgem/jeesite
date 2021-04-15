@@ -1,0 +1,112 @@
+<% layout('/layouts/default.html', {title: '访问日志表管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('访问日志表管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<!-- <% if(hasPermi('cms:visitLog:edit')){ %>
+					<a href="${ctx}/cms/visitLog/form" class="btn btn-default btnTool" title="${text('新增访问日志表')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %> -->
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${visitLog}" action="${ctx}/cms/visitLog/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('请求的URL地址')}：</label>
+					<div class="control-inline">
+						<#form:input path="requestUrl" maxlength="1000" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('受访域名')}：</label>
+					<div class="control-inline">
+						<#form:input path="requestUrlHost" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('来源页面/上一个页面')}：</label>
+					<div class="control-inline">
+						<#form:input path="sourceReferer" maxlength="1000" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('来源域名')}：</label>
+					<div class="control-inline">
+						<#form:input path="sourceRefererHost" maxlength="128" class="form-control width-120"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label">${text('搜索的关键词')}：</label>
+					<div class="control-inline">
+						<#form:input path="searchWord" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				
+				
+				
+				
+			
+				
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('请求的URL地址')}', name:'requestUrl', index:'a.request_url', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/cms/visitLog/form?id='+row.id+'" class="btnList" data-title="${text('编辑访问日志表')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('受访域名')}', name:'requestUrlHost', index:'a.request_url_host', width:150, align:"left"},
+		{header:'${text('来源页面')}', name:'sourceReferer', index:'a.source_referer', width:150, align:"left"},
+		
+		{header:'${text('客户IP地址')}', name:'remoteAddr', index:'a.remote_addr', width:150, align:"left"},
+		
+		{header:'${text('客户机设备类型')}', name:'userDevice', index:'a.user_device', width:150, align:"left"},
+		{header:'${text('客户机操作系统')}', name:'userOsName', index:'a.user_os_name', width:150, align:"left"},
+		{header:'${text('客户机浏览器')}', name:'userBrowser', index:'a.user_browser', width:150, align:"left"},
+		{header:'${text('浏览器版本')}', name:'userBrowserVersion', index:'a.user_browser_version', width:150, align:"left"},
+		
+		{header:'${text('站点编码')}', name:'siteCode', index:'a.site_code', width:150, align:"left"},
+		{header:'${text('站点名称')}', name:'siteName', index:'a.site_name', width:150, align:"left"},
+		{header:'${text('栏目编码')}', name:'categoryCode', index:'a.category_code', width:150, align:"left"},
+		{header:'${text('栏目名称')}', name:'categoryName', index:'a.category_name', width:150, align:"left"},
+		{header:'${text('栏目内容编号')}', name:'contentId', index:'a.content_id', width:150, align:"left"},
+		{header:'${text('访问页面标题')}', name:'contentTitle', index:'a.content_title', width:150, align:"left"},
+		{header:'${text('访问用户编码')}', name:'visitUserCode', index:'a.visit_user_code', width:150, align:"left"},
+
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('cms:visitLog:edit')){ %>
+				actions.push('<a href="${ctx}/cms/visitLog/form?id='+row.id+'" class="btnList" title="${text('编辑访问日志表')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/cms/visitLog/disable?id='+row.id+'" class="btnList" title="${text('停用访问日志表')}" data-confirm="${text('确认要停用该访问日志表吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/cms/visitLog/enable?id='+row.id+'" class="btnList" title="${text('启用访问日志表')}" data-confirm="${text('确认要启用该访问日志表吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/cms/visitLog/delete?id='+row.id+'" class="btnList" title="${text('删除访问日志表')}" data-confirm="${text('确认要删除该访问日志表吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

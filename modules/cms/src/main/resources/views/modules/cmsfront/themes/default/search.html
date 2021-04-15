@@ -1,0 +1,98 @@
+<% layout('layouts/default.html', {title: '全站搜索', libs: []}){ %>
+<script src="${ctxStatic}/laydate/5.0/laydate.js?${_version}"></script>
+<style type="text/css">
+	form.search {margin:12px 20px 5px;}
+	form.search input.txt {padding:4px 8px;font-size:16px;width:300px;margin:5px;border:1px solid #bbb;border-radius:3px;}
+	form.search input.txt.date {width:133px;}
+	form.search .sel {margin:15px 0;padding:10px 5px;border-bottom:1px solid #efefef;font-size:16px;}
+	form.search .act {font-weight:bold;}
+	form.search .btn {padding:4px 18px;font-size:16px;margin-top:-3px;margin-right:5px;border:1px solid #bbb;border-radius:3px;}
+	form.search .btn:hover {color:#333;background:#d1d1d1}
+	dl.search {line-height:25px;border-bottom:1px solid #efefef;margin:10px 20px 15px 20px;}
+	dl.search dt {border-top:1px solid #efefef;padding:13px 5px 5px;font-size:16px;}
+	dl.search dt a {color:#0000cc;text-decoration:underline;}
+	dl.search dd {margin:0 5px 13px;font-size:13px;color:#333;word-break:break-all;word-wrap:break-word;}
+	dl.search dd .info, dl.search dd .info a {margin-top:3px;font-size:12px;color:#008000;}
+	dl.search .highlight {color:#DF0037;}
+	.pagination{margin:0 0 10px 10px;}
+</style>
+<script type="text/javascript">
+var message = "${message!}";
+if (message != ''){
+	alert(message);
+}
+function page(n,s){
+	$("#pageNo").val(n);
+	$("#pageSize").val(s);
+	$("#searchForm").submit();
+	return false;
+}
+function sel(th, val){
+	$('#t').val(val);
+	$('.sel a').removeClass('act');
+	$(th).addClass('act');
+}
+$(function(){
+	laydate.render({elem:'#bd', type:'date', format:'yyyy-MM-dd'});
+	laydate.render({elem:'#ed', type:'date', format:'yyyy-MM-dd'});
+});
+</script>
+<div class="row">
+	<form id="searchForm" method="get" class="search">
+		<input type="hidden" id="pageNo" name="pageNo" value="${page.pageNo!}"/>
+		<input type="hidden" id="t" name="t" value="${isNotBlank(t)?t:'article'}"/>
+		<input type="hidden" id="a" name="a" value="${isNotBlank(t)?t:'0'}"/>
+		<div class="sel">
+			<a href="javascript:" onclick="sel(this, 'article')" class="${isBlank(t) || t == 'article'?'act':''}">文章搜索</a> &nbsp;
+			<!-- <a href="javascript:" onclick="sel(this, 'link')" class="${t == 'link'?'act':''}">链接搜索</a> &nbsp; -->
+		</div>
+		<% if (parameter.a == '1'){ %>
+			<table>
+				<tr><td>包含以下<strong>任意一个</strong>关键词</td><td><input type="text" name="q" value="${q}" class="txt"/>
+					<input type="submit" value="搜  索" class="btn" onclick="$('#a').val('1')"/>
+					<input type="submit" value="简单搜索" class="btn" onclick="$('#a').val('0')"/></td></tr>
+				<tr><td>包含以下<strong>全部</strong>的关键词</td><td><input type="text" name="qand" value="${qand}" class="txt"/></td></tr>
+				<tr><td><strong>不包含</strong>以下关键词</td><td><input type="text" name="qnot" value="${qnot}" class="txt"/></td></tr>
+				<tr><td>最后更新日期范围</td><td>
+					<input id="bd" name="bd" type="text" readonly="readonly" maxlength="20" class="txt date" value="${parameter.bd}"/>&nbsp;~&nbsp;
+					<input id="ed" name="ed" type="text" readonly="readonly" maxlength="20" class="txt date" value="${parameter.ed}"/>
+				</td></tr>
+			</table>
+		<% }else{ %>
+			<input type="hidden" id="pageSize" name="pageSize" value="${page.pageSize!}"/>
+			<input type="text" name="q" value="${q}" class="txt"/>
+			<input type="submit" value="搜  索" class="btn" onclick="$('#a').val('0')"/>
+			<input type="submit" value="高级搜索" class="btn" onclick="$('#a').val('1')"/>
+		<% } %>
+	</form>
+	<dl class="search">
+		<#html:if test="${page! != null && (isBlank(t) || t == 'article')}">
+			<#html:foreach items="${page.list}" var="article">
+				<dt><a href="${article.url}" target="_blank">${article.title}</a></dt>
+				<dd>${article.content}
+					<div class="info">
+						发布者：${article.createBy} &nbsp; 点击数：${article.hits} &nbsp; 
+						发布时间：${article.createDateStr} &nbsp; 更新时间：${article.updateDateStr} &nbsp;
+						<a href="${article.url}" target="_blank">查看全文</a><br/>
+					</div>
+				</dd>
+			</#html:foreach>
+		</#html:if>
+		<#html:if test="${page! != null && t == 'link'}">
+			<#html:forEach items="${page.list}" var="link">
+				<dt><a href="${link.url}" target="_blank">${link.title}</a></dt>
+				<dd><div class="info">
+						发布者：${link.createBy} &nbsp; 发布时间：${link.createDateStr} &nbsp; 更新时间：${link.updateDateStr} &nbsp;
+						<a href="${link.url}" target="_blank">打开链接</a><br/>
+					</div>
+				</dd>
+			</#html:forEach>
+		</#html:if>
+		<#html:if test="${page! == null || page.list.~size == 0}">
+			<dt><#html:if test="${isBlank(q)}">请键入要查找的关键字。</#html:if><#html:if test="${isNotBlank(q)}">抱歉，没有找到与“${q}”相关内容。</#html:if><br/><br/>建议：</dt>
+			<dd><ul><li>检查输入是否正确；</li><li>简化输入词；</li><li>尝试其他相关词，如同义、近义词等。</li></ul></dd>
+		</#html:if>
+	</dl>
+	<div class="pagination">${page! == null ? '' : @page.toHtml()}</div>
+</div>
+<% } %>

@@ -1,0 +1,57 @@
+<% layout('/layouts/default.html', {title: '模板内容', libs: ['validate','ueditor']}){%>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('模板内容')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool"
+					data-widget="collapse">
+					<i class="fa fa-minus"></i>
+				</button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${template}" class="form-horizontal2">
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="input-group mb10">
+							<span class="input-group-addon text-right">&nbsp;${text('文件名')}：</span>
+							<#form:input value="${template.filePath}/${template.fileName}"
+								name="fileName" maxlength="255" class="form-control required nofocus" />
+		                </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<#form:textarea path="fileContent" rows="23"
+							encodeHtml="true" maxlength="990000"
+							class="form-control autoHeight" />
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('cms:template:edit')){ %>
+<!-- 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit" onclick="saveFile()"><i class="fa fa-check"></i> ${text('保 存')}</button> &nbsp; -->
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+	function saveFile() {
+		js.ajaxSubmit("${ctx}/cms/template/saveFileTemplate", {filePath: "${template.fileName}",fileName:$("#file_name").val(),fileSource:$("#fileSource").val()}, function(data) {
+			if(data.result=='1'){
+				window.self.parent.loadTree();
+			}
+			js.showMessage(data.message);
+		});
+	}
+</script>

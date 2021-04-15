@@ -1,0 +1,35 @@
+<% layout('layouts/default.html', {title:site.siteName+'-首页', libs: []}){ %>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="jumbotron">
+			<h1>JeeSite平台简介</h1>
+			<p>${site.description}</p>
+			<p><a class="btn btn-primary btn-sm" href="http://www.jeesite.com" target="_blank">更多...</a></p>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<#html:foreach items="${categoryList(site.siteCode, '0', 3, '')}" var="category,status">
+		<#html:if test="${category.moduleType == 'article'}">
+			<div class="col-lg-4">
+				<div class="bs-component">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"><small><a href="${ctx}/list-${category.categoryCode}" class="pull-right more">更多&gt;&gt;</a></small>${category.categoryName}</h3>
+						</div>
+						<div class="panel-body">
+							<ul class="article-list">
+								<#html:foreach items="${articleList(site.siteCode, category.categoryCode, 5)}" var="article,status">
+									<li>${status.index}. &nbsp; <span class="pull-right">${article.updateDate,'yyyy-MM-dd'}</span>
+										<a href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a> </li>
+								</#html:foreach>
+							</ul>
+						</div>
+						<div class="panel-footer"></div>
+					</div>
+				</div>
+			</div>
+		</#html:if>
+	</#html:foreach>
+</div>
+<% } %>

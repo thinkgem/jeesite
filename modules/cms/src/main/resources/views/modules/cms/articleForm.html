@@ -1,0 +1,252 @@
+<% layout('/layouts/default.html', {title: '文章管理', libs: ['validate','fileupload','ueditor']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/colorpicker/bootstrap-colorpicker.css"/>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text(article.isNewRecord ? '新增文章' : '编辑文章')}（${@CmsUtils.getCurrentSite().getSiteName()}）
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${article}" action="${ctx}/cms/article/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<#form:hidden path="wordCount"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('所属栏目')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+							<#form:treeselect id="category" title="${text('所属栏目')}"
+									path="category.categoryCode" labelPath="category.categoryName"
+									url="${ctx}/cms/category/treeData?excludeCode=${article.category.categoryCode}"
+									class="required" allowClear="true" canSelectRoot="true" canSelectParent="true" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('来源')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="source" dictType="cms_source" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('内容标题')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<div class="input-group">
+									<#form:input path="title" maxlength="255"  class="form-control text-ruler required"/>
+									<span class="input-group-btn">
+										 <span class="input-group input-color " data-color-format="hex">
+											<span class="input-group-addon" style="border-radius:0;border-left:0;">
+												<i style="background-color:${isNotBlank(article.color)?article.color:'#ddd'};"></i>
+											</span>
+											<#form:input path="color" maxlength="50" class="form-control"  style="width:80px;"  placeholder="${text('标题颜色')}"/>
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('外部链接')}：<i class="fa icon-question"  title="${text('如果填写外部链接，点击该文章会直接跳转到该地址，不想不跳转请留空')}。"></i></label>
+							<div class="col-sm-10">
+								<#form:input path="href" maxlength="1000" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="${text('数值越大排序越靠前，可设置权重过期时间')}。">
+							${text('权重/排序')}： <i class="fa icon-question"></i></label>
+						<div class="col-sm-8">
+							<div class="form-inline">
+								<#form:input path="weight" class="form-control  width-90 digits" maxlength="10"/> &nbsp;
+								<#form:checkbox id="weightTop" label="${text('置顶')}" value="${article.weight==9999 ?'1' : ''}"
+										class="form-control" style="vertical-align:middle;"/>
+							</div>
+							<span class="help-block">&nbsp;</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="${text('时间到期后，权重自动恢复为0，如果为空，则权重永不过期')}。">
+							${text('权重过期时间')}： <i class="fa icon-question"></i></label>
+						<div class="col-sm-8">
+						<#form:input path="weightDate" readonly="true" maxlength="20" class="form-control laydate"
+								dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-unit">${text('详细信息')}</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-1">${text('摘要')}：</label>
+						<div class="col-sm-11">
+							<#form:textarea path="description" maxlength="500" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-1">${text('正文')}：</label>
+						<div class="col-sm-11">
+							<#form:ueditor id="content" path="articleData.content" maxlength="10000" height="500" class="required" simpleToolbars="false" readonly="false" outline="false"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-unit">${text('其他信息')}</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-2" title="">
+							<span class="required hide">*</span> ${text('内容图片')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-10">
+						<#form:fileupload id="uploadImage" bizKey="${article.id}"
+								bizType="article_image" returnPath="true"
+								filePathInputId="image" uploadType="image" readonly="false"
+								maxUploadNum="4" isMini="false" />
+						<#form:input path="image" maxlength="1000" readonly="true" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="">
+							<span class="required hide">*</span> ${text('关键字')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-8">
+							<#form:input path="keywords" maxlength="500" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4">${text('推荐位')}：</label>
+						<div class="col-sm-8">
+							<div class="checkbox-list">
+								<#form:checkbox path="posidList" dictType="cms_post" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="${text('文章的发布状态')}">${text('状态')}：<i class="fa icon-question"></i></label>
+						<div class="col-sm-8">
+							<#form:select path="state" dictType="sys_status" blankOption="true" class="form-control" />
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="${text('可修改发布时间，不填则使用当前时间')}">
+							${text('发布时间')}： <i class="fa icon-question"></i></label>
+						<div class="col-sm-8">
+							<#form:input path="createDate" readonly="true" maxlength="20" class="form-control Wdate"
+								dataFormat="datetime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false});"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-unit">${text('高级信息')}</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label class="control-label col-sm-4" title="">
+							<span class="required hide">*</span> ${text('自定义内容视图')}：<i class="fa icon-question" title="自定义内容视图名称必须以'${article_DEFAULT_TEMPLATE}'开始"></i></label>
+						<div class="col-sm-8">
+							<#form:select path="customContentView" items="${contentViewList}" itemLabel="id" itemValue="id" blankOption="true" class="form-control " />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-2" title="">
+							<span class="required hide">*</span> ${text('视图参数配置')}：<i class="fa icon-question" title="视图参数例如: {count:2, title_show:'yes'} 则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}"></i></label>
+						<div class="col-sm-10">
+							<#form:input path="viewConfig" maxlength="1000" placeholder="视图参数例如: {count:2, title_show:'yes'} 则在视图文件中的获取方法是：${'${'}viewConfig_count}、${'${'}viewConfig_titleShow}" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-sm-2" title="">
+							<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+						<div class="col-sm-10">
+							<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<#form:extend collapsed="true" />
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('cms:article:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/colorpicker/bootstrap-colorpicker.js"></script>
+<script type="text/javascript">
+// 颜色控件初始化
+$("#inputForm .input-color").colorpicker();
+// 权重、排序
+$('#weightTop input').on('ifChecked ifUnchecked', function(){
+	if ($(this).is(':checked')){
+		$('#weight').val('9999');
+	}else{
+		$('#weight').val('0');
+	}
+});
+$("#inputForm").validate({
+	submitHandler: function(form){
+		$('#wordCount').val(contentUE.getContentTxt().length);
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

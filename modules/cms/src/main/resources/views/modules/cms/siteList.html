@@ -1,0 +1,90 @@
+<% layout('/layouts/default.html', {title: '站点管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('站点管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('cms:site:edit')){ %>
+					<a href="${ctx}/cms/site/form" class="btn btn-default btnTool" title="${text('新增站点')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${site}" action="${ctx}/cms/site/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('站点名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="siteName" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('站点标题')}：</label>
+					<div class="control-inline">
+						<#form:input path="title" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('站点域名')}：</label>
+					<div class="control-inline">
+						<#form:input path="domain" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('站点名称')}', name:'siteName', index:'a.site_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/cms/site/form?siteCode='+row.siteCode+'" class="btnList" data-title="${text('编辑站点')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('站点标题')}', name:'title', index:'a.title', width:150, align:"left"},
+// 		{header:'${text('站点Logo')}', name:'logo', index:'a.logo', width:150, align:"left"},
+		{header:'${text('站点域名')}', name:'domain', index:'a.domain', width:150, align:"center"},
+		{header:'${text('描述')}', name:'description', index:'a.description', width:150, align:"left"},
+		{header:'${text('主题')}', name:'theme', index:'a.theme', width:150, align:"center"},
+		{header:'${text('状态')}', name:'status', index:'a.status', width:90, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('cms:site:edit')){ %>
+				actions.push('<a href="${ctx}/cms/site/form?siteCode='+row.siteCode+'" class="btnList" title="${text('编辑站点')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/cms/site/disable?siteCode='+row.siteCode+'" class="btnList" title="${text('停用站点')}" data-confirm="${text('确认要停用该站点吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/cms/site/enable?siteCode='+row.siteCode+'" class="btnList" title="${text('启用站点')}" data-confirm="${text('确认要启用该站点吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/cms/site/delete?siteCode='+row.siteCode+'" class="btnList" title="${text('删除站点')}" data-confirm="${text('确认要删除该站点吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

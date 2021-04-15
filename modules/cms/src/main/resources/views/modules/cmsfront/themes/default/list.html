@@ -1,0 +1,31 @@
+<% layout('layouts/default.html', {title: '列表页面', libs: []}){ %>
+<% include('include/banner.html'){} %>
+<div class="row">
+	<div class="col-xs-2">
+		<h4>栏目列表</h4>
+		<ul class="article-list">
+			<#html:foreach items="${qmark(categoryList! != null, categoryList!, categoryList(site.siteCode, category.parentCode, 50, ''))}" var="category,status">
+				<li><a href="${category.url}" target="${category.target}" >${category.categoryName}</a></li>
+			</#html:foreach>
+		</ul>
+	</div>
+	<div class="col-xs-10">
+		<h4>${category.categoryName}</h4>
+		<#html:if test="${page! != null && category.moduleType == 'article'}">
+			<ul class="article-list">
+				<#html:foreach items="${page.list}" var="article,status">
+					<li><span class="pull-right">${article.updateDate,'yyyy-MM-dd'}</span>
+						<a href="${article.url}" style="color:${article.color}">${abbr(article.title,96)}</a></li>
+				</#html:foreach>
+			</ul>
+			<div class="pagination">${@page.toHtml()}</div>
+			<script type="text/javascript">
+			function page(n,s){
+				location="${ctx}/list-${category.categoryCode}?pageNo="+n+"&pageSize="+s;
+			}
+			</script>
+		</#html:if>
+	</div>
+</div>
+<% } %>
+

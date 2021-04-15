@@ -16,6 +16,7 @@
         <module>../parent</module>
         <module>../common</module>
         <module>../modules/core</module>
+        <module>../modules/cms</module>
         <module>../web</module>
     </modules>
 	

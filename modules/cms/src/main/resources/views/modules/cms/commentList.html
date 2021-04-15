@@ -1,0 +1,150 @@
+<% layout('/layouts/default.html', {title: '文章评论表管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('文章评论表管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('cms:comment:edit')){ %>
+					<a href="${ctx}/cms/comment/form" class="btn btn-default btnTool" title="${text('新增文章评论表')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${comment}" action="${ctx}/cms/comment/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('栏目编码')}：</label>
+					<div class="control-inline">
+						<#form:input path="categoryCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('内容编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="articleId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('父级评论')}：</label>
+					<div class="control-inline">
+						<#form:input path="parentId" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('内容标题')}：</label>
+					<div class="control-inline">
+						<#form:input path="articleTitle" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('评论内容')}：</label>
+					<div class="control-inline">
+						<#form:input path="content" maxlength="255" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('评论姓名')}：</label>
+					<div class="control-inline">
+						<#form:input path="name" maxlength="50" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('评论IP')}：</label>
+					<div class="control-inline">
+						<#form:input path="ip" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('审核人')}：</label>
+					<div class="control-inline">
+						<#form:input path="auditUserCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('审核时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="auditDate" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('审核意见')}：</label>
+					<div class="control-inline">
+						<#form:input path="auditComment" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('支持数')}：</label>
+					<div class="control-inline">
+						<#form:input path="hitsPlus" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('反对数')}：</label>
+					<div class="control-inline">
+						<#form:input path="hitsMinus" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text('栏目编码')}', name:'categoryCode', index:'a.category_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/cms/comment/form?id='+row.id+'" class="btnList" data-title="${text('编辑文章评论表')}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text('内容编号')}', name:'articleId', index:'a.article_id', width:150, align:"left"},
+		{header:'${text('父级评论')}', name:'parentId', index:'a.parent_id', width:150, align:"left"},
+		{header:'${text('内容标题')}', name:'articleTitle', index:'a.article_title', width:150, align:"left"},
+		{header:'${text('评论内容')}', name:'content', index:'a.content', width:150, align:"left"},
+		{header:'${text('评论姓名')}', name:'name', index:'a.name', width:150, align:"left"},
+		{header:'${text('评论IP')}', name:'ip', index:'a.ip', width:150, align:"left"},
+		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text('审核人')}', name:'auditUserCode', index:'a.audit_user_code', width:150, align:"left"},
+		{header:'${text('审核时间')}', name:'auditDate', index:'a.audit_date', width:150, align:"center"},
+		{header:'${text('审核意见')}', name:'auditComment', index:'a.audit_comment', width:150, align:"left"},
+		{header:'${text('支持数')}', name:'hitsPlus', index:'a.hits_plus', width:150, align:"center"},
+		{header:'${text('反对数')}', name:'hitsMinus', index:'a.hits_minus', width:150, align:"center"},
+		{header:'${text('状态')}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+		}},
+		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('cms:comment:edit')){ %>
+				actions.push('<a href="${ctx}/cms/comment/form?id='+row.id+'" class="btnList" title="${text('编辑文章评论表')}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/cms/comment/disable?id='+row.id+'" class="btnList" title="${text('停用文章评论表')}" data-confirm="${text('确认要停用该文章评论表吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/cms/comment/enable?id='+row.id+'" class="btnList" title="${text('启用文章评论表')}" data-confirm="${text('确认要启用该文章评论表吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/cms/comment/delete?id='+row.id+'" class="btnList" title="${text('删除文章评论表')}" data-confirm="${text('确认要删除该文章评论表吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
