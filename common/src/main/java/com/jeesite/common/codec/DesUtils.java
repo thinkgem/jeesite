@@ -73,15 +73,15 @@ public class DesUtils {
 			String encData = "";
 			List firstKeyBt = null, secondKeyBt = null, thirdKeyBt = null;
 			int firstLength = 0, secondLength = 0, thirdLength = 0;
-			if (firstKey != null && firstKey.equals("")) {
+			if (firstKey != null && !firstKey.equals("")) {
 				firstKeyBt = getKeyBytes(firstKey);
 				firstLength = firstKeyBt.size();
 			}
-			if (secondKey != null && secondKey.equals("")) {
+			if (secondKey != null && !secondKey.equals("")) {
 				secondKeyBt = getKeyBytes(secondKey);
 				secondLength = secondKeyBt.size();
 			}
-			if (thirdKey != null && thirdKey.equals("")) {
+			if (thirdKey != null && !thirdKey.equals("")) {
 				thirdKeyBt = getKeyBytes(thirdKey);
 				thirdLength = thirdKeyBt.size();
 			}
@@ -90,7 +90,7 @@ public class DesUtils {
 				if (leng < 4) {
 					int[] bt = strToBt(data);
 					int[] encByte = null;
-					if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("") && thirdKey != null && thirdKey.equals("")) {
+					if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !firstKey.equals("")) {
 						int[] tempBt;
 						int x, y, z;
 						tempBt = bt;
@@ -105,7 +105,7 @@ public class DesUtils {
 						}
 						encByte = tempBt;
 					} else {
-						if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("")) {
+						if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
 							int[] tempBt;
 							int x, y;
 							tempBt = bt;
@@ -117,7 +117,7 @@ public class DesUtils {
 							}
 							encByte = tempBt;
 						} else {
-							if (firstKey != null && firstKey.equals("")) {
+							if (firstKey != null && !firstKey.equals("")) {
 								int[] tempBt;
 								int x = 0;
 								tempBt = bt;
@@ -137,7 +137,7 @@ public class DesUtils {
 						String tempData = data.substring(i * 4 + 0, i * 4 + 4);
 						int[] tempByte = strToBt(tempData);
 						int[] encByte = null;
-						if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("") && thirdKey != null && thirdKey.equals("")) {
+						if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !thirdKey.equals("")) {
 							int[] tempBt;
 							int x, y, z;
 							tempBt = tempByte;
@@ -152,7 +152,7 @@ public class DesUtils {
 							}
 							encByte = tempBt;
 						} else {
-							if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("")) {
+							if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
 								int[] tempBt;
 								int x, y;
 								tempBt = tempByte;
@@ -164,7 +164,7 @@ public class DesUtils {
 								}
 								encByte = tempBt;
 							} else {
-								if (firstKey != null && firstKey.equals("")) {
+								if (firstKey != null && !firstKey.equals("")) {
 									int[] tempBt;
 									int x;
 									tempBt = tempByte;
@@ -181,7 +181,7 @@ public class DesUtils {
 						String remainderData = data.substring(iterator * 4 + 0, leng);
 						int[] tempByte = strToBt(remainderData);
 						int[] encByte = null;
-						if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("") && thirdKey != null && thirdKey.equals("")) {
+						if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !thirdKey.equals("")) {
 							int[] tempBt;
 							int x, y, z;
 							tempBt = tempByte;
@@ -196,7 +196,7 @@ public class DesUtils {
 							}
 							encByte = tempBt;
 						} else {
-							if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("")) {
+							if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
 								int[] tempBt;
 								int x, y;
 								tempBt = tempByte;
@@ -208,7 +208,7 @@ public class DesUtils {
 								}
 								encByte = tempBt;
 							} else {
-								if (firstKey != null && firstKey.equals("")) {
+								if (firstKey != null && !firstKey.equals("")) {
 									int[] tempBt;
 									int x;
 									tempBt = tempByte;
@@ -236,15 +236,15 @@ public class DesUtils {
 			String decStr = "";
 			List firstKeyBt = null, secondKeyBt = null, thirdKeyBt = null;
 			int firstLength = 0, secondLength = 0, thirdLength = 0;
-			if (firstKey != null && firstKey.equals("")) {
+			if (firstKey != null && !firstKey.equals("")) {
 				firstKeyBt = getKeyBytes(firstKey);
 				firstLength = firstKeyBt.size();
 			}
-			if (secondKey != null && secondKey.equals("")) {
+			if (secondKey != null && !secondKey.equals("")) {
 				secondKeyBt = getKeyBytes(secondKey);
 				secondLength = secondKeyBt.size();
 			}
-			if (thirdKey != null && thirdKey.equals("")) {
+			if (thirdKey != null && !thirdKey.equals("")) {
 				thirdKeyBt = getKeyBytes(thirdKey);
 				thirdLength = thirdKeyBt.size();
 			}
@@ -260,7 +260,7 @@ public class DesUtils {
 					intByte[j] = Integer.parseInt(strByte.substring(j, j + 1));
 				}
 				int[] decByte = null;
-				if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("") && thirdKey != null && thirdKey.equals("")) {
+				if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !thirdKey.equals("")) {
 					int[] tempBt;
 					int x, y, z;
 					tempBt = intByte;
@@ -275,7 +275,7 @@ public class DesUtils {
 					}
 					decByte = tempBt;
 				} else {
-					if (firstKey != null && firstKey.equals("") && secondKey != null && secondKey.equals("")) {
+					if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
 						int[] tempBt;
 						int x, y, z;
 						tempBt = intByte;
@@ -287,7 +287,7 @@ public class DesUtils {
 						}
 						decByte = tempBt;
 					} else {
-						if (firstKey != null && firstKey.equals("")) {
+						if (firstKey != null && !firstKey.equals("")) {
 							int[] tempBt;
 							int x, y, z;
 							tempBt = intByte;
