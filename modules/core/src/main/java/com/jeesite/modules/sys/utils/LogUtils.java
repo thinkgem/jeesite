@@ -20,6 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.method.HandlerMethod;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.lang.ExceptionUtils;
@@ -31,7 +32,6 @@ import com.jeesite.common.mybatis.mapper.MapperHelper;
 import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.utils.DiffDataUtils;
 import com.jeesite.common.utils.SpringUtils;
-import com.jeesite.common.web.http.UserAgentUtils;
 import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.LogService;
@@ -94,10 +94,10 @@ public class LogUtils {
 		}
 		log.setServerAddr(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
 		log.setRemoteAddr(IpUtils.getRemoteAddr(request));
-		UserAgent userAgent = UserAgentUtils.getUserAgent(request);
+		log.setUserAgent(EncodeUtils.xssFilter(request.getHeader("User-Agent")));
+		UserAgent userAgent = UserAgent.parseUserAgentString(log.getUserAgent());
 		log.setDeviceName(userAgent.getOperatingSystem().getName());
 		log.setBrowserName(userAgent.getBrowser().getName());
-		log.setUserAgent(request.getHeader("User-Agent"));
 		log.setRequestUri(StringUtils.abbr(request.getRequestURI(), 255));
 		log.setRequestParams(request.getParameterMap());
 		log.setRequestMethod(request.getMethod());
