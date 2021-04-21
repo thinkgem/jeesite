@@ -51,9 +51,9 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	public void save(VisitLog visitLog) {
 		super.save(visitLog);
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(visitLog.getId(), "visitLog_image");
+		FileUploadUtils.saveFileUpload(visitLog, visitLog.getId(), "visitLog_image");
 		// 保存上传附件
-		FileUploadUtils.saveFileUpload(visitLog.getId(), "visitLog_file");
+		FileUploadUtils.saveFileUpload(visitLog, visitLog.getId(), "visitLog_file");
 	}
 	
 	/**

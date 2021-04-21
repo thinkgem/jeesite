@@ -51,9 +51,9 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	public void save(Comment comment) {
 		super.save(comment);
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(comment.getId(), "comment_image");
+		FileUploadUtils.saveFileUpload(comment, comment.getId(), "comment_image");
 		// 保存上传附件
-		FileUploadUtils.saveFileUpload(comment.getId(), "comment_file");
+		FileUploadUtils.saveFileUpload(comment, comment.getId(), "comment_file");
 	}
 	
 	/**

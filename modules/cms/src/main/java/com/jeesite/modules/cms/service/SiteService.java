@@ -53,7 +53,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 		super.save(site);
 		CmsUtils.removeCache("siteList");
 		// 保存logo
-		FileUploadUtils.saveFileUpload(site.getId(), "site_logo");
+		FileUploadUtils.saveFileUpload(site, site.getId(), "site_logo");
 	}
 
 	/**

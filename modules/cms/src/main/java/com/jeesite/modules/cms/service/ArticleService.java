@@ -158,9 +158,9 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 			articleDataDao.update(article.getArticleData());
 		}
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(article.getId(), "article_image");
+		FileUploadUtils.saveFileUpload(article, article.getId(), "article_image");
 //		// 保存上传附件
-//		FileUploadUtils.saveFileUpload(article.getId(), "article_file");
+//		FileUploadUtils.saveFileUpload(article, article.getId(), "article_file");
 	}
 
 	/**

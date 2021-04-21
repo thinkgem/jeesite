@@ -51,9 +51,9 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	public void save(Report report) {
 		super.save(report);
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(report.getId(), "report_image");
+		FileUploadUtils.saveFileUpload(report, report.getId(), "report_image");
 		// 保存上传附件
-		FileUploadUtils.saveFileUpload(report.getId(), "report_file");
+		FileUploadUtils.saveFileUpload(report, report.getId(), "report_file");
 	}
 	
 	/**

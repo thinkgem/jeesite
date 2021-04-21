@@ -164,11 +164,11 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	<% } %>
 	<% if(toBoolean(table.optionMap['isImageUpload'])){ %>
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(${className}.getId(), "${className}_image");
+		FileUploadUtils.saveFileUpload(${className}, ${className}.getId(), "${className}_image");
 	<% } %>
 	<% if(toBoolean(table.optionMap['isFileUpload'])){ %>
 		// 保存上传附件
-		FileUploadUtils.saveFileUpload(${className}.getId(), "${className}_file");
+		FileUploadUtils.saveFileUpload(${className}, ${className}.getId(), "${className}_file");
 	<% } %>
 	<% for (child in table.childList) { %>
 		// 保存 ${ClassName}子表

@@ -95,7 +95,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 		msgInner.setIsAttac(StringUtils.isNotBlank(ServletUtils.getParameter("msgInner_file"))?Global.YES:Global.NO);
 		super.save(msgInner);
 		// 保存上传附件
-		FileUploadUtils.saveFileUpload(msgInner.getId(), "msgInner_file");
+		FileUploadUtils.saveFileUpload(msgInner, msgInner.getId(), "msgInner_file");
 		// 发送内部消息
 		if (MsgInner.STATUS_NORMAL.equals(msgInner.getStatus())){
 			this.updateStatus(msgInner); // 更新状态

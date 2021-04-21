@@ -66,7 +66,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		super.save(category);
 		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		// 保存上传图片
-		FileUploadUtils.saveFileUpload(category.getId(), "category_image");
+		FileUploadUtils.saveFileUpload(category, category.getId(), "category_image");
 	}
 	
 	/**
