@@ -367,7 +367,7 @@ logging:
 #  # 默认时区（4.1.3+）
 #  defaultTimeZone: GMT+08:00
   
-# 任务调度（个人版）
+# 任务调度（标准版）
 #job:
 #  enabled: false
 #  
@@ -438,7 +438,7 @@ shiro:
 #  logoutUrl: ${shiro.loginUrl}
 #  successUrl: ${adminPath}/index
 #
-##  # Apereo CAS 相关配置（个人版）
+##  # Apereo CAS 相关配置（标准版）
 ##  casServerUrl: http://127.0.0.1:8981/cas
 ##  casClientUrl: http://127.0.0.1:8980/js
 ##  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
