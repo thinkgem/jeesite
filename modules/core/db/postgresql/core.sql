@@ -164,6 +164,7 @@ CREATE TABLE js_sys_dict_data
 	tree_names varchar(1000) NOT NULL,
 	dict_label varchar(100) NOT NULL,
 	dict_value varchar(100) NOT NULL,
+	dict_icon varchar(100),
 	dict_type varchar(100) NOT NULL,
 	is_sys char(1) NOT NULL,
 	description varchar(500),
@@ -1064,6 +1065,7 @@ COMMENT ON COLUMN js_sys_dict_data.tree_level IS '层次级别';
 COMMENT ON COLUMN js_sys_dict_data.tree_names IS '全节点名';
 COMMENT ON COLUMN js_sys_dict_data.dict_label IS '字典标签';
 COMMENT ON COLUMN js_sys_dict_data.dict_value IS '字典键值';
+COMMENT ON COLUMN js_sys_dict_data.dict_icon IS '字典图标';
 COMMENT ON COLUMN js_sys_dict_data.dict_type IS '字典类型';
 COMMENT ON COLUMN js_sys_dict_data.is_sys IS '系统内置（1是 0否）';
 COMMENT ON COLUMN js_sys_dict_data.description IS '字典描述';

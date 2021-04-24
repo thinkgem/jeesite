@@ -164,6 +164,7 @@ CREATE TABLE js_sys_dict_data
 	tree_names varchar(1000) NOT NULL,
 	dict_label vargraphic(100) NOT NULL,
 	dict_value varchar(100) NOT NULL,
+	dict_icon varchar(100),
 	dict_type varchar(100) NOT NULL,
 	is_sys char(1) NOT NULL,
 	description vargraphic(500),
