@@ -39,6 +39,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 账号自助服务Controller
@@ -48,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping(value = "/account")
 @ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
-@Api(tags = "Account / 账号服务：验证码登录、找回密码、账号注册")
+@Api(tags = "Account - 账号服务")
 public class AccountController extends BaseController{
 
 	@Autowired
@@ -107,7 +108,7 @@ public class AccountController extends BaseController{
 	 * 忘记密码页面
 	 */
 	@GetMapping(value = "forgetPwd")
-	@ApiOperation(value = "忘记密码页面")
+	@ApiIgnore
 	public String forgetPwd(Model model) {
 		return "modules/sys/forgetPwd";
 	}
@@ -340,7 +341,7 @@ public class AccountController extends BaseController{
 	 * @param user 用户信息参数
 	 */
 	@GetMapping(value = "registerUser")
-	@ApiOperation(value = "用户注册页面")
+	@ApiIgnore
 	public String registerUser(User user, HttpServletRequest request) {
 		return "modules/sys/registerUser";
 	}
