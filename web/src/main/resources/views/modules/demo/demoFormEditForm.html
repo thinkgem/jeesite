@@ -1,9 +1,9 @@
-<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','ueditor','dataGrid','inputmask']}){ %>
+<% layout('/layouts/default.html', {title: '组件应用实例', libs: ['validate','fileupload','ueditor','dataGrid','inputmask']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa icon-notebook"></i> ${testData.isNewRecord ? '新增数据' : '编辑数据'}
+				<i class="fa icon-notebook"></i> 组件应用实例
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -101,6 +101,36 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 金额格式：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-rmb"></i></span>
+									<#form:input path="testInput_money" maxlength="200" class="form-control inputmask"
+											data-inputmask-alias="money" data-inputmask="'digits':'2'"/>
+									<span class="input-group-addon">(千分位，右对齐，保留2位小数)</span>
+				                </div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 电子邮箱：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
+									<#form:input path="testInput_regex" maxlength="200" class="form-control inputmask"
+											data-inputmask-regex="[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,4}"/>
+									<span class="input-group-addon">(正则表达式)</span>
+				                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 用户选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:treeselect id="testUser" title="用户选择"
@@ -151,6 +181,18 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> 城市选择（异步）：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testAreaCode" title="区域选择"
+									path="testAreaCode" labelPath="testAreaName"
+									url="${ctx}/sys/area/treeData?parentCode=0"
+									class="" allowClear="true" returnFullName="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> 机构选择：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:treeselect id="testOffice" title="机构选择"
@@ -160,24 +202,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 城市选择（异步）：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<#form:treeselect id="testAreaCode" title="区域选择"
-									path="testAreaCode" labelPath="testAreaName"
-									url="${ctx}/sys/area/treeData?parentCode=0"
-									class="" allowClear="true"/>
-							</div>
-						</div>
-					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 城市联动：<i class="fa icon-question hide"></i></label>
+								<span class="required hide">*</span> 城市选择（联动）：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<div class="input-group" id="cascadeSelect"></div>
 								<script src="${ctxStatic}/jquery-plugins/jquery.cascadeSelect.js?${_version}"></script>
@@ -202,36 +232,6 @@
 								<span class="required hide">*</span> 联动选择结果：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="areaSelectValue" maxlength="200" class="form-control"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 金额格式：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-fw fa-rmb"></i></span>
-									<#form:input path="testInput_money" maxlength="200" class="form-control inputmask"
-											data-inputmask-alias="money" data-inputmask="'digits':'2'"/>
-									<span class="input-group-addon">(千分位，右对齐，保留2位小数)</span>
-				                </div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label class="control-label col-sm-4" title="">
-								<span class="required hide">*</span> 电子邮箱格式：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-8">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
-									<#form:input path="testInput_regex" maxlength="200" class="form-control inputmask"
-											data-inputmask-regex="[a-zA-Z0-9._%-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,4}"/>
-									<span class="input-group-addon">(正则表达式)</span>
-				                </div>
 							</div>
 						</div>
 					</div>
@@ -285,7 +285,7 @@
 					</div>
 				</div>
 				<h4 class="form-unit">测试数据子表</h4>
-				<div class="ml10 mr10">
+				<div class="ml10 mr10 table-form">
 					<table id="testDataChildDataGrid"></table>
 					<% if (hasPermi('test:testData:edit')){ %>
 						<a href="#" id="testDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> 增行</a>
@@ -447,7 +447,7 @@ $("#testDataChildDataGrid").dataGrid({
 	
 	// 编辑表格参数
 	editGrid: true,				// 是否是编辑表格
-	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridInitRowNum: 3,		// 编辑表格的初始化新增行数
 	editGridAddRowBtn: $('#testDataChildDataGridAddRowBtn'),	// 子表增行按钮
 	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
 	
