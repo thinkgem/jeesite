@@ -153,6 +153,7 @@ if (table.tplCategory != 'query'){
 	editGrid: true,				// 是否是编辑表格
 	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
 	editGridAddRowBtn: $('#${@StringUtils.uncap(child.className)}DataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上
 	editGridAddRowInitData: {<% for(pk in child.pkList){ %>${pk.attrName}<% break; }%>: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
 	
 	// 编辑表格的提交数据参数
