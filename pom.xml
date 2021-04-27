@@ -23,7 +23,7 @@
 		<druid.version>1.0.18</druid.version>
 		<ehcache.version>2.6.11</ehcache.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
-		<shiro.version>1.2.3</shiro.version>
+		<shiro.version>1.2.6</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<activiti.version>5.21.0</activiti.version>
 		
