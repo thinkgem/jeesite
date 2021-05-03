@@ -39,6 +39,8 @@ public class ReflectUtils {
 	private static final String CGLIB_CLASS_SEPARATOR = "$$";
 	
 	private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+	
+	private static Class baseEntityClass = null;
 
 	/**
 	 * 调用Getter方法，
@@ -75,8 +77,28 @@ public class ReflectUtils {
 				if (obj instanceof Map){
 					object = ((Map)obj).get(names[i]);
 				}else{
-					String methodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
-					object = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
+					String methodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);                            
+					Object childObj = invokeMethod(object, methodName, new Class[] {}, new Object[] {});
+					// 如果 get 获取对象为空，并且返回值类型继承自 BaseEntity，则 new 对象，并通过 set 赋予它
+					if (childObj == null && object != null){
+						Method method = getAccessibleMethod(object, methodName, new Class[] {});
+						if (method != null) {
+							Class<?> returnType = method.getReturnType();
+							try {
+								if (baseEntityClass == null) {
+									baseEntityClass = Class.forName("com.jeesite.common.entity.BaseEntity");
+								}
+								if (baseEntityClass.isAssignableFrom(returnType)) {
+									childObj = returnType.getDeclaredConstructor().newInstance();
+									methodName = SETTER_PREFIX + StringUtils.capitalize(names[i]);
+									invokeMethodByName(object, methodName, new Object[] { childObj });
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+					object = childObj;
 				}
 			}else{
 				if (obj instanceof Map){
