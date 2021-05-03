@@ -87,6 +87,10 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:view")
 	@RequestMapping(value = "list")
 	public String list(EmpUser empUser, Model model) {
+		// 获取角色列表
+		Role role = new Role();
+		role.setUserType(User.USER_TYPE_EMPLOYEE);
+		model.addAttribute("roleList", roleService.findList(role));
 		// 获取岗位列表
 		Post post = new Post();
 		model.addAttribute("postList", postService.findList(post));
@@ -427,6 +431,10 @@ public class EmpUserController extends BaseController {
 		if (selectDataJson != null && JSONValidator.from(selectDataJson).validate()){
 			model.addAttribute("selectData", selectDataJson);
 		}
+		// 获取角色列表
+		Role role = new Role();
+		role.setUserType(User.USER_TYPE_MEMBER);
+		model.addAttribute("roleList", roleService.findList(role));
 		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserSelect";
 	}
