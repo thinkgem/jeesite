@@ -198,11 +198,27 @@ public class PropertiesUtils {
 	}
 
 	/**
-	 * 取出String类型的Property，但以System的Property优先，如果都为null则返回defaultValue值
+	 * 获取配置文件中String类型的值，但以System的Property优先，如果都为null则返回defaultValue值
 	 */
 	public String getProperty(String key, String defaultValue) {
 		String value = getProperty(key);
 		return value != null ? value : defaultValue;
+	}
+
+	/**
+	 * 获取配置文件中Boolean类型的值，取不到从System.getProperty获取，取不到，返回空。
+	 * @return 获取不到，返回空defValue默认值
+	 */
+	public Boolean getPropertyToBoolean(String key, String defValue) {
+		return ObjectUtils.toBoolean(getProperty(key, defValue));
+	}
+	
+	/**
+	 * 获取配置文件中Integer类型的值，取不到从System.getProperty获取，取不到，返回空。
+	 * @return 获取不到，返回空defValue默认值
+	 */
+	public Integer getPropertyToInteger(String key, String defValue) {
+		return ObjectUtils.toInteger(getProperty(key, defValue));
 	}
 	
 	/**
