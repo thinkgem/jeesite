@@ -35,27 +35,23 @@
 	<logger name="com.jeesite.common.beetl" level="INFO" />
 	<logger name="com.jeesite.common.cache" level="INFO" />
 	<logger name="com.jeesite.common.j2cache" level="INFO" />
+	<logger name="com.jeesite.common.j2cache.cache.support.caffeine" level="ERROR" />
 	<logger name="com.jeesite.common.mybatis" level="INFO" />
 	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
 	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
 	
-	<!-- Production profile
+	<!-- Production profile -->
 	<springProfile name="prod">
-		<logger name="org.mybatis" level="WARN" />
-		<logger name="org.mybatis.spring.transaction" level="WARN" />
-		<logger name="com.atomikos" level="ERROR" />
-		<logger name="org.flowable" level="WARN" />
-		<logger name="com.jeesite" level="WARN" />
-		<logger name="com.jeesite.common.i18n" level="WARN" />
-		<logger name="com.jeesite.common.shiro" level="WARN" />
-		<logger name="com.jeesite.common.beetl" level="WARN" />
-		<logger name="com.jeesite.common.cache" level="WARN" />
-		<logger name="com.jeesite.common.j2cache" level="WARN" />
-		<logger name="com.jeesite.common.mybatis" level="WARN" />
-		<logger name="com.jeesite.common.mybatis.mapper" level="WARN" />
-		<logger name="com.jeesite.common.reflect.ReflectUtils" level="WARN" />
-		<logger name="com.jeesite.common.io.FileUtils" level="WARN" />
-	</springProfile> -->
+		<logger name="org.mybatis.spring.transaction" level="INFO" />
+		<logger name="org.flowable.ui.modeler.domain" level="INFO" />
+		<logger name="org.flowable.idm.engine.impl.persistence" level="INFO" />
+		<logger name="org.flowable.task.service.impl.persistence" level="INFO" />
+		<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
+		<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
+		<logger name="org.flowable.engine.impl.persistence" level="INFO" />
+		<logger name="com.jeesite" level="INFO" />
+		<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
+	</springProfile>
 	
 </included>
