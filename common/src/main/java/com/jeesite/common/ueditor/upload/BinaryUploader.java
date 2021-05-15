@@ -34,7 +34,7 @@ public class BinaryUploader {
 			Map<String, Object> conf) {
 		FileItemStream fileStream = null; // 原始上传
 		MultipartFile fileStream2 = null; // Spring MVC 上传
-		boolean isAjaxUpload = request.getHeader( "X_Requested_With" ) != null;
+		boolean isAjaxUpload = request.getHeader("X-Requested-With") != null;
 				
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			return new BaseState(false, AppInfo.NOT_MULTIPART_CONTENT);
