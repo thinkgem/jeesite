@@ -370,6 +370,9 @@ shiro:
   # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
   isAllowExternalSiteIframe: true
   
+  # 设定允许获取的资源列表（v4.2.3）
+  #contentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval' data:"
+  
   # 是否允许跨域访问 CORS，如果允许，设置允许的域名。当设置'*'号全部域名时，accessControlAllowCredentials应该设置为false。
   # v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
 #  accessControlAllowOrigin: http://demo.jeesite.com
