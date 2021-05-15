@@ -39,11 +39,11 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.3、Spring Framework 5.2、Apache Shiro 1.7、J2Cache
+* 主框架：Spring Boot 2.4、Spring Framework 5.3、Apache Shiro 1.7、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.1、Alibaba Druid 1.2
-* 视图层：Spring MVC 5.2、Beetl 3.1（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
+* 视图层：Spring MVC 5.3、Beetl 3.1（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.4、jqGrid 4.7、layer 3.1、zTree 3.5、jquery validation
-* 工作流引擎：Flowable 6.5、符合 BPMN 规范、在线流程设计器、中国式工作流
+* 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤销、自由流
 * 技术选型详情：<http://jeesite.com/docs/technology/>
 
 ## 内置功能
@@ -56,6 +56,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite4-jflow> ：<http://ccflow.org>
 * Flowable业务流程模块（BPM）：<http://jeesite.com/docs/bpm/>
 * 内容管理模块（CMS）：<https://gitee.com/thinkgem/jeesite4-cms>
+* 手机端移动端：<https://gitee.com/thinkgem/jeesite4-uniapp>
 
 ## 快速体验
 
