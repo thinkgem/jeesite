@@ -54,10 +54,11 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	public static final String MESSAGE_PARAM = "message"; 						// 登录返回消息
 	public static final String REMEMBER_USERCODE_PARAM = "rememberUserCode"; 	// 记住用户名
 	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; 			// 异常类属性名
+    public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
 	
 	private static final Logger logger = LoggerFactory.getLogger(FormAuthenticationFilter.class);
 	private static FormAuthenticationFilter instance;
-
+	
 	private BaseAuthorizingRealm authorizingRealm;
 	private Cookie rememberUserCodeCookie; 	// 记住用户名Cookie
 	
@@ -228,7 +229,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	 */
 	@Override
 	protected boolean isLoginRequest(ServletRequest request, ServletResponse response) {
-		boolean isLogin = WebUtils.isTrue(request, "__login");
+		boolean isLogin = WebUtils.isTrue(request, LOGIN_PARAM);
 		return super.isLoginRequest(request, response) || isLogin;
 	}
 
@@ -237,7 +238,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	 */
 	@Override
 	protected boolean isLoginSubmission(ServletRequest request, ServletResponse response) {
-		boolean isLogin = WebUtils.isTrue(request, "__login");
+		boolean isLogin = WebUtils.isTrue(request, LOGIN_PARAM);
 		return super.isLoginSubmission(request, response) || isLogin;
 	}
 	

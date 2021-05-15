@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
+import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
@@ -66,7 +67,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 如果是登录操作，跳转到此，则认为是登录失败（支持GET登录时传递__login=true参数）
-		if (WebUtils.isTrue(request, "__login")){
+		if (WebUtils.isTrue(request, BaseAuthorizingRealm.IS_LOGIN_OPER)){
 			return loginFailure(request, response, model);
 		}
 
@@ -182,10 +183,10 @@ public class LoginController extends BaseController{
 		Session session = UserUtils.getSession();
 		
 		// 是否是登录操作
-		boolean isLogin = "true".equals(session.getAttribute("__login"));
+		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));
 		if (isLogin){
 			// 获取后接着清除，防止下次获取仍然认为是登录状态
-			session.removeAttribute("__login");
+			session.removeAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER);
 			// 设置共享SessionId的Cookie值（第三方系统使用）
 			String cookieName = Global.getProperty("session.shareSessionIdCookieName");
 			if (StringUtils.isNotBlank(cookieName)){
