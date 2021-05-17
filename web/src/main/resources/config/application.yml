@@ -427,7 +427,7 @@ logging:
 #========= Framework settings =========#
 #======================================#
 
-# Shiro 相关配置
+# Shiro 相关
 shiro:
   
 #  #索引页路径
@@ -468,8 +468,8 @@ shiro:
 #  # 指定获取客户端IP的Header名称，防止IP伪造。指定为空，则使用原生方法获取IP。
 #  remoteAddrHeaderName: X-Forwarded-For
 #  
-#  # 允许的请求方法设定，解决安全审计问题
-#  allowRequestMethods: GET,POST,OPTIONS,PUT,DELETE
+#  # 允许的请求方法设定，解决安全审计问题（BPM设计器用到了PUT或DELETE方法）
+#  allowRequestMethods: GET, POST, OPTIONS, PUT, DELETE
 #  
 #  # 是否允许账号多地登录，如果设置为false，同一个设备类型的其它地点登录的相同账号被踢下线
 #  isAllowMultiAddrLogin: true
@@ -483,21 +483,22 @@ shiro:
 #  # 是否允许嵌入到外部网站iframe中（true：不限制，false：不允许）
 #  isAllowExternalSiteIframe: true
 #  
-#  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。当设置'*'号全部域名时，accessControlAllowCredentials应该设置为false。
-#  # v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
-##  accessControlAllowOrigin: http://demo.jeesite.com
-##  accessControlAllowOrigin: '*'
-#
-#  # 允许跨域访问时 CORS，可以使用的方法和标头
-##  accessControlAllowMethods: GET, POST, OPTIONS
-##  accessControlAllowHeaders: Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With
-#
-#  # 是否允许接收跨域的Cookie凭证数据 CORS，当设置为true时，accessControlAllowOrigin不能设置为'*'。
-##  accessControlAllowCredentials: false
+#  # 设定允许获取的资源列表（v4.2.3）
+#  #contentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval' data:"
+#  
+#  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
+#  #accessControlAllowOrigin: '*'
+#  
+#  # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
+#  #accessControlAllowMethods: GET, POST, OPTIONS
+#  #accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
+#  #accessControlExposeHeaders: x-remember
+#  
+#  # 是否允许接收跨域的Cookie凭证数据 CORS
+#  #accessControlAllowCredentials: false
 #  
 #  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
-##  allowReferers: http://127.0.0.1,http://localhost
-##  allowReferers: ~
+#  #allowReferers: http://127.0.0.1,http://localhost
 #
 #  # 是否在登录后生成新的Session（默认false）
 #  isGenerateNewSessionAfterLogin: false
@@ -516,8 +517,11 @@ shiro:
 #  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
 #  sessionTimeout: 1800000
 #  
+#  # PC设备会话超时参数设置，登录请求参数加 param_deviceType=pc 时有效
+#  #pcSessionTimeout: 1800000
+#  
 #  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
-#  mobileAppSessionTimeout: 43200000
+#  #mobileAppSessionTimeout: 43200000
 #  
 #  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
 #  sessionTimeoutClean: 1200000
@@ -528,7 +532,23 @@ shiro:
 #  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
 #  #shareSessionIdCookieName: ${session.sessionIdCookieName}
-  
+#  
+#  # 其它 SimpleCookie 参数（v4.2.3）
+#  #sessionIdCookieSecure: false
+#  #sessionIdCookieHttpOnly: true
+#  #sessionIdCookieSameSite: LAX
+#  
+#  # 设置接收 SessionId 请求参数和请求头的名称
+#  sessionIdParamName: __sid
+#  sessionIdHeaderName: x-token
+#  
+#  # 当直接通过 __sid 参数浏览器访问页面时，可将直接将 __sid 写入 Cookie 应用于后面的访问
+#  # 访问地址举例：http://host/js/a/index?__sid=123456&__cookie=true
+#  writeCookieParamName: __cookie
+#  
+#  # 记住我的请求参数和请求头的名称（v4.2.3）
+#  rememberMeHeaderName: x-remember
+#
 # 系统缓存配置
 #j2cache:
 #
@@ -565,6 +585,9 @@ shiro:
 #  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
 #  scanTypeHandlersPackage: ~
 #  
+#  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
+#  jdbcTransaction: false
+#  
 #  # Mapper文件刷新线程
 #  mapper:
 #    refresh:
@@ -575,6 +598,10 @@ shiro:
   
 # Web 相关
 #web:
+#
+#  # AJAX 接受参数名和请求头名（v4.3.0）
+#  ajaxParamName: __ajax
+#  ajaxHeaderName: x-ajax
 #  
 #  # MVC 视图相关
 #  view:
@@ -583,6 +610,16 @@ shiro:
 #    # 引入页面头部：'/themes/'+themeName+'/include/header.html'
 #    # 引入页面尾部：'/themes/'+themeName+'/include/footer.html'
 #    themeName: default
+#    
+#    # 使用智能参数接收器，同时支持 JSON 和 FormData 的参数接受
+#    smartMethodArgumentResolver: true
+#    
+#    # 使用 .json、.xml 后缀匹配返回视图数据（Spring官方已不推荐使用）
+#    favorPathExtension: false
+#    # 使用 __ajax=json、__ajax=xml 后缀匹配返回视图数据
+#    favorParameter: true
+#    # 使用 x-ajax=json、x-ajax=xml 请求头匹配返回视图数据
+#    favorHeader: true
 #
 #  # MVC 拦截器
 #  interceptor:
@@ -628,6 +665,11 @@ shiro:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
 #    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
 #    
+#  # 默认不启用（为兼用旧版保留，建议使用 CORS）
+#  jsonp:
+#    enabled: false
+#    callback: __callback
+#
 #  # 核心模块的Web功能（仅作为微服务时设为false）
 #  core: 
 #    enabled: true
@@ -649,12 +691,12 @@ shiro:
 #  enabled: true
 #  
 #  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
-##  baseDir: D:/jeesite
+#  #baseDir: D:/jeesite
 #  
 #  # 上传文件的相对路径（支持：yyyy, MM, dd, HH, mm, ss, E）
 #  uploadPath: '{yyyy}{MM}/'
 #  
-#  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等。
+#  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等，此设置会覆盖 spring.http.multipart.maxFileSize 设置
 #  maxFileSize: 500*1024*1024
 #  
 #  # 设置允许上传的文件后缀（全局设置）
@@ -687,13 +729,17 @@ shiro:
 #  
 #  # 视频格式转换  ffmpeg.exe 所放的路径
 #  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
-##  ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
+#  #ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
 #  
 #  # 视频格式转换  mencoder.exe 所放的路径
 #  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
 #  
 #  # 将mp4视频的元数据信息转到视频第一帧
 #  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
+
+# 文件管理是否启用租户模式
+#filemanager:
+#  useCorpModel: false
 
 #======================================#
 #========== Message settings ==========#
@@ -707,6 +753,8 @@ shiro:
 #  realtime:
 #    # 是否开启
 #    enabled: true
+#    # 消息实时推送任务Bean名称
+#    beanName: msgLocalPushTask
   
 #  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
 #  pushFailNumber: 3

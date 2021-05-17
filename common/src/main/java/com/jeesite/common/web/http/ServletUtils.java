@@ -8,7 +8,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
@@ -25,7 +24,6 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.ExceptionUtils;
-import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
@@ -40,13 +38,26 @@ public class ServletUtils {
 	public static final String EXT_PARAMS_PREFIX = "param_";	// 扩展参数前缀
 	
 	// 定义静态文件后缀；静态文件排除URI地址
-	private static String[] staticFiles;
-	private static String[] staticFileExcludeUri;
-	private static Boolean favorPathExtension;
-	private static Boolean favorParameter;
-	private static Boolean favorHeader;
-	private static Boolean jsonp;
+	private static final PropertiesUtils PROPS = PropertiesUtils.getInstance();
+	private static final String[] STATIC_FILE = StringUtils.split(PROPS.getProperty("web.staticFile"), ",");
+	private static final String[] STATIC_FILE_EXCLUDE_URI = StringUtils.split(PROPS.getProperty("web.staticFileExcludeUri"), ",");
 
+	// AJAX 请求参数和请求头名
+	public static final String AJAX_PARAM_NAME = PROPS.getProperty("web.ajaxParamName", "__ajax");
+	public static final String AJAX_HEADER_NAME = PROPS.getProperty("web.ajaxHeaderName", "x-ajax");
+	
+	// MVC 偏好设置，根据后缀、参数、Header 返回特定格式数据
+	public static final Boolean FAVOR_PATH_EXTENSION = PROPS.getPropertyToBoolean("web.view.favorPathExtension", "false");
+	public static final Boolean FAVOR_PARAMETER = PROPS.getPropertyToBoolean("web.view.favorParameter", "true");
+	public static final Boolean FAVOR_HEADER = PROPS.getPropertyToBoolean("web.view.favorHeader", "true");
+	
+	// JSONP 支持（为兼用旧版保留，建议使用 CORS）
+	public static final Boolean JSONP_ENABLED = PROPS.getPropertyToBoolean("web.jsonp.enabled", "false");
+	public static final String  JSONP_CALLBACK = PROPS.getProperty("web.jsonp.callback", "__callback");
+	
+	// 是否打印错误信息参数到视图页面（生产环境关闭）
+	private static final Boolean PRINT_ERROR_INFO = PROPS.getPropertyToBoolean("error.page.printErrorInfo", "true");
+	
 	/**
 	 * 获取当前请求对象
 	 * web.xml: <listener><listener-class>
@@ -105,49 +116,26 @@ public class ServletUtils {
 	 * @throws Exception 
 	 */
 	public static boolean isStaticFile(String uri){
-		if (staticFiles == null){
-			PropertiesUtils pl = PropertiesUtils.getInstance();
-			try{
-				staticFiles = StringUtils.split(pl.getProperty("web.staticFile"), ",");
-				staticFileExcludeUri = StringUtils.split(pl.getProperty("web.staticFileExcludeUri"), ",");
-			}catch(NoSuchElementException nsee){
-				; // 什么也不做
-			}
-			if (staticFiles == null){
-				try {
-					throw new Exception("检测到“jeesite.yml”中没有配置“web.staticFile”属性。"
-							+ "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
-							+ ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		if (STATIC_FILE == null){
+			try {
+				throw new Exception("检测到“jeesite.yml”中没有配置“web.staticFile”属性。"
+						+ "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
+						+ ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		if (staticFileExcludeUri != null){
-			for (String s : staticFileExcludeUri){
+		if (STATIC_FILE_EXCLUDE_URI != null){
+			for (String s : STATIC_FILE_EXCLUDE_URI){
 				if (StringUtils.contains(uri, s)){
 					return false;
 				}
 			}
 		}
-		if (StringUtils.endsWithAny(uri, staticFiles)){
+		if (StringUtils.endsWithAny(uri, STATIC_FILE)){
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * 初始化一些个性化配置
-	 * @author ThinkGem
-	 */
-	private static void initWebViewConfig() {
-		if (favorPathExtension == null || favorParameter == null || favorHeader == null || jsonp == null) {
-			PropertiesUtils props = PropertiesUtils.getInstance();
-			favorPathExtension = ObjectUtils.toBoolean(props.getProperty("web.view.favorPathExtension", "false"));
-			favorParameter = ObjectUtils.toBoolean(props.getProperty("web.view.favorParameter", "true"));
-			favorHeader = ObjectUtils.toBoolean(props.getProperty("web.view.favorHeader", "true"));
-			jsonp = ObjectUtils.toBoolean(props.getProperty("web.jsonp.enabled", "false"));
-		}
 	}
 
 	/**
@@ -166,9 +154,7 @@ public class ServletUtils {
 			return true;
 		}
 		
-		initWebViewConfig();
-		
-		if (favorPathExtension) {
+		if (FAVOR_PATH_EXTENSION) {
 			String uri = request.getRequestURI();
 			if (StringUtils.endsWithIgnoreCase(uri, ".json")
 					|| StringUtils.endsWithIgnoreCase(uri, ".xml")){
@@ -176,15 +162,15 @@ public class ServletUtils {
 			}
 		}
 		
-		if (favorParameter) {
-			String ajaxParameter = request.getParameter("__ajax");
+		if (FAVOR_PARAMETER) {
+			String ajaxParameter = request.getParameter(AJAX_PARAM_NAME);
 			if (StringUtils.inStringIgnoreCase(ajaxParameter, "json", "xml")){
 				return true;
 			}
 		}
 		
-		if (favorHeader) {
-			String ajaxHeader = request.getHeader("__ajax");
+		if (FAVOR_HEADER) {
+			String ajaxHeader = request.getHeader(AJAX_HEADER_NAME);
 			if (StringUtils.inStringIgnoreCase(ajaxHeader, "json", "xml")){
 				return true;
 			}
@@ -234,8 +220,7 @@ public class ServletUtils {
 				String exMsg = ExceptionUtils.getExceptionMessage(ex);
 				if (StringUtils.isNotBlank(exMsg)){
 					resultMap.put("message", message + "，" + exMsg);
-				}else if (ObjectUtils.toBoolean(PropertiesUtils.getInstance()
-							.getProperty("error.page.printErrorInfo", "true"))){
+				}else if (PRINT_ERROR_INFO){
 					resultMap.put("message", message + "，" + ex.getMessage());
 				}
 			}else if (data instanceof Map){
@@ -248,9 +233,9 @@ public class ServletUtils {
 		HttpServletResponse response = getResponse();
 		HttpServletRequest request = getRequest();
 		if (request != null){
-			String uri = request.getRequestURI(); initWebViewConfig();
-			if ((favorPathExtension && StringUtils.endsWithIgnoreCase(uri, ".xml"))
-					|| (favorParameter && StringUtils.equalsIgnoreCase(request.getParameter("__ajax"), "xml"))){
+			String uri = request.getRequestURI();
+			if ((FAVOR_PATH_EXTENSION && StringUtils.endsWithIgnoreCase(uri, ".xml"))
+					|| (FAVOR_PARAMETER && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml"))){
 				if (response != null){
 					response.setContentType(MediaType.APPLICATION_XML_VALUE);
 				}
@@ -260,8 +245,8 @@ public class ServletUtils {
 					return XmlMapper.toXml(resultMap);
 				}
 			}
-			if (jsonp) {
-				String functionName = request.getParameter("__callback");
+			if (JSONP_ENABLED) {
+				String functionName = request.getParameter(JSONP_CALLBACK);
 				if (StringUtils.isNotBlank(functionName)){
 					object = new JSONPObject(functionName, resultMap);
 				}
@@ -337,13 +322,13 @@ public class ServletUtils {
 	 */
 	public static String renderObject(HttpServletResponse response, Object object, Class<?> jsonView) {
 		HttpServletRequest request = getRequest();
-		String uri = request.getRequestURI(); initWebViewConfig();
-		if ((favorPathExtension && StringUtils.endsWithIgnoreCase(uri, ".xml"))
-				|| (favorParameter && StringUtils.equalsIgnoreCase(request.getParameter("__ajax"), "xml"))){
+		String uri = request.getRequestURI();
+		if ((FAVOR_PATH_EXTENSION && StringUtils.endsWithIgnoreCase(uri, ".xml"))
+				|| (FAVOR_PARAMETER && StringUtils.equalsIgnoreCase(request.getParameter(AJAX_PARAM_NAME), "xml"))){
 			return renderString(response, XmlMapper.toXml(object));
 		}
-		if (jsonp) {
-			String functionName = request.getParameter("__callback");
+		if (JSONP_ENABLED) {
+			String functionName = request.getParameter(JSONP_CALLBACK);
 			if (StringUtils.isNotBlank(functionName)){
 				object = new JSONPObject(functionName, object);
 			}
