@@ -374,7 +374,7 @@ shiro:
   #contentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval' data:"
   
   # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
-  accessControlAllowOrigin: '*'
+  #accessControlAllowOrigin: '*'
   
   # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
   #accessControlAllowMethods: GET, POST, OPTIONS
@@ -589,6 +589,10 @@ web:
   validator:
     id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
     user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
+  
+  # 默认的日期格式（JsonMapper）
+  json:
+    defaultDateFormat: yyyy-MM-dd HH:mm:ss
   
   # 默认不启用（为兼用旧版保留，建议使用 CORS）
   jsonp:

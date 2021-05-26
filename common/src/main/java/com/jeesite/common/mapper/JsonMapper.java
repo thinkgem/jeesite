@@ -4,6 +4,9 @@
 package com.jeesite.common.mapper;
 
 import java.io.IOException;
+import java.lang.reflect.AnnotatedElement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -13,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser.Feature;
@@ -23,10 +27,14 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.introspect.Annotated;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
+import com.jeesite.common.lang.DateUtils;
 
 /**
  * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
@@ -59,6 +67,31 @@ public class JsonMapper extends ObjectMapper {
 		// 设置默认时区
 		this.setTimeZone(TimeZone.getTimeZone(PropertiesUtils.getInstance()
 					.getProperty("lang.defaultTimeZone", "GMT+08:00")));
+		// 设置默认日期格式
+		this.setDateFormat(new SimpleDateFormat(PropertiesUtils.getInstance()
+				.getProperty("web.json.defaultDateFormat", "yyyy-MM-dd HH:mm:ss")));
+		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Object findSerializer(Annotated a) {
+				if (a instanceof AnnotatedMethod) {
+					AnnotatedElement m = a.getAnnotated();
+					JsonFormat jf = m.getAnnotation(JsonFormat.class);
+					if (jf != null) {
+						return new JsonSerializer<Date>(){
+							@Override
+							public void serialize(Date value, JsonGenerator jgen,
+									SerializerProvider provider) throws IOException, JsonProcessingException {
+								if (value != null){
+									jgen.writeString(DateUtils.formatDate(value, jf.pattern()));
+								}
+							}
+				        };
+					}
+				}
+				return super.findSerializer(a);
+			}
+		});
 		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
 		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         // 遇到空值处理为空串
@@ -69,19 +102,6 @@ public class JsonMapper extends ObjectMapper {
 				jgen.writeString(StringUtils.EMPTY);
 			}
         });
-//		// 统一默认Date类型转换格式。如果设置，Bean中的@JsonFormat将失效
-//		final String dataFormat = Global.getProperty("json.mapper.dataFormat");
-//		if (StringUtils.isNotBlank(dataFormat)){
-//			this.registerModule(new SimpleModule().addSerializer(Date.class, new JsonSerializer<Date>(){
-//				@Override
-//				public void serialize(Date value, JsonGenerator jgen,
-//						SerializerProvider provider) throws IOException, JsonProcessingException {
-//					if (value != null){
-//						jgen.writeString(DateUtils.formatDate(value, dataFormat));
-//					}
-//				}
-//	        }));
-//		}
 //		// 进行HTML解码（先注释掉，否则会造成XSS攻击，比如菜单名称里输入<script>alert(123)</script>转josn后就会还原这个编码 ，并在浏览器中运行）。
 //		this.registerModule(new SimpleModule().addSerializer(String.class, new JsonSerializer<String>(){
 //			@Override
