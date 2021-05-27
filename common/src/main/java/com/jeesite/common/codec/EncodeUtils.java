@@ -232,6 +232,7 @@ public class EncodeUtils {
 					&& !StringUtils.contains(value, "id=\"FormHtml\"") 		// JFlow
 					&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
 					&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
+					&& !(request != null && StringUtils.contains(request.getRequestURI(), "/ureport/")) // UReport
 				){
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < value.length(); i++) {
