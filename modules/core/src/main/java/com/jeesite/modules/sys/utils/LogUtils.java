@@ -94,7 +94,7 @@ public class LogUtils {
 		}
 		log.setServerAddr(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort());
 		log.setRemoteAddr(IpUtils.getRemoteAddr(request));
-		log.setUserAgent(EncodeUtils.xssFilter(request.getHeader("User-Agent")));
+		log.setUserAgent(EncodeUtils.xssFilter(request.getHeader("User-Agent"), request));
 		UserAgent userAgent = UserAgent.parseUserAgentString(log.getUserAgent());
 		log.setDeviceName(userAgent.getOperatingSystem().getName());
 		log.setBrowserName(userAgent.getBrowser().getName());

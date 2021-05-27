@@ -115,7 +115,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		}
 		// 登录时判断是否需要记住用户名
 		if (WebUtils.isTrue(request, REMEMBER_USERCODE_PARAM)) {
-			rememberUserCodeCookie.setValue(EncodeUtils.encodeUrl(EncodeUtils.xssFilter(username)));
+			rememberUserCodeCookie.setValue(EncodeUtils.encodeUrl(EncodeUtils.xssFilter(username, (HttpServletRequest)request)));
 			rememberUserCodeCookie.saveTo((HttpServletRequest)request, (HttpServletResponse)response);
 		} else {
 			rememberUserCodeCookie.removeFrom((HttpServletRequest)request, (HttpServletResponse)response);

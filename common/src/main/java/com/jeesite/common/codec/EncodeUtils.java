@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -201,12 +203,20 @@ public class EncodeUtils {
 			Pattern.compile("(eval\\((.*?)\\)|xpression\\((.*?)\\))", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("^(javascript:|vbscript:)", Pattern.CASE_INSENSITIVE)
 		);
-	
+
 	/**
 	 * XSS 非法字符过滤，内容以<!--HTML-->开头的用以下规则（保留标签）
 	 * @author ThinkGem
 	 */
 	public static String xssFilter(String text) {
+		return xssFilter(text, null);
+	}
+	
+	/**
+	 * XSS 非法字符过滤，内容以<!--HTML-->开头的用以下规则（保留标签）
+	 * @author ThinkGem
+	 */
+	public static String xssFilter(String text, HttpServletRequest request) {
 		String oriValue = StringUtils.trim(text);
 		if (text != null){
 			String value = oriValue;
@@ -265,12 +275,19 @@ public class EncodeUtils {
 			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml)([\\s]*?)\\()|"
 			+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when|sleep|union|load_file)\\b)",
 			Pattern.CASE_INSENSITIVE);
-	
+
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
 	 * @author ThinkGem
 	 */
 	public static String sqlFilter(String text){
+		return sqlFilter(text, null);
+	}
+	/**
+	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
+	 * @author ThinkGem
+	 */
+	public static String sqlFilter(String text, String source){
 		if (text != null){
 			String value = text;
 			Matcher matcher = sqlPattern.matcher(value);

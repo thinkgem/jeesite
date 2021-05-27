@@ -27,7 +27,7 @@ public class IpUtils {
 			ip = request.getRemoteAddr();
 		}
 		if (StringUtils.isNotBlank(ip)){
-			ip = EncodeUtils.xssFilter(ip);
+			ip = EncodeUtils.xssFilter(ip, request);
 			ip = StringUtils.split(ip, ",")[0];
 		}
 		if (StringUtils.isBlank(ip)){
