@@ -18,6 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.image.ImageUtils;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.media.VideoUtils;
@@ -43,7 +44,7 @@ public class BinaryUploader {
 		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
 
         if ( isAjaxUpload ) {
-            upload.setHeaderEncoding( "UTF-8" );
+            upload.setHeaderEncoding( EncodeUtils.UTF_8 );
         }
 
 		try {

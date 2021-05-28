@@ -34,7 +34,7 @@ public class SmsUtils {
 //		dataMap.put("mobile", mobile);
 //		// 短信内容
 //		dataMap.put("content", prefix + content + suffix);
-//		HttpClientUtils.post(url, dataMap, "UTF-8");
+//		HttpClientUtils.post(url, dataMap, EncodeUtils.UTF_8);
 		logger.debug("短信内容：" + content + "    手机号码：" + mobile);
 		logger.warn("短信模拟发送成功！实际并未发送到手机，请实现 " + SmsUtils.class + " 的 send 方法。");
 		return "{result:0,message:\"短信模拟发送成功！\"}";

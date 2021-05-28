@@ -151,7 +151,7 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', firstsortorder:'desc', width:150, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
-		{header:'${text("操作")}', name:'actions', width:200, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:100, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('test:testData:edit')){ %>
 				actions.push('<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');

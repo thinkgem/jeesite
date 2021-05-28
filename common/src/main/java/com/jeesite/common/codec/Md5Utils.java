@@ -20,7 +20,6 @@ import com.jeesite.common.io.IOUtils;
 public class Md5Utils {
 
 	private static final String MD5 = "MD5";
-	private static final String DEFAULT_ENCODING = "UTF-8";
 	
 	/**
 	 * 对输入字符串进行md5散列.
@@ -37,7 +36,7 @@ public class Md5Utils {
 	 */
 	public static String md5(String input, int iterations) {
 		try {
-			return EncodeUtils.encodeHex(DigestUtils.digest(input.getBytes(DEFAULT_ENCODING), MD5, null, iterations));
+			return EncodeUtils.encodeHex(DigestUtils.digest(input.getBytes(EncodeUtils.UTF_8), MD5, null, iterations));
 		} catch (UnsupportedEncodingException e) {
 			return StringUtils.EMPTY;
 		}

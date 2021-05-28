@@ -29,6 +29,8 @@ import java.util.jar.JarInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.jeesite.common.codec.EncodeUtils;
+
 /**
  * Class工具类，借鉴ibatis的io包的ResolverUtil类。
  * @author ThinkGem
@@ -620,7 +622,7 @@ class DefaultVFS extends VFS {
 				// File name might be URL-encoded
 				if (!file.exists()) {
 					try {
-						file = new File(URLEncoder.encode(jarUrl.toString(), "UTF-8"));
+						file = new File(URLEncoder.encode(jarUrl.toString(), EncodeUtils.UTF_8));
 					} catch (UnsupportedEncodingException e) {
 						throw new RuntimeException("Unsupported encoding?  UTF-8?  That's unpossible.");
 					}

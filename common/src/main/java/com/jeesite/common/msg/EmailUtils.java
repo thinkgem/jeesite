@@ -7,6 +7,7 @@ import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.io.PropertiesUtils;
 
 /**
@@ -66,7 +67,7 @@ public class EmailUtils {
 			htmlEmail.setMsg(content);
 
 			// 其他信息
-			htmlEmail.setCharset("utf-8");
+			htmlEmail.setCharset(EncodeUtils.UTF_8);
 			
 			// 发送
 			htmlEmail.send();

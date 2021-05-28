@@ -36,8 +36,9 @@ import com.jeesite.common.lang.StringUtils;
  */
 public class EncodeUtils {
 	
+	public static final String UTF_8 = "UTF-8";
+	
 	private static final Logger logger = LoggerFactory.getLogger(EncodeUtils.class);
-	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 	private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
 	/**
@@ -73,7 +74,7 @@ public class EncodeUtils {
 			return StringUtils.EMPTY;
 		}
 		try {
-			return new String(Base64.encodeBase64(input.getBytes(DEFAULT_URL_ENCODING)));
+			return new String(Base64.encodeBase64(input.getBytes(EncodeUtils.UTF_8)));
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
@@ -90,7 +91,11 @@ public class EncodeUtils {
 	 * Base64解码.
 	 */
 	public static byte[] decodeBase64(String input) {
-		return Base64.decodeBase64(input.getBytes());
+		try {
+			return Base64.decodeBase64(input.getBytes(EncodeUtils.UTF_8));
+		} catch (UnsupportedEncodingException e) {
+			throw ExceptionUtils.unchecked(e);
+		}
 	}
 	
 	/**
@@ -101,7 +106,7 @@ public class EncodeUtils {
 			return StringUtils.EMPTY;
 		}
 		try {
-			return new String(Base64.decodeBase64(input.getBytes()), DEFAULT_URL_ENCODING);
+			return new String(Base64.decodeBase64(input.getBytes(EncodeUtils.UTF_8)), EncodeUtils.UTF_8);
 		} catch (UnsupportedEncodingException e) {
 			return StringUtils.EMPTY;
 		}
@@ -150,7 +155,7 @@ public class EncodeUtils {
 	 * URL 编码, Encode默认为UTF-8. 
 	 */
 	public static String encodeUrl(String part) {
-		return encodeUrl(part, DEFAULT_URL_ENCODING);
+		return encodeUrl(part, EncodeUtils.UTF_8);
 	}
 
 	/**
@@ -171,7 +176,7 @@ public class EncodeUtils {
 	 * URL 解码, Encode默认为UTF-8. 
 	 */
 	public static String decodeUrl(String part) {
-		return decodeUrl(part, DEFAULT_URL_ENCODING);
+		return decodeUrl(part, EncodeUtils.UTF_8);
 	}
 
 	/**

@@ -124,11 +124,11 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'单行文本', name:'testInput', index:'a.test_input', width:150, align:"center", frozen:true, formatter: function(val, obj, row, act){
+		{header:'单行文本', name:'testInput', index:'a.test_input', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			if(obj.rowId == ''){ return '小计:'; }
 			return '<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" data-title="编辑数据">'+(val||row.id)+'</a>';
 		}, summaryTpl: "<em>{0}</em> ", summaryType: "count"},
-		{header:'多行文本', name:'testTextarea', index:'a.test_textarea', width:150, align:"center", frozen:true, formatter: function(val, obj, row, act){
+		{header:'多行文本', name:'testTextarea', index:'a.test_textarea', width:200, align:"center", formatter: function(val, obj, row, act){
 			if(obj.rowId == ''){ return '<em>' + val + '</em>个' }
 			return val||'';
 		}, summaryTpl: "<em>{0}</em>", summaryType: "count"},

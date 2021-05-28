@@ -6,6 +6,7 @@ package com.jeesite.modules.msg.send;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.stereotype.Service;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -33,7 +34,7 @@ public class EmailSendService extends BaseService implements MsgSendService{
 			String sslSmtpPort = Global.getProperty("msg.email.sslSmtpPort", "465");
 			
 			HtmlEmail htmlEmail = new HtmlEmail();
-			htmlEmail.setCharset("utf-8");
+			htmlEmail.setCharset(EncodeUtils.UTF_8);
 			htmlEmail.setFrom(fromAddress);
 			htmlEmail.setAuthentication(fromAddress, fromPassword);
 			htmlEmail.setHostName(fromHostName);

@@ -22,7 +22,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -244,7 +243,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static String readFileToString(String classResourcePath){
 		try (InputStream in = new ClassPathResource(classResourcePath).getInputStream()){
-            return IOUtils.toString(in, Charsets.toCharset("UTF-8"));
+            return IOUtils.toString(in, EncodeUtils.UTF_8);
 		} catch (IOException e) {
 			logger.warn("Error file convert: {}", e.getMessage());
 		}
@@ -422,7 +421,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static void writeToFile(String fileName, String content, boolean append) {
 		try {
-			FileUtils.write(new File(fileName), content, "utf-8", append);
+			FileUtils.write(new File(fileName), content, EncodeUtils.UTF_8, append);
 			logger.debug("文件 " + fileName + " 写入成功!");
 		} catch (IOException e) {
 			logger.debug("文件 " + fileName + " 写入失败! " + e.getMessage());

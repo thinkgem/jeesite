@@ -77,7 +77,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 		String ticket = (String) casToken.getCredentials();
 		if (ticketValidator == null) {
             ticketValidator = new Cas20ServiceTicketValidator(casServerUrl);
-            ((Cas20ServiceTicketValidator)ticketValidator).setEncoding("UTF-8");
+            ((Cas20ServiceTicketValidator)ticketValidator).setEncoding(EncodeUtils.UTF_8);
         }
 		
 		// 进行登录身份验证

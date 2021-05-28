@@ -19,8 +19,8 @@
 package com.jeesite.common.text;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.jeesite.common.codec.EncodeUtils;
 
 /*
  * Functions for diff, match and patch.
@@ -1433,7 +1435,7 @@ public class DiffMatchPatch {
       switch (aDiff.operation) {
       case INSERT:
         try {
-          text.append("+").append(URLEncoder.encode(aDiff.text, "UTF-8")
+          text.append("+").append(URLEncoder.encode(aDiff.text, EncodeUtils.UTF_8)
                                             .replace('+', ' ')).append("\t");
         } catch (UnsupportedEncodingException e) {
           // Not likely on modern system.
@@ -1483,7 +1485,7 @@ public class DiffMatchPatch {
         // decode would change all "+" to " "
         param = param.replace("+", "%2B");
         try {
-          param = URLDecoder.decode(param, "UTF-8");
+          param = URLDecoder.decode(param, EncodeUtils.UTF_8);
         } catch (UnsupportedEncodingException e) {
           // Not likely on modern system.
           throw new Error("This system does not support UTF-8.", e);
@@ -2255,7 +2257,7 @@ public class DiffMatchPatch {
         line = text.getFirst().substring(1);
         line = line.replace("+", "%2B");  // decode would change all "+" to " "
         try {
-          line = URLDecoder.decode(line, "UTF-8");
+          line = URLDecoder.decode(line, EncodeUtils.UTF_8);
         } catch (UnsupportedEncodingException e) {
           // Not likely on modern system.
           throw new Error("This system does not support UTF-8.", e);
@@ -2424,7 +2426,7 @@ public class DiffMatchPatch {
           break;
         }
         try {
-          text.append(URLEncoder.encode(aDiff.text, "UTF-8").replace('+', ' '))
+          text.append(URLEncoder.encode(aDiff.text, EncodeUtils.UTF_8).replace('+', ' '))
               .append("\n");
         } catch (UnsupportedEncodingException e) {
           // Not likely on modern system.

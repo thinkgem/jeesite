@@ -32,6 +32,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
+import com.jeesite.common.codec.EncodeUtils;
+
 /**
  * HTTP客户端工具类（支持HTTPS）
  * @author ThinkGem
@@ -44,7 +46,7 @@ public class HttpClientUtils {
 	 * @param url
 	 */
 	public static String get(String url) {
-		return get(url, "UTF-8");
+		return get(url, EncodeUtils.UTF_8);
 	}
 	
 	/**
@@ -61,7 +63,7 @@ public class HttpClientUtils {
 	 * @param url
 	 */
 	public static String ajaxGet(String url) {
-		return ajaxGet(url, "UTF-8");
+		return ajaxGet(url, EncodeUtils.UTF_8);
 	}
 	
 	/**
@@ -78,7 +80,7 @@ public class HttpClientUtils {
 	 * http的post请求，传递map格式参数
 	 */
 	public static String post(String url, Map<String, String> dataMap) {
-		return post(url, dataMap, "UTF-8");
+		return post(url, dataMap, EncodeUtils.UTF_8);
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class HttpClientUtils {
 	 * http的post请求，增加异步请求头参数，传递map格式参数
 	 */
 	public static String ajaxPost(String url, Map<String, String> dataMap) {
-		return ajaxPost(url, dataMap, "UTF-8");
+		return ajaxPost(url, dataMap, EncodeUtils.UTF_8);
 	}
 
 	/**
@@ -135,7 +137,7 @@ public class HttpClientUtils {
 	 * http的post请求，增加异步请求头参数，传递json格式参数
 	 */
 	public static String ajaxPostJson(String url, String jsonString) {
-		return ajaxPostJson(url, jsonString, "UTF-8");
+		return ajaxPostJson(url, jsonString, EncodeUtils.UTF_8);
 	}
 
 	/**
@@ -159,7 +161,7 @@ public class HttpClientUtils {
 	 * 执行一个http请求，传递HttpGet或HttpPost参数
 	 */
 	public static String executeRequest(HttpUriRequest httpRequest) {
-		return executeRequest(httpRequest, "UTF-8");
+		return executeRequest(httpRequest, EncodeUtils.UTF_8);
 	}
 
 	/**

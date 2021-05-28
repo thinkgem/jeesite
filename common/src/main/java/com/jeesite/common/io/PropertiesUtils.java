@@ -18,6 +18,7 @@ import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -111,7 +112,7 @@ public class PropertiesUtils {
 			Resource resource = ResourceUtils.getResource(location);
 			if (resource.exists()){
     			if (location.endsWith(".properties")){
-    				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), "UTF-8")){
+    				try (InputStreamReader is = new InputStreamReader(resource.getInputStream(), EncodeUtils.UTF_8)){
     					properties.load(is);
     					configSet.add(location);
         			} catch (IOException e) {

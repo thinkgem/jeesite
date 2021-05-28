@@ -27,7 +27,6 @@ public class AesUtils {
 	private static final int DEFAULT_IVSIZE = 16; 					// 生成随机向量, 默认大小为cipher.getBlockSize(), 16字节
 	private static final SecureRandom RANDOM = new SecureRandom();	// 用于 生成 generateIV随机数对象
 
-	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 	private static final byte[] DEFAULT_KEY = new byte[]{-97,88,-94,9,70,-76,126,25,0,3,-20,113,108,28,69,125}; 
 
 	/**
@@ -44,7 +43,7 @@ public class AesUtils {
 	 */
 	public static String encode(String input) {
 		try {
-			return EncodeUtils.encodeHex(encode(input.getBytes(DEFAULT_URL_ENCODING), DEFAULT_KEY));
+			return EncodeUtils.encodeHex(encode(input.getBytes(EncodeUtils.UTF_8), DEFAULT_KEY));
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
@@ -58,7 +57,7 @@ public class AesUtils {
 	 */
 	public static String encode(String input, String key) {
 		try {
-			return EncodeUtils.encodeHex(encode(input.getBytes(DEFAULT_URL_ENCODING), EncodeUtils.decodeHex(key)));
+			return EncodeUtils.encodeHex(encode(input.getBytes(EncodeUtils.UTF_8), EncodeUtils.decodeHex(key)));
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
@@ -71,7 +70,7 @@ public class AesUtils {
 	 */
 	public static String decode(String input) {
 		try {
-			return new String(decode(EncodeUtils.decodeHex(input), DEFAULT_KEY), DEFAULT_URL_ENCODING);
+			return new String(decode(EncodeUtils.decodeHex(input), DEFAULT_KEY), EncodeUtils.UTF_8);
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
@@ -85,7 +84,7 @@ public class AesUtils {
 	 */
 	public static String decode(String input, String key) {
 		try {
-			return new String(decode(EncodeUtils.decodeHex(input), EncodeUtils.decodeHex(key)), DEFAULT_URL_ENCODING);
+			return new String(decode(EncodeUtils.decodeHex(input), EncodeUtils.decodeHex(key)), EncodeUtils.UTF_8);
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
