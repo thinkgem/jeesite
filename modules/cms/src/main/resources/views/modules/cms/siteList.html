@@ -67,7 +67,7 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
 		}},
 		{header:'${text('创建时间')}', name:'createDate', index:'a.create_date', width:150, align:"center"},
-		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text('操作')}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('cms:site:edit')){ %>
 				actions.push('<a href="${ctx}/cms/site/form?siteCode='+row.siteCode+'" class="btnList" title="${text('编辑站点')}"><i class="fa fa-pencil"></i></a>&nbsp;');

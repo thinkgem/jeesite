@@ -89,7 +89,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text('访问页面标题')}', name:'contentTitle', index:'a.content_title', width:150, align:"left"},
 		{header:'${text('访问用户编码')}', name:'visitUserCode', index:'a.visit_user_code', width:150, align:"left"},
 
-		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text('操作')}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('cms:visitLog:edit')){ %>
 				actions.push('<a href="${ctx}/cms/visitLog/form?id='+row.id+'" class="btnList" title="${text('编辑访问日志表')}"><i class="fa fa-pencil"></i></a>&nbsp;');

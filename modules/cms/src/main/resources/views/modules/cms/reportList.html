@@ -68,7 +68,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text('举报的URL')}', name:'reportUrl', index:'a.report_url', width:150, align:"left"},
 		{header:'${text('举报类型')}', name:'reportType', index:'a.report_type', width:150, align:"left"},
 		{header:'${text('举报原因')}', name:'reportCause', index:'a.report_cause', width:150, align:"left"},
-		{header:'${text('操作')}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text('操作')}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('cms:report:edit')){ %>
 				actions.push('<a href="${ctx}/cms/report/form?id='+row.id+'" class="btnList" title="${text('编辑内容举报表')}"><i class="fa fa-pencil"></i></a>&nbsp;');

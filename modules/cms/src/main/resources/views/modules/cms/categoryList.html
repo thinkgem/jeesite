@@ -85,7 +85,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("展现方式")}', name:'showModes', index:'a.show_modes', width:150, fixed:true, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('cms_show_modes')}, val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('cms:category:edit')){ %>
 				actions.push('<a href="${ctx}/cms/category/form?categoryCode='+row.categoryCode+'" class="btnList" title="${text("编辑栏目表")}"><i class="fa fa-pencil"></i></a>&nbsp;');

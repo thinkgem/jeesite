@@ -69,7 +69,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:130, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:post:edit')){ %>
 				actions.push('<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" title="${text("编辑岗位")}"><i class="fa fa-pencil"></i></a>&nbsp;');

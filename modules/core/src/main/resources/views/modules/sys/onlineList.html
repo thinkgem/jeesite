@@ -62,7 +62,7 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_device_type')}, val, 'PC', true);
 		}}
 		<% if(hasPermi('sys:online:edit')){ %>
-		,{header:'${text("操作")}', name:'actions', width:50, sortable:false, formatter: function(val, obj, row, act){
+		,{header:'${text("操作")}', name:'actions', width:100, sortable:false, formatter: function(val, obj, row, act){
 			var actions = [];
 			actions.push('<a href="${ctx}/sys/online/tickOut?sessionId='+row.id+'" class="btnList" title="${text("踢出在线用户")}" data-confirm="${text("确认要踢出该用户在线状态吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			return actions.join('');

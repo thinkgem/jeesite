@@ -121,7 +121,7 @@ $('#dataGrid').dataGrid({
 		{header:'设备名称', name:'deviceName', index:'a.device_name', width:100, align:"center"},
 		{header:'浏览器名', name:'browserName', index:'a.browser_name', width:100, align:"center"},
 		{header:'响应时间', name:'executeTimeFormat', index:'a.execute_time', width:100, align:"center"}/* ,
-		{header:'操作', name:'actions', width:130, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'操作', name:'actions', width:130, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:log:edit')){ %>
 				actions.push('<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="日志详情"><i class="fa fa-pencil"></i></a>&nbsp;');

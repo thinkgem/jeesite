@@ -70,7 +70,7 @@ $('#dataGrid').dataGrid({
 			}
 		}
 		%>
-		{header:'\${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+		{header:'\${text("操作")}', name:'actions', width:${table.isTreeEntity?150:120}, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(isQueryTpl){ %>
 			actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("查看${functionNameSimple}")}"><i class="fa fa-file-text-o"></i></a>&nbsp;');
