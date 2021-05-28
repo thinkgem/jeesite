@@ -130,7 +130,7 @@ $('#dataGrid').dataGrid({
 		}, summaryTpl: "<em>{0}</em> ", summaryType: "count"},
 		{header:'多行文本', name:'testTextarea', index:'a.test_textarea', width:150, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			if(obj.rowId == ''){ return '<em>' + val + '</em>个' }
-			return val;
+			return val||'';
 		}, summaryTpl: "<em>{0}</em>", summaryType: "count"},
 		{header:'金额', name:'id', index:'a.id', width:150, align:"right", formatter: function(val, obj, row, act){
 			val = js.formatMoney(val/(1000*1000*1000*1000));
