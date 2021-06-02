@@ -72,6 +72,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		rememberUserCodeCookie.setSecure(Global.getPropertyToBoolean("session.sessionIdCookieSecure", "false"));
 		rememberUserCodeCookie.setHttpOnly(Global.getPropertyToBoolean("session.sessionIdCookieHttpOnly", "true"));
 		rememberUserCodeCookie.setSameSite(SameSiteOptions.valueOf(Global.getProperty("session.sessionIdCookieSameSite", "LAX")));
+		rememberUserCodeCookie.setMaxAge(Cookie.ONE_YEAR);
         instance = this;
 	}
 	
