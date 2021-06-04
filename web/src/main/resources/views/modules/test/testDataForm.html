@@ -216,7 +216,7 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:120, 
+		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:130, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
 				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
@@ -227,14 +227,6 @@ $("#testDataChildDataGrid").dataGrid({
 		{header:'${text("单选框")}', name:'testRadio', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
-				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).resetValid()});
-				}
-			}
-		},
-		{header:'${text("复选框")}', name:'testCheckbox', width:100, 
-			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
-				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					$(element).select2().on("change",function(){$(this).resetValid()});
 				}
@@ -251,40 +243,32 @@ $("#testDataChildDataGrid").dataGrid({
 				}
 			}
 		},
-		{header:'${text("日期时间")}', name:'testDatetime', width:150, 
-			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i:s'},
-			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
-				dataInit: function(element){
-					laydate.render({elem:element, type:'datetime', format:'yyyy-MM-dd HH:mm'});
-				}
-			}
-		},
-		{header:'${text("用户选择")}', name:'testUser', width:150,
-			formatter: function(val, obj, row, act){
-				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
-			}, editable: true, edittype: "custom", editoptions: {
-				custom_element: function(val, editOptions) {
-					return js.template('treeselectTpl', {
-						id: 'user_'+editOptions.id, title: '用户选择', 
-						name: 'testUser.userCode', value: val.split('|')[0], 
-						labelName: 'testUser.userName', labelValue: val.split('|')[1],
-						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: '', readonly: false
-					});
-				},
-				custom_value: function(element, act){
-					return {userCode: element.find('[type=hidden]').val(),
-						userName: element.find('[type=text]').val()};
-				},
-				dataInit: function(element){
-					// 初始化控件后设置只读模式（实例）
-					// $(element).find('.form-control, .btn').addClass('disabled');
-				}
-			}, 
-			unformat: function(val, obj, cell){
-				return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();
-			}
-		},
-		{header:'${text("列表选择")}', name:'testUser2', width:150,
+// 		{header:'${text("用户选择")}', name:'testUser', width:150,
+// 			formatter: function(val, obj, row, act){
+// 				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
+// 			}, editable: true, edittype: "custom", editoptions: {
+// 				custom_element: function(val, editOptions) {
+// 					return js.template('treeselectTpl', {
+// 						id: 'user_'+editOptions.id, title: '用户选择', 
+// 						name: 'testUser.userCode', value: val.split('|')[0], 
+// 						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+// 						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: '', readonly: false
+// 					});
+// 				},
+// 				custom_value: function(element, act){
+// 					return {userCode: element.find('[type=hidden]').val(),
+// 						userName: element.find('[type=text]').val()};
+// 				},
+// 				dataInit: function(element){
+// 					// 初始化控件后设置只读模式（实例）
+// 					// $(element).find('.form-control, .btn').addClass('disabled');
+// 				}
+// 			}, 
+// 			unformat: function(val, obj, cell){
+// 				return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();
+// 			}
+// 		},
+		{header:'${text("用户选择")}', name:'testUser2', width:150,
 			formatter: function(val, obj, row, act){
 				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
 			}, editable: true, edittype: "custom", editoptions: {

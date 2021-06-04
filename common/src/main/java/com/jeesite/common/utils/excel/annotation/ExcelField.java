@@ -84,7 +84,6 @@ public @interface ExcelField {
 	/**
 	 * 反射类型
 	 * MoneyType.class 金额类型转换（保留两位）
-	 * DateTimeType.class 日期时间类型转换 yyyy-MM-dd HH:mm:ss
 	 */
 	Class<? extends FieldType> fieldType() default FieldType.class;
 	
