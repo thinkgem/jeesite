@@ -22,8 +22,8 @@
 			</childTable>
 		</category>
 		<category value="crud_cloud" label="单表/主子表 （增删改查 Cloud，生成 Api/Client）">
-			<template>crud_cloud/mapper.xml</template>
 			<template>crud_cloud/entity.xml</template>
+			<template>crud_cloud/mapper.xml</template>
 			<template>crud_cloud/dao.xml</template>
 			<template>crud_cloud/api.xml</template>
 			<template>crud_cloud/client.xml</template>
@@ -48,13 +48,13 @@
 			<template>crud/service.xml</template>
 		</category>
 		<category value="dao" label="关系表/仅持久层（dao/mapper/entity）">
-			<template>crud/mapper.xml</template>
 			<template>crud/entity.xml</template>
+			<template>crud/mapper.xml</template>
 			<template>crud/dao.xml</template>
 		</category>
 		<category value="query" label="仅查询功能（不含增删改，仅数据展现）">
-			<template>crud/mapper.xml</template>
 			<template>crud/entity.xml</template>
+			<template>crud/mapper.xml</template>
 			<template>query/dao.xml</template>
 			<template>query/service.xml</template>
 			<template>query/controller.xml</template>
