@@ -97,6 +97,9 @@ $('#dataGrid').dataGrid({
 				}
 				actions.push('<a href="${ctx}/cms/category/delete?categoryCode='+row.categoryCode+'" class="btnList" title="${text("删除栏目表")}" data-confirm="${text("确认要删除该栏目表及所有子栏目表吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/cms/category/form?parentCode='+row.id+'&site.siteCode=${category.site.siteCode}" class="btnList" title="${text("新增下级栏目表")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctxFront}/list-'+row.categoryCode+'" target="_blank" title="${text("访问栏目")}"><i class="fa fa-globe"></i></a>&nbsp;');
+				}
 			<% } %>
 			return actions.join('');
 		}}
