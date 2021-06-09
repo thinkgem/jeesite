@@ -35,14 +35,14 @@ public class FileTempleteUtils {
 	 * @param path 前缀路径
 	 */
 	public static List<FileTemplete> getFileTempleteListByPath(String path) throws IOException {
-		Set<FileTemplete> set = SetUtils.newTreeSet();
+		List<FileTemplete> list = ListUtils.newArrayList();
 		Resource[] resources = ResourceUtils.getResources("classpath*:" + path + "/**/*.html");
 		for (Resource resource : resources) {
 			if (resource.exists()) {
-				set.add(new FileTemplete(resource, path));
+				list.add(new FileTemplete(resource, path));
 			}
 		}
-		return ListUtils.newArrayList(set);
+		return list;
 	}
 
 	/**
