@@ -58,10 +58,14 @@ for (c in child.columnList){
 	}else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'radio' || c.showType == 'checkbox'){
 %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', width:100, 
-			editable:true, edittype:'select', editoptions:{<%if (c.showType == 'select_multiple' || c.showType == 'checkbox'){ %>multiple:true, <% } %>'class':'form-control${cssClass}',
-				items: $.merge([<%if (!(c.showType == 'select_multiple' || c.showType == 'checkbox')){ %>{dictLabel:'&nbsp;',dictValue:''}<% } %>], \${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}),
+			editable:true, edittype:'${c.showType == "select_multiple" ? "select" : c.showType}', editoptions:{<%if (c.showType == 'select_multiple' || c.showType == 'checkbox'){ %>multiple:true, <% } %>'class':'form-control${cssClass}<%if (c.showType == "radio" || c.showType == "checkbox"){ %> icheck<% } %>',
+				items: $.merge([<%if (c.showType == 'select'){ %>{dictLabel:'&nbsp;',dictValue:''}<% } %>], \${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).resetValid()});
+					<%if (c.showType == "radio" || c.showType == "checkbox"){ %>
+					js.iCheck(element).on("ifChanged",function(){$(this).resetValid()});
+					<% }else{ %>
+					js.select2(element).on("change",function(){$(this).resetValid()});
+					<% } %>
 				}
 			}
 		},
@@ -135,7 +139,7 @@ for (c in child.columnList){
 }
 if (table.tplCategory != 'query'){
 %>
-		{header:'\${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+		{header:'\${text("操作")}', name:'actions', width:80, align:'center', formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
 				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
