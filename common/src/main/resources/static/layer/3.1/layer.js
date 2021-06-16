@@ -804,29 +804,45 @@ layer.window = window;
 
 //获取子iframe的DOM
 layer.getChildFrame = function(selector, index){
-  index = index || $('.'+doms[4]).attr('times');
-  return $('#'+ doms[0] + index).find('iframe').contents().find(selector);  
+	index = index || $('.'+doms[4]).attr('times');
+	return $('#'+ doms[0] + index).find('iframe').contents().find(selector);  
 };
 
 //得到当前iframe层的索引，子iframe时使用
 layer.getFrameIndex = function(name){
-  return $('#'+ name).parents('.'+doms[4]).attr('times');
+	return $('#'+ name).parents('.'+doms[4]).attr('times');
 };
 
-//iframe层自适应宽高
-layer.iframeAuto = function(index){
-  if(!index) return;
-  var heg = layer.getChildFrame('html', index).outerHeight();
-  var layero = $('#'+ doms[0] + index);
-  var titHeight = layero.find(doms[1]).outerHeight() || 0;
-  var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
-  layero.css({height: heg + titHeight + btnHeight});
-  layero.find('iframe').css({height: heg});
+//iframe层自适应宽高（diffVal差值范围内，进行自适应高度） 
+layer.iframeAuto = function(index, diffVal){
+	if(!index){
+		return;
+	}
+  	var iframe = document.getElementById(doms[4] + index);
+	if (iframe) {
+		var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+		if (iframeWin.document.body) {
+			var layero = $('#'+ doms[0] + index);
+			var titHeight = layero.find(doms[1]).outerHeight() || 0;
+			var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
+//			var heg = layer.getChildFrame('html', index).outerHeight();
+			var heg = iframeWin.document.body.scrollHeight;
+			var layerHeight = heg + titHeight + btnHeight;
+			var layerTop = ($(window).height() - layerHeight) / 2;
+			if (layerTop > 0){
+				var $iframe = layero.find('iframe');
+				if (Math.abs($iframe.height() - heg) < (diffVal || 9000)){
+					layero.css({height: layerHeight, top: layerTop});
+					$iframe.css({height: heg});
+				}
+			}
+		}
+	}
 };
 
 //重置iframe url
 layer.iframeSrc = function(index, url){
-  $('#'+ doms[0] + index).find('iframe').attr('src', url);
+	$('#'+ doms[0] + index).find('iframe').attr('src', url);
 };
 
 //返回当前layer的iframe对象的window对象 ThinkGem

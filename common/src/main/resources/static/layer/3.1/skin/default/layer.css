@@ -92,7 +92,8 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 .layui-layer-page .layui-layer-content{position:relative; overflow:auto;}
 .layui-layer-page .layui-layer-btn,.layui-layer-iframe .layui-layer-btn{padding-top:10px;}
 .layui-layer-nobg{background:none;}
-.layui-layer-iframe iframe{display: block; width: 100%; border-radius: 3px;}
+.layui-layer-iframe{transition:top 0.2s ease-in-out;}
+.layui-layer-iframe iframe{display: block; width: 100%; border-radius: 3px; transition:height 0.2s ease-in-out;}
 
 .layui-layer-loading{border-radius:100%; background:none;  box-shadow:none;  border:none;}
 .layui-layer-loading .layui-layer-content{width:60px; height:24px; background:url(loading-0.gif) no-repeat;}

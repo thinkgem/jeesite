@@ -15,5 +15,5 @@ var themeName = @Global.getConfig('web.view.themeName', 'default');
 <% if (!@ListUtils.inString('layout', libs!)){ %>
 <div class="wrapper">${layoutContent}</div>
 <% }else{ %>${layoutContent}<% } %>
-<a id="scroll-up" href="#" class="btn btn-sm"><i class="fa fa-angle-double-up"></i></a>
+<a id="scroll-up" href="#" class="btn btn-sm hide"><i class="fa fa-angle-double-up"></i></a>
 <% include('/themes/'+themeName+'/include/footer.html', {libs: libs!}){} %>
