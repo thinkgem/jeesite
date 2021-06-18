@@ -142,10 +142,10 @@ user:
   # {"用户类型":{"beanName":"Service或Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
   userTypeMap: >
     {
-      "employee":{"beanName":"employeeService","loginView":"","indexView":"modules/sys/sysIndex"},
-      "member":{"beanName":"memberService","loginView":"","indexView":"modules/sys/sysIndexMember"},
-      "btype":{"beanName":"btypeInfoService","loginView":"","indexView":"modules/sys/sysIndexBtype"},
-      "expert":{"beanName":"expertService","loginView":"","indexView":"modules/sys/sysIndexExpert"}
+      employee: {beanName: "employeeService", loginView: "", indexView: "modules/sys/sysIndex"},
+      member: {beanName: "memberService", loginView: "", indexView: "modules/sys/sysIndexMember"},
+      btype: {beanName: "btypeInfoService", loginView: "", indexView: "modules/sys/sysIndexBtype"},
+      expert: {beanName: "expertService", loginView: "", indexView: "modules/sys/sysIndexExpert"}
     }
 
   # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型（0全部  1拥有权限  2管理权限）

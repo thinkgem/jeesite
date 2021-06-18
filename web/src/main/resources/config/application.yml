@@ -131,8 +131,41 @@ jdbc:
 #    # 设置连接属性，可获取到表的 remark (备注)
 #    remarksReporting: false
 
+#  # 读写分离配置（专业版）v4.3.0
+#  readwriteSplitting:
+#    # 读库的数据源名称列表（默认数据源）
+#    readDataSourceNames: ds_read_01, ds_read_02
+#    # 负载均衡算法（ROUND_ROBIN轮询、RANDOM随机、自定义类名）
+#    loadBalancerAlgorithm: RANDOM
+
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
-#  dataSourceNames: ds2
+#  dataSourceNames: ds_read_01, ds_read_02, ds2
+#  
+#  # 默认数据源的从库01
+#  ds_read_01:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
+#    
+#  # 默认数据源的从库02
+#  ds_read_02:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
 #  
 #  # 多数据源配置：ds2
 #  ds2:
@@ -142,14 +175,29 @@ jdbc:
 #    username: root
 #    password: 123456
 #    testSql: SELECT 1
+#    # 其它数据源支持密码加密
 #    encrypt:
 #      username: false
 #      password: true
+#    # 其它数据源支持连接池设置
 #    pool:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-#      
+#    # 其它数据源支持读写分离
+#    readwriteSplitting:
+#      readDataSourceNames: ~
+#      loadBalancerAlgorithm: RANDOM
+
+#  # 数据源映射（Dao类名 = 数据源名称），优先于 @MyBatisDao(dataSourceName="ds2") 设置 v4.3.0
+#  # Dao类名，不仅支持某个具体 Dao类名，还支持 Dao 里的某个方法指定数据源名称，还支持包路径指定数据源等
+#  # 从上到下，先匹配先受用规则，默认数据源名为 default 扩展数据源为 dataSourceNames 列表里自定义的名字
+#  mybatisDaoAndDataSourceMappings: |
+#    OfficeDao = ds2
+#    EmpUserDao.findList = ds2
+#    com.jeesite.modules.sys = default
+#    com.jeesite.modules.filemanager = ds2
+
 #  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
 #  jta:
 #    enabled: false
@@ -257,10 +305,10 @@ logging:
 #  # {"用户类型":{"beanName":"Service或Dao的Bean名称","loginView":"登录页面视图","indexView":"主框架页面视图，支持 redirect: 前缀"}}
 #  userTypeMap: >
 #    {
-#      "employee":{"beanName":"employeeService","loginView":"","indexView":"modules/sys/sysIndex"},
-#      "member":{"beanName":"memberService","loginView":"","indexView":"modules/sys/sysIndexMember"},
-#      "btype":{"beanName":"btypeInfoService","loginView":"","indexView":"modules/sys/sysIndexBtype"},
-#      "expert":{"beanName":"expertService","loginView":"","indexView":"modules/sys/sysIndexExpert"}
+#      employee: {beanName: "employeeService", loginView: "", indexView: "modules/sys/sysIndex"},
+#      member: {beanName: "memberService", loginView: "", indexView: "modules/sys/sysIndexMember"},
+#      btype: {beanName: "btypeInfoService", loginView: "", indexView: "modules/sys/sysIndexBtype"},
+#      expert: {beanName: "expertService", loginView: "", indexView: "modules/sys/sysIndexExpert"}
 #    }
 #
 #  # 数据权限设置参数，可新增自定义数据权限，moduleCode: 针对模块, ctrlPermi: 权限类型, 0全部  1拥有权限  2管理权限
