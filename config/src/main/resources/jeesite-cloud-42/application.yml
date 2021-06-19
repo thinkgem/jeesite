@@ -53,8 +53,8 @@ feign:
     enabled: false
     
   # 容错限流断路器
-  hystrix:
-    enabled: false
+#  hystrix:
+#    enabled: false
   sentinel:
     enabled: true
     
@@ -81,16 +81,16 @@ ribbon:
   MaxAutoRetries: 0
 
 # 延迟容错机制
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          # 隔离策略（THREAD、SEMAPHORE）
-          strategy: THREAD
-          # 线程超时时间（毫秒）
-          thread:
-            timeoutInMilliseconds: 60000
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          # 隔离策略（THREAD、SEMAPHORE）
+#          strategy: THREAD
+#          # 线程超时时间（毫秒）
+#          thread:
+#            timeoutInMilliseconds: 60000
 
 # 微服务列表
 service:
