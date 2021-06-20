@@ -27,7 +27,7 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- version setting -->
-		<nacos.version>1.4.1</nacos.version>
+		<nacos.version>2.0.2</nacos.version>
 		
 		<!-- docker setting -->
         <docker.run.port>8848:8848</docker.run.port>
