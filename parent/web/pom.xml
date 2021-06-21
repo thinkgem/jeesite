@@ -65,6 +65,18 @@
 			<artifactId>nacos-api</artifactId>
 		</dependency>
 		
+		<!-- 启用负载均衡 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+
+		<!-- 链路追踪服务 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>

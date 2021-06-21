@@ -27,7 +27,7 @@
 						<#form:input path="testTextarea" maxlength="200" class="form-control width-120"/>
 					</div>
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label class="control-label">${text('下拉框')}：</label>
 					<div class="control-inline width-120">
 						<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control"/>
@@ -94,19 +94,19 @@
 							path="testAreaCode" labelPath="testAreaName" 
 							url="${ctx}/sys/area/treeData" allowClear="true"/>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
 					<div class="control-inline width-120">
 						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control"/>
 					</div>
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label class="control-label">${text('备注信息')}：</label>
 					<div class="control-inline">
 						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
 					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>

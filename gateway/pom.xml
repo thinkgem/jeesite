@@ -39,12 +39,6 @@
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 		
-		<!-- 启用负载均衡 -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
-		</dependency>
-		
 		<!-- 流量防卫兵 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
