@@ -770,6 +770,12 @@
         <level value="INFO"/>
     </logger>
 
+    <logger name="com.jeesite">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="rootFile"/>
+        <level value="DEBUG"/>
+    </logger>
+
     <root>
         <level value="INFO"/>
         <appender-ref ref="rootFile"/>

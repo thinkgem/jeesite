@@ -5,9 +5,9 @@
 	
 	<parent>
 		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-cloud-parent</artifactId>
+		<artifactId>jeesite-cloud-parent-web</artifactId>
 		<version>4.3.0-SNAPSHOT</version>
-		<relativePath>../../../parent/pom.xml</relativePath>
+		<relativePath>../../../parent/web/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-cloud-module-core</artifactId>
@@ -32,30 +32,6 @@
 	</properties>
 
 	<dependencies>
-		
-		<!-- 服务发现 -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-		</dependency>
-		
-		<!-- 配置中心 -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-		</dependency>
 		
 		<!-- 自动更新配置支持 
 		<dependency>

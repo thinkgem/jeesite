@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.web.BaseController;
@@ -55,6 +56,7 @@ public class TestData1Controller extends BaseController {
 	/**
 	 * 查询列表数据
 	 */
+	@SentinelResource
 	@RequiresPermissions("test:testData:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody

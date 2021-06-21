@@ -70,17 +70,17 @@ feign:
   # 调试模式
   debug: false
 
-# 启用负载均衡
-ribbon:
-  eureka:
-    enabled: true
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
-  OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 0
-  MaxAutoRetries: 0
+# 启用负载均衡（2020.0+ 替换为 loadbalancer）
+#ribbon:
+#  eureka:
+#    enabled: true
+#  ReadTimeout: 60000
+#  ConnectTimeout: 60000
+#  OkToRetryOnAllOperations: false
+#  MaxAutoRetriesNextServer: 0
+#  MaxAutoRetries: 0
 
-# 延迟容错机制
+# 延迟容错机制（2020.0+ 替换为 sentinel）
 #hystrix:
 #  command:
 #    default:
@@ -178,7 +178,7 @@ tx-lcn:
   springcloud.loadbalance.enabled: true
     
   # 是否启动LCN负载均衡策略(优化选项，开启与否，功能不受影响)
-  ribbon.loadbalancer.dtx.enabled: true
+  ribbon.loadbalancer.dtx.enabled: false
   
   # 该参数是分布式事务框架存储的业务切面信息。采用的是h2数据库。绝对路径。该参数默认的值为{user.dir}/.txlcn/{application.name}-{application.port}
   # aspect.log.file-path: ${user.dir}/.txlcn/${spring.application.name}-${server.port}

@@ -22,6 +22,7 @@
 		<!-- Spring Cloud -->
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+		<nacos.version>2.0.2</nacos.version>
 		<seata.version>1.4.2</seata.version>
 		
 	</properties>
@@ -43,6 +44,21 @@
 				<scope>import</scope>
 			</dependency>
 			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-client</artifactId>
+				<version>${nacos.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-common</artifactId>
+				<version>${nacos.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-api</artifactId>
+				<version>${nacos.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>io.seata</groupId>
 				<artifactId>seata-spring-boot-starter</artifactId>
 				<version>${seata.version}</version>
@@ -51,8 +67,14 @@
 	</dependencyManagement>
 	
 	<dependencies>
+	
+		<!-- bootstrap.yml -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
 		
-		<!-- Common -->
+		<!-- JeeSite Common -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-common</artifactId>
