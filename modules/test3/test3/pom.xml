@@ -47,6 +47,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
+		<!-- 业务流程
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-bpm-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
 		<!-- 分布式事务
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -56,13 +63,6 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-seata-client</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency> -->
-		
-		<!-- 业务流程
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-bpm-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
