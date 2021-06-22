@@ -2,13 +2,12 @@
 ## 技术交流
 
 * 交流 QQ 群（千人大群）：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite4/issues> 　[【新手必读】](https://gitee.com/thinkgem/jeesite4/issues/I18ARR)
 * 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
 * GitHub：<https://github.com/thinkgem/jeesite4>
 * 作者博客：<https://my.oschina.net/thinkgem>
-* **技术服务：**<http://s.jeesite.com>
+* **帮助文档：**<http://docs.jeesite.com>
 * 官方网站：<http://jeesite.com>
-* 官方论坛：<http://jeesite.net>
+* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite4/issues/I18ARR)
 * 关注微信公众号，了解最新动态：
 
 ![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite4微信公众号")
@@ -33,22 +32,26 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 大家都在用 Spring ，在学习 Spring 架构的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，JeeSite 也一样具备强大的扩展性。
 
-发展至今 JeeSite 平台架构已经非常稳定，JeeSite 是一个专业的平台，是一个让你使用放心的平台。
+**发展至今 JeeSite 平台架构已经非常稳定，JeeSite 是一个专业的平台，是一个让你使用放心的平台。**
 
 ### v4 架构特点、安全方面等等的优势：<http://jeesite.com/docs/feature/>
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.4、Spring Framework 5.3、Apache Shiro 1.7、J2Cache
+* 主框架：Spring Boot 2.5、Spring Framework 5.3、Apache Shiro 1.7、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.1、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.1（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
-* 前端组件：jQuery 3.4、jqGrid 4.7、layer 3.1、zTree 3.5、jquery validation
+* 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.1、zTree 3.5、jquery validation
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
-* 技术选型详情：<http://jeesite.com/docs/technology/>
+* 技术选型（详细）：<http://jeesite.com/docs/technology/>
 
-## 内置功能
+## 更多介绍
 
-* <http://jeesite.com/docs/function/>
+* 内置功能：<http://jeesite.com/docs/function/>
+* 目录结构：<https://jeesite.com/docs/catalog/>
+* 架构特点：<https://jeesite.com/docs/feature/>
+* 开发规范：<https://jeesite.com/docs/standard/>
+* 代码生成：<https://jeesite.com/docs/code-gen/>
 
 ## 生态系统
 
@@ -66,24 +69,53 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 2. 账号：system
 3. 密码：admin
 
-### 本地运行
+### 本地快速运行
 
-1. 环境准备：`JDK 1.8 or 11`、`Maven 3.6+`、`MySQL 5.7 or 8.0`
-2. 执行命令：`git clone https://gitee.com/thinkgem/jeesite4.git` 下载源码
+1. 环境准备：`JDK 1.8 or 11`、`Maven 3.6+`、`MySQL 5.7 or 8.0`（[支持更多数据库](https://jeesite.com/docs/technology/#8已支持数据库)）
+2. 执行命令：`git clone https://gitee.com/thinkgem/jeesite4.git` 下载源码（master分支）
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 7. 部署常见问题：<http://jeesite.com/docs/faq/>
 
-### 开发环境
+### 开发环境部署
 
 1. 部署运行文档：<http://jeesite.com/docs/install-deploy/>
 2. 部署常见问题：<http://jeesite.com/docs/faq/>
 
-## 在线文档
+## 技术文章
 
-* 在线文档学习地址：<http://docs.jeesite.com>
+* 菜单和按钮权限：<https://jeesite.com/docs/permi-shiro/>
+* 强大的数据权限：<https://jeesite.com/docs/service-datascope/#数据权限>
+* 表结构数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
+* 表单组件封装：<https://jeesite.com/docs/views-beetl/>
+* 持久层设计：<https://jeesite.com/docs/dao-mybatis/>
+* JS脚本工具：<https://jeesite.com/docs/jeesite-js/>
+* 后端工具：<https://jeesite.com/docs/sys-utils/>
+
+## 专题文章
+
+* 手机端：<https://jeesite.com/docs/mobile-rest-api/>
+* 用户类型：<https://jeesite.com/docs/user-type/>
+* 树表结构设计：<https://jeesite.com/docs/tree-table-use/>
+* 单点登录：<https://jeesite.com/docs/sso-cas/>
+* 国际化：<https://jeesite.com/docs/i18n-locale/>
+* 对象存储：<https://jeesite.com/docs/oss-client/>
+* 文件在线预览：<https://jeesite.com/docs/filepreview/>
+* 报表设计器：<https://jeesite.com/docs/ureport/>
+* 大屏设计器：<https://jeesite.com/docs/visual/>
+* 三员管理员：<https://jeesite.com/docs/3manager/>
+* 在线作业调度：<https://jeesite.com/docs/job/>
+* 消息推送：<https://jeesite.com/docs/msg-push-use/>
+
+## 云服务架构
+
+* 多租户、SaaS服务：<https://jeesite.com/docs/saas-corp-use/>
+* 集群、负载均衡、高可用：<https://jeesite.com/docs/cluster/>
+* Spring Cloud：<https://jeesite.com/docs/springcloud/>
+* 分布式事务 LCN：<https://jeesite.com/docs/springcloud-lcn/>
+* 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
 
 ## 授权协议声明
 
@@ -101,18 +133,20 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ## 技术服务与支持
 
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系方式（官方商务）QQ：[1766571055](http://wpa.qq.com/msgrd?v=3&uin=1766571055&site=qq&menu=yes)**
-* 技术服务支持网页：<http://s.jeesite.com>
+* **联系方式（官方商务）QQ：[1766571055](http://wpa.qq.com/msgrd?v=3&uin=1766571055&site=qq&menu=yes)、[1928733133](http://wpa.qq.com/msgrd?v=3&uin=1928733133&site=qq&menu=yes)**
+* 技术支持服务网页：<http://s.jeesite.com>
 
 ## 今后如何升级？
 
-尽量不修改 web 项目以外的源码项目，如 jeesite-common、jeesite-modele-core，如果修改了，请 Pull Requests 上来，否则代码与官方不同步，会将对你的日后升级增加难度。
+尽量不修改 web 项目以外的源码项目，如 jeesite-common、jeesite-modele-core，如果修改了，请 Pull Requests 上来，否则代码与官方不同步，可能会将对你的日后升级增加难度。
 
 如果您修改了依赖模块代码，也没关系，这时你需要利用 Git 版本控制工具，与官方仓库代码进行同步，合并代码即可。
 
 每个版本升级，我们都会附带详细更新日志：<http://jeesite.com/docs/upgrade/>。
 
 在这里，你可以看到 JeeSite 新增哪些新功能和改进，在每个版本下都有对应升级方法。
+
+如果跨版本升级，可以将版本号直接修改为最新版本，然后去看每个版本的升级方法，修改对应业务。
 
 # Git 全局设置技巧
 
