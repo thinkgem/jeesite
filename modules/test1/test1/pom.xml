@@ -32,25 +32,6 @@
 	</properties>
 
 	<dependencies>
-
-		<!-- 在线文档 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-		<!-- 分布式事务
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-txlcn-client</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-seata-client</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency> -->
 		
 		<!-- 核心模块 -->
 		<dependency>
@@ -59,12 +40,14 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
+		<!-- test1模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-test1-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		
+		<!-- test2模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-test2-client</artifactId>
@@ -75,6 +58,18 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-cloud-module-bpm-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
+		<!-- 分布式事务
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-txlcn-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-seata-client</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
