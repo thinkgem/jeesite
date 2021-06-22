@@ -12,9 +12,9 @@
 	
 	<parent>
 		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-cloud-parent</artifactId>
+		<artifactId>jeesite-cloud-parent-web</artifactId>
 		<version>${jeesiteVersion}-SNAPSHOT</version>
-		<relativePath>../../../parent/pom.xml</relativePath>
+		<relativePath>../../../parent/web/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-cloud-module-${module.moduleCode}</artifactId>
@@ -39,41 +39,18 @@
 	</properties>
 
 	<dependencies>
-
-		<!-- 服务发现 -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-		</dependency>
 		
-		<!-- 配置中心 -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-		</dependency>
-		
-		<!-- 链路追踪服务 -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
-		</dependency>
-		
-		<!-- 在线文档 -->
+		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-swagger</artifactId>
+			<artifactId>jeesite-cloud-module-core-client</artifactId>
+			<version>\${project.parent.version}</version>
+		</dependency>
+		
+		<!-- ${module.moduleName}模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-cloud-module-${module.moduleCode}-client</artifactId>
 			<version>\${project.parent.version}</version>
 		</dependency>
 		
@@ -89,19 +66,6 @@
 			<version>\${project.parent.version}</version>
 		</dependency> -->
 		
-		<!-- 核心模块 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-core-client</artifactId>
-			<version>\${project.parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-module-${module.moduleCode}-client</artifactId>
-			<version>\${project.parent.version}</version>
-		</dependency>
-		
 		<!-- 业务流程
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -114,15 +78,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency> -->
-
-		<!-- 自定义jar依赖包演示
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>test-core</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>\${project.basedir}/src/main/webapp/WEB-INF/lib/test-core-1.0.jar</systemPath>
 		</dependency> -->
 		
 	</dependencies>
