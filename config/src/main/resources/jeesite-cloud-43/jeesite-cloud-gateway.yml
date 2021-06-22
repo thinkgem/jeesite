@@ -18,7 +18,7 @@ spring:
         ds2.nacos:
           server-addr: 127.0.0.1:8848
           data-id: ${spring.application.name}-sentinel
-          group-id: jeesite-cloud-42
+          group-id: jeesite-cloud-43
           rule-type: flow
 
     # 网关路由配置
@@ -48,6 +48,17 @@ spring:
           uri: lb://jeesite-cloud-module-test2/js/a/jeesite-cloud-module-test2
           predicates:
             - Path=/js/a/jeesite-cloud-module-test2/**
+            
+        # 测试模块3
+        - id: test3
+          uri: lb://jeesite-cloud-module-test3/js/a/test3
+          predicates:
+            - Path=/js/a/test3/**
+        # 测试模块3（系统监控）
+        - id: test3_def
+          uri: lb://jeesite-cloud-module-test3/js/a/jeesite-cloud-module-test3
+          predicates:
+            - Path=/js/a/jeesite-cloud-module-test3/**
             
         # 业务流程模块
         - id: bpm

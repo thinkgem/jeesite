@@ -69,7 +69,7 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yml
-        group: jeesite-cloud-42
+        group: jeesite-cloud-43
       
   # 打印横幅
   main:

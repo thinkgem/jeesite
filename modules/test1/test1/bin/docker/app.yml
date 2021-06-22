@@ -46,7 +46,7 @@ spring:
       config:
         server-addr: 10.0.2.15:8848
         file-extension: yml
-        group: jeesite-cloud-42
+        group: jeesite-cloud-43
         ext-config:
           - data-id: application.yml
-            group: jeesite-cloud-42
+            group: jeesite-cloud-43

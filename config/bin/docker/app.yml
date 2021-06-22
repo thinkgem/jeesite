@@ -23,6 +23,10 @@ eureka:
 #======================================#
 
 spring:
+
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: git
   
   # 分布式配置中心
   cloud:
@@ -39,7 +43,7 @@ spring:
           username: ~
           password: ~
           default-label: master
-          search-paths: jeesite-cloud-42
+          search-paths: jeesite-cloud-43
           
     # Consul 服务发现
     consul:
@@ -49,18 +53,6 @@ spring:
         hostname: 10.0.2.15
         preferIpAddress: false
         
-    # 服务注册和配置
-    nacos:
-      discovery:
-        server-addr: 10.0.2.15:8848
-      config:
-        server-addr: 10.0.2.15:8848
-        file-extension: yml
-        group: jeesite-cloud-42
-        ext-config:
-          - data-id: application.yml
-            group: jeesite-cloud-42
-
   # 消息队列服务
 #  rabbitmq:
 #    host: 192.168.56.106
