@@ -20,40 +20,52 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 6. 如 UserUtils、EmpUtils、EmpUserService、OfficeService 等等众多的基础服务工具类，都可以直接从基础数据的微服务中获取数据，你不必考虑跨 web 服务的数据交互，我们已经帮你做了。
 7. 微服务组件 Nacos、Sentinel、Zipkin 提供源码方式启动部署，方便开发调试。
 8. 写一个别人有的，使用柔性事务解决，跨 web 服务的情况，入侵性非常小哦。
-9. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
+9. 集成工作流，提供BPM引擎独立的服务，客户端只需调用API，无需加载复杂流程引擎。
+10. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud Hoxton 2.2
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 1.4
-* 分布式统一配置中心：Spring Cloud Config / Nacos 1.4
-* 熔断隔离限流降级：Spring Cloud Hystrix / Sentinel 1.8
-* 集成阿里云组件：Nacos 注册与配置、Sentinel 流量防卫兵
+* 分布式系统套件版本：Spring Cloud 2020.0.3 + Alibaba 2021.1
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.0
+* 分布式统一配置中心：Spring Cloud Config / Nacos 2.0
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
-* 客户端负载均衡：Spring Cloud Ribbon
-* 分布式链路追踪：Spring Cloud Zipkin 2.23 (可选组件)
-* 分布式事务框架：TX-LCN 5.0 / Seata 1.4 (可选组件)
-* 工作流引擎框架：Flowable 6.5 (可选组件)
+* 客户端负载均衡：Spring Cloud LoadBalancer
+* 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
+* 分布式事务框架：Seata 1.4 / TX-LCN 5.0 (可选组件)
+* 分布式链路追踪：Zipkin 2.23 (可选组件)
+* 工作流引擎框架：Flowable 6.6 (可选组件)
 
 ## 子项目介绍
 
 * 服务注册：jeesite-cloud-eureka ： <http://127.0.0.1:8970>
 * 配置中心：jeesite-cloud-config ： <http://127.0.0.1:8971/project/default>
-* 服务注册和配置中心 **Nacos** 版本 ：<http://127.0.0.1:8848/nacos/index.html>
+* **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8848/nacos/index.html>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
-* 核心模块（**统一授权认证**）：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
+* 核心模块（**统一授权认证服务、平台基础数据服务**）：
+    - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-core-client
 * 测试模块1（单表增删改查示例）：
     - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
     - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
 * 测试模块2（树表增删改查示例）：
     - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
     - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
-* 业务流程基础服务：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
-* 分布式事务 LCN 服务：jeesite-cloud-module-txlcn ： <http://127.0.0.1:7970>
-* 分布式事务 Seata 服务：jeesite-cloud-module-seata ： <http://127.0.0.1:8091>
+* 测试模块3（代码生成的模块和代码生成的增删改查，**该模块完全没有手写，全部为生成的**）：
+    - 模块3主项目：jeesite-cloud-module-test3 ： <http://127.0.0.1:8985/js>
+    - 模块3客户端项目（提供其它模块调用）：jeesite-cloud-module-test3-client
+* 业务流程基础服务（流程引擎服务，客户端只需调用接口，无需加载引擎逻辑）：
+    - 流程主项目：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-bpm-client
+* 分布式事务 Seata 服务（推荐）：
+    - 服务主项目：jeesite-cloud-module-seata ： <http://127.0.0.1:8091>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-seata-client
+* 分布式事务 LCN 服务：
+    - 服务主项目：jeesite-cloud-module-txlcn ： <http://127.0.0.1:7970>
+    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-txlcn-client
 * 熔断限流：jeesite-cloud-sentinel ： <http://127.0.0.1:9311>
 * 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
+* 解释：主项目为服务提供者、客户端项目为服务消费者
 
 ## 快速运行
 
@@ -119,7 +131,7 @@ db.password: 123456
 
 浏览器访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
 
-登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-42.zip` 上传文件。
+登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-43.zip` 上传文件。
 
 然后编辑 Data Id 为 `application.yml` 的文件里的 JDBC 和 Redis 信息。
 
