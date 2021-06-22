@@ -79,13 +79,9 @@ spring:
           predicates:
             - Path=/js/static/modules/bpm/**
         - id: bpm_static_tag
-          uri: lb://jeesite-cloud-module-bpm/js/static/htmltags/bpm/
+          uri: lb://jeesite-cloud-module-bpm/js/static/htmltags/bpm
           predicates:
             - Path=/js/static/htmltags/bpm/**
-        - id: bpm_static_ace
-          uri: lb://jeesite-cloud-module-bpm/js/static/aceEditor/
-          predicates:
-            - Path=/js/static/aceEditor/**
         # 业务流程模块（系统监控）
         - id: bpm_def
           uri: lb://jeesite-cloud-module-bpm/js/a/jeesite-cloud-module-bpm

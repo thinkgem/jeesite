@@ -8,8 +8,8 @@ productName: JeeSite Cloud
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V4.2
-copyrightYear: 2020
+productVersion: V4.3
+copyrightYear: 2021
 
 #是否演示模式
 demoMode: false
@@ -102,6 +102,9 @@ service:
     path: ${server.servlet.context-path}
   test2:
     name: jeesite-cloud-module-test2
+    path: ${server.servlet.context-path}
+  test3:
+    name: jeesite-cloud-module-test3
     path: ${server.servlet.context-path}
   bpm:
     name: jeesite-cloud-module-bpm
@@ -243,7 +246,7 @@ spring:
         ds2.nacos:
           server-addr: 127.0.0.1:8848
           data-id: ${spring.application.name}-sentinel
-          group-id: jeesite-cloud-42
+          group-id: jeesite-cloud-43
           rule-type: flow
         
   # Spring Boot Admin 服务监控中心：https://codecentric.github.io/spring-boot-admin/2.0.6
