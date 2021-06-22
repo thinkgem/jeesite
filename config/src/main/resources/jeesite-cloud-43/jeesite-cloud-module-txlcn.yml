@@ -20,3 +20,49 @@ spring:
     database: 0
     password: 1234
     timeout: 2000
+
+  # Zipkin 服务链路追踪
+  zipkin:
+    enabled: false
+    base-url: http://127.0.0.1:9411
+    
+# 分布式事务管理地址
+
+tx-lcn: 
+
+  # 分布式事务管理配置
+  manager:
+    # TM监听IP. 默认为 127.0.0.1
+    host: 127.0.0.1
+    # TM监听Socket端口. 默认为 ${server.port} - 100
+    port: 8070
+    # 心跳检测时间(ms). 默认为 300000
+    heart-time: 300000
+    # 分布式事务执行总时间(ms). 默认为36000
+    dtx-time: 600000
+    # 事务处理并发等级. 默认为机器逻辑核心数5倍
+    concurrent-level: 160
+    # TM后台登陆密码，默认值为codingapi
+    admin-key: thinkgem
+    # 分布式事务锁超时时间 默认为-1，当-1时会用tx-lcn.manager.dtx-time的时间
+    dtx-lock-time: ${tx-lcn.manager.dtx-time}
+    # 雪花算法的sequence位长度，默认为12位.
+    seq-len: 12
+    # 异常回调开关。开启时请制定ex-url
+    ex-url-enabled: false
+    # 事务异常通知（任何http协议地址。未指定协议时，为TM提供内置功能接口）。默认是邮件通知
+    ex-url: /provider/email-to/thinkgem@163.com
+    
+  # 分布式事务消息配置
+  message:
+    # 参数延迟删除时间单位ms  默认为dtx-time值
+    netty.attr-delay-time: ${tx-lcn.manager.dtx-time}
+    
+  # 分布式事务日志配置
+  logger:
+    enabled: true
+    driver-class-name: ${spring.datasource.driver-class-name}
+    jdbc-url: ${spring.datasource.url}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    
