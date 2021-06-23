@@ -42,6 +42,9 @@ import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subMod
 import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${@StringUtils.cap(child.className)}Dao;
 <% } %>
 
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import io.seata.spring.annotation.GlobalTransactional;
+
 /**
  * ${functionName}Service
  * @author ${functionAuthor}
@@ -123,6 +126,8 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * @param ${className}
 	 */
 	@Override
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void save(${ClassName} ${className}) {
 	<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
@@ -200,6 +205,8 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * @param ${className}
 	 */
 	@Override
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void updateStatus(${ClassName} ${className}) {
 		super.updateStatus(${className});
@@ -210,6 +217,8 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * @param ${className}
 	 */
 	@Override
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void delete(${ClassName} ${className}) {
 		super.delete(${className});
