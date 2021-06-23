@@ -134,9 +134,42 @@ jdbc:
     minIdle: 3
     # 最大连接数
     maxActive: 20
-    
-#  # 多数据源名称列表，启用方式：@MyBatisDao(dataSourceName="ds2")
-#  dataSourceNames: ds2
+
+#  # 读写分离配置（专业版）v4.3.0
+#  readwriteSplitting:
+#    # 读库的数据源名称列表（默认数据源）
+#    readDataSourceNames: ds_read_01, ds_read_02
+#    # 负载均衡算法（ROUND_ROBIN轮询、RANDOM随机、自定义类名）
+#    loadBalancerAlgorithm: RANDOM
+
+#  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
+#  dataSourceNames: ds_read_01, ds_read_02, ds2
+#  
+#  # 默认数据源的从库01
+#  ds_read_01:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
+#  
+#  # 默认数据源的从库02
+#  ds_read_02:
+#    type: mysql
+#    driver: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/jeesite_test2?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+#    testSql: SELECT 1
+#    pool:
+#      init: 1
+#      minIdle: 3
+#      maxActive: 20
 #  
 #  # 多数据源配置：ds2
 #  ds2:
@@ -146,24 +179,39 @@ jdbc:
 #    username: root
 #    password: 123456
 #    testSql: SELECT 1
+#    # 其它数据源支持密码加密
 #    encrypt:
 #      username: false
 #      password: true
+#    # 其它数据源支持连接池设置
 #    pool:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
+#    # 其它数据源支持读写分离
+#    readwriteSplitting:
+#      readDataSourceNames: ~
+#      loadBalancerAlgorithm: RANDOM
 
-  # JTA 分布式事务
+#  # 数据源映射（Dao类名 = 数据源名称），优先于 @MyBatisDao(dataSourceName="ds2") 设置 v4.3.0
+#  # Dao类名，不仅支持某个具体 Dao类名，还支持 Dao 里的某个方法指定数据源名称，还支持包路径指定数据源等
+#  # 从上到下，先匹配先受用规则，默认数据源名为 default 扩展数据源为 dataSourceNames 列表里自定义的名字
+#  mybatisDaoAndDataSourceMappings: |
+#    TestDataChildDao = ds2
+#    EmpUserDao.findList = ds2
+#    com.jeesite.modules.sys = default
+#    com.jeesite.modules.filemanager = ds2
+
+  # JTA XA 事务
   jta:
     enabled: false
     
-  # LCN 分布式事务
-  lcn:
-    enabled: true
+#  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
+#  transactionTimeout: 1800
     
-# 分布式事务管理地址
+# LCN 分布式事务
 tx-lcn:
+  enabled: true
   client:
     # tx-manager 的配置地址，可以指定TM集群中的任何一个或多个地址
     # tx-manager 下集群策略，每个TC都会从始至终<断线重连>与TM集群保持集群大小个连接。
@@ -353,6 +401,9 @@ mybatis:
 
   # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
   scanBasePackage: com.jeesite.modules
+  
+  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
+  jdbcTransaction: true
   
 # Web 相关
 web:

@@ -26,6 +26,8 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.test.client.TestTreeServiceClient;
 import com.jeesite.modules.test.entity.TestTree;
 
+import io.seata.spring.annotation.GlobalTransactional;
+
 /**
  * 测试树表Controller，调用 test2 服务
  * @author ThinkGem
@@ -124,7 +126,7 @@ public class TestTree1Controller extends BaseController {
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-//	@GlobalTransactional
+	@GlobalTransactional
 	public String save(@Validated TestTree testTree) {
 		testTreeService.save(testTree);
 		return renderResult(Global.TRUE, text("保存数据成功！"));

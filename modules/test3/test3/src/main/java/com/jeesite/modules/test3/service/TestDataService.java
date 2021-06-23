@@ -5,17 +5,20 @@ package com.jeesite.modules.test3.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.modules.test3.entity.TestData;
-import com.jeesite.modules.test3.dao.TestDataDao;
-import com.jeesite.modules.test3.api.TestDataServiceApi;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import com.jeesite.modules.test3.entity.TestDataChild;
+import com.jeesite.modules.test3.api.TestDataServiceApi;
 import com.jeesite.modules.test3.dao.TestDataChildDao;
+import com.jeesite.modules.test3.dao.TestDataDao;
+import com.jeesite.modules.test3.entity.TestData;
+import com.jeesite.modules.test3.entity.TestDataChild;
+
+import org.springframework.transaction.annotation.Transactional;
+import io.seata.spring.annotation.GlobalTransactional;
 
 /**
  * 测试数据Service
@@ -75,6 +78,8 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void save(TestData testData) {
 		super.save(testData);
@@ -102,6 +107,8 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void updateStatus(TestData testData) {
 		super.updateStatus(testData);
@@ -112,6 +119,8 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void delete(TestData testData) {
 		super.delete(testData);

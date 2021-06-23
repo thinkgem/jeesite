@@ -22,6 +22,8 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.client.TestDataServiceClient;
 import com.jeesite.modules.test.entity.TestData;
 
+import io.seata.spring.annotation.GlobalTransactional;
+
 /**
  * 测试数据Controller，调用 test1 服务
  * @author ThinkGem
@@ -81,7 +83,7 @@ public class TestData2Controller extends BaseController {
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-//	@GlobalTransactional
+	@GlobalTransactional
 	public String save(@Validated TestData testData) {
 		testDataServiceClient.save(testData);
 		return renderResult(Global.TRUE, text("保存数据成功！"));

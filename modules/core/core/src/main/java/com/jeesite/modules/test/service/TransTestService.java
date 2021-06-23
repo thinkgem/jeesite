@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
@@ -14,6 +15,8 @@ import com.jeesite.modules.test.client.TestDataServiceClient;
 import com.jeesite.modules.test.client.TestTreeServiceClient;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestTree;
+
+import io.seata.spring.annotation.GlobalTransactional;
 
 /**
  * 分布式事务测试
@@ -32,8 +35,8 @@ public class TransTestService extends BaseService{
 	/**
 	 * 事务测试，第二个接口调用故意抛出异常
 	 */
-//	@LcnTransaction
-//	@GlobalTransactional
+	@LcnTransaction
+	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void transTest(TestData testData) {
 		
