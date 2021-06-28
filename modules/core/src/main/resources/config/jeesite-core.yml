@@ -53,7 +53,7 @@ jdbc:
     # 设置连接属性，可获取到表的 remark (备注)
     remarksReporting: false
 
-  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
+  # JTA XA 事务（v4.0.4+）
   jta:
     enabled: false
 

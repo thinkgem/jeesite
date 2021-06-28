@@ -140,7 +140,8 @@ jdbc:
 
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds_read_01, ds_read_02, ds2
-#  
+#  dataSourceNames: ds2
+  
 #  # 默认数据源的从库01
 #  ds_read_01:
 #    type: mysql
@@ -153,7 +154,7 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-#    
+#  
 #  # 默认数据源的从库02
 #  ds_read_02:
 #    type: mysql
@@ -191,14 +192,15 @@ jdbc:
 
 #  # 数据源映射（Dao类名 = 数据源名称），优先于 @MyBatisDao(dataSourceName="ds2") 设置 v4.3.0
 #  # Dao类名，不仅支持某个具体 Dao类名，还支持 Dao 里的某个方法指定数据源名称，还支持包路径指定数据源等
+#  # 数据源名指定 empty 时支持动态，相当于 @MyBatisDao(dataSourceName=DataSourceHolder.EMPTY)
 #  # 从上到下，先匹配先受用规则，默认数据源名为 default 扩展数据源为 dataSourceNames 列表里自定义的名字
 #  mybatisDaoAndDataSourceMappings: |
-#    OfficeDao = ds2
+#    TestDataChildDao = ds2
 #    EmpUserDao.findList = ds2
 #    com.jeesite.modules.sys = default
 #    com.jeesite.modules.filemanager = ds2
 
-#  # JTA 分布式事务，建议启用多数据源的时候开启（v4.0.4+）
+#  # JTA XA 事务（v4.0.4+）
 #  jta:
 #    enabled: false
 
