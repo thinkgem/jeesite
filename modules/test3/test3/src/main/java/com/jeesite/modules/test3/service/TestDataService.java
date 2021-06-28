@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
@@ -78,7 +77,6 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
-	@LcnTransaction
 	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void save(TestData testData) {
@@ -107,7 +105,6 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
-	@LcnTransaction
 	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void updateStatus(TestData testData) {
@@ -119,7 +116,6 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
-	@LcnTransaction
 	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void delete(TestData testData) {

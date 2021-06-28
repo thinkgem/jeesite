@@ -52,13 +52,13 @@ feign:
   httpclient:
     enabled: false
     
-  # 容错限流断路器
-#  hystrix:
-#    enabled: false
+  # 容错限流断路器（2020.0+ 替换为 sentinel）
+  hystrix:
+    enabled: false
   sentinel:
     enabled: true
     
-  # 请求和响应GZIP压缩支持
+  # 请求和响应 GZIP 压缩支持
   compression:
     request:
       enabled: true
@@ -144,7 +144,8 @@ jdbc:
 
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
 #  dataSourceNames: ds_read_01, ds_read_02, ds2
-#  
+#  dataSourceNames: ds2
+  
 #  # 默认数据源的从库01
 #  ds_read_01:
 #    type: mysql
@@ -170,7 +171,7 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-#  
+  
 #  # 多数据源配置：ds2
 #  ds2:
 #    type: mysql
@@ -195,6 +196,7 @@ jdbc:
 
 #  # 数据源映射（Dao类名 = 数据源名称），优先于 @MyBatisDao(dataSourceName="ds2") 设置 v4.3.0
 #  # Dao类名，不仅支持某个具体 Dao类名，还支持 Dao 里的某个方法指定数据源名称，还支持包路径指定数据源等
+#  # 数据源名指定 empty 时支持动态，相当于 @MyBatisDao(dataSourceName=DataSourceHolder.EMPTY)
 #  # 从上到下，先匹配先受用规则，默认数据源名为 default 扩展数据源为 dataSourceNames 列表里自定义的名字
 #  mybatisDaoAndDataSourceMappings: |
 #    TestDataChildDao = ds2
@@ -206,52 +208,12 @@ jdbc:
   jta:
     enabled: false
     
-#  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
-#  transactionTimeout: 1800
-    
-# LCN 分布式事务
-tx-lcn:
-  enabled: true
-  client:
-    # tx-manager 的配置地址，可以指定TM集群中的任何一个或多个地址
-    # tx-manager 下集群策略，每个TC都会从始至终<断线重连>与TM集群保持集群大小个连接。
-    # TM方，每有TM进入集群，会找到所有TC并通知其与新TM建立连接。
-    # TC方，启动时按配置与集群建立连接，成功后，会再与集群协商，查询集群大小并保持与所有TM的连接
-    manager-address: 127.0.0.1:8070
-    # 调用链长度等级，默认值为3（优化选项。系统中每个请求大致调用链平均长度，估算值。）
-    chain-level: 3
-    # 该参数为事务方法注解切面的orderNumber，默认值为0.
-    dtx-aspect-order: 0
-    # 该参数为事务连接资源方法切面的orderNumber，默认值为0.
-    resource-order: 0
-  
-  # 开启TX-LCN重写的负载策略
-  springcloud.loadbalance.enabled: true
-    
-  # 是否启动LCN负载均衡策略(优化选项，开启与否，功能不受影响)
-  ribbon.loadbalancer.dtx.enabled: false
-  
-  # 该参数是分布式事务框架存储的业务切面信息。采用的是h2数据库。绝对路径。该参数默认的值为{user.dir}/.txlcn/{application.name}-{application.port}
-  # aspect.log.file-path: ${user.dir}/.txlcn/${spring.application.name}-${server.port}
-  
-  # RpcConfig
-  message.netty:
-    # 断线重连次数，默认值为8.
-    reconnect-count: 100
-    # 重连延迟时间(ms)，默认值为6000.
-    reconnect-delay: 10000
-    
-  # 是否开启日志记录。当开启以后需要配置对应logger的数据库连接配置信息。
-  logger:
-    enabled: true
-    driver-class-name: ${jdbc.driver}
-    jdbc-url: ${jdbc.url}
-    username: ${jdbc.username}
-    password: ${jdbc.password}
-    
+  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
+  transactionTimeout: 1800
+
 # Seata 分布式事务
 seata:
-  enabled: true
+  enabled: false
   application-id: ${spring.application.name}
   tx-service-group: jeesite_tx_group
   service:
@@ -401,9 +363,6 @@ mybatis:
 
   # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
   scanBasePackage: com.jeesite.modules
-  
-  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
-  jdbcTransaction: true
   
 # Web 相关
 web:

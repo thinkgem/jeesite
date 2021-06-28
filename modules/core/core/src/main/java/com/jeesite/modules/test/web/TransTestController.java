@@ -34,19 +34,12 @@ public class TransTestController extends BaseController {
 	public String test(TestData testData) {
 		String mode = StringUtils.EMPTY;
 		try {
-			Class.forName("com.codingapi.txlcn.tc.annotation.LcnTransaction");
-			mode = "Lcn";
+			Class.forName("io.seata.spring.annotation.GlobalTransactionScanner");
+			mode = "GlobalTransactional";
 		} catch (ClassNotFoundException e) {
-			
-		}
-		try {
-			Class.forName("io.seata.spring.annotation.GlobalTransactional");
-			mode = "Global";
-		} catch (ClassNotFoundException e) {
-			
 		}
 		if (StringUtils.isBlank(mode)) {
-			return renderResult(Global.FALSE, "测试失败，没有安装 LCN 或者 Seata 模块！");
+			return renderResult(Global.FALSE, "测试失败，没有安装 Seata 模块！");
 		}
 		try{
 			transTestService.transTest(testData);
@@ -56,7 +49,7 @@ public class TransTestController extends BaseController {
 		boolean bl = transTestService.transValid(testData);
 		String message = "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！";
 		if (!bl) {
-			message += "请全局搜索“@"+mode+"Transaction”关键词，是否将前面的“//”注释去掉？";
+			message += "请全局搜索“@"+mode+"”关键词，是否将前面的“//”注释去掉？";
 		}
 		return renderResult(Global.TRUE, message);
 	}

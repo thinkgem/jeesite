@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
@@ -35,7 +34,6 @@ public class TransTestService extends BaseService{
 	/**
 	 * 事务测试，第二个接口调用故意抛出异常
 	 */
-	@LcnTransaction
 	@GlobalTransactional
 	@Transactional(readOnly=false)
 	public void transTest(TestData testData) {
@@ -67,7 +65,12 @@ public class TransTestService extends BaseService{
 		testTreeService.save(testTree);
 		
 		// 有些情况可能需要手动回滚事务，调用该方法即可
-		//DTXUserControls.rollbackCurrentGroup();
+//		try {
+//			logger.info("Seata 手动回滚");
+//			GlobalTransactionContext.reload(RootContext.getXID()).rollback();
+//		} catch (TransactionException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	/**
