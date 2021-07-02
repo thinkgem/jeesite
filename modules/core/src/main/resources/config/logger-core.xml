@@ -41,7 +41,7 @@
 	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
 	
-	<!-- Production profile -->
+	<!-- Production profile
 	<springProfile name="prod">
 		<logger name="org.mybatis.spring.transaction" level="INFO" />
 		<logger name="org.flowable.ui.modeler.domain" level="INFO" />
@@ -52,6 +52,6 @@
 		<logger name="org.flowable.engine.impl.persistence" level="INFO" />
 		<logger name="com.jeesite" level="INFO" />
 		<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
-	</springProfile>
+	</springProfile> -->
 	
 </included>
