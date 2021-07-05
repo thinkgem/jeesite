@@ -17,12 +17,12 @@ public class UserFilter extends org.apache.shiro.web.filter.authc.UserFilter {
 
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
 	
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        return PermissionsAuthorizationFilter.redirectTo403Page(request, response);
+        return PermissionsFilter.redirectTo403Page(request, response);
     }
 	
 }

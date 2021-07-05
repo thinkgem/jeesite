@@ -26,16 +26,16 @@ import com.jeesite.common.web.http.wrapper.GetHttpServletRequestWrapper;
  * @author ThinkGem
  * @version 2017-03-22
  */
-public class PermissionsAuthorizationFilter extends org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter {
+public class PermissionsFilter extends org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter {
 
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
 	
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        return PermissionsAuthorizationFilter.redirectTo403Page(request, response);
+        return PermissionsFilter.redirectTo403Page(request, response);
     }
 	
 	/**

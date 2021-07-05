@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
+import com.jeesite.common.shiro.filter.FormFilter;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.shiro.realm.LoginInfo;
 import com.jeesite.common.web.BaseController;
@@ -72,7 +72,7 @@ public class LoginController extends BaseController{
 		}
 
 		// 获取登录数据
-		model.addAllAttributes(FormAuthenticationFilter.getLoginData(request, response));
+		model.addAllAttributes(FormFilter.getLoginData(request, response));
 		
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
@@ -109,7 +109,7 @@ public class LoginController extends BaseController{
 		}
 		
 		// 获取登录失败数据
-		model.addAllAttributes(FormAuthenticationFilter.getLoginFailureData(request, response));
+		model.addAllAttributes(FormFilter.getLoginFailureData(request, response));
 		
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest(request)){

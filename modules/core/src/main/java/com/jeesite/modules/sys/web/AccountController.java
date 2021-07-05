@@ -27,7 +27,7 @@ import com.jeesite.common.msg.EmailUtils;
 import com.jeesite.common.msg.SmsUtils;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.shiro.authc.FormToken;
-import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
+import com.jeesite.common.shiro.filter.FormFilter;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
@@ -88,7 +88,7 @@ public class AccountController extends BaseController{
 		if (!Global.getConfigToBoolean("user.loginByValidCode", "true")) {
 			return renderResult(Global.FALSE, "验证码登录未开启，请设置：user.loginByValidCode=true");
 		}
-		FormToken formToken = FormAuthenticationFilter.newToken(request, response);
+		FormToken formToken = FormFilter.newToken(request, response);
 		String s = validValidCode("login", formToken.getUsername(), loginValidCode, request);
 		if (s != null) {
 			return s;
@@ -97,9 +97,9 @@ public class AccountController extends BaseController{
 		try {
 			formToken.setInnerLogin(true); // 因为手机验证码已验证，所以无需再进行验证密码
 			UserUtils.getSubject().login(formToken);
-			FormAuthenticationFilter.onLoginSuccess(request, response);
+			FormFilter.onLoginSuccess(request, response);
         } catch (AuthenticationException e) {
-        	FormAuthenticationFilter.onLoginFailure(e, request, response);
+        	FormFilter.onLoginFailure(e, request, response);
         }
 		return null;
 	}

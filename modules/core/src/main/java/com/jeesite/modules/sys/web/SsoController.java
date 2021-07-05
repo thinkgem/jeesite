@@ -18,7 +18,7 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.shiro.authc.FormToken;
-import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
+import com.jeesite.common.shiro.filter.FormFilter;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.User;
@@ -67,9 +67,9 @@ public class SsoController extends BaseController{
 				// FormToken 构造方法的三个参数：登录名、单点登录的令牌秘钥、请求对象
 				UserUtils.getSubject().login(new FormToken(username, token, request));
 				request.setAttribute("__url", EncodeUtils.decodeUrl2(url));
-				FormAuthenticationFilter.onLoginSuccess(request, response);
+				FormFilter.onLoginSuccess(request, response);
 	        } catch (AuthenticationException e) {
-	        	FormAuthenticationFilter.onLoginFailure(e, request, response);
+	        	FormFilter.onLoginFailure(e, request, response);
 	        }
 			return null;
 		}

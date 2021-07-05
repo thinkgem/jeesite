@@ -48,7 +48,7 @@ import com.jeesite.modules.sys.utils.ValidCodeUtils;
  * @author ThinkGem
  * @version 2020-9-19
  */
-public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
+public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 
 	public static final String CAPTCHA_PARAM = "validCode"; 					// 验证码
 	public static final String MESSAGE_PARAM = "message"; 						// 登录返回消息
@@ -56,8 +56,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; 			// 异常类属性名
     public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
 	
-	private static final Logger logger = LoggerFactory.getLogger(FormAuthenticationFilter.class);
-	private static FormAuthenticationFilter instance;
+	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
+	private static FormFilter instance;
 	
 	private BaseAuthorizingRealm authorizingRealm;
 	private Cookie rememberUserCodeCookie; 	// 记住用户名Cookie
@@ -65,7 +65,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	/**
 	 * 构造方法
 	 */
-	public FormAuthenticationFilter() {
+	public FormFilter() {
 		super();
 		rememberUserCodeCookie = new SimpleCookie();
 		rememberUserCodeCookie.setName(REMEMBER_USERCODE_PARAM);
@@ -193,7 +193,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	 */
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsAuthorizationFilter.redirectToDefaultPath(request, response);
+		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
 
 	/**

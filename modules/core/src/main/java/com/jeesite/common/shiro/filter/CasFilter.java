@@ -15,7 +15,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.shiro.realm.CasAuthorizingRealm;
+import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 
 /**
  * CAS过滤器
@@ -23,14 +23,14 @@ import com.jeesite.common.shiro.realm.CasAuthorizingRealm;
  * @version 2020-9-19
  */
 @SuppressWarnings("deprecation")
-public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
+public class CasFilter extends org.apache.shiro.cas.CasFilter {
 	
 	/**
 	 * 登录成功调用事件
 	 */
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
-		return FormAuthenticationFilter.onLoginSuccess((HttpServletRequest)request, (HttpServletResponse)response);
+		return FormFilter.onLoginSuccess((HttpServletRequest)request, (HttpServletResponse)response);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class CasAuthenticationFilter extends org.apache.shiro.cas.CasFilter {
 		}
 	}
 
-	public void setAuthorizingRealm(CasAuthorizingRealm authorizingRealm) {
+	public void setAuthorizingRealm(BaseAuthorizingRealm authorizingRealm) {
 		
 	}
 

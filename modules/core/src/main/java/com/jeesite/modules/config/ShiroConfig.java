@@ -26,12 +26,12 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.shiro.cas.CasOutHandler;
 import com.jeesite.common.shiro.config.FilterChainDefinitionMap;
-import com.jeesite.common.shiro.filter.CasAuthenticationFilter;
-import com.jeesite.common.shiro.filter.FormAuthenticationFilter;
+import com.jeesite.common.shiro.filter.CasFilter;
+import com.jeesite.common.shiro.filter.FormFilter;
 import com.jeesite.common.shiro.filter.InnerFilter;
 import com.jeesite.common.shiro.filter.LogoutFilter;
-import com.jeesite.common.shiro.filter.PermissionsAuthorizationFilter;
-import com.jeesite.common.shiro.filter.RolesAuthorizationFilter;
+import com.jeesite.common.shiro.filter.PermissionsFilter;
+import com.jeesite.common.shiro.filter.RolesFilter;
 import com.jeesite.common.shiro.filter.UserFilter;
 import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.shiro.realm.CasAuthorizingRealm;
@@ -43,7 +43,7 @@ import com.jeesite.common.shiro.web.WebSecurityManager;
 /**
  * Shiro配置
  * @author ThinkGem
- * @version 2018-7-11
+ * @version 2021-7-6
  */
 @SuppressWarnings("deprecation")
 @Configuration(proxyBeanMethods = false)
@@ -72,8 +72,8 @@ public class ShiroConfig {
 	/**
 	 * CAS登录过滤器
 	 */
-	private CasAuthenticationFilter shiroCasFilter(CasAuthorizingRealm casAuthorizingRealm) {
-		CasAuthenticationFilter bean = new CasAuthenticationFilter();
+	private CasFilter shiroCasFilter(CasAuthorizingRealm casAuthorizingRealm) {
+		CasFilter bean = new CasFilter();
 		bean.setAuthorizingRealm(casAuthorizingRealm);
 		return bean;
 	}
@@ -81,8 +81,8 @@ public class ShiroConfig {
 	/**
 	 * Form登录过滤器
 	 */
-	private FormAuthenticationFilter shiroAuthcFilter(AuthorizingRealm authorizingRealm) {
-		FormAuthenticationFilter bean = new FormAuthenticationFilter();
+	private FormFilter shiroAuthcFilter(AuthorizingRealm authorizingRealm) {
+		FormFilter bean = new FormFilter();
 		bean.setAuthorizingRealm(authorizingRealm);
 		return bean;
 	}
@@ -99,15 +99,15 @@ public class ShiroConfig {
 	/**
 	 * 权限字符串过滤器
 	 */
-	private PermissionsAuthorizationFilter shiroPermsFilter() {
-		return new PermissionsAuthorizationFilter();
+	private PermissionsFilter shiroPermsFilter() {
+		return new PermissionsFilter();
 	}
 
 	/**
 	 * 角色权限过滤器
 	 */
-	private RolesAuthorizationFilter shiroRolesFilter() {
-		return new RolesAuthorizationFilter();
+	private RolesFilter shiroRolesFilter() {
+		return new RolesFilter();
 	}
 
 	/**
@@ -125,13 +125,13 @@ public class ShiroConfig {
 		bean.setBlockNonAscii(false);
 		return bean;
 	}
-
+	
 	/**
 	 * Shiro认证过滤器
 	 */
 	@Bean
-	public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager,
-			AuthorizingRealm authorizingRealm, CasAuthorizingRealm casAuthorizingRealm) {
+	public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager, AuthorizingRealm authorizingRealm, 
+			CasAuthorizingRealm casAuthorizingRealm) {
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		bean.setSecurityManager(webSecurityManager);
 		bean.setLoginUrl(Global.getProperty("shiro.loginUrl"));
@@ -171,7 +171,7 @@ public class ShiroConfig {
 	}
 	
 	/**
-	 * 系统安全认证实现类
+	 * CAS安全认证实现类
 	 */
 	@Bean
 	public CasAuthorizingRealm casAuthorizingRealm(SessionDAO sessionDAO, CasOutHandler casOutHandler) {
@@ -187,9 +187,8 @@ public class ShiroConfig {
 	 * 定义Shiro安全管理配置
 	 */
 	@Bean
-	public WebSecurityManager webSecurityManager(AuthorizingRealm authorizingRealm,
-			CasAuthorizingRealm casAuthorizingRealm, SessionManager sessionManager,
-			CacheManager shiroCacheManager) {
+	public WebSecurityManager webSecurityManager(AuthorizingRealm authorizingRealm, CasAuthorizingRealm casAuthorizingRealm,
+			SessionManager sessionManager, CacheManager shiroCacheManager) {
 		WebSecurityManager bean = new WebSecurityManager();
 		Collection<Realm> realms = ListUtils.newArrayList();
 		realms.add(authorizingRealm); // 第一个为权限授权控制类
@@ -197,9 +196,8 @@ public class ShiroConfig {
 		bean.setRealms(realms);
 		bean.setSessionManager(sessionManager);
 		bean.setCacheManager(shiroCacheManager);
-		//bean.setRememberMeManager(null); // 关闭 RememberMe
-		// 设置支持CAS的subjectFactory
 		bean.setSubjectFactory(new CasSubjectFactory());
+		//bean.setRememberMeManager(null); // 关闭 RememberMe
 		return bean;
 	}
 	

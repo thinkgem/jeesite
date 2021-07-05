@@ -36,7 +36,7 @@ import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
- * 系统安全认证实现类
+ * 系统认证授权实现类
  * @author ThinkGem
  * @version 2020-9-19
  */
@@ -175,7 +175,7 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken authcToken,
 			AuthenticationInfo info) throws AuthenticationException {
-		// CAS的Ticket已经在doGetAuthenticationInfo()认证过了，这里就不验证身份了
+		// 已经在 getFormToken 认证过了，这里就不验证身份了
 	}
 	
 	@Override

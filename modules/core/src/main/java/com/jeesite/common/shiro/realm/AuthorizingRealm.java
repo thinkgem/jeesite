@@ -20,7 +20,7 @@ import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
- * 系统安全认证实现类
+ * 系统认证授权实现类
  * @author ThinkGem
  * @version 2018-7-11
  */

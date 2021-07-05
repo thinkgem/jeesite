@@ -41,7 +41,7 @@ public class InnerFilter extends AccessControlFilter {
 
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-		return PermissionsAuthorizationFilter.redirectTo403Page(request, response);
+		return PermissionsFilter.redirectTo403Page(request, response);
 	}
 	
 }
