@@ -51,7 +51,7 @@
 		<druid.version>1.2.6</druid.version>
 		<shiro.version>1.7.1</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
-		<beetl.version>3.1-SNAPSHOT</beetl.version>
+		<beetl.version>3.3-SNAPSHOT</beetl.version>
 		<swagger.version>1.6.0</swagger.version>
 		
 		<!-- jdbc setting -->
