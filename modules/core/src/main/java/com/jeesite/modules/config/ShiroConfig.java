@@ -11,6 +11,7 @@ import javax.servlet.Filter;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cas.CasSubjectFactory;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.filter.InvalidRequestFilter;
@@ -29,12 +30,14 @@ import com.jeesite.common.shiro.config.FilterChainDefinitionMap;
 import com.jeesite.common.shiro.filter.CasFilter;
 import com.jeesite.common.shiro.filter.FormFilter;
 import com.jeesite.common.shiro.filter.InnerFilter;
+import com.jeesite.common.shiro.filter.LdapFilter;
 import com.jeesite.common.shiro.filter.LogoutFilter;
 import com.jeesite.common.shiro.filter.PermissionsFilter;
 import com.jeesite.common.shiro.filter.RolesFilter;
 import com.jeesite.common.shiro.filter.UserFilter;
 import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.shiro.realm.CasAuthorizingRealm;
+import com.jeesite.common.shiro.realm.LdapAuthorizingRealm;
 import com.jeesite.common.shiro.session.SessionDAO;
 import com.jeesite.common.shiro.session.SessionManager;
 import com.jeesite.common.shiro.web.ShiroFilterFactoryBean;
@@ -75,6 +78,15 @@ public class ShiroConfig {
 	private CasFilter shiroCasFilter(CasAuthorizingRealm casAuthorizingRealm) {
 		CasFilter bean = new CasFilter();
 		bean.setAuthorizingRealm(casAuthorizingRealm);
+		return bean;
+	}
+	
+	/**
+	 * LDAP登录过滤器
+	 */
+	private LdapFilter shiroLdapFilter(LdapAuthorizingRealm ldapAuthorizingRealm) {
+		LdapFilter bean = new LdapFilter();
+		bean.setAuthorizingRealm(ldapAuthorizingRealm);
 		return bean;
 	}
 
@@ -131,7 +143,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager, AuthorizingRealm authorizingRealm, 
-			CasAuthorizingRealm casAuthorizingRealm) {
+			CasAuthorizingRealm casAuthorizingRealm, LdapAuthorizingRealm ldapAuthorizingRealm) {
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		bean.setSecurityManager(webSecurityManager);
 		bean.setLoginUrl(Global.getProperty("shiro.loginUrl"));
@@ -139,6 +151,7 @@ public class ShiroConfig {
 		Map<String, Filter> filters = bean.getFilters();
 		filters.put("inner", shiroInnerFilter());
 		filters.put("cas", shiroCasFilter(casAuthorizingRealm));
+		filters.put("ldap", shiroLdapFilter(ldapAuthorizingRealm));
 		filters.put("authc", shiroAuthcFilter(authorizingRealm));
 		filters.put("logout", shiroLogoutFilter(authorizingRealm));
 		filters.put("perms", shiroPermsFilter());
@@ -182,17 +195,31 @@ public class ShiroConfig {
 		bean.setCasServerCallbackUrl(Global.getProperty("shiro.casClientUrl") + Global.getAdminPath() + "/login-cas");
 		return bean;
 	}
+	
+	/**
+	 * LDAP安全认证实现类
+	 */
+	@Bean
+	public LdapAuthorizingRealm ldapAuthorizingRealm(SessionDAO sessionDAO, CasOutHandler casOutHandler) {
+		LdapAuthorizingRealm bean = new LdapAuthorizingRealm();
+		JndiLdapContextFactory contextFactory = (JndiLdapContextFactory) bean.getContextFactory();
+		contextFactory.setUrl(Global.getProperty("shiro.ldapUrl"/*, "ldap://127.0.0.1:389"*/));
+		bean.setUserDnTemplate(Global.getProperty("shiro.ldapUserDn"/*, "uid={0},ou=users,dc=mycompany,dc=com"*/));
+		bean.setSessionDAO(sessionDAO);
+		return bean;
+	}
 
 	/**
 	 * 定义Shiro安全管理配置
 	 */
 	@Bean
 	public WebSecurityManager webSecurityManager(AuthorizingRealm authorizingRealm, CasAuthorizingRealm casAuthorizingRealm,
-			SessionManager sessionManager, CacheManager shiroCacheManager) {
+			LdapAuthorizingRealm ldapAuthorizingRealm, SessionManager sessionManager, CacheManager shiroCacheManager) {
 		WebSecurityManager bean = new WebSecurityManager();
 		Collection<Realm> realms = ListUtils.newArrayList();
 		realms.add(authorizingRealm); // 第一个为权限授权控制类
 		realms.add(casAuthorizingRealm);
+		realms.add(ldapAuthorizingRealm);
 		bean.setRealms(realms);
 		bean.setSessionManager(sessionManager);
 		bean.setCacheManager(shiroCacheManager);
