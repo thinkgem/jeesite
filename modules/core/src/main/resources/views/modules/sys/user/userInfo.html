@@ -6,8 +6,8 @@
 	<div class="nav-tabs-custom nav-main">
 		<ul class="nav nav-tabs pull-right">
 			<li class="${op == 'pqa' ? 'active' : ''}"><a href="#tab-3" data-toggle="tab">${text('修改密保')}</a></li>
-			<li class="${op == 'pwd' ? 'active' : ''}"><a href="#tab-2" data-toggle="tab">${text('修改密码')}</a></li>
-			<% if(!(isNotBlank(parameter.msg) && op == 'pwd')){ %>
+			<li class="${op == 'mpd' ? 'active' : ''}"><a href="#tab-2" data-toggle="tab">${text('修改密码')}</a></li>
+			<% if(!(isNotBlank(parameter.msg) && op == 'mpd')){ %>
 				<li class="${op == 'base' ? 'active' : ''}"><a href="#tab-1" data-toggle="tab">${text('个人信息')}</a></li>
 			<% } %>
 			<li class="pull-left header">
@@ -115,7 +115,7 @@
 					</div>
 				</#form:form>
 			</div>
-			<div class="tab-pane ${op == 'pwd' ? 'active' : ''}" id="tab-2">
+			<div class="tab-pane ${op == 'mpd' ? 'active' : ''}" id="tab-2">
 				<#form:form id="inputFormPwd" model="${user}" action="${ctx}/sys/user/infoSavePwd" method="post" class="form-horizontal">
 					<div class="box-body">
 						<% if(isNotBlank(parameter.msg)){ %>
@@ -332,7 +332,7 @@ $("#inputFormPwd").validate({
 					if ('${parameter.url}'!=''){
 						location = '${ctxPath}${parameter.url}';
 					}else{
-						location = '${ctx}/sys/user/info?op=pwd';
+						location = '${ctx}/sys/user/info?op=mpd';
 					}
 				});
 			}else{
