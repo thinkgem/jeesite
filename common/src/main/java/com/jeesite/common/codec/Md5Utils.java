@@ -6,12 +6,10 @@ package com.jeesite.common.codec;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import com.jeesite.common.io.IOUtils;
+import com.jeesite.common.lang.StringUtils;
 
 /**
  * MD5不可逆加密工具类
@@ -75,18 +73,40 @@ public class Md5Utils {
 	
 	/**
 	 * 获取文件的MD5值，支持获取文件部分的MD5值
-	 * uploader.md5File(file, 0, 10 * 1024 * 1024)
+	 * @param cutSize 截取大小（前后文件内容）
 	 */
-	public static String md5File(File file, int size) {
+	public static String md5File(File file, int cutSize) {
 		if (file != null && file.exists()){
-	        try (InputStream in = FileUtils.openInputStream(file)){
-	            byte[] bytes = null;
-	            if (size != -1 && file.length() >= size){
-	            	bytes = IOUtils.toByteArray(in, size);
+			long size = file.length();
+			//System.out.println("file size " + Math.floor(size / 1024 / 1024) + "M");
+			try(RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");){
+	            if (cutSize != -1 && size >= cutSize){
+	            	byte[] bytes = new byte[cutSize];
+	    			randomAccessFile.read(bytes);
+		            String firstMd5 = EncodeUtils.encodeHex(md5(bytes));
+	    			//System.out.println("first md5 val " + firstMd5);
+		            if (size > cutSize) {
+		    			long startPos = size - cutSize;
+		    			long sizeDiff = size - (cutSize * 2);
+		    			if (sizeDiff < 0){
+		    				startPos += Math.abs(sizeDiff);
+		    			}
+		    			//System.out.println("last md5 pos " + startPos + " " + size + " "
+		    			//		+ Math.floor((size - startPos) / 1024 / 1024) + "M");
+		    			bytes = new byte[(int)(size - startPos)];
+		    			randomAccessFile.seek(startPos);
+		    			randomAccessFile.read(bytes);
+		    			String lastMd5 = EncodeUtils.encodeHex(md5(bytes));
+		    			//System.out.println("last md5 val " + lastMd5);
+		    			return firstMd5.substring(8, 24) + lastMd5.substring(8, 24);
+		            }else {
+		            	return firstMd5;
+		            }
 	            }else{
-	            	bytes = IOUtils.toByteArray(in);
+	            	byte[] bytes = new byte[(int)size];
+	    			randomAccessFile.read(bytes);
+		            return EncodeUtils.encodeHex(md5(bytes));
 	            }
-	            return EncodeUtils.encodeHex(md5(bytes));
 	        } catch (IOException e) {
 				return StringUtils.EMPTY;
 	        }
