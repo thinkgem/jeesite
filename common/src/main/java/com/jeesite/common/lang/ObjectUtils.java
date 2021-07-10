@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.nustaq.serialization.FSTConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,20 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			return 0D;
 		}
 		try {
-			return NumberUtils.toDouble(StringUtils.trim(val.toString()));
+			String str = val.toString();
+			if (StringUtils.contains(str, "*")) {
+				Double number = null, d = null;
+				for (String s : StringUtils.split(str, "*")) {
+					d = Double.parseDouble(StringUtils.trim(s));
+					if (number == null) {
+						number = d;
+					} else {
+						number *= d;
+					}
+				}
+				return number;
+			}
+			return Double.parseDouble(StringUtils.trim(str));
 		} catch (Exception e) {
 			return 0D;
 		}
@@ -59,7 +71,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * 转换为 Integer 类型
 	 */
 	public static Integer toInteger(final Object val) {
-		return toLong(val).intValue();
+		return toDouble(val).intValue();
 	}
 
 	/**
