@@ -264,7 +264,7 @@ spring:
 #    # 缓存及会话共享（专业版）
 #    isClusterMode: false
 #    # 清理全部缓存按钮所清理的缓存列表
-#    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache,roleCache,fileUploadCache
+#    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache,roleCache,fileUploadCache,bpmFormCache
 
 # 日志配置
 logging:
