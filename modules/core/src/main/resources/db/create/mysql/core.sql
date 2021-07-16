@@ -165,6 +165,7 @@ CREATE TABLE ${_prefix}sys_dict_data
 	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
 	dict_label varchar(100) NOT NULL COMMENT '字典标签',
 	dict_value varchar(100) NOT NULL COMMENT '字典键值',
+	dict_icon varchar(100) COMMENT '字典图标',
 	dict_type varchar(100) NOT NULL COMMENT '字典类型',
 	is_sys char(1) NOT NULL COMMENT '系统内置（1是 0否）',
 	description varchar(500) COMMENT '字典描述',
