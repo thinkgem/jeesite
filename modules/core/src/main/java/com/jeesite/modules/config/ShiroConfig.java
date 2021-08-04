@@ -16,12 +16,9 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.filter.InvalidRequestFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
@@ -52,19 +49,6 @@ import com.jeesite.common.shiro.web.WebSecurityManager;
 @Configuration(proxyBeanMethods = false)
 public class ShiroConfig {
 	
-	/**
-	 * Apache Shiro Filter
-	 */
-	@Bean
-	@Order(3000)
-	@ConditionalOnMissingBean(name="shiroFilterProxy")
-	public FilterRegistrationBean<Filter> shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
-		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-		bean.setFilter((Filter) shiroFilter.getInstance());
-		bean.addUrlPatterns("/*");
-		return bean;
-	}
-
 	/**
 	 * 内部系统访问过滤器
 	 */

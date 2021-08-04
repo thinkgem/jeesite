@@ -13,7 +13,6 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.BaseService;
 import com.jeesite.modules.msg.entity.MsgPush;
 import com.jeesite.modules.msg.entity.content.EmailMsgContent;
-import com.jeesite.modules.msg.send.MsgSendService;
 
 /**
  * 电子邮件发送服务实现

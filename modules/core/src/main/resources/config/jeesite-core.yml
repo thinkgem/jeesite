@@ -424,6 +424,7 @@ shiro:
     /userfiles/** = anon
     /validCode = anon
     /static/** = anon
+    /oauth2/authorize = user
     /druid/** = perms[sys:state:druid]
     /bpm/modeler/** = perms[bpm:modeler]
     ${adminPath}/login-cas = cas

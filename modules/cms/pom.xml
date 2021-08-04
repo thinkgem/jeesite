@@ -27,16 +27,7 @@
 			<artifactId>jeesite-module-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-
-		<!-- 全文搜索引擎 Lucene -->
-		<!-- <dependency> <groupId>com.jeesite</groupId> <artifactId>jeesite-plugin-lucene</artifactId> 
-			<version>${project.parent.version}</version> </dependency> -->
-
-		<!-- 静态资源-ECharts图表 -->
-		<!-- <dependency> <groupId>com.jeesite</groupId> <artifactId>jeesite-plugin-echarts</artifactId> 
-			<version>${project.parent.version}</version> </dependency> -->
-
-
+		
 	</dependencies>
 
 	<build>
