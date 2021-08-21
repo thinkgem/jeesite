@@ -14,8 +14,10 @@
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav mr-auto">
         <#html:foreach items="${categoryList(site.siteCode, '0', 4, '')}" var="c">
-          <li class="${c.categoryCode == category.categoryCode! ? 'active' : ''}"><a
-            href="${ctx}/list-${c.categoryCode}">${c.categoryName}</a></li>
+        	<#html:if test="${c.inMenu == @Global.YES}">
+	          <li class="${c.categoryCode == category.categoryCode! ? 'active' : ''}"><a
+	            href="${ctx}/list-${c.categoryCode}">${c.categoryName}</a></li>
+            </#html:if>
         </#html:foreach>
         <li><a href="http://jeesite.com" target="_blank">官方网站</a></li>
         <li><a href="http://s.jeesite.com" target="_blank">技术服务</a></li>
