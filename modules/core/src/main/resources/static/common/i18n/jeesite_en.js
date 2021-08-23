@@ -19,7 +19,7 @@
 	window.layer = window.layer || {};
 	layer.i18n = $.extend({}, layer.i18n, {
 		btnOk: 'Ok',
-		btnCancel: 'Cancle',
+		btnCancel: 'Cancel',
 		title: 'Information',
 		promptTipA: 'Enter ',
 		promptTipB: 'character at most.',
