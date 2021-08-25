@@ -24,13 +24,13 @@
 <div class="ui-layout-center">
 	<iframe id="mainFrame" name="mainFrame" class="ui-layout-content p0"
 		src="${ctx}/sys/empUser/list"></iframe>
-</div>
+</div> 
 <% } %>
 <script>
 // 初始化布局
 $('body').layout({
 	west__initClosed: $(window).width() <= 767, // 是否默认关闭
-	west__size: 200
+	west__size: window.lang == 'en' ? 215 : 200
 });
 // 主页框架
 var win = $("#mainFrame")[0].contentWindow;

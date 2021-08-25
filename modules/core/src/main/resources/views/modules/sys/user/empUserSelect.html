@@ -95,7 +95,7 @@
 <script>
 // 初始化布局
 $('body').layout({
-	west__size: 200,
+	west__size: window.lang == 'en' ? 225 : 200,
 	onresize_end: function(){
 		$('#dataGrid').dataGrid('resize');
 	}

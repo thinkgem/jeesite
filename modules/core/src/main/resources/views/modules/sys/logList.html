@@ -1,9 +1,9 @@
-<% layout('/layouts/default.html', {title: '访问日志查询', libs: ['dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '访问日志', libs: ['dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa fa-bug"></i> 访问日志
+				<i class="fa fa-bug"></i> ${text('访问日志')}
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
@@ -14,52 +14,52 @@
 			<#form:form id="searchForm" model="${log}" action="${ctx}/sys/log/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
-					<label class="control-label">日志标题：</label>
+					<label class="control-label">${text('日志标题')}：</label>
 					<div class="control-inline">
 						<#form:input path="logTitle" maxlength="500" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">请求地址：</label>
+					<label class="control-label">${text('请求地址')}：</label>
 					<div class="control-inline">
 						<#form:input path="requestUri" maxlength="255" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">日志类型：</label>
+					<label class="control-label">${text('日志类型')}：</label>
 					<div class="control-inline width-date">
 						<#form:select path="logType" dictType="sys_log_type" blankOption="true" class="form-control required " />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">操作用户：</label>
+					<label class="control-label">${text('操作用户')}：</label>
 					<div class="control-inline width-120">
-						<#form:listselect id="userSelect" title="用户选择" path="createBy"
+						<#form:listselect id="userSelect" title="${text('用户选择')}" path="createBy"
 							url="${ctx}/sys/empUser/empUserSelect" allowClear="false" 
 							checkbox="false" itemCode="userCode" itemName="userName"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">是否异常：</label>
+					<label class="control-label">${text('是否异常')}：</label>
 					<div class="control-inline width-60">
 						<#form:select path="isException" dictType="sys_yes_no" blankOption="true" class="form-control"/>
 					</div>
 				</div>
 				<div class="clearfix"></div>
 				<div class="form-group">
-					<label class="control-label">业务类型：</label>
+					<label class="control-label">${text('业务类型')}：</label>
 					<div class="control-inline">
 						<#form:input path="bizType" maxlength="64" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">业务主键：</label>
+					<label class="control-label">${text('业务主键')}：</label>
 					<div class="control-inline">
 						<#form:input path="bizKey" maxlength="64" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">操作时间：</label>
+					<label class="control-label">${text('操作时间')}：</label>
 					<div class="control-inline">
 						<#form:input path="createDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
 							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="createDate_lte.click()"/> -
@@ -68,24 +68,24 @@
 					</div>
 					<div class="control-inline" style="width:75px;">
 						<select onchange="js.quickSelectDate(this.value, 'createDate_gte', 'createDate_lte');" class="form-control">
-							<option value="0">&nbsp;</option><option value="1">今日</option>
-							<option value="2">本周</option><option value="2|7">上周</option>
-							<option value="3">本月</option><option value="4">本季度</option>
-							<option value="5">上1个月</option><option value="5|3">上3个月</option>
-							<option value="1|7">近1个周</option><option value="6">近1个月</option>
-							<option value="6|3">近3个月</option>
+							<option value="0">&nbsp;</option><option value="1">${text('今日')}</option>
+							<option value="2">${text('本周')}</option><option value="2|7">${text('上周')}</option>
+							<option value="3">${text('本月')}</option><option value="4">${text('本季度')}</option>
+							<option value="5">${text('上1个月')}</option><option value="5|3">${text('上3个月')}</option>
+							<option value="1|7">${text('近1个周')}</option><option value="6">${text('近1个月')}</option>
+							<option value="6|3">${text('近3个月')}</option>
 						</select>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label">客户端IP：</label>
+					<label class="control-label">${text('客户端IP')}：</label>
 					<div class="control-inline">
 						<#form:input path="remoteAddr" maxlength="255" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm">查询</button>
-					<button type="reset" class="btn btn-default btn-sm">重置</button>
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
 				</div>
 			</#form:form>			
 			<table id="dataGrid"></table>
@@ -99,32 +99,32 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'日志标题', name:'logTitle', index:'a.log_title', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="日志详情">'+(val||row.id)+'</a>';
+		{header:'${text("日志标题")}', name:'logTitle', index:'a.log_title', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="${text("日志详情")}">'+(val||row.id)+'</a>';
 		}},
-		{header:'请求地址', name:'requestUri', index:'a.request_uri', width:260, align:"left", formatter: function(val, obj, row, act){
+		{header:'${text("请求地址")}', name:'requestUri', index:'a.request_uri', width:260, align:"left", formatter: function(val, obj, row, act){
 			return '<span title="['+row.requestMethod+'] '+row.serverAddr+row.requestUri+'">'+ row.requestUri;
 		}},
-		{header:'日志类型', name:'logType', index:'a.log_type', width:100, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("日志类型")}', name:'logType', index:'a.log_type', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_log_type')}, val, '未知', true);
 		}},
-		{header:'操作用户', name:'createByName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
-			return '<span title="账号：'+row.createBy+'">'+ row.createByName;
+		{header:'${text("操作用户")}', name:'createByName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
+			return '<span title="${text("账号")}：'+row.createBy+'">'+ row.createByName;
 		}},
-		{header:'异常', name:'isException', index:'a.is_exception', width:60, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("异常")}', name:'isException', index:'a.is_exception', width:60, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);
 		}},
-		{header:'业务类型', name:'bizType', index:'a.biz_type', width:90, align:"center"},
-		{header:'业务主键', name:'bizKey', index:'a.biz_key', width:90, align:"center"},
-		{header:'操作时间', name:'createDate', index:'a.create_date', width:100, align:"center"},
-		{header:'客户端IP', name:'remoteAddr', index:'a.remote_addr', width:100, align:"center"},
-		{header:'设备名称', name:'deviceName', index:'a.device_name', width:100, align:"center"},
-		{header:'浏览器名', name:'browserName', index:'a.browser_name', width:100, align:"center"},
-		{header:'响应时间', name:'executeTimeFormat', index:'a.execute_time', width:100, align:"center"}/* ,
-		{header:'操作', name:'actions', width:130, formatter: function(val, obj, row, act){
+		{header:'${text("业务类型")}', name:'bizType', index:'a.biz_type', width:90, align:"center"},
+		{header:'${text("业务主键")}', name:'bizKey', index:'a.biz_key', width:90, align:"center"},
+		{header:'${text("操作时间")}', name:'createDate', index:'a.create_date', width:100, align:"center"},
+		{header:'${text("客户端IP")}', name:'remoteAddr', index:'a.remote_addr', width:100, align:"center"},
+		{header:'${text("设备名称")}', name:'deviceName', index:'a.device_name', width:100, align:"center"},
+		{header:'${text("浏览器名")}', name:'browserName', index:'a.browser_name', width:100, align:"center"},
+		{header:'${text("响应时间")}', name:'executeTimeFormat', index:'a.execute_time', width:100, align:"center"}/* ,
+		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('sys:log:edit')){ %>
-				actions.push('<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="日志详情"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa fa-pencil"></i></a>&nbsp;');
 			<% } %>
 			return actions.join('');
 		}} */

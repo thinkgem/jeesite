@@ -1,4 +1,4 @@
-<% layout('/layouts/default.html', {title:'切换主题风格'}){ %>
+<% layout('/layouts/default.html', {title:'切换主题'}){ %>
 <link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
 <style>
 	.list-unstyled{margin:10px;}
@@ -13,7 +13,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">蓝</p>
+		<p class="text-center no-margin">${text('蓝')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;display:none;">
 		<a href="javascript:" data-skin="skin-black" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -22,7 +22,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">白</p>
+		<p class="text-center no-margin">${text('白')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-black2" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -31,7 +31,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">黑-经典</p>
+		<p class="text-center no-margin">${text('黑-经典')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-purple" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -40,7 +40,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">紫</p>
+		<p class="text-center no-margin">${text('紫')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-green" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -49,7 +49,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">绿</p>
+		<p class="text-center no-margin">${text('绿')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-red" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -58,7 +58,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">红</p>
+		<p class="text-center no-margin">${text('红')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-yellow" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -67,7 +67,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#222d32"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">黄</p>
+		<p class="text-center no-margin">${text('黄')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-blue-light" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -76,7 +76,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">蓝灰-经典</p>
+		<p class="text-center no-margin">${text('蓝灰-经典')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;display:none;">
 		<a href="javascript:" data-skin="skin-black-light" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -85,7 +85,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">白灰</p>
+		<p class="text-center no-margin">${text('白灰')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-black-light2" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -94,7 +94,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">黑灰</p>
+		<p class="text-center no-margin">${text('黑灰')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-purple-light" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -103,7 +103,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">紫灰</p>
+		<p class="text-center no-margin">${text('紫灰')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-green-light" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -112,7 +112,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">绿灰</p>
+		<p class="text-center no-margin">${text('绿灰')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-red-light" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -121,7 +121,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">红灰</p>
+		<p class="text-center no-margin">${text('红灰')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-yellow-light" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -130,7 +130,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">黄灰</p>
+		<p class="text-center no-margin">${text('黄灰')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-blue2" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -139,7 +139,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">亮蓝（新）</p>
+		<p class="text-center no-margin">${text('亮蓝（新）')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-blue-light2" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -148,11 +148,11 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">浅蓝（新）</p>
+		<p class="text-center no-margin">${text('浅蓝（新）')}</p>
 	</li>
 	<li style="float:left;padding:18px 0 0 45px;">
-		<#form:checkbox name="formLayerModel" label="表单弹窗模式" class="form-control" data-style="square-blue" style="margin-right:20px"/>
-		<#form:checkbox name="tabPageModel" label="取消页签模式" class="form-control" data-style="square-blue"/>
+		<#form:checkbox name="formLayerModel" label="${text('表单弹窗模式')}" class="form-control" data-style="square-blue" style="margin-right:20px"/>
+		<#form:checkbox name="tabPageModel" label="${text('取消页签模式')}" class="form-control" data-style="square-blue"/>
 	</li>
 </ul>
 <% } %>
