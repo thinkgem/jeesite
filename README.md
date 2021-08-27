@@ -6,8 +6,8 @@
 <p align="center">
  <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V4.3" src="https://img.shields.io/badge/JeeSite-V4.3-success.svg"></a>
  <a href="https://jeesite.com/docs/feature/" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.5-blue.svg"></a>
- <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></img></a>
- <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></img></a>
+ <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
 </p>
 
 ## 技术交流
@@ -52,7 +52,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 主框架：Spring Boot 2.5、Spring Framework 5.3、Apache Shiro 1.7、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.1、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.3（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
-* 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.1、zTree 3.5、jquery validation
+* 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.1、zTree 3.5、jQuery Validation
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 
@@ -120,6 +120,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 在线作业调度：<https://jeesite.com/docs/job/>
 * 消息推送：<https://jeesite.com/docs/msg-push-use/>
 * 手机端框架：<https://jeesite.com/docs/uniapp/>
+* 统一认证服务：<https://jeesite.com/docs/oauth2-server/>
 
 ## 云服务架构
 
