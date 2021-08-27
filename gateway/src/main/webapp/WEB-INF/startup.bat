@@ -17,7 +17,7 @@ cd %~dp0
 title %cd%
 
 rem 优化JVM参数
-set JAVA_OPTS=-Xms256m -Xmx1024m
+set JAVA_OPTS=-Xms256m -Xmx1024m -Dfile.encoding=utf-8
 
 rem 方式一、配置外部自定义的属性文件（建议）
 rem set JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml
