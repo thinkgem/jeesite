@@ -16,19 +16,20 @@
 
 package com.alibaba.nacos.console.config;
 
-import com.alibaba.nacos.core.code.ControllerMethodsCache;
+import java.time.ZoneId;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.annotation.PostConstruct;
-import java.time.ZoneId;
+import com.alibaba.nacos.core.code.ControllerMethodsCache;
 
 /**
  * Console config.
@@ -39,7 +40,7 @@ import java.time.ZoneId;
  */
 @Component
 @EnableScheduling
-@PropertySource("/application.properties")
+//@PropertySource("/application.properties")
 public class ConsoleConfig {
     
     @Autowired
