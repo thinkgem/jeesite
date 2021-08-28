@@ -30,9 +30,7 @@ import java.util.Collection;
  */
 public class NacosUserDetails implements UserDetails {
     
-	private static final long serialVersionUID = 1L;
-	
-	private final User user;
+    private final User user;
     
     public NacosUserDetails(User user) {
         this.user = user;

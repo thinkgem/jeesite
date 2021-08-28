@@ -22,7 +22,7 @@
 		<!-- Spring Cloud -->
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-		<nacos.version>2.0.2</nacos.version>
+		<nacos.version>2.0.3</nacos.version><!-- gRPC 若网络不稳定可降级为 1.4.2 -->
 		<seata.version>1.4.2</seata.version>
 		
 	</properties>
