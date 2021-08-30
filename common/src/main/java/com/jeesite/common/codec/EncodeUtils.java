@@ -269,7 +269,8 @@ public class EncodeUtils {
 				value = sb.toString();
 			}
 			if (logger.isInfoEnabled() && !value.equals(oriValue)){
-				logger.info("xssFilter: {}   <=<=<=   {}", value, text);
+				logger.info("xssFilter: {}   <=<=<=   {}   source: {}", value, text,
+						request != null ? request.getRequestURL() : StringUtils.EMPTY);
 			}
 			return value;
 		}
@@ -301,7 +302,7 @@ public class EncodeUtils {
 				value = matcher.replaceAll(StringUtils.EMPTY);
 			}
 			if (logger.isWarnEnabled() && !value.equals(text)){
-				logger.info("sqlFilter: {}   <=<=<=   {}", value, text);
+				logger.info("sqlFilter: {}   <=<=<=   {}   source: {}", value, text, source);
 				return StringUtils.EMPTY;
 			}
 			return value;
