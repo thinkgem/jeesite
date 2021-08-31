@@ -88,12 +88,12 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
-7. 部署常见问题：<http://jeesite.com/docs/faq/>
+7. 部署常见问题：<https://jeesite.com/docs/faq/>
 
 ### 开发环境部署
 
-1. 部署运行文档：<http://jeesite.com/docs/install-deploy/>
-2. 部署常见问题：<http://jeesite.com/docs/faq/>
+1. 部署运行文档：<https://jeesite.com/docs/install-deploy/>
+2. 部署常见问题：<https://jeesite.com/docs/faq/>
 
 ## 技术文章
 
@@ -146,8 +146,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ## 技术服务与支持
 
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系方式（官方商务）QQ：[1766571055](http://wpa.qq.com/msgrd?v=3&uin=1766571055&site=qq&menu=yes)、[1928733133](http://wpa.qq.com/msgrd?v=3&uin=1928733133&site=qq&menu=yes)**
-* 技术支持服务网页：<http://s.jeesite.com>
+* **联系我们**：请访问技术支持服务页面：<https://jeesite.com/docs/support/> 
 
 ## 今后如何升级？
 
@@ -155,7 +154,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 如果您修改了依赖模块代码，也没关系，这时你需要利用 Git 版本控制工具，与官方仓库代码进行同步，合并代码即可。
 
-每个版本升级，我们都会附带详细更新日志：<http://jeesite.com/docs/upgrade/>。
+每个版本升级，我们都会附带详细更新日志：<https://jeesite.com/docs/upgrade/>。
 
 在这里，你可以看到 JeeSite 新增哪些新功能和改进，在每个版本下都有对应升级方法。
 
