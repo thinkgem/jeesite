@@ -6759,15 +6759,28 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             langReadied(me);
 
         }else{
-            utils.loadFile(document, {
-                src: me.options.langPath + me.options.lang + "/" + me.options.lang + ".js",
-                tag: "script",
-                type: "text/javascript",
-                defer: "defer"
-            }, function () {
-                UE.plugin.load(me);
-                langReadied(me);
-            });
+			try {
+	            utils.loadFile(document, {
+	                src: me.options.langPath + me.options.lang + "/" + me.options.lang + ".js",
+	                tag: "script",
+	                type: "text/javascript",
+	                defer: "defer"
+	            }, function () {
+	                UE.plugin.load(me);
+	                langReadied(me);
+	            });
+			}catch(e){
+				// 未找到语言时，使用默认语言
+	            utils.loadFile(document, {
+	                src: me.options.langPath + "zh_CN/zh_CN.js",
+	                tag: "script",
+	                type: "text/javascript",
+	                defer: "defer"
+	            }, function () {
+	                UE.plugin.load(me);
+	                langReadied(me);
+	            });
+			}
         }
 
         UE.instants['ueditorInstant' + me.uid] = me;

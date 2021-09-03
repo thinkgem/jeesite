@@ -45,7 +45,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 **发展至今 JeeSite 平台架构已经非常稳定，JeeSite 是一个专业的平台，是一个让你使用放心的平台。**
 
-### v4 架构特点、安全方面等等的优势：<http://jeesite.com/docs/feature/>
+### v4 架构特点、安全方面等等的优势：<https://jeesite.com/docs/feature/>
 
 ## 技术选型
 
@@ -58,7 +58,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 更多介绍
 
-* 内置功能：<http://jeesite.com/docs/function/>
+* 内置功能：<https://jeesite.com/docs/function/>
 * 目录结构：<https://jeesite.com/docs/catalog/>
 * 架构特点：<https://jeesite.com/docs/feature/>
 * 开发规范：<https://jeesite.com/docs/standard/>
