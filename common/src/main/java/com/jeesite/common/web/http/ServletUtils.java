@@ -21,6 +21,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.ExceptionUtils;
@@ -253,7 +254,8 @@ public class ServletUtils {
 			}
 		}
 		if (response != null){
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8");
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			response.setCharacterEncoding(EncodeUtils.UTF_8);
 		}
 		if (object == null) {
 			object = resultMap;
@@ -362,10 +364,10 @@ public class ServletUtils {
 			if (type == null && StringUtils.isBlank(response.getContentType())){
 				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
 						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
-					type = MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8";
+					type = MediaType.APPLICATION_JSON_VALUE;
 				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
 					if (StringUtils.startsWith(string, "<!DOCTYPE")){
-						type = MediaType.TEXT_HTML_VALUE+";charset=UTF-8";
+						type = MediaType.TEXT_HTML_VALUE;
 					}else{
 						type = MediaType.APPLICATION_XML_VALUE;
 					}
@@ -375,6 +377,7 @@ public class ServletUtils {
 			}
 			if (type != null) {
 				response.setContentType(type);
+				response.setCharacterEncoding(EncodeUtils.UTF_8);
 			}
 			response.getWriter().print(string);
 		} catch (IOException e) {

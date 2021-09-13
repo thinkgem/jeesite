@@ -68,7 +68,7 @@
 		
 		<!-- docker setting -->
         <docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
-        <docker.imageName>${project.groupId}/${project.artifactId}:4.2</docker.imageName>
+        <docker.imageName>${project.groupId}/${project.artifactId}:4.3</docker.imageName>
         
 	</properties>
 	
