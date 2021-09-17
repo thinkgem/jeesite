@@ -5377,7 +5377,10 @@ S2.define('select2/core',[
       } else {
         if (/*key === KEYS.ENTER || */key === KEYS.SPACE || // ThinkGem 去掉回车后打开下拉框，解决jqgrid回车获取下一个输入框按键冲突
             (key === KEYS.DOWN && evt.altKey)) {
-          self.open();
+
+          if (!this.options.get('disabled')){ // 修正禁用的时候，按空格可弹窗下拉框问题
+             self.open();
+          }
 
           evt.preventDefault();
         }
