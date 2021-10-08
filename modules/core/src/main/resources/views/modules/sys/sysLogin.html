@@ -5,21 +5,21 @@
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <div class="login-box" style="margin:7% auto 300px auto;">
 	<div class="login-logo">
-		<a href="${ctx}/login"><b>${@Global.getConfig('productName')}</b>
+		<a href="${ctxAdmin}/login"><b>${@Global.getConfig('productName')}</b>
 			<small>${@Global.getConfig('productVersion')}</small></a>
 	</div>
 	<div class="login-box-body">
 		<% var isLoginByValidCode = @Global.getConfigToBoolean('user.loginByValidCode', 'true'); %>
 		<% if(isLoginByValidCode){ %>
 			<ul id="loginTab" class="nav nav-tabs">
-				<li class="active"><a href="#tab-1" data-toggle="tab" action="${ctx}/login">${text('账号登录')}</a></li>
+				<li class="active"><a href="#tab-1" data-toggle="tab" action="${ctxAdmin}/login">${text('账号登录')}</a></li>
 				<li><a href="#tab-2" data-toggle="tab" action="${ctxPath}/account/loginByValidCode">${text('手机登录')}</a></li>
 				<% if(isNotBlank(@Global.getConfig('shiro.ldapUrl'))){ %>
-					<li><a href="#tab-3" data-toggle="tab" action="${ctx}/login-ldap">${text('LDAP登录')}</a></li>
+					<li><a href="#tab-3" data-toggle="tab" action="${ctxAdmin}/login-ldap">${text('LDAP登录')}</a></li>
 				<% } %>
 			</ul>
 		<% } %>
-		<#form:form id="loginForm" model="${user!}" action="${ctx}/login" method="post" class="tab-content">
+		<#form:form id="loginForm" model="${user!}" action="${ctxAdmin}/login" method="post" class="tab-content">
 			<% if(!isLoginByValidCode && isBlank(message!)){ %>
 				<h4 class="login-box-msg">${text('欢迎回来')+'！'}</h4>
 			<% }else if(isNotBlank(message!)){ %>
@@ -42,7 +42,7 @@
 			<% if(@Global.getConfigToBoolean('user.loginCodeCorpUnique', 'false')){ %>
 			<div class="form-group has-feedback">
 				<#form:treeselect id="switchCorpSelect" title="${text('登录租户')}" allowClear="false"
-					name="param_corpCode" url="${ctx}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
+					name="param_corpCode" url="${ctxAdmin}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
 			</div>
 			<% } %>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
