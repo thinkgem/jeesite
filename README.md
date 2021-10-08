@@ -99,8 +99,8 @@ JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src �
 
 **jar 方式：**
 
-1. 下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `nacos-server-1.2.1.zip` 下载文件。
-2. 解压 `nacos-server-1.2.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.0.3/nacos-server-2.0.3.zip>
+2. 解压 `nacos-server-2.0.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **src 方式：**
 
