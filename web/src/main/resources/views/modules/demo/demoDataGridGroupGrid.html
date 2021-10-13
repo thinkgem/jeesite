@@ -207,6 +207,9 @@ $('#dataGrid').dataGrid({
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
+		// 分组和冻结列情况下的合并单元格测试
+		//$('#dataGrid').dataGrid("mergeCell", "testInput,id");
+		
 		// ================ 启用合计行 BEGIN ==============
 		// showFooter: true, // 是否显示底部合计行
 		// 第 1 种方法：请求完成之后通过js设置，举例如下：
