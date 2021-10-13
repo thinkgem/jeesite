@@ -3,7 +3,7 @@
  */
 package com.jeesite.modules.test.entity;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
@@ -76,7 +76,7 @@ public class TestData extends DataEntity<TestData> {
 		super(id);
 	}
 	
-	@Length(min=0, max=200, message="单行文本长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="单行文本长度不能超过 200 个字符")
 	public String getTestInput() {
 		return testInput;
 	}
@@ -85,7 +85,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testInput = testInput;
 	}
 	
-	@Length(min=0, max=200, message="多行文本长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="多行文本长度不能超过 200 个字符")
 	public String getTestTextarea() {
 		return testTextarea;
 	}
@@ -94,7 +94,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testTextarea = testTextarea;
 	}
 	
-	@Length(min=0, max=10, message="下拉框长度不能超过 10 个字符")
+	@Size(min=0, max=10, message="下拉框长度不能超过 10 个字符")
 	public String getTestSelect() {
 		return testSelect;
 	}
@@ -103,7 +103,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testSelect = testSelect;
 	}
 	
-	@Length(min=0, max=200, message="下拉多选长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="下拉多选长度不能超过 200 个字符")
 	public String getTestSelectMultiple() {
 		return testSelectMultiple;
 	}
@@ -112,7 +112,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testSelectMultiple = testSelectMultiple;
 	}
 	
-	@Length(min=0, max=10, message="单选框长度不能超过 10 个字符")
+	@Size(min=0, max=10, message="单选框长度不能超过 10 个字符")
 	public String getTestRadio() {
 		return testRadio;
 	}
@@ -121,7 +121,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testRadio = testRadio;
 	}
 	
-	@Length(min=0, max=200, message="复选框长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="复选框长度不能超过 200 个字符")
 	public String getTestCheckbox() {
 		return testCheckbox;
 	}
@@ -164,7 +164,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testOffice = testOffice;
 	}
 	
-	@Length(min=0, max=64, message="区域选择长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="区域选择长度不能超过 64 个字符")
 	public String getTestAreaCode() {
 		return testAreaCode;
 	}
@@ -173,7 +173,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testAreaCode = testAreaCode;
 	}
 	
-	@Length(min=0, max=100, message="区域名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="区域名称长度不能超过 100 个字符")
 	public String getTestAreaName() {
 		return testAreaName;
 	}

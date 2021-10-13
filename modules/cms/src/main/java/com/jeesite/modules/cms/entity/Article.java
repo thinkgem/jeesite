@@ -8,7 +8,7 @@ import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;
@@ -115,7 +115,7 @@ public class Article extends DataEntity<Article> {
 		this.category = category;
 	}
 
-	@Length(min = 0, max = 50, message = "模块类型长度不能超过 50 个字符")
+	@Size(min = 0, max = 50, message = "模块类型长度不能超过 50 个字符")
 	public String getModuleType() {
 		return moduleType;
 	}
@@ -125,7 +125,7 @@ public class Article extends DataEntity<Article> {
 	}
 
 	@NotBlank(message = "内容标题不能为空")
-	@Length(min = 0, max = 255, message = "内容标题长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "内容标题长度不能超过 255 个字符")
 	public String getTitle() {
 		return title;
 	}
@@ -134,7 +134,7 @@ public class Article extends DataEntity<Article> {
 		this.title = title;
 	}
 
-	@Length(min = 0, max = 1000, message = "外部链接长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "外部链接长度不能超过 1000 个字符")
 	public String getHref() {
 		return href;
 	}
@@ -143,7 +143,7 @@ public class Article extends DataEntity<Article> {
 		this.href = href;
 	}
 
-	@Length(min = 0, max = 50, message = "标题颜色长度不能超过 50 个字符")
+	@Size(min = 0, max = 50, message = "标题颜色长度不能超过 50 个字符")
 	public String getColor() {
 		return color;
 	}
@@ -152,7 +152,7 @@ public class Article extends DataEntity<Article> {
 		this.color = color;
 	}
 
-	@Length(min = 0, max = 1000, message = "内容图片长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "内容图片长度不能超过 1000 个字符")
 	public String getImage() {
 		return image;
 	}
@@ -161,7 +161,7 @@ public class Article extends DataEntity<Article> {
 		this.image = image;
 	}
 
-	@Length(min = 0, max = 500, message = "关键字长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "关键字长度不能超过 500 个字符")
 	public String getKeywords() {
 		return keywords;
 	}
@@ -170,7 +170,7 @@ public class Article extends DataEntity<Article> {
 		this.keywords = keywords;
 	}
 
-	@Length(min = 0, max = 500, message = "描述长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "描述长度不能超过 500 个字符")
 	public String getDescription() {
 		return description;
 	}
@@ -196,7 +196,7 @@ public class Article extends DataEntity<Article> {
 		this.weightDate = weightDate;
 	}
 
-	@Length(min = 0, max = 1, message = "来源长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "来源长度不能超过 1 个字符")
 	public String getSource() {
 		return source;
 	}
@@ -205,7 +205,7 @@ public class Article extends DataEntity<Article> {
 		this.source = source;
 	}
 
-	@Length(min = 0, max = 255, message = "文章来源出处长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "文章来源出处长度不能超过 255 个字符")
 	public String getCopyfrom() {
 		return copyfrom;
 	}
@@ -248,7 +248,7 @@ public class Article extends DataEntity<Article> {
 		this.wordCount = wordCount;
 	}
 
-	@Length(min = 0, max = 255, message = "自定义内容视图长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "自定义内容视图长度不能超过 255 个字符")
 	public String getCustomContentView() {
 		return customContentView;
 	}
@@ -257,7 +257,7 @@ public class Article extends DataEntity<Article> {
 		this.customContentView = customContentView;
 	}
 
-	@Length(min = 0, max = 1000, message = "视图配置长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "视图配置长度不能超过 1000 个字符")
 	public String getViewConfig() {
 		return viewConfig;
 	}

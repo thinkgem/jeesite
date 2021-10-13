@@ -3,7 +3,7 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -52,7 +52,7 @@ public class CategoryRole extends DataEntity<CategoryRole> {
 		this.roleCode = roleCode;
 	}
 
-	@Length(min = 0, max = 32, message = "控制类型长度不能超过 32 个字符")
+	@Size(min = 0, max = 32, message = "控制类型长度不能超过 32 个字符")
 	public String getCtrlType() {
 		return ctrlType;
 	}

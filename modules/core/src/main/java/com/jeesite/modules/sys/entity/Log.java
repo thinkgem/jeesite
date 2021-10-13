@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.validation.constraints.NotBlank;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -87,7 +87,7 @@ public class Log extends DataEntity<Log> {
 	}
 	
 	@NotBlank(message="日志类型不能为空")
-	@Length(min=0, max=1, message="日志类型长度不能超过 1 个字符")
+	@Size(min=0, max=1, message="日志类型长度不能超过 1 个字符")
 	public String getLogType() {
 		return logType;
 	}
@@ -97,7 +97,7 @@ public class Log extends DataEntity<Log> {
 	}
 	
 	@NotBlank(message="日志标题不能为空")
-	@Length(min=0, max=500, message="日志标题长度不能超过 500 个字符")
+	@Size(min=0, max=500, message="日志标题长度不能超过 500 个字符")
 	public String getLogTitle() {
 		return logTitle;
 	}
@@ -106,7 +106,7 @@ public class Log extends DataEntity<Log> {
 		this.logTitle = logTitle;
 	}
 	
-	@Length(min=0, max=500, message="请求URI长度不能超过 500 个字符")
+	@Size(min=0, max=500, message="请求URI长度不能超过 500 个字符")
 	public String getRequestUri() {
 		return requestUri;
 	}
@@ -115,7 +115,7 @@ public class Log extends DataEntity<Log> {
 		this.requestUri = requestUri;
 	}
 	
-	@Length(min=0, max=10, message="操作方式长度不能超过 10 个字符")
+	@Size(min=0, max=10, message="操作方式长度不能超过 10 个字符")
 	public String getRequestMethod() {
 		return requestMethod;
 	}
@@ -140,7 +140,7 @@ public class Log extends DataEntity<Log> {
 		this.diffModifyData = diffModifyData;
 	}
 
-	@Length(min=0, max=64, message="业务主键长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="业务主键长度不能超过 64 个字符")
 	public String getBizKey() {
 		return bizKey;
 	}
@@ -149,7 +149,7 @@ public class Log extends DataEntity<Log> {
 		this.bizKey = bizKey;
 	}
 	
-	@Length(min=0, max=64, message="业务类型长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="业务类型长度不能超过 64 个字符")
 	public String getBizType() {
 		return bizType;
 	}
@@ -159,7 +159,7 @@ public class Log extends DataEntity<Log> {
 	}
 	
 	@NotBlank(message="操作IP地址不能为空")
-	@Length(min=0, max=255, message="操作IP地址长度不能超过 255 个字符")
+	@Size(min=0, max=255, message="操作IP地址长度不能超过 255 个字符")
 	public String getRemoteAddr() {
 		return remoteAddr;
 	}
@@ -169,7 +169,7 @@ public class Log extends DataEntity<Log> {
 	}
 	
 	@NotBlank(message="请求服务器地址不能为空")
-	@Length(min=0, max=255, message="请求服务器地址长度不能超过 255 个字符")
+	@Size(min=0, max=255, message="请求服务器地址长度不能超过 255 个字符")
 	public String getServerAddr() {
 		return serverAddr;
 	}
@@ -194,7 +194,7 @@ public class Log extends DataEntity<Log> {
 		this.exceptionInfo = exceptionInfo;
 	}
 	
-	@Length(min=0, max=500, message="用户代理长度不能超过 500 个字符")
+	@Size(min=0, max=500, message="用户代理长度不能超过 500 个字符")
 	public String getUserAgent() {
 		return userAgent;
 	}
@@ -203,7 +203,7 @@ public class Log extends DataEntity<Log> {
 		this.userAgent = userAgent;
 	}
 	
-	@Length(min=0, max=100, message="设备名称/操作系统长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="设备名称/操作系统长度不能超过 100 个字符")
 	public String getDeviceName() {
 		return deviceName;
 	}
@@ -212,7 +212,7 @@ public class Log extends DataEntity<Log> {
 		this.deviceName = deviceName;
 	}
 	
-	@Length(min=0, max=100, message="浏览器名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="浏览器名称长度不能超过 100 个字符")
 	public String getBrowserName() {
 		return browserName;
 	}

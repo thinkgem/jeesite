@@ -8,7 +8,7 @@ import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;
@@ -77,7 +77,7 @@ public class Comment extends DataEntity<Comment> {
 	}
 	
 	@NotBlank(message="栏目编码不能为空")
-	@Length(min=0, max=64, message="栏目编码长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="栏目编码长度不能超过 64 个字符")
 	public String getCategoryCode() {
 		return categoryCode;
 	}
@@ -87,7 +87,7 @@ public class Comment extends DataEntity<Comment> {
 	}
 	
 	@NotBlank(message="内容编号不能为空")
-	@Length(min=0, max=64, message="内容编号长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="内容编号长度不能超过 64 个字符")
 	public String getArticleId() {
 		return articleId;
 	}
@@ -96,7 +96,7 @@ public class Comment extends DataEntity<Comment> {
 		this.articleId = articleId;
 	}
 	
-	@Length(min=0, max=64, message="父级评论长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="父级评论长度不能超过 64 个字符")
 	public String getParentId() {
 		return parentId;
 	}
@@ -106,7 +106,7 @@ public class Comment extends DataEntity<Comment> {
 	}
 	
 	@NotBlank(message="内容标题不能为空")
-	@Length(min=0, max=255, message="内容标题长度不能超过 255 个字符")
+	@Size(min=0, max=255, message="内容标题长度不能超过 255 个字符")
 	public String getArticleTitle() {
 		return articleTitle;
 	}
@@ -116,7 +116,7 @@ public class Comment extends DataEntity<Comment> {
 	}
 	
 	@NotBlank(message="评论内容不能为空")
-	@Length(min=0, max=255, message="评论内容长度不能超过 255 个字符")
+	@Size(min=0, max=255, message="评论内容长度不能超过 255 个字符")
 	public String getContent() {
 		return content;
 	}
@@ -125,7 +125,7 @@ public class Comment extends DataEntity<Comment> {
 		this.content = content;
 	}
 	
-	@Length(min=0, max=50, message="评论姓名长度不能超过 50 个字符")
+	@Size(min=0, max=50, message="评论姓名长度不能超过 50 个字符")
 	public String getName() {
 		return name;
 	}
@@ -134,7 +134,7 @@ public class Comment extends DataEntity<Comment> {
 		this.name = name;
 	}
 	
-	@Length(min=0, max=100, message="评论IP长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="评论IP长度不能超过 100 个字符")
 	public String getIp() {
 		return ip;
 	}
@@ -143,7 +143,7 @@ public class Comment extends DataEntity<Comment> {
 		this.ip = ip;
 	}
 	
-	@Length(min=0, max=64, message="审核人长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="审核人长度不能超过 64 个字符")
 	public String getAuditUserCode() {
 		return auditUserCode;
 	}
@@ -161,7 +161,7 @@ public class Comment extends DataEntity<Comment> {
 		this.auditDate = auditDate;
 	}
 	
-	@Length(min=0, max=200, message="审核意见长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="审核意见长度不能超过 200 个字符")
 	public String getAuditComment() {
 		return auditComment;
 	}

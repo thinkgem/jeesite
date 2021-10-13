@@ -5,7 +5,7 @@ package com.jeesite.modules.cms.entity;
 
 import java.util.Date;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;
@@ -96,7 +96,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		super(id);
 	}
 	
-	@Length(min=0, max=1000, message="请求的URL地址长度不能超过 1000 个字符")
+	@Size(min=0, max=1000, message="请求的URL地址长度不能超过 1000 个字符")
 	public String getRequestUrl() {
 		return requestUrl;
 	}
@@ -105,7 +105,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.requestUrl = requestUrl;
 	}
 	
-	@Length(min=0, max=128, message="受访域名长度不能超过 128 个字符")
+	@Size(min=0, max=128, message="受访域名长度不能超过 128 个字符")
 	public String getRequestUrlHost() {
 		return requestUrlHost;
 	}
@@ -114,7 +114,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.requestUrlHost = requestUrlHost;
 	}
 	
-	@Length(min=0, max=1000, message="来源页面/上一个页面长度不能超过 1000 个字符")
+	@Size(min=0, max=1000, message="来源页面/上一个页面长度不能超过 1000 个字符")
 	public String getSourceReferer() {
 		return sourceReferer;
 	}
@@ -123,7 +123,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.sourceReferer = sourceReferer;
 	}
 	
-	@Length(min=0, max=128, message="来源域名长度不能超过 128 个字符")
+	@Size(min=0, max=128, message="来源域名长度不能超过 128 个字符")
 	public String getSourceRefererHost() {
 		return sourceRefererHost;
 	}
@@ -132,7 +132,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.sourceRefererHost = sourceRefererHost;
 	}
 	
-	@Length(min=0, max=1, message="访问来源类型长度不能超过 1 个字符")
+	@Size(min=0, max=1, message="访问来源类型长度不能超过 1 个字符")
 	public String getSourceType() {
 		return sourceType;
 	}
@@ -141,7 +141,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.sourceType = sourceType;
 	}
 	
-	@Length(min=0, max=200, message="使用的搜索引擎长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="使用的搜索引擎长度不能超过 200 个字符")
 	public String getSearchEngine() {
 		return searchEngine;
 	}
@@ -150,7 +150,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.searchEngine = searchEngine;
 	}
 	
-	@Length(min=0, max=200, message="搜索的关键词长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="搜索的关键词长度不能超过 200 个字符")
 	public String getSearchWord() {
 		return searchWord;
 	}
@@ -159,7 +159,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.searchWord = searchWord;
 	}
 	
-	@Length(min=0, max=50, message="客户IP地址长度不能超过 50 个字符")
+	@Size(min=0, max=50, message="客户IP地址长度不能超过 50 个字符")
 	public String getRemoteAddr() {
 		return remoteAddr;
 	}
@@ -168,7 +168,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.remoteAddr = remoteAddr;
 	}
 	
-	@Length(min=0, max=500, message="用户代理字符串长度不能超过 500 个字符")
+	@Size(min=0, max=500, message="用户代理字符串长度不能超过 500 个字符")
 	public String getUserAgent() {
 		return userAgent;
 	}
@@ -177,7 +177,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userAgent = userAgent;
 	}
 	
-	@Length(min=0, max=32, message="客户机语言长度不能超过 32 个字符")
+	@Size(min=0, max=32, message="客户机语言长度不能超过 32 个字符")
 	public String getUserLanguage() {
 		return userLanguage;
 	}
@@ -186,7 +186,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userLanguage = userLanguage;
 	}
 	
-	@Length(min=0, max=32, message="客户机屏幕大小0x0长度不能超过 32 个字符")
+	@Size(min=0, max=32, message="客户机屏幕大小0x0长度不能超过 32 个字符")
 	public String getUserScreenSize() {
 		return userScreenSize;
 	}
@@ -195,7 +195,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userScreenSize = userScreenSize;
 	}
 	
-	@Length(min=0, max=32, message="客户机设备类型长度不能超过 32 个字符")
+	@Size(min=0, max=32, message="客户机设备类型长度不能超过 32 个字符")
 	public String getUserDevice() {
 		return userDevice;
 	}
@@ -204,7 +204,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userDevice = userDevice;
 	}
 	
-	@Length(min=0, max=32, message="客户机操作系统长度不能超过 32 个字符")
+	@Size(min=0, max=32, message="客户机操作系统长度不能超过 32 个字符")
 	public String getUserOsName() {
 		return userOsName;
 	}
@@ -213,7 +213,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userOsName = userOsName;
 	}
 	
-	@Length(min=0, max=32, message="客户机浏览器长度不能超过 32 个字符")
+	@Size(min=0, max=32, message="客户机浏览器长度不能超过 32 个字符")
 	public String getUserBrowser() {
 		return userBrowser;
 	}
@@ -222,7 +222,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userBrowser = userBrowser;
 	}
 	
-	@Length(min=0, max=16, message="浏览器版本长度不能超过 16 个字符")
+	@Size(min=0, max=16, message="浏览器版本长度不能超过 16 个字符")
 	public String getUserBrowserVersion() {
 		return userBrowserVersion;
 	}
@@ -231,7 +231,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.userBrowserVersion = userBrowserVersion;
 	}
 	
-	@Length(min=0, max=64, message="唯一访问标识长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="唯一访问标识长度不能超过 64 个字符")
 	public String getUniqueVisitId() {
 		return uniqueVisitId;
 	}
@@ -240,7 +240,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.uniqueVisitId = uniqueVisitId;
 	}
 	
-	@Length(min=0, max=8, message="本次访问日期长度不能超过 8 个字符")
+	@Size(min=0, max=8, message="本次访问日期长度不能超过 8 个字符")
 	public String getVisitDate() {
 		return visitDate;
 	}
@@ -258,7 +258,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.visitTime = visitTime;
 	}
 	
-	@Length(min=0, max=1, message="是否新访问长度不能超过 1 个字符")
+	@Size(min=0, max=1, message="是否新访问长度不能超过 1 个字符")
 	public String getIsNewVisit() {
 		return isNewVisit;
 	}
@@ -291,7 +291,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.totalRemainTime = totalRemainTime;
 	}
 	
-	@Length(min=0, max=64, message="站点编码长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="站点编码长度不能超过 64 个字符")
 	public String getSiteCode() {
 		return siteCode;
 	}
@@ -300,7 +300,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.siteCode = siteCode;
 	}
 	
-	@Length(min=0, max=100, message="站点名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="站点名称长度不能超过 100 个字符")
 	public String getSiteName() {
 		return siteName;
 	}
@@ -309,7 +309,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.siteName = siteName;
 	}
 	
-	@Length(min=0, max=64, message="栏目编码长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="栏目编码长度不能超过 64 个字符")
 	public String getCategoryCode() {
 		return categoryCode;
 	}
@@ -318,7 +318,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.categoryCode = categoryCode;
 	}
 	
-	@Length(min=0, max=100, message="栏目名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="栏目名称长度不能超过 100 个字符")
 	public String getCategoryName() {
 		return categoryName;
 	}
@@ -327,7 +327,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.categoryName = categoryName;
 	}
 	
-	@Length(min=0, max=64, message="栏目内容编号长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="栏目内容编号长度不能超过 64 个字符")
 	public String getContentId() {
 		return contentId;
 	}
@@ -336,7 +336,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.contentId = contentId;
 	}
 	
-	@Length(min=0, max=255, message="访问页面标题长度不能超过 255 个字符")
+	@Size(min=0, max=255, message="访问页面标题长度不能超过 255 个字符")
 	public String getContentTitle() {
 		return contentTitle;
 	}
@@ -345,7 +345,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.contentTitle = contentTitle;
 	}
 	
-	@Length(min=0, max=100, message="访问用户编码长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="访问用户编码长度不能超过 100 个字符")
 	public String getVisitUserCode() {
 		return visitUserCode;
 	}
@@ -354,7 +354,7 @@ public class VisitLog extends DataEntity<VisitLog> {
 		this.visitUserCode = visitUserCode;
 	}
 	
-	@Length(min=0, max=100, message="访问用户姓名长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="访问用户姓名长度不能超过 100 个字符")
 	public String getVisitUserName() {
 		return visitUserName;
 	}

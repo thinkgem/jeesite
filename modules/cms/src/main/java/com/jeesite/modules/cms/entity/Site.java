@@ -6,7 +6,7 @@ package com.jeesite.modules.cms.entity;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.DataEntity;
@@ -85,7 +85,7 @@ public class Site extends DataEntity<Site> {
 	}
 
 	@NotBlank(message = "站点名称不能为空")
-	@Length(min = 0, max = 100, message = "站点名称长度不能超过 100 个字符")
+	@Size(min = 0, max = 100, message = "站点名称长度不能超过 100 个字符")
 	public String getSiteName() {
 		return siteName;
 	}
@@ -103,7 +103,7 @@ public class Site extends DataEntity<Site> {
 	}
 
 	@NotBlank(message = "站点标题不能为空")
-	@Length(min = 0, max = 100, message = "站点标题长度不能超过 100 个字符")
+	@Size(min = 0, max = 100, message = "站点标题长度不能超过 100 个字符")
 	public String getTitle() {
 		return title;
 	}
@@ -112,7 +112,7 @@ public class Site extends DataEntity<Site> {
 		this.title = title;
 	}
 
-	@Length(min = 0, max = 1000, message = "站点Logo长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "站点Logo长度不能超过 1000 个字符")
 	public String getLogo() {
 		return logo;
 	}
@@ -121,7 +121,7 @@ public class Site extends DataEntity<Site> {
 		this.logo = logo;
 	}
 
-	@Length(min = 0, max = 500, message = "站点域名长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "站点域名长度不能超过 500 个字符")
 	public String getDomain() {
 		return domain;
 	}
@@ -130,7 +130,7 @@ public class Site extends DataEntity<Site> {
 		this.domain = domain;
 	}
 
-	@Length(min = 0, max = 500, message = "关键字长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "关键字长度不能超过 500 个字符")
 	public String getKeywords() {
 		return keywords;
 	}
@@ -139,7 +139,7 @@ public class Site extends DataEntity<Site> {
 		this.keywords = keywords;
 	}
 
-	@Length(min = 0, max = 500, message = "描述长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "描述长度不能超过 500 个字符")
 	public String getDescription() {
 		return description;
 	}
@@ -148,7 +148,7 @@ public class Site extends DataEntity<Site> {
 		this.description = description;
 	}
 
-	@Length(min = 0, max = 500, message = "主题长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "主题长度不能超过 500 个字符")
 	public String getTheme() {
 		return theme;
 	}
@@ -157,7 +157,7 @@ public class Site extends DataEntity<Site> {
 		this.theme = theme;
 	}
 
-	@Length(min = 0, max = 1000, message = "版权信息长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "版权信息长度不能超过 1000 个字符")
 	public String getCopyright() {
 		return copyright;
 	}
@@ -166,7 +166,7 @@ public class Site extends DataEntity<Site> {
 		this.copyright = copyright;
 	}
 
-	@Length(min = 0, max = 500, message = "自定义站点首页视图长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "自定义站点首页视图长度不能超过 500 个字符")
 	public String getCustomIndexView() {
 		return customIndexView;
 	}

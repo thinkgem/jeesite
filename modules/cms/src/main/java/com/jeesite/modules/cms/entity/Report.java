@@ -3,7 +3,7 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -40,7 +40,7 @@ public class Report extends DataEntity<Report> {
 		super(id);
 	}
 	
-	@Length(min=0, max=1, message="举报来源长度不能超过 1 个字符")
+	@Size(min=0, max=1, message="举报来源长度不能超过 1 个字符")
 	public String getReportSource() {
 		return reportSource;
 	}
@@ -49,7 +49,7 @@ public class Report extends DataEntity<Report> {
 		this.reportSource = reportSource;
 	}
 	
-	@Length(min=0, max=500, message="举报内容长度不能超过 500 个字符")
+	@Size(min=0, max=500, message="举报内容长度不能超过 500 个字符")
 	public String getReportContent() {
 		return reportContent;
 	}
@@ -58,7 +58,7 @@ public class Report extends DataEntity<Report> {
 		this.reportContent = reportContent;
 	}
 	
-	@Length(min=0, max=1000, message="举报的URL长度不能超过 1000 个字符")
+	@Size(min=0, max=1000, message="举报的URL长度不能超过 1000 个字符")
 	public String getReportUrl() {
 		return reportUrl;
 	}
@@ -67,7 +67,7 @@ public class Report extends DataEntity<Report> {
 		this.reportUrl = reportUrl;
 	}
 	
-	@Length(min=0, max=1, message="举报类型长度不能超过 1 个字符")
+	@Size(min=0, max=1, message="举报类型长度不能超过 1 个字符")
 	public String getReportType() {
 		return reportType;
 	}
@@ -76,7 +76,7 @@ public class Report extends DataEntity<Report> {
 		this.reportType = reportType;
 	}
 	
-	@Length(min=0, max=500, message="举报原因长度不能超过 500 个字符")
+	@Size(min=0, max=500, message="举报原因长度不能超过 500 个字符")
 	public String getReportCause() {
 		return reportCause;
 	}

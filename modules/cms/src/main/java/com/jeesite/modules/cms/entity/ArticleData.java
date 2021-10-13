@@ -3,7 +3,7 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
@@ -47,7 +47,7 @@ public class ArticleData extends DataEntity<ArticleData> {
 		this.content = content;
 	}
 
-	@Length(min = 0, max = 1000, message = "相关文章长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "相关文章长度不能超过 1000 个字符")
 	public String getRelation() {
 		return relation;
 	}
@@ -56,7 +56,7 @@ public class ArticleData extends DataEntity<ArticleData> {
 		this.relation = relation;
 	}
 
-	@Length(min = 0, max = 1, message = "是否允许评论长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "是否允许评论长度不能超过 1 个字符")
 	public String getIsCanComment() {
 		return isCanComment;
 	}

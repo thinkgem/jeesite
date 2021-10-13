@@ -3,7 +3,7 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
@@ -75,7 +75,7 @@ public class EmployeeOffice extends DataEntity<EmployeeOffice> {
 		this.officeCode = officeCode;
 	}
 	
-	@Length(min=0, max=64, message="岗位编码长度不能超过 64 个字符")
+	@Size(min=0, max=64, message="岗位编码长度不能超过 64 个字符")
 	public String getPostCode() {
 		return postCode;
 	}

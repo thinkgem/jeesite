@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.DataEntity;
@@ -110,7 +110,7 @@ public class Category extends TreeEntity<Category> {
 	}
 
 	@NotBlank(message = "栏目名称不能为空")
-	@Length(min = 0, max = 100, message = "栏目名称长度不能超过 100 个字符")
+	@Size(min = 0, max = 100, message = "栏目名称长度不能超过 100 个字符")
 	public String getCategoryName() {
 		return categoryName;
 	}
@@ -130,7 +130,7 @@ public class Category extends TreeEntity<Category> {
 		this.site = site;
 	}
 
-	@Length(min = 0, max = 50, message = "模块类型长度不能超过 50 个字符")
+	@Size(min = 0, max = 50, message = "模块类型长度不能超过 50 个字符")
 	public String getModuleType() {
 		return moduleType;
 	}
@@ -139,7 +139,7 @@ public class Category extends TreeEntity<Category> {
 		this.moduleType = moduleType;
 	}
 
-	@Length(min = 0, max = 255, message = "栏目图片长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "栏目图片长度不能超过 255 个字符")
 	public String getImage() {
 		return image;
 	}
@@ -148,7 +148,7 @@ public class Category extends TreeEntity<Category> {
 		this.image = image;
 	}
 
-	@Length(min = 0, max = 255, message = "链接长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "链接长度不能超过 255 个字符")
 	public String getHref() {
 		return href;
 	}
@@ -157,7 +157,7 @@ public class Category extends TreeEntity<Category> {
 		this.href = href;
 	}
 
-	@Length(min = 0, max = 20, message = "目标长度不能超过 20 个字符")
+	@Size(min = 0, max = 20, message = "目标长度不能超过 20 个字符")
 	public String getTarget() {
 		return target;
 	}
@@ -166,7 +166,7 @@ public class Category extends TreeEntity<Category> {
 		this.target = target;
 	}
 
-	@Length(min = 0, max = 500, message = "关键字长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "关键字长度不能超过 500 个字符")
 	public String getKeywords() {
 		return keywords;
 	}
@@ -175,7 +175,7 @@ public class Category extends TreeEntity<Category> {
 		this.keywords = keywords;
 	}
 
-	@Length(min = 0, max = 500, message = "描述长度不能超过 500 个字符")
+	@Size(min = 0, max = 500, message = "描述长度不能超过 500 个字符")
 	public String getDescription() {
 		return description;
 	}
@@ -184,7 +184,7 @@ public class Category extends TreeEntity<Category> {
 		this.description = description;
 	}
 
-	@Length(min = 0, max = 1, message = "是否在导航中显示长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "是否在导航中显示长度不能超过 1 个字符")
 	public String getInMenu() {
 		return inMenu;
 	}
@@ -193,7 +193,7 @@ public class Category extends TreeEntity<Category> {
 		this.inMenu = inMenu;
 	}
 
-	@Length(min = 0, max = 1, message = "是否在分类页中显示列表长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "是否在分类页中显示列表长度不能超过 1 个字符")
 	public String getInList() {
 		return inList;
 	}
@@ -202,7 +202,7 @@ public class Category extends TreeEntity<Category> {
 		this.inList = inList;
 	}
 
-	@Length(min = 0, max = 1, message = "展现模式长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "展现模式长度不能超过 1 个字符")
 	public String getShowModes() {
 		return showModes;
 	}
@@ -211,7 +211,7 @@ public class Category extends TreeEntity<Category> {
 		this.showModes = showModes;
 	}
 
-	@Length(min = 0, max = 1, message = "是否需要审核长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "是否需要审核长度不能超过 1 个字符")
 	public String getIsNeedAudit() {
 		return isNeedAudit;
 	}
@@ -220,7 +220,7 @@ public class Category extends TreeEntity<Category> {
 		this.isNeedAudit = isNeedAudit;
 	}
 
-	@Length(min = 0, max = 1, message = "是否允许评论长度不能超过 1 个字符")
+	@Size(min = 0, max = 1, message = "是否允许评论长度不能超过 1 个字符")
 	public String getIsCanComment() {
 		return isCanComment;
 	}
@@ -229,7 +229,7 @@ public class Category extends TreeEntity<Category> {
 		this.isCanComment = isCanComment;
 	}
 
-	@Length(min = 0, max = 255, message = "自定义列表视图长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "自定义列表视图长度不能超过 255 个字符")
 	public String getCustomListView() {
 		return customListView;
 	}
@@ -238,7 +238,7 @@ public class Category extends TreeEntity<Category> {
 		this.customListView = customListView;
 	}
 
-	@Length(min = 0, max = 255, message = "自定义内容视图长度不能超过 255 个字符")
+	@Size(min = 0, max = 255, message = "自定义内容视图长度不能超过 255 个字符")
 	public String getCustomContentView() {
 		return customContentView;
 	}
@@ -247,7 +247,7 @@ public class Category extends TreeEntity<Category> {
 		this.customContentView = customContentView;
 	}
 
-	@Length(min = 0, max = 1000, message = "视图配置长度不能超过 1000 个字符")
+	@Size(min = 0, max = 1000, message = "视图配置长度不能超过 1000 个字符")
 	public String getViewConfig() {
 		return viewConfig;
 	}

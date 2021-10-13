@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;
@@ -78,7 +78,7 @@ public class Employee extends DataEntity<Employee> {
 		this.empCode = empCode;
 	}
 
-	@Length(min=0, max=100, message="工号长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="工号长度不能超过 100 个字符")
 	public String getEmpNo() {
 		return empNo;
 	}
@@ -87,7 +87,7 @@ public class Employee extends DataEntity<Employee> {
 		this.empNo = empNo;
 	}
 
-	@Length(min=0, max=100, message="名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="名称长度不能超过 100 个字符")
 	public String getEmpName() {
 		return empName;
 	}
@@ -96,7 +96,7 @@ public class Employee extends DataEntity<Employee> {
 		this.empName = empName;
 	}
 	
-	@Length(min=0, max=100, message="英文名长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="英文名长度不能超过 100 个字符")
 	public String getEmpNameEn() {
 		return empNameEn;
 	}

@@ -5,7 +5,7 @@ package com.jeesite.modules.sys.entity;
 
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -94,7 +94,7 @@ public class Office extends TreeEntity<Office> {
 	}
 	
 	@NotBlank(message="机构名称不能为空")
-	@Length(min=0, max=100, message="机构名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="机构名称长度不能超过 100 个字符")
 	public String getOfficeName() {
 		return officeName;
 	}
@@ -104,7 +104,7 @@ public class Office extends TreeEntity<Office> {
 	}
 	
 	@NotBlank(message="机构全称不能为空")
-	@Length(min=0, max=200, message="机构全称长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="机构全称长度不能超过 200 个字符")
 	public String getFullName() {
 		return fullName;
 	}
@@ -114,7 +114,7 @@ public class Office extends TreeEntity<Office> {
 	}
 	
 	@NotBlank(message="机构类型不能为空")
-	@Length(min=0, max=1, message="机构类型长度不能超过 1 个字符")
+	@Size(min=0, max=1, message="机构类型长度不能超过 1 个字符")
 	public String getOfficeType() {
 		return officeType;
 	}
@@ -131,7 +131,7 @@ public class Office extends TreeEntity<Office> {
 		sqlMap.getWhere().and("office_type", QueryType.IN, officeTypes);
 	}
 	
-	@Length(min=0, max=100, message="负责人长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="负责人长度不能超过 100 个字符")
 	public String getLeader() {
 		return leader;
 	}
@@ -140,7 +140,7 @@ public class Office extends TreeEntity<Office> {
 		this.leader = leader;
 	}
 	
-	@Length(min=0, max=100, message="电话长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="电话长度不能超过 100 个字符")
 	public String getPhone() {
 		return phone;
 	}
@@ -149,7 +149,7 @@ public class Office extends TreeEntity<Office> {
 		this.phone = phone;
 	}
 	
-	@Length(min=0, max=255, message="联系地址长度不能超过 255 个字符")
+	@Size(min=0, max=255, message="联系地址长度不能超过 255 个字符")
 	public String getAddress() {
 		return address;
 	}
@@ -158,7 +158,7 @@ public class Office extends TreeEntity<Office> {
 		this.address = address;
 	}
 	
-	@Length(min=0, max=100, message="邮政编码长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="邮政编码长度不能超过 100 个字符")
 	public String getZipCode() {
 		return zipCode;
 	}
@@ -167,7 +167,7 @@ public class Office extends TreeEntity<Office> {
 		this.zipCode = zipCode;
 	}
 	
-	@Length(min=0, max=200, message="邮箱长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="邮箱长度不能超过 200 个字符")
 	public String getEmail() {
 		return email;
 	}

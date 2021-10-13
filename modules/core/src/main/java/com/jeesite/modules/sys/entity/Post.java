@@ -3,7 +3,7 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 
 import com.jeesite.common.entity.BaseEntity;
@@ -48,7 +48,7 @@ public class Post extends DataEntity<Post> {
 	}
 	
 	@NotBlank(message="岗位名称不能为空")
-	@Length(min=0, max=100, message="岗位名称长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="岗位名称长度不能超过 100 个字符")
 	public String getPostName() {
 		return postName;
 	}
@@ -65,7 +65,7 @@ public class Post extends DataEntity<Post> {
 		getSqlMap().getWhere().and("post_name", QueryType.LIKE, roleName);
 	}
 	
-	@Length(min=0, max=100, message="岗位分类长度不能超过 100 个字符")
+	@Size(min=0, max=100, message="岗位分类长度不能超过 100 个字符")
 	public String getPostType() {
 		return postType;
 	}

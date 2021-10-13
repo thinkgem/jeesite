@@ -8,7 +8,7 @@ import java.util.List;
 import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 
 import com.jeesite.common.collect.ListUtils;
@@ -98,7 +98,7 @@ public class Company extends TreeEntity<Company> {
 	}
 	
 	@NotBlank(message="公司名称不能为空")
-	@Length(min=0, max=200, message="公司名称长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="公司名称长度不能超过 200 个字符")
 	public String getCompanyName() {
 		return companyName;
 	}
@@ -108,7 +108,7 @@ public class Company extends TreeEntity<Company> {
 	}
 	
 	@NotBlank(message="公司全称不能为空")
-	@Length(min=0, max=200, message="公司全称长度不能超过 200 个字符")
+	@Size(min=0, max=200, message="公司全称长度不能超过 200 个字符")
 	public String getFullName() {
 		return fullName;
 	}
