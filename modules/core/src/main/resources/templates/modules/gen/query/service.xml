@@ -10,17 +10,13 @@
  */
 package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};
 
-<% if (table.isTreeEntity){ %>
 import java.util.List;
-<% } %>
 <% if (table.childList.~size > 0){ %>
 import org.springframework.beans.factory.annotation.Autowired;
 <% } %>
 import org.springframework.stereotype.Service;
 
-<% if (!table.isTreeEntity){ %>
 import com.jeesite.common.entity.Page;
-<% } %>
 import com.jeesite.common.service.${table.isTreeEntity?'Tree':'Query'}Service;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Dao;
@@ -63,7 +59,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 		return super.get(${className});
 		<% } %>
 	}
-	<% if(!table.isTreeEntity){ %>
 	
 	/**
 	 * 查询分页数据
@@ -75,7 +70,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 	public Page<${ClassName}> findPage(${ClassName} ${className}) {
 		return super.findPage(${className});
 	}
-	<% }else{ %>
 	
 	/**
 	 * 查询列表数据
@@ -86,7 +80,6 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Query'}Ser
 	public List<${ClassName}> findList(${ClassName} ${className}) {
 		return super.findList(${className});
 	}
-	<% } %>
 	<% for (child in table.childList){ %>
 	
 	/**
