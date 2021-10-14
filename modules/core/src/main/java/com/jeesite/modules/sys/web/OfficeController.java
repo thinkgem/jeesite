@@ -238,7 +238,6 @@ public class OfficeController extends BaseController {
 		// 根据父节点过滤数据
 		if (StringUtils.isNotBlank(parentCode)){
 			where.setParentCode(parentCode);
-			where.setParentCodes(","+parentCode+",");
 		}
 		// 根据部门类型过滤数据
 		if (StringUtils.isNotBlank(officeTypes)){
