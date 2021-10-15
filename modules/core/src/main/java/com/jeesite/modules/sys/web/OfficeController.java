@@ -53,7 +53,7 @@ public class OfficeController extends BaseController {
 	}
 
 	/**
-	 * 机构管理主页面
+	 * 机构管理
 	 */
 	@RequiresPermissions("sys:office:view")
 	@RequestMapping(value = "index")

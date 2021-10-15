@@ -54,6 +54,16 @@ public class CompanyController extends BaseController {
 	public Company get(String companyCode, boolean isNewRecord) {
 		return companyService.get(companyCode, isNewRecord);
 	}
+	
+	/**
+	 * 公司管理
+	 */
+	@RequiresPermissions("sys:company:view")
+	@RequestMapping(value = "index")
+	public String index(Company company, Model model) {
+		model.addAttribute("company", company);
+		return "modules/sys/companyIndex";
+	}
 
 	/**
 	 * 公司列表
