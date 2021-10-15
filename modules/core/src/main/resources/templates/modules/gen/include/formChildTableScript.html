@@ -38,14 +38,18 @@ for (c in child.columnList){
 	}
 	// 生成控件样式
 	var cssClass = '';
-	if (c.isNull != '1'){ 
+	if (c.isRequired == '1'){ 
 		cssClass = cssClass + ' required';
 	}
-	if (c.attrType == 'Long' || c.attrType == 'Integer'){ 
-		cssClass = cssClass + ' digits';
-	}
-	if (c.attrType == 'Double'){ 
-		cssClass = cssClass + ' number';
+	var fieldValid = c.optionMap['fieldValid'];
+	if (isNotEmpty(fieldValid)){
+		if (type.name(fieldValid) == 'String[]'){
+			for (var fv in fieldValid){
+				cssClass = cssClass + ' ' + fv;
+			}
+		}else if(isNotBlank(fieldValid)){
+			cssClass = cssClass + ' ' + fieldValid;
+		}
 	}
 	// 输出列字段
 	if(c.showType == 'input'){
