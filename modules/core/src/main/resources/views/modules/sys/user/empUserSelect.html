@@ -31,7 +31,7 @@
 				<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 					<#form:hidden name="status" value="${isNotBlank(empUser.status) ? empUser.status : '0'}" class="isReset"/>
-					<#form:hidden name="isAll" value="${parameter.isAll}" class="isReset"/>
+					<#form:hidden name="isAll" value="${parameter.isAll}" class=""/>
 					<#form:hidden id="postCode" name="employee.postCode" class="isReset"/>
 					<#form:hidden id="roleCode" name="roleCode" class="isReset"/>
 					<#form:hidden id="userType" name="userType" class="isReset"/>
@@ -58,7 +58,7 @@
 						<div class="control-inline width-90">
 							<#form:treeselect id="office" title="${text('机构选择')}"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
-									url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+									url="${ctx}/sys/office/treeData?isAll=${parameter.isAll}" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -139,13 +139,13 @@ var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 	}else{
 		if (!queryType || queryType == 'office'){
 			$('#queryTypeName').text('${text("按组织查询")}');
-			url = "${ctx}/sys/office/treeData?___t=" + new Date().getTime();
+			url = "${ctx}/sys/office/treeData?isAll=${parameter.isAll}&___t=" + new Date().getTime();
 		} else if (queryType == 'post'){
 			$('#queryTypeName').text('${text("按岗位查询")}');
 			url = "${ctx}/sys/post/treeData?___t=" + new Date().getTime();
 		} else if (queryType == 'role'){
 			$('#queryTypeName').text('${text("按角色查询")}');
-			url = "${ctx}/sys/role/treeData?userType=__all&___t=" + new Date().getTime();
+			url = "${ctx}/sys/role/treeData?isAll=${parameter.isAll}&userType=__all&___t=" + new Date().getTime();
 		}
 		js.ajaxSubmit(url, {ctrlPermi:'1'/*1拥有的权限 2管理的权限*/}, function(data){
 			tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);

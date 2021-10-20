@@ -432,9 +432,9 @@ public class EmpUserController extends BaseController {
 			model.addAttribute("selectData", selectDataJson);
 		}
 		// 获取角色列表
-		Role role = new Role();
-		role.setUserType(User.USER_TYPE_MEMBER);
-		model.addAttribute("roleList", roleService.findList(role));
+//		Role role = new Role();
+//		role.setUserType(User.USER_TYPE_MEMBER);
+//		model.addAttribute("roleList", roleService.findList(role));
 		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserSelect";
 	}
