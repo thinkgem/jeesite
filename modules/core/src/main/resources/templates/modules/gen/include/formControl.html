@@ -1,7 +1,7 @@
 <% 
 	var rowFlag = -1, preGridRowCol;
 	for (c in table.columnList){
-		if (c.isEdit == '1'){
+		if (c.isEdit == '1' || c.isPk == '1'){
 			// 如果是树结构的字段，则自动忽略
 			if(table.isTreeEntity && @StringUtils.inStringIgnoreCase(c.columnName, 'parent_code',
 				'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')){
