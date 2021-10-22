@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * @author ThinkGem
  * @version 2016-11-9
  */
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelFields {
 

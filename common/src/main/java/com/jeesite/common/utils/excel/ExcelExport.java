@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -202,6 +203,16 @@ public class ExcelExport implements Closeable{
 	 */
 	public void createSheet(String sheetName, String title, Class<?> cls, Type type, String... groups){
 		this.annotationList = ListUtils.newArrayList();
+		// Get constructor annotation
+		Constructor<?>[] cs = cls.getConstructors();
+		for (Constructor<?> c : cs) {
+			ExcelFields efs = c.getAnnotation(ExcelFields.class);
+			if (efs != null && efs.value() != null){
+				for (ExcelField ef : efs.value()){
+					addAnnotation(annotationList, ef, c, type, groups);
+				}
+			}
+		}
 		// Get annotation field
 		Field[] fs = cls.getDeclaredFields();
 		for (Field f : fs){

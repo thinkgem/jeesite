@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -354,6 +355,16 @@ public class ExcelImport implements Closeable {
 	@SuppressWarnings("unchecked")
 	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws Exception{
 		List<Object[]> annotationList = ListUtils.newArrayList();
+		// Get constructor annotation
+		Constructor<?>[] cs = cls.getConstructors();
+		for (Constructor<?> c : cs) {
+			ExcelFields efs = c.getAnnotation(ExcelFields.class);
+			if (efs != null && efs.value() != null){
+				for (ExcelField ef : efs.value()){
+					addAnnotation(annotationList, ef, c, Type.IMPORT, groups);
+				}
+			}
+		}
 		// Get annotation field 
 		Field[] fs = cls.getDeclaredFields();
 		for (Field f : fs){

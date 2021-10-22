@@ -15,7 +15,7 @@ import com.jeesite.common.utils.excel.fieldtype.FieldType;
  * @author ThinkGem
  * @version 2020-3-5
  */
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
+@Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelField {
 
