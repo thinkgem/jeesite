@@ -5,6 +5,8 @@ package com.jeesite.modules.sys.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.jeesite.common.service.api.TreeServiceApi;
 import com.jeesite.modules.sys.entity.Office;
 
@@ -38,6 +40,13 @@ public interface OfficeService extends TreeServiceApi<Office> {
 	 */
 	@Override
 	public void save(Office office);
+
+	/**
+	 * 导入机构数据
+	 * @param file 导入的用户数据文件
+	 * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
+	 */
+	public String importData(MultipartFile file, Boolean isUpdateSupport);
 
 	/**
 	 * 更新部门状态

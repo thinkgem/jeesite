@@ -6,6 +6,8 @@ package com.jeesite.modules.sys.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,12 +18,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.utils.excel.ExcelExport;
+import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.OfficeService;
@@ -161,6 +167,53 @@ public class OfficeController extends BaseController {
 	public String save(@Validated Office office, String cmd, Model model) {
 		officeService.save(office);
 		return renderResult(Global.TRUE, text("保存机构''{0}''成功", office.getOfficeName()));
+	}
+
+	/**
+	 * 导出机构数据
+	 */
+	@RequiresPermissions("sys:office:view")
+	@RequestMapping(value = "exportData")
+	public void exportData(Office office, Boolean isAll, String ctrlPermi, HttpServletResponse response) {
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
+			officeService.addDataScopeFilter(office, ctrlPermi);
+		}
+		office.getSqlMap().getOrder().setOrderBy("a.tree_sorts");
+		List<Office> list = officeService.findList(office);
+		String fileName = "机构数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
+		try(ExcelExport ee = new ExcelExport("机构数据", Office.class)){
+			ee.setDataList(list).write(response, fileName);
+		}
+	}
+
+	/**
+	 * 下载导入机构数据模板
+	 */
+	@RequiresPermissions("sys:office:view")
+	@RequestMapping(value = "importTemplate")
+	public void importTemplate(HttpServletResponse response) {
+		Office office = new Office();
+		List<Office> list = ListUtils.newArrayList(office);
+		String fileName = "机构数据模板.xlsx";
+		try(ExcelExport ee = new ExcelExport("机构数据", Office.class, Type.IMPORT)){
+			ee.setDataList(list).write(response, fileName);
+		}
+	}
+
+	/**
+	 * 导入机构数据
+	 */
+	@ResponseBody
+	@RequiresPermissions("sys:office:edit")
+	@PostMapping(value = "importData")
+	public String importData(MultipartFile file, String updateSupport) {
+		try {
+			boolean isUpdateSupport = Global.YES.equals(updateSupport);
+			String message = officeService.importData(file, isUpdateSupport);
+			return renderResult(Global.TRUE, "posfull:"+message);
+		} catch (Exception ex) {
+			return renderResult(Global.FALSE, "posfull:"+ex.getMessage());
+		}
 	}
 
 	/**

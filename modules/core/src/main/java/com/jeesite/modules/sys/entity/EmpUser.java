@@ -85,16 +85,7 @@ public class EmpUser extends User {
 	private static final long serialVersionUID = 1L;
 	
 	private String[] codes; // 查询用
-	
-	public EmpUser() {
-		this(null);
-	}
 
-	public EmpUser(String id){
-		super(id);
-	}
-	
-	@Valid
 	@ExcelFields({
 		@ExcelField(title="归属机构", attrName="employee.office", align=Align.CENTER, sort=10, fieldType=OfficeType.class),
 		@ExcelField(title="归属公司", attrName="employee.company", align = Align.CENTER, sort=20, fieldType=CompanyType.class),
@@ -110,6 +101,15 @@ public class EmpUser extends User {
 		@ExcelField(title="建档日期", attrName="createDate", align=Align.CENTER, words=15, sort=900, type=ExcelField.Type.EXPORT, dataFormat="yyyy-MM-dd"),
 		@ExcelField(title="最后登录", attrName="lastLoginDate", align=Align.CENTER, words=20, sort=900, type=ExcelField.Type.EXPORT),
 	})
+	public EmpUser() {
+		this(null);
+	}
+
+	public EmpUser(String id){
+		super(id);
+	}
+	
+	@Valid
 	public Employee getEmployee(){
 		Employee employee = super.getRefObj();
 		if (employee == null){

@@ -10,7 +10,9 @@
 				<a href="#" class="btn btn-default" id="btnRefreshTree" title="${text('刷新')}"><i class="fa fa-refresh"></i> ${text('刷新')}</a>
 				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="${text('展开一级')}"><i class="fa fa-angle-double-down"></i> ${text('展开')}</a>
 				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a>
+				<a href="#" class="btn btn-default" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a>
 				<% if(hasPermi('sys:office:edit')){ %>
+					<a href="#" class="btn btn-default" id="btnImport"><i class="glyphicon glyphicon-import"></i> ${text('导入')}</a>
 					<a href="${ctx}/sys/office/form" class="btn btn-default btnTool" title="${text('新增机构')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
@@ -104,4 +106,61 @@ $('#dataGrid').dataGrid({
 		}
 	}
 });
+$('#btnExport').click(function(){
+	js.ajaxSubmitForm($('#searchForm'), {
+		url:'${ctx}/sys/office/exportData',
+		downloadFile:true
+	});
+});
+$('#btnImport').click(function(){
+	js.layer.open({
+		type: 1,
+		area: ['400px'],
+		title: '${text("导入机构数据")}',
+		resize: false,
+		scrollbar: true,
+		content: js.template('importTpl'),
+		success: function(layero, index){
+			layero.find('input[type="checkbox"]').iCheck();
+		},
+		btn: ['<i class="fa fa-check"></i> ${text("导入")}',
+			'<i class="fa fa-remove"></i> ${text("关闭")}'],
+		btn1: function(index, layero){
+			var form = {
+				inputForm: layero.find('#inputForm'),
+				file: layero.find('#file').val()
+			};
+		    if (form.file == '' || (!js.endWith(form.file, '.xls') && !js.endWith(form.file, '.xlsx'))){
+		    	js.showMessage("${text('文件不正确，请选择后缀为“xls”或“xlsx”的文件。')}", null, 'warning');
+		        return false;
+		    }
+			js.ajaxSubmitForm(form.inputForm, function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.layer.closeAll();
+				}
+				page();
+			}, "json");
+			return true;
+		}
+	});
+});
 </script>
+<script id="importTpl" type="text/template">//<!--
+<form id="inputForm" action="${ctx}/sys/office/importData" method="post" enctype="multipart/form-data"
+	class="form-horizontal mt20 mb10" style="overflow:auto;max-height:200px;">
+	<div class="row">
+		<div class="col-xs-12 col-xs-offset-1">
+			<input type="file" id="file" name="file" class="form-file"/>
+			<div class="mt10 pt5">
+				<#form:checkbox name="updateSupport" label="${text('是否更新已经存在的机构数据')}" class="form-control"
+					title="${text('如果机构编码已经存在，更新这条数据。')}"/> &nbsp;
+				<a href="${ctx}/sys/office/importTemplate" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> ${text('下载模板')}</a>
+			</div>
+			<font color="red" class="pull-left mt10">
+				${text('提示：仅允许导入“xls”或“xlsx”格式文件！')}
+			</font>
+		</div>
+	</div>
+</form>
+//--></script>

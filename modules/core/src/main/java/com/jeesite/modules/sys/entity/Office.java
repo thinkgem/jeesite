@@ -3,10 +3,9 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import javax.validation.constraints.Pattern;
-
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jeesite.common.entity.BaseEntity;
@@ -16,6 +15,9 @@ import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.common.utils.excel.annotation.ExcelField;
+import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
+import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.modules.sys.utils.EmpUtils;
 
 /**
@@ -38,7 +40,7 @@ import com.jeesite.modules.sys.utils.EmpUtils;
 		@Column(name="zip_code", 	attrName="zipCode", 	label="邮政编码", queryType=QueryType.LIKE),
 		@Column(name="email", 		attrName="email", 		label="邮箱", queryType=QueryType.LIKE),
 		@Column(includeEntity=Extend.class, attrName="extend"),
-	}, extWhereKeys="dsf", orderBy="a.tree_sort, a.office_code"
+	}, extWhereKeys="dsf", orderBy="a.tree_sorts, a.office_code"
 )
 public class Office extends TreeEntity<Office> {
 	
@@ -56,7 +58,19 @@ public class Office extends TreeEntity<Office> {
 	private Extend extend;		// 扩展字段
 
 	private String companyCode; // 根据公司查询机构，组织机构所属公司
-	
+
+	@ExcelFields({
+		@ExcelField(title="上级编码", attrName="parentCode", align=Align.LEFT, sort=10),
+		@ExcelField(title="机构编码", attrName="officeCode", align=Align.LEFT, sort=20),
+		@ExcelField(title="显示编码", attrName="viewCode", align = Align.LEFT, sort=30),
+		@ExcelField(title="机构名称", attrName="officeName", align=Align.LEFT, sort=40),
+		@ExcelField(title="机构全称", attrName="fullName", align=Align.LEFT, sort=50),
+		@ExcelField(title="机构类型", attrName="officeType", align=Align.CENTER, sort=60, dictType="sys_office_type"),
+		@ExcelField(title="负责人", attrName="leader", align=Align.CENTER, sort=70),
+		@ExcelField(title="电话", attrName="phone", align=Align.CENTER, sort=80),
+		@ExcelField(title="联系地址", attrName="address", align=Align.CENTER, sort=90),
+		@ExcelField(title="邮箱", attrName="email", align=Align.CENTER, sort=90),
+	})
 	public Office() {
 		this(null);
 	}
@@ -74,7 +88,7 @@ public class Office extends TreeEntity<Office> {
 	public void setParent(Office parent) {
 		this.parent = parent;
 	}
-	
+
 	public String getOfficeCode() {
 		return officeCode;
 	}
