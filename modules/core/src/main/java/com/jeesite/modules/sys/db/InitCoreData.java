@@ -506,7 +506,7 @@ public class InitCoreData extends BaseInitDataTests {
 						){
 					column.setQueryType("LIKE");
 					column.getOptionMap().put("isNewLine", Global.YES);
-					column.getOptionMap().put("gridRowCol", "12/2/10");
+//					column.getOptionMap().put("gridRowCol", "12/2/10");
 				}
 				else if ("test_select".equals(column.getColumnName())
 						|| "test_select_multiple".equals(column.getColumnName())

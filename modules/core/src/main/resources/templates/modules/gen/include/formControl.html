@@ -1,5 +1,12 @@
 <% 
-	var rowFlag = -1, preGridRowCol;
+	var rowFlag = -1, preGridRowCol, txtGridRowCol;
+	if (table.optionMap['formColNum'] == "1") {
+		txtGridRowCol = ['col-xs-12', 'col-sm-2', 'col-sm-8'];
+	} else if (table.optionMap['formColNum'] == "3") {
+		txtGridRowCol = ['col-xs-12', 'col-sm-2 col-sm-9-1', 'col-sm-10 col-sm-9-8'];
+	} else {
+		txtGridRowCol = ['col-xs-12', 'col-sm-2', 'col-sm-10'];
+	}
 	for (c in table.columnList){
 		if (c.isEdit == '1' || c.isPk == '1'){
 			// 如果是树结构的字段，则自动忽略
@@ -15,13 +22,15 @@
 			// 输出表单字段
 			else{
 				// 栅格参数获取
-				var gridRowCol = @StringUtils.split(c.optionMap['gridRowCol'], '/');
-				if (isBlank(gridRowCol) || gridRowCol.~size != 3){
-					if (c.showType == 'textarea'){
-						gridRowCol = @StringUtils.split('12/2/10', '/');
-					}else{
-						gridRowCol = @StringUtils.split('6/4/8', '/');
-					}
+				var gridRowCol = null;
+				if (c.showType == 'textarea') {
+					gridRowCol = txtGridRowCol;
+				} else if (table.optionMap['formColNum'] == "1") {
+					gridRowCol = ['col-xs-12', 'col-sm-2', 'col-sm-4'];
+				} else if (table.optionMap['formColNum'] == "3") {
+					gridRowCol = ['col-xs-4', 'col-sm-4', 'col-sm-8'];
+				} else {
+					gridRowCol = ['col-xs-6', 'col-sm-4', 'col-sm-8'];
 				}
 				// 是否强制新行获取，生成字段界面用户设定的
 				var isNewLine = @Global.YES.equals(c.optionMap['isNewLine']);
@@ -31,7 +40,7 @@
 					}
 				}
 				// 如果上一个控件占12列，则强制新行算了
-				if (isNotEmpty(preGridRowCol) && preGridRowCol[0] == '12'){
+				if (isNotEmpty(preGridRowCol) && preGridRowCol[0] == 'col-xs-12'){
 					isNewLine = true;
 				}
 				// 保存上一个控件输出栅格对象
@@ -71,11 +80,11 @@
 				}
 				// 开始输出控件
 %>
-					<div class="col-xs-${gridRowCol[0]}">
+					<div class="${gridRowCol[0]}">
 						<div class="form-group">
-							<label class="control-label col-sm-${gridRowCol[1]}" title="">
+							<label class="control-label ${gridRowCol[1]}" title="">
 								<span class="required ${c.isNull == '1' ? 'hide' : ''}">*</span> \${text('${c.columnLabel}')}：<i class="fa icon-question hide"></i></label>
-							<div class="col-sm-${gridRowCol[2]}">
+							<div class="${gridRowCol[2]}">
 								<%
 								var attrs = '';
 								if (c.dataLength != '0'){
@@ -171,11 +180,11 @@
 	if(toBoolean(table.optionMap['isImageUpload'])){
 %>
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="${txtGridRowCol[0]}">
 						<div class="form-group">
-							<label class="control-label col-sm-2">
+							<label class="control-label ${txtGridRowCol[1]}">
 								<span class="required hide">*</span> \${text('图片上传')}：</label>
-							<div class="col-sm-10">
+							<div class="${txtGridRowCol[2]}">
 								<${'#'}form:fileupload id="uploadImage" bizKey="\${${className}.id}" bizType="${className}_image"
 									uploadType="image" class="" readonly="false" preview="true"/>
 							</div>
@@ -188,11 +197,11 @@
 	if(toBoolean(table.optionMap['isFileUpload'])){
 %>
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="${txtGridRowCol[0]}">
 						<div class="form-group">
-							<label class="control-label col-sm-2">
+							<label class="control-label ${txtGridRowCol[1]}">
 								<span class="required hide">*</span> \${text('附件上传')}：</label>
-							<div class="col-sm-10">
+							<div class="${txtGridRowCol[2]}">
 								<${'#'}form:fileupload id="uploadFile" bizKey="\${${className}.id}" bizType="${className}_file"
 									uploadType="all" class="" readonly="false" preview="true"/>
 							</div>
