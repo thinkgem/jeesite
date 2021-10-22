@@ -341,7 +341,7 @@ public class EmpUserController extends BaseController {
 			return renderResult(Global.FALSE, text("删除用户失败，不允许删除当前用户"));
 		}
 		empUserService.delete(empUser);
-		return renderResult(Global.TRUE, text("删除用户'{0}'成功", empUser.getUserName()));
+		return renderResult(Global.TRUE, text("删除用户''{0}''成功", empUser.getUserName()));
 	}
 	
 	/** 
