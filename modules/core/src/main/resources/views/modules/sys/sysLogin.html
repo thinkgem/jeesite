@@ -5,8 +5,10 @@
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysLogin.css?${_version}">
 <div class="login-box" style="margin:7% auto 300px auto;">
 	<div class="login-logo">
-		<a href="${ctxAdmin}/login"><b>${@Global.getConfig('productName')}</b>
-			<small>${@Global.getConfig('productVersion')}</small></a>
+		<a href="${ctxAdmin}/login">
+			<b>${@Global.getConfig('productNamePrefix')}${@Global.getConfig('productName')}</b>
+			<small>${@Global.getConfig('productVersion')}</small>
+		</a>
 	</div>
 	<div class="login-box-body">
 		<% var isLoginByValidCode = @Global.getConfigToBoolean('user.loginByValidCode', 'true'); %>
