@@ -53,6 +53,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.1、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.3（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.1、zTree 3.5、jQuery Validation
+* 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌浏览器、火狐浏览器、国产浏览器 等
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 
