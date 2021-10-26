@@ -5,7 +5,7 @@ var sidebarCollapse = (sidebarStyle == '2' ? 'sidebar-collapse' : '');
 var bodyClass = 'fixed noscroll2 sidebar-mini ' + sidebarCollapse;
 %>
 <% layout('/layouts/default.html', {title: '', bodyClass: bodyClass, libs: ['tabPage']}){ %>
-<% include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 %>
+<!--[if lte IE 8]><script>window.location.href='${ctxStatic}/upbw/index.html';</script><![endif]-->
 <link rel="stylesheet" href="${ctxStatic}/jquery-toastr/2.1/toastr.min.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/modules/sys/sysIndex.css?${_version}">
 <header class="main-header">
