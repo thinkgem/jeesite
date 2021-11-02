@@ -25,8 +25,8 @@ server:
     context-path: /js
   tomcat:
     uri-encoding: UTF-8
-#    # 表单请求数据的最大大小
-#    max-http-form-post-size: 20M
+    # 表单请求数据的最大大小
+    max-http-form-post-size: 20MB
 #    # 进程的最大连接数
 #    max-connections: 8192
 #    # 连接数满后的排队个数
