@@ -145,13 +145,14 @@ public class Employee extends DataEntity<Employee> {
 		this.employeePostList = employeePostList;
 	}
 
-	public String[] getEmployeePosts() {
+	public String getEmployeePosts() {
 		List<String> list = ListUtils.extractToList(employeePostList, "postCode");
-		return list.toArray(new String[list.size()]);
+		return StringUtils.join(list, ",");
 	}
 
-	public void setEmployeePosts(String[] employeePosts) {
-		for (String val : employeePosts){
+	public void setEmployeePosts(String employeePosts) {
+		String[] list = StringUtils.split(employeePosts, ",");
+		for (String val : list){
 			if (StringUtils.isNotBlank(val)){
 				EmployeePost e = new EmployeePost();
 				e.setPostCode(val);

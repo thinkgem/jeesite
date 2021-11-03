@@ -380,7 +380,7 @@ public class InitCoreData extends BaseInitDataTests {
 						entity.setUserRoleString(val);
 						return true;
 					}else if ("employee.employeePosts".equals(header)){
-						entity.getEmployee().setEmployeePosts(new String[]{val});
+						entity.getEmployee().setEmployeePosts(val);
 						return true;
 					}
 				}
