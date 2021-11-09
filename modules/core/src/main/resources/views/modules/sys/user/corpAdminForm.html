@@ -175,8 +175,6 @@ $('#corpCode_').change(function(){
 var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
 	postData: [
-<%// 	{name:'userType',value:'employee'}, // 指定用户类型的角色 %>
-<%// 	{name:'ctrlPermi',value:'${@Global.getConfig("user.adminCtrlPermi", "2")}'} 		// 过滤可管理的角色 %>
 		{name:'isAll',value:'true'} 	<%  // 显示所有角色（与上方两个条件互斥） %>
 	],
 	columnModel: [

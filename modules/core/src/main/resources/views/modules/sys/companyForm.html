@@ -19,7 +19,7 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="parent" title="${text('上级公司')}"
 									path="parent.id" labelPath="parent.companyName" 
-									url="${ctx}/sys/company/treeData?excludeCode=${company.id}&ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									url="${ctx}/sys/company/treeData?excludeCode=${company.id}&ctrlPermi=${ctrlPermi}"
 									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>

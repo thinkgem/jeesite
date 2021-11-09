@@ -25,7 +25,7 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="office" title="${text('机构选择')}"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
-									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									url="${ctx}/sys/office/treeData?ctrlPermi=${ctrlPermi}"
 									class="required" allowClear="false" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="company" title="${text('公司选择')}"
 									path="employee.company.companyCode" labelPath="employee.company.companyName" 
-									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									url="${ctx}/sys/company/treeData?ctrlPermi=${ctrlPermi}"
 									btnClass="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
@@ -273,7 +273,7 @@ var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
 	postData: [
 		{name:'userType',value:'employee'},
-		{name:'ctrlPermi',value:'${@Global.getConfig("user.adminCtrlPermi", "2")}'}
+		{name:'ctrlPermi',value:'${ctrlPermi}'}
 	],
 	columnModel: [
 		{header:'${text("角色名称")}', name:'name', sortable:false, width:100, align:"center"},

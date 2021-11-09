@@ -110,8 +110,8 @@ var setting = {
 		onCheck: function (event, treeId, treeNode){ }
 	}
 },
-moduleCodes = '${toJson(@ModuleUtils.getEnableModuleCodes())}';
-dataScopes = ${@Global.getConfig('user.dataScopes','[]')},
+moduleCodes = '${toJson(moduleCodes)}';
+dataScopes = ${toJson(dataScopes)},
 dataScopeTrees = {}; // 用sysCode分类存储所有菜单树
 for (var i=0; i<dataScopes.length; i++){
 	var dataScope = dataScopes[i];
@@ -129,7 +129,7 @@ for (var i=0; i<dataScopes.length; i++){
 	$.ajax({
 		type: 'POST',
 		url: "${ctx}" + ctrlDataUrl + (ctrlDataUrl.indexOf("?")!=-1?'&':'?') + "___t=" + new Date().getTime(),
-		data: {ctrlPermi: '${@Global.getConfig("user.adminCtrlPermi", "2")}'},
+		data: {ctrlPermi: '${ctrlPermi}'},
 		dataType: 'json',
 		async: false,
 		error: function(data){

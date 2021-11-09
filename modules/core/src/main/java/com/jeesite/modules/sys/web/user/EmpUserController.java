@@ -33,6 +33,7 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
@@ -49,6 +50,7 @@ import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -81,6 +83,7 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "index")
 	public String index(EmpUser empUser, Model model) {
 		model.addAttribute("empUser", empUser);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/user/empUserIndex";
 	}
 	
@@ -95,6 +98,8 @@ public class EmpUserController extends BaseController {
 		Post post = new Post();
 		model.addAttribute("postList", postService.findList(post));
 		model.addAttribute("empUser", empUser);
+		// 获取控制权限类型
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/user/empUserList";
 	}
 
@@ -148,9 +153,13 @@ public class EmpUserController extends BaseController {
 			model.addAttribute("roleList", roleService.findListByUserCode(role));
 
 		}
+		
 		// 操作类型：add: 全部； edit: 编辑； auth: 授权
 		model.addAttribute("op", op);
 		model.addAttribute("empUser", empUser);
+		
+		// 获取控制权限类型
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/user/empUserForm";
 	}
 
@@ -356,6 +365,9 @@ public class EmpUserController extends BaseController {
 		List<UserDataScope> userDataScopeList = userService.findDataScopeList(userDataScope);
 		model.addAttribute("userDataScopeList", userDataScopeList);
 		model.addAttribute("empUser", empUser);
+		model.addAttribute("moduleCodes", ModuleUtils.getEnableModuleCodes());
+		model.addAttribute("dataScopes", JsonMapper.fromJson(Global.getConfig("user.dataScopes", "[]"), List.class));
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/user/empUserFormAuthDataScope";
 	}
 	

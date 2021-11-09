@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.entity.UserDataScope;
 import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.utils.ModuleUtils;
 
 /**
  * 二级管理员Controller
@@ -48,6 +50,7 @@ public class SecAdminController extends BaseController {
 	@RequestMapping(value = "list")
 	public String list(User user, Model model) {
 		model.addAttribute("user", user);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/user/secAdminList";
 	}
 
@@ -70,6 +73,9 @@ public class SecAdminController extends BaseController {
 		List<UserDataScope> userDataScopeList = userService.findDataScopeList(userDataScope);
 		model.addAttribute("userDataScopeList", userDataScopeList);
 		model.addAttribute("user", user);
+		model.addAttribute("moduleCodes", ModuleUtils.getEnableModuleCodes());
+		model.addAttribute("dataScopes", JsonMapper.fromJson(Global.getConfig("user.dataScopes", "[]"), List.class));
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/user/secAdminForm";
 	}
 

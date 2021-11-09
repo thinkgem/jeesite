@@ -65,6 +65,7 @@ public class OfficeController extends BaseController {
 	@RequestMapping(value = "index")
 	public String index(Office office, Model model) {
 		model.addAttribute("office", office);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/officeIndex";
 	}
 
@@ -76,6 +77,7 @@ public class OfficeController extends BaseController {
 	@RequestMapping(value = "list")
 	public String list(Office office, Model model) {
 		model.addAttribute("office", office);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/officeList";
 	}
 	
@@ -125,6 +127,7 @@ public class OfficeController extends BaseController {
 			}
 		}
 		model.addAttribute("office", office);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/officeForm";
 	}
 	

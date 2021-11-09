@@ -45,7 +45,7 @@ var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{
 	}}
 }, tree, loadTree = function(){
 	js.ajaxSubmit("${ctx}/sys/office/treeData?___t=" + new Date().getTime(),
-			{ctrlPermi:'${@Global.getConfig("user.adminCtrlPermi", "2")}'/*1拥有的权限 2管理的权限*/}, function(data){
+			{ctrlPermi:'${ctrlPermi}'/*1拥有的权限 2管理的权限*/}, function(data){
 		tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
 		// 展开第一级节点
 		var nodes = tree.getNodesByParam("level", 0);

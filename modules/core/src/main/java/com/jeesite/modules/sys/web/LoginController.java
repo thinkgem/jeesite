@@ -4,6 +4,7 @@
 package com.jeesite.modules.sys.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -288,7 +289,7 @@ public class LoginController extends BaseController{
 	}
 	
 	/**
-	 * 当前用户权限字符串数据（移动端用）
+	 * 当前用户权限字符串数据
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "authInfo")
@@ -298,7 +299,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * 当前用户菜单数据（移动端用）
+	 * 当前用户菜单列表数据
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "menuTree")
@@ -306,6 +307,16 @@ public class LoginController extends BaseController{
 	@JsonView(Menu.SimpleView.class)
 	public List<Menu> menuTree(String parentCode) {
 		return UserUtils.getMenuTreeByParentCode(parentCode);
+	}
+
+	/**
+	 * 当前用户菜单路由数据
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "menuRoute")
+	@ResponseBody
+	public List<Map<String, Object>> menuRoute(String parentCode) {
+		return UserUtils.getMenuRouteByParentCode(parentCode);
 	}
 
 	/**

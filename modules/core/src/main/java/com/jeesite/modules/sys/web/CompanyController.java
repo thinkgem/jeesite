@@ -62,6 +62,7 @@ public class CompanyController extends BaseController {
 	@RequestMapping(value = "index")
 	public String index(Company company, Model model) {
 		model.addAttribute("company", company);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/companyIndex";
 	}
 
@@ -73,6 +74,7 @@ public class CompanyController extends BaseController {
 	@RequestMapping(value = "list")
 	public String list(Company company, Model model) {
 		model.addAttribute("company", company);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/companyList";
 	}
 
@@ -114,6 +116,7 @@ public class CompanyController extends BaseController {
 			model.addAttribute("officeList", officeList);
 		}
 		model.addAttribute("company", company);
+		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));
 		return "modules/sys/companyForm";
 	}
 	

@@ -4,7 +4,7 @@
 		<div class="box box-main">
 			<div class="box-header">
 				<div class="box-title">
-					<i class="fa icon-grid"></i> ${text('公司')}
+					<i class="fa icon-grid"></i> ${text('公司管理')}
 				</div>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" id="btnExpand" title="${text('展开')}" style="display:none;"><i class="fa fa-chevron-up"></i></button>
@@ -36,11 +36,12 @@ var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
 		//win.$('button[type=reset]').click();
-		win.$('#menuCode').val(treeNode.id);
+		win.$('#companyCode').val(treeNode.id);
 		win.page();
 	}}
 }, tree, loadTree = function(){
-	js.ajaxSubmit("${ctx}/sys/company/treeData?___t=" + new Date().getTime(), function(data){
+	js.ajaxSubmit("${ctx}/sys/company/treeData?___t=" + new Date().getTime(), 
+			{ctrlPermi:'${ctrlPermi}'/*1拥有的权限 2管理的权限*/}, function(data){
 		tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
 		// 展开第一级节点
 		var nodes = tree.getNodesByParam("level", 0);

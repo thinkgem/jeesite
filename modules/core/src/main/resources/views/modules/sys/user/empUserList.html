@@ -28,7 +28,7 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${empUser}" action="${ctx}/sys/empUser/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<#form:hidden name="ctrlPermi" value="${@Global.getConfig('user.adminCtrlPermi', '2')}"/>
+				<#form:hidden name="ctrlPermi" value="${ctrlPermi}"/>
 				<div class="form-group">
 					<label class="control-label">${text('账号')}：</label>
 					<div class="control-inline">
@@ -71,7 +71,7 @@
 						<div class="control-inline width-90">
 							<#form:treeselect id="office" title="${text('机构选择')}"
 									path="employee.office.officeCode" labelPath="employee.office.officeName" 
-									url="${ctx}/sys/office/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									url="${ctx}/sys/office/treeData?ctrlPermi=${ctrlPermi}"
 									btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 						</div>
 					</div>
@@ -80,7 +80,7 @@
 						<div class="control-inline width-90">
 							<#form:treeselect id="company" title="${text('公司选择')}"
 									path="employee.company.companyCode" labelPath="employee.company.companyName" 
-									url="${ctx}/sys/company/treeData?ctrlPermi=${@Global.getConfig('user.adminCtrlPermi', '2')}"
+									url="${ctx}/sys/company/treeData?ctrlPermi=${ctrlPermi}"
 									btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 						</div>
 					</div>

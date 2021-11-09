@@ -13,7 +13,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<% if(@Global.getConfig('user.adminCtrlPermi', '2') == '1'){ %>
+			<% if(ctrlPermi == '1'){ %>
 			<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<p><i class="icon fa fa-info"></i> 当前二级管理员的控制权限类型为拥有的权限。你可以在用户管理里设置数据权限和角色管理设置数据权限。

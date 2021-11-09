@@ -19,7 +19,8 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${company}" action="${ctx}/sys/company/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
-				<#form:hidden name="ctrlPermi" value="${@Global.getConfig('user.adminCtrlPermi', '2')}"/>
+				<#form:hidden name="ctrlPermi" value="${ctrlPermi}"/>
+				<#form:hidden path="companyCode" class="isReset"/>
 				<div class="form-group">
 					<label class="control-label">${text('公司代码')}：</label>
 					<div class="control-inline">
@@ -89,7 +90,10 @@ $('#dataGrid').dataGrid({
 	defaultExpandLevel: 0,	// 默认展开的层次
 	expandNodeClearPostData: 'viewCode,companyName,fullName,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+		if ($('#companyCode').val() != ''){
+			$('#companyCode').val('');
+			$('#btnExpandTreeNode').click();
+		}
 	}
 });
 </script>
