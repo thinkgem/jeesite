@@ -1,15 +1,20 @@
 <% layout('/layouts/default.html', {title: '访问日志', libs: ['dataGrid']}){ %>
 <div class="main-content">
-	<div class="box box-main">
+	<div class="box box-main nav-tabs-custom nav-main">
 		<div class="box-header">
-			<div class="box-title">
-				<i class="fa fa-bug"></i> ${text('访问日志')}
-			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
+		<ul class="nav nav-tabs">
+			<li class="${isBlank(parameter.logType) ? 'active' : ''}"><a href="${
+				ctx}/sys/log/list?logType="><i class="fa fa-bug"></i> ${text('访问日志')}</a></li>
+			<% var sysLogType = @DictUtils.getDictList('sys_log_type'); for(var dict in sysLogType){ %>
+			<li class="${parameter.logType! == dict.dictValue ? 'active' : ''}"><a href="${
+				ctx}/sys/log/list?logType=${dict.dictValue}">${dict.dictLabel}</a></li>
+			<% } %>
+		</ul>
 		<div class="box-body">
 			<#form:form id="searchForm" model="${log}" action="${ctx}/sys/log/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
