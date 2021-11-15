@@ -248,6 +248,7 @@ public class CompanyController extends BaseController {
 			if ("true".equals(isShowFullName) || "1".equals(isShowFullName)){
 				name = e.getFullName();
 			}
+			map.put("code", e.getViewCode());
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getViewCode(), name));
 			map.put("title", e.getFullName());
 			mapList.add(map);

@@ -147,7 +147,8 @@ public class PostController extends BaseController {
 			Map<String, Object> map = MapUtils.newHashMap();
 			map.put("id", e.getId());
 			map.put("pId", "0");
-			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getPostCode(), e.getPostName()));
+			map.put("code", e.getViewCode());
+			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getViewCode(), e.getPostName()));
 			mapList.add(map);
 		});
 		return mapList;

@@ -51,6 +51,10 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	@Override
 	@Transactional(readOnly=false)
 	public void save(Post post) {
+		if (post.getIsNewRecord()){
+			// 生成主键，并验证改主键是否存在，如存在则抛出验证信息
+			genIdAndValid(post, post.getViewCode());
+		}
 		super.save(post);
 	}
 

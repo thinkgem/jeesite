@@ -322,6 +322,7 @@ public class OfficeController extends BaseController {
 			if ("true".equals(isShowFullName) || "1".equals(isShowFullName)){
 				name = e.getFullName();
 			}
+			map.put("code", e.getViewCode());
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getViewCode(), name));
 			map.put("title", e.getFullName());
 			// 如果需要加载用户，则处理用户数据

@@ -5,6 +5,7 @@ package com.jeesite.modules.sys.entity;
 
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
@@ -16,6 +17,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
 		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
+		@Column(name="view_code", attrName="viewCode", label="岗位代码"),
 		@Column(name="post_name", attrName="postName", label="岗位名称"),
 		@Column(name="post_type", attrName="postType", label="岗位分类", comment="岗位分类（高管、中层、基层）"),
 		@Column(name="post_sort", attrName="postSort", label="岗位排序", comment="岗位排序（升序）"),
@@ -25,6 +27,7 @@ public class Post extends DataEntity<Post> {
 	
 	private static final long serialVersionUID = 1L;
 	private String postCode;		// 岗位编码
+	private String viewCode;		// 岗位代码（作为显示用，多租户内唯一）
 	private String postName;		// 岗位名称
 	private String postType;		// 岗位分类（高管、中层、基层）
 	private Integer postSort;		// 岗位排序（升序）
@@ -45,6 +48,16 @@ public class Post extends DataEntity<Post> {
 
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
+	}
+	
+	@NotBlank(message="岗位代码不能为空")
+	@Pattern(regexp="[a-zA-Z0-9_]{0,30}", message="代码长度不能大于 30 个字符，并且只能包含字母、数字、下划线")
+	public String getViewCode() {
+		return viewCode;
+	}
+
+	public void setViewCode(String viewCode) {
+		this.viewCode = viewCode;
 	}
 	
 	@NotBlank(message="岗位名称不能为空")

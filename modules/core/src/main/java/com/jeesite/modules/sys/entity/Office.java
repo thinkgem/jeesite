@@ -98,7 +98,7 @@ public class Office extends TreeEntity<Office> {
 	}
 	
 	@NotBlank(message="机构代码不能为空")
-	@Pattern(regexp="[a-zA-Z0-9_]{0,30}", message="编码长度不能大于 30 个字符，并且只能包含字母、数字、下划线")
+	@Pattern(regexp="[a-zA-Z0-9_]{0,30}", message="代码长度不能大于 30 个字符，并且只能包含字母、数字、下划线")
 	public String getViewCode() {
 		return viewCode;
 	}
