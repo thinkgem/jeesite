@@ -32,6 +32,7 @@ import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.shiro.realm.AuthorizingRealm;
@@ -425,7 +426,7 @@ public class EmpUserController extends BaseController {
 		for (int i = 0; i < list.size(); i++) {
 			EmpUser e = list.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
-			map.put("id", StringUtils.defaultIfBlank(idPrefix, "u_") + e.getId());
+			map.put("id", ObjectUtils.defaultIfNull(idPrefix, "u_") + e.getId());
 			map.put("pId", StringUtils.defaultIfBlank(pId, "0"));
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getLoginCode(), e.getUserName()));
 			mapList.add(map);

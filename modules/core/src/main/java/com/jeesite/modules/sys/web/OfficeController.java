@@ -283,7 +283,7 @@ public class OfficeController extends BaseController {
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, Boolean isAll,
 			String officeTypes, String companyCode, String isShowCode, String isShowFullName,
-			String isLoadUser, String postCode, String roleCode, String ctrlPermi) {
+			String isLoadUser, String userIdPrefix, String postCode, String roleCode, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		Office where = new Office();
 		where.setStatus(Office.STATUS_NORMAL);
@@ -331,8 +331,8 @@ public class OfficeController extends BaseController {
 				// 一次性后台加载用户，若数据量比较大，建议使用懒加载
 				if (StringUtils.equals(isLoadUser, "true")) {
 					List<Map<String, Object>> userList = 
-							empUserController.treeData("u_", e.getOfficeCode(), e.getOfficeCode(), 
-									companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
+						empUserController.treeData(userIdPrefix, e.getOfficeCode(), e.getOfficeCode(), 
+								companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
 					mapList.addAll(userList);
 				}
 			}
