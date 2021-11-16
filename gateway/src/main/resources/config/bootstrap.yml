@@ -5,7 +5,7 @@
 
 server:
 
-  port: 1980
+  port: 8980
   servlet:
     context-path: /js
   tomcat:
