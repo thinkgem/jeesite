@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>docker-bulid</name>
 	<filePath>${module.moduleCode}/${module.moduleCode}/bin</filePath>
@@ -8,6 +9,7 @@
 	<content><![CDATA[@echo off
 rem /**
 rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+rem  * No deletion without permission, or be held responsible to law.
 rem  *
 rem  * Author: ThinkGem@163.com
 rem  */

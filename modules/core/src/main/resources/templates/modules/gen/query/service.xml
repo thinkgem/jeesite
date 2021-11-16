@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>service</name>
 	<filePath>src/main/java/${packageName}/${moduleName}/service/${subModuleName}</filePath>
 	<fileName>${ClassName}Service.java</fileName>
 	<content><![CDATA[
-/**
- * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
- */
 package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};
 
 import java.util.List;
