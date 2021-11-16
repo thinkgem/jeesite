@@ -1,6 +1,7 @@
 @echo off
 rem /**
 rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+rem  * No deletion without permission, or be held responsible to law.
 rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
@@ -28,5 +29,4 @@ set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m"
 call mvn test -Dmaven.test.skip=false -Dtest=com.jeesite.test.InitData
 
 cd bin
-cmd /c msg %username% /time:0 /w "初始化数据库完成..."
 pause
