@@ -101,11 +101,12 @@
 								}
 								var fieldValid = c.optionMap['fieldValid'];
 								if (isNotEmpty(fieldValid)){
-									if (type.name(fieldValid) == 'String[]'){
+									var t = type.name(fieldValid);
+									if (t == 'String[]' || t == 'ArrayList'){
 										for (var fv in fieldValid){
 											cssClass = cssClass + ' ' + fv;
 										}
-									}else if(isNotBlank(fieldValid)){
+									}else if(t == 'String' && isNotBlank(fieldValid)){
 										cssClass = cssClass + ' ' + fieldValid;
 									}
 								}
