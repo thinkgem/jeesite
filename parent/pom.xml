@@ -20,7 +20,7 @@
 	<properties>
 		
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
 		<nacos.version>1.4.2</nacos.version><!-- 若使用 gRPC 版本号改为 2.0.3 -->
 		<seata.version>1.4.2</seata.version>
