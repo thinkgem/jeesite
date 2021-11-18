@@ -25,7 +25,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud 2020.0.3 + Alibaba 2021.1
+* 分布式系统套件版本：Spring Cloud 2020.0.4 + Alibaba 2021.1
 * 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.0
 * 分布式统一配置中心：Spring Cloud Config / Nacos 2.0
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
