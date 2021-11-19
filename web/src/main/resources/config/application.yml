@@ -505,6 +505,10 @@ shiro:
 ##  logoutUrl: ${shiro.casServerUrl}/logout?service=${shiro.loginUrl}
 ##  successUrl: ${shiro.casClientUrl}${adminPath}/index
 #
+##  # LDAP 相关设置（标准版）
+##  ldapUrl: ldap://127.0.0.1:389
+##  ldapUserDn: uid={0},ou=users,dc=mycompany,dc=com
+#
 #  # 简单 SSO 登录相关配置
 #  sso:
 #    # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
