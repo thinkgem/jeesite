@@ -394,7 +394,6 @@ public class EmpUserController extends BaseController {
 	/**
 	 * 根据机构查询用户树格式
 	 * @param idPrefix id前缀，默认 u_
-	 * @param pId 父级编码，默认 0
 	 * @param officeCode 机构Code
 	 * @param companyCode 公司Code
 	 * @param postCode 岗位Code
@@ -406,13 +405,17 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String idPrefix, String pId,
-			String officeCode, String companyCode, String postCode, String roleCode, 
+	public List<Map<String, Object>> treeData(String idPrefix,
+			String[] officeCode, String companyCode, String postCode, String roleCode, 
 			Boolean isAll, String isShowCode, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		EmpUser empUser = new EmpUser();
 		Employee employee = empUser.getEmployee();
-		employee.getOffice().setOfficeCode(officeCode);
+		if (officeCode != null && officeCode.length == 1) {
+			employee.getOffice().setOfficeCode(officeCode[0]);
+		}else {
+			employee.getOffice().setId_in(officeCode);
+		}
 		employee.getOffice().setIsQueryChildren(false);
 		employee.getCompany().setCompanyCode(companyCode);
 		employee.getCompany().setIsQueryChildren(false);
@@ -428,7 +431,7 @@ public class EmpUserController extends BaseController {
 			EmpUser e = list.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();
 			map.put("id", ObjectUtils.defaultIfNull(idPrefix, "u_") + e.getId());
-			map.put("pId", StringUtils.defaultIfBlank(pId, "0"));
+			map.put("pId", StringUtils.defaultIfBlank(e.getEmployee().getOffice().getOfficeCode(), "0"));
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getLoginCode(), e.getUserName()));
 			mapList.add(map);
 		}

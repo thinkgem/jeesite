@@ -300,6 +300,7 @@ public class OfficeController extends BaseController {
 		if (StringUtils.isNotBlank(officeTypes)){
 			where.setOfficeType_in(officeTypes.split(","));
 		}
+		List<String> idList = ListUtils.newArrayList();
 		List<Office> list = officeService.findList(where);
 		for (int i = 0; i < list.size(); i++) {
 			Office e = list.get(i);
@@ -316,6 +317,7 @@ public class OfficeController extends BaseController {
 					continue;
 				}
 			}
+			idList.add(e.getId());
 			Map<String, Object> map = MapUtils.newHashMap();
 			map.put("id", e.getId());
 			map.put("pId", e.getParentCode());
@@ -329,20 +331,20 @@ public class OfficeController extends BaseController {
 			// 如果需要加载用户，则处理用户数据
 			if (StringUtils.inString(isLoadUser, "true", "lazy")) {
 				map.put("isParent", true);
-				// 一次性后台加载用户，若数据量比较大，建议使用懒加载
-				if (StringUtils.equals(isLoadUser, "true")) {
-					List<Map<String, Object>> userList = 
-						empUserController.treeData(userIdPrefix, e.getOfficeCode(), e.getOfficeCode(), 
-								companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
-					mapList.addAll(userList);
-				}
 			}
 			mapList.add(map);
+		}
+		// 一次性后台加载用户，若数据量比较大，建议使用懒加载
+		if (StringUtils.equals(isLoadUser, "true") && idList.size() > 0) {
+			List<Map<String, Object>> userList = 
+				empUserController.treeData(userIdPrefix, idList.toArray(new String[idList.size()]), 
+						companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
+			mapList.addAll(userList);
 		}
 		// 懒加载用户，点击叶子节点的时候再去加载部门（懒加载无法回显，数据量大时，建议使用 listselect 实现列表选择用户）
 		if (StringUtils.inString(isLoadUser, "lazy") && StringUtils.isNotBlank(parentCode)) {
 			List<Map<String, Object>> userList = 
-					empUserController.treeData("u_", parentCode, parentCode, 
+					empUserController.treeData(userIdPrefix, new String[]{parentCode}, 
 							companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
 			mapList.addAll(userList);
 		}
