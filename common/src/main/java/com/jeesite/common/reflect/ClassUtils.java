@@ -288,7 +288,10 @@ abstract class VFS {
 
 		// Try each implementation class until a valid one is found
 		VFS vfs = null;
-		for (int i = 0; vfs == null || !vfs.isValid(); i++) {
+		for (int i = 0; true; i++) {
+			if (!(vfs == null || !vfs.isValid())) {
+				break;
+			}
 			Class<? extends VFS> impl = impls.get(i);
 			try {
 				vfs = impl.getDeclaredConstructor().newInstance();
@@ -302,7 +305,7 @@ abstract class VFS {
 			}
 		}
 
-		log.debug("Using VFS adapter " + vfs.getClass().getName());
+		log.debug("Using VFS adapter " + vfs == null ? null : vfs.getClass().getName());
 		return VFS.instance = vfs;
 	}
 

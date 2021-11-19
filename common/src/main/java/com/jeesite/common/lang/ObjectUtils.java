@@ -212,7 +212,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			}
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 3000){
+		if (totalTime > 3000 && object != null){
 			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatDateAgo(totalTime));
 		}
 		return object;
@@ -255,7 +255,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		long beginTime = System.currentTimeMillis();
 		Object object = fstConfiguration.get().asObject(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 3000){
+		if (totalTime > 3000 && object != null){
 			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatDateAgo(totalTime));
 		}
 		return object;
