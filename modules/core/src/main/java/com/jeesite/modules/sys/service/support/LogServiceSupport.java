@@ -6,6 +6,7 @@ package com.jeesite.modules.sys.service.support;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.LogDao;
@@ -45,6 +46,7 @@ public class LogServiceSupport extends CrudService<LogDao, Log>
 	 */
 	@Transactional(readOnly=false)//, propagation=Propagation.NOT_SUPPORTED)
 	public void insertLog(Log entity) {
+		DataSourceHolder.setJdbcTransaction(false);
 		dao.insert(entity);
 	}
 	
