@@ -32,10 +32,10 @@ $('#dataGrid').dataGrid({
 		for(c in table.columnList){ 
 			if(c.isList == "1"){
 				// 如果是树结构的字段，则自动忽略
-				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+				if(table.isTreeEntity && (@StringUtils.inString(c.columnName, 'parent_code',
 					'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
-						&& c.attrName != table.treeViewCodeAttrName
-						&& c.attrName != table.treeViewNameAttrName){
+						|| c.attrName == table.treeViewCodeAttrName
+						|| c.attrName == table.treeViewNameAttrName)){
 				}
 				// 如果是首列，则输出带链接的列
 				else if(firstColumn){
