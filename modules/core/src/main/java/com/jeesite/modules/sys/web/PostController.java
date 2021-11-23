@@ -77,7 +77,7 @@ public class PostController extends BaseController {
 	@RequiresPermissions("sys:post:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Post post, String oldRoleName, Model model) {
+	public String save(@Validated Post post, String oldRoleName) {
 		if (!"true".equals(checkPostName(oldRoleName, post.getPostName()))) {
 			return renderResult(Global.FALSE, text("保存岗位失败，岗位名称''{0}''已存在", post.getPostName()));
 		}

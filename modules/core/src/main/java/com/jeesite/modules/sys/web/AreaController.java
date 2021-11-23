@@ -160,7 +160,7 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("sys:area:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Area area, Model model) {
+	public String save(@Validated Area area) {
 		areaService.save(area);
 		return renderResult(Global.TRUE, text("保存区域成功"));
 	}

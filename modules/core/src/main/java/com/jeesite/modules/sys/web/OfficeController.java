@@ -168,7 +168,7 @@ public class OfficeController extends BaseController {
 	@RequiresPermissions("sys:office:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Office office, String cmd, Model model) {
+	public String save(@Validated Office office) {
 		officeService.save(office);
 		return renderResult(Global.TRUE, text("保存机构''{0}''成功", office.getOfficeName()));
 	}
