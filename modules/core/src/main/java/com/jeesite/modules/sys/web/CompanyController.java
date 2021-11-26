@@ -115,6 +115,8 @@ public class CompanyController extends BaseController {
 			office.setCompanyCode(company.getCompanyCode());
 			List<Office> officeList = officeService.findList(office);
 			model.addAttribute("officeList", officeList);
+			model.addAttribute("officeCodes", ListUtils.extractToString(officeList, "officeCode", ","));
+			model.addAttribute("officeNames", ListUtils.extractToString(officeList, "officeName", ","));
 		}
 		model.addAttribute("company", company);
 		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));

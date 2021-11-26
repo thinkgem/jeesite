@@ -6,18 +6,17 @@ package com.jeesite.modules.sys.entity;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
 import com.jeesite.common.entity.TreeEntity;
-import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
@@ -138,8 +137,8 @@ public class Company extends TreeEntity<Company> {
 		return companyOfficeList;
 	}
 	
-	public void setCompanyOfficeListJson(String jsonString) {
-		List<String> list = JsonMapper.fromJson(jsonString, List.class);
+	public void setOfficeCodes(String officeCodes) {
+		String[] list = StringUtils.split(officeCodes, ",");
 		if (list != null){
 			for (String val : list){
 				if (StringUtils.isNotBlank(val)){

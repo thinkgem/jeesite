@@ -85,12 +85,11 @@
 							<label class="control-label col-sm-4" title="">
 								<span class="required hide">*</span> ${text('包含机构')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:treeselect id="companyOfficeList" title="${text('机构选择')}"
-									value="${@ListUtils.extractToString(officeList!, 'officeCode', ',')}"
-									labelValue="${@ListUtils.extractToString(officeList!, 'officeName', ',')}"
+								<#form:treeselect id="office" title="${text('机构选择')}"
+									name="officeCodes" value="${officeCodes!}"
+									labelName="officeNames" labelValue="${officeNames!}"
 									url="${ctx}/sys/office/treeData" checkbox="true"
 									class="" allowClear="true"/>
-								<#form:hidden name="companyOfficeListJson"/>
 							</div>
 						</div>
 					</div>
@@ -125,8 +124,6 @@
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		var companyOfficeData = $('#companyOfficeListCode').val().split(',');
-		$("#companyOfficeListJson").val(JSON.stringify(companyOfficeData));
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
