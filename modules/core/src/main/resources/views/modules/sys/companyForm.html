@@ -128,7 +128,7 @@ $("#inputForm").validate({
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.$('#dataGrid').dataGrid('refreshTreeChildren',
+					(contentWindow.win||contentWindow).$('#dataGrid').dataGrid('refreshTreeChildren',
 							$('#parentCode').val(), '${company.id}');
 				});
 			}

@@ -69,6 +69,18 @@ public class ${ClassName}Controller extends BaseController {
 		return ${className}Service.getAndValid(${className});
 		<% } %>
 	}
+	<% if(table.isTreeEntity){ %>
+	
+	/**
+	 * 管理主页
+	 */
+	@RequiresPermissions("${permissionPrefix}:view")
+	@RequestMapping(value = "index")
+	public String index(${ClassName} ${className}, Model model) {
+		model.addAttribute("${className}", ${className});
+		return "${lastPackageName}/${viewPrefix}Index";
+	}
+	<% } %>
 	
 	/**
 	 * 查询列表

@@ -112,7 +112,7 @@ $("#inputForm").validate({
 			if(data.result == Global.TRUE){
 				js.closeCurrentTabPage(function(contentWindow){
 				<% if(table.isTreeEntity){ %>
-					contentWindow.$('#dataGrid').dataGrid('refreshTreeChildren',
+					(contentWindow.win||contentWindow).$('#dataGrid').dataGrid('refreshTreeChildren',
 							$('#parentCode').val(), '\${${className}.id}');
 				<% }else{ %>
 					contentWindow.page();

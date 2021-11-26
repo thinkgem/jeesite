@@ -2,7 +2,9 @@
 			<${'#'}form:form id="searchForm" model="\${${className}}" action="\${ctx}/${urlPrefix}/listData" method="post" class="form-inline hide"
 					data-page-no="\${parameter.pageNo}" data-page-size="\${parameter.pageSize}" data-order-by="\${parameter.orderBy}">
 		<% for(c in table.columnList){ %>
-			<% if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
+			<% if(table.isTreeEntity && c.isPk == "1"){ %>
+				<${'#'}form:hidden path="${c.attrName}"/>
+			<% }else if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
 				<div class="form-group">
 					<label class="control-label">\${text('${c.columnLabel}')}：</label>
 				<% if(c.showType == 'input' || c.showType == 'textarea'){ %>

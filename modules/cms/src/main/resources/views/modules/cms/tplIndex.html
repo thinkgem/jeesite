@@ -61,11 +61,11 @@ var setting = {
 		for (var i = 0; i < nodes.length; i++) {
 			tree.expandNode(nodes[i], true, false, false);
 		}
-		// 展开第二级节点
-		nodes = tree.getNodesByParam("level", 1);
-		for (var i = 0; i < nodes.length; i++) {
-			tree.expandNode(nodes[i], true, false, false);
-		}
+// 		// 展开第二级节点
+// 		nodes = tree.getNodesByParam("level", 1);
+// 		for (var i = 0; i < nodes.length; i++) {
+// 			tree.expandNode(nodes[i], true, false, false);
+// 		}
 	}, null, null, js.text('loading.message'));
 };
 loadTree();
