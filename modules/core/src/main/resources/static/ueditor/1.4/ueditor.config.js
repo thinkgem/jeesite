@@ -42,7 +42,7 @@
           'paragraph', 'fontfamily', 'fontsize', 'customstyle', 'insertcode', '|', 
           'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
           'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-          'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map',/* 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', */'template', 'background', '|',
+          'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map',/* 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', */'template', 'background', '|',
           'horizontal', 'date', 'time', 'spechars', /*'snapscreen', */'wordimage', '|',
           'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
           'print', 'preview', 'searchreplace', 'drafts', 'help'
