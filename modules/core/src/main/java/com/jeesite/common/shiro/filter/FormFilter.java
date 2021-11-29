@@ -107,6 +107,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		if (StringUtils.isBlank(username)){
 			username = ObjectUtils.toString(request.getAttribute(getUsernameParam()), StringUtils.EMPTY);
 		}
+		if (StringUtils.length(username) > 1000) {
+    		throw new AuthenticationException("msg:"+Global.getText("sys.login.error"));
+		}
 		// 登录用户名解密（解决登录用户名明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
 		if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(secretKey)){
@@ -133,6 +136,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		String password = super.getPassword(request);
 		if (StringUtils.isBlank(password)){
 			password = ObjectUtils.toString(request.getAttribute(getPasswordParam()), StringUtils.EMPTY);
+		}
+		if (StringUtils.length(password) > 1000) {
+    		throw new AuthenticationException("msg:"+Global.getText("sys.login.error"));
 		}
 		// 登录密码解密（解决登录密码明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
@@ -172,6 +178,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		String captcha = WebUtils.getCleanParam(request, CAPTCHA_PARAM);
 		if (StringUtils.isBlank(captcha)){
 			captcha = ObjectUtils.toString(request.getAttribute(CAPTCHA_PARAM), StringUtils.EMPTY);
+		}
+		if (StringUtils.length(captcha) > 100) {
+    		throw new AuthenticationException("msg:"+Global.getText("sys.login.error"));
 		}
 		// 登录用户名解密（解决登录用户名明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
