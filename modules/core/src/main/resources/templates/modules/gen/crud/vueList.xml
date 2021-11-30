@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueList</name>
+	<filePath>vue/src/views/${urlPrefix}</filePath>
+	<fileName>list.vue</fileName>
+	<content><![CDATA[
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+-->
+<template>
+  <div>
+    <BasicTable @register="registerTable"<% if(table.isTreeEntity){ %> @fetchSuccess="fetchSuccess"<% } %>>
+      <template #tableTitle>
+        <Icon :icon="getTitle.icon" class="m-1 pr-1" />
+        <span> {{ getTitle.value }} </span>
+      </template>
+      <template #toolbar>
+      	<% if(table.isTreeEntity){ %>
+        <a-button @click="expandAll" :title="t('展开一级')">
+          <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
+        </a-button>
+        <a-button @click="collapseAll" :title="t('展开全部')">
+          <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
+        </a-button>
+        <% } %>
+        <a-button type="primary" @click="handleForm({})" v-auth="'${permissionPrefix}:edit'">
+          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+        </a-button>
+      </template>
+      <template #firstColumn="{ record }">
+<%
+	var idParam = '';
+	for(pk in table.pkList){
+		idParam = idParam + pk.attrName + ': record.' + pk.attrName;
+		if (pkLP.index == table.pkList.~size - 1) {
+			idParam = idParam + ', ';
+		}
+	}
+	if(table.isTreeEntity){
+%>
+        <span class="cursor-pointer" @click="expandCollapse(record)">
+          ( {{ record.${table.treeViewCodeAttrName} }} )
+        </span>
+        <a @click="handleForm({ ${idParam} })">
+          {{ record.${table.treeViewNameAttrName} }}
+        </a>
+<%
+	}else{
+		for(c in table.columnList){ 
+			if(c.isList == "1"){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+					'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+						&& c.attrName != table.treeViewCodeAttrName
+						&& c.attrName != table.treeViewNameAttrName){
+					continue;
+				}
+%>
+        <a @click="handleForm({ ${idParam} })">
+          {{ record.${c.attrName} }}
+        </a>
+<%
+				break;
+			}
+		}
+	}
+%>
+      </template>
+    </BasicTable>
+    <InputForm @register="registerDrawer" @success="handleSuccess" />
+  </div>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    name: '${compNamePrefix}List',
+  });
+</script>
+<script lang="ts" setup>
+  import { defineComponent<% if(table.isTreeEntity){ %>, watch, nextTick<% } %> } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { Icon } from '/@/components/Icon';
+  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
+  import { ${className}Delete, ${className}ListData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+  import { ${className}Disable, ${className}Enable } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+<% } %>
+<%
+var userselectExists = false;
+var officeselectExists = false;
+var areaselectExists = false;
+for(c in table.columnList){
+	if(c.isQuery == "1" && !c.isTreeEntityColumn){
+		if(c.showType == 'userselect'){
+			userselectExists = true;
+		}else if(c.showType == 'officeselect'){
+			officeselectExists = true;
+		}else if(c.showType == 'areaselect'){
+			areaselectExists = true;
+		}
+	}
+}
+%>
+<% if(userselectExists || officeselectExists) { %>
+  import { officeTreeData } from '/@/api/sys/office';
+<% } %>
+<% if(areaselectExists) { %>
+  import { areaTreeData } from '/@/api/sys/area';
+<% } %>
+  import { useDrawer } from '/@/components/Drawer';
+  import { FormProps } from '/@/components/Form';
+  import { router } from '/@/router';
+  import InputForm from './form.vue';
+
+<% if(table.isTreeEntity){ %>
+  const props = defineProps({
+    treeCode: String,
+  });
+
+<% } %>
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}/${className}');
+  const { showMessage } = useMessage();
+  const getTitle = {
+    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    value: router.currentRoute.value.meta.title || t('${functionNameSimple}管理'),
+  };
+
+  const searchForm: FormProps = {
+    baseColProps: { lg: 6, md: 8 },
+    labelWidth: 90,
+    schemas: [
+<% for(c in table.columnList){ %>
+  <% if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
+      {
+        label: t('${c.columnLabel}${c.queryType == 'BETWEEN'?'起':''}'),
+        field: '${c.attrName}${c.queryType == 'BETWEEN'?'_gte':''}',
+    <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+        component: 'Input',
+      <% if (c.queryType == 'BETWEEN'){ %>
+      },
+      {
+        field: '${c.attrName}${c.queryType == 'BETWEEN'?'_lte':''}',
+        label: t('${c.columnLabel}${c.queryType == 'BETWEEN'?'止':''}'),
+        component: 'Input',
+      <% } %>
+    <% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
+		var isMultiple = (c.showType == 'select_multiple'); %>
+        component: 'Select',
+        componentProps: {
+          dictType: '${c.optionMap['dictType']}',
+          allowClear: true,
+          <% if(isMultiple){ %>
+          mode: 'multiple',
+          <% } %>
+        },
+        defaultValue: '',
+    <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
+        component: '${@StringUtils.cap(c.showType)}Group',
+        componentProps: {
+          dictType: '${c.optionMap['dictType']}',
+        },
+    <% }else if(c.showType == 'date' || c.showType == 'datetime'){
+		var isTime = (c.showType == 'datetime'); %>
+        component: 'DatePicker',
+        componentProps: {
+          format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+          showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+        },
+      <% if (c.queryType == 'BETWEEN'){ %>
+      },
+      {
+        label: t('${c.columnLabel}${c.queryType == 'BETWEEN'?'止':''}'),
+        field: '${c.attrName}${c.queryType == 'BETWEEN'?'_lte':''}',
+        component: 'DatePicker',
+        componentProps: {
+          format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+          showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+        },
+      <% } %>
+    <% }else if(c.showType == 'userselect'){ %>
+        component: 'TreeSelect',
+        componentProps: {
+          api: officeTreeData,
+          params: { isLoadUser: true, userIdPrefix: '' },
+          canSelectParent: false,
+          allowClear: true,
+        },
+        defaultValue: '',
+    <% }else if(c.showType == 'officeselect'){ %>
+        component: 'TreeSelect',
+        componentProps: {
+          api: officeTreeData,
+          allowClear: true,
+        },
+        defaultValue: '',
+    <% }else if(c.showType == 'areaselect'){ %>
+        component: 'TreeSelect',
+        componentProps: {
+          api: areaTreeData,
+          allowClear: true,
+        },
+        defaultValue: '',
+    <% }else{ %>
+        component: 'Input',
+    <% } %>
+      },
+  <% } %>
+<% } %>
+    ],
+  };
+
+  const tableColumns: BasicColumn[] = [
+<%
+var firstColumn = true;
+// 生成树表的节点列
+if(table.isTreeEntity){
+	for(c in table.columnList){
+		if(c.attrName == table.treeViewNameAttrName){
+		%>
+    {
+      title: t('${c.columnLabel}'),
+      dataIndex: '${c.attrName}',
+      width: 250,
+      align: 'left',
+      slots: { customRender: 'firstColumn' },
+    },
+		<%
+			firstColumn = false;
+			break;
+		}
+	}
+}
+for(c in table.columnList){
+	if(c.isList == "1"){
+		// 如果是树结构的字段，则自动忽略
+		if(table.isTreeEntity && (@StringUtils.inString(c.columnName, 'parent_code',
+			'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+				|| c.attrName == table.treeViewCodeAttrName
+				|| c.attrName == table.treeViewNameAttrName)){
+			continue;
+		}
+%>
+    {
+      title: t('${c.columnLabel}'),
+    <% if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
+      dataIndex: '${c.attrName2}',
+    <% }else{ %>
+      dataIndex: '${c.attrName}',
+    <% } %>
+    <% if(!table.isTreeEntity){ %>
+      key: 'a.${c.columnName}',
+      sorter: true,
+    <% } %>
+    <% if(firstColumn){ %>
+      width: 250,
+    <% }else{ %>
+      width: 150,
+    <% } %>
+    <% if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long') && !firstColumn){ %>
+      align: 'center',
+    <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double') && !firstColumn){ %>
+      align: 'right',
+    <% }else{ %>
+      align: 'left',
+    <% } %>
+    <% if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
+      dictType: '${c.optionMap['dictType']}',
+    <% } %>
+    <% if(firstColumn){ %>
+      slots: { customRender: 'firstColumn' },
+    <% } %>
+    },
+<%
+		if(firstColumn){
+			firstColumn = false;
+		}
+	}
+}
+%>
+  ];
+
+  const actionColumn: BasicColumn = {
+    width: 160,
+    actions: (record: Recordable) => [
+      {
+        icon: 'clarity:note-edit-line',
+        title: t('编辑${functionNameSimple}'),
+        onClick: handleForm.bind(this, { ${idParam} }),
+        auth: '${permissionPrefix}:edit',
+      },
+      <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+      {
+        icon: 'ant-design:stop-outlined',
+        color: 'error',
+        title: t('停用${functionNameSimple}'),
+        popConfirm: {
+          title: t('是否确认停用${functionNameSimple}'),
+          confirm: handleDisable.bind(this, { ${idParam} }),
+        },
+        auth: '${permissionPrefix}:edit',
+        ifShow: () => record.status === '0',
+      },
+      {
+        icon: 'ant-design:check-circle-outlined',
+        color: 'success',
+        title: t('启用${functionNameSimple}'),
+        popConfirm: {
+          title: t('是否确认启用${functionNameSimple}'),
+          confirm: handleEnable.bind(this, { ${idParam} }),
+        },
+        auth: '${permissionPrefix}:edit',
+        ifShow: () => record.status === '2',
+      },
+      <% } %>
+      <% if(toBoolean(table.optionMap['isHaveDelete'])){ %>
+      {
+        icon: 'ant-design:delete-outlined',
+        color: 'error',
+        title: t('删除${functionNameSimple}'),
+        popConfirm: {
+          title: t('是否确认删除${functionNameSimple}'),
+          confirm: handleDelete.bind(this, { ${idParam} }),
+        },
+        auth: '${permissionPrefix}:edit',
+      },
+      <% } %>
+      <% if(table.isTreeEntity){ %>
+      {
+        icon: 'fluent:add-circle-24-regular',
+        title: t('新建下级${functionNameSimple}'),
+        onClick: handleForm.bind(this, {
+          parentCode: record.id,
+          parentName: record.${table.treeViewNameAttrName},
+        }),
+        auth: '${permissionPrefix}:edit',
+      },
+      <% } %>
+    ],
+  };
+
+  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %> }] = useTable({
+    api: ${className}ListData,
+    beforeFetch: (params) => {
+      <% if(table.isTreeEntity){ %>
+		<% for(pk in table.pkList){ %>
+      params.${pk.attrName} = props.treeCode;
+		<% } %>
+      <% } %>
+      return params;
+    },
+    columns: tableColumns,
+    actionColumn: actionColumn,
+    formConfig: searchForm,
+    showTableSetting: true,
+    useSearchForm: true,
+    <% if(table.isTreeEntity){ %>
+    isTreeTable: true,
+    pagination: false,
+    <% } %>
+    canResize: true,
+  });
+<% if(table.isTreeEntity){ %>
+
+  watch(
+    () => props.treeCode,
+    () => {
+      reload();
+    },
+  );
+
+  function fetchSuccess() {
+    if (props.treeCode) {
+      nextTick(expandAll);
+    }
+  }
+<% } %>
+
+  function handleForm(record: Recordable) {
+    openDrawer(true, record);
+  }
+<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+
+  async function handleDisable(record: Recordable) {
+    const res = await ${className}Disable(record);
+    showMessage(res.message);
+    handleSuccess();
+  }
+
+  async function handleEnable(record: Recordable) {
+    const res = await ${className}Enable(record);
+    showMessage(res.message);
+    handleSuccess();
+  }
+<% } %>
+
+  async function handleDelete(record: Recordable) {
+    const res = await ${className}Delete(record);
+    showMessage(res.message);
+    handleSuccess();
+  }
+
+  function handleSuccess() {
+    reload();
+  }
+</script>
+<% %>
+]]>
+	</content>
+</template>

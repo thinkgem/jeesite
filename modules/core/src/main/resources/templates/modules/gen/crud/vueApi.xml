@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueApi</name>
+	<filePath>vue/src/api/${moduleName}/${subModuleName}</filePath>
+	<fileName>${className}.ts</fileName>
+	<content><![CDATA[
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+ */
+import { defHttp } from '/@/utils/http/axios';
+import { useGlobSetting } from '/@/hooks/setting';
+<% if(table.isTreeEntity){ %>
+import { TreeDataModel, TreeModel } from '../model/baseModel';
+<% }else{ %>
+import { BasicModel } from '../model/baseModel';
+<% } %>
+
+const { adminPath } = useGlobSetting();
+
+export interface ${ClassName} extends ${table.isTreeEntity?'Tree':'Basic'}Model<${ClassName}> {
+<%
+isExtend = false;
+// 生成字段属性
+for(c in table.columnList){
+	var attrType = c.simpleAttrType;
+	if (attrType == 'String') attrType = 'string';
+	else if (attrType == 'Long') attrType = 'number';
+	else if (attrType == 'Integer') attrType = 'number';
+	else if (attrType == 'Double') attrType = 'number';
+	else if (attrType == 'BigDecimal') attrType = 'number';
+	else if (attrType == 'Date') attrType = 'string';
+	else attrType = 'any';
+	if(!@StringUtils.equalsIgnoreCase(c.columnName, 'id') && !c.isSuperColumn){
+		// 如果是Extend类属性
+		if(table.isExtendEntity && c.isExtendColumn){
+			if(!isExtend){
+				isExtend = true;
+%>
+  extend?: any; // 扩展字段
+<%
+			}
+		}
+		// 如果不是基类属性
+		else if(!@StringUtils.equalsIgnoreCase(c.columnName, 'id') && !c.isSuperColumn){
+			// 父类对象
+			if(table.parentExists && table.parentTableFkName == c.columnName){
+%>
+  ${c.simpleAttrName}?: ${attrType};<% if (isNotBlank(c.comments)){ %> // ${c.comments} 父类<% } %>
+<%
+			// 其它字段
+			}else{
+%>
+  ${c.simpleAttrName}?: ${attrType};<%if(isNotBlank(c.comments)){%> // ${c.comments}<%}%>
+<%
+			}
+		}
+	}
+}
+%>
+<% // 生成子表列表字段
+for(child in table.childList){ %>
+  ${@StringUtils.uncap(child.className)}List?: any[]; // 子表列表
+<% } %>
+}
+
+export const ${className}List = (params?: ${ClassName} | any) =>
+  defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/list', params });
+
+export const ${className}ListData = (params?: ${ClassName} | any) =>
+  defHttp.post<${ClassName}[]>({ url: adminPath + '/${urlPrefix}/listData', params });
+
+export const ${className}Form = (params?: ${ClassName} | any) =>
+  defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/form', params });
+<% if(table.isTreeEntity){ %>
+
+export const ${className}CreateNextNode = (params?: ${ClassName} | any) =>
+  defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/createNextNode', params });
+<% } %>
+
+export const ${className}Save = (params?: any, data?: ${ClassName} | any) =>
+  defHttp.postJson<${ClassName}>({ url: adminPath + '/${urlPrefix}/save', params, data });
+<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+
+export const ${className}Disable = (params?: ${ClassName} | any) =>
+  defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/disable', params });
+
+export const ${className}Enable = (params?: ${ClassName} | any) =>
+  defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/enable', params });
+<% } %>
+
+export const ${className}Delete = (params?: ${ClassName} | any) =>
+  defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/delete', params });
+<% if(table.isTreeEntity){ %>
+
+export const ${className}TreeData = (params?: any) =>
+  defHttp.get<TreeDataModel[]>({ url: adminPath + '/${urlPrefix}/treeData', params });
+<% } %>
+]]>
+	</content>
+</template>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueIndex</name>
+	<filePath>vue/src/views/${urlPrefix}</filePath>
+	<fileName>index.vue</fileName>
+	<content><![CDATA[
+<% if(table.isTreeEntity){ %>
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+-->
+<template>
+  <PageWrapper :sidebarWidth="230">
+    <template #sidebar>
+      <BasicTree
+        :title="t('${functionNameSimple}')"
+        :search="true"
+        :toolbar="true"
+        :api="${className}TreeData"
+        :defaultExpandLevel="1"
+        @select="handleSelect"
+      />
+    </template>
+    <ListView :treeCode="treeCode" />
+  </PageWrapper>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    name: '${compNamePrefix}Index',
+  });
+</script>
+<script lang="ts" setup>
+  import { defineComponent, ref } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { PageWrapper } from '/@/components/Page';
+  import { BasicTree } from '/@/components/Tree';
+  import { ${className}TreeData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import ListView from './list.vue';
+
+  const { t } = useI18n('sys.menu');
+  const treeCode = ref<string>('');
+
+  function handleSelect(keys: string[]) {
+    treeCode.value = keys[0];
+  }
+</script>
+<% } %>
+<% %>
+]]>
+	</content>
+</template>

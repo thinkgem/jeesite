@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved. -->
-<!-- 该文件可自定义，复制 config.xml 到  config-custom.xml 相同目录下，即可生效。 -->
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<!-- 该文件可自定义，复制 config.xml 到 config-custom.xml 相同目录下，即可生效。 -->
 <config>
 	<!-- 模板分类 -->
 	<tplCategory>
@@ -9,10 +10,29 @@
 			<template>crud/service.xml</template>
 			<template>crud/controller.xml</template>
 			<template>crud/viewList.xml</template>
+			<template>crud/viewIndex.xml</template>
 			<template>crud/viewForm.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
 			</childTable>
+		</category>
+		<category value="crud_vue" label="单表/主子表 （增删改查）Vue">
+			<template>category-ref:dao</template>
+			<template>crud/service.xml</template>
+			<template>crud/controller.xml</template>
+			<template>crud/vueApi.xml</template>
+			<template>crud/vueList.xml</template>
+			<template>crud/vueIndex.xml</template>
+			<template>crud/vueForm.xml</template>
+			<childTable>
+				<template>category-ref:dao</template>
+			</childTable>
+		</category>
+		<category value="crud_vue_only" label="单表/主子表 （增删改查）仅Vue">
+			<template>crud/vueApi.xml</template>
+			<template>crud/vueList.xml</template>
+			<template>crud/vueIndex.xml</template>
+			<template>crud/vueForm.xml</template>
 		</category>
 		<category value="crud_select" label="单表/主子表 （增删改查，含 listselect 选择页面）">
 			<template>category-ref:crud</template>
@@ -39,6 +59,12 @@
 		</category>
 		<category value="treeGrid" label="树表/树结构表（增删改查）">
 			<template>category-ref:crud</template>
+		</category>
+		<category value="treeGrid_vue" label="树表/树结构表（增删改查）Vue">
+			<template>category-ref:crud_vue</template>
+		</category>
+		<category value="treeGrid_vue_only" label="树表/树结构表（增删改查）仅Vue">
+			<template>category-ref:crud_vue_only</template>
 		</category>
 		<category value="treeGrid_cloud" label="树表/树结构表（增删改查  Cloud，生成 Api/Client）">
 			<template>category-ref:crud_cloud</template>
@@ -110,8 +136,6 @@
 	<!-- 字段验证 -->
 	<fieldValid>
 		<dict value="email" label="电子邮件"/>
-		<dict value="url" label="网址"/>
-		<dict value="date" label="日期"/>
 		<dict value="number" label="数值"/>
 		<dict value="integer" label="整数"/>
 		<dict value="digits" label="正整数"/>
@@ -124,7 +148,9 @@
 		<dict value="zipCode" label="邮政编码"/>
 		<dict value="ipv4" label="IPv4"/>
 		<dict value="ipv6" label="IPv6"/>
-		<dict value="qq" label="QQ"/>
+		<dict value="qq" label="QQ号"/>
+		<dict value="url" label="网址"/>
+		<dict value="date" label="日期"/>
 		<dict value="idcard" label="身份证"/>
 	</fieldValid>
 	<!-- 栅格布局 -->

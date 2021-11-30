@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueForm</name>
+	<filePath>vue/src/views/${urlPrefix}</filePath>
+	<fileName>form.vue</fileName>
+	<content><![CDATA[
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+-->
+<template>
+  <BasicDrawer
+    v-bind="$attrs"
+    :showFooter="true"
+    :okAuth="'${permissionPrefix}:edit'"
+    @register="registerDrawer"
+    @ok="handleSubmit"
+    width="60%"
+  >
+    <template #title>
+      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+      <span> {{ getTitle.value }} </span>
+    </template>
+    <BasicForm @register="registerForm" />
+  </BasicDrawer>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    name: '${compNamePrefix}Form',
+  });
+</script>
+<script lang="ts" setup>
+  import { defineComponent, ref } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { Icon } from '/@/components/Icon';
+  import { BasicForm, FormSchema, useForm } from '/@/components/Form';
+  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
+  import { ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+<%
+var userselectExists = false;
+var officeselectExists = false;
+var areaselectExists = false;
+for(c in table.columnList){
+	if(c.isQuery == "1" && !c.isTreeEntityColumn){
+		if(c.showType == 'userselect'){
+			userselectExists = true;
+		}else if(c.showType == 'officeselect'){
+			officeselectExists = true;
+		}else if(c.showType == 'areaselect'){
+			areaselectExists = true;
+		}
+	}
+}
+%>
+<% if(userselectExists || officeselectExists) { %>
+  import { officeTreeData } from '/@/api/sys/office';
+<% } %>
+<% if(areaselectExists) { %>
+  import { areaTreeData } from '/@/api/sys/area';
+<% } %>
+  import { router } from '/@/router';
+
+  const emit = defineEmits(['success', 'register']);
+
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}/${className}');
+  const { showMessage } = useMessage();
+  const record = ref<Recordable>({});
+  const getTitle = {
+    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
+  };
+
+  const inputFormSchemas: FormSchema[] = [
+<% if(table.isTreeEntity){ %>
+    {
+      label: t('上级${functionNameSimple}'),
+      field: 'parentCode',
+      fieldLabel: 'parentName',
+      component: 'TreeSelect',
+      componentProps: {
+        allowClear: true,
+      },
+    },
+<% }
+for (c in table.columnList){
+	if (c.isEdit == '1' && c.showType != 'hidden'){
+		// 如果是树结构的字段，则自动忽略
+		if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+			'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+				&& c.attrName != table.treeViewCodeAttrName
+				&& c.attrName != table.treeViewNameAttrName){
+			continue;
+		}
+		// 是否强制新行获取，生成字段界面用户设定的
+		var isNewLine = @Global.YES.equals(c.optionMap['isNewLine']);
+		if (isBlank(c.optionMap['isNewLine'])){
+			if (c.showType == 'textarea'){
+				isNewLine = true;
+			}
+		}
+%>
+    {
+      label: t('${c.columnLabel}'),
+      field: '${c.attrName}',
+  <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+      <% if (c.simpleAttrType == 'Integer' && c.attrName == 'treeSort'){ %>
+      helpMessage: '升序${c.dataLength}',
+      component: 'InputNumber',
+      defaultValue: '30',
+      <% }else{ %>
+      component: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
+      <% } %>
+      <% if (c.dataLength != '0'){ %>
+      componentProps: {
+        maxlength: ${c.dataLength},
+      },
+      <% } %>
+  <% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
+	  var isMultiple = (c.showType == 'select_multiple'); %>
+      component: 'Select',
+      componentProps: {
+        dictType: '${c.optionMap['dictType']}',
+        allowClear: true,
+        <% if(isMultiple){ %>
+        mode: 'multiple',
+        <% } %>
+      },
+      defaultValue: '',
+  <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
+      component: '${@StringUtils.cap(c.showType)}Group',
+      componentProps: {
+        dictType: '${c.optionMap['dictType']}',
+      },
+  <% }else if(c.showType == 'date' || c.showType == 'datetime'){
+	  var isTime = (c.showType == 'datetime'); %>
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+        showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+      },
+  <% }else if(c.showType == 'userselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: officeTreeData,
+        params: { isLoadUser: true, userIdPrefix: '' },
+        canSelectParent: false,
+        allowClear: true,
+      },
+      defaultValue: '',
+  <% }else if(c.showType == 'officeselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: officeTreeData,
+        allowClear: true,
+      },
+      defaultValue: '',
+  <% }else if(c.showType == 'areaselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: areaTreeData,
+        allowClear: true,
+      },
+      defaultValue: '',
+  <% }else{ %>
+      component: 'Input',
+  <% } 
+	var fieldValid = c.optionMap['fieldValid'], fvs = [], rules = [];
+	if(isNotEmpty(fieldValid)){
+		var t = type.name(fieldValid);
+		if (t == 'String[]' || t == 'ArrayList'){
+			fvs = fieldValid;
+		}else if(t == 'String' && isNotBlank(fieldValid)){
+			@fvs.add(fieldValid);
+		}
+	}
+	for(var fv in fvs){
+		if (fv == 'email'){
+			var s = { %>{ type: 'email', message: t('请输入邮箱地址') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'number'){
+			var s = { %>{ pattern: /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/, message: t('请输入一个数值') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'integer'){
+			var s = { %>{ pattern: /^-?\d+$/, message: t('请输入一个整数') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'digits'){
+			var s = { %>{ pattern: /^\d+$/, message: t('请输入一个正整数') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'userName'){
+			var s = { %>{ pattern: /^[\u0391-\uFFE5\w]+$/, message: t('请输入登录账号') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'realName'){
+			var s = { %>{ pattern: /^[\u4e00-\u9fa5]{2,30}$/, message: t('请输入真实姓名') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'abc'){
+			var s = { %>{ pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'mobile'){
+			var s = { %>{ pattern: /^1[3,4,5,6,7,8,9]\d{9}$/g, message: t('请输入手机号码') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'simplePhone'){
+			var s = { %>{ pattern: /^(\d{3,4}-?)?\d{7,9}$/g, message: t('请输入固话号码') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'phone'){
+			var s = { %>{ pattern: /(^0[1-9]{1}\d{8,10}$)|(^1[3,4,5,6,7,8,9]\d{9}$)/g, message: t('请输入固话或手机号码') }<% };
+			@rules.add(s);
+		}
+		if (fv == 'zipCode'){
+			var s = { %>{ pattern: /^[0-9]{6}$/, message: t('请输入邮政编码') }<% };
+			@rules.add(s);
+		}
+	}
+	if(rules.~size == 0){
+		if(c.isRequired == '1'){
+  %>      required: true,
+  <%
+		}
+	} else { %>
+      rules: [<%
+		if(c.isRequired == '1'){ 
+        	%>{ required: true }, <%
+        }
+        for (var rule in rules){
+        	print(rule);
+        	if (ruleLP.index < rules.~size) {
+        		print(', ');
+        	}
+        } %>],
+  <%
+    }
+    if (isNewLine){ %>
+      colProps: { lg: 24, md: 24 },
+  <%
+    }
+  %>
+    },
+<%
+	}
+}
+%>
+  ];
+<%
+	var updateSchemas = [];
+	if(table.isTreeEntity){
+		var s = {
+   %>      {
+        field: 'parentCode',
+        componentProps: {
+          api: ${className}TreeData,
+          params: {
+            excludeCode: record.value.id,
+            isShowRawName: true,
+          },
+        },
+      },<%
+      	};
+		@updateSchemas.add(s);
+	}
+  	for (c in table.columnList){
+		if (c.isPk == '1' && c.showType == 'input'){
+			var s = {
+  %>      {
+        field: '${c.attrName}',
+        componentProps: {
+          disabled: !record.value.isNewRecord,
+        },
+      },<%
+      		};
+			@updateSchemas.add(s);
+		}
+	}
+  %>
+  const [registerForm, { resetFields, setFieldsValue<% if(updateSchemas.~size > 0){ %>, updateSchema<% } %>, validate }] = useForm({
+    labelWidth: 120,
+    schemas: inputFormSchemas,
+    <% var formColNum = table.optionMap['formColNum']; %>
+    baseColProps: { lg: ${formColNum=="1"?24:formColNum=="3"?8:12}, md: 24 },
+  });
+
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+    resetFields();
+    setDrawerProps({ loading: true });
+    const res = await ${className}Form(data);
+    record.value = (res.${className} || {}) as Recordable;
+  <% if(table.isTreeEntity){ %>
+    if (data.parentCode && data.parentName) {
+      record.value.parentCode = data.parentCode;
+      record.value.parentName = data.parentName;
+    }
+  <% } %>
+    setFieldsValue(record.value);
+  <% if(updateSchemas.~size > 0){ %>
+    updateSchema([
+    <% for(updateSchema in updateSchemas){
+    	print(updateSchema + '\n');  
+    } %>
+    ]);
+  <% } %>
+    setDrawerProps({ loading: false });
+  });
+
+  async function handleSubmit() {
+    try {
+      const data = await validate();
+      setDrawerProps({ confirmLoading: true });
+      const params: any = {
+        isNewRecord: record.value.isNewRecord,
+  <%
+  for (c in table.columnList){
+	if (c.isPk == '1' || c.showType == 'hidden'){ %>
+        ${c.attrName}: record.value.${c.attrName},
+      <% 
+    }
+  }
+  %>
+      };
+      console.log('submit', params, data, record);
+      const res = await ${className}Save(params, data);
+      showMessage(res.message);
+      setTimeout(closeDrawer);
+      emit('success', data);
+    } catch (error: any) {
+      showMessage(t('您填写的信息有误，请根据提示修正。'));
+      console.log('error', error);
+    } finally {
+      setDrawerProps({ confirmLoading: false });
+    }
+  }
+</script>
+<% %>
+]]>
+	</content>
+</template>
