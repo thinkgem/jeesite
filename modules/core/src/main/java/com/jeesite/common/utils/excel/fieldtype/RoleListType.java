@@ -4,6 +4,7 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jeesite.common.collect.ListUtils;
@@ -31,14 +32,15 @@ public class RoleListType implements FieldType {
 	 * 获取对象值（导入）
 	 */
 	public Object getValue(String val) {
+		List<String> list = new ArrayList<String>();
 		for (String s : StringUtils.split(val, ",")) {
 			for (Role e : roleList) {
 				if (StringUtils.trimToEmpty(s).equals(e.getRoleName())) {
-					roleList.add(e);
+					list.add(e.getRoleCode());
 				}
 			}
 		}
-		return roleList.size() > 0 ? roleList : null;
+		return list.size() > 0 ? list.toArray(new String[list.size()]) : null;
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class RoleListType implements FieldType {
 			List<Role> roleList = (List<Role>) val;
 			return ListUtils.extractToString(roleList, "roleName", ", ");
 		}
-		return "";
+		return StringUtils.EMPTY;
 	}
 	
 }

@@ -83,7 +83,9 @@ for(c in table.columnList){
       component: 'TreeSelect',
       componentProps: {
         allowClear: true,
+        style: 'width: calc(50% - 60px)',
       },
+      colProps: { lg: 24, md: 24 },
     },
 <% }
 for (c in table.columnList){
@@ -108,7 +110,7 @@ for (c in table.columnList){
       field: '${c.attrName}',
   <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
       <% if (c.simpleAttrType == 'Integer' && c.attrName == 'treeSort'){ %>
-      helpMessage: '升序${c.dataLength}',
+      helpMessage: '升序',
       component: 'InputNumber',
       defaultValue: '30',
       <% }else{ %>

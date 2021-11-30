@@ -4,6 +4,7 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jeesite.common.collect.ListUtils;
@@ -31,14 +32,15 @@ public class PostListType implements FieldType {
 	 * 获取对象值（导入）
 	 */
 	public Object getValue(String val) {
+		List<String> list = new ArrayList<String>();
 		for (String s : StringUtils.split(val, ",")) {
 			for (Post e : postList) {
 				if (StringUtils.trimToEmpty(s).equals(e.getPostName())) {
-					postList.add(e);
+					list.add(e.getPostCode());
 				}
 			}
 		}
-		return postList.size() > 0 ? postList : null;
+		return list.size() > 0 ? list.toArray(new String[list.size()]) : null;
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class PostListType implements FieldType {
 			List<Post> postList = (List<Post>) val;
 			return ListUtils.extractToString(postList, "postName", ", ");
 		}
-		return "";
+		return StringUtils.EMPTY;
 	}
 	
 }
