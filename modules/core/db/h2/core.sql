@@ -121,6 +121,7 @@ CREATE TABLE js_sys_company
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (company_code)
 );
 
@@ -198,6 +199,7 @@ CREATE TABLE js_sys_dict_data
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (dict_code)
 );
 
@@ -313,6 +315,7 @@ CREATE TABLE js_sys_file_upload
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (id)
 );
 
@@ -423,6 +426,8 @@ CREATE TABLE js_sys_menu
 	is_show char(1) NOT NULL,
 	sys_code varchar(64) NOT NULL,
 	module_codes varchar(500) NOT NULL,
+	component varchar(500),
+	params varchar(500),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
 	create_date datetime NOT NULL,
@@ -449,6 +454,7 @@ CREATE TABLE js_sys_menu
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (menu_code)
 );
 
@@ -637,6 +643,7 @@ CREATE TABLE js_sys_office
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (office_code)
 );
 
@@ -645,6 +652,7 @@ CREATE TABLE js_sys_office
 CREATE TABLE js_sys_post
 (
 	post_code varchar(64) NOT NULL,
+	view_code varchar(100),
 	post_name varchar(100) NOT NULL,
 	post_type varchar(100),
 	post_sort decimal(10),
@@ -665,6 +673,7 @@ CREATE TABLE js_sys_role
 (
 	role_code varchar(64) NOT NULL,
 	role_name varchar(100) NOT NULL,
+	view_code varchar(100),
 	role_type varchar(100),
 	role_sort decimal(10),
 	is_sys char(1),
@@ -699,6 +708,7 @@ CREATE TABLE js_sys_role
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (role_code)
 );
 
@@ -785,6 +795,7 @@ CREATE TABLE js_sys_user
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
+	extend_json clob,
 	PRIMARY KEY (user_code)
 );
 

@@ -4,8 +4,8 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V4.3
-copyrightYear: 2021
+productVersion: V5.0
+copyrightYear: 2022
 
 # 数据库连接
 jdbc: 

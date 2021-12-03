@@ -122,6 +122,7 @@ CREATE TABLE js_sys_company
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (company_code)
 ) COMMENT = '公司表';
 
@@ -199,6 +200,7 @@ CREATE TABLE js_sys_dict_data
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (dict_code)
 ) COMMENT = '字典数据表';
 
@@ -314,6 +316,7 @@ CREATE TABLE js_sys_file_upload
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (id)
 ) COMMENT = '文件上传表';
 
@@ -424,6 +427,8 @@ CREATE TABLE js_sys_menu
 	is_show char(1) NOT NULL COMMENT '是否显示（1显示 0隐藏）',
 	sys_code varchar(64) NOT NULL COMMENT '归属系统（default:主导航菜单、mobileApp:APP菜单）',
 	module_codes varchar(500) NOT NULL COMMENT '归属模块（多个用逗号隔开）',
+	component varchar(500) COMMENT '组件路径',
+	params varchar(500) COMMENT '组件参数',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',
@@ -450,6 +455,7 @@ CREATE TABLE js_sys_menu
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (menu_code)
 ) COMMENT = '菜单表';
 
@@ -638,6 +644,7 @@ CREATE TABLE js_sys_office
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (office_code)
 ) COMMENT = '组织机构表';
 
@@ -646,6 +653,7 @@ CREATE TABLE js_sys_office
 CREATE TABLE js_sys_post
 (
 	post_code varchar(64) NOT NULL COMMENT '岗位编码',
+	view_code varchar(100) COMMENT '岗位代码',
 	post_name varchar(100) NOT NULL COMMENT '岗位名称',
 	post_type varchar(100) COMMENT '岗位分类（高管、中层、基层）',
 	post_sort decimal(10) COMMENT '岗位排序（升序）',
@@ -666,6 +674,7 @@ CREATE TABLE js_sys_role
 (
 	role_code varchar(64) NOT NULL COMMENT '角色编码',
 	role_name varchar(100) NOT NULL COMMENT '角色名称',
+	view_code varchar(100) COMMENT '角色代码',
 	role_type varchar(100) COMMENT '角色分类（高管、中层、基层、其它）',
 	role_sort decimal(10) COMMENT '角色排序（升序）',
 	is_sys char(1) COMMENT '系统内置（1是 0否）',
@@ -700,6 +709,7 @@ CREATE TABLE js_sys_role
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (role_code)
 ) COMMENT = '角色表';
 
@@ -786,6 +796,7 @@ CREATE TABLE js_sys_user
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (user_code)
 ) COMMENT = '用户表';
 

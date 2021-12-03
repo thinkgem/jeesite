@@ -12,11 +12,7 @@ import org.springframework.stereotype.Component;
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
-import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.tests.BaseInitDataTests;
-import com.jeesite.modules.gen.entity.GenTable;
-import com.jeesite.modules.gen.entity.GenTableColumn;
-import com.jeesite.modules.gen.service.GenTableService;
 import com.jeesite.modules.gen.utils.GenUtils;
 import com.jeesite.modules.job.dao.JobDao;
 import com.jeesite.modules.job.entity.JobEntity;
@@ -77,25 +73,8 @@ public class InitCoreData extends BaseInitDataTests {
 		this.initPost();
 		this.initEmpUser();
 		this.initJob();
-		this.initGenDemoData();
 		return true;
 	}
-	
-//	/**
-//	 * 建表语句执行
-//	 */
-//	public void createTable() throws Exception{
-//		runScript("core.sql");
-//		runScript("job.sql");
-//		runScript("test.sql");
-//	}
-//
-//	/**
-//	 * 清理日志表
-//	 */
-//	public void initLog() throws Exception{
-//		clearTable(Log.class);
-//	}
 	
 //	@Autowired
 //	private AreaService areaService;
@@ -373,7 +352,11 @@ public class InitCoreData extends BaseInitDataTests {
 			@Override
 			public Object execute(Object... params) {
 				String action = (String)params[0];
-				if("set".equals(action)){
+				if("check".equals(action)){
+					User user = new User();
+					user.setLoginCode("user1");
+					return userService.getByLoginCode(user) == null;
+				}else if("set".equals(action)){
 					EmpUser entity = (EmpUser)params[1];
 					String header = (String)params[2];
 					String val = (String)params[3];
@@ -384,8 +367,7 @@ public class InitCoreData extends BaseInitDataTests {
 						entity.getEmployee().setEmployeePosts(val);
 						return true;
 					}
-				}
-				else if("save".equals(action)){
+				}else if("save".equals(action)){
 					EmpUser entity = (EmpUser)params[1];
 					entity.setIsNewRecord(true);
 					empUserService.save(entity);
@@ -424,148 +406,6 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
 		job.setStatus(JobEntity.STATUS_PAUSED);
 		jobDao.insert(job);
-	}
-	
-	@Autowired
-	private GenTableService genTableService;
-	/**
-	 * 代码生成测试数据
-	 */
-	public void initGenDemoData() throws Exception{
-		if (!checkTable(GenTable.class)) {
-			return;
-		}
-		if (!checkTable(GenTableColumn.class)) {
-			return;
-		}
-		initGenTestData();
-		initGenTreeData();
-	}
-	/**
-	 * 代码生成测试数据
-	 */
-	private void initGenTestData() throws Exception{
-		GenTable genTable = new GenTable();
-		genTable.setIsNewRecord(true);
-		genTable.setTableName("test_data");
-		genTable = genTableService.getFromDb(genTable);
-		genTable.setIsNewRecord(true);
-		genTable.setClassName("TestData");
-		genTable.setFunctionAuthor("ThinkGem");
-		genTable.setTplCategory("crud");
-		genTable.setPackageName("com.jeesite.modules");
-		genTable.setModuleName("test");
-		genTable.setSubModuleName("");
-		genTable.setFunctionName("测试数据");
-		genTable.setFunctionNameSimple("数据");
-		genTable.getOptionMap().put("isHaveDisableEnable", Global.YES);
-		genTable.getOptionMap().put("isHaveDelete", Global.YES);
-		genTable.getOptionMap().put("isFileUpload", Global.YES);
-		genTable.getOptionMap().put("isImageUpload", Global.YES);
-		initGenTableColumn(genTable);
-		genTableService.save(genTable);
-		// 子表
-		GenTable genTableChild = new GenTable();
-		genTableChild.setIsNewRecord(true);
-		genTableChild.setTableName("test_data_child");
-		genTableChild = genTableService.getFromDb(genTableChild);
-		genTableChild.setIsNewRecord(true);
-		genTableChild.setClassName("TestDataChild");
-		genTableChild.setFunctionAuthor("ThinkGem");
-		genTableChild.setTplCategory("crud");
-		genTableChild.setPackageName("com.jeesite.modules");
-		genTableChild.setModuleName("test");
-		genTableChild.setSubModuleName("");
-		genTableChild.setFunctionName("测试子表");
-		genTableChild.setFunctionNameSimple("数据");
-		genTableChild.setParentTableName("test_data");
-		genTableChild.setParentTableFkName("test_data_id");
-		initGenTableColumn(genTableChild);
-		genTableService.save(genTableChild);
-	}
-	/**
-	 * 代码生成测试数据（列初始化）
-	 */
-	private void initGenTableColumn(GenTable genTable){
-		for(GenTableColumn column : genTable.getColumnList()){
-			if ("test_input".equals(column.getColumnName())
-					|| "test_textarea".equals(column.getColumnName())
-					|| "test_select".equals(column.getColumnName())
-					|| "test_select_multiple".equals(column.getColumnName())
-					|| "test_checkbox".equals(column.getColumnName())
-					|| "test_radio".equals(column.getColumnName())
-					|| "test_date".equals(column.getColumnName())
-					|| "test_datetime".equals(column.getColumnName())
-				){
-				column.setShowType(StringUtils.substringAfter(
-						column.getColumnName(), "test_"));
-				if ("test_input".equals(column.getColumnName())
-						){
-					column.setQueryType("LIKE");
-				}
-				else if ("test_textarea".equals(column.getColumnName())
-						){
-					column.setQueryType("LIKE");
-					column.getOptionMap().put("isNewLine", Global.YES);
-//					column.getOptionMap().put("gridRowCol", "12/2/10");
-				}
-				else if ("test_select".equals(column.getColumnName())
-						|| "test_select_multiple".equals(column.getColumnName())
-						|| "test_radio".equals(column.getColumnName())
-						|| "test_checkbox".equals(column.getColumnName())
-						){
-					column.getOptionMap().put("dictType", "sys_menu_type");
-					column.getOptionMap().put("dictName", "sys_menu_type");
-				}
-				else if ("test_date".equals(column.getColumnName())
-						|| "test_datetime".equals(column.getColumnName())
-						){
-					column.setQueryType("BETWEEN");
-				}
-			}else if ("test_user_code".equals(column.getColumnName())){
-				column.setAttrType("com.jeesite.modules.sys.entity.User");
-				column.setFullAttrName("testUser");
-				column.setShowType("userselect");
-			}else if ("test_office_code".equals(column.getColumnName())){
-				column.setAttrType("com.jeesite.modules.sys.entity.Office");
-				column.setFullAttrName("testOffice");
-				column.setShowType("officeselect");
-			}else if ("test_area_code".equals(column.getColumnName())){
-				column.setFullAttrName("testAreaCode|testAreaName");
-				column.setShowType("areaselect");
-			}else if ("test_area_name".equals(column.getColumnName())){
-				column.setIsEdit(Global.NO);
-				column.setIsQuery(Global.NO);
-			}else if ("test_data_id".equals(column.getColumnName())){
-				column.setFullAttrName("testData");
-			}
-		}
-	}
-	/**
-	 * 代码生成树表测试数据
-	 */
-	private void initGenTreeData() throws Exception{
-		GenTable genTable = new GenTable();
-		genTable.setIsNewRecord(true);
-		genTable.setTableName("test_tree");
-		genTable = genTableService.getFromDb(genTable);
-		genTable.setIsNewRecord(true);
-		genTable.setClassName("TestTree");
-		genTable.setFunctionAuthor("ThinkGem");
-		genTable.setTplCategory("treeGrid");
-		genTable.setPackageName("com.jeesite.modules");
-		genTable.setModuleName("test");
-		genTable.setSubModuleName("");
-		genTable.setFunctionName("测试树表");
-		genTable.setFunctionNameSimple("数据");
-		genTable.getOptionMap().put("isHaveDisableEnable", Global.YES);
-		genTable.getOptionMap().put("isHaveDelete", Global.YES);
-		genTable.getOptionMap().put("isFileUpload", Global.YES);
-		genTable.getOptionMap().put("isImageUpload", Global.YES);
-		genTable.getOptionMap().put("treeViewCode", "tree_code");
-		genTable.getOptionMap().put("treeViewName", "tree_name");
-		initGenTableColumn(genTable);
-		genTableService.save(genTable);
 	}
 	
 	@Override

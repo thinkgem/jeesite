@@ -8,8 +8,8 @@ productName: JeeSite Demo
 companyName: ThinkGem
 
 # 产品版本、版权年份
-productVersion: V4.3
-copyrightYear: 2021
+productVersion: V5.0
+copyrightYear: 2022
 
 #是否演示模式
 demoMode: false
@@ -49,7 +49,7 @@ jdbc:
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
   username: root
   password: 123456
   testSql: SELECT 1

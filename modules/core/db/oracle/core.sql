@@ -121,6 +121,7 @@ CREATE TABLE js_sys_company
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (company_code)
 );
 
@@ -198,6 +199,7 @@ CREATE TABLE js_sys_dict_data
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (dict_code)
 );
 
@@ -313,6 +315,7 @@ CREATE TABLE js_sys_file_upload
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (id)
 );
 
@@ -423,6 +426,8 @@ CREATE TABLE js_sys_menu
 	is_show char(1) NOT NULL,
 	sys_code varchar2(64) NOT NULL,
 	module_codes varchar2(500) NOT NULL,
+	component varchar2(500),
+	params varchar2(500),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -449,6 +454,7 @@ CREATE TABLE js_sys_menu
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (menu_code)
 );
 
@@ -637,6 +643,7 @@ CREATE TABLE js_sys_office
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (office_code)
 );
 
@@ -645,6 +652,7 @@ CREATE TABLE js_sys_office
 CREATE TABLE js_sys_post
 (
 	post_code varchar2(64) NOT NULL,
+	view_code varchar2(100),
 	post_name varchar2(100) NOT NULL,
 	post_type varchar2(100),
 	post_sort number(10),
@@ -665,6 +673,7 @@ CREATE TABLE js_sys_role
 (
 	role_code varchar2(64) NOT NULL,
 	role_name varchar2(100) NOT NULL,
+	view_code varchar2(100),
 	role_type varchar2(100),
 	role_sort number(10),
 	is_sys char(1),
@@ -699,6 +708,7 @@ CREATE TABLE js_sys_role
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (role_code)
 );
 
@@ -785,6 +795,7 @@ CREATE TABLE js_sys_user
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json clob,
 	PRIMARY KEY (user_code)
 );
 
@@ -1040,6 +1051,7 @@ COMMENT ON COLUMN js_sys_company.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_company.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_company.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_company.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_company.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_company_office IS '公司部门关联表';
 COMMENT ON COLUMN js_sys_company_office.company_code IS '公司编码';
 COMMENT ON COLUMN js_sys_company_office.office_code IS '机构编码';
@@ -1099,6 +1111,7 @@ COMMENT ON COLUMN js_sys_dict_data.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_dict_data.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_dict_data.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_dict_data.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_dict_data.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_dict_type IS '字典类型表';
 COMMENT ON COLUMN js_sys_dict_type.id IS '编号';
 COMMENT ON COLUMN js_sys_dict_type.dict_name IS '字典名称';
@@ -1178,6 +1191,7 @@ COMMENT ON COLUMN js_sys_file_upload.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_file_upload.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_file_upload.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_file_upload.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_file_upload.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_job IS '作业调度表';
 COMMENT ON COLUMN js_sys_job.job_name IS '任务名称';
 COMMENT ON COLUMN js_sys_job.job_group IS '任务组名';
@@ -1258,6 +1272,8 @@ COMMENT ON COLUMN js_sys_menu.weight IS '菜单权重';
 COMMENT ON COLUMN js_sys_menu.is_show IS '是否显示（1显示 0隐藏）';
 COMMENT ON COLUMN js_sys_menu.sys_code IS '归属系统（default:主导航菜单、mobileApp:APP菜单）';
 COMMENT ON COLUMN js_sys_menu.module_codes IS '归属模块（多个用逗号隔开）';
+COMMENT ON COLUMN js_sys_menu.component IS '组件路径';
+COMMENT ON COLUMN js_sys_menu.params IS '组件参数';
 COMMENT ON COLUMN js_sys_menu.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_menu.create_by IS '创建者';
 COMMENT ON COLUMN js_sys_menu.create_date IS '创建时间';
@@ -1284,6 +1300,7 @@ COMMENT ON COLUMN js_sys_menu.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_menu.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_menu.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_menu.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_menu.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_module IS '模块表';
 COMMENT ON COLUMN js_sys_module.module_code IS '模块编码';
 COMMENT ON COLUMN js_sys_module.module_name IS '模块名称';
@@ -1430,8 +1447,10 @@ COMMENT ON COLUMN js_sys_office.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_office.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_office.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_office.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_office.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_post IS '员工岗位表';
 COMMENT ON COLUMN js_sys_post.post_code IS '岗位编码';
+COMMENT ON COLUMN js_sys_post.view_code IS '岗位代码';
 COMMENT ON COLUMN js_sys_post.post_name IS '岗位名称';
 COMMENT ON COLUMN js_sys_post.post_type IS '岗位分类（高管、中层、基层）';
 COMMENT ON COLUMN js_sys_post.post_sort IS '岗位排序（升序）';
@@ -1446,6 +1465,7 @@ COMMENT ON COLUMN js_sys_post.corp_name IS '租户名称';
 COMMENT ON TABLE js_sys_role IS '角色表';
 COMMENT ON COLUMN js_sys_role.role_code IS '角色编码';
 COMMENT ON COLUMN js_sys_role.role_name IS '角色名称';
+COMMENT ON COLUMN js_sys_role.view_code IS '角色代码';
 COMMENT ON COLUMN js_sys_role.role_type IS '角色分类（高管、中层、基层、其它）';
 COMMENT ON COLUMN js_sys_role.role_sort IS '角色排序（升序）';
 COMMENT ON COLUMN js_sys_role.is_sys IS '系统内置（1是 0否）';
@@ -1480,6 +1500,7 @@ COMMENT ON COLUMN js_sys_role.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_role.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_role.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_role.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_role.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_role_data_scope IS '角色数据权限表';
 COMMENT ON COLUMN js_sys_role_data_scope.role_code IS '控制角色编码';
 COMMENT ON COLUMN js_sys_role_data_scope.ctrl_type IS '控制类型';
@@ -1548,6 +1569,7 @@ COMMENT ON COLUMN js_sys_user.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_sys_user.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_user.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_user.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_sys_user.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_sys_user_data_scope IS '用户数据权限表';
 COMMENT ON COLUMN js_sys_user_data_scope.user_code IS '控制用户编码';
 COMMENT ON COLUMN js_sys_user_data_scope.ctrl_type IS '控制类型';
