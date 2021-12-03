@@ -54,7 +54,7 @@ jdbc:
   password: 123456
   testSql: SELECT 1
 
-#  # Oracle 数据库配置
+#  # Oracle 数据库配置（若使用 12c，请修改 /modules/core/pom.xml 文件，打开 12c 依赖，去掉 11g 依赖）
 #  type: oracle
 #  driver: oracle.jdbc.OracleDriver
 #  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
@@ -70,7 +70,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # Sql Server 数据库配置（2012）
+#  # Sql Server 数据库配置（2012以上版本）（请修改 /modules/core/pom.xml 文件，打开 SqlServer 2012 依赖）
 #  type: mssql2012
 #  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite
@@ -86,7 +86,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # H2 数据库配置
+#  # H2 数据库配置（请修改 /modules/core/pom.xml 文件，打开 H2 DB 依赖）
 #  type: h2
 #  driver: org.h2.Driver
 #  url: jdbc:h2:~/jeesite-db/jeesite
