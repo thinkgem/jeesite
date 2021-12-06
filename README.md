@@ -4,10 +4,9 @@
 </p>
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite 快速开发平台</h3>
 <p align="center">
- <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V4.3" src="https://img.shields.io/badge/JeeSite-V4.3-success.svg"></a>
- <a href="https://jeesite.com/docs/feature/" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.5-blue.svg"></a>
- <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
- <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V1.2" src="https://img.shields.io/badge/JeeSite-V1.2-success.svg"></a> &nbsp;
+<a href="https://gitee.com/thinkgem/jeesite/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite/badge/star.svg?theme=gvp"></a> &nbsp;
+ <a href="https://gitee.com/thinkgem/jeesite/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite/badge/fork.svg?theme=gvp"></a>
 </p>
 
 <br/>
