@@ -1,6 +1,22 @@
-## 关注 JeeSite 4.0 请移步: <https://gitee.com/thinkgem/jeesite4>
 
-# JeeSite 企业信息化快速开发平台
+<p align="center">
+ <img alt="JeeSite" src="https://jeesite.com/assets/images/logo.png" width="120" height="120" style="margin-bottom: 10px;">
+</p>
+<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite 快速开发平台</h3>
+<p align="center">
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V4.3" src="https://img.shields.io/badge/JeeSite-V4.3-success.svg"></a>
+ <a href="https://jeesite.com/docs/feature/" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.5-blue.svg"></a>
+ <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
+</p>
+
+<br/>
+
+### 关注 JeeSite V4.0 请点击: <https://gitee.com/thinkgem/jeesite4>
+### 关注 JeeSite 微服务 请点击: <https://gitee.com/thinkgem/jeesite4-cloud>
+### 关注 JeeSite 移动端 请点击: <https://gitee.com/thinkgem/jeesite4-uniapp>
+
+<br/>
 
 ## 平台简介
 
@@ -143,7 +159,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 6. 你可以二次包装出售，**但还请保留文件中的版权和作者信息**，并在你的产品说明中注明JeeSite。
 7. 你可以以任何方式获得，你可以修改包名或类名，**但还请保留文件中的版权和作者信息**。
 
-##为何使用MyBatis
+## 为何使用MyBatis
 
 * 学习成本：Hibernate的真正掌握要比Mybatis来得难不少。Mybatis框架相对简单很容易上手，也更加灵活。
 对于学习过Hibernate的用户，学习起MyBatis也更容易上手。
