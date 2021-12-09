@@ -857,11 +857,11 @@ S2.define('select2/results',[
   };
 
   Results.prototype.highlightFirstItem = function () {
-//    var $options = this.$results
-//      .find('.select2-results__option[aria-selected]');
-//
-//    var $selected = $options.filter('[aria-selected=true]');
-//
+    var $options = this.$results
+      .find('.select2-results__option[aria-selected]');
+
+    var $selected = $options.filter('[aria-selected=true]');
+
 //    // Check if there are any selected options
 //    if ($selected.length > 0) {
 //      // If there are selected options, highlight the first
@@ -874,6 +874,12 @@ S2.define('select2/results',[
 //
 //    this.ensureHighlightVisible();
 //	  ThinkGem 禁用 First Item 高亮
+
+	// ThinkGem 当超过设置最大选择长度时，自动关闭下拉框
+	var msl = this.options.get('maximumSelectionLength');
+	if (msl > 0 && $selected.length >= msl) {
+		this.trigger('close', {});
+	}
   };
 
   Results.prototype.setClasses = function () {
@@ -4462,7 +4468,7 @@ S2.define('select2/dropdown/closeOnSelect',[
   return CloseOnSelect;
 });
 
-//ThinkGem 默认为中文
+// ThinkGem 默认为中文
 S2.define('select2/i18n/en',[],function () {
   // English
   return {
@@ -4493,9 +4499,9 @@ S2.define('select2/i18n/en',[],function () {
     maximumSelected: function (args) {
       var message = '最多只能选择 ' + args.maximum + ' 个项目';
 
-      if (args.maximum != 1) {
-        message += 's';
-      }
+      //if (args.maximum != 1) { // ThinkGem 删除多余的复数
+      //  message += 's';
+      //}
 
       return message;
     },

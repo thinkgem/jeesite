@@ -862,17 +862,24 @@ S2.define('select2/results',[
 
     var $selected = $options.filter('[aria-selected=true]');
 
-    // Check if there are any selected options
-    if ($selected.length > 0) {
-      // If there are selected options, highlight the first
-      $selected.first().trigger('mouseenter');
-    } else {
-      // If there are no selected options, highlight the first option
-      // in the dropdown
-      $options.first().trigger('mouseenter');
-    }
+//    // Check if there are any selected options
+//    if ($selected.length > 0) {
+//      // If there are selected options, highlight the first
+//      $selected.first().trigger('mouseenter');
+//    } else {
+//      // If there are no selected options, highlight the first option
+//      // in the dropdown
+//      $options.first().trigger('mouseenter');
+//    }
+//
+//    this.ensureHighlightVisible();
+//	  ThinkGem 禁用 First Item 高亮
 
-    this.ensureHighlightVisible();
+	// ThinkGem 当超过设置最大选择长度时，自动关闭下拉框
+	var msl = this.options.get('maximumSelectionLength');
+	if (msl > 0 && $selected.length >= msl) {
+		this.trigger('close', {});
+	}
   };
 
   Results.prototype.setClasses = function () {
@@ -4492,9 +4499,9 @@ S2.define('select2/i18n/en',[],function () {
     maximumSelected: function (args) {
       var message = '最多只能选择 ' + args.maximum + ' 个项目';
 
-      if (args.maximum != 1) {
-        message += 's';
-      }
+      //if (args.maximum != 1) { // ThinkGem 删除多余的复数
+      //  message += 's';
+      //}
 
       return message;
     },
@@ -5376,7 +5383,10 @@ S2.define('select2/core',[
       } else {
         if (/*key === KEYS.ENTER || */key === KEYS.SPACE || // ThinkGem 去掉回车后打开下拉框，解决jqgrid回车获取下一个输入框按键冲突
             (key === KEYS.DOWN && evt.altKey)) {
-          self.open();
+
+          if (!this.options.get('disabled')){ // 修正禁用的时候，按空格可弹窗下拉框问题
+             self.open();
+          }
 
           evt.preventDefault();
         }
