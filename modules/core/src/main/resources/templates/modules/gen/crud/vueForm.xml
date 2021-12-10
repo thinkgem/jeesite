@@ -81,6 +81,7 @@ for(c in table.columnList){
       field: 'parentCode',
       fieldLabel: 'parentName',
       component: 'TreeSelect',
+      defaultValue: '',
       componentProps: {
         allowClear: true,
         style: 'width: calc(50% - 60px)',
@@ -115,6 +116,7 @@ for (c in table.columnList){
       defaultValue: '30',
       <% }else{ %>
       component: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
+      defaultValue: '',
       <% } %>
       <% if (c.dataLength != '0'){ %>
       componentProps: {
