@@ -131,7 +131,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testCheckbox = testCheckbox;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getTestDate() {
 		return testDate;
 	}
@@ -140,7 +140,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testDate = testDate;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	public Date getTestDatetime() {
 		return testDatetime;
 	}

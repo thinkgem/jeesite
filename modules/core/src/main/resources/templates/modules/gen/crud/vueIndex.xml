@@ -20,7 +20,7 @@
         :search="true"
         :toolbar="true"
         :api="${className}TreeData"
-        :defaultExpandLevel="1"
+        :defaultExpandLevel="2"
         @select="handleSelect"
       />
     </template>

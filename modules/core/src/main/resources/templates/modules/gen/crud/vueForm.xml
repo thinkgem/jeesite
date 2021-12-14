@@ -340,13 +340,15 @@ for (c in table.columnList){
   }
   %>
       };
-      console.log('submit', params, data, record);
+      // console.log('submit', params, data, record);
       const res = await ${className}Save(params, data);
       showMessage(res.message);
       setTimeout(closeDrawer);
       emit('success', data);
     } catch (error: any) {
-      showMessage(t('您填写的信息有误，请根据提示修正。'));
+      if (error && error.errorFields) {
+        showMessage(t('您填写的信息有误，请根据提示修正。'));
+      }
       console.log('error', error);
     } finally {
       setDrawerProps({ confirmLoading: false });
