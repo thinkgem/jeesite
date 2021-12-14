@@ -32,7 +32,6 @@ import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.DateUtils;
@@ -222,15 +221,15 @@ public class JsonMapper extends ObjectMapper {
 		return this;
 	}
 
-	/**
-	 * 支持使用Jaxb的Annotation，使得POJO上的annotation不用与Jackson耦合。
-	 * 默认会先查找jaxb的annotation，如果找不到再找jackson的。
-	 */
-	public JsonMapper enableJaxbAnnotation() {
-		JaxbAnnotationModule module = new JaxbAnnotationModule();
-		this.registerModule(module);
-		return this;
-	}
+//	/**
+//	 * 支持使用Jaxb的Annotation，使得POJO上的annotation不用与Jackson耦合。
+//	 * 默认会先查找jaxb的annotation，如果找不到再找jackson的。
+//	 */
+//	public JsonMapper enableJaxbAnnotation() {
+//		JaxbAnnotationModule module = new JaxbAnnotationModule();
+//		this.registerModule(module);
+//		return this;
+//	}
 
 	/**
 	 * 取出Mapper做进一步的设置或使用其他序列化API.
