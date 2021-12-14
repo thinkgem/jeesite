@@ -144,6 +144,7 @@ var layer = {
   msg: function(content, options, end){ //最常用提示层
     var type = typeof options === 'function', rskin = ready.config.skin;
     var skin = (rskin ? rskin + ' ' + rskin + '-msg' : '')||'layui-layer-msg';
+    skin = skin + ' ' + (options.positionClass || '');
     var anim = doms.anim.length - 1;
     if(type) end = options;
     return layer.open($.extend({
@@ -152,7 +153,7 @@ var layer = {
       shade: false,
       skin: skin,
       title: false,
-      closeBtn: false,
+      closeBtn: options.time && options.time >= 5000 || false,
       btn: false,
       resize: false,
       end: end
