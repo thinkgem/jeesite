@@ -49,6 +49,7 @@
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<beetl.version>3.8-SNAPSHOT</beetl.version>
 		<swagger.version>1.6.0</swagger.version>
+		<log4j2.version>2.16.0</log4j2.version>
 		
 		<!-- jdbc setting -->
 		<!-- <mysql.version>5.1.47</mysql.version> -->
@@ -64,7 +65,7 @@
 		
 		<!-- docker setting -->
         <docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
-        <docker.imageName>${project.groupId}/${project.artifactId}:4.3</docker.imageName>
+        <docker.imageName>${project.groupId}/${project.artifactId}:5.0</docker.imageName>
         
 	</properties>
 	
@@ -289,11 +290,11 @@
 					</configuration>
 				</plugin> -->
 				
-				<!-- Docker 插件 -->
+				<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin -->
 				<plugin>
 					<groupId>io.fabric8</groupId>
 					<artifactId>docker-maven-plugin</artifactId>
-					<version>0.33.0</version>
+					<version>0.38.0</version>
 					<configuration>
 						<dockerHost>${docker.dockerHost}</dockerHost>
 						<verbose>true</verbose>
