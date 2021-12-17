@@ -22,4 +22,4 @@ ENTRYPOINT java $JAVA_OPTS -cp /app $JAVA_OPTS org.springframework.boot.loader.W
 
 EXPOSE 8980
 
-#docker run -p 8980:8980 com.jeesite/jeesite-web:4.3
+#docker run -p 8980:8980 com.jeesite/jeesite-web:5.0
