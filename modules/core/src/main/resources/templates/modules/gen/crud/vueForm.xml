@@ -36,6 +36,7 @@
   import { defineComponent, ref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
@@ -62,7 +63,6 @@ for(c in table.columnList){
 <% if(areaselectExists) { %>
   import { areaTreeData } from '/@/api/sys/area';
 <% } %>
-  import { router } from '/@/router';
 
   const emit = defineEmits(['success', 'register']);
 

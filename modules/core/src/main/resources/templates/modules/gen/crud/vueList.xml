@@ -83,6 +83,7 @@
   import { defineComponent<% if(table.isTreeEntity){ %>, watch, nextTick<% } %> } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { ${className}Delete, ${className}ListData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
@@ -113,7 +114,6 @@ for(c in table.columnList){
 <% } %>
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
-  import { router } from '/@/router';
   import InputForm from './form.vue';
 
 <% if(table.isTreeEntity){ %>
