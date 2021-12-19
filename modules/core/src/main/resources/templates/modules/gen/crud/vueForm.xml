@@ -81,7 +81,6 @@ for(c in table.columnList){
       field: 'parentCode',
       fieldLabel: 'parentName',
       component: 'TreeSelect',
-      defaultValue: '',
       componentProps: {
         allowClear: true,
         style: 'width: calc(50% - 60px)',
@@ -116,7 +115,6 @@ for (c in table.columnList){
       defaultValue: '30',
       <% }else{ %>
       component: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
-      defaultValue: '',
       <% } %>
       <% if (c.dataLength != '0'){ %>
       componentProps: {
@@ -133,7 +131,6 @@ for (c in table.columnList){
         mode: 'multiple',
         <% } %>
       },
-      defaultValue: '',
   <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
       component: '${@StringUtils.cap(c.showType)}Group',
       componentProps: {
@@ -157,7 +154,6 @@ for (c in table.columnList){
         canSelectParent: false,
         allowClear: true,
       },
-      defaultValue: '',
   <% }else if(c.showType == 'officeselect'){
       if (isNotBlank(c.attrName2)){ %>
       fieldLabel: '${c.attrName2}',
@@ -167,7 +163,6 @@ for (c in table.columnList){
         api: officeTreeData,
         allowClear: true,
       },
-      defaultValue: '',
   <% }else if(c.showType == 'areaselect'){
       if (isNotBlank(c.attrName2)){ %>
       fieldLabel: '${c.attrName2}',
@@ -177,7 +172,6 @@ for (c in table.columnList){
         api: areaTreeData,
         allowClear: true,
       },
-      defaultValue: '',
   <% }else{ %>
       component: 'Input',
   <% } 

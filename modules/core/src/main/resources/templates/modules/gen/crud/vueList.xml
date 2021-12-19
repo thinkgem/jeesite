@@ -157,7 +157,6 @@ for(c in table.columnList){
           mode: 'multiple',
           <% } %>
         },
-        defaultValue: '',
     <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
         component: '${@StringUtils.cap(c.showType)}Group',
         componentProps: {
@@ -189,21 +188,18 @@ for(c in table.columnList){
           canSelectParent: false,
           allowClear: true,
         },
-        defaultValue: '',
     <% }else if(c.showType == 'officeselect'){ %>
         component: 'TreeSelect',
         componentProps: {
           api: officeTreeData,
           allowClear: true,
         },
-        defaultValue: '',
     <% }else if(c.showType == 'areaselect'){ %>
         component: 'TreeSelect',
         componentProps: {
           api: areaTreeData,
           allowClear: true,
         },
-        defaultValue: '',
     <% }else{ %>
         component: 'Input',
     <% } %>

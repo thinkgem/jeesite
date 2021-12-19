@@ -105,6 +105,10 @@ import com.jeesite.modules.bpm.entity.BpmEntity;
 					if (c.attrName == table.treeViewNameAttrName){
 						print(', isTreeName=true');
 					}
+					if (c.isNull == @Global.YES && @StringUtils.inString(c.simpleAttrType,
+							'Long', 'Integer', 'Double', 'BigDecimal', 'Date')){
+						print(', isUpdateForce=true');
+					}
 				}
 		%>),
 		<%

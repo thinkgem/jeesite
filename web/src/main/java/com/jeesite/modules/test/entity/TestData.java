@@ -33,7 +33,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(name="test_radio", attrName="testRadio", label="单选框"),
 		@Column(name="test_checkbox", attrName="testCheckbox", label="复选框"),
 		@Column(name="test_date", attrName="testDate", label="日期选择", isUpdateForce=true/*是否强制更新（当调用update并且该属性为空的时候，允许更新为空）*/),
-		@Column(name="test_datetime", attrName="testDatetime", label="日期时间"),
+		@Column(name="test_datetime", attrName="testDatetime", label="日期时间", isUpdateForce=true),
 		@Column(name="test_user_code", attrName="testUser.userCode", label="用户选择"),
 		@Column(name="test_office_code", attrName="testOffice.officeCode", label="机构选择"),
 		@Column(name="test_area_code", attrName="testAreaCode", label="区域选择"),
