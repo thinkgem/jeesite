@@ -24,6 +24,8 @@
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
 		<nacos.version>1.4.2</nacos.version><!-- 若使用 gRPC 版本号改为 2.0.3 -->
 		<seata.version>1.4.2</seata.version>
+		<eureka.version>1.10.17</eureka.version>
+		<xstream.version>1.4.18</xstream.version>
 		
 	</properties>
 	
@@ -72,6 +74,16 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.netflix.eureka</groupId>
+				<artifactId>eureka-client</artifactId>
+				<version>${eureka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>${xstream.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
