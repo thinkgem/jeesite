@@ -52,8 +52,8 @@
 		<log4j2.version>2.17.0</log4j2.version>
 		
 		<!-- jdbc setting -->
-		<!-- <mysql.version>5.1.47</mysql.version> -->
-		<mysql.version>8.0.11</mysql.version>
+		<!-- <mysql.version>5.1.49</mysql.version> -->
+		<mysql.version>8.0.27</mysql.version>
 		
 		<!-- environment setting -->
 		<java.version>1.8</java.version>

@@ -970,7 +970,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>本级排序号（升序）</logical_name>
+			<logical_name>排序号（升序）</logical_name>
 			<physical_name>tree_sort</physical_name>
 			<type>decimal(p)</type>
 		</word>
@@ -986,7 +986,7 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>所有级别排序号</logical_name>
+			<logical_name>所有排序号</logical_name>
 			<physical_name>tree_sorts</physical_name>
 			<type>varchar(n)</type>
 		</word>

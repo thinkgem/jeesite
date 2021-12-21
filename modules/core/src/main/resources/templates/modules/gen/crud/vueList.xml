@@ -220,7 +220,7 @@ if(table.isTreeEntity){
     {
       title: t('${c.columnLabel}'),
       dataIndex: '${c.attrName}',
-      width: 250,
+      width: 230,
       align: 'left',
       slots: { customRender: 'firstColumn' },
     },
@@ -252,11 +252,11 @@ for(c in table.columnList){
       sorter: true,
     <% } %>
     <% if(firstColumn){ %>
-      width: 250,
+      width: 230,
     <% }else{ %>
-      width: 150,
+      width: 130,
     <% } %>
-    <% if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long') && !firstColumn){ %>
+    <% if ((isNotBlank(c.optionMap['dictType']) || @StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')) && !firstColumn){ %>
       align: 'center',
     <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double') && !firstColumn){ %>
       align: 'right',
