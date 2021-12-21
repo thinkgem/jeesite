@@ -59,8 +59,8 @@ public class CaptchaUtils {
 	        		
 	        		// 设置字体大小
 	        		RandomFontFactory ff = new RandomFontFactory();
-	        		ff.setMinSize(28);
-	        		ff.setMaxSize(28);
+	        		ff.setMinSize(25);
+	        		ff.setMaxSize(25);
 	        		ccs.setFontFactory(ff);
 	        		
 	        		// 设置文字渲染边距
