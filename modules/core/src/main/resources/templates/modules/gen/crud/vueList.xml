@@ -122,7 +122,7 @@ for(c in table.columnList){
   });
 
 <% } %>
-  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}/${className}');
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
   const getTitle = {
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
