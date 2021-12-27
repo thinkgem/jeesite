@@ -251,7 +251,7 @@ spring:
 #    ssl: false
 #    database: 0
 #    password: 1234
-#    timeout: 2000
+#    timeout: 20000
 #    lettuce:
 #      pool:
 #        # 最大空闲连接数
