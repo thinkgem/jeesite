@@ -41,7 +41,7 @@
 		<groovy.version>3.0.9</groovy.version>
 		
 		<!-- framework version setting -->
-		<mybatis.version>3.5.7</mybatis.version>
+		<mybatis.version>3.5.9</mybatis.version>
 		<mybatis-spring.version>2.0.6</mybatis-spring.version>
 		<jsqlparser.version>4.0</jsqlparser.version>
 		<druid.version>1.2.8</druid.version>
