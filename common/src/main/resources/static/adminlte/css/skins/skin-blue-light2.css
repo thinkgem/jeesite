@@ -5,7 +5,12 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   color:#1890ff;
 }
 .main-header .navbar {
-  background-color: #1890ff;
+  background: #1890ff;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #2684f5), color-stop(1, #1890ff));
+  background: -ms-linear-gradient(left, #2684f5, #1890ff);
+  background: -moz-linear-gradient(left top, #2684f5 0%, #1890ff 100%);
+  background: -o-linear-gradient(#1890ff, #2684f5);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1,startColorstr='#1890ff', endColorstr='#2684f5');
 }
 .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -157,7 +162,9 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   background-color: #3b8ab8;
 }
 
-.sidebar-menu .treeview-item.active > a {color:#1890ff;background-color:#e1f1ff;border-right:solid #57a6ee;}
+.sidebar-menu {padding:0 8px 0 7px;}
+.sidebar-menu li>a>.pull-right-container {left:0;}
+.sidebar-menu .treeview-item.active > a {color:#1890ff;background-color:#e1f1ff;border-right:0;border-radius:6px;}
 
 .content-wrapper, .right-side, body {background-color:#f8f8f8;}
 
@@ -173,9 +180,8 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .form-unit {border-bottom: 1px solid #eee;}
 
-.tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;
-	border-radius:3px;background:#fff;box-shadow:0 0 5px #e6e6e6;}
-.tabpanel_mover li.active {background-color:#3aa0ff;}
+.tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
+.tabpanel_mover li.active {background-color:#3aa0ff;box-shadow:0 0 5px #e6e6e6;}
 .tabpanel_mover li.active div {color:#fff;}
 .tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
 .tabpanel_mover li .closer:before {content:"\f00d";}
@@ -212,5 +218,5 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
-.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e5f3ff;}
+.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e6f7ff;}
 /* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} 解开注释，可去除表格单元格的竖边框线 */

@@ -162,7 +162,9 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   background-color: #3b8ab8;
 }
 
-.sidebar-menu .treeview-item.active > a {color:#001C6B;background-color:#e1f1ff;border-right:solid #7791ce;}
+.sidebar-menu {padding:0 8px 0 7px;}
+.sidebar-menu li>a>.pull-right-container {left:0;}
+.sidebar-menu .treeview-item.active > a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
 
 .content-wrapper, .right-side, body {background-color:#f8f8f8;}
 
@@ -178,9 +180,8 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
 .form-unit {border-bottom: 1px solid #eee;}
 
-.tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;
-	border-radius:3px;background:#fff;box-shadow:0 0 5px #e6e6e6;}
-.tabpanel_mover li.active {background-color:#1e5edb;}
+.tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
+.tabpanel_mover li.active {background-color:#1e5edb;box-shadow:0 0 5px #e6e6e6;}
 .tabpanel_mover li.active div {color:#fff;}
 .tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
 .tabpanel_mover li .closer:before {content:"\f00d";}
@@ -210,12 +211,12 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-control:focus,.select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field,
 .select2-container--default.select2-container--focus .select2-selection--single,
-.select2-container--default.select2-container--focus .select2-selection--multiple {border-color:#40a9ff!important;box-shadow:0 0 0 2px rgba(24,144,255,.2);}
+.select2-container--default.select2-container--focus .select2-selection--multiple {border-color:#557bfa!important;box-shadow:0 0 0 2px rgba(24,80,236,.2);}
 .table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#f6f6f6;}
 .ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column,
 .ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid .ui-widget-content, .ui-jqgrid tr.ui-row-ltr td,
 .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
-.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e5f3ff;}
+.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#f0f5ff;}
 /* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} 解开注释，可去除表格单元格的竖边框线 */
