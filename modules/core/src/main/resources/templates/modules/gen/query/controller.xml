@@ -155,15 +155,21 @@ public class ${ClassName}Controller extends BaseController {
 	/**
 	 * 获取树结构数据
 	 * @param excludeCode 排除的Code
+	 * @param parentCode 设置父级编码返回一级
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @return
 	 */
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode) {
+	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		List<${ClassName}> list = ${className}Service.findList(new ${ClassName}());
+		${ClassName} where = new ${ClassName}();
+		where.setStatus(${ClassName}.STATUS_NORMAL);
+		if (StringUtils.isNotBlank(parentCode)){
+			where.setParentCode(parentCode);
+		}
+		List<${ClassName}> list = ${className}Service.findList(where);
 		for (int i=0; i<list.size(); i++){
 			${ClassName} e = list.get(i);
 			<% if (table.statusExists){ %>
@@ -185,6 +191,7 @@ public class ${ClassName}Controller extends BaseController {
 			map.put("id", e.getId());
 			map.put("pId", e.getParentCode());
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.get${@StringUtils.cap(table.treeViewCodeAttrName)}(), e.get${@StringUtils.cap(table.treeViewNameAttrName)}()));
+			map.put("isParent", !e.getIsTreeLeaf());
 			mapList.add(map);
 		}
 		return mapList;

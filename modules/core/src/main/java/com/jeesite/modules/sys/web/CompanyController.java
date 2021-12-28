@@ -212,6 +212,7 @@ public class CompanyController extends BaseController {
 	/**
 	 * 获取公司树结构数据
 	 * @param excludeCode 排除的ID
+	 * @param parentCode 设置父级编码返回一级
 	 * @param isAll 是否显示所有机构（true：不进行权限过滤）
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @param isShowFullName 是否显示全公司名称
@@ -220,11 +221,14 @@ public class CompanyController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, Boolean isAll, String isShowCode,
+	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, Boolean isAll, String isShowCode,
 			String isShowFullName, String ctrlPermi) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		Company where = new Company();
 		where.setStatus(Company.STATUS_NORMAL);
+		if (StringUtils.isNotBlank(parentCode)){
+			where.setParentCode(parentCode);
+		}
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			companyService.addDataScopeFilter(where, ctrlPermi);
 		}
@@ -254,6 +258,7 @@ public class CompanyController extends BaseController {
 			map.put("code", e.getViewCode());
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getViewCode(), name));
 			map.put("title", e.getFullName());
+			map.put("isParent", !e.getIsTreeLeaf());
 			mapList.add(map);
 		}
 		return mapList;

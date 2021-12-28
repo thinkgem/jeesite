@@ -267,8 +267,8 @@ public class OfficeController extends BaseController {
 
 	/**
 	 * 获取机构树结构数据
-	 * @param excludeCode		排除的ID
-	 * @param parentCode	上级Code
+	 * @param excludeCode	排除的ID
+	 * @param parentCode 	设置父级编码返回一级
 	 * @param isAll			是否显示所有机构（true：不进行权限过滤）
 	 * @param officeTypes	机构类型（1：省级公司；2：市级公司；3：部门）
 	 * @param companyCode	仅查询公司下的机构
@@ -328,10 +328,8 @@ public class OfficeController extends BaseController {
 			map.put("code", e.getViewCode());
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getViewCode(), name));
 			map.put("title", e.getFullName());
-			// 如果需要加载用户，则处理用户数据
-			if (StringUtils.inString(isLoadUser, "true", "lazy")) {
-				map.put("isParent", true);
-			}
+			// 返回是否是父节点，如果需要加载用户，则全部都是父节点，来加载用户数据
+			map.put("isParent", !e.getIsTreeLeaf() || StringUtils.inString(isLoadUser, "true", "lazy"));
 			mapList.add(map);
 		}
 		// 一次性后台加载用户，若数据量比较大，建议使用懒加载

@@ -219,11 +219,12 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String excludeCode, String isShowCode, String parentCode) {
+	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
 		List<Area> list = null;
 		if (StringUtils.isNotBlank(parentCode)){
 			Area where = new Area();
+			where.setStatus(Area.STATUS_NORMAL);
 			where.setParentCode(parentCode);
 			list = areaService.findList(where);
 		}else{
