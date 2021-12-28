@@ -26,6 +26,12 @@ import org.springframework.core.NamedThreadLocal;
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
+	private static final boolean isJavaSerialize; 
+	
+	static {
+		String[] ver = StringUtils.split(System.getProperty("java.version"), '.');
+		isJavaSerialize = ver.length > 0 && Integer.parseInt(ver[0]) > 1;
+	}
 	
 	/**
 	 * 转换为 Double 类型
@@ -155,7 +161,11 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @return
 	 */
 	public static byte[] serialize(Object object) {
-		return ObjectUtils.serializeFst(object);
+		if (isJavaSerialize) {
+			return ObjectUtils.serializeJava(object);
+		}else {
+			return ObjectUtils.serializeFst(object);
+		}
 	}
 
 	/**
@@ -164,7 +174,11 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * @return
 	 */
 	public static Object unserialize(byte[] bytes) {
-		return ObjectUtils.unserializeFst(bytes);
+		if (isJavaSerialize) {
+			return ObjectUtils.unserializeJava(bytes);
+		}else {
+			return ObjectUtils.unserializeFst(bytes);
+		}
 	}
 	
 	/**
