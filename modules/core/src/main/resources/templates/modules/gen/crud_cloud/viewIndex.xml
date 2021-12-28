@@ -42,6 +42,7 @@ $('body').layout({
 var win = $("#mainFrame")[0].contentWindow;
 // 树结构初始化加载
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
+	async:{enable:true,autoParam:["id=parentCode"],url:"\${ctx}/${urlPrefix}/treeData"},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
 		//win.$('button[type=reset]').click();
@@ -51,18 +52,17 @@ var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{
 		win.page();
 	}}
 }, tree, loadTree = function(){
-	js.ajaxSubmit("\${ctx}/${urlPrefix}/treeData?___t=" + new Date().getTime(), function(data){
-		tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
-		// 展开第一级节点
-		var nodes = tree.getNodesByParam("level", 0);
-		for(var i=0; i<nodes.length; i++) {
-			tree.expandNode(nodes[i], true, false, false);
+	js.ajaxSubmit(setting.async.url+"?___t="+new Date().getTime(), {
+			parentCode:'\${parameter.parentCode!}'}, function(data){
+		tree = $.fn.zTree.init($("#tree"), setting, data);
+		var level = -1, nodes;
+		while (++level <= 1) {
+			nodes = tree.getNodesByParam("level", level);
+			if (nodes.length > 10) { break; }
+			for(var i=0; i<nodes.length; i++) {
+	 			tree.expandNode(nodes[i], true, false, false);
+			}
 		}
-		// 展开第二级节点
-// 		nodes = tree.getNodesByParam("level", 1);
-// 		for(var i=0; i<nodes.length; i++) {
-// 			tree.expandNode(nodes[i], true, false, false);
-// 		}
 	}, null, null, js.text('loading.message'));
 };loadTree();
 // 工具栏按钮绑定

@@ -148,17 +148,15 @@ var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 			url = "${ctx}/sys/role/treeData?isAll=${parameter.isAll}&userType=__all&___t=" + new Date().getTime();
 		}
 		js.ajaxSubmit(url, {ctrlPermi:'1'/*1拥有的权限 2管理的权限*/}, function(data){
-			tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
-			// 展开第一级节点
-			var nodes = tree.getNodesByParam("level", 0);
-			for(var i=0; i<nodes.length; i++) {
-				tree.expandNode(nodes[i], true, false, false);
+			tree = $.fn.zTree.init($("#tree"), setting, data);
+			var level = -1, nodes;
+			while (++level <= 1) {
+				nodes = tree.getNodesByParam("level", level);
+				if (nodes.length > 10) { break; }
+				for(var i=0; i<nodes.length; i++) {
+		 			tree.expandNode(nodes[i], true, false, false);
+				}
 			}
-			// 展开第二级节点
-//	 		nodes = tree.getNodesByParam("level", 1);
-//	 		for(var i=0; i<nodes.length; i++) {
-//	 			tree.expandNode(nodes[i], true, false, false);
-//	 		}
 		}, null, null, js.text('loading.message'));
 	}
 };loadTree();

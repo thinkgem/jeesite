@@ -84,7 +84,10 @@ $('#dataGrid').dataGrid({
 	defaultExpandLevel: 0,	// 默认展开的层次
 	expandNodeClearPostData: 'areaCode,areaName,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+		if ($('#areaCode').val() != ''){
+			$('#areaCode').val('');
+			$('#btnExpandTreeNode').click();
+		}
 	}
 });
 </script>
