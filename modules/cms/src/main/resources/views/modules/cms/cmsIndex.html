@@ -73,17 +73,15 @@ var setting = {
 }, tree, loadTree = function() {
 	js.ajaxSubmit("${ctx}/cms/category/treeData?___t="
 			+ new Date().getTime(), { }, function(data) {
-		tree = $.fn.zTree.init($("#tree"), setting, data);//.expandAll(true);
-		// 展开第一级节点
-		var nodes = tree.getNodesByParam("level", 0);
-		for (var i = 0; i < nodes.length; i++) {
-			tree.expandNode(nodes[i], true, false, false);
+		tree = $.fn.zTree.init($("#tree"), setting, data);
+		var level = -1, nodes;
+		while (++level <= 1) {
+			nodes = tree.getNodesByParam("level", level);
+			if (nodes.length > 10) { break; }
+			for(var i=0; i<nodes.length; i++) {
+	 			tree.expandNode(nodes[i], true, false, false);
+			}
 		}
-		// 展开第二级节点
-// 		nodes = tree.getNodesByParam("level", 1);
-// 		for(var i=0; i<nodes.length; i++) {
-// 			tree.expandNode(nodes[i], true, false, false);
-// 		}
 	}, null, null, js.text('loading.message'));
 };
 loadTree();
