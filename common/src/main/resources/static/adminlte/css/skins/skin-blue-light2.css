@@ -180,7 +180,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
 .form-unit {border-bottom: 1px solid #eee;}
 
-.tabpanel_mover li {padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
+.tabpanel_mover li {height:26px;padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
 .tabpanel_mover li.active {background-color:#3aa0ff;box-shadow:0 0 5px #e6e6e6;}
 .tabpanel_mover li.active div {color:#fff;}
 .tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
