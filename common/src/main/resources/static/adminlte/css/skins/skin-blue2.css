@@ -10,7 +10,6 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   background: -ms-linear-gradient(left, #1951be, #2780ec);
   background: -moz-linear-gradient(left top, #1951be 0%, #2780ec 100%);
   background: -o-linear-gradient(#2780ec, #1951be);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1,startColorstr='#2780ec', endColorstr='#1951be');
 }
 .main-header .navbar .nav > li > a {
   color: #ffffff;
