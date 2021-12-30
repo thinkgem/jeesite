@@ -114,7 +114,7 @@
 									// 如果为自定义主键，则第一个pk字段需输出isNewRecord
 									if (c.isPk == '1' && table.pkList[0].columnName == c.columnName){
 							%><${'#'}form:hidden path="isNewRecord"/>
-							<%
+								<%
 									}
 							%><${'#'}form:input path="${c.attrName}"${attrs} class="form-control${cssClass}"/>
 							<%

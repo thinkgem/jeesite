@@ -295,7 +295,7 @@ var roleGrid = $("#roleGrid").dataGrid({
 <% } %>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { // 获取选中角色  %>
+		<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
 		<% } %>
 		var empNo = $('#employee_empNo').val();
