@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueIndex</name>
-	<filePath>vue/src/views/${urlPrefix}</filePath>
+	<filePath>src/views/${urlPrefix}</filePath>
 	<fileName>index.vue</fileName>
 	<content><![CDATA[
 <% if(table.isTreeEntity){ %>

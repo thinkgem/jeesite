@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueList</name>
-	<filePath>vue/src/views/${urlPrefix}</filePath>
+	<filePath>src/views/${urlPrefix}</filePath>
 	<fileName>list.vue</fileName>
 	<content><![CDATA[
 <!--
@@ -19,7 +19,7 @@
         <span> {{ getTitle.value }} </span>
       </template>
       <template #toolbar>
-      	<% if(table.isTreeEntity){ %>
+        <% if(table.isTreeEntity){ %>
         <a-button @click="expandAll" :title="t('展开一级')">
           <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
@@ -33,14 +33,14 @@
       </template>
       <template #firstColumn="{ record }">
 <%
-	var idParam = '';
-	for(pk in table.pkList){
-		idParam = idParam + pk.attrName + ': record.' + pk.attrName;
-		if (pkLP.index == table.pkList.~size - 1) {
-			idParam = idParam + ', ';
-		}
-	}
-	if(table.isTreeEntity){
+var idParam = '';
+for(pk in table.pkList){
+  idParam = idParam + pk.attrName + ': record.' + pk.attrName;
+  if (pkLP.index == table.pkList.~size - 1) {
+    idParam = idParam + ', ';
+  }
+}
+if(table.isTreeEntity){
 %>
         <span class="cursor-pointer" @click="expandCollapse(record)">
           ( {{ record.${table.treeViewCodeAttrName} }} )
@@ -49,25 +49,25 @@
           {{ record.${table.treeViewNameAttrName} }}
         </a>
 <%
-	}else{
-		for(c in table.columnList){ 
-			if(c.isList == "1"){
-				// 如果是树结构的字段，则自动忽略
-				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
-					'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
-						&& c.attrName != table.treeViewCodeAttrName
-						&& c.attrName != table.treeViewNameAttrName){
-					continue;
-				}
+}else{
+  for(c in table.columnList){ 
+    if(c.isList == "1"){
+      // 如果是树结构的字段，则自动忽略
+      if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+        'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+          && c.attrName != table.treeViewCodeAttrName
+          && c.attrName != table.treeViewNameAttrName){
+        continue;
+      }
 %>
         <a @click="handleForm({ ${idParam} })">
           {{ record.${c.attrName} }}
         </a>
 <%
-				break;
-			}
-		}
-	}
+      break;
+    }
+  }
+}
 %>
       </template>
     </BasicTable>
@@ -95,15 +95,15 @@ var userselectExists = false;
 var officeselectExists = false;
 var areaselectExists = false;
 for(c in table.columnList){
-	if(c.isQuery == "1" && !c.isTreeEntityColumn){
-		if(c.showType == 'userselect'){
-			userselectExists = true;
-		}else if(c.showType == 'officeselect'){
-			officeselectExists = true;
-		}else if(c.showType == 'areaselect'){
-			areaselectExists = true;
-		}
-	}
+  if(c.isQuery == "1" && !c.isTreeEntityColumn){
+    if(c.showType == 'userselect'){
+      userselectExists = true;
+    }else if(c.showType == 'officeselect'){
+      officeselectExists = true;
+    }else if(c.showType == 'areaselect'){
+      areaselectExists = true;
+    }
+  }
 }
 %>
 <% if(userselectExists || officeselectExists) { %>
@@ -148,7 +148,7 @@ for(c in table.columnList){
         component: 'Input',
       <% } %>
     <% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
-		var isMultiple = (c.showType == 'select_multiple'); %>
+    var isMultiple = (c.showType == 'select_multiple'); %>
         component: 'Select',
         componentProps: {
           dictType: '${c.optionMap['dictType']}',
@@ -163,7 +163,7 @@ for(c in table.columnList){
           dictType: '${c.optionMap['dictType']}',
         },
     <% }else if(c.showType == 'date' || c.showType == 'datetime'){
-		var isTime = (c.showType == 'datetime'); %>
+    var isTime = (c.showType == 'datetime'); %>
         component: 'DatePicker',
         componentProps: {
           format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
@@ -214,9 +214,9 @@ for(c in table.columnList){
 var firstColumn = true;
 // 生成树表的节点列
 if(table.isTreeEntity){
-	for(c in table.columnList){
-		if(c.attrName == table.treeViewNameAttrName){
-		%>
+  for(c in table.columnList){
+    if(c.attrName == table.treeViewNameAttrName){
+    %>
     {
       title: t('${c.columnLabel}'),
       dataIndex: '${c.attrName}',
@@ -224,21 +224,21 @@ if(table.isTreeEntity){
       align: 'left',
       slots: { customRender: 'firstColumn' },
     },
-		<%
-			firstColumn = false;
-			break;
-		}
-	}
+    <%
+      firstColumn = false;
+      break;
+    }
+  }
 }
 for(c in table.columnList){
-	if(c.isList == "1"){
-		// 如果是树结构的字段，则自动忽略
-		if(table.isTreeEntity && (@StringUtils.inString(c.columnName, 'parent_code',
-			'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
-				|| c.attrName == table.treeViewCodeAttrName
-				|| c.attrName == table.treeViewNameAttrName)){
-			continue;
-		}
+  if(c.isList == "1"){
+    // 如果是树结构的字段，则自动忽略
+    if(table.isTreeEntity && (@StringUtils.inString(c.columnName, 'parent_code',
+      'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+        || c.attrName == table.treeViewCodeAttrName
+        || c.attrName == table.treeViewNameAttrName)){
+      continue;
+    }
 %>
     {
       title: t('${c.columnLabel}'),
@@ -271,10 +271,10 @@ for(c in table.columnList){
     <% } %>
     },
 <%
-		if(firstColumn){
-			firstColumn = false;
-		}
-	}
+    if(firstColumn){
+      firstColumn = false;
+    }
+  }
 }
 %>
   ];
@@ -342,11 +342,11 @@ for(c in table.columnList){
   const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %> }] = useTable({
     api: ${className}ListData,
     beforeFetch: (params) => {
-      <% if(table.isTreeEntity){ %>
-		<% for(pk in table.pkList){ %>
+  <% if(table.isTreeEntity){ %>
+    <% for(pk in table.pkList){ %>
       params.${pk.attrName} = props.treeCode;
-		<% } %>
-      <% } %>
+    <% } %>
+  <% } %>
       return params;
     },
     columns: tableColumns,
