@@ -187,3 +187,4 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 	padding-top:3px;padding-bottom:10px;}
 .layui-layer-btn .layui-layer-btn0{border-color:#367fa9;background-color:#367fa9;}
 .layui-layer-btn a {height:auto;padding:0 12px;font-size:13px;background-color:#f4f4f4;}
+.layui-layer.toast-top-full-width {min-width: 60%;}

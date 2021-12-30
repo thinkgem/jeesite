@@ -141,9 +141,11 @@ var layer = {
     }, type ? {} : options));
   },
   
-  msg: function(content, options, end){ //最常用提示层
+  //最常用提示层
+  msg: function(content, options, end){
     var type = typeof options === 'function', rskin = ready.config.skin;
     var skin = (rskin ? rskin + ' ' + rskin + '-msg' : '')||'layui-layer-msg';
+    options = options || {};
     skin = skin + ' ' + (options.positionClass || '');
     var anim = doms.anim.length - 1;
     if(type) end = options;
