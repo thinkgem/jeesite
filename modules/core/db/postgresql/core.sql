@@ -19,6 +19,7 @@ CREATE TABLE js_gen_table
 	function_name_simple varchar(50),
 	function_author varchar(50),
 	gen_base_dir varchar(1000),
+	gen_front_dir varchar(1000),
 	options varchar(1000),
 	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -967,6 +968,7 @@ COMMENT ON COLUMN js_gen_table.function_name IS '生成功能名';
 COMMENT ON COLUMN js_gen_table.function_name_simple IS '生成功能名（简写）';
 COMMENT ON COLUMN js_gen_table.function_author IS '生成功能作者';
 COMMENT ON COLUMN js_gen_table.gen_base_dir IS '生成基础路径';
+COMMENT ON COLUMN js_gen_table.gen_front_dir IS '生成前端路径';
 COMMENT ON COLUMN js_gen_table.options IS '其它生成选项';
 COMMENT ON COLUMN js_gen_table.create_by IS '创建者';
 COMMENT ON COLUMN js_gen_table.create_date IS '创建时间';

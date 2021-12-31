@@ -19,6 +19,7 @@ CREATE TABLE js_gen_table
 	function_name_simple vargraphic(50),
 	function_author vargraphic(50),
 	gen_base_dir vargraphic(1000),
+	gen_front_dir vargraphic(1000),
 	options vargraphic(1000),
 	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,

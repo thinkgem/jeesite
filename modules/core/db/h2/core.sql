@@ -19,6 +19,7 @@ CREATE TABLE js_gen_table
 	function_name_simple varchar(50),
 	function_author varchar(50),
 	gen_base_dir varchar(1000),
+	gen_front_dir varchar(1000),
 	options varchar(1000),
 	create_by varchar(64) NOT NULL,
 	create_date datetime NOT NULL,

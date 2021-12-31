@@ -19,6 +19,7 @@ CREATE TABLE [js_gen_table]
 	[function_name_simple] nvarchar(50),
 	[function_author] nvarchar(50),
 	[gen_base_dir] nvarchar(1000),
+	[gen_front_dir] nvarchar(1000),
 	[options] nvarchar(1000),
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,

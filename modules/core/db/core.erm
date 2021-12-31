@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>226</x>
-	<y>0</y>
+	<y>1459</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -1765,6 +1765,22 @@
 			<description>生成基础路径</description>
 			<logical_name>生成基础路径</logical_name>
 			<physical_name>gen_base_dir</physical_name>
+			<type>nvarchar(n)</type>
+		</word>
+		<word>
+			<id>7712e202512f61edb425833d0b81860dc3816839</id>
+			<length>1000</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
+			<char_semantics>false</char_semantics>
+			<description>生成前端路径</description>
+			<logical_name>生成前端路径</logical_name>
+			<physical_name>gen_front_dir</physical_name>
 			<type>nvarchar(n)</type>
 		</word>
 		<word>
@@ -3960,7 +3976,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>be17e27c1f73fe128f00468cc83953077b7e00a9</id>
+			<id>16c9c333062ea3614d2e044803b872676c8a5377</id>
 			<length>10</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -3976,7 +3992,7 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
-			<id>b0bd388c14e5b2bbab9590f5247961a7edd9eb3b</id>
+			<id>312c35e49a1de2ac558655550904b2d4e275322f</id>
 			<length>1000</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -10117,6 +10133,39 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
+					<word_id>7712e202512f61edb425833d0b81860dc3816839</word_id>
+					<id>3799e5c5b6d2f6a32674f79ecaa5fb1463bf6475</id>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>nvarchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>false</foreign_key>
+					<not_null>false</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
 					<word_id>688b0f7ac0036d32e75f7da7a74d307c976be2ab</word_id>
 					<id>e8f6148deaa56e9cde72c0ee2f693ba95ca4dcf7</id>
 					<description></description>
@@ -10187,7 +10236,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>13d5d16ad388cc5aa4c3a6c57b1088ee84f7dbd1</id>
+					<id>e9f3accd1161baceb4bf0ff27e2734fe932b31a0</id>
 					<source>c58a967b7958dfa2351079a5cf55aa97da99ae82</source>
 					<target>28d6a068ed90b37e3f2ccb30d9c0bd332591bce4</target>
 						<source_xp>-1</source_xp>
@@ -10252,7 +10301,7 @@
 				<normal_column>
 					<id>abd5fc5f0bb213daae3de2abc362c5aea5276f4d</id>
 					<referenced_column>a3c67705fc3d118ba46b7f57c9b24fbf0505d7b9</referenced_column>
-					<relation>13d5d16ad388cc5aa4c3a6c57b1088ee84f7dbd1</relation>
+					<relation>e9f3accd1161baceb4bf0ff27e2734fe932b31a0</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -18706,7 +18755,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>be17e27c1f73fe128f00468cc83953077b7e00a9</word_id>
+						<word_id>16c9c333062ea3614d2e044803b872676c8a5377</word_id>
 						<id>23f973124aedd0244533f4e7b3b103c548b966be</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -18739,7 +18788,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>b0bd388c14e5b2bbab9590f5247961a7edd9eb3b</word_id>
+						<word_id>312c35e49a1de2ac558655550904b2d4e275322f</word_id>
 						<id>984d5eac2b3221118a61655e4a5a49c78e0f0151</id>
 						<description></description>
 						<unique_key_name></unique_key_name>

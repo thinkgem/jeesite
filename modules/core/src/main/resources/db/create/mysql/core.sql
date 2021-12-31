@@ -20,6 +20,7 @@ CREATE TABLE ${_prefix}gen_table
 	function_name_simple varchar(50) COMMENT '生成功能名（简写）',
 	function_author varchar(50) COMMENT '生成功能作者',
 	gen_base_dir varchar(1000) COMMENT '生成基础路径',
+	gen_front_dir varchar(1000) COMMENT '生成前端路径',
 	options varchar(1000) COMMENT '其它生成选项',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',
