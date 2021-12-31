@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>pom</name>
-	<filePath>${module.moduleCode}</filePath>
+	<filePath>${baseDir}/${moduleCode}</filePath>
 	<fileName>pom.xml</fileName>
 	<charset></charset>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -18,10 +18,10 @@
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-module-${module.moduleCode}</artifactId>
+	<artifactId>jeesite-module-${moduleCode}</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>JeeSite Module ${module.moduleName}</name>
+	<name>JeeSite Module ${moduleName}</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	

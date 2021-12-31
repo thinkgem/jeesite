@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>package</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}-client/bin</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}-client/bin</filePath>
 	<fileName>package.sh</fileName>
 	<content><![CDATA[#!/bin/sh
 # /**

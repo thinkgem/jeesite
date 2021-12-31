@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>Dockerfile</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}/bin/docker</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}/bin/docker</filePath>
 	<fileName>Dockerfile</fileName>
 	<content><![CDATA[FROM frolvlad/alpine-java:jdk8-slim
 MAINTAINER ThinkGem@163.com
@@ -28,7 +28,7 @@ ENTRYPOINT java $JAVA_OPTS -cp /app $JAVA_OPTS org.springframework.boot.loader.W
 
 EXPOSE 8983
 
-#docker run -p 8983:8983 com.jeesite/jeesite-cloud-module-${module.moduleCode}:4.2
+#docker run -p 8983:8983 com.jeesite/jeesite-cloud-module-${moduleCode}:4.2
 ]]>
 	</content>
 </template>

@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>app</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}/bin/docker</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}/bin/docker</filePath>
 	<fileName>app</fileName>
 	<content><![CDATA[    
 #======================================#

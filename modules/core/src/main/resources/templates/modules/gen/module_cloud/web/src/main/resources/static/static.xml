@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>static</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}/src/main/resources/static/modules/${module.moduleCode}</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/static/modules/${moduleCode}</filePath>
 	<fileName></fileName>
 	<content><![CDATA[
 

@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>start-class</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}/src/main/java/com/jeesite/modules</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/java/com/jeesite/modules</filePath>
 	<fileName>${@StringUtils.cap(module.moduleCode)}Application.java</fileName>
 	<content><![CDATA[/**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.

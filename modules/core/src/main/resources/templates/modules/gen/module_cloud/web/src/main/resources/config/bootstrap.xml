@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>bootstrap</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}/src/main/resources/config</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
 	<fileName>bootstrap.yml</fileName>
 	<content><![CDATA[
 #======================================#
@@ -41,7 +41,7 @@ spring:
   
   # 应用程序名称
   application:
-    name: jeesite-cloud-module-${module.moduleCode}
+    name: jeesite-cloud-module-${moduleCode}
 
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:

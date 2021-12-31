@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>versions</name>
-	<filePath>${module.moduleCode}/src/main/resources/db/upgrade/${module.moduleCode}</filePath>
+	<filePath>${baseDir}/${moduleCode}/src/main/resources/db/upgrade/${moduleCode}</filePath>
 	<fileName>versions</fileName>
 	<content><![CDATA[${module.currentVersion}]]>
 	</content>

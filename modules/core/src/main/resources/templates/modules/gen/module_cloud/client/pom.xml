@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>pom</name>
-	<filePath>${module.moduleCode}/${module.moduleCode}-client</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}-client</filePath>
 	<fileName>pom.xml</fileName>
 	<charset></charset>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -18,10 +18,10 @@
 		<relativePath>../../../parent/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-cloud-module-${module.moduleCode}-client</artifactId>
+	<artifactId>jeesite-cloud-module-${moduleCode}-client</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>JeeSite Cloud Module ${module.moduleName} Client</name>
+	<name>JeeSite Cloud Module ${moduleName} Client</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	

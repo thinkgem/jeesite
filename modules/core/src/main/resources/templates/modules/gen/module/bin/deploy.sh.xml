@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>deploy</name>
-	<filePath>${module.moduleCode}/bin</filePath>
+	<filePath>${baseDir}/${moduleCode}/bin</filePath>
 	<fileName>deploy.sh</fileName>
 	<content><![CDATA[#!/bin/sh
 # /**
