@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueApi</name>
-	<filePath>src/api/${moduleName}/${subModuleName}</filePath>
+	<filePath>${frontDir}/src/api/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}.ts</fileName>
 	<content><![CDATA[
 /**

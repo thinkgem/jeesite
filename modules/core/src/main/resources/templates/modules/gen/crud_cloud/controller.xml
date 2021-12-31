@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>controller</name>
-	<filePath>${moduleName}/src/main/java/${packageName}/${moduleName}/web/${subModuleName}</filePath>
+	<filePath>${baseDir}/${moduleName}/src/main/java/${packagePath}/${moduleName}/web/${subModuleName}</filePath>
 	<fileName>${ClassName}Controller.java</fileName>
 	<content><![CDATA[
 package ${packageName}.${moduleName}.web${isNotEmpty(subModuleName)?'.'+subModuleName:''};

@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>dao</name>
-	<filePath>src/main/java/${packageName}/${moduleName}/dao/${subModuleName}</filePath>
+	<filePath>${baseDir}/src/main/java/${packagePath}/${moduleName}/dao/${subModuleName}</filePath>
 	<fileName>${ClassName}Dao.java</fileName>
 	<content><![CDATA[
 package ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModuleName:''};

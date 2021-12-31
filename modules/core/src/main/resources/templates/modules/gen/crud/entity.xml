@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>entity</name>
-	<filePath>src/main/java/${packageName}/${moduleName}/entity/${subModuleName}</filePath>
+	<filePath>${baseDir}/src/main/java/${packagePath}/${moduleName}/entity/${subModuleName}</filePath>
 	<fileName>${ClassName}.java</fileName>
 	<content><![CDATA[
 package ${packageName}.${moduleName}.entity${isNotBlank(subModuleName)?'.'+subModuleName:''};

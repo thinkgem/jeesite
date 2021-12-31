@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>viewSelect</name>
-	<filePath>src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<filePath>${frontDir}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}Select.html</fileName>
 	<content><![CDATA[
 \<% layout('/layouts/default.html', {title: '${functionNameSimple}管理', libs: ['dataGrid']}){ %>

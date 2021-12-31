@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>service</name>
-	<filePath>${moduleName}/src/main/java/${packageName}/${moduleName}/service/${subModuleName}</filePath>
+	<filePath>${baseDir}/${moduleName}/src/main/java/${packagePath}/${moduleName}/service/${subModuleName}</filePath>
 	<fileName>${ClassName}Service.java</fileName>
 	<content><![CDATA[
 package ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''};

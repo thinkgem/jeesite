@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>client</name>
-	<filePath>${moduleName}-client/src/main/java/${packageName}/${moduleName}/client/${subModuleName}</filePath>
+	<filePath>${baseDir}/${moduleName}-client/src/main/java/${packagePath}/${moduleName}/client/${subModuleName}</filePath>
 	<fileName>${ClassName}ServiceClient.java</fileName>
 	<content><![CDATA[
 package ${packageName}.${moduleName}.client${isNotEmpty(subModuleName)?'.'+subModuleName:''};

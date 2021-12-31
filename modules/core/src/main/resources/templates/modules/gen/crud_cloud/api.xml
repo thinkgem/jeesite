@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>controller</name>
-	<filePath>${moduleName}-client/src/main/java/${packageName}/${moduleName}/api/${subModuleName}</filePath>
+	<filePath>${baseDir}/${moduleName}-client/src/main/java/${packagePath}/${moduleName}/api/${subModuleName}</filePath>
 	<fileName>${ClassName}ServiceApi.java</fileName>
 	<content><![CDATA[
 package ${packageName}.${moduleName}.api${isNotEmpty(subModuleName)?'.'+subModuleName:''};

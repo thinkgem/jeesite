@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>mapper</name>
-	<filePath>src/main/resources/mappings/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<filePath>${baseDir}/src/main/resources/mappings/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${ClassName}Dao.xml</fileName>
 	<content><![CDATA[
 <?xml version="1.0" encoding="UTF-8" ?>

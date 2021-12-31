@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueForm</name>
-	<filePath>src/views/${urlPrefix}</filePath>
+	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
 	<fileName>form.vue</fileName>
 	<content><![CDATA[
 <!--
