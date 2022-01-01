@@ -43,7 +43,7 @@ spring:
           username: ~
           password: ~
           default-label: master
-          search-paths: jeesite-cloud-43
+          search-paths: jeesite-cloud-50
           
     # Consul 服务发现
     consul:

@@ -131,7 +131,7 @@ db.password: 123456
 
 浏览器访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
 
-登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-43.zip` 上传文件。
+登录后，进入菜单 `配置管理 -> 配置列表` 点击 `导入配置` 按钮，选择 `/config/src/main/resources/jeesite-cloud-50.zip` 上传文件。
 
 然后编辑 Data Id 为 `application.yml` 的文件里的 JDBC 和 Redis 信息。
 
