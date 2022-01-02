@@ -6,36 +6,6 @@
 	<filePath>${frontDir}/${moduleName}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}List.html</fileName>
 	<content><![CDATA[
-\<% layout('/layouts/default.html', {title: '${functionNameSimple}管理', libs: ['dataGrid']}){ %>
-<div class="main-content">
-	<div class="box box-main">
-		<div class="box-header">
-			<div class="box-title">
-				<i class="fa icon-notebook"></i> \${text('${functionNameSimple}管理')}
-			</div>
-			<div class="box-tools pull-right">
-				<a href="#" class="btn btn-default" id="btnSearch" title="\${text('查询')}"><i class="fa fa-filter"></i> \${text('查询')}</a>
-				<% if(table.isTreeEntity){ %>
-				<a href="#" class="btn btn-default" id="btnRefreshTree" title="\${text('刷新')}"><i class="fa fa-refresh"></i> \${text('刷新')}</a>
-				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="\${text('展开一级')}"><i class="fa fa-angle-double-down"></i> \${text('展开')}</a>
-				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="\${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> \${text('折叠')}</a>
-				<% } %>
-				\<% if(hasPermi('${permissionPrefix}:edit')){ %>
-					<a href="\${ctx}/${urlPrefix}/form" class="btn btn-default btnTool" title="\${text('新增${functionNameSimple}')}"><i class="fa fa-plus"></i> \${text('新增')}</a>
-				\<% } %>
-				<a href="#" class="btn btn-default" id="btnSetting" title="\${text('设置')}"><i class="fa fa-navicon"></i></a>
-			</div>
-		</div>
-		<div class="box-body">
-			<% include('/templates/modules/gen/include/searchForm.html'){} %>
-			<table id="dataGrid"></table>
-			<% if(!table.isTreeEntity){ %>
-			<div id="dataGridPage"></div>
-			<% } %>
-		</div>
-	</div>
-</div>
-\<% } %>
-<% include('/templates/modules/gen/include/dataGridScript.html'){} %>]]>
+<% include('/templates/modules/gen/include/viewList.html'){} %>]]>
 	</content>
 </template>
