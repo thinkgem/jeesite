@@ -1,0 +1,633 @@
+
+
+<p align="center">
+ <img alt="JeeSite" src="https://jeesite.com/assets/images/logo.png" width="120" height="120" style="margin-bottom: 10px;">
+</p>
+<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
+<p align="center">
+ <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
+ <a href="https://2x.antdv.com/" target="__blank"><img alt="Ant Design Vue-2.2" src="https://img.shields.io/badge/Ant Design Vue-2.2-blue.svg"></a>
+ <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.0-blue.svg"></a>
+ <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
+</p>
+
+## 技术交流
+
+* 交流 QQ 群（千人大群）：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite-vue>
+* GitHub：<https://github.com/thinkgem/jeesite-vue>
+* 作者博客：<https://my.oschina.net/thinkgem>
+* **帮助文档：**<http://docs.jeesite.com>
+* 官方网站：<http://jeesite.com>
+* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite-vue/issues/I18ARR)
+* 关注微信公众号，了解最新动态：
+
+![JeeSite微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite微信公众号")
+
+## 框架介绍
+
+基于 Vue3、Vite、Ant-Design-Vue、TypeScript、Vue Vben Admin，最先进的技术栈，让初学者能够更快的入门并投入到团队开发中去。包括模块如：组织机构、角色用户、菜单授权、数据权限、系统参数等。强大的组件封装，数据驱动视图。为微小中大型项目的开发，提供现成的开箱解决方案及丰富的示例。
+
+在 Vben Admin 基础上做的改进：
+
+* 更精致的界面细节优化改进，非常适合信息化管理后台
+* 主题风格改进，不同的布局风格，菜单及权限体验优化
+* 顶部菜单、分隔菜单、混合菜单的活动状态激活和加载优化改进
+* 树表支持异步的封装，提升展开折叠性能，支持按层次展开折叠树表
+* 树结构新增快捷刷新、动态生成树、层次独立和不独立的数据返回兼容
+* 增加左树右表功能展示，可折叠左树，树组件增加默认图标
+* 表单组件适应各种数据格式来源，特别是多选字符串到数组的互转兼容
+* 表单新增各种便捷属性和表单组件，下拉框和树选择支持标签名回显
+* 表单组件，改进折叠表单 Action 的算法，智能化布局
+* 表格组件，Action 更多，支持横向显示操作，更方便
+* 表格组件，子表编辑改进，表格列排序和重置改进优化
+* 新增字典组件，支持展示到表格列、表单组件下拉框单选框等
+* 字典标签支持 Tag、Badge、自定义 class、style 等，显示风格
+* 更方便的支持 Tab 页面的缓存，切换页签的时候不重载页面内容
+* Tab 页签界面美化、图标显示、任何标签上右键，可快速刷新等等
+* 全局 Axios 改进，兼容各种数据格式，超时消息提醒改进
+* 功能权限鉴权改进，并兼容本地路由和后台路由同时使用
+* 等等各种细节改进，体验优化，黑暗布局细节优化
+* Vue端完全开源，用上你就会爱上，实在太方便了
+
+## 设计特点
+
+定义众多组件，非常贴心的组件属性及小功能，符合 JeeSite 以往的设计思想，列表和表单以数据驱动视图，极大简化了业务功能开发，注释分解详见本页最下【源码解析】
+
+为什么做数据驱动视图？前端向下兼容一直是最大的问题，有了一套相应的标准，会对框架升级帮助很大。比如你可以非常小的成本，业务代码改动非常小的情况下，去升级前端；数据驱动视图可以为未来自定义拖拽表单做更好的铺垫，数据存储结构更清晰化，更利于维护。
+
+提示：请仔细阅读源码解析，表单视图和列表视图上的注释哦，复杂表单可以多表单联合使用。
+
+## 演示地址
+
+1. 地址：<http://vue.jeesite.com/>
+2. 账号：system
+3. 密码：admin
+
+## 学习准备
+
+- [Node.js 16](http://nodejs.org/) 和 [git](https://git-scm.com/) - 开发环境
+- [Vite](https://vitejs.dev/) - 熟悉 Vite 特性
+- [Vue-v3](https://v3.vuejs.org/) - 熟悉 Vue 基础语法
+- [TypeScript](https://www.typescriptlang.org/) - 熟悉 `TypeScript` 基本语法
+- [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
+- [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
+- [Vue-Vben-Admin](https://vvbin.cn/doc-next/) - 熟悉 UI 及表单列表及常用组件使用
+- [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
+- [Mock.js](https://github.com/nuysoft/Mock) - mockjs 基本语法
+- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.0_dev/) - 后台服务
+
+## 安装使用
+
+- 如果没有安装 Node.js（不低于 14，建议 16）
+
+```
+下载安装 Node.js 16：https://nodejs.org
+```
+
+- 如果没有安装 Yarn 执行安装（要求 Yarn v1.x）
+
+```bash
+npm i -g yarn
+```
+
+- 获取代码
+
+```bash
+git clone https://gitee.com/thinkgem/jeesite-vue.git
+```
+
+- 安装依赖
+
+```bash
+cd jeesite-vue
+
+yarn config set registry https://registry.npm.taobao.org
+yarn install
+```
+
+- 运行
+
+```bash
+yarn serve
+```
+开发环境会加载文件较多，便于调试，请耐心等待。
+
+编译打包后，会合并这些文件，所以访问性能会大大提高。
+
+- 打包
+
+```bash
+yarn build
+```
+打包完成后，会在根目录生成 dist 文件夹，发布 nginx。
+
+有一些打包参数，详见 .env.production 里面有注释。
+
+### 如果您使用的 VSCode 的话，推荐安装以下插件：
+
+* [Iconify IntelliSense](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Iconify 图标插件
+* [windicss IntelliSense](https://marketplace.visualstudio.com/items?itemName=voorjaar.windicss-intellisense) - windicss 提示插件
+* [I18n-ally](https://marketplace.visualstudio.com/items?itemName=Lokalise.i18n-ally) - i18n 插件
+* [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) - Vue3 开发必备（Vetur禁用）
+* [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - 脚本代码检查
+* [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - 代码格式化
+* [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) - CSS 格式化
+* [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) - .env 文件高亮
+
+## 常见问题
+
+* 如何将表单抽屉改为弹窗，替换 list 和 form 页面的 Drawer 为 Modal 即可。
+* 浏览器支持情况：支持所有现代浏览器，Vue3 已不再支持 IE 浏览器。
+
+## 授权许可协议条款
+
+1. 基于 Apache License Version 2.0 协议发布，可用于商业项目，但必须遵守以下补充条款。
+2. 不得将本软件应用于危害国家安全、荣誉和利益的行为，不能以任何形式用于非法为目的的行为。
+3. 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议、版权声明和其他原作者
+   规定需要包含的说明（请尊重原作者的著作权，不要删除或修改文件中的`Copyright`和`@author`信息）
+   更不要，全局替换源代码中的 jeesite 或 ThinkGem 等字样，否则你将违反本协议条款承担责任。
+4. 基于本软件的作品，只能使用 JeeSite5 作为后台服务，除外情况不可商用且不允许二次分发或开源。
+5. 您若套用本软件的一些代码或功能参考，请保留源文件中的版权和作者，需要在您的软件介绍明显位置
+   说明出处，举例：本软件基于 JeeSite Vue 快速开发平台，并附带链接：http://jeesite.com
+6. 任何基于本软件而产生的一切法律纠纷和责任，均于我司无关。
+7. 如果你对本软件有改进，希望可以贡献给我们，共同进步。
+8. 本项目已申请软件著作权，请尊重开源，感谢阅读。
+
+## 技术服务与支持
+
+* 本软件免费，我们也提供了相应的收费服务，因为：
+* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞（本软件Git仓库首页，右上角点击 star 按钮，关注我们）。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* **联系方式（官方商务）QQ：[1766571055](http://wpa.qq.com/msgrd?v=3&uin=1766571055&site=qq&menu=yes)**
+* 技术服务支持网页：<http://s.jeesite.com>
+
+
+## 附录
+
+### 表单视图
+
+```html
+<template>
+  <!-- 弹出抽屉组件，如果想改为弹窗，Drawer 换为 Modal 即可快速替换 -->
+  <BasicDrawer
+    v-bind="$attrs"    -- 传递来自父组件的属性
+    :showFooter="true" -- 显示弹窗底部按钮组
+    :okAuth="'test:testData:edit'" -- 提交按钮权限，控制按钮是否显示
+    @register="registerDrawer"     -- 弹窗后的回调方法
+    @ok="handleSubmit" -- 提交按钮调用方法
+    width="60%"        -- 弹窗宽度，支持按比例
+  >
+    <!-- 弹窗标题 -->
+    <template #title>
+      <Icon :icon="getTitle.icon" class="pr-1 m-1" /> -- 图标
+      <span> {{ getTitle.value }} </span>  -- 标题名称
+    </template>
+    <!-- 表单组件 -->
+    <BasicForm @register="registerForm">
+      <!-- 定义表单控件插槽、个性化表单控件，如：这是一个表单子表插槽 -->
+      <template #testDataChildList>
+        <BasicTable
+          @register="registerTestDataChildTable"
+          @row-click="handleTestDataChildRowClick"
+        />
+        <!-- 子表新增按钮 -->
+        <a-button class="mt-2" @click="handleTestDataChildAdd">
+          <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+        </a-button>
+      </template>
+    </BasicForm>
+  </BasicDrawer>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    // 当前组件名称（与路由名一致，如果不一致会页面缓存失效）
+    name: 'ViewsTestTestDataForm',
+  });
+</script>
+<script lang="ts" setup>
+
+  // 导入当前用到的对象，部分省略
+  import { defineComponent, ref } from 'vue';
+  import { officeTreeData } from '/@/api/sys/office';
+  import { areaTreeData } from '/@/api/sys/area';
+
+  // 页面事件定义
+  const emit = defineEmits(['success', 'register']);
+
+  // 国际化方法调用，参数是国际化编码的跟路径
+  const { t } = useI18n('test.testData');
+
+  // 消息弹窗方法
+  const { showMessage } = useMessage();
+
+  // 当前页面数据记录
+  const record = ref<Recordable>({});
+
+  // 当前页面标题定义，来自菜单管理定义
+  const getTitle = {
+    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
+  };
+
+  // 输入表单控件定义
+  const inputFormSchemas: FormSchema[] = [
+    {
+      label: t('单行文本'), // 控件前面的页签
+      field: 'testInput',  // 字段提交参数名
+      component: 'Input',  // 控件类型（可自定义，更多查看 componentMap.ts ）
+      componentProps: {    // 组件属性定义
+        maxlength: 200,
+      },
+      required: true,      // 表单验证，是否必填（快速定义）
+      rules: [             // 如果不只是必填，需要通过 rules 定义，举例：
+        { required: true },
+        { min: 4, max: 20, message: t('请输入长度在 4 到 20 个字符之间') },
+        { pattern: /^[\u0391-\uFFE5\w]+$/, message: t('不能输入特殊字符') },
+        {
+          validator(_rule, value) {
+             return new Promise((resolve, reject) => {
+              if (!value || value === '') return resolve();
+              // 远程验证，访问后台校验数据是否重复
+              checkTestInput(record.value.testInput || '', value)
+                .then((res) => (res ? resolve() : reject(t('数据已存在'))))
+                .catch((err) => reject(err.message || t('验证失败')));
+            });
+          },
+        },
+      ],
+      colProps: { lg: 24, md: 24 }, // 栅格布局（遵循 Ant Design 风格）
+    },
+    {
+      label: t('下拉框'),
+      field: 'testSelect',
+      component: 'Select',    // 选择框还有 RadioGroup、CheckboxGroup
+      componentProps: {
+        dictType: 'sys_menu_type', // 下拉框选项数据（支持直接指定字典类型）
+        allowClear: true,          // 启用空选项，可清空选择
+        mode: 'multiple',          // 下拉框模块，启用多选
+      },
+    },
+    {
+      label: t('日期选择'),
+      field: 'testDate',
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD',      // 日期选择
+        showTime: false,           // 关闭时间选择
+      },
+    },
+    {
+      label: t('日期时间'),
+      field: 'testDatetime',
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD HH:mm',    // 日期时间选择
+        showTime: { format: 'HH:mm' }, // 设置时间的格式
+      },
+    },
+    {
+      label: t('用户选择'),
+      field: 'testUser.userCode',
+      fieldLabel: 'testUser.userName', //【支持返回，如下拉框或树选择的节点名】
+      component: 'TreeSelect',         // 树选择控件
+      componentProps: {
+        api: officeTreeData,           // 数据源 API 定义，支持 ztree 格式
+        params: { isLoadUser: true, userIdPrefix: '' }, // API 参数
+        canSelectParent: false,        // 是否允许选择父级
+        allowClear: true,
+      },
+    },
+    {
+      label: t('子表数据'),
+      field: 'testDataChildList',
+      component: 'Input',
+      colProps: { lg: 24, md: 24 },
+      slot: 'testDataChildList',      // 指定插槽、个性化控件内容
+    },
+  ];
+
+  // 当前表单的参数定义
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+    labelWidth: 120,                  // 控件前面的标签宽度
+    schemas: inputFormSchemas,        // 控件定义列表
+    baseColProps: { lg: 12, md: 24 }, // 控件默认栅格布局方式（响应式）
+  });
+
+  // 当前表单子表格定义
+  const [registerTestDataChildTable, testDataChildTable] = useTable({
+    actionColumn: {  // 子表的操作列定义
+      width: 60,     // 操作列宽度
+      actions: (record: Recordable) => [
+        {
+          icon: 'ant-design:delete-outlined',
+          color: 'error',
+          popConfirm: { // 是否需要启用确认框
+            title: '是否确认删除',
+            confirm: handleTestDataChildDelete.bind(this, record),
+          },
+          auth: 'sys:empUser:edit',  // 按钮权限（可控制按钮是否显示）
+        },
+      ],
+    },
+    rowKey: 'id',     // 子表主键名
+    pagination: false,// 关闭分页
+    bordered: true,   // 开启表格边框
+    size: 'small',    // 单元格间距
+    inset: true,      // 是否内嵌（去除一些边距）
+  });
+
+  // 当前表单子表自动定义
+  async function setTestDataChildTableData(_res: Recordable) {
+    testDataChildTable.setColumns([
+      {
+        title: t('单行文本'),
+        dataIndex: 'testInput',
+        width: 230,
+        align: 'left',
+        editRow: true,          // 是否启用编辑
+        editComponent: 'Input', // 编辑控件（可自定义，更多查看 componentMap.ts ）
+        editRule: true,         // 控件验证（是否必填）
+      },
+      {
+        title: t('下拉框'),
+        dataIndex: 'testSelect',
+        width: 130,
+        align: 'left',
+        dictType: 'sys_menu_type',   // 指定字典类型，自动显示字典标签
+        editRow: true,
+        editComponent: 'Select',
+        editComponentProps: {        // 控件属性
+          dictType: 'sys_menu_type', // 下拉框的字段类型
+          allowClear: true,
+        },
+        editRule: false,
+      },
+      // 更多组件控件不举例了，同表单控件 ...
+    ]);
+    // 设定子表数据
+    testDataChildTable.setTableData(record.value.testDataChildList || []);
+  }
+
+  // 点击行，启用编辑
+  function handleTestDataChildRowClick(record: Recordable) {
+    record.onEdit?.(true, false);
+  }
+
+  // 添加编辑行，可指定初始数据
+  function handleTestDataChildAdd() {
+    testDataChildTable.insertTableDataRecord({
+      id: new Date().getTime(),
+      isNewRecord: true,
+      editable: true,
+    });
+  }
+
+  // 删除编辑行方法
+  function handleTestDataChildDelete(record: Recordable) {
+    testDataChildTable.deleteTableDataRecord(record);
+  }
+
+  // 获取子表数据（支持返回删除未提交的数据）
+  async function getTestDataChildList() {
+    let testDataChildListValid = true;
+    let testDataChildList: Recordable[] = [];
+    for (const record of testDataChildTable.getDataSource()) {
+      // 验证控件内容，并取消行的编辑状态（如果验证失败返回false）
+      if (!(await record.onEdit?.(false, true))) {
+        testDataChildListValid = false;
+      }
+      testDataChildList.push({
+        ...record,
+        id: !!record.isNewRecord ? '' : record.id,
+      });
+    }
+    for (const record of testDataChildTable.getDelDataSource()) {
+      if (!!record.isNewRecord) continue;
+      testDataChildList.push({
+        ...record,
+        status: '1',
+      });
+    }
+    // 子表验证事件，抛出异常消息
+    if (!testDataChildListValid) {
+      throw new Error('testDataChildList valid.');
+    }
+    return testDataChildList;
+  }
+
+  // 弹窗后的回调事件，进行一些表单数据初始化等操作
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+    resetFields(); // 重置表单数据
+    setDrawerProps({ loading: true }); // 显示加载框
+    const res = await testDataForm(data); // 查询表单数据
+    record.value = (res.testData || {}) as Recordable;
+    setFieldsValue(record.value);  // 设置字段值
+    setTestDataChildTableData(res);  // 设置子表数据（没有子表可不写）
+    setDrawerProps({ loading: false }); // 隐藏加载框
+  });
+
+  // 表单提交按钮方法
+  async function handleSubmit() {
+    try {
+      const data = await validate(); // 验证表单，并返回数据
+      setDrawerProps({ confirmLoading: true }); // 显示提交加载中
+      // 设置提交的参数（QueryString，后台 Controller 的 get 接受）
+      const params: any = {
+        isNewRecord: record.value.isNewRecord,
+        id: record.value.id,
+      };
+      // 获取并设置子表数据
+      data.testDataChildList = await getTestDataChildList();
+      // console.log('submit', params, data, record);
+      // 将数据提交给后台（如果失败跳转到 catch）
+      const res = await testDataSave(params, data);
+      showMessage(res.message); // 显示提交结果
+      setTimeout(closeDrawer);  // 隐藏抽屉弹窗
+      emit('success', data);    // 触发事件，列表数据刷新
+    } catch (error: any) {
+      if (error && error.errorFields) {
+        showMessage(t('您填写的信息有误，请根据提示修正。'));
+      }
+      console.log('error', error);
+    } finally {
+      setDrawerProps({ confirmLoading: false }); // 隐藏提交加载中
+    }
+  }
+</script>
+```
+
+### 列表视图
+
+```html
+<template>
+  <div>
+    <!-- 表格组件 -->
+    <BasicTable @register="registerTable">
+      <!-- 表格标题插槽 -->
+      <template #tableTitle>
+        <Icon :icon="getTitle.icon" class="m-1 pr-1" />
+        <span> {{ getTitle.value }} </span>
+      </template>
+      <!-- 表格右侧按钮插槽，其中 v-auth 是按钮权限控制 -->
+      <template #toolbar>
+        <a-button type="primary" @click="handleForm({})" v-auth="'test:testData:edit'">
+          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+        </a-button>
+      </template>
+      <!-- 首列插槽 -->
+      <template #firstColumn="{ record }">
+        <a @click="handleForm({ id: record.id })">
+          {{ record.testInput }}
+        </a>
+      </template>
+    </BasicTable>
+    <!-- 点击表格行进入的输入表单弹窗 -->
+    <InputForm @register="registerDrawer" @success="handleSuccess" />
+  </div>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    // 当前组件名称（与路由名一致，如果不一致会页面缓存失效）
+    name: 'ViewsTestTestDataList',
+  });
+</script>
+<script lang="ts" setup>
+
+  // 导入当前用到的对象，部分省略
+  import { defineComponent } from 'vue';
+  import InputForm from './form.vue';
+
+  // 国际化方法调用，参数是国际化编码的跟路径
+  const { t } = useI18n('test.testData');
+
+  // 消息弹窗方法
+  const { showMessage } = useMessage();
+
+  // 当前页面标题定义，来自菜单管理定义
+  const getTitle = {
+    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    value: router.currentRoute.value.meta.title || t('数据管理'),
+  };
+
+  // 表格搜索表单控件定义
+  const searchForm: FormProps = {
+    baseColProps: { lg: 6, md: 8 }, // 表单栅格布局
+    labelWidth: 90,                 // 表单标签宽度
+    schemas: [
+      {
+        label: t('单行文本'),        // 表单标签
+        field: 'testInput',         // 字段提交参数名
+        component: 'Input',         // 表单控件
+      },
+      {
+        label: t('下拉框'),
+        field: 'testSelect',
+        component: 'Select',    // 选择框还有 RadioGroup、CheckboxGroup
+        componentProps: {
+          dictType: 'sys_menu_type', // 下拉框选项数据（支持直接指定字典类型）
+          allowClear: true,          // 启用空选项，可清空选择
+          mode: 'multiple',          // 下拉框模块，启用多选
+        },
+      },
+      // 更多控件，再次不展示了，和上一节表单视图一致
+    ],
+  };
+
+  // 表格列定义
+  const tableColumns: BasicColumn[] = [
+    {
+      title: t('单行文本'),    // 表头标题
+      dataIndex: 'testInput', // 表列实体属性名
+      key: 'a.test_input',    // 排序数据库字段名
+      sorter: true,           // 点击表头是否可排序
+      width: 230,             // 列宽
+      align: 'left',          // 列的对齐方式
+      // 个性化列，可定义插槽（如样式，增加控件等）
+      slots: { customRender: 'firstColumn' },
+    },
+    {
+      title: t('下拉框'),
+      dataIndex: 'testSelect',
+      key: 'a.test_select',
+      sorter: true,
+      width: 130,
+      align: 'center',
+      dictType: 'sys_menu_type', // 字典列，快速显示字典标签
+    },
+  ];
+
+  // 表格操作列定义
+  const actionColumn: BasicColumn = {
+    width: 160, // 操作列宽
+    actions: (record: Recordable) => [
+      {
+        icon: 'clarity:note-edit-line',
+        title: t('编辑数据'),
+        onClick: handleForm.bind(this, { id: record.id }),
+        // 按钮权限控制，指定权限字符串
+        auth: 'test:testData:edit',
+      },
+      {
+        icon: 'ant-design:stop-outlined',
+        color: 'error',
+        title: t('停用数据'),
+        // 是否需要启用确认框
+        popConfirm: {
+          title: t('是否确认停用数据'),
+          confirm: handleDisable.bind(this, { id: record.id }),
+        },
+        // 按钮权限控制，指定权限字符串
+        auth: 'test:testData:edit',
+        // 控制按钮是否显示（区别：show 是显示或隐藏；ifShow 是显示或移除）
+        show: () => record.status === '0',
+        ifShow: () => record.status === '0',
+      },
+    ],
+    // 操作列更多按钮定义
+    dropDownActions: (record: Recordable) => [
+      {
+        icon: 'ant-design:reload-outlined',
+        label: t('重置密码'),
+        onClick: handleResetpwd.bind(this, { userCode: record.userCode }),
+        auth: 'sys:empUser:resetpwd',
+      },
+    ],
+  };
+
+  // 点击首列或编辑按钮是的抽屉弹窗定义
+  const [registerDrawer, { openDrawer }] = useDrawer();
+
+  // 表格定义
+  const [registerTable, { reload }] = useTable({
+    api: testDataListData,     // 表格数据源 API
+    beforeFetch: (params) => {
+      return params;           // API 提交之前的参数修改
+    },
+    columns: tableColumns,     // 表格列
+    actionColumn: actionColumn,// 操作列
+    formConfig: searchForm,    // 搜索表单
+    showTableSetting: true,    // 是否显示右上角的设置按钮
+    useSearchForm: true,       // 是否显示搜索表单
+    canResize: true,           // 是否自适应表单高度
+  });
+
+  // 弹窗操作方法
+  function handleForm(record: Recordable) {
+    openDrawer(true, record);
+  }
+
+  // 操作列停用按钮方法
+  async function handleDisable(record: Recordable) {
+    const res = await testDataDisable(record);
+    showMessage(res.message);
+    handleSuccess();
+  }
+
+  // 刷新表格数据（含表单回调）
+  function handleSuccess() {
+    reload();
+  }
+</script>
+
+```

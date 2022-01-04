@@ -1,0 +1,54 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
+import { defHttp } from '/@/utils/http/axios';
+import { UserInfo } from '/#/store';
+import { ErrorMessageMode } from '/#/axios';
+import { useGlobSetting } from '/@/hooks/setting';
+import { encryptByBase64 } from '/@/utils/cipher';
+import { Menu } from '/@/router/types';
+
+const { adminPath } = useGlobSetting();
+
+export interface LoginParams {
+  username: string;
+  password: string;
+  validCode?: string;
+  rememberMe?: boolean;
+}
+
+export interface LoginResult {
+  result: string;
+  message: string;
+  sessionid: string;
+  user: UserInfo;
+  isValidCodeLogin: boolean;
+}
+
+export interface AuthInfo {
+  stringPermissions: string[];
+  roles: string[];
+}
+
+export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') => {
+  params.username = encryptByBase64(params.username);
+  params.password = encryptByBase64(params.password);
+  if (params.validCode) {
+    params.validCode = encryptByBase64(params.validCode);
+  }
+  return defHttp.post<LoginResult>(
+    { url: adminPath + '/login', params },
+    { errorMessageMode: mode },
+  );
+};
+
+export const userInfoApi = (mode: ErrorMessageMode = 'message') =>
+  defHttp.get<LoginResult>({ url: adminPath + '/index' }, { errorMessageMode: mode });
+
+export const authInfoApi = () => defHttp.get<AuthInfo>({ url: adminPath + '/authInfo' });
+
+export const menuRouteApi = () => defHttp.get<Menu[]>({ url: adminPath + '/menuRoute' });
+
+export const logoutApi = () => defHttp.get({ url: adminPath + '/logout' });
