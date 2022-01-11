@@ -63,6 +63,7 @@ public class CorpAdminController extends BaseController {
 		user.setCorpCode(null);
 		user.setCorpName(null);
 		model.addAttribute("user", user);
+		model.addAttribute("useCorpModel", Global.getConfigToBoolean("user.useCorpModel", "false"));
 		return "modules/sys/user/corpAdminList";
 	}
 
@@ -93,10 +94,14 @@ public class CorpAdminController extends BaseController {
 		// 获取当前用户所拥有的角色
 		Role role = new Role();
 		role.setUserCode(user.getUserCode());
-		model.addAttribute("roleList", roleService.findListByUserCode(role));
+		List<Role> roleList = roleService.findListByUserCode(role);
+		roleList.add(new Role(Role.CORP_ADMIN_ROLE_CODE));
+		model.addAttribute("roleList", roleList);
+		model.addAttribute("corpAdminRoleCode", Role.CORP_ADMIN_ROLE_CODE);
 		// 操作类型：addCorp: 添加租户； addAdmin: 添加管理员； edit: 编辑
 		model.addAttribute("op", op);
 		model.addAttribute("user", user);
+		model.addAttribute("useCorpModel", Global.getConfigToBoolean("user.useCorpModel", "false"));
 		return "modules/sys/user/corpAdminForm";
 	}
 

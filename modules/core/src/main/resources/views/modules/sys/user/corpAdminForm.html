@@ -15,7 +15,7 @@
 			<#form:hidden path="userCode"/>
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
-				<div class="row ${@Global.getConfigToBoolean('user.useCorpModel', 'false')?'':'hide'}">
+				<div class="row ${useCorpModel?'':'hide'}">
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label" title="">
@@ -187,6 +187,18 @@ var roleGrid = $("#roleGrid").dataGrid({
 	},
 	autoGridWidth: function(){
 		return $('#inputForm .box-body').width()-20;
+	},
+	onSelectRow: function(id, isSelect, event){
+		if (!isSelect && id == '${corpAdminRoleCode}') {
+			js.showMessage('${text("该角色为管理员默认，不能取消。")}');
+		}
+	},
+	onSelectAll: function(ids, isSelect){
+		for (var i=0; i<ids.length; i++){
+			if (!isSelect && ids[i] == '${corpAdminRoleCode}') {
+				js.showMessage('${text("该角色为管理员默认，不能取消。")}');
+			}
+		}
 	},
 	ajaxSuccess: function(){
 		<% for (role in roleList!){ %>
