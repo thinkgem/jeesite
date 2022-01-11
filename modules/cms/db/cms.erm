@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>0</x>
-	<y>7</y>
+	<y>0</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -774,6 +774,22 @@
 			<logical_name>扩展 Integer 4</logical_name>
 			<physical_name>extend_i4</physical_name>
 			<type>decimal(p)</type>
+		</word>
+		<word>
+			<id>f777df0683772224af74eaac56ff9ba3086493a1</id>
+			<length>null</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
+			<char_semantics>false</char_semantics>
+			<description></description>
+			<logical_name>扩展 JSON</logical_name>
+			<physical_name>extend_json</physical_name>
+			<type>text</type>
 		</word>
 		<word>
 			<id>ad6f9eff50476669df62b7601cbc3a2e0c905d36</id>
@@ -1912,7 +1928,7 @@
 			<type>nvarchar(n)</type>
 		</word>
 		<word>
-			<id>be17e27c1f73fe128f00468cc83953077b7e00a9</id>
+			<id>16c9c333062ea3614d2e044803b872676c8a5377</id>
 			<length>10</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -1928,7 +1944,7 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
-			<id>b0bd388c14e5b2bbab9590f5247961a7edd9eb3b</id>
+			<id>312c35e49a1de2ac558655550904b2d4e275322f</id>
 			<length>1000</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -2282,7 +2298,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>b3360c18b956528f86538657fb259817fab21f34</id>
+					<id>bf0ac4b1588841d8f855c9d1030b492190b31adb</id>
 					<source>7f024bd90eec8d89290f4db163b3ea077d6ce26d</source>
 					<target>e9faab162f8d6a9f4bed0be95c9dbb56647656e1</target>
 						<source_xp>-1</source_xp>
@@ -2314,7 +2330,7 @@
 				<normal_column>
 					<id>7b648ef7efea218657b3201e0a0318986ff5e8cb</id>
 					<referenced_column>0d993b7470d7bde3d20e9c7f24d1811518cf44cc</referenced_column>
-					<relation>b3360c18b956528f86538657fb259817fab21f34</relation>
+					<relation>bf0ac4b1588841d8f855c9d1030b492190b31adb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -4622,7 +4638,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>221fc0bc73b3badd39d437e05f24a752587a8a48</id>
+					<id>86d964debc4ef630dc9ec2e2115ee2a2927df3d2</id>
 					<source>388faee80ae30bf2d261c383395ea538ac65d139</source>
 					<target>a64b64022c5b291e365f8bc84c6dcadd1a69b93f</target>
 						<source_xp>-1</source_xp>
@@ -4654,7 +4670,7 @@
 				<normal_column>
 					<id>a1ea205b23430d5e2419ab6fc7b81e6a1063b163</id>
 					<referenced_column>eb5d114785c793115e222f88cbce9d6cda0f1543</referenced_column>
-					<relation>221fc0bc73b3badd39d437e05f24a752587a8a48</relation>
+					<relation>86d964debc4ef630dc9ec2e2115ee2a2927df3d2</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -4929,7 +4945,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>8b10442357d1561bb946b77f486c97d2673bde4b</id>
+					<id>1f10e7900c8bbfe93ffd36ad7cc6f8d8f0c7a2e0</id>
 					<source>02c2487dc0cf00bec5bb12635a6b2eaca8dce45b</source>
 					<target>7f024bd90eec8d89290f4db163b3ea077d6ce26d</target>
 						<source_xp>-1</source_xp>
@@ -5028,7 +5044,7 @@
 				<normal_column>
 					<id>f86eb0e3c56d958c2d1ee2c0ea77353b01b89973</id>
 					<referenced_column>f51ed54a54f6cd6b1d74072be62c808f6848470c</referenced_column>
-					<relation>8b10442357d1561bb946b77f486c97d2673bde4b</relation>
+					<relation>1f10e7900c8bbfe93ffd36ad7cc6f8d8f0c7a2e0</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5599,7 +5615,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>102c612ebec0dcaf6a4a4270ed4683aea7346293</id>
+					<id>f2b951b9ecd59350e7e2b1dbdc3bdaf651981042</id>
 					<source>7f024bd90eec8d89290f4db163b3ea077d6ce26d</source>
 					<target>388faee80ae30bf2d261c383395ea538ac65d139</target>
 						<source_xp>-1</source_xp>
@@ -5664,7 +5680,7 @@
 				<normal_column>
 					<id>dde1496bcd5d55330967cc24f53513e102a163c0</id>
 					<referenced_column>0d993b7470d7bde3d20e9c7f24d1811518cf44cc</referenced_column>
-					<relation>102c612ebec0dcaf6a4a4270ed4683aea7346293</relation>
+					<relation>f2b951b9ecd59350e7e2b1dbdc3bdaf651981042</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -6382,7 +6398,7 @@
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
 				<relation>
-					<id>52c8c967a2f0edf6dd988a9bb4cb00d6da008195</id>
+					<id>6917f16fcd1f020c33c9058293719d194ef610c6</id>
 					<source>7f024bd90eec8d89290f4db163b3ea077d6ce26d</source>
 					<target>18893974755ff1a6dc89f298885d6b0d571a8c7b</target>
 						<source_xp>-1</source_xp>
@@ -6447,7 +6463,7 @@
 				<normal_column>
 					<id>835faef487ae6874a525a8cb8ba19825f93091aa</id>
 					<referenced_column>0d993b7470d7bde3d20e9c7f24d1811518cf44cc</referenced_column>
-					<relation>52c8c967a2f0edf6dd988a9bb4cb00d6da008195</relation>
+					<relation>6917f16fcd1f020c33c9058293719d194ef610c6</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -8596,6 +8612,39 @@
 							<decimal_size>0</decimal_size>
 						</sequence>
 					</normal_column>
+					<normal_column>
+						<word_id>f777df0683772224af74eaac56ff9ba3086493a1</word_id>
+						<id>42c5d8f490f69b93e77698efa030ca23988ae696</id>
+						<description></description>
+						<unique_key_name></unique_key_name>
+						<logical_name></logical_name>
+						<physical_name></physical_name>
+						<type>text</type>
+						<constraint></constraint>
+						<default_value></default_value>
+						<auto_increment>false</auto_increment>
+						<foreign_key>false</foreign_key>
+						<not_null>false</not_null>
+						<primary_key>false</primary_key>
+						<unique_key>false</unique_key>
+						<character_set></character_set>
+						<collation></collation>
+						<sequence>
+							<name></name>
+							<schema></schema>
+							<increment></increment>
+							<min_value></min_value>
+							<max_value></max_value>
+							<start></start>
+							<cache></cache>
+							<nocache>false</nocache>
+							<cycle>false</cycle>
+							<order>false</order>
+							<description></description>
+							<data_type></data_type>
+							<decimal_size>0</decimal_size>
+						</sequence>
+					</normal_column>
 				</columns>
 			</column_group>
 			<column_group>
@@ -8669,7 +8718,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>be17e27c1f73fe128f00468cc83953077b7e00a9</word_id>
+						<word_id>16c9c333062ea3614d2e044803b872676c8a5377</word_id>
 						<id>23f973124aedd0244533f4e7b3b103c548b966be</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -8702,7 +8751,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>b0bd388c14e5b2bbab9590f5247961a7edd9eb3b</word_id>
+						<word_id>312c35e49a1de2ac558655550904b2d4e275322f</word_id>
 						<id>984d5eac2b3221118a61655e4a5a49c78e0f0151</id>
 						<description></description>
 						<unique_key_name></unique_key_name>

@@ -3,7 +3,7 @@
 /* Create Tables */
 
 -- 文章表
-CREATE TABLE ${_prefix}cms_article
+CREATE TABLE js_cms_article
 (
 	id varchar(64) NOT NULL,
 	category_code varchar(64) NOT NULL,
@@ -14,14 +14,14 @@ CREATE TABLE ${_prefix}cms_article
 	image varchar(1000),
 	keywords varchar(500),
 	description varchar(500),
-	weight decimal(10) DEFAULT 0,
+	weight numeric DEFAULT 0,
 	weight_date datetime,
 	source char(1),
 	copyfrom varchar(255),
-	hits decimal(20) DEFAULT 0,
-	hits_plus numeric(10),
-	hits_minus numeric(10),
-	word_count numeric(10),
+	hits numeric DEFAULT 0,
+	hits_plus numeric,
+	hits_minus numeric,
+	word_count numeric,
 	custom_content_view varchar(255),
 	view_config varchar(1000),
 	status char(1) DEFAULT '0' NOT NULL,
@@ -37,10 +37,10 @@ CREATE TABLE ${_prefix}cms_article
 
 
 -- 文章详情表
-CREATE TABLE ${_prefix}cms_article_data
+CREATE TABLE js_cms_article_data
 (
 	id varchar(64) NOT NULL,
-	content clob,
+	content memo,
 	relation varchar(1000),
 	is_can_comment char(1),
 	extend_s1 varchar(500),
@@ -51,25 +51,24 @@ CREATE TABLE ${_prefix}cms_article_data
 	extend_s6 varchar(500),
 	extend_s7 varchar(500),
 	extend_s8 varchar(500),
-	extend_i1 decimal(19),
-	extend_i2 decimal(19),
-	extend_i3 decimal(19),
-	extend_i4 decimal(19),
-	extend_f1 decimal(19,4),
-	extend_f2 decimal(19,4),
-	extend_f3 decimal(19,4),
-	extend_f4 decimal(19,4),
+	extend_i1 numeric,
+	extend_i2 numeric,
+	extend_i3 numeric,
+	extend_i4 numeric,
+	extend_f1 numeric,
+	extend_f2 numeric,
+	extend_f3 numeric,
+	extend_f4 numeric,
 	extend_d1 datetime,
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
 	PRIMARY KEY (id)
 );
 
 
 -- 文章推荐位
-CREATE TABLE ${_prefix}cms_article_posid
+CREATE TABLE js_cms_article_posid
 (
 	article_id varchar(64) NOT NULL,
 	postid char(1) NOT NULL
@@ -77,7 +76,7 @@ CREATE TABLE ${_prefix}cms_article_posid
 
 
 -- 文章与标签关系
-CREATE TABLE ${_prefix}cms_article_tag
+CREATE TABLE js_cms_article_tag
 (
 	article_id varchar(64) NOT NULL,
 	tag_name varchar(200) NOT NULL
@@ -85,15 +84,15 @@ CREATE TABLE ${_prefix}cms_article_tag
 
 
 -- 栏目表
-CREATE TABLE ${_prefix}cms_category
+CREATE TABLE js_cms_category
 (
 	category_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(1000) NOT NULL,
-	tree_sort decimal(10) NOT NULL,
+	tree_sort numeric NOT NULL,
 	tree_sorts varchar(1000) NOT NULL,
 	tree_leaf char(1) NOT NULL,
-	tree_level decimal(4) NOT NULL,
+	tree_level numeric NOT NULL,
 	tree_names varchar(1000) NOT NULL,
 	category_name varchar(100) NOT NULL,
 	site_code varchar(64) NOT NULL,
@@ -125,25 +124,24 @@ CREATE TABLE ${_prefix}cms_category
 	extend_s6 varchar(500),
 	extend_s7 varchar(500),
 	extend_s8 varchar(500),
-	extend_i1 decimal(19),
-	extend_i2 decimal(19),
-	extend_i3 decimal(19),
-	extend_i4 decimal(19),
-	extend_f1 decimal(19,4),
-	extend_f2 decimal(19,4),
-	extend_f3 decimal(19,4),
-	extend_f4 decimal(19,4),
+	extend_i1 numeric,
+	extend_i2 numeric,
+	extend_i3 numeric,
+	extend_i4 numeric,
+	extend_f1 numeric,
+	extend_f2 numeric,
+	extend_f3 numeric,
+	extend_f4 numeric,
 	extend_d1 datetime,
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
 	PRIMARY KEY (category_code)
 );
 
 
 -- 栏目与角色关联表
-CREATE TABLE ${_prefix}cms_category_role
+CREATE TABLE js_cms_category_role
 (
 	category_code varchar(64) NOT NULL,
 	role_code varchar(64) NOT NULL,
@@ -153,7 +151,7 @@ CREATE TABLE ${_prefix}cms_category_role
 
 
 -- 文章评论表
-CREATE TABLE ${_prefix}cms_comment
+CREATE TABLE js_cms_comment
 (
 	id varchar(64) NOT NULL,
 	category_code varchar(64) NOT NULL,
@@ -168,8 +166,8 @@ CREATE TABLE ${_prefix}cms_comment
 	audit_user_code varchar(64),
 	audit_date datetime,
 	audit_comment varchar(200),
-	hits_plus numeric(10),
-	hits_minus numeric(10),
+	hits_plus numeric,
+	hits_minus numeric,
 	status char(1) NOT NULL,
 	corp_code varchar(64) DEFAULT '0' NOT NULL,
 	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL,
@@ -178,7 +176,7 @@ CREATE TABLE ${_prefix}cms_comment
 
 
 -- 留言板表
-CREATE TABLE ${_prefix}cms_guestbook
+CREATE TABLE js_cms_guestbook
 (
 	id varchar(64) NOT NULL,
 	type char(1) NOT NULL,
@@ -201,7 +199,7 @@ CREATE TABLE ${_prefix}cms_guestbook
 
 
 -- 内容举报表
-CREATE TABLE ${_prefix}cms_report
+CREATE TABLE js_cms_report
 (
 	id varchar(64) NOT NULL,
 	report_source char(1),
@@ -214,11 +212,11 @@ CREATE TABLE ${_prefix}cms_report
 
 
 -- 站点表
-CREATE TABLE ${_prefix}cms_site
+CREATE TABLE js_cms_site
 (
 	site_code varchar(64) NOT NULL,
 	site_name varchar(100) NOT NULL,
-	site_sort decimal(10),
+	site_sort numeric,
 	title varchar(100) NOT NULL,
 	logo varchar(1000),
 	domain varchar(500),
@@ -238,16 +236,16 @@ CREATE TABLE ${_prefix}cms_site
 
 
 -- 内容标签
-CREATE TABLE ${_prefix}cms_tag
+CREATE TABLE js_cms_tag
 (
 	tag_name varchar(200) NOT NULL,
-	clicknum numeric(10) NOT NULL,
+	clicknum numeric NOT NULL,
 	PRIMARY KEY (tag_name)
 );
 
 
 -- 访问日志表
-CREATE TABLE ${_prefix}cms_visit_log
+CREATE TABLE js_cms_visit_log
 (
 	id varchar(64) NOT NULL,
 	request_url varchar(1000),
@@ -269,9 +267,9 @@ CREATE TABLE ${_prefix}cms_visit_log
 	visit_date char(8),
 	visit_time datetime,
 	is_new_visit char(1),
-	first_visit_time decimal(20),
-	prev_remain_time decimal(20),
-	total_remain_time decimal(20),
+	first_visit_time numeric,
+	prev_remain_time numeric,
+	total_remain_time numeric,
 	site_code varchar(64),
 	site_name varchar(100),
 	category_code varchar(64),
@@ -289,34 +287,34 @@ CREATE TABLE ${_prefix}cms_visit_log
 
 /* Create Indexes */
 
-CREATE INDEX idx_cms_article_cb ON ${_prefix}cms_article (create_by);
-CREATE INDEX idx_cms_article_cc ON ${_prefix}cms_article (category_code);
-CREATE INDEX idx_cms_article_corp_code ON ${_prefix}cms_article (corp_code);
-CREATE INDEX idx_cms_article_status ON ${_prefix}cms_article (status);
-CREATE INDEX idx_cms_article_ud ON ${_prefix}cms_article (update_date);
-CREATE INDEX idx_cms_article_weight ON ${_prefix}cms_article (weight);
-CREATE INDEX idx_cms_category_pc ON ${_prefix}cms_category (parent_code);
-CREATE INDEX idx_cms_category_ts ON ${_prefix}cms_category (tree_sort);
-CREATE INDEX idx_cms_category_status ON ${_prefix}cms_category (status);
-CREATE INDEX idx_cms_category_tss ON ${_prefix}cms_category (tree_sorts);
-CREATE INDEX idx_cms_comment_catc ON ${_prefix}cms_comment (category_code);
-CREATE INDEX idx_cms_comment_ai ON ${_prefix}cms_comment (article_id);
-CREATE INDEX idx_cms_comment_cc ON ${_prefix}cms_comment (corp_code);
-CREATE INDEX idx_cms_comment_status ON ${_prefix}cms_comment (status);
-CREATE INDEX idx_cms_guestbook_cc ON ${_prefix}cms_guestbook (corp_code);
-CREATE INDEX idx_cms_guestbook_status ON ${_prefix}cms_guestbook (status);
-CREATE INDEX idx_cms_guestbook_type ON ${_prefix}cms_guestbook (type);
-CREATE INDEX idx_cms_site_status ON ${_prefix}cms_site (status);
-CREATE INDEX cms_visit_log_cc ON ${_prefix}cms_visit_log (category_code);
-CREATE INDEX cms_visit_log_ci ON ${_prefix}cms_visit_log (content_id);
-CREATE INDEX cms_visit_log_fvt ON ${_prefix}cms_visit_log (first_visit_time);
-CREATE INDEX cms_visit_log_inv ON ${_prefix}cms_visit_log (is_new_visit);
-CREATE INDEX cms_visit_log_ra ON ${_prefix}cms_visit_log (remote_addr);
-CREATE INDEX cms_visit_log_sc ON ${_prefix}cms_visit_log (site_code);
-CREATE INDEX cms_visit_log_uvid ON ${_prefix}cms_visit_log (unique_visit_id);
-CREATE INDEX cms_visit_log_vd ON ${_prefix}cms_visit_log (visit_date);
-CREATE INDEX cms_visit_log_vt ON ${_prefix}cms_visit_log (visit_time);
-CREATE INDEX idx_cms_visit_log_corpc ON ${_prefix}cms_visit_log (corp_code);
+CREATE INDEX idx_cms_article_cb ON js_cms_article (create_by);
+CREATE INDEX idx_cms_article_cc ON js_cms_article (category_code);
+CREATE INDEX idx_cms_article_corp_code ON js_cms_article (corp_code);
+CREATE INDEX idx_cms_article_status ON js_cms_article (status);
+CREATE INDEX idx_cms_article_ud ON js_cms_article (update_date);
+CREATE INDEX idx_cms_article_weight ON js_cms_article (weight);
+CREATE INDEX idx_cms_category_pc ON js_cms_category (parent_code);
+CREATE INDEX idx_cms_category_ts ON js_cms_category (tree_sort);
+CREATE INDEX idx_cms_category_status ON js_cms_category (status);
+CREATE INDEX idx_cms_category_tss ON js_cms_category (tree_sorts);
+CREATE INDEX idx_cms_comment_catc ON js_cms_comment (category_code);
+CREATE INDEX idx_cms_comment_ai ON js_cms_comment (article_id);
+CREATE INDEX idx_cms_comment_cc ON js_cms_comment (corp_code);
+CREATE INDEX idx_cms_comment_status ON js_cms_comment (status);
+CREATE INDEX idx_cms_guestbook_cc ON js_cms_guestbook (corp_code);
+CREATE INDEX idx_cms_guestbook_status ON js_cms_guestbook (status);
+CREATE INDEX idx_cms_guestbook_type ON js_cms_guestbook (type);
+CREATE INDEX idx_cms_site_status ON js_cms_site (status);
+CREATE INDEX cms_visit_log_cc ON js_cms_visit_log (category_code);
+CREATE INDEX cms_visit_log_ci ON js_cms_visit_log (content_id);
+CREATE INDEX cms_visit_log_fvt ON js_cms_visit_log (first_visit_time);
+CREATE INDEX cms_visit_log_inv ON js_cms_visit_log (is_new_visit);
+CREATE INDEX cms_visit_log_ra ON js_cms_visit_log (remote_addr);
+CREATE INDEX cms_visit_log_sc ON js_cms_visit_log (site_code);
+CREATE INDEX cms_visit_log_uvid ON js_cms_visit_log (unique_visit_id);
+CREATE INDEX cms_visit_log_vd ON js_cms_visit_log (visit_date);
+CREATE INDEX cms_visit_log_vt ON js_cms_visit_log (visit_time);
+CREATE INDEX idx_cms_visit_log_corpc ON js_cms_visit_log (corp_code);
 
 
 

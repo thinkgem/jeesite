@@ -63,6 +63,7 @@ CREATE TABLE [${_prefix}cms_article_data]
 	[extend_d2] datetime,
 	[extend_d3] datetime,
 	[extend_d4] datetime,
+	[extend_json] text,
 	PRIMARY KEY ([id])
 );
 
@@ -136,6 +137,7 @@ CREATE TABLE [${_prefix}cms_category]
 	[extend_d2] datetime,
 	[extend_d3] datetime,
 	[extend_d4] datetime,
+	[extend_json] text,
 	PRIMARY KEY ([category_code])
 );
 

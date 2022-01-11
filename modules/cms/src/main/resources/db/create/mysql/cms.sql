@@ -64,6 +64,7 @@ CREATE TABLE ${_prefix}cms_article_data
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (id)
 ) COMMENT = '文章详情表';
 
@@ -137,6 +138,7 @@ CREATE TABLE ${_prefix}cms_category
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
+	extend_json text COMMENT '扩展 JSON',
 	PRIMARY KEY (category_code)
 ) COMMENT = '栏目表';
 

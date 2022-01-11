@@ -63,6 +63,7 @@ CREATE TABLE js_cms_article_data
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json text,
 	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
@@ -136,6 +137,7 @@ CREATE TABLE js_cms_category
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
+	extend_json text,
 	PRIMARY KEY (category_code)
 ) WITHOUT OIDS;
 
@@ -373,6 +375,7 @@ COMMENT ON COLUMN js_cms_article_data.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_cms_article_data.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_cms_article_data.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_cms_article_data.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_cms_article_data.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_cms_article_posid IS '文章推荐位';
 COMMENT ON COLUMN js_cms_article_posid.article_id IS '内容编号';
 COMMENT ON COLUMN js_cms_article_posid.postid IS '推荐位置（1轮播图 2首页推荐 3栏目页面）';
@@ -430,6 +433,7 @@ COMMENT ON COLUMN js_cms_category.extend_d1 IS '扩展 Date 1';
 COMMENT ON COLUMN js_cms_category.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_cms_category.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_cms_category.extend_d4 IS '扩展 Date 4';
+COMMENT ON COLUMN js_cms_category.extend_json IS '扩展 JSON';
 COMMENT ON TABLE js_cms_category_role IS '栏目与角色关联表';
 COMMENT ON COLUMN js_cms_category_role.category_code IS '栏目编码';
 COMMENT ON COLUMN js_cms_category_role.role_code IS '角色编码';
