@@ -16,5 +16,4 @@ cd ..
 call mvn clean install -Dmaven.test.skip=true -Ppackage
 
 cd bin
-cmd /c msg %username% /time:0 /w "打包完成..."
 pause
