@@ -215,7 +215,7 @@ yarn build
   // 页面事件定义
   const emit = defineEmits(['success', 'register']);
 
-  // 国际化方法调用，参数是国际化编码的跟路径
+  // 国际化方法调用，参数是国际化编码的根路径
   const { t } = useI18n('test.testData');
 
   // 消息弹窗方法
@@ -498,7 +498,7 @@ yarn build
   import { defineComponent } from 'vue';
   import InputForm from './form.vue';
 
-  // 国际化方法调用，参数是国际化编码的跟路径
+  // 国际化方法调用，参数是国际化编码的根路径
   const { t } = useI18n('test.testData');
 
   // 消息弹窗方法
