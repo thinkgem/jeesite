@@ -35,8 +35,8 @@
 <%
 var idParam = '';
 for(pk in table.pkList){
-  idParam = idParam + pk.attrName + ': record.' + pk.attrName;
-  if (pkLP.index == table.pkList.~size - 1) {
+  idParam = idParam + (pk.attrName + ': record.' + pk.attrName);
+  if (pkLP.index != table.pkList.~size) {
     idParam = idParam + ', ';
   }
 }
