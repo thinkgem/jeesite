@@ -38,7 +38,7 @@
   });
 </script>
 <script lang="ts" setup>
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -57,10 +57,10 @@
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
   const record = ref<Recordable>({});
-  const getTitle = {
+  const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
-  };
+  }));
   const ctrlPermi = ref<String>('');
   const op = ref<String>('');
 

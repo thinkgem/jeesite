@@ -208,7 +208,7 @@ yarn build
 <script lang="ts" setup>
 
   // 导入当前用到的对象，部分省略
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, computed } from 'vue';
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
 
@@ -225,10 +225,10 @@ yarn build
   const record = ref<Recordable>({});
 
   // 当前页面标题定义，来自菜单管理定义
-  const getTitle = {
+  const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
-  };
+  }));
 
   // 输入表单控件定义
   const inputFormSchemas: FormSchema[] = [
