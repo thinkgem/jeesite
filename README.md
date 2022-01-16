@@ -14,6 +14,7 @@
 ### 关注 JeeSite V4.0 请点击: <https://gitee.com/thinkgem/jeesite4>
 ### 关注 JeeSite 微服务 请点击: <https://gitee.com/thinkgem/jeesite4-cloud>
 ### 关注 JeeSite 移动端 请点击: <https://gitee.com/thinkgem/jeesite4-uniapp>
+### 关注 JeeSite Vue 请点击: <https://gitee.com/thinkgem/jeesite-vue>
 
 <br/>
 
@@ -44,15 +45,15 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 内置功能
 
-1.	用户管理：用户是系统操作者，该功能主要完成系统用户配置。
-2.	机构管理：配置系统组织机构（公司、部门、小组），树结构展现，可随意调整上下级。
-3.	区域管理：系统城市区域模型，如：国家、省市、地市、区县的维护。
-4.	菜单管理：配置系统菜单，操作权限，按钮权限标识等。
-5.	角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
-6.	字典管理：对系统中经常使用的一些较为固定的数据进行维护，如：是否、男女、类别、级别等。
-7.	操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-8.	连接池监视：监视当期系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
-9.	工作流引擎：实现业务工单流转、在线流程设计器。
+1. 用户管理：用户是系统操作者，该功能主要完成系统用户配置。
+2. 机构管理：配置系统组织机构（公司、部门、小组），树结构展现，可随意调整上下级。
+3. 区域管理：系统城市区域模型，如：国家、省市、地市、区县的维护。
+4. 菜单管理：配置系统菜单，操作权限，按钮权限标识等。
+5. 角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
+6. 字典管理：对系统中经常使用的一些较为固定的数据进行维护，如：是否、男女、类别、级别等。
+7. 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+8. 连接池监视：监视当期系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+9. 工作流引擎：实现业务工单流转、在线流程设计器。
 
 ## 为何选择JeeSite
 
@@ -132,7 +133,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 更多文档
 
-* <https://github.com/thinkgem/jeesite/tree/master/doc>
+* <https://gitee.com/thinkgem/jeesite/tree/master/doc>
 
 ## 如何交流、反馈、参与贡献？
 
@@ -175,4 +176,4 @@ Hibernate性能上定不是问题。但对于大多数情况下，真正掌握Hi
 
 上述纯属个人观点，欢迎指正（thinkgem@163.com）。
 
-如果你仍然喜欢Hibernate，请点击[下载JeeSite Hibernate版本](https://github.com/thinkgem/jeesite/tree/master_hibernate)。
+如果你仍然喜欢Hibernate，请点击[下载JeeSite Hibernate版本](https://gitee.com/thinkgem/jeesite/tree/master_hibernate)。
