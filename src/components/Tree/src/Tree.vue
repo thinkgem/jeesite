@@ -75,7 +75,7 @@
         searchData: [] as TreeItem[],
       });
 
-      const treeDataRef = ref<TreeItem[]>([]);
+      const treeDataRef = ref<TreeItem[]>(props.treeData as TreeItem[]);
 
       if (props.dictType && props.dictType !== '') {
         const { initSelectTreeData } = useDict();
