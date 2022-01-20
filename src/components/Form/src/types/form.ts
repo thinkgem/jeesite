@@ -135,9 +135,9 @@ export interface FormSchema {
   fieldLabel?: string;
   // Event name triggered by internal value change, default change
   changeEvent?: string;
-  // 标签绑定字段名，默认：value，如：v-model:value
+  // 绑定组件的属性名（一般无需设置）默认：value，如：v-model:value
   valueField?: string;
-  // 标签绑定字段名，默认：labelValue，如：v-model:labelValue
+  // 绑定组件的标签属性名（一般无需设置）默认：labelValue，如：v-model:labelValue
   labelField?: string;
   // 标签名
   label: string;
