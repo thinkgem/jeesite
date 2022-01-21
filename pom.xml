@@ -29,6 +29,7 @@
 		
 		<!-- tools version setting -->
 		<slf4j.version>1.7.7</slf4j.version>
+		<logback.version>1.2.6</logback.version>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
 		<commons-codec.version>1.9</commons-codec.version>
@@ -346,6 +347,10 @@
 					<artifactId>activiti-simple-workflow</artifactId>
 					<groupId>org.activiti</groupId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -372,22 +377,29 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- common-logging 实际调用slf4j -->
+		<!-- common-logging 实际调用 slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<!-- java.util.logging 实际调用slf4j -->
+		<!-- jdk logging 实际调用 slf4j -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- log4j 实际调用 slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- slf4j logback 实现   -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 		<!-- LOGGING end -->
 		
