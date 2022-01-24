@@ -163,7 +163,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .sidebar-menu {padding:0 8px 0 7px;}
 .sidebar-menu li>a>.pull-right-container {left:0;}
-.sidebar-menu .treeview-item.active > a {color:#1890ff;background-color:#e1f1ff;border-right:0;border-radius:6px;}
+.sidebar-menu .treeview-item.active > a {color:#1890ff;background-color:#e7f4ff;border-right:0;border-radius:6px;}
 
 .content-wrapper, .right-side, body {background-color:#f8f8f8;}
 
@@ -217,5 +217,5 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
-.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#e6f7ff;}
+.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#ecf9ff;}
 /* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} 解开注释，可去除表格单元格的竖边框线 */
