@@ -24,10 +24,10 @@
   import TreeHeader from './TreeHeader.vue';
   import { ScrollContainer } from '/@/components/Container';
 
-  import { omit, get, difference, intersection } from 'lodash-es';
+  import { omit, get, difference, intersection, cloneDeep } from 'lodash-es';
   import { isArray, isBoolean, isEmpty, isFunction } from '/@/utils/is';
   import { extendSlots, getSlot } from '/@/utils/helper/tsxHelper';
-  import { filter, listToTree, treeToList } from '/@/utils/helper/treeHelper';
+  import { eachTree, filter, listToTree, treeToList } from '/@/utils/helper/treeHelper';
 
   import { useTree } from './useTree';
   import { useContextMenu } from '/@/hooks/web/useContextMenu';
@@ -506,25 +506,22 @@
         });
       }
 
-      function renderTreeNode({ data, level }: { data: TreeItem[] | undefined; level: number }) {
-        if (!data) {
-          return null;
-        }
-        const searchText = searchState.searchText;
-        const { highlight } = unref(props);
-        return data.map((item) => {
+      const treeData = computed((): TreeItem[] | undefined => {
+        const data = cloneDeep(getTreeData.value);
+        if (!data) return undefined;
+        eachTree(data, (item, _parent) => {
+          const searchText = searchState.searchText;
+          const { highlight } = unref(props);
           const {
             title: titleField,
             key: keyField,
             children: childrenField,
           } = unref(getReplaceFields);
 
-          const propsData = omit(item, 'title');
-          const icon = getIcon({ ...item, level }, item.icon);
-          const children = get(item, childrenField) || [];
+          const icon = getIcon(item, item.icon);
           const title = get(item, titleField);
 
-          const searchIdx = title.indexOf(searchText);
+          const searchIdx = searchText ? title.indexOf(searchText) : -1;
           const isHighlight =
             searchState.startSearch && !isEmpty(searchText) && highlight && searchIdx !== -1;
           const highlightStyle = `color: ${isBoolean(highlight) ? '#f50' : highlight}`;
@@ -539,36 +536,30 @@
             <span innerHTML={title} />
           );
 
-          propsData.isLeaf = !(item.children && item.children.length > 0);
+          item.isLeaf = !(item.children && item.children.length > 0);
 
-          return (
-            <Tree.TreeNode {...propsData} node={toRaw(item)} key={get(item, keyField)}>
-              {{
-                title: () => (
-                  <span
-                    class={`${prefixCls}-title pl-2`}
-                    onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}
-                  >
-                    {slots?.title ? (
-                      getSlot(slots, 'title', item)
-                    ) : (
-                      <>
-                        {icon && <TreeIcon icon={icon} />}
-                        {titleDom}
-                        {/*{get(item, titleField)}*/}
-                        <span class={`${prefixCls}__actions`}>
-                          {renderAction({ ...item, level })}
-                        </span>
-                      </>
-                    )}
-                  </span>
-                ),
-                default: () => renderTreeNode({ data: children, level: level + 1 }),
-              }}
-            </Tree.TreeNode>
+          item.title = (
+            <span
+              class={`${prefixCls}-title pl-2`}
+              onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}
+            >
+              {slots?.title ? (
+                getSlot(slots, 'title', item)
+              ) : (
+                <>
+                  {icon && <TreeIcon icon={icon} />}
+                  {titleDom}
+                  {/*{get(item, titleField)}*/}
+                  <span class={`${prefixCls}__actions`}>{renderAction(item)}</span>
+                </>
+              )}
+            </span>
           );
+          return item;
         });
-      }
+        return data;
+      });
+
       return () => {
         const { title, helpMessage, toolbar, search, checkable, showIcon } = props;
         const showTitle = title || toolbar || search || slots.headerTitle;
@@ -597,13 +588,11 @@
             )}
 
             <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound) || unref(loading)}>
-              <TreeComp {...unref(getBindValues)} v-show={!unref(loading)}>
-                {{
-                  // switcherIcon: () => <DownOutlined />,
-                  default: () => renderTreeNode({ data: unref(getTreeData), level: 1 }),
-                  ...extendSlots(slots),
-                }}
-              </TreeComp>
+              <TreeComp
+                {...unref(getBindValues)}
+                v-show={!unref(loading)}
+                treeData={treeData.value}
+              />
               <div class="flex justify-center w-full mt-10 mb-10" v-show={unref(loading)}>
                 <Spin />
               </div>
