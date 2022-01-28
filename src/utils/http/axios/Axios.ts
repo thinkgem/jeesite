@@ -80,13 +80,11 @@ export class VAxios {
     // Request interceptor configuration processing
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
-      const {
-        headers: { ignoreCancelToken },
-      } = config;
+      const ignoreCancelToken = config.headers?.ignoreCancelToken;
 
       const ignoreCancel =
         ignoreCancelToken !== undefined
-          ? ignoreCancelToken
+          ? ignoreCancelToken === 'true'
           : this.options.requestOptions?.ignoreCancelToken;
 
       !ignoreCancel && axiosCanceler.addPending(config);
@@ -137,7 +135,7 @@ export class VAxios {
       });
     }
     formData.append(params.name || 'file', params.file, params.filename);
-    const customParams = omit(params, 'file', 'filename', 'file');
+    const customParams = omit(params, 'file', 'filename');
 
     Object.keys(customParams).forEach((key) => {
       formData.append(key, customParams[key]);
@@ -149,7 +147,7 @@ export class VAxios {
       data: formData,
       headers: {
         'Content-type': ContentTypeEnum.FORM_DATA,
-        ignoreCancelToken: true,
+        ignoreCancelToken: 'true',
       },
     });
   }
