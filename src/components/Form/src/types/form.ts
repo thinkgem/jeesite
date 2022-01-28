@@ -189,8 +189,9 @@ export interface FormSchema {
   // Matching details components
   span?: number;
 
+  // 表单控件是否显示（为 false 时不渲染控件）
   ifShow?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
-
+  // 表单控件是否显示（正常渲染控件，只是控制显示隐藏）
   show?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
 
   // Render the content in the form-item tag

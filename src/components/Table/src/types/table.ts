@@ -455,7 +455,7 @@ export interface BasicColumn extends ColumnProps {
 
   // 权限编码控制是否显示
   auth?: RoleEnum | RoleEnum[] | string | string[];
-  // 业务控制是否显示（与show的区别是，ifShow不渲染组件）
+  // 业务控制是否显示
   ifShow?: boolean | ((column: BasicColumn) => boolean);
 
   // 数据的标签显示，举例 dataIndex 是 userCode，dataLabel 是 userName
