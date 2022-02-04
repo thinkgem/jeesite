@@ -75,6 +75,7 @@
       divider: propTypes.bool.def(true),
       outside: propTypes.bool.def(false),
       stopButtonPropagation: propTypes.bool.def(false),
+      align: propTypes.string,
     },
     setup(props) {
       const { prefixCls } = useDesign('basic-table-action');
@@ -138,9 +139,10 @@
       });
 
       const getAlign = computed(() => {
+        if (props.align) return props.align;
         const columns = (table as TableActionType)?.getColumns?.() || [];
         const actionColumn = columns.find((item) => item.flag === ACTION_COLUMN_FLAG);
-        return actionColumn?.align ?? 'left';
+        return actionColumn?.align ?? 'center';
       });
 
       function getTooltip(data: string | TooltipProps): TooltipProps {
