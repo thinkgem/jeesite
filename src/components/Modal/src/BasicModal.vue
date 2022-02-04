@@ -1,5 +1,5 @@
 <template>
-  <Modal v-bind="getBindValue">
+  <Modal v-bind="getBindValue" @cancel="handleCancel">
     <template #closeIcon v-if="!$slots.closeIcon">
       <ModalClose
         :canFullscreen="getProps.canFullscreen"
