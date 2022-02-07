@@ -280,6 +280,38 @@ for (c in table.columnList){
   <%
   }
 }
+  if(toBoolean(table.optionMap['isImageUpload'])){
+  %>
+    {
+      label: t('图片上传'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: '${className}_image',
+        uploadType: 'image',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+  <%
+  }
+  if(toBoolean(table.optionMap['isFileUpload'])){
+  %>
+    {
+      label: t('附件上传'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: '${className}_file',
+        uploadType: 'all',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+  <%
+  }
   for (child in table.childList){ %>
     {
       label: t('${child.comments}'),
@@ -502,6 +534,7 @@ for (c in table.columnList){
     setDrawerProps({ loading: true });
     const res = await ${className}Form(data);
     record.value = (res.${className} || {}) as Recordable;
+    record.value.__t = new Date().getTime();
   <% if(table.isTreeEntity){ %>
     if (data.parentCode && data.parentName) {
       record.value.parentCode = data.parentCode;
