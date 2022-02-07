@@ -7,22 +7,31 @@ export enum UploadResultStatus {
 }
 
 export interface FileItem {
-  thumbUrl?: string;
-  name: string;
+  file: File;
   size: string | number;
   type?: string;
   percent: number;
-  file: File;
   status?: UploadResultStatus;
   responseData?: UploadApiResult;
-  uuid: string;
+  // jeesite
+  id: string;
+  fileMd5: string;
+  fileName: string;
+  fileUploadId: string;
+  fileEntityId: string;
+  bizKey: string;
+  bizType: string;
+  uploadType: string;
+  imageMaxWidth?: string | number;
+  imageMaxHeight?: string | number;
+  fileUrl?: string;
 }
 
-export interface PreviewFileItem {
-  url: string;
-  name: string;
-  type: string;
-}
+// export interface PreviewFileItem extends FileItem {
+//   url: string;
+//   name: string;
+//   type: string;
+// }
 
 export interface FileBasicColumn {
   /**

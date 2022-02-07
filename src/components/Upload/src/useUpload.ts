@@ -1,12 +1,26 @@
 import { Ref, unref, computed } from 'vue';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
+
+const imageAllowSuffixes = '.gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff'.split(',');
+const mediaAllowSuffixes =
+  '.flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv'.split(
+    ',',
+  );
+const fileAllowSuffixes =
+  '.doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso'.split(
+    ',',
+  );
+const allowSuffixes = [...imageAllowSuffixes, ...mediaAllowSuffixes, ...fileAllowSuffixes];
+
 export function useUploadType({
+  uploadTypeRef,
   acceptRef,
   helpTextRef,
   maxNumberRef,
   maxSizeRef,
 }: {
+  uploadTypeRef: Ref<string>;
   acceptRef: Ref<string[]>;
   helpTextRef: Ref<string>;
   maxNumberRef: Ref<number>;
@@ -18,7 +32,16 @@ export function useUploadType({
     if (accept && accept.length > 0) {
       return accept;
     }
-    return [];
+    const uploadType = unref(uploadTypeRef);
+    if (uploadType == 'image') {
+      return imageAllowSuffixes;
+    } else if (uploadType == 'media') {
+      return mediaAllowSuffixes;
+    } else if (uploadType == 'file') {
+      return fileAllowSuffixes;
+    } else {
+      return allowSuffixes;
+    }
   });
   const getStringAccept = computed(() => {
     return unref(getAccept)

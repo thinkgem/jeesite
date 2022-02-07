@@ -25,3 +25,13 @@ export function getBase64WithFile(file: File) {
     reader.onerror = (error) => reject(error);
   });
 }
+
+// 格式化文件大小, 输出成带单位的字符串 think gem
+export function formatSize(size: number, pointLength = 2, units = ['B', 'K', 'M', 'G', 'TB']) {
+  if (!size) return '';
+  let unit;
+  while ((unit = units.shift()) && size > 1024) {
+    size = size / 1024;
+  }
+  return (unit === 'B' ? size : size.toFixed(pointLength)) + unit;
+}

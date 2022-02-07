@@ -172,6 +172,30 @@
       colProps: { lg: 24, md: 24 },
     },
     {
+      label: t('图片上传'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: 'testData_image',
+        uploadType: 'image',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+    {
+      label: t('文件上传'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: 'testData_file',
+        uploadType: 'all',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+    {
       label: t('子表数据'),
       field: 'testDataChildList',
       component: 'Input',
@@ -379,6 +403,7 @@
     setDrawerProps({ loading: true });
     const res = await testDataForm(data);
     record.value = (res.testData || {}) as Recordable;
+    record.value.__t = new Date().getTime();
     setFieldsValue(record.value);
     setTestDataChildTableData(res);
     setDrawerProps({ loading: false });

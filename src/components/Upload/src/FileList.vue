@@ -3,6 +3,7 @@
   import { fileListProps } from './props';
   import { isFunction } from '/@/utils/is';
   import { useModalContext } from '/@/components/Modal/src/hooks/useModalContext';
+  import { get } from 'lodash-es';
 
   export default defineComponent({
     name: 'FileList',
@@ -54,8 +55,8 @@
                       return (
                         <td class={['file-table-td', align]} key={dataIndex}>
                           {render
-                            ? customRender?.({ text: record[dataIndex], record })
-                            : record[dataIndex]}
+                            ? customRender?.({ text: get(record, dataIndex), record, index })
+                            : get(record, dataIndex)}
                         </td>
                       );
                     })}
@@ -72,7 +73,21 @@
 <style lang="less">
   .file-table {
     width: 100%;
-    border-collapse: collapse;
+    border-top: 1px solid @border-color-base;
+    border-right: 1px solid @border-color-base;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    &-th,
+    &-td {
+      border-left: 1px solid @border-color-base;
+      border-bottom: 1px solid @border-color-base;
+      padding: 12px 8px;
+    }
+
+    thead {
+      background-color: @background-color-light;
+    }
 
     .center {
       text-align: center;
@@ -84,21 +99,6 @@
 
     .right {
       text-align: right;
-    }
-
-    &-th,
-    &-td {
-      padding: 12px 8px;
-    }
-
-    thead {
-      background-color: @background-color-light;
-    }
-
-    table,
-    td,
-    th {
-      border: 1px solid @border-color-base;
     }
   }
 </style>

@@ -19,7 +19,6 @@
         </a-button>
       </Tooltip>
     </a-button-group>
-
     <UploadModal
       v-bind="bindValue"
       :previewFileList="fileList"
@@ -27,12 +26,11 @@
       @change="handleChange"
       @delete="handleDelete"
     />
-
     <UploadPreviewModal
       :value="fileList"
       @register="registerPreviewModal"
-      @list-change="handlePreviewChange"
-      @delete="handlePreviewDelete"
+      @change="handlePreviewChange"
+      @delete="handleDelete"
     />
   </div>
 </template>
@@ -47,22 +45,22 @@
   import { omit } from 'lodash-es';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isArray } from '/@/utils/is';
+  import { FileUpload, uploadFileList } from '/@/api/sys/upload';
 
   export default defineComponent({
     name: 'BasicUpload',
     components: { UploadModal, UploadPreviewModal, Icon, Tooltip },
     props: uploadContainerProps,
-    emits: ['change', 'delete', 'preview-delete', 'update:value'],
+    emits: ['change', 'delete', 'update:value'],
 
     setup(props, { emit, attrs }) {
       const { t } = useI18n();
-      // 上传modal
       const [registerUploadModal, { openModal: openUploadModal }] = useModal();
-
-      //   预览modal
       const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
 
-      const fileList = ref<string[]>([]);
+      const dataMap = ref<Object>({});
+      const fileList = ref<FileUpload[]>([]);
+      const fileListDel = ref<FileUpload[]>([]);
 
       const showPreview = computed(() => {
         const { emptyHidePreview } = props;
@@ -77,32 +75,56 @@
 
       watch(
         () => props.value,
-        (value = []) => {
-          fileList.value = isArray(value) ? value : [];
+        (value = '') => {
+          dataMap.value = value;
         },
         { immediate: true },
       );
 
+      watch(
+        () => [props.bizKey, props.loadTime],
+        () => {
+          loadFileList();
+        },
+        { immediate: true },
+      );
+
+      function loadFileList() {
+        fileList.value = [];
+        if (props.bizKey != '') {
+          uploadFileList({
+            bizKey: props.bizKey,
+            bizType: props.bizType,
+          }).then((res) => {
+            if (isArray(res)) {
+              fileList.value = res;
+            }
+          });
+        }
+      }
+
       // 上传modal保存操作
-      function handleChange(urls: string[]) {
-        fileList.value = [...unref(fileList), ...(urls || [])];
-        emit('update:value', fileList.value);
-        emit('change', fileList.value);
+      function handleChange(records: FileUpload[]) {
+        fileList.value = [...unref(fileList), ...(records || [])];
+        dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
+        emit('update:value', dataMap.value);
+        emit('change', dataMap.value);
       }
 
       // 预览modal保存操作
-      function handlePreviewChange(urls: string[]) {
-        fileList.value = [...(urls || [])];
-        emit('update:value', fileList.value);
-        emit('change', fileList.value);
+      function handlePreviewChange(records: FileUpload[]) {
+        fileList.value = [...(records || [])];
+        dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
+        emit('update:value', dataMap.value);
+        emit('change', dataMap.value);
       }
 
-      function handleDelete(record: Recordable) {
+      function handleDelete(record: FileUpload) {
+        fileListDel.value.push(record);
+        dataMap.value[props.bizType + '__del'] = fileListDel.value.map((item) => item.id).join(',');
         emit('delete', record);
-      }
-
-      function handlePreviewDelete(url: string) {
-        emit('preview-delete', url);
+        emit('update:value', dataMap.value);
+        emit('change', dataMap.value);
       }
 
       return {
@@ -116,7 +138,6 @@
         showPreview,
         bindValue,
         handleDelete,
-        handlePreviewDelete,
         t,
       };
     },

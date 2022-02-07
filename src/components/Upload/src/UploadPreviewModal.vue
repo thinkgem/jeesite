@@ -1,63 +1,55 @@
 <template>
   <BasicModal
     width="800px"
-    :title="t('component.upload.preview')"
+    :title="t('component.upload.view')"
+    :cancelText="t('component.modal.okText')"
     wrapClassName="upload-preview-modal"
     v-bind="$attrs"
     @register="register"
     :showOkBtn="false"
   >
-    <FileList :dataSource="fileListRef" :columns="columns" :actionColumn="actionColumn" />
+    <FileList :dataSource="fileList" :columns="columns" :actionColumn="actionColumn" />
   </BasicModal>
 </template>
 <script lang="ts">
   import { defineComponent, watch, ref } from 'vue';
-  //   import { BasicTable, useTable } from '/@/components/Table';
-  import FileList from './FileList.vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
+  // import { BasicTable, useTable } from '/@/components/Table';
+  import FileList from './FileList.vue';
   import { previewProps } from './props';
-  import { PreviewFileItem } from './typing';
   import { downloadByUrl } from '/@/utils/file/download';
   import { createPreviewColumns, createPreviewActionColumn } from './data';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isArray } from '/@/utils/is';
+  import { FileUpload } from '/@/api/sys/upload';
+  import { useGlobSetting } from '/@/hooks/setting';
 
   export default defineComponent({
     components: { BasicModal, FileList },
     props: previewProps,
-    emits: ['list-change', 'register', 'delete'],
+    emits: ['change', 'register', 'delete'],
     setup(props, { emit }) {
       const [register, { closeModal }] = useModalInner();
       const { t } = useI18n();
+      const { apiUrl } = useGlobSetting();
+      const fileList = ref<FileUpload[]>([]);
 
-      const fileListRef = ref<PreviewFileItem[]>([]);
       watch(
         () => props.value,
         (value) => {
           if (!isArray(value)) value = [];
-          fileListRef.value = value
-            .filter((item) => !!item)
-            .map((item) => {
-              return {
-                url: item,
-                type: item.split('.').pop() || '',
-                name: item.split('/').pop() || '',
-              };
-            });
+          fileList.value = value;
         },
         { immediate: true },
       );
 
       // 删除
-      function handleRemove(record: PreviewFileItem) {
-        const index = fileListRef.value.findIndex((item) => item.url === record.url);
+      function handleRemove(record: FileUpload) {
+        const index = fileList.value.findIndex((item) => item.id === record.id);
         if (index !== -1) {
-          const removed = fileListRef.value.splice(index, 1);
-          emit('delete', removed[0].url);
-          emit(
-            'list-change',
-            fileListRef.value.map((item) => item.url),
-          );
+          const removed = fileList.value.splice(index, 1);
+          emit('delete', removed[0]);
+          emit('change', fileList.value);
         }
       }
 
@@ -70,8 +62,12 @@
       // }
 
       // 下载
-      function handleDownload(record: PreviewFileItem) {
-        const { url = '' } = record;
+      function handleDownload(record: FileUpload) {
+        const { fileUrl } = record;
+        let url = fileUrl || '';
+        if (url.indexOf('://') == -1) {
+          url = apiUrl + url;
+        }
         downloadByUrl({ url });
       }
 
@@ -79,7 +75,7 @@
         t,
         register,
         closeModal,
-        fileListRef,
+        fileList,
         columns: createPreviewColumns() as any[],
         actionColumn: createPreviewActionColumn({ handleRemove, handleDownload }) as any,
       };

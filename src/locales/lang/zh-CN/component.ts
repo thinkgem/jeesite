@@ -91,17 +91,19 @@ export default {
     checkUnStrictly: '层级独立',
   },
   upload: {
-    save: '保存',
+    save: '确定',
     upload: '上传',
     imgUpload: '图片上传',
     uploaded: '已上传',
 
     operating: '操作',
     del: '删除',
+    delConfirm: '确认删除？',
     download: '下载',
     saveWarn: '请等待文件上传后，保存!',
     saveError: '没有上传成功的文件，无法保存!',
 
+    view: '查看',
     preview: '预览',
     choose: '选择文件',
 
@@ -111,10 +113,11 @@ export default {
     maxSizeMultiple: '只能上传不超过{0}MB的文件!',
     maxNumber: '最多只能上传{0}个文件',
 
-    legend: '略缩图',
+    legend: '图标',
     fileName: '文件名',
     fileSize: '文件大小',
     fileStatue: '状态',
+    createDate: '上传时间',
 
     startUpload: '开始上传',
     uploadSuccess: '上传成功',

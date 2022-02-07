@@ -1,30 +1,40 @@
 import type { BasicColumn, ActionItem } from '/@/components/Table';
-import { FileItem, PreviewFileItem, UploadResultStatus } from './typing';
-import {
-  // checkImgType,
-  isImgTypeByName,
-} from './helper';
-import { Progress, Tag } from 'ant-design-vue';
+import { FileItem, UploadResultStatus } from './typing';
+import { formatSize, isImgTypeByName } from './helper';
+import { Avatar, Progress, Tag } from 'ant-design-vue';
+import { FileOutlined } from '@ant-design/icons-vue';
 import TableAction from '/@/components/Table/src/components/TableAction.vue';
 import ThumbUrl from './ThumbUrl.vue';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { FileUpload } from '../../../api/sys/upload';
+import { useGlobSetting } from '/@/hooks/setting';
 
 const { t } = useI18n();
+const { apiUrl } = useGlobSetting();
 
 // 文件上传列表
 export function createTableColumns(): BasicColumn[] {
   return [
     {
-      dataIndex: 'thumbUrl',
+      dataIndex: 'fileUrl',
       title: t('component.upload.legend'),
       width: 100,
-      customRender: ({ record }) => {
-        const { thumbUrl } = (record as FileItem) || {};
-        return thumbUrl && <ThumbUrl fileUrl={thumbUrl} />;
+      customRender: ({ record, index }) => {
+        const { fileUrl, type, fileEntity } = (record as FileUpload) || {};
+        let url = fileUrl || '';
+        if (!url.startsWith('data:image/') && url.indexOf('://') == -1) {
+          url = apiUrl + url;
+        }
+        if (isImgTypeByName(url)) {
+          return <ThumbUrl fileUrl={url} />;
+        }
+        const ext = type || fileEntity?.fileExtension || <FileOutlined />
+        const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
+        return <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }}>{ext}</Avatar>;
       },
     },
     {
-      dataIndex: 'name',
+      dataIndex: 'fileName',
       title: t('component.upload.fileName'),
       align: 'left',
       customRender: ({ text, record }) => {
@@ -52,27 +62,23 @@ export function createTableColumns(): BasicColumn[] {
       title: t('component.upload.fileSize'),
       width: 100,
       customRender: ({ text = 0 }) => {
-        return text && (text / 1024).toFixed(2) + 'KB';
+        return text && formatSize(text);
       },
     },
-    // {
-    //   dataIndex: 'type',
-    //   title: '文件类型',
-    //   width: 100,
-    // },
     {
       dataIndex: 'status',
       title: t('component.upload.fileStatue'),
       width: 100,
-      customRender: ({ text }) => {
+      customRender: ({ text, record }) => {
+        console.log(record);
+        const { responseData } = (record as FileItem) || {};
         if (text === UploadResultStatus.SUCCESS) {
-          return <Tag color="green">{() => t('component.upload.uploadSuccess')}</Tag>;
+          return <Tag color="green">{() => responseData?.message || t('component.upload.uploadSuccess')}</Tag>;
         } else if (text === UploadResultStatus.ERROR) {
-          return <Tag color="red">{() => t('component.upload.uploadError')}</Tag>;
+          return <Tag color="red">{() => responseData?.message || t('component.upload.uploadError')}</Tag>;
         } else if (text === UploadResultStatus.UPLOADING) {
-          return <Tag color="blue">{() => t('component.upload.uploading')}</Tag>;
+          return <Tag color="blue">{() => responseData?.message || t('component.upload.uploading')}</Tag>;
         }
-
         return text;
       },
     },
@@ -82,14 +88,18 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
   return {
     width: 120,
     title: t('component.upload.operating'),
-    dataIndex: 'action',
+    dataIndex: 'actions',
+    align: 'center',
     fixed: false,
     customRender: ({ record }) => {
       const actions: ActionItem[] = [
         {
           label: t('component.upload.del'),
           color: 'error',
-          onClick: handleRemove.bind(null, record),
+          popConfirm: {
+            title: t('component.upload.delConfirm'),
+            confirm: handleRemove.bind(null, record),
+          },
         },
       ];
       // if (checkImgType(record)) {
@@ -106,18 +116,41 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
 export function createPreviewColumns(): BasicColumn[] {
   return [
     {
-      dataIndex: 'url',
+      dataIndex: 'fileUrl',
       title: t('component.upload.legend'),
       width: 100,
-      customRender: ({ record }) => {
-        const { url } = (record as PreviewFileItem) || {};
-        return isImgTypeByName(url) && <ThumbUrl fileUrl={url} />;
+      customRender: ({ record, index }) => {
+        const { fileUrl, type, fileEntity } = (record as FileUpload) || {};
+        let url = fileUrl || '';
+        if (!url.startsWith('data:image/') && url.indexOf('://') == -1) {
+          url = apiUrl + url;
+        }
+        if (isImgTypeByName(url)) {
+          return <ThumbUrl fileUrl={url} />;
+        }
+        const ext = type || fileEntity?.fileExtension || <FileOutlined />
+        const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
+        return <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }}>{ext}</Avatar>;
       },
     },
     {
-      dataIndex: 'name',
+      dataIndex: 'fileName',
       title: t('component.upload.fileName'),
       align: 'left',
+    },
+    {
+      dataIndex: 'fileEntity.fileSize',
+      title: t('component.upload.fileSize'),
+      width: 100,
+      customRender: ({ text = 0 }) => {
+        return text && formatSize(text);
+      },
+    },
+    {
+      title: t('上传时间'),
+      dataIndex: 'createDate',
+      width: 130,
+      align: 'center',
     },
   ];
 }
@@ -132,21 +165,30 @@ export function createPreviewActionColumn({
   return {
     width: 160,
     title: t('component.upload.operating'),
-    dataIndex: 'action',
+    dataIndex: 'actions',
+    align: 'center',
     fixed: false,
     customRender: ({ record }) => {
       const actions: ActionItem[] = [
         {
           label: t('component.upload.del'),
           color: 'error',
-          onClick: handleRemove.bind(null, record),
+          popConfirm: {
+            title: t('component.upload.delConfirm'),
+            confirm: handleRemove.bind(null, record),
+          },
         },
         {
           label: t('component.upload.download'),
           onClick: handleDownload.bind(null, record),
         },
       ];
-
+      // if (checkImgType(record)) {
+      //   actions.unshift({
+      //     label: t('component.upload.preview'),
+      //     onClick: handlePreview.bind(null, record),
+      //   });
+      // }
       return <TableAction actions={actions} outside={true} />;
     },
   };

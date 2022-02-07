@@ -88,17 +88,19 @@ export default {
     checkUnStrictly: 'Hierarchical independence',
   },
   upload: {
-    save: 'Save',
+    save: 'OK',
     upload: 'Upload',
     imgUpload: 'ImageUpload',
     uploaded: 'Uploaded',
 
     operating: 'Operating',
     del: 'Delete',
-    download: 'download',
+    delConfirm: 'Confirm deletion?',
+    download: 'Download',
     saveWarn: 'Please wait for the file to upload and save!',
     saveError: 'There is no file successfully uploaded and cannot be saved!',
 
+    view: 'View',
     preview: 'Preview',
     choose: 'Select the file',
 
@@ -108,10 +110,11 @@ export default {
     maxSizeMultiple: 'Only upload files up to {0}MB!',
     maxNumber: 'Only upload up to {0} files',
 
-    legend: 'Legend',
+    legend: 'Icon',
     fileName: 'File name',
     fileSize: 'File size',
     fileStatue: 'File status',
+    createDate: 'Upload time',
 
     startUpload: 'Start upload',
     uploadSuccess: 'Upload successfully',
