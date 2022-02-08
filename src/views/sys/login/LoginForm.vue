@@ -43,6 +43,14 @@
       </Input>
     </FormItem>
 
+    <div class="gp" v-if="gp">
+      Tip：发送 <a href="https://gitee.com/thinkgem/jeesite4" target="_blank">JeeSite</a> 和
+      <a href="https://gitee.com/thinkgem/jeesite-vue" target="_blank">JeeSite Vue</a> 仓库 Star
+      截图到邮箱：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <span @click="selectText('st')" id="st">jeesite_demo@163.com</span>
+      免费 获取账号密码
+    </div>
+
     <ARow class="enter-x">
       <ACol :span="12">
         <FormItem>
@@ -199,4 +207,27 @@
       loading.value = false;
     }
   }
+
+  function selectText(id: string) {
+    const text = document.getElementById(id);
+    const selection = window.getSelection();
+    const range = document.createRange();
+    if (text && selection) {
+      range.selectNodeContents(text);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  }
+
+  const gp = location.href.indexOf('.jeesite.com') != -1 || import.meta.env.DEV;
 </script>
+<style>
+  .gp {
+    padding-bottom: 15px;
+    font-size: 16px;
+  }
+  .gp,
+  .gp a {
+    color: #d21919;
+  }
+</style>

@@ -45,7 +45,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { computed, onMounted } from 'vue';
+  import { computed } from 'vue';
   import { AppLogo } from '/@/components/Application';
   import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
@@ -57,6 +57,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useLocaleStore } from '/@/store/modules/locale';
 
+  /* import { onMounted } from 'vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   const { createConfirm } = useMessage();
   onMounted(() => {
@@ -78,7 +79,7 @@
         },
       });
     }
-  });
+  }); */
 
   defineProps({
     sessionTimeout: {
