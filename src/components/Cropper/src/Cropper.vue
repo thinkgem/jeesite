@@ -41,12 +41,14 @@
     guides: true,
     movable: true,
     rotatable: true,
+    dragMode: 'move',
+    autoCropArea: 1,
   };
 
   const props = {
     src: { type: String, required: true },
     alt: { type: String },
-    circled: { type: Boolean, default: false },
+    circled: { type: Boolean, default: true },
     realTimePreview: { type: Boolean, default: true },
     height: { type: [String, Number], default: '360px' },
     crossorigin: {
@@ -133,7 +135,8 @@
           return;
         }
         let imgInfo = cropper.value.getData();
-        const canvas = props.circled ? getRoundedCanvas() : cropper.value.getCroppedCanvas();
+        // const canvas = props.circled ? getRoundedCanvas() : cropper.value.getCroppedCanvas();
+        const canvas = cropper.value.getCroppedCanvas();
         canvas.toBlob((blob) => {
           if (!blob) {
             return;
@@ -153,22 +156,22 @@
       }
 
       // Get a circular picture canvas
-      function getRoundedCanvas() {
-        const sourceCanvas = cropper.value!.getCroppedCanvas();
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d')!;
-        const width = sourceCanvas.width;
-        const height = sourceCanvas.height;
-        canvas.width = width;
-        canvas.height = height;
-        context.imageSmoothingEnabled = true;
-        context.drawImage(sourceCanvas, 0, 0, width, height);
-        context.globalCompositeOperation = 'destination-in';
-        context.beginPath();
-        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
-        context.fill();
-        return canvas;
-      }
+      // function getRoundedCanvas() {
+      //   const sourceCanvas = cropper.value!.getCroppedCanvas();
+      //   const canvas = document.createElement('canvas');
+      //   const context = canvas.getContext('2d')!;
+      //   const width = sourceCanvas.width;
+      //   const height = sourceCanvas.height;
+      //   canvas.width = width;
+      //   canvas.height = height;
+      //   context.imageSmoothingEnabled = true;
+      //   context.drawImage(sourceCanvas, 0, 0, width, height);
+      //   context.globalCompositeOperation = 'destination-in';
+      //   context.beginPath();
+      //   context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+      //   context.fill();
+      //   return canvas;
+      // }
 
       return { getClass, imgElRef, getWrapperStyle, getImageStyle, isReady, croppered };
     },

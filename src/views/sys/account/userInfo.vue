@@ -24,7 +24,7 @@
   </CollapseContainer>
 </template>
 <script lang="ts" setup>
-  import { computed, onMounted } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { Button, Row, Col } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -39,6 +39,7 @@
 
   const { t } = useI18n();
   const { showMessage } = useMessage();
+  const avatarBase64 = ref<String>('');
   const userStore = useUserStore();
   const ARow = Row;
   const ACol = Col;
@@ -93,19 +94,24 @@
     return avatarUrl || headerImg;
   });
 
-  function updateAvatar(src: string) {
-    const userinfo = userStore.getUserInfo;
-    userinfo.avatarUrl = src;
-    userStore.setUserInfo(userinfo);
+  function updateAvatar(source: string) {
+    avatarBase64.value = source;
   }
 
   async function handleSubmit() {
     try {
       const data = await validate();
+      if (avatarBase64.value != '') {
+        data.avatarBase64 = avatarBase64.value;
+      }
       // console.log('submit', data);
       const res = await infoSaveBase(data);
       const userInfoRes = await userInfo();
-      userStore.setUserInfo(userInfoRes.user);
+      const user = userInfoRes.user;
+      if (avatarBase64.value != '') {
+        user.avatarUrl = avatarBase64.value;
+      }
+      userStore.setUserInfo(user);
       showMessage(res.message);
     } catch (error: any) {
       if (error && error.errorFields) {
