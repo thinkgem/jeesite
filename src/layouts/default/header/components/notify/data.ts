@@ -29,7 +29,7 @@ export const tabListData: TabItem[] = [
       {
         id: '000000001',
         avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
-        title: '你收到了 14 份新周报',
+        title: '你收到了 10 份新周报',
         description: '',
         datetime: '2022-08-09',
         type: '1',
