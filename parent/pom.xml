@@ -57,7 +57,7 @@
 		
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
-		<!-- <tomcat.version>9.0.54</tomcat.version> -->
+		<tomcat.version>9.0.58</tomcat.version>
 		<maven.test.skip>true</maven.test.skip>
 		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 降级到该版本，新版本可能会出现VM崩溃 -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
