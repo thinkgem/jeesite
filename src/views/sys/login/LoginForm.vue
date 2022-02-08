@@ -48,7 +48,7 @@
       <a href="https://gitee.com/thinkgem/jeesite-vue" target="_blank">JeeSite Vue</a> 仓库 Star
       截图到邮箱：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <span @click="selectText('st')" id="st">jeesite_demo@163.com</span>
-      免费 获取账号密码
+      免费 获取账号密码。
     </div>
 
     <ARow class="enter-x">
