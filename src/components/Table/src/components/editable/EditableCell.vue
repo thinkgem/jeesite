@@ -24,7 +24,7 @@
           :class="getWrapperClass"
           ref="elRef"
           @change="handleChange"
-          @pressEnter="handleEnter"
+          @press-enter="handleEnter"
         />
         <div :class="`${prefixCls}__action`" v-if="!getRowEditable">
           <CheckOutlined :class="[`${prefixCls}__icon`, 'mx-2']" @click="handleSubmitClick" />
@@ -51,7 +51,7 @@
   import { isArray, isBoolean, isFunction, isNumber, isObject } from '/@/utils/is';
   import { createPlaceholderMessage } from './helper';
   import { omit, pick, set } from 'lodash-es';
-  import { treeToList } from '/@/utils/helper/treeHelper';
+  // import { treeToList } from '/@/utils/helper/treeHelper';
   import { Spin } from 'ant-design-vue';
   import { DictLabel } from '/@/components/Dict';
 
