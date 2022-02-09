@@ -163,7 +163,7 @@ $("#testDataChildDataGrid").dataGrid({
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
-					$(element).select2().on("change",function(){$(this).resetValid()});
+					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
 			}
 		},
