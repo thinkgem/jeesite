@@ -32,6 +32,10 @@ export const basicProps = {
     type: Object as PropType<any>,
     default: {},
   },
+  readonly: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
   // 秒传功能（标准版/专业版）
   checkmd5: {
     type: Boolean as PropType<boolean>,
@@ -46,7 +50,7 @@ export const basicProps = {
     default: false,
   },
   bizKey: {
-    type: String as PropType<string>,
+    type: [String, Number] as PropType<string | number>,
     default: '',
   },
   bizType: {

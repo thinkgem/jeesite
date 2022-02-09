@@ -1,7 +1,12 @@
 <template>
   <div>
     <a-button-group>
-      <a-button type="primary" @click="openUploadModal" preIcon="carbon:cloud-upload">
+      <a-button
+        v-if="!readonly"
+        type="primary"
+        @click="openUploadModal"
+        preIcon="carbon:cloud-upload"
+      >
         {{ t('component.upload.upload') }}
       </a-button>
       <Tooltip placement="bottom" v-if="showPreview">
