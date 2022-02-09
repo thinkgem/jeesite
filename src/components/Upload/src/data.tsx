@@ -70,7 +70,6 @@ export function createTableColumns(): BasicColumn[] {
       title: t('component.upload.fileStatue'),
       width: 100,
       customRender: ({ text, record }) => {
-        console.log(record);
         const { responseData } = (record as FileItem) || {};
         if (text === UploadResultStatus.SUCCESS) {
           return <Tag color="green">{() => responseData?.message || t('component.upload.uploadSuccess')}</Tag>;
