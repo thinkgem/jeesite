@@ -18,10 +18,17 @@
     </template>
     <BasicForm @register="registerForm">
       <template #testDataChildList>
-        <BasicTable
-          @register="registerTestDataChildTable"
-          @row-click="handleTestDataChildRowClick"
-        />
+        <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
+          <template #testDataChildUpload="{ record: childRecord }">
+            <BasicUpload
+              v-model:value="childRecord.dataMap"
+              :bizKey="childRecord.id"
+              :bizType="'testDataChild_file'"
+              :uploadType="'all'"
+              :loadTime="record.__t"
+            />
+          </template>
+        </BasicTable>
         <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
           <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
         </a-button>
@@ -46,6 +53,7 @@
   import { testDataSave, testDataForm } from '/@/api/test/testData';
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
+  import { BasicUpload } from '/@/components/Upload';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -237,7 +245,7 @@
       {
         title: t('单行文本'),
         dataIndex: 'testInput',
-        width: 230,
+        width: 130,
         align: 'left',
         editRow: true,
         editComponent: 'Input',
@@ -353,12 +361,20 @@
         },
         editRule: false,
       },
+      {
+        title: t('文件上传'),
+        dataIndex: 'upload',
+        width: 160,
+        align: 'left',
+        slots: { customRender: 'testDataChildUpload' },
+      },
     ]);
     testDataChildTable.setTableData(record.value.testDataChildList || []);
   }
 
   function handleTestDataChildRowClick(record: Recordable) {
     record.onEdit?.(true, false);
+    record.dataMap = record.dataMap || {};
   }
 
   function handleTestDataChildAdd() {
@@ -366,6 +382,7 @@
       id: new Date().getTime(),
       isNewRecord: true,
       editable: true,
+      dataMap: {},
     });
   }
 

@@ -188,7 +188,7 @@
       dataIndex: 'testInput',
       key: 'a.test_input',
       sorter: true,
-      width: 230,
+      width: 130,
       align: 'left',
       slots: { customRender: 'firstColumn' },
     },
