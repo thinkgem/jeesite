@@ -67,16 +67,16 @@
 
 ## 学习准备
 
+- [VSCode](https://code.visualstudio.com/) - 推荐 IDE 集成开发工具
 - [Node.js 16](http://nodejs.org/) 和 [git](https://git-scm.com/) - 开发环境
 - [Vite](https://vitejs.dev/) - 熟悉 Vite 特性
 - [Vue-v3](https://v3.vuejs.org/) - 熟悉 Vue 基础语法
-- [TypeScript](https://www.typescriptlang.org/) - 熟悉 `TypeScript` 基本语法
+- [TypeScript](https://www.typescriptlang.org/) - 熟悉 TS 基本语法
 - [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
 - [Vue-Vben-Admin](https://vvbin.cn/doc-next/) - 熟悉 UI 及表单列表及常用组件使用
 - [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
-- [Mock.js](https://github.com/nuysoft/Mock) - mockjs 基本语法
-- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.0_dev/) - 后台服务
+- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.0_dev/) - 安装后台服务
 
 ## 安装使用
 
