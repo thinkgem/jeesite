@@ -53,7 +53,7 @@
         default: () => [],
       },
       api: {
-        type: Function as PropType<(arg?: Recordable) => Promise<OptionsItem[]>>,
+        type: Function as PropType<(arg?: Recordable) => Promise<Recordable[] | OptionsItem[]>>,
         default: null,
       },
       params: {
@@ -69,7 +69,7 @@
     setup(props, { emit }) {
       const { t } = useI18n();
       const attrs = useAttrs();
-      const optionsRef = ref<OptionsItem[]>(props.options);
+      const optionsRef = ref<Recordable[]>(props.options);
       const isFirstLoad = ref<Boolean>(false);
       const loading = ref<Boolean>(false);
 
@@ -121,7 +121,7 @@
       });
 
       async function fetch() {
-        const api = props.api;
+        const { api } = props;
         if (!api || !isFunction(api)) return;
         optionsRef.value = [];
         try {
