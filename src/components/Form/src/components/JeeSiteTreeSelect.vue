@@ -36,6 +36,7 @@
   import { LoadingOutlined } from '@ant-design/icons-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDict } from '/@/components/Dict';
+  import { TreeItem } from '/@/components/Tree';
 
   export default defineComponent({
     name: 'JeeSiteTreeSelect',
@@ -50,11 +51,11 @@
       },
       labelInValue: propTypes.bool,
       treeData: {
-        type: Array as PropType<Recordable[]>,
+        type: Array as PropType<Recordable[] | TreeItem[]>,
         default: () => [],
       },
       api: {
-        type: Function as PropType<(arg?: Recordable) => Promise<Recordable>>,
+        type: Function as PropType<(arg?: Recordable) => Promise<Recordable[] | TreeItem[]>>,
         default: null,
       },
       params: {

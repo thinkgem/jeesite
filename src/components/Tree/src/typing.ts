@@ -7,6 +7,10 @@ export interface ActionItem {
 
 export interface TreeItem extends TreeDataItem {
   icon?: any;
+  id?: string;
+  pId?: string;
+  name?: string;
+  children?: TreeItem[];
 }
 
 export interface ReplaceFields {
