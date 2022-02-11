@@ -86,22 +86,13 @@
       const { prefixCls } = useDesign('basic-tree');
 
       const getReplaceFields = computed((): Required<ReplaceFields> => {
-        const { treeDataSimpleMode, replaceFields } = props;
-        if (treeDataSimpleMode) {
-          return {
-            key: 'id',
-            title: 'name',
-            children: 'children',
-            ...replaceFields,
-          };
-        } else {
-          return {
-            key: 'key',
-            title: 'title',
-            children: 'children',
-            ...replaceFields,
-          };
-        }
+        const { replaceFields } = props;
+        return {
+          key: 'id',
+          title: 'name',
+          children: 'children',
+          ...replaceFields,
+        };
       });
 
       const getBindValues = computed(() => {
@@ -538,7 +529,7 @@
 
           item.isLeaf = !(item.children && item.children.length > 0);
 
-          item.title = (
+          item[titleField] = (
             <span
               class={`${prefixCls}-title pl-2`}
               onClick={handleClickNode.bind(null, item[keyField], item[childrenField])}
