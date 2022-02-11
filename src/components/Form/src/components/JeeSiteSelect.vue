@@ -70,7 +70,7 @@
       const { t } = useI18n();
       const attrs = useAttrs();
       const optionsRef = ref<OptionsItem[]>(props.options);
-      const isFirstLoad = ref<Boolean>(true);
+      const isFirstLoad = ref<Boolean>(false);
       const loading = ref<Boolean>(false);
 
       const getAttrs = computed(() => {
