@@ -4,7 +4,7 @@
 </p>
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">快速开发平台 - Spring Boot</h3>
 <p align="center">
- <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V4.3" src="https://img.shields.io/badge/JeeSite-V4.3-success.svg"></a>
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.0" src="https://img.shields.io/badge/JeeSite-V5.0-success.svg"></a>
  <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.5-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
@@ -25,9 +25,9 @@
 
 ## 平台介绍
 
-JeeSite 快速开发平台，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，基于经典技术组合（Spring Boot、Spring MVC、Apache Shiro、MyBatis、Beetl、Bootstrap、AdminLTE）采用经典开发模式，让初学者能够更快的入门并投入到团队开发中去。提供在线代码生成功能，包括模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计，模块增减便捷；界面无刷新，一键换肤；众多账号安全设置，密码策略；文件在线预览；消息推送；多元化第三方登录；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务应用。
+JeeSite 快速开发平台，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，后端基于经典组合 Spring Boot、Shiro、MyBatis，前端采用 Beetl、Bootstrap、AdminLTE 经典开发模式，或者分离版 Vue3、Vite、Ant Design Vue、TypeScript、Vben Admin 最先进技术栈。提供在线代码生成功能，包括模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计，微内核和插件架构，模块增减便捷；界面无刷新，一键换肤；众多账号安全设置，密码策略；文件在线预览；消息推送；多元化第三方登录；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务应用。
 
-JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能（经典架构会的人多），让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
+JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能，中高级人员有时间做一些更有用的事情。让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
 
 JeeSite 自 2013 年发布以来已被广大爱好者用到了企业、政府、医疗、金融、互联网等各个领域中，JeeSite 架构精良、易于扩展、大众思维的设计模式、工匠精神打磨每一个细节，深入开发者的内心，并荣获开源中国《最受欢迎中国开源软件》奖杯，期间也帮助了不少刚毕业的大学生，教师作为入门教材，快速的去实践。
 
@@ -37,21 +37,23 @@ JeeSite4 的升级，作者结合了多年总结和经验，以及各方面的�
 
 JeeSite 整体架构清晰、稳定技术先进、源代码书写规范、经典技术会的人多、易于维护、易于扩展、安全稳定。
 
-JeeSite 功能全，JeeSite 的知识点非常多，也非常少。因为她使用的都是一些通用的技术，通俗的设计风格，大多数基础知识点多数人都能掌握，所以每一个 JeeSite 的功能点都非常容易掌握。只要你学会使用这些功能和组件的应用，就可以顺利的完成系统开发了。
+JeeSite 功能全，知识点非常多，也非常少。因为她使用的都是一些通用的技术，通俗的设计风格，大多数基础知识点多数人都能掌握，所以每一个 JeeSite 的功能点都非常容易掌握。只要你学会使用这些功能和组件的应用，就可以顺利的完成系统开发了。
 
 JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，封装不是限制你去做一些事情，而是在便捷的同时，也具有较好的扩展性，在不具备一些功能的情况下，JeeSite 提供了扩展接口，提供了原生调用方法。
 
-大家都在用 Spring ，在学习 Spring 架构的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，JeeSite 也一样具备强大的扩展性。
+大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重着一块，JeeSite 也一样具备强大的扩展性。
 
-**发展至今 JeeSite 平台架构已经非常稳定，JeeSite 是一个专业的平台，是一个让你使用放心的平台。**
+* 至今 JeeSite 平台架构已经非常稳定。
+* JeeSite 精益求精，用心打磨每一个细节。
+* JeeSite 是一个专业的平台，是一个让你使用放心的平台。
 
-### v4 架构特点、安全方面等等的优势：<https://jeesite.com/docs/feature/>
+### 架构特点及安全方面的优势：<https://jeesite.com/docs/feature/>
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.6、Spring Framework 5.3、Apache Shiro 1.8、J2Cache
-* 持久层：Apache MyBatis 3.5、Hibernate Validator 6.1、Alibaba Druid 1.2
-* 视图层：Spring MVC 5.3、Beetl 3.8（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
+* 主框架：Spring Boot 2.5、Spring Framework 5.3、Apache Shiro 1.8、J2Cache
+* 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
+* 视图层：Spring MVC 5.3、Beetl 3.3（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.1、zTree 3.5、jQuery Validation
 * 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌浏览器、火狐浏览器、国产浏览器 等
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
@@ -61,7 +63,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 1. 前端发展迅速，向下兼容性是前端最大的弊端，会造成升级 JeeSite 变的困难，无法做到平滑升级。
 2. 其实 JeeSite 一直为前端组件做相应升级，满足各种需求场景，可以达到相应的效果，并向下兼容。 
 3. 为了兼容 IE 浏览器，2020 年浏览器国内市场份额分析，还是有一定的 IE 占有率。
-4. JeeSite 也提供了更先进的分离端版本：<http://vue.jeesite.com>
+4. JeeSite 也提供了更先进的**分离端版本**：<http://jeesite.com/docs/jeesite-vue/>
 
 ## 更多介绍
 
@@ -78,6 +80,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * Flowable业务流程模块（BPM）：<http://jeesite.com/docs/bpm/>
 * 内容管理模块（CMS）：<https://gitee.com/thinkgem/jeesite4-cms>
 * 手机端移动端：<https://gitee.com/thinkgem/jeesite4-uniapp>
+* Vue3分离版本：<http://jeesite.com/docs/jeesite-vue/>
 
 ## 快速体验
 
@@ -89,7 +92,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ### 本地运行
 
-1. 环境准备：`JDK 1.8 or 11`、`Maven 3.6+`、`MySQL 5.7 or 8.0`（[支持更多数据库](https://jeesite.com/docs/technology/#8已支持数据库)）
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、`MySQL 5.7 or 8.0`（[支持更多数据库](https://jeesite.com/docs/technology/#8已支持数据库)）
 2. 执行命令：`git clone https://gitee.com/thinkgem/jeesite4.git` 下载源码（master分支）
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
