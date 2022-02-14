@@ -21,7 +21,7 @@
 * 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite4/issues/I18ARR)
 * 关注微信公众号，了解最新动态：
 
-![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite4微信公众号")
+![JeeSite微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite微信公众号")
 
 ## 平台介绍
 
