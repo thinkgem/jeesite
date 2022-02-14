@@ -817,7 +817,7 @@ layer.getFrameIndex = function(name){
 };
 
 //iframe层自适应宽高（diffVal差值范围内，进行自适应高度） 
-layer.iframeAuto = function(index, diffVal){
+layer.iframeAuto = function(index, diffVal, $this){
 	if(!index){
 		return;
 	}
@@ -835,8 +835,8 @@ layer.iframeAuto = function(index, diffVal){
 			if (layerTop > 0){
 				var $iframe = layero.find('iframe');
 				if (Math.abs($iframe.height() - heg) < (diffVal || 9000)){
-					layero.css({height: layerHeight, top: layerTop});
-					$iframe.css({height: heg});
+					layero.animate({height: layerHeight, top: layerTop}, 20);
+					$iframe.animate({height: heg}, 20);
 				}
 			}
 		}

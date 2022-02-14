@@ -1,5 +1,4 @@
 <% layout('/layouts/default.html', {title:'切换主题'}){ %>
-<link rel="stylesheet" href="${ctxStatic}/icheck/1.0/square/blue.css?${_version}">
 <style>
 	.list-unstyled{margin:10px;}
 	.full-opacity-hover{opacity:1;filter:none;border:1px solid #fff}
@@ -139,7 +138,7 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">${text('亮蓝（新）')}</p>
+		<p class="text-center no-margin">${text('亮蓝(经典)')}</p>
 	</li>
 	<li style="float:left;width:16.66666%;padding:5px;">
 		<a href="javascript:" data-skin="skin-blue-light2" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
@@ -148,11 +147,29 @@
 			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
 			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
 		</a>
-		<p class="text-center no-margin">${text('浅蓝（新）')}</p>
+		<p class="text-center no-margin">${text('浅蓝(经典)')}</p>
 	</li>
-	<li style="float:left;padding:18px 0 0 45px;">
-		<#form:checkbox name="formLayerModel" label="${text('表单弹窗模式')}" class="form-control" data-style="square-blue" style="margin-right:20px"/>
-		<#form:checkbox name="tabPageModel" label="${text('取消页签模式')}" class="form-control" data-style="square-blue"/>
+	<li style="float:left;width:16.66666%;padding:5px;">
+		<a href="javascript:" data-skin="skin-blue3" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+			<span style="display:block;width:20%;float:left;height:13px;background:#1648ab"></span>
+			<span style="display:block;width:80%;float:left;height:13px;background:#1951be"></span>
+			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
+			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
+		</a>
+		<p class="text-center no-margin">${text('亮蓝(无界)')}</p>
+	</li>
+	<li style="float:left;width:16.66666%;padding:5px;">
+		<a href="javascript:" data-skin="skin-blue-light3" style="display:block;box-shadow:0 0 3px rgba(0,0,0,0.4)" class="clearfix full-opacity-hover">
+			<span style="display:block;width:20%;float:left;height:13px;background:#1681e5"></span>
+			<span style="display:block;width:80%;float:left;height:13px;background:#1890ff"></span>
+			<span style="display:block;width:20%;float:left;height:30px;background:#f9fafc"></span>
+			<span style="display:block;width:80%;float:left;height:30px;background:#f4f5f7"></span>
+		</a>
+		<p class="text-center no-margin">${text('浅蓝(无界)')}</p>
+	</li>
+	<li style="float:left;width:32%;padding-top:8px;text-align:center;">
+		<#form:checkbox name="formLayerModel" label="${text('表单弹窗模式')}" class="form-control"/>
+		<#form:checkbox name="tabPageModel" label="${text('取消页签模式')}" class="form-control"/>
 	</li>
 </ul>
 <% } %>

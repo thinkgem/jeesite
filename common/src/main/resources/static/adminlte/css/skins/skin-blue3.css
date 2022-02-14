@@ -2,14 +2,14 @@
  * http://jeesite.com
  */
 a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {
-  color:#1890ff;
+  color:#1e5edb;
 }
 .main-header .navbar {
-  background: #1890ff;
-  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #2684f5), color-stop(1, #1890ff));
-  background: -ms-linear-gradient(left, #2684f5, #1890ff);
-  background: -moz-linear-gradient(left top, #2684f5 0%, #1890ff 100%);
-  background: -o-linear-gradient(#1890ff, #2684f5);
+  background: #1951be;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #1951be), color-stop(1, #2780ec));
+  background: -ms-linear-gradient(left, #1951be, #2780ec);
+  background: -moz-linear-gradient(left top, #1951be 0%, #2780ec 100%);
+  background: -o-linear-gradient(#2780ec, #1951be);
 }
 .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -54,10 +54,10 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   border-bottom: 0 solid transparent;
 }
 .main-header .logo:hover {
-  background-color: #1890ff;
+  background-color: #1951be;
 }
 .main-header li.user-header {
-  background-color: #1890ff;
+  background-color: #1951be;
 }
 .content-header {
   background: transparent;
@@ -93,7 +93,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   background: #ffffff;
 }
 .sidebar-menu > li.active {
-  border-left-color: #1890ff;
+  border-left-color: #1e5edb;
 }
 .sidebar-menu > li.active > a {
   font-weight: 600;
@@ -153,7 +153,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   border-top-color: #d2d6de;
 }
 .skin-blue.layout-top-nav .main-header > .logo {
-  background-color: #1890ff;
+  background-color: #1e5edb;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
@@ -163,9 +163,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .sidebar-menu {padding:0 8px 0 7px;}
 .sidebar-menu li>a>.pull-right-container {left:0;}
-.sidebar-menu .treeview-item.active > a {color:#1890ff;background-color:#e7f4ff;border-right:0;border-radius:6px;}
-
-.content-wrapper, .right-side, body {background-color:#f0f2f5;}
+.sidebar-menu .treeview-item.active > a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
 
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
@@ -175,27 +173,9 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .open>.dropdown-toggle.btn-primary:hover, .layui-layer-btn .layui-layer-btn0,
 .select2-container--default .select2-selection--multiple .select2-selection__choice,
 .select2-container--default .select2-results__option--highlighted[aria-selected],
-.wup_container .placeholder .webuploader-pick {background-color:#1890ff!important;border-color:#1890ff;}
-.form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1890ff;}
+.wup_container .placeholder .webuploader-pick {background-color:#1e5edb!important;border-color:#1e5edb!important;}
+.form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
 .form-unit {border-bottom: 1px solid #eee;}
-
-.tabpanel_mover li {height:26px;padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
-.tabpanel_mover li.active {background-color:#3aa0ff;box-shadow:0 0 5px #e6e6e6;}
-.tabpanel_mover li.active div {color:#fff;}
-.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
-.tabpanel_mover li .closer:before {content:"\f00d";}
-.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2); 
-     -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
-.tabpanel_mover li.active .closer:hover {color:#fff;opacity:0.9;}
-.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;}
-/* .tabpanel_mover li {background:#fff;border-right:1px solid #eee;padding:8px 16px 8px 5px;}
-.tabpanel_mover li.active {background-color:#fff;border-bottom:3px solid #3aa0ff;}
-.tabpanel_mover li.active div {color:#0975d9;}
-.tabpanel_mover li .closer {background:none;font:11px/1 FontAwesome;opacity:0.7;}
-.tabpanel_mover li .closer:before {content:"\f00d";}
-.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2);
-    -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
-.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;} 替换上面 tab 样式，改变 tab 风格。*/
 
 /* .main-content {padding:10px;}
 .ui-layout-container {padding:10px;}
@@ -205,17 +185,64 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .ui-layout-content>.wrapper>.main-content {padding:0;}
 .box-main,.nav-main{border-radius:3px;box-shadow:0 0 5px #e0e0e0;} 解开注释，可给内容页面，添加内边距样式 */
 .box-main>.box-header {border-bottom-color:#eeeeee;}
-.box-main>.box-header .box-title .fa {color:#1890ff;}
-.nav-tabs-custom>.nav-tabs>li.active {border-top-color:#3aa0ff;}
+.box-main>.box-header .box-title .fa {color:#1e5edb;}
+.nav-tabs-custom>.nav-tabs>li.active {border-top-color:#1e5edb;}
 .form-control:focus,.select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field,
 .select2-container--default.select2-container--focus .select2-selection--single,
-.select2-container--default.select2-container--focus .select2-selection--multiple {border-color:#40a9ff!important;box-shadow:0 0 0 2px rgba(24,144,255,.2);}
+.select2-container--default.select2-container--focus .select2-selection--multiple {border-color:#557bfa!important;box-shadow:0 0 0 2px rgba(24,80,236,.2);}
 .table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#f6f6f6;}
 .ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column,
 .ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid .ui-widget-content, .ui-jqgrid tr.ui-row-ltr td,
 .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
-.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#ecf9ff;}
+.ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#f0f5ff;}
 /* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} 解开注释，可去除表格单元格的竖边框线 */
+
+/* 内容页面，内边距风格 */
+.content-wrapper, .right-side, body, iframe {background-color:#f0f2f5;}
+.ui-layout-container, .main-content {padding:15px 15px 13px 15px;}
+.ui-layout-resizer {background:transparent;}
+.ui-layout-pane>.main-content {padding:0;}
+.ui-layout-content>.wrapper>.main-content {padding:0;}
+.box-main,.nav-main,.ui-layout-pane{border-radius:5px;}
+
+/* 页签-无界风格 */
+.tabpanel_mover li {height:26px;padding:2px 16px 2px 3px;margin:11px 0 0px 9px;border:0;border-radius:4px;background:#fff;}
+.tabpanel_mover li .title {padding-left:0;text-align:center;}
+.tabpanel_mover li.active {background-color:#316ee6;}
+.tabpanel_mover li.active div {color:#fff;}
+.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:4px;background:none;opacity:0.7;}
+.tabpanel_mover li .closer:before {content:"\f00d";}
+.tabpanel_mover li .closer:hover {background:none;-moz-transform:scale(1.2);-webkit-transform:scale(1.2); 
+     -o-transform:scale(1.2);-ms-transform:scale(1.2);transform:scale(1.2);color:#d30606;}
+.tabpanel_mover li.active .closer:hover {color:#fff;opacity:0.9;}
+.tabpanel_tab_content {background-color:transparent;border-bottom-color:#eeeeee;overflow:visible;}
+.tabpanel_tab_content .tabpanel_left_scroll, .tabpanel_tab_content .tabpanel_right_scroll {top:10px;}
+.tabpanel_tab_content .tabpanel_mover {margin:0 5px;}
+.tabpanel_content .html_content {margin-top:-1px;}
+
+/* 页签-经典风格
+.tabpanel_mover li {height:26px;padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
+.tabpanel_mover li.active {background-color:#1e5edb;box-shadow:0 0 5px #e6e6e6;}
+.tabpanel_mover li.active div {color:#fff;}
+.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
+.tabpanel_mover li .closer:before {content:"\f00d";}
+.tabpanel_mover li .closer:hover {background:none;-moz-transform:scale(1.2);-webkit-transform:scale(1.2); 
+     -o-transform:scale(1.2);-ms-transform:scale(1.2);transform:scale(1.2);color:#d30606;}
+.tabpanel_mover li.active .closer:hover {color:#fff;opacity:0.9;}
+.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;} */
+
+/* 页签-下划线风格
+.tabpanel_mover li {background:#fff;border:0;padding:5px 16px 5px 3px;}
+.tabpanel_mover li .title {padding-left:0;text-align:center;}
+.tabpanel_mover li.active {background-color:#fff;border-bottom:2px solid #1e5edb;}
+.tabpanel_mover li.active div {color:#0975d9;}
+.tabpanel_mover li .closer {background:none;font:11px/1 FontAwesome;opacity:0.6;right:3px;top:10px;}
+.tabpanel_mover li .closer:before {content:"\f00d";}
+.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
+.tabpanel_tab_content {height:32px;line-height:32px;border:0;background-color:#fff;overflow:visible;}
+.tabpanel_tab_content .tabpanel_move_content {min-height:32px;}
+.tabpanel_tab_content .tabpanel_left_scroll, .tabpanel_tab_content .tabpanel_right_scroll {top:4px;} */

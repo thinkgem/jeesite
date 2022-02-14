@@ -10,8 +10,11 @@
 <script src="${ctxStatic}/jquery/jquery-3.5.0.min.js"></script>
 <script src="${ctxStatic}/jquery/jquery-migrate-3.2.0.min.js"></script>
 <!--[if lt IE 9]><script src="${ctxStatic}/common/h5fix.min.js"></script><![endif]-->
-<% if(parameter.__layer! == 'true'){ if(parameter.__layer_title! == 'false'){ %>
-<style>.main-content>.box-main>.box-header{padding-right:45px;}</style>
+<% if(parameter.__layer! == 'true'){ %>
+<style>.ui-layout-container,.main-content{padding:0!important}</style>
+<% if(parameter.__layer_title! == 'false'){ %>
+<style>.main-content>.box-main>.box-header{padding-right:45px}</style>
 <% }else{ %>
-<style>.main-content>.box-main>.box-header{display:none;}</style>
-<% } } %>
+<style>.main-content>.box-main>.box-header{display:none}</style>
+<% }
+} %>

@@ -165,7 +165,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .sidebar-menu li>a>.pull-right-container {left:0;}
 .sidebar-menu .treeview-item.active > a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
 
-.content-wrapper, .right-side, body {background-color:#f8f8f8;}
+.content-wrapper, .right-side, body {background-color:#f0f2f5;}
 
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
