@@ -20,7 +20,7 @@
   import { useLayoutHeight } from '../content/useContentViewHeight';
 
   const HEADER_HEIGHT = 48;
-  const TABS_HEIGHT = 32;
+  const TABS_HEIGHT = 37;
 
   export default defineComponent({
     name: 'LayoutMultipleHeader',

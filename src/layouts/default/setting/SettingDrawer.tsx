@@ -283,20 +283,6 @@ export default defineComponent({
       return (
         <>
           <SwitchItem
-            title={t('layout.setting.breadcrumb')}
-            event={HandlerEnum.SHOW_BREADCRUMB}
-            def={unref(getShowBreadCrumb)}
-            disabled={!unref(getShowHeader)}
-          />
-
-          <SwitchItem
-            title={t('layout.setting.breadcrumbIcon')}
-            event={HandlerEnum.SHOW_BREADCRUMB_ICON}
-            def={unref(getShowBreadCrumbIcon)}
-            disabled={!unref(getShowHeader)}
-          />
-
-          <SwitchItem
             title={t('layout.setting.tabs')}
             event={HandlerEnum.TABS_SHOW}
             def={unref(getShowMultipleTab)}
@@ -320,6 +306,20 @@ export default defineComponent({
             event={HandlerEnum.TABS_SHOW_FOLD}
             def={unref(getShowFold)}
             disabled={!unref(getShowMultipleTab)}
+          />
+
+          <SwitchItem
+            title={t('layout.setting.breadcrumb')}
+            event={HandlerEnum.SHOW_BREADCRUMB}
+            def={unref(getShowBreadCrumb)}
+            disabled={!unref(getShowHeader)}
+          />
+
+          <SwitchItem
+            title={t('layout.setting.breadcrumbIcon')}
+            event={HandlerEnum.SHOW_BREADCRUMB_ICON}
+            def={unref(getShowBreadCrumbIcon)}
+            disabled={!unref(getShowHeader)}
           />
 
           {/* <SwitchItem
