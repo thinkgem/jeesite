@@ -52,7 +52,7 @@ public class PinyinUtils {
 			if (arr[i] > 128) {
 				try {
 					String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], Static.defaultFormat);
-					if (temp != null) {
+					if (temp != null && temp.length > 0) {
 						pybf.append(temp[0].charAt(0));
 					}else{
 						pybf.append(String.valueOf(arr[i]));
@@ -155,6 +155,7 @@ public class PinyinUtils {
 	}
 	
 //	public static void main(String[] args) {
+//		String str = "你好，123，🅻🅾🆅🅴、世界abc,~!#$_Sdf，女；ｈｅｌｌｏ！-";
 //		String str = "你好，123，世界abc,~!#$_Sdf，女；ｈｅｌｌｏ！-";
 //		System.out.println(getFirstSpell(str));
 //		System.out.println(getFirstSpell(str, false));
