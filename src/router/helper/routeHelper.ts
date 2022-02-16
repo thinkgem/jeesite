@@ -9,7 +9,7 @@ import type { Router, RouteRecordNormalized } from 'vue-router';
 import { getParentLayout, LAYOUT, EXCEPTION_COMPONENT } from '/@/router/constant';
 import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '/@/utils/log';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
 
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('/@/views/sys/iframe/FrameBlank.vue');
@@ -117,12 +117,20 @@ export function flatMultiLevelRoutes(routeModules: AppRouteModule[]) {
   return modules;
 }
 
+export function createRouteHistory() {
+  if (import.meta.env.VITE_ROUTE_WEB_HISTORY == 'true') {
+    return createWebHistory(import.meta.env.VITE_PUBLIC_PATH);
+  } else {
+    return createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH);
+  }
+}
+
 // Routing level upgrade
 function promoteRouteLevel(routeModule: AppRouteModule) {
   // Use vue-router to splice menus
   let router: Router | null = createRouter({
     routes: [routeModule as unknown as RouteRecordNormalized],
-    history: createWebHashHistory(),
+    history: createRouteHistory(),
   });
 
   const routes = router.getRoutes();
