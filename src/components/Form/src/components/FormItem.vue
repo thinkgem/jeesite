@@ -253,7 +253,7 @@
             const value = target ? (isCheck ? target.checked : target.value) : e;
             props.setFormModel(
               field,
-              value || defaultValue || '',
+              value || (typeof value == 'number' ? value : defaultValue || ''),
               fieldLabel,
               labelValue || defaultLabel || '',
             );
