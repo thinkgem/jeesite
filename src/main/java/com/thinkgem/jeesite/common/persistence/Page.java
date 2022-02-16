@@ -445,8 +445,8 @@ public class Page<T> {
 	@JsonIgnore
 	public String getOrderBy() {
 		// SQL过滤，防止注入 
-		String reg = "(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml)([\\s]*?)\\()|"
-					+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when)\\b)";
+		String reg = "(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database)([\\s]*?)\\()|"
+				+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when|sleep|union|load_file)\\b)";
 		Pattern sqlPattern = Pattern.compile(reg, Pattern.CASE_INSENSITIVE);
 		if (sqlPattern.matcher(orderBy).find()) {
 			return "";
