@@ -279,7 +279,7 @@ public class EncodeUtils {
 	
 	// 预编译SQL过滤正则表达式
 	private static Pattern sqlPattern = Pattern.compile(
-			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml)([\\s]*?)\\()|"
+			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database)([\\s]*?)\\()|"
 			+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when|sleep|union|load_file)\\b)",
 			Pattern.CASE_INSENSITIVE);
 
@@ -341,7 +341,7 @@ public class EncodeUtils {
 		sqlFilter((++i)+"你好，insert into xxx values(1,2,3,4,5)我还在。");
 		sqlFilter((++i)+"你好，delete from xxx我还在。");
 		sqlFilter((++i)+"你好，a.audit_result asc,case when 1 like case when length(database())=6 then 1 else exp(11111111111111111) end then 1 else 1/0 end");
-		sqlFilter((++i)+"你好，if(1=2,1,SLEEP(10))");
+		sqlFilter((++i)+"你好，if(1=2,1,SLEEP(10)), if(mid(database(),{},1)=\\\"{}\\\",a.id,a.login_name)");
 	}
 	
 }
