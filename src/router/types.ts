@@ -33,7 +33,7 @@ export interface Menu {
 
   path: string;
 
-  target: string;
+  target?: string;
 
   // path contains param, auto assignment.
   paramPath?: string;
