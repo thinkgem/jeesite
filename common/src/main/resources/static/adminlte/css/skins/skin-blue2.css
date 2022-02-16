@@ -150,7 +150,8 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
   border-bottom-left-radius: 0;
 }
 .main-footer {
-  border-top-color: #d2d6de;
+  border-top-color: #e5e5e5;
+  border-radius: 4px;
 }
 .skin-blue.layout-top-nav .main-header > .logo {
   background-color: #1e5edb;
@@ -167,6 +168,17 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .content-wrapper, .right-side, body {background-color:#f0f2f5;}
 
+/* 页签-经典风格 */
+.tabpanel_mover li {height:26px;padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
+.tabpanel_mover li.active {background-color:#1e5edb;box-shadow:0 0 5px #e6e6e6;}
+.tabpanel_mover li.active div {color:#fff;}
+.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
+.tabpanel_mover li .closer:before {content:"\f00d";}
+.tabpanel_mover li .closer:hover {background:none;-moz-transform:scale(1.2);-webkit-transform:scale(1.2); 
+     -o-transform:scale(1.2);-ms-transform:scale(1.2);transform:scale(1.2);color:#d30606;}
+.tabpanel_mover li.active .closer:hover {color:#fff;opacity:0.9;}
+.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;}
+
 .btn-primary, .btn-primary:hover, .btn-primary:active,
 .btn-primary.hover, .btn-primary.focus, .btn-primary:focus,
 .btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover,
@@ -179,31 +191,6 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
 .form-unit {border-bottom: 1px solid #eee;}
 
-.tabpanel_mover li {height:26px;padding:1px 16px 2px 3px;margin:6px 0 6px 6px;border:1px solid #e4e4e4;border-radius:3px;background:#fff;}
-.tabpanel_mover li.active {background-color:#1e5edb;box-shadow:0 0 5px #e6e6e6;}
-.tabpanel_mover li.active div {color:#fff;}
-.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:2px;background:none;opacity:0.7;}
-.tabpanel_mover li .closer:before {content:"\f00d";}
-.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2); 
-     -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
-.tabpanel_mover li.active .closer:hover {color:#fff;opacity:0.9;}
-.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;}
-/* .tabpanel_mover li {background:#fff;border-right:1px solid #eee;padding:8px 16px 8px 5px;}
-.tabpanel_mover li.active {background-color:#fff;border-bottom:3px solid #1e5edb;}
-.tabpanel_mover li.active div {color:#0975d9;}
-.tabpanel_mover li .closer {background:none;font:11px/1 FontAwesome;opacity:0.7;}
-.tabpanel_mover li .closer:before {content:"\f00d";}
-.tabpanel_mover li .closer:hover {background:none;-moz-transform: scale(1.2);-webkit-transform: scale(1.2);
-    -o-transform: scale(1.2);-ms-transform: scale(1.2);transform: scale(1.2);color:#d30606;}
-.tabpanel_tab_content {background-color:#fafafa;border-bottom-color:#eeeeee;overflow:visible;} 替换上面 tab 样式，改变 tab 风格。*/
-
-/* .main-content {padding:10px;}
-.ui-layout-container {padding:10px;}
-.ui-layout-resizer {background:transparent;}
-.ui-layout-pane {box-shadow:0 0 5px #e0e0e0;}
-.ui-layout-pane>.main-content {padding:0;}
-.ui-layout-content>.wrapper>.main-content {padding:0;}
-.box-main,.nav-main{border-radius:3px;box-shadow:0 0 5px #e0e0e0;} 解开注释，可给内容页面，添加内边距样式 */
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title .fa {color:#1e5edb;}
 .nav-tabs-custom>.nav-tabs>li.active {border-top-color:#1e5edb;}

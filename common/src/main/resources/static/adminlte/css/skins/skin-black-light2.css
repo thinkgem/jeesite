@@ -145,7 +145,8 @@
   border-bottom-left-radius: 0;
 }
 .main-footer {
-  border-top-color: #d2d6de;
+  border-top-color: #e5e5e5;
+  border-radius: 4px;
 }
 .skin-blue.layout-top-nav .main-header > .logo {
   background-color: #2A579A;
