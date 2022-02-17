@@ -28,7 +28,7 @@
             </div>
           </div>
         </div>
-        <div class="flex w-full h-full py-5 lg:h-auto lg:py-0 lg:my-0 lg:w-11/24">
+        <div class="flex w-full h-full py-5 lg:h-auto lg:py-0 lg:my-0 lg:w-11/24 overflow-auto">
           <div
             :class="`${prefixCls}-form`"
             class="relative w-full px-5 py-8 mx-auto my-auto rounded-xl shadow-md sm:px-8 lg:px-10 lg:py-9 lg:ml-16 sm:w-3/4 lg:w-2/4 lg:w-auto enter-x"
