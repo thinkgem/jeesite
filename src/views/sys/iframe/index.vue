@@ -1,3 +1,8 @@
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author Vben、ThinkGem
+-->
 <template>
   <div :class="prefixCls" :style="getWrapStyle">
     <Spin :spinning="loading" size="large" :style="getWrapStyle">
@@ -31,10 +36,11 @@
 
   const { prefixCls } = useDesign('iframe-page');
   useWindowSizeFn(calcHeight, 150, { immediate: true });
+  const padding = 15; // jee site default padding
 
   const getWrapStyle = computed((): CSSProperties => {
     return {
-      height: `${unref(heightRef)}px`,
+      height: `${unref(heightRef) - padding}px`,
     };
   });
 
@@ -43,11 +49,11 @@
     if (!iframe) {
       return;
     }
-    const top = headerHeightRef.value;
+    const top = headerHeightRef.value + padding;
     topRef.value = top;
     heightRef.value = window.innerHeight - top;
     const clientHeight = document.documentElement.clientHeight - top;
-    iframe.style.height = `${clientHeight}px`;
+    iframe.style.height = `${clientHeight - padding}px`;
   }
 
   function hideLoading() {
@@ -85,6 +91,7 @@
       background-color: @component-background;
       border: 0;
       box-sizing: border-box;
+      border-radius: 5px;
     }
   }
 </style>

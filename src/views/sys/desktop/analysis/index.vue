@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div>
     <GrowCard :loading="loading" class="enter-y" />
     <SiteAnalysis class="!my-4 enter-y" :loading="loading" />
     <div class="md:flex enter-y">

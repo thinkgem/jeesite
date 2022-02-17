@@ -101,7 +101,7 @@ export function useTableScroll(
     const { bottomIncludeBody } = getViewportOffset(headEl);
     // Table height from bottom height-custom offset
 
-    const paddingHeight = 28;
+    const paddingHeight = 30;
     // Pager height
     let paginationHeight = 2;
     // if (!isBoolean(pagination)) {

@@ -36,6 +36,7 @@
     position: relative;
     flex: 1 1 auto;
     min-height: 0;
+    padding: 14px 14px 13px 15px;
 
     &.fixed {
       width: 1200px;

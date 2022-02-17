@@ -605,7 +605,7 @@
 
   .@{prefix-cls} {
     background-color: @component-background;
-    border-radius: 4px;
+    border-radius: 5px;
 
     .ant-tree {
       margin: 5px 15px 10px 10px;

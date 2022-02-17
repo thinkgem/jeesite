@@ -1,3 +1,8 @@
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author Vben、ThinkGem
+-->
 <template>
   <div :class="getClass" ref="wrapperRef">
     <PageHeader
@@ -24,8 +29,8 @@
       </template>
     </PageHeader>
 
-    <div class="overflow-hidden" :class="getContentClass" :style="getContentStyle" ref="contentRef">
-      <a-layout v-if="sidebar" class="h-full overflow-auto">
+    <div :class="getContentClass" :style="getContentStyle" ref="contentRef">
+      <a-layout v-if="sidebar">
         <a-layout-sider
           class="sidebar"
           v-model:collapsed="collapsed"
@@ -145,24 +150,32 @@
 
       const getContentStyle = computed((): CSSProperties => {
         const { contentFullHeight, contentStyle, fixedHeight } = props;
-        if (!contentFullHeight && !sidebar) {
-          return { ...contentStyle };
+        const height = `${(unref(contentHeight) || 800) - 15}px`;
+
+        if (sidebar) {
+          return {
+            ...contentStyle,
+            minHeight: height,
+          };
         }
 
-        const height = `${unref(contentHeight)}px`;
-        return {
-          ...contentStyle,
-          minHeight: height,
-          ...(fixedHeight || sidebar ? { height } : {}),
-        };
+        if (contentFullHeight) {
+          return {
+            ...contentStyle,
+            minHeight: height,
+            ...(fixedHeight || sidebar ? { height } : {}),
+          };
+        }
+
+        return { ...contentStyle };
       });
 
       const getSidebarContentHeight = ref(0);
       const getSidebarContentStyle = computed((): CSSProperties => {
         if (getSidebarContentHeight.value <= 0) return {};
         return {
-          height: `${getSidebarContentHeight.value - 15}px`,
-          minHeight: `${getSidebarContentHeight.value - 15}px`,
+          height: `${getSidebarContentHeight.value}px`,
+          minHeight: `${getSidebarContentHeight.value}px`,
         };
       });
 
@@ -185,7 +198,7 @@
         if (height < mainContentHeight) {
           height = mainContentHeight - 15;
         }
-        //console.log('calcSidebarContentHeight', height);
+        // console.log('calcSidebarContentHeight', height);
         getSidebarContentHeight.value = height;
       }
 
@@ -204,7 +217,7 @@
           `${prefixCls}-content`,
           contentClass,
           {
-            [`${prefixCls}-content-bg`]: contentBackground,
+            [`${prefixCls}-content-bg`]: contentBackground && !sidebar,
           },
         ];
       });
@@ -253,15 +266,16 @@
     position: relative;
 
     .@{prefix-cls}-content {
-      margin: 16px;
+      // margin: 16px;
       padding: 15px;
-      border-radius: 4px;
+      border-radius: 5px;
     }
 
     .ant-page-header {
-      margin: 16px;
+      // margin: 16px;
+      margin-bottom: 15px;
       padding: 4px 16px;
-      border-radius: 4px;
+      border-radius: 5px;
 
       .ant-page-header-heading-title {
         font-size: 16px;
@@ -306,7 +320,8 @@
       min-height: 400px;
 
       &-content {
-        margin: 15px 0 0 15px;
+        // margin: 15px 0 0 15px;
+        margin-right: 15px;
         height: calc(100% - 29px);
       }
 
@@ -318,18 +333,19 @@
         background: #fff;
         position: absolute;
         z-index: 100;
-        top: 70px;
         opacity: 0.7;
+        top: 55px;
       }
 
       &-open {
-        left: 0;
+        left: -15px;
+        padding-right: 0;
         border-left-width: 0;
         border-radius: 0 3px 3px 0;
       }
 
       &-close {
-        right: 0;
+        right: 15px;
         border-right-width: 0;
         border-radius: 3px 0 0 3px;
       }
