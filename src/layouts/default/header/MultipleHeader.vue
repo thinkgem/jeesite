@@ -2,7 +2,7 @@
   <div :style="getPlaceholderDomStyle" v-if="getIsShowPlaceholderDom"></div>
   <div :style="getWrapStyle" :class="getClass">
     <LayoutHeader v-if="getShowInsetHeaderRef" />
-    <MultipleTabs v-if="getShowTabs" />
+    <MultipleTabs v-if="getShowTabs" v-show="getShowTabs2" />
   </div>
 </template>
 <script lang="ts">
@@ -18,6 +18,7 @@
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useLayoutHeight } from '../content/useContentViewHeight';
+  import { useMultipleTabStore } from '/@/store/modules/multipleTab';
 
   const HEADER_HEIGHT = 48;
   const TABS_HEIGHT = 37;
@@ -42,9 +43,14 @@
       const { getFullContent } = useFullContent();
 
       const { getShowMultipleTab } = useMultipleTabSetting();
+      const tabStore = useMultipleTabStore();
 
       const getShowTabs = computed(() => {
         return unref(getShowMultipleTab) && !unref(getFullContent);
+      });
+
+      const getShowTabs2 = computed(() => {
+        return tabStore.getTabList.length > 1;
       });
 
       const getIsShowPlaceholderDom = computed(() => {
@@ -75,7 +81,7 @@
         ) {
           height += HEADER_HEIGHT;
         }
-        if (unref(getShowMultipleTab) && !unref(getFullContent)) {
+        if (unref(getShowMultipleTab) && !unref(getFullContent) && unref(getShowTabs2)) {
           height += TABS_HEIGHT;
         }
         setHeaderHeight(height);
@@ -100,6 +106,7 @@
         getWrapStyle,
         getIsShowPlaceholderDom,
         getShowTabs,
+        getShowTabs2,
         getShowInsetHeaderRef,
       };
     },
