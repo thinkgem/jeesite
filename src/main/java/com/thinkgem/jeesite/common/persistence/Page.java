@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.common.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,8 @@ public class Page<T> {
 	private String funcParam = ""; // 函数的附加参数，第三个参数值。
 	
 	private String message = ""; // 设置提示消息，显示在“共n条”之后
+
+	private static Pattern orderByPattern = Pattern.compile("[a-z0-9_\\.\\, ]*", Pattern.CASE_INSENSITIVE);
 
 	public Page() {
 		this.pageSize = -1;
@@ -445,11 +448,9 @@ public class Page<T> {
 	@JsonIgnore
 	public String getOrderBy() {
 		// SQL过滤，防止注入 
-		String reg = "(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database)([\\s]*?)\\()|"
-				+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|drop|execute|case when|sleep|union|load_file)\\b)";
-		Pattern sqlPattern = Pattern.compile(reg, Pattern.CASE_INSENSITIVE);
-		if (sqlPattern.matcher(orderBy).find()) {
-			return "";
+		Matcher matcher = orderByPattern.matcher(orderBy);
+		if (!matcher.matches()) {
+			return StringUtils.EMPTY;
 		}
 		return orderBy;
 	}
