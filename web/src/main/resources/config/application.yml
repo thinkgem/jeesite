@@ -11,8 +11,11 @@ companyName: ThinkGem
 productVersion: V5.0
 copyrightYear: 2022
 
-#是否演示模式
+# 是否演示模式
 demoMode: false
+
+# 是否 Api 模式
+apiMode: false
 
 #======================================#
 #========== Server settings ===========#

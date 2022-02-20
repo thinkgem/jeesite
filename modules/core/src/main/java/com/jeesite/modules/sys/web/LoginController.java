@@ -82,6 +82,11 @@ public class LoginController extends BaseController{
 			return ServletUtils.renderObject(response, model);
 		}
 		
+		// API 模式不返回视图页面
+		if (Global.isApiMode()) {
+			return null;
+		}
+		
 		// 返回指定用户类型的登录页视图
 		String userType = (String)model.asMap().get(ServletUtils.EXT_PARAMS_PREFIX + "userType");
 		if (StringUtils.isBlank(userType)){
@@ -116,6 +121,11 @@ public class LoginController extends BaseController{
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest(request)){
 			return ServletUtils.renderObject(response, model);
+		}
+		
+		// API 模式不返回视图页面
+		if (Global.isApiMode()) {
+			return null;
 		}
 		
 		// 返回指定用户类型的登录页视图
@@ -265,6 +275,11 @@ public class LoginController extends BaseController{
 		//String roleCode = "dept";
 		//session.setAttribute("roleCode", roleCode);
 		//UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		
+		// API 模式不返回视图页面
+		if (Global.isApiMode()) {
+			return null;
+		}
 		
 		// 返回指定用户类型的首页视图
 		String userType = user.getUserType();
