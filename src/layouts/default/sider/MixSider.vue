@@ -343,7 +343,7 @@
     overflow: hidden;
     background-color: @sider-dark-bg-color;
     transition: all 0.2s ease 0s;
-    padding: 5px; // 2
+    padding: 0 5px 5px 5px; // 2
 
     &-dom {
       height: 100%;
@@ -358,6 +358,7 @@
       justify-content: center;
 
       img {
+        padding: 0;
         width: @logo-width;
         height: @logo-width;
       }
@@ -368,11 +369,11 @@
         border-bottom: 1px solid rgb(238, 238, 238);
       }
 
-      &.open {
-        > .scrollbar {
-          border-right: 1px solid rgb(238, 238, 238);
-        }
-      }
+      // &.open {
+      //   > .scrollbar {
+      //     border-right: 1px solid rgb(238, 238, 238);
+      //   }
+      // }
 
       .@{prefix-cls}-module {
         &__item {
@@ -404,15 +405,15 @@
     @border-color: @sider-dark-lighten-bg-color;
 
     &.dark {
-      &.open {
-        .@{prefix-cls}-logo {
-          // border-bottom: 1px solid @border-color;
-        }
+      // &.open {
+      //   // .@{prefix-cls}-logo {
+      //   //   border-bottom: 1px solid @border-color;
+      //   // }
 
-        > .scrollbar {
-          border-right: 1px solid @border-color;
-        }
-      }
+      //   > .scrollbar {
+      //     border-right: 1px solid @border-color;
+      //   }
+      // }
       .@{prefix-cls}-menu-list {
         background-color: @sider-dark-bg-color;
 
@@ -440,7 +441,7 @@
 
     &-module {
       position: relative;
-      padding-top: 1px;
+      padding-top: 3px;
 
       &__item {
         position: relative;
