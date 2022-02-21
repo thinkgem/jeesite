@@ -14,8 +14,8 @@ copyrightYear: 2022
 # 是否演示模式
 demoMode: false
 
-# 专为分离端提供接口服务
-apiMode: false
+# 为分离端提供接口服务，关闭内置登录页和主框架页视图
+apiMode: true
 
 #======================================#
 #========== Server settings ===========#

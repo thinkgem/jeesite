@@ -10,12 +10,12 @@
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-web</artifactId>
+	<artifactId>jeesite-web-api</artifactId>
 	<packaging>war</packaging>
 	
-	<description>Web 服务，也可为分离端提供接口服务</description>
+	<description>专为分离端提供接口服务，关闭内置登录页和主框架页视图</description>
 	
-	<name>JeeSite Web</name>
+	<name>JeeSite Web Api</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	

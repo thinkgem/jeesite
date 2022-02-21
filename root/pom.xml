@@ -18,6 +18,7 @@
         <module>../modules/core</module>
         <module>../modules/cms</module>
         <module>../web</module>
+        <module>../web-api</module>
     </modules>
 	
 	<developers>  
