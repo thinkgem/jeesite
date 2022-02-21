@@ -164,7 +164,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .sidebar-menu {padding:0 8px 0 7px;}
 .sidebar-menu li>a>.pull-right-container {left:0;}
-.sidebar-menu .treeview-item.active > a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
+.sidebar-menu .treeview-item.active>a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
 
 .content-wrapper, .right-side, body {background-color:#f0f2f5;}
 
@@ -189,7 +189,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .wup_container .placeholder .webuploader-pick {background-color:#1e5edb!important;border-color:#1e5edb!important;}
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
-.form-unit {border-bottom: 1px solid #eee;}
+.form-unit {border-bottom:1px solid #eee;}
 
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title .fa {color:#1e5edb;}

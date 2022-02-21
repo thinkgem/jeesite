@@ -62,7 +62,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	dataGridPage: $('#dataGridPage'),
 	autoGridHeight: function(){
-		return $('#searchForm').parent().height() - $('#dataGridPage').height() - 45;
+		return $('#searchForm').parent().height() - $('#dataGridPage').height() - 58;
 	},
 	columnModel: [
 		{header:'${text("岗位名称")}', name:'postName', index:'a.post_name', width:200, align:"center"},
@@ -91,7 +91,7 @@ $('#dataGrid2').dataGrid({
 	searchForm: $("#searchForm2"),
 	dataGridPage: $('#dataGrid2Page'),
 	autoGridHeight: function(){
-		return $('#searchForm2').parent().height() - $('#dataGrid2Page').height() - 45;
+		return $('#searchForm2').parent().height() - $('#dataGrid2Page').height() - 58;
 	},
 	columnModel: [
 		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center"},

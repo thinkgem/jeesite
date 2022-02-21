@@ -72,7 +72,7 @@ ul.ztree.zTreeDragUL {margin:0;padding:0;position:absolute;width:auto;height:aut
 .ztree li span.button.roots_open:before,
 .ztree li span.button.center_open:before,
 .ztree li span.button.bottom_open:before,
-.ztree li span.button.noline_open:before {content:"\f147";line-height:20px;}
+.ztree li span.button.noline_open:before {content:"\f147";line-height:19px;}
 .ztree li span.button.root_close:before,
 .ztree li span.button.roots_close:before,
 .ztree li span.button.center_close:before,

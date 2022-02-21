@@ -150,7 +150,7 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', firstsortorder:'desc', width:150, align:"center"},
-		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'${text("备注")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:100, formatter: function(val, obj, row, act){
 			var actions = [];
 			<% if(hasPermi('test:testData:edit')){ %>

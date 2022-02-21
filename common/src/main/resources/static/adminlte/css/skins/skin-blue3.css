@@ -164,7 +164,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 
 .sidebar-menu {padding:0 8px 0 7px;}
 .sidebar-menu li>a>.pull-right-container {left:0;}
-.sidebar-menu .treeview-item.active > a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
+.sidebar-menu .treeview-item.active>a {color:#2a50ec;background-color:#edf2fc;border-right:0;border-radius:6px;}
 
 /* 页签添加内边距 */
 .content-wrapper, .tabpanel_content, .tabpanel_content .html_content, body {background-color:#f0f2f5;}
@@ -211,7 +211,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .wup_container .placeholder .webuploader-pick {background-color:#1e5edb!important;border-color:#1e5edb!important;}
 .form-unit, th[aria-selected=true] .ui-jqgrid-sortable {color:#1e5edb;}
-.form-unit {border-bottom: 1px solid #eee;}
+.form-unit {border-bottom:1px solid #eee;}
 
 .box-main>.box-header {border-bottom-color:#eeeeee;}
 .box-main>.box-header .box-title .fa {color:#1e5edb;}
@@ -220,11 +220,14 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .select2-container--default .select2-search--dropdown .select2-search__field,
 .select2-container--default.select2-container--focus .select2-selection--single,
 .select2-container--default.select2-container--focus .select2-selection--multiple {border-color:#557bfa!important;box-shadow:0 0 0 2px rgba(24,80,236,.2);}
-.table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#f6f6f6;}
+.table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#fafafa;}
+.ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child,
 .ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column,
-.ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid .ui-widget-content, .ui-jqgrid tr.ui-row-ltr td,
-.ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child {border-color:#eaeaea;}
+.ui-jqgrid.ui-widget-content, .ui-jqgrid .ui-widget-content {border-color:#f0f0f0;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
 .ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#f0f5ff;}
 /* .ui-jqgrid tr.ui-row-ltr td {border-right:0!important;} 解开注释，可去除表格单元格的竖边框线 */
+.ui-jqgrid .ui-jqgrid-frozen .ui-jqgrid-htable th div {height:46px!important;}
+.ui-jqgrid .ui-jqgrid-htable th div {padding:15px 0 15px 2px;}
+.ui-jqgrid tr.jqgrow td {height: 49px;}
