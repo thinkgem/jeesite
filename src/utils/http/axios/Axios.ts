@@ -8,6 +8,7 @@ import { isFunction } from '/@/utils/is';
 import { cloneDeep, omit } from 'lodash-es';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { RequestEnum } from '/@/enums/httpEnum';
+import { encodeParams } from './helper';
 
 export * from './axiosTransform';
 
@@ -162,12 +163,15 @@ export class VAxios {
       !Reflect.has(config, 'data') ||
       config.method?.toUpperCase() === RequestEnum.GET
     ) {
+      if (config.params) {
+        encodeParams(config.params);
+      }
       return config;
     }
 
     return {
       ...config,
-      data: qs.stringify(config.data, { arrayFormat: 'brackets' }),
+      data: qs.stringify(config.data, { arrayFormat: 'indices' }),
     };
   }
 
