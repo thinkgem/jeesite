@@ -31,16 +31,16 @@ export function formatRequestDate(params: Recordable) {
       params[key] = params[key].format(DATE_TIME_FORMAT);
     }
     const value = params[key];
-    if (isString(key)) {
-      if (value) {
+    if (value) {
+      if (isString(key)) {
         try {
           params[key] = isString(value) ? value.trim() : value;
         } catch (error: any) {
           throw new Error(error);
         }
+      } else if (isObject(value)) {
+        formatRequestDate(params[key]);
       }
-    } else if (isObject(value)) {
-      formatRequestDate(params[key]);
     }
   }
 }
@@ -48,10 +48,12 @@ export function formatRequestDate(params: Recordable) {
 export function encodeParams(params = {}) {
   for (const key in params) {
     const value = params[key];
-    if (isString(key)) {
-      params[key] = encodeURI(value);
-    } else if (isObject(value)) {
-      encodeParams(value);
+    if (value) {
+      if (isString(key)) {
+        params[key] = encodeURI(value);
+      } else if (isObject(value)) {
+        encodeParams(value);
+      }
     }
   }
 }
