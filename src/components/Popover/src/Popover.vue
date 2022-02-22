@@ -173,4 +173,21 @@
       }
     }
   }
+
+  html[data-theme='dark'] {
+    .jeesite-basic-popover {
+      .ant-menu-horizontal:not(.ant-menu-dark) {
+        > .ant-menu-item:hover,
+        > .ant-menu-submenu:hover,
+        > .ant-menu-item-active,
+        > .ant-menu-submenu-active,
+        > .ant-menu-item-open,
+        > .ant-menu-submenu-open,
+        > .ant-menu-item-selected,
+        > .ant-menu-submenu-selected {
+          color: #1890ff;
+        }
+      }
+    }
+  }
 </style>
