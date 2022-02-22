@@ -140,6 +140,7 @@
       background: #080808;
     }
   }
+
   .@{prefix-cls} {
     height: 36px;
     background-color: @app-content-background;
