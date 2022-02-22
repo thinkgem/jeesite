@@ -386,15 +386,7 @@
 </script>
 <style lang="less">
   @border-color: #cecece4d;
-
   @prefix-cls: ~'jeesite-basic-table';
-
-  [data-theme='dark'] {
-    .ant-table-tbody > tr:hover.ant-table-row-selected > td,
-    .ant-table-tbody > tr.ant-table-row-selected td {
-      background-color: #262626;
-    }
-  }
 
   .@{prefix-cls} {
     max-width: 100%;
@@ -506,6 +498,19 @@
             margin: 0;
           }
         }
+      }
+    }
+  }
+
+  html[data-theme='dark'] {
+    .ant-table-tbody > tr:hover.ant-table-row-selected > td,
+    .ant-table-tbody > tr.ant-table-row-selected td {
+      background-color: #262626;
+    }
+    .@{prefix-cls} {
+      a,
+      .ant-btn-link {
+        color: #1890ff;
       }
     }
   }
