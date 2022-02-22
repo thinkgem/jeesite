@@ -705,5 +705,17 @@
       background-color: #1d1d1d;
       border: 1px solid #383838;
     }
+    .@{prefix-cls} {
+      .ant-tree {
+        &.ant-tree-directory {
+          > li.ant-tree-treenode-selected > span,
+          .ant-tree-child-tree > li.ant-tree-treenode-selected > span {
+            &.ant-tree-node-content-wrapper {
+              background-color: fade(@primary-color, 50) !important;
+            }
+          }
+        }
+      }
+    }
   }
 </style>

@@ -185,12 +185,18 @@
 </script>
 <style lang="less" scoped>
   .basic-tree-header {
-    border-bottom: 1px solid @border-color-base;
+    border-bottom: 1px solid #f0f0f0;
     min-height: 35px;
 
     .jeesite-basic-title {
       font-size: 16px;
       line-height: 15px;
+    }
+  }
+
+  html[data-theme='dark'] {
+    .basic-tree-header {
+      border-bottom: 1px solid #303030;
     }
   }
 </style>
