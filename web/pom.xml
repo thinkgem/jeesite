@@ -56,6 +56,13 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 		
+		<!-- 移动端模块
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-app</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+		
 		<!-- 文件管理共享（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
