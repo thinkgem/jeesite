@@ -6,10 +6,19 @@
 	
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
+	<logger name="org.mybatis.spring.transaction" level="INFO" />
+	<logger name="org.flowable.ui.modeler.domain" level="INFO" />
+	<logger name="org.flowable.idm.engine.impl.persistence" level="INFO" />
+	<logger name="org.flowable.task.service.impl.persistence" level="INFO" />
+	<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
+	<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
+	<logger name="org.flowable.engine.impl.persistence" level="INFO" />
+	<logger name="com.jeesite" level="INFO" />
+	<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
 	
 	<!-- Project level setting -->
 <!-- 	<logger name="your.package" level="DEBUG" /> -->
-
+	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
