@@ -6,6 +6,8 @@ package com.jeesite.common.idgen;
 
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 来自于twitter项目snowflake的id产生方案，全局唯一，时间有序。
  * 64位ID (42(毫秒)+5(机器ID)+5(业务编码)+12(重复累加))
@@ -42,23 +44,39 @@ public class IdWorker {
 	private final long datacenterId;
 
 	public IdWorker(long workerId, long datacenterId) {
-		if (workerId > maxWorkerId || workerId < 0) {
-			if (workerId == -1){
-				this.workerId = new Random().nextInt((int)maxWorkerId);
-			}else{
+		String wid = System.getProperty("workerId");
+		if (StringUtils.isNotBlank(wid)) {
+			try {
+				workerId = Integer.parseInt(wid);
+			} catch (Exception e) {
 				throw new IllegalArgumentException(
-						"worker Id can't be greater than %d or less than 0");
+						"jvm param -DworkerId can't be greater than %d or less than 0");
 			}
+		}
+		String dcid = System.getProperty("datacenterId");
+		if (StringUtils.isNotBlank(dcid)) {
+			try {
+				workerId = Integer.parseInt(dcid);
+			} catch (Exception e) {
+				throw new IllegalArgumentException(
+						"jvm param -DdatacenterId can't be greater than %d or less than 0");
+			}
+		}
+		if (workerId == -1){
+			workerId = new Random().nextInt((int)maxWorkerId);
+		}
+		if (datacenterId == -1){
+			datacenterId = new Random().nextInt((int)maxDatacenterId);
+		}
+		if (workerId > maxWorkerId || workerId < 0) {
+			throw new IllegalArgumentException(
+					"worker Id can't be greater than %d or less than 0");
 		}else{
 			this.workerId = workerId;
 		}
 		if (datacenterId > maxDatacenterId || datacenterId < 0) {
-			if (datacenterId == -1){
-				this.datacenterId = new Random().nextInt((int)maxDatacenterId);
-			}else{
-				throw new IllegalArgumentException(
-						"datacenter Id can't be greater than %d or less than 0");
-			}
+			throw new IllegalArgumentException(
+					"datacenter Id can't be greater than %d or less than 0");
 		}else{
 			this.datacenterId = datacenterId;
 		}
