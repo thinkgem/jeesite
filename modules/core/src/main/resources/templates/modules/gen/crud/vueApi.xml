@@ -16,7 +16,7 @@ import { useGlobSetting } from '/@/hooks/setting';
 <% if(table.isTreeEntity){ %>
 import { TreeDataModel, TreeModel } from '../model/baseModel';
 <% }else{ %>
-import { BasicModel } from '../model/baseModel';
+import { BasicModel, Page } from '../model/baseModel';
 <% } %>
 
 const { adminPath } = useGlobSetting();
@@ -71,7 +71,11 @@ export const ${className}List = (params?: ${ClassName} | any) =>
   defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/list', params });
 
 export const ${className}ListData = (params?: ${ClassName} | any) =>
+<% if(table.isTreeEntity){ %>
   defHttp.post<${ClassName}[]>({ url: adminPath + '/${urlPrefix}/listData', params });
+<% }else{ %>
+  defHttp.post<Page<${ClassName}>>({ url: adminPath + '/${urlPrefix}/listData', params });
+<% } %>
 
 export const ${className}Form = (params?: ${ClassName} | any) =>
   defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/form', params });

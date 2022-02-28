@@ -61,7 +61,7 @@
   import { BasicTable, useTable } from '/@/components/Table';
 <% } %>
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
 <%
 var userselectExists = false;
 var officeselectExists = false;
@@ -89,7 +89,7 @@ for(c in table.columnList){
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<${ClassName}>({} as ${ClassName});
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
@@ -533,7 +533,7 @@ for (c in table.columnList){
     resetFields();
     setDrawerProps({ loading: true });
     const res = await ${className}Form(data);
-    record.value = (res.${className} || {}) as Recordable;
+    record.value = (res.${className} || {}) as ${ClassName};
     record.value.__t = new Date().getTime();
   <% if(table.isTreeEntity){ %>
     if (data.parentCode && data.parentName) {
