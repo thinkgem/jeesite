@@ -67,7 +67,7 @@
       /**
        * @description: Whether to setting title
        */
-      const useWrapper = computed(() => !!unref(getMergeProps).title);
+      const useWrapper = computed(() => !!unref(getMergeProps).title || !!slots.title);
 
       /**
        * @description: Get configuration Collapse
@@ -76,6 +76,7 @@
         return {
           // Cannot be expanded by default
           canExpand: false,
+          expand: true,
           ...unref(getProps).collapseOptions,
         };
       });
@@ -157,14 +158,15 @@
           return content;
         }
 
-        const { canExpand, helpMessage } = unref(getCollapseOptions);
+        const { canExpand, expand, helpMessage } = unref(getCollapseOptions);
         const { title } = unref(getMergeProps);
 
         return (
-          <CollapseContainer title={title} canExpan={canExpand} helpMessage={helpMessage}>
+          <CollapseContainer title={title} canExpan={canExpand} expand={expand} helpMessage={helpMessage}>
             {{
               default: () => content,
               action: () => getSlot(slots, 'action'),
+              title: () => getSlot(slots, 'title'),
             }}
           </CollapseContainer>
         );

@@ -24,7 +24,7 @@
 </template>
 <script lang="ts" setup>
   import type { PropType } from 'vue';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   // component
   import { Skeleton } from 'ant-design-vue';
   import { CollapseTransition } from '/@/components/Transition';
@@ -41,6 +41,10 @@
      *  Can it be expanded
      */
     canExpan: { type: Boolean, default: true },
+     /**
+     *  expanded
+     */
+    expand: { type: Boolean, default: true },
     /**
      * Warm reminder on the right side of the title
      */
@@ -62,6 +66,16 @@
   const show = ref(true);
 
   const { prefixCls } = useDesign('collapse-container');
+
+  watch(
+    () => props.expand,
+    (newExpand) => {
+      if (show.value != newExpand) {
+        handleExpand();
+      }
+    },
+    { immediate: true },
+  );
 
   /**
    * @description: Handling development events
