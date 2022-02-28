@@ -2,6 +2,7 @@ export type ScrollType = 'default' | 'main';
 
 export interface CollapseContainerOptions {
   canExpand?: boolean;
+  expand?: boolean;
   title?: string;
   helpMessage?: Array<any> | string;
 }
