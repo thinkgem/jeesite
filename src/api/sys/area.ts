@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { TreeDataModel, TreeModel } from '../model/baseModel';
+import { TreeDataModel, TreeModel, Page } from '../model/baseModel';
 
 const { adminPath } = useGlobSetting();
 
@@ -19,7 +19,7 @@ export const areaList = (params?: Area | any) =>
   defHttp.get<Area>({ url: adminPath + '/sys/area/list', params });
 
 export const areaListData = (params?: Area | any) =>
-  defHttp.post<Area[]>({ url: adminPath + '/sys/area/listPageData', params });
+  defHttp.post<Page<Area>>({ url: adminPath + '/sys/area/listPageData', params });
 
 export const areaForm = (params?: Area | any) =>
   defHttp.get<Area>({ url: adminPath + '/sys/area/form', params });
