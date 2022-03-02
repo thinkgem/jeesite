@@ -202,6 +202,7 @@
   @prefix-cls-detail: ~'jeesite-basic-drawer__detail';
 
   .@{prefix-cls} {
+    .ant-drawer-content,
     .ant-drawer-wrapper-body {
       overflow: hidden;
     }
