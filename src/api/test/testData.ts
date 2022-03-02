@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { BasicModel } from '../model/baseModel';
+import { BasicModel, Page } from '../model/baseModel';
 
 const { adminPath } = useGlobSetting();
 
@@ -30,7 +30,7 @@ export const testDataList = (params?: TestData | any) =>
   defHttp.get<TestData>({ url: adminPath + '/test/testData/list', params });
 
 export const testDataListData = (params?: TestData | any) =>
-  defHttp.post<TestData[]>({ url: adminPath + '/test/testData/listData', params });
+  defHttp.post<Page<TestData>>({ url: adminPath + '/test/testData/listData', params });
 
 export const testDataForm = (params?: TestData | any) =>
   defHttp.get<TestData>({ url: adminPath + '/test/testData/form', params });
