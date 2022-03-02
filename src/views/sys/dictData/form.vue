@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { dictDataSave, dictDataForm, dictDataTreeData } from '/@/api/sys/dictData';
+  import { DictData, dictDataSave, dictDataForm, dictDataTreeData } from '/@/api/sys/dictData';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.dictData');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<DictData>({} as DictData);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增选项') : t('编辑选项'),
@@ -161,7 +161,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await dictDataForm(data);
-    record.value = (res.dictData || {}) as Recordable;
+    record.value = (res.dictData || {}) as DictData;
     if (data.dictType) {
       record.value.dictType = data.dictType;
     }

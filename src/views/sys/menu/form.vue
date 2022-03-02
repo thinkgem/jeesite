@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { menuSave, menuForm, menuTreeData } from '/@/api/sys/menu';
+  import { Menu, menuSave, menuForm, menuTreeData } from '/@/api/sys/menu';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.menu');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Menu>({} as Menu);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增菜单') : t('编辑菜单'),
@@ -223,7 +223,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await menuForm(data);
-    record.value = (res.menu || {}) as Recordable;
+    record.value = (res.menu || {}) as Menu;
     if (data.parentCode && data.parentName) {
       record.value.parentCode = data.parentCode;
       record.value.parentName = data.parentName;

@@ -51,13 +51,13 @@
   import { BasicTree, TreeActionType } from '/@/components/Tree';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { roleSave, checkRoleName, roleForm, menuTreeData } from '/@/api/sys/role';
+  import { Role, roleSave, checkRoleName, roleForm, menuTreeData } from '/@/api/sys/role';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.role');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Role>({} as Role);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增角色') : t('编辑角色'),
@@ -194,7 +194,7 @@
     setDrawerProps({ loading: true });
     op.value = data.op || 'add';
     const res = await roleForm(data);
-    record.value = (res.role || {}) as Recordable;
+    record.value = (res.role || {}) as Role;
     setFieldsValue(record.value);
     updateSchema([
       {

@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { areaSave, areaForm, areaTreeData } from '/@/api/sys/area';
+  import { Area, areaSave, areaForm, areaTreeData } from '/@/api/sys/area';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.area');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Area>({} as Area);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增区域') : t('编辑区域'),
@@ -119,7 +119,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await areaForm(data);
-    record.value = (res.area || {}) as Recordable;
+    record.value = (res.area || {}) as Area;
     if (data.parentCode && data.parentName) {
       record.value.parentCode = data.parentCode;
       record.value.parentName = data.parentName;

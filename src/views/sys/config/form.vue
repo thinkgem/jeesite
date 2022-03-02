@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { configSave, configForm, checkConfigKey } from '/@/api/sys/config';
+  import { Config, configSave, configForm, checkConfigKey } from '/@/api/sys/config';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.config');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Config>({} as Config);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增参数') : t('编辑参数'),
@@ -114,7 +114,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await configForm(data);
-    record.value = (res.config || {}) as Recordable;
+    record.value = (res.config || {}) as Config;
     setFieldsValue(record.value);
     setDrawerProps({ loading: false });
   });

@@ -45,7 +45,7 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { checkEmpNo, empUserSave, empUserForm } from '/@/api/sys/empUser';
+  import { EmpUser, checkEmpNo, empUserSave, empUserForm } from '/@/api/sys/empUser';
   import { checkLoginCode } from '/@/api/sys/user';
   import { officeTreeData } from '/@/api/sys/office';
   import { companyTreeData } from '/@/api/sys/company';
@@ -56,7 +56,7 @@
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<EmpUser>({} as EmpUser);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
@@ -384,7 +384,7 @@
     setDrawerProps({ loading: true });
     op.value = data.op || 'add';
     const res = await empUserForm(data);
-    record.value = (res.empUser || {}) as Recordable;
+    record.value = (res.empUser || {}) as EmpUser;
     ctrlPermi.value = res.ctrlPermi || '2';
     setFieldsValue(record.value);
     updateSchema([

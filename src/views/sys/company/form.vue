@@ -32,7 +32,7 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { companySave, companyForm, companyTreeData } from '/@/api/sys/company';
+  import { Company, companySave, companyForm, companyTreeData } from '/@/api/sys/company';
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
 
@@ -40,7 +40,7 @@
 
   const { t } = useI18n('sys.company');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Company>({} as Company);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增公司') : t('编辑公司'),
@@ -139,7 +139,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await companyForm(data);
-    record.value = (res.company || {}) as Recordable;
+    record.value = (res.company || {}) as Company;
     record.value.officeCodes = res.officeCodes || '';
     record.value.officeNames = res.officeNames || '';
     if (data.parentCode && data.parentName) {

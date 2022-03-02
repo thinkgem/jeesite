@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { postSave, postForm } from '/@/api/sys/post';
+  import { Post, postSave, postForm } from '/@/api/sys/post';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.post');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Post>({} as Post);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增岗位') : t('编辑岗位'),
@@ -103,7 +103,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await postForm(data);
-    record.value = (res.post || {}) as Recordable;
+    record.value = (res.post || {}) as Post;
     setFieldsValue(record.value);
     updateSchema([
       {

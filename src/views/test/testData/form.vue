@@ -50,7 +50,7 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicTable, useTable } from '/@/components/Table';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { testDataSave, testDataForm } from '/@/api/test/testData';
+  import { TestData, testDataSave, testDataForm } from '/@/api/test/testData';
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
   import { BasicUpload } from '/@/components/Upload';
@@ -59,7 +59,7 @@
 
   const { t } = useI18n('test.testData');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<TestData>({} as TestData);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
@@ -419,7 +419,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await testDataForm(data);
-    record.value = (res.testData || {}) as Recordable;
+    record.value = (res.testData || {}) as TestData;
     record.value.__t = new Date().getTime();
     setFieldsValue(record.value);
     setTestDataChildTableData(res);

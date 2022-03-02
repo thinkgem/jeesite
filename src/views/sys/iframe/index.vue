@@ -17,15 +17,16 @@
 </template>
 <script lang="ts" setup>
   import type { CSSProperties } from 'vue';
-  import { ref, unref, computed } from 'vue';
+  import type { AppRouteRecordRaw } from '/@/router/types';
+  import { ref, unref, computed, watch } from 'vue';
   import { Spin } from 'ant-design-vue';
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
-  import { propTypes } from '/@/utils/propTypes';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useLayoutHeight } from '/@/layouts/default/content/useContentViewHeight';
+  import { router } from '/@/router';
 
-  defineProps({
-    frameSrc: propTypes.string.def(''),
+  const props = defineProps({
+    frame: { type: Object as PropType<AppRouteRecordRaw> },
   });
 
   const loading = ref(true);
@@ -36,6 +37,22 @@
 
   const { prefixCls } = useDesign('iframe-page');
   useWindowSizeFn(calcHeight, 150, { immediate: true });
+
+  const frameSrc = ref(props.frame?.meta?.frameSrc);
+
+  watch(
+    () => router.currentRoute.value.name,
+    () => {
+      // jee site iframe refresh
+      var params = router.currentRoute.value.params;
+      if (params && params.path == props.frame?.path) {
+        var src = props.frame?.meta?.frameSrc;
+        src += src?.indexOf('?') != -1 ? '&' : '?';
+        frameSrc.value = src + '__t' + new Date().getTime();
+      }
+    },
+  );
+
   const padding = 15; // jee site default padding
 
   const getWrapStyle = computed((): CSSProperties => {

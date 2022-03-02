@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { officeSave, officeForm, officeTreeData } from '/@/api/sys/office';
+  import { Office, officeSave, officeForm, officeTreeData } from '/@/api/sys/office';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.office');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<Office>({} as Office);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增机构') : t('编辑机构'),
@@ -173,7 +173,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await officeForm(data);
-    record.value = (res.office || {}) as Recordable;
+    record.value = (res.office || {}) as Office;
     if (data.parentCode && data.parentName) {
       record.value.parentCode = data.parentCode;
       record.value.parentName = data.parentName;

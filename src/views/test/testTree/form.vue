@@ -32,13 +32,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { testTreeSave, testTreeForm, testTreeTreeData } from '/@/api/test/testTree';
+  import { TestTree, testTreeSave, testTreeForm, testTreeTreeData } from '/@/api/test/testTree';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('test.testTree');
   const { showMessage } = useMessage();
-  const record = ref<Recordable>({});
+  const record = ref<TestTree>({} as TestTree);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
@@ -107,7 +107,7 @@
     resetFields();
     setDrawerProps({ loading: true });
     const res = await testTreeForm(data);
-    record.value = (res.testTree || {}) as Recordable;
+    record.value = (res.testTree || {}) as TestTree;
     if (data.parentCode && data.parentName) {
       record.value.parentCode = data.parentCode;
       record.value.parentName = data.parentName;
