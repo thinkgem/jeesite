@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { BasicModel } from '../model/baseModel';
+import { BasicModel, Page } from '../model/baseModel';
 
 const { adminPath } = useGlobSetting();
 
@@ -22,7 +22,7 @@ export const moduleList = (params?: Module | any) =>
   defHttp.get<Module>({ url: adminPath + '/sys/module/list', params });
 
 export const moduleListData = (params?: Module | any) =>
-  defHttp.post<Module[]>({ url: adminPath + '/sys/module/listData', params });
+  defHttp.post<Page<Module>>({ url: adminPath + '/sys/module/listData', params });
 
 export const moduleForm = (params?: Module | any) =>
   defHttp.get<Module>({ url: adminPath + '/sys/module/form', params });
