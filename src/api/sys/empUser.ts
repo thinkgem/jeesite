@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { TreeDataModel } from '../model/baseModel';
+import { Page, TreeDataModel } from '../model/baseModel';
 import { User } from './user';
 
 const { adminPath } = useGlobSetting();
@@ -18,7 +18,7 @@ export const empUserList = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/list', params });
 
 export const empUserListData = (params?: EmpUser | any) =>
-  defHttp.post<EmpUser[]>({ url: adminPath + '/sys/empUser/listData', params });
+  defHttp.post<Page<EmpUser>>({ url: adminPath + '/sys/empUser/listData', params });
 
 export const empUserForm = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/form', params });
