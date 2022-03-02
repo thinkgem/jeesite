@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { BasicModel, TreeDataModel } from '../model/baseModel';
+import { BasicModel, Page, TreeDataModel } from '../model/baseModel';
 
 const { adminPath } = useGlobSetting();
 
@@ -19,7 +19,7 @@ export const dictTypeList = (params?: DictType | any) =>
   defHttp.get<DictType>({ url: adminPath + '/sys/dictType/list', params });
 
 export const dictTypeListData = (params?: DictType | any) =>
-  defHttp.post<DictType[]>({ url: adminPath + '/sys/dictType/listData', params });
+  defHttp.post<Page<DictType>>({ url: adminPath + '/sys/dictType/listData', params });
 
 export const dictTypeForm = (params?: DictType | any) =>
   defHttp.get<DictType>({ url: adminPath + '/sys/dictType/form', params });
