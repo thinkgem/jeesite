@@ -1,11 +1,21 @@
+import type { Result } from '/#/axios';
+
 /**
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
-export interface BasicModel<T> extends Recordable {
+export interface Page<T> {
+  pageNo: number;
+  pageSize: number;
+  orderBy: string;
+  count: number;
+  list: T[];
+}
+
+export interface BasicModel<T> extends Result, Recordable {
   id: string;
-  page: PageModel<T>;
+  page: Page<T>;
   isNewRecord: boolean;
   dataMap: Map<string, any>;
 }
@@ -27,14 +37,6 @@ export interface TreeModel<T> extends BasicModel<T> {
   isRoot?: boolean; // 是否根节点
   isTreeLeaf?: boolean; // 是否叶子
   isLoading?: boolean; // 是否加载中
-}
-
-export interface PageModel<T> {
-  pageNo: number;
-  pageSize: number;
-  orderBy: string;
-  count: number;
-  list: T[];
 }
 
 export interface TreeDataModel {

@@ -31,6 +31,7 @@ export interface Result {
   sessionid: string;
   message: string;
   result: string;
+  data?: any;
 }
 
 // multipart/form-data: upload file
