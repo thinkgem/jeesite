@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { BasicModel } from '../model/baseModel';
+import { BasicModel, Page } from '../model/baseModel';
 import { encryptByBase64 } from '/@/utils/cipher';
 
 const { adminPath } = useGlobSetting();
@@ -44,7 +44,7 @@ export interface User extends BasicModel<User> {
 }
 
 export const userListData = (params?: User | any) =>
-  defHttp.post<User[]>({ url: adminPath + '/sys/user/listData', params });
+  defHttp.post<Page<User>>({ url: adminPath + '/sys/user/listData', params });
 
 export const checkLoginCode = (oldLoginCode: string, loginCode: string) =>
   defHttp.get<User>({
