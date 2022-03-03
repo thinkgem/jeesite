@@ -15,7 +15,7 @@
 			}
 		});
 		function page(n,s){
-			$.get("${ctx}/comment",{theme: '${site.theme}', 'category.id': '${category.id}',
+			$.get("${ctx}/comment-${site.theme}",{'category.id': '${category.id}',
 				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
 			},function(data){
 				$("#comment").html(data);

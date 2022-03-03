@@ -268,8 +268,8 @@ public class FrontController extends BaseController{
 	/**
 	 * 内容评论
 	 */
-	@RequestMapping(value = "comment", method=RequestMethod.GET)
-	public String comment(String theme, Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
+	@RequestMapping(value = "comment-{theme}", method=RequestMethod.GET)
+	public String comment(@PathVariable String theme, Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<Comment> page = new Page<Comment>(request, response);
 		Comment c = new Comment();
 		c.setCategory(comment.getCategory());
