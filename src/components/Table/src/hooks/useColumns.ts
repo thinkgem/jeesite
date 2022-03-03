@@ -5,8 +5,10 @@ import { computed, Ref, ref, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
 import { usePermission } from '/@/hooks/web/usePermission';
 import { useI18n } from '/@/hooks/web/useI18n';
-import { isArray, isBoolean, isFunction, isMap, isString } from '/@/utils/is';
-import { cloneDeep, isEqual } from 'lodash-es';
+import { isObject, isArray, isBoolean, isFunction, isMap, isString } from '/@/utils/is';
+import { deepMerge } from '/@/utils';
+import { error } from '/@/utils/log';
+import { cloneDeep, isEqual, uniqBy } from 'lodash-es';
 import { formatToDate } from '/@/utils/dateUtil';
 import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, PAGE_SIZE } from '../const';
 
@@ -259,6 +261,36 @@ export function useColumns(
     }
   }
 
+  function updateColumn(data: Partial<BasicColumn> | Partial<BasicColumn>[]) {
+    let updateData: Partial<BasicColumn>[] = [];
+    if (isObject(data)) {
+      updateData.push(data as BasicColumn);
+    }
+    if (isArray(data)) {
+      updateData = [...data];
+    }
+    const hasDataIndex = updateData.every(
+      (item) => Reflect.has(item, 'dataIndex') && item.dataIndex,
+    );
+    if (!hasDataIndex) {
+      error('必须包含 dataIndex  字段。');
+      return;
+    }
+
+    const column: BasicColumn[] = [];
+    updateData.forEach((item) => {
+      columnsRef.value.forEach((val) => {
+        if (val.dataIndex === item.dataIndex) {
+          const newColumn = deepMerge(val, item);
+          column.push(newColumn as BasicColumn);
+        } else {
+          column.push(val);
+        }
+      });
+    });
+    columnsRef.value = uniqBy(column, 'dataIndex');
+  }
+
   function getColumns(opt?: GetColumnsParams) {
     const { ignoreIndex, ignoreAction, sort } = opt || {};
     let columns = toRaw(unref(getColumnsRef));
@@ -284,6 +316,7 @@ export function useColumns(
     getCacheColumns,
     getColumns,
     setColumns,
+    updateColumn,
     getViewColumns,
     setCacheColumnsByField,
   };

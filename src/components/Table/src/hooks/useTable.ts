@@ -98,6 +98,9 @@ export function useTable(tableProps?: Props): [
     setTableData: (values: any[]) => {
       return getTableInstance().setTableData(values);
     },
+    updateColumn: (column: BasicColumn | BasicColumn[]) => {
+      getTableInstance().updateColumn(column);
+    },
     setPagination: (info: Partial<PaginationProps>) => {
       return getTableInstance().setPagination(info);
     },
