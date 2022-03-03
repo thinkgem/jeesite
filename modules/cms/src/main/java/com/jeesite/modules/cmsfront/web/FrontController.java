@@ -310,8 +310,8 @@ public class FrontController extends BaseController {
 	/**
 	 * 内容评论
 	 */
-	@RequestMapping(value = "comment", method = RequestMethod.GET)
-	public String comment(Comment comment, String theme, HttpServletRequest request, HttpServletResponse response,
+	@RequestMapping(value = "comment-{theme}", method = RequestMethod.GET)
+	public String comment(Comment comment, @PathVariable String theme, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
 		Page<Comment> page = new Page<Comment>(request, response);
 		Comment c = new Comment();
