@@ -211,6 +211,7 @@
         getColumns,
         setCacheColumnsByField,
         setColumns,
+        updateColumn,
         getColumnsRef,
         getCacheColumns,
       } = useColumns(getProps, getPaginationInfo);
@@ -334,6 +335,7 @@
         redoHeight,
         setSelectedRowKeys,
         setColumns,
+        updateColumn,
         setLoading,
         getDataSource,
         getDelDataSource,
