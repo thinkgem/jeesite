@@ -372,6 +372,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		
 		data.put("result", "login");
+		data.put("demoMode", Global.isDemoMode());
 		return data;
 	}
 
@@ -423,6 +424,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		
 		data.put("result", Global.FALSE);
+		data.put("demoMode", Global.isDemoMode());
 		return data;
 	}
 	

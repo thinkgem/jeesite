@@ -190,6 +190,7 @@ public class LoginController extends BaseController{
 			return null;
 		}
 		model.addAttribute("user", user); // 设置当前用户信息
+		model.addAttribute("demoMode", Global.isDemoMode());
 
 		//获取当前会话对象
 		Session session = UserUtils.getSession();
