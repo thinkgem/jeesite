@@ -44,6 +44,7 @@
 
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useTableContext } from '../../hooks/useTableContext';
+  import { formatCell } from '../../hooks/useColumns';
 
   import clickOutside from '/@/directives/clickOutside';
 
@@ -140,6 +141,9 @@
         const labelValue = unref(currentLabelValueRef);
         if (props.column?.dataLabel && labelValue) {
           return labelValue;
+        }
+        if (props.column?.format && value) {
+          return formatCell(value, props.column.format, props.record as Recordable, props.index);
         }
         return value;
       });
