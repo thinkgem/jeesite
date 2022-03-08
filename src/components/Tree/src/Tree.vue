@@ -555,7 +555,7 @@
         const { title, helpMessage, toolbar, search, checkable, showIcon } = props;
         const showTitle = title || toolbar || search || slots.headerTitle;
         const scrollStyle: CSSProperties = {
-          height: 'calc(100%' + (showTitle ? ' - 35px)' : ')'),
+          height: 'calc(100%' + (showTitle ? ' - 38px)' : ')'),
         };
         const TreeComp = showIcon ? Tree.DirectoryTree : Tree;
         return (
