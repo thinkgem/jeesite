@@ -8,7 +8,6 @@ import { isFunction } from '/@/utils/is';
 import { cloneDeep, omit } from 'lodash-es';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
 import { RequestEnum } from '/@/enums/httpEnum';
-import { encodeParams } from './helper';
 
 export * from './axiosTransform';
 
@@ -163,8 +162,12 @@ export class VAxios {
       !Reflect.has(config, 'data') ||
       config.method?.toUpperCase() === RequestEnum.GET
     ) {
-      if (config.params) {
-        encodeParams(config.params);
+      if (config.url && config.params) {
+        let url = config.url;
+        url += url.indexOf('?') == -1 ? '?' : '&';
+        url += qs.stringify(config.params, { encode: true });
+        config.url = url;
+        config.params = {};
       }
       return config;
     }

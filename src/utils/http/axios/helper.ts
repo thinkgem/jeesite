@@ -44,16 +44,3 @@ export function formatRequestDate(params: Recordable) {
     }
   }
 }
-
-export function encodeParams(params = {}) {
-  for (const key in params) {
-    const value = params[key];
-    if (value) {
-      if (isString(key)) {
-        params[key] = encodeURI(value);
-      } else if (isObject(value)) {
-        encodeParams(value);
-      }
-    }
-  }
-}
