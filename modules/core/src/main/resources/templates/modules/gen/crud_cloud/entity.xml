@@ -210,15 +210,16 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	public ${ClassName}() {
 		this(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}null<% } %>);
 	}
-
 	<%
 	// 生成带主键参数的构造
 	if (!table.parentExists){
 		if (table.pkList.~size == 1){ %>
+	
 	public ${ClassName}(String id){
 		super(id);
 	}
 	<%	}else{ %>
+	
 	public ${ClassName}(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType} ${pk.simpleAttrName}<% } %>){
 		<% for(pk in table.pkList){ %>
 		this.${pk.simpleAttrName} = ${pk.simpleAttrName};
@@ -281,11 +282,6 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	%>
 	
 	<%
-			for(a in c.simpleAnnotationList){
-	%>
-	@${a}
-	<%
-			}
 			// 父类对象
 			if(table.parentExists && table.parentTableFkName == c.columnName){
 	%>
@@ -299,6 +295,11 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	<%
 			// 其它字段
 			}else{
+				for(a in c.simpleAnnotationList){
+	%>
+	@${a}
+	<%
+				}
 	%>
 	public ${c.simpleAttrType} get${@StringUtils.cap(c.simpleAttrName)}() {
 		return ${c.simpleAttrName};
@@ -340,6 +341,7 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	for(child in table.childList){
 	%>
 	
+	@Valid
 	public List<${@StringUtils.cap(child.className)}> get${@StringUtils.cap(child.className)}List() {
 		return ${@StringUtils.uncap(child.className)}List;
 	}
