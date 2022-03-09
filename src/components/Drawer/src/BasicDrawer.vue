@@ -32,7 +32,6 @@
 </template>
 <script lang="ts">
   import type { DrawerInstance, DrawerProps } from './typing';
-  import type { CSSProperties } from 'vue';
   import {
     defineComponent,
     ref,
@@ -42,6 +41,8 @@
     nextTick,
     toRaw,
     getCurrentInstance,
+    CSSProperties,
+    watchEffect,
   } from 'vue';
   import { Drawer } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -58,7 +59,7 @@
     components: { Drawer, ScrollContainer, DrawerFooter, DrawerHeader },
     inheritAttrs: false,
     props: basicProps,
-    emits: ['visible-change', 'ok', 'close', 'register'],
+    emits: ['visible-change', 'ok', 'close', 'register', 'update:visible'],
     setup(props, { emit }) {
       const visibleRef = ref(false);
       const attrs = useAttrs();
@@ -73,8 +74,9 @@
       };
 
       const instance = getCurrentInstance();
-
-      instance && emit('register', drawerInstance, instance.uid);
+      if (instance) {
+        emit('register', drawerInstance, instance.uid);
+      }
 
       const getMergeProps = computed((): DrawerProps => {
         return deepMerge(toRaw(props), unref(propsRef));
@@ -108,6 +110,7 @@
         return {
           ...attrs,
           ...unref(getProps),
+          visible: unref(visibleRef),
         };
       });
 
@@ -134,34 +137,32 @@
         return !!unref(getProps)?.loading;
       });
 
-      watch(
-        () => props.visible,
-        (newVal, oldVal) => {
-          if (newVal !== oldVal) visibleRef.value = newVal;
-        },
-        { deep: true },
-      );
+      watchEffect(() => {
+        visibleRef.value = !!props.visible;
+      });
 
       watch(
-        () => visibleRef.value,
-        (visible) => {
-          nextTick(() => {
-            emit('visible-change', visible);
-            instance && drawerInstance.emitVisible?.(visible, instance.uid);
-          });
+        () => unref(visibleRef),
+        (v) => {
+          emit('visible-change', v);
+          emit('update:visible', v);
+          instance && drawerInstance.emitVisible?.(v, instance.uid);
+        },
+        {
+          immediate: false,
         },
       );
 
       // Cancel event
       async function onClose(e: Recordable) {
         const { closeFunc } = unref(getProps);
-        emit('close', e);
         if (closeFunc && isFunction(closeFunc)) {
           const res = await closeFunc();
           visibleRef.value = !res;
           return;
         }
         visibleRef.value = false;
+        emit('close', e);
       }
 
       function setDrawerProps(props: Partial<DrawerProps>): void {
@@ -176,8 +177,8 @@
         }
       }
 
-      function handleOk() {
-        emit('ok');
+      function handleOk(e: Event) {
+        emit('ok', e);
       }
 
       return {

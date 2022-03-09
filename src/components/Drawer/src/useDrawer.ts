@@ -7,8 +7,9 @@ import type {
 } from './typing';
 import {
   ref,
-  getCurrentInstance,
+  onUnmounted,
   unref,
+  getCurrentInstance,
   reactive,
   watchEffect,
   nextTick,
@@ -17,11 +18,11 @@ import {
 } from 'vue';
 import { isProdMode } from '/@/utils/env';
 import { isFunction } from '/@/utils/is';
-import { tryOnUnmounted } from '@vueuse/core';
 import { isEqual } from 'lodash-es';
+import { tryOnUnmounted } from '@vueuse/core';
 import { error } from '/@/utils/log';
 
-const dataTransferRef = reactive<any>({});
+const dataTransfer = reactive<any>({});
 
 const visibleData = reactive<{ [key: number]: boolean }>({});
 
@@ -29,25 +30,23 @@ const visibleData = reactive<{ [key: number]: boolean }>({});
  * @description: Applicable to separate drawer and call outside
  */
 export function useDrawer(): UseDrawerReturnType {
-  if (!getCurrentInstance()) {
-    throw new Error('useDrawer() can only be used inside setup() or functional components!');
-  }
   const drawer = ref<DrawerInstance | null>(null);
   const loaded = ref<Nullable<boolean>>(false);
   const uid = ref<string>('');
 
   function register(drawerInstance: DrawerInstance, uuid: string) {
-    isProdMode() &&
-      tryOnUnmounted(() => {
-        drawer.value = null;
-        loaded.value = null;
-        dataTransferRef[unref(uid)] = null;
-      });
-
-    if (unref(loaded) && isProdMode() && drawerInstance === unref(drawer)) {
-      return;
+    if (!getCurrentInstance()) {
+      throw new Error('useDrawer() can only be used inside setup() or functional components!');
     }
     uid.value = uuid;
+    isProdMode() &&
+      onUnmounted(() => {
+        drawer.value = null;
+        loaded.value = false;
+        dataTransfer[unref(uid)] = null;
+      });
+    if (unref(loaded) && isProdMode() && drawerInstance === unref(drawer)) return;
+
     drawer.value = drawerInstance;
     loaded.value = true;
 
@@ -77,20 +76,34 @@ export function useDrawer(): UseDrawerReturnType {
       getInstance()?.setDrawerProps({
         visible: visible,
       });
-      if (!data) return;
 
+      if (!data) return;
+      const id = unref(uid);
       if (openOnSet) {
-        dataTransferRef[unref(uid)] = null;
-        dataTransferRef[unref(uid)] = toRaw(data);
+        dataTransfer[id] = null;
+        dataTransfer[id] = toRaw(data);
         return;
       }
-      const equal = isEqual(toRaw(dataTransferRef[unref(uid)]), toRaw(data));
+      const equal = isEqual(toRaw(dataTransfer[id]), toRaw(data));
       if (!equal) {
-        dataTransferRef[unref(uid)] = toRaw(data);
+        dataTransfer[id] = toRaw(data);
       }
     },
+
     closeDrawer: () => {
       getInstance()?.setDrawerProps({ visible: false });
+    },
+
+    setDrawerData: (data: any) => {
+      if (!data) return;
+      nextTick(() => {
+        setTimeout(() => {
+          const id = unref(uid);
+          dataTransfer[id] = null;
+          dataTransfer[id] = toRaw(data);
+          return;
+        }, 100);
+      });
     },
   };
 
@@ -101,10 +114,6 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
   const drawerInstanceRef = ref<Nullable<DrawerInstance>>(null);
   const currentInstance = getCurrentInstance();
   const uidRef = ref<string>('');
-
-  if (!getCurrentInstance()) {
-    throw new Error('useDrawerInner() can only be used inside setup() or functional components!');
-  }
 
   const getInstance = () => {
     const instance = unref(drawerInstanceRef);
@@ -127,7 +136,7 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
   };
 
   watchEffect(() => {
-    const data = dataTransferRef[unref(uidRef)];
+    const data = dataTransfer[unref(uidRef)];
     if (!data) return;
     if (!callbackFn || !isFunction(callbackFn)) return;
     nextTick(() => {
