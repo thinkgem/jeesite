@@ -280,8 +280,7 @@ job:
     isClustered: true
     dataSourceName: job
     clusterCheckinInterval: 1000
-#    className: org.quartz.impl.jdbcjobstore.JobStoreTX
-#    className: org.quartz.impl.jdbcjobstore.JobStoreCMT
+#    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
 
   # 调度日志配置
   log:
