@@ -15,6 +15,7 @@ export interface ReturnMethods extends ModalMethods {
   openModal: <T = any>(props?: boolean, data?: T, openOnSet?: boolean) => void;
   closeModal: () => void;
   getVisible?: ComputedRef<boolean>;
+  setModalData: (data: any) => void;
 }
 
 export type UseModalReturnType = [RegisterFn, ReturnMethods];

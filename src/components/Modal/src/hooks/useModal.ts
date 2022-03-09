@@ -96,6 +96,18 @@ export function useModal(): UseModalReturnType {
     closeModal: () => {
       getInstance()?.setModalProps({ visible: false });
     },
+
+    setModalData: (data: any) => {
+      if (!data) return;
+      nextTick(() => {
+        setTimeout(() => {
+          const id = unref(uid);
+          dataTransfer[id] = null;
+          dataTransfer[id] = toRaw(data);
+          return;
+        }, 100);
+      });
+    },
   };
   return [register, methods];
 }
