@@ -26,7 +26,6 @@ function asyncImportRoute(
   routes: AppRouteRecordRaw[] | undefined,
   parent: AppRouteRecordRaw | undefined,
 ) {
-  dynamicViewsModules = dynamicViewsModules || import.meta.glob('../../views/**/*.{vue,tsx}');
   if (!routes) return;
   routes.forEach((item) => {
     if (!item.meta.icon) {
@@ -42,7 +41,7 @@ function asyncImportRoute(
       if (layoutFound) {
         item.component = layoutFound;
       } else {
-        item.component = dynamicImport(dynamicViewsModules, component as string);
+        item.component = dynamicImport(component as string);
       }
     } else if (name) {
       item.component = getParentLayout();
@@ -56,10 +55,10 @@ function asyncImportRoute(
   });
 }
 
-function dynamicImport(
-  dynamicViewsModules: Record<string, () => Promise<Recordable>>,
-  component: string,
-) {
+export function dynamicImport(component: string) {
+  if (!dynamicViewsModules) {
+    dynamicViewsModules = import.meta.glob('../../views/**/*.{vue,tsx}');
+  }
   const keys = Object.keys(dynamicViewsModules);
   const matchKeys = keys.filter((key) => {
     let k = key.replace('../../views', '');
