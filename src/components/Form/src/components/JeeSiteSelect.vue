@@ -62,6 +62,7 @@
       },
       resultField: propTypes.string.def(''),
       immediate: propTypes.bool.def(false),
+      each: propTypes.bool.def(false),
       dictType: propTypes.string,
       mode: propTypes.string,
     },
@@ -145,6 +146,8 @@
         if (!props.immediate && !unref(isFirstLoad)) {
           await fetch();
           isFirstLoad.value = true;
+        } else if (props.each) {
+          await fetch();
         }
         emit('click');
       }

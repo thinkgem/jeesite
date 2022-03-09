@@ -62,6 +62,10 @@
         type: Object as PropType<Recordable>,
         default: () => ({}),
       },
+      isDisable: {
+        type: Function as PropType<(node: Recordable) => boolean>,
+        default: null,
+      },
       resultField: propTypes.string.def(''),
       immediate: propTypes.bool.def(false),
       dictType: propTypes.string,
@@ -157,7 +161,10 @@
       function getTreeData(treeData: Recordable[]) {
         if (props.treeDataSimpleMode) {
           return listToTree(treeData, {
-            callback: (parent) => {
+            callback: (parent, node) => {
+              if (props.isDisable && node) {
+                node.disabled = props.isDisable(node);
+              }
               if (!props.canSelectParent && parent) {
                 if (parent.children && parent.children.length > 0) {
                   parent.disabled = true;
