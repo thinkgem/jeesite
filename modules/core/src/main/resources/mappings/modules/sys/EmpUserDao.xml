@@ -27,13 +27,14 @@
 					)
 				)
 			</if>
+			<!-- 附属部门查询，根据业务需要添加查询条件
 			<if test="employee.office.officeCode != null and employee.office.officeCode != ''">
 				OR EXISTS (
 					SELECT 1 FROM ${_prefix}sys_employee_office
 					WHERE emp_code = e.emp_code
 						AND office_code = #{employee.office.officeCode}
 				)
-			</if>
+			</if> -->
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
 	</select>
