@@ -255,9 +255,9 @@ public class CategoryController extends BaseController {
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String siteCode, String module, String extCode, Boolean isAll, String isShowCode) {
+	public List<Map<String, Object>> treeData(String siteCode, String module, String excludeCode, Boolean isAll, String isShowCode) {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		List<Category> categoryList = null;
+		List<Category> list = null;
 		Category category = new Category();
 		// 站点条件
 		if (StringUtils.isNotBlank(siteCode)) {
@@ -273,30 +273,34 @@ public class CategoryController extends BaseController {
 		if (!(isAll != null && isAll)) {
 			categoryService.addDataScopeFilter(category);
 		}
-		categoryList = categoryService.findList(category);
-		// 处理转换数据，并返回ztree支持的格式
-		for (int i = 0; i < categoryList.size(); i++) {
-			Category e = categoryList.get(i);
-			if (extCode == null || (extCode != null && !extCode.equals(e.getId()) && e.getParentCodes().indexOf("," + extCode + ",") == -1)) {
-				Map<String, Object> map = MapUtils.newHashMap();
-				map.put("id", e.getId());
-				map.put("pId", e.getParent() != null ? e.getParent().getId() : 0);
-				if ("true".equals(isShowCode) || "1".equals(isShowCode)) {
-					map.put("name", "(" + e.getCategoryCode() + ")" + e.getCategoryName());
-				} else if ("2".equals(isShowCode)) {
-					map.put("name", e.getCategoryName() + "(" + e.getCategoryCode() + ")");
-				} else {
-					map.put("name", e.getCategoryName());
+		list = categoryService.findList(category);
+		for (int i = 0; i < list.size(); i++) {
+			Category e = list.get(i);
+			// 过滤非正常的数据
+			if (!Category.STATUS_NORMAL.equals(e.getStatus())){
+				continue;
+			}
+			// 过滤被排除的编码（包括所有子级）
+			if (StringUtils.isNotBlank(excludeCode)){
+				if (e.getId().equals(excludeCode)){
+					continue;
 				}
-				map.put("title", e.getCategoryName() + " [" + DictUtils.getDictLabel(e.getModuleType(), "cms_module", "公共模型") + "]");
-				map.put("module", e.getModuleType());
-				map.put("showModes", e.getShowModes());
-				// 是否仅获取可管理的栏目，指定 true 或 false
-				String adminUrl = e.getAdminUrl();
-				if (!"none".equals(adminUrl)) {
-					map.put("adminUrl", "".equals(adminUrl) ? "none" : adminUrl);
-					mapList.add(map);
+				if (e.getParentCodes().contains("," + excludeCode + ",")){
+					continue;
 				}
+			}
+			Map<String, Object> map = MapUtils.newHashMap();
+			map.put("id", e.getId());
+			map.put("pId", e.getParent() != null ? e.getParent().getId() : 0);
+			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.getCategoryCode(), e.getCategoryName()));
+			map.put("title", e.getCategoryName() + " [" + DictUtils.getDictLabel(e.getModuleType(), "cms_module", "公共模型") + "]");
+			map.put("module", e.getModuleType());
+			map.put("showModes", e.getShowModes());
+			// 是否仅获取可管理的栏目，指定 true 或 false
+			String adminUrl = e.getAdminUrl();
+			if (!"none".equals(adminUrl)) {
+				map.put("adminUrl", "".equals(adminUrl) ? "none" : adminUrl);
+				mapList.add(map);
 			}
 		}
 		return mapList;
