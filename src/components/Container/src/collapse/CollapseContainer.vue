@@ -9,10 +9,10 @@
       </template>
     </CollapseHeader>
 
-    <div class="p-2">
+    <div class="p-2" v-show="show">
       <CollapseTransition :enable="canExpan">
         <Skeleton v-if="loading" :active="loading" />
-        <div :class="`${prefixCls}__body`" v-else v-show="show">
+        <div :class="`${prefixCls}__body`" v-else>
           <slot></slot>
         </div>
       </CollapseTransition>
