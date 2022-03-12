@@ -63,6 +63,8 @@
     lazyTime: { type: Number, default: 0 },
   });
 
+  const emit = defineEmits(['update:expand']);
+
   const show = ref(true);
 
   const { prefixCls } = useDesign('collapse-container');
@@ -86,6 +88,7 @@
       // 200 milliseconds here is because the expansion has animation,
       useTimeoutFn(triggerWindowResize, 200);
     }
+    emit('update:expand', show.value);
   }
 </script>
 <style lang="less">
