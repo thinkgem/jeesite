@@ -580,17 +580,19 @@ shiro:
 # Session 相关
 #session:
 #  
-#  # 全局会话超时，单位：毫秒， 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+#  # 会话超时时间，单位：毫秒，10m=600000, 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
 #  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
-#  sessionTimeout: 1800000
 #  
-#  # PC设备会话超时参数设置，登录请求参数加 param_deviceType=pc 时有效
-#  #pcSessionTimeout: 1800000
+#  # 游客会话超时时间：只访问了系统，但未登录系统的用户为游客，游客默认超时时间为10分钟，如：未登录系统时的图片验证码有效时间。
+#  sessionTimeout: 180000
 #  
-#  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
-#  #mobileAppSessionTimeout: 43200000
+#  # 登录系统后的用户超时时间（不明确 param_deviceType 参数的，默认设备为 pc 登录）
+#  pcSessionTimeout: 1800000
 #  
-#  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
+#  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效，一般无需单独设置
+#  #mobileAppSessionTimeout: 1800000
+#  
+#  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话（设置为 0 关闭，微服务下只开启 core 即可）
 #  sessionTimeoutClean: 1200000
 #  
 #  # 会话唯一标识SessionId在Cookie中的名称。

@@ -39,7 +39,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 /**
  * 在线用户Controller
  * @author ThinkGem
- * @version 2016-8-31
+ * @version 2022-3-10
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/online")
@@ -58,7 +58,8 @@ public class OnlineController extends BaseController{
 	@RequestMapping(value = "count")
 	@ResponseBody
 	public Integer count(HttpServletRequest request, HttpServletResponse response) {
-		return sessionDAO.getActiveSessions(true, true).size();
+		// 在线人数统计，缓存3分钟的数据，要求高的业务可缩小间隔时间
+		return sessionDAO.getActiveSessionsCount(false, false, 3);
 	}
 
 	/**
@@ -156,7 +157,7 @@ public class OnlineController extends BaseController{
 				if (pp != null) {
 					if (pp instanceof LoginInfo){
 						LoginInfo loginInfo = ((LoginInfo)pp);
-						String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "PC");
+						String key = loginInfo.getId()+"_"+loginInfo.getParam("deviceType", "pc");
 						onlineTickOutMap.put(key, StringUtils.EMPTY);
 					}
 				}

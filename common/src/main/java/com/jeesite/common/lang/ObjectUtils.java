@@ -42,6 +42,9 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		try {
 			String str = val.toString();
+			if (StringUtils.isBlank(str)) {
+				return 0D;
+			}
 			if (StringUtils.contains(str, "*")) {
 				Double number = null, d = null;
 				for (String s : StringUtils.split(str, "*")) {
