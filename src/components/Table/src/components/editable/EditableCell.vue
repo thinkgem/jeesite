@@ -113,8 +113,17 @@
         return ['Checkbox', 'Switch'].includes(component);
       });
 
+      const getEditComponentProps = computed(() => {
+        const { value: text, record, column, index } = props;
+        let compProps = props.column?.editComponentProps ?? {};
+        if (isFunction(compProps)) {
+          compProps = compProps({ text, record, column, index }) ?? {};
+        }
+        return compProps;
+      });
+
       const getComponentProps = computed(() => {
-        const compProps = props.column?.editComponentProps ?? {};
+        const compProps = unref(getEditComponentProps);
 
         const val = unref(currentValueRef);
         const labelVal = unref(currentLabelValueRef);
@@ -205,7 +214,7 @@
           value = e;
         }
 
-        const format = props.column?.editComponentProps?.format;
+        const format = unref(getEditComponentProps)?.format;
         if (format) {
           if (isObject(value)) {
             value = value._isAMomentObject ? value?.format(format) : value;
@@ -218,7 +227,7 @@
         currentValueRef.value = value;
         currentLabelValueRef.value = labelValue;
 
-        const onChange = props.column?.editComponentProps?.onChange;
+        const onChange = unref(getEditComponentProps)?.onChange;
         if (onChange && isFunction(onChange)) onChange(...arguments);
 
         table.emit?.('edit-change', {

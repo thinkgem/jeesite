@@ -10,6 +10,7 @@ import { ComponentType } from './componentType';
 import { VueNode } from '/@/utils/propTypes';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { ActionItem } from './tableAction';
+import { EditRecordRow } from '../components/editable';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
@@ -445,7 +446,14 @@ export interface BasicColumn extends ColumnProps {
   editRow?: boolean;
   editable?: boolean;
   editComponent?: ComponentType;
-  editComponentProps?: Recordable;
+  editComponentProps?:
+    | ((opt: {
+        text: any;
+        record: EditRecordRow;
+        column: BasicColumn;
+        index: number;
+      }) => Recordable)
+    | Recordable;
   editRule?: boolean | ((text: string, record: Recordable) => Promise<string>);
   editValueMap?: (value: any) => string;
   onEditRow?: () => void;

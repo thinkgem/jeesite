@@ -9,10 +9,10 @@
       </template>
     </CollapseHeader>
 
-    <div class="p-2">
+    <div class="p-2" v-show="show">
       <CollapseTransition :enable="canExpan">
         <Skeleton v-if="loading" :active="loading" />
-        <div :class="`${prefixCls}__body`" v-else v-show="show">
+        <div :class="`${prefixCls}__body`" v-else>
           <slot></slot>
         </div>
       </CollapseTransition>
@@ -63,6 +63,8 @@
     lazyTime: { type: Number, default: 0 },
   });
 
+  const emit = defineEmits(['update:expand']);
+
   const show = ref(true);
 
   const { prefixCls } = useDesign('collapse-container');
@@ -86,6 +88,7 @@
       // 200 milliseconds here is because the expansion has animation,
       useTimeoutFn(triggerWindowResize, 200);
     }
+    emit('update:expand', show.value);
   }
 </script>
 <style lang="less">
