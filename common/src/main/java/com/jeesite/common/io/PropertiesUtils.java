@@ -209,7 +209,7 @@ public class PropertiesUtils {
 
 	/**
 	 * 获取配置文件中Boolean类型的值，取不到从System.getProperty获取，取不到，返回空。
-	 * @return 获取不到，返回空defValue默认值
+	 * @return 获取不到，返回空defValue默认值，如果结果为非布尔类型，则返回false
 	 */
 	public Boolean getPropertyToBoolean(String key, String defValue) {
 		return ObjectUtils.toBoolean(getProperty(key, defValue));
@@ -217,10 +217,18 @@ public class PropertiesUtils {
 	
 	/**
 	 * 获取配置文件中Integer类型的值，取不到从System.getProperty获取，取不到，返回空。
-	 * @return 获取不到，返回空defValue默认值
+	 * @return 获取不到，返回空defValue默认值，如果结果为非数值类型，则返回0
 	 */
 	public Integer getPropertyToInteger(String key, String defValue) {
 		return ObjectUtils.toInteger(getProperty(key, defValue));
+	}
+	
+	/**
+	 * 获取配置文件中Long类型的值，取不到从System.getProperty获取，取不到，返回空。
+	 * @return 获取不到，返回空defValue默认值，如果结果为非数值类型，则返回0
+	 */
+	public Long getPropertyToLong(String key, String defValue) {
+		return ObjectUtils.toLong(getProperty(key, defValue));
 	}
 	
 	/**
