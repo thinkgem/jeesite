@@ -214,7 +214,8 @@
           value = e;
         }
 
-        const format = unref(getEditComponentProps)?.format;
+        const editComponentProps = unref(getEditComponentProps);
+        const format = editComponentProps?.format;
         if (format) {
           if (isObject(value)) {
             value = value._isAMomentObject ? value?.format(format) : value;
@@ -227,7 +228,7 @@
         currentValueRef.value = value;
         currentLabelValueRef.value = labelValue;
 
-        const onChange = unref(getEditComponentProps)?.onChange;
+        const onChange = editComponentProps?.onChange;
         if (onChange && isFunction(onChange)) onChange(...arguments);
 
         table.emit?.('edit-change', {
