@@ -224,8 +224,9 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 				}
 			}
 		} catch (Exception e) {
-			failureMsg.append(e.getMessage());
 			logger.error(e.getMessage(), e);
+			failureMsg.append(e.getMessage());
+			return failureMsg.toString();
 		}
 		if (failureNum > 0) {
 			failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
