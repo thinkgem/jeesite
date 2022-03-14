@@ -7,8 +7,10 @@ import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 import { Page, TreeDataModel } from '../model/baseModel';
 import { User } from './user';
+import { UploadApiResult } from './upload';
+import { UploadFileParams } from '/#/axios';
 
-const { adminPath } = useGlobSetting();
+const { apiUrl, adminPath } = useGlobSetting();
 
 export interface EmpUser extends User {
   employee?: any;
@@ -32,14 +34,17 @@ export const checkEmpNo = (oldEmpNo: string, empNo: string) =>
     params: { oldEmpNo, 'employee.empNo': empNo },
   });
 
-export const empUserExportData = (params?: EmpUser | any) =>
-  defHttp.post<EmpUser[]>({ url: adminPath + '/sys/empUser/exportData', params });
-
-export const empUserImportTemplate = (params?: EmpUser | any) =>
-  defHttp.get<EmpUser[]>({ url: adminPath + '/sys/empUser/importTemplate', params });
-
-export const empUserImportData = (params?: EmpUser | any) =>
-  defHttp.post<EmpUser[]>({ url: adminPath + '/sys/empUser/importData', params });
+export const empUserImportData = (
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: ProgressEvent) => void,
+) =>
+  defHttp.uploadFile<UploadApiResult>(
+    {
+      url: apiUrl + adminPath + '/sys/empUser/importData',
+      onUploadProgress,
+    },
+    params,
+  );
 
 export const empUserDisable = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/disable', params });

@@ -29,6 +29,7 @@
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
     <FormAuthDataScope @register="registerAuthDataSourceDrawer" @success="handleSuccess" />
+    <FormImport @register="registerImportModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -41,6 +42,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGlobSetting } from '/@/hooks/setting';
+  import { downloadByUrl } from '/@/utils/file/download';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
@@ -49,10 +51,11 @@
   import { officeTreeData } from '/@/api/sys/office';
   import { companyTreeData } from '/@/api/sys/company';
   import { useDrawer } from '/@/components/Drawer';
+  import { useModal } from '/@/components/Modal';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
   import FormAuthDataScope from './formAuthDataScope.vue';
-  import { downloadByUrl } from '/@/utils/file/download';
+  import FormImport from './formImport.vue';
 
   const props = defineProps({
     treeCode: String,
@@ -341,8 +344,10 @@
     });
   }
 
+  const [registerImportModal, { openModal: importModal }] = useModal();
+
   function handleImport() {
-    showMessage('敬请期待');
+    importModal(true, {});
   }
 
   async function handleDisable(record: Recordable) {
