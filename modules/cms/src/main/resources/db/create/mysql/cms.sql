@@ -64,7 +64,7 @@ CREATE TABLE ${_prefix}cms_article_data
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (id)
 ) COMMENT = '文章详情表';
 
@@ -90,12 +90,12 @@ CREATE TABLE ${_prefix}cms_category
 (
 	category_code varchar(64) NOT NULL COMMENT '栏目编码',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(1000) NOT NULL COMMENT '所有父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(1000) NOT NULL COMMENT '所有排序号',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
 	category_name varchar(100) NOT NULL COMMENT '栏目名称',
 	site_code varchar(64) NOT NULL COMMENT '站点编码',
 	module_type varchar(50) COMMENT '模块类型',
@@ -138,7 +138,7 @@ CREATE TABLE ${_prefix}cms_category
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (category_code)
 ) COMMENT = '栏目表';
 

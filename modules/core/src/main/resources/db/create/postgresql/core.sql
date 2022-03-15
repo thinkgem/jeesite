@@ -61,12 +61,12 @@ CREATE TABLE ${_prefix}sys_area
 (
 	area_code varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	area_name varchar(100) NOT NULL,
 	area_type char(1),
 	status char(1) DEFAULT '0' NOT NULL,
@@ -84,12 +84,12 @@ CREATE TABLE ${_prefix}sys_company
 (
 	company_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	view_code varchar(100) NOT NULL,
 	company_name varchar(200) NOT NULL,
 	full_name varchar(200) NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE ${_prefix}sys_company
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (company_code)
 ) WITHOUT OIDS;
 
@@ -158,12 +158,12 @@ CREATE TABLE ${_prefix}sys_dict_data
 (
 	dict_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	dict_label varchar(100) NOT NULL,
 	dict_value varchar(100) NOT NULL,
 	dict_icon varchar(100),
@@ -200,7 +200,7 @@ CREATE TABLE ${_prefix}sys_dict_data
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (dict_code)
 ) WITHOUT OIDS;
 
@@ -316,7 +316,27 @@ CREATE TABLE ${_prefix}sys_file_upload
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
+	PRIMARY KEY (id)
+) WITHOUT OIDS;
+
+
+-- 系统健康检查
+CREATE TABLE ${_prefix}sys_health_check
+(
+	id varchar(64) NOT NULL,
+	server_name varchar(50),
+	server_url varchar(500),
+	lic_version varchar(10),
+	heart_time timestamp,
+	timeout decimal(10),
+	state char(1),
+	status char(1) DEFAULT '0' NOT NULL,
+	create_by varchar(64) NOT NULL,
+	create_date timestamp NOT NULL,
+	update_by varchar(64) NOT NULL,
+	update_date timestamp NOT NULL,
+	remarks varchar(500),
 	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
@@ -409,12 +429,12 @@ CREATE TABLE ${_prefix}sys_menu
 (
 	menu_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	menu_name varchar(100) NOT NULL,
 	menu_type char(1) NOT NULL,
 	menu_href varchar(1000),
@@ -455,7 +475,7 @@ CREATE TABLE ${_prefix}sys_menu
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (menu_code)
 ) WITHOUT OIDS;
 
@@ -601,12 +621,12 @@ CREATE TABLE ${_prefix}sys_office
 (
 	office_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	view_code varchar(100) NOT NULL,
 	office_name varchar(100) NOT NULL,
 	full_name varchar(200) NOT NULL,
@@ -644,7 +664,7 @@ CREATE TABLE ${_prefix}sys_office
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (office_code)
 ) WITHOUT OIDS;
 
@@ -709,7 +729,7 @@ CREATE TABLE ${_prefix}sys_role
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (role_code)
 ) WITHOUT OIDS;
 
@@ -796,7 +816,7 @@ CREATE TABLE ${_prefix}sys_user
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (user_code)
 ) WITHOUT OIDS;
 
@@ -1194,6 +1214,20 @@ COMMENT ON COLUMN ${_prefix}sys_file_upload.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN ${_prefix}sys_file_upload.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN ${_prefix}sys_file_upload.extend_d4 IS '扩展 Date 4';
 COMMENT ON COLUMN ${_prefix}sys_file_upload.extend_json IS '扩展 JSON';
+COMMENT ON TABLE ${_prefix}sys_health_check IS '系统健康检查';
+COMMENT ON COLUMN ${_prefix}sys_health_check.id IS '编号';
+COMMENT ON COLUMN ${_prefix}sys_health_check.server_name IS '系统节点名称';
+COMMENT ON COLUMN ${_prefix}sys_health_check.server_url IS '系统节点地址';
+COMMENT ON COLUMN ${_prefix}sys_health_check.lic_version IS '系统许可版本';
+COMMENT ON COLUMN ${_prefix}sys_health_check.heart_time IS '最后心跳时间';
+COMMENT ON COLUMN ${_prefix}sys_health_check.timeout IS '超时时间';
+COMMENT ON COLUMN ${_prefix}sys_health_check.state IS '服务状态';
+COMMENT ON COLUMN ${_prefix}sys_health_check.status IS '状态（0正常 1删除 2停用）';
+COMMENT ON COLUMN ${_prefix}sys_health_check.create_by IS '创建者';
+COMMENT ON COLUMN ${_prefix}sys_health_check.create_date IS '创建时间';
+COMMENT ON COLUMN ${_prefix}sys_health_check.update_by IS '更新者';
+COMMENT ON COLUMN ${_prefix}sys_health_check.update_date IS '更新时间';
+COMMENT ON COLUMN ${_prefix}sys_health_check.remarks IS '备注信息';
 COMMENT ON TABLE ${_prefix}sys_job IS '作业调度表';
 COMMENT ON COLUMN ${_prefix}sys_job.job_name IS '任务名称';
 COMMENT ON COLUMN ${_prefix}sys_job.job_group IS '任务组名';

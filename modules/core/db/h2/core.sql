@@ -61,12 +61,12 @@ CREATE TABLE js_sys_area
 (
 	area_code varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	area_name varchar(100) NOT NULL,
 	area_type char(1),
 	status char(1) DEFAULT '0' NOT NULL,
@@ -84,12 +84,12 @@ CREATE TABLE js_sys_company
 (
 	company_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	view_code varchar(100) NOT NULL,
 	company_name varchar(200) NOT NULL,
 	full_name varchar(200) NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE js_sys_company
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
 	PRIMARY KEY (company_code)
 );
 
@@ -158,12 +158,12 @@ CREATE TABLE js_sys_dict_data
 (
 	dict_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	dict_label varchar(100) NOT NULL,
 	dict_value varchar(100) NOT NULL,
 	dict_icon varchar(100),
@@ -200,7 +200,7 @@ CREATE TABLE js_sys_dict_data
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
 	PRIMARY KEY (dict_code)
 );
 
@@ -316,7 +316,27 @@ CREATE TABLE js_sys_file_upload
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
+	PRIMARY KEY (id)
+);
+
+
+-- 系统健康检查
+CREATE TABLE js_sys_health_check
+(
+	id varchar(64) NOT NULL,
+	server_name varchar(50),
+	server_url varchar(500),
+	lic_version varchar(10),
+	heart_time datetime,
+	timeout decimal(10),
+	state char(1),
+	status char(1) DEFAULT '0' NOT NULL,
+	create_by varchar(64) NOT NULL,
+	create_date datetime NOT NULL,
+	update_by varchar(64) NOT NULL,
+	update_date datetime NOT NULL,
+	remarks varchar(500),
 	PRIMARY KEY (id)
 );
 
@@ -409,12 +429,12 @@ CREATE TABLE js_sys_menu
 (
 	menu_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	menu_name varchar(100) NOT NULL,
 	menu_type char(1) NOT NULL,
 	menu_href varchar(1000),
@@ -455,7 +475,7 @@ CREATE TABLE js_sys_menu
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
 	PRIMARY KEY (menu_code)
 );
 
@@ -601,12 +621,12 @@ CREATE TABLE js_sys_office
 (
 	office_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	view_code varchar(100) NOT NULL,
 	office_name varchar(100) NOT NULL,
 	full_name varchar(200) NOT NULL,
@@ -644,7 +664,7 @@ CREATE TABLE js_sys_office
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
 	PRIMARY KEY (office_code)
 );
 
@@ -709,7 +729,7 @@ CREATE TABLE js_sys_role
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
 	PRIMARY KEY (role_code)
 );
 
@@ -796,7 +816,7 @@ CREATE TABLE js_sys_user
 	extend_d2 datetime,
 	extend_d3 datetime,
 	extend_d4 datetime,
-	extend_json clob,
+	extend_json varchar(1000),
 	PRIMARY KEY (user_code)
 );
 

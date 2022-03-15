@@ -62,12 +62,12 @@ CREATE TABLE ${_prefix}sys_area
 (
 	area_code varchar(100) NOT NULL COMMENT '区域编码',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(1000) NOT NULL COMMENT '所有父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(1000) NOT NULL COMMENT '所有排序号',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
 	area_name varchar(100) NOT NULL COMMENT '区域名称',
 	area_type char(1) COMMENT '区域类型',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
@@ -85,12 +85,12 @@ CREATE TABLE ${_prefix}sys_company
 (
 	company_code varchar(64) NOT NULL COMMENT '公司编码',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(1000) NOT NULL COMMENT '所有父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(1000) NOT NULL COMMENT '所有排序号',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
 	view_code varchar(100) NOT NULL COMMENT '公司代码',
 	company_name varchar(200) NOT NULL COMMENT '公司名称',
 	full_name varchar(200) NOT NULL COMMENT '公司全称',
@@ -123,7 +123,7 @@ CREATE TABLE ${_prefix}sys_company
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (company_code)
 ) COMMENT = '公司表';
 
@@ -159,12 +159,12 @@ CREATE TABLE ${_prefix}sys_dict_data
 (
 	dict_code varchar(64) NOT NULL COMMENT '字典编码',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(1000) NOT NULL COMMENT '所有父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(1000) NOT NULL COMMENT '所有排序号',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
 	dict_label varchar(100) NOT NULL COMMENT '字典标签',
 	dict_value varchar(100) NOT NULL COMMENT '字典键值',
 	dict_icon varchar(100) COMMENT '字典图标',
@@ -201,7 +201,7 @@ CREATE TABLE ${_prefix}sys_dict_data
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (dict_code)
 ) COMMENT = '字典数据表';
 
@@ -317,9 +317,29 @@ CREATE TABLE ${_prefix}sys_file_upload
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (id)
 ) COMMENT = '文件上传表';
+
+
+-- 系统健康检查
+CREATE TABLE ${_prefix}sys_health_check
+(
+	id varchar(64) NOT NULL COMMENT '编号',
+	server_name varchar(50) COMMENT '系统节点名称',
+	server_url varchar(500) COMMENT '系统节点地址',
+	lic_version varchar(10) COMMENT '系统许可版本',
+	heart_time datetime COMMENT '最后心跳时间',
+	timeout decimal(10) COMMENT '超时时间',
+	state char(1) COMMENT '服务状态',
+	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
+	create_by varchar(64) NOT NULL COMMENT '创建者',
+	create_date datetime NOT NULL COMMENT '创建时间',
+	update_by varchar(64) NOT NULL COMMENT '更新者',
+	update_date datetime NOT NULL COMMENT '更新时间',
+	remarks varchar(500) COMMENT '备注信息',
+	PRIMARY KEY (id)
+) COMMENT = '系统健康检查';
 
 
 -- 作业调度表
@@ -410,12 +430,12 @@ CREATE TABLE ${_prefix}sys_menu
 (
 	menu_code varchar(64) NOT NULL COMMENT '菜单编码',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(1000) NOT NULL COMMENT '所有父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(1000) NOT NULL COMMENT '所有排序号',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
 	menu_name varchar(100) NOT NULL COMMENT '菜单名称',
 	menu_type char(1) NOT NULL COMMENT '菜单类型（1菜单 2权限 3开发）',
 	menu_href varchar(1000) COMMENT '链接',
@@ -456,7 +476,7 @@ CREATE TABLE ${_prefix}sys_menu
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (menu_code)
 ) COMMENT = '菜单表';
 
@@ -602,12 +622,12 @@ CREATE TABLE ${_prefix}sys_office
 (
 	office_code varchar(64) NOT NULL COMMENT '机构编码',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(1000) NOT NULL COMMENT '所有父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(1000) NOT NULL COMMENT '所有排序号',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(1000) NOT NULL COMMENT '全节点名',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
 	view_code varchar(100) NOT NULL COMMENT '机构代码',
 	office_name varchar(100) NOT NULL COMMENT '机构名称',
 	full_name varchar(200) NOT NULL COMMENT '机构全称',
@@ -645,7 +665,7 @@ CREATE TABLE ${_prefix}sys_office
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (office_code)
 ) COMMENT = '组织机构表';
 
@@ -710,7 +730,7 @@ CREATE TABLE ${_prefix}sys_role
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (role_code)
 ) COMMENT = '角色表';
 
@@ -797,7 +817,7 @@ CREATE TABLE ${_prefix}sys_user
 	extend_d2 datetime COMMENT '扩展 Date 2',
 	extend_d3 datetime COMMENT '扩展 Date 3',
 	extend_d4 datetime COMMENT '扩展 Date 4',
-	extend_json text COMMENT '扩展 JSON',
+	extend_json varchar(1000) COMMENT '扩展 JSON',
 	PRIMARY KEY (user_code)
 ) COMMENT = '用户表';
 

@@ -63,7 +63,7 @@ CREATE TABLE js_cms_article_data
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (id)
 ) WITHOUT OIDS;
 
@@ -89,12 +89,12 @@ CREATE TABLE js_cms_category
 (
 	category_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	category_name varchar(100) NOT NULL,
 	site_code varchar(64) NOT NULL,
 	module_type varchar(50),
@@ -137,7 +137,7 @@ CREATE TABLE js_cms_category
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json text,
+	extend_json varchar(1000),
 	PRIMARY KEY (category_code)
 ) WITHOUT OIDS;
 

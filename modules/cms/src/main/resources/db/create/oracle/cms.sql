@@ -63,7 +63,7 @@ CREATE TABLE ${_prefix}cms_article_data
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json clob,
+	extend_json varchar2(1000),
 	PRIMARY KEY (id)
 );
 
@@ -89,12 +89,12 @@ CREATE TABLE ${_prefix}cms_category
 (
 	category_code varchar2(64) NOT NULL,
 	parent_code varchar2(64) NOT NULL,
-	parent_codes varchar2(1000) NOT NULL,
+	parent_codes varchar2(767) NOT NULL,
 	tree_sort number(10) NOT NULL,
-	tree_sorts varchar2(1000) NOT NULL,
+	tree_sorts varchar2(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level number(4) NOT NULL,
-	tree_names nvarchar2(1000) NOT NULL,
+	tree_names nvarchar2(767) NOT NULL,
 	category_name nvarchar2(100) NOT NULL,
 	site_code varchar2(64) NOT NULL,
 	module_type varchar2(50),
@@ -137,7 +137,7 @@ CREATE TABLE ${_prefix}cms_category
 	extend_d2 timestamp,
 	extend_d3 timestamp,
 	extend_d4 timestamp,
-	extend_json clob,
+	extend_json varchar2(1000),
 	PRIMARY KEY (category_code)
 );
 

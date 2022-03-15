@@ -63,7 +63,7 @@ CREATE TABLE [${_prefix}cms_article_data]
 	[extend_d2] datetime,
 	[extend_d3] datetime,
 	[extend_d4] datetime,
-	[extend_json] text,
+	[extend_json] varchar(1000),
 	PRIMARY KEY ([id])
 );
 
@@ -89,12 +89,12 @@ CREATE TABLE [${_prefix}cms_category]
 (
 	[category_code] varchar(64) NOT NULL,
 	[parent_code] varchar(64) NOT NULL,
-	[parent_codes] varchar(1000) NOT NULL,
+	[parent_codes] varchar(767) NOT NULL,
 	[tree_sort] decimal(10) NOT NULL,
-	[tree_sorts] varchar(1000) NOT NULL,
+	[tree_sorts] varchar(767) NOT NULL,
 	[tree_leaf] char(1) NOT NULL,
 	[tree_level] decimal(4) NOT NULL,
-	[tree_names] nvarchar(1000) NOT NULL,
+	[tree_names] nvarchar(767) NOT NULL,
 	[category_name] nvarchar(100) NOT NULL,
 	[site_code] varchar(64) NOT NULL,
 	[module_type] varchar(50),
@@ -137,7 +137,7 @@ CREATE TABLE [${_prefix}cms_category]
 	[extend_d2] datetime,
 	[extend_d3] datetime,
 	[extend_d4] datetime,
-	[extend_json] text,
+	[extend_json] varchar(1000),
 	PRIMARY KEY ([category_code])
 );
 

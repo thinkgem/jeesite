@@ -776,8 +776,8 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
-			<id>f777df0683772224af74eaac56ff9ba3086493a1</id>
-			<length>null</length>
+			<id>80cd53da9d5a1b19676537e590e20fa2793e902c</id>
+			<length>1000</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -789,7 +789,7 @@
 			<description></description>
 			<logical_name>扩展 JSON</logical_name>
 			<physical_name>extend_json</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>ad6f9eff50476669df62b7601cbc3a2e0c905d36</id>
@@ -1272,8 +1272,8 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>63772c051414452204e91e8d0dabd1dbfd640326</id>
-			<length>1000</length>
+			<id>5887f9db78a9ebc7b23b9a163c6f68100257c0e5</id>
+			<length>767</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1912,8 +1912,8 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
-			<id>8f1564e5646071de508d4325f3cc7f62bdeede16</id>
-			<length>1000</length>
+			<id>49ec595ac14253d7d25479f6f8c8a94da5a8ca13</id>
+			<length>767</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -1944,8 +1944,8 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
-			<id>312c35e49a1de2ac558655550904b2d4e275322f</id>
-			<length>1000</length>
+			<id>a886757c87fb1e04c5f84b6a802e129baaec2ca6</id>
+			<length>767</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -8613,13 +8613,13 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>f777df0683772224af74eaac56ff9ba3086493a1</word_id>
+						<word_id>80cd53da9d5a1b19676537e590e20fa2793e902c</word_id>
 						<id>42c5d8f490f69b93e77698efa030ca23988ae696</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
 						<logical_name></logical_name>
 						<physical_name></physical_name>
-						<type>text</type>
+						<type>varchar(n)</type>
 						<constraint></constraint>
 						<default_value></default_value>
 						<auto_increment>false</auto_increment>
@@ -8685,7 +8685,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>63772c051414452204e91e8d0dabd1dbfd640326</word_id>
+						<word_id>5887f9db78a9ebc7b23b9a163c6f68100257c0e5</word_id>
 						<id>e8d877396943acfec73023dba2c1c6e3d7802d62</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -8751,7 +8751,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>312c35e49a1de2ac558655550904b2d4e275322f</word_id>
+						<word_id>a886757c87fb1e04c5f84b6a802e129baaec2ca6</word_id>
 						<id>984d5eac2b3221118a61655e4a5a49c78e0f0151</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -8850,7 +8850,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>8f1564e5646071de508d4325f3cc7f62bdeede16</word_id>
+						<word_id>49ec595ac14253d7d25479f6f8c8a94da5a8ca13</word_id>
 						<id>618194ebfc8c6c42efcef3a4af0b8054f6af209b</id>
 						<description></description>
 						<unique_key_name></unique_key_name>

@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path>db${module.moduleCode}.sql</output_path>
+				<output_path>db\template.sql</output_path>
 				<encoding>UTF-8</encoding>
 				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>false</is_open_after_saved>
@@ -73,7 +73,7 @@
 			</export_ddl_setting>
 			<export_excel_setting>
 				<category_id>null</category_id>
-				<output_path>db${module.moduleCode}.xls</output_path>
+				<output_path>db\template.xls</output_path>
 				<template></template>
 				<template_path></template_path>
 				<used_default_template_lang>en</used_default_template_lang>
@@ -89,7 +89,7 @@
 				<is_open_after_saved>true</is_open_after_saved>
 			</export_html_setting>
 			<export_image_setting>
-				<output_file_path>db${module.moduleCode}.png</output_file_path>
+				<output_file_path>db\template.png</output_file_path>
 				<category_dir_path></category_dir_path>
 				<with_category_image>true</with_category_image>
 				<is_open_after_saved>true</is_open_after_saved>
@@ -424,6 +424,22 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
+			<id>80cd53da9d5a1b19676537e590e20fa2793e902c</id>
+			<length>1000</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
+			<char_semantics>false</char_semantics>
+			<description></description>
+			<logical_name>扩展 JSON</logical_name>
+			<physical_name>extend_json</physical_name>
+			<type>varchar(n)</type>
+		</word>
+		<word>
 			<id>ad6f9eff50476669df62b7601cbc3a2e0c905d36</id>
 			<length>500</length>
 			<decimal>null</decimal>
@@ -584,8 +600,8 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>63772c051414452204e91e8d0dabd1dbfd640326</id>
-			<length>1000</length>
+			<id>5887f9db78a9ebc7b23b9a163c6f68100257c0e5</id>
+			<length>767</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -936,8 +952,8 @@
 			<type>nvarchar(n)</type>
 		</word>
 		<word>
-			<id>f48d759281e0da56d3e82430c3489d1276418f61</id>
-			<length>1000</length>
+			<id>bf5e60dee567b3ed0f12e8f3ffa1f74e43012b3a</id>
+			<length>767</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -952,7 +968,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>be17e27c1f73fe128f00468cc83953077b7e00a9</id>
+			<id>16c9c333062ea3614d2e044803b872676c8a5377</id>
 			<length>10</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -968,8 +984,8 @@
 			<type>decimal(p)</type>
 		</word>
 		<word>
-			<id>b0bd388c14e5b2bbab9590f5247961a7edd9eb3b</id>
-			<length>1000</length>
+			<id>a886757c87fb1e04c5f84b6a802e129baaec2ca6</id>
+			<length>767</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -3290,6 +3306,39 @@
 							<decimal_size>0</decimal_size>
 						</sequence>
 					</normal_column>
+					<normal_column>
+						<word_id>80cd53da9d5a1b19676537e590e20fa2793e902c</word_id>
+						<id>42c5d8f490f69b93e77698efa030ca23988ae696</id>
+						<description></description>
+						<unique_key_name></unique_key_name>
+						<logical_name></logical_name>
+						<physical_name></physical_name>
+						<type>varchar(n)</type>
+						<constraint></constraint>
+						<default_value></default_value>
+						<auto_increment>false</auto_increment>
+						<foreign_key>false</foreign_key>
+						<not_null>false</not_null>
+						<primary_key>false</primary_key>
+						<unique_key>false</unique_key>
+						<character_set></character_set>
+						<collation></collation>
+						<sequence>
+							<name></name>
+							<schema></schema>
+							<increment></increment>
+							<min_value></min_value>
+							<max_value></max_value>
+							<start></start>
+							<cache></cache>
+							<nocache>false</nocache>
+							<cycle>false</cycle>
+							<order>false</order>
+							<description></description>
+							<data_type></data_type>
+							<decimal_size>0</decimal_size>
+						</sequence>
+					</normal_column>
 				</columns>
 			</column_group>
 			<column_group>
@@ -3330,7 +3379,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>63772c051414452204e91e8d0dabd1dbfd640326</word_id>
+						<word_id>5887f9db78a9ebc7b23b9a163c6f68100257c0e5</word_id>
 						<id>e8d877396943acfec73023dba2c1c6e3d7802d62</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -3363,7 +3412,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>be17e27c1f73fe128f00468cc83953077b7e00a9</word_id>
+						<word_id>16c9c333062ea3614d2e044803b872676c8a5377</word_id>
 						<id>23f973124aedd0244533f4e7b3b103c548b966be</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -3396,7 +3445,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>b0bd388c14e5b2bbab9590f5247961a7edd9eb3b</word_id>
+						<word_id>a886757c87fb1e04c5f84b6a802e129baaec2ca6</word_id>
 						<id>984d5eac2b3221118a61655e4a5a49c78e0f0151</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
@@ -3495,7 +3544,7 @@
 						</sequence>
 					</normal_column>
 					<normal_column>
-						<word_id>f48d759281e0da56d3e82430c3489d1276418f61</word_id>
+						<word_id>bf5e60dee567b3ed0f12e8f3ffa1f74e43012b3a</word_id>
 						<id>618194ebfc8c6c42efcef3a4af0b8054f6af209b</id>
 						<description></description>
 						<unique_key_name></unique_key_name>
