@@ -171,7 +171,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.serializeFst(object);
 			}
 		} catch (Exception e) {
-			logger.error("serialize", e);
+			logger.error("serialize", e.getMessage());
 		}
 		return null;
 	}
@@ -189,7 +189,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.unserializeFst(bytes);
 			}
 		} catch (Exception e) {
-			logger.error("unserialize", e);
+			logger.error("unserialize", e.getMessage());
 		}
 		return null;
 	}
@@ -210,7 +210,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			oos.writeObject(object);
 			bytes = baos.toByteArray();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000){
@@ -235,7 +235,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 					ObjectInputStream ois = new ObjectInputStream(bais);) {
 				object = ois.readObject();
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
