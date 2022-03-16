@@ -59,7 +59,7 @@ public class OnlineController extends BaseController{
 	@ResponseBody
 	public Integer count(HttpServletRequest request, HttpServletResponse response) {
 		// 在线人数统计，缓存3分钟的数据，要求高的业务可缩小间隔时间
-		return sessionDAO.getActiveSessionsCount(false, false, 3);
+		return sessionDAO.getActiveSessionsCount(true, true, 3);
 	}
 
 	/**
