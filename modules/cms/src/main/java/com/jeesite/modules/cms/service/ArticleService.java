@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,8 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
+import io.netty.util.concurrent.DefaultThreadFactory;
+
 /**
  * 文章表Service
  * @author 长春叭哥、ThinkGem
@@ -39,6 +45,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	@Autowired
 	private ArticleDataDao articleDataDao;
+
+	private static ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
+			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
+			new DefaultThreadFactory("cms-update-expired-weight"));
 	
 	/**
 	 * 获取单条数据
@@ -77,14 +87,12 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 */
 	@Override
 	public Page<Article> findPage(Article article) {
-		Thread thread = new Thread("cms-update-expired-weight") {
+		updateExpiredWeightThreadPool.submit(new Runnable() {
 			@Override
 			public void run() {
 				updateExpiredWeight(article);
 			}
-		};
-		thread.setDaemon(true);
-		thread.start();
+		});
 		return super.findPage(article);
 	}
 

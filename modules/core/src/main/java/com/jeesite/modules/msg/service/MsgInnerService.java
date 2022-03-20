@@ -6,6 +6,10 @@ package com.jeesite.modules.msg.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +38,8 @@ import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
 
+import io.netty.util.concurrent.DefaultThreadFactory;
+
 /**
  * 内部消息Service
  * @author ThinkGem
@@ -47,6 +53,10 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	private EmpUserService empUserService;
 	@Autowired
 	private MsgInnerRecordDao msgInnerRecordDao;
+
+	private static ExecutorService msgPushThreadPool = new ThreadPoolExecutor(5, 20,
+			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
+			new DefaultThreadFactory("cms-update-expired-weight"));
 	
 	/**
 	 * 获取单条数据
@@ -191,7 +201,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 		});
 		// 手动触发消息推送任务
 		if (Global.TRUE.equals(Global.getProperty("msg.realtime.enabled"))){
-			Thread thread = new Thread("msg-push-task-execute"){
+			msgPushThreadPool.submit(new Runnable() {
 				public void run() {
 					try{
 						MsgPushUtils.getMsgPushTask().execute();
@@ -199,9 +209,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 						logger.error("实时消息发送失败，推送服务配置不正确。", ex);
 					}
 				}
-			};
-			thread.setDaemon(true);
-			thread.start();
+			});
 		}
 	}
 	
