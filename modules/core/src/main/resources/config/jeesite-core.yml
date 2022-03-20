@@ -86,6 +86,12 @@ spring:
     isClusterMode: false
     # 清理全部缓存按钮所清理的缓存列表
     clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache,roleCache,fileUploadCache,bpmFormCache
+    # 用户缓存
+    #userCache:
+    #  clearTaskPool:
+    #    corePoolSize: 5
+    #    maxPoolSize: 20
+    #    keepAliveSeconds: 60
     
   # 打印横幅
   main:
@@ -501,6 +507,13 @@ j2cache:
     channel: j2cache
     # 缓存命名空间名
     namespace: jeesite
+    # 消息监听器
+    #listener:
+    #  taskPool:
+    #    corePoolSize: 8
+    #    maxPoolSize: 20
+    #    keepAliveSeconds: 60
+    #    queueCapacity: 1000
   
   # 通知订阅
   broadcast:
@@ -699,6 +712,11 @@ msg:
     enabled: true
     # 消息实时推送任务Bean名称
     beanName: msgLocalPushTask
+    # 消息推送线程池
+    #pushTaskPool:
+    #  corePoolSize: 5
+    #  maxPoolSize: 20
+    #  keepAliveSeconds: 60
   
   # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
   pushFailNumber: 3
