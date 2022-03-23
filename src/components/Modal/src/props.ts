@@ -9,7 +9,7 @@ export const modalProps = {
   minHeight: { type: Number },
   // open drag
   draggable: { type: Boolean, default: true },
-  centered: { type: Boolean },
+  centered: { type: Boolean, default: true },
   cancelText: { type: String },
   okText: { type: String },
 
