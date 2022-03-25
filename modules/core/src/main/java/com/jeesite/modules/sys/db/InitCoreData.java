@@ -112,9 +112,6 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initConfig() throws Exception{
 //		clearTable(Config.class);
-		if (!checkTable(Config.class)) {
-			return;
-		}
 		initExcelData(Config.class, new MethodCallback() {
 			@Override
 			public Object execute(Object... params) {
@@ -138,9 +135,6 @@ public class InitCoreData extends BaseInitDataTests {
 	 */
 	public void initModule() throws Exception{
 //		clearTable(Module.class);
-		if (!checkTable(Module.class)) {
-			return;
-		}
 		initExcelData(Module.class, new MethodCallback() {
 			@Override
 			public Object execute(Object... params) {
