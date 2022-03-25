@@ -22,6 +22,10 @@
     minHeight: [Number, String] as NumberOrNumberString,
     minWidth: [Number, String] as NumberOrNumberString,
     width: [Number, String] as NumberOrNumberString,
+    scrollToBottom: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
     bench: {
       type: [Number, String] as NumberOrNumberString,
       default: 0,
@@ -102,6 +106,19 @@
       watch([() => props.itemHeight, () => props.height], () => {
         onScroll();
       });
+
+      watch(
+        () => props.items.length,
+        () => {
+          if (props.scrollToBottom) {
+            const wrapEl = unref(wrapElRef);
+            if (!wrapEl) {
+              return;
+            }
+            wrapEl.scrollTop = (props.items || []).length * unref(getItemHeightRef);
+          }
+        },
+      );
 
       function getLast(first: number): number {
         const wrapEl = unref(wrapElRef);
