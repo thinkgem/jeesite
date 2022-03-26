@@ -272,12 +272,20 @@
 
         const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder;
         // RangePicker place is an array
-        if (isCreatePlaceholder && component !== 'RangePicker' && component) {
+        if (isCreatePlaceholder && component && component !== 'RangePicker') {
           propsData.placeholder =
             unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
         }
         propsData.codeField = field;
         propsData.formValues = unref(getValues);
+
+        if (defaultValue && !props.formModel[field]) {
+          if (defaultLabel && fieldLabel && !props.formModel[fieldLabel]) {
+            props.setFormModel(field, defaultValue, defaultLabel);
+          } else {
+            props.setFormModel(field, defaultValue);
+          }
+        }
 
         const bindValue: Recordable = {
           [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field] || defaultValue,
