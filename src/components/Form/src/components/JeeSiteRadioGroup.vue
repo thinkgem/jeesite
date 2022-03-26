@@ -31,7 +31,7 @@
     inheritAttrs: false,
     props: {
       value: {
-        type: [String, Number, Boolean] as PropType<string | number | boolean>,
+        type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Object>,
       },
       options: {
         type: Array as PropType<RadioItem[]>,
