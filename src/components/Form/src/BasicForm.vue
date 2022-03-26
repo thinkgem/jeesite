@@ -303,6 +303,7 @@
   @prefix-cls: ~'jeesite-basic-form';
 
   .@{prefix-cls} {
+    padding-top: 8px;
     padding-right: 20px;
 
     .ant-form-item {
