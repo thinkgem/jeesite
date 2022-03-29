@@ -13,7 +13,7 @@
         :showIcon="true"
         :api="menuTreeData"
         :params="{ sysCode: 'default' }"
-        :defaultExpandLevel="2"
+        :defaultExpandLevel="1"
         @select="handleSelect"
       />
     </template>
