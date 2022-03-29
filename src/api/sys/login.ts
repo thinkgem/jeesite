@@ -9,6 +9,7 @@ import { ErrorMessageMode } from '/#/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 import { encryptByBase64 } from '/@/utils/cipher';
 import { Menu } from '/@/router/types';
+import { useAppStore } from '/@/store/modules/app';
 
 const { adminPath } = useGlobSetting();
 
@@ -42,6 +43,14 @@ export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') =
     { url: adminPath + '/login', params },
     { errorMessageMode: mode },
   );
+};
+
+export const switchSkin = (name: string) => {
+  if (!name) {
+    const themeColor = useAppStore().getProjectConfig.themeColor;
+    name = themeColor == '#1890ff' ? 'skin-blue-light3' : 'skin-blue3';
+  }
+  return defHttp.get({ url: adminPath + '/switchSkin/' + name });
 };
 
 export const userInfoApi = (mode: ErrorMessageMode = 'message') =>
