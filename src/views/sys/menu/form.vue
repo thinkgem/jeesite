@@ -116,7 +116,9 @@
       field: 'component',
       helpMessage: [
         '设置 vue 组件名称，一般不需要填写，默认是根据 “链接地址” 进行自动生成，',
-        '只有个性化的时候才需要设置，如果填写 IFRAME 则强制使用 iframe 打开链接',
+        '只有个性化的时候才需要设置，如果填写 IFRAME 则强制使用 iframe 打开链接；',
+        '如果填写 LAYOUT 将不在 Beetl 视图中显示菜单项',
+        '如果填写 BEETL 则只在 Beetl 视图中显示菜单项',
       ],
       component: 'Input',
       componentProps: {
