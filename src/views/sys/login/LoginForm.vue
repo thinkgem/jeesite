@@ -150,7 +150,7 @@
 
   const formData = reactive({
     account: 'system',
-    password: 'admin',
+    password: '',
     validCode: '',
   });
 
