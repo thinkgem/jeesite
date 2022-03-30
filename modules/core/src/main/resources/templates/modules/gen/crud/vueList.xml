@@ -72,6 +72,9 @@ if(table.isTreeEntity){
       </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
+    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+    <BpmRuntimeTrace @register="registerTraceModal" />
+    <% } %>
   </div>
 </template>
 <script lang="ts">
@@ -113,6 +116,10 @@ for(c in table.columnList){
   import { areaTreeData } from '/@/api/sys/area';
 <% } %>
   import { useDrawer } from '/@/components/Drawer';
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+  import { useModal } from '/@/components/Modal';
+  import { BpmRuntimeTrace } from '/@/components/Bpm';
+  <% } %>
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
 
@@ -322,6 +329,9 @@ for(c in table.columnList){
           confirm: handleDelete.bind(this, { ${idParam} }),
         },
         auth: '${permissionPrefix}:edit',
+        <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+        ifShow: () => record.status == '9',
+        <% } %>
       },
       <% } %>
       <% if(table.isTreeEntity){ %>
@@ -333,6 +343,14 @@ for(c in table.columnList){
           parentName: record.${table.treeViewNameAttrName},
         }),
         auth: '${permissionPrefix}:edit',
+      },
+      <% } %>
+      <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+      {
+        icon: 'fluent:flowchart-20-regular',
+        title: t('流程追踪'),
+        onClick: handleTrace.bind(this, record),
+        ifShow: () => record.status != '9',
       },
       <% } %>
     ],
@@ -403,6 +421,14 @@ for(c in table.columnList){
   function handleSuccess() {
     reload();
   }
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+
+  const [registerTraceModal, { openModal: traceModel }] = useModal();
+
+  function handleTrace(record: Recordable) {
+    traceModel(true, { formKey: '${table.optionMap['bpmFormKey']}', bizKey: record.id });
+  }
+  <% } %>
 </script>
 <% %>
 ]]>

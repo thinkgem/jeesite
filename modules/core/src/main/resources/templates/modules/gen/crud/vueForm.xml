@@ -43,6 +43,21 @@
     <% }else{ %>
     <BasicForm @register="registerForm" />
     <% } %>
+    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+    <template #footer>
+      <BpmButton
+        v-model:bpmEntity="record"
+        bpmEntityKey="id"
+        formKey="${table.optionMap['bpmFormKey']}"
+        completeText="提交"
+        :loading="loadingRef"
+        :auth="'oa:oaLeave:edit'"
+        @complete="handleSubmit"
+        @success="handleSuccess"
+        @close="closeDrawer"
+      />
+    </template>
+    <% } %>
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -84,6 +99,9 @@ for(c in table.columnList){
 <% if(areaselectExists) { %>
   import { areaTreeData } from '/@/api/sys/area';
 <% } %>
+<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+  import { BpmButton } from '/@/components/Bpm';
+<% } %>
 
   const emit = defineEmits(['success', 'register']);
 
@@ -94,6 +112,10 @@ for(c in table.columnList){
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
   }));
+<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+
+  const loadingRef = ref(false);
+<% } %>
 
   const inputFormSchemas: FormSchema[] = [
   <% if(table.isTreeEntity){ %>
@@ -558,6 +580,11 @@ for (c in table.columnList){
   async function handleSubmit() {
     try {
       const data = await validate();
+      <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+      data.bpm = record.value.bpm; // 流程信息
+      data.status = record.value.status; // 提交状态
+      loadingRef.value = true;
+      <% } %>
       setDrawerProps({ confirmLoading: true });
       const params: any = {
         isNewRecord: record.value.isNewRecord,
@@ -584,9 +611,18 @@ for (c in table.columnList){
       }
       console.log('error', error);
     } finally {
+      <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+      loadingRef.value = false;
+      <% } %>
       setDrawerProps({ confirmLoading: false });
     }
   }
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+
+  async function handleSuccess() {
+    emit('success');
+  }
+  <% } %>
 </script>
 <% %>
 ]]>
