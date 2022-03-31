@@ -427,7 +427,7 @@
   .edit-cell-align-left {
     text-align: left;
 
-    input:not(.ant-calendar-picker-input, .ant-time-picker-input) {
+    input:not(.ant-calendar-picker-input):not(.ant-time-picker-input) {
       text-align: left;
     }
   }
@@ -435,7 +435,7 @@
   .edit-cell-align-center {
     text-align: center;
 
-    input:not(.ant-calendar-picker-input, .ant-time-picker-input) {
+    input:not(.ant-calendar-picker-input):not(.ant-time-picker-input) {
       text-align: center;
     }
   }
@@ -443,7 +443,7 @@
   .edit-cell-align-right {
     text-align: right;
 
-    input:not(.ant-calendar-picker-input, .ant-time-picker-input) {
+    input:not(.ant-calendar-picker-input):not(.ant-time-picker-input) {
       text-align: right;
     }
   }

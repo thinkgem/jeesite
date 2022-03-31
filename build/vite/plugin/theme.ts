@@ -36,7 +36,7 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
         case '.ant-select-item-option-selected:not(.ant-select-item-option-disabled)':
           return s;
         default:
-          if (s.indexOf('.ant-btn') >= -1) {
+          if (s.indexOf('.ant-btn') >= 0) {
             // 按钮被重新定制过，需要过滤掉class防止覆盖
             return s;
           }
