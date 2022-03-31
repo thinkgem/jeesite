@@ -252,6 +252,10 @@ spring:
       transport:
         port: 9311
         dashboard: 127.0.0.1:9311
+      # 更改 csp 日志位置
+      log:
+        dir: ${user.home}/logs/csp
+        switch-pid: true
       # 流量防卫兵 Nacos 数据源：https://github.com/alibaba/Sentinel/wiki/动态规则扩展
       datasource:
         ds2.nacos:
@@ -259,7 +263,7 @@ spring:
           data-id: ${spring.application.name}-sentinel
           group-id: jeesite-cloud-50
           rule-type: flow
-        
+  
   # Spring Boot Admin 服务监控中心：https://codecentric.github.io/spring-boot-admin/2.0.6
   boot:
     admin:

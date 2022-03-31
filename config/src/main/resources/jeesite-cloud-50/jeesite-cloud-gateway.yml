@@ -13,6 +13,10 @@ spring:
       transport:
         port: 9311
         dashboard: 127.0.0.1:9311
+      # 更改 csp 日志位置
+      log:
+        dir: ${user.home}/logs/csp
+        switch-pid: true
       # 流量防卫兵 Nacos 数据源
       datasource:
         ds2.nacos:
@@ -102,3 +106,5 @@ spring:
 #======================================#
 #========== Project settings ==========#
 #======================================#
+
+management.endpoint.gateway.enabled: false

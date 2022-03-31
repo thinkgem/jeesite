@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-cloud-parent</artifactId>
-		<version>5.0.0-SNAPSHOT</version>
+		<version>5.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
 	</parent>
 	
@@ -69,6 +69,16 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+		
+		<!-- 流量防卫兵 -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.csp</groupId>
+			<artifactId>sentinel-datasource-nacos</artifactId>
 		</dependency>
 
 		<!-- 链路追踪服务

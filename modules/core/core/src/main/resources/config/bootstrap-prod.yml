@@ -1,11 +1,13 @@
 
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod
+
 #======================================#
 #========== Server settings ===========#
 #======================================#
 
 server:
 
-  port: 9311
+  port: 8981
     
 #======================================#
 #========== Cloud settings ============#
@@ -17,17 +19,14 @@ eureka:
   # 实例设置
   instance:
     # 实例主机名称
-    hostname: 127.0.0.1
+    hostname: 192.168.56.1
     # 实例是否允许使用IP
     preferIpAddress: false
-    # 实例状态监控参数
-    statusPageUrlPath: ${server.servlet.context-path}
-    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
 
   # 客户端设置
   client:
     # 注册中心地址（集群时指定另外一个注册中心地址）
-    serviceUrl.defaultZone: http://127.0.0.1:8970/eureka/
+    serviceUrl.defaultZone: http://192.168.56.1:8970/eureka/
 
 #======================================#
 #========== Spring settings ===========#
@@ -35,14 +34,6 @@ eureka:
 
 spring:
   
-  # 应用程序名称
-  application:
-    name: jeesite-cloud-sentinel
-
-  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
-  profiles:
-    active: default
-    
   # 分布式配置中心
   cloud:
     config:
@@ -52,25 +43,24 @@ spring:
         
     # Consul 服务发现
     consul:
-      host: 127.0.0.1
+      host: 192.168.56.1
       port: 8500
       discovery:
-        hostname: 127.0.0.1
+        hostname: 192.168.56.1
         preferIpAddress: false
         
     # 服务注册和配置
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.56.1:8848
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.56.1:8848
         file-extension: yml
         group: jeesite-cloud-50
-      
-  # 打印横幅
-  main:
-    bannerMode: "off"
-    
+        ext-config:
+          - data-id: application.yml
+            group: jeesite-cloud-50
+
 # 日志配置
 logging:
-  config: classpath:config/logback-spring.xml
+  config: classpath:config/logback-spring-prod.xml

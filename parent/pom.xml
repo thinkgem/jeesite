@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.0.0-SNAPSHOT</version>
+		<version>5.0.1-SNAPSHOT</version>
 		<!--<relativePath>../../jeesite/parent/pom.xml</relativePath>-->
 	</parent>
 	
@@ -22,10 +22,11 @@
 		<!-- Spring Cloud -->
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+		<spring-cloud-gateway.version>3.0.7</spring-cloud-gateway.version>
 		<nacos.version>1.4.2</nacos.version><!-- 若使用 gRPC 版本号改为 2.0.3 -->
 		<seata.version>1.4.2</seata.version>
 		<eureka.version>1.10.17</eureka.version>
-		<xstream.version>1.4.18</xstream.version>
+		<xstream.version>1.4.19</xstream.version>
 		
 	</properties>
 	
@@ -44,6 +45,16 @@
 				<version>${spring-cloud-alibaba.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-gateway</artifactId>
+				<version>${spring-cloud-gateway.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-gateway-server</artifactId>
+				<version>${spring-cloud-gateway.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba.nacos</groupId>

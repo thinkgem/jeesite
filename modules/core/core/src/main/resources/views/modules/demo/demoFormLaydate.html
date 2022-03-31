@@ -1,0 +1,66 @@
+<% layout('/layouts/default.html', {title: '文书内容', libs: ['validate','dataGrid','fileupload']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<button type="button" class="btn btn-sm btn-primary" onclick="openEdit(1)" id="submitBtn"><i class="fa fa-arrow-right"></i> ${text('时间弹窗')}</button>
+	</div>
+</div>
+<% } %>
+<script>
+function openEdit(docId){
+	js.layer.open({
+		type: 1,
+		area: ['400px'],
+		title: '${text("审核审批时间修改")}',
+		resize: false,
+		scrollbar: true,
+		content: js.template('importTpl'),
+		success: function(layero, index){
+			layero.find('.laydate').on('click', function(e){
+				var id = $(this).attr('id');
+				top.laydate.render({
+				    elem: '#'+id, show: true, closeStop: '#'+id
+				});
+			});
+		},
+		btn: ['<i class="fa fa-check"></i> ${text("确认")}',
+			'<i class="fa fa-remove"></i> ${text("关闭")}'],
+		btn1: function(index, layero){
+			var form = {
+				inputForm: layero.find('#inputDateForm'),
+				shDate: layero.find('#shDate').val(),
+				spDate: layero.find('#spDate').val()
+			};
+			if (docId == '' || form.shDate == '' ||form.spDate == ''){
+				js.showMessage("${text('请确认需要修改的内容')}", null, 'warning');
+				return false;
+			}
+			return true;
+		}
+	});
+}
+</script>
+<script id="importTpl" type="text/template">//<!--
+<form id="inputDateForm" action="${ctx}/doc/base/docBase/updateDate" method="post" enctype="multipart/form-data"
+		class="form-horizontal mt20 mb10" style="overflow:auto;max-height:200px;">
+	<div class="row">
+		<div class="form-group">
+			<label class="control-label col-sm-4" title="">
+				<span class="required">*</span> ${text('审核时间')}：<i class="fa icon-question hide"></i>
+			</label>
+			<div class="col-sm-8">
+				<#form:input name="shDate" dataFormat="yyyy-MM-dd" readonly="true" maxlength="20" class="form-control laydate width-250"
+                    data-type="date" lay-key="1"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-4" title="">
+				<span class="required">*</span> ${text('审批时间')}：<i class="fa icon-question hide"></i>
+			</label>
+			<div class="col-sm-8">
+                <#form:input name="spDate" dataFormat="yyyy-MM-dd" readonly="true" maxlength="20" class="form-control laydate width-250"
+                    data-type="date" lay-key="2"/>
+			</div>
+		</div>
+	</div>
+</form>
+//--></script>

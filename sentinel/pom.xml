@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.jeesite</groupId>
         <artifactId>jeesite-cloud-parent-web</artifactId>
-        <version>5.0.0-SNAPSHOT</version>
+        <version>5.0.1-SNAPSHOT</version>
         <relativePath>../parent/web/pom.xml</relativePath>
     </parent>
 
@@ -27,7 +27,7 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- version setting -->
-		<sentinel.version>1.8.1</sentinel.version>
+		<sentinel.version>1.8.3</sentinel.version>
         <curator.version>4.0.1</curator.version>
         
 		<!-- docker setting -->
@@ -79,12 +79,6 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-        </dependency>
-
-        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
@@ -93,7 +87,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.3</version><!--$NO-MVN-MAN-VER$-->
+            <version>4.5.13</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -112,7 +106,7 @@
         </dependency>
         <!-- <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactI	d>fastjson</artifactId>
+            <artifactId>fastjson</artifactId>
         </dependency> -->
 
         <!-- for Nacos rule publisher sample -->

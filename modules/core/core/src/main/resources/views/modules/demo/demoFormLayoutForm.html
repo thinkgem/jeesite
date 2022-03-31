@@ -9,7 +9,7 @@
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			</div>
 		</div>
-		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal">
+		<#form:form id="inputForm" model="${testData}" action="${ctx}/test1/testData/save" method="post" class="form-horizontal">
 			<div class="box-body">
 				<div class="form-unit">一列</div>
 				<#form:hidden path="id"/>
@@ -142,6 +142,30 @@
 								<span class="required hide">*</span> 备注：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="remarks" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<style>
+								/* 栅格9列布局 */
+								@media (min-width: 768px){
+									.col-sm-9-1{width:11.11%}
+									.col-sm-9-2{width:22.22%}
+									.col-sm-9-3{width:33.33%}
+									.col-sm-9-4{width:44.44%}
+									.col-sm-9-5{width:55.55%}
+									.col-sm-9-6{width:66.66%}
+									.col-sm-9-7{width:77.77%}
+									.col-sm-9-8{width:88.88%}
+								}
+							</style>
+							<label class="control-label col-sm-2 col-sm-9-1" title="">
+								<span class="required hide">*</span> 单行文本：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10 col-sm-9-8">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
 							</div>
 						</div>
 					</div>
