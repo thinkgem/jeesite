@@ -201,7 +201,7 @@
           const parentKeys = getEnabledKeys(undefined, true);
           state.checkedKeys = intersection(keys, parentKeys);
         } else {
-          state.checkedKeys = keys;
+          state.checkedKeys = keys || [];
         }
       }
 
