@@ -1,10 +1,10 @@
 <template>
-  <div class="p-4">
+  <div>
     <template v-for="src in imgList" :key="src">
       <img :src="src" v-show="false" />
     </template>
     <DetailModal :info="rowInfo" @register="registerModal" />
-    <BasicTable @register="register" class="error-handle-table">
+    <BasicTable @register="register" class="error-handle-table" @row-click="handleDetail">
       <template #toolbar>
         <a-button @click="fireVueError" type="primary">
           {{ t('sys.errorLog.fireVueError') }}
@@ -50,7 +50,7 @@
     columns: getColumns(),
     actionColumn: {
       width: 80,
-      title: 'Action',
+      title: '操作',
       dataIndex: 'action',
       slots: { customRender: 'action' },
     },

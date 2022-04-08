@@ -5,7 +5,7 @@
     :mouseEnterDelay="0.5"
     @click="handleToErrorList"
   >
-    <Badge :count="getCount" :offset="[0, 10]" :overflowCount="99">
+    <Badge :count="getCount" dot :offset="[-4, 1]" :overflowCount="99">
       <Icon icon="ion:bug-outline" />
     </Badge>
   </Tooltip>

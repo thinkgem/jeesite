@@ -27,7 +27,7 @@ export function getColumns(): BasicColumn[] {
     },
     {
       dataIndex: 'url',
-      title: 'URL',
+      title: t('地址'),
       width: 200,
     },
     {
@@ -42,7 +42,7 @@ export function getColumns(): BasicColumn[] {
     },
     {
       dataIndex: 'name',
-      title: 'Name',
+      title: t('名称'),
       width: 200,
     },
     {
