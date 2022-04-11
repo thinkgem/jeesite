@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +48,7 @@ import io.netty.util.concurrent.DefaultThreadFactory;
  */
 @Service
 @Transactional(readOnly=true)
+@ConditionalOnBean(MsgInnerDao.class)
 public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	
 	@Autowired
