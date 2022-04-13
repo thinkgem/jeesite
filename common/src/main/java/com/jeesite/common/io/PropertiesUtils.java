@@ -126,7 +126,7 @@ public class PropertiesUtils {
         				YamlPropertiesFactoryBean bean = new YamlPropertiesFactoryBean();
         				bean.setResources(resource);
         				for (Map.Entry<Object,Object> entry : bean.getObject().entrySet()){
-        					properties.put(ObjectUtils.toString(entry.getKey()),
+        					properties.put(getStandardKey(ObjectUtils.toString(entry.getKey())),
         							ObjectUtils.toString(entry.getValue()));
         				}
     					configSet.add(location);
@@ -181,7 +181,7 @@ public class PropertiesUtils {
 				return value;
 			}
 		}
-        String value = properties.getProperty(key);
+        String value = properties.getProperty(getStandardKey(key));
         if (value != null){
 	    	Matcher m = p1.matcher(value);
 	        while(m.find()) {
@@ -229,6 +229,27 @@ public class PropertiesUtils {
 	 */
 	public Long getPropertyToLong(String key, String defValue) {
 		return ObjectUtils.toLong(getProperty(key, defValue));
+	}
+	
+	/**
+	 * 获取标准key，去减号并将后一个字母转换为大写
+	 * @author Think Gem
+	 */
+	private String getStandardKey(String key) {
+        StringBuilder sb = new StringBuilder();
+        boolean upperCase = false;
+        for (int i = 0; i < key.length(); i++) {
+            char c = key.charAt(i);
+            if (c == '-') {
+                upperCase = true;
+            } else if (upperCase) {
+                sb.append(Character.toUpperCase(c));
+                upperCase = false;
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
 	}
 	
 	/**
