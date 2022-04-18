@@ -209,9 +209,9 @@
 							<goals>
 								<goal>jar</goal>
 							</goals>
-							<configuration>
+							<!-- <configuration>
 								<additionalparam>-Xdoclint:none</additionalparam>
-							</configuration>  
+							</configuration> -->
 						</execution>
 					</executions>
 				</plugin>
@@ -293,6 +293,7 @@
 								</build>
 								<run>
 									<ports>
+										<!--suppress UnresolvedMavenProperty -->
 										<port>${docker.run.port}</port>
 									</ports>
 									<network>
