@@ -26,6 +26,7 @@ server:
   port: 8980
   servlet:
     context-path: /js
+    register-default-servlet: false
   tomcat:
     uri-encoding: UTF-8
     # 表单请求数据的最大大小
