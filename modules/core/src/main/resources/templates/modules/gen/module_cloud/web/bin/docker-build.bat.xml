@@ -2,9 +2,9 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>docker-bulid</name>
+	<name>docker-build</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/bin</filePath>
-	<fileName>docker-bulid.bat</fileName>
+	<fileName>docker-build.bat</fileName>
 	<charset>GBK</charset>
 	<content><![CDATA[@echo off
 rem /**
