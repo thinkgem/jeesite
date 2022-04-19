@@ -116,7 +116,7 @@
               if (!wrapEl) {
                 return;
               }
-              wrapEl.scrollTop = unref(getContainerHeightRef);
+              wrapEl.scrollTop = (props.items || []).length * unref(getItemHeightRef);
             });
           }
         },
