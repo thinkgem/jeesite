@@ -20,7 +20,7 @@ jdbc:
   
     # 初始化连接数
     init: 1
-    # 最小活动连接数
+    # 最小空闲连接数
     minIdle: 3
     # 最大激活连接数
     maxActive: 20
@@ -322,7 +322,7 @@ state:
 # Shiro 相关
 shiro:
   
-  #索引页路径
+  # 主页路径
   defaultPath: ${shiro.loginUrl}
 
   # 登录相关设置
@@ -405,6 +405,10 @@ shiro:
   innerFilter.allowIp: 127.0.0.1
   
   # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
+  filterChainDefinitions: |
+    ${adminPath}/** = user
+  
+#  # URI 权限过滤器定义（以下参考，必须登录user可访问的地址和不需要登录anon可访问地址）
 #  filterChainDefinitions: |
 #    /ReportServer/** = user
 #    ${adminPath}/file/** = anon
@@ -418,10 +422,6 @@ shiro:
 #    ${adminPath}/sys/corpAdmin/treeData = anon
 #    ${adminPath}/${spring.application.name}/swagger/** = anon
 #    ${adminPath}/** = user
-  
-  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
-  filterChainDefinitions: |
-    ${adminPath}/** = user
   
   # 默认的授权过滤定义，如果在filterChainDefinitions中已经定义，则该定义会被覆盖。
   defaultFilterChainDefinitions: |
