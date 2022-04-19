@@ -1,5 +1,5 @@
 FROM frolvlad/alpine-java:jdk8-slim
-MAINTAINER ThinkGem@163.com
+LABEL maintainer="ThinkGem@163.com"
 ENV TZ "Asia/Shanghai"
 ENV LANG C.UTF-8
 VOLUME /tmp

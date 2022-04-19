@@ -22,5 +22,5 @@ mybatis:
 file:
 
   # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
-  baseDir: /root
+  baseDir: /data
   
