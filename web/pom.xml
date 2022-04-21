@@ -28,8 +28,10 @@
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
-		<!-- docker setting -->
-        <docker.run.port>8980:8980</docker.run.port>
+		<!-- docker setting
+        <docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
+        <docker.imageName>${project.groupId}/${project.artifactId}:5.0</docker.imageName>
+        <docker.run.port>8980:8980</docker.run.port> -->
 		
 	</properties>
 
@@ -42,19 +44,26 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- 内容管理模块
+		<!-- 在线文档接口 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-swagger</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		
+		<!-- 内容管理模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-cms</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency> -->
+		</dependency>
 		
-		<!-- 移动端模块
+		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-app</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency> -->
+		</dependency>
 		
 		<!-- 文件管理共享（标准版）
 		<dependency>
