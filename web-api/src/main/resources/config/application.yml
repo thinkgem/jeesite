@@ -800,6 +800,7 @@ error:
 #======== FileUpload settings =========#
 #======================================#
 
+# 文件上传
 file:
   enabled: true
   

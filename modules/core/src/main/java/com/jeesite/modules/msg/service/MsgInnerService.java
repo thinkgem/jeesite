@@ -12,8 +12,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.callback.MethodCallback;
@@ -46,9 +44,7 @@ import io.netty.util.concurrent.DefaultThreadFactory;
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Service
 @Transactional(readOnly=true)
-@ConditionalOnBean(MsgInnerDao.class)
 public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	
 	@Autowired
