@@ -44,8 +44,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		long beginTime = System.currentTimeMillis();// 1、开始时间  
 		startTimeThreadLocal.set(beginTime);		// 线程绑定变量（该数据只有当前请求的线程可见）  
 		if (logger.isDebugEnabled()){
-	        logger.debug("开始计时: {}  URI: {}  IP: {}", new SimpleDateFormat("hh:mm:ss.SSS")
-	        	.format(beginTime), request.getRequestURI(), IpUtils.getRemoteAddr(request));
+	        logger.debug("请求开始, URI: {}, IP: {}", request.getRequestURI(), IpUtils.getRemoteAddr(request));
 		}
 		return true;
 	}
@@ -53,8 +52,8 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, 
 			ModelAndView modelAndView) throws Exception {
-		if (modelAndView != null){
-			logger.info("ViewName: " + modelAndView.getViewName() + " <<<<<<<<< " + request.getRequestURI() + " >>>>>>>>> " + handler);
+		if (modelAndView != null && logger.isDebugEnabled()){
+			logger.debug("ViewName: " + modelAndView.getViewName() + " <<< " + request.getRequestURI() + " >>> " + handler);
 		}
 	}
 
@@ -79,11 +78,12 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		LogUtils.saveLog(UserUtils.getUser(), request, handler, ex, null, null, executeTime);
 		
 		// 打印JVM信息。
-		if (logger.isDebugEnabled()){
+		if (logger.isInfoEnabled()){
 			Runtime runtime = Runtime.getRuntime();
-	        logger.debug("计时结束: {}  用时: {}  URI: {}  总内存: {}  已用内存: {}",
-	        		DateUtils.formatDate(endTime, "hh:mm:ss.SSS"), TimeUtils.formatDateAgo(executeTime), request.getRequestURI(), 
-					ByteUtils.formatByteSize(runtime.totalMemory()), ByteUtils.formatByteSize(runtime.totalMemory()-runtime.freeMemory())); 
+			long totalMemory = runtime.totalMemory();
+	        logger.info("请求完成, URI: {}, 用时: {}, 总内存: {}, 剩余: {}", request.getRequestURI(),
+					TimeUtils.formatTime(executeTime), ByteUtils.formatByteSize(totalMemory),
+					ByteUtils.formatByteSize(totalMemory-(totalMemory-runtime.freeMemory())));
 		}
 		MDC.remove(TRACE_ID);
 	}
