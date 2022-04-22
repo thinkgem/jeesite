@@ -234,7 +234,7 @@ public class Log extends DataEntity<Log> {
 		if (executeTime == null) {
 			executeTime = 0L;
 		}
-		return TimeUtils.formatDateAgo(executeTime);
+		return TimeUtils.formatTime(executeTime);
 	}
 
 	/**

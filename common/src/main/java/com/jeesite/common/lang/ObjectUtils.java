@@ -214,7 +214,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000){
-			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return bytes;
 	}
@@ -240,7 +240,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return object;
 	}
@@ -265,7 +265,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		byte[] bytes = fstConfiguration.get().asByteArray(object);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000){
-			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return bytes;
 	}
@@ -283,7 +283,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		Object object = fstConfiguration.get().asObject(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return object;
 	}

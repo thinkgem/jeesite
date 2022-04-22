@@ -105,7 +105,7 @@ public class OnlineController extends BaseController{
 			}
 			map.put("startTimestamp", DateUtils.formatDateTime(session.getStartTimestamp()));
 			map.put("lastAccessTime", DateUtils.formatDateTime(session.getLastAccessTime()));
-			map.put("timeout", TimeUtils.formatDateAgo(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
+			map.put("timeout", TimeUtils.formatTime(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
 			map.put("userCode", session.getAttribute("userCode"));
 			map.put("userName", session.getAttribute("userName"));
 			map.put("userType", session.getAttribute("userType"));
