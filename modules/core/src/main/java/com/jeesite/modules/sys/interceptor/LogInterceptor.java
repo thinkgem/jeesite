@@ -44,7 +44,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		long beginTime = System.currentTimeMillis();// 1、开始时间  
 		startTimeThreadLocal.set(beginTime);		// 线程绑定变量（该数据只有当前请求的线程可见）  
 		if (logger.isDebugEnabled()){
-	        logger.debug("请求开始, URI: {}, IP: {}", request.getRequestURI(), IpUtils.getRemoteAddr(request));
+	        logger.debug("请求开始 URI: {}, IP: {}", request.getRequestURI(), IpUtils.getRemoteAddr(request));
 		}
 		return true;
 	}
@@ -81,7 +81,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		if (logger.isInfoEnabled()){
 			Runtime runtime = Runtime.getRuntime();
 			long totalMemory = runtime.totalMemory();
-	        logger.info("请求完成, URI: {}, 用时: {}, 总内存: {}, 剩余: {}", request.getRequestURI(),
+	        logger.info("请求完成 URI: {}, 用时: {}, 总内存: {}, 剩余: {}", request.getRequestURI(),
 					TimeUtils.formatTime(executeTime), ByteUtils.formatByteSize(totalMemory),
 					ByteUtils.formatByteSize(totalMemory-(totalMemory-runtime.freeMemory())));
 		}
