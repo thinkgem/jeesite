@@ -1,23 +1,19 @@
-FROM frolvlad/alpine-java:jdk8-slim
+FROM openjdk:8-slim
 LABEL maintainer="ThinkGem@163.com"
 ENV TZ "Asia/Shanghai"
 ENV LANG C.UTF-8
 VOLUME /tmp
 
 WORKDIR /app
+
+#RUN mkdir WEB-INF
+#ADD jeesite.lic ./WEB-INF
 ADD ./maven/web.war ./app.war
 
-RUN jar -xvf app.war
-#RUN chmod -R 755 ./*
-
-WORKDIR /app/WEB-INF
-ADD ./app.yml ./classes/config/bootstrap-prod.yml
-#ADD jeesite.lic ./
-
-#ENV JAVA_OPTS "-Xms256m -Xmx1024m"
+#ENV JAVA_OPTS "$JAVA_OPTS -Xms256m -Xmx1024m"
 ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=prod"
 
-ENTRYPOINT java -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+ENTRYPOINT jar -xvf app.war && rm app.war && cd WEB-INF && sh startup.sh
 
 EXPOSE 8981
 

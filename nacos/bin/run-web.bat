@@ -20,10 +20,11 @@ rem 打包Web工程（结束）
 
 
 rem 根据情况修改 web.jar 为您的 jar 包名称
-mkdir web
-copy web.war web
-cd web
+mkdir app
+copy web.war app
+cd app
 jar -xvf web.war
+del web.war
 cd WEB-INF
 call startup.bat
 
