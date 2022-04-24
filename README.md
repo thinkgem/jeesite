@@ -82,18 +82,37 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 在线演示
 
 1. 地址：<http://demo.jeesite.com/>
-2. 账号：system
-3. 密码：admin
 
 ### 本地运行
 
-1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、`MySQL 5.7 or 8.0`（[支持更多数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)）
-2. 执行命令：`git clone https://gitee.com/thinkgem/jeesite4.git` 下载源码（master分支）
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.0_dev.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
+
+### 快速运行
+
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB）
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.0_dev.zip> 并解压
+3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
+4. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
+5. 部署常见问题：<https://jeesite.com/docs/faq/>
+
+### 容器运行
+
+- 拉取 Docker 镜像：
+```
+docker pull thinkgem/jeesite-web
+```
+- 启动脚本：
+```
+docker run -d -p 8980:8980 --name jeesite-web -v /data:/data \
+thinkgem/jeesite-web && docker logs -f jeesite-web
+```
+- 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 
 ### 开发环境
 

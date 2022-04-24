@@ -1,0 +1,149 @@
+<% layout('/layouts/default.html', {title: '统计表样例', libs: ['dataGrid']}){ %>
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        padding: 0 !important;
+    }
+    .ui-jqgrid .sum-child{
+        width: 100%;
+        height: 100%;
+        line-height: 35px;
+        background-color: #f0f0f0;
+    }
+    .ui-jqgrid .sum-parent {
+        background-color: #65a1db;
+        color: white;
+    }
+</style>
+<div class="main-content">
+    <div class="box box-main">
+        <div class="box-header">
+            <div class="box-title">
+                <i class="fa fa-list-alt"></i> ${text('统计表样例')}
+            </div>
+            <div class="box-tools pull-right">
+                <a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+                <a href="${ctx}/psi/wechatUser/form" class="btn btn-default btnTool" title="${text('新增微信用户表')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+            </div>
+        </div>
+        <div class="box-body">
+            <#form:form id="searchForm" class="form-inline hide" >
+            <div class="form-group">
+                <label class="control-label">${text('时间')}：</label>
+                <div class="control-inline width-150">
+                    <#form:input path="dateStart" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+                    	dataFormat="date" />
+                    &nbsp;--&nbsp;
+                    <#form:input path="dateEnd" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+                    	dataFormat="date" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">区域选择：</label>
+                <div class="control-inline width-120" >
+                    <#form:treeselect id="areaId" title="区域选择"
+	                    path="areaId" canSelectParent="true" canSelectRoot="true"
+	                    url="${ctx}/sys/area/treeData?parentCode=0" allowClear="true"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="search" class="btn btn-primary btn-sm">${text('查询')}</button>
+                <button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+            </div>
+        </#form:form>
+        <table id="dataGrid"></table>
+    </div>
+</div>
+</div>
+<% } %>
+<script>
+var dataGridData = {
+    data: [
+        {name:"客户1-1-1",quantity:1,amount:0,return:0,virtual:0,balance:0,parentArea:'营销1部',childArea:'省区1-1'},
+        {name:"客户1-1-2",quantity:0,amount:2,return:0,virtual:0,balance:0,parentArea:'营销1部',childArea:'省区1-1'},
+        {name:"片区合计",quantity:1,amount:2,return:0,virtual:0,balance:0,sumSet:'child',parentArea:'营销1部',childArea:'片区合计'},
+        {name:"大区合计",quantity:1,amount:2,return:0,virtual:0,balance:0,sumSet:'parent',parentArea:'大区合计',childArea:'大区合计'},
+        {name:"客户2-1-1",quantity:0,amount:0,return:0,virtual:0,balance:0,parentArea:'营销2部',childArea:'省区2-1'},
+        {name:"客户2-1-2",quantity:0,amount:0,return:3,virtual:0,balance:0,parentArea:'营销2部',childArea:'省区2-1'},
+        {name:"片区合计",quantity:0,amount:0,return:3,virtual:4,balance:0,sumSet:'child',parentArea:'营销2部',childArea:'片区合计'},
+        {name:"客户2-2-1",quantity:0,amount:0,return:0,virtual:0,balance:0,parentArea:'营销2部',childArea:'省区2-2'},
+        {name:"客户2-2-2",quantity:0,amount:0,return:0,virtual:0,balance:5,parentArea:'营销2部',childArea:'省区2-2'},
+        {name:"片区合计",quantity:0,amount:0,return:0,virtual:0,balance:5,sumSet:'child',parentArea:'营销2部',childArea:'片区合计'},
+        {name:"大区合计",quantity:0,amount:0,return:3,virtual:4,balance:5,sumSet:'parent',parentArea:'大区合计',childArea:'大区合计'}
+    ], sum: {quantity:1,amount:2,return:3,virtual:4,balance:5}
+}
+
+function formatter(val, obj, row, act) {
+    if (row.sumSet === 'child') {
+        return '<div class="sum-child">' + val + '</div>'
+    } else if (row.sumSet === 'parent') {
+        return '<div class="sum-child sum-parent">' + val + '</div>'
+    } else {
+        return val
+    }
+}
+
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+    searchForm: $("#searchForm"),
+    data: dataGridData.data,
+    datatype: "local", // 设置本地数据
+    columnModel: [
+        {
+            header: '大区', name: 'parentArea', align: 'center', width: 150, sortable: false, formatter: formatter,
+            cellattr: function (rowId, tv, row, cm, val) {
+                if (row.sumSet === 'parent') {
+                    return ' colspan=3'
+                }
+            }
+        },
+        {
+            header: '片区', name: 'childArea', align: 'center', width: 150, sortable: false, formatter: formatter,
+            cellattr: function (rowId, tv, row, cm, val) {
+                if (row.sumSet === 'parent') {
+                    return ' style="display:none;'
+                }
+                if (row.sumSet === 'child') {
+                    return ' colspan=2'
+                }
+            }
+        },
+        {
+            header: '客户', name: 'name', align: 'center', width: 150, sortable: false, formatter: formatter,
+            cellattr: function (rowId, tv, row, cm, val) {
+                if (row.sumSet === 'parent' || row.sumSet === 'child') {
+                    return ' style="display:none;'
+                }
+            }
+        },
+        {header: '数量', name: 'quantity', align: 'center', width: 150, sortable: false, formatter: formatter},
+        {header: '金额', name: 'amount', align: 'center', width: 150, sortable: false, formatter: formatter},
+        {header: '总回款', name: 'return', align: 'center', width: 150, sortable: false, formatter: formatter},
+        {header: '虚拟货款', name: 'virtual', align: 'center', width: 150, sortable: false, formatter: formatter},
+        {header: '最新余额', name: 'balance', align: 'center', width: 150, sortable: false, formatter: formatter}
+    ],
+    altRows: false,
+    groupHeaders: {
+        threeLevel: [
+            {startColumnName: 'parentArea', numberOfColumns: 8, titleText: '时间'}
+        ],
+        twoLevel: [
+            {startColumnName: 'quantity', numberOfColumns: 2, titleText: '发货', width: 150},
+            {startColumnName: 'return', numberOfColumns: 2, titleText: '回款', width: 150}
+        ]
+    },
+    showRownum: true,	// 是否显示行号，默认true
+    showFooter: true,	// 是否显示底部合计行，数据载入详见 ajaxSuccess
+    // 加载成功后执行事件
+    ajaxSuccess: function (data) {
+        $('#dataGrid').dataGrid('mergeCell', 'parentArea,childArea');
+        $('#dataGrid').dataGrid("footerData", "set", {
+            "parentArea": "<center><em>合计：</em></center>",
+            "quantity": "<em>" + dataGridData.sum.quantity + "</em>",
+            "amount": "<em>" + dataGridData.sum.amount + "</em>",
+            "return": "<em>" + dataGridData.sum.return + "</em>",
+            "virtual": "<em>" + dataGridData.sum.virtual + "</em>",
+            "balance": "<em>" + dataGridData.sum.balance + "</em>",
+        }, false);
+    }
+});
+</script>

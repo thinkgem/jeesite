@@ -1,0 +1,234 @@
+<% layout('/layouts/default.html', {title: '多表头分组小计合计', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> 多表头分组小计合计
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+				<% if(hasPermi('test:testData:edit')){ %>
+					<a href="${ctx}/test/testData/form" class="btn btn-default btnTool" title="新增数据"><i class="fa fa-plus"></i> 新增</a>
+				<% } %>
+				<a href="${ctx}/demo/dataGrid/stateGrid" class="btn btn-default btnTool" title="统计表样例"><i class="fa fa-hand-lizard-o"></i> 统计表样例</a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${testData}" action="${ctx}/test/testData/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">单行文本：</label>
+					<div class="control-inline">
+						<#form:input path="testInput" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">多行文本：</label>
+					<div class="control-inline">
+						<#form:input path="testTextarea" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">下拉框：</label>
+					<div class="control-inline width-120">
+						<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">下拉多选：</label>
+					<div class="control-inline width-120">
+						<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">单选框：</label>
+					<div class="control-inline">
+						<#form:radio path="testRadio" dictType="sys_menu_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">复选框：</label>
+					<div class="control-inline">
+						<#form:checkbox path="testCheckbox" dictType="sys_menu_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">日期选择：</label>
+					<div class="control-inline">
+						<#form:input path="testDate_gte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd" data-done="testDate_lte.click()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="testDate_lte" readonly="true" maxlength="20" class="form-control laydate width-date"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">日期时间：</label>
+					<div class="control-inline">
+						<#form:input path="testDatetime_gte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm" data-done="testDatetime_lte.click()"/>
+						&nbsp;-&nbsp;
+						<#form:input path="testDatetime_lte" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">用户选择：</label>
+					<div class="control-inline width-120" >
+						<#form:treeselect id="testUser" title="用户选择"
+							path="testUser.userCode" labelPath="testUser.userName" 
+							url="${ctx}/sys/office/treeData?isLoadUser=true" allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">机构选择：</label>
+					<div class="control-inline width-120" >
+						<#form:treeselect id="testOffice" title="机构选择"
+							path="testOffice.officeCode" labelPath="testOffice.officeName" 
+							url="${ctx}/sys/office/treeData" allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">区域选择：</label>
+					<div class="control-inline width-120" >
+						<#form:treeselect id="testAreaCode" title="区域选择"
+							path="testAreaCode" labelPath="testAreaName" 
+							url="${ctx}/sys/area/treeData" allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">状态：</label>
+					<div class="control-inline width-120">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">备注信息：</label>
+					<div class="control-inline">
+						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">查询</button>
+					<button type="reset" class="btn btn-default btn-sm">重置</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'单行文本', name:'testInput', index:'a.test_input', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			if(obj.rowId == ''){ return '小计:'; }
+			return '<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" data-title="编辑数据">'+(val||row.id)+'</a>';
+		}, summaryTpl: "<em>{0}</em> ", summaryType: "count"},
+		{header:'多行文本', name:'testTextarea', index:'a.test_textarea', width:200, align:"center", formatter: function(val, obj, row, act){
+			if(obj.rowId == ''){ return '<em>' + val + '</em>个' }
+			return val||'';
+		}, summaryTpl: "<em>{0}</em>", summaryType: "count"},
+		{header:'金额', name:'id', index:'a.id', width:150, align:"right", formatter: function(val, obj, row, act){
+			val = js.formatMoney(val/(1000*1000*1000*1000));
+			if(obj.rowId == ''){ return (val != '') ? ('￥' + val) : ''; }
+			return val;
+		}, summaryTpl: "<em>{0}</em> ", summaryType: "sum"},
+		{header:'下拉框', name:'testSelect', index:'a.test_select', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '未知', true);
+		}},
+		{header:'下拉多选', name:'testSelectMultiple', index:'a.test_select_multiple', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '未知', true);
+		}},
+		{header:'单选框', name:'testRadio', index:'a.test_radio', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '未知', true);
+		}},
+		{header:'复选框', name:'testCheckbox', index:'a.test_checkbox', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '未知', true);
+		}},
+		{header:'日期选择', name:'testDate', index:'a.test_date', width:150, align:"center"},
+		{header:'日期时间', name:'testDatetime', index:'a.test_datetime', width:150, align:"center"},
+		{header:'用户选择', name:'testUser.userName', index:'a.test_user_code', width:150, align:"center"},
+		{header:'机构选择', name:'testOffice.officeName', index:'a.test_office_code', width:150, align:"center"},
+		{header:'区域选择', name:'testAreaName', index:'a.test_area_code', width:150, align:"center"},
+		{header:'区域名称', name:'testAreaName', index:'a.test_area_name', width:150, align:"left"},
+		{header:'状态', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '未知', true);
+		}},
+		{header:'创建时间', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'备注信息', name:'remarks', index:'a.remarks', width:150, align:"left"},
+		{header:'操作', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('test:testData:edit')){ %>
+				actions.push('<a href="${ctx}/test/testData/form?id='+row.id+'" class="btnList" title="编辑数据"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/test/testData/disable?id='+row.id+'" class="btnList" title="停用数据" data-confirm="确认要停用该数据吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/test/testData/enable?id='+row.id+'" class="btnList" title="启用数据" data-confirm="确认要启用该数据吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/test/testData/delete?id='+row.id+'" class="btnList" title="删除数据" data-confirm="确认要删除该数据吗？"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	
+	shrinkToFit: false, // 是否按百分比自动调整列宽，当列比较多时，开启水平滚动，可设置为false
+	frozenCols: true, 	// 启用冻结列，并在colModel中设置frozen:true
+	showRownum: true,	// 是否显示行号，默认true
+	showFooter: true,	// 是否显示底部合计行，数据载入详见 ajaxSuccess
+
+	// ================ 设置多级表头 BEGIN ==============
+	// 设置多级表头
+	groupHeaders: {
+ 		twoLevel:[
+ 			{startColumnName: 'testSelect', numberOfColumns: 2, titleText: '二级表头'},
+ 			{startColumnName: 'testRadio', numberOfColumns:2, titleText:'二级表头2'}
+ 		],
+ 		threeLevel:[
+ 			{startColumnName: 'testSelect', numberOfColumns:4, titleText:'三级表头'}
+ 		]
+	},
+	// ================ 设置多级表头 END ==============
+
+	// ================ 分组，小计 BEGIN ==============
+	grouping: true, 	// 是否分组显示
+	groupingView: {
+		groupField: ["status"], // 需要分组的列
+		groupColumnShow: [false],// 是否显示分组的列
+		groupText: ["<b>{0}</b>"],	// 设置组标题，加粗标题：["<b>{0}</b>"]，不显示标题：["none"]
+		groupSummary: [true],	// 是否显示[小计]列，数据载入详见 columnModel.formatter
+		groupCollapse: false 	// false为默认展开，true默认为折叠
+	},
+	// ================ 分组，小计 END ==============
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+		// 分组和冻结列情况下的合并单元格测试
+		//$('#dataGrid').dataGrid("mergeCell", "testInput,id");
+		
+		// ================ 启用合计行 BEGIN ==============
+		// showFooter: true, // 是否显示底部合计行
+		// 第 1 种方法：请求完成之后通过js设置，举例如下：
+		// 设置底部合计行数据（设置合计行）
+		$('#dataGrid').dataGrid("footerData", "set", {
+			"testInput" : "<center><em>合计：</em></center>",
+			"testTextarea" : "<em>" + data.count + "</em>个",
+			"id": "<em>￥900,000,000.00 &nbsp;</em>"
+		}, false);
+		// 第 2 种方法：在返回结果集中设置 otherData属性，举例格式如下：
+		/* {"pageNo":1, "pageSize":30, "list":[返回结果集数据],
+			"otherData":{
+				"testInput" : "<center><em>合计：</em></center>",
+				"testTextarea" : "<em>" + data.count + "</em>个",
+				"id": "<em>￥900,000,000.00 &nbsp;</em>"
+			}
+		   } */
+		// ================ 启用合计行 END ================
+		
+	}
+});
+</script>

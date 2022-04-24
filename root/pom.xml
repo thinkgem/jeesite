@@ -19,6 +19,7 @@
         <module>../modules/cms</module>
         <module>../web</module>
         <module>../web-api</module>
+        <module>../web-fast</module>
     </modules>
 	
 	<developers>  

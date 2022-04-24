@@ -1,0 +1,32 @@
+
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod
+
+# 数据库连接
+jdbc: 
+  
+  # Mysql 数据库配置
+  type: h2
+  driver: org.h2.Driver
+  url: jdbc:h2:/data/jeesite-db/jeesite501
+  username: jeesite
+  password: jeesite
+  testSql: SELECT 1
+
+# 日志配置
+logging:
+  config: classpath:config/logback-spring-prod.xml
+  
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: false
+      
+# 文件相关
+file:
+
+  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
+  baseDir: /data
+  
