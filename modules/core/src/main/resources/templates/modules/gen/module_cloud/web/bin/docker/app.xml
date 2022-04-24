@@ -4,7 +4,7 @@
 <template>
 	<name>app</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/bin/docker</filePath>
-	<fileName>app</fileName>
+	<fileName>app.yml</fileName>
 	<content><![CDATA[    
 #======================================#
 #========== Cloud settings ============#

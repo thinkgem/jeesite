@@ -212,6 +212,8 @@
 			<template>module_cloud/client/bin/package.sh.xml</template>
 			<template>module_cloud/client/src/main/java/package.xml</template>
 			<template>module_cloud/client/pom.xml</template>
+			<template>module_cloud/web/bin/docker/app.xml</template>
+			<template>module_cloud/web/bin/docker/Dockerfile.xml</template>
 			<template>module_cloud/web/bin/docker-build.bat.xml</template>
 			<template>module_cloud/web/bin/docker-build.sh.xml</template>
 			<template>module_cloud/web/bin/package.bat.xml</template>
