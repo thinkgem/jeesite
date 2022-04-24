@@ -15,4 +15,4 @@ ENTRYPOINT java $JAVA_OPTS -jar app.jar
 
 EXPOSE 9311
 
-#docker run -p 9411:9411 com.jeesite/jeesite-cloud-sentinel:4.2
+#docker run -p 9411:9411 thinkgem/jeesite-cloud-sentinel:5.0

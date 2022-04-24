@@ -17,8 +17,8 @@ ADD ./app.yml ./classes/config/bootstrap-git.yml
 #ENV JAVA_OPTS "-Xms256m -Xmx1024m"
 ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=git"
 
-ENTRYPOINT java $JAVA_OPTS -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+ENTRYPOINT java -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
 
 EXPOSE 8971
 
-#docker run -p 8971:8971 com.jeesite/jeesite-cloud-module-config:4.2
+#docker run -p 8971:8971 thinkgem/jeesite-cloud-module-config:5.0

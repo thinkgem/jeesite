@@ -17,8 +17,8 @@ WORKDIR /app/WEB-INF
 #ENV JAVA_OPTS "-Xms256m -Xmx1024m"
 #ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=prod"
 
-ENTRYPOINT java $JAVA_OPTS -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+ENTRYPOINT java -cp /app $JAVA_OPTS org.springframework.boot.loader.WarLauncher
 
 EXPOSE 8970
 
-#docker run -p 8970:8970 com.jeesite/jeesite-cloud-module-eureka:4.2
+#docker run -p 8970:8970 thinkgem/jeesite-cloud-module-eureka:5.0

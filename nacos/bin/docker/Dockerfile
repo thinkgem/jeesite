@@ -16,4 +16,4 @@ ENTRYPOINT java $JAVA_OPTS -jar app.jar
 
 EXPOSE 8848
 
-#docker run -p 8848:8848 com.jeesite/jeesite-cloud-nacos:4.2
+#docker run -p 8848:8848 thinkgem/jeesite-cloud-nacos:5.0
