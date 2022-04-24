@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.tests.BaseSpringContextTests;
-import com.jeesite.modules.Application;
+import com.jeesite.modules.ApiApplication;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestDataChild;
 import com.jeesite.modules.test.service.TestDataService;
@@ -31,7 +31,7 @@ import com.jeesite.modules.test.service.TestDataService;
  * @version 2019-6-26
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=Application.class)
+@SpringBootTest(classes = ApiApplication.class)
 public class MultiDataSourceTest extends BaseSpringContextTests {
 	
 	@Autowired

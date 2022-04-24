@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.tests.BaseSpringContextTests;
-import com.jeesite.modules.Application;
+import com.jeesite.modules.ApiApplication;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
 
@@ -24,7 +24,7 @@ import com.jeesite.modules.test.entity.TestData;
  * @version 2019年10月28日
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=Application.class)
+@SpringBootTest(classes = ApiApplication.class)
 public class InsertBatchTest extends BaseSpringContextTests {
 	
 	@Autowired
