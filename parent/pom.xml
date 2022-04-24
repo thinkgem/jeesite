@@ -64,8 +64,6 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- docker setting -->
-        <docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
-        <docker.imageName>${project.groupId}/${project.artifactId}:5.0</docker.imageName>
         <docker.run.port>8980:8980</docker.run.port>
         
 	</properties>
