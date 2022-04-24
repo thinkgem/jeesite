@@ -12,6 +12,16 @@ jdbc:
   password: jeesite
   testSql: SELECT 1
 
+  # 数据库连接池配置
+  pool:
+  
+    # 初始化连接数
+    init: 1
+    # 最小连接数
+    minIdle: 3
+    # 最大连接数
+    maxActive: 20
+
 # 日志配置
 logging:
   config: classpath:config/logback-spring-prod.xml
