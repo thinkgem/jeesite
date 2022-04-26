@@ -13,7 +13,7 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-		<!--<module>../../jeesite/root</module>-->
+		<!--<module>../common/root</module>-->
         <module>../parent</module>
         <module>../nacos</module>
         <module>../eureka</module>
@@ -26,6 +26,8 @@
         <module>../modules/test1/test1</module>
         <module>../modules/test2/test2-client</module>
         <module>../modules/test2/test2</module>
+        <module>../modules/test3/test3-client</module>
+        <module>../modules/test3/test3</module>
     </modules>
 	
 	<developers>  
