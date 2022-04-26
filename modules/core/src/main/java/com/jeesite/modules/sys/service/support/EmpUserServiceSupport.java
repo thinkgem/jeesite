@@ -127,8 +127,11 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	public void save(EmpUser user) {
 		// 1、初始化用户信息
 		if (user.getIsNewRecord()){
-			userService.genId(user, user.getLoginCode());
-			user.setUserCode(user.getUserCode()+"_"+IdGen.randomBase62(4).toLowerCase());
+			// 如果没有设置用户编码，则根据登录名生成一个
+			if (StringUtils.isBlank(user.getUserCode())){
+				userService.genId(user, user.getLoginCode());
+				user.setUserCode(user.getUserCode()+"_"+IdGen.randomBase62(4).toLowerCase());
+			}
 			user.setUserType(EmpUser.USER_TYPE_EMPLOYEE);
 			user.setMgrType(EmpUser.MGR_TYPE_NOT_ADMIN);
 		}
