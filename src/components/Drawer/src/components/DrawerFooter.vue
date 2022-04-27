@@ -4,7 +4,9 @@
       <slot name="insertFooter"></slot>
       <a-button v-bind="cancelButtonProps" @click="handleClose" class="mr-2" v-if="showCancelBtn">
         <Icon icon="ant-design:close-outlined" />
-        {{ cancelText || getOkAuth ? t('common.cancelText') : t('common.closeText') }}
+        {{
+          cancelText || (getOkAuth && showOkBtn ? t('common.cancelText') : t('common.closeText'))
+        }}
       </a-button>
       <slot name="centerFooter"></slot>
       <a-button
