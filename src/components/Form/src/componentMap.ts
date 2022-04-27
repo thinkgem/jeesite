@@ -64,6 +64,7 @@ componentMap.set('IconPicker', IconPicker);
 componentMap.set('InputCountDown', CountdownInput);
 
 componentMap.set('Upload', BasicUpload);
+componentMap.set('None', Input);
 componentMap.set('Divider', Divider);
 componentMap.set('FormGroup', FormGroup);
 

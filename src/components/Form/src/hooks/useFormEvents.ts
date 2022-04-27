@@ -153,13 +153,14 @@ export function useFormEvents({
 
     const hasField = updateData.every(
       (item) =>
+        item.component === 'None' ||
         item.component === 'Divider' ||
         item.component === 'FormGroup' ||
         (Reflect.has(item, 'field') && item.field),
     );
 
     if (!hasField) {
-      error('重载的元素不能是 Divider 或 FormGroup 组件，必须包含 field 字段。');
+      error('重载的元素不能是 None、Divider 或 FormGroup 组件，必须包含 field 字段。');
       return;
     }
     schemaRef.value = updateData as FormSchema[];
@@ -176,13 +177,14 @@ export function useFormEvents({
 
     const hasField = updateData.every(
       (item) =>
+        item.component === 'None' ||
         item.component === 'Divider' ||
         item.component === 'FormGroup' ||
         (Reflect.has(item, 'field') && item.field),
     );
 
     if (!hasField) {
-      error('更新的元素不能是 Divider 或 FormGroup 组件，必须包含 field 字段。');
+      error('更新的元素不能是 None、Divider 或 FormGroup 组件，必须包含 field 字段。');
       return;
     }
     const schema: FormSchema[] = [];

@@ -13,7 +13,7 @@
   import { Form, Col, Divider } from 'ant-design-vue';
   import { componentMap } from '../componentMap';
   import { BasicHelp } from '/@/components/Basic';
-  import { isBoolean, isFunction, isNull } from '/@/utils/is';
+  import { isBoolean, isFunction, isNull, isEmpty } from '/@/utils/is';
   import { getSlot } from '/@/utils/helper/tsxHelper';
   import { createPlaceholderMessage, setComponentRuleType } from '../helper';
   import { upperFirst, cloneDeep } from 'lodash-es';
@@ -339,20 +339,17 @@
       }
 
       function renderItem() {
-        const { itemProps, slot, render, field, fieldLabel, suffix, component } = props.schema;
+        const { itemProps, slot, render, label, field, fieldLabel, suffix, component } = props.schema;
         const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
         const { colon } = props.formProps;
 
-        if (component === 'Divider') {
+        if (component === 'None') {
+          return ''; // 占位符，什么也不输出
+        } else if (component === 'Divider' || component === 'FormGroup') {
+          const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
           return (
             <Col span={24}>
-              <Divider {...unref(getComponentsProps)}>{renderLabelHelpMessage()}</Divider>
-            </Col>
-          );
-        } else if (component === 'FormGroup') {
-          return (
-            <Col span={24}>
-              <FormGroup {...unref(getComponentsProps)}>{renderLabelHelpMessage()}</FormGroup>
+              <Comp {...unref(getComponentsProps)}>{renderLabelHelpMessage()}</Comp>
             </Col>
           );
         } else {
@@ -371,7 +368,7 @@
             <Form.Item
               name={field}
               colon={colon}
-              class={{ 'suffix-item': showSuffix }}
+              class={{ 'suffix-item': showSuffix, 'no-label': isEmpty(label) }}
               {...(itemProps as Recordable)}
               label={renderLabelHelpMessage()}
               rules={handleRules()}
