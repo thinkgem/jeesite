@@ -42,3 +42,30 @@ svg,
 span {
   outline: none !important;
 }
+
+.table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid #f0f0f0;
+
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid #f0f0f0;
+    vertical-align: middle;
+  }
+
+  th {
+    font-weight: normal;
+    background-color: #fafafa;
+  }
+
+  tr:hover {
+    background-color: #fafafa;
+
+    .table {
+      background-color: #fff;
+    }
+  }
+}
