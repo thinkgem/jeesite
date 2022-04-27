@@ -336,6 +336,9 @@
           align-items: center;
         }
       }
+      &.no-label {
+        margin-left: 20px;
+      }
     }
 
     .ant-form-explain {
@@ -361,7 +364,8 @@
       }
     }
 
-    .ant-input-number {
+    .ant-input-number,
+    .ant-calendar-picker {
       width: 100%;
     }
   }
