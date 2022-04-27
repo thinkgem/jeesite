@@ -46,7 +46,7 @@
   import { useTableContext } from '../../hooks/useTableContext';
   import { formatCell } from '../../hooks/useColumns';
 
-  import clickOutside from '/@/directives/clickOutside';
+  import clickOutside from '/@/directives/clickOutsideSimple';
 
   import { propTypes } from '/@/utils/propTypes';
   import { isArray, isBoolean, isFunction, isNumber, isObject } from '/@/utils/is';
@@ -163,6 +163,7 @@
         }
         return {
           width: 'calc(100% - 48px)',
+          minWidth: 'calc(100% - 48px)',
         };
       });
 
@@ -352,9 +353,12 @@
         if (props.column?.editable || unref(getRowEditable)) {
           return;
         }
-        const component = unref(getComponent);
-
-        if (component.includes('Input')) {
+        // const component = unref(getComponent);
+        // if (component.includes('Input')) {
+        //   handleCancel();
+        // }
+        // 自动取消上一个组件编辑状态
+        if (props.column?.editAutoCancel) {
           handleCancel();
         }
       }
@@ -490,6 +494,7 @@
     }
 
     &__normal {
+      display: inline-block;
       &-icon {
         position: absolute;
         top: 4px;

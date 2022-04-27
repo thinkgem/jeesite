@@ -445,6 +445,7 @@ export interface BasicColumn extends ColumnProps {
   edit?: boolean;
   editRow?: boolean;
   editable?: boolean;
+  editAutoCancel?: boolean;
   editComponent?: ComponentType;
   editComponentProps?:
     | ((opt: {
