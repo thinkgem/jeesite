@@ -140,7 +140,7 @@ export interface FormSchema {
   // 绑定组件的标签属性名（一般无需设置）默认：labelValue，如：v-model:labelValue
   labelField?: string;
   // 标签名
-  label: string;
+  label?: string;
   // 辅助标签名，使用浅色显示在标签右侧
   subLabel?: string;
   // 帮助信息，显示在标签右侧的问号里
