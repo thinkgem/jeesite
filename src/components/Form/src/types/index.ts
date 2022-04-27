@@ -108,5 +108,6 @@ export type ComponentType =
   | 'Render'
   | 'Slider'
   | 'Rate'
+  | 'None'
   | 'Divider'
   | 'FormGroup';
