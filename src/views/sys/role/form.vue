@@ -19,7 +19,7 @@
     <BasicForm @register="registerForm">
       <template #menuTrees>
         <div class="flex flex-row flex-wrap">
-          <div class="mb-5 ml-5" v-for="item in sysCodeRef" :key="item.id">
+          <div class="mr-5 mb-5" v-for="item in sysCodeRef" :key="item.id">
             <BasicTree
               class="bg-gray"
               style="width: 500px"
@@ -169,7 +169,6 @@
       ifShow: () => op.value === 'add' || op.value === 'auth',
     },
     {
-      label: '',
       field: 'roleMenuListJson',
       component: 'Input',
       colProps: { lg: 24, md: 24 },

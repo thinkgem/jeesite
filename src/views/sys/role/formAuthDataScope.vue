@@ -19,7 +19,7 @@
     <BasicForm @register="registerForm">
       <template #dataScopeTrees>
         <div class="flex flex-row flex-wrap">
-          <div class="mb-5 ml-5" v-for="item in dataScopes" :key="item.moduleCode">
+          <div class="mr-5 mb-5" v-for="item in dataScopes" :key="item.moduleCode">
             <BasicTree
               v-if="moduleCodes.includes(item.moduleCode) && ['0', '1'].includes(item.ctrlPermi)"
               class="bg-gray"
@@ -118,7 +118,6 @@
       show: ({ values }) => values.dataScope === '2',
     },
     {
-      label: '',
       field: 'roleDataScopeListJson',
       component: 'Input',
       colProps: { lg: 24, md: 24 },

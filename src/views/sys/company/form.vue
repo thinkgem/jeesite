@@ -54,9 +54,13 @@
       component: 'TreeSelect',
       componentProps: {
         allowClear: true,
-        style: 'width: calc(50% - 60px)',
+        // style: 'width: calc(50% - 60px)',
       },
-      colProps: { lg: 24, md: 24 },
+      // colProps: { lg: 24, md: 24 },
+    },
+    {
+      field: 'none',
+      component: 'None',
     },
     {
       label: t('公司名称'),
