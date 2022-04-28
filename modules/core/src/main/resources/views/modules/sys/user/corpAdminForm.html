@@ -1,9 +1,9 @@
-<% layout('/layouts/default.html', {title: '系统管理员', libs: ['validate','dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '租户管理员', libs: ['validate','dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
 			<div class="box-title">
-				<i class="fa icon-badge"></i> ${text(user.isNewRecord ? op == 'addCorp' ? '新增租户管理员' : '新增管理员' : '编辑管理员')}
+				<i class="fa icon-badge"></i> ${text(user.isNewRecord ? '新增管理员' : '编辑管理员')}
 			</div>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>

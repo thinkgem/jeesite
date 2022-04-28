@@ -1,15 +1,15 @@
-<% layout('/layouts/default.html', {title: '系统管理员', libs: ['dataGrid']}){ %>
+<% layout('/layouts/default.html', {title: '租户管理员', libs: ['dataGrid']}){ %>
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header">
 			<div class="box-title">
-				<i class="fa icon-badge"></i> ${text('系统管理员')}
+				<i class="fa icon-badge"></i> ${text('租户管理员')}
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:corpAdmin:edit')){ %>
 					<% if(useCorpModel){ %>
-					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title=" ${text('新增租户管理员')}"><i class="fa fa-plus"></i> ${text('新增租户管理员')}</a>
+					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title=" ${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增管理员')}</a>
 					<% }else{ %>
 					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${user.currentUser.corpCode_}&corpName_=${user.currentUser.corpName_}&op=addAdmin" class="btn btn-default btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增管理员')}</a>
 					<% } %>

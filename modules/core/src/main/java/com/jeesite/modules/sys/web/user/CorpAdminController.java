@@ -38,7 +38,7 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
- * 系统管理员Controller
+ * 租户和系统管理员Controller
  * @author ThinkGem
  * @version 2017-03-26
  */
