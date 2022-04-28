@@ -111,11 +111,13 @@
         () => props.items.length,
         () => {
           if (props.scrollToBottom) {
-            const wrapEl = unref(wrapElRef);
-            if (!wrapEl) {
-              return;
-            }
-            wrapEl.scrollTop = (props.items || []).length * unref(getItemHeightRef);
+            nextTick(() => {
+              const wrapEl = unref(wrapElRef);
+              if (!wrapEl) {
+                return;
+              }
+              wrapEl.scrollTop = (props.items || []).length * unref(getItemHeightRef);
+            });
           }
         },
       );
