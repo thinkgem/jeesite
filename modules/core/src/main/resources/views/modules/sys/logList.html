@@ -108,7 +108,7 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="${text("日志详情")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("请求地址")}', name:'requestUri', index:'a.request_uri', width:260, align:"left", formatter: function(val, obj, row, act){
-			return '<span title="['+row.requestMethod+'] '+row.serverAddr+row.requestUri+'">'+ row.requestUri;
+			return '<span title="['+row.requestMethod+'] '+row.serverAddr+row.requestUri+'">'+row.requestUri+'</span>';
 		}},
 		{header:'${text("日志类型")}', name:'logType', index:'a.log_type', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_log_type')}, val, '未知', true);
