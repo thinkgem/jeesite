@@ -110,23 +110,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-			</plugin> -->
-			
-			<!-- 打包插件, war包名称不带版本号 -->
+
+			<!-- war插件，war包名称不带版本号 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<packagingExcludes></packagingExcludes>
-					<warSourceExcludes></warSourceExcludes>
-					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 					<warName>${finalName}</warName>
-					<archive>
-						<addMavenDescriptor>false</addMavenDescriptor>
-					</archive>
 				</configuration>
 			</plugin>
 			
