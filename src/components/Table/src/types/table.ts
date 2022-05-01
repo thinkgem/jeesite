@@ -474,6 +474,9 @@ export interface BasicColumn extends ColumnProps {
   // JeeSite的字典类型
   dictType?: string;
 
+  // 没有找到字典标签的时候显示的默认值
+  defaultValue?: string;
+
   // 列表操作列选项
   actions?: (record: Recordable) => ActionItem[];
   dropDownActions?: (record: Recordable) => ActionItem[];

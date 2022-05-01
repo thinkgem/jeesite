@@ -5,7 +5,12 @@
       :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }"
       @click="handleEdit"
     >
-      <DictLabel v-if="column.dictType" :dictType="column.dictType" :dictValue="currentValueRef" />
+      <DictLabel
+        v-if="column.dictType"
+        :dictType="column.dictType"
+        :dictValue="currentValueRef"
+        :defaultValue="column.defaultValue"
+      />
       <div v-else class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">
         {{ getValues ? getValues : '&nbsp;' }}
       </div>

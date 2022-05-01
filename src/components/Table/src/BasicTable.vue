@@ -34,7 +34,11 @@
         <HeaderCell :column="column" />
       </template>
       <template #dictLabelColumn="{ column, record }">
-        <DictLabel :dictType="column.dictType" :dictValue="record[column.dataIndex]" />
+        <DictLabel
+          :dictType="column.dictType"
+          :dictValue="record[column.dataIndex]"
+          :defaultValue="column.defaultValue"
+        />
       </template>
       <template v-if="tableActions" #tableActions="{ record }">
         <TableAction

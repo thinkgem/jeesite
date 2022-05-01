@@ -5,12 +5,9 @@
 -->
 <template>
   <template v-for="item in dictList" :key="item.id">
-    <span
-      v-if="(',' + props.dictValue + ',').includes(',' + item.value + ',')"
-      class="jeesite-dict-label"
-    >
+    <span class="jeesite-dict-label">
       <template v-if="item.cssClass?.startsWith('tag ')">
-        <Tag :color="item.cssClass?.substring(4)" :title="item.name">
+        <Tag :color="item.cssClass?.substring(4)?.split(' ')[0]" :title="item.name">
           <Icon v-if="props.icon && item.icon && item.icon != ''" :icon="item.icon" class="pr-1" />
           {{ item.name }}
         </Tag>
@@ -19,13 +16,13 @@
         <Icon v-if="props.icon && item.icon && item.icon != ''" :icon="item.icon" class="pr-1" />
         <Badge
           :status="
-            item.cssClass === 'badge error'
+            item.cssClass.indexOf(' error') >= 0
               ? 'error'
-              : item.cssClass === 'badge success'
+              : item.cssClass.indexOf(' success') >= 0
               ? 'success'
-              : item.cssClass === 'badge warning'
+              : item.cssClass.indexOf(' warning') >= 0
               ? 'warning'
-              : item.cssClass === 'badge processing'
+              : item.cssClass.indexOf(' processing') >= 0
               ? 'processing'
               : 'default'
           "
@@ -39,6 +36,11 @@
           {{ item.name }}
         </span>
       </template>
+    </span>
+  </template>
+  <template v-if="dictList.length == 0">
+    <span class="jeesite-dict-label">
+      {{ props.defaultValue }}
     </span>
   </template>
 </template>
@@ -63,9 +65,13 @@
       icon: propTypes.bool.def(true),
     },
     setup(props) {
+      const dictList = getDictList(props.dictType).filter((item) =>
+        (',' + props.dictValue + ',').includes(',' + item.value + ','),
+      );
       return {
-        dictList: getDictList(props.dictType),
+        dictList,
         props,
+        t,
       };
     },
   });
