@@ -163,6 +163,9 @@ for(c in table.columnList){
           <% if(isMultiple){ %>
           mode: 'multiple',
           <% } %>
+          <% if(c.columnName == 'status'){ %>
+          onChange: handleSuccess,
+          <% } %>
         },
     <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
         component: '${@StringUtils.cap(c.showType)}Group',
