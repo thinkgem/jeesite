@@ -249,7 +249,7 @@
             if (propsData[eventKey]) {
               propsData[eventKey](...args);
             }
-            const target = e ? e.target : null;
+            const target = typeof e === 'boolean' ? { checked: e } : e ? e.target : null;
             const value = target ? (isCheck ? target.checked : target.value) : e;
             props.setFormModel(
               field,
