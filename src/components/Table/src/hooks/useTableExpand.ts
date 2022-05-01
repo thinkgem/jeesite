@@ -53,7 +53,7 @@ export function useTableExpand(
   async function expandOneLevel(data?: Recordable[]) {
     const rowKey = unref(getRowKey) as string;
     const { childrenColumnName } = unref(propsRef);
-    const { status } = getFormData();
+    const status = getFormData()?.status;
     for (const item of data || unref(tableData)) {
       await expandCollapse(item, true, status === ''); // 加载并展开行的数据
       expandedRowKeys.value.push(item[rowKey]);
@@ -80,7 +80,7 @@ export function useTableExpand(
       const rowKey = unref(getRowKey) as string;
       let list = await api({
         parentCode: record[rowKey] as string,
-        status: forceLoad ? '' : undefined,
+        status: forceLoad ? '' : getFormData()?.status,
       });
       if (pagination && list.list) {
         list = list.list;
