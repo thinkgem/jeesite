@@ -27,7 +27,7 @@
 <script lang="ts" setup>
   import { defineComponent, h } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
-  import { useMessage } from '/@/hooks/web/useMessage';
+  // import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
@@ -38,16 +38,26 @@
   import InputForm from './form.vue';
 
   const { t } = useI18n('sys.log');
-  const { showMessage } = useMessage();
+  // const { showMessage } = useMessage();
   const getTitle = {
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('日志管理'),
+    value: router.currentRoute.value.meta.title || t('访问日志'),
   };
 
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
     labelWidth: 90,
     schemas: [
+      {
+        label: t('日志类型'),
+        field: 'logType',
+        component: 'Select',
+        componentProps: {
+          dictType: 'sys_log_type',
+          allowClear: true,
+          onChange: handleSuccess,
+        },
+      },
       {
         label: t('日志标题'),
         field: 'logTitle',
@@ -57,15 +67,6 @@
         label: t('请求地址'),
         field: 'requestUri',
         component: 'Input',
-      },
-      {
-        label: t('日志类型'),
-        field: 'logType',
-        component: 'Select',
-        componentProps: {
-          dictType: 'sys_log_type',
-          allowClear: true,
-        },
       },
       {
         label: t('是否异常'),
@@ -125,8 +126,8 @@
       width: 150,
       align: 'left',
       customRender: ({ record }) => {
-        const t = '[' + record.requestMethod + '] ' + record.serverAddr + record.requestUri;
-        return h('span', { title: t }, record.requestUri);
+        const tit = '[' + record.requestMethod + '] ' + record.serverAddr + record.requestUri;
+        return h('span', { title: tit }, record.requestUri);
       },
     },
     {

@@ -39,7 +39,7 @@
   const record = ref<Log>({} as Log);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: record.value.isNewRecord ? t('新增日志') : t('查看日志'),
+    value: record.value.isNewRecord ? t('新增日志') : t('日志详情'),
   }));
 
   const inputFormSchemas: FormSchema[] = [
