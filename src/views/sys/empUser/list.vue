@@ -92,6 +92,7 @@
         componentProps: {
           dictType: 'sys_user_status',
           allowClear: true,
+          onChange: handleSuccess,
         },
       },
       {

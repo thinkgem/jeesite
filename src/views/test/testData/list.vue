@@ -172,6 +172,7 @@
         componentProps: {
           dictType: 'sys_search_status',
           allowClear: true,
+          onChange: handleSuccess,
         },
       },
       {
@@ -189,7 +190,7 @@
       key: 'a.test_input',
       sorter: true,
       width: 130,
-      align: 'left',
+      align: 'center',
       slots: { customRender: 'firstColumn' },
     },
     {

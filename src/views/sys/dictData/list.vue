@@ -95,6 +95,8 @@
         component: 'Select',
         componentProps: {
           dictType: 'sys_search_status',
+          allowClear: true,
+          onChange: handleSuccess,
         },
       },
     ],
