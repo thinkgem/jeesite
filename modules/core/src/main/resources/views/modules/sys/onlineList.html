@@ -48,7 +48,7 @@
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
-		{header:'${text("用户名称")}', name:'userName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("用户名称")}', name:'userName', index:'userName', width:100, align:"center", formatter: function(val, obj, row, act){
 			return '<span title="${text("账号")}：'+(row.userCode||'')+'">'+(val||'${text("游客")}');
 		}},
 		{header:'${text("创建时间")}', name:'startTimestamp', firstsortorder:'desc', width:100, align:'center'},
@@ -56,10 +56,10 @@ $('#dataGrid').dataGrid({
 		{header:'${text("超时时间")}', name:'timeout', width:100, align:'center'},
 		{header:'${text("客户主机")}', name:'host', width:70, align:'center'},
 		{header:'${text("用户类型")}', name:'userType', width:50, align:'center', formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_user_type')}, val, '未设置', true);
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_user_type')}, val, ${text('未设置')}, true);
 		}},
 		{header:'${text("设备类型")}', name:'deviceType', width:50, align:'center', formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_device_type')}, val, '未设置', true);
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_device_type')}, val, ${text('未设置')}, true);
 		}}
 		<% if(hasPermi('sys:online:edit')){ %>
 		,{header:'${text("操作")}', name:'actions', width:100, sortable:false, formatter: function(val, obj, row, act){
