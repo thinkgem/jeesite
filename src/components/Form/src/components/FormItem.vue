@@ -246,9 +246,6 @@
           [eventKey]: (...args: Nullable<Recordable>[]) => {
             // console.log('event', eventKey, ...args);
             const [e, labelValue] = args;
-            if (propsData[eventKey]) {
-              propsData[eventKey](...args);
-            }
             const target = typeof e === 'boolean' ? { checked: e } : e ? e.target : null;
             const value = target ? (isCheck ? target.checked : target.value) : e;
             props.setFormModel(
@@ -257,6 +254,9 @@
               fieldLabel,
               labelValue || defaultLabel || '',
             );
+            if (propsData[eventKey]) {
+              propsData[eventKey](...args);
+            }
           },
         };
         const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
