@@ -172,7 +172,7 @@
     img {
       width: 24px;
       height: 24px;
-      margin-right: 12px;
+      margin-right: 10px;
       background: #eee;
     }
 
@@ -236,7 +236,7 @@
           }
 
           .online {
-            padding-right: 10px;
+            padding-right: 9px;
 
             .anticon {
               color: #3c763d;
