@@ -41,7 +41,7 @@ JeeSite 功能全，知识点非常多，也非常少。因为她使用的都是
 
 JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，封装不是限制你去做一些事情，而是在便捷的同时，也具有较好的扩展性，在不具备一些功能的情况下，JeeSite 提供了扩展接口，提供了原生调用方法。
 
-大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重着一块，JeeSite 也一样具备强大的扩展性。
+大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重这一点，JeeSite 也一样具备强大的扩展性。
 
 * 至今 JeeSite 平台架构已经非常稳定。
 * JeeSite 精益求精，用心打磨每一个细节。
@@ -140,7 +140,7 @@ thinkgem/jeesite-web && docker logs -f jeesite-web
 * 文件在线预览：<https://jeesite.com/docs/filepreview/>
 * 报表设计器：<https://jeesite.com/docs/ureport/>
 * 大屏设计器：<https://jeesite.com/docs/visual/>
-* 三员管理员：<https://jeesite.com/docs/3manager/>
+* 三员管理员：<https://jeesite.com/docs/manager3/>
 * 在线作业调度：<https://jeesite.com/docs/job/>
 * 消息推送：<https://jeesite.com/docs/msg-push-use/>
 * 手机端框架：<https://jeesite.com/docs/uniapp/>
@@ -151,7 +151,6 @@ thinkgem/jeesite-web && docker logs -f jeesite-web
 * 多租户、SaaS服务：<https://jeesite.com/docs/saas-corp-use/>
 * 集群、负载均衡、高可用：<https://jeesite.com/docs/cluster/>
 * Spring Cloud：<https://jeesite.com/docs/springcloud/>
-* 分布式事务 LCN：<https://jeesite.com/docs/springcloud-lcn/>
 * 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
 
 ## 授权协议声明
