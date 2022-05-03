@@ -1,4 +1,5 @@
 import { BasicArrow } from '/@/components/Basic';
+import { isEmpty } from '/@/utils/is';
 
 export default (expandCollapse: Fn, handleTableExpand: Fn, expandedRowRender = false) => {
   return (props: Recordable) => {
@@ -9,11 +10,11 @@ export default (expandCollapse: Fn, handleTableExpand: Fn, expandedRowRender = f
     //     return <span />;
     //   }
     // }
-    const { treeLeaf, isLoading } = props.record;
+    const { treeLeaf, isLoading, children, childList } = props.record;
     // if (treeLeaf && treeLeaf === '1') {
     //   return <span class="ant-table-row-expand-icon ant-table-row-spaced" />;
     // }
-    const leaf = treeLeaf && treeLeaf === '1';
+    const leaf = !isEmpty(treeLeaf) ? treeLeaf === '1' : isEmpty(children || childList);
     return (
       <BasicArrow
         style={
@@ -35,7 +36,7 @@ export default (expandCollapse: Fn, handleTableExpand: Fn, expandedRowRender = f
           }
         }}
         onDblclick={async (_e: Event) => {
-          if (props.record.childList) return;
+          if (children || childList) return;
           // 当没有子节点的时候，尝试强制加载非正常状态的节点 by jeesite
           const expanded = await expandCollapse(props.record, false, true);
           handleTableExpand(expanded, props.record);
