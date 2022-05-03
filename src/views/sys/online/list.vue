@@ -91,7 +91,7 @@
       align: 'center',
       customRender: ({ record }) => {
         const tit = '' + t('账号') + '：' + (record.userCode || '');
-        return h('span', { title: tit }, record.userName);
+        return h('span', { title: tit }, record.userName || t('游客'));
       },
     },
     {
