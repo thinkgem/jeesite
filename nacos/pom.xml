@@ -144,13 +144,6 @@
             <roles><role>Project lead</role></roles>
             <timezone>+8</timezone>
         </developer>
-        <developer>
-            <id>长春叭哥</id>
-            <name>YaoHailu</name>
-            <email>admin at jeegit.com</email>
-            <roles><role>Project member</role></roles>
-            <timezone>+8</timezone>
-        </developer>
     </developers>
 
     <organization>

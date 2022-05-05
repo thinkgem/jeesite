@@ -17,10 +17,6 @@
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
-	<properties>
-		
-	</properties>
-	
 	<dependencies>
 		
 		<!-- 监控接口 -->
@@ -92,12 +88,6 @@
 		</dependency> -->
 		
 	</dependencies>
-	
-	<build>
-		<plugins>
-			
-		</plugins>
-	</build>
 	
 	<developers>  
 		<developer>
