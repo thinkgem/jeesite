@@ -8,7 +8,7 @@
 	<version>5.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
-	<name>JeeSite</name>
+	<name>JeeSite Root</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
