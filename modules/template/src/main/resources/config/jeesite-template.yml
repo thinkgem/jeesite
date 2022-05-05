@@ -1,4 +1,0 @@
-# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
-
-#template:
-#  enabled: true
