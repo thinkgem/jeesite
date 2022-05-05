@@ -171,7 +171,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.serializeFst(object);
 			}
 		} catch (Exception e) {
-			logger.error("serialize", e.getMessage());
+			logger.error("serialize: {}", e.getMessage());
 		}
 		return null;
 	}
@@ -189,7 +189,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.unserializeFst(bytes);
 			}
 		} catch (Exception e) {
-			logger.error("unserialize", e.getMessage());
+			logger.error("unserialize: {}", e.getMessage());
 		}
 		return null;
 	}
