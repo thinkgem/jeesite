@@ -85,7 +85,7 @@ spring:
     # 缓存及会话共享（专业版）
     isClusterMode: false
     # 清理全部缓存按钮所清理的缓存列表
-    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache,roleCache,fileUploadCache,bpmFormCache
+    clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
     # 用户缓存
     #userCache:
     #  clearTaskPool:
@@ -190,7 +190,7 @@ user:
     
   # 数据权限调试模式（会输出一些日志）
   dataScopeDebug: false
-    
+
   # 数据权限使用 API 方式实现（适应 Cloud 环境，基础用户表与业务数据表跨库的情况）
   # 开启后设置 ctrlDataAttrName 加 AndChildren 后缀，ctrlDataParentCodesAttrName 清空
   # 以方便读取树结构数据权限的表时包含子节点，举例如下：
