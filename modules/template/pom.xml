@@ -25,10 +25,6 @@
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
-	<properties>
-		
-	</properties>
-	
 	<dependencies>
 			
 		<dependency>
@@ -38,12 +34,6 @@
 		</dependency>
 		
 	</dependencies>
-	
-	<build>
-		<plugins>
-			
-		</plugins>
-	</build>
 	
 	<developers>  
 		<developer>

@@ -95,12 +95,6 @@
 		
 	</dependencies>
 	
-	<build>
-		<plugins>
-		
-		</plugins>
-	</build>
-	
 	<developers>  
 		<developer>
 			<id>thinkgem</id>

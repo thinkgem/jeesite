@@ -17,10 +17,6 @@
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
-	<properties>
-		
-	</properties>
-	
 	<dependencies>
 
 		<!-- Servlet Api -->
@@ -268,12 +264,6 @@
 		</dependency>
 		
 	</dependencies>
-	
-	<build>
-		<plugins>
-			
-		</plugins>
-	</build>
 	
 	<developers>  
 		<developer>
