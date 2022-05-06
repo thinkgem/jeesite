@@ -59,7 +59,7 @@
   const record = ref<EmpUser>({} as EmpUser);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
+    value: record.value.isNewRecord ? t('新增字典') : t('编辑字典'),
   }));
   const ctrlPermi = ref<String>('');
   const op = ref<String>('');
