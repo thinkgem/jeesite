@@ -58,7 +58,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌浏览器、火狐浏览器、国产浏览器 等
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
-* JeeSite Vue：<http://jeesite.com/docs/jeesite-vue/>
+* JeeSite Vue：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 更多介绍
 
@@ -75,7 +75,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * Flowable业务流程模块（BPM）：<http://jeesite.com/docs/bpm/>
 * 内容管理模块（CMS）：<https://gitee.com/thinkgem/jeesite4-cms>
 * 手机端移动端：<https://gitee.com/thinkgem/jeesite4-uniapp>
-* Vue3分离版本：<http://jeesite.com/docs/jeesite-vue/>
+* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 快速体验
 
