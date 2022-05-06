@@ -77,12 +77,11 @@
 						<label class="control-label col-sm-4" title="${text('数值越大排序越靠前，可设置权重过期时间')}。">
 							${text('权重/排序')}： <i class="fa icon-question"></i></label>
 						<div class="col-sm-8">
-							<div class="form-inline">
+							<div class="form-inline m0">
 								<#form:input path="weight" class="form-control  width-90 digits" maxlength="10"/> &nbsp;
 								<#form:checkbox id="weightTop" label="${text('置顶')}" value="${article.weight==9999 ?'1' : ''}"
 										class="form-control" style="vertical-align:middle;"/>
 							</div>
-							<span class="help-block">&nbsp;</span>
 						</div>
 					</div>
 				</div>
