@@ -64,8 +64,8 @@
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('字典管理'),
+    icon: router.currentRoute.value.meta.icon || 'simple-line-icons:user',
+    value: router.currentRoute.value.meta.title || t('用户管理'),
   };
   const ctrlPermi = ref('');
   const postList = ref<Recordable>([]);
