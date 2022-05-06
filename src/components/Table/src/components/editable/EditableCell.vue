@@ -12,7 +12,7 @@
         :defaultValue="column.defaultValue"
       />
       <div v-else class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">
-        {{ getValues ? getValues : '&nbsp;' }}
+        {{ getValues ?? '&nbsp;' }}
       </div>
       <FormOutlined :class="`${prefixCls}__normal-icon`" v-if="!column.editRow" />
     </div>
@@ -243,6 +243,7 @@
           labelValue: unref(currentLabelValueRef),
           record: toRaw(props.record),
         });
+
         handleSubmitRule();
       }
 
