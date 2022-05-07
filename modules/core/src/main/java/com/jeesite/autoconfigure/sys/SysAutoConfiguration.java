@@ -6,6 +6,7 @@ package com.jeesite.autoconfigure.sys;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,6 +34,7 @@ import com.jeesite.modules.sys.service.support.PostServiceSupport;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBean(MyBatisFactoryBean.class)
+@ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class SysAutoConfiguration {
 	
 	@Bean

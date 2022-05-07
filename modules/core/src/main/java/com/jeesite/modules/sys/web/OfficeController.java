@@ -42,7 +42,7 @@ import com.jeesite.modules.sys.web.user.EmpUserController;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/office")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class OfficeController extends BaseController {
 
 	@Autowired

@@ -48,9 +48,9 @@ import springfox.documentation.annotations.ApiIgnore;
  * @version 2020-9-20
  */
 @Controller
-@RequestMapping(value = "/account")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
 @Api(tags = "Account - 账号服务")
+@RequestMapping(value = "/account")
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class AccountController extends BaseController{
 
 	@Autowired

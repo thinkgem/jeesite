@@ -56,7 +56,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	@PostConstruct
 	private void corpModelValid() throws Exception{
 		if (Global.isUseCorpModel() != Global.getPropertyToBoolean("user.useCorpModel", "false")){
-			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，视乎你的当前版本不是JeeSite专业版。\n");
+			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，似乎你的当前版本不是JeeSite专业版。\n");
 		}
 	}
 	

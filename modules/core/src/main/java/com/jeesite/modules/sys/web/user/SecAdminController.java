@@ -36,7 +36,7 @@ import com.jeesite.modules.sys.utils.ModuleUtils;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/secAdmin")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class SecAdminController extends BaseController {
 
 	@Autowired

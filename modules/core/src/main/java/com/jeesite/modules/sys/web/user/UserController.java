@@ -37,9 +37,9 @@ import springfox.documentation.annotations.ApiIgnore;
  * @version 2017-3-21
  */
 @Controller
-@RequestMapping(value = "${adminPath}/sys/user")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
 @ApiIgnore
+@RequestMapping(value = "${adminPath}/sys/user")
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class UserController extends BaseController {
 
 	@Autowired

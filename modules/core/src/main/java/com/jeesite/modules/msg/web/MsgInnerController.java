@@ -34,7 +34,7 @@ import com.jeesite.modules.msg.service.MsgInnerService;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/msg/msgInner")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class MsgInnerController extends BaseController {
 
 	@Autowired
