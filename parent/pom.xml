@@ -42,7 +42,7 @@
 		
 		<!-- framework version setting -->
 		<mybatis.version>3.5.9</mybatis.version>
-		<mybatis-spring.version>2.0.6</mybatis-spring.version>
+		<mybatis-spring.version>2.0.7</mybatis-spring.version>
 		<jsqlparser.version>4.4</jsqlparser.version>
 		<druid.version>1.2.9</druid.version>
 		<shiro.version>1.9.0</shiro.version>
@@ -161,6 +161,7 @@
 						</warSourceExcludes>
 						<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 						<warName>${project.artifactId}</warName>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
 						<archive>
 							<addMavenDescriptor>false</addMavenDescriptor>
 						</archive>
