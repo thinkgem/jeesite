@@ -9,9 +9,9 @@
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
 				<% if(hasPermi('sys:corpAdmin:edit')){ %>
 					<% if(useCorpModel){ %>
-					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title=" ${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增管理员')}</a>
+					<a href="${ctx}/sys/corpAdmin/form?op=addCorp" class="btn btn-default btnTool" title=" ${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 					<% }else{ %>
-					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${user.currentUser.corpCode_}&corpName_=${user.currentUser.corpName_}&op=addAdmin" class="btn btn-default btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增管理员')}</a>
+					<a href="${ctx}/sys/corpAdmin/form?corpCode_=${currentCorpCode}&corpName_=${currentCorpName}&op=addAdmin" class="btn btn-default btnTool" title="${text('新增管理员')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 					<% } %>
 				<% } %>
 				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>

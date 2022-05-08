@@ -67,7 +67,7 @@ public class SecAdminController extends BaseController {
 
 	@RequiresPermissions("sys:secAdmin:view")
 	@RequestMapping(value = "form")
-	public String form(User user, String op, Model model) {
+	public String form(User user, Model model) {
 		UserDataScope userDataScope = new UserDataScope();
 		userDataScope.setUserCode(user.getUserCode());
 		userDataScope.setCtrlPermi(UserDataScope.CTRL_PERMI_MANAGE);
@@ -88,7 +88,7 @@ public class SecAdminController extends BaseController {
 	@RequiresPermissions("sys:secAdmin:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated User user, String op) {
+	public String save(@Validated User user) {
 		if (User.isSuperAdmin(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
