@@ -45,7 +45,7 @@
   </template>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref, watch } from 'vue';
   import { Tag, Badge } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
   import { propTypes } from '/@/utils/propTypes';
@@ -65,9 +65,18 @@
       icon: propTypes.bool.def(true),
     },
     setup(props) {
-      const dictList = getDictList(props.dictType).filter((item) =>
-        (',' + props.dictValue + ',').includes(',' + item.value + ','),
+      const dictList = ref<any[]>([]);
+
+      watch(
+        () => props.dictValue,
+        () => {
+          dictList.value = getDictList(props.dictType).filter((item) =>
+            (',' + props.dictValue + ',').includes(',' + item.value + ','),
+          );
+        },
+        { immediate: true },
       );
+
       return {
         dictList,
         props,
