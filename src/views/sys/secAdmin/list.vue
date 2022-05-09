@@ -1,0 +1,234 @@
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+-->
+<template>
+  <div>
+    <BasicTable @register="registerTable">
+      <template #tableTitle>
+        <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+        <span> {{ getTitle.value }} </span>
+      </template>
+      <template #toolbar>
+        <a-button type="primary" @click="handleForm({})" v-auth="'sys:secAdmin:edit'">
+          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+        </a-button>
+      </template>
+      <template #firstColumn="{ record }">
+        <a @click="handleForm({ userCode: record.userCode })" :title="record.loginCode">
+          {{ record.loginCode }}
+        </a>
+      </template>
+    </BasicTable>
+    <InputForm @register="registerDrawer" @success="handleSuccess" />
+  </div>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    name: 'ViewsSysEmpUserList',
+  });
+</script>
+<script lang="ts" setup>
+  import { defineComponent, onMounted, watch, ref } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { router } from '/@/router';
+  import { Icon } from '/@/components/Icon';
+  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
+  import { secAdminDelete, secAdminListData, secAdminList } from '/@/api/sys/secAdmin';
+  import { useDrawer } from '/@/components/Drawer';
+  import { FormProps } from '/@/components/Form';
+  import InputForm from './form.vue';
+
+  const props = defineProps({
+    treeCode: String,
+  });
+
+  const { t } = useI18n('sys.secAdmin');
+  const { showMessage } = useMessage();
+  const getTitle = {
+    icon: router.currentRoute.value.meta.icon || 'simple-line-icons:user-female',
+    value: router.currentRoute.value.meta.title || t('二级管理员'),
+  };
+  const ctrlPermi = ref('');
+  const postList = ref<Recordable>([]);
+  const roleList = ref<Recordable>([]);
+
+  const searchForm: FormProps = {
+    baseColProps: { lg: 6, md: 8 },
+    labelWidth: 60,
+    schemas: [
+      {
+        label: t('账号'),
+        field: 'loginCode',
+        component: 'Input',
+      },
+      {
+        label: t('昵称'),
+        field: 'userName',
+        component: 'Input',
+      },
+      {
+        label: t('状态'),
+        field: 'status',
+        component: 'Select',
+        componentProps: {
+          dictType: 'sys_user_status',
+          allowClear: true,
+          onChange: handleSuccess,
+        },
+      },
+      {
+        label: t('姓名'),
+        field: 'refName',
+        component: 'Input',
+      },
+      {
+        label: t('手机'),
+        field: 'mobile',
+        component: 'Input',
+      },
+      {
+        label: t('邮箱'),
+        field: 'email',
+        component: 'Input',
+      },
+      {
+        label: t('电话'),
+        field: 'phone',
+        component: 'Input',
+      },
+    ],
+  };
+
+  const tableColumns: BasicColumn[] = [
+    {
+      title: t('登录账号'),
+      dataIndex: 'loginCode',
+      key: 'a.login_code',
+      sorter: true,
+      width: 100,
+      slots: { customRender: 'firstColumn' },
+    },
+    {
+      title: t('用户昵称'),
+      dataIndex: 'userName',
+      key: 'a.user_name',
+      sorter: true,
+      width: 100,
+    },
+    {
+      title: t('状态'),
+      dataIndex: 'status',
+      key: 'a.status',
+      sorter: true,
+      width: 80,
+      dictType: 'sys_status',
+    },
+    {
+      title: t('更新时间'),
+      dataIndex: 'updateDate',
+      key: 'a.update_date',
+      sorter: true,
+      width: 100,
+    },
+    {
+      title: t('电子邮箱'),
+      dataIndex: 'email',
+      key: 'a.email',
+      sorter: true,
+      width: 100,
+    },
+    {
+      title: t('手机号码'),
+      dataIndex: 'mobile',
+      key: 'a.mobile',
+      sorter: true,
+      width: 100,
+    },
+    {
+      title: t('办公电话'),
+      dataIndex: 'phone',
+      key: 'a.phone',
+      sorter: true,
+      width: 100,
+    },
+  ];
+
+  const actionColumn: BasicColumn = {
+    width: 160,
+    actions: (record: Recordable) => [
+      {
+        icon: 'clarity:note-edit-line',
+        title: t('编辑用户'),
+        onClick: handleForm.bind(this, { userCode: record.userCode }),
+        auth: 'sys:secAdmin:edit',
+      },
+      {
+        icon: 'ant-design:delete-outlined',
+        color: 'error',
+        title: t('删除用户'),
+        popConfirm: {
+          title: t('是否确认删除用户'),
+          confirm: handleDelete.bind(this, { userCode: record.userCode }),
+        },
+        auth: 'sys:secAdmin:edit',
+      },
+    ],
+  };
+
+  const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerTable, { reload, getForm }] = useTable({
+    api: secAdminListData,
+    beforeFetch: (params) => {
+      params.ctrlPermi = ctrlPermi.value;
+      return params;
+    },
+    immediate: false,
+    columns: tableColumns,
+    actionColumn: actionColumn,
+    formConfig: searchForm,
+    showTableSetting: true,
+    useSearchForm: true,
+    canResize: true,
+  });
+
+  onMounted(async () => {
+    const res = await secAdminList();
+    postList.value = res.postList?.map((item) => ({
+      label: item.postName,
+      value: item.postCode,
+    }));
+    roleList.value = res.roleList?.map((item) => ({
+      label: item.roleName,
+      value: item.roleCode,
+    }));
+    ctrlPermi.value = res.ctrlPermi || '2';
+    reload();
+  });
+
+  watch(
+    () => props.treeCode,
+    async () => {
+      await getForm().setFieldsValue({
+        'employee.office.officeCode': props.treeCode,
+      });
+      reload();
+    },
+  );
+
+  function handleForm(record: Recordable) {
+    openDrawer(true, record);
+  }
+
+  async function handleDelete(record: Recordable) {
+    const res = await secAdminDelete(record);
+    showMessage(res.message);
+    handleSuccess(record);
+  }
+
+  function handleSuccess(_record: Recordable) {
+    reload();
+  }
+</script>
