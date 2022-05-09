@@ -25,7 +25,7 @@
             </Popconfirm>
             <template v-else>
               <Icon :icon="item.icon" v-if="item.icon" />
-              <span class="ml-1">{{ item.text }}</span>
+              <span class="ml-1 mr-1">{{ item.text }}</span>
             </template>
           </MenuItem>
           <MenuDivider v-if="item.divider" :key="`d-${item.event}`" />
