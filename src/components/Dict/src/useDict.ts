@@ -40,6 +40,12 @@ export function useDict() {
     return result.length > 0 ? result.join(',') : defaultValue;
   }
 
+  async function initGetDictList(dictType: string): Promise<Recordable[]> {
+    if (isEmpty(dictType)) return [];
+    await initDict([dictType]);
+    return dictListMap[dictType] || [];
+  }
+
   async function initSelectOptions(optionsRef: Ref, dictType?: string) {
     if (isEmpty(dictType)) return;
     await initDict([dictType]);
@@ -62,5 +68,12 @@ export function useDict() {
     }
   }
 
-  return { initDict, getDictList, getDictLabel, initSelectOptions, initSelectTreeData };
+  return {
+    initDict,
+    getDictList,
+    getDictLabel,
+    initGetDictList,
+    initSelectOptions,
+    initSelectTreeData,
+  };
 }

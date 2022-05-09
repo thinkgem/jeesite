@@ -217,10 +217,7 @@
   });
 
   async function loadSysCode() {
-    const { initDict, getDictList } = useDict();
-    const dictType = 'sys_menu_sys_code';
-    await initDict([dictType]);
-    sysCodeRef.value = getDictList(dictType);
+    sysCodeRef.value = await useDict().initGetDictList('sys_menu_sys_code');
   }
 
   async function loadTreeDatas() {
