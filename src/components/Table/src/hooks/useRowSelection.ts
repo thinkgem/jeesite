@@ -47,10 +47,13 @@ export function useRowSelection(
           const { onChange } = rowSelection;
           if (onChange && isFunction(onChange)) onChange(getSelectRowKeys(), getSelectRows());
         }
-        emit('selection-change', {
-          keys: getSelectRowKeys(),
-          rows: getSelectRows(),
-        });
+        // 有数据时，再调用选择变更事件
+        if (unref(tableData).length > 0) {
+          emit('selection-change', {
+            keys: getSelectRowKeys(),
+            rows: getSelectRows(),
+          });
+        }
       });
     },
     { deep: true },
