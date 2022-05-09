@@ -7,7 +7,7 @@ import type { ComputedRef, Ref } from 'vue';
 import type { BasicTableProps } from '../types/table';
 import { computed, unref, ref, toRaw } from 'vue';
 import { ROW_KEY } from '../const';
-import { isFunction } from '/@/utils/is';
+import { isEmpty, isFunction } from '/@/utils/is';
 
 export function useTableExpand(
   propsRef: ComputedRef<BasicTableProps>,
@@ -18,7 +18,11 @@ export function useTableExpand(
 ) {
   const expandedRowKeys = ref<string[]>([]);
   const currentLevel = ref(0);
-  const treeLevel = ref(0);
+
+  const getChildrenColumnName = computed(() => {
+    const { childrenColumnName } = unref(propsRef);
+    return childrenColumnName || 'children';
+  });
 
   const getAutoCreateKey = computed(() => {
     return unref(propsRef).autoCreateKey && !unref(propsRef).rowKey;
@@ -42,25 +46,28 @@ export function useTableExpand(
     };
   });
 
-  async function expandAll() {
+  function expandAll() {
     setLoading(true);
-    if (getFormData()) {
-      treeLevel.value = 0;
-      await expandOneLevel();
-      currentLevel.value += 1;
-    } else {
-      const keys = getAllKeys();
-      expandedRowKeys.value = keys;
-    }
-    setLoading(false);
+    setTimeout(async () => {
+      try {
+        if (getFormData()) {
+          await expandOneLevel();
+          currentLevel.value += 1;
+        } else {
+          const keys = getAllKeys();
+          expandedRowKeys.value = keys;
+        }
+      } finally {
+        setLoading(false);
+      }
+    });
   }
 
   function getAllKeys(data?: Recordable[]) {
     const keys: string[] = [];
-    const { childrenColumnName } = unref(propsRef);
     toRaw(data || unref(tableData)).forEach((item) => {
       keys.push(item[unref(getRowKey) as string]);
-      const children = item[childrenColumnName || 'children'];
+      const children = item[unref(getChildrenColumnName)];
       if (children?.length) {
         keys.push(...getAllKeys(children));
       }
@@ -68,21 +75,18 @@ export function useTableExpand(
     return keys;
   }
 
-  async function expandOneLevel(data?: Recordable[]) {
+  async function expandOneLevel(data?: Recordable[], treeLevel = 0) {
     const rowKey = unref(getRowKey) as string;
-    const { childrenColumnName } = unref(propsRef);
-    const status = getFormData()?.status;
-    toRaw(data || unref(tableData)).forEach(async (item) => {
-      await expandCollapse(item, true, status === ''); // 加载并展开行的数据
-      expandedRowKeys.value.push(item[rowKey]);
-      if (treeLevel.value < currentLevel.value) {
-        const children = item[childrenColumnName || 'children'];
-        if (children?.length) {
-          await expandOneLevel(children);
+    for (const record of toRaw(data || tableData.value)) {
+      await expandCollapse(record, true);
+      expandedRowKeys.value.push(record[rowKey]);
+      if (treeLevel < currentLevel.value) {
+        const children = record[unref(getChildrenColumnName)];
+        if (children?.length > 0) {
+          await expandOneLevel(children, treeLevel + 1);
         }
       }
-    });
-    treeLevel.value += 1;
+    }
   }
 
   function collapseAll() {
@@ -91,7 +95,8 @@ export function useTableExpand(
   }
 
   async function expandCollapse(record: Recordable, onlyLoadData = false, forceLoad = false) {
-    if ((record.treeLeaf === '0' && !record.childList) || forceLoad) {
+    const treeLeaf = record.treeLeaf && record.treeLeaf === '1';
+    if ((!treeLeaf && isEmpty(record[unref(getChildrenColumnName)])) || forceLoad) {
       record.isLoading = true;
       const { api, pagination } = unref(propsRef);
       if (!api || !isFunction(api)) return;
