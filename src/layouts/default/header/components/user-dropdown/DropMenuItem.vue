@@ -1,7 +1,7 @@
 <template>
   <MenuItem :key="itemKey">
     <span class="flex items-center">
-      <Icon :icon="icon" class="mr-1" />
+      <Icon v-if="icon" :icon="icon" class="mr-1" />
       <span>{{ text }}</span>
     </span>
   </MenuItem>
@@ -18,13 +18,13 @@
     name: 'DropdownMenuItem',
     components: { MenuItem: Menu.Item, Icon },
     props: {
-      key: propTypes.string,
+      value: propTypes.string,
       text: propTypes.string,
       icon: propTypes.string,
     },
     setup(props) {
       const instance = getCurrentInstance();
-      const itemKey = computed(() => props.key || instance?.vnode?.props?.key);
+      const itemKey = computed(() => props.value || instance?.vnode?.props?.value);
       return { itemKey };
     },
   });

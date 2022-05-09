@@ -26,11 +26,11 @@
     </span>
     <template #overlay>
       <Menu @click="handleMenuClick">
-        <MenuItem key="accountCenter" :text="t('sys.account.center')" icon="ion:person-outline" />
-        <MenuItem key="modifyPwd" :text="t('sys.account.modifyPwd')" icon="ion:key-outline" />
+        <MenuItem value="accountCenter" :text="t('sys.account.center')" icon="ion:person-outline" />
+        <MenuItem value="modifyPwd" :text="t('sys.account.modifyPwd')" icon="ion:key-outline" />
         <MenuDivider />
         <MenuItem
-          key="doc"
+          value="doc"
           :text="t('layout.header.dropdownItemDoc')"
           icon="ion:document-text-outline"
           v-if="getShowDoc"
@@ -38,12 +38,12 @@
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
           v-if="getUseLockPage"
-          key="lock"
+          value="lock"
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
         />
         <MenuItem
-          key="logout"
+          value="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
           icon="ion:power-outline"
         />
