@@ -6,26 +6,26 @@ export const LOCALE_KEY = 'LOCALE__';
 export const SESSION_TIMEOUT_KEY = 'SESSION_TIMEOUT__';
 
 // user info key
-export const USER_INFO_KEY = 'USER__INFO__';
+export const USER_INFO_KEY = 'USER_INFO__';
 
 // role info key
-export const ROLES_KEY = 'ROLES__KEY__';
+export const ROLES_KEY = 'ROLES__';
 
 // project config key
-export const PROJ_CFG_KEY = 'PROJ__CFG__KEY__';
+export const PROJ_CFG_KEY = 'PROJ_CFG__';
 
 // lock info
-export const LOCK_INFO_KEY = 'LOCK__INFO__KEY__';
+export const LOCK_INFO_KEY = 'LOCK_INFO__';
 
-export const MULTIPLE_TABS_KEY = 'MULTIPLE_TABS__KEY__';
+export const MULTIPLE_TABS_KEY = 'MULTIPLE_TABS__';
 
-export const APP_DARK_MODE_KEY_ = '__APP__DARK__MODE__';
+export const APP_DARK_MODE_KEY = 'APP_DARK_MODE__';
 
 // base global local key
-export const APP_LOCAL_CACHE_KEY = 'COMMON__LOCAL__KEY__';
+export const APP_LOCAL_CACHE_KEY = 'COMMON_LOCAL__';
 
 // base global session key
-export const APP_SESSION_CACHE_KEY = 'COMMON__SESSION__KEY__';
+export const APP_SESSION_CACHE_KEY = 'COMMON_SESSION__';
 
 export enum CacheTypeEnum {
   SESSION,

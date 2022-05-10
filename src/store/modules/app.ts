@@ -11,7 +11,7 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 
 import { ThemeEnum } from '/@/enums/appEnum';
-import { APP_DARK_MODE_KEY_, PROJ_CFG_KEY } from '/@/enums/cacheEnum';
+import { APP_DARK_MODE_KEY, PROJ_CFG_KEY } from '/@/enums/cacheEnum';
 import { Persistent } from '/@/utils/cache/persistent';
 import { darkMode } from '/@/settings/designSetting';
 import { resetRouter } from '/@/router';
@@ -40,7 +40,7 @@ export const useAppStore = defineStore({
       return this.pageLoading;
     },
     getDarkMode(): 'light' | 'dark' | string {
-      return this.darkMode || localStorage.getItem(APP_DARK_MODE_KEY_) || darkMode;
+      return this.darkMode || localStorage.getItem(APP_DARK_MODE_KEY) || darkMode;
     },
 
     getBeforeMiniInfo(): BeforeMiniState {
@@ -71,7 +71,7 @@ export const useAppStore = defineStore({
 
     setDarkMode(mode: ThemeEnum): void {
       this.darkMode = mode;
-      localStorage.setItem(APP_DARK_MODE_KEY_, mode);
+      localStorage.setItem(APP_DARK_MODE_KEY, mode);
     },
 
     setBeforeMiniInfo(state: BeforeMiniState): void {
