@@ -85,7 +85,16 @@ export function createPermissionGuard(router: Router) {
     if (userStore.getLastUpdateTime === 0) {
       try {
         await userStore.getUserInfoAction();
-      } catch (err) {
+      } catch (error: any) {
+        const err: string = error?.toString?.() ?? '';
+        if (
+          from.fullPath === '/' &&
+          ((error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) ||
+            err.indexOf('Network Error') !== -1)
+        ) {
+          next(LOGIN_PATH);
+          return;
+        }
         next();
         return;
       }
