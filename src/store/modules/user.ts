@@ -108,6 +108,9 @@ export const useUserStore = defineStore({
       this.roleList = [];
       this.sessionTimeout = true;
     },
+    setPageCache(key: string, value: any) {
+      this.pageCache[key] = value;
+    },
     getPageCacheByKey(key: string, defaultValue: any): any {
       if (!this.pageCache[key] && defaultValue) {
         this.pageCache[key] = defaultValue;
