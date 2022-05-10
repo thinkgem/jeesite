@@ -7,7 +7,7 @@ export default {
     apiTimeoutMessage: '接口请求超时,请刷新页面重试!',
     apiRequestFailed: '请求出错，请稍候重试',
     networkException: '网络异常',
-    networkExceptionMsg: '网络异常，请检查您的网络连接是否正常!',
+    networkExceptionMsg: '网络异常,请稍后重试!',
 
     errMsg401: '很抱歉，您没有权限（令牌、用户名、密码错误）!',
     errMsg403: '很抱歉，您没有权限访问此页面，若有疑问请联系管理员。',
