@@ -135,7 +135,7 @@
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { notification } = useMessage();
+  const { showMessage, notification } = useMessage();
   const { prefixCls } = useDesign('login');
   const { apiUrl } = useGlobSetting();
   const userStore = useUserStore();
@@ -201,7 +201,13 @@
           duration: 3,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
+      const err: string = error?.toString?.() ?? '';
+      if (error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) {
+        showMessage(t('sys.api.apiTimeoutMessage'));
+      } else if (err.indexOf('Network Error') !== -1) {
+        showMessage(t('sys.api.networkExceptionMsg'));
+      }
       console.log(error);
     } finally {
       loading.value = false;

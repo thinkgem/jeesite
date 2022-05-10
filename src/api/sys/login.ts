@@ -40,7 +40,7 @@ export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') =
     params.validCode = encryptByBase64(params.validCode);
   }
   return defHttp.post<LoginResult>(
-    { url: adminPath + '/login', params },
+    { url: adminPath + '/login', params, timeout: 20 * 1000 },
     { errorMessageMode: mode },
   );
 };
@@ -54,7 +54,10 @@ export const switchSkin = (name: string) => {
 };
 
 export const userInfoApi = (mode: ErrorMessageMode = 'message') =>
-  defHttp.get<LoginResult>({ url: adminPath + '/index' }, { errorMessageMode: mode });
+  defHttp.get<LoginResult>(
+    { url: adminPath + '/index', timeout: 10 * 1000 },
+    { errorMessageMode: mode },
+  );
 
 export const authInfoApi = () => defHttp.get<AuthInfo>({ url: adminPath + '/authInfo' });
 
