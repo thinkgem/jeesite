@@ -39,5 +39,5 @@ export const corpAdminTreeData = (params?: any) =>
 
 export const switchCorp = (corpCode: string) =>
   defHttp.get<User>({
-    url: adminPath + '/sys/switch/' + corpCode,
+    url: adminPath + '/sys/corpAdmin/switch/' + corpCode,
   });
