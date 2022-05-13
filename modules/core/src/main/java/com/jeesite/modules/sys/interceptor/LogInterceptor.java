@@ -4,8 +4,6 @@
  */
 package com.jeesite.modules.sys.interceptor;
 
-import java.text.SimpleDateFormat;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.ByteUtils;
-import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.network.IpUtils;
