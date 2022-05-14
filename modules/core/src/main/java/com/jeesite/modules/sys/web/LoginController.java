@@ -33,6 +33,7 @@ import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
@@ -189,12 +190,17 @@ public class LoginController extends BaseController{
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
 			return null;
 		}
+		
+		// 获取当前会话对象，并返回一些数据
+		Session session = UserUtils.getSession();
+		model.addAttribute("user", user); // 设置当前用户信息
 		model.addAttribute("user", user); // 设置当前用户信息
 		model.addAttribute("demoMode", Global.isDemoMode());
+		model.addAttribute("useCorpModel", Global.isUseCorpModel());
+		model.addAttribute("currentCorpCode", CorpUtils.getCurrentCorpCode());
+		model.addAttribute("currentCorpName", CorpUtils.getCurrentCorpName());
+		model.addAttribute("sysCode", session.getAttribute("sysCode"));
 
-		//获取当前会话对象
-		Session session = UserUtils.getSession();
-		
 		// 是否是登录操作
 		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));
 		if (isLogin){

@@ -63,6 +63,8 @@ public class CorpAdminController extends BaseController {
 		user.setCorpCode(null);
 		user.setCorpName(null);
 		model.addAttribute("user", user);
+		model.addAttribute("currentCorpCode", user.getCurrentUser().getCorpCode_());
+		model.addAttribute("currentCorpName", user.getCurrentUser().getCorpName_());
 		model.addAttribute("useCorpModel", Global.getConfigToBoolean("user.useCorpModel", "false"));
 		return "modules/sys/user/corpAdminList";
 	}
@@ -108,7 +110,7 @@ public class CorpAdminController extends BaseController {
 	@RequiresPermissions("sys:corpAdmin:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated User user, String oldLoginCode, String op) {
+	public String save(@Validated User user, String op, HttpServletRequest request) {
 		if (!user.getCurrentUser().isSuperAdmin()){
 			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
 		}
@@ -121,8 +123,9 @@ public class CorpAdminController extends BaseController {
 		if (StringUtils.isBlank(user.getCorpCode_())){
 			return renderResult(Global.FALSE, text("租户代码不能为空！"));
 		}
-		if (!Global.TRUE.equals(userService.checkLoginCode(oldLoginCode, user.getLoginCode()))) {
-			return renderResult(Global.FALSE, text("保存管理员''{0}''失败，登录账号已存在", user.getLoginCode()));
+		User old = super.getWebDataBinderSource(request);
+		if (!Global.TRUE.equals(userService.checkLoginCode(old != null ? old.getLoginCode() : "", user.getLoginCode()))) {
+			return renderResult(Global.FALSE, text("保存管理员失败，登录账号''{0}''已存在", user.getLoginCode()));
 		}
 		if (user.getIsNewRecord()){
 			user.setUserType(User.USER_TYPE_NONE); // 仅登录用户
