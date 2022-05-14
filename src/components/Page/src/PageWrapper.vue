@@ -240,7 +240,6 @@
       }
       function onSiderMove(_event, offsetX: number) {
         //向右移动是负数
-        console.log(offsetX);
         offsetXmoved.value = offsetXmoved.value - offsetX;
       }
 
