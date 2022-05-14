@@ -37,20 +37,15 @@
           :collapsedWidth="0"
           :collapsible="true"
           :trigger="null"
-          :width="sidebarWidth"
+          :width="getSidebarWidth"
           :breakpoint="sidebarBreakpoint"
           @breakpoint="onBreakpoint"
         >
           <div class="sidebar-content" :style="getSidebarContentStyle">
             <slot name="sidebar"></slot>
           </div>
-          <div class="sidebar-close" v-if="!collapsed" @click="collapsed = !collapsed">
-            <Icon icon="ant-design:double-left-outlined" />
-          </div>
-          <div class="sidebar-open" v-else @click="collapsed = !collapsed">
-            <Icon icon="ant-design:double-right-outlined" />
-          </div>
         </a-layout-sider>
+        <Resizer position="left" v-model:collapsed="collapsed" @move="onSiderMove" />
         <a-layout-content>
           <slot></slot>
         </a-layout-content>
@@ -82,11 +77,11 @@
   import { PageHeader } from 'ant-design-vue';
   import { useContentHeight } from '/@/hooks/web/useContentHeight';
   import { PageWrapperFixedHeightKey } from '..';
-  import { Icon } from '/@/components/Icon';
+  import { Resizer } from '/@/components/Resizer';
 
   export default defineComponent({
     name: 'PageWrapper',
-    components: { PageFooter, PageHeader, Icon },
+    components: { PageFooter, PageHeader, Resizer },
     inheritAttrs: false,
     props: {
       title: propTypes.string,
@@ -112,11 +107,16 @@
       const footerRef = ref(null);
       const { prefixCls } = useDesign('page-wrapper');
       const sidebar = !!slots.sidebar;
+      const offsetXmoved = ref(0);
 
       provide(
         PageWrapperFixedHeightKey,
         computed(() => props.fixedHeight),
       );
+
+      const getSidebarWidth = computed(() => {
+        return props.sidebarWidth + offsetXmoved.value;
+      });
 
       const getIsContentFullHeight = computed(() => {
         return props.contentFullHeight || sidebar;
@@ -238,6 +238,11 @@
       function onBreakpoint(broken: boolean) {
         if (broken) collapsed.value = true;
       }
+      function onSiderMove(_event, offsetX: number) {
+        //向右移动是负数
+        console.log(offsetX);
+        offsetXmoved.value = offsetXmoved.value - offsetX;
+      }
 
       return {
         getContentStyle,
@@ -252,8 +257,10 @@
         omit,
         getContentClass,
         getSidebarContentStyle,
+        getSidebarWidth,
         sidebar,
         collapsed,
+        onSiderMove,
         onBreakpoint,
       };
     },
@@ -321,7 +328,7 @@
 
       &-content {
         // margin: 15px 0 0 15px;
-        margin-right: 15px;
+        // margin-right: 15px;
         height: calc(100% - 29px);
       }
 
