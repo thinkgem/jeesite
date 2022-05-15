@@ -132,7 +132,6 @@
 
       const getSidebarWidth = computed(() => {
         const width = props.sidebarWidth + offsetXmoved.value - 15;
-        console.log(width, props.sidebarMinWidth)
         return width < props.sidebarMinWidth ? props.sidebarMinWidth : width;
       });
 
