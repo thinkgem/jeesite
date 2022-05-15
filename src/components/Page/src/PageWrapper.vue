@@ -37,20 +37,28 @@
           :collapsedWidth="0"
           :collapsible="true"
           :trigger="null"
-          :width="sidebarWidth"
+          :width="getSidebarWidth"
           :breakpoint="sidebarBreakpoint"
           @breakpoint="onBreakpoint"
         >
           <div class="sidebar-content" :style="getSidebarContentStyle">
             <slot name="sidebar"></slot>
           </div>
-          <div class="sidebar-close" v-if="!collapsed" @click="collapsed = !collapsed">
-            <Icon icon="ant-design:double-left-outlined" />
-          </div>
-          <div class="sidebar-open" v-else @click="collapsed = !collapsed">
-            <Icon icon="ant-design:double-right-outlined" />
-          </div>
+          <template v-if="!sidebarResizer">
+            <div class="sidebar-close" v-if="!collapsed" @click="collapsed = !collapsed">
+              <Icon icon="ant-design:double-left-outlined" />
+            </div>
+            <div class="sidebar-open" v-else @click="collapsed = !collapsed">
+              <Icon icon="ant-design:double-right-outlined" />
+            </div>
+          </template>
         </a-layout-sider>
+        <template v-if="sidebarResizer">
+          <Resizer position="left" v-model:collapsed="collapsed" @move="onSiderMove" />
+        </template>
+        <template v-else>
+          <div v-if="!collapsed" style="margin-right: 15px"></div>
+        </template>
         <a-layout-content>
           <slot></slot>
         </a-layout-content>
@@ -83,10 +91,11 @@
   import { useContentHeight } from '/@/hooks/web/useContentHeight';
   import { PageWrapperFixedHeightKey } from '..';
   import { Icon } from '/@/components/Icon';
+  import { Resizer } from '/@/components/Resizer';
 
   export default defineComponent({
     name: 'PageWrapper',
-    components: { PageFooter, PageHeader, Icon },
+    components: { PageFooter, PageHeader, Icon, Resizer },
     inheritAttrs: false,
     props: {
       title: propTypes.string,
@@ -102,6 +111,8 @@
       fixedHeight: propTypes.bool,
       upwardSpace: propTypes.oneOfType([propTypes.number, propTypes.string]).def(0),
       sidebarWidth: propTypes.number.def(230),
+      sidebarResizer: propTypes.bool.def(true),
+      sidebarMinWidth: propTypes.number.def(0),
       sidebarBreakpoint: propTypes.string.def('md'),
     },
     setup(props, { slots, attrs }) {
@@ -112,11 +123,18 @@
       const footerRef = ref(null);
       const { prefixCls } = useDesign('page-wrapper');
       const sidebar = !!slots.sidebar;
+      const offsetXmoved = ref(0);
 
       provide(
         PageWrapperFixedHeightKey,
         computed(() => props.fixedHeight),
       );
+
+      const getSidebarWidth = computed(() => {
+        const width = props.sidebarWidth + offsetXmoved.value - 15;
+        console.log(width, props.sidebarMinWidth)
+        return width < props.sidebarMinWidth ? props.sidebarMinWidth : width;
+      });
 
       const getIsContentFullHeight = computed(() => {
         return props.contentFullHeight || sidebar;
@@ -239,6 +257,11 @@
         if (broken) collapsed.value = true;
       }
 
+      //向右移动是负数
+      function onSiderMove(_event, offsetX: number) {
+        offsetXmoved.value = offsetXmoved.value - offsetX;
+      }
+
       return {
         getContentStyle,
         wrapperRef,
@@ -252,8 +275,10 @@
         omit,
         getContentClass,
         getSidebarContentStyle,
+        getSidebarWidth,
         sidebar,
         collapsed,
+        onSiderMove,
         onBreakpoint,
       };
     },
@@ -321,7 +346,7 @@
 
       &-content {
         // margin: 15px 0 0 15px;
-        margin-right: 15px;
+        // margin-right: 15px;
         height: calc(100% - 29px);
       }
 
@@ -345,7 +370,7 @@
       }
 
       &-close {
-        right: 15px;
+        right: 0;
         border-right-width: 0;
         border-radius: 3px 0 0 3px;
       }

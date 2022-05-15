@@ -187,6 +187,7 @@
   .basic-tree-header {
     border-bottom: 1px solid #f0f0f0;
     min-height: 35px;
+    overflow: hidden;
 
     .jeesite-basic-title {
       font-size: 16px;
