@@ -1,6 +1,6 @@
 <template>
-  <div @mousedown="onMouseDown" class="resizer" :style="getWrapStyleRef">
-    <div class="resiezer-toggler" @click="toggle" title="双击隐藏/显示">
+  <div class="jeesite-resizer" :style="getWrapStyleRef" @mousedown="onMouseDown">
+    <div class="resiezer-toggler" :title="`${t('隐藏')}/${t('显示')}`" @click="toggle">
       <span class="resizer-content">
         <slot v-if="$slots.default"></slot>
         <span v-else>
@@ -12,10 +12,12 @@
 </template>
 <script lang="ts">
   import { computed, defineComponent, reactive, ref, unref, watch } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
   import { Icon } from '/@/components/Icon';
   import { useEventListener } from '/@/hooks/event/useEventListener';
+
   export default defineComponent({
-    name: 'Resizer',
+    name: 'JeeSiteResizer',
     components: { Icon },
     props: {
       position: {
@@ -29,6 +31,7 @@
     },
     emits: ['move', 'update:collapsed'],
     setup(props, { emit }) {
+      const { t } = useI18n();
       const isCollapsed = ref<Boolean>(false);
       const drift = reactive({
         lastX: 0,
@@ -86,8 +89,6 @@
         wait: 0,
       });
 
-      // document.addEventListener('mouseup', onMouseUp);
-
       function onMouseDown(event) {
         if (isCollapsed.value) {
           return;
@@ -118,6 +119,7 @@
       }
 
       return {
+        t,
         getWrapStyleRef,
         ...unref(props),
         getCaretIcon,
@@ -127,18 +129,19 @@
     },
   });
 </script>
-
 <style lang="less">
-  .resizer {
+  .jeesite-resizer {
     z-index: 999;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2px;
+    padding: 1px;
+
     .resiezer-toggler {
-      padding: 2px;
       cursor: pointer;
+
       .resizer-content {
+        padding: 15px 1px;
         font-size: 10px;
         color: @text-color-secondary;
         -moz-user-select: none;
@@ -147,6 +150,7 @@
         -khtml-user-select: none;
         user-select: none;
       }
+
       :hover {
         background-color: @border-color-base;
         border-radius: @border-radius-base;

@@ -44,8 +44,21 @@
           <div class="sidebar-content" :style="getSidebarContentStyle">
             <slot name="sidebar"></slot>
           </div>
+          <template v-if="!sidebarResizer">
+            <div class="sidebar-close" v-if="!collapsed" @click="collapsed = !collapsed">
+              <Icon icon="ant-design:double-left-outlined" />
+            </div>
+            <div class="sidebar-open" v-else @click="collapsed = !collapsed">
+              <Icon icon="ant-design:double-right-outlined" />
+            </div>
+          </template>
         </a-layout-sider>
-        <Resizer position="left" v-model:collapsed="collapsed" @move="onSiderMove" />
+        <template v-if="sidebarResizer">
+          <Resizer position="left" v-model:collapsed="collapsed" @move="onSiderMove" />
+        </template>
+        <template v-else>
+          <div v-if="!collapsed" style="margin-right: 15px"></div>
+        </template>
         <a-layout-content>
           <slot></slot>
         </a-layout-content>
@@ -77,11 +90,12 @@
   import { PageHeader } from 'ant-design-vue';
   import { useContentHeight } from '/@/hooks/web/useContentHeight';
   import { PageWrapperFixedHeightKey } from '..';
+  import { Icon } from '/@/components/Icon';
   import { Resizer } from '/@/components/Resizer';
 
   export default defineComponent({
     name: 'PageWrapper',
-    components: { PageFooter, PageHeader, Resizer },
+    components: { PageFooter, PageHeader, Icon, Resizer },
     inheritAttrs: false,
     props: {
       title: propTypes.string,
@@ -97,6 +111,8 @@
       fixedHeight: propTypes.bool,
       upwardSpace: propTypes.oneOfType([propTypes.number, propTypes.string]).def(0),
       sidebarWidth: propTypes.number.def(230),
+      sidebarResizer: propTypes.bool.def(true),
+      sidebarMinWidth: propTypes.number.def(0),
       sidebarBreakpoint: propTypes.string.def('md'),
     },
     setup(props, { slots, attrs }) {
@@ -115,7 +131,9 @@
       );
 
       const getSidebarWidth = computed(() => {
-        return props.sidebarWidth + offsetXmoved.value;
+        const width = props.sidebarWidth + offsetXmoved.value - 15;
+        console.log(width, props.sidebarMinWidth)
+        return width < props.sidebarMinWidth ? props.sidebarMinWidth : width;
       });
 
       const getIsContentFullHeight = computed(() => {
@@ -238,8 +256,9 @@
       function onBreakpoint(broken: boolean) {
         if (broken) collapsed.value = true;
       }
+
+      //向右移动是负数
       function onSiderMove(_event, offsetX: number) {
-        //向右移动是负数
         offsetXmoved.value = offsetXmoved.value - offsetX;
       }
 
@@ -351,7 +370,7 @@
       }
 
       &-close {
-        right: 15px;
+        right: 0;
         border-right-width: 0;
         border-radius: 3px 0 0 3px;
       }
