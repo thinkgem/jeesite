@@ -21,78 +21,21 @@
 		</ul>
 	</div>
 	<% if(@Global.getConfig('sys.index.menuStyle', '1') == '2'){ %>
-	<div class="navbar-custom-menu pull-left">
-		<ul class="nav navbar-nav" id="topMenu">
-		<%
-			var p = {parentCode: '0', children: false};
-			menu.tree(p); print(p.html);
-		%>
+	<div class="navbar-custom-menu pull-left" id="topMenu">
+		<ul class="nav navbar-nav">
+			<li class="treeview dropdown" id="topMenuMore" style="position:relative;">
+				<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+					<i class="fa fa-fw icon-options"></i></span>
+				</a>
+				<ul class="treeview-menu dropdown-menu" style="left:0;">
+					<%
+					var p = {parentCode: '0', children: false};
+					menu.tree(p); print(p.html);
+					%>
+				</ul>
+			</li>
 		</ul>
-		<script>
-			$(function(){
-				$('#topMenu').on('click', '.addTabPage', function (e) {
-					$('#topMenu li').removeClass('active');
-					$(this).closest('li').addClass('active');
-					var code = $(this).data("code");
-					js.cookie('currentMenuCode', code); // 保存当前菜单ID
-					if ($("#leftMenu-" + code).length > 0){
-						$("#leftMenu > ul").hide();
-						$("#leftMenu-" + code).show();
-						refreshSidebar(code);
-					}else{
-						js.ajaxSubmit('${ctx}/index/menuTree?parentCode=' + code
-									+ '&t=' + new Date().getTime(), function(data){
-							if (data && data.indexOf('"result":"login"') == -1){
-								$("#leftMenu > ul").hide();
-								$("#leftMenu").append(data);
-								// 如果是初次加载，则选中上次打开的菜单
-								if($('.sidebar-menu').length == 1){
-									$(window).trigger("hashchange");
-								}
-								refreshSidebar(code);
-							}else{
-								location = '${ctx}/login';
-							}
-						}, 'html');
-					}
-				});
-				var refreshSidebar = function(code){
-					if(js.trim($("#leftMenu-" + code).text()) == ''){
-						$('.main-sidebar,.logo small,.tabpanel_tab_content').hide();
-						$('.content-wrapper').css("cssText","margin-left:0!important;");
-						if (window.initMenu && $(window).width() <= 767 && $('body').hasClass('sidebar-open')){
-							$('[data-toggle="push-menu"]').click();
-						}
-					}else{
-						$('.main-sidebar,.logo small,.tabpanel_tab_content').show();
-						$('.content-wrapper').css('margin-left', '');
-						if (window.initMenu && $(window).width() <= 767 && !$('body').hasClass('sidebar-open')){
-							$('[data-toggle="push-menu"]').click();
-						}
-						var li = $("#leftMenu-" + code + " > li");
-						if (!li.hasClass('menu-open')){
-							li = li.eq(0).find('> a');
-							if (li.data('href') == 'blank'){
-								li.click();
-							}
-						}
-					}
-					$('#leftMenu').triggerHandler('initd');
-					window.initMenu = true;
-					$(window).resize();
-				}
-				// 激活存储的顶部当前菜单项
-				var currentMenuCode = js.cookie('currentMenuCode'), currentMenu;
-				if (currentMenuCode && currentMenuCode != ''){
-					currentMenu = $("#topMenu .addTabPage[data-code="+currentMenuCode+"]");
-				}
-				if (currentMenu && currentMenu.length > 0 && window.location.hash != ''){
-					currentMenu.click();
-				}else{
-					$("#topMenu .addTabPage:first").click(); 
-				}
-			});
-		</script>
+		<script src="${ctxStatic}/modules/sys/topMenu.js"></script>
 	</div>
 	<% } %>
 </nav>

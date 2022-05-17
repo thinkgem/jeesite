@@ -3,44 +3,7 @@
 		<div class="pull-left image">
 			<img data-href="${ctx}/sys/user/info" data-title="${text('个人中心')}" class="img-circle pointer"
 				src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}">
-			<script>
-				$(function(){
-					if ($(window).width() <= 767){
-						$('body').append('<div class="btn btn-default full-screen-menu"><i class="fa fa-bars"></i></div>');
-					}
-					$('.full-screen-menu,.user-panel .img-circle').click(function(){
-						if (!$('.main-header').is(':hidden')){
-							$('.main-header').slideUp(100, function(){
-								if (($(window).width() > 767 && !$('body').hasClass('sidebar-collapse'))
-										|| $('body').hasClass('sidebar-open')){
-									$('[data-toggle="push-menu"]').click();
-								}
-							});
-						}else{
-							$('.main-header').slideDown(100, function(){
-								setTimeout(function(){
-									if (${@Global.getConfig('sys.index.sidebarStyle', '1') != '2'}){
-										$('[data-toggle="push-menu"]').click();
-									}
-								},100);
-							});
-						}
-						setTimeout(function(){
-							$('#tabpanel').tabPanel('resize');
-						},500);
-					});
-					$('#leftMenu').on('click', '.addTabPage', function (e) {
-						if ($(window).width() <= 767 && $('body').hasClass('sidebar-open')){
-							var href = $(this).data('href');
-				        	if (href != '' && href != 'blank'){
-				        		if ($(window).width() <= 767){
-					        		$('.full-screen-menu').click();
-				        		}
-							}
-						}
-					});
-				})
-			</script>
+			<script src="${ctxStatic}/modules/sys/leftMenu.js"></script>
 		</div>
 		<div class="pull-left info">
 			<p>${user.userName}</p>
@@ -69,8 +32,8 @@
 		<% if(@Global.getConfig('sys.index.menuStyle', '1') == '1'){ %>
 		<ul class="sidebar-menu">
 			<% 
-				var p = {parentCode: '0'};
-				menu.tree(p); print(p.html);
+			var p = {parentCode: '0'};
+			menu.tree(p); print(p.html);
 			%>
 		</ul>
 		<% } %>
