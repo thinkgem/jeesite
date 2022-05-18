@@ -34,7 +34,7 @@
 	</properties>
 
 	<dependencies>
-		
+
 		<!-- 核心模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
