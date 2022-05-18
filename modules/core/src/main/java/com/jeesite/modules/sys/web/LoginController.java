@@ -109,12 +109,12 @@ public class LoginController extends BaseController{
 		LoginInfo loginInfo = UserUtils.getLoginInfo();
 		
 		// 如果已经登录，则跳转到管理首页
-		if(loginInfo != null){
-			String queryString = request.getQueryString();
-			queryString = queryString == null ? "" : "?" + queryString;
-			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
-			return null;
-		}
+//		if(loginInfo != null){ // 注释掉，已经登录的账号，正常返回登录失败信息，方便前端判断。
+//			String queryString = request.getQueryString();
+//			queryString = queryString == null ? "" : "?" + queryString;
+//			ServletUtils.redirectUrl(request, response, adminPath + "/index" + queryString);
+//			return null;
+//		}
 		
 		// 获取登录失败数据
 		model.addAllAttributes(FormFilter.getLoginFailureData(request, response));
