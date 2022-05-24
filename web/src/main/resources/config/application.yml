@@ -27,6 +27,7 @@ server:
   servlet:
     context-path: /js
     register-default-servlet: false
+    encoding.enabled: true
   tomcat:
     uri-encoding: UTF-8
     # 表单请求数据的最大大小
@@ -254,6 +255,11 @@ spring:
   # 打印横幅
   main:
     bannerMode: "off"
+
+  # MVC 映射匹配策略
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
     
 #  # Redis 连接参数 （RedisProperties）
 #  redis:
