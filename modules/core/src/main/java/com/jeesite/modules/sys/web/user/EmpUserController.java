@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
@@ -61,6 +62,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 2017-03-26
  */
 @Controller
+@Api(tags = "EmpUser - 员工用户管理")
 @RequestMapping(value = "${adminPath}/sys/empUser")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class EmpUserController extends BaseController {

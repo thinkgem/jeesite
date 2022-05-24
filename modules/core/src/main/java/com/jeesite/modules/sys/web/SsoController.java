@@ -7,6 +7,7 @@ package com.jeesite.modules.sys.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -32,6 +33,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 2020-9-19
  */
 @Controller
+@Api(tags = "SSO - 单点登录")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class SsoController extends BaseController{
 	

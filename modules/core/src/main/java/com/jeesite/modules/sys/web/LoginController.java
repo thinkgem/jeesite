@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jeesite.modules.sys.utils.CorpUtils;
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -44,6 +45,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 2020-9-19
  */
 @Controller
+@Api(tags = "Login - 登录公共")
 @RequestMapping(value = "${adminPath}")
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class LoginController extends BaseController{
