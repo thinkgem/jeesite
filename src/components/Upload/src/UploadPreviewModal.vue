@@ -31,7 +31,7 @@
     setup(props, { emit }) {
       const [register, { closeModal }] = useModalInner();
       const { t } = useI18n();
-      const { apiUrl } = useGlobSetting();
+      const { ctxAdminPath } = useGlobSetting();
       const fileList = ref<FileUpload[]>([]);
 
       watch(
@@ -63,12 +63,7 @@
 
       // 下载
       function handleDownload(record: FileUpload) {
-        const { fileUrl } = record;
-        let url = fileUrl || '';
-        if (url.indexOf('://') == -1) {
-          url = apiUrl + url;
-        }
-        downloadByUrl({ url });
+        downloadByUrl({ url: ctxAdminPath + '/file/download/' + record.id });
       }
 
       return {
@@ -84,6 +79,11 @@
 </script>
 <style lang="less">
   .upload-preview-modal {
+    .file-table-td {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
     .ant-upload-list {
       display: none;
     }
