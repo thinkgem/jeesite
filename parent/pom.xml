@@ -24,9 +24,9 @@
 		<commons-io.version>2.11.0</commons-io.version>
 		<commons-text.version>1.9</commons-text.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
-		<fst.version>2.57</fst.version>
-		<fastjson.version>1.2.80</fastjson.version>
 		<commons-email.version>1.5</commons-email.version>
+		<fst.version>2.57</fst.version>
+		<fastjson.version>1.2.83</fastjson.version>
 		<!-- <jackson.version>2.12.6</jackson.version> -->
 		<!-- <activation.version>1.1.1</activation.version> -->
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
@@ -44,7 +44,7 @@
 		<mybatis.version>3.5.9</mybatis.version>
 		<mybatis-spring.version>2.0.7</mybatis-spring.version>
 		<jsqlparser.version>4.4</jsqlparser.version>
-		<druid.version>1.2.9</druid.version>
+		<druid.version>1.2.10</druid.version>
 		<shiro.version>1.9.0</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<swagger.version>1.6.0</swagger.version>
