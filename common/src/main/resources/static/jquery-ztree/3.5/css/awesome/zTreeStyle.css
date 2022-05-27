@@ -116,3 +116,8 @@ ul.ztree.zTreeDragUL {margin:0;padding:0;position:absolute;width:auto;height:aut
 .ztree li span.button.chk[class$="focus"]:before {font-weight:bold;}
 .ztree li span.button.chk[class$="disable"]:before {color:#aaa;}
 .ztree li a.curSelectedNode, .ztree li a.tmpTargetNode_inner {height:26px;}
+
+.skin-dark .ztree li a {color:#ddd}
+.skin-dark .ztree li span.button:before {color:#aaa}
+.skin-dark .ztree li a.curSelectedNode {background-color:#2975bc;color:#eee;}
+.skin-dark .ztree li a.curSelectedNode span.button:before {color:#eee;}

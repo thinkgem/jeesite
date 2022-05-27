@@ -25,3 +25,6 @@
 .iradio_minimal-grey {background-image:url(grey@2x.png);
 	-webkit-background-size:200px 20px;background-size:200px 20px;}
 }
+
+.skin-dark .icheckbox_minimal-grey,
+.skin-dark .iradio_minimal-grey {background-image:url(dark.png);}

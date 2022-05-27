@@ -1,6 +1,3 @@
-<% include('/include/csslibs.html', {libs: libs!}){}
-// 获取当前皮肤样式名称：详见jeesite-common项目下的static/adminlte/css/skins目录
-var defaultSkinName = @Global.getConfig('sys.index.skinName', 'skin-blue-light');
-var skinName = cookie('skinName_'+session.userCode, false, defaultSkinName); %>
+<% include('/include/csslibs.html', {libs: libs!}){} %>
 <link rel="stylesheet" href="${ctxStatic}/adminlte/css/skins/${skinName}.css?${_version}">
 <link rel="stylesheet" href="${ctxStatic}/common/common.css?${_version}">
