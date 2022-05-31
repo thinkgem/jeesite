@@ -174,7 +174,13 @@
 		<#form:checkbox name="tabPageModel" label="${text('取消页签模式')}" class="form-control"/>
 	</li>
 	<li style="float:left;width:100%;" id="skinDark">
-		<button class="full-opacity-hover mt10 form-control" data-skin="skin-dark">${text('黑暗模式')}</button>
+		<% var defaultSkinName = @Global.getConfig('sys.index.skinName', 'skin-blue-light3');
+		var skinName = cookie('skinName', false, defaultSkinName);
+		if (skinName == 'skin-dark') { %>
+			<button class="full-opacity-hover mt10 form-control" data-skin="${defaultSkinName}">${text('浅色模式')}</button>
+		<% }else{ %>
+			<button class="full-opacity-hover mt10 form-control" data-skin="skin-dark">${text('黑暗模式')}</button>
+		<% } %>
 	</li>
 </ul>
 <% } %>
@@ -182,8 +188,6 @@
 $('.full-opacity-hover').click(function(){
 	js.window.location = '${ctx}/switchSkin/' + $(this).data('skin');
 });
-
-$('#skinDark').toggle(!$('html').hasClass('skin-dark'));
 
 $('#formLayerModel')
 .iCheck(js.cookie('formLayerModel') == 'true' ? 'check' : 'uncheck')

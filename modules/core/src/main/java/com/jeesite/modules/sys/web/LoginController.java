@@ -374,12 +374,11 @@ public class LoginController extends BaseController{
 	/**
 	 * 切换主题风格
 	 */
-	@RequiresPermissions("user")
+	//@RequiresPermissions("user")
 	@RequestMapping(value = "switchSkin/{skinName}")
 	public String switchSkin(@PathVariable String skinName, HttpServletRequest request, HttpServletResponse response) {
-		LoginInfo loginInfo = UserUtils.getLoginInfo();
 		if (StringUtils.isNotBlank(skinName) && !"select".equals(skinName)){
-			CookieUtils.setCookie(response, "skinName_" + loginInfo.getId(), skinName);
+			CookieUtils.setCookie(response, "skinName", skinName);
 			return REDIRECT + adminPath + "/index";
 		}
 		return "modules/sys/switchSkin";

@@ -241,6 +241,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .main-header .navbar .dropdown-menu li a {color:#ddd!important;}
 .main-header .navbar .dropdown-menu li a:hover {background: #4c4c4c!important;}
 .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a {border-color:#414141!important;}
+.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>h4 {color:#ddd!important;}
 .navbar-nav>.messages-menu>.dropdown-menu>li.header,.main-header .navbar .dropdown-menu li a,
 .navbar-nav>.notifications-menu>.dropdown-menu>li.footer>a, .navbar-nav>.messages-menu>.dropdown-menu>li.footer>a,
 .navbar-nav>.tasks-menu>.dropdown-menu>li.footer>a {background-color:#1a1a1a!important;border-color:#414141!important;color:#c6c6c6!important;}

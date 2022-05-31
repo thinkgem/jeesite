@@ -441,6 +441,7 @@ shiro:
     ${adminPath}/login = authc
     ${adminPath}/logout = logout
     ${adminPath}/file/** = user
+    ${adminPath}/switchSkin/* = anon
     ${adminPath}/sys/corpAdmin/treeData = anon
     ${adminPath}/cms/* = perms[cms:view]
     ${adminPath}/cms/site/select = user

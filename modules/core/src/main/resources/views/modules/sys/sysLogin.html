@@ -11,6 +11,13 @@
 		</a>
 	</div>
 	<div class="login-box-body">
+		<% var defaultSkinName = @Global.getConfig('sys.index.skinName', 'skin-blue-light3');
+		var skinName = cookie('skinName', false, defaultSkinName);
+		if (skinName == 'skin-dark') { %>
+			<a class="switchSkin" href="${ctxAdmin}/switchSkin/${defaultSkinName}" title="${text('浅色模式')}"><i class="fa fa-toggle-off"></i></a>
+		<% }else{ %>
+			<a class="switchSkin" href="${ctxAdmin}/switchSkin/skin-dark" title="${text('黑暗模式')}"><i class="fa fa-toggle-on"></i></a>
+		<% } %>
 		<% var isLoginByValidCode = @Global.getConfigToBoolean('user.loginByValidCode', 'true'); %>
 		<% if(isLoginByValidCode){ %>
 			<ul id="loginTab" class="nav nav-tabs">
