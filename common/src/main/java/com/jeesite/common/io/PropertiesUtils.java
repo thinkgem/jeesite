@@ -236,6 +236,9 @@ public class PropertiesUtils {
 	 * @author Think Gem
 	 */
 	private String getStandardKey(String key) {
+		if (key.startsWith("spring.shardingsphere.")) {
+			return key;
+		}
         StringBuilder sb = new StringBuilder();
         boolean upperCase = false;
         for (int i = 0; i < key.length(); i++) {
