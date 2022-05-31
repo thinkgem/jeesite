@@ -278,7 +278,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .select2-container--default.select2-container--focus .select2-selection--single,
 .select2-container--default.select2-container--focus .select2-selection--multiple {border-color:#40a9ff!important;box-shadow:0 0 0 2px rgba(24,144,255,.2);}
 .table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color: #1f1f1f;color:#b3b3b3;}
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {border-top-color:#3e3e3e;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {border-color:#3e3e3e;}
 .table-striped>tbody>tr:nth-of-type(odd) {background-color:#262626;}
 .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {background-color:#323232;}
 .ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child,
