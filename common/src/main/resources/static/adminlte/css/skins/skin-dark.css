@@ -210,7 +210,8 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus,
 .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
     background-color:#3e3e3e;border-color:#3e3e3e;color:#eee;}
-.input-group-btn .btn, .treeSearchInput button {background-color:#1a1a1a;border-color:#3c3c3c;color:#ddd;}
+.input-group-btn .btn, .treeSearchInput button, .treeSearchInput button:hover, .treeSearchInput button:focus {
+    background-color:#1a1a1a;border-color:#3c3c3c;color:#ddd;}
 .treeExpandCollapse, .treeExpandCollapse a {background-color:#1a1a1a;color:#8d8d8d;}
 
 .btn-primary, .btn-primary:hover, .btn-primary:active,
