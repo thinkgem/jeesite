@@ -4,23 +4,14 @@
  */
 package com.jeesite.common.collect;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.apache.commons.beanutils.PropertyUtils;
-
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.reflect.ReflectUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * List工具类
@@ -346,27 +337,38 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	 * @author ThinkGem
 	 */
 	public static <T> void pageList(List<T> list, int pageSize, MethodCallback pageCallback){
-		if (list != null && list.size() > 0){
+		if (list == null || pageSize == 0) {
+			return;
+		}
 
-			int count = list.size(), pageNo = 1;
-			int totalPage = (count + pageSize - 1) / pageSize;
-			
-			while(true){
+		int count = list.size();
 
-				// 执行回调，分页后的数据
-				List<T> pageList = getPageList(list, pageNo, pageSize, totalPage);
-				if (pageList.size() > 0){
-					pageCallback.execute(pageList, pageNo, pageSize, totalPage);
-				}
-				
-				// 如果为最后一页，则跳出循环
-				if (pageNo >= totalPage){
-					break;
-				}
-				
-				// 页数加一继续下一页
-				pageNo++;
+		if (count == 0) {
+			return;
+		}
+
+		if (count <= pageSize) {
+			pageCallback.execute(list, 1, pageSize, 1);
+			return;
+		}
+
+		int pageNo = 1, totalPage = (count + pageSize - 1) / pageSize;
+
+		while(true){
+
+			// 执行回调，分页后的数据
+			List<T> pageList = getPageList(list, pageNo, pageSize, totalPage);
+			if (pageList.size() > 0){
+				pageCallback.execute(pageList, pageNo, pageSize, totalPage);
 			}
+
+			// 如果为最后一页，则跳出循环
+			if (pageNo >= totalPage){
+				break;
+			}
+
+			// 页数加一继续下一页
+			pageNo++;
 		}
 	}
 	
