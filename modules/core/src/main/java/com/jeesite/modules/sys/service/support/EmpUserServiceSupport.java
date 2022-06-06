@@ -4,16 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
@@ -33,6 +23,14 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.PostConstruct;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 /**
  * 员工管理Service
@@ -164,7 +162,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 				employeeOffice.setId(IdGen.nextId());
 				employeeOffice.setEmpCode(employee.getEmpCode());
 			});
-			employeeOfficeDao.insertBatch(employee.getEmployeeOfficeList());
+			employeeOfficeDao.insertBatch(employee.getEmployeeOfficeList(), null);
 		}
 	}
 

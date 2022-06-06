@@ -4,11 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
@@ -19,6 +14,10 @@ import com.jeesite.modules.sys.entity.Employee;
 import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.EmployeePost;
 import com.jeesite.modules.sys.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 员工管理Service
@@ -80,7 +79,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 			for (EmployeePost e : employee.getEmployeePostList()){
 				e.setEmpCode(employee.getEmpCode());
 			}
-			employeePostDao.insertBatch(employee.getEmployeePostList());
+			employeePostDao.insertBatch(employee.getEmployeePostList(), null);
 		}
 	}
 	

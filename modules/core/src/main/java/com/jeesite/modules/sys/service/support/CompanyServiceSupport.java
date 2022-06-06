@@ -4,12 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.sys.dao.CompanyDao;
@@ -19,6 +13,11 @@ import com.jeesite.modules.sys.entity.CompanyOffice;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.DataScopeService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 公司管理Service
@@ -85,7 +84,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 			list.forEach(e -> {
 				e.setCompanyCode(company.getCompanyCode());
 			});
-			companyOfficeDao.insertBatch(list);
+			companyOfficeDao.insertBatch(list, null);
 		}
 		// 清理公司相关缓存
 		clearCompanyCache();

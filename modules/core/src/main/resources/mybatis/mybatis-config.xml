@@ -25,13 +25,13 @@
 		<!-- 指定 MyBatis 如何自动映射 数据基表的列 NONE：不映射　PARTIAL:部分  FULL:全部  -->  
 		<setting name="autoMappingBehavior" value="PARTIAL"/>
 		
-		<!-- 这是默认的执行类型  （SIMPLE: 简单； REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）  -->
+		<!-- 这是默认的执行类型（SIMPLE: 简单；REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）  -->
 		<setting name="defaultExecutorType" value="SIMPLE"/>
-		
+
 		<!-- 使用驼峰命名法转换字段。 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 		
-		<!-- 设置本地缓存范围 session:就会有数据的共享  statement:语句范围 (这样就不会有数据的共享 ) defalut:session -->
+		<!-- 设置本地缓存范围 session:就会有数据的共享 statement:语句范围 (这样就不会有数据的共享 ) defalut:session -->
         <setting name="localCacheScope" value="SESSION"/>
 		
         <!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
