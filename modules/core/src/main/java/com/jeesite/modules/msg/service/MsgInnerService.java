@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Transactional(readOnly=true)
 public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	
 	@Autowired
@@ -81,7 +80,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	 * @param msgInner
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(MsgInner msgInner) {
 		if (msgInner.getIsNewRecord()){
 			User user = msgInner.getCurrentUser();
@@ -201,7 +200,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	/**
 	 * 根据消息编号和接受者用户名读取内部消息
 	 */
-	@Transactional(readOnly=false)
+	@Transactional
 	public void readMsgInnerRecord(MsgInner msgInner){
 		MsgInnerRecord msgInnerRecord = new MsgInnerRecord();
 		msgInnerRecord.setMsgInnerId(msgInner.getId());
@@ -219,7 +218,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	 * @param msgInner
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(MsgInner msgInner) {
 		super.updateStatus(msgInner);
 	}
@@ -229,7 +228,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	 * @param msgInner
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(MsgInner msgInner) {
 		super.delete(msgInner);
 	}

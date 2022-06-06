@@ -24,7 +24,6 @@ import java.util.List;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Transactional(readOnly=true)
 public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		implements EmployeeService{
 
@@ -63,7 +62,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	 * 保存数据（插入或更新）
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Employee employee) {
 		if (employee.getIsNewRecord()){
 			if (dao.get(employee) != null){
@@ -87,7 +86,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	 * 删除数据
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Employee employee) {
 		super.delete(employee);
 	}

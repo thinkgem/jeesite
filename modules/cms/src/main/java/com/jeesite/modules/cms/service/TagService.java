@@ -18,7 +18,6 @@ import com.jeesite.modules.cms.entity.Tag;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly=true)
 public class TagService extends CrudService<TagDao, Tag> {
 	
 	/**
@@ -47,7 +46,7 @@ public class TagService extends CrudService<TagDao, Tag> {
 	 * @param tag
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Tag tag) {
 		super.save(tag);
 	}
@@ -57,7 +56,7 @@ public class TagService extends CrudService<TagDao, Tag> {
 	 * @param tag
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(Tag tag) {
 		super.updateStatus(tag);
 	}
@@ -67,7 +66,7 @@ public class TagService extends CrudService<TagDao, Tag> {
 	 * @param tag
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Tag tag) {
 		super.delete(tag);
 	}

@@ -19,7 +19,6 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly=true)
 public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	
 	/**
@@ -48,7 +47,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	 * @param visitLog
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(VisitLog visitLog) {
 		super.save(visitLog);
 		// 保存上传图片
@@ -62,7 +61,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	 * @param visitLog
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(VisitLog visitLog) {
 		super.updateStatus(visitLog);
 	}
@@ -72,7 +71,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	 * @param visitLog
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(VisitLog visitLog) {
 		super.delete(visitLog);
 	}

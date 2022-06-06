@@ -23,7 +23,6 @@ import com.jeesite.modules.sys.entity.DictData;
  * @version 2020-7-7
  */
 @Service
-@Transactional(readOnly = true)
 public class FileTempleteService {
 
 //	public List<String> getTempleteContent(String prefix) throws IOException {

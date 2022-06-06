@@ -20,7 +20,6 @@ import com.jeesite.modules.test.entity.TestTree;
  * @version 2018-04-22
  */
 @Service
-@Transactional(readOnly=true)
 public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	
 	/**
@@ -48,7 +47,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * @param testTree
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(TestTree testTree) {
 		super.save(testTree);
 		// 保存上传图片
@@ -62,7 +61,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * @param testTree
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(TestTree testTree) {
 		super.updateStatus(testTree);
 	}
@@ -72,7 +71,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	 * @param testTree
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(TestTree testTree) {
 		super.delete(testTree);
 	}
