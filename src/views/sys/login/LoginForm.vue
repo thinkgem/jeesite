@@ -181,9 +181,9 @@
   });
 
   async function handleLogin() {
-    const data = await validForm();
-    if (!data) return;
     try {
+      const data = await validForm();
+      if (!data) return;
       loading.value = true;
       const res = await userStore.login(
         toRaw({
