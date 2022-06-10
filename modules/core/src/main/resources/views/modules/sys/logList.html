@@ -128,9 +128,9 @@ $('#dataGrid').dataGrid({
 		{header:'${text("响应时间")}', name:'executeTimeFormat', index:'a.execute_time', width:100, align:"center"}/* ,
 		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
 			var actions = [];
-			<% if(hasPermi('sys:log:edit')){ %>
+			//<% if(hasPermi('sys:log:edit')){ %>
 				actions.push('<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa fa-pencil"></i></a>&nbsp;');
-			<% } %>
+			//<% } %>
 			return actions.join('');
 		}} */
 	],

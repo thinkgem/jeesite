@@ -75,7 +75,7 @@ $('#dataGrid').dataGrid({
 			<% if(isQueryTpl){ %>
 			actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("查看${functionNameSimple}")}"><i class="fa fa-file-text-o"></i></a>&nbsp;');
 			<% }else{ %>
-			\<% if(hasPermi('${permissionPrefix}:edit')){ %>
+			//\<% if(hasPermi('${permissionPrefix}:edit')){ %>
 				actions.push('<a href="\${ctx}/${urlPrefix}/form?${idParam}" class="btnList" title="\${text("编辑${functionNameSimple}")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 				if (row.status == Global.STATUS_NORMAL){
@@ -90,7 +90,7 @@ $('#dataGrid').dataGrid({
 				<% if(table.isTreeEntity){ %>
 				actions.push('<a href="\${ctx}/${urlPrefix}/form?parentCode='+row.id+'" class="btnList" title="\${text("新增下级${functionNameSimple}")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
 				<% } %>
-			\<% } %>
+			//\<% } %>
 			<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 			if (row.status != Global.STATUS_DRAFT){
 				actions.push('<a href="\${ctx}/bpm/bpmRuntime/trace?formKey=${table.optionMap['bpmFormKey']}&bizKey='+row.id+'" class="btnList" title="\${text("流程追踪")}" data-layer="true"><i class="fa fa-file-picture-o"></i></a>&nbsp;');

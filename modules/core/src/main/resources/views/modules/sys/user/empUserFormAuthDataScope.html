@@ -167,8 +167,8 @@ for (var i=0; i<dataScopes.length; i++){
 	});
 }
 // 默认选择节点
-<% for(dataScope in userDataScopeList){ %> 
+//<% for(dataScope in userDataScopeList){ %>
 try{dataScopeTrees['${dataScope.ctrlType}'].checkNode(dataScopeTrees['${dataScope.ctrlType}']
 	.getNodeByParam("id","${dataScope.ctrlData}"), true, false);}catch(e){}
-<% } %>
+//<% } %>
 </script>

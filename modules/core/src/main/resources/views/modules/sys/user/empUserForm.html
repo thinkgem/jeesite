@@ -267,7 +267,7 @@ $("#empOfficeGrid").dataGrid({
 		
 	}
 });
-<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
+//<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 // 加载角色列表
 var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
@@ -287,17 +287,17 @@ var roleGrid = $("#roleGrid").dataGrid({
 		return $('#inputForm .box-body').width()-20;
 	},
 	ajaxSuccess: function(){
-		<% for (role in roleList!){ %>
+		//<% for (role in roleList!){ %>
  		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
-		<% } %>
+		//<% } %>
 	}
 });
-<% } %>
+//<% } %>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
+		//<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
-		<% } %>
+		//<% } %>
 		var empNo = $('#employee_empNo').val();
 		if (empNo == ''){
 			$('#employee_empNo').val($('#loginCode').val());

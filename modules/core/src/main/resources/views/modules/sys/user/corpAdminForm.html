@@ -175,7 +175,7 @@ $('#corpCode_').change(function(){
 var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
 	postData: [
-		{name:'isAll',value:'true'} 	<%  // 显示所有角色（与上方两个条件互斥） %>
+		{name:'isAll',value:'true'} 	//<%  // 显示所有角色（与上方两个条件互斥） %>
 	],
 	columnModel: [
 		{header:'${text("角色名称")}', name:'name', sortable:false, width:100, align:"center"},
@@ -201,9 +201,9 @@ var roleGrid = $("#roleGrid").dataGrid({
 		}
 	},
 	ajaxSuccess: function(){
-		<% for (role in roleList!){ %>
+		//<% for (role in roleList!){ %>
  		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
-		<% } %>
+		//<% } %>
 	}
 });
 </script>

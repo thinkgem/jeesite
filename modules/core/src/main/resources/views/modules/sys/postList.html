@@ -71,7 +71,7 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
 			var actions = [];
-			<% if(hasPermi('sys:post:edit')){ %>
+			//<% if(hasPermi('sys:post:edit')){ %>
 				actions.push('<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" title="${text("编辑岗位")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/post/disable?postCode='+row.postCode+'" class="btnList" title="${text("停用岗位")}" data-confirm="${text("确认要停用该岗位吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -79,7 +79,7 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/sys/post/enable?postCode='+row.postCode+'" class="btnList" title="${text("启用岗位")}" data-confirm="${text("确认要启用该岗位吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/post/delete?postCode='+row.postCode+'" class="btnList" title="${text("删除岗位")}" data-confirm="${text("确认要删除该岗位吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			<% } %>
+			//<% } %>
 			return actions.join('');
 		}}
 	],
