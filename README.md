@@ -265,14 +265,9 @@ spring:
       routes:
         # 测试模块3
         - id: test3
-          uri: lb://jeesite-cloud-module-test3/js/a/test3
+          uri: lb://jeesite-cloud-module-test3
           predicates:
-            - Path=/js/a/test3/**
-        # 测试模块3（系统监控）
-        - id: test3_def
-          uri: lb://jeesite-cloud-module-test3/js/a/jeesite-cloud-module-test3
-          predicates:
-            - Path=/js/a/jeesite-cloud-module-test3/**
+            - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
 ```
 注意：新增的配置请放到 core 基础权限模块之上。
 

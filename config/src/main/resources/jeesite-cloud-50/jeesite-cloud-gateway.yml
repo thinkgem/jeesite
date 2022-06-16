@@ -33,73 +33,31 @@ spring:
       
         # 测试模块1
         - id: test1
-          uri: lb://jeesite-cloud-module-test1/js/a/test1
+          uri: lb://jeesite-cloud-module-test1
           predicates:
-            - Path=/js/a/test1/**
-        # 测试模块1（系统监控）
-        - id: test1_def
-          uri: lb://jeesite-cloud-module-test1/js/a/jeesite-cloud-module-test1
-          predicates:
-            - Path=/js/a/jeesite-cloud-module-test1/**
+            - Path=/js/a/test1/**,/js/a/jeesite-cloud-module-test1/**,/js/static/modules/test1/**
             
         # 测试模块2
         - id: test2
-          uri: lb://jeesite-cloud-module-test2/js/a/test2
+          uri: lb://jeesite-cloud-module-test2
           predicates:
-            - Path=/js/a/test2/**
-        # 测试模块2（系统监控）
-        - id: test2_def
-          uri: lb://jeesite-cloud-module-test2/js/a/jeesite-cloud-module-test2
-          predicates:
-            - Path=/js/a/jeesite-cloud-module-test2/**
+            - Path=/js/a/test2/**,/js/a/jeesite-cloud-module-test2/**,/js/static/modules/test2/**
             
         # 测试模块3
         - id: test3
-          uri: lb://jeesite-cloud-module-test3/js/a/test3
+          uri: lb://jeesite-cloud-module-test3
           predicates:
-            - Path=/js/a/test3/**
-        # 测试模块3（系统监控）
-        - id: test3_def
-          uri: lb://jeesite-cloud-module-test3/js/a/jeesite-cloud-module-test3
-          predicates:
-            - Path=/js/a/jeesite-cloud-module-test3/**
+            - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
             
         # 业务流程模块
         - id: bpm
-          uri: lb://jeesite-cloud-module-bpm/js/a/bpm
+          uri: lb://jeesite-cloud-module-bpm
           predicates:
-            - Path=/js/a/bpm/**
-        # 业务流程模块（流程管控）
-        - id: bpm_mgr
-          uri: lb://jeesite-cloud-module-bpm/js/bpm
-          predicates:
-            - Path=/js/bpm/**
-        - id: bpm_api
-          uri: lb://jeesite-cloud-module-bpm/js/inner/api/bpm
-          predicates:
-            - Path=/js/inner/api/bpm/**
-        - id: bpm_static
-          uri: lb://jeesite-cloud-module-bpm/js/static/modules/bpm
-          predicates:
-            - Path=/js/static/modules/bpm/**
-        - id: bpm_static_tag
-          uri: lb://jeesite-cloud-module-bpm/js/static/htmltags/bpm
-          predicates:
-            - Path=/js/static/htmltags/bpm/**
-        # 业务流程模块（系统监控）
-        - id: bpm_def
-          uri: lb://jeesite-cloud-module-bpm/js/a/jeesite-cloud-module-bpm
-          predicates:
-            - Path=/js/a/jeesite-cloud-module-bpm/**
-        # 业务流程模块（OA实例）
-        - id: bpm_oa_test
-          uri: lb://jeesite-cloud-module-bpm/js/a/oa/oaLeave
-          predicates:
-            - Path=/js/a/oa/oaLeave/**
+            - Path=/js/a/bpm/**,/js/bpm/**,/js/inner/api/bpm/**,/js/static/modules/bpm/**,/js/static/htmltags/bpm/**,/js/a/jeesite-cloud-module-bpm/**,/js/a/oa/oaLeave/**
             
         # 基础权限模块
         - id: core
-          uri: lb://jeesite-cloud-module-core/js
+          uri: lb://jeesite-cloud-module-core
           predicates:
             - Path=/js/**
 
