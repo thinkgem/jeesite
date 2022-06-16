@@ -154,7 +154,7 @@
 
       function addFileItem(record: FileItem) {
         const { maxNumber } = props;
-        if ((fileItemList.value.length + props.previewFileList?.length ?? 0) > maxNumber) {
+        if ((fileItemList.value.length + props.previewFileList?.length ?? 0) >= maxNumber) {
           createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
           return;
         }
