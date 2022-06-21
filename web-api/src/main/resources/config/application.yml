@@ -594,7 +594,7 @@ shiro:
 #  isGenerateNewSessionAfterLogin: false
 #
 #  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
-#  innerFilter.allowIp: 127.0.0.1
+#  innerFilterAllowRemoteAddrs: 127.0.0.1
 
   # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
   # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
