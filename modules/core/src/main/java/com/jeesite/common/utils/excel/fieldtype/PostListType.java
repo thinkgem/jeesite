@@ -31,6 +31,7 @@ public class PostListType implements FieldType {
 	/**
 	 * 获取对象值（导入）
 	 */
+	@Override
 	public Object getValue(String val) {
 		List<String> list = new ArrayList<String>();
 		for (String s : StringUtils.split(val, ",")) {
@@ -46,6 +47,7 @@ public class PostListType implements FieldType {
 	/**
 	 * 设置对象值（导出）
 	 */
+	@Override
 	public String setValue(Object val) {
 		if (val != null) {
 			@SuppressWarnings("unchecked")

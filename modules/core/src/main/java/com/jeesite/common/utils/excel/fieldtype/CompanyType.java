@@ -27,6 +27,7 @@ public class CompanyType implements FieldType {
 	/**
 	 * 获取对象值（导入）
 	 */
+	@Override
 	public Object getValue(String val) {
 		for (Company e : list){
 			if (StringUtils.trimToEmpty(val).equals(e.getCompanyName())){
@@ -39,6 +40,7 @@ public class CompanyType implements FieldType {
 	/**
 	 * 设置对象值（导出）
 	 */
+	@Override
 	public String setValue(Object val) {
 		if (val != null && ((Company)val).getCompanyName() != null){
 			return ((Company)val).getCompanyName();

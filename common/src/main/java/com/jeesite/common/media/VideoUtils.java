@@ -170,7 +170,7 @@ public class VideoUtils {
 		command.add(getFfmpegFile());
 		command.add("-i");
 		command.add(inputFile);
-		if ((imgFileExtension.toLowerCase()).equals("gif")) {
+		if ("gif".equals(imgFileExtension.toLowerCase())) {
 			command.add("-vframes");
 			command.add("30");
 			command.add("-f");

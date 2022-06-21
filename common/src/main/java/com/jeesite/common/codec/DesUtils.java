@@ -74,15 +74,15 @@ public class DesUtils {
 			String encData = "";
 			List firstKeyBt = null, secondKeyBt = null, thirdKeyBt = null;
 			int firstLength = 0, secondLength = 0, thirdLength = 0;
-			if (firstKey != null && !firstKey.equals("")) {
+			if (firstKey != null && !"".equals(firstKey)) {
 				firstKeyBt = getKeyBytes(firstKey);
 				firstLength = firstKeyBt.size();
 			}
-			if (secondKey != null && !secondKey.equals("")) {
+			if (secondKey != null && !"".equals(secondKey)) {
 				secondKeyBt = getKeyBytes(secondKey);
 				secondLength = secondKeyBt.size();
 			}
-			if (thirdKey != null && !thirdKey.equals("")) {
+			if (thirdKey != null && !"".equals(thirdKey)) {
 				thirdKeyBt = getKeyBytes(thirdKey);
 				thirdLength = thirdKeyBt.size();
 			}
@@ -91,7 +91,7 @@ public class DesUtils {
 				if (leng < 4) {
 					int[] bt = strToBt(data);
 					int[] encByte = null;
-					if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !firstKey.equals("")) {
+					if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey) && thirdKey != null && !"".equals(firstKey)) {
 						int[] tempBt;
 						int x, y, z;
 						tempBt = bt;
@@ -106,7 +106,7 @@ public class DesUtils {
 						}
 						encByte = tempBt;
 					} else {
-						if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
+						if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey)) {
 							int[] tempBt;
 							int x, y;
 							tempBt = bt;
@@ -118,7 +118,7 @@ public class DesUtils {
 							}
 							encByte = tempBt;
 						} else {
-							if (firstKey != null && !firstKey.equals("")) {
+							if (firstKey != null && !"".equals(firstKey)) {
 								int[] tempBt;
 								int x = 0;
 								tempBt = bt;
@@ -138,7 +138,7 @@ public class DesUtils {
 						String tempData = data.substring(i * 4 + 0, i * 4 + 4);
 						int[] tempByte = strToBt(tempData);
 						int[] encByte = null;
-						if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !thirdKey.equals("")) {
+						if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey) && thirdKey != null && !"".equals(thirdKey)) {
 							int[] tempBt;
 							int x, y, z;
 							tempBt = tempByte;
@@ -153,7 +153,7 @@ public class DesUtils {
 							}
 							encByte = tempBt;
 						} else {
-							if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
+							if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey)) {
 								int[] tempBt;
 								int x, y;
 								tempBt = tempByte;
@@ -165,7 +165,7 @@ public class DesUtils {
 								}
 								encByte = tempBt;
 							} else {
-								if (firstKey != null && !firstKey.equals("")) {
+								if (firstKey != null && !"".equals(firstKey)) {
 									int[] tempBt;
 									int x;
 									tempBt = tempByte;
@@ -182,7 +182,7 @@ public class DesUtils {
 						String remainderData = data.substring(iterator * 4 + 0, leng);
 						int[] tempByte = strToBt(remainderData);
 						int[] encByte = null;
-						if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !thirdKey.equals("")) {
+						if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey) && thirdKey != null && !"".equals(thirdKey)) {
 							int[] tempBt;
 							int x, y, z;
 							tempBt = tempByte;
@@ -197,7 +197,7 @@ public class DesUtils {
 							}
 							encByte = tempBt;
 						} else {
-							if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
+							if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey)) {
 								int[] tempBt;
 								int x, y;
 								tempBt = tempByte;
@@ -209,7 +209,7 @@ public class DesUtils {
 								}
 								encByte = tempBt;
 							} else {
-								if (firstKey != null && !firstKey.equals("")) {
+								if (firstKey != null && !"".equals(firstKey)) {
 									int[] tempBt;
 									int x;
 									tempBt = tempByte;
@@ -237,15 +237,15 @@ public class DesUtils {
 			String decStr = "";
 			List firstKeyBt = null, secondKeyBt = null, thirdKeyBt = null;
 			int firstLength = 0, secondLength = 0, thirdLength = 0;
-			if (firstKey != null && !firstKey.equals("")) {
+			if (firstKey != null && !"".equals(firstKey)) {
 				firstKeyBt = getKeyBytes(firstKey);
 				firstLength = firstKeyBt.size();
 			}
-			if (secondKey != null && !secondKey.equals("")) {
+			if (secondKey != null && !"".equals(secondKey)) {
 				secondKeyBt = getKeyBytes(secondKey);
 				secondLength = secondKeyBt.size();
 			}
-			if (thirdKey != null && !thirdKey.equals("")) {
+			if (thirdKey != null && !"".equals(thirdKey)) {
 				thirdKeyBt = getKeyBytes(thirdKey);
 				thirdLength = thirdKeyBt.size();
 			}
@@ -261,7 +261,7 @@ public class DesUtils {
 					intByte[j] = Integer.parseInt(strByte.substring(j, j + 1));
 				}
 				int[] decByte = null;
-				if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("") && thirdKey != null && !thirdKey.equals("")) {
+				if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey) && thirdKey != null && !"".equals(thirdKey)) {
 					int[] tempBt;
 					int x, y, z;
 					tempBt = intByte;
@@ -276,7 +276,7 @@ public class DesUtils {
 					}
 					decByte = tempBt;
 				} else {
-					if (firstKey != null && !firstKey.equals("") && secondKey != null && !secondKey.equals("")) {
+					if (firstKey != null && !"".equals(firstKey) && secondKey != null && !"".equals(secondKey)) {
 						int[] tempBt;
 						int x, y, z;
 						tempBt = intByte;
@@ -288,7 +288,7 @@ public class DesUtils {
 						}
 						decByte = tempBt;
 					} else {
-						if (firstKey != null && !firstKey.equals("")) {
+						if (firstKey != null && !"".equals(firstKey)) {
 							int[] tempBt;
 							int x, y, z;
 							tempBt = intByte;
@@ -382,37 +382,37 @@ public class DesUtils {
 		 */
 		public String bt4ToHex(String binary) {
 			String hex = "";
-			if (binary.equalsIgnoreCase("0000")) {
+			if ("0000".equalsIgnoreCase(binary)) {
 				hex = "0";
-			} else if (binary.equalsIgnoreCase("0001")) {
+			} else if ("0001".equalsIgnoreCase(binary)) {
 				hex = "1";
-			} else if (binary.equalsIgnoreCase("0010")) {
+			} else if ("0010".equalsIgnoreCase(binary)) {
 				hex = "2";
-			} else if (binary.equalsIgnoreCase("0011")) {
+			} else if ("0011".equalsIgnoreCase(binary)) {
 				hex = "3";
-			} else if (binary.equalsIgnoreCase("0100")) {
+			} else if ("0100".equalsIgnoreCase(binary)) {
 				hex = "4";
-			} else if (binary.equalsIgnoreCase("0101")) {
+			} else if ("0101".equalsIgnoreCase(binary)) {
 				hex = "5";
-			} else if (binary.equalsIgnoreCase("0110")) {
+			} else if ("0110".equalsIgnoreCase(binary)) {
 				hex = "6";
-			} else if (binary.equalsIgnoreCase("0111")) {
+			} else if ("0111".equalsIgnoreCase(binary)) {
 				hex = "7";
-			} else if (binary.equalsIgnoreCase("1000")) {
+			} else if ("1000".equalsIgnoreCase(binary)) {
 				hex = "8";
-			} else if (binary.equalsIgnoreCase("1001")) {
+			} else if ("1001".equalsIgnoreCase(binary)) {
 				hex = "9";
-			} else if (binary.equalsIgnoreCase("1010")) {
+			} else if ("1010".equalsIgnoreCase(binary)) {
 				hex = "A";
-			} else if (binary.equalsIgnoreCase("1011")) {
+			} else if ("1011".equalsIgnoreCase(binary)) {
 				hex = "B";
-			} else if (binary.equalsIgnoreCase("1100")) {
+			} else if ("1100".equalsIgnoreCase(binary)) {
 				hex = "C";
-			} else if (binary.equalsIgnoreCase("1101")) {
+			} else if ("1101".equalsIgnoreCase(binary)) {
 				hex = "D";
-			} else if (binary.equalsIgnoreCase("1110")) {
+			} else if ("1110".equalsIgnoreCase(binary)) {
 				hex = "E";
-			} else if (binary.equalsIgnoreCase("1111")) {
+			} else if ("1111".equalsIgnoreCase(binary)) {
 				hex = "F";
 			}
 
@@ -426,51 +426,51 @@ public class DesUtils {
 		 */
 		public String hexToBt4(String hex) {
 			String binary = "";
-			if (hex.equalsIgnoreCase("0")) {
+			if ("0".equalsIgnoreCase(hex)) {
 				binary = "0000";
-			} else if (hex.equalsIgnoreCase("1")) {
+			} else if ("1".equalsIgnoreCase(hex)) {
 				binary = "0001";
 			}
-			if (hex.equalsIgnoreCase("2")) {
+			if ("2".equalsIgnoreCase(hex)) {
 				binary = "0010";
 			}
-			if (hex.equalsIgnoreCase("3")) {
+			if ("3".equalsIgnoreCase(hex)) {
 				binary = "0011";
 			}
-			if (hex.equalsIgnoreCase("4")) {
+			if ("4".equalsIgnoreCase(hex)) {
 				binary = "0100";
 			}
-			if (hex.equalsIgnoreCase("5")) {
+			if ("5".equalsIgnoreCase(hex)) {
 				binary = "0101";
 			}
-			if (hex.equalsIgnoreCase("6")) {
+			if ("6".equalsIgnoreCase(hex)) {
 				binary = "0110";
 			}
-			if (hex.equalsIgnoreCase("7")) {
+			if ("7".equalsIgnoreCase(hex)) {
 				binary = "0111";
 			}
-			if (hex.equalsIgnoreCase("8")) {
+			if ("8".equalsIgnoreCase(hex)) {
 				binary = "1000";
 			}
-			if (hex.equalsIgnoreCase("9")) {
+			if ("9".equalsIgnoreCase(hex)) {
 				binary = "1001";
 			}
-			if (hex.equalsIgnoreCase("A")) {
+			if ("A".equalsIgnoreCase(hex)) {
 				binary = "1010";
 			}
-			if (hex.equalsIgnoreCase("B")) {
+			if ("B".equalsIgnoreCase(hex)) {
 				binary = "1011";
 			}
-			if (hex.equalsIgnoreCase("C")) {
+			if ("C".equalsIgnoreCase(hex)) {
 				binary = "1100";
 			}
-			if (hex.equalsIgnoreCase("D")) {
+			if ("D".equalsIgnoreCase(hex)) {
 				binary = "1101";
 			}
-			if (hex.equalsIgnoreCase("E")) {
+			if ("E".equalsIgnoreCase(hex)) {
 				binary = "1110";
 			}
-			if (hex.equalsIgnoreCase("F")) {
+			if ("F".equalsIgnoreCase(hex)) {
 				binary = "1111";
 			}
 			return binary;

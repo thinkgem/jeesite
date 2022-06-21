@@ -72,6 +72,7 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	 * @param plainPassword 明文密码
 	 * @return 16位salt密钥  + 40位hash密码
 	 */
+	@Override
 	public String encryptPassword(String plainPassword) {
 		String plain = EncodeUtils.decodeHtml(plainPassword);
 		byte[] salt = Sha1Utils.genSalt(SALT_SIZE);
@@ -85,6 +86,7 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	 * @param password 密文密码
 	 * @return 验证成功返回true
 	 */
+	@Override
 	public boolean validatePassword(String plainPassword, String password) {
 		try{
 			String plain = EncodeUtils.decodeHtml(plainPassword);

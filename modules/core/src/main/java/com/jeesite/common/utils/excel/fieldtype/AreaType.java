@@ -27,6 +27,7 @@ public class AreaType implements FieldType {
 	/**
 	 * 获取对象值（导入）
 	 */
+	@Override
 	public Object getValue(String val) {
 		for (Area e : list){
 			if (StringUtils.trimToEmpty(val).equals(e.getAreaName())){
@@ -39,6 +40,7 @@ public class AreaType implements FieldType {
 	/**
 	 * 获取对象值（导出）
 	 */
+	@Override
 	public String setValue(Object val) {
 		if (val != null && ((Area)val).getAreaName() != null){
 			return ((Area)val).getAreaName();

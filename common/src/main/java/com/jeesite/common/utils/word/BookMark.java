@@ -464,7 +464,7 @@ public class BookMark {
 				// Get the first node and catch it's reference for return if 
 				// the first child node is a style node (w:rPr). 
 				childNode = parentNode.getFirstChild();
-				if (childNode != null && childNode.getNodeName().equals("w:rPr")) {
+				if (childNode != null && "w:rPr".equals(childNode.getNodeName())) {
 					styleNode = childNode;
 				} else {
 					// If the first node was not a style node and there are other 

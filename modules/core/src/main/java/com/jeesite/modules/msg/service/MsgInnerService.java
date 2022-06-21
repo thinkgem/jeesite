@@ -186,6 +186,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 		// 手动触发消息推送任务
 		if (Global.TRUE.equals(Global.getProperty("msg.realtime.enabled"))){
 			msgPushThreadPool.submit(new Runnable() {
+				@Override
 				public void run() {
 					try{
 						MsgPushUtils.getMsgPushTask().execute();

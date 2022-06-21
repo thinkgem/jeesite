@@ -76,7 +76,7 @@ public class WorkDayUtils {
 	 * @return
 	 */
 	public String getChineseWeek(Calendar date) {
-		final String dayNames[] = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+		final String[] dayNames = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
 		int dayOfWeek = date.get(Calendar.DAY_OF_WEEK); 
 		// System.out.println(dayNames[dayOfWeek - 1]);
 		return dayNames[dayOfWeek - 1];

@@ -35,6 +35,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	/**
 	 * 根据名称查询岗位
 	 */
+	@Override
 	public Post getByPostName(Post post) {
 		Post where = new Post();
 		where.setPostName(post.getPostName());

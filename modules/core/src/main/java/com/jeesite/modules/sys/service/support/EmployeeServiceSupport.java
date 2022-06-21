@@ -94,6 +94,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	/**
 	 * 查询当前员工关联的岗位信息
 	 */
+	@Override
 	public List<EmployeePost> findEmployeePostList(Employee employee){
 		EmployeePost employeePost = new EmployeePost();
 		employeePost.setEmpCode(employee.getEmpCode());
@@ -103,6 +104,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	/**
 	 * 查询当前员工关联的附属机构信息
 	 */
+	@Override
 	public List<EmployeeOffice> findEmployeeOfficeList(Employee employee){
 		EmployeeOffice employeeOffice = new EmployeeOffice();
 		employeeOffice.setEmpCode(employee.getEmpCode());
