@@ -90,6 +90,7 @@ export type ComponentType =
   | 'InputCountDown'
   | 'Select'
   | 'TreeSelect'
+  | 'ListSelect'
   | 'RadioButtonGroup'
   | 'RadioGroup'
   | 'Checkbox'

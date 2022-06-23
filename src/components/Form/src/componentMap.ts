@@ -28,6 +28,7 @@ import JeeSiteCheckboxGroup from './components/JeeSiteCheckboxGroup.vue';
 import JeeSiteRadioButtonGroup from './components/JeeSiteRadioButtonGroup.vue';
 import FormGroup from './components/FormGroup.vue';
 
+import { ListSelect } from '/@/components/ListSelect';
 import { BasicUpload } from '/@/components/Upload';
 import { StrengthMeter } from '/@/components/StrengthMeter';
 import { IconPicker } from '/@/components/Icon';
@@ -63,6 +64,7 @@ componentMap.set('StrengthMeter', StrengthMeter);
 componentMap.set('IconPicker', IconPicker);
 componentMap.set('InputCountDown', CountdownInput);
 
+componentMap.set('ListSelect', ListSelect);
 componentMap.set('Upload', BasicUpload);
 componentMap.set('None', Input);
 componentMap.set('Divider', Divider);
