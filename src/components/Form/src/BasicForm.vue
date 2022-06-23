@@ -364,6 +364,12 @@
       }
     }
 
+    .ant-form-item-label > label {
+      white-space: normal;
+      min-height: 32px;
+      height: auto;
+    }
+
     .ant-input-number,
     .ant-calendar-picker {
       width: 100%;
