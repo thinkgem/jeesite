@@ -31,14 +31,13 @@
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { onlineListData, onlineTickOut } from '/@/api/sys/online';
-  import { officeTreeData } from '/@/api/sys/office';
   import { FormProps } from '/@/components/Form';
 
   const { t } = useI18n('sys.log');
   const { showMessage } = useMessage();
   const getTitle = {
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('日志管理'),
+    value: router.currentRoute.value.meta.title || t('在线用户'),
   };
 
   const searchForm: FormProps = {
@@ -48,12 +47,9 @@
       {
         label: t('操作用户'),
         field: 'userCode',
-        component: 'TreeSelect',
+        component: 'ListSelect',
         componentProps: {
-          api: officeTreeData,
-          params: { isLoadUser: true, userIdPrefix: '' },
-          canSelectParent: false,
-          allowClear: true,
+          selectType: 'userSelect',
         },
       },
       {
