@@ -55,7 +55,7 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { ctrlDataTreeData } from '/@/api/sys/empUser';
-  import { officeTreeData } from '/@/api/sys/office';
+  // import { officeTreeData } from '/@/api/sys/office';
   import { secAdminForm, secAdminSave } from '/@/api/sys/secAdmin';
   import { BasicTree, TreeActionType } from '/@/components/Tree';
 
@@ -78,13 +78,21 @@
   const inputFormSchemas: FormSchema[] = [
     {
       label: t('登录账号'),
-      field: 'loginCode',
-      component: 'TreeSelect',
+      field: 'userCode',
+      fieldLabel: 'userName',
+      // component: 'TreeSelect',
+      // componentProps: {
+      //   api: officeTreeData,
+      //   params: { isLoadUser: true, userIdPrefix: '' },
+      //   canSelectParent: false,
+      //   allowClear: true,
+      //   onChange: (userCode) => {
+      //     loadData({ userCode });
+      //   },
+      // },
+      component: 'ListSelect',
       componentProps: {
-        api: officeTreeData,
-        params: { isLoadUser: true, userIdPrefix: '' },
-        canSelectParent: false,
-        allowClear: true,
+        selectType: 'empUserSelect',
         onChange: (userCode) => {
           loadData({ userCode });
         },
@@ -124,11 +132,11 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner((data) => {
+    resetFields();
     loadData(data);
   });
 
   async function loadData(data) {
-    resetFields();
     setDrawerProps({ loading: true });
     const res = await secAdminForm(data);
     record.value = (res.user || {}) as Recordable;
