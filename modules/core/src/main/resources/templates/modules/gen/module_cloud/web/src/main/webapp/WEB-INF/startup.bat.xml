@@ -1,3 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>run-web</name>
+	<filePath>${module.moduleCode}/${module.moduleCode}/src/main/webapp/WEB-INF</filePath>
+	<fileName>startup.bat</fileName>
+	<content><![CDATA[chcp 65001
 @echo off
 rem /**
 rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
@@ -6,7 +14,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [ÐÅÏ¢] ÔËÐÐWeb¹¤³Ì¡£
+echo [ä¿¡æ¯] è¿è¡ŒWebå·¥ç¨‹ã€‚
 echo.
 rem pause
 rem echo.
@@ -16,19 +24,19 @@ cd %~dp0
 
 title %cd%
 
-rem ÉèÖÃJDKÄ¿Â¼
+rem è®¾ç½®JDKç›®å½•
 rem set "JAVA_HOME=%cd%\jdk1.8.0_x64"
 
-rem ÉèÖÃÀà¼ÓÔØÂ·¾¶
+rem è®¾ç½®ç±»åŠ è½½è·¯å¾„
 set "CLASS_PATH=%cd%/../"
 
-rem ÓÅ»¯JVM²ÎÊý
-set "JAVA_OPTS=%JAVA_OPTS% -Xms512m -Xmx1024m"
+rem ä¼˜åŒ–JVMå‚æ•°
+set "JAVA_OPTS=%JAVA_OPTS% -Xms512m -Xmx1024m -Dfile.encoding=utf-8"
 
-rem ·½Ê½Ò»¡¢ÅäÖÃÍâ²¿×Ô¶¨ÒåµÄÊôÐÔÎÄ¼þ£¨½¨Òé£©
+rem æ–¹å¼ä¸€ã€é…ç½®å¤–éƒ¨è‡ªå®šä¹‰çš„å±žæ€§æ–‡ä»¶ï¼ˆå»ºè®®ï¼‰
 rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml"
 
-rem ·½Ê½¶þ¡¢ÅäÖÃ»·¾³Ãû³Æ£¬¼ÓÔØ²»Í¬µÄÊôÐÔÎÄ¼þ
+rem æ–¹å¼äºŒã€é…ç½®çŽ¯å¢ƒåç§°ï¼ŒåŠ è½½ä¸åŒçš„å±žæ€§æ–‡ä»¶
 rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.profiles.active=prod"
 
 if "%JAVA_HOME%" == "" goto noJavaHome
@@ -49,3 +57,6 @@ goto end
 
 :end
 pause
+]]>
+	</content>
+</template>
