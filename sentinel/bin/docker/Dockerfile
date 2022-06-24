@@ -6,14 +6,15 @@ VOLUME /tmp
 
 WORKDIR /app
 
-ADD ./app.yml ./app.yml
-ADD ./maven/web.jar ./app.jar
+#RUN mkdir WEB-INF
+#ADD jeesite.lic ./WEB-INF
+ADD ./maven/web.war ./app.war
 
 #ENV JAVA_OPTS "$JAVA_OPTS -Xms256m -Xmx1024m"
-ENV JAVA_OPTS "$JAVA_OPTS -Dspring.config.location=/app/app.yml"
+ENV JAVA_OPTS "$JAVA_OPTS -Dspring.profiles.active=prod"
 
-ENTRYPOINT java $JAVA_OPTS -jar app.jar
+ENTRYPOINT jar -xvf app.war && rm app.war && cd WEB-INF && sh startup.sh
 
 EXPOSE 9311
 
-#docker run -p 9411:9411 thinkgem/jeesite-cloud-sentinel:5.0
+#docker run -p 9311:9311 thinkgem/jeesite-cloud-sentinel:5.0

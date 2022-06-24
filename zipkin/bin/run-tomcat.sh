@@ -12,4 +12,4 @@ echo ""
 
 cd ..
 MAVEN_OPTS="$MAVEN_OPTS -Xms512m -Xmx1024m"
-mvn clean spring-boot:run -Dmaven.test.skip=true -U
+mvn clean spring-boot:run -Dmaven.test.skip=true

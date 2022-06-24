@@ -1,13 +1,13 @@
+chcp 65001
 @echo off
 rem /**
 rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
 rem  * No deletion without permission, or be held responsible to law.
 rem  *
 rem  * Author: ThinkGem@163.com
-rem  * 
 rem  */
 echo.
-echo [ĞÅÏ¢] ÔËĞĞWeb¹¤³Ì¡£
+echo [ä¿¡æ¯] è¿è¡ŒWebå·¥ç¨‹ã€‚
 echo.
 rem pause
 rem echo.
@@ -17,14 +17,20 @@ cd %~dp0
 
 title %cd%
 
-rem ÓÅ»¯JVM²ÎÊı
-set JAVA_OPTS=-Xms256m -Xmx1024m
+rem è®¾ç½®JDKç›®å½•
+rem set "JAVA_HOME=%cd%\jdk1.8.0_x64"
 
-rem ·½Ê½Ò»¡¢ÅäÖÃÍâ²¿×Ô¶¨ÒåµÄÊôĞÔÎÄ¼ş£¨½¨Òé£©
-rem set JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml
+rem è®¾ç½®ç±»åŠ è½½è·¯å¾„
+set "CLASS_PATH=%cd%/../"
 
-rem ·½Ê½¶ş¡¢ÅäÖÃ»·¾³Ãû³Æ£¬¼ÓÔØ²»Í¬µÄÊôĞÔÎÄ¼ş
-rem set JAVA_OPTS=%JAVA_OPTS% -Dspring.profiles.active=prod
+rem ä¼˜åŒ–JVMå‚æ•°
+set "JAVA_OPTS=%JAVA_OPTS% -Xms512m -Xmx1024m -Dfile.encoding=utf-8"
+
+rem æ–¹å¼ä¸€ã€é…ç½®å¤–éƒ¨è‡ªå®šä¹‰çš„å±æ€§æ–‡ä»¶ï¼ˆå»ºè®®ï¼‰
+rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.config.location=%cd%\app.yml"
+
+rem æ–¹å¼äºŒã€é…ç½®ç¯å¢ƒåç§°ï¼ŒåŠ è½½ä¸åŒçš„å±æ€§æ–‡ä»¶
+rem set "JAVA_OPTS=%JAVA_OPTS% -Dspring.profiles.active=prod"
 
 if "%JAVA_HOME%" == "" goto noJavaHome
 if not "%JAVA_HOME%" == "" goto gotJavaHome
@@ -39,7 +45,7 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-call "%RUN_JAVA%" -cp %cd%/../ %JAVA_OPTS% org.springframework.boot.loader.WarLauncher
+call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.WarLauncher
 goto end
 
 :end

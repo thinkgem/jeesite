@@ -15,6 +15,6 @@ cd %~dp0
 cd ..
 title %cd%
 set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m"
-call mvn clean spring-boot:run -Dmaven.test.skip=true -U
+call mvn clean spring-boot:run -Dmaven.test.skip=true
 
 pause

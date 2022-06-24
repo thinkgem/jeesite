@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>jeesite-cloud-zipkin</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>JeeSite Cloud Zipkin</name>
     <url>http://www.jeesite.com</url>
@@ -53,13 +53,36 @@
     <build>
 		<finalName>${finalName}</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
+
+			<!-- Spring Boot -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
+			</plugin>
+
+			<!-- war插件，war包名称不带版本号 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${finalName}</warName>
+				</configuration>
+			</plugin>
+
+			<!-- Eclipse插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>${eclipse-plugin-download-sources}</downloadSources>
+					<downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
+					<wtpContextName>${finalName}</wtpContextName>
+					<wtpversion>2.0</wtpversion>
+					<jeeversion>6.0</jeeversion>
+				</configuration>
 			</plugin>
         </plugins>
     </build>
@@ -70,13 +93,6 @@
             <name>WangZhen</name>
             <email>thinkgem at 163.com</email>
             <roles><role>Project lead</role></roles>
-            <timezone>+8</timezone>
-        </developer>
-        <developer>
-            <id>长春叭哥</id>
-            <name>YaoHailu</name>
-            <email>admin at jeegit.com</email>
-            <roles><role>Project member</role></roles>
             <timezone>+8</timezone>
         </developer>
     </developers>

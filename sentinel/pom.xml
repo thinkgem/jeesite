@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>jeesite-cloud-sentinel</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>JeeSite Cloud Sentinel</name>
     <url>http://www.jeesite.com</url>
@@ -164,22 +164,11 @@
 
     <build>
 		<finalName>${finalName}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-			</plugin>
-        </plugins>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-
             <resource>
                 <directory>src/main/webapp/</directory>
                 <excludes>
@@ -187,6 +176,39 @@
                 </excludes>
             </resource>
         </resources>
+        <plugins>
+
+            <!-- Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+
+            <!-- war插件，war包名称不带版本号 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warName>${finalName}</warName>
+                </configuration>
+            </plugin>
+
+            <!-- Eclipse插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <downloadSources>${eclipse-plugin-download-sources}</downloadSources>
+                    <downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
+                    <wtpContextName>${finalName}</wtpContextName>
+                    <wtpversion>2.0</wtpversion>
+                    <jeeversion>6.0</jeeversion>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <developers>

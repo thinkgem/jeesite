@@ -14,7 +14,7 @@ cd %~dp0
 
 cd ..
 title %cd%
-set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m -Dfile.encoding=utf-8"
+set "MAVEN_OPTS=%MAVEN_OPTS% -Xms512m -Xmx1024m"
 call mvn clean spring-boot:run -Dmaven.test.skip=true
 
 pause
