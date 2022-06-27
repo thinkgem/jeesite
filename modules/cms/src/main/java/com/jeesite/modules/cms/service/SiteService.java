@@ -20,7 +20,6 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly = true)
 public class SiteService extends CrudService<SiteDao, Site> {
 	
 	/**
@@ -49,7 +48,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void save(Site site) {
 		super.save(site);
 		CmsUtils.removeCache("siteList");
@@ -62,7 +61,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void updateStatus(Site site) {
 		super.updateStatus(site);
 	}
@@ -72,7 +71,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Site site) {
 		super.delete(site);
 	}
@@ -82,7 +81,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * @param site
 	 * @param isRe
 	 */
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Site site, Boolean isRe) {
 		site.setStatus(isRe != null && isRe ? Site.STATUS_NORMAL : Site.STATUS_DELETE);
 		super.delete(site);

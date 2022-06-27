@@ -212,8 +212,9 @@
 			<template>module_cloud/client/bin/package.sh.xml</template>
 			<template>module_cloud/client/src/main/java/package.xml</template>
 			<template>module_cloud/client/pom.xml</template>
-			<template>module_cloud/web/bin/docker-bulid.bat.xml</template>
-			<template>module_cloud/web/bin/docker-bulid.sh.xml</template>
+			<template>module_cloud/web/bin/docker/Dockerfile.xml</template>
+			<template>module_cloud/web/bin/docker-build.bat.xml</template>
+			<template>module_cloud/web/bin/docker-build.sh.xml</template>
 			<template>module_cloud/web/bin/package.bat.xml</template>
 			<template>module_cloud/web/bin/package.sh.xml</template>
 			<template>module_cloud/web/bin/run-tomcat.bat.xml</template>
@@ -226,6 +227,8 @@
 			<template>module_cloud/web/src/main/resources/config/bootstrap.xml</template>
 			<template>module_cloud/web/src/main/resources/config/logback-spring.xml</template>
 			<template>module_cloud/web/src/main/resources/static/static.xml</template>
+			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.bat.xml</template>
+			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.sh.xml</template>
 			<template>module_cloud/web/pom.xml</template>
 		</category>
 	</moduleTplCategory>

@@ -19,7 +19,6 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly=true)
 public class CommentService extends CrudService<CommentDao, Comment> {
 	
 	/**
@@ -48,7 +47,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	 * @param comment
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Comment comment) {
 		super.save(comment);
 		// 保存上传图片
@@ -62,7 +61,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	 * @param comment
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(Comment comment) {
 		super.updateStatus(comment);
 	}
@@ -72,7 +71,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	 * @param comment
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Comment comment) {
 		super.delete(comment);
 	}

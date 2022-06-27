@@ -10,12 +10,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeesite.modules.sys.utils.CorpUtils;
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +36,6 @@ import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
 import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
@@ -43,7 +45,9 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 2020-9-19
  */
 @Controller
+@Api(tags = "Login - 登录公共")
 @RequestMapping(value = "${adminPath}")
+@ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class LoginController extends BaseController{
 	
 	/**
@@ -157,24 +161,18 @@ public class LoginController extends BaseController{
 
 		// 验证下用户权限，以便调用doGetAuthorizationInfo方法，保存单点登录登出句柄
 		Subject subject = SecurityUtils.getSubject();
-		if (subject == null || !subject.isPermitted("user")){
-			if (subject != null){
-				subject.logout();
-			}
+		if (!subject.isPermitted("user")){
+			subject.logout();
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
 			return null;
 		}
 
-		//获取登录用户信息
+		// 获取登录用户信息，未加载shiro模块时会为空，直接访问则提示操作权限不足。
 		LoginInfo loginInfo = UserUtils.getLoginInfo();
-		
-		// 未加载shiro模块时会为空，直接访问则提示操作权限不足。
 		if(loginInfo == null){
-			if (subject != null){
-				subject.logout();
-			}
+			subject.logout();
 			String queryString = request.getQueryString();
 			queryString = queryString == null ? "" : "?" + queryString;
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
@@ -190,10 +188,9 @@ public class LoginController extends BaseController{
 			ServletUtils.redirectUrl(request, response, adminPath + "/login" + queryString);
 			return null;
 		}
-		
+
 		// 获取当前会话对象，并返回一些数据
 		Session session = UserUtils.getSession();
-		model.addAttribute("user", user); // 设置当前用户信息
 		model.addAttribute("user", user); // 设置当前用户信息
 		model.addAttribute("demoMode", Global.isDemoMode());
 		model.addAttribute("useCorpModel", Global.isUseCorpModel());
@@ -377,12 +374,11 @@ public class LoginController extends BaseController{
 	/**
 	 * 切换主题风格
 	 */
-	@RequiresPermissions("user")
+	//@RequiresPermissions("user")
 	@RequestMapping(value = "switchSkin/{skinName}")
 	public String switchSkin(@PathVariable String skinName, HttpServletRequest request, HttpServletResponse response) {
-		LoginInfo loginInfo = UserUtils.getLoginInfo();
 		if (StringUtils.isNotBlank(skinName) && !"select".equals(skinName)){
-			CookieUtils.setCookie(response, "skinName_" + loginInfo.getId(), skinName);
+			CookieUtils.setCookie(response, "skinName", skinName);
 			return REDIRECT + adminPath + "/index";
 		}
 		return "modules/sys/switchSkin";

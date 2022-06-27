@@ -5,10 +5,10 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-root</artifactId>
-	<version>5.0.1-SNAPSHOT</version>
+	<version>5.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
-	<name>JeeSite</name>
+	<name>JeeSite Root</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
@@ -19,6 +19,7 @@
         <module>../modules/cms</module>
         <module>../web</module>
         <module>../web-api</module>
+        <module>../web-fast</module>
     </modules>
 	
 	<developers>  

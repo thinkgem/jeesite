@@ -25,7 +25,7 @@
 
 ## 平台介绍
 
-JeeSite 快速开发平台，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，后端基于经典组合 Spring Boot、Shiro、MyBatis，前端采用 Beetl、Bootstrap、AdminLTE 经典开发模式，或者分离版 Vue3、Vite、Ant Design Vue、TypeScript、Vben Admin 最先进技术栈。提供在线代码生成功能，包括模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计，微内核和插件架构，模块增减便捷；界面无刷新，一键换肤；众多账号安全设置，密码策略；文件在线预览；消息推送；多元化第三方登录；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务应用。
+JeeSite 快速开发平台，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，后端基于经典组合 Spring Boot、Shiro、MyBatis，前端采用 Beetl、Bootstrap、AdminLTE 经典开发模式，或者分离版 Vue3、Vite、Ant Design Vue、TypeScript、Vben Admin 最先进技术栈。提供在线代码生成功能，可自动创建业务模块工程和微服务模块工程，自动生成前端代码和后端代码；包括功能模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。采用松耦合设计，微内核和插件架构，模块增减便捷；界面无刷新，一键换肤；众多账号安全设置，密码策略；文件在线预览；消息推送；多元化第三方登录；在线定时任务配置；支持集群，支持SAAS；支持多数据源；支持读写分离、分库分表；支持微服务应用。
 
 JeeSite 快速开发平台的主要目的是能够让初级的研发人员快速的开发出复杂的业务功能，中高级人员有时间做一些更有用的事情。让开发者注重专注业务，其余有平台来封装技术细节，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。
 
@@ -41,7 +41,7 @@ JeeSite 功能全，知识点非常多，也非常少。因为她使用的都是
 
 JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，封装不是限制你去做一些事情，而是在便捷的同时，也具有较好的扩展性，在不具备一些功能的情况下，JeeSite 提供了扩展接口，提供了原生调用方法。
 
-大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重着一块，JeeSite 也一样具备强大的扩展性。
+大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重这一点，JeeSite 也一样具备强大的扩展性。
 
 * 至今 JeeSite 平台架构已经非常稳定。
 * JeeSite 精益求精，用心打磨每一个细节。
@@ -51,14 +51,14 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.5、Spring Framework 5.3、Apache Shiro 1.8、J2Cache
+* 主框架：Spring Boot 2.5、Spring Framework 5.3、Apache Shiro 1.9、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.3（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
 * 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌浏览器、火狐浏览器、国产浏览器 等
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
-* JeeSite Vue：<http://jeesite.com/docs/jeesite-vue/>
+* JeeSite Vue：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 更多介绍
 
@@ -75,25 +75,44 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * Flowable业务流程模块（BPM）：<http://jeesite.com/docs/bpm/>
 * 内容管理模块（CMS）：<https://gitee.com/thinkgem/jeesite4-cms>
 * 手机端移动端：<https://gitee.com/thinkgem/jeesite4-uniapp>
-* Vue3分离版本：<http://jeesite.com/docs/jeesite-vue/>
+* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 快速体验
 
 ### 在线演示
 
 1. 地址：<http://demo.jeesite.com/>
-2. 账号：system
-3. 密码：admin
 
 ### 本地运行
 
-1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、`MySQL 5.7 or 8.0`（[支持更多数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)）
-2. 执行命令：`git clone https://gitee.com/thinkgem/jeesite4.git` 下载源码（master分支）
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.0_dev.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
+
+### 快速运行
+
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB）
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.0_dev.zip> 并解压
+3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
+4. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
+5. 部署常见问题：<https://jeesite.com/docs/faq/>
+
+### 容器运行
+
+- 拉取 Docker 镜像：
+```
+docker pull thinkgem/jeesite-web
+```
+- 启动脚本：
+```
+docker run -d -p 8980:8980 --name jeesite-web -v /data:/data \
+thinkgem/jeesite-web && docker logs -f jeesite-web
+```
+- 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 
 ### 开发环境
 
@@ -121,7 +140,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 文件在线预览：<https://jeesite.com/docs/filepreview/>
 * 报表设计器：<https://jeesite.com/docs/ureport/>
 * 大屏设计器：<https://jeesite.com/docs/visual/>
-* 三员管理员：<https://jeesite.com/docs/3manager/>
+* 三员管理员：<https://jeesite.com/docs/manager3/>
 * 在线作业调度：<https://jeesite.com/docs/job/>
 * 消息推送：<https://jeesite.com/docs/msg-push-use/>
 * 手机端框架：<https://jeesite.com/docs/uniapp/>
@@ -132,7 +151,6 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 多租户、SaaS服务：<https://jeesite.com/docs/saas-corp-use/>
 * 集群、负载均衡、高可用：<https://jeesite.com/docs/cluster/>
 * Spring Cloud：<https://jeesite.com/docs/springcloud/>
-* 分布式事务 LCN：<https://jeesite.com/docs/springcloud-lcn/>
 * 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
 
 ## 授权协议声明

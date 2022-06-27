@@ -4,16 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
@@ -33,13 +23,20 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.PostConstruct;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 /**
  * 员工管理Service
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Transactional(readOnly=true)
 public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 		implements EmpUserService{
 
@@ -55,8 +52,8 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 */
 	@PostConstruct
 	private void corpModelValid() throws Exception{
-		if (Global.isUseCorpModel() != Global.getPropertyToBoolean("user.useCorpModel", "false")){
-			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，视乎你的当前版本不是JeeSite专业版。\n");
+		if (!Global.isUseCorpModel().equals(Global.getPropertyToBoolean("user.useCorpModel", "false"))){
+			throw new Exception("\n\nuser.useCorpModel=true? 你开启了多租户模式，似乎你的当前版本不是JeeSite专业版。\n");
 		}
 	}
 	
@@ -70,7 +67,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	
 	/**
 	 * 添加数据权限过滤条件
-	 * @param entity 控制对象
+	 * @param empUser 控制对象
 	 * @param ctrlPermi 控制权限类型（拥有的数据权限：DataScope.CTRL_PERMI_HAVE、可管理的数据权限：DataScope.CTRL_PERMI_HAVE）
 	 */
 	@Override
@@ -94,6 +91,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	/**
 	 * 查询全部用户，仅返回基本信息
 	 */
+	@Override
 	public List<EmpUser> findUserList(EmpUser empUser){
 		return dao.findUserList(empUser);
 	}
@@ -101,6 +99,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	/**
 	 * 根据部门编码查询用户，仅返回基本信息
 	 */
+	@Override
 	public List<EmpUser> findUserListByOfficeCodes(EmpUser empUser){
 		return dao.findUserListByOfficeCodes(empUser);
 	}
@@ -108,6 +107,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	/**
 	 * 根据角色编码查询用户，仅返回基本信息
 	 */
+	@Override
 	public List<EmpUser> findUserListByRoleCodes(EmpUser empUser){
 		return dao.findUserListByRoleCodes(empUser);
 	}
@@ -115,6 +115,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	/**
 	 * 根据岗位编码查询用户，仅返回基本信息
 	 */
+	@Override
 	public List<EmpUser> findUserListByPostCodes(EmpUser empUser){
 		return dao.findUserListByPostCodes(empUser);
 	}
@@ -123,12 +124,15 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 * 保存用户员工
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(EmpUser user) {
 		// 1、初始化用户信息
 		if (user.getIsNewRecord()){
-			userService.genId(user, user.getLoginCode());
-			user.setUserCode(user.getUserCode()+"_"+IdGen.randomBase62(4).toLowerCase());
+			// 如果没有设置用户编码，则根据登录名生成一个
+			if (StringUtils.isBlank(user.getUserCode())){
+				userService.genId(user, user.getLoginCode());
+				user.setUserCode(user.getUserCode()+"_"+IdGen.randomBase62(4).toLowerCase());
+			}
 			user.setUserType(EmpUser.USER_TYPE_EMPLOYEE);
 			user.setMgrType(EmpUser.MGR_TYPE_NOT_ADMIN);
 		}
@@ -161,7 +165,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 				employeeOffice.setId(IdGen.nextId());
 				employeeOffice.setEmpCode(employee.getEmpCode());
 			});
-			employeeOfficeDao.insertBatch(employee.getEmployeeOfficeList());
+			employeeOfficeDao.insertBatch(employee.getEmployeeOfficeList(), null);
 		}
 	}
 
@@ -170,7 +174,8 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 * @param file 导入的用户数据文件
 	 * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
 	 */
-	@Transactional(readOnly=false)
+	@Override
+	@Transactional
 	public String importData(MultipartFile file, Boolean isUpdateSupport) {
 		if (file == null){
 			throw new ServiceException(text("请选择导入的数据文件！"));
@@ -241,7 +246,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 * 更新状态
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(EmpUser empUser) {
 		userService.updateStatus(empUser);
 		employeeService.updateStatus(empUser.getEmployee());
@@ -251,7 +256,7 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 * 删除用户
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(EmpUser empUser) {
 		userService.delete(empUser);
 		employeeService.delete(empUser.getEmployee());

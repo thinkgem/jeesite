@@ -4,11 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
@@ -19,13 +14,16 @@ import com.jeesite.modules.sys.entity.Employee;
 import com.jeesite.modules.sys.entity.EmployeeOffice;
 import com.jeesite.modules.sys.entity.EmployeePost;
 import com.jeesite.modules.sys.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 员工管理Service
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Transactional(readOnly=true)
 public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		implements EmployeeService{
 
@@ -64,7 +62,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	 * 保存数据（插入或更新）
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Employee employee) {
 		if (employee.getIsNewRecord()){
 			if (dao.get(employee) != null){
@@ -80,7 +78,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 			for (EmployeePost e : employee.getEmployeePostList()){
 				e.setEmpCode(employee.getEmpCode());
 			}
-			employeePostDao.insertBatch(employee.getEmployeePostList());
+			employeePostDao.insertBatch(employee.getEmployeePostList(), null);
 		}
 	}
 	
@@ -88,7 +86,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	 * 删除数据
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Employee employee) {
 		super.delete(employee);
 	}
@@ -96,6 +94,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	/**
 	 * 查询当前员工关联的岗位信息
 	 */
+	@Override
 	public List<EmployeePost> findEmployeePostList(Employee employee){
 		EmployeePost employeePost = new EmployeePost();
 		employeePost.setEmpCode(employee.getEmpCode());
@@ -105,6 +104,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	/**
 	 * 查询当前员工关联的附属机构信息
 	 */
+	@Override
 	public List<EmployeeOffice> findEmployeeOfficeList(Employee employee){
 		EmployeeOffice employeeOffice = new EmployeeOffice();
 		employeeOffice.setEmpCode(employee.getEmpCode());

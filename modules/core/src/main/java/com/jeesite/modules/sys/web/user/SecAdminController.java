@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,8 +36,9 @@ import com.jeesite.modules.sys.utils.ModuleUtils;
  * @version 2017-12-12
  */
 @Controller
+@Api(tags = "SecAdmin - 二级管理员管理")
 @RequestMapping(value = "${adminPath}/sys/secAdmin")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class SecAdminController extends BaseController {
 
 	@Autowired
@@ -67,7 +69,7 @@ public class SecAdminController extends BaseController {
 
 	@RequiresPermissions("sys:secAdmin:view")
 	@RequestMapping(value = "form")
-	public String form(User user, String op, Model model) {
+	public String form(User user, Model model) {
 		UserDataScope userDataScope = new UserDataScope();
 		userDataScope.setUserCode(user.getUserCode());
 		userDataScope.setCtrlPermi(UserDataScope.CTRL_PERMI_MANAGE);
@@ -88,7 +90,7 @@ public class SecAdminController extends BaseController {
 	@RequiresPermissions("sys:secAdmin:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated User user, String op) {
+	public String save(@Validated User user) {
 		if (User.isSuperAdmin(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}

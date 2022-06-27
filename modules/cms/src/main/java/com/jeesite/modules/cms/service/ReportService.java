@@ -19,7 +19,6 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly=true)
 public class ReportService extends CrudService<ReportDao, Report> {
 	
 	/**
@@ -48,7 +47,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	 * @param report
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Report report) {
 		super.save(report);
 		// 保存上传图片
@@ -62,7 +61,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	 * @param report
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(Report report) {
 		super.updateStatus(report);
 	}
@@ -72,7 +71,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	 * @param report
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Report report) {
 		super.delete(report);
 	}

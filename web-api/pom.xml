@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.0.1-SNAPSHOT</version>
+		<version>5.0.2-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -22,7 +22,7 @@
 	<properties>
 		
 		<finalName>web</finalName><!-- war or jar 包的名称 -->
-		<start-class>com.jeesite.modules.Application</start-class>
+		<start-class>com.jeesite.modules.ApiApplication</start-class>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
@@ -41,27 +41,27 @@
 			<artifactId>jeesite-module-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
+
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
-		<!-- 内容管理模块
+
+		<!-- 内容管理模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-cms</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency> -->
-		
-		<!-- 移动端模块
+		</dependency>
+
+		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-app</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency> -->
+		</dependency>
 		
 		<!-- 文件管理共享（标准版）
 		<dependency>
@@ -83,7 +83,7 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency> -->
-		
+
 	</dependencies>
 	
 	<build>
@@ -99,23 +99,13 @@
 					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-			</plugin> -->
-			
-			<!-- 打包插件, war包名称不带版本号 -->
+
+			<!-- war插件，war包名称不带版本号 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<!-- <packagingExcludes></packagingExcludes>
-					<warSourceExcludes></warSourceExcludes> -->
-					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
 					<warName>${finalName}</warName>
-					<archive>
-						<addMavenDescriptor>false</addMavenDescriptor>
-					</archive>
 				</configuration>
 			</plugin>
 			

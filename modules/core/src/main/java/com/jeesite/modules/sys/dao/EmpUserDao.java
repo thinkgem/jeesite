@@ -9,6 +9,7 @@ import java.util.List;
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.sys.entity.EmpUser;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
  * 员工管理DAO接口
@@ -16,6 +17,7 @@ import com.jeesite.modules.sys.entity.EmpUser;
  * @version 2017-03-25
  */
 @MyBatisDao
+@ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public interface EmpUserDao extends CrudDao<EmpUser> {
 
 	/**

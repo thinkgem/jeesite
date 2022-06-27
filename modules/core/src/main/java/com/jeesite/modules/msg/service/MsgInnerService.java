@@ -4,18 +4,6 @@
  */
 package com.jeesite.modules.msg.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
@@ -28,25 +16,27 @@ import com.jeesite.modules.msg.dao.MsgInnerRecordDao;
 import com.jeesite.modules.msg.entity.MsgInner;
 import com.jeesite.modules.msg.entity.MsgInnerRecord;
 import com.jeesite.modules.msg.entity.MsgPush;
-import com.jeesite.modules.msg.entity.content.AppMsgContent;
-import com.jeesite.modules.msg.entity.content.BaseMsgContent;
-import com.jeesite.modules.msg.entity.content.EmailMsgContent;
-import com.jeesite.modules.msg.entity.content.PcMsgContent;
-import com.jeesite.modules.msg.entity.content.SmsMsgContent;
+import com.jeesite.modules.msg.entity.content.*;
 import com.jeesite.modules.msg.utils.MsgPushUtils;
 import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.EmpUserService;
-
 import io.netty.util.concurrent.DefaultThreadFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 内部消息Service
  * @author ThinkGem
  * @version 2019-03-12
  */
-@Service
-@Transactional(readOnly=true)
 public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	
 	@Autowired
@@ -70,8 +60,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	
 	/**
 	 * 查询分页数据
-	 * @param msgInner 查询条件
-	 * @param msgInner.page 分页对象
+	 * @param msgInner 查询条件；.page 分页对象
 	 * @return
 	 */
 	@Override
@@ -91,7 +80,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	 * @param msgInner
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(MsgInner msgInner) {
 		if (msgInner.getIsNewRecord()){
 			User user = msgInner.getCurrentUser();
@@ -193,15 +182,11 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 				}
 			}
 		});
-		ListUtils.pageList(recordList, 100, new MethodCallback() {
-			@SuppressWarnings("unchecked")
-			public Object execute(Object... objs) {
-				return msgInnerRecordDao.insertBatch((List<MsgInnerRecord>)objs[0]);
-			}
-		});
+		msgInnerRecordDao.insertBatch(recordList, null);
 		// 手动触发消息推送任务
 		if (Global.TRUE.equals(Global.getProperty("msg.realtime.enabled"))){
 			msgPushThreadPool.submit(new Runnable() {
+				@Override
 				public void run() {
 					try{
 						MsgPushUtils.getMsgPushTask().execute();
@@ -216,7 +201,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	/**
 	 * 根据消息编号和接受者用户名读取内部消息
 	 */
-	@Transactional(readOnly=false)
+	@Transactional
 	public void readMsgInnerRecord(MsgInner msgInner){
 		MsgInnerRecord msgInnerRecord = new MsgInnerRecord();
 		msgInnerRecord.setMsgInnerId(msgInner.getId());
@@ -234,7 +219,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	 * @param msgInner
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(MsgInner msgInner) {
 		super.updateStatus(msgInner);
 	}
@@ -244,7 +229,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	 * @param msgInner
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(MsgInner msgInner) {
 		super.delete(msgInner);
 	}

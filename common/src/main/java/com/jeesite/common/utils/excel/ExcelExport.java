@@ -97,7 +97,6 @@ public class ExcelExport implements Closeable{
 	 * 构造函数
 	 * @param title 表格标题，传“空值”，表示无标题
 	 * @param cls 实体对象，通过annotation.ExportField获取标题
-	 * @param type 导出类型（1:导出数据）
 	 */
 	public ExcelExport(String title, Class<?> cls){
 		this(title, cls, Type.EXPORT);

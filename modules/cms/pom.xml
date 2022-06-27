@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.0.1-SNAPSHOT</version>
+		<version>5.0.2-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
@@ -15,10 +15,6 @@
 	<name>JeeSite Module CMS</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
-
-	<properties>
-
-	</properties>
 
 	<dependencies>
 
@@ -29,12 +25,6 @@
 		</dependency>
 		
 	</dependencies>
-
-	<build>
-		<plugins>
-
-		</plugins>
-	</build>
 
 	<developers>
 		<developer>

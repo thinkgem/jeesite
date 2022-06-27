@@ -26,6 +26,8 @@ server:
   port: 8980
   servlet:
     context-path: /js
+    register-default-servlet: false
+    encoding.enabled: true
   tomcat:
     uri-encoding: UTF-8
     # 表单请求数据的最大大小
@@ -38,7 +40,7 @@ server:
 #    threads:
 #      max: 200
 #      min-spare: 10 
-  
+    
   # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
   schemeHttps: false
   
@@ -52,7 +54,7 @@ jdbc:
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
   username: root
   password: 123456
   testSql: SELECT 1
@@ -97,28 +99,28 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # 连接信息加密
-#  encrypt:
-#  
-#    # 加密连接用户名
-#    username: false
-#    # 加密连接密码
-#    password: true
-#
-#  # 数据库连接池配置
-#  pool:
-#  
-#    # 初始化连接数
-#    init: 1
-#    # 最小空闲连接数
-#    minIdle: 3
-#    # 最大激活连接数
-#    maxActive: 20
-#
+  # 连接信息加密
+  encrypt:
+  
+    # 加密连接用户名
+    username: false
+    # 加密连接密码
+    password: true
+
+  # 数据库连接池配置
+  pool:
+  
+    # 初始化连接数
+    init: 1
+    # 最小空闲连接数
+    minIdle: 3
+    # 最大激活连接数
+    maxActive: 20
+
 #    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
 #    maxWait: 60000
 #    
-#    # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
+#    # 从池中取出和归还连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
 #    testOnBorrow: false
 #    testOnReturn: false
 #    
@@ -130,7 +132,7 @@ jdbc:
 #    # 一个连接在池中最大空闲的时间，单位毫秒（30分钟）（4.1.2+）
 #    maxEvictableIdleTimeMillis: 1800000
 #    
-#    #连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作（4.1.8+）
+#    # 连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作（4.1.8+）
 #    keepAlive: false
 #    
 #    # 是否自动回收泄露的连接和超时时间，单位秒（35分钟）（4.0.6+）
@@ -149,11 +151,10 @@ jdbc:
 #    readDataSourceNames: ds_read_01, ds_read_02
 #    # 负载均衡算法（ROUND_ROBIN轮询、RANDOM随机、自定义类名）
 #    loadBalancerAlgorithm: RANDOM
-
+#
 #  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
-#  dataSourceNames: ds_read_01, ds_read_02, ds2
-#  dataSourceNames: ds2
-  
+#  dataSourceNames: ds_read_01, ds_read_02
+#  
 #  # 默认数据源的从库01
 #  ds_read_01:
 #    type: mysql
@@ -179,7 +180,10 @@ jdbc:
 #      init: 1
 #      minIdle: 3
 #      maxActive: 20
-#  
+
+#  # 多数据源名称列表，多个用逗号隔开，使用方法：@MyBatisDao(dataSourceName="ds2")
+#  dataSourceNames: ds2
+#
 #  # 多数据源配置：ds2
 #  ds2:
 #    type: mysql
@@ -225,7 +229,12 @@ jdbc:
 
 #  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
 #  transactionTimeout: 1800
-
+#  
+#  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
+#  tableAndColumn: 
+#    prefixSuffix: "`|`"
+#    forceUpperCase: true
+#
 #  # 表名前缀
 #  tablePrefix: js_
 
@@ -246,6 +255,11 @@ spring:
   # 打印横幅
   main:
     bannerMode: "off"
+
+  # MVC 映射匹配策略
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
     
 #  # Redis 连接参数 （RedisProperties）
 #  redis:
@@ -265,9 +279,15 @@ spring:
 #  # 缓存配置
 #  cache:
 #    # 缓存及会话共享（专业版）
-#    isClusterMode: false
+#    isClusterMode: true
 #    # 清理全部缓存按钮所清理的缓存列表
-#    clearNames: sysCache,corpCache,userCache,cmsCache,msgPcPoolCache,roleCache,fileUploadCache,bpmFormCache
+#    clearNames: sysCache,corpCache,userCache,roleCache,fileUploadCache,msgPcPoolCache,cmsCache,bpmFormCache
+#    # 用户缓存
+#    userCache:
+#      clearTaskPool:
+#        corePoolSize: 5
+#        maxPoolSize: 20
+#        keepAliveSeconds: 60
 
 # 日志配置
 logging:
@@ -285,7 +305,7 @@ logging:
 
 # 分页相关
 #page:
-#
+#  
 #  # 默认每页显示的数据条数
 #  pageSize: 20
 #  
@@ -293,8 +313,8 @@ logging:
 #  maxPageSize: 999
 
 # 用户相关
-#user:
-#  
+user:
+  
 #  # 指定超级管理员编号（研发团队使用的账号）
 #  superAdminCode: system
 #
@@ -306,10 +326,10 @@ logging:
 #  
 #  # 二级管理员的控制权限类型（1拥有的权限 2管理的权限，管理功能包括：用户管理、组织机构、公司管理等）（v4.1.5+）
 #  adminCtrlPermi: 2
-#  
-#  # 多租户模式（SAAS模式）（专业版）
-#  useCorpModel: false
-#  
+  
+  # 多租户模式（SAAS模式）（专业版）
+  useCorpModel: false
+  
 #  # 登录账号是否租户内唯一，否则全局唯一
 #  loginCodeCorpUnique: false
 #
@@ -359,16 +379,16 @@ logging:
 #      expandLevel: -1,
 #      remarks: ""
 #    }]
-#    
+#
 #  # 数据权限调试模式（会输出一些日志）
 #  dataScopeDebug: false
-#    
+#
 #  # 数据权限使用 API 方式实现（适应 Cloud 环境，基础用户表与业务数据表跨库的情况）
 #  # 开启后设置 ctrlDataAttrName 加 AndChildren 后缀，ctrlDataParentCodesAttrName 清空
 #  # 以方便读取树结构数据权限的表时包含子节点，举例如下：
 #  # ctrlDataAttrName: "officeCodesAndChildren", ctrlDataParentCodesAttrName: ""
 #  dataScopeApiMode: false
-
+  
 # 角色管理 
 #role: 
 #  # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
@@ -422,18 +442,18 @@ logging:
 #  updateStatusByModuleStatus: false
 
 # 国际化管理（专业版）
-#lang:
-#  enabled: false
-#  
+lang:
+  enabled: false
+  
 #  # 默认语言（4.1.3+）
 #  defaultLocale: zh_CN
 #  # 默认时区（4.1.3+）
 #  defaultTimeZone: GMT+08:00
   
 # 任务调度（标准版）
-#job:
-#  enabled: false
-#  
+job:
+  enabled: false
+  
 #  # 是否自动启动任务调度（可关闭）
 #  autoStartup: true
 #
@@ -458,7 +478,8 @@ logging:
 #    isClustered: true
 #    dataSourceName: job
 #    clusterCheckinInterval: 1000
-#
+#    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+
 #  # 调度日志
 #  log:
 #    # 计划调度日志
@@ -476,15 +497,15 @@ logging:
 #      enabled: false
 
 # 代码生成
-#gen:
-#  enabled: true
-#  
+gen:
+  enabled: true
+  
 #  # 表名字段名是否强制小写
 #  forceLowerCase: true
 
 # 系统监控
-#state:
-#  enabled: true
+state:
+  enabled: true
 
 #======================================#
 #========= Framework settings =========#
@@ -493,41 +514,41 @@ logging:
 # Shiro 相关
 shiro:
   
-#  #索引页路径
-#  defaultPath: ${shiro.loginUrl}
-#
-#  # 登录相关设置
-#  loginUrl: ${adminPath}/login
-#  logoutUrl: ${shiro.loginUrl}
-#  successUrl: ${adminPath}/index
-#
-##  # Apereo CAS 相关配置（标准版）
-##  casServerUrl: http://127.0.0.1:8981/cas
-##  casClientUrl: http://127.0.0.1:8980/js
-##  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
-##  logoutUrl: ${shiro.casServerUrl}/logout?service=${shiro.loginUrl}
-##  successUrl: ${shiro.casClientUrl}${adminPath}/index
-#
-##  # LDAP 相关设置（标准版）
-##  ldapUrl: ldap://127.0.0.1:389
-##  ldapUserDn: uid={0},ou=users,dc=mycompany,dc=com
-#
-#  # 简单 SSO 登录相关配置
-#  sso:
-#    # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
-#    secretKey: ~
-#    # 是否加密单点登录安全Key
-#    encryptKey: true
-#    # token 时效性，如：1天：yyyyMMdd、1小时：yyyyMMddHH、1分钟：yyyyMMddHHmm
-#    encryptKeyDateFormat: yyyyMMdd
-#
-#  # 登录提交信息加密（如果不需要加密，设置为空即可）
-#  loginSubmit:
-#    # 加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）加密方式：DES（4.1.9及之前版本默认设置）
-#    # v4.2.0+ 开始支持 Base64 加密方式，方便移动端及第三方系统处理认证，可直接设置 Key 为 Base64（4.2.0+默认设置）
-#    #secretKey: thinkgem,jeesite,com
-#    secretKey: Base64
-#    #secretKey: ~
+  # 主页路径
+  defaultPath: ${shiro.loginUrl}
+
+  # 登录相关设置
+  loginUrl: ${adminPath}/login
+  logoutUrl: ${shiro.loginUrl}
+  successUrl: ${adminPath}/index
+
+#  # Apereo CAS 相关配置（标准版）
+#  casServerUrl: http://127.0.0.1:8981/cas
+#  casClientUrl: http://127.0.0.1:8980/js
+#  loginUrl: ${shiro.casServerUrl}?service=${shiro.casClientUrl}${adminPath}/login-cas
+#  logoutUrl: ${shiro.casServerUrl}/logout?service=${shiro.loginUrl}
+#  successUrl: ${shiro.casClientUrl}${adminPath}/index
+
+#  # LDAP 相关设置（标准版）
+#  ldapUrl: ldap://127.0.0.1:389
+#  ldapUserDn: uid={0},ou=users,dc=mycompany,dc=com
+
+  # 简单 SSO 登录相关配置
+  sso:
+    # 如果启用/sso/{username}/{token}单点登录，请修改此安全key并与单点登录系统key一致。
+    secretKey: ~
+    # 是否加密单点登录安全Key
+    encryptKey: true
+    # token 时效性，如：1天：yyyyMMdd、1小时：yyyyMMddHH、1分钟：yyyyMMddHHmm
+    encryptKeyDateFormat: yyyyMMdd
+
+  # 登录提交信息加密（如果不需要加密，设置为空即可）
+  loginSubmit:
+    # 加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）加密方式：DES（4.1.9及之前版本默认设置）
+    # v4.2.0+ 开始支持 Base64 加密方式，方便移动端及第三方系统处理认证，可直接设置 Key 为 Base64（4.2.0+默认设置）
+    #secretKey: thinkgem,jeesite,com
+    secretKey: Base64
+    #secretKey: ~
   
   # 记住我密钥设置，你可以通过 com.jeesite.test.RememberMeKeyGen 类快速生成一个秘钥。
   # 若不设置，则每次启动系统后自动生成一个新秘钥，这样会导致每次重启后，客户端记录的用户信息将失效。
@@ -554,45 +575,61 @@ shiro:
 #  
 #  # 设定允许获取的资源列表（v4.2.3）
 #  #contentSecurityPolicy: "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src 'self' 'unsafe-inline' 'unsafe-eval' data:"
-#  
+
 #  # 是否允许跨域访问 CORS，如果允许，设置允许的域名。v4.2.3 开始支持多个域名和模糊匹配，例如：http://*.jeesite.com,http://*.jeesite.net
-#  #accessControlAllowOrigin: '*'
+#  accessControlAllowOrigin: '*'
 #  
 #  # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
-#  #accessControlAllowMethods: GET, POST, OPTIONS
-#  #accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
-#  #accessControlExposeHeaders: x-remember
-#  
+#  accessControlAllowMethods: GET, POST, OPTIONS
+#  accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
+#  accessControlExposeHeaders: x-remember
+
 #  # 是否允许接收跨域的Cookie凭证数据 CORS
-#  #accessControlAllowCredentials: false
+#  accessControlAllowCredentials: false
 #  
 #  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
-#  #allowReferers: http://127.0.0.1,http://localhost
+#  allowReferers: http://127.0.0.1,http://localhost
 #
 #  # 是否在登录后生成新的Session（默认false）
 #  isGenerateNewSessionAfterLogin: false
 #
 #  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
-#  innerFilter.allowIp: 127.0.0.1
-#  
-#  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
-#  filterChainDefinitions: |
-#    ${adminPath}/** = user
+#  innerFilterAllowRemoteAddrs: 127.0.0.1
 
+  # URI 权限过滤器定义（自定义添加参数时，请不要移除 ${adminPath}/** = user，否则会导致权限异常）
+  # 提示：填写过滤规则，请注意先后顺序，从上到下，先匹配先受用规则，匹配成功后不再继续匹配。
+  filterChainDefinitions: |
+    ${adminPath}/** = user
+
+#  # URI 权限过滤器定义（以下参考，必须登录user可访问的地址和不需要登录anon可访问地址）
+#  filterChainDefinitions: |
+#    /ReportServer/** = user
+#    ${adminPath}/file/** = anon
+#    ${adminPath}/cms/* = anon
+#    ${adminPath}/cms/site/select = anon
+#    ${adminPath}/cms/site/* = anon
+#    ${adminPath}/cms/category/treeData = anon
+#    ${adminPath}/cms/category/* = anon
+#    ${adminPath}/cms/article/* = anon
+#    ${adminPath}/cms/link/* = anon
+#    ${adminPath}/sys/corpAdmin/treeData = anon
+#    ${adminPath}/${spring.application.name}/swagger/** = anon
+#    ${adminPath}/** = user
+    
 # Session 相关
-#session:
-#  
-#  # 会话超时时间，单位：毫秒，10m=600000, 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
-#  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
-#  
-#  # 游客会话超时时间：只访问了系统，但未登录系统的用户为游客，游客默认超时时间为10分钟，如：未登录系统时的图片验证码有效时间。
-#  sessionTimeout: 180000
-#  
-#  # 登录系统后的用户超时时间（不明确 param_deviceType 参数的，默认设备为 pc 登录）
-#  pcSessionTimeout: 1800000
-#  
-#  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效，一般无需单独设置
-#  #mobileAppSessionTimeout: 1800000
+session:
+  
+  # 会话超时时间，单位：毫秒，10m=600000, 20m=1200000ms, 30m=1800000ms, 60m=3600000ms, 12h=43200000ms, 1day=86400000ms
+  # 注意：如果超时超过30m，你还需要同步修改当前配置文件的属性：j2cache.caffeine.region.sessionCache 超时时间，大于这个值。
+  
+  # 游客会话超时时间：只访问了系统，但未登录系统的用户为游客，游客默认超时时间为10分钟，如：未登录系统时的图片验证码有效时间。
+  sessionTimeout: 180000
+  
+  # 登录系统后的用户超时时间（不明确 param_deviceType 参数的，默认设备为 pc 登录）
+  pcSessionTimeout: 1800000
+  
+#  # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效，一般情况无需设置
+#  mobileAppSessionTimeout: 1800000
 #  
 #  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话（设置为 0 关闭，微服务下只开启 core 即可）
 #  sessionTimeoutClean: 1200000
@@ -602,12 +639,12 @@ shiro:
 #  #sessionIdCookiePath: ${server.servlet.context-path}
 #  
 #  # 共享的SessionId的Cookie名称，保存到跟路径下，第三方应用获取。同一域名下多个项目时需设置共享Cookie的名称。
-#  #shareSessionIdCookieName: ${session.sessionIdCookieName}
+#  shareSessionIdCookieName: ${session.sessionIdCookieName}
 #  
 #  # 其它 SimpleCookie 参数（v4.2.3）
-#  #sessionIdCookieSecure: false
-#  #sessionIdCookieHttpOnly: true
-#  #sessionIdCookieSameSite: LAX
+#  sessionIdCookieSecure: false
+#  sessionIdCookieHttpOnly: true
+#  sessionIdCookieSameSite: LAX
 #  
 #  # 设置接收 SessionId 请求参数和请求头的名称
 #  sessionIdParamName: __sid
@@ -619,7 +656,7 @@ shiro:
 #  
 #  # 记住我的请求参数和请求头的名称（v4.2.3）
 #  rememberMeHeaderName: x-remember
-#
+
 # 系统缓存配置
 #j2cache:
 #
@@ -638,6 +675,13 @@ shiro:
 #    channel: j2cache
 #    # 缓存命名空间名
 #    namespace: jeesite
+#    # 消息监听器
+#    listener:
+#      taskPool:
+#        corePoolSize: 8
+#        maxPoolSize: 20
+#        keepAliveSeconds: 60
+#        queueCapacity: 1000
 #  
 #  # 通知订阅
 #  broadcast:
@@ -648,28 +692,31 @@ shiro:
 #    cache_clean_mode: passive
 
 # MyBatis 相关
-#mybatis:
-#  
-#  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
-#  scanBasePackage: com.jeesite.modules
-#  
+mybatis:
+  
+  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules
+  
 #  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
 #  scanTypeHandlersPackage: ~
 #  
 #  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
 #  jdbcTransaction: false
-#  
-#  # Mapper文件刷新线程
-#  mapper:
-#    refresh:
-#      enabled: true
+#
+#  # 批量插入和更新的分批默认大小（防止库一次性接受不了太大的sql语句）
+#  defaultBatchSize: 500
+  
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
 #      delaySeconds: 60
 #      sleepSeconds: 3
 #      mappingPath: mappings
   
 # Web 相关
-#web:
-#
+web:
+
 #  # AJAX 接受参数名和请求头名（v4.3.0）
 #  ajaxParamName: __ajax
 #  ajaxHeaderName: x-ajax
@@ -691,41 +738,41 @@ shiro:
 #    favorParameter: true
 #    # 使用 x-ajax=json、x-ajax=xml 请求头匹配返回视图数据
 #    favorHeader: true
-#
-#  # MVC 拦截器
-#  interceptor:
-#    
-#    # 后台管理日志记录拦截器
-#    log:
-#      enabled: true
-#      addPathPatterns: >
-#        ${adminPath}/**
-#      excludePathPatterns: >
-#        ${adminPath}/index,
-#        ${adminPath}/login,
-#        ${adminPath}/desktop,
-#        ${adminPath}/index/menuTree,
-#        ${adminPath}/sys/online/count,
-#        ${adminPath}/state/server/rtInfo,
-#        ${adminPath}/**/treeData,
-#        ${adminPath}/file/**,
-#        ${adminPath}/tags/*,
-#        ${adminPath}/msg/**
-#    
-#    # 前台自动切换到手机视图拦截器
-#    mobile:
-#      enabled: false
-#      addPathPatterns: >
-#        ${frontPath}/**
-#      excludePathPatterns: ~
-#      
+
+  # MVC 拦截器
+  interceptor:
+    
+    # 后台管理日志记录拦截器
+    log:
+      enabled: true
+      addPathPatterns: >
+        ${adminPath}/**
+      excludePathPatterns: >
+        ${adminPath}/index,
+        ${adminPath}/login,
+        ${adminPath}/desktop,
+        ${adminPath}/index/menuTree,
+        ${adminPath}/sys/online/count,
+        ${adminPath}/**/server/rtInfo,
+        ${adminPath}/**/treeData,
+        ${adminPath}/file/**,
+        ${adminPath}/tags/*,
+        ${adminPath}/msg/**
+    
+    # 前台自动切换到手机视图拦截器
+    mobile:
+      enabled: false
+      addPathPatterns: >
+        ${frontPath}/**
+      excludePathPatterns: ~
+      
 #  # 静态文件后缀，过滤静态文件，以提高访问性能。
 #  staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
 #  
 #  # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
 #  staticFileExcludeUri: /druid/
 #  
-#  # 静态资源路径前缀，可做CDN加速优化
+#  # 静态资源路径前缀，可做 CDN 加速优化，默认前面增加 ctxPath 前缀，如果前面写 “//” 两个斜杠 或 包含 “://” 不加 ctxPath。
 #  staticPrefix: /static
 #  
 #  # 严格模式（更严格的数据安全验证）
@@ -735,32 +782,37 @@ shiro:
 #  validator:
 #    id: '[a-zA-Z0-9_\-/#\u4e00-\u9fa5]{0,64}'
 #    user.loginCode: '[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}'
-#    
+#  
+#  # 默认的日期格式（JsonMapper）
+#  json:
+#    defaultDateFormat: yyyy-MM-dd HH:mm:ss
+#  
 #  # 默认不启用（为兼用旧版保留，建议使用 CORS）
 #  jsonp:
 #    enabled: false
 #    callback: __callback
-#
-#  # 核心模块的Web功能（仅作为微服务时设为false）
-#  core: 
-#    enabled: true
-#  
-#  # 在线API文档工具
-#  swagger: 
-#    enabled: true
+
+  # 核心模块的Web功能（仅作为微服务时设为false）
+  core: 
+    enabled: true
+  
+  # 在线API文档工具
+  swagger: 
+    enabled: true
 
 # 错误页面500.html是否输出错误信息（正式环境，为提供安全性可设置为false）
-#error:
-#  page:
-#    printErrorInfo: true
+error:
+  page:
+    printErrorInfo: true
 
 #======================================#
 #======== FileUpload settings =========#
 #======================================#
 
-#file:
-#  enabled: true
-#  
+# 文件上传
+file:
+  enabled: true
+  
 #  # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 #  #baseDir: D:/jeesite
 #  
@@ -768,7 +820,7 @@ shiro:
 #  uploadPath: '{yyyy}{MM}/'
 #  
 #  # 上传单个文件最大字节（500M），在这之上还有 > Tomcat限制 > Nginx限制，等，此设置会覆盖 spring.http.multipart.maxFileSize 设置
-#  maxFileSize: 500*1024*1024
+#  maxFileSize: '500*1024*1024'
 #  
 #  # 设置允许上传的文件后缀（全局设置）
 #  imageAllowSuffixes: .gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,
@@ -776,10 +828,10 @@ shiro:
 #  fileAllowSuffixes: .doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,.ipa,.apk,
 #  
 #  # 允许上传的文件内容类型（图片、word、excel、ppt）防止修改后缀恶意上传文件（默认不启用验证）
-##  allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
-##    application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-##    application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-##    application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
+#  #allowContentTypes: image/jpeg,image/gif,image/bmp,image/png,image/x-png,
+#  #  application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+#  #  application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+#  #  application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation
 #  
 #  # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
 #  imageMaxWidth: 1024
@@ -798,10 +850,10 @@ shiro:
 #  # 是否启用检查点（支持断点续传，上传）
 #  checkpoint: true
 #
-#  # 是否用文件流方式下载（支持断点续传）
+#  # 是否用文件流方式下载（支持断点续传，下载）
 #  isFileStreamDown: true
   
-#视频转码
+# 视频转码
 #video:
 #  
 #  # 视频格式转换  ffmpeg.exe 所放的路径
@@ -823,19 +875,24 @@ shiro:
 #======================================#
 
 # 消息提醒中心（专业版）
-#msg:
-#  enabled: false
-#  
+msg:
+  enabled: false
+  
 #  # 是否开启实时发送消息（保存消息后立即检查未读消息并发送），分布式部署下请单独配置消息发送服务，不建议开启此选项。
 #  realtime:
 #    # 是否开启
 #    enabled: true
 #    # 消息实时推送任务Bean名称
 #    beanName: msgLocalPushTask
-  
+#    # 消息推送线程池
+#    pushTaskPool:
+#      corePoolSize: 5
+#      maxPoolSize: 20
+#      keepAliveSeconds: 60
+#  
 #  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
 #  pushFailNumber: 3
-  
+#  
 #  # 邮件发送参数
 #  email:
 #    beanName: emailSendService

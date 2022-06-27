@@ -4,13 +4,6 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import java.util.Map;
-
-import javax.validation.constraints.NotBlank;
-
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.entity.BaseEntity;
@@ -20,6 +13,10 @@ import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Map;
 
 /**
  * 操作日志Entity
@@ -234,7 +231,7 @@ public class Log extends DataEntity<Log> {
 		if (executeTime == null) {
 			executeTime = 0L;
 		}
-		return TimeUtils.formatDateAgo(executeTime);
+		return TimeUtils.formatTime(executeTime);
 	}
 
 	/**
@@ -284,9 +281,9 @@ public class Log extends DataEntity<Log> {
         return values != null && values.length > 0 ? values[0] : null;
     }
 	
-	@Override
-	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
-	}
+//	@Override
+//	public String toString() {
+//		return ReflectionToStringBuilder.toString(this);
+//	}
 	
 }

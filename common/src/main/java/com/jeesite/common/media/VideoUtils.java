@@ -116,7 +116,7 @@ public class VideoUtils {
 				log.error("视频剪切图片失败", e);
 			}
 		}
-		log.debug("视频剪切图片" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatDateAgo(System.currentTimeMillis() - startTime));
+		log.debug("视频剪切图片" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatTime(System.currentTimeMillis() - startTime));
 		return statusTemp;
 	}
 
@@ -142,7 +142,7 @@ public class VideoUtils {
 		}
 		log.debug("删除临时文件");
 		FileUtils.deleteFile(tempFile);
-		log.debug("视频转换" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatDateAgo(System.currentTimeMillis() - startTime));
+		log.debug("视频转换" + (statusTemp ? "成功" : "失败") + "，用时：" + TimeUtils.formatTime(System.currentTimeMillis() - startTime));
 		return statusTemp;
 	}
 
@@ -170,7 +170,7 @@ public class VideoUtils {
 		command.add(getFfmpegFile());
 		command.add("-i");
 		command.add(inputFile);
-		if ((imgFileExtension.toLowerCase()).equals("gif")) {
+		if ("gif".equals(imgFileExtension.toLowerCase())) {
 			command.add("-vframes");
 			command.add("30");
 			command.add("-f");

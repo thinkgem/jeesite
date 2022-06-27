@@ -2227,7 +2227,7 @@ public class DiffMatchPatch {
       if (m.group(2).length() == 0) {
         patch.start1--;
         patch.length1 = 1;
-      } else if (m.group(2).equals("0")) {
+      } else if ("0".equals(m.group(2))) {
         patch.length1 = 0;
       } else {
         patch.start1--;
@@ -2238,7 +2238,7 @@ public class DiffMatchPatch {
       if (m.group(4).length() == 0) {
         patch.start2--;
         patch.length2 = 1;
-      } else if (m.group(4).equals("0")) {
+      } else if ("0".equals(m.group(4))) {
         patch.length2 = 0;
       } else {
         patch.start2--;

@@ -71,11 +71,11 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
 		}},
-		<% if(isBlank(user.userType)){ %>
+		//<% if(isBlank(user.userType)){ %>
 		{header:'${text("类型")}', name:'userType', index:'a.user_type', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_user_type')}, val, '无', true);
 		}},
-		<% } %>
+		//<% } %>
 		{header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){
 			return JSON.stringify(row);
 		}}

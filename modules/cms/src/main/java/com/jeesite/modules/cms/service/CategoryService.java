@@ -23,7 +23,6 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly = true)
 public class CategoryService extends TreeService<CategoryDao, Category> {
 
 	/**
@@ -59,7 +58,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * @param category
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void save(Category category) {
 		if (StringUtils.isNotBlank(category.getViewConfig())){
             category.setViewConfig(StringEscapeUtils.unescapeHtml4(category.getViewConfig()));
@@ -85,7 +84,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * @param category
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void updateStatus(Category category) {
 		super.updateStatus(category);
 	}
@@ -95,7 +94,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * @param category
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Category category) {
 		super.delete(category);
 	}

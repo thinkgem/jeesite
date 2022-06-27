@@ -91,10 +91,10 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
 			var actions = [];
-			<% if(hasPermi('sys:secAdmin:edit')){ %>
+			//<% if(hasPermi('sys:secAdmin:edit')){ %>
 				actions.push('<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" title="${text("管理数据权限")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/sys/secAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("取消二级管理员身份")}" data-confirm="${text("确认要取消该用户的二级管理员身份吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			<% } %>
+			//<% } %>
 			return actions.join('');
 		}}
 	],

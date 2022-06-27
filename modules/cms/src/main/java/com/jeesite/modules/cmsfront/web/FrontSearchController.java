@@ -62,7 +62,7 @@ public class FrontSearchController extends BaseController{
 					parmas.put("siteCode", siteCode);
 				}
 				page = articleService.searchPage(page, q, qand, qnot, bd, ed, parmas);
-				page.setPageInfo("匹配结果，共耗时 " + TimeUtils.formatDateAgo(System.currentTimeMillis() - start) + "。");
+				page.setPageInfo("匹配结果，共耗时 " + TimeUtils.formatTime(System.currentTimeMillis() - start) + "。");
 				model.addAttribute("page", page);
 			}
 			

@@ -231,7 +231,7 @@ public class LogUtils {
 			}
 			// 如果是修改类型的日志，则获取修改前后的差异数据
 			if (Log.TYPE_UPDATE.equals(log.getLogType()) && sourceData != null && targetData != null) {
-				log.setDiffModifyData(DiffDataUtils.getDiffData(sourceData, targetData));
+				log.setDiffModifyData(DiffDataUtils.compareToString(sourceData, targetData));
 			}
 			// 保存日志信息
 			log.setIsNewRecord(true);

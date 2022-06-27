@@ -4,12 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.sys.dao.CompanyDao;
@@ -19,13 +13,17 @@ import com.jeesite.modules.sys.entity.CompanyOffice;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.DataScopeService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 公司管理Service
  * @author ThinkGem
  * @version 2016-4-23
  */
-@Transactional(readOnly=true)
 public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 		implements CompanyService{
 
@@ -64,7 +62,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	 * 保存公司
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Company company) {
 		if (company.getIsNewRecord()){
 			// 生成主键，并验证改主键是否存在，如存在则抛出验证信息
@@ -85,7 +83,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 			list.forEach(e -> {
 				e.setCompanyCode(company.getCompanyCode());
 			});
-			companyOfficeDao.insertBatch(list);
+			companyOfficeDao.insertBatch(list, null);
 		}
 		// 清理公司相关缓存
 		clearCompanyCache();
@@ -95,7 +93,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	 * 删除公司
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Company company) {
 		super.delete(company);
 		// 清理公司相关缓存
@@ -106,7 +104,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	 * 停用当前节点
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(Company company) {
 		dao.updateStatus(company);
 		// 清理公司相关缓存

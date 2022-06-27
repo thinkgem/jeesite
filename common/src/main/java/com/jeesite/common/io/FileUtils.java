@@ -655,7 +655,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static String getContentType(String fileName) {
 		if (mimetypesFileTypeMap == null){
-			mimetypesFileTypeMap = new MimetypesFileTypeMap();
+			try {
+				mimetypesFileTypeMap = new MimetypesFileTypeMap(ResourceUtils
+						.getResourceFileStream("/META-INF/jeesite.mime.types"));
+			}catch (IOException e) {
+				mimetypesFileTypeMap = new MimetypesFileTypeMap();
+			}
 		}
 		return mimetypesFileTypeMap.getContentType(fileName);
 	}

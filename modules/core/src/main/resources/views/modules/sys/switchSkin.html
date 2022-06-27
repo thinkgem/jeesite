@@ -1,7 +1,9 @@
 <% layout('/layouts/default.html', {title:'切换主题'}){ %>
 <style>
 	.list-unstyled{margin:10px;}
+	.skin-dark .list-unstyled {color:#a8a8a8}
 	.full-opacity-hover{opacity:1;filter:none;border:1px solid #fff}
+	.skin-dark .full-opacity-hover {border:1px solid #888}
 	.full-opacity-hover:hover{border:1px solid #f00;}
 </style>
 <ul class="list-unstyled clearfix">
@@ -167,9 +169,18 @@
 		</a>
 		<p class="text-center no-margin">${text('浅蓝-无界')}</p>
 	</li>
-	<li style="float:left;width:32%;padding-top:8px;text-align:center;">
+	<li style="float:left;width:32%;padding-top:8px;padding-left:20px;">
 		<#form:checkbox name="formLayerModel" label="${text('表单弹窗模式')}" class="form-control"/>
 		<#form:checkbox name="tabPageModel" label="${text('取消页签模式')}" class="form-control"/>
+	</li>
+	<li style="float:left;width:100%;" id="skinDark">
+		<% var defaultSkinName = @Global.getConfig('sys.index.skinName', 'skin-blue-light3');
+		var skinName = cookie('skinName', false, defaultSkinName);
+		if (skinName == 'skin-dark') { %>
+			<button class="full-opacity-hover mt10 form-control" data-skin="${defaultSkinName}">${text('浅色模式')}</button>
+		<% }else{ %>
+			<button class="full-opacity-hover mt10 form-control" data-skin="skin-dark">${text('黑暗模式')}</button>
+		<% } %>
 	</li>
 </ul>
 <% } %>

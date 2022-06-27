@@ -18,6 +18,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.web.filter.InvalidRequestFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,6 +53,7 @@ import com.jeesite.common.shiro.web.WebSecurityManager;
  */
 @SuppressWarnings("deprecation")
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class ShiroConfig {
 	
 	/**
@@ -62,7 +64,7 @@ public class ShiroConfig {
 	@ConditionalOnMissingBean(name="shiroFilterProxy")
 	public FilterRegistrationBean<Filter> shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-		bean.setFilter((Filter) shiroFilter.getInstance());
+		bean.setFilter(shiroFilter.getObject());
 		bean.addUrlPatterns("/*");
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 5000);
 		return bean;

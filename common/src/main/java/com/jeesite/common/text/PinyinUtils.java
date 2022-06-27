@@ -123,7 +123,7 @@ public class PinyinUtils {
 		if (input == null){
 			return null;
 		}
-		char c[] = input.toCharArray();
+		char[] c = input.toCharArray();
 		for (int i = 0; i < c.length; i++) {
 			if (c[i] == ' ') {
 				c[i] = '\u3000';

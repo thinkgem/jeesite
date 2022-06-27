@@ -171,7 +171,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.serializeFst(object);
 			}
 		} catch (Exception e) {
-			logger.error("serialize", e.getMessage());
+			logger.error("serialize: {}", e.getMessage());
 		}
 		return null;
 	}
@@ -189,7 +189,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				return ObjectUtils.unserializeFst(bytes);
 			}
 		} catch (Exception e) {
-			logger.error("unserialize", e.getMessage());
+			logger.error("unserialize: {}", e.getMessage());
 		}
 		return null;
 	}
@@ -214,7 +214,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000){
-			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return bytes;
 	}
@@ -240,13 +240,14 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return object;
 	}
 	
 	private static ThreadLocal<FSTConfiguration> fstConfiguration = 
 				new NamedThreadLocal<FSTConfiguration>("FSTConfiguration") {
+		@Override
 		public FSTConfiguration initialValue() {
 			return FSTConfiguration.createDefaultConfiguration();
 		}
@@ -265,7 +266,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		byte[] bytes = fstConfiguration.get().asByteArray(object);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000){
-			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return bytes;
 	}
@@ -283,7 +284,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		Object object = fstConfiguration.get().asObject(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatDateAgo(totalTime));
+			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatTime(totalTime));
 		}
 		return object;
 	}

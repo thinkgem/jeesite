@@ -7,6 +7,7 @@ package com.jeesite.modules.sys.dao;
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.sys.entity.Employee;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 /**
  * 员工管理DAO接口
@@ -16,6 +17,7 @@ import com.jeesite.modules.sys.entity.Employee;
  * 但是，在 4.2.0+ 版本中，新增了 userTypeMap 指定 service，所以无需设置 entity 类型。
  */
 @MyBatisDao(entity = Employee.class)
+@ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public interface EmployeeDao extends CrudDao<Employee> {
 
 }

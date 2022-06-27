@@ -4,19 +4,6 @@
  */
 package com.jeesite.modules.cms.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
@@ -31,8 +18,19 @@ import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-
 import io.netty.util.concurrent.DefaultThreadFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 文章表Service
@@ -40,7 +38,6 @@ import io.netty.util.concurrent.DefaultThreadFactory;
  * @version 2020-7-24
  */
 @Service
-@Transactional(readOnly = true)
 public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	@Autowired
@@ -120,7 +117,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article
 	 * @author ThinkGem
 	 */
-	@Transactional(readOnly = false)
+	@Transactional
 	public void updateExpiredWeight(Article article) {
 		// 更新过期的权重，间隔为“6”个小时
 		Date updateExpiredWeightDate = CmsUtils.getCache("updateExpiredWeightDateByArticle");
@@ -137,7 +134,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void save(Article article) {
 		Global.assertDemoMode();
 		// 设置内容状态
@@ -177,7 +174,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void updateStatus(Article article) {
 		super.updateStatus(article);
 	}
@@ -185,7 +182,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	/**
 	 * 获取文章获取文章并点击数加一
 	 */
-	@Transactional(readOnly = false)
+	@Transactional
 	public void updateHitsAddOne(String id) {
 		dao.updateHitsAddOne(id);
 	}
@@ -195,7 +192,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param article
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Article article) {
 		super.delete(article);
 	}

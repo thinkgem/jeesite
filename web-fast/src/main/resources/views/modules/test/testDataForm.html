@@ -1,0 +1,403 @@
+<% layout('/layouts/default.html', {title: '数据管理', libs: ['validate','fileupload','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text(testData.isNewRecord ? '新增数据' : '编辑数据')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('单行文本')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:input path="testInput" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('多行文本')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="testTextarea" rows="4" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('下拉框')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="testSelect" dictType="sys_menu_type" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('下拉多选')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="testSelectMultiple" dictType="sys_menu_type" multiple="true" blankOption="true" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('单选框')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="testRadio" dictType="sys_menu_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('复选框')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:checkbox path="testCheckbox" dictType="sys_menu_type" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('日期选择')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testDate" readonly="true" maxlength="20" class="form-control laydate"
+									dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('日期时间')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="testDatetime" readonly="true" maxlength="20" class="form-control laydate"
+									dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('用户选择')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testUser" title="${text('用户选择')}"
+									path="testUser.userCode" labelPath="testUser.userName"
+									url="${ctx}/sys/office/treeData?isLoadUser=true"
+									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('机构选择')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testOffice" title="${text('机构选择')}"
+									path="testOffice.officeCode" labelPath="testOffice.officeName"
+									url="${ctx}/sys/office/treeData"
+									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('区域选择')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="testAreaCode" title="${text('区域选择')}"
+									path="testAreaCode" labelPath="testAreaName"
+									url="${ctx}/sys/area/treeData"
+									class="" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">${text('图片上传')}：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
+									uploadType="image" class="" readonly="false" preview="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">${text('附件上传')}：</label>
+							<div class="col-sm-10">
+								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
+									uploadType="all" class="" readonly="false" preview="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h4 class="form-unit">${text('子表数据')}</h4>
+				<div class="ml10 mr10 table-form">
+					<table id="testDataChildDataGrid"></table>
+					<% if (hasPermi('test:testData:edit')){ %>
+						<a href="#" id="testDataChildDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+					<% } %>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('test:testData:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+//初始化测试数据子表DataGrid对象
+$("#testDataChildDataGrid").dataGrid({
+
+	data: ${toJson(testData.testDataChildList)},
+	datatype: "local", // 设置本地数据
+	autoGridHeight: function(){return 'auto'}, // 设置自动高度
+	
+	// 设置数据表格列
+	columnModel: [
+
+		{header:'${text("操作")}', name:'actions', width:40, align:"center", formatter: function(val, obj, row, act){
+			var actions = [];
+			if (val == 'new'){
+				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}else{
+				actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#testDataChildDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			}
+			return actions.join('');
+		}, editoptions: {defaultValue: 'new'}},
+
+		{header:'状态', name:'status', editable:true, hidden:true},
+		{header:'主键', name:'id', editable:true, hidden:true},
+		{header:'${text("排序号")}', name:'testSort', width:100, editable:true, edittype:'text', editoptions:{'maxlength':'11', 'class':'form-control digits'}},
+		{header:'${text("父表主键")}', name:'testData.id', editable:true, hidden:true},
+		{header:'${text("单行文本")}', name:'testInput', width:100, editable:true, edittype:'text', editoptions:{'maxlength':'200', 'class':'form-control'}},
+		{header:'${text("多行文本")}', name:'testTextarea', width:100, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
+		{header:'${text("下拉框")}', name:'testSelect', width:100, 
+			editable:true, edittype:'select', editoptions:{'class':'form-control',
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.select2(element).on("change",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("下拉多选")}', name:'testSelectMultiple', width:90, fixed: true, 
+			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
+				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.select2(element).on("change",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("单选框")}', name:'testRadio', width:135, fixed: true,
+			editable:true, edittype:'radio', editoptions:{'class':'form-control icheck',
+				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.iCheck(element).on("ifChanged",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("复选框")}', name:'testCheckbox', width:135, fixed: true, 
+			editable:true, edittype:'checkbox', editoptions:{'class':'form-control icheck',
+				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
+					js.iCheck(element).on("ifChanged",function(){$(this).resetValid()});
+				}
+			}
+		},
+		{header:'${text("日期选择")}', name:'testDate', width:120, 
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'date', format:'yyyy-MM-dd', done: function(){
+						// 选择日期后，自动给下一个输入框赋值（联动实例）
+						// $(element).closest('td').next().find('.form-control').val('2020-11-26 10:10');
+					}});
+				}
+			}
+		},
+		{header:'${text("日期时间")}', name:'testDatetime', width:155, 
+			formatter:'date', formatoptions:{srcformat:'Y-m-d H:i:s',newformat:'Y-m-d H:i'},
+			editable:true, edittype:'text', editoptions:{'class':'form-control laydate', 'readonly':'true',
+				dataInit: function(element){
+					laydate.render({elem:element, type:'datetime', format:'yyyy-MM-dd HH:mm'});
+				}
+			}
+		},
+		{header:'${text("用户选择")}', name:'testUser', width:100,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户选择', 
+						name: 'testUser.userCode', value: val.split('|')[0], 
+						labelName: 'testUser.userName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/office/treeData?isLoadUser=true', cssClass: '', readonly: false
+					});
+				},
+				custom_value: function(element, act){
+					return {userCode: element.find('[type=hidden]').val(),
+						userName: element.find('[type=text]').val()};
+				},
+				dataInit: function(element){
+					// 初始化控件后设置只读模式（实例）
+					// $(element).find('.form-control, .btn').addClass('disabled');
+				}
+			}, 
+			unformat: function(val, obj, cell){
+				return $('#user_'+obj.rowId+'_'+obj.colModel.name+'Code', cell).val();
+			}
+		},
+		{header:'${text("用户选择")}', name:'testUser2', width:100,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testUser.userCode')+'|'+js.val(row, 'testUser.userName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('listselectTpl', {
+						id: 'user_'+editOptions.id, title: '用户选择', 
+						name: 'testUser2.userCode', value: val.split('|')[0], 
+						labelName: 'testUser2.userName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/empUser/empUserSelect', cssClass: '', readonly: false,
+						itemCode: 'userCode', itemName: 'userName'
+					});
+				}
+			}
+		},
+		{header:'${text("机构选择")}', name:'testOffice', width:100, title:false,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testOffice.officeCode')+'|'+js.val(row, 'testOffice.officeName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'office_'+editOptions.id, title: '机构选择', 
+						name: 'testOffice.officeCode', value: val.split('|')[0], 
+						labelName: 'testOffice.officeName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/office/treeData?officeTypes=1,2', cssClass: '', readonly: false
+					});
+				}
+			}
+		},
+		{header:'${text("区域选择")}', name:'testAreaCode', width:100,
+			formatter: function(val, obj, row, act){
+				return js.val(row, 'testAreaCode')+'|'+js.val(row, 'testAreaName');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'area_'+editOptions.id, title: '区域选择', 
+						name: 'testAreaCode', value: val.split('|')[0], 
+						labelName: 'testAreaName', labelValue: val.split('|')[1],
+						url: '${ctx}/sys/area/treeData', cssClass: '', readonly: false
+					});
+				}
+			}
+		},
+		{header:'${text("文件上传")}', name:'id', width:200,
+			editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('fileuploadTpl', {
+						id: 'fileupload_'+editOptions.id, title: '区域选择', 
+						bizKey: val, bizType: 'testDataChild_file', cssClass: '', readonly: false
+					});
+				}
+			}
+		}
+	],
+	shrinkToFit: false,	// 是否按百分比自动调整列宽
+	
+	// 编辑表格参数
+	editGrid: true,				// 是否是编辑表格
+	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+	editGridAddRowBtn: $('#testDataChildDataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上 v4.1.7
+	editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+	
+	// 编辑表格的提交数据参数
+	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
+	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,'
+		+'testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,'
+		+'testAreaCode,testAreaName,testDataChild_file,testDataChild_file__del', // 提交数据列表的属性字段
+	
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+// 		$('#jqgh_testDataChildDataGrid_rn').append('<a href="javascript:" onclick="'
+// 				+ '$(\'#testDataChildDataGridAddRowBtn\').click();">'
+// 				+ '<i class="fa fa-plus"></i></a>');
+	}
+});
+</script>
+<script id="treeselectTpl" type="text/template">//<!--<div>
+<#form:treeselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"/>
+</div>//--></script>
+<script id="listselectTpl" type="text/template">//<!--<div>
+<#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
+	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
+	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
+</div>//--></script>
+<script id="fileuploadTpl" type="text/template">//<!--<div>
+<#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}" uploadType="all" 
+	class="{{d.cssClass}}" isMini="true" preview="true" readonly="{{d.readonly}}"/>
+</div>//--></script>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

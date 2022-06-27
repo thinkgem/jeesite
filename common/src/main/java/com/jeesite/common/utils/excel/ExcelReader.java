@@ -168,7 +168,7 @@ public abstract class ExcelReader extends DefaultHandler {
 			// 将单元格内容加入rowlist中，在这之前先去掉字符串前后的空白符
 		} else if ("v".equals(name)) {
 			String value = lastContents.trim();
-			value = value.equals("") ? " " : value;
+			value = "".equals(value) ? " " : value;
 			try {
 				// 日期格式处理
 				if (dateFlag) {
@@ -188,7 +188,7 @@ public abstract class ExcelReader extends DefaultHandler {
 			curCol++;
 		} else {
 			// 如果标签名称为 row ，这说明已到行尾，调用 optRows() 方法
-			if (name.equals("row")) {
+			if ("row".equals(name)) {
 				getRows(sheetIndex + 1, curRow, rowList);
 				rowList.clear();
 				curRow++;

@@ -4,19 +4,17 @@
  */
 package com.jeesite.test;
 
-import java.util.List;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.tests.BaseSpringContextTests;
+import com.jeesite.modules.ApiApplication;
+import com.jeesite.modules.test.dao.TestDataDao;
+import com.jeesite.modules.test.entity.TestData;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.jeesite.common.callback.MethodCallback;
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.tests.BaseSpringContextTests;
-import com.jeesite.modules.Application;
-import com.jeesite.modules.test.dao.TestDataDao;
-import com.jeesite.modules.test.entity.TestData;
+import java.util.List;
 
 /**
  * 批量插入测试
@@ -24,7 +22,7 @@ import com.jeesite.modules.test.entity.TestData;
  * @version 2019年10月28日
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=Application.class)
+@SpringBootTest(classes = ApiApplication.class)
 public class InsertBatchTest extends BaseSpringContextTests {
 	
 	@Autowired
@@ -38,14 +36,11 @@ public class InsertBatchTest extends BaseSpringContextTests {
 			testData.setTestInput("test"+i);
 			list.add(testData);
 		}
-		ListUtils.pageList(list, 100, new MethodCallback() {
-			@SuppressWarnings("unchecked")
-			public Object execute(Object... objs) {
-				return testDataDao.insertBatch((List<TestData>)objs[0]);
-			}
-		});
+		testDataDao.insertBatch(list, null);
 		list = testDataDao.findList(new TestData());
-		System.out.println("size: " + list.size());
+		System.out.println("insert: " + list.size());
+		long count = testDataDao.updateBatch(list, null);
+		System.out.println("update: " + count);
 	}
 	
 }

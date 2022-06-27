@@ -27,6 +27,7 @@ public class OfficeType implements FieldType {
 	/**
 	 * 获取对象值（导入）
 	 */
+	@Override
 	public Object getValue(String val) {
 		for (Office e : list){
 			if (StringUtils.trimToEmpty(val).equals(e.getOfficeName())){
@@ -39,6 +40,7 @@ public class OfficeType implements FieldType {
 	/**
 	 * 设置对象值（导出）
 	 */
+	@Override
 	public String setValue(Object val) {
 		if (val != null && ((Office)val).getOfficeName() != null){
 			return ((Office)val).getOfficeName();

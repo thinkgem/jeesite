@@ -21,7 +21,6 @@ import com.jeesite.modules.sys.utils.CorpUtils;
  * @author ThinkGem
  * @version 2017-03-25
  */
-@Transactional(readOnly=true)
 public class PostServiceSupport extends CrudService<PostDao, Post>
 		implements PostService{
 
@@ -36,6 +35,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	/**
 	 * 根据名称查询岗位
 	 */
+	@Override
 	public Post getByPostName(Post post) {
 		Post where = new Post();
 		where.setPostName(post.getPostName());
@@ -54,7 +54,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	 * 保存岗位
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(Post post) {
 		if (post.getIsNewRecord()){
 			// 生成主键，并验证改主键是否存在，如存在则抛出验证信息
@@ -81,7 +81,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	 * 更新岗位状态
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(Post post) {
 		super.updateStatus(post);
 	}
@@ -90,7 +90,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	 * 删除岗位
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(Post post) {
 		super.delete(post);
 	}

@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -42,8 +43,9 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 2022-3-10
  */
 @Controller
+@Api(tags = "Online - 在线用户")
 @RequestMapping(value = "${adminPath}/sys/online")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class OnlineController extends BaseController{
 
 	@Autowired
@@ -105,7 +107,7 @@ public class OnlineController extends BaseController{
 			}
 			map.put("startTimestamp", DateUtils.formatDateTime(session.getStartTimestamp()));
 			map.put("lastAccessTime", DateUtils.formatDateTime(session.getLastAccessTime()));
-			map.put("timeout", TimeUtils.formatDateAgo(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
+			map.put("timeout", TimeUtils.formatTime(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
 			map.put("userCode", session.getAttribute("userCode"));
 			map.put("userName", session.getAttribute("userName"));
 			map.put("userType", session.getAttribute("userType"));

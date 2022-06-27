@@ -22,7 +22,7 @@
 						<div class="col-sm-offset-1 col-sm-3"><br/>
 							<div class="box-body box-profile">
 								<img id="avatarImg" class="profile-user-img img-responsive img-circle"
-									src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}">
+									src="${@user.getAvatarUrl().replaceFirst('/ctxPath', ctxPath)}?__t=${date().time}">
 								<h3 class="profile-username text-center">${user.userName}</h3>
 								<p class="text-muted text-center">
 									<#form:radio path="sex" dictType="sys_user_sex" class="form-control required"/>

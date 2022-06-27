@@ -18,7 +18,6 @@ import com.jeesite.modules.sys.service.LogService;
  * @author ThinkGem
  * @version 2014-05-16
  */
-@Transactional(readOnly=true)
 public class LogServiceSupport extends CrudService<LogDao, Log>
 		implements LogService{
 	
@@ -44,7 +43,8 @@ public class LogServiceSupport extends CrudService<LogDao, Log>
 	/**
 	 * 不使用数据库事务，执行插入日志
 	 */
-	@Transactional(readOnly=false)//, propagation=Propagation.NOT_SUPPORTED)
+	@Override
+	@Transactional//(propagation = Propagation.NOT_SUPPORTED)
 	public void insertLog(Log entity) {
 		DataSourceHolder.setJdbcTransaction(false);
 		dao.insert(entity);

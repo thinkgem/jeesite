@@ -23,6 +23,7 @@ public class MoneyType implements FieldType {
 	/**
 	 * 获取对象值（导入）
 	 */
+	@Override
 	public Object getValue(String val) {
 		return val == null ? StringUtils.EMPTY : StringUtils.replace(val, ",", StringUtils.EMPTY);
 	}
@@ -30,6 +31,7 @@ public class MoneyType implements FieldType {
 	/**
 	 * 获取对象值（导出）
 	 */
+	@Override
 	public String setValue(Object val) {
 		return val == null ? StringUtils.EMPTY : nf.format(val);
 	}
@@ -37,6 +39,7 @@ public class MoneyType implements FieldType {
 	/**
 	 * 获取对象值格式（导出）
 	 */
+	@Override
 	public String getDataFormat() {
 		return "0.00";
 	}

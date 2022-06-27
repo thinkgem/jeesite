@@ -2,6 +2,7 @@ package com.jeesite.modules.sys.web;
 
 import javax.annotation.PostConstruct;
 
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
  * @version 20167-8-27
  */
 @Controller
+@Api(tags = "Cache - 缓存管理")
 @RequestMapping(value = "${adminPath}/sys/cache")
 public class CacheController extends BaseController {
 

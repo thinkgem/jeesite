@@ -6,10 +6,12 @@ package com.jeesite.autoconfigure.sys;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.jeesite.common.mybatis.MyBatisFactoryBean;
+import com.jeesite.modules.msg.service.MsgInnerService;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.EmpUserService;
@@ -32,6 +34,7 @@ import com.jeesite.modules.sys.service.support.PostServiceSupport;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnBean(MyBatisFactoryBean.class)
+@ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class SysAutoConfiguration {
 	
 	@Bean
@@ -74,6 +77,12 @@ public class SysAutoConfiguration {
 	@ConditionalOnMissingBean
 	public PostService postService(){
 		return new PostServiceSupport();
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	public MsgInnerService msgInnerService(){
+		return new MsgInnerService();
 	}
 	
 }

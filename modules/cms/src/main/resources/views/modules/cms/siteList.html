@@ -69,7 +69,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
 		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
 			var actions = [];
-			<% if(hasPermi('cms:site:edit')){ %>
+			//<% if(hasPermi('cms:site:edit')){ %>
 				actions.push('<a href="${ctx}/cms/site/form?siteCode='+row.siteCode+'" class="btnList" title="${text("编辑站点")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/cms/site/disable?siteCode='+row.siteCode+'" class="btnList" title="${text("停用站点")}" data-confirm="${text("确认要停用该站点吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -81,7 +81,7 @@ $('#dataGrid').dataGrid({
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctxFront}/index-'+row.siteCode+'" target="_blank" title="${text("访问站点")}"><i class="fa fa-globe"></i></a>&nbsp;');
 				}
-			<% } %>
+			//<% } %>
 			return actions.join('');
 		}}
 	],

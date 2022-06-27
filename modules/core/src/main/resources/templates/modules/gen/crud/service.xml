@@ -40,7 +40,6 @@ import ${packageName}.${moduleName}.dao${isNotEmpty(subModuleName)?'.'+subModule
  * @version ${functionVersion}
  */
 @Service
-@Transactional(readOnly=true)
 public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Service<${ClassName}Dao, ${ClassName}> {
 	<% for (child in table.childList){ %>
 	
@@ -110,7 +109,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * @param ${className}
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(${ClassName} ${className}) {
 	<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 		// 如果未设置状态，则指定状态为审核状态，以提交审核流程
@@ -187,7 +186,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * @param ${className}
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(${ClassName} ${className}) {
 		super.updateStatus(${className});
 	}
@@ -197,7 +196,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	 * @param ${className}
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(${ClassName} ${className}) {
 		super.delete(${className});
 	<% for (child in table.childList) { %>

@@ -1,0 +1,72 @@
+<% layout('/layouts/default.html', {title: '多页签应用示例', libs: ['tabPage']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> 多页签应用示例
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" onclick="js.addTabPage(null, '机构列表', '${ctx}/sys/office/list'+p)"><i class="fa fa-plus"></i> 添加页签(1)</button>
+				<button type="button" class="btn btn-box-tool" onclick="b.addTabPage(null, '公司列表', '${ctx}/sys/company/list'+p)"><i class="fa fa-plus"></i> 添加页签(2)</button>
+				<button type="button" class="btn btn-box-tool" onclick="top.js.closeCurrentTabPage()"><i class="fa fa-close"></i> 关闭窗口</button>
+			</div>
+		</div>
+		<div class="box-body pt0">
+			<div class="row">
+				<div class="col-sm-6 pr0">
+					<div id="tabpanel1"></div>
+				</div>
+				<div class="col-sm-6 pl0">
+					<div id="tabpanel2"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
+
+<style>
+	.tabpanel {padding-top:4px;}
+	.tabpanel_tab_content {border:0;}
+	.tabpanel_tab_content .tabpanel_move_content {background: #fff;}
+	.tabpanel_content .html_content {background:#fff;padding:0;}
+</style>
+
+<script>
+	// 一个页面一个 tab 控件
+	js.initTabPage('tabpanel1', {
+		height: function () {
+			var windowHeight = $(window).height(),
+				headerHeight = $('.box-header').outerHeight() || 0,
+				footerHeight = $('.box-footer').outerHeight() || 0,
+				height = windowHeight - headerHeight - footerHeight - 13;
+			return height < 300 ? 300 : height;
+		}
+	});
+	// 打开示例页面（不可关闭）
+	var p = '?__layer=true'; // 隐藏标题
+	js.addTabPage(null, "机构列表", "${ctx}/sys/office/list"+p, false);
+	js.addTabPage(null, "用户列表", "${ctx}/sys/empUser/list"+p, false);
+	// 用于机构保存后的刷新列表页面（示例）
+	window.win = $('#tabpanel1 iframe:first')[0].contentWindow;
+	// 激活第一个页签
+	$('#tabpanel1 .tabpanel_mover li:first').click();
+	
+	// 一个页面多个 tab 控件展示
+	var b = $.extend([], tabPage);
+	b.initTabPage('tabpanel2', {
+		height: function () {
+			var windowHeight = $(window).height(),
+				headerHeight = $('.box-header').outerHeight() || 0,
+				footerHeight = $('.box-footer').outerHeight() || 0,
+				height = windowHeight - headerHeight - footerHeight - 13;
+			return height < 300 ? 300 : height;
+		}
+	});
+	b.addTabPage(null, "岗位列表", "${ctx}/sys/post/list"+p, false);
+	b.addTabPage(null, "公司列表", "${ctx}/sys/company/list"+p, false);
+	$('#tabpanel2 .tabpanel_mover li:first').click();
+	
+	// 指定内页调用的 tab 对象
+	window.tabPage = top.tabPage;
+</script>

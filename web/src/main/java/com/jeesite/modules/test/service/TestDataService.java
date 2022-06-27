@@ -4,12 +4,6 @@
  */
 package com.jeesite.modules.test.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.DateUtils;
@@ -20,6 +14,11 @@ import com.jeesite.modules.test.dao.TestDataChildDao;
 import com.jeesite.modules.test.dao.TestDataDao;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestDataChild;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 测试数据Service
@@ -27,7 +26,6 @@ import com.jeesite.modules.test.entity.TestDataChild;
  * @version 2018-04-22
  */
 @Service
-@Transactional(readOnly=true)
 public class TestDataService extends CrudService<TestDataDao, TestData> {
 	
 	@Autowired
@@ -85,7 +83,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * @param testData
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(TestData testData) {
 		super.save(testData);
 		// 保存上传图片
@@ -119,7 +117,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * @param testData
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(TestData testData) {
 		super.updateStatus(testData);
 	}
@@ -129,7 +127,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 * @param testData
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(TestData testData) {
 		super.delete(testData);
 		TestDataChild testDataChild = new TestDataChild();
@@ -148,7 +146,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	/**
 	 * 事务测试，若 Child 报错，则回滚
 	 */
-	@Transactional(readOnly=false/*, propagation=Propagation.NOT_SUPPORTED*/)
+	@Transactional//(propagation = Propagation.NOT_SUPPORTED)
 	public void transTest(TestData testData) {
 		testData.setTestInput("transTest");
 		testData.setTestTextarea(IdGen.randomBase62(5));

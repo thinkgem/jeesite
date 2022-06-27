@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +39,14 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
 
 /**
- * 系统管理员Controller
+ * 租户和系统管理员Controller
  * @author ThinkGem
  * @version 2017-03-26
  */
 @Controller
+@Api(tags = "CorpAdmin - 租户管理员管理")
 @RequestMapping(value = "${adminPath}/sys/corpAdmin")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class CorpAdminController extends BaseController {
 
 	@Autowired
@@ -267,7 +269,7 @@ public class CorpAdminController extends BaseController {
 
 	/**
 	 * 切换租户
-	 * @param user
+	 * @param corpCode
 	 * @return
 	 */
 	@RequiresPermissions("sys:corpAdmin:edit")

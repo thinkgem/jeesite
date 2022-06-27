@@ -5,7 +5,7 @@
 	
 	<logger name="org.springframework.boot.web.embedded" level="INFO" />
 	<logger name="net.oschina.j2cache.caffeine.CaffeineProvider" level="ERROR" />
-	
+	<logger name="ShardingSphere-SQL" level="DEBUG" />
 <!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
 <!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
 <!-- 	<logger name="org.springframework.jdbc" level="DEBUG" /> -->
