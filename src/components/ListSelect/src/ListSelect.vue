@@ -23,7 +23,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef } from 'vue';
-  import { InputSearch } from 'ant-design-vue';
+  import { Input } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
   import { useAttrs } from '/@/hooks/core/useAttrs';
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -33,14 +33,17 @@
 
   export default defineComponent({
     name: 'JeeSiteListSelect',
-    components: { InputSearch },
+    components: { InputSearch: Input.Search },
     // inheritAttrs: false,
     props: {
       value: propTypes.string,
       labelValue: propTypes.string,
 
       // 选择类型，加载 ./selectType/*.ts 的配置。
-      selectType: propTypes.string.def('userSelect'),
+      selectType: {
+        type: String as PropType<string>,
+        default: 'userSelect',
+      },
 
       // 选择结果或回显数据中的编码和名称属性名（默认使用 selectType 里指定的）
       itemCode: propTypes.string,
@@ -86,7 +89,7 @@
       );
 
       onMounted(async () => {
-        configRef.value = (await import('./selectType/' + props.selectType)).default as any;
+        configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
         modalComponent.value = createAsyncComponent(() => import('./ListSelectModal.vue'));
         if (!itemCode.value) {
           itemCode.value = configRef.value.itemCode;
