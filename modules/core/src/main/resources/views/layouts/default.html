@@ -12,7 +12,7 @@ var defaultSkinName = @Global.getConfig('sys.index.skinName', 'skin-blue-light3'
 var skinName = cookie('skinName', false, defaultSkinName);
 print('<'+'!DOC'+'TYPE html'+'><'+'html class="'+skinName+'"><'+'head'+'>');
 include('/include/head.html', {title: text(title!)}){}
-include('/themes/'+themeName+'/include/header.html', {libs: libs!, skinName: skinName}){} %>
+include('/themes/'+themeName+'/include/header.html', {libs: libs!, skinName: skinName!}){} %>
 </head><body class="hold-transition ${bodyClass!}">
 <% if (!@ListUtils.inString('layout', libs!)){ %>
 <div class="wrapper">${layoutContent}</div>
