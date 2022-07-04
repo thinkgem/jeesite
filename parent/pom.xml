@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.13</version>
-	</parent>
-	
+
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
 	<version>5.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<name>JeeSite Parent</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
-	
+
 	<properties>
-		
+
 		<!-- common version setting -->
 		<commons-io.version>2.11.0</commons-io.version>
 		<commons-text.version>1.9</commons-text.version>
@@ -39,74 +33,92 @@
 		<poi.version>4.1.2</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<groovy.version>3.0.10</groovy.version>
-		
+
 		<!-- framework version setting -->
+		<spring-boot.version>2.5.13</spring-boot.version>
 		<mybatis.version>3.5.9</mybatis.version>
 		<mybatis-spring.version>2.0.7</mybatis-spring.version>
 		<jsqlparser.version>4.4</jsqlparser.version>
 		<druid.version>1.2.10</druid.version>
-		<shiro.version>1.9.0</shiro.version>
+		<shiro.version>1.9.1</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<swagger.version>1.6.0</swagger.version>
 		<log4j2.version>2.17.0</log4j2.version>
-		
+
 		<!-- jdbc setting -->
 		<!-- <mysql.version>5.1.49</mysql.version> -->
 		<mysql.version>8.0.29</mysql.version>
-		
+
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
 		<!-- <tomcat.version>9.0.58</tomcat.version> -->
 		<maven.test.skip>true</maven.test.skip>
+		<resource.delimiter>@</resource.delimiter>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 降级到该版本，新版本可能会出现VM崩溃 -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
-		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
 		<!-- docker setting -->
 		<docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
 		<docker.imageName>thinkgem/${project.artifactId}:5.0</docker.imageName>
 		<docker.run.port>8980:8980</docker.run.port>
-        
+
 	</properties>
-	
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
-	
+
 		<plugins>
-		
+
 			<!-- compiler插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
-				
+
 			<!-- jar插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
-			
+
 			<!-- resource插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
-			
+
 			<!-- install插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
 			</plugin>
-			
+
 			<!-- clean插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 			</plugin>
-			
+
 		</plugins>
-		
+
 		<pluginManagement>
-		
+
 			<plugins>
 
 				<!-- compiler插件，设定JDK版本 -->
@@ -114,6 +126,7 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
+						<parameters>true</parameters>
 						<showWarnings>true</showWarnings>
 						<!-- <compilerArguments>
 							<verbose /> 输出有关编译器正在执行的操作的消息
@@ -128,6 +141,11 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<configuration>
 						<archive>
+							<manifest>
+								<!--suppress UnresolvedMavenProperty -->
+								<mainClass>${start-class}</mainClass>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 						</archive>
 					</configuration>
@@ -137,7 +155,7 @@
 								<excludes>
 									<exclude>userfiles/**</exclude>
 								</excludes>
-                                <finalName>${project.artifactId}</finalName>
+								<finalName>${project.artifactId}</finalName>
 								<archive>
 									<manifest>
 										<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -149,7 +167,7 @@
 						</execution>
 					</executions>
 				</plugin>
-				
+
 				<!-- war插件，war包名称不带版本号 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -163,11 +181,47 @@
 						<warName>${project.artifactId}</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 						<archive>
+							<manifest>
+								<!--suppress UnresolvedMavenProperty -->
+								<mainClass>${start-class}</mainClass>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 						</archive>
 					</configuration>
 				</plugin>
-				
+
+				<!-- resource插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<configuration>
+						<propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
+						<delimiters>
+							<delimiter>${resource.delimiter}</delimiter>
+						</delimiters>
+						<useDefaultDelimiters>false</useDefaultDelimiters>
+					</configuration>
+				</plugin>
+
+				<!-- springboot插件 -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>repackage</id>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<!--suppress UnresolvedMavenProperty -->
+						<mainClass>${start-class}</mainClass>
+					</configuration>
+				</plugin>
+
 				<!-- Eclipse 插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -191,7 +245,7 @@
 						</additionalProjectnatures>
 					</configuration>
 				</plugin>
-				
+
 				<!-- Java Document Generate -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -209,7 +263,7 @@
 						</execution>
 					</executions>
 				</plugin>
-				
+
 				<!-- JavaScript CSS Compress -->
 				<plugin>
 					<groupId>com.jeesite.maven</groupId>
@@ -240,7 +294,7 @@
 						</excludes>
 					</configuration>
 				</plugin>
-				
+
 				<!-- Eclipse m2e settings only -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -253,6 +307,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.apache.maven.plugins</groupId>
 										<artifactId>maven-dependency-plugin</artifactId>
+										<!--suppress UnresolvedMavenProperty -->
 										<versionRange>${maven-dependency-plugin.version}</versionRange>
 										<goals>
 											<goal>copy-dependencies</goal>
@@ -266,7 +321,7 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-				
+
 				<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin -->
 				<plugin>
 					<groupId>io.fabric8</groupId>
@@ -297,11 +352,11 @@
 						</images>
 					</configuration>
 				</plugin>
-				
+
 			</plugins>
-			
+
 		</pluginManagement>
-		
+
 		<!-- 资源文件配置 -->
 		<resources>
 			<resource>
@@ -317,24 +372,24 @@
 				</excludes>
 			</resource>
 		</resources>
-		
+
 	</build>
-	
-	<developers>  
+
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
-	
+
 	<organization>
 		<name>JeeSite</name>
 		<url>http://jeesite.com</url>
 	</organization>
-	
+
 	<repositories>
 		<repository>
 			<id>aliyun-repos</id>
@@ -359,9 +414,9 @@
 			<url>http://maven.jeesite.net/repository/maven-public</url>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<profiles>
-		
+
 		<profile>
 			<id>javadoc</id>
 			<build>
@@ -373,7 +428,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>package</id>
 			<build>
@@ -385,7 +440,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>deploy</id>
 			<build>
