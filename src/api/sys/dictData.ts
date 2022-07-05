@@ -42,6 +42,12 @@ export const dictDataCreateNextNode = (params?: DictData | any) =>
 export const dictDataSave = (params?: any, data?: DictData | any) =>
   defHttp.postJson<DictData>({ url: adminPath + '/sys/dictData/save', params, data });
 
+export const dictDataDisable = (params?: DictData | any) =>
+  defHttp.get<DictData>({ url: adminPath + '/sys/dictData/disable', params });
+
+export const dictDataEnable = (params?: DictData | any) =>
+  defHttp.get<DictData>({ url: adminPath + '/sys/dictData/enable', params });
+
 export const dictDataDelete = (params?: DictData | any) =>
   defHttp.get<DictData>({ url: adminPath + '/sys/dictData/delete', params });
 

@@ -50,6 +50,7 @@
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { dictDataDelete, dictDataListData } from '/@/api/sys/dictData';
+  import { dictDataDisable, dictDataEnable } from '/@/api/sys/dictData';
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
@@ -165,6 +166,28 @@
         auth: 'sys:dictData:edit',
       },
       {
+        icon: 'ant-design:stop-outlined',
+        color: 'error',
+        title: t('停用字典'),
+        popConfirm: {
+          title: t('是否确认停用字典'),
+          confirm: handleDisable.bind(this, { dictCode: record.dictCode }),
+        },
+        auth: 'sys:dictData:edit',
+        ifShow: () => record.status === '0',
+      },
+      {
+        icon: 'ant-design:check-circle-outlined',
+        color: 'success',
+        title: t('启用字典'),
+        popConfirm: {
+          title: t('是否确认启用字典'),
+          confirm: handleEnable.bind(this, { dictCode: record.dictCode }),
+        },
+        auth: 'sys:dictData:edit',
+        ifShow: () => record.status === '2',
+      },
+      {
         icon: 'ant-design:delete-outlined',
         color: 'error',
         title: t('删除字典'),
@@ -220,6 +243,18 @@
 
   function handleForm(record: Recordable) {
     openDrawer(true, record);
+  }
+
+  async function handleDisable(record: Recordable) {
+    const res = await dictDataDisable(record);
+    showMessage(res.message);
+    handleSuccess(record);
+  }
+
+  async function handleEnable(record: Recordable) {
+    const res = await dictDataEnable(record);
+    showMessage(res.message);
+    handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
