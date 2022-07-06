@@ -375,13 +375,13 @@ public class InitCoreData extends BaseInitDataTests {
 		});
 	}
 
-	@Autowired
+	@Autowired(required = false)
 	private JobDao jobDao; // 默认情况下job是关闭状态，需要注入jobDao
 	/**
 	 * 初始化消息推送服务
 	 */
 	public void initJob(){
-		if (!checkTable(JobEntity.class)) {
+		if (jobDao == null || !checkTable(JobEntity.class)) {
 			return;
 		}
 		JobEntity job = new JobEntity(MsgLocalPushTask.class.getSimpleName(), "SYSTEM");
