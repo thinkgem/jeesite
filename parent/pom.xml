@@ -5,7 +5,7 @@
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>5.0.2-SNAPSHOT</version>
+	<version>5.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Parent</name>
@@ -103,18 +103,6 @@
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
 
-			<!-- install插件 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-			</plugin>
-
-			<!-- clean插件 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-			</plugin>
-
 		</plugins>
 
 		<pluginManagement>
@@ -125,6 +113,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
 					<configuration>
 						<parameters>true</parameters>
 						<showWarnings>true</showWarnings>
@@ -139,6 +128,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.2.2</version>
 					<configuration>
 						<archive>
 							<manifest>
@@ -172,7 +162,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.2.3</version>
+					<version>3.3.2</version>
 					<configuration>
 						<warSourceExcludes>
 							userfiles/**
@@ -195,6 +185,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.2.0</version>
 					<configuration>
 						<propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
 						<delimiters>
@@ -208,6 +199,7 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring-boot.version}</version>
 					<executions>
 						<execution>
 							<id>repackage</id>
