@@ -259,7 +259,12 @@ export function useDataSource(
       );
       let pageParams: Recordable = {};
 
-      const { current = 1, pageSize = PAGE_SIZE } = unref(getPaginationInfo) as PaginationProps;
+      const {
+        current = 1,
+        pageSize: pageSizeVal,
+        defaultPageSize,
+      } = unref(getPaginationInfo) as PaginationProps;
+      const pageSize = pageSizeVal || defaultPageSize;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
