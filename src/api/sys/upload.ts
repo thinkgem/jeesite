@@ -3,7 +3,7 @@ import { UploadFileParams } from '/#/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 import { BasicModel } from '../model/baseModel';
 
-const { apiUrl, adminPath, uploadUrl } = useGlobSetting();
+const { ctxPath, adminPath, uploadUrl } = useGlobSetting();
 
 export interface UploadApiResult {
   code: string;
@@ -46,7 +46,7 @@ export function uploadFile(
   if (params.file != undefined) {
     return defHttp.uploadFile<UploadApiResult>(
       {
-        url: apiUrl + adminPath + '/file/' + uploadUrl,
+        url: ctxPath + adminPath + '/file/' + uploadUrl,
         onUploadProgress,
       },
       params,

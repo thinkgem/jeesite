@@ -10,7 +10,7 @@ import { FileUpload } from '../../../api/sys/upload';
 import { useGlobSetting } from '/@/hooks/setting';
 
 const { t } = useI18n();
-const { apiUrl } = useGlobSetting();
+const { ctxPath } = useGlobSetting();
 
 // 文件上传列表
 export function createTableColumns(): BasicColumn[] {
@@ -23,12 +23,12 @@ export function createTableColumns(): BasicColumn[] {
         const { fileUrl, type, fileEntity } = (record as FileUpload) || {};
         let url = fileUrl || '';
         if (!url.startsWith('data:image/') && url.indexOf('://') == -1) {
-          url = apiUrl + url;
+          url = ctxPath + url;
         }
         if (isImgTypeByName(url)) {
           return <ThumbUrl fileUrl={url} />;
         }
-        const ext = type || fileEntity?.fileExtension || <FileOutlined />
+        const ext = type || fileEntity?.fileExtension || <FileOutlined />;
         const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
         return <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }}>{ext}</Avatar>;
       },
@@ -72,11 +72,21 @@ export function createTableColumns(): BasicColumn[] {
       customRender: ({ text, record }) => {
         const { responseData } = (record as FileItem) || {};
         if (text === UploadResultStatus.SUCCESS) {
-          return <Tag color="green">{() => responseData?.message || t('component.upload.uploadSuccess')}</Tag>;
+          return (
+            <Tag color="green">
+              {() => responseData?.message || t('component.upload.uploadSuccess')}
+            </Tag>
+          );
         } else if (text === UploadResultStatus.ERROR) {
-          return <Tag color="red">{() => responseData?.message || t('component.upload.uploadError')}</Tag>;
+          return (
+            <Tag color="red">
+              {() => responseData?.message || t('component.upload.uploadError')}
+            </Tag>
+          );
         } else if (text === UploadResultStatus.UPLOADING) {
-          return <Tag color="blue">{() => responseData?.message || t('component.upload.uploading')}</Tag>;
+          return (
+            <Tag color="blue">{() => responseData?.message || t('component.upload.uploading')}</Tag>
+          );
         }
         return text;
       },
@@ -122,12 +132,12 @@ export function createPreviewColumns(): BasicColumn[] {
         const { fileUrl, type, fileEntity } = (record as FileUpload) || {};
         let url = fileUrl || '';
         if (!url.startsWith('data:image/') && url.indexOf('://') == -1) {
-          url = apiUrl + url;
+          url = ctxPath + url;
         }
         if (isImgTypeByName(url)) {
           return <ThumbUrl fileUrl={url} />;
         }
-        const ext = type || fileEntity?.fileExtension || <FileOutlined />
+        const ext = type || fileEntity?.fileExtension || <FileOutlined />;
         const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
         return <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }}>{ext}</Avatar>;
       },

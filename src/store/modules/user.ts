@@ -89,9 +89,9 @@ export const useUserStore = defineStore({
     },
     setUserInfo(info: UserInfo | null) {
       if (info) {
-        const { apiUrl } = useGlobSetting();
+        const { ctxPath } = useGlobSetting();
         let url = info.avatarUrl || '/ctxPath/static/images/user1.jpg';
-        url = url.replace('/ctxPath/', apiUrl + '/');
+        url = url.replace('/ctxPath/', ctxPath + '/');
         info.avatarUrl = url || logoImg;
       }
       this.userInfo = info;

@@ -10,7 +10,7 @@ import { User } from './user';
 import { UploadApiResult } from './upload';
 import { UploadFileParams } from '/#/axios';
 
-const { apiUrl, adminPath } = useGlobSetting();
+const { ctxPath, adminPath } = useGlobSetting();
 
 export interface EmpUser extends User {
   employee?: any;
@@ -40,7 +40,7 @@ export const empUserImportData = (
 ) =>
   defHttp.uploadFile<UploadApiResult>(
     {
-      url: apiUrl + adminPath + '/sys/empUser/importData',
+      url: ctxPath + adminPath + '/sys/empUser/importData',
       onUploadProgress,
     },
     params,

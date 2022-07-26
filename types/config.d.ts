@@ -146,6 +146,8 @@ export interface GlobConfig {
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
+  // context-path，如：/js
+  ctxPath: string;
   // 管理路径，如：/a
   adminPath: string;
   // 后台管理路径，如：/js/a

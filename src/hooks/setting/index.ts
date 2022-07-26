@@ -18,10 +18,8 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     );
   }
 
-  const adminPath = import.meta.env.VITE_GLOB_ADMIN_PATH as string;
-
-  const ctxAdminPathFn = (): string => {
-    let ctx = VITE_GLOB_API_URL + adminPath;
+  const ctxPath = ((): string => {
+    let ctx = VITE_GLOB_API_URL + VITE_GLOB_API_URL_PREFIX;
     let idx = ctx.indexOf('://');
     if (idx != -1) {
       ctx = ctx.substring(idx + 3);
@@ -33,8 +31,10 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
       ctx = '';
     }
     return ctx;
-  };
-  const ctxAdminPath = ctxAdminPathFn();
+  })();
+
+  const adminPath = import.meta.env.VITE_GLOB_ADMIN_PATH as string;
+  const ctxAdminPath = ctxPath + adminPath;
 
   // Take global configuration
   const glob: Readonly<GlobConfig> = {
@@ -43,6 +43,7 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     shortName: VITE_GLOB_APP_SHORT_NAME,
     urlPrefix: VITE_GLOB_API_URL_PREFIX,
     uploadUrl: VITE_GLOB_UPLOAD_URL,
+    ctxPath: ctxPath,
     adminPath: adminPath,
     ctxAdminPath: ctxAdminPath,
   };

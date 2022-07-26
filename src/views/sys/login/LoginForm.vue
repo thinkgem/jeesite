@@ -137,7 +137,7 @@
   const { t } = useI18n();
   const { showMessage, notification } = useMessage();
   const { prefixCls } = useDesign('login');
-  const { apiUrl } = useGlobSetting();
+  const { ctxPath } = useGlobSetting();
   const userStore = useUserStore();
 
   const { setLoginState, getLoginState } = useLoginState();
@@ -164,7 +164,7 @@
 
   function refreshValidCodeImg() {
     getValidCodeImg.value =
-      apiUrl + '/validCode' + '?__sid=' + userStore.getToken + '&t=' + new Date().getTime();
+      ctxPath + '/validCode' + '?__sid=' + userStore.getToken + '&t=' + new Date().getTime();
   }
 
   // is show jee site valid data.
