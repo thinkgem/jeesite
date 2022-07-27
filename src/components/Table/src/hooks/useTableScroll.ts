@@ -190,7 +190,7 @@ export function useTableScroll(
     return {
       x: unref(getScrollX),
       y: canResize ? tableHeight : null,
-      scrollToFirstRowOnChange: false,
+      scrollToFirstRowOnChange: true,
       ...scroll,
     };
   });
