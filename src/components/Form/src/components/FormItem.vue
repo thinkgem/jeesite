@@ -200,6 +200,10 @@
           if (!isShow) {
             rule.required = false;
           }
+          // rules: [{ required: true }] 时的验证应与直接写 required: true 的验证相同
+          if (rule.required && !rule.validator) {
+            rule.validator = validator;
+          }
           if (component) {
             if (!Reflect.has(rule, 'type')) {
               rule.type = component === 'InputNumber' ? 'number' : 'string';
