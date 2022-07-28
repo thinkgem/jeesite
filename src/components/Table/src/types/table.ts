@@ -456,7 +456,7 @@ export interface BasicColumn extends ColumnProps {
       }) => Recordable)
     | Recordable;
   editRule?: boolean | ((text: string, record: Recordable) => Promise<string>);
-  editValueMap?: (value: any) => string;
+  // editValueMap?: (value: any) => string;
   onEditRow?: () => void;
 
   // 默认值
