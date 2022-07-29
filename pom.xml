@@ -5,7 +5,7 @@
 	
 	<groupId>com.thinkgem.jeesite</groupId>
 	<artifactId>jeesite</artifactId>
-	<version>1.2.7</version>
+	<version>1.2.8</version>
 	<packaging>war</packaging>
 	
 	<name>JeeSite</name>
