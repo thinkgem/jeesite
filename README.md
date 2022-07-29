@@ -71,9 +71,9 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 1、后端
 
-* 核心框架：Spring Framework 4.1
-* 安全框架：Apache Shiro 1.2
-* 视图框架：Spring MVC 4.1
+* 核心框架：Spring Framework 5.3
+* 安全框架：Apache Shiro 1.9
+* 视图框架：Spring MVC 5.3
 * 服务端验证：Hibernate Validator 5.2
 * 布局框架：SiteMesh 2.4
 * 工作流引擎：Activiti 5.21
@@ -82,7 +82,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 * 数据库连接池：Alibaba Druid 1.0
 * 缓存框架：Ehcache 2.6、Redis
 * 日志管理：SLF4J 1.7、Logback
-* 工具类：Apache Commons、Jackson 2.2、Xstream 1.4、Dozer 5.3、POI 3.9
+* 工具类：Apache Commons、Jackson、POI 3.9
 
 2、前端
 
@@ -101,8 +101,7 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 4、平台
 
-* 服务器中间件：在Java EE 5规范（Servlet 2.5、JSP 2.1）下开发，支持应用服务器中间件
-有Tomcat 6+、Jboss 7+、WebLogic 10+、WebSphere 8+。
+* 服务器中间件：在Java EE 7规范（Servlet 3.1、JSP 2.1）下开发。
 * 数据库支持：目前仅提供MySql和Oracle数据库的支持，但不限于数据库，平台留有其它数据库支持接口，
 你可以很方便的更改为其它数据库，如：SqlServer 2008、MySql 5.5、H2等
 * 开发环境：Java、Eclipse Java EE 4.3、Maven 3.1、Git
@@ -118,12 +117,13 @@ JeeSite 提供了常用工具进行封装，包括日志工具、缓存工具、
 
 ## 快速体验
 
-1. 具备运行环境：JDK1.6+、Maven3.0+、MySql5+或Oracle10g+。
+1. 具备运行环境：JDK1.8、Maven3.0+、MySql5+或Oracle10g+、Tomcat8.5。
 2. 修改src\main\resources\jeesite.properties文件中的数据库设置参数。
 3. 根据修改参数创建对应MySql或Oracle数据库用户和参数。
 4. 运行bin\init-db.bat脚本，即可导入表结构及演示数据(linux操作系统：在控制台中切换至项目根目录，运行命令：mvn antrun:run -Pinit-db)
-5. 运行bin\run-tomcat7.bat或bin\run-jetty.bat，启动Web服务器（第一次运行，需要下载依赖jar包，请耐心等待）。
-6. 最高管理员账号，用户名：thinkgem 密码：admin
+5. 运行bin\package.bat进行打包系统，完成后会在target目录生成jeesite.war文件
+6. 将jeesite.war文件，拷贝到您的Tomcat8 webapps目录下进行部署，启动Tomcat8。
+7. 启动Tomcat后浏览器访问系统，最高管理员账号，用户名：thinkgem 密码：admin
 
 ## 常见问题
 

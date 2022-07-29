@@ -641,7 +641,7 @@ public class ActTaskService extends BaseService {
 	public ActivityImpl[] insertTasksAfter(String procDefId, String procInsId, String targetTaskDefinitionKey, Map<String, Object> variables, String... assignees) {
 		List<String> assigneeList = new ArrayList<String>();
 		assigneeList.add(Authentication.getAuthenticatedUserId());
-		assigneeList.addAll(CollectionUtils.arrayToList(assignees));
+		assigneeList.addAll((List<String>)CollectionUtils.arrayToList(assignees));
 		String[] newAssignees = assigneeList.toArray(new String[0]);
 		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(procDefId);
 		ActivityImpl prototypeActivity = ProcessDefUtils.getActivity(processEngine, processDefinition.getId(), targetTaskDefinitionKey);
@@ -675,7 +675,7 @@ public class ActTaskService extends BaseService {
 		RuntimeActivityDefinitionEntityIntepreter radei = new RuntimeActivityDefinitionEntityIntepreter(info);
 
 		radei.setPrototypeActivityId(targetTaskDefinitionKey);
-		radei.setAssignees(CollectionUtils.arrayToList(assignees));
+		radei.setAssignees((List<String>)CollectionUtils.arrayToList(assignees));
 		radei.setSequential(isSequential);
 		
 		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity)repositoryService.getProcessDefinition(procDefId);
@@ -706,7 +706,7 @@ public class ActTaskService extends BaseService {
 
 		RuntimeActivityDefinitionEntityIntepreter radei = new RuntimeActivityDefinitionEntityIntepreter(info);
 		radei.setPrototypeActivityId(prototypeActivityId);
-		radei.setAssignees(CollectionUtils.arrayToList(assignees));
+		radei.setAssignees((List<String>)CollectionUtils.arrayToList(assignees));
 		radei.setNextActivityId(nextActivityId);
 
 		ActivityImpl[] activities = new ChainedActivitiesCreator().createActivities(processEngine, procDef, info);

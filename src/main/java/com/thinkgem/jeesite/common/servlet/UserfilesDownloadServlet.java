@@ -35,11 +35,7 @@ public class UserfilesDownloadServlet extends HttpServlet {
 		if(index >= 0) {
 			filepath = filepath.substring(index + Global.USERFILES_BASE_URL.length());
 		}
-		try {
-			filepath = UriUtils.decode(filepath, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			logger.error(String.format("解释文件路径失败，URL地址为%s", filepath), e1);
-		}
+		filepath = UriUtils.decode(filepath, "UTF-8");
 		File file = new File(Global.getUserfilesBaseDir() + Global.USERFILES_BASE_URL + filepath);
 		try {
 			FileCopyUtils.copy(new FileInputStream(file), resp.getOutputStream());

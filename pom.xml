@@ -5,7 +5,7 @@
 	
 	<groupId>com.thinkgem.jeesite</groupId>
 	<artifactId>jeesite</artifactId>
-	<version>1.2.8</version>
+	<version>1.3.0</version>
 	<packaging>war</packaging>
 	
 	<name>JeeSite</name>
@@ -16,14 +16,14 @@
 	<properties>
 		
 		<!-- main version setting -->
-		<spring.version>4.1.9.RELEASE</spring.version>
+		<spring.version>5.3.22</spring.version>
 		<validator.version>5.2.4.Final</validator.version>
-		<mybatis.version>3.2.8</mybatis.version>
-		<mybatis-spring.version>1.2.3</mybatis-spring.version>
-		<druid.version>1.0.18</druid.version>
+		<mybatis.version>3.5.10</mybatis.version>
+		<mybatis-spring.version>2.0.7</mybatis-spring.version>
+		<druid.version>1.2.11</druid.version>
 		<ehcache.version>2.6.11</ehcache.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
-		<shiro.version>1.2.6</shiro.version>
+		<shiro.version>1.9.1</shiro.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<activiti.version>5.21.0</activiti.version>
 		
@@ -35,9 +35,9 @@
 		<commons-codec.version>1.9</commons-codec.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 		<commons-beanutils.version>1.9.1</commons-beanutils.version>
-		<jackson.version>2.2.3</jackson.version>
+		<jackson.version>2.13.3</jackson.version>
 		<fastjson.version>1.1.40</fastjson.version>
-		<xstream.version>1.4.7</xstream.version>
+		<xstream.version>1.4.19</xstream.version>
 		<guava.version>17.0</guava.version>
 		<dozer.version>5.5.1</dozer.version>
 		<poi.version>3.9</poi.version>
@@ -49,36 +49,11 @@
 		<mssql.driver.version>1.3.1</mssql.driver.version>
 	    
 		<!-- environment setting -->
-		<jdk.version>1.6</jdk.version>
-		<tomcat.version>2.2</tomcat.version>
-		<jetty.version>7.6.14.v20131031</jetty.version>
-		<webserver.port>8181</webserver.port>
+		<jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<downloadSources>true</downloadSources>
 		
 	</properties>
-	
-	<!-- 设定主仓库，按设定顺序进行查找。 -->
-	<repositories>
-	
-		<repository>
-			<id>jeesite-repos</id>
-			<name>Jeesite Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
-		</repository>
-		
-	</repositories>
-	
-	<!-- 设定插件仓库 -->
-	<pluginRepositories> 
-	
-		<pluginRepository>
-			<id>jeesite-repos</id>
-			<name>Jeesite Repository</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
-		</pluginRepository>
-		
-	</pluginRepositories> 
 	
 	<!-- 依赖项定义 -->
 	<dependencies>
@@ -822,53 +797,6 @@
 				</configuration>
 			</plugin>
 			
-			<!-- tomcat6插件 -->
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat6-maven-plugin</artifactId>
-				<version>${tomcat.version}</version> 
-				<configuration>
-					<port>${webserver.port}</port>
-					<path>/${project.artifactId}</path>
-					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-				</configuration>
-			</plugin>
-			
-			<!-- tomcat7插件 -->
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>${tomcat.version}</version> 
-				<configuration>
-					<port>${webserver.port}</port>
-					<path>/${project.artifactId}</path>
-					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-				</configuration>
-			</plugin>
-			
-			<!-- jetty插件 -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
-				<configuration>
-					<connectors>
-						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>${webserver.port}</port>
-						</connector>
-					</connectors>
-					<webAppConfig>
-						<contextPath>/${project.artifactId}</contextPath>
-					</webAppConfig>
-					<systemProperties>  
-						<systemProperty>
-							<name>org.mortbay.util.URI.charset</name>
-							<value>${project.build.sourceEncoding}</value>
-						</systemProperty>
-					</systemProperties>
-				</configuration>
-			</plugin>
-			
 			<!-- resource插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -995,5 +923,22 @@
 			<timezone>+8</timezone>
 		</developer>
 	</developers>
+	
+	<repositories>
+		<repository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	
 </project>

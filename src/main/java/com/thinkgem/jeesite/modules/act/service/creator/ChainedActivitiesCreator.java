@@ -19,7 +19,7 @@ public class ChainedActivitiesCreator extends RuntimeActivityCreatorSupport impl
 		RuntimeActivityDefinitionEntityIntepreter radei = new RuntimeActivityDefinitionEntityIntepreter(info);
 
 		if (radei.getCloneActivityIds() == null) {
-			radei.setCloneActivityIds(CollectionUtils.arrayToList(new String[radei.getAssignees().size()]));
+			radei.setCloneActivityIds((List<String>)CollectionUtils.arrayToList(new String[radei.getAssignees().size()]));
 		}
 
 		return createActivities(processEngine, processDefinition, info.getProcessInstanceId(), radei.getPrototypeActivityId(),
