@@ -7,7 +7,7 @@
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
 		<if test="roleCode != null and roleCode != ''">
-			JOIN ${_prefix}sys_user_role ur ON ur.user_code = a.user_code
+			JOIN ${_prefix}sys_user_role ur2 ON ur2.user_code = a.user_code
 		</if>
 		<if test="employee.postCode != null and employee.postCode != ''">
 			JOIN ${_prefix}sys_employee_post ep ON e.emp_code = ep.emp_code
@@ -15,7 +15,7 @@
 		<where>
 			${sqlMap.where.toSql()}
 			<if test="roleCode != null and roleCode != ''">
-				AND ur.role_code = #{roleCode}
+				AND ur2.role_code = #{roleCode}
 			</if>
 			<if test="employee.postCode != null and employee.postCode != ''">
 				AND (
@@ -81,8 +81,8 @@
 		SELECT 
 		    <include refid="userColumns"/>
 		FROM ${_prefix}sys_user a
-		JOIN ${_prefix}sys_user_role ur ON ur.user_code = a.user_code
-		JOIN ${_prefix}sys_role r ON r.role_code = ur.role_code
+		JOIN ${_prefix}sys_user_role ur2 ON ur2.user_code = a.user_code
+		JOIN ${_prefix}sys_role r ON r.role_code = ur2.role_code
 		WHERE a.status = #{STATUS_NORMAL}
 			AND a.user_type = #{USER_TYPE_EMPLOYEE}
 			<if test="global.useCorpModel">
