@@ -687,6 +687,9 @@ file:
   
   # 是否用文件流方式下载（支持断点续传，下载）
   isFileStreamDown: true
+
+  # 默认的预览类型（true、oss）
+  preview: true
   
 # 视频转码
 video:
@@ -700,6 +703,10 @@ video:
   
   # 将mp4视频的元数据信息转到视频第一帧
   qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
+
+# 文件管理是否启用租户模式
+filemanager:
+  useCorpModel: false
 
 #======================================#
 #========== Message settings ==========#
