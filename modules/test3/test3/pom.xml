@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-cloud-parent-web</artifactId>
-		<version>5.0.1-SNAPSHOT</version>
+		<version>5.0.2-SNAPSHOT</version>
 		<relativePath>../../../parent/web/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-cloud-module-test3</artifactId>
 	<packaging>war</packaging>
 	
-	<name>JeeSite Cloud Module test3</name>
+	<name>JeeSite Cloud Module Test3</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
