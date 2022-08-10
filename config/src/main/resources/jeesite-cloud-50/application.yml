@@ -239,6 +239,10 @@ spring:
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
     active: default
+
+  # Feign 序列化时区
+  jackson:
+    time-zone: GMT+8
     
   # Consul 服务发现
   cloud:

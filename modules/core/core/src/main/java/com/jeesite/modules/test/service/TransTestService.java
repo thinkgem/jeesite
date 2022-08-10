@@ -24,7 +24,6 @@ import io.seata.spring.annotation.GlobalTransactional;
  * @version 2020-1-9
  */
 @Service
-@Transactional(readOnly=true)
 public class TransTestService extends BaseService{
 	
 	@Autowired
@@ -36,7 +35,7 @@ public class TransTestService extends BaseService{
 	 * 事务测试，第二个接口调用故意抛出异常
 	 */
 	@GlobalTransactional
-	@Transactional(readOnly=false)
+	@Transactional
 	public void transTest(TestData testData) {
 		
 		// 正常保存 testData 数据

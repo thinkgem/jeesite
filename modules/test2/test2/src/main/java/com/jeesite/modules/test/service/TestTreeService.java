@@ -25,7 +25,6 @@ import io.seata.spring.annotation.GlobalTransactional;
  */
 @Service
 @RestController
-@Transactional(readOnly=true)
 public class TestTreeService extends TreeService<TestTreeDao, TestTree>
 		implements TestTreeServiceApi {
 	
@@ -55,7 +54,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree>
 	 */
 	@Override
 	@GlobalTransactional
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(TestTree testTree) {
 		super.save(testTree);
 		// 保存上传图片
@@ -69,7 +68,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree>
 	 * @param testTree
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(TestTree testTree) {
 		super.updateStatus(testTree);
 	}
@@ -79,7 +78,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree>
 	 * @param testTree
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(TestTree testTree) {
 		super.delete(testTree);
 	}

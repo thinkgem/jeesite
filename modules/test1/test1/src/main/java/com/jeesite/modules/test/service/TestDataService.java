@@ -30,7 +30,6 @@ import io.seata.spring.annotation.GlobalTransactional;
  */
 @Service
 @RestController
-@Transactional(readOnly=true)
 public class TestDataService extends CrudService<TestDataDao, TestData>
 		implements TestDataServiceApi{
 	
@@ -70,7 +69,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 	@GlobalTransactional
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(TestData testData) {
 		super.save(testData);
 		// 保存上传图片
@@ -99,7 +98,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(TestData testData) {
 		super.updateStatus(testData);
 	}
@@ -109,7 +108,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 * @param testData
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(TestData testData) {
 		super.delete(testData);
 		TestDataChild testDataChild = new TestDataChild();
@@ -128,7 +127,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	/**
 	 * 事务测试，若 Child 报错，则回滚
 	 */
-	@Transactional(readOnly=false/*, propagation=Propagation.NOT_SUPPORTED*/)
+	@Transactional//(propagation=Propagation.NOT_SUPPORTED)
 	public void transTest(TestData testData) {
 		testData.setTestInput("transTest");
 		testData.setTestTextarea(IdGen.randomBase62(5));

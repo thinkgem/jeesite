@@ -27,7 +27,6 @@ import io.seata.spring.annotation.GlobalTransactional;
  */
 @Service
 @RestController
-@Transactional(readOnly=true)
 public class TestDataService extends CrudService<TestDataDao, TestData>
 		implements TestDataServiceApi {
 	
@@ -79,7 +78,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 	@GlobalTransactional
-	@Transactional(readOnly=false)
+	@Transactional
 	public void save(TestData testData) {
 		super.save(testData);
 		// 保存上传图片
@@ -107,7 +106,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 	@GlobalTransactional
-	@Transactional(readOnly=false)
+	@Transactional
 	public void updateStatus(TestData testData) {
 		super.updateStatus(testData);
 	}
@@ -118,7 +117,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	 */
 	@Override
 	@GlobalTransactional
-	@Transactional(readOnly=false)
+	@Transactional
 	public void delete(TestData testData) {
 		super.delete(testData);
 		TestDataChild testDataChild = new TestDataChild();
