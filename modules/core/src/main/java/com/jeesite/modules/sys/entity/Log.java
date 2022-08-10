@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.entity.BaseEntity;
@@ -16,6 +17,7 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -280,6 +282,12 @@ public class Log extends DataEntity<Log> {
         String[] values = (String[])paramsMap.get(name);
         return values != null && values.length > 0 ? values[0] : null;
     }
+
+	@Override
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getCreateDate() {
+		return super.getCreateDate();
+	}
 	
 //	@Override
 //	public String toString() {
