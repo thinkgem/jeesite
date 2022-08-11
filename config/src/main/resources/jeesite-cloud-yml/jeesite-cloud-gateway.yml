@@ -22,7 +22,7 @@ spring:
         ds2.nacos:
           server-addr: 127.0.0.1:8848
           data-id: ${spring.application.name}-sentinel
-          group-id: jeesite-cloud-50
+          group-id: jeesite-cloud-yml
           rule-type: flow
 
     # 网关路由配置

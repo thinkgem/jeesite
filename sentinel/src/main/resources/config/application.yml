@@ -1,27 +1,43 @@
 
-#common
-project.name: sentinel-dashboard
-project.version: 1.8.1
+server:
+  servlet:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
 
-#spring settings
-spring.http.encoding.force: true
-spring.http.encoding.charset: UTF-8
-spring.http.encoding.enabled: true
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
-#logging settings
-logging.level.org.springframework.web: INFO
-logging.file: ${user.home}/logs/csp/sentinel-dashboard.log
-logging.pattern.file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
-#logging.pattern.console: %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+logging:
+  level:
+    org:
+      springframework:
+        web: info
+  file:
+    name: ${user.home}/logs/csp/sentinel-dashboard.log
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
 
-#auth settings
-auth.filter.exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version
-auth.filter.exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
+auth:
+  username: sentinel
+  password: sentinel
+  filter:
+    exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version,/actuator/**,/details
+    exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
 
-# If auth.enabled: false, Sentinel console disable login
-auth.username: sentinel
-auth.password: sentinel
+sentinel:
+  dashboard:
+    version: 1.8.3
 
-# Inject the dashboard version. It's required to enable
-# filtering in pom.xml for this resource file.
-sentinel.dashboard.version: ${project.version}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+      

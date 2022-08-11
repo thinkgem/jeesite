@@ -1,4 +1,4 @@
-s@echo off
+@echo off
 rem /**
 rem  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
 rem  * No deletion without permission, or be held responsible to law.

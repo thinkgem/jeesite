@@ -11,8 +11,8 @@ zipkin:
     # Timeout in seconds to flush self-tracing data to storage.
     message-timeout: ${SELF_TRACING_FLUSH_INTERVAL:1}
   collector:
-    # percentage to traces to retain
-    sample-rate: ${COLLECTOR_SAMPLE_RATE:1.0}
+    # percentage to traces to retain（如果设置1.0会导致配置报错）
+    sample-rate: ${COLLECTOR_SAMPLE_RATE:1}
     activemq:
       enabled: ${COLLECTOR_ACTIVEMQ_ENABLED:true}
       # ActiveMQ broker url. Ex. tcp://localhost:61616 or failover:(tcp://localhost:61616,tcp://remotehost:61616)

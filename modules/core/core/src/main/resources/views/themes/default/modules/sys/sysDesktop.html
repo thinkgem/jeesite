@@ -233,8 +233,9 @@
 							<div class="chart">
 								<div id="myChart" style="height:230px;width:100%"></div><script>
 									$(function(){
-										myChart1 = echarts.init(document.getElementById('myChart'), 'default');
+										myChart1 = echarts.init(document.getElementById('myChart'), chartTheme);
 										myChart1.setOption({
+                                            backgroundColor:'',
 										    title : {
 										        text: js.formatDate(new Date(), 'yyyy-MM')
 										    },
@@ -272,7 +273,9 @@
 										            type : 'value'
 										        }
 										    ],
-										    //color: ['#FAD860','#F3A43B','#60C0DD','#C6E579'],
+										    color: [
+										        '#5470c6','#ee6666','#73c0de','#3ba272','#9a60b4'
+                                            ],
 										    series : [
 										        {
 										            name:'成交',
@@ -306,31 +309,31 @@
 								<strong>完成目标</strong>
 							</p>
 							<div class="progress-group">
-								<span class="progress-text">将产品添加到购物车</span>
+								<span class="progress-text">查询访问量</span>
 								<span class="progress-number"><b>160</b>/200</span>
 								<div class="progress sm">
 									<div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
 								</div>
 							</div>
 							<div class="progress-group">
-								<span class="progress-text">完成购买率</span>
+								<span class="progress-text">产品访问量</span>
 								<span class="progress-number"><b>310</b>/400</span>
 								<div class="progress sm">
-									<div class="progress-bar progress-bar-red" style="width: 80%"></div>
+									<div class="progress-bar progress-bar-red" style="width: 77%"></div>
 								</div>
 							</div>
 							<div class="progress-group">
-								<span class="progress-text">产品访问量</span>
+								<span class="progress-text">完成购买率</span>
 								<span class="progress-number"><b>480</b>/800</span>
 								<div class="progress sm">
-									<div class="progress-bar progress-bar-green" style="width: 80%"></div>
+									<div class="progress-bar progress-bar-green" style="width: 60%"></div>
 								</div>
 							</div>
 							<div class="progress-group">
-								<span class="progress-text">查询访问量</span>
-								<span class="progress-number"><b>250</b>/500</span>
+								<span class="progress-text">将产品添加到购物车</span>
+								<span class="progress-number"><b>100</b>/200</span>
 								<div class="progress sm">
-									<div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
+									<div class="progress-bar progress-bar-yellow" style="width: 50%"></div>
 								</div>
 							</div>
 						</div>
@@ -372,22 +375,32 @@
 		</section>
 	</div>
 </div>
-<footer class="main-footer m0">
+<footer class="main-footer m0" style="padding-right:50px">
 	<div class="pull-right hidden-xs">当前版本： ${@Global.getConfig('productVersion')}</div>
-	&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By <a href="http://jeesite.com">JeeSite</a>
+	&copy; ${@DateUtils.getYear()} ${@Global.getConfig('productName')} - Powered By
+	<a href="http://jeesite.com" target="_blank">JeeSite</a>
 </footer>
 <% } %>
+<script src="${ctxStatic}/jquery/jquery-ui-sortable-1.12.1.min.js"></script>
 <script src="${ctxStatic}/echarts/4.2/echarts.min.js"></script>
 <script>
+var chartTheme = $('html').hasClass('skin-dark') > 0 ? 'dark' : 'light';
 $(function(){
 	$(window).resize(function(){
 		var footerHeight = $('.main-footer').outerHeight() || 0;
 		var windowHeight = $(window).height();
 		$('.content').css('min-height', windowHeight - footerHeight);
-		myChart1.resize();
+		myChart1.resize(); myChart2.resize(); myChart3.resize();
 	}).resize();
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		$(window).resize();
 	});
+	$('.ui-sortable').sortable({
+		connectWith : '.ui-sortable',
+		handle      : '.box-header, .nav-tabs',
+		placeholder : 'sort-highlight',
+		forcePlaceholderSize: true,
+		zIndex : 999999
+	}).find('.box-header, .nav-tabs').css('cursor', 'move');
 });
 </script>

@@ -6,8 +6,8 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.0.3-SNAPSHOT</version>
-		<!--<relativePath>../../jeesite/parent/pom.xml</relativePath>-->
+		<version>5.1.0-SNAPSHOT</version>
+		<relativePath>../../../jeesite/jeesite/parent/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-cloud-parent</artifactId>
@@ -20,10 +20,10 @@
 	<properties>
 		
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2020.0.4</spring-cloud.version>
-		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+		<spring-cloud.version>2021.0.2</spring-cloud.version>
+		<spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
 		<spring-cloud-gateway.version>3.0.7</spring-cloud-gateway.version>
-		<nacos.version>2.0.3</nacos.version><!-- 默认 gRPC 旧版切换到 1.4.2 -->
+		<nacos.version>2.1.0.1</nacos.version>
 		<seata.version>1.4.2</seata.version>
 		<eureka.version>1.10.17</eureka.version>
 		<xstream.version>1.4.19</xstream.version>
@@ -79,6 +79,11 @@
 			<dependency>
 				<groupId>io.seata</groupId>
 				<artifactId>seata-spring-boot-starter</artifactId>
+				<version>${seata.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.seata</groupId>
+				<artifactId>seata-serializer-kryo</artifactId>
 				<version>${seata.version}</version>
 			</dependency>
 			<dependency>

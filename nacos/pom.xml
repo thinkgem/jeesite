@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.jeesite</groupId>
-		<artifactId>jeesite-parent</artifactId>
-        <version>5.0.3-SNAPSHOT</version>
-		<relativePath>../../../jeesite/jeesite/parent/pom.xml</relativePath>
-    </parent>
+     <parent>
+         <groupId>com.jeesite</groupId>
+		 <artifactId>jeesite-parent</artifactId>
+		 <version>5.1.0-SNAPSHOT</version>
+		 <relativePath>../../../jeesite/jeesite/parent/pom.xml</relativePath>
+     </parent>
 
     <artifactId>jeesite-cloud-nacos</artifactId>
     <packaging>war</packaging>
@@ -22,12 +22,12 @@
 		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 		
+		<!-- version setting -->
+		<nacos.version>2.1.0.1</nacos.version>
+		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
-		
-		<!-- version setting -->
-		<nacos.version>2.0.3</nacos.version>
 		
 		<!-- docker setting -->
         <docker.run.port>8848:8848</docker.run.port>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-config</artifactId>
-			<version>${nacos.version}</version><!--$NO-MVN-MAN-VER$-->
+			<version>${nacos.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -48,6 +48,12 @@
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-naming</artifactId>
+			<version>${nacos.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.nacos</groupId>
+			<artifactId>nacos-plugin-default-impl</artifactId>
 			<version>${nacos.version}</version>
 		</dependency>
 		<dependency>
@@ -83,18 +89,17 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- FastJSON -->
+		<!-- FastJSON
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
-		</dependency>
+		</dependency> -->
 		
     </dependencies>
 
     <build>
 		<finalName>${finalName}</finalName>
-		<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

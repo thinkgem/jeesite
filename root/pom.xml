@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-cloud-root</artifactId>
-	<version>5.0.3-SNAPSHOT</version>
+	<version>5.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Cloud Root</name>
@@ -26,8 +26,8 @@
         <module>../modules/test1/test1</module>
         <module>../modules/test2/test2-client</module>
         <module>../modules/test2/test2</module>
-        <module>../modules/test3/test3-client</module>
-        <module>../modules/test3/test3</module>
+		<module>../modules/test3/test3-client</module>
+		<module>../modules/test3/test3</module>
     </modules>
 	
 	<developers>  

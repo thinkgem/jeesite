@@ -36,7 +36,7 @@ public class TransTestService extends BaseService{
 	 */
 	@GlobalTransactional
 	@Transactional
-	public void transTest(TestData testData) {
+	public void transTest(TestData testData, boolean normal) {
 		
 		// 正常保存 testData 数据
 		testData.setIsNewRecord(true);
@@ -58,7 +58,7 @@ public class TransTestService extends BaseService{
 		}
 		// 设置一个超出数据库范围的值，抛出数据库异常
 		StringBuilder sb = new StringBuilder();
-		for (int i=0; i<500; i++){
+		for (int i=0; i<(normal?1:500); i++){
 			sb.append("transTest" + i);
 		}
 		testTree.setTreeName(sb.toString());
@@ -81,6 +81,16 @@ public class TransTestService extends BaseService{
 			return true;
 		}
 		return testDataService.get(testData.getId()) == null;
+	}
+
+	/**
+	 * 事务验证，返回空，则事务回滚成功
+	 */
+	public boolean transValid(TestTree testTree) {
+		if (StringUtils.isBlank(testTree.getId())){
+			return true;
+		}
+		return testTreeService.get(testTree.getId()) == null;
 	}
 	
 }

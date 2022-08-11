@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.test.web;
 
+import com.jeesite.modules.test.entity.TestTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,9 @@ public class TransTestController extends BaseController {
 
 	@Autowired
 	private TransTestService transTestService;
-	
+
+	private int i = 0;
+
 	/**
 	 * 查询列表数据
 	 */
@@ -37,22 +40,30 @@ public class TransTestController extends BaseController {
 		try {
 			Class.forName("io.seata.spring.annotation.GlobalTransactionScanner");
 			mode = "GlobalTransactional";
-		} catch (ClassNotFoundException e) {
-		}
+		} catch (ClassNotFoundException e) { }
 		if (StringUtils.isBlank(mode)) {
 			return renderResult(Global.FALSE, "测试失败，没有安装 Seata 模块！");
 		}
+		boolean normal = ++i % 2 == 0; // 正常报错和故意失败模式切换
 		try{
-			transTestService.transTest(testData);
+			transTestService.transTest(testData, normal);
 		}catch (Exception e) {
 			logger.debug("事务测试信息，报错回滚：" + e.getMessage(), e);
 		}
-		boolean bl = transTestService.transValid(testData);
-		String message = "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！";
-		if (!bl) {
-			message += "请全局搜索“@"+mode+"”关键词，是否将前面的“//”注释去掉？";
+		if (normal) {
+			boolean bl1 = transTestService.transValid(testData);
+			boolean bl2 = transTestService.transValid(new TestTree(testData.getId()));
+			String message = "事务测试"+(!bl1&&!bl2?"成功，数据已正常":"失败，数据未")+"保存！";
+			return renderResult(Global.TRUE, message);
+		}else{
+			boolean bl = transTestService.transValid(testData);
+			String message = "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！";
+			if (!bl) {
+				message += "请全局搜索“@"+mode+"”关键词，是否将前面的“//”注释去掉？";
+				message += "是否开启 seata.enabled 参数配置？";
+			}
+			return renderResult(Global.TRUE, message);
 		}
-		return renderResult(Global.TRUE, message);
 	}
 
 }

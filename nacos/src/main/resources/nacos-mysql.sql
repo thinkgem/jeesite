@@ -1,3 +1,19 @@
+/*
+ * Copyright 1999-2018 Alibaba Group Holding Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /******************************************/
 /*   数据库全名 = nacos_config   */
 /*   表名称 = config_info   */
@@ -11,7 +27,7 @@ CREATE TABLE `config_info` (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `src_user` text COMMENT 'source user',
-  `src_ip` varchar(20) DEFAULT NULL COMMENT 'source ip',
+  `src_ip` varchar(50) DEFAULT NULL COMMENT 'source ip',
   `app_name` varchar(128) DEFAULT NULL,
   `tenant_id` varchar(128) DEFAULT '' COMMENT '租户字段',
   `c_desc` varchar(256) DEFAULT NULL,
@@ -19,6 +35,7 @@ CREATE TABLE `config_info` (
   `effect` varchar(64) DEFAULT NULL,
   `type` varchar(64) DEFAULT NULL,
   `c_schema` text,
+  `encrypted_data_key` text NOT NULL COMMENT '秘钥',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
@@ -56,8 +73,9 @@ CREATE TABLE `config_info_beta` (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `src_user` text COMMENT 'source user',
-  `src_ip` varchar(20) DEFAULT NULL COMMENT 'source ip',
+  `src_ip` varchar(50) DEFAULT NULL COMMENT 'source ip',
   `tenant_id` varchar(128) DEFAULT '' COMMENT '租户字段',
+  `encrypted_data_key` text NOT NULL COMMENT '秘钥',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfobeta_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info_beta';
@@ -78,7 +96,7 @@ CREATE TABLE `config_info_tag` (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `src_user` text COMMENT 'source user',
-  `src_ip` varchar(20) DEFAULT NULL COMMENT 'source ip',
+  `src_ip` varchar(50) DEFAULT NULL COMMENT 'source ip',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfotag_datagrouptenanttag` (`data_id`,`group_id`,`tenant_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info_tag';
@@ -134,9 +152,10 @@ CREATE TABLE `his_config_info` (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `src_user` text,
-  `src_ip` varchar(20) DEFAULT NULL,
+  `src_ip` varchar(50) DEFAULT NULL,
   `op_type` char(10) DEFAULT NULL,
   `tenant_id` varchar(128) DEFAULT '' COMMENT '租户字段',
+  `encrypted_data_key` text NOT NULL COMMENT '秘钥',
   PRIMARY KEY (`nid`),
   KEY `idx_gmt_create` (`gmt_create`),
   KEY `idx_gmt_modified` (`gmt_modified`),
@@ -192,7 +211,7 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `permissions` (
     `role` varchar(50) NOT NULL,
-    `resource` varchar(512) NOT NULL,
+    `resource` varchar(255) NOT NULL,
     `action` varchar(8) NOT NULL,
     UNIQUE INDEX `uk_role_permission` (`role`,`resource`,`action`) USING BTREE
 );

@@ -50,8 +50,10 @@ public class ZipkinApplication {
     new SpringApplicationBuilder(ZipkinApplication.class)
       .banner(new ZipkinBanner())
       .initializers(new ZipkinModuleImporter(), new ZipkinActuatorImporter())
-      .properties(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY + "=false")
-      .run(args);
+      // Avoids potentially expensive DNS lookup and inaccurate startup timing
+      .logStartupInfo(false)
+      .properties(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY + "=false",
+    	        "spring.config.name=zipkin-server").run(args);
   }
   
 }

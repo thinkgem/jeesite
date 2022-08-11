@@ -22,6 +22,8 @@ server:
 
   servlet:
     context-path: /js
+    register-default-servlet: false
+    encoding.enabled: true
   tomcat:
     uri-encoding: UTF-8
     
@@ -216,19 +218,22 @@ jdbc:
 seata:
   enabled: false
   application-id: ${spring.application.name}
-  tx-service-group: jeesite_tx_group
+  tx-service-group: default_tx_group
   service:
     vgroup-mapping:
-      jeesite_tx_group: default
+      default_tx_group: default
+  client:
+    undo:
+      log-serialization: kryo
   registry:
     type: nacos
     nacos:
       application: seata-server
       server-addr: 127.0.0.1:8848
-      group : "SEATA_GROUP"
-      namespace: ""
-      username: "nacos"
-      password: "nacos"
+      group : SEATA_GROUP
+      namespace: ~
+      username: nacos
+      password: nacos
       
 #======================================#
 #========== Spring settings ===========#
@@ -239,11 +244,16 @@ spring:
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
     active: default
+    
+  # MVC 映射匹配策略
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
   # Feign 序列化时区
   jackson:
     time-zone: GMT+8
-    
+      
   # Consul 服务发现
   cloud:
     consul:
@@ -265,7 +275,7 @@ spring:
         ds2.nacos:
           server-addr: 127.0.0.1:8848
           data-id: ${spring.application.name}-sentinel
-          group-id: jeesite-cloud-50
+          group-id: jeesite-cloud-yml
           rule-type: flow
   
   # Spring Boot Admin 服务监控中心：https://codecentric.github.io/spring-boot-admin/2.0.6
@@ -390,8 +400,8 @@ session:
   # 手机APP设备会话超时参数设置，登录请求参数加 param_deviceType=mobileApp 时有效
   mobileAppSessionTimeout: 43200000
   
-  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话
-  sessionTimeoutClean: 1200000
+  # 定时清理失效会话，清理用户直接关闭浏览器造成的孤立会话（仅 Core 基础微服务开启会话清理，其余微服务关闭）
+  sessionTimeoutClean: 0
   
   # 会话唯一标识SessionId在Cookie中的名称。
   sessionIdCookieName: jeesite.session.id

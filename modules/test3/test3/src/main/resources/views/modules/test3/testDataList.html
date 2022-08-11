@@ -153,7 +153,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
-			<% if(hasPermi('test3:testData:edit')){ %>
+			//<% if(hasPermi('test3:testData:edit')){ %>
 				actions.push('<a href="${ctx}/test3/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/test3/testData/disable?id='+row.id+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -161,7 +161,7 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/test3/testData/enable?id='+row.id+'" class="btnList" title="${text("启用数据")}" data-confirm="${text("确认要启用该数据吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/test3/testData/delete?id='+row.id+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			<% } %>
+			//<% } %>
 			return actions.join('');
 		}}
 	],

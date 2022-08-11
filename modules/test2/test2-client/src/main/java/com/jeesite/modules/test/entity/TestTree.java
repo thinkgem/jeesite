@@ -42,7 +42,7 @@ public class TestTree extends TreeEntity<TestTree> {
 	}
 
 	public TestTree(String id){
-		super(id);
+		this.setTreeCode(id);
 	}
 	
 	@Override

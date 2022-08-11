@@ -17,8 +17,8 @@
 
 <configuration scan="true" scanPeriod="10 seconds">
 
-<!--     <springProperty scope="context" name="logPath" source="nacos.logs.path" defaultValue="${nacos.home}/logs"/> -->
-    <property name="LOG_HOME" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
+    <springProperty scope="context" name="logPath" source="nacos.logs.path" defaultValue="${nacos.home}/logs"/>
+    <property name="LOG_HOME" value="${logPath}"/>
 
     <appender name="cmdb-main"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -476,11 +476,11 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
-    
+
+
     <!--TPS control -->
     <appender name="tps-control"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/tps-control.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -495,9 +495,9 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
+
     <appender name="tps-control-digest"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/tps-control-digest.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -512,9 +512,9 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
+
     <appender name="tps-control-detail"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/tps-control-detail.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -529,10 +529,10 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
-    
+
+
     <appender name="remote"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/remote.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -547,9 +547,9 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
+
     <appender name="remote-digest"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/remote-digest.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -564,9 +564,9 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
+
     <appender name="remote-push"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/remote-push.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -581,8 +581,8 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    
-    
+
+
     <logger name="com.alibaba.nacos.address.main" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="nacos-address"/>
@@ -592,7 +592,7 @@
         <level value="INFO"/>
         <appender-ref ref="cmdb-main"/>
     </logger>
-    
+
     <logger name="com.alibaba.nacos.core.remote" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="remote"/>
@@ -601,28 +601,28 @@
         <level value="DEBUG"/>
         <appender-ref ref="remote-push"/>
     </logger>
-    
+
     <logger name="com.alibaba.nacos.core.remote.digest" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="remote-digest"/>
     </logger>
-    
+
     <!-- TPS Control-->
     <logger name="com.alibaba.nacos.core.remote.control.digest" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="tps-control-digest"/>
     </logger>
-    
+
     <logger name="com.alibaba.nacos.core.remote.control.detail" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="tps-control-detail"/>
     </logger>
-    
+
     <logger name="com.alibaba.nacos.core.remote.control" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="tps-control"/>
     </logger>
-    
+
     <logger name="com.alibaba.nacos.naming.main" additivity="false">
         <level value="INFO"/>
         <appender-ref ref="async-naming-server"/>
