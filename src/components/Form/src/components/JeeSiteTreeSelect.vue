@@ -101,7 +101,7 @@
 
       if (!isEmpty(props.dictType)) {
         const { initSelectTreeData } = useDict();
-        initSelectTreeData(treeDataRef, props.dictType, false);
+        initSelectTreeData(treeDataRef, props.dictType, true);
       }
 
       watch(
