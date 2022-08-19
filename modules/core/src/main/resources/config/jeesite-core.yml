@@ -287,7 +287,8 @@ job:
     isClustered: true
     dataSourceName: job
     clusterCheckinInterval: 1000
-    #className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+    className: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+    misfireThreshold: 1000
 
   # 调度日志配置
   log:
