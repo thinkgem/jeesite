@@ -151,6 +151,14 @@
       },
     },
     {
+      label: t('用户列表选择'),
+      field: 'testUser.userCode',
+      component: 'ListSelect',
+      componentProps: {
+        selectType: 'empUserSelect',
+      },
+    },
+    {
       label: t('机构选择'),
       field: 'testOffice.officeCode',
       fieldLabel: 'testOffice.officeName',

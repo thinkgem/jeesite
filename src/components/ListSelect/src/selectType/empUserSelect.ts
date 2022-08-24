@@ -6,6 +6,10 @@ import { empUserListData } from '/@/api/sys/empUser';
 
 const { t } = useI18n('sys.empUser');
 
+const modalProps = {
+  title: t('人员选择'),
+};
+
 const searchForm: FormProps = {
   baseColProps: { lg: 6, md: 8 },
   labelWidth: 60,
@@ -17,6 +21,7 @@ const searchForm: FormProps = {
       componentProps: {
         api: officeTreeData,
       },
+      show: false,
     },
     {
       label: t('账号'),
@@ -145,13 +150,28 @@ const tableColumns: BasicColumn[] = [
 
 const tableProps: BasicTableProps = {
   api: empUserListData,
+  beforeFetch: (params) => {
+    params['isAll'] = true;
+    return params;
+  },
   columns: tableColumns,
   formConfig: searchForm,
   rowKey: 'userCode',
 };
 
+const treeProps: Recordable = {
+  api: officeTreeData,
+  params: { isAll: true },
+  title: t('部门'),
+};
+
+const treeTableFieldName = 'employee.office.officeCode';
+
 export default {
+  modalProps,
   tableProps,
   itemCode: 'userCode',
   itemName: 'userName',
+  treeProps,
+  treeTableFieldName,
 };

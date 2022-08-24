@@ -4,6 +4,10 @@ import { userListData } from '/@/api/sys/user';
 
 const { t } = useI18n('sys.empUser');
 
+const modalProps = {
+  title: t('人员选择'),
+};
+
 const searchForm: FormProps = {
   baseColProps: { lg: 6, md: 8 },
   labelWidth: 60,
@@ -126,12 +130,17 @@ const tableColumns: BasicColumn[] = [
 
 const tableProps: BasicTableProps = {
   api: userListData,
+  beforeFetch: (params) => {
+    params['isAll'] = true;
+    return params;
+  },
   columns: tableColumns,
   formConfig: searchForm,
   rowKey: 'userCode',
 };
 
 export default {
+  modalProps,
   tableProps,
   itemCode: 'userCode',
   itemName: 'userName',
