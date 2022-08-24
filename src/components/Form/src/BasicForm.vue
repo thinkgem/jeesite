@@ -361,6 +361,10 @@
         font-size: 13px;
         height: 30px;
         border-radius: 4px;
+
+        &.ant-btn-link {
+          z-index: 1;
+        }
       }
     }
 
