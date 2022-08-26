@@ -4,8 +4,8 @@
 </p>
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">快速开发平台 - Spring Boot</h3>
 <p align="center">
- <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.0" src="https://img.shields.io/badge/JeeSite-V5.0-success.svg"></a>
- <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.5-blue.svg"></a>
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.1" src="https://img.shields.io/badge/JeeSite-V5.1-success.svg"></a>
+ <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.6-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
 </p>
@@ -51,12 +51,14 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.5、Spring Framework 5.3、Apache Shiro 1.9、J2Cache
+* 主框架：Spring Boot 2.6、Spring Framework 5.3、Apache Shiro 1.9、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.3（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
-* 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌浏览器、火狐浏览器、国产浏览器 等
+* 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
+* Bootstrap 版 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
+* Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 * JeeSite Vue：<https://gitee.com/thinkgem/jeesite-vue>
 
@@ -86,12 +88,13 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.0_dev.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.1.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
 6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
+8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 
 ### 快速运行
 
@@ -100,6 +103,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
 4. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 5. 部署常见问题：<https://jeesite.com/docs/faq/>
+8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 
 ### 容器运行
 
@@ -113,45 +117,65 @@ docker run -d -p 8980:8980 --name jeesite-web -v /data:/data \
 thinkgem/jeesite-web && docker logs -f jeesite-web
 ```
 - 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
+- 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 
 ### 开发环境
 
 1. 部署运行文档：<https://jeesite.com/docs/install-deploy/>
 2. 部署常见问题：<https://jeesite.com/docs/faq/>
+3. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 
 ## 技术文章
 
 * 菜单和按钮权限：<https://jeesite.com/docs/permi-shiro/>
 * 强大的数据权限：<https://jeesite.com/docs/service-datascope/#数据权限>
 * 表结构数据字典：<https://jeesite.com/docs/code-gen/#表结构数据字典>
-* 表单组件封装：<https://jeesite.com/docs/views-beetl/>
 * 持久层设计：<https://jeesite.com/docs/dao-mybatis/>
-* JS脚本工具：<https://jeesite.com/docs/jeesite-js/>
 * 后端工具：<https://jeesite.com/docs/sys-utils/>
+* 表单组件：<https://jeesite.com/docs/views-beetl/>
+* 表格组件：<https://jeesite.com/docs/datagrid/>
+* js工具：<https://jeesite.com/docs/jeesite-js/>
 
 ## 专题文章
 
+* 自定义主题：<https://jeesite.com/docs/custom-views/>
+* 国际化多语言：<https://jeesite.com/docs/i18n-locale/>
 * 接口文档：<https://jeesite.com/docs/mobile-rest-api/>
+* BPM工作流引擎：<https://jeesite.com/docs/bpm/>
 * 用户类型：<https://jeesite.com/docs/user-type/>
-* 树表结构设计：<https://jeesite.com/docs/tree-table-use/>
-* 单点登录：<https://jeesite.com/docs/sso-cas/>
-* 国际化：<https://jeesite.com/docs/i18n-locale/>
-* 对象存储：<https://jeesite.com/docs/oss-client/>
-* 文件在线预览：<https://jeesite.com/docs/filepreview/>
-* 报表设计器：<https://jeesite.com/docs/ureport/>
-* 大屏设计器：<https://jeesite.com/docs/visual/>
-* 三员管理员：<https://jeesite.com/docs/manager3/>
-* 在线作业调度：<https://jeesite.com/docs/job/>
 * 消息推送：<https://jeesite.com/docs/msg-push-use/>
+* 单点登录：<https://jeesite.com/docs/sso-cas/>
+* 在线任务调度：<https://jeesite.com/docs/job/>
+* 对象存储：<https://jeesite.com/docs/oss-client/>
+* 大屏设计器：<https://jeesite.com/docs/visual/>
+* 报表设计器：<https://jeesite.com/docs/ureport/>
+* 文件在线预览：<https://jeesite.com/docs/filepreview/>
+* 三员管理员：<https://jeesite.com/docs/manager3/>
 * 手机端框架：<https://jeesite.com/docs/uniapp/>
 * 统一认证服务：<https://jeesite.com/docs/oauth2-server/>
+* 树表结构设计：<https://jeesite.com/docs/tree-table-use/>
 
 ## 云服务架构
 
 * 多租户、SaaS服务：<https://jeesite.com/docs/saas-corp-use/>
 * 集群、负载均衡、高可用：<https://jeesite.com/docs/cluster/>
-* Spring Cloud：<https://jeesite.com/docs/springcloud/>
+* Spring Cloud 微服务：<https://jeesite.com/docs/springcloud/>
 * 分布式事务 Seata：<https://jeesite.com/docs/springcloud-seata/>
+* 读写分离、分库分表：<https://jeesite.com/docs/sharding/>
+
+## 前后分离版
+
+* Vue 版介绍：<https://jeesite.com/docs/jeesite-vue/>
+* Vue 安装部署：<https://jeesite.com/docs/vue-install-deploy/>
+* Vue 参数配置：<https://jeesite.com/docs/vue-settings/>
+* Vue 前端权限：<https://jeesite.com/docs/vue-auth/>
+* Vue 源码解析：<https://jeesite.com/docs/vue-crud-view/>
+* Vue 表单组件：<https://jeesite.com/docs/vue-basic-form/>
+* Vue 表格组件：<https://jeesite.com/docs/vue-basic-table/>
+* Vue 常用组件：<https://jeesite.com/docs/vue-comp/>
+* Vue 图标组件：<https://jeesite.com/docs/vue-icon/>
+* Vue 国际化多语言：<https://jeesite.com/docs/vue-i18n/>
+* Vue 样式库：<https://jeesite.com/docs/vue-style/>
 
 ## 授权协议声明
 
@@ -169,7 +193,7 @@ thinkgem/jeesite-web && docker logs -f jeesite-web
 
 ## 技术服务与支持
 
-* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
 * **联系我们**：请访问技术支持服务页面：<https://jeesite.com/docs/support/> 
 
 ## 今后如何升级？
