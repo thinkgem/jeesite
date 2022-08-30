@@ -4,9 +4,15 @@
  */
 package com.jeesite.modules.sys.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.shiro.authc.FormToken;
+import com.jeesite.common.shiro.filter.FormFilter;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -17,15 +23,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.lang.ObjectUtils;
-import com.jeesite.common.shiro.authc.FormToken;
-import com.jeesite.common.shiro.filter.FormFilter;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.common.web.http.ServletUtils;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 单点登录Controller
@@ -36,7 +35,14 @@ import com.jeesite.modules.sys.utils.UserUtils;
 @Api(tags = "SSO - 单点登录")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class SsoController extends BaseController{
-	
+
+//	public static void main(String[] args) {
+//		String username = "system";
+// 		String secretKey = Global.getConfig("shiro.sso.secretKey");
+// 		String token = Md5Utils.md5(secretKey + username + DateUtils.getDate("yyyyMMdd"));
+//		System.out.println("http://127.0.0.1:3100/js/sso/" + username + "/" + token + "?url=../sys/office/index");
+//	}
+
 	/**
 	 * 单点登录（如已经登录，则直接跳转）
 	 * @param username 	登录用户名（loginCode）
@@ -80,9 +86,5 @@ public class SsoController extends BaseController{
 		}
 		return "error/403";
 	}
-	
-//	public static void main(String[] args) {
-//		System.out.println(UserUtils.getSsoToken("system"));
-//	}
 	
 }
