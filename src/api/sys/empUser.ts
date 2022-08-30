@@ -16,6 +16,9 @@ export interface EmpUser extends User {
   employee?: any;
 }
 
+export const empUserIndex = (params?: EmpUser | any) =>
+  defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/index', params });
+
 export const empUserList = (params?: EmpUser | any) =>
   defHttp.get<EmpUser>({ url: adminPath + '/sys/empUser/list', params });
 

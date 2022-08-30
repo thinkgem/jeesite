@@ -12,6 +12,8 @@
         :toolbar="true"
         :showIcon="true"
         :api="officeTreeData"
+        :params="{ ctrlPermi }"
+        :immediate="immediate"
         :defaultExpandLevel="2"
         @select="handleSelect"
       />
@@ -25,15 +27,24 @@
   });
 </script>
 <script lang="ts" setup>
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { PageWrapper } from '/@/components/Page';
   import { BasicTree } from '/@/components/Tree';
   import { officeTreeData } from '/@/api/sys/office';
+  import { empUserIndex } from '/@/api/sys/empUser';
   import ListView from './list.vue';
 
   const { t } = useI18n('sys.empUser');
   const treeCode = ref<string>('');
+  const ctrlPermi = ref('');
+  const immediate = ref(false);
+
+  onMounted(async () => {
+    const res = await empUserIndex();
+    ctrlPermi.value = res.ctrlPermi || '2';
+    immediate.value = true;
+  });
 
   function handleSelect(keys: string[]) {
     treeCode.value = keys[0];
