@@ -3,7 +3,7 @@ import type { AppRouteModule } from '/@/router/types';
 import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
-const dashboard: AppRouteModule = {
+const account: AppRouteModule = {
   path: '/account',
   name: 'Account',
   component: LAYOUT,
@@ -35,4 +35,4 @@ const dashboard: AppRouteModule = {
   ],
 };
 
-export default dashboard;
+export default account;
