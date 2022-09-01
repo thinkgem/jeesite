@@ -4,13 +4,20 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.fasterxml.jackson.annotation.JsonView;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.shiro.filter.FormFilter;
+import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.common.shiro.realm.LoginInfo;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.common.web.CookieUtils;
+import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.sys.entity.Menu;
+import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.utils.CorpUtils;
+import com.jeesite.modules.sys.utils.PwdUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -25,19 +32,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.shiro.filter.FormFilter;
-import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
-import com.jeesite.common.shiro.realm.LoginInfo;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.common.web.CookieUtils;
-import com.jeesite.common.web.http.ServletUtils;
-import com.jeesite.modules.sys.entity.Menu;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.utils.PwdUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 登录Controller
@@ -237,6 +235,9 @@ public class LoginController extends BaseController{
 				successUrl = request.getContextPath() + successUrl;
 			}
 			model.addAttribute("__url", successUrl); // 告诉浏览器登录后跳转的页面
+			// 初始密码策略和密码修改策略验证（0：关闭；1：提醒用户；2：强制修改初始或旧密码）
+			String modifyPasswordMsg = PwdUtils.getModifyPasswordMsg(user, model);
+			model.addAttribute("modifyPasswordMsg", modifyPasswordMsg);
 			return ServletUtils.renderObject(response, model);
 		}
 		// 如果是登录操作，则跳转到登录成功页
