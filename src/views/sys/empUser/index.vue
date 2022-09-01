@@ -21,13 +21,8 @@
     <ListView :treeCode="treeCode" />
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysEmpUserIndex',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, onMounted, ref } from 'vue';
+<script lang="ts" setup name="ViewsSysEmpUserIndex">
+  import { onMounted, ref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { PageWrapper } from '/@/components/Page';
   import { BasicTree } from '/@/components/Tree';
