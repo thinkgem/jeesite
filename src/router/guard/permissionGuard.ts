@@ -10,10 +10,11 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { RootRoute } from '/@/router/routes';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
+const MOD_PWD_PAGE = PageEnum.MOD_PWD_PAGE;
 
 const ROOT_PATH = RootRoute.path;
 
-const whitePathList: PageEnum[] = [LOGIN_PATH];
+const whitePathList: PageEnum[] = [LOGIN_PATH, MOD_PWD_PAGE];
 
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStoreWithOut();
@@ -44,7 +45,23 @@ export function createPermissionGuard(router: Router) {
       //     }
       //   } catch {}
       // }
+      if (to.path === MOD_PWD_PAGE) {
+        try {
+          await userStore.getUserInfoAction();
+        } catch (error: any) {
+          console.error(error);
+        }
+      }
       next();
+      return;
+    }
+
+    // force modify password
+    if (userStore.getPageCacheByKey('modifyPasswordMsg')) {
+      next({
+        path: MOD_PWD_PAGE,
+        replace: true,
+      });
       return;
     }
 

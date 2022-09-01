@@ -9,9 +9,9 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, SESSION_TIMEOUT_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { TOKEN_KEY, ROLES_KEY, USER_INFO_KEY, SESSION_TIMEOUT_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { loginApi, logoutApi, userInfoApi, LoginParams } from '/@/api/sys/login';
+import { loginApi, logoutApi, userInfoApi, LoginParams, LoginResult } from '/@/api/sys/login';
 // import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -22,7 +22,7 @@ import { useGlobSetting } from '/@/hooks/setting';
 import logoImg from '/@/assets/images/logo.png';
 import mitt, { Emitter } from '/@/utils/mitt';
 
-const { showMessage } = useMessage();
+const { showMessage, createConfirm } = useMessage();
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -111,15 +111,12 @@ export const useUserStore = defineStore({
     setPageCache(key: string, value: any) {
       this.pageCache[key] = value;
     },
-    getPageCacheByKey(key: string, defaultValue: any): any {
+    getPageCacheByKey(key: string, defaultValue?: any): any {
       if (!this.pageCache[key] && defaultValue) {
         this.pageCache[key] = defaultValue;
       }
       return this.pageCache[key];
     },
-    /**
-     * @description: login
-     */
     async login(
       params: LoginParams & {
         goHome?: boolean;
@@ -134,14 +131,14 @@ export const useUserStore = defineStore({
       }
       const userInfo = res.user;
       this.setUserInfo(userInfo);
+      this.initPageCache(res);
       this.setSessionTimeout(false);
-      await this.afterLoginAction(goHome);
+      await this.afterLoginAction(res, goHome);
       return res;
     },
     // async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
-    async afterLoginAction(goHome?: boolean, userInfo?: UserInfo) {
+    async afterLoginAction(res: LoginResult, goHome?: boolean) {
       if (!this.getToken) return null;
-      // get user info
       // const userInfo = await this.getUserInfoAction();
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -156,28 +153,45 @@ export const useUserStore = defineStore({
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
           permissionStore.setDynamicAddedRoute(true);
         }
-        // goHome && (await router.replace(userInfo?.homePath || PageEnum.BASE_HOME));
         if (goHome) {
           const currentRoute = router.currentRoute.value;
           let path = currentRoute.query.redirect;
           if (path !== '/') {
-            path = path || userInfo?.homePath || PageEnum.BASE_HOME;
+            path = path || res.user?.homePath || PageEnum.BASE_HOME;
           } else {
-            path = userInfo?.homePath || PageEnum.BASE_HOME;
+            path = res.user?.homePath || PageEnum.BASE_HOME;
           }
           await router.replace(decodeURIComponent(path as string));
         }
+        if (res['modifyPasswordTip']) {
+          createConfirm({
+            content: res['modifyPasswordTip'],
+            maskClosable: false,
+            iconType: 'info',
+            cancelText: '取消',
+            okText: '确定',
+            onOk: () => {
+              router.replace('/account/modPwd');
+            },
+          });
+        }
       }
-      return userInfo || null;
+      return res.user || null;
     },
     async getUserInfoAction() {
       // if (!this.getToken) return null;
-      const data = await userInfoApi();
-      const userInfo = data.user;
+      const res = await userInfoApi();
+      const userInfo = res.user;
       this.setUserInfo(userInfo);
+      this.initPageCache(res);
       // this.setRoleList(roleList);
       this.setSessionTimeout(false);
       return userInfo;
+    },
+    initPageCache(res: LoginResult) {
+      this.setUserInfo(res.user);
+      this.setPageCache('modifyPasswordTip', res.modifyPasswordTip);
+      this.setPageCache('modifyPasswordMsg', res.modifyPasswordMsg);
     },
     /**
      * @description: logout

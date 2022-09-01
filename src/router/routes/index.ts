@@ -36,9 +36,20 @@ export const LoginRoute: AppRouteRecordRaw = {
   },
 };
 
+const ModPwdRoute: AppRouteModule = {
+  path: '/modPwd',
+  name: 'ModPwd',
+  component: () => import('/@/views/sys/account/modPwd.vue'),
+  meta: {
+    icon: 'ion:key-outline',
+    title: t('sys.account.modifyPwd'),
+  },
+};
+
 // Basic routing without permission
 export const basicRoutes = [
   LoginRoute,
+  ModPwdRoute,
   RootRoute,
   ...mainOutRoutes,
   REDIRECT_ROUTE,

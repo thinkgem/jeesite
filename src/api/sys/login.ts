@@ -25,6 +25,8 @@ export interface LoginResult {
   message: string;
   sessionid: string;
   user: UserInfo;
+  modifyPasswordTip: string;
+  modifyPasswordMsg: string;
   isValidCodeLogin: boolean;
 }
 
@@ -45,10 +47,15 @@ export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') =
   );
 };
 
-export const switchSkin = (name: string) => {
-  if (!name) {
-    const themeColor = useAppStore().getProjectConfig.themeColor;
-    name = themeColor == '#1890ff' ? 'skin-blue-light3' : 'skin-blue3';
+export const switchSkin = (name = '') => {
+  if (name == '') {
+    const appStore = useAppStore();
+    if (appStore.getDarkMode === 'dark') {
+      name = 'skin-dark';
+    } else {
+      const themeColor = appStore.getProjectConfig.themeColor;
+      name = themeColor == '#1890ff' ? 'skin-blue-light3' : 'skin-blue3';
+    }
   }
   return defHttp.get({ url: adminPath + '/switchSkin/' + name });
 };

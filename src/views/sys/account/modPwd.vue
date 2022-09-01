@@ -4,6 +4,9 @@
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
+    <div v-if="getModifyPasswordMsg" class="pl-8 pr-8">
+      <Alert :message="getModifyPasswordMsg" type="info" show-icon />
+    </div>
     <div class="py-8 bg-white flex flex-col justify-center items-center">
       <BasicForm @register="register" />
       <div class="flex justify-center">
@@ -15,19 +18,22 @@
     </div>
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'AccountModPwd',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent } from 'vue';
+<script lang="ts" setup name="AccountModPwd">
+  import { computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { Icon } from '/@/components/Icon';
   import { PageWrapper } from '/@/components/Page';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { infoSavePwd } from '/@/api/sys/user';
+  import { useUserStore } from '/@/store/modules/user';
+  import { Alert } from 'ant-design-vue';
+  import { router } from '/@/router';
+
+  const userStore = useUserStore();
+  const getModifyPasswordMsg = computed(() => {
+    return userStore.getPageCacheByKey('modifyPasswordMsg');
+  });
 
   const { t } = useI18n();
   const { showMessage } = useMessage();
@@ -92,6 +98,10 @@
       const data = await validate();
       const res = await infoSavePwd(data);
       showMessage(res.message);
+      if (res.result == 'true' && getModifyPasswordMsg.value) {
+        userStore.setPageCache('modifyPasswordMsg', undefined);
+        router.replace('/');
+      }
     } catch (error: any) {
       if (error && error.errorFields) {
         showMessage(t('您填写的信息有误，请根据提示修正。'));
