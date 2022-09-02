@@ -47,6 +47,7 @@
       {
         label: t('操作用户'),
         field: 'userCode',
+        fieldLabel: 'userName',
         component: 'ListSelect',
         componentProps: {
           selectType: 'userSelect',
