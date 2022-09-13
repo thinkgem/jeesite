@@ -301,12 +301,12 @@ export default defineComponent({
             def={unref(getShowQuick)}
             disabled={!unref(getShowMultipleTab)}
           />
-          <SwitchItem
+          {/* <SwitchItem
             title={t('layout.setting.tabsFoldBtn')}
             event={HandlerEnum.TABS_SHOW_FOLD}
             def={unref(getShowFold)}
             disabled={!unref(getShowMultipleTab)}
-          />
+          /> */}
 
           <SwitchItem
             title={t('layout.setting.breadcrumb')}

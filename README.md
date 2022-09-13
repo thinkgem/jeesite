@@ -76,38 +76,41 @@
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
 - [Vue-Vben-Admin](https://vvbin.cn/doc-next/) - 熟悉 UI 及表单列表及常用组件使用
 - [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
-- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.0_dev/) - 安装后台服务
+- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.1/) - 安装后台服务
 
 ## 安装使用
 
-- 如果没有安装 Node.js（不低于 14，建议 16）
+- 如果没有安装 Node.js 16，下载地址：<https://nodejs.org>
 
-```
-下载安装 Node.js 16：https://nodejs.org
+```bash
+# 验证
+node -v
 ```
 
 - 如果没有安装 Yarn 执行安装（要求 Yarn v1.x）
 
 ```bash
 npm i -g yarn
+# 验证
+yarn -v
 ```
 
 - 获取代码
 
 ```bash
 git clone https://gitee.com/thinkgem/jeesite-vue.git
+cd jeesite-vue
 ```
+注意：不要放到中文或带空格的目录下。
 
 - 安装依赖
 
 ```bash
-cd jeesite-vue
-
 yarn config set registry https://registry.npm.taobao.org
 yarn install
 ```
 
-- 运行
+- 运行访问
 
 ```bash
 yarn serve
@@ -123,7 +126,7 @@ yarn build
 ```
 打包完成后，会在根目录生成 dist 文件夹，发布 nginx。
 
-有一些打包参数，详见 .env.production 里面有注释。
+详见文档：<https://jeesite.com/docs/vue-install-deploy/#部署到正式服务器>
 
 ### 如果您使用的 VSCode 的话，推荐安装以下插件：
 
@@ -154,6 +157,15 @@ yarn build
 6. 任何基于本软件而产生的一切法律纠纷和责任，均于我司无关。
 7. 如果你对本软件有改进，希望可以贡献给我们，共同进步。
 8. 本项目已申请软件著作权，请尊重开源，感谢阅读。
+
+## 专业版增加的功能
+
+1. 主题的标签页风格切换
+2. 表格列拖拽调整列宽功能
+3. 子系统管理和切换功能
+4. 业务流程-流程办理
+5. 租户管理功能
+6. 文件上传秒传
 
 ## 技术服务与支持
 
