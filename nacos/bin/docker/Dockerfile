@@ -18,4 +18,4 @@ ENTRYPOINT jar -xvf app.war && rm app.war && cd WEB-INF && sh startup.sh
 
 EXPOSE 8848
 
-#docker run -p 8848:8848 thinkgem/jeesite-cloud-nacos:5.0
+#docker run -p 8848:8848 thinkgem/jeesite-cloud-nacos:5.1

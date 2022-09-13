@@ -24,4 +24,4 @@ cd app
 jar -xvf web.war
 rm web.war
 cd WEB-INF
-exec ./startup.sh
+sh ./startup.sh

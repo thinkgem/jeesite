@@ -17,4 +17,4 @@ ENTRYPOINT jar -xvf app.war && rm app.war && cd WEB-INF && sh startup.sh
 
 EXPOSE 8983
 
-#docker run -p 8983:8983 thinkgem/jeesite-cloud-module-test2:5.0
+#docker run -p 8983:8983 thinkgem/jeesite-cloud-module-test2:5.1
