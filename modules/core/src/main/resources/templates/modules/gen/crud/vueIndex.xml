@@ -40,7 +40,7 @@
   import { ${className}TreeData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
   import ListView from './list.vue';
 
-  const { t } = useI18n('sys.menu');
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const treeCode = ref<string>('');
 
   function handleSelect(keys: string[]) {
