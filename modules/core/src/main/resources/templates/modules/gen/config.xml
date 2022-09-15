@@ -10,8 +10,8 @@
 			<template>crud/service.xml</template>
 			<template>crud/controller.xml</template>
 			<template>crud/viewList.xml</template>
-			<template>crud/viewIndex.xml</template>
 			<template>crud/viewForm.xml</template>
+			<template>crud/viewIndex.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
 			</childTable>
@@ -22,8 +22,9 @@
 			<template>crud/controller.xml</template>
 			<template>crud/vueApi.xml</template>
 			<template>crud/vueList.xml</template>
-			<template>crud/vueIndex.xml</template>
 			<template>crud/vueForm.xml</template>
+			<template>crud/vueIndex.xml</template>
+			<template>crud/vueImport.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
 			</childTable>
@@ -31,8 +32,9 @@
 		<category value="crud_only_vue" label="单表/主子表 （增删改查）仅Vue">
 			<template>crud/vueApi.xml</template>
 			<template>crud/vueList.xml</template>
-			<template>crud/vueIndex.xml</template>
 			<template>crud/vueForm.xml</template>
+			<template>crud/vueIndex.xml</template>
+			<template>crud/vueImport.xml</template>
 		</category>
 		<category value="crud_select" label="单表/主子表 （增删改查，含 listselect 选择页面）">
 			<template>category-ref:crud</template>
@@ -70,6 +72,7 @@
 			<template>crud/vueList.xml</template>
 			<template>crud/vueIndex.xml</template>
 			<template>crud/vueForm.xml</template>
+			<template>crud/vueImport.xml</template>
 			<childTable>
 				<template>crud_cloud/mapper.xml</template>
 				<template>crud_cloud/entity.xml</template>

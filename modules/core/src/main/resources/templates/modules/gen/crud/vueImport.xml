@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>formImport</name>
+	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<fileName>formImport.vue</fileName>
+	<content><![CDATA[
+<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+-->
+<template>
+  <BasicModal
+    v-bind="$attrs"
+    :title="t('导入${functionNameSimple}')"
+    :okText="t('导入')"
+    @register="registerModal"
+    @ok="handleSubmit"
+    :minHeight="120"
+    :width="400"
+  >
+    <Upload
+      accept=".xls,.xlsx"
+      :file-list="fileList"
+      :remove="handleRemove"
+      :before-upload="beforeUpload"
+    >
+      <a-button> <Icon icon="ant-design:upload-outlined" /> {{ t('选择文件') }} </a-button>
+      <span class="ml-4">{{ uploadInfo }}</span>
+    </Upload>
+    <div class="ml-4 mt-4">
+      {{ t('提示：仅允许导入“xls”或“xlsx”格式文件！') }}
+    </div>
+    <div class="mt-4">
+      <a-button @click="handleDownloadTemplate()" type="text">
+        <Icon icon="fa:file-excel-o" />
+        {{ t('下载模板') }}
+      </a-button>
+    </div>
+  </BasicModal>
+</template>
+<script lang="ts" setup>
+  import { ref } from 'vue';
+  import { Upload } from 'ant-design-vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { useGlobSetting } from '/@/hooks/setting';
+  import { downloadByUrl } from '/@/utils/file/download';
+  import { Icon } from '/@/components/Icon';
+  import { BasicModal, useModalInner } from '/@/components/Modal';
+  import { ${className}ImportData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+
+  const emit = defineEmits(['success', 'register']);
+
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const { showMessage, showMessageModal } = useMessage();
+
+  const fileList = ref([]);
+  const uploadInfo = ref('');
+
+  const beforeUpload = (file: never) => {
+    fileList.value = [file];
+    return false;
+  };
+
+  const handleRemove = () => {
+    fileList.value = [];
+  };
+
+  const [registerModal, { setModalProps, closeModal }] = useModalInner(() => {
+    fileList.value = [];
+    uploadInfo.value = '';
+  });
+
+  async function handleDownloadTemplate() {
+    const { ctxAdminPath } = useGlobSetting();
+    downloadByUrl({
+      url: ctxAdminPath + '/${urlPrefix}/importTemplate',
+      target: '_self',
+    });
+  }
+
+  function onUploadProgress(progressEvent: ProgressEvent) {
+    const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+    if (complete != 100) {
+      uploadInfo.value = t('正在导入，请稍后') + ' ' + complete + '%...';
+    } else {
+      uploadInfo.value = '';
+    }
+  }
+
+  async function handleSubmit() {
+    try {
+      if (fileList.value.length == 0) {
+        showMessage(t('请选择要导入的数据文件'));
+        return;
+      }
+      setModalProps({ confirmLoading: true });
+      const params = {
+        file: fileList.value[0],
+      };
+      const { data } = await ${className}ImportData(params, onUploadProgress);
+      showMessageModal({ content: data.message });
+      setTimeout(closeModal);
+      emit('success');
+    } catch (error: any) {
+      if (error && error.errorFields) {
+        showMessage(t('您填写的信息有误，请根据提示修正。'));
+      }
+      console.log('error', error);
+    } finally {
+      setModalProps({ confirmLoading: false });
+    }
+  }
+</script>
+<% } %>
+<% %>
+]]>
+	</content>
+</template>

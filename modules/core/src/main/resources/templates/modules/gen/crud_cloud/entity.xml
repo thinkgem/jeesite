@@ -8,6 +8,9 @@
 	<content><![CDATA[
 package ${packageName}.${moduleName}.entity${isNotBlank(subModuleName)?'.'+subModuleName:''};
 
+<% if(table.childList.~size > 0){ %>
+import javax.validation.Valid;
+<% } %>
 <% for(i in table.importList){ %>
 import ${i};
 <% } %>
@@ -25,6 +28,11 @@ import com.jeesite.modules.bpm.entity.BpmTreeEntity;
 	<% }else{ %>
 import com.jeesite.modules.bpm.entity.BpmEntity;
 	<% } %>
+<% } %>
+<% if(!table.parentExists && toBoolean(table.optionMap['isImportExport'])){ %>
+import com.jeesite.common.utils.excel.annotation.ExcelField;
+import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
+import com.jeesite.common.utils.excel.annotation.ExcelFields;
 <% } %>
 
 /**
@@ -206,7 +214,18 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	
 	// 生成构造方法
 	%>
-	
+
+	<% if(!table.parentExists && toBoolean(table.optionMap['isImportExport'])){ %>
+	@ExcelFields({
+		<% for(c in table.columnList){ if(c.optionMap['isImportExport'] == @Global.YES){ %>
+		@ExcelField(title="${c.columnLabel}", attrName="${c.attrName}"${
+			isNotBlank(c.optionMap['dictType'])?', dictType="'+c.optionMap['dictType']+'"':''
+		}, align=Align.CENTER, sort=${c.columnSort}${
+			c.showType == 'date'?', dataFormat="yyyy-MM-dd"':c.showType == 'datetime'?', dataFormat="yyyy-MM-dd hh:mm"':''
+		}),
+		<% } } %>
+	})
+	<% } %>
 	public ${ClassName}() {
 		this(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}null<% } %>);
 	}

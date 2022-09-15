@@ -1,6 +1,6 @@
 <%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
    * No deletion without permission, or be held responsible to law. */%>
-<% if(table.isTreeEntity){ %>
+<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
 \<% layout('/layouts/default.html', {title: '${functionNameSimple}管理', libs: ['layout','zTree']}){ %>
 <div class="ui-layout-west">
 	<div class="main-content">
@@ -36,12 +36,19 @@ $('body').layout({
 var win = $("#mainFrame")[0].contentWindow;
 // 树结构初始化加载
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
-	async:{enable:true,autoParam:["id=parentCode"],url:"\${ctx}/${urlPrefix}/treeData"},
+	async:{enable:true,autoParam:["id=parentCode"],url:"\${ctx}${
+		isNotBlank(table.optionMap['leftTreeRightTableUrl'])
+		?table.optionMap['leftTreeRightTableUrl']
+		:'/'+urlPrefix+'/treeData'}"},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
 		//win.$('button[type=reset]').click();
-		<% for(pk in table.pkList){ %>
+		<% if (isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
+		win.$('#searchForm [name="${table.optionMap['leftTreeRightTableFk']}"]').val(treeNode.id);
+		<% }else{ %>
+			<% for(pk in table.pkList){ %>
 		win.$('#${pk.attrName}').val(treeNode.id);
+			<% } %>
 		<% } %>
 		win.page();
 	}}

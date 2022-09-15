@@ -6,7 +6,7 @@
 	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
 	<fileName>index.vue</fileName>
 	<content><![CDATA[
-<% if(table.isTreeEntity){ %>
+<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
 <!--
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.

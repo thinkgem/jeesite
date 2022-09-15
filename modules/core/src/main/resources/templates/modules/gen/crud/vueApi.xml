@@ -15,11 +15,20 @@ import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 <% if(table.isTreeEntity){ %>
 import { TreeDataModel, TreeModel } from '../model/baseModel';
+<% }else if(isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
+import { BasicModel, Page, TreeDataModel } from '../model/baseModel';
 <% }else{ %>
 import { BasicModel, Page } from '../model/baseModel';
 <% } %>
+<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+import { UploadApiResult } from '../sys/upload';
+import { UploadFileParams } from '/#/axios';
+
+const { ctxPath, adminPath } = useGlobSetting();
+<% }else{ %>
 
 const { adminPath } = useGlobSetting();
+<% } %>
 
 export interface ${ClassName} extends ${table.isTreeEntity?'Tree':'Basic'}Model<${ClassName}> {
 <%
@@ -87,6 +96,20 @@ export const ${className}CreateNextNode = (params?: ${ClassName} | any) =>
 
 export const ${className}Save = (params?: any, data?: ${ClassName} | any) =>
   defHttp.postJson<${ClassName}>({ url: adminPath + '/${urlPrefix}/save', params, data });
+<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+
+export const ${className}ImportData = (
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: ProgressEvent) => void,
+) =>
+  defHttp.uploadFile<UploadApiResult>(
+    {
+      url: ctxPath + adminPath + '/${urlPrefix}/importData',
+      onUploadProgress,
+    },
+    params,
+  );
+<% } %>
 <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 
 export const ${className}Disable = (params?: ${ClassName} | any) =>
@@ -98,7 +121,11 @@ export const ${className}Enable = (params?: ${ClassName} | any) =>
 
 export const ${className}Delete = (params?: ${ClassName} | any) =>
   defHttp.get<${ClassName}>({ url: adminPath + '/${urlPrefix}/delete', params });
-<% if(table.isTreeEntity){ %>
+<% if(isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
+
+export const ${className}TreeData = (params?: any) =>
+  defHttp.get<TreeDataModel[]>({ url: adminPath + '${table.optionMap['leftTreeRightTableUrl']}', params });
+<% }else if(table.isTreeEntity){ %>
 
 export const ${className}TreeData = (params?: any) =>
   defHttp.get<TreeDataModel[]>({ url: adminPath + '/${urlPrefix}/treeData', params });

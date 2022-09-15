@@ -27,6 +27,14 @@
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <% } %>
+        <% if(toBoolean(table.optionMap['isImportExport'])){ %>
+        <a-button type="default" @click="handleExport()">
+          <Icon icon="ant-design:download-outlined" /> {{ t('导出') }}
+        </a-button>
+        <a-button type="default" @click="handleImport()">
+          <Icon icon="ant-design:upload-outlined" /> {{ t('导入') }}
+        </a-button>
+        <% } %>
         <a-button type="primary" @click="handleForm({})" v-auth="'${permissionPrefix}:edit'">
           <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
@@ -72,6 +80,9 @@ if(table.isTreeEntity){
       </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
+    <% if(toBoolean(table.optionMap['isImportExport'])){ %>
+    <FormImport @register="registerImportModal" @success="handleSuccess" />
+    <% } %>
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
     <BpmRuntimeTrace @register="registerTraceModal" />
     <% } %>
@@ -83,9 +94,14 @@ if(table.isTreeEntity){
   });
 </script>
 <script lang="ts" setup>
-  import { defineComponent<% if(table.isTreeEntity){ %>, watch, nextTick<% } %> } from 'vue';
+  import { defineComponent<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
+  	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  <% if(toBoolean(table.optionMap['isImportExport'])){ %>
+  import { useGlobSetting } from '/@/hooks/setting';
+  import { downloadByUrl } from '/@/utils/file/download';
+  <% } %>
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
@@ -116,14 +132,19 @@ for(c in table.columnList){
   import { areaTreeData } from '/@/api/sys/area';
 <% } %>
   import { useDrawer } from '/@/components/Drawer';
-  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+  <% if(toBoolean(table.optionMap['isBpmForm']) || toBoolean(table.optionMap['isImportExport'])){ %>
   import { useModal } from '/@/components/Modal';
+  <% } %>
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
   import { BpmRuntimeTrace } from '/@/components/Bpm';
   <% } %>
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
+  <% if(toBoolean(table.optionMap['isImportExport'])){ %>
+  import FormImport from './formImport.vue';
+  <% } %>
 
-<% if(table.isTreeEntity){ %>
+<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
   const props = defineProps({
     treeCode: String,
   });
@@ -360,14 +381,9 @@ for(c in table.columnList){
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %> }] = useTable({
+  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %>, getForm }] = useTable({
     api: ${className}ListData,
     beforeFetch: (params) => {
-  <% if(table.isTreeEntity){ %>
-    <% for(pk in table.pkList){ %>
-      params.${pk.attrName} = props.treeCode;
-    <% } %>
-  <% } %>
       return params;
     },
     columns: tableColumns,
@@ -381,14 +397,25 @@ for(c in table.columnList){
     <% } %>
     canResize: true,
   });
-<% if(table.isTreeEntity){ %>
+<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
 
   watch(
     () => props.treeCode,
-    () => {
+    async () => {
+      await getForm().setFieldsValue({
+    <% if (isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
+        '${table.optionMap['leftTreeRightTableFk']}': props.treeCode,
+    <% }else if(table.isTreeEntity){ %>
+      <% for(pk in table.pkList){ %>
+        '${pk.attrName}': props.treeCode,
+      <% } %>
+    <% } %>
+      });
       reload();
     },
   );
+<% } %>
+<% if(table.isTreeEntity){ %>
 
   function fetchSuccess() {
     if (props.treeCode) {
@@ -400,6 +427,22 @@ for(c in table.columnList){
   function handleForm(record: Recordable) {
     openDrawer(true, record);
   }
+<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+
+  async function handleExport() {
+    const { ctxAdminPath } = useGlobSetting();
+    downloadByUrl({
+      url: ctxAdminPath + '/${urlPrefix}/exportData',
+      target: '_self',
+    });
+  }
+
+  const [registerImportModal, { openModal: importModal }] = useModal();
+
+  function handleImport() {
+    importModal(true, {});
+  }
+<% } %>
 <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 
   async function handleDisable(record: Recordable) {
