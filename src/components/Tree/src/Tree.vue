@@ -527,7 +527,13 @@
             <span innerHTML={title} />
           );
 
-          item.isLeaf = !(item.children && item.children.length > 0);
+          // item.isLeaf = !(item.children && item.children.length > 0);
+
+          item.isLeaf = attrs.loadData ? 
+            item.isLeaf ?
+             item.isLeaf : 
+            false : 
+          !(item.children && item.children.length > 0)
 
           item[titleField] = (
             <span
