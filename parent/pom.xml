@@ -3,6 +3,13 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.11</version>
+		<relativePath />
+	</parent>
+
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
 	<version>5.1.0-SNAPSHOT</version>
@@ -35,7 +42,6 @@
 		<groovy.version>3.0.10</groovy.version>
 
 		<!-- framework version setting -->
-		<spring-boot.version>2.6.11</spring-boot.version>
 		<mybatis.version>3.5.10</mybatis.version>
 		<mybatis-spring.version>2.0.7</mybatis-spring.version>
 		<jsqlparser.version>4.5</jsqlparser.version>
@@ -56,7 +62,7 @@
 		<resource.delimiter>@</resource.delimiter>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 降级到该版本，新版本可能会出现VM崩溃 -->
+		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 其它版本可能会出现VM崩溃 -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,18 +74,6 @@
 		<docker.run.port>8980:8980</docker.run.port>
 
 	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 
@@ -199,7 +193,6 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>${spring-boot.version}</version>
 					<executions>
 						<execution>
 							<id>repackage</id>
