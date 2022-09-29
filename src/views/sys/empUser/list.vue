@@ -286,7 +286,10 @@
       {
         icon: 'ant-design:reload-outlined',
         label: t('重置密码'),
-        onClick: handleResetpwd.bind(this, { userCode: record.userCode }),
+        popConfirm: {
+          title: t('是否确认重置密码'),
+          confirm: handleResetpwd.bind(this, { userCode: record.userCode }),
+        },
         auth: 'sys:empUser:resetpwd',
       },
     ],

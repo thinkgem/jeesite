@@ -74,9 +74,8 @@ export function useForm(props?: Props): UseFormReturnType {
     },
 
     resetFields: async () => {
-      getForm().then(async (form) => {
-        await form.resetFields();
-      });
+      const form = await getForm();
+      await form.resetFields();
     },
 
     removeSchemaByFiled: async (field: string | string[]) => {
