@@ -10,7 +10,7 @@ package ${packageName}.${moduleName}.api${isNotEmpty(subModuleName)?'.'+subModul
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jeesite.common.service.rest.CrudServiceRest;
+import com.jeesite.common.service.rest.${table.isTreeEntity?'Tree':'Crud'}ServiceRest;
 import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName};
 
 /**
