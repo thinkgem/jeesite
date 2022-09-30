@@ -380,6 +380,9 @@ public class LoginController extends BaseController{
 	public String switchSkin(@PathVariable String skinName, HttpServletRequest request, HttpServletResponse response) {
 		if (StringUtils.isNotBlank(skinName) && !"select".equals(skinName)){
 			CookieUtils.setCookie(response, "skinName", skinName);
+			if (ServletUtils.isAjaxRequest(request)) {
+				return renderResult(response, Global.TRUE, text("主题切换成功"));
+			}
 			return REDIRECT + adminPath + "/index";
 		}
 		return "modules/sys/switchSkin";
