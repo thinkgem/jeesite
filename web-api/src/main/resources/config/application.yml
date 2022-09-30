@@ -27,7 +27,7 @@ server:
   servlet:
     context-path: /js
     register-default-servlet: false
-    encoding.enabled: true
+#    encoding.enabled: true
   tomcat:
     uri-encoding: UTF-8
     # 表单请求数据的最大大小
