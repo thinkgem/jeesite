@@ -23,7 +23,7 @@ server:
   servlet:
     context-path: /js
     register-default-servlet: false
-    encoding.enabled: true
+#    encoding.enabled: true
   tomcat:
     uri-encoding: UTF-8
     
