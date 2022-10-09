@@ -552,8 +552,8 @@ for (c in table.columnList){
 <% } %>
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await ${className}Form(data);
     record.value = (res.${className} || {}) as ${ClassName};
     record.value.__t = new Date().getTime();
