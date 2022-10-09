@@ -6,8 +6,8 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
- <a href="https://2x.antdv.com/" target="__blank"><img alt="Ant Design Vue-2.2" src="https://img.shields.io/badge/Ant Design Vue-2.2-blue.svg"></a>
- <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.0-blue.svg"></a>
+ <a href="https://2x.antdv.com/" target="__blank"><img alt="Ant Design Vue-3.2" src="https://img.shields.io/badge/Ant Design Vue-3.2-blue.svg"></a>
+ <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.1-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
 </p>
@@ -75,7 +75,7 @@
 - [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
 - [Vue-Vben-Admin](https://vvbin.cn/doc-next/) - 熟悉 UI 及表单列表及常用组件使用
-- [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
+- [Ant-Design-Vue](https://antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
 - [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.1/) - 安装后台服务
 
 ## 安装使用
@@ -170,9 +170,8 @@ yarn build
 ## 技术服务与支持
 
 * 本软件免费，我们也提供了相应的收费服务，因为：
-* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞（本软件Git仓库首页，右上角点击 star 按钮，关注我们）。支持我们，您可以得到一些回报，有了这些我们会把公益事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系方式（官方商务）QQ：[1766571055](http://wpa.qq.com/msgrd?v=3&uin=1766571055&site=qq&menu=yes)**
-* 技术服务支持网页：<http://s.jeesite.com>
+* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* **联系我们**：请访问技术支持服务页面：<https://jeesite.com/docs/support/> 
 
 ## 软件截图
 
