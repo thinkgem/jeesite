@@ -52,7 +52,7 @@
       width: 80,
       title: '操作',
       dataIndex: 'action',
-      slots: { customRender: 'action' },
+      slot: 'action',
     },
   });
   const [registerModal, { openModal }] = useModal();

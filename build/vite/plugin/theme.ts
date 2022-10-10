@@ -2,7 +2,7 @@
  * Vite plugin for website theme color switching
  * https://github.com/anncwb/vite-plugin-theme
  */
-import type { Plugin } from 'vite';
+import type { PluginOption } from 'vite';
 import path from 'path';
 import {
   viteThemePlugin,
@@ -14,7 +14,7 @@ import {
 import { getThemeColors, generateColors } from '../../config/themeConfig';
 import { generateModifyVars } from '../../generate/generateModifyVars';
 
-export function configThemePlugin(isBuild: boolean): Plugin[] {
+export function configThemePlugin(isBuild: boolean): PluginOption[] {
   const colors = generateColors({
     mixDarken,
     mixLighten,
@@ -34,6 +34,8 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
         case '.ant-steps-item-icon > .ant-steps-icon':
           return s;
         case '.ant-select-item-option-selected:not(.ant-select-item-option-disabled)':
+          return s;
+        case '.ant-menu-item-selected':
           return s;
         default:
           if (s.indexOf('.ant-btn') >= 0) {
@@ -100,5 +102,5 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
       },
     }),
   ];
-  return plugin as unknown as Plugin[];
+  return plugin as unknown as PluginOption[];
 }

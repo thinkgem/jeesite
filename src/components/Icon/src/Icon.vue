@@ -37,7 +37,7 @@
 
   const SVG_END_WITH_FLAG = '|svg';
   export default defineComponent({
-    name: 'Icon',
+    name: 'BasicIcon',
     components: { SvgIcon },
     props: {
       // icon name

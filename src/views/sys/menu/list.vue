@@ -54,6 +54,7 @@
 
   const props = defineProps({
     treeCode: String,
+    sysCode: String,
   });
 
   const { t } = useI18n('sys.menu');
@@ -91,7 +92,7 @@
       dataIndex: 'menuNameRaw',
       width: 230,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('归属模块'),
@@ -198,7 +199,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable({
     api: menuListData,
     beforeFetch: (params) => {
-      params.sysCode = 'default';
+      params.sysCode = props.sysCode || 'default';
       params.menuCode = props.treeCode;
       return params;
     },
@@ -212,12 +213,9 @@
     canResize: true,
   });
 
-  watch(
-    () => props.treeCode,
-    () => {
-      reload();
-    },
-  );
+  watch([() => props.treeCode, () => props.sysCode], () => {
+    reload();
+  });
 
   function fetchSuccess() {
     if (props.treeCode) {
@@ -226,6 +224,7 @@
   }
 
   function handleForm(record: Recordable) {
+    record.sysCode = props.sysCode;
     openDrawer(true, record);
   }
 

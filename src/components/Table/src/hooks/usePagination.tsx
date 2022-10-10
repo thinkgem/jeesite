@@ -1,6 +1,6 @@
 import type { PaginationProps } from '../types/pagination';
 import type { BasicTableProps } from '../types/table';
-import { computed, unref, ref, ComputedRef, watchEffect } from 'vue';
+import { computed, unref, ref, ComputedRef, watch } from 'vue';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue';
 import { isBoolean } from '/@/utils/is';
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../const';
@@ -27,15 +27,17 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
   const configRef = ref<PaginationProps>({});
   const show = ref(true);
 
-  watchEffect(() => {
-    const { pagination } = unref(refProps);
-    if (!isBoolean(pagination) && pagination) {
-      configRef.value = {
-        ...unref(configRef),
-        ...(pagination ?? {}),
-      };
-    }
-  });
+  watch(
+    () => unref(refProps).pagination,
+    (pagination) => {
+      if (!isBoolean(pagination) && pagination) {
+        configRef.value = {
+          ...unref(configRef),
+          ...(pagination ?? {}),
+        };
+      }
+    },
+  );
 
   const getPaginationInfo = computed((): PaginationProps | boolean => {
     const { pagination } = unref(refProps);
@@ -46,7 +48,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
 
     return {
       current: 1,
-      //pageSize: PAGE_SIZE, // æ³¨é‡ŠæŽ‰ï¼Œå¦åˆ™ pagination: {defaultPageSize: 10 } ä¸ç”Ÿæ•ˆ
+      //pageSize: PAGE_SIZE, // ×¢ÊÍµô£¬·ñÔò pagination: {defaultPageSize: 10 } ²»ÉúÐ§
       size: 'small',
       defaultPageSize: PAGE_SIZE,
       showTotal: (total) => t('component.table.total', { total }),

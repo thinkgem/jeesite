@@ -44,7 +44,6 @@
   import 'tinymce/plugins/print';
   import 'tinymce/plugins/save';
   import 'tinymce/plugins/searchreplace';
-  import 'tinymce/plugins/spellchecker';
   import 'tinymce/plugins/tabfocus';
   // import 'tinymce/plugins/table';
   import 'tinymce/plugins/template';
@@ -328,9 +327,6 @@
     },
   });
 </script>
-
-<style lang="less" scoped></style>
-
 <style lang="less">
   @prefix-cls: ~'jeesite-tinymce-container';
 

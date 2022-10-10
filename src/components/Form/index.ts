@@ -11,5 +11,6 @@ export { default as TreeSelect } from './src/components/JeeSiteTreeSelect.vue';
 export { default as RadioGroup } from './src/components/JeeSiteRadioGroup.vue';
 export { default as RadioButtonGroup } from './src/components/JeeSiteRadioButtonGroup.vue';
 export { default as CheckboxGroup } from './src/components/JeeSiteCheckboxGroup.vue';
+export { default as FormGroup } from './src/components/FormGroup.vue';
 
 export { BasicForm };

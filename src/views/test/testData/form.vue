@@ -10,13 +10,16 @@
     :okAuth="'test:testData:edit'"
     @register="registerDrawer"
     @ok="handleSubmit"
-    width="60%"
+    width="70%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="pr-1 m-1" />
       <span> {{ getTitle.value }} </span>
     </template>
     <BasicForm @register="registerForm">
+      <template #remarks="{ model, field }">
+        <WangEditor v-model="model[field]" :height="200" />
+      </template>
       <template #testDataChildList>
         <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
           <template #testDataChildUpload="{ record: childRecord }">
@@ -54,6 +57,7 @@
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
   import { BasicUpload } from '/@/components/Upload';
+  import { WangEditor } from '/@/components/WangEditor';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -185,6 +189,7 @@
       componentProps: {
         maxlength: 500,
       },
+      slot: 'remarks',
       colProps: { lg: 24, md: 24 },
     },
     {
@@ -374,7 +379,7 @@
         dataIndex: 'upload',
         width: 160,
         align: 'left',
-        slots: { customRender: 'testDataChildUpload' },
+        slot: 'testDataChildUpload',
       },
     ]);
     testDataChildTable.setTableData(record.value.testDataChildList || []);
@@ -424,8 +429,8 @@
   }
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await testDataForm(data);
     record.value = (res.testData || {}) as TestData;
     record.value.__t = new Date().getTime();

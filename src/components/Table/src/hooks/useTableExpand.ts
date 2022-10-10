@@ -63,6 +63,13 @@ export function useTableExpand(
     });
   }
 
+  function expandRows(keys: string[]) {
+    // use row ID expands the specified table row
+    const { isTreeTable } = unref(propsRef);
+    if (!isTreeTable) return;
+    expandedRowKeys.value = [...expandedRowKeys.value, ...keys];
+  }
+
   function getAllKeys(data?: Recordable[]) {
     const keys: string[] = [];
     toRaw(data || unref(tableData)).forEach((item) => {
@@ -134,5 +141,5 @@ export function useTableExpand(
     }
   }
 
-  return { getExpandOption, expandAll, collapseAll, expandCollapse };
+  return { getExpandOption, expandAll, expandRows, collapseAll, expandCollapse };
 }

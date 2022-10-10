@@ -38,6 +38,7 @@
 
   export default defineComponent({
     name: 'JeeSiteSelect',
+    // eslint-disable-next-line vue/no-reserved-component-names
     components: { Select, LoadingOutlined },
     // inheritAttrs: false,
     props: {
@@ -49,7 +50,7 @@
       },
       labelInValue: propTypes.bool,
       options: {
-        type: Array as PropType<OptionsItem[]>,
+        type: Array as PropType<Recordable[] | OptionsItem[]>,
         default: () => [],
       },
       api: {
@@ -161,5 +162,8 @@
 
   .@{prefix-cls} {
     width: 100%;
+    .ant-select {
+      width: 100%;
+    }
   }
 </style>

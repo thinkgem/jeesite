@@ -109,7 +109,7 @@
       dataIndex: 'dictLabelRaw',
       width: 230,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('选项键值'),

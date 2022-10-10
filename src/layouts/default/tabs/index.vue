@@ -18,7 +18,7 @@
         </TabPane>
       </template>
 
-      <template #tabBarExtraContent v-if="getShowRedo || getShowQuick">
+      <template #rightExtra v-if="getShowRedo || getShowQuick">
         <TabRedo v-if="getShowRedo" />
         <TabContent isExtra :tabItem="$route" v-if="getShowQuick" />
         <FoldButton v-if="getShowFold" />
@@ -70,7 +70,7 @@
 
       const { prefixCls } = useDesign('multiple-tabs');
       const go = useGo();
-      const { getShowQuick, getShowRedo, getShowFold } = useMultipleTabSetting();
+      const { getTabsStyle, getShowQuick, getShowRedo, getShowFold } = useMultipleTabSetting();
 
       const getTabsState = computed(() => {
         return tabStore.getTabList.filter((item) => !item.meta?.hideTab);
@@ -81,8 +81,9 @@
       const getWrapClass = computed(() => {
         return [
           prefixCls,
+          `${prefixCls}-${unref(getTabsStyle)}`,
           {
-            [`${prefixCls}--hide-close`]: unref(unClose),
+            [`${prefixCls}-hide-close`]: unref(unClose),
           },
         ];
       });

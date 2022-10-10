@@ -51,7 +51,11 @@ export function setComponentRuleType(
   }
 }
 
-export function processDateValue(value: Recordable, component: ComponentType, componentProps: any) {
+export function processDateValue(
+  value: Recordable | any,
+  component: ComponentType,
+  componentProps: any,
+) {
   if (!value || !component) return value;
   const { valueFormat } = componentProps;
   if (dateItemType.includes(component)) {
@@ -65,11 +69,11 @@ export function processDateValue(value: Recordable, component: ComponentType, co
         }
       }
       return arr;
-    }
-    if (valueFormat) {
+    } else if (valueFormat) {
       return dateUtil(value).format(valueFormat);
+    } else {
+      return dateUtil(value);
     }
-    return dateUtil(value);
   }
   return value;
 }

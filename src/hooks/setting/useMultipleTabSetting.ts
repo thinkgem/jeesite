@@ -9,6 +9,8 @@ export function useMultipleTabSetting() {
 
   const getShowMultipleTab = computed(() => appStore.getMultiTabsSetting.show);
 
+  const getTabsStyle = computed(() => appStore.getMultiTabsSetting.style);
+
   const getShowQuick = computed(() => appStore.getMultiTabsSetting.showQuick);
 
   const getShowRedo = computed(() => appStore.getMultiTabsSetting.showRedo);
@@ -21,6 +23,7 @@ export function useMultipleTabSetting() {
   return {
     setMultipleTabSetting,
     getShowMultipleTab,
+    getTabsStyle,
     getShowQuick,
     getShowRedo,
     getShowFold,

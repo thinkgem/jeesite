@@ -60,7 +60,7 @@ const tableColumns: BasicColumn[] = [
     key: 'a.login_code',
     sorter: true,
     width: 100,
-    slots: { customRender: 'firstColumn' },
+    slot: 'firstColumn',
   },
   {
     title: t('用户昵称'),
@@ -75,35 +75,6 @@ const tableColumns: BasicColumn[] = [
     key: 'a.ref_name',
     sorter: true,
     width: 100,
-  },
-  {
-    title: t('归属机构'),
-    dataIndex: 'employee.office.officeName',
-    key: 'o.office_name',
-    sorter: true,
-    width: 100,
-  },
-  {
-    title: t('归属公司'),
-    dataIndex: 'employee.company.companyName',
-    key: 'c.company_name',
-    sorter: true,
-    width: 100,
-  },
-  {
-    title: t('状态'),
-    dataIndex: 'status',
-    key: 'a.status',
-    sorter: true,
-    width: 80,
-    dictType: 'sys_status',
-  },
-  {
-    title: t('更新时间'),
-    dataIndex: 'updateDate',
-    key: 'a.update_date',
-    sorter: true,
-    width: 130,
   },
   {
     title: t('电子邮箱'),
@@ -125,6 +96,21 @@ const tableColumns: BasicColumn[] = [
     key: 'a.phone',
     sorter: true,
     width: 130,
+  },
+  {
+    title: t('更新时间'),
+    dataIndex: 'updateDate',
+    key: 'a.update_date',
+    sorter: true,
+    width: 130,
+  },
+  {
+    title: t('状态'),
+    dataIndex: 'status',
+    key: 'a.status',
+    sorter: true,
+    width: 80,
+    dictType: 'sys_status',
   },
 ];
 

@@ -204,8 +204,8 @@
   });
 
   const [registerDrawer, { setDrawerProps }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await logForm(data);
     record.value = (res.log || {}) as Log;
     record.value.__t = new Date().getTime();

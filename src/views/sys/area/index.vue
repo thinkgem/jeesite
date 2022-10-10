@@ -19,8 +19,13 @@
     <ListView :treeCode="treeCode" />
   </PageWrapper>
 </template>
-<script lang="ts" setup name="ViewsSysAreaIndex">
-  import { ref } from 'vue';
+<script lang="ts">
+  export default defineComponent({
+    name: 'ViewsSysAreaIndex',
+  });
+</script>
+<script lang="ts" setup>
+  import { defineComponent, ref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { PageWrapper } from '/@/components/Page';
   import { BasicTree } from '/@/components/Tree';

@@ -41,7 +41,7 @@
   const record = ref<DictType>({} as DictType);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: record.value.isNewRecord ? t('新增字典类型') : t('编辑字典类型'),
+    value: record.value.isNewRecord ? t('新增字典') : t('编辑字典'),
   }));
 
   const inputFormSchemas: FormSchema[] = [
@@ -101,8 +101,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await dictTypeForm(data);
     record.value = (res.dictType || {}) as DictType;
     setFieldsValue(record.value);

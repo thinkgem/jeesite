@@ -19,7 +19,7 @@ import {
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
 import { buildUUID } from '/@/utils/uuid';
 import { isFunction, isBoolean } from '/@/utils/is';
-import { get, cloneDeep } from 'lodash-es';
+import { get, cloneDeep, merge } from 'lodash-es';
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
 import { useEmitter } from '/@/store/modules/user';
 import { useDict } from '/@/components/Dict';
@@ -247,8 +247,17 @@ export function useDataSource(
   }
 
   async function fetch(opt?: FetchParams) {
-    const { api, searchInfo, fetchSetting, beforeFetch, afterFetch, useSearchForm, pagination } =
-      unref(propsRef);
+    const {
+      api,
+      searchInfo,
+      defSort,
+      fetchSetting,
+      beforeFetch,
+      afterFetch,
+      useSearchForm,
+      pagination,
+      isTreeTable,
+    } = unref(propsRef);
     if (!api || !isFunction(api)) return;
     try {
       setLoading(true);
@@ -264,7 +273,7 @@ export function useDataSource(
         pageSize: pageSizeVal,
         defaultPageSize,
       } = unref(getPaginationInfo) as PaginationProps;
-      const pageSize = pageSizeVal || defaultPageSize;
+      const pageSize = pageSizeVal || defaultPageSize || PAGE_SIZE;
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
@@ -275,16 +284,17 @@ export function useDataSource(
 
       const { sortInfo = {}, filterInfo } = searchState;
 
-      let params: Recordable = {
-        ...pageParams,
-        ...(useSearchForm ? getFieldsValue() : {}),
-        ...searchInfo,
-        ...(opt?.searchInfo ?? {}),
-        ...sortInfo,
-        ...filterInfo,
-        ...(opt?.sortInfo ?? {}),
-        ...(opt?.filterInfo ?? {}),
-      };
+      let params: Recordable = merge(
+        pageParams,
+        useSearchForm ? getFieldsValue() : {},
+        searchInfo,
+        opt?.searchInfo ?? {},
+        defSort,
+        sortInfo,
+        filterInfo,
+        opt?.sortInfo ?? {},
+        opt?.filterInfo ?? {},
+      );
 
       collapseAll(); // 如果是树表，刷新后折叠
 
@@ -301,7 +311,7 @@ export function useDataSource(
       const isArrayResult = Array.isArray(res);
 
       let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
-      const resultTotal: number = isArrayResult ? 0 : get(res, totalField);
+      const resultTotal: number = isArrayResult ? res.length : get(res, totalField);
 
       // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
       if (resultTotal) {
@@ -310,7 +320,14 @@ export function useDataSource(
           setPagination({
             current: currentTotalPage,
           });
-          fetch(opt);
+          return await fetch(opt);
+        }
+      }
+
+      if (isTreeTable && resultItems.length > 0) {
+        const { childrenColumnName = 'children' } = unref(propsRef);
+        if (!resultItems[0][childrenColumnName]) {
+          resultItems[0][childrenColumnName] = [];
         }
       }
 
@@ -331,6 +348,7 @@ export function useDataSource(
         total: resultTotal,
       });
       emitter.emit('on-page-wrapper-resize');
+      return resultItems;
     } catch (error) {
       emit('fetch-error', error);
       dataSourceRef.value = [];
@@ -342,8 +360,8 @@ export function useDataSource(
     }
   }
 
-  function setTableData<T = Recordable>(values: T[]) {
-    dataSourceRef.value = values;
+  function setTableData<T = Recordable[]>(values: T[]) {
+    dataSourceRef.value = values as Recordable[];
   }
 
   function getDataSource<T = Recordable>() {

@@ -36,6 +36,7 @@ export default (expandCollapse: Fn, handleTableExpand: Fn, expandedRowRender = f
           }
         }}
         onDblclick={async (_e: Event) => {
+          if (expandedRowRender) return;
           if (children || childList) return;
           // 当没有子节点的时候，尝试强制加载非正常状态的节点 by jeesite
           const expanded = await expandCollapse(props.record, false, true);

@@ -93,7 +93,7 @@
       sorter: true,
       width: 130,
       align: 'center',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('模块编码'),
@@ -127,7 +127,7 @@
       width: 60,
       align: 'center',
       dictType: 'sys_status',
-      slots: { customRender: 'statusColumn' },
+      slot: 'statusColumn',
     },
   ];
 

@@ -27,7 +27,7 @@
   import { useRouter } from 'vue-router';
 
   export default defineComponent({
-    name: 'OnlineCount',
+    name: 'JeeSiteOnlineCount',
     components: { Icon, Tooltip, Badge },
 
     setup() {

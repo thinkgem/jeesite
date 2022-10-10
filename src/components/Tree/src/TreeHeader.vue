@@ -9,24 +9,26 @@
       v-if="search || toolbar"
     >
       <div :class="getInputSearchCls" v-if="search">
-        <InputSearch
-          :placeholder="t('common.searchText')"
-          size="small"
-          allowClear
-          v-model:value="searchValue"
-        />
+        <FormItemRest>
+          <InputSearch
+            :placeholder="t('common.searchText')"
+            size="small"
+            allowClear
+            v-model:value="searchValue"
+          />
+        </FormItemRest>
       </div>
       <Dropdown @click.prevent v-if="toolbar">
         <Icon icon="ion:ellipsis-vertical" />
         <template #overlay>
-          <Menu @click="handleMenuClick">
+          <AMenu @click="handleMenuClick">
             <template v-for="item in toolbarList" :key="item.value">
               <MenuItem v-bind="{ key: item.value }">
                 {{ item.label }}
               </MenuItem>
               <MenuDivider v-if="item.divider" />
             </template>
-          </Menu>
+          </AMenu>
         </template>
       </Dropdown>
     </div>
@@ -36,7 +38,7 @@
   import { PropType } from 'vue';
   import { defineComponent, computed, ref, watch } from 'vue';
 
-  import { Dropdown, Menu, Input } from 'ant-design-vue';
+  import { Dropdown, Menu, Input, Form } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
   import { BasicTitle } from '/@/components/Basic';
 
@@ -64,10 +66,11 @@
       BasicTitle,
       Icon,
       Dropdown,
-      Menu,
+      AMenu: Menu,
       MenuItem: Menu.Item,
       MenuDivider: Menu.Divider,
       InputSearch: Input.Search,
+      FormItemRest: Form.ItemRest,
     },
     props: {
       helpMessage: {

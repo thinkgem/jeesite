@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite';
+import { PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import legacy from '@vitejs/plugin-legacy';
@@ -13,7 +13,6 @@ import { configStyleImportPlugin } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configSvgIconsPlugin } from './svgSprite';
-import { configHmrPlugin } from './hmr';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -23,7 +22,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
   } = viteEnv;
 
-  const vitePlugins: (Plugin | Plugin[])[] = [
+  const vitePlugins: (PluginOption | PluginOption[])[] = [
     // have to
     vue(),
     // have to
@@ -35,15 +34,12 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   // vite-plugin-windicss
   vitePlugins.push(windiCSS());
 
-  // TODO
-  !isBuild && vitePlugins.push(configHmrPlugin());
-
   // @vitejs/plugin-legacy
   VITE_LEGACY &&
     isBuild &&
     vitePlugins.push(
       legacy({
-        targets: ['Chrome 63'],
+        targets: ['Chrome 80'],
         modernPolyfills: true,
       }),
     );
@@ -66,7 +62,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerConfig());
 
-  //vite-plugin-theme
+  // vite-plugin-theme
   vitePlugins.push(configThemePlugin(isBuild));
 
   // The following plugins only work in the production environment

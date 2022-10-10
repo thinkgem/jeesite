@@ -1,5 +1,5 @@
 <template>
-  <Drawer :class="prefixCls" @close="onClose" v-bind="getBindValues">
+  <Drawer :class="prefixCls" @close="onClose" :closable="false" v-bind="getBindValues">
     <template #title v-if="!$slots.title">
       <DrawerHeader
         :title="getMergeProps.title"
@@ -14,6 +14,11 @@
     </template>
     <template v-else #title>
       <slot name="title"></slot>
+    </template>
+    <template #extra>
+      <Tooltip :title="t('component.drawer.cancelText')" placement="bottom">
+        <CloseOutlined @click="onClose" />
+      </Tooltip>
     </template>
 
     <ScrollContainer
@@ -38,7 +43,6 @@
     computed,
     watch,
     unref,
-    nextTick,
     toRaw,
     getCurrentInstance,
     CSSProperties,
@@ -48,6 +52,8 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isFunction, isNumber } from '/@/utils/is';
   import { deepMerge } from '/@/utils';
+  import { Tooltip } from 'ant-design-vue';
+  import { CloseOutlined } from '@ant-design/icons-vue';
   import DrawerFooter from './components/DrawerFooter.vue';
   import DrawerHeader from './components/DrawerHeader.vue';
   import { ScrollContainer } from '/@/components/Container';
@@ -56,7 +62,7 @@
   import { useAttrs } from '/@/hooks/core/useAttrs';
 
   export default defineComponent({
-    components: { Drawer, ScrollContainer, DrawerFooter, DrawerHeader },
+    components: { Drawer, Tooltip, CloseOutlined, ScrollContainer, DrawerFooter, DrawerHeader },
     inheritAttrs: false,
     props: basicProps,
     emits: ['visible-change', 'ok', 'close', 'register', 'update:visible'],
@@ -90,13 +96,13 @@
           visible: unref(visibleRef),
         };
         opt.title = undefined;
-        const { isDetail, width, wrapClassName, getContainer } = opt;
+        const { isDetail, width, class: wrapClassName, getContainer } = opt;
         if (isDetail) {
           if (!width) {
             opt.width = '100%';
           }
           const detailCls = `${prefixCls}__detail`;
-          opt.wrapClassName = wrapClassName ? `${wrapClassName} ${detailCls}` : detailCls;
+          opt.class = wrapClassName ? `${wrapClassName} ${detailCls}` : detailCls;
 
           if (!getContainer) {
             // TODO type error?

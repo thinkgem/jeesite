@@ -1,217 +1,230 @@
 /**
- * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
- * No deletion without permission, or be held responsible to law.
- * @author Vben、ThinkGem
- */
- @prefix-cls: ~'jeesite-multiple-tabs';
- @multiple-height: 39px; // TABS_HEIGHT
- 
- html[data-theme='dark'] {
-   .@{prefix-cls} {
-     background: #000;
-     border: 0;
- 
-     .ant-tabs-tab {
-       color: #aaa !important;
-       border-bottom: 1px solid @border-color-base;
-     }
- 
-     .ant-tabs.ant-tabs-card {
-       .ant-tabs-card-bar {
-         background: #000;
-         .ant-tabs-tab-active {
-           color: #ddd !important;
-           background: fade(@primary-color, 80) !important;
-           // border-color: fade(@primary-color, 80) !important;
-         }
-       }
-     }
-   }
- }
- 
- // html[data-theme='light'] {
- //   .@{prefix-cls} {
- //     .ant-tabs-tab:not(.ant-tabs-tab-active) {
- //       border: 1px solid @border-color-base !important;
- //       // box-shadow: 0 0 3px @border-color-base;
- //     }
- //   }
- // }
- 
- .@{prefix-cls} {
-   z-index: 10;
-   height: @multiple-height + 2;
-   line-height: @multiple-height + 2;
-   // background-color: @component-background;
-   // border-bottom: 1px solid @header-light-bottom-border-color;
- 
-   .ant-tabs-small {
-     height: @multiple-height;
-   }
- 
-   .ant-tabs.ant-tabs-card {
-     .ant-tabs-card-bar {
-       height: @multiple-height;
-       margin: 0;
-       background-color: @content-bg;
-       border: 0;
-       box-shadow: none;
- 
-       .ant-tabs-nav-container {
-         height: @multiple-height;
-         // padding-top: 4px;
-       }
- 
-       .ant-tabs-tab {
-         height: calc(@multiple-height - 12px);
-         line-height: calc(@multiple-height - 13px);
-         color: @text-color-base;
-         background-color: @component-background;
-         transition: none;
-         border-radius: 4px;
-         margin: 10px 0 0 0;
-         padding-left: 10px;
-         padding-right: 11px;
-         border: 0 !important;
- 
-         &:hover {
-           .ant-tabs-close-x {
-             opacity: 1;
-           }
-         }
- 
-         .anticon:not(.ant-tabs-close-x) {
-           font-size: 16px;
-           opacity: 0.8;
-         }
- 
-         .ant-tabs-close-x {
-           width: 15px;
-           height: 10px;
-           // font-size: 12px;
-           color: inherit;
-           // opacity: 0; // 始终显示叉号
-           transition: none;
- 
-           &:hover {
-             svg {
-               width: 0.8em;
-             }
-           }
-         }
- 
-         > div {
-           display: flex;
-           justify-content: center;
-           align-items: center;
-         }
- 
-         svg {
-           fill: @text-color-base;
-         }
-       }
- 
-       .ant-tabs-tab:not(.ant-tabs-tab-active) {
-         &:hover {
-           color: @primary-color;
-         }
-       }
- 
-       .ant-tabs-tab-active {
-         position: relative;
-         // padding-left: 18px;
-         color: @white !important;
-         // color: @primary-color !important;
-         background: fade(@primary-color, 90);
-         // border-color: fade(@primary-color, 25);
-         // height: calc(@multiple-height - 2px);
-         // transition: none;
-         text-shadow: none;
- 
-         .ant-tabs-close-x {
-           opacity: 1;
- 
-           svg {
-             width: 0.7em;
-             fill: @white;
-           }
-         }
-       }
-     }
- 
-     .ant-tabs-nav > div:nth-child(1) {
-       padding: 0 15px;
- 
-       .ant-tabs-tab {
-         margin-right: 10px !important;
-       }
-     }
-   }
- 
-   .ant-tabs-tab:not(.ant-tabs-tab-active) {
-     .ant-tabs-close-x {
-       // font-size: 12px;
- 
-       svg {
-         width: 0.6em;
-       }
-     }
-   }
- 
-   .ant-tabs-extra-content {
-     margin-top: 2px;
-     margin-right: 10px;
-     line-height: @multiple-height !important;
-   }
- 
-   .ant-dropdown-trigger {
-     display: inline-flex;
-   }
- 
-   &.jeesite-multiple-tabs-hide-close {
-     .ant-tabs-close-x {
-       opacity: 0 !important;
-     }
-   }
- 
-   .jeesite-multiple-tabs-content {
-     &__info {
-       display: inline-block;
-       width: 100%;
-       cursor: pointer;
-       user-select: none;
-     }
-     &__extra-redo {
-       span[role='img'] {
-         transform: rotate(0deg);
-       }
-     }
-     &__extra-quick,
-     &__extra-redo,
-     &__extra-fold {
-       display: inline-block;
-       width: 36px;
-       // height: @multiple-height;
-       // line-height: @multiple-height;
-       padding-top: 2px;
-       color: @text-color-secondary;
-       text-align: center;
-       cursor: pointer;
-       // border-left: 1px solid @header-light-bottom-border-color;
- 
-       &:hover {
-         color: @text-color-base;
-       }
- 
-       span[role='img'] {
-         transform: rotate(90deg);
-       }
-     }
-   }
- 
-   .ant-tabs-tab-prev-icon,
-   .ant-tabs-tab-next-icon {
-     padding-top: 5px;
-   }
- }
- 
+  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+  * No deletion without permission, or be held responsible to law.
+  * @author Vben、ThinkGem
+  */
+@prefix-cls: ~'jeesite-multiple-tabs';
+@multiple-height-large: 39px; // TABS_HEIGHT_LARGE
+
+html[data-theme='dark'] {
+  .@{prefix-cls} {
+    .ant-tabs.ant-tabs-card {
+      .ant-tabs-nav {
+        background: #000;
+        &::before {
+          border-bottom: 0;
+        }
+        .ant-tabs-tab {
+          color: #aaa !important;
+          background: #151515;
+          svg {
+            fill: #aaa !important;
+          }
+          &:hover,
+          .ant-tabs-tab-btn:hover {
+            color: #ddd !important;
+          }
+        }
+        .ant-tabs-tab-active {
+          background: #2975bc !important;
+          svg {
+            fill: #fff !important;
+          }
+          .ant-tabs-tab-btn,
+          .ant-tabs-tab-btn:hover {
+            color: #fff !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.@{prefix-cls} {
+  z-index: 10;
+  height: @multiple-height-large + 2;
+  line-height: @multiple-height-large + 2;
+
+  .ant-tabs.ant-tabs-card {
+    .ant-tabs-nav {
+      height: @multiple-height-large;
+      background-color: @content-bg;
+      margin: 0;
+      border: 0;
+      box-shadow: none;
+
+      .ant-tabs-tab {
+        height: calc(@multiple-height-large - 12px);
+        line-height: calc(@multiple-height-large - 13px);
+        color: @text-color-base;
+        background-color: @component-background;
+        transition: none;
+        border-radius: 4px;
+        margin: 10px 0 0 0;
+        padding-left: 10px;
+        padding-right: 11px;
+        border: 0 !important;
+
+        .ant-tabs-tab-btn {
+          transition: none;
+        }
+
+        &:hover,
+        .ant-tabs-tab-btn:hover {
+          color: @text-color-base;
+        }
+
+        .anticon {
+          opacity: 0.8;
+          font-size: 16px;
+          text-align: center;
+          margin-right: 5px;
+          svg {
+            fill: @text-color-base;
+          }
+        }
+
+        .ant-tabs-tab-remove {
+          width: 12px;
+          height: 24px;
+          color: inherit;
+          transition: none;
+          padding: 0;
+          .anticon {
+            svg {
+              width: 0.6em;
+            }
+            &:hover svg {
+              width: 0.7em;
+            }
+          }
+        }
+      }
+
+      .ant-tabs-tab:not(.ant-tabs-tab-active) {
+        &:hover {
+          color: @primary-color;
+        }
+      }
+
+      .ant-tabs-tab-active {
+        position: relative;
+        // padding-left: 18px;
+        color: @white !important;
+        // color: @primary-color !important;
+        background: fade(@primary-color, 90);
+        // border-color: fade(@primary-color, 25);
+        // height: calc(@multiple-height-large - 2px);
+        border: 0;
+        transition: none;
+        text-shadow: none;
+
+        // span {
+        //   color: @white !important;
+        // }
+        .ant-tabs-tab-btn {
+          color: @white !important;
+          text-shadow: none;
+        }
+
+        .ant-tabs-tab-remove {
+          opacity: 1;
+          svg {
+            fill: @white;
+          }
+        }
+      }
+    }
+
+    .ant-tabs-nav > div:nth-child(1) {
+      padding: 0 15px;
+      .ant-tabs-tab {
+        margin-right: 10px !important;
+        &:nth-last-child(2) {
+          margin-right: 20px !important;
+        }
+      }
+    }
+  }
+
+  .ant-tabs-extra-content {
+    margin-top: 2px;
+    margin-right: 10px;
+    line-height: @multiple-height-large !important;
+  }
+
+  .ant-dropdown-trigger {
+    display: inline-flex;
+  }
+
+  &.jeesite-multiple-tabs-hide-close {
+    .ant-tabs-tab-remove {
+      opacity: 0 !important;
+    }
+  }
+
+  .jeesite-multiple-tabs-content {
+    &__info {
+      display: inline-block;
+      width: 100%;
+      cursor: pointer;
+      user-select: none;
+    }
+    &__extra-redo {
+      span[role='img'] {
+        transform: rotate(0deg);
+      }
+    }
+    &__extra-quick,
+    &__extra-redo,
+    &__extra-fold {
+      display: inline-block;
+      width: 36px;
+      // height: @multiple-height-large;
+      // line-height: @multiple-height-large;
+      padding-top: 6px;
+      color: @text-color-secondary;
+      text-align: center;
+      cursor: pointer;
+      // border-left: 1px solid @header-light-bottom-border-color;
+
+      &:hover {
+        color: @text-color-base;
+      }
+
+      span[role='img'] {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .ant-tabs .ant-tabs-nav {
+    .ant-tabs-nav-more {
+      padding-top: 12px;
+    }
+  }
+}
+
+.ant-tabs-dropdown-menu {
+  padding: 5px 0;
+  max-height: 300px;
+  &-title-content {
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    .@{prefix-cls} {
+      &-content__info {
+        width: auto;
+        margin-left: 0;
+        line-height: 28px;
+      }
+    }
+    .anticon:not(.anticon-close) {
+      margin-left: -3px;
+      margin-right: 3px;
+    }
+  }
+  &-item-remove {
+    margin-left: auto !important;
+  }
+}

@@ -108,7 +108,7 @@
       key: 'a.login_code',
       sorter: true,
       width: 100,
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('用户昵称'),
@@ -123,7 +123,7 @@
       key: 'a.corp_code',
       sorter: true,
       width: 100,
-      slots: { customRender: 'corpColumn' },
+      slot: 'corpColumn',
       ifShow: () => useCorpModel.value,
     },
     {

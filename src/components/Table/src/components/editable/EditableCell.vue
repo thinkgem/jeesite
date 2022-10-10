@@ -1,45 +1,9 @@
-<template>
-  <div :class="prefixCls">
-    <div
-      v-show="!isEdit"
-      :class="{ [`${prefixCls}__normal`]: true, 'ellipsis-cell': column.ellipsis }"
-      @click="handleEdit"
-    >
-      <DictLabel
-        v-if="column.dictType"
-        :dictType="column.dictType"
-        :dictValue="currentValueRef"
-        :defaultValue="column.defaultValue"
-      />
-      <div v-else class="cell-content" :title="column.ellipsis ? getValues ?? '' : ''">
-        {{ getValues ?? '&nbsp;' }}
-      </div>
-      <FormOutlined :class="`${prefixCls}__normal-icon`" v-if="!column.editRow" />
-    </div>
-
-    <a-spin v-if="isEdit" :spinning="spinning">
-      <div :class="`${prefixCls}__wrapper`" v-click-outside="onClickOutside">
-        <CellComponent
-          v-bind="getComponentProps"
-          :component="getComponent"
-          :style="getWrapperStyle"
-          :popoverVisible="getRuleVisible"
-          :rule="getRule"
-          :ruleMessage="ruleMessage"
-          :class="getWrapperClass"
-          ref="elRef"
-          @change="handleChange"
-          @press-enter="handleEnter"
-        />
-        <div :class="`${prefixCls}__action`" v-if="!getRowEditable">
-          <CheckOutlined :class="[`${prefixCls}__icon`, 'mx-2']" @click="handleSubmitClick" />
-          <CloseOutlined :class="`${prefixCls}__icon `" @click="handleCancel" />
-        </div>
-      </div>
-    </a-spin>
-  </div>
-</template>
-<script lang="ts">
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author Vben、ThinkGem
+-->
+<script lang="tsx">
   import type { CSSProperties, PropType } from 'vue';
   import { computed, defineComponent, nextTick, ref, toRaw, unref, watchEffect } from 'vue';
   import type { BasicColumn } from '../../types/table';
@@ -54,12 +18,13 @@
   import clickOutside from '/@/directives/clickOutsideSimple';
 
   import { propTypes } from '/@/utils/propTypes';
-  import { isArray, isBoolean, isFunction, isNumber, isObject } from '/@/utils/is';
+  import { isArray, isBoolean, isDef, isFunction, isNumber, isObject } from '/@/utils/is';
   import { createPlaceholderMessage } from './helper';
-  import { omit, pick, set } from 'lodash-es';
+  import { pick, set } from 'lodash-es';
   // import { treeToList } from '/@/utils/helper/treeHelper';
   import { Spin } from 'ant-design-vue';
   import { DictLabel } from '/@/components/Dict';
+  import { dateUtil } from '/@/utils/dateUtil';
 
   export default defineComponent({
     name: 'EditableCell',
@@ -118,6 +83,11 @@
         return ['Checkbox', 'Switch'].includes(component);
       });
 
+      const getIsDateComp = computed(() => {
+        const component = unref(getComponent);
+        return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(component);
+      });
+
       const getEditComponentProps = computed(() => {
         const { value: text, record, column, index } = props;
         let compProps = props.column?.editComponentProps ?? {};
@@ -130,19 +100,32 @@
       const getComponentProps = computed(() => {
         const compProps = unref(getEditComponentProps);
 
-        const val = unref(currentValueRef);
+        let value = unref(currentValueRef);
         const labelVal = unref(currentLabelValueRef);
 
         const isCheckValue = unref(getIsCheckComp);
         const valueField = isCheckValue ? 'checked' : 'value';
-        const value = isCheckValue ? (isNumber(val) && isBoolean(val) ? val : !!val) : val;
+
+        if (isCheckValue) {
+          value = isNumber(value) && isBoolean(value) ? value : !!value;
+        } else if (value && unref(getIsDateComp)) {
+          if (Array.isArray(value)) {
+            const arr: any[] = [];
+            for (const val of value) {
+              arr.push(val ? dateUtil(val) : null);
+            }
+            value = arr;
+          } else {
+            value = dateUtil(value);
+          }
+        }
 
         return {
           size: 'small',
           getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
-          getCalendarContainer: () => unref(table?.wrapRef.value) ?? document.body,
           placeholder: createPlaceholderMessage(unref(getComponent)),
-          ...omit(compProps, 'onChange'),
+          dropdownMatchSelectWidth: false,
+          ...compProps,
           [valueField]: value,
           labelValue: labelVal,
           labelInValue: !!props.column?.dataLabel,
@@ -156,7 +139,7 @@
         if (props.column?.dataLabel && labelValue) {
           return labelValue;
         }
-        if (props.column?.format && value) {
+        if (props.column?.format && isDef(value)) {
           return formatCell(value, props.column.format, props.record as Recordable, props.index);
         }
         return value;
@@ -223,10 +206,9 @@
         const editComponentProps = unref(getEditComponentProps);
         const format = editComponentProps?.format;
         if (format) {
-          if (isObject(value)) {
-            value = value._isAMomentObject ? value?.format(format) : value;
-          }
-          if (isArray(value) && value[0]?._isAMomentObject && value[1]?._isAMomentObject) {
+          if (isObject(value) && value.format) {
+            value = value?.format(format) ?? value;
+          } else if (isArray(value) && value[0]?.format && value[1]?.format) {
             value = value.map((item) => item?.format(format));
           }
         }
@@ -386,7 +368,7 @@
 
           if (props.column.dataIndex) {
             if (!props.record.editValueRefs) props.record.editValueRefs = {};
-            props.record.editValueRefs[props.column.dataIndex] = currentValueRef;
+            props.record.editValueRefs[props.column.dataIndex as any] = currentValueRef;
           }
           /* eslint-disable  */
           props.record.onCancelEdit = () => {
@@ -428,6 +410,65 @@
         handleSubmitClick,
         spinning,
       };
+    },
+    render() {
+      return (
+        <div class={this.prefixCls}>
+          <div
+            v-show={!this.isEdit}
+            class={{ [`${this.prefixCls}__normal`]: true, 'ellipsis-cell': this.column.ellipsis }}
+            onClick={this.handleEdit}
+          >
+            {this.column.dictType
+              ? <DictLabel
+                dictType={this.column.dictType}
+                dictValue={this.currentValueRef}
+                defaultValue={this.column.defaultValue}
+              />
+              : <div class="cell-content" title={this.column.ellipsis ? this.getValues ?? '' : ''}>
+                {this.column.editRender
+                  ? this.column.editRender({
+                      text: this.value,
+                      record: this.record as Recordable,
+                      column: this.column,
+                      index: this.index,
+                    })
+                  : this.getValues
+                  ? this.getValues
+                  : '\u00A0'}
+              </div>
+            }
+            {!this.column.editRow && <FormOutlined class={`${this.prefixCls}__normal-icon`} />}
+          </div>
+          {this.isEdit && (
+            <Spin spinning={this.spinning}>
+              <div class={`${this.prefixCls}__wrapper`} v-click-outside={this.onClickOutside}>
+                <CellComponent
+                  {...this.getComponentProps}
+                  component={this.getComponent}
+                  style={this.getWrapperStyle}
+                  popoverVisible={this.getRuleVisible}
+                  rule={this.getRule}
+                  ruleMessage={this.ruleMessage}
+                  class={this.getWrapperClass}
+                  ref="elRef"
+                  onChange={this.handleChange}
+                  onPressEnter={this.handleEnter}
+                />
+                {!this.getRowEditable && (
+                  <div class={`${this.prefixCls}__action`}>
+                    <CheckOutlined
+                      class={[`${this.prefixCls}__icon`, 'mx-2']}
+                      onClick={this.handleSubmitClick}
+                    />
+                    <CloseOutlined class={`${this.prefixCls}__icon `} onClick={this.handleCancel} />
+                  </div>
+                )}
+              </div>
+            </Spin>
+          )}
+        </div>
+      );
     },
   });
 </script>
@@ -500,7 +541,7 @@
     }
 
     &__normal {
-      display: inline-block;
+      // display: inline-block; // 去掉，否则编辑表格的 ellipsis 省略号失效
       &-icon {
         position: absolute;
         top: 4px;

@@ -116,8 +116,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await areaForm(data);
     record.value = (res.area || {}) as Area;
     if (data.parentCode && data.parentName) {

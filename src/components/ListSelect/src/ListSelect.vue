@@ -173,3 +173,12 @@
     },
   });
 </script>
+<style lang="less">
+  .jeesite-listselect {
+    .ant-input-group {
+      .ant-input {
+        height: 32px;
+      }
+    }
+  }
+</style>

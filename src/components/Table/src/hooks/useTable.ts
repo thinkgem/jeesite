@@ -68,7 +68,7 @@ export function useTable(tableProps?: Props): [
     getForm: () => FormActionType;
   } = {
     reload: async (opt?: FetchParams) => {
-      getTableInstance().reload(opt);
+      return await getTableInstance().reload(opt);
     },
     setProps: (props: Partial<BasicTableProps>) => {
       getTableInstance().setProps(props);
@@ -158,11 +158,17 @@ export function useTable(tableProps?: Props): [
     expandAll: () => {
       getTableInstance().expandAll();
     },
+    expandRows: (keys: string[]) => {
+      getTableInstance().expandRows(keys);
+    },
     collapseAll: () => {
       getTableInstance().collapseAll();
     },
     expandCollapse: (record: Recordable) => {
       getTableInstance().expandCollapse(record);
+    },
+    scrollTo: (pos: string) => {
+      getTableInstance().scrollTo(pos);
     },
   };
 

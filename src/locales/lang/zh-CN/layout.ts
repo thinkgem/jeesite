@@ -91,6 +91,8 @@ export default {
     breadcrumb: '面包屑',
     breadcrumbIcon: '面包屑图标',
     tabs: '标签页',
+    tabsHide: '不显示',
+    tabsStyle: '风格',
     tabsQuickBtn: '标签页快捷按钮',
     tabsRedoBtn: '标签页刷新按钮',
     tabsFoldBtn: '标签页折叠按钮',

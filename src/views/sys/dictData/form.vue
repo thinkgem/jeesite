@@ -162,8 +162,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await dictDataForm(data);
     record.value = (res.dictData || {}) as DictData;
     if (data.dictType) {

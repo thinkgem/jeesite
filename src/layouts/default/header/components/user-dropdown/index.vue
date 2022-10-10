@@ -47,6 +47,15 @@
           :text="t('layout.header.dropdownItemLoginOut')"
           icon="ion:power-outline"
         />
+        <MenuDivider v-if="sysListRef.length > 0" />
+        <MenuItem :text="t('系统切换：')" :class="`${prefixCls}-menu-subtitle`" />
+        <MenuItem
+          v-for="item in sysListRef"
+          :key="item.value"
+          :value="'sysCode-' + item.value"
+          :text="item.name"
+          :icon="sysCodeRef == item.value ? 'ant-design:check-outlined' : 'radix-icons:dot'"
+        />
       </Menu>
     </template>
   </Dropdown>
@@ -56,7 +65,7 @@
   // components
   import { Dropdown, Menu } from 'ant-design-vue';
 
-  import { defineComponent, computed } from 'vue';
+  import { defineComponent, computed, ref, onMounted } from 'vue';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
@@ -72,6 +81,8 @@
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
   import Icon from '/@/components/Icon/src/Icon.vue';
+
+  import { useDict } from '/@/components/Dict';
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock';
 
@@ -101,6 +112,17 @@
         return { userName, avatarUrl, remarks };
       });
 
+      const sysCodeRef = ref<string>('default');
+      const sysListRef = ref<Recordable[]>([]);
+
+      onMounted(async () => {
+        sysCodeRef.value = userStore.getPageCacheByKey('sysCode', 'default');
+        const sysList = await useDict().initGetDictList('sys_menu_sys_code');
+        if (sysList.length > 1) {
+          sysListRef.value = sysList;
+        }
+      });
+
       const [registerModal, { openModal }] = useModal();
 
       function handleLoginOut() {
@@ -123,7 +145,7 @@
         openModal(true);
       }
 
-      function handleMenuClick(e: { key: MenuEvent }) {
+      async function handleMenuClick(e: { key: MenuEvent }) {
         switch (e.key) {
           case 'accountCenter':
             handleAccountCenter();
@@ -152,6 +174,9 @@
         registerModal,
         getUseLockPage,
         handleLoginOut,
+        sysCodeRef,
+        sysListRef,
+        userStore,
       };
     },
   });
@@ -207,6 +232,14 @@
     &-dropdown-overlay {
       .ant-dropdown-menu-item {
         min-width: 160px;
+      }
+    }
+
+    &-menu-subtitle {
+      line-height: 13px;
+      span {
+        font-weight: bold;
+        opacity: 0.7;
       }
     }
 

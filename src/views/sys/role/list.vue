@@ -113,7 +113,7 @@
       sorter: true,
       width: 130,
       align: 'center',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('角色编码'),

@@ -21,7 +21,8 @@
   import { useMultipleTabStore } from '/@/store/modules/multipleTab';
 
   const HEADER_HEIGHT = 48;
-  const TABS_HEIGHT = 37;
+  const TABS_HEIGHT = 32;
+  const TABS_HEIGHT_LARGE = 37;
 
   export default defineComponent({
     name: 'LayoutMultipleHeader',
@@ -42,7 +43,7 @@
 
       const { getFullContent } = useFullContent();
 
-      const { getShowMultipleTab } = useMultipleTabSetting();
+      const { getShowMultipleTab, getTabsStyle } = useMultipleTabSetting();
       const tabStore = useMultipleTabStore();
 
       const getShowTabs = computed(() => {
@@ -82,7 +83,11 @@
           height += HEADER_HEIGHT;
         }
         if (unref(getShowMultipleTab) && !unref(getFullContent) && unref(getShowTabs2)) {
-          height += TABS_HEIGHT;
+          if (unref(getTabsStyle) == '3') {
+            height += TABS_HEIGHT_LARGE;
+          } else {
+            height += TABS_HEIGHT;
+          }
         }
         setHeaderHeight(height);
         return {

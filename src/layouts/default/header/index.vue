@@ -33,7 +33,7 @@
 
     <!-- action  -->
     <div :class="`${prefixCls}-action`">
-      <AppSearch :class="`${prefixCls}-action__item `" v-if="getShowSearch" />
+      <AppSearch v-if="getShowSearch" :class="`${prefixCls}-action__item `" />
 
       <OnlineCount :class="`${prefixCls}-action__item online-count`" />
 
@@ -86,9 +86,11 @@
   } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { usePermission } from '/@/hooks/web/usePermission';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
   import { useLocale } from '/@/locales/useLocale';
+  import { useUserStore } from '/@/store/modules/user';
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -152,6 +154,14 @@
         ];
       });
 
+      const getUseCorpModel = computed(() => {
+        const userStore = useUserStore();
+        const { hasPermission } = usePermission();
+        return (
+          userStore.getPageCacheByKey('useCorpModel', false) && hasPermission('sys:corpAdmin:edit')
+        );
+      });
+
       const getShowSetting = computed(() => {
         if (!unref(getShowSettingButton)) {
           return false;
@@ -202,6 +212,7 @@
         getShowSettingButton,
         getShowSetting,
         getShowSearch,
+        getUseCorpModel,
       };
     },
   });

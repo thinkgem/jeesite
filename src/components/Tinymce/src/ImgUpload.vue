@@ -4,7 +4,7 @@
       name="file"
       multiple
       @change="handleChange"
-      :action="uploadUrl"
+      :action="uploadAction"
       :showUploadList="false"
       accept=".jpg,.jpeg,.gif,.png,.webp"
     >
@@ -38,7 +38,9 @@
     setup(props, { emit }) {
       let uploading = false;
 
-      const { uploadUrl } = useGlobSetting();
+      const { ctxPath, adminPath } = useGlobSetting();
+      const uploadAction = ctxPath + adminPath + '/file/ueditor/uploadimage';
+
       const { t } = useI18n();
       const { prefixCls } = useDesign('tinymce-img-upload');
 
@@ -72,7 +74,7 @@
       return {
         prefixCls,
         handleChange,
-        uploadUrl,
+        uploadAction,
         t,
         getButtonProps,
       };

@@ -131,8 +131,8 @@
     labelWidth: 120,
   });
 
-  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner((data) => {
-    resetFields();
+  const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+    await resetFields();
     loadData(data);
   });
 

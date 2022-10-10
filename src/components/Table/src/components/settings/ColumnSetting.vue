@@ -6,7 +6,7 @@
     <Popover
       placement="bottomLeft"
       trigger="click"
-      @visibleChange="handleVisibleChange"
+      @visible-change="handleVisibleChange"
       :overlayClassName="`${prefixCls}__cloumn-list`"
       :getPopupContainer="getPopupContainer"
     >
@@ -40,12 +40,7 @@
 
       <template #content>
         <ScrollContainer>
-          <CheckboxGroup
-            v-if="isShow"
-            v-model:value="checkedList"
-            @change="onChange"
-            ref="columnListRef"
-          >
+          <CheckboxGroup v-model:value="checkedList" @change="onChange" ref="columnListRef">
             <template v-for="item in plainOptions" :key="item.value">
               <div :class="`${prefixCls}__check-item`" v-if="!('ifShow' in item && !item.ifShow)">
                 <DragOutlined class="table-column-drag-icon" />
@@ -54,7 +49,7 @@
                 </Checkbox>
 
                 <Tooltip
-                  placement="bottomLeft"
+                  placement="left"
                   :mouseLeaveDelay="0.4"
                   :getPopupContainer="getPopupContainer"
                 >
@@ -75,7 +70,7 @@
                 </Tooltip>
                 <Divider type="vertical" />
                 <Tooltip
-                  placement="bottomLeft"
+                  placement="right"
                   :mouseLeaveDelay="0.4"
                   :getPopupContainer="getPopupContainer"
                 >
@@ -116,19 +111,23 @@
     computed,
   } from 'vue';
   import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue';
+  import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface';
   import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue';
   import { Icon } from '/@/components/Icon';
   import { ScrollContainer } from '/@/components/Container';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useTableContext } from '../../hooks/useTableContext';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { useSortable } from '/@/hooks/web/useSortable';
+  // import { useSortable } from '/@/hooks/web/useSortable';
   import { isFunction, isNullAndUnDef } from '/@/utils/is';
   import { getPopupContainer as getParentContainer } from '/@/utils';
   import { cloneDeep, omit } from 'lodash-es';
+  import Sortablejs from 'sortablejs';
+  import type Sortable from 'sortablejs';
 
   interface State {
     checkAll: boolean;
+    isInit?: boolean;
     checkedList: string[];
     defaultCheckList: string[];
   }
@@ -161,9 +160,8 @@
       const defaultRowSelection = omit(table.getRowSelection(), 'selectedRowKeys');
       let inited = false;
 
-      const isShow = ref(true);
       const cachePlainOptions = ref<Options[]>([]);
-      const plainOptions = ref<Options[]>([]);
+      const plainOptions = ref<Options[] | any>([]);
 
       const plainSortOptions = ref<Options[]>([]);
 
@@ -185,10 +183,12 @@
       });
 
       watchEffect(() => {
-        const columns = table.getColumns();
-        if (columns.length) {
-          init();
-        }
+        setTimeout(() => {
+          const columns = table.getColumns();
+          if (columns.length && !state.isInit) {
+            init();
+          }
+        }, 0);
       });
 
       watchEffect(() => {
@@ -239,11 +239,12 @@
             }
           });
         }
+        state.isInit = true;
         state.checkedList = checkList;
       }
 
       // checkAll change
-      function onCheckAllChange(e: ChangeEvent) {
+      function onCheckAllChange(e: CheckboxChangeEvent) {
         const checkList = plainOptions.value.map((item) => item.value);
         if (e.target.checked) {
           state.checkedList = checkList;
@@ -272,6 +273,8 @@
         setColumns(checkedList);
       }
 
+      let sortable: Sortable;
+      let sortableOrder: string[] = [];
       // reset columns
       function reset() {
         state.checkedList = [...state.defaultCheckList];
@@ -279,12 +282,7 @@
         plainOptions.value = unref(cachePlainOptions);
         plainSortOptions.value = unref(cachePlainOptions);
         setColumns(table.getCacheColumns());
-        isShow.value = false;
-        setTimeout(() => {
-          isShow.value = true;
-          inited = false;
-          handleVisibleChange();
-        });
+        sortable.sort(sortableOrder);
       }
 
       // Open the pop-up window for drag and drop initialization
@@ -296,7 +294,10 @@
           const el = columnListEl.$el as any;
           if (!el) return;
           // Drag and drop sort
-          const { initSortable } = useSortable(el, {
+          sortable = Sortablejs.create(unref(el), {
+            animation: 500,
+            delay: 400,
+            delayOnTouchOnly: true,
             handle: '.table-column-drag-icon ',
             onEnd: (evt) => {
               const { oldIndex, newIndex } = evt;
@@ -315,23 +316,29 @@
               }
 
               plainSortOptions.value = columns;
-              setColumns(columns);
+
+              setColumns(
+                columns
+                  .map((col: Options) => col.value)
+                  .filter((value: string) => state.checkedList.includes(value)),
+              );
             },
           });
-          initSortable();
+          // 记录原始order 序列
+          sortableOrder = sortable.toArray();
           inited = true;
         });
       }
 
       // Control whether the serial number column is displayed
-      function handleIndexCheckChange(e: ChangeEvent) {
+      function handleIndexCheckChange(e: CheckboxChangeEvent) {
         table.setProps({
           showIndexColumn: e.target.checked,
         });
       }
 
       // Control whether the check box is displayed
-      function handleSelectCheckChange(e: ChangeEvent) {
+      function handleSelectCheckChange(e: CheckboxChangeEvent) {
         table.setProps({
           rowSelection: e.target.checked ? defaultRowSelection : undefined,
         });
@@ -351,7 +358,7 @@
         if (isFixed && !item.width) {
           item.width = 100;
         }
-        table.setCacheColumnsByField?.(item.dataIndex, { fixed: isFixed });
+        table.setCacheColumnsByField?.(item.dataIndex as string, { fixed: isFixed });
         setColumns(columns);
       }
 
@@ -381,7 +388,6 @@
         indeterminate,
         onCheckAllChange,
         onChange,
-        isShow,
         plainOptions,
         reset,
         prefixCls,

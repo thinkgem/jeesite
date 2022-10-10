@@ -96,7 +96,7 @@
       sorter: true,
       width: 260,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('字典类型'),
@@ -105,7 +105,7 @@
       sorter: true,
       width: 260,
       align: 'left',
-      slots: { customRender: 'dictTypeColumn' },
+      slot: 'dictTypeColumn',
     },
     {
       title: t('系统字典'),

@@ -6,6 +6,7 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
     <BasicForm
+      ref="formRef"
       submitOnReset
       v-bind="getFormProps"
       v-if="getBindValues.useSearchForm"
@@ -19,34 +20,38 @@
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
     </BasicForm>
-
-    <Table
-      ref="tableElRef"
-      v-bind="getBindValues"
-      :rowClassName="getRowClassName"
-      v-show="getEmptyDataIsShowTable"
-      @change="handleTableChange"
-    >
-      <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
-        <slot :name="item" v-bind="data || {}"></slot>
-      </template>
-      <template #[`header-${column.dataIndex}`] v-for="column in columns" :key="column.dataIndex">
-        <HeaderCell :column="column" />
-      </template>
-      <template #dictLabelColumn="{ column, record }">
-        <DictLabel
-          :dictType="column.dictType"
-          :dictValue="record[column.dataIndex]"
-          :defaultValue="column.defaultValue"
-        />
-      </template>
-      <template v-if="tableActions" #tableActions="{ record }">
-        <TableAction
-          :actions="tableActions.actions && tableActions.actions(record)"
-          :dropDownActions="tableActions.dropDownActions && tableActions.dropDownActions(record)"
-        />
-      </template>
-    </Table>
+    <FormItemRest>
+      <ATable
+        ref="tableElRef"
+        v-bind="getBindValues"
+        :rowClassName="getRowClassName"
+        v-show="getEmptyDataIsShowTable"
+        @change="handleTableChange"
+      >
+        <template #headerCell="{ column }">
+          <HeaderCell :column="column" />
+        </template>
+        <template #bodyCell="data">
+          <template v-if="!data.column.customRender">
+            <TableAction
+              v-if="data.column.slot === 'tableActions'"
+              :actions="tableActions.actions && tableActions.actions(data.record)"
+              :dropDownActions="
+                tableActions.dropDownActions && tableActions.dropDownActions(data.record)
+              "
+            />
+            <DictLabel
+              v-else-if="data.column.slot === 'dictLabelColumn'"
+              :dictType="data.column.dictType"
+              :dictValue="data.record[data.column.dataIndex]"
+              :defaultValue="data.column.defaultValue"
+            />
+            <slot v-else-if="data.column.slot" :name="data.column.slot" v-bind="data || {}"></slot>
+          </template>
+          <slot v-else name="bodyCell" v-bind="data || {}"></slot>
+        </template>
+      </ATable>
+    </FormItemRest>
   </div>
 </template>
 <script lang="ts">
@@ -58,7 +63,7 @@
   } from './types/table';
 
   import { defineComponent, ref, computed, unref, toRaw, inject, watchEffect } from 'vue';
-  import { Table } from 'ant-design-vue';
+  import { Table, Form } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { PageWrapperFixedHeightKey } from '/@/components/Page';
   import expandIcon from './components/ExpandIcon';
@@ -73,6 +78,7 @@
   import { useLoading } from './hooks/useLoading';
   import { useRowSelection } from './hooks/useRowSelection';
   import { useTableScroll } from './hooks/useTableScroll';
+  import { useTableScrollTo } from './hooks/useScrollTo';
   import { useCustomRow } from './hooks/useCustomRow';
   import { useTableStyle } from './hooks/useTableStyle';
   import { useTableHeader } from './hooks/useTableHeader';
@@ -89,7 +95,8 @@
 
   export default defineComponent({
     components: {
-      Table,
+      ATable: Table,
+      FormItemRest: Form.ItemRest,
       BasicForm,
       HeaderCell,
       TableAction,
@@ -120,6 +127,7 @@
       const tableData = ref<Recordable[]>([]);
 
       const wrapRef = ref(null);
+      const formRef = ref(null);
       const innerPropsRef = ref<Partial<BasicTableProps>>();
 
       const { prefixCls } = useDesign('basic-table');
@@ -157,13 +165,8 @@
         setSelectedRowKeys,
       } = useRowSelection(getProps, tableData, emit);
 
-      const { getExpandOption, expandAll, collapseAll, expandCollapse } = useTableExpand(
-        getProps,
-        tableData,
-        formActions.getFieldsValue,
-        emit,
-        setLoading,
-      );
+      const { getExpandOption, expandAll, collapseAll, expandRows, expandCollapse } =
+        useTableExpand(getProps, tableData, formActions.getFieldsValue, emit, setLoading);
 
       const {
         handleTableChange: onTableChange,
@@ -226,7 +229,11 @@
         getColumnsRef,
         getRowSelectionRef,
         getDataSourceRef,
+        wrapRef,
+        formRef,
       );
+
+      const { scrollTo } = useTableScrollTo(tableElRef, getDataSourceRef);
 
       const { customRow } = useCustomRow(getProps, {
         setSelectedRowKeys,
@@ -263,6 +270,7 @@
         const { isTreeTable } = unref(getProps);
         let propsData: Recordable = {
           size: 'middle',
+          showSorterTooltip: false,
           // ...(dataSource.length === 0 ? { getPopupContainer: () => document.body } : {}),
           ...attrs,
           customRow,
@@ -283,10 +291,14 @@
           footer: unref(getFooterProps),
           ...unref(getExpandOption),
           onExpand: handleTableExpand,
+          onResizeColumn: (w, col) => {
+            col.width = w;
+            return false;
+          },
         };
-        if (slots.expandedRowRender) {
-          propsData = omit(propsData, 'scroll');
-        }
+        // if (slots.expandedRowRender) { // 带展开的表格不显示水平滚动条问题
+        //   propsData = omit(propsData, 'scroll');
+        // }
 
         propsData = omit(propsData, ['class', 'onChange']);
         return propsData;
@@ -355,8 +367,10 @@
         getShowPagination,
         setCacheColumnsByField,
         expandAll,
+        expandRows,
         collapseAll,
         expandCollapse,
+        scrollTo,
         getSize: () => {
           return unref(getBindValues).size as SizeType;
         },
@@ -368,6 +382,7 @@
       emit('register', tableAction, formActions);
 
       return {
+        formRef,
         tableElRef,
         getBindValues,
         getLoading,
@@ -449,6 +464,10 @@
         align-items: center;
       }
 
+      &-tbody > tr > td.ant-table-column-sort {
+        background-color: @app-content-background;
+      }
+
       //.ant-table-tbody > tr.ant-table-row-selected td {
       //background-color: fade(@primary-color, 8%) !important;
       //}
@@ -505,18 +524,38 @@
           }
         }
       }
+
+      .ant-table-bordered {
+        &.ant-table-small {
+          > .ant-table-container {
+            > .ant-table-content,
+            > .ant-table-body {
+              > table > tbody > tr > td {
+                > .ant-table-expanded-row-fixed {
+                  margin: -15px -9px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
   html[data-theme='dark'] {
-    .ant-table-tbody > tr:hover.ant-table-row-selected > td,
-    .ant-table-tbody > tr.ant-table-row-selected td {
-      background-color: #262626;
-    }
     .@{prefix-cls} {
+      .ant-table {
+        &-tbody > tr > td.ant-table-column-sort {
+          background-color: #1e1e1e;
+        }
+        &-tbody > tr:hover.ant-table-row-selected > td,
+        &-tbody > tr.ant-table-row-selected td {
+          background-color: #262626;
+        }
+      }
       a,
       .ant-btn-link {
-        color: #1890ff;
+        color: #42a4e0;
       }
     }
   }

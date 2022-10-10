@@ -16,6 +16,7 @@ import { Persistent } from '/@/utils/cache/persistent';
 import { darkMode } from '/@/settings/designSetting';
 import { resetRouter } from '/@/router';
 import { deepMerge } from '/@/utils';
+import { switchSkin } from '/@/api/sys/login';
 
 interface AppState {
   darkMode?: ThemeEnum;
@@ -72,6 +73,7 @@ export const useAppStore = defineStore({
     setDarkMode(mode: ThemeEnum): void {
       this.darkMode = mode;
       localStorage.setItem(APP_DARK_MODE_KEY, mode);
+      switchSkin();
     },
 
     setBeforeMiniInfo(state: BeforeMiniState): void {

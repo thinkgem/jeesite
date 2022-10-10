@@ -104,7 +104,7 @@
       dataIndex: 'areaName',
       width: 230,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('排序号'),

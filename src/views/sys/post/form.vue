@@ -100,8 +100,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await postForm(data);
     record.value = (res.post || {}) as Post;
     setFieldsValue(record.value);

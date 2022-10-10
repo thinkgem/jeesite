@@ -70,6 +70,10 @@
 
     &__overlay {
       max-width: 360px;
+
+      .ant-popover-content {
+        width: 300px;
+      }
     }
 
     .ant-tabs-content {

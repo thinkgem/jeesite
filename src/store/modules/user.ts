@@ -78,10 +78,10 @@ export const useUserStore = defineStore({
     },
   },
   actions: {
-    setToken(info: string | undefined) {
-      this.token = info ? info : ''; // for null or undefined value
+    setToken(token: string | undefined) {
+      this.token = token ? token : ''; // for null or undefined value
       this.lastUpdateTime = new Date().getTime();
-      setAuthCache(TOKEN_KEY, info);
+      setAuthCache(TOKEN_KEY, token);
     },
     setRoleList(roleList: RoleEnum[] | string[]) {
       this.roleList = roleList;
@@ -190,8 +190,13 @@ export const useUserStore = defineStore({
     },
     initPageCache(res: LoginResult) {
       this.setUserInfo(res.user);
+      this.setPageCache('demoMode', res.demoMode);
+      this.setPageCache('useCorpModel', res.useCorpModel);
+      this.setPageCache('currentCorpCode', res.currentCorpCode);
+      this.setPageCache('currentCorpName', res.currentCorpName);
       this.setPageCache('modifyPasswordTip', res.modifyPasswordTip);
       this.setPageCache('modifyPasswordMsg', res.modifyPasswordMsg);
+      this.setPageCache('sysCode', res.sysCode);
     },
     /**
      * @description: logout

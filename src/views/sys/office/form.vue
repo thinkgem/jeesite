@@ -174,8 +174,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await officeForm(data);
     record.value = (res.office || {}) as Office;
     if (data.parentCode && data.parentName) {

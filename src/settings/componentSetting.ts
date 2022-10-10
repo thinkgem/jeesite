@@ -21,6 +21,8 @@ export default {
     pageSizeOptions: ['10', '20', '50', '80', '100'],
     // Default display quantity on one page
     defaultPageSize: 20,
+    // Default Size
+    defaultSize: 'middle',
     // Custom general sort function
     defaultSortFn: (sortInfo: SorterResult) => {
       const { order, columnKey } = sortInfo;

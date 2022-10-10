@@ -104,8 +104,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await testTreeForm(data);
     record.value = (res.testTree || {}) as TestTree;
     if (data.parentCode && data.parentName) {

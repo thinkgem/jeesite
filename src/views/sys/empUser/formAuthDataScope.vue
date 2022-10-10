@@ -116,8 +116,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await formAuthDataScope(data);
     record.value = (res.empUser || {}) as Recordable;
     ctrlPermi.value = res.ctrlPermi || '2';

@@ -111,8 +111,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await configForm(data);
     record.value = (res.config || {}) as Config;
     setFieldsValue(record.value);

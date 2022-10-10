@@ -402,7 +402,7 @@ export default defineComponent({
         {...attrs}
         title={t('layout.setting.drawerTitle')}
         width={330}
-        wrapClassName="setting-drawer"
+        class="setting-drawer"
         mask={false}
       >
         {/* {unref(getShowDarkModeToggle) && <Divider>{() => t('layout.setting.darkMode')}</Divider>} */}

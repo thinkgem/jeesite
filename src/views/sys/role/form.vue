@@ -189,8 +189,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     op.value = data.op || 'add';
     const res = await roleForm(data);
     record.value = (res.role || {}) as Role;

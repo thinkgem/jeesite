@@ -25,6 +25,9 @@ export interface Menu extends TreeModel<Menu> {
   moduleCodes?: string; // 归属模块（多个用逗号隔开）
 }
 
+export const menuIndex = (params?: Menu | any) =>
+  defHttp.get<Menu>({ url: adminPath + '/sys/menu/index', params });
+
 export const menuList = (params?: Menu | any) =>
   defHttp.get<Menu>({ url: adminPath + '/sys/menu/list', params });
 

@@ -41,7 +41,7 @@
      *  Can it be expanded
      */
     canExpan: { type: Boolean, default: true },
-     /**
+    /**
      *  expanded
      */
     expand: { type: Boolean, default: true },

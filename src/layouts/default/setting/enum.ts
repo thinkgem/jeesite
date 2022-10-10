@@ -38,9 +38,9 @@ export enum HandlerEnum {
 
   HEADER_SEARCH,
 
+  TABS_SHOW,
   TABS_SHOW_QUICK,
   TABS_SHOW_REDO,
-  TABS_SHOW,
   TABS_SHOW_FOLD,
 
   LOCK_TIME,

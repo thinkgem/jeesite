@@ -131,7 +131,7 @@
 </script>
 <style lang="less">
   .jeesite-resizer {
-    z-index: 999;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;

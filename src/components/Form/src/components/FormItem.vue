@@ -10,7 +10,7 @@
   import type { ValidationRule } from 'ant-design-vue/lib/form/Form';
   import type { TableActionType } from '/@/components/Table';
   import { defineComponent, computed, unref, toRefs } from 'vue';
-  import { Form, Col, Divider } from 'ant-design-vue';
+  import { Form, Col } from 'ant-design-vue';
   import { componentMap } from '../componentMap';
   import { BasicHelp } from '/@/components/Basic';
   import { isBoolean, isFunction, isNull, isEmpty } from '/@/utils/is';
@@ -19,7 +19,6 @@
   import { upperFirst, cloneDeep } from 'lodash-es';
   import { useItemLabelWidth } from '../hooks/useLabelWidth';
   import { useI18n } from '/@/hooks/web/useI18n';
-  import FormGroup from './FormGroup.vue';
 
   export default defineComponent({
     name: 'JeeSiteFormItem',
@@ -343,7 +342,8 @@
       }
 
       function renderItem() {
-        const { itemProps, slot, render, label, field, fieldLabel, suffix, component } = props.schema;
+        const { itemProps, slot, render, label, field, fieldLabel, suffix, component } =
+          props.schema;
         const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
         const { colon } = props.formProps;
 

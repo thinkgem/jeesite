@@ -150,3 +150,8 @@ html #layuicss-layer{display:none;position:absolute;width:1989px;}
 .layui-layer-btn .layui-layer-btn0{border-color:#1e5edb;background-color:#1e5edb;}
 .layui-layer-btn a {height:auto;padding:1px 14px;font-size:14px;background-color:#f4f4f4;}
 .layui-layer.toast-top-full-width {min-width:60%;}
+
+html.dark .layui-layer {background:#1a1a1a!important;color:#ddd!important;}
+html.dark .layui-layer-title {background:#262626!important;border-bottom-color:#484848!important;color:#bcbcbc!important;}
+html.dark .layui-layer-btn a {background-color:#444!important;border-color:#444!important;color:#b5b5b5!important;}
+html.dark .layui-layer-btn .layui-layer-btn0 {background-color:#1e5edb!important;border-color:#1e5edb!important;}

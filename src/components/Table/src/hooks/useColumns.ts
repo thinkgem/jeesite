@@ -1,7 +1,7 @@
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import type { ComputedRef } from 'vue';
-import { computed, Ref, ref, toRaw, unref, watch } from 'vue';
+import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
 import { usePermission } from '/@/hooks/web/usePermission';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -15,9 +15,10 @@ import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, PAGE_SIZE } from 
 function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
   const { key, dataIndex, children } = item;
   item.align = item.align || DEFAULT_ALIGN;
+  item.resizable = item.resizable || true;
   if (ellipsis) {
     if (!key) {
-      item.key = dataIndex;
+      item.key = dataIndex as any;
     }
     if (!isBoolean(item.ellipsis)) {
       Object.assign(item, {
@@ -25,16 +26,22 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
       });
     }
   }
+  if (dataIndex && isString(dataIndex) && dataIndex.indexOf('.') != -1) {
+    item.dataIndex = dataIndex.split('.');
+  }
   if (children && children.length) {
     handleChildren(children, !!ellipsis, dictTypes);
   }
   if (item.dictType) {
     dictTypes.add(item.dictType);
-    if (!item.slots?.customRender) {
-      if (!item.slots) {
-        item.slots = {};
-      }
-      item.slots.customRender = 'dictLabelColumn';
+    // if (!item.slots?.customRender) {
+    //   if (!item.slots) {
+    //     item.slots = {};
+    //   }
+    //   item.slots.customRender = 'dictLabelColumn';
+    // }
+    if (!item.slot) {
+      item.slot = 'dictLabelColumn';
     }
   }
 }
@@ -112,7 +119,7 @@ function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: Bas
       dataIndex: 'actions',
       title: t('操作'),
       fixed: 'right',
-      slots: { customRender: 'tableActions' },
+      slot: 'tableActions',
       ...actionColumn,
       flag: ACTION_COLUMN_FLAG,
     });
@@ -127,7 +134,8 @@ export function useColumns(
   let cacheColumns = unref(propsRef).columns;
 
   const getColumnsRef = computed(() => {
-    const columns = cloneDeep(unref(columnsRef));
+    // const columns = cloneDeep(unref(columnsRef)); // 暂且注释，克隆会导致拖拽失效
+    const columns = unref(columnsRef);
 
     handleIndexColumn(propsRef, getPaginationRef, columns);
     handleActionColumn(propsRef, columns);
@@ -178,13 +186,14 @@ export function useColumns(
         return hasPermission(column.auth) && isIfShow(column);
       })
       .map((column) => {
-        const { slots, dataIndex, customRender, format, edit, editRow, flag } = column;
+        // const { slots, dataIndex, customRender, format, edit, editRow, flag } = column;
+        const { customRender, format, edit, editRow, flag } = column;
 
-        if (!slots || !slots?.title) {
-          column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
-          column.customTitle = column.title;
-          Reflect.deleteProperty(column, 'title');
-        }
+        //if (!slots || !slots?.title) {
+        //  //column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
+        column.customTitle = column.title as any;
+        Reflect.deleteProperty(column, 'title');
+        //}
         const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
         if (!customRender && format && !edit && !isDefaultAction) {
           column.customRender = ({ text, record, index }) => {
@@ -196,7 +205,7 @@ export function useColumns(
         if ((edit || editRow) && !isDefaultAction) {
           column.customRender = renderEditCell(column);
         }
-        return column;
+        return reactive(column);
       });
   });
 
@@ -223,7 +232,7 @@ export function useColumns(
    * set columns
    * @param columnList key｜column
    */
-  function setColumns(columnList: Partial<BasicColumn>[] | string[]) {
+  function setColumns(columnList: Partial<BasicColumn>[] | (string | string[])[]) {
     const columns = cloneDeep(columnList);
     if (!isArray(columns)) return;
 
@@ -236,24 +245,23 @@ export function useColumns(
 
     const cacheKeys = cacheColumns.map((item) => item.dataIndex);
 
-    if (!isString(firstColumn)) {
+    if (!isString(firstColumn) && !isArray(firstColumn)) {
       columnsRef.value = columns as BasicColumn[];
     } else {
-      const columnKeys = columns as string[];
+      const columnKeys = (columns as (string | string[])[]).map((m) => m.toString());
       const newColumns: BasicColumn[] = [];
       cacheColumns.forEach((item) => {
         newColumns.push({
           ...item,
-          defaultHidden: !columnKeys.includes(item.dataIndex! || (item.key as string)),
+          defaultHidden: !columnKeys.includes(item.dataIndex?.toString() || (item.key as string)),
         });
       });
-
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {
           return (
-            columnKeys.indexOf(prev.dataIndex as string) -
-            columnKeys.indexOf(next.dataIndex as string)
+            columnKeys.indexOf(prev.dataIndex?.toString() as string) -
+            columnKeys.indexOf(next.dataIndex?.toString() as string)
           );
         });
       }
@@ -356,7 +364,7 @@ export function formatCell(text: string, format: CellFormat, record: Recordable,
   try {
     // date type
     const DATE_FORMAT_PREFIX = 'date|';
-    if (isString(format) && format.startsWith(DATE_FORMAT_PREFIX)) {
+    if (isString(format) && format.startsWith(DATE_FORMAT_PREFIX) && text) {
       const dateFormat = format.replace(DATE_FORMAT_PREFIX, '');
 
       if (!dateFormat) {

@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import type {
-  ReplaceFields,
+  FieldNames,
   ActionItem,
   Keys,
   CheckKeys,
@@ -8,7 +8,7 @@ import type {
   TreeItem,
 } from './typing';
 import type { ContextMenuItem } from '/@/hooks/web/useContextMenu';
-import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree';
+import type { TreeDataItem } from 'ant-design-vue/es/tree';
 import { propTypes } from '/@/utils/propTypes';
 
 export const basicProps = {
@@ -41,8 +41,8 @@ export const basicProps = {
   // formatter for ztree
   treeDataSimpleMode: propTypes.bool.def(true),
 
-  replaceFields: {
-    type: Object as PropType<ReplaceFields>,
+  fieldNames: {
+    type: Object as PropType<FieldNames>,
   },
 
   treeData: {
@@ -86,7 +86,7 @@ export const basicProps = {
   // 自定义数据过滤判断方法(注: 不是整个过滤方法，而是内置过滤的判断方法，用于增强原本仅能通过title进行过滤的方式)
   filterFn: {
     type: Function as PropType<
-      (searchValue: any, node: TreeItem, replaceFields: ReplaceFields) => boolean
+      (searchValue: any, node: TreeItem, fieldNames: FieldNames) => boolean
     >,
     default: null,
   },
@@ -108,8 +108,8 @@ export const treeNodeProps = {
     type: Array as PropType<ActionItem[]>,
     default: () => [],
   },
-  replaceFields: {
-    type: Object as PropType<ReplaceFields>,
+  fieldNames: {
+    type: Object as PropType<FieldNames>,
   },
   treeData: {
     type: Array as PropType<TreeDataItem[]>,

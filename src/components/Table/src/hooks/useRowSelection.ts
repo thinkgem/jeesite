@@ -21,7 +21,6 @@ export function useRowSelection(
 
     return {
       selectedRowKeys: unref(selectedRowKeysRef),
-      hideDefaultSelections: false,
       onChange: (selectedRowKeys: string[]) => {
         setSelectedRowKeys(selectedRowKeys);
         // selectedRowKeysRef.value = selectedRowKeys;
@@ -47,7 +46,7 @@ export function useRowSelection(
           const { onChange } = rowSelection;
           if (onChange && isFunction(onChange)) onChange(getSelectRowKeys(), getSelectRows());
         }
-        // 鏈夋暟鎹椂锛屽啀璋冪敤閫夋嫨鍙樻洿浜嬩欢
+        // 有数据时，再调用选择变更事件
         if (unref(tableData).length > 0) {
           emit('selection-change', {
             keys: getSelectRowKeys(),

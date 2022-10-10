@@ -25,8 +25,13 @@ export interface LoginResult {
   message: string;
   sessionid: string;
   user: UserInfo;
+  demoMode: boolean;
+  useCorpModel: boolean;
+  currentCorpCode: string;
+  currentCorpName: string;
   modifyPasswordTip: string;
   modifyPasswordMsg: string;
+  sysCode: string;
   isValidCodeLogin: boolean;
 }
 

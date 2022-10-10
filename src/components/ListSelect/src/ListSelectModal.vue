@@ -28,7 +28,6 @@
       <ACol :span="props.config.treeProps ? 17 : 18">
         <BasicTable
           @register="registerTable"
-          @row-click="rowClick"
           @row-db-click="rowDbClick"
           :minHeight="treeHeight - 160"
         />
@@ -89,7 +88,8 @@
   const selectList = ref<Recordable[]>([]);
 
   const rowSelection: TableRowSelection = {
-    type: 'checkbox',
+    type: props.checkbox ? 'checkbox' : 'radio',
+    columnWidth: props.checkbox ? undefined : 0,
     onChange: (_selectedRowKeys: string[], selectedRows: Recordable[]) => {
       selectList.value = selectedRows;
     },
@@ -100,7 +100,8 @@
     useSearchForm: true,
     canResize: true,
     resizeHeightOffset: 100,
-    ...(props.checkbox ? { rowSelection } : {}),
+    // ...(props.checkbox ? { rowSelection } : {}),
+    rowSelection,
     ...props.config?.tableProps,
   };
 
@@ -113,14 +114,14 @@
     setModalProps({ loading: false });
   });
 
-  const rowClick = (record: Recordable) => {
-    if (!props.checkbox) {
-      selectList.value = [record];
-    }
-  };
+  // const rowClick = (record: Recordable) => {
+  //   if (!props.checkbox) {
+  //     selectList.value = [record];
+  //   }
+  // };
 
   const rowDbClick = (record: Recordable) => {
-    rowClick(record);
+    // rowClick(record);
     if (!props.checkbox) {
       emit('select', [record]);
       closeModal();

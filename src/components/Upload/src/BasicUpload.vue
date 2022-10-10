@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-button-group>
+    <Space>
       <a-button
         v-if="!readonly"
         type="primary"
@@ -23,7 +23,7 @@
           </template>
         </a-button>
       </Tooltip>
-    </a-button-group>
+    </Space>
     <UploadModal
       v-bind="bindValue"
       :previewFileList="fileList"
@@ -44,7 +44,7 @@
   import UploadModal from './UploadModal.vue';
   import UploadPreviewModal from './UploadPreviewModal.vue';
   import { Icon } from '/@/components/Icon';
-  import { Tooltip } from 'ant-design-vue';
+  import { Tooltip, Space } from 'ant-design-vue';
   import { useModal } from '/@/components/Modal';
   import { uploadContainerProps } from './props';
   import { omit } from 'lodash-es';
@@ -54,7 +54,7 @@
 
   export default defineComponent({
     name: 'BasicUpload',
-    components: { UploadModal, UploadPreviewModal, Icon, Tooltip },
+    components: { UploadModal, Space, UploadPreviewModal, Icon, Tooltip },
     props: uploadContainerProps,
     emits: ['change', 'delete', 'update:value'],
 

@@ -144,11 +144,11 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
       return { showLogo: value };
 
     // ============tabs==================
+    case HandlerEnum.TABS_SHOW:
+      return { multiTabsSetting: { show: value != '0', style: value } };
+
     case HandlerEnum.TABS_SHOW_QUICK:
       return { multiTabsSetting: { showQuick: value } };
-
-    case HandlerEnum.TABS_SHOW:
-      return { multiTabsSetting: { show: value } };
 
     case HandlerEnum.TABS_SHOW_REDO:
       return { multiTabsSetting: { showRedo: value } };

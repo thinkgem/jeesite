@@ -5,7 +5,7 @@
  * @author Vben、ThinkGem
 -->
 <script lang="tsx">
-  import type { ReplaceFields, Keys, CheckKeys, TreeActionType, TreeItem } from './typing';
+  import type { FieldNames, Keys, CheckKeys, TreeActionType, TreeItem } from './typing';
 
   import {
     defineComponent,
@@ -36,8 +36,6 @@
 
   import { basicProps } from './props';
   import { CreateContextOptions } from '/@/components/ContextMenu';
-
-  import { CheckEvent } from './typing';
 
   interface State {
     expandedKeys: Keys;
@@ -85,13 +83,13 @@
       const [createContextMenu] = useContextMenu();
       const { prefixCls } = useDesign('basic-tree');
 
-      const getReplaceFields = computed((): Required<ReplaceFields> => {
-        const { replaceFields } = props;
+      const getFieldNames = computed((): Required<FieldNames> => {
+        const { fieldNames } = props;
         return {
           key: 'id',
           title: 'name',
           children: 'children',
-          ...replaceFields,
+          ...fieldNames,
         };
       });
 
@@ -104,7 +102,7 @@
           selectedKeys: state.selectedKeys,
           checkedKeys: state.checkedKeys,
           checkStrictly: state.checkStrictly,
-          replaceFields: unref(getReplaceFields),
+          fieldNames: unref(getFieldNames),
           'onUpdate:expandedKeys': (v: Keys) => {
             state.expandedKeys = v;
             emit('update:expandedKeys', v);
@@ -113,10 +111,10 @@
             state.selectedKeys = v;
             emit('update:selectedKeys', v);
           },
-          onCheck: (v: CheckKeys, e: CheckEvent) => {
+          onCheck: (v: CheckKeys, e) => {
             let currentValue = toRaw(state.checkedKeys) as Keys;
             if (isArray(currentValue) && searchState.startSearch) {
-              const { key } = unref(getReplaceFields);
+              const { key } = unref(getFieldNames);
               currentValue = difference(currentValue, getChildrenKeys(e.node.$attrs.node[key]));
               if (e.checked) {
                 currentValue.push(e.node.$attrs.node[key]);
@@ -152,7 +150,7 @@
         getAllKeys,
         getChildrenKeys,
         getEnabledKeys,
-      } = useTree(treeDataRef, getReplaceFields);
+      } = useTree(treeDataRef, getFieldNames);
 
       function getIcon(params: Recordable, icon?: string) {
         if (!icon) {
@@ -345,21 +343,21 @@
         const { filterFn, checkable, expandOnSearch, checkOnSearch, selectedOnSearch } =
           unref(props);
         searchState.startSearch = true;
-        const { title: titleField, key: keyField } = unref(getReplaceFields);
+        const { title: titleField, key: keyField } = unref(getFieldNames);
 
         const matchedKeys: string[] = [];
         searchState.searchData = filter(
           unref(treeDataRef),
           (node) => {
             const result = filterFn
-              ? filterFn(searchValue, node, unref(getReplaceFields))
+              ? filterFn(searchValue, node, unref(getFieldNames))
               : node[titleField]?.includes(searchValue) ?? false;
             if (result) {
               matchedKeys.push(node[keyField]);
             }
             return result;
           },
-          unref(getReplaceFields),
+          unref(getFieldNames),
         );
 
         if (expandOnSearch) {
@@ -507,7 +505,7 @@
             title: titleField,
             key: keyField,
             children: childrenField,
-          } = unref(getReplaceFields);
+          } = unref(getFieldNames);
 
           const icon = getIcon(item, item.icon);
           const title = get(item, titleField);
@@ -528,12 +526,11 @@
           );
 
           // item.isLeaf = !(item.children && item.children.length > 0);
-
-          item.isLeaf = attrs.loadData ? 
-            item.isLeaf ?
-             item.isLeaf : 
-            false : 
-          !(item.children && item.children.length > 0)
+          item.isLeaf = attrs.loadData
+            ? item.isLeaf
+              ? item.isLeaf
+              : false
+            : !(item.children && item.children.length > 0);
 
           item[titleField] = (
             <span
@@ -561,7 +558,7 @@
         const { title, helpMessage, toolbar, search, checkable, showIcon } = props;
         const showTitle = title || toolbar || search || slots.headerTitle;
         const scrollStyle: CSSProperties = {
-          height: 'calc(100%' + (showTitle ? ' - 37px)' : ')'),
+          height: 'calc(100%' + (showTitle ? ' - 35px)' : ')'),
         };
         const TreeComp = showIcon ? Tree.DirectoryTree : Tree;
         return (
@@ -583,23 +580,16 @@
                 {extendSlots(slots)}
               </TreeHeader>
             )}
-
-            <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound) || unref(loading)}>
-              <TreeComp
-                {...unref(getBindValues)}
-                v-show={!unref(loading)}
-                treeData={treeData.value}
-              />
-              <div class="flex justify-center w-full mt-10 mb-10" v-show={unref(loading)}>
-                <Spin />
-              </div>
+            <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound)}>
+              <TreeComp {...unref(getBindValues)} treeData={treeData.value} />
             </ScrollContainer>
-
-            <Empty
-              v-show={unref(getNotFound) && !unref(loading)}
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              class="!mt-4"
-            />
+            <Spin spinning={unref(loading)}>
+              <Empty
+                v-show={unref(getNotFound)}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                class="!mt-4"
+              />
+            </Spin>
           </div>
         );
       };
@@ -614,54 +604,58 @@
     border-radius: 5px;
 
     .ant-tree {
-      margin: 5px 15px 10px 10px;
+      margin: 10px 15px 10px 10px;
+      background-color: transparent;
 
       .ant-tree-node-content-wrapper {
         position: relative;
-        height: 26px;
-        line-height: 27px;
-
         .ant-tree-title {
-          // position: absolute;
+          position: absolute;
           left: 0;
           width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
 
       &.ant-tree-directory {
-        .@{prefix-cls}-title {
-          padding-left: 3px;
+        .ant-tree-treenode:hover::before {
+          background-color: transparent;
         }
-        li span {
+        .ant-tree-treenode {
+          .ant-tree-node-content-wrapper {
+            transition: none;
+            .ant-tree-title {
+              left: auto;
+            }
+            .@{prefix-cls}-title {
+              padding-left: 3px;
+            }
+            .ant-tree-switcher,
+            .ant-tree-iconEle {
+              color: fade(@text-color-base, 70);
+              width: 20px;
+            }
+            &:hover {
+              background-color: fade(@primary-color, 8);
+              border-radius: 3px;
+            }
+            &.ant-tree-node-selected {
+              color: @text-color-base;
+              background-color: fade(@primary-color, 15);
+              border-radius: 3px;
+            }
+          }
+        }
+        .ant-tree-treenode-selected {
+          color: @text-color-base;
           .ant-tree-switcher,
           .ant-tree-iconEle {
-            width: 20px;
+            color: fade(@text-color-base, 70);
           }
-          .ant-tree-iconEle {
-            color: fade(@text-color-base, 60);
-          }
-        }
-        > li span.ant-tree-node-content-wrapper,
-        .ant-tree-child-tree > li span.ant-tree-node-content-wrapper {
-          padding-left: 2px;
-          span {
-            display: inline-block;
-          }
-          &:hover::before {
-            border-radius: 3px;
-          }
-        }
-        > li.ant-tree-treenode-selected > span,
-        .ant-tree-child-tree > li.ant-tree-treenode-selected > span {
-          color: @text-color-base;
-          &.ant-tree-switcher {
-            color: @text-color-base;
-          }
-          &.ant-tree-node-content-wrapper {
-            background-color: fade(@primary-color, 15);
-            border-radius: 3px;
-          }
-          &.ant-tree-node-content-wrapper::before {
+          &:hover::before,
+          &::before {
             background-color: transparent;
           }
         }
@@ -696,6 +690,10 @@
     &__action {
       margin-left: 4px;
       visibility: hidden;
+    }
+
+    &-header {
+      border-bottom: 1px solid @border-color-base;
     }
   }
 

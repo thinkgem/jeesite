@@ -140,8 +140,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await companyForm(data);
     record.value = (res.company || {}) as Company;
     record.value.officeCodes = res.officeCodes || '';

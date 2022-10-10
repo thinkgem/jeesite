@@ -1,13 +1,13 @@
 interface TreeHelperConfig {
   id: string;
-  children: string;
   pid: string;
+  children: string;
   callback: Fn;
 }
 const DEFAULT_CONFIG: TreeHelperConfig = {
   id: 'id',
-  children: 'children',
   pid: 'pId',
+  children: 'children',
   callback: () => {},
 };
 
@@ -18,7 +18,7 @@ export function listToTree<T = any>(list?: any[], config: Partial<TreeHelperConf
   const conf = getConfig(config) as TreeHelperConfig;
   const nodeMap = new Map();
   const result: T[] = [];
-  const { id, children, pid } = conf;
+  const { id, pid, children } = conf;
 
   for (const node of list || []) {
     node[children] = node[children] || [];

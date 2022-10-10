@@ -115,8 +115,8 @@
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-    resetFields();
     setDrawerProps({ loading: true });
+    await resetFields();
     const res = await moduleForm(data);
     record.value = (res.module || {}) as Module;
     setFieldsValue(record.value);

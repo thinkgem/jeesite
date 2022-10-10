@@ -1,9 +1,6 @@
 <template>
   <a-col v-bind="actionColOpt" v-if="showActionButtonGroup">
-    <div
-      style="width: 100%; white-space: nowrap"
-      :style="{ textAlign: actionColOpt.style.textAlign }"
-    >
+    <div class="ant-form-action" :style="{ textAlign: actionColOpt.style.textAlign }">
       <FormItem>
         <slot name="submitBefore"></slot>
         <Button

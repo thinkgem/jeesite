@@ -127,7 +127,7 @@
             if (!Array.isArray(defaultValue)) {
               schema.defaultValue = dateUtil(defaultValue);
             } else {
-              const def: moment.Moment[] = [];
+              const def: any[] = [];
               defaultValue.forEach((item) => {
                 def.push(dateUtil(item));
               });
@@ -354,18 +354,32 @@
         height: 31px;
       }
 
-      .ant-btn {
-        margin-top: 1px;
-        padding: 1px 10px;
-        // line-height: 1.5;
-        font-size: 13px;
-        height: 30px;
-        border-radius: 4px;
+      .ant-form-action {
+        width: 100%;
+        white-space: nowrap;
 
-        &.ant-btn-link {
-          z-index: 1;
+        .ant-btn {
+          margin-top: 1px;
+          padding: 1px 10px;
+          // line-height: 1.5;
+          font-size: 13px;
+          height: 30px;
+          border-radius: 4px;
+
+          &.ant-btn-link {
+            z-index: 1;
+          }
         }
       }
+
+      // .ant-input-group {
+      //   &-addon {
+      //     .ant-btn {
+      //       margin: 0;
+      //       padding: 0;
+      //     }
+      //   }
+      // }
     }
 
     .ant-form-item-label > label {
@@ -375,7 +389,7 @@
     }
 
     .ant-input-number,
-    .ant-calendar-picker {
+    .ant-picker-default {
       width: 100%;
     }
   }

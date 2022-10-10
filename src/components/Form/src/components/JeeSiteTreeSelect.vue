@@ -32,7 +32,7 @@
   import { listToTree } from '/@/utils/helper/treeHelper';
   import { useAttrs } from '/@/hooks/core/useAttrs';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
-  import { get } from 'lodash-es';
+  import { get, omit } from 'lodash-es';
   import { LoadingOutlined } from '@ant-design/icons-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDict } from '/@/components/Dict';
@@ -82,19 +82,20 @@
       const loading = ref<Boolean>(false);
 
       const getAttrs = computed(() => {
-        return {
+        let propsData = {
           showSearch: true,
-          treeNodeFilterProp: 'title',
-          replaceFields: {
+          treeNodeFilterProp: 'name',
+          fieldNames: {
             value: props.dictType ? 'value' : 'id',
-            title: 'name',
+            label: 'name',
           },
+          treeDataSimpleMode: false,
           dropdownStyle: { maxHeight: '300px' },
           getPopupContainer: () => document.body,
           ...unref(attrs),
           ...(props as Recordable),
-          treeDataSimpleMode: false,
         };
+        return omit(propsData, 'treeData');
       });
 
       const [state] = useRuleFormItem(props);
@@ -193,6 +194,9 @@
 
   .@{prefix-cls} {
     width: 100%;
+    .ant-select {
+      width: 100%;
+    }
 
     .ant-select-tree {
       padding: 4px;

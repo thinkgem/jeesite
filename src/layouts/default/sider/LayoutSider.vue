@@ -149,10 +149,10 @@
       height: calc(100% - @header-height);
     }
 
-    &.ant-layout-sider-light {
-      // border-right: 1px solid @border-color-base;
-      box-shadow: 1px 0 0 0 @header-light-bottom-border-color;
-    }
+    // &.ant-layout-sider-light {
+    //   // border-right: 1px solid @border-color-base;
+    //   box-shadow: 1px 0 0 0 @header-light-bottom-border-color;
+    // }
 
     &.ant-layout-sider-dark {
       background-color: @sider-dark-bg-color;

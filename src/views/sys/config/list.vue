@@ -82,7 +82,7 @@
       sorter: true,
       width: 130,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('参数键名'),

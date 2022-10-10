@@ -80,7 +80,7 @@ const tableColumns: BasicColumn[] = [
     key: 'a.login_code',
     sorter: true,
     width: 100,
-    slots: { customRender: 'firstColumn' },
+    slot: 'firstColumn',
   },
   {
     title: t('用户昵称'),

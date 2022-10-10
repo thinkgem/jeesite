@@ -39,10 +39,9 @@ export function useFormValues({
       if (!key || (isArray(value) && value.length === 0) || isFunction(value)) {
         continue;
       }
-      if (isObject(value)) {
+      if (isObject(value) && value?.format) {
         value = transformDateFunc?.(value);
-      }
-      if (isArray(value) && value[0]?._isAMomentObject && value[1]?._isAMomentObject) {
+      } else if (isArray(value) && value[0]?.format && value[1]?.format) {
         value = value.map((item) => transformDateFunc?.(item));
       }
       // Remove spaces

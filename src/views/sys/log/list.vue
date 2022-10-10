@@ -116,7 +116,7 @@
       sorter: true,
       width: 180,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     {
       title: t('请求地址'),
