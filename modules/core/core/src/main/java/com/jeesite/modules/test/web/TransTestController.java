@@ -4,17 +4,15 @@
  */
 package com.jeesite.modules.test.web;
 
+import com.jeesite.common.config.Global;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.entity.TestTree;
+import com.jeesite.modules.test.service.TransTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.cloud.commons.lang.StringUtils;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.test.entity.TestData;
-import com.jeesite.modules.test.service.TransTestService;
 
 /**
  * 分布式事务测试
@@ -36,13 +34,13 @@ public class TransTestController extends BaseController {
 	@RequestMapping(value = "test")
 	@ResponseBody
 	public String test(TestData testData) {
-		String mode = StringUtils.EMPTY;
 		try {
 			Class.forName("io.seata.spring.annotation.GlobalTransactionScanner");
-			mode = "GlobalTransactional";
-		} catch (ClassNotFoundException e) { }
-		if (StringUtils.isBlank(mode)) {
+		} catch (ClassNotFoundException e) {
 			return renderResult(Global.FALSE, "测试失败，没有安装 Seata 模块！");
+		}
+		if (!Global.getPropertyToBoolean("seata.enabled", "false")) {
+			return renderResult(Global.FALSE, "请将 seata.enabled 参数设置为 true");
 		}
 		boolean normal = ++i % 2 == 0; // 正常报错和故意失败模式切换
 		try{
@@ -59,8 +57,9 @@ public class TransTestController extends BaseController {
 			boolean bl = transTestService.transValid(testData);
 			String message = "事务测试"+(bl?"成功，数据已":"失败，数据未")+"回滚！";
 			if (!bl) {
-				message += "请全局搜索“@"+mode+"”关键词，是否将前面的“//”注释去掉？";
-				message += "是否开启 seata.enabled 参数配置？";
+				message += "① pom.xml 里是否添加 jeesite-cloud-module-seata-client 依赖？";
+				message += "② application.yml 里是否开启 seata.enabled 参数配置？";
+				message += "③ 执行方法是否声明 @GlobalTransactional 注解？";
 			}
 			return renderResult(Global.TRUE, message);
 		}
