@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.jeesite</groupId>
         <artifactId>jeesite-cloud-parent</artifactId>
-        <version>5.1.0-SNAPSHOT</version>
+        <version>5.2.0-SNAPSHOT</version>
         <relativePath>../parent/web/pom.xml</relativePath>
     </parent>
 
@@ -27,7 +27,7 @@
 		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 		
 		<!-- version setting -->
-		<sentinel.version>1.8.4</sentinel.version>
+		<sentinel.version>1.8.5</sentinel.version>
         <curator.version>4.0.1</curator.version>
         
 		<!-- docker setting -->
