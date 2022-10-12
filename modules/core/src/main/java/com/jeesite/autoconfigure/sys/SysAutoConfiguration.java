@@ -4,35 +4,22 @@
  */
 package com.jeesite.autoconfigure.sys;
 
+import com.jeesite.common.mybatis.MyBatisFactoryBean;
+import com.jeesite.modules.msg.service.MsgInnerService;
+import com.jeesite.modules.sys.service.*;
+import com.jeesite.modules.sys.service.support.*;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import com.jeesite.common.mybatis.MyBatisFactoryBean;
-import com.jeesite.modules.msg.service.MsgInnerService;
-import com.jeesite.modules.sys.service.AreaService;
-import com.jeesite.modules.sys.service.CompanyService;
-import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.EmployeeService;
-import com.jeesite.modules.sys.service.LogService;
-import com.jeesite.modules.sys.service.OfficeService;
-import com.jeesite.modules.sys.service.PostService;
-import com.jeesite.modules.sys.service.support.AreaServiceSupport;
-import com.jeesite.modules.sys.service.support.CompanyServiceSupport;
-import com.jeesite.modules.sys.service.support.EmpUserServiceSupport;
-import com.jeesite.modules.sys.service.support.EmployeeServiceSupport;
-import com.jeesite.modules.sys.service.support.LogServiceSupport;
-import com.jeesite.modules.sys.service.support.OfficeServiceSupport;
-import com.jeesite.modules.sys.service.support.PostServiceSupport;
 
 /**
  * 系统核心实现类
  * @author ThinkGem
  * @version 2018-10-13
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @ConditionalOnBean(MyBatisFactoryBean.class)
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class SysAutoConfiguration {
