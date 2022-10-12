@@ -6,7 +6,7 @@
      <parent>
          <groupId>com.jeesite</groupId>
 		 <artifactId>jeesite-parent</artifactId>
-		 <version>5.1.0-SNAPSHOT</version>
+		 <version>5.2.0-SNAPSHOT</version>
 		 <relativePath>../../../jeesite/jeesite/parent/pom.xml</relativePath>
      </parent>
 
@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 		
 		<!-- version setting -->
-		<nacos.version>2.1.0.1</nacos.version>
+		<nacos.version>2.1.1.0</nacos.version>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
