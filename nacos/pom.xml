@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 		
 		<!-- version setting -->
-		<nacos.version>2.1.1.0</nacos.version>
+		<nacos.version>2.1.1.1</nacos.version>
 		
 		<!-- environment setting -->
 		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
