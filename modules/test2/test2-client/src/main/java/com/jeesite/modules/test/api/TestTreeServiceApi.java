@@ -4,16 +4,14 @@
  */
 package com.jeesite.modules.test.api;
 
-import java.util.List;
-
+import com.jeesite.common.entity.Page;
+import com.jeesite.modules.test.entity.TestTree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jeesite.common.entity.Page;
-import com.jeesite.modules.test.entity.TestTree;
+import java.util.List;
 
 /**
  * 测试数据API
@@ -29,7 +27,7 @@ public interface TestTreeServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
-	@GetMapping(value = "getByPk")
+	@PostMapping(value = "getByPk")
 	public TestTree get(@RequestParam(name = "id", required = false) String id);
 	
 	/**
@@ -38,7 +36,7 @@ public interface TestTreeServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
-	@GetMapping(value = "getByPkAndIsNewRecord")
+	@PostMapping(value = "getByPkAndIsNewRecord")
 	public TestTree get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
 	
 	/**
@@ -47,7 +45,7 @@ public interface TestTreeServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
-	@GetMapping(value = "getLastByParentCode")
+	@PostMapping(value = "getLastByParentCode")
 	public TestTree getLastByParentCode(TestTree testTree);
 	
 	/**

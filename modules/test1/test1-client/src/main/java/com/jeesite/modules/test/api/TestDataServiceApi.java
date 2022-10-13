@@ -4,16 +4,14 @@
  */
 package com.jeesite.modules.test.api;
 
-import java.util.List;
-
+import com.jeesite.common.entity.Page;
+import com.jeesite.modules.test.entity.TestData;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jeesite.common.entity.Page;
-import com.jeesite.modules.test.entity.TestData;
+import java.util.List;
 
 /**
  * 测试数据API
@@ -29,7 +27,7 @@ public interface TestDataServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testData:view")
-	@GetMapping(value = "getByPk")
+	@PostMapping(value = "getByPk")
 	public TestData get(@RequestParam(name = "id", required = false) String id);
 	
 	/**
@@ -38,7 +36,7 @@ public interface TestDataServiceApi {
 	 * @return
 	 */
 	@RequiresPermissions("test:testData:view")
-	@GetMapping(value = "getByPkAndIsNewRecord")
+	@PostMapping(value = "getByPkAndIsNewRecord")
 	public TestData get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
 	
 	/**
