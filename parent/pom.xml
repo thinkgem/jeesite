@@ -23,7 +23,7 @@
 
 		<!-- common version setting -->
 		<commons-io.version>2.11.0</commons-io.version>
-		<commons-text.version>1.9</commons-text.version>
+		<commons-text.version>1.10.0</commons-text.version>
 		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-email.version>1.5</commons-email.version>
 		<fst.version>2.57</fst.version>
