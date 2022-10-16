@@ -4,7 +4,7 @@ JeeSite Cloud 具备 [JeeSite 4.x](https://gitee.com/thinkgem/jeesite4) 的所�
 
 JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
 
-集成阿里优秀组件 Nacos 服务治理与配置中心、集成 Sentinel 流量卫兵；集成 Zipkin 链路追踪；集成 LCN 分布式事务等，详见技术选型章节。
+集成阿里优秀组件 Nacos 服务治理与配置中心、集成 Sentinel 流量卫兵；集成 Zipkin 链路追踪；集成 Seata 分布式事务等，详见技术选型章节。
 
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
@@ -19,13 +19,13 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 5. 统一的授权认证、基础数据微服务，都已经提供查询 client 接口，其他微服务应用模块中可直接获取用户、组织、权限、字典等基础数据。微服务之间调用中，出现的会话及缓存的一致性统一得到解决。
 6. 如 UserUtils、EmpUtils、EmpUserService、OfficeService 等等众多的基础服务工具类，都可以直接从基础数据的微服务中获取数据，你不必考虑跨 web 服务的数据交互，我们已经帮你做了。
 7. 微服务组件 Nacos、Sentinel、Zipkin 提供源码方式启动部署，方便开发调试。
-8. 写一个别人有的，使用柔性事务解决，跨 web 服务的情况，入侵性非常小哦。
+8. 写一个别人有的，使用柔性事务入侵性小，跨 web 服务的情况，支持单个微服务独立数据库。
 9. 集成工作流，提供BPM引擎独立的服务，客户端只需调用API，无需加载复杂流程引擎。
 10. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud 2021.0.2 + Alibaba 2021.0.1
+* 分布式系统套件版本：Spring Cloud 2021.0.4 + Alibaba 2021.0.4
 * 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.1
 * 分布式统一配置中心：Spring Cloud Config / Nacos 2.1
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
@@ -43,23 +43,23 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * **服务注册和配置中心 Nacos 版本**（推荐） ：<http://127.0.0.1:8848/nacos/index.html>
 * 网关路由：jeesite-cloud-gateway ： <http://127.0.0.1:8980/js/a/login>
 * 核心模块（**统一授权认证服务、平台基础数据服务**）：
-    - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
-    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-core-client
+  - 核心主项目：jeesite-cloud-module-core ： <http://127.0.0.1:8981/js>
+  - 客户端项目（提供其它模块调用）：jeesite-cloud-module-core-client
 * 测试模块1（单表增删改查示例）：
-    - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
-    - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
+  - 模块1主项目：jeesite-cloud-module-test1 ： <http://127.0.0.1:8982/js>
+  - 模块1客户端项目（提供其它模块调用）：jeesite-cloud-module-test1-client
 * 测试模块2（树表增删改查示例）：
-    - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
-    - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
+  - 模块2主项目：jeesite-cloud-module-test2 ： <http://127.0.0.1:8983/js>
+  - 模块2客户端项目（提供其它模块调用）：jeesite-cloud-module-test2-client
 * 测试模块3（代码生成的模块和代码生成的增删改查，**该模块完全没有手写，全部为生成的**）：
-    - 模块3主项目：jeesite-cloud-module-test3 ： <http://127.0.0.1:8985/js>
-    - 模块3客户端项目（提供其它模块调用）：jeesite-cloud-module-test3-client
+  - 模块3主项目：jeesite-cloud-module-test3 ： <http://127.0.0.1:8985/js>
+  - 模块3客户端项目（提供其它模块调用）：jeesite-cloud-module-test3-client
 * 业务流程基础服务（流程引擎服务，客户端只需调用接口，无需加载引擎逻辑）：
-    - 流程主项目：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
-    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-bpm-client
-* 分布式事务 Seata 服务（推荐，1.5之后新增监控界面，端口7091）：
-    - 服务主项目：jeesite-cloud-module-seata ： <http://127.0.0.1:7091>
-    - 客户端项目（提供其它模块调用）：jeesite-cloud-module-seata-client
+  - 流程主项目：jeesite-cloud-module-bpm ： <http://127.0.0.1:8990>
+  - 客户端项目（提供其它模块调用）：jeesite-cloud-module-bpm-client
+* 分布式事务 Seata 服务（1.5之后新增监控界面，端口7091）：
+  - 服务主项目：jeesite-cloud-module-seata ： <http://127.0.0.1:7091>
+  - 客户端项目（提供其它模块调用）：jeesite-cloud-module-seata-client
 * 熔断限流：jeesite-cloud-sentinel ： <http://127.0.0.1:9311>
 * 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
 * 解释：主项目为服务提供者、客户端项目为服务消费者
@@ -69,7 +69,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 ### 初始化数据库
 
 JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，你可以 [下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite4/attach_files)
-     或者使用 [init-data.bat(sh)](http://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种数据库）。
+或者使用 [init-data.bat(sh)](http://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种数据库）。
 
 ### 安装 Redis
 
@@ -80,7 +80,7 @@ Redis 是一个缓存数据库，主要用来集中式管理共享会话和系�
 下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `Redis-x64-4.0.2.2.zip` 下载文件。
 
 解压  `Redis-x64-4.0.2.2.zip` 压缩包，运行 `service-install.bat` 安装 Windows 系统服务。
-d
+
 默认地址：127.0.0.1；默认端口：6379；默认密码：1234，可根据自己需要修改 conf 文件。
 
 ### 启动 Nacos 服务
@@ -96,8 +96,8 @@ JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src �
 
 **jar 方式：**
 
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.zip>
-2. 解压 `nacos-server-2.1.0.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.1.1/nacos-server-2.1.1.zip>
+2. 解压 `nacos-server-2.1.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **src 方式：**
 
@@ -111,15 +111,15 @@ JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src �
 3. 找到 Nacos 的配置文件（application.properties 或 application.yml）如下：
 
 ```yml
-spring.datasource.platform: mysql
+spring.datasource.platform=mysql
 
 ### Count of DB:
-db.num: 1
+db.num=1
 
 ### Connect URL of DB:
-db.url.0: jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
-db.user: root
-db.password: 123456
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
+db.user=root
+db.password=123456
 
 # 如果是 application.properties 文件，将 key 后的冒号换为等号即可。
 ```
@@ -156,13 +156,13 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 
 * 在每个微服务中可以找的 `config/bootstrap.yml` 配置服务注册和配置中心地址。
 * 按顺序运行以下启动类的main方法：（因为服务直接有依赖，请启动完成一个再启下一个）
-    - /jeesite-cloud-gateway/../GatewayApplication.java
-    - /jeesite-cloud-module-core/../CoreApplication.java
-    - /jeesite-cloud-module-test1/../Test1Application.java
-    - /jeesite-cloud-module-test2/../Test2Application.java
+  - /jeesite-cloud-gateway/../GatewayApplication.java
+  - /jeesite-cloud-module-core/../CoreApplication.java
+  - /jeesite-cloud-module-test1/../Test1Application.java
+  - /jeesite-cloud-module-test2/../Test2Application.java
 * 以上都启动成功后，浏览器访问网关项目地址即可：
-    - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
-    - 若访问报错，请再等待一会，可能服务未完全启动完成
+  - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
+  - 若访问报错，请再等待一会，可能服务未完全启动完成
 
 ![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
 
@@ -171,18 +171,18 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 ### 网关代理模块调用
 
 * 代理 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test1/testData/list>
-    - 控制器位置：/jeesite-cloud-module-test1/../web/TestData1Controller.java
+  - 控制器位置：/jeesite-cloud-module-test1/../web/TestData1Controller.java
 * 代理 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test2/testTree/list>
-    - 控制器位置：/jeesite-cloud-module-test2/../web/TestTree2Controller.java
+  - 控制器位置：/jeesite-cloud-module-test2/../web/TestTree2Controller.java
 
 ### 模块之间互相调用
 
 * test2 模块调用 test1 模块（单表）：<http://127.0.0.1:8980/js/a/test2/testData/list>
-    - 服务消费者位置：/jeesite-cloud-module-test2/../web/TestData2Controller.java
-    - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
+  - 服务消费者位置：/jeesite-cloud-module-test2/../web/TestData2Controller.java
+  - 服务提供者位置：/jeesite-cloud-module-test1/../service/TestDataService.java
 * test1 模块调用 test2 模块（树表）：<http://127.0.0.1:8980/js/a/test1/testTree/list>
-    - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
-    - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
+  - 服务消费者位置：/jeesite-cloud-module-test1/../web/TestTree1Controller.java
+  - 服务提供者位置：/jeesite-cloud-module-test2/../service/TestTreeService.java
 
 ## 新增微服务工程
 
@@ -271,6 +271,7 @@ spring:
 ## 微服务增删改查
 
 进入 “代码生成器” 菜单，同单机版使用方法，只需在生成代码时，选择 Cloud 版本的生成模板即可。
+
 
 ## 授权协议声明
 
