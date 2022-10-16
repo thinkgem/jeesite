@@ -4,8 +4,8 @@
 </p>
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">快速开发平台 - Spring Boot</h3>
 <p align="center">
- <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.1" src="https://img.shields.io/badge/JeeSite-V5.1-success.svg"></a>
- <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.5" src="https://img.shields.io/badge/SpringBoot-2.6-blue.svg"></a>
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.2" src="https://img.shields.io/badge/JeeSite-V5.2-success.svg"></a>
+ <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.7" src="https://img.shields.io/badge/SpringBoot-2.7-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
 </p>
@@ -41,7 +41,7 @@ JeeSite 功能全，知识点非常多，也非常少。因为她使用的都是
 
 JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，封装不是限制你去做一些事情，而是在便捷的同时，也具有较好的扩展性，在不具备一些功能的情况下，JeeSite 提供了扩展接口，提供了原生调用方法。
 
-大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重这一点，JeeSite 也一样具备强大的扩展性。
+大家都在用 Spring，也在学习 Spring 的优点，Spring 提供了较好的扩展性，可又有多少人去修改它的源代码呢，退一步说，大家去修改了 Spring 的源码，反而会对未来升级造成很大困扰，您说不是呢？这样的例子很多，所以不要纠结，我们非常注重这一点，JeeSite 也一样具备强大的扩展性。
 
 * 至今 JeeSite 平台架构已经非常稳定。
 * JeeSite 精益求精，用心打磨每一个细节。
@@ -51,11 +51,11 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.6、Spring Framework 5.3、Apache Shiro 1.9、J2Cache
+* 主框架：Spring Boot 2.7、Spring Framework 5.3、Apache Shiro 1.10、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
-* 视图层：Spring MVC 5.3、Beetl 3.3（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
+* 视图层：Spring MVC 5.3、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
-* 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
+* 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue3、Vue Vben Admin
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * Bootstrap 版 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
@@ -88,7 +88,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.1.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.2.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
