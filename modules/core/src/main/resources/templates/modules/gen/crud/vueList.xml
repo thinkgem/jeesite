@@ -253,7 +253,7 @@ if(table.isTreeEntity){
       dataIndex: '${c.attrName}',
       width: 230,
       align: 'left',
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     },
     <%
       firstColumn = false;
@@ -298,7 +298,7 @@ for(c in table.columnList){
       dictType: '${c.optionMap['dictType']}',
     <% } %>
     <% if(firstColumn){ %>
-      slots: { customRender: 'firstColumn' },
+      slot: 'firstColumn',
     <% } %>
     },
 <%
