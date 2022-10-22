@@ -18,7 +18,7 @@
     </template>
     <BasicForm @register="registerForm">
       <template #remarks="{ model, field }">
-        <WangEditor v-model="model[field]" :height="200" />
+        <WangEditor v-model:value="model[field]" :height="200" />
       </template>
       <template #testDataChildList>
         <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
