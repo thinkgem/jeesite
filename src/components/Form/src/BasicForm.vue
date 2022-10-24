@@ -241,7 +241,9 @@
         }
         const { validateTrigger } = unref(getBindValue);
         if (!validateTrigger || validateTrigger === 'change') {
-          validateFields([key]).catch((_) => {});
+          setTimeout(() => {
+            validateFields([key]).catch((_) => {});
+          });
         }
       }
 
