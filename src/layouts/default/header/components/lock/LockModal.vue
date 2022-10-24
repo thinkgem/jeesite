@@ -49,6 +49,7 @@
 
       const [registerForm, { validateFields, resetFields }] = useForm({
         showActionButtonGroup: false,
+        labelWidth: 90,
         schemas: [
           {
             field: 'password',
