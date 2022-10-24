@@ -125,6 +125,10 @@
         animation: loadingCircle 1s infinite linear;
       }
     }
+
+    svg.iconify--fa {
+      opacity: 0.7;
+    }
   }
 
   span.iconify {
