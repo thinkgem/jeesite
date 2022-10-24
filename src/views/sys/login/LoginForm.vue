@@ -22,6 +22,7 @@
         visibilityToggle
         v-model:value="formData.password"
         :placeholder="t('sys.login.password')"
+        autocomplete="false"
       />
     </FormItem>
     <FormItem v-if="isValidCodeLogin" name="validCode" class="enter-x valid-code">
