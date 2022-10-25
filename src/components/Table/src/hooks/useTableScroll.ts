@@ -126,10 +126,17 @@ export function useTableScroll(
     if (!isBoolean(pagination)) {
       if (!footerEl) {
         footerEl = tableEl.querySelector('.ant-table-footer') as HTMLElement;
-      } else {
+      }
+      if (footerEl) {
         const offsetHeight = footerEl.offsetHeight;
         footerHeight += offsetHeight || 0;
       }
+    }
+
+    const summaryEl = tableEl.querySelector('.ant-table-summary') as HTMLElement;
+    if (summaryEl) {
+      const offsetHeight = summaryEl.offsetHeight;
+      footerHeight += offsetHeight || 0;
     }
 
     let headerHeight = 0;
