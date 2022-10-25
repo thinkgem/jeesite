@@ -196,8 +196,9 @@
 
       function setCheckedKeys(keys: Keys) {
         if (!state.checkStrictly && keys && keys.length > 0) {
-          const parentKeys = getEnabledKeys(undefined, true);
-          state.checkedKeys = intersection(keys, parentKeys);
+          const childrenKeys = getEnabledKeys(undefined, true);
+          state.checkedKeys = intersection(keys, childrenKeys);
+          state.halfCheckedKeys = difference(keys, childrenKeys);
         } else {
           state.checkedKeys = keys || [];
         }
@@ -206,7 +207,7 @@
       function getCheckedKeys() {
         let checkedKeys: Keys;
         if (isArray(state.checkedKeys)) {
-          checkedKeys = [...state.checkedKeys, ...state.halfCheckedKeys];
+          checkedKeys = [...state.halfCheckedKeys, ...state.checkedKeys];
         } else if (state.checkedKeys.checked) {
           checkedKeys = state.checkedKeys.checked;
         } else {
