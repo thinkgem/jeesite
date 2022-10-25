@@ -26,6 +26,9 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { isNumber } from '/@/utils/is';
   import { useLocale } from '/@/locales/useLocale';
+  import { useGlobSetting } from '/@/hooks/setting';
+  import { uploadFile } from '/@/api/sys/upload';
+  import { buildUUID } from '/@/utils/uuid';
 
   const tinymceProps = {
     value: {
@@ -41,7 +44,17 @@
       required: false,
       default: 'auto',
     },
+    bizKey: {
+      type: [String, Number] as PropType<string | number>,
+      default: '',
+    },
+    bizType: {
+      type: String as PropType<string>,
+      default: '',
+    },
   };
+
+  type InsertFnType = (url: string, alt: string, href?: string) => void;
 
   export default defineComponent({
     name: 'WangEditor',
@@ -51,7 +64,7 @@
     emits: ['update:value', 'change'],
     setup(props, { emit, attrs }) {
       const { prefixCls } = useDesign('editor-container');
-
+      const { ctxAdminPath } = useGlobSetting();
       const containerWidth = computed(() => {
         const width = props.width;
         if (isNumber(width)) {
@@ -73,8 +86,24 @@
         placeholder: '请输入...',
         MENU_CONF: {
           uploadImage: {
-            fieldName: 'your-fileName',
-            base64LimitSize: 10 * 1024 * 1024, // 10M 以下插入 base64
+            onBeforeUpload: (file: File) => file,
+            customUpload: async (file: File, insertFn: InsertFnType) => {
+              const { data } = await uploadFile(
+                {
+                  bizKey: props.bizKey,
+                  bizType: props.bizType + '_editor_image',
+                  uploadType: 'image',
+                  fileMd5: buildUUID(), // 专业版支持 MD5 秒传
+                  fileName: file.name,
+                  file,
+                },
+                () => {},
+              );
+              if (data.result == 'true' && data.fileUpload) {
+                const url = ctxAdminPath + '/file/download/' + data.fileUpload.id;
+                insertFn(url, data.fileUpload.fileName);
+              }
+            },
           },
           uploadVideo: {},
         },
