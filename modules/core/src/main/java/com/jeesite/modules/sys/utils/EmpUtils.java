@@ -4,21 +4,17 @@
  */
 package com.jeesite.modules.sys.utils;
 
-import java.util.List;
-import java.util.Set;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
-import com.jeesite.modules.sys.entity.Company;
-import com.jeesite.modules.sys.entity.Employee;
-import com.jeesite.modules.sys.entity.EmployeeOffice;
-import com.jeesite.modules.sys.entity.Office;
-import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.entity.*;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 员工部门工具类
@@ -55,7 +51,11 @@ public class EmpUtils {
 	 */
 	public static Employee get(User user){
 		if (user != null && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
-			return user.getRefObj();
+			Employee employee = user.getRefObj();
+			if (employee == null) {
+				employee = Static.employeeService.get(user.getRefCode());
+			}
+			return employee;
 		}
 		return null;
 	}
