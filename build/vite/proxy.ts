@@ -2,6 +2,7 @@
  * Used to parse the .env.development proxy configuration
  */
 import type { ProxyOptions } from 'vite';
+import { IncomingMessage } from 'node:http';
 
 type ProxyItem = [string, string, boolean];
 
@@ -25,9 +26,14 @@ export function createProxy(list: ProxyList = []) {
       target: target,
       changeOrigin,
       ws: true,
-      rewrite: (path) => path.replace(new RegExp(`^${prefix}`), ''),
       // https is require secure=false
       ...(isHttps ? { secure: false } : {}),
+      rewrite: (path) => path.replace(new RegExp(`^${prefix}`), ''),
+      bypass: (req: IncomingMessage) => {
+        if (req.method === 'GET') {
+          req['url'] = req['originalUrl'];
+        }
+      },
     };
   }
   return ret;
