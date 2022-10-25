@@ -38,9 +38,10 @@ public class SsoController extends BaseController{
 
 //	public static void main(String[] args) {
 //		String username = "system";
-// 		String secretKey = Global.getConfig("shiro.sso.secretKey");
+// 		String secretKey = "test"; // Global.getConfig("shiro.sso.secretKey");
 // 		String token = Md5Utils.md5(secretKey + username + DateUtils.getDate("yyyyMMdd"));
-//		System.out.println("http://127.0.0.1:3100/js/sso/" + username + "/" + token + "?url=../sys/office/index");
+//		System.out.println("http://192.168.56.1:8980/js/sso/" + username + "/" + token + "?url=/a/sys/office/index&relogin=true");
+//		System.out.println("http://192.168.56.1:3100/js/sso/" + username + "/" + token + "?url=../sys/office/index&relogin=true");
 //	}
 
 	/**
