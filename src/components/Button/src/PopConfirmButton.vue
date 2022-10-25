@@ -32,6 +32,7 @@
           {
             okText: t('common.okText'),
             cancelText: t('common.cancelText'),
+            placement: 'left',
           },
           { ...props, ...unref(attrs) },
         );
