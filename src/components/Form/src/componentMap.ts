@@ -21,6 +21,7 @@ import {
   Divider,
 } from 'ant-design-vue';
 
+import JeeSiteText from './components/JeeSiteText.vue';
 import JeeSiteSelect from './components/JeeSiteSelect.vue';
 import JeeSiteTreeSelect from './components/JeeSiteTreeSelect.vue';
 import JeeSiteRadioGroup from './components/JeeSiteRadioGroup.vue';
@@ -44,6 +45,7 @@ componentMap.set('InputTextArea', Input.TextArea);
 componentMap.set('InputNumber', InputNumber);
 componentMap.set('AutoComplete', AutoComplete);
 
+componentMap.set('Text', JeeSiteText);
 componentMap.set('Select', JeeSiteSelect); //Select);
 componentMap.set('TreeSelect', JeeSiteTreeSelect); //TreeSelect);
 componentMap.set('Switch', Switch);
