@@ -186,6 +186,7 @@
       function getExpandedKeys() {
         return state.expandedKeys;
       }
+
       function setSelectedKeys(keys: Keys) {
         state.selectedKeys = keys;
       }
@@ -528,7 +529,9 @@
 
           // item.isLeaf = !(item.children && item.children.length > 0);
           item.isLeaf = attrs.loadData
-            ? item.isLeaf
+            ? item.isParent != undefined
+              ? !item.isParent
+              : item.isLeaf != undefined
               ? item.isLeaf
               : false
             : !(item.children && item.children.length > 0);
