@@ -70,7 +70,7 @@ spring:
         server-addr: 127.0.0.1:8848
         file-extension: yml
         group: jeesite-cloud-50
-        ext-config:
+        extension-configs:
           - data-id: application.yml
             group: jeesite-cloud-50
 
