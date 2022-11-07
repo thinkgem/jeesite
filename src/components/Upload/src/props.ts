@@ -5,6 +5,10 @@ import { FileUpload, uploadFile } from '/@/api/sys/upload';
 type UploadType = 'image' | 'media' | 'file' | 'all';
 
 export const basicProps = {
+  uploadText: {
+    type: String as PropType<string>,
+    default: '',
+  },
   helpText: {
     type: String as PropType<string>,
     default: '',
@@ -69,6 +73,10 @@ export const uploadContainerProps = {
     default: {},
   },
   ...basicProps,
+  showPreview: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
   showPreviewNumber: {
     type: Boolean as PropType<boolean>,
     default: true,

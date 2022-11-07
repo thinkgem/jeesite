@@ -7,9 +7,9 @@
         @click="openUploadModal"
         preIcon="carbon:cloud-upload"
       >
-        {{ t('component.upload.upload') }}
+        {{ uploadText || t('component.upload.upload') }}
       </a-button>
-      <Tooltip placement="bottom" v-if="showPreview">
+      <Tooltip placement="bottom" v-if="getShowPreview">
         <template #title>
           {{ t('component.upload.uploaded') }}
           <template v-if="fileList.length">
@@ -56,19 +56,25 @@
     name: 'BasicUpload',
     components: { UploadModal, Space, UploadPreviewModal, Icon, Tooltip },
     props: uploadContainerProps,
-    emits: ['change', 'delete', 'update:value'],
+    emits: ['change', 'delete', 'update:value', 'click'],
 
     setup(props, { emit, attrs }) {
       const { t } = useI18n();
-      const [registerUploadModal, { openModal: openUploadModal }] = useModal();
+      const [registerUploadModal, { openModal }] = useModal();
       const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
+
+      function openUploadModal() {
+        openModal();
+        emit('click');
+      }
 
       const dataMap = ref<Object>({});
       const fileList = ref<FileUpload[]>([]);
       const fileListDel = ref<FileUpload[]>([]);
 
-      const showPreview = computed(() => {
-        const { emptyHidePreview } = props;
+      const getShowPreview = computed(() => {
+        const { showPreview, emptyHidePreview } = props;
+        if (!showPreview) return false;
         if (!emptyHidePreview) return true;
         return emptyHidePreview ? fileList.value.length > 0 : true;
       });
@@ -80,7 +86,7 @@
 
       watch(
         () => props.value,
-        (value = '') => {
+        (value) => {
           dataMap.value = value;
         },
         { immediate: true },
@@ -96,6 +102,7 @@
 
       function loadFileList() {
         fileList.value = [];
+        fileListDel.value = [];
         if (props.bizKey != '') {
           uploadFileList({
             bizKey: props.bizKey,
@@ -140,7 +147,7 @@
         registerPreviewModal,
         openPreviewModal,
         fileList,
-        showPreview,
+        getShowPreview,
         bindValue,
         handleDelete,
         t,
