@@ -111,7 +111,7 @@
 <script lang="ts" setup>
   import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
 
-  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
+  import { Checkbox, Form, Input, Row, Col, Button, Divider, message } from 'ant-design-vue';
   import {
     GithubFilled,
     WechatFilled,
@@ -177,6 +177,7 @@
   }
 
   onMounted(async () => {
+    setTimeout(() => message.destroy());
     const res = await userInfoApi('none');
     refreshValidCodeStatus(res);
   });

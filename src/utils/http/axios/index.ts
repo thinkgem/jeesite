@@ -45,7 +45,7 @@ const transform: AxiosTransform = {
     }
     // 错误的时候返回
 
-    const { data } = res;
+    const { data, config } = res;
     // if (!data) { // boolean false return error
     //   // return '[HTTP] Request has no return value';
     //   throw new Error(t('sys.api.apiRequestFailed'));
@@ -69,13 +69,17 @@ const transform: AxiosTransform = {
         if (!isShowMessage) {
           isShowMessage = true;
           // userStore.resetState();
-          showMessage(data.message);
-          let path = PageEnum.BASE_LOGIN as string;
           const currentRoute = router.currentRoute.value;
-          if (currentRoute.path !== '/' && currentRoute.path !== PageEnum.BASE_LOGIN) {
-            path = path + '?redirect=' + currentRoute.path;
+          if (currentRoute.path !== '/') {
+            showMessage(data.message, undefined, 180);
           }
-          router.replace(path);
+          if (config.url?.indexOf('__notUpdateSession=true') == -1) {
+            let path = PageEnum.BASE_LOGIN as string;
+            if (currentRoute.path !== '/' && currentRoute.path !== PageEnum.BASE_LOGIN) {
+              path = path + '?redirect=' + currentRoute.path;
+            }
+            router.replace(path);
+          }
           setTimeout(() => (isShowMessage = false), 1000);
         }
         throw new Error(t('sys.api.timeoutMessage'));
