@@ -11,20 +11,24 @@
           <Icon
             :icon="action.icon"
             :class="{ 'mr-1': !!action.label }"
-            :title="action.title"
+            :title="action.iconTitle"
             v-if="action.icon"
           />
-          <template v-if="action.label">{{ action.label }}</template>
+          <template v-if="action.label">
+            <span :title="action.iconTitle">{{ action.label }}</span>
+          </template>
         </PopConfirmButton>
       </Tooltip>
       <PopConfirmButton v-else v-bind="action">
         <Icon
           :icon="action.icon"
           :class="{ 'mr-1': !!action.label }"
-          :title="action.title"
+          :title="action.iconTitle"
           v-if="action.icon"
         />
-        <template v-if="action.label">{{ action.label }}</template>
+        <template v-if="action.label">
+          <span :title="action.iconTitle">{{ action.label }}</span>
+        </template>
       </PopConfirmButton>
       <Divider
         type="vertical"
@@ -112,6 +116,7 @@
               size: 'small',
               ...action,
               ...(popConfirm || {}),
+              iconTitle: action.title,
               onConfirm: popConfirm?.confirm,
               onCancel: popConfirm?.cancel,
               enable: !!popConfirm,
@@ -128,6 +133,7 @@
           return {
             ...action,
             ...popConfirm,
+            iconTitle: action.title,
             onConfirm: popConfirm?.confirm,
             onCancel: popConfirm?.cancel,
             text: label,

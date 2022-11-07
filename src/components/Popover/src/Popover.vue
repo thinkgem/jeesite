@@ -22,7 +22,7 @@
             v-bind="getAttr(item.event)"
             @click="handleClickMenu(item)"
             :disabled="item.disabled"
-            :title="item.title"
+            :title="item.iconTitle"
           >
             <Popconfirm
               v-if="popconfirm && item.popConfirm"
