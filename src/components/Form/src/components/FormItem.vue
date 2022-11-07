@@ -270,7 +270,7 @@
         const { autoSetPlaceHolder, size } = props.formProps;
         const propsData: Recordable = {
           // allowClear: true, // 默认不显示清除按钮
-          getPopupContainer: (trigger: Element) => trigger.parentNode,
+          getPopupContainer: () => document.body, //(trigger: Element) => trigger.parentNode,
           size,
           ...unref(getComponentsProps),
           disabled: unref(getDisable),
