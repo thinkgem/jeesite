@@ -42,7 +42,7 @@ export const basicProps = {
   },
   autoSetPlaceHolder: propTypes.bool.def(true),
   // 在INPUT组件上单击回车时，是否自动提交
-  autoSubmitOnEnter: propTypes.bool.def(false),
+  autoSubmitOnEnter: propTypes.bool.def(true),
   submitOnReset: propTypes.bool,
   size: propTypes.oneOf(['default', 'small', 'large']).def('default'),
   // 禁用表单
