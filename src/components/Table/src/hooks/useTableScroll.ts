@@ -54,6 +54,7 @@ export function useTableScroll(
   let paginationEl: HTMLElement | null;
   let footerEl: HTMLElement | null;
   let bodyEl: HTMLElement | null;
+  let emptyDataEl: HTMLElement | null;
 
   async function calcTableHeight() {
     const {
@@ -96,12 +97,16 @@ export function useTableScroll(
 
     bodyEl!.style.height = 'unset';
 
-    if (!unref(getCanResize) || !unref(tableData) || tableData.length === 0) return;
+    // if (!unref(getCanResize) || !unref(tableData) || tableData.length === 0) return;
+    if (!unref(getCanResize) || !unref(tableData)) return;
+    if (tableData.length === 0) {
+      emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed');
+    }
 
     await nextTick();
     // Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
 
-    const headEl = tableEl.querySelector('.ant-table-thead ');
+    const headEl = tableEl.querySelector('.ant-table-thead');
 
     if (!headEl) return;
 
@@ -165,7 +170,6 @@ export function useTableScroll(
       const headerCellHeight =
         (tableEl.querySelector('.ant-table-title') as HTMLElement)?.offsetHeight ?? 0;
 
-      console.log(wrapHeight - formHeight - headerCellHeight - tablePadding - paginationMargin);
       bottomIncludeBody =
         wrapHeight - formHeight - headerCellHeight - tablePadding - paginationMargin;
     } else {
@@ -189,6 +193,7 @@ export function useTableScroll(
     setHeight(height);
 
     bodyEl!.style.height = `${height}px`;
+    emptyDataEl!.style.height = `${height - 1}px`;
   }
   useWindowSizeFn(calcTableHeight, 280);
   onMountedOrActivated(() => {
