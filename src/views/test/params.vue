@@ -23,6 +23,8 @@
   const { currentRoute, push } = useRouter();
   const value = ref<string>('');
 
+  // 注意：在 Vue Router 4.1.4 中 params 被移除，请使用 query 代替
+  // https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
   const params = computed(() => {
     return unref(currentRoute).params;
   });
