@@ -2,12 +2,15 @@ import type { RouteLocationRaw, Router } from 'vue-router';
 
 import { PageEnum } from '/@/enums/pageEnum';
 import { isString } from '/@/utils/is';
-import { unref } from 'vue';
+import { computed, unref } from 'vue';
 
 import { useRouter } from 'vue-router';
 import { REDIRECT_NAME } from '/@/router/constant';
 
-export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & { path: PageEnum };
+export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & {
+  path: PageEnum | string;
+  query?: Object;
+};
 
 function handleError(e: Error) {
   console.error(e);
@@ -58,3 +61,14 @@ export const useRedo = (_router?: Router) => {
   }
   return redo;
 };
+
+export function useQuery(_router?: Router) {
+  let router;
+  if (!_router) {
+    router = useRouter();
+  }
+  const query = computed(() => {
+    return unref(router.currentRoute).query;
+  });
+  return query;
+}
