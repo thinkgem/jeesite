@@ -1,6 +1,6 @@
 ## 引言
 
-JeeSite Cloud 具备 [JeeSite 5.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 5.x 的开发便利性巧妙地简化了分布式系统开发。
+JeeSite Cloud 具备 [JeeSite 5.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x 的开发便利性巧妙地简化了分布式系统开发。
 
 JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
 
@@ -108,9 +108,9 @@ JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src �
 
 1. 默认情况 Nacos 采用 Derby 数据库，你可以将数据库切换到 MySQL 下。
 2. 找到 /nacos/src/main/resources/config/nacos-mysql.sql 文件导入数据表。
-3. 找到 Nacos 的配置文件（application.properties 或 application.yml）如下：
+3. 找到 Nacos 的配置文件 application.properties 如下：
 
-```yml
+```properties
 spring.datasource.platform=mysql
 
 ### Count of DB:
@@ -271,7 +271,6 @@ spring:
 ## 微服务增删改查
 
 进入 “代码生成器” 菜单，同单机版使用方法，只需在生成代码时，选择 Cloud 版本的生成模板即可。
-
 
 ## 授权协议声明
 
