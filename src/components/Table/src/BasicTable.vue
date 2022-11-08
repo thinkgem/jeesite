@@ -197,6 +197,7 @@
           getFieldsValue: formActions.getFieldsValue,
           clearSelectedRowKeys,
           collapseAll,
+          expandCollapse,
         },
         emit,
       );

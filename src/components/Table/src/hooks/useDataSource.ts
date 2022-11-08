@@ -32,6 +32,7 @@ interface ActionType {
   clearSelectedRowKeys: () => void;
   tableData: Ref<Recordable[]>;
   collapseAll: () => void;
+  expandCollapse: (record: Recordable, onlyLoadData: boolean, forceLoad: boolean) => void;
 }
 
 interface SearchState {
@@ -48,6 +49,7 @@ export function useDataSource(
     clearSelectedRowKeys,
     tableData,
     collapseAll,
+    expandCollapse,
   }: ActionType,
   emit: EmitType,
 ) {
@@ -377,7 +379,12 @@ export function useDataSource(
   }
 
   async function reload(opt?: FetchParams) {
-    await fetch(opt);
+    if (opt?.parentCode && opt?.parentCode != '0') {
+      const row = findTableDataRecord(opt.parentCode);
+      await expandCollapse(row, false, true);
+    } else {
+      await fetch(opt);
+    }
   }
 
   onMounted(() => {
