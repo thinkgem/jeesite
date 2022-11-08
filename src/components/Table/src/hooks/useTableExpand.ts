@@ -134,6 +134,9 @@ export function useTableExpand(
           break;
         }
       }
+      if (forceLoad) {
+        expanded = true;
+      }
       if (expanded) {
         expandedRowKeys.value.push(record[unref(getRowKey) as string]);
       }
