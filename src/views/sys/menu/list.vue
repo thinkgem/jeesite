@@ -27,7 +27,7 @@
           @click="expandCollapse(record)"
           class="text-base w-5 mr-2"
         />
-        <a @click="handleForm({ menuCode: record.menuCode })" :title="record.menuNameRaw">
+        <a @click="handleForm(record)" :title="record.menuNameRaw">
           {{ record.menuNameRaw }}
         </a>
       </template>
@@ -148,7 +148,7 @@
       {
         icon: 'clarity:note-edit-line',
         title: t('编辑菜单'),
-        onClick: handleForm.bind(this, { menuCode: record.menuCode }),
+        onClick: handleForm.bind(this, record),
         auth: 'sys:menu:edit',
       },
       {
@@ -157,7 +157,7 @@
         title: t('停用菜单'),
         popConfirm: {
           title: t('是否确认停用菜单'),
-          confirm: handleDisable.bind(this, { menuCode: record.menuCode }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: 'sys:menu:edit',
         ifShow: () => record.status === '0',
@@ -168,7 +168,7 @@
         title: t('启用菜单'),
         popConfirm: {
           title: t('是否确认启用菜单'),
-          confirm: handleEnable.bind(this, { menuCode: record.menuCode }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: 'sys:menu:edit',
         ifShow: () => record.status === '2',
@@ -179,7 +179,7 @@
         title: t('删除菜单'),
         popConfirm: {
           title: t('是否确认删除菜单'),
-          confirm: handleDelete.bind(this, { menuCode: record.menuCode }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: 'sys:menu:edit',
       },
@@ -224,32 +224,37 @@
   }
 
   function handleForm(record: Recordable) {
-    record.sysCode = props.sysCode;
-    openDrawer(true, record);
+    const data = {
+      menuCode: record.menuCode,
+      parentCode: record.parentCode,
+      parentName: record.parentName,
+      sysCode: props.sysCode,
+    };
+    openDrawer(true, data);
   }
 
   async function handleDisable(record: Recordable) {
-    const res = await menuDisable(record);
+    const data = { menuCode: record.menuCode };
+    const res = await menuDisable(data);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await menuEnable(record);
+    const data = { menuCode: record.menuCode };
+    const res = await menuEnable(data);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const res = await menuDelete(record);
+    const data = { menuCode: record.menuCode };
+    const res = await menuDelete(data);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   function handleSuccess(record: Recordable) {
-    if (record.parentCode) {
-      // showMessage('刷新节点：' + record.parentCode);
-    }
-    reload();
+    reload({ parentCode: record.parentCode });
   }
 </script>
