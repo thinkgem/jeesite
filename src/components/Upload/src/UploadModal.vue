@@ -137,7 +137,7 @@
           bizKey,
           bizType,
           uploadType,
-        };
+        } as FileItem;
         // 生成图片缩略图
         if (checkImgType(file)) {
           getBase64WithFile(file).then(({ result: fileUrl }) => {
