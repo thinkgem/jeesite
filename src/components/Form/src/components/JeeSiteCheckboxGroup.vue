@@ -73,14 +73,14 @@
   });
 </script>
 <style lang="less">
-  .ant-radio-wrapper {
+  .ant-checkbox-wrapper {
     margin-right: 0;
     margin-left: 4px;
   }
 
-  .ant-radio-checked {
-    .ant-radio-inner {
-      opacity: 0.8;
+  .ant-checkbox-checked {
+    .ant-checkbox-inner {
+      opacity: 0.9;
     }
   }
 </style>
