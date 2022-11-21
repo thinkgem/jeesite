@@ -98,7 +98,7 @@ export const basicProps = {
 
   wrapperCol: Object as PropType<Partial<ColEx>>,
 
-  colon: propTypes.bool,
+  colon: propTypes.bool.def(true),
 
   labelAlign: propTypes.string,
 

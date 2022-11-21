@@ -14,6 +14,7 @@ export function useTableForm(
     const { formConfig } = unref(propsRef);
     const { submitButtonOptions } = formConfig || {};
     return {
+      colon: false,
       compact: true,
       enctype: 'form-data',
       showActionButtonGroup: true,

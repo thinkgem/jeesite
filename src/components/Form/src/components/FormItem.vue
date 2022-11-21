@@ -321,14 +321,15 @@
         return <Comp {...compAttr}>{compSlot}</Comp>;
       }
 
-      function renderLabelHelpMessage() {
+      function renderLabelHelpMessage(colon = false) {
         const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
+        const colonText = props.formProps.colon && label && label != '　' ? '：' : '';
         const renderLabel = subLabel ? (
           <span>
-            {label} <span class="text-secondary">{subLabel}</span>
+            {label} <span class="text-secondary">{subLabel}</span> {colonText}
           </span>
         ) : (
-          label
+          label + colonText
         );
         const getHelpMessage = isFunction(helpMessage)
           ? helpMessage(unref(getValues))
@@ -339,7 +340,7 @@
         return (
           <span>
             {renderLabel}
-            <BasicHelp placement="top" class="mx-1" text={getHelpMessage} {...helpComponentProps} />
+            <BasicHelp placement="top" text={getHelpMessage} {...helpComponentProps} />
           </span>
         );
       }
@@ -348,7 +349,6 @@
         const { itemProps, slot, render, label, field, fieldLabel, suffix, component } =
           props.schema;
         const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
-        const { colon } = props.formProps;
 
         if (component === 'None') {
           return ''; // 占位符，什么也不输出
@@ -374,10 +374,10 @@
           return (
             <Form.Item
               name={field}
-              colon={colon}
+              colon={false}
               class={{ 'suffix-item': showSuffix, 'no-label': isEmpty(label) }}
               {...(itemProps as Recordable)}
-              label={renderLabelHelpMessage()}
+              label={renderLabelHelpMessage(true)}
               rules={handleRules()}
               labelCol={labelCol}
               wrapperCol={wrapperCol}
