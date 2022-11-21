@@ -10,7 +10,7 @@ import {
   mixLighten,
   mixDarken,
   tinycolor,
-} from 'vite-plugin-theme';
+} from 'vite-plugin-theme-vite3';
 import { getThemeColors, generateColors } from '../../config/themeConfig';
 import { generateModifyVars } from '../../generate/generateModifyVars';
 

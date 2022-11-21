@@ -1,4 +1,4 @@
-import { darkCssIsReady, loadDarkThemeCss } from 'vite-plugin-theme/es/client';
+import { darkCssIsReady, loadDarkThemeCss } from 'vite-plugin-theme-vite3/es/client';
 import { addClass, hasClass, removeClass } from '/@/utils/domUtils';
 
 export async function updateDarkTheme(mode: string | null = 'light') {
