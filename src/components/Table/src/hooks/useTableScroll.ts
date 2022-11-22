@@ -193,7 +193,9 @@ export function useTableScroll(
     setHeight(height);
 
     bodyEl!.style.height = `${height}px`;
-    emptyDataEl!.style.height = `${height - 1}px`;
+    if (emptyDataEl && emptyDataEl.style) {
+      emptyDataEl.style.height = `${height - 1}px`;
+    }
   }
   useWindowSizeFn(calcTableHeight, 280);
   onMountedOrActivated(() => {
