@@ -7,23 +7,6 @@
 
 spring:
   cloud:
-  
-    # 流量防卫兵
-    sentinel:
-      transport:
-        port: 9311
-        dashboard: 127.0.0.1:9311
-      # 更改 csp 日志位置
-      log:
-        dir: ${user.home}/logs/csp
-        switch-pid: true
-      # 流量防卫兵 Nacos 数据源
-      datasource:
-        ds2.nacos:
-          server-addr: 127.0.0.1:8848
-          data-id: ${spring.application.name}-sentinel
-          group-id: jeesite-cloud-yml
-          rule-type: flow
 
     # 网关路由配置
     gateway:
