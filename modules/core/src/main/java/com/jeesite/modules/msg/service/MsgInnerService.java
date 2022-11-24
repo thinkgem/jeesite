@@ -92,7 +92,8 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 			}
 		}
 		msgInner.setSendDate(new Date());
-		msgInner.setIsAttac(StringUtils.isNotBlank(ServletUtils.getParameter("msgInner_file"))?Global.YES:Global.NO);
+		msgInner.setIsAttac(msgInner.getDataMap() != null && StringUtils.isNotBlank((String)msgInner.getDataMap().get("msgInner_file"))
+				|| StringUtils.isNotBlank(ServletUtils.getParameter("msgInner_file")) ? Global.YES : Global.NO);
 		super.save(msgInner);
 		// 保存上传附件
 		FileUploadUtils.saveFileUpload(msgInner, msgInner.getId(), "msgInner_file");
