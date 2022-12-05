@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { BasicModel, Page } from '../model/baseModel';
+import { TreeDataModel, BasicModel, Page } from '../model/baseModel';
 
 const { adminPath } = useGlobSetting();
 
@@ -37,3 +37,6 @@ export const postSave = (params?: any, data?: Post | any) =>
 
 export const postDelete = (params?: Post | any) =>
   defHttp.get<Post>({ url: adminPath + '/sys/post/delete', params });
+
+export const postTreeData = (params?: any) =>
+  defHttp.get<TreeDataModel[]>({ url: adminPath + '/sys/post/treeData', params });
