@@ -66,6 +66,8 @@
     },
     setup(props) {
       const dictList = ref<any[]>([]);
+      const { initDict } = useDict();
+      initDict([props.dictType]);
 
       watch(
         () => props.dictValue,
