@@ -83,7 +83,7 @@ function handleIndexColumn(
 
   if (!pushIndexColumns) return;
 
-  const isFixedLeft = columns.some((item) => item.fixed === 'left');
+  // const isFixedLeft = columns.some((item) => item.fixed === 'left');
 
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,
@@ -98,11 +98,12 @@ function handleIndexColumn(
       const { current = 1, pageSize = PAGE_SIZE } = getPagination;
       return ((current < 1 ? 1 : current) - 1) * pageSize + index + 1;
     },
-    ...(isFixedLeft
-      ? {
-          fixed: 'left',
-        }
-      : {}),
+    // ...(isFixedLeft
+    //   ? {
+    //       fixed: 'left',
+    //     }
+    //   : {}),
+    ...{ fixed: 'left' },
     ...indexColumnProps,
   });
 }
