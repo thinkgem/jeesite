@@ -6,15 +6,23 @@
 -->
 <template>
   <div class="jeesite-text">
-    {{ labelValue || value }}
+    <DictLabel v-if="dictType" :dictType="dictType" :dictValue="value" />
+    <!-- eslint-disable vue/no-v-html -->
+    <div v-else-if="isHtml" v-html="labelValue || value"></div>
+    <div v-else>
+      {{ labelValue || value }}
+    </div>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { propTypes } from '/@/utils/propTypes';
+  import { DictLabel } from '/@/components/Dict';
 
   export default defineComponent({
     name: 'JeeSiteText',
     // inheritAttrs: false,
+    components: { DictLabel },
     props: {
       value: {
         type: Object as PropType<object>,
@@ -22,6 +30,8 @@
       labelValue: {
         type: Object as PropType<object>,
       },
+      dictType: propTypes.string,
+      isHtml: propTypes.bool,
     },
     setup() {
       return {};
