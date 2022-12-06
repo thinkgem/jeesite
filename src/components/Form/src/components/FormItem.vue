@@ -323,7 +323,8 @@
 
       function renderLabelHelpMessage(colon = false) {
         const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
-        const colonText = colon && props.formProps.colon && label && label != '　' ? '：' : '';
+        if (!label) return;
+        const colonText = colon && props.formProps.colon && label != '　' ? '：' : '';
         const renderLabel = subLabel ? (
           <span>
             {label} <span class="text-secondary">{subLabel}</span> {colonText}
