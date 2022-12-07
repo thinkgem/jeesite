@@ -65,9 +65,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : [],
     },
     build: {
-      // target: 'es2015',
       // 兼容 Chrome 内核比较低的浏览器，如 360、QQ 浏览器
-      target: 'chrome80',
       cssTarget: 'chrome80',
       outDir: OUTPUT_DIR,
       // minify: 'terser',
