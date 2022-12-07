@@ -6,8 +6,8 @@
      <parent>
          <groupId>com.jeesite</groupId>
 		 <artifactId>jeesite-parent</artifactId>
-		 <version>5.2.0-SNAPSHOT</version>
-		 <relativePath>../../../jeesite/jeesite/parent/pom.xml</relativePath>
+		 <version>5.2.1-SNAPSHOT</version>
+		 <relativePath>../../jeesite/parent/pom.xml</relativePath>
      </parent>
 
     <artifactId>jeesite-cloud-nacos</artifactId>
