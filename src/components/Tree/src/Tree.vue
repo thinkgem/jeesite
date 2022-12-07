@@ -660,7 +660,7 @@
           }
           &:hover::before,
           &::before {
-            background-color: transparent;
+            background-color: transparent !important;
           }
         }
       }
