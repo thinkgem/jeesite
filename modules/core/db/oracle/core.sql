@@ -348,7 +348,14 @@ CREATE TABLE js_sys_job
 	job_group varchar2(64) NOT NULL,
 	description nvarchar2(100) NOT NULL,
 	invoke_target nvarchar2(1000) NOT NULL,
+	job_type nvarchar2(10) DEFAULT 'cron' NOT NULL,
+	job_priority number(10),
+	start_time timestamp,
+	start_delay number(19),
+	repeat_interval number(19),
+	repeat_count number(10),
 	cron_expression varchar2(255) NOT NULL,
+	rule_expression varchar2(255),
 	misfire_instruction number(1) NOT NULL,
 	concurrent char(1) NOT NULL,
 	instance_name varchar2(64) DEFAULT 'JeeSiteScheduler' NOT NULL,
@@ -1233,7 +1240,14 @@ COMMENT ON COLUMN js_sys_job.job_name IS '任务名称';
 COMMENT ON COLUMN js_sys_job.job_group IS '任务组名';
 COMMENT ON COLUMN js_sys_job.description IS '任务描述';
 COMMENT ON COLUMN js_sys_job.invoke_target IS '调用目标字符串';
+COMMENT ON COLUMN js_sys_job.job_type IS '任务触发类型';
+COMMENT ON COLUMN js_sys_job.job_priority IS '触发器优先级';
+COMMENT ON COLUMN js_sys_job.start_time IS '触发器启动时间';
+COMMENT ON COLUMN js_sys_job.start_delay IS '触发器延迟启动时间';
+COMMENT ON COLUMN js_sys_job.repeat_interval IS '循环间隔时间（毫秒）';
+COMMENT ON COLUMN js_sys_job.repeat_count IS '循环次数（ -1 无期限）';
 COMMENT ON COLUMN js_sys_job.cron_expression IS 'Cron执行表达式';
+COMMENT ON COLUMN js_sys_job.rule_expression IS '自定义规则表达式';
 COMMENT ON COLUMN js_sys_job.misfire_instruction IS '计划执行错误策略';
 COMMENT ON COLUMN js_sys_job.concurrent IS '是否并发执行';
 COMMENT ON COLUMN js_sys_job.instance_name IS '集群的实例名字';
