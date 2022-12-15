@@ -46,7 +46,7 @@
             <DictLabel
               v-else-if="data.column.slot === 'dictLabelColumn'"
               :dictType="data.column.dictType"
-              :dictValue="data.record[data.column.dataIndex]"
+              :dictValue="getColumnValue(data)"
               :defaultValue="data.column.defaultValue"
             />
             <slot v-else-if="data.column.slot" :name="data.column.slot" v-bind="data || {}"></slot>
@@ -93,7 +93,7 @@
 
   import { omit } from 'lodash-es';
   import { basicProps } from './props';
-  import { isFunction } from '/@/utils/is';
+  import { isFunction, isArray } from '/@/utils/is';
   import { warn } from '/@/utils/log';
 
   export default defineComponent({
@@ -338,6 +338,16 @@
 
       function setProps(props: Partial<BasicTableProps>) {
         innerPropsRef.value = { ...unref(innerPropsRef), ...props };
+      }
+
+      function getColumnValue(data: any) {
+        const dataIndex = data.column.dataIndex;
+        if (isArray(dataIndex)) {
+          return dataIndex.reduce((pre, cur) => {
+            return pre[cur];
+          }, data.record);
+        }
+        return data.record[dataIndex];
       }
 
       const tableAction: TableActionType = {
