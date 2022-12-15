@@ -5,6 +5,7 @@ import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
 import { usePermission } from '/@/hooks/web/usePermission';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { useDict } from '/@/components/Dict';
 import { isObject, isArray, isBoolean, isFunction, isMap, isString } from '/@/utils/is';
 import { deepMerge } from '/@/utils';
 import { error } from '/@/utils/log';
@@ -31,6 +32,14 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
   }
   if (children && children.length) {
     handleChildren(children, !!ellipsis, dictTypes);
+  }
+  if (item.filterDictType) {
+    const { getDictList } = useDict();
+    dictTypes.add(item.filterDictType);
+    const filterList = getDictList(item.filterDictType);
+    item.filters = filterList.map((item) => {
+      return { text: item.name, value: item.value };
+    });
   }
   if (item.dictType) {
     dictTypes.add(item.dictType);
