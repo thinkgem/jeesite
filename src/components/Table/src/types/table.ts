@@ -480,6 +480,9 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   // JeeSite的字典类型
   dictType?: string;
 
+  // JeeSite的字典类型
+  filterDictType?: string;
+
   // 没有找到字典标签的时候显示的默认值
   defaultValue?: string;
 
