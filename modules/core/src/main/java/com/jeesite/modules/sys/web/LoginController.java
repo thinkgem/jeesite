@@ -217,6 +217,13 @@ public class LoginController extends BaseController{
 		if (StringUtils.isBlank(successUrl)){
 			successUrl = (String)request.getAttribute("__url");
 		}
+		if (StringUtils.contains(successUrl, "://")){
+			String domain = ServletUtils.getRequestDomain(successUrl);
+			successUrl = StringUtils.substring(successUrl, domain.length());
+			if (StringUtils.startsWith(successUrl, request.getContextPath())) {
+				successUrl = StringUtils.substringAfter(successUrl, request.getContextPath());
+			}
+		}
 		if (StringUtils.isBlank(successUrl)){
 			successUrl = Global.getProperty("shiro.successUrl");
 		}

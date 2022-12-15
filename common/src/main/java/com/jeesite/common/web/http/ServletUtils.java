@@ -4,23 +4,6 @@
  */
 package com.jeesite.common.web.http;
 
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.Validate;
-import org.springframework.http.MediaType;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -29,6 +12,17 @@ import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
+import org.apache.commons.lang3.Validate;
+import org.springframework.http.MediaType;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * Http与Servlet工具类.
@@ -385,6 +379,18 @@ public class ServletUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 获取请求的域名（含端口）
+	 */
+	public static String getRequestDomain(String url) {
+		String scheme = StringUtils.substringBefore(url, "://");
+		String domain = StringUtils.substringAfter(url, "://");
+		if (StringUtils.contains(domain, "/")) {
+			domain = StringUtils.substringBefore(domain, "/");
+		}
+		return scheme + "://" + domain;
 	}
 
 	/**
