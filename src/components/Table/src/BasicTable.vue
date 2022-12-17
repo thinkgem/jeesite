@@ -414,6 +414,7 @@
         getFormSlotKeys,
         getWrapperClass,
         columns: getViewColumns,
+        getColumnValue,
         tableActions,
       };
     },
