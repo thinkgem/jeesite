@@ -76,7 +76,7 @@ const transform: AxiosTransform = {
           if (config.url?.indexOf('__notUpdateSession=true') == -1) {
             let path = PageEnum.BASE_LOGIN as string;
             if (currentRoute.path !== '/' && currentRoute.path !== PageEnum.BASE_LOGIN) {
-              path = path + '?redirect=' + currentRoute.path;
+              path = path + '?redirect=' + currentRoute.fullPath;
             }
             router.replace(path);
           }

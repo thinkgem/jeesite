@@ -103,16 +103,20 @@ export function createPermissionGuard(router: Router) {
       try {
         await userStore.getUserInfoAction();
       } catch (error: any) {
-        const err: string = error?.toString?.() ?? '';
-        if (
-          from.fullPath === '/' &&
-          ((error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) ||
-            err.indexOf('Network Error') !== -1)
-        ) {
-          next(LOGIN_PATH);
-          return;
+        // const err: string = error?.toString?.() ?? '';
+        // if (
+        //   from.fullPath === '/' &&
+        //   ((error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) ||
+        //     err.indexOf('Network Error') !== -1)
+        // ) {
+        //   next(LOGIN_PATH);
+        //   return;
+        // }
+        let path = LOGIN_PATH as string;
+        if (to.path !== '/' && to.path !== LOGIN_PATH) {
+          path = path + '?redirect=' + to.fullPath;
         }
-        next();
+        next(path);
         return;
       }
     }
