@@ -25,10 +25,10 @@
     components: { DictLabel },
     props: {
       value: {
-        type: Object as PropType<object>,
+        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
       },
       labelValue: {
-        type: Object as PropType<object>,
+        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
       },
       dictType: propTypes.string,
       isHtml: propTypes.bool,
