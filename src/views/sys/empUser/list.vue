@@ -59,6 +59,7 @@
 
   const props = defineProps({
     treeCode: String,
+    treeName: String,
   });
 
   const { t } = useI18n('sys.empUser');
@@ -109,6 +110,7 @@
       {
         label: t('机构'),
         field: 'employee.office.officeCode',
+        fieldLabel: 'employee.office.officeName',
         component: 'TreeSelect',
         componentProps: {
           api: officeTreeData,
@@ -117,6 +119,7 @@
       {
         label: t('公司'),
         field: 'employee.company.companyCode',
+        fieldLabel: 'employee.company.companyName',
         component: 'TreeSelect',
         componentProps: {
           api: companyTreeData,
@@ -332,6 +335,7 @@
     async () => {
       await getForm().setFieldsValue({
         'employee.office.officeCode': props.treeCode,
+        'employee.office.officeName': props.treeName,
       });
       reload();
     },

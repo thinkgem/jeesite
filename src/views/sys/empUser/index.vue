@@ -18,7 +18,7 @@
         @select="handleSelect"
       />
     </template>
-    <ListView :treeCode="treeCode" />
+    <ListView :treeCode="treeCode" :treeName="treeName" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserIndex">
@@ -32,6 +32,7 @@
 
   const { t } = useI18n('sys.empUser');
   const treeCode = ref<string>('');
+  const treeName = ref<string>('');
   const ctrlPermi = ref('');
   const immediate = ref(false);
 
@@ -41,7 +42,8 @@
     immediate.value = true;
   });
 
-  function handleSelect(keys: string[]) {
+  function handleSelect(keys: string[], { node }) {
     treeCode.value = keys[0];
+    treeName.value = node._name;
   }
 </script>
