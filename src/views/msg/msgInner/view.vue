@@ -1,0 +1,163 @@
+<!--
+  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+  * No deletion without permission, or be held responsible to law.
+  * @author ThinkGem
+-->
+<template>
+  <PageWrapper :sidebarWidth="230" title="false">
+    <div class="text-xl text-center pt-4 pb-6 ml-2 mr-2 mb-5 border-b-1">
+      {{ record.msgTitle }}
+    </div>
+    <BasicForm @register="registerForm">
+      <template #readList="{ model, field }">
+        <span v-for="(e, i) in model[field]" :key="i">
+          <Tag color="blue" :title="e.receiveUserCode">{{ e.receiveUserName }}</Tag>
+        </span>
+        <span v-if="model[field] == 0">
+          <Tag>{{ t('还没有人阅读') }}</Tag>
+        </span>
+      </template>
+      <template #unReadList="{ model, field }">
+        <span v-for="(e, i) in model[field]" :key="i">
+          <Tag color="purple" :title="e.receiveUserCode">{{ e.receiveUserName }}</Tag>
+        </span>
+        <span v-if="model[field] == 0">
+          <Tag>{{ t('没有了') }}</Tag>
+        </span>
+      </template>
+    </BasicForm>
+    <div class="flex justify-center">
+      <a-button type="primary" @click="closeCurrent">
+        <Icon icon="ant-design:close-outlined" /> {{ t('关闭') }}
+      </a-button>
+    </div>
+  </PageWrapper>
+</template>
+<script lang="ts">
+  export default defineComponent({
+    name: 'ViewsMsgMsgInnerView',
+  });
+</script>
+<script lang="ts" setup>
+  import { defineComponent, ref, computed, onMounted } from 'vue';
+  import { Tag } from 'ant-design-vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { PageWrapper } from '/@/components/Page';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { router } from '/@/router';
+  import { Icon } from '/@/components/Icon';
+  import { BasicForm, FormSchema, useForm } from '/@/components/Form';
+  import { MsgInner, msgInnerView } from '/@/api/msg/msgInner';
+  import { WangEditor } from '/@/components/WangEditor';
+  import { useTabs } from '/@/hooks/web/useTabs';
+  import { useQuery } from '/@/hooks/web/usePage';
+
+  const { t } = useI18n('msg.msgInner');
+  const { showMessage } = useMessage();
+  const { closeCurrent } = useTabs();
+  const getQuery = useQuery();
+  const record = ref<MsgInner>({ id: getQuery.value.id } as MsgInner);
+  const getTitle = computed(() => ({
+    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    value: t('查看消息'),
+  }));
+
+  const inputFormSchemas: FormSchema[] = [
+    // {
+    //   label: t('查看消息'),
+    //   field: 'basicInfo',
+    //   component: 'FormGroup',
+    //   colProps: { lg: 24, md: 24 },
+    // },
+    // {
+    //   label: t('标题'),
+    //   field: 'msgTitle',
+    //   component: 'Text',
+    //   colProps: { lg: 24, md: 24 },
+    // },
+    {
+      label: t('等级'),
+      field: 'contentLevel',
+      component: 'Text',
+      componentProps: {
+        dictType: 'msg_inner_content_level',
+      },
+    },
+    {
+      label: t('类型'),
+      field: 'contentType',
+      component: 'Text',
+      componentProps: {
+        dictType: 'msg_inner_content_type',
+      },
+    },
+    {
+      label: t('内容'),
+      field: 'msgContent',
+      component: 'Text',
+      componentProps: {
+        isHtml: true,
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+    {
+      label: t('附件'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: 'msgInner_file',
+        uploadType: 'all',
+        readonly: true,
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+    {
+      label: t('发送者'),
+      field: 'sendUserName',
+      component: 'Text',
+    },
+    {
+      label: t('发送时间'),
+      field: 'sendDate',
+      component: 'Text',
+    },
+    {
+      label: t('阅读状态'),
+      field: 'receiveInfo',
+      component: 'FormGroup',
+      colProps: { lg: 24, md: 24 },
+    },
+    {
+      label: t('已读用户'),
+      field: 'readList',
+      component: 'Text',
+      colProps: { lg: 24, md: 24 },
+      slot: 'readList',
+    },
+    {
+      label: t('未读用户'),
+      field: 'unReadList',
+      component: 'Text',
+      colProps: { lg: 24, md: 24 },
+      slot: 'unReadList',
+    },
+  ];
+
+  const [registerForm, { resetFields, setFieldsValue }] = useForm({
+    labelWidth: 120,
+    schemas: inputFormSchemas,
+    baseColProps: { lg: 12, md: 24 },
+  });
+
+  onMounted(async () => {
+    await resetFields();
+    const res = await msgInnerView(record.value);
+    record.value = (res.msgInner || {}) as MsgInner;
+    record.value.__t = new Date().getTime();
+    record.value.readList = res.readList;
+    record.value.unReadList = res.unReadList;
+    setFieldsValue(record.value);
+  });
+</script>
