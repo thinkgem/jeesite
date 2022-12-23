@@ -590,6 +590,9 @@ shiro:
 #  # 允许的网站来源地址，不设置为全部地址（避免一些跨站点请求伪造 CSRF、防盗链）
 #  allowReferers: http://127.0.0.1,http://localhost
 #
+#  # 允许重定向的地址，不设置为全部允许，设置this只允许本项目内部跳转，多个用逗号隔开，例如：this,http://*.jeesite.com
+#  allowRedirects: ~
+#
 #  # 是否在登录后生成新的Session（默认false）
 #  isGenerateNewSessionAfterLogin: false
 #
