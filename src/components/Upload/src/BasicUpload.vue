@@ -110,6 +110,9 @@
           }).then((res) => {
             if (isArray(res)) {
               fileList.value = res;
+              dataMap.value[props.bizType + '__len'] = fileList.value.length;
+              emit('update:value', dataMap.value);
+              emit('change', dataMap.value);
             }
           });
         }
@@ -119,6 +122,7 @@
       function handleChange(records: FileUpload[]) {
         fileList.value = [...unref(fileList), ...(records || [])];
         dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
+        dataMap.value[props.bizType + '__len'] = fileList.value.length;
         emit('update:value', dataMap.value);
         emit('change', dataMap.value);
       }
@@ -127,6 +131,7 @@
       function handlePreviewChange(records: FileUpload[]) {
         fileList.value = [...(records || [])];
         dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
+        dataMap.value[props.bizType + '__len'] = fileList.value.length;
         emit('update:value', dataMap.value);
         emit('change', dataMap.value);
       }
@@ -134,6 +139,7 @@
       function handleDelete(record: FileUpload) {
         fileListDel.value.push(record);
         dataMap.value[props.bizType + '__del'] = fileListDel.value.map((item) => item.id).join(',');
+        dataMap.value[props.bizType + '__len'] = fileList.value.length;
         emit('delete', record);
         emit('update:value', dataMap.value);
         emit('change', dataMap.value);

@@ -166,6 +166,18 @@
         bizType: 'msgInner_file',
         uploadType: 'all',
       },
+      // rules: [
+      //   { required: true, message: t('请上传附件') },
+      //   {
+      //     validator(_rule, value) {
+      //       return new Promise<void>((resolve, reject) => {
+      //         const bizType = 'msgInner_file';
+      //         if (!value || (value[bizType + '__len'] as number) > 0) resolve();
+      //         else reject(t('请上传附件'));
+      //       });
+      //     },
+      //   },
+      // ],
       colProps: { lg: 24, md: 24 },
     },
     {
