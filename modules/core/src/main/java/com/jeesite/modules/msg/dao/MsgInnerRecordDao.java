@@ -21,6 +21,6 @@ public interface MsgInnerRecordDao extends CrudDao<MsgInnerRecord> {
 	/**
 	 * 根据消息编号和接受者用户名更新读取状态
 	 */
-	public long updateReadStatus(MsgInnerRecord msgInnerRecord);
+	long updateReadStatus(MsgInnerRecord msgInnerRecord);
 	
 }

@@ -4,10 +4,10 @@
  */
 package com.jeesite.modules.sys.service;
 
-import java.util.List;
-
 import com.jeesite.common.service.api.TreeServiceApi;
 import com.jeesite.modules.sys.entity.Area;
+
+import java.util.List;
 
 /**
  * 行政区划Service
@@ -20,24 +20,24 @@ public interface AreaService extends TreeServiceApi<Area> {
 	 * 获取区划
 	 */
 	@Override
-	public Area get(Area area);
+	Area get(Area area);
 
 	/**
 	 * 查询区划
 	 */
 	@Override
-	public List<Area> findList(Area area);
+	List<Area> findList(Area area);
 
 	/**
 	 * 保存区划
 	 */
 	@Override
-	public void save(Area area);
+	void save(Area area);
 
 	/**
 	 * 删除区划
 	 */
 	@Override
-	public void delete(Area area);
+	void delete(Area area);
 
 }

@@ -14,21 +14,21 @@ public interface FieldType {
 	/**
 	 * 获取对象值（导入）
 	 */
-	default public Object getValue(String val) {
+	default Object getValue(String val) {
 		return null;
 	}
 
 	/**
 	 * 获取对象值（导出）
 	 */
-	default public String setValue(Object val) {
+	default String setValue(Object val) {
 		return null;
 	}
 	
 	/**
 	 * 获取对象值格式（导出）
 	 */
-	default public String getDataFormat() {
+	default String getDataFormat() {
 		return null;
 	}
 	

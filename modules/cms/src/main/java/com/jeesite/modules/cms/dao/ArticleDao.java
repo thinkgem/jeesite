@@ -16,8 +16,8 @@ import com.jeesite.modules.cms.entity.Article;
 @MyBatisDao
 public interface ArticleDao extends CrudDao<Article> {
 
-	public long updateExpiredWeight(Article article);
+	long updateExpiredWeight(Article article);
 
-	public long updateHitsAddOne(String id);
+	long updateHitsAddOne(String id);
 
 }

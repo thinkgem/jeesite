@@ -19,11 +19,11 @@ public interface LogService extends CrudServiceApi<Log> {
 	 * 查询日志记录
 	 */
 	@Override
-	public Page<Log> findPage(Log log);
+	Page<Log> findPage(Log log);
 	
 	/**
 	 * 不使用数据库事务，执行插入日志
 	 */
-	public void insertLog(Log entity);
+	void insertLog(Log entity);
 	
 }

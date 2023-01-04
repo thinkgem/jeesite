@@ -22,6 +22,6 @@ public interface TestDataDao extends CrudDao<TestData> {
 	/**
 	 * 演示Map参数和返回值，支持分页
 	 */
-	public List<Map<String, Object>> findListForMap(Map<String, Object> params);
+	List<Map<String, Object>> findListForMap(Map<String, Object> params);
 	
 }

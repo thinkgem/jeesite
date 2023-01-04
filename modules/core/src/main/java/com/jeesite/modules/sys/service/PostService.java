@@ -19,35 +19,35 @@ public interface PostService extends CrudServiceApi<Post> {
 	 * 查询岗位
 	 */
 	@Override
-	public Post get(Post post);
+	Post get(Post post);
 	
 	/**
 	 * 根据名称查询岗位
 	 */
-	public Post getByPostName(Post post);
+	Post getByPostName(Post post);
 
 	/**
 	 * 查询岗位
 	 */
 	@Override
-	public Page<Post> findPage(Post post);
+	Page<Post> findPage(Post post);
 
 	/**
 	 * 保存岗位
 	 */
 	@Override
-	public void save(Post post);
+	void save(Post post);
 
 	/**
 	 * 更新岗位状态
 	 */
 	@Override
-	public void updateStatus(Post post);
+	void updateStatus(Post post);
 
 	/**
 	 * 删除岗位
 	 */
 	@Override
-	public void delete(Post post);
+	void delete(Post post);
 
 }
