@@ -28,7 +28,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "getByPk")
-	public TestTree get(@RequestParam(name = "id", required = false) String id);
+	TestTree get(@RequestParam(name = "id", required = false) String id);
 	
 	/**
 	 * 获取单条数据
@@ -37,7 +37,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "getByPkAndIsNewRecord")
-	public TestTree get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
+	TestTree get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
 	
 	/**
 	 * 根据父节点单条数据
@@ -46,7 +46,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "getLastByParentCode")
-	public TestTree getLastByParentCode(TestTree testTree);
+	TestTree getLastByParentCode(TestTree testTree);
 	
 	/**
 	 * 查询分页数据
@@ -55,7 +55,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "findList")
-	public List<TestTree> findList(TestTree testTree);
+	List<TestTree> findList(TestTree testTree);
 	
 	/**
 	 * 查询分页数据
@@ -65,7 +65,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "findPage")
-	public Page<TestTree> findPage(TestTree testTree);
+	Page<TestTree> findPage(TestTree testTree);
 	
 	/**
 	 * 查询数据总数
@@ -74,7 +74,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:view")
 	@PostMapping(value = "findCount")
-	public long findCount(TestTree testTree);
+	long findCount(TestTree testTree);
 	
 	/**
 	 * 保存数据（插入或更新）
@@ -82,7 +82,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "save")
-	public void save(TestTree testTree);
+	void save(TestTree testTree);
 	
 	/**
 	 * 更新状态
@@ -90,7 +90,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "updateStatus")
-	public void updateStatus(TestTree testTree);
+	void updateStatus(TestTree testTree);
 	
 	/**
 	 * 删除数据
@@ -98,7 +98,7 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "delete")
-	public void delete(TestTree testTree);
+	void delete(TestTree testTree);
 	
 	/**
 	 * 修复树结构数据
@@ -106,6 +106,6 @@ public interface TestTreeServiceApi {
 	 */
 	@RequiresPermissions("test:testTree:edit")
 	@PostMapping(value = "fixTreeData")
-	public void fixTreeData();
+	void fixTreeData();
 	
 }

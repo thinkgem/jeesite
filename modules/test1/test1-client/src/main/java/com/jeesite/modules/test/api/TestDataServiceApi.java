@@ -28,7 +28,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "getByPk")
-	public TestData get(@RequestParam(name = "id", required = false) String id);
+	TestData get(@RequestParam(name = "id", required = false) String id);
 	
 	/**
 	 * 获取单条数据
@@ -37,7 +37,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "getByPkAndIsNewRecord")
-	public TestData get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
+	TestData get(@RequestParam(name = "id", required = false) String id, @RequestParam("isNewRecord") boolean isNewRecord);
 	
 	/**
 	 * 查询分页数据
@@ -46,7 +46,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findList")
-	public List<TestData> findList(TestData testData);
+	List<TestData> findList(TestData testData);
 	
 	/**
 	 * 查询分页数据
@@ -56,7 +56,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findPage")
-	public Page<TestData> findPage(TestData testData);
+	Page<TestData> findPage(TestData testData);
 	
 	/**
 	 * 查询数据总数
@@ -65,7 +65,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@PostMapping(value = "findCount")
-	public long findCount(TestData testData);
+	long findCount(TestData testData);
 	
 	/**
 	 * 保存数据（插入或更新）
@@ -73,7 +73,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "save")
-	public void save(TestData testData);
+	void save(TestData testData);
 	
 	/**
 	 * 更新状态
@@ -81,7 +81,7 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "updateStatus")
-	public void updateStatus(TestData testData);
+	void updateStatus(TestData testData);
 	
 	/**
 	 * 删除数据
@@ -89,6 +89,6 @@ public interface TestDataServiceApi {
 	 */
 	@RequiresPermissions("test:testData:edit")
 	@PostMapping(value = "delete")
-	public void delete(TestData testData);
+	void delete(TestData testData);
 	
 }
