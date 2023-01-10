@@ -607,6 +607,9 @@ web:
         
   # 静态文件后缀，过滤静态文件，以提高访问性能。
   staticFile: .css,.js,.map,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2
+
+  # 静态资源缓存周期 Cache-Control，单位秒，1年
+  staticCachePeriod: 31536000
   
   # 静态文件后缀，排除的url路径，指定哪些uri路径不进行静态文件过滤。
   staticFileExcludeUri: /druid/
