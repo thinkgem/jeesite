@@ -242,15 +242,16 @@
             return false;
           }
           if (isFunction(editRule)) {
-            const res = await editRule(currentValue, record as Recordable);
-            if (!!res) {
-              ruleMessage.value = res;
-              ruleVisible.value = true;
-              return false;
-            } else {
+            editRule(currentValue, record as Recordable)
+            .then(() => {
               ruleMessage.value = '';
               return true;
-            }
+            })
+            .catch((msg) => {
+              ruleMessage.value = msg;
+              ruleVisible.value = true;
+              return false;
+            });
           }
         }
         ruleMessage.value = '';
