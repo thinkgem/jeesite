@@ -1,5 +1,5 @@
 import type { EChartsOption } from 'echarts';
-import type { Ref } from 'vue';
+import { onActivated, Ref } from 'vue';
 import { useTimeoutFn } from '/@/hooks/core/useTimeout';
 import { tryOnUnmounted } from '@vueuse/core';
 import { unref, nextTick, watch, computed, ref } from 'vue';
@@ -81,6 +81,10 @@ export function useECharts(
   function resize() {
     chartInstance?.resize();
   }
+
+  onActivated(() => {
+    resize();
+  });
 
   watch(
     () => getDarkMode.value,
