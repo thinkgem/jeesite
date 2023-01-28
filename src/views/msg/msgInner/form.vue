@@ -34,7 +34,7 @@
           v-model:value="model[field]"
           :bizKey="record.id"
           :bizType="'msgInner_' + field"
-          :height="200"
+          :height="300"
         />
       </template>
       <template #receiveCodes="{ model }">

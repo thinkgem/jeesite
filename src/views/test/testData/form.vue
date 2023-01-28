@@ -22,7 +22,7 @@
           v-model:value="model[field]"
           :bizKey="record.id"
           :bizType="'testDataChild_' + field"
-          :height="200"
+          :height="300"
         />
       </template>
       <template #testDataChildList>
