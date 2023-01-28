@@ -83,6 +83,8 @@
   import Icon from '/@/components/Icon/src/Icon.vue';
 
   import { useDict } from '/@/components/Dict';
+  import { switchSys } from '/@/api/sys/login';
+  import { PageEnum } from '/@/enums/pageEnum';
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock';
 
@@ -100,7 +102,7 @@
       theme: propTypes.oneOf(['dark', 'light']),
       sidebar: propTypes.bool.def(false),
     },
-    setup() {
+    setup(props) {
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
@@ -115,13 +117,15 @@
       const sysCodeRef = ref<string>('default');
       const sysListRef = ref<Recordable[]>([]);
 
-      onMounted(async () => {
-        sysCodeRef.value = userStore.getPageCacheByKey('sysCode', 'default');
-        const sysList = await useDict().initGetDictList('sys_menu_sys_code');
-        if (sysList.length > 1) {
-          sysListRef.value = sysList;
-        }
-      });
+      if (!props.sidebar) {
+        onMounted(async () => {
+          sysCodeRef.value = userStore.getPageCacheByKey('sysCode', 'default');
+          const sysList = await useDict().initGetDictList('sys_menu_sys_code');
+          if (sysList.length > 1) {
+            sysListRef.value = sysList;
+          }
+        });
+      }
 
       const [registerModal, { openModal }] = useModal();
 
@@ -161,6 +165,15 @@
             break;
           case 'lock':
             handleLock();
+            break;
+          default:
+            const keyPrefix = 'sysCode-';
+            if (String(e.key).startsWith(keyPrefix)) {
+              go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
+              const sysCode = String(e.key).substring(keyPrefix.length);
+              await switchSys(sysCode);
+              location.reload();
+            }
             break;
         }
       }

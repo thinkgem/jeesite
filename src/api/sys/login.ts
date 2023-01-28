@@ -52,6 +52,10 @@ export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') =
   );
 };
 
+export const switchSys = (sysCode: string) => {
+  return defHttp.get({ url: adminPath + '/switch/' + sysCode });
+};
+
 export const switchSkin = (name = '') => {
   if (name == '') {
     const appStore = useAppStore();
