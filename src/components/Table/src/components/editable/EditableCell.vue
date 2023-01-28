@@ -243,15 +243,15 @@
           }
           if (isFunction(editRule)) {
             editRule(currentValue, record as Recordable)
-            .then(() => {
-              ruleMessage.value = '';
-              return true;
-            })
-            .catch((msg) => {
-              ruleMessage.value = msg;
-              ruleVisible.value = true;
-              return false;
-            });
+              .then(() => {
+                ruleMessage.value = '';
+                return true;
+              })
+              .catch((msg) => {
+                ruleMessage.value = msg;
+                ruleVisible.value = true;
+                return false;
+              });
           }
         }
         ruleMessage.value = '';
