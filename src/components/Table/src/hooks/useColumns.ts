@@ -298,7 +298,9 @@ export function useColumns(
     const column: BasicColumn[] = [];
     updateData.forEach((item) => {
       columnsRef.value.forEach((val) => {
-        if (val.dataIndex === item.dataIndex) {
+        const dataIndexStr = isArray(val.dataIndex) ? val.dataIndex.join('.') : val.dataIndex;
+        if (dataIndexStr === item.dataIndex) {
+          item.dataIndex = val.dataIndex;
           const newColumn = deepMerge(val, item);
           column.push(newColumn as BasicColumn);
         } else {
