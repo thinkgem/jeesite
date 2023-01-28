@@ -81,6 +81,24 @@
       .anticon {
         color: @primary-color;
       }
+
+      .ant-tabs-nav {
+        margin: 0;
+        &-list {
+          .ant-tabs-tab {
+            padding: 5px 8px;
+            color: @text-color-call-out;
+            .anticon {
+              color: @text-color-call-out;
+            }
+            &-active {
+              .anticon {
+                color: @primary-color;
+              }
+            }
+          }
+        }
+      }
     }
 
     &__toolbar {
