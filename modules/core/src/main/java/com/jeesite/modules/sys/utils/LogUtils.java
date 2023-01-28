@@ -4,23 +4,6 @@
  */
 package com.jeesite.modules.sys.utils;
 
-import java.lang.reflect.Method;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.core.DefaultParameterNameDiscoverer;
-import org.springframework.core.ParameterNameDiscoverer;
-import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.method.HandlerMethod;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.BaseEntity;
@@ -37,9 +20,23 @@ import com.jeesite.modules.sys.entity.Log;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.LogService;
 import com.jeesite.modules.sys.service.MenuService;
-
 import eu.bitwalker.useragentutils.UserAgent;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.core.DefaultParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.method.HandlerMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 日志工具类
@@ -167,7 +164,7 @@ public class LogUtils {
 							};
 							// 如果是BaseEntity的子类，则获取主键名
 							if (superClass != null){
-								Table t = type.getAnnotation(Table.class);
+								Table t = MapperHelper.getTableCache(type);
 								for (Column c : t.columns()){
 									if (c.isPK()){
 										try {
