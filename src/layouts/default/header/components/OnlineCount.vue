@@ -16,7 +16,7 @@
   </Tooltip>
 </template>
 <script lang="ts">
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { Tooltip, Badge } from 'ant-design-vue';
   import Icon from '/@/components/Icon';
 
@@ -35,13 +35,16 @@
       const { push } = useRouter();
       const { hasPermission } = usePermission();
 
-      const count = ref<Number>(12);
+      const count = ref<Number>(0);
 
       async function refreshOnlineCount() {
         count.value = Number(await onlineCount());
       }
-      refreshOnlineCount(); // 先执行一次
-      setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
+
+      onMounted(async () => {
+        refreshOnlineCount(); // 先执行一次
+        setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
+      });
 
       function handleToOnlineList() {
         if (hasPermission('sys:online:view')) {
