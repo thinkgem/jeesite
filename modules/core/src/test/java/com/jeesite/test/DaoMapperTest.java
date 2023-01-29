@@ -4,15 +4,6 @@
  */
 package com.jeesite.test;
 
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
@@ -20,18 +11,16 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.file.dao.FileUploadDao;
 import com.jeesite.modules.file.entity.FileUpload;
-import com.jeesite.modules.sys.dao.AreaDao;
-import com.jeesite.modules.sys.dao.CompanyDao;
-import com.jeesite.modules.sys.dao.ConfigDao;
-import com.jeesite.modules.sys.dao.DictDataDao;
-import com.jeesite.modules.sys.dao.EmpUserDao;
-import com.jeesite.modules.sys.dao.UserDao;
-import com.jeesite.modules.sys.entity.Area;
-import com.jeesite.modules.sys.entity.Company;
-import com.jeesite.modules.sys.entity.Config;
-import com.jeesite.modules.sys.entity.DictData;
-import com.jeesite.modules.sys.entity.EmpUser;
-import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.dao.*;
+import com.jeesite.modules.sys.entity.*;
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Mapper测试
@@ -164,7 +153,8 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			throw new Exception(e);
 		}
 	}
-	
+
+	@Test
 	public static void main(String[] args) {
 		String a = null, b = null;
 		System.out.println("============ 基本测试 ============");
@@ -172,25 +162,25 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				.getWhere().and("name", QueryType.EQ, "abc").toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND a.name = #{sqlMap.where.name#EQ1.val}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config("1").getSqlMap().getWhere()
 				.and("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND a.name IN ( #{sqlMap.where.name#IN1.val[0]},"
 				+ " #{sqlMap.where.name#IN1.val[1]}, #{sqlMap.where.name#IN1.val[2]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config("1").getSqlMap().getWhere()
 				.or("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} OR a.name IN ( #{sqlMap.where.name#IN1.val[0]},"
 				+ " #{sqlMap.where.name#IN1.val[1]}, #{sqlMap.where.name#IN1.val[2]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 重复赋值测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.and("name", QueryType.LIKE, "abc").and("name", QueryType.LIKE, "def").toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND a.name LIKE #{sqlMap.where.name#LIKE1.val}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ IN、NOT IN 测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.and("name", QueryType.IN, new String[]{"abc","def"})
@@ -198,13 +188,13 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND a.name IN ( #{sqlMap.where.name#IN1.val[0]}, #{sqlMap.where.name#IN1.val[1]} )"
 				+ " AND a.name2 NOT IN ( #{sqlMap.where.name2#NOT_IN1.val[0]}, #{sqlMap.where.name2#NOT_IN1.val[1]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config("1").getSqlMap().getWhere()
 				.and("name", QueryType.IN, null).and("name2", QueryType.IN, new String[]{})
 				.and("name3", QueryType.NOT_IN, ListUtils.newArrayList()).toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 带括号测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
@@ -212,7 +202,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ1.val}"
 				+ " OR a.name = #{sqlMap.where.name#EQ2.val} OR a.name = #{sqlMap.where.name#EQ3.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config().getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "val1", 1).and("name", QueryType.NE, "val2", 11).endBracket(1)
 				.orBracket("name", QueryType.NE, "val3", 2).and("name", QueryType.NE, "val4", 22).endBracket(2)
@@ -222,41 +212,41 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " OR ( a.name != #{sqlMap.where.name#NE2.val} AND a.name != #{sqlMap.where.name#NE22.val} )"
 				+ " OR ( a.name != #{sqlMap.where.name#NE3.val} AND a.name = #{sqlMap.where.name#EQ33.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 带括号部分空值测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
 					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ2.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
 				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ1.val}"
 				+ " OR a.name = #{sqlMap.where.name#EQ2.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
 				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ2.val}"
 				+ " OR a.name = #{sqlMap.where.name#EQ3.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 带括号全部空值测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
 				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} ";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		a = new Config().getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "", 2)
 				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 实体嵌套测试 ============");
 		Company company = new Company("1");
 		company.setCreateDate_gte(new Date());
@@ -280,7 +270,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		a = new FileUpload().getSqlMap().getWhere().and("u.`user_name`", QueryType.EQ, "user1").toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND u.`user_name` = #{sqlMap.where.u#_user_name_#EQ1.val}";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 联合查询，返回到当前实体测试 ============");
 		FileUpload fileUpload = new FileUpload();
 		fileUpload.getSqlMap().getWhere().and("create_by", QueryType.IN, new String[]{"user1","user2"});
@@ -288,7 +278,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.`status` != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
 				+ " #{sqlMap.where.create_by#IN1.val[1]} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.out.println("============ 联合查询，属性为this时也可作为查询条件 ============");
 		FileUpload fileUpload2 = new FileUpload();
 		fileUpload2.setCreateByName("ThinkGem/JeeSite");
@@ -296,6 +286,27 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		a = fileUpload2.getSqlMap().getWhere().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
 				+ " #{sqlMap.where.create_by#IN1.val[1]} ) AND u.`user_name` LIKE #{sqlMap.where#user_name#LIKE1}";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+
+		System.out.println("============ 条件嵌套查询，可替代 andBracket、orBracket、endBracket v5.2.1+ ============");
+		a = new Config("1").getSqlMap().getWhere()
+				.and("name", QueryType.EQ, "abc", 1)
+				.and((w) -> w
+						.or("name", QueryType.EQ, "def", 2)
+						.or("name", QueryType.EQ, "ghi", 3))
+				.and((w) -> w
+						.or((w2) -> w2
+								.and("name", QueryType.EQ, "def", 4)
+								.and("name", QueryType.EQ, "", 5)
+								.and("name", QueryType.EQ_FORCE, "", 6))
+						.or((w2) -> w2
+								.and("name", QueryType.EQ, "def", 7)
+								.and("name", QueryType.EQ, "ghi", 8)))
+				.toSql();
+		b = "a.`id` = #{sqlMap.where#id#EQ1} AND a.name = #{sqlMap.where.name#EQ1.val}" +
+				" AND (a.name = #{sqlMap.where.n#[0].name#EQ2.val} OR a.name = #{sqlMap.where.n#[0].name#EQ3.val})" +
+				" AND ((a.name = #{sqlMap.where.n#[1].n#[0].name#EQ4.val} AND a.name = #{sqlMap.where.n#[1].n#[0].name#EQ_FORCE6.val})" +
+				" OR (a.name = #{sqlMap.where.n#[1].n#[1].name#EQ7.val} AND a.name = #{sqlMap.where.n#[1].n#[1].name#EQ8.val}))";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 		
 		System.exit(0);
