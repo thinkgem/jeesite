@@ -423,6 +423,7 @@ export type CellFormat =
 
 // @ts-ignore
 export interface BasicColumn extends ColumnProps<Recordable> {
+  dataIndex_?: string;
   children?: BasicColumn[];
   filters?: {
     text: string;

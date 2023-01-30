@@ -202,7 +202,7 @@
         table.getColumns({ ignoreIndex: true, ignoreAction: true }).forEach((item) => {
           ret.push({
             label: (item.title as string) || (item.customTitle as string),
-            value: (item.dataIndex || item.title) as string,
+            value: (item.dataIndex_ || item.title) as string,
             ...item,
           });
         });
@@ -218,7 +218,7 @@
             if (item.defaultHidden) {
               return '';
             }
-            return item.dataIndex || item.title;
+            return item.dataIndex_ || item.title;
           })
           .filter(Boolean) as string[];
 
@@ -233,7 +233,7 @@
           // ) as BasicColumn[];
 
           unref(plainOptions).forEach((item: BasicColumn) => {
-            const findItem = columns.find((col: BasicColumn) => col.dataIndex === item.dataIndex);
+            const findItem = columns.find((col: BasicColumn) => col.dataIndex_ === item.dataIndex_);
             if (findItem) {
               item.fixed = findItem.fixed;
             }
@@ -345,11 +345,11 @@
       }
 
       function handleColumnFixed(item: BasicColumn, fixed?: 'left' | 'right') {
-        if (!state.checkedList.includes(item.dataIndex as string)) return;
+        if (!state.checkedList.includes(item.dataIndex_ as string)) return;
 
         const columns = getColumns() as BasicColumn[];
         const isFixed = item.fixed === fixed ? false : fixed;
-        const index = columns.findIndex((col) => col.dataIndex === item.dataIndex);
+        const index = columns.findIndex((col) => col.dataIndex_ === item.dataIndex_);
         if (index !== -1) {
           columns[index].fixed = isFixed;
         }
@@ -358,7 +358,7 @@
         if (isFixed && !item.width) {
           item.width = 100;
         }
-        table.setCacheColumnsByField?.(item.dataIndex as string, { fixed: isFixed });
+        table.setCacheColumnsByField?.(item.dataIndex_ as string, { fixed: isFixed });
         setColumns(columns);
       }
 
@@ -368,9 +368,9 @@
           const visible =
             columns.findIndex(
               (c: BasicColumn | string) =>
-                c === col.value || (typeof c !== 'string' && c.dataIndex === col.value),
+                c === col.value || (typeof c !== 'string' && c.dataIndex_ === col.value),
             ) !== -1;
-          return { dataIndex: col.value, fixed: col.fixed, visible };
+          return { dataIndex_: col.value, fixed: col.fixed, visible };
         });
 
         emit('columns-change', data);

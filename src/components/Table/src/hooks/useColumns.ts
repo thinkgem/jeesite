@@ -29,7 +29,13 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
   }
   if (dataIndex && isString(dataIndex) && dataIndex.indexOf('.') != -1) {
     item.dataIndex = dataIndex.split('.');
+    item.dataIndex_ = dataIndex;
+  } else if (isArray(dataIndex)) {
+    item.dataIndex_ = dataIndex.join('.');
+  } else {
+    item.dataIndex_ = dataIndex?.toString() || '';
   }
+
   if (children && children.length) {
     handleChildren(children, !!ellipsis, dictTypes);
   }
@@ -232,7 +238,7 @@ export function useColumns(
       return;
     }
     cacheColumns.forEach((item) => {
-      if (item.dataIndex === dataIndex) {
+      if (item.dataIndex_ === dataIndex) {
         Object.assign(item, value);
         return;
       }
@@ -253,7 +259,7 @@ export function useColumns(
 
     const firstColumn = columns[0];
 
-    const cacheKeys = cacheColumns.map((item) => item.dataIndex);
+    const cacheKeys = cacheColumns.map((item) => item.dataIndex_);
 
     if (!isString(firstColumn) && !isArray(firstColumn)) {
       columnsRef.value = columns as BasicColumn[];
@@ -263,15 +269,15 @@ export function useColumns(
       cacheColumns.forEach((item) => {
         newColumns.push({
           ...item,
-          defaultHidden: !columnKeys.includes(item.dataIndex?.toString() || (item.key as string)),
+          defaultHidden: !columnKeys.includes(item.dataIndex_ || (item.key as string)),
         });
       });
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {
           return (
-            columnKeys.indexOf(prev.dataIndex?.toString() as string) -
-            columnKeys.indexOf(next.dataIndex?.toString() as string)
+            columnKeys.indexOf(prev.dataIndex_ as string) -
+            columnKeys.indexOf(next.dataIndex_ as string)
           );
         });
       }
@@ -297,10 +303,17 @@ export function useColumns(
 
     const column: BasicColumn[] = [];
     updateData.forEach((item) => {
+      // const dataIndex = item.dataIndex;
+      // if (dataIndex && isString(dataIndex) && dataIndex.indexOf('.') != -1) {
+      //   item.dataIndex = dataIndex.split('.');
+      //   item.dataIndex_ = dataIndex;
+      // } else if (isArray(dataIndex)) {
+      //   item.dataIndex_ = dataIndex.join('.');
+      // } else {
+      //   item.dataIndex_ = dataIndex?.toString() || '';
+      // }
       columnsRef.value.forEach((val) => {
-        const dataIndexStr = isArray(val.dataIndex) ? val.dataIndex.join('.') : val.dataIndex;
-        if (dataIndexStr === item.dataIndex) {
-          item.dataIndex = val.dataIndex;
+        if (val.dataIndex_ === item.dataIndex) {
           const newColumn = deepMerge(val, item);
           column.push(newColumn as BasicColumn);
         } else {
