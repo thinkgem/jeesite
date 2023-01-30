@@ -214,8 +214,8 @@ public class LogUtils {
 			if (StringUtils.isBlank(log.getLogTitle())){
 				log.setLogTitle("未知操作");
 			}
-			// 如果有异常，设置异常信息（将异常对象转换为字符串）
-			log.setIsException(throwable != null ? Global.YES : Global.NO);
+			// 如果有异常，并且不是登录登出的日志，则设置异常信息（将异常对象转换为字符串）
+			log.setIsException(throwable != null && !Log.TYPE_LOGIN_LOGOUT.equals(log.getLogType()) ? Global.YES : Global.NO);
 			String message = ExceptionUtils.getExceptionMessage(throwable);
 			if (message != null) {
 				log.setExceptionInfo(message);
