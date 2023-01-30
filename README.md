@@ -1,6 +1,6 @@
 ## 引言
 
-JeeSite Cloud 具备 [JeeSite 5.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x 的开发便利性巧妙地简化了分布式系统开发。
+JeeSite Cloud 具备 [JeeSite 5.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 5.x 的开发便利性巧妙地简化了分布式系统开发。
 
 JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
 
