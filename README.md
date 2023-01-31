@@ -51,7 +51,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.7、Spring Framework 5.3、Apache Shiro 1.10、J2Cache
+* 主框架：Spring Boot 2.7、Spring Framework 5.3、Apache Shiro 1.11、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
@@ -99,7 +99,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 快速运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB）
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.0_dev.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.2.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
 4. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 5. 部署常见问题：<https://jeesite.com/docs/faq/>

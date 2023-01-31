@@ -51,6 +51,9 @@
 		<swagger.version>1.6.6</swagger.version>
 		<log4j2.version>2.18.0</log4j2.version>
 
+		<!-- jdbc setting -->
+		<h2.version>1.4.200</h2.version>
+
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
 		<!--<tomcat.version>9.0.58</tomcat.version>-->
