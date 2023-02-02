@@ -7,6 +7,7 @@ package com.jeesite.test;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.common.tests.BaseSpringContextTests;
 import com.jeesite.modules.file.dao.FileUploadDao;
@@ -45,67 +46,110 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	private FileUploadDao fileUploadDao;
 	@Autowired
 	private EmpUserDao empUserDao;
-	
+
 	@Test
 	public void testTableAnnotation() throws Exception{
 		try{
-			
-			System.out.println("============ 插入和批量插入测试 ============");
+
+			System.out.println("============ 插入测试 ============");
 			Config config = new Config();
 			config.setId("1");
 			config.setConfigKey("test");
 			config.setConfigName("test");
 			config.setConfigValue("1");
 			config.setIsSys("1");
+			long configInsertNum = configDao.insert(config);
+			Assert.assertEquals("configDao.insert", configInsertNum , 1);
+			Config configInsertRes = configDao.get(config);
+			Assert.assertEquals("configDao.insert result", configInsertRes.getId() , "1");
+
+			System.out.println("============ 批量插入测试 ============");
 			Config config2 = (Config)config.clone();
 			config2.setId("2");
-			config.setConfigKey("test2");
+			config2.setConfigKey("test2");
 			Config config3 = (Config)config.clone();
 			config3.setId("3");
-			config.setConfigKey("test3");
-			System.out.println(configDao.insert(config));
-			System.out.println(configDao.insertBatch(ListUtils.newArrayList(config2, config3)));
-			
-			System.out.println("============ 更新测试 ============");
+			config3.setConfigKey("test3");
+			long configinsertBatchNum = configDao.insertBatch(ListUtils.newArrayList(config2, config3));
+			Assert.assertEquals("configDao.insertBatch", configinsertBatchNum , 2);
+			Config configInsertBatchRes2 = configDao.get(config2);
+			Assert.assertEquals("configDao.insertBatch result", configInsertBatchRes2.getId() , "2");
+			Config configInsertBatchRes3 = configDao.get(config3);
+			Assert.assertEquals("configDao.insertBatch result", configInsertBatchRes3.getId() , "3");
+
+			System.out.println("============ 按主键更新测试 ============");
 			Area area = new Area();
 			area.setAreaCode("1");
 			area.setAreaName("你好");
+			area.setParentCode("0");
+			area.setParentCodes("0,");
+			area.setTreeSort(1);
+			area.setTreeSorts("1,");
+			area.setTreeLevel(0);
+			area.setTreeLeaf("1");
+			area.setTreeNames(area.getAreaName());
 			area.setStatus("0");
+			Area area2 = (Area) area.clone();
+			area2.setAreaCode("2");
+			Area area3 = (Area) area.clone();
+			area3.setAreaCode("3");
+			long areaInsertNum = areaDao.insertBatch(ListUtils.newArrayList(area, area2, area3));
+			Assert.assertEquals("areaDao.insert", areaInsertNum , 3);
+			area.setAreaName("你好2");
+			long areaUpdateNum = areaDao.update(area);
+			Assert.assertEquals("areaDao.update", areaUpdateNum , 1);
+			Area areaUpdateRes = areaDao.get(area);
+			Assert.assertEquals("areaDao.update result", areaUpdateRes.getAreaName() , "你好2");
+
+			System.out.println("============ 按主键批量更新测试 ============");
+			long areaUpdateBatchNum = areaDao.updateBatch(ListUtils.newArrayList(area2, area3));
+			Assert.assertEquals("areaDao.update", areaUpdateBatchNum , 2);
+
+			System.out.println("============ 自定义更新条件测试 ============");
 			Area where = new Area();
-			where.setId("2");
-			where.setId_in(new String[]{"1","2"});
-			where.setAreaName("你好2");
-			where.setStatus("0");
-			System.out.println(areaDao.update(area));
-			System.out.println(areaDao.updateByEntity(area, where));
-			System.out.println(areaDao.updateStatus(area));
-			System.out.println(areaDao.updateStatusByEntity(area, where));
-			
+			where.setId(areaUpdateRes.getId());
+			where.setId_in(new String[]{areaUpdateRes.getId()});
+			where.setAreaName(areaUpdateRes.getAreaName());
+			where.setStatus(areaUpdateRes.getStatus());
+			long areaUpdateByEntityNum = areaDao.updateByEntity(area, where);
+			Assert.assertEquals("areaDao.updateByEntity", areaUpdateByEntityNum , 1);
+
+			System.out.println("============ 更新数据状态测试 ============");
+			long areaStatusNum = areaDao.updateStatus(area);
+			Assert.assertEquals("areaDao.updateStatus", areaUpdateByEntityNum , 1);
+			long areaStatusByEntityNum = areaDao.updateStatusByEntity(area, where);
+			Assert.assertEquals("areaDao.updateStatusByEntity", areaUpdateByEntityNum , 1);
+
 			System.out.println("============ 逻辑删除测试 ============");
-			System.out.println(areaDao.delete(area));
-			System.out.println(areaDao.delete((Area)where.clone()));
-			System.out.println(areaDao.deleteByEntity((Area)where.clone()));
+			long areaDeleteNum = areaDao.delete(area);
+			Assert.assertEquals("areaDao.delete", areaDeleteNum , 1);
+			where.setStatus("1");
+			long areaDeleteByEntityNum = areaDao.deleteByEntity(where);
+			Assert.assertEquals("areaDao.deleteByEntity", areaDeleteByEntityNum , 1);
 
 			System.out.println("============ 物理删除测试 ============");
-			System.out.println(areaDao.phyDelete((Area)where.clone()));
-			System.out.println(areaDao.phyDeleteByEntity((Area)where.clone()));
+			long areaPhyDeleteNum = areaDao.phyDelete(area2);
+			Assert.assertEquals("areaDao.phyDelete", areaPhyDeleteNum , 1);
+			long areaPhyDeleteByEntityNum = areaDao.phyDeleteByEntity(area3);
+			Assert.assertEquals("areaDao.phyDeleteByEntity", areaPhyDeleteByEntityNum , 1);
 
-			System.out.println("============ 基本信息查询测试 ============");
-			System.out.println(areaDao.findList(area));
+			System.out.println("============ 基本查询测试 ============");
+			List<Area> areaList = areaDao.findList(area);
+			Assert.assertEquals("areaDao.findList", areaList.size() , 1);
 			User user = new User();
 			user.setUserType(User.USER_TYPE_NONE);
-			System.out.println(userDao.findList(user));
-			
+			List<User> userList = userDao.findList(user);
+			Assert.assertTrue("userDao.findList", userList.size() > 0);
+
 			System.out.println("============ 条件嵌套，日期范围，自定义sqlMap测试 ============");
 			Company company = new Company("1");
 			company.setCompanyName("a");
 			company.setCreateDate_gte(new Date());
 			company.setCreateDate_lte(new Date());
-			company.setArea(new Area("2"));
-			company.getArea().setAreaName("a");
-			company.getArea().setCreateDate_gte(new Date());
-			company.getArea().setCreateDate_lte(new Date());
-			company.setFullName("a");
+			company.setArea(areaList.get(0));
+			company.getArea().setCreateDate_gte(company.getCreateDate_gte());
+			company.getArea().setCreateDate_lte(company.getCreateDate_gte());
+			company.setFullName(IdGen.nextId());
 			company.setViewCode("1");
 			company.setParentCode("0");
 			company.setParentCodes("0,");
@@ -113,48 +157,73 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company.setTreeSorts("1,");
 			company.setTreeLevel(0);
 			company.setTreeLeaf("1");
-			company.setTreeNames("a");
-			System.out.println(companyDao.insert(company));
-			System.out.println(companyDao.get(company));
-			System.out.println(companyDao.findCount(company));
-			
+			company.setTreeNames(company.getCompanyName());
+			Company company2 = (Company) company.clone();
+			company2.setParentCode(company.getCompanyCode());
+			company2.setParentCodes("0,1," + company.getCompanyCode());
+			company2.setCompanyCode("12");
+			Company company3 = (Company) company.clone();
+			company3.setParentCode(company.getCompanyCode());
+			company3.setParentCodes("0,1," + company.getCompanyCode());
+			company3.setCompanyCode("13");
+			company3.setCompanyName("b");
+			long companyInsertNum = companyDao.insertBatch(ListUtils.newArrayList(company, company2, company3));
+			Assert.assertEquals("advanced query init", companyInsertNum , 3);
+			Company companyWhere = (Company) company.clone();
+			companyWhere.setCompanyCode(null);
+			companyWhere.setParentCode(null);
+			long companyFindCount = companyDao.findCount(companyWhere);
+			Assert.assertEquals("advanced query list", companyFindCount , 2);
+
 			System.out.println("============ 分页测试，查询子节点 ============");
-			company.setPage(new Page<Company>(1, 20));
-			company.setIsQueryChildren(true);
-			System.out.println(companyDao.findList(company));
-			
+			Company company4 = new Company("1");
+			company4.setFullName(company.getFullName());
+			company4.setPage(new Page<Company>(1, 2));
+			company4.setIsQueryChildren(true);
+			List<Company> companyListPage = companyDao.findList(company4);
+			Assert.assertEquals("find page list size", companyListPage.size(), 2);
+			Assert.assertEquals("find page list get(1)", companyListPage.get(1).getCompanyCode(), company2.getCompanyCode());
+			Assert.assertEquals("find page count", company4.getPage().getCount(), 3);
+
 			System.out.println("============ 扩展条件语句前带AND容错测试 ============");
-			Company company2 = new Company();
-			company2.getSqlMap().getWhere().disableAutoAddStatusWhere();
-			company2.getSqlMap().getDataScope().addFilter("dsf",
+			Company company5 = new Company();
+			company5.getSqlMap().getWhere().disableAutoAddStatusWhere();
+			company5.getSqlMap().getDataScope().addFilter("dsf",
 					"Company", "a.`company_code`", DataScope.CTRL_PERMI_HAVE);
-			System.out.println(companyDao.findList(company2));
+			List<Company> companyList = companyDao.findList(company5);
+			System.out.println(companyList);
+			Assert.assertEquals("companyDao.findList extWhere", companyList.size(), 0);
 
 			System.out.println("============ 联合查询未设定columns和attrName为this时测试 ============");
 			FileUpload fileUpload = new FileUpload();
 			fileUpload.getSqlMap().getWhere().and("u.`user_name`", QueryType.EQ, "user1");
-			System.out.println(fileUploadDao.findList(fileUpload));
-			
+			List<FileUpload> fileUploadList = fileUploadDao.findList(fileUpload);
+			System.out.println(fileUploadList);
+			Assert.assertEquals("fileUploadDao.findList attrName this", fileUploadList.size(), 0);
+
 			System.out.println("============ 树结构基本查询测试 ============");
 			DictData dictData = new DictData();
 			dictData.setParentCodes("0,");
-			System.out.println(dictDataDao.findByParentCodesLike(dictData));
-			System.out.println(dictDataDao.findList(dictData));
+			List<DictData> dictDataList = dictDataDao.findByParentCodesLike(dictData);
+			Assert.assertTrue("dictDataDao.findByParentCodesLike", dictDataList.size() > 0);
+			List<DictData> dictDataList2 = dictDataDao.findList(dictData);
+			System.out.println(dictDataList2);
+			Assert.assertTrue("dictDataDao.findList", dictDataList2.size() > 0);
 
 			System.out.println("============ 分页情况下foreach测试 ============");
 			EmpUser empUser = new EmpUser();
 			empUser.setCodes(new String[]{"SDJN01","SDJN02"});
 			empUser.setPage(new Page<>(1, 3));
-			List<EmpUser> list = empUserDao.findUserListByOfficeCodes(empUser);
-			System.out.println(list);
-			
+			List<EmpUser> empUserList = empUserDao.findUserListByOfficeCodes(empUser);
+			System.out.println(empUserList);
+			Assert.assertTrue("empUserDao.findUserListByOfficeCodes", empUserList.size() > 0);
+
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new Exception(e);
 		}
 	}
 
-	@Test
 	public static void main(String[] args) {
 		String a = null, b = null;
 		System.out.println("============ 基本测试 ============");
@@ -198,7 +267,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		System.out.println("============ 带括号测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "abc", 1).or("name", QueryType.EQ, "def", 2)
-					.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql();
+				.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ1.val}"
 				+ " OR a.name = #{sqlMap.where.name#EQ2.val} OR a.name = #{sqlMap.where.name#EQ3.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
@@ -216,7 +285,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		System.out.println("============ 带括号部分空值测试 ============");
 		a = new Config("1").getSqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1).or("name", QueryType.EQ, "def", 2)
-					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
+				.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`id` = #{sqlMap.where#id#EQ1} AND ( a.name = #{sqlMap.where.name#EQ2.val} )";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
 
@@ -308,7 +377,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				" AND ((a.name = #{sqlMap.where.n#[1].n#[0].name#EQ4.val} AND a.name = #{sqlMap.where.n#[1].n#[0].name#EQ_FORCE6.val})" +
 				" OR (a.name = #{sqlMap.where.n#[1].n#[1].name#EQ7.val} AND a.name = #{sqlMap.where.n#[1].n#[1].name#EQ8.val}))";
 		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-		
+
 		System.exit(0);
 	}
 }
