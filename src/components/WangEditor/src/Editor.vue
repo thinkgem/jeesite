@@ -177,8 +177,12 @@
   .@{prefix-cls} {
     border: 1px solid #ccc;
 
-    .toolbar {
+    .w-e-toolbar {
       border-bottom: 1px solid #ccc;
+    }
+
+    &.w-e-full-screen-container {
+      z-index: 1000;
     }
 
     .editor {
@@ -190,18 +194,18 @@
     .@{prefix-cls} {
       border-color: #303030;
 
-      .toolbar {
+      .w-e-toolbar {
         border-bottom-color: #303030;
       }
     }
 
     // textarea - css vars
-    --w-e-textarea-bg-color: transparent;
+    --w-e-textarea-bg-color: #151515;
     --w-e-textarea-color: #c9d1d9;
     --w-e-textarea-border-color: #303030;
     --w-e-textarea-slight-border-color: #303030;
     --w-e-textarea-slight-color: #c9d1d9;
-    --w-e-textarea-slight-bg-color: transparent;
+    --w-e-textarea-slight-bg-color: #151515;
     --w-e-textarea-selected-border-color: #303030; // 选中的元素，如选中了分割线
     --w-e-textarea-handler-bg-color: #4290f7; // 工具，如图片拖拽按钮
 
@@ -214,7 +218,7 @@
     --w-e-toolbar-border-color: #303030;
 
     // modal - css vars
-    --w-e-modal-button-bg-color: transparent;
+    --w-e-modal-button-bg-color: #151515;
     --w-e-modal-button-border-color: #303030;
   }
 </style>
