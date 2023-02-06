@@ -14,19 +14,11 @@ import java.util.Date;
 public class TimeUtils {
 	
 	public static final String[] CN = new String[] {"毫秒", "秒", "分", "时", "天"};
-	public static final String[] EN = new String[] {" millisecond ", " second", " minute", " hour", " day"};
+	public static final String[] EN = new String[] {" millisecond ", " second ", " minute ", " hour ", " day "};
 	
 	public static final String[] AGO_CN = new String[] {"刚刚", "秒前", "分钟前", "小时前", "天前"};
 	public static final String[] AGO_EN = new String[] {"just now", " seconds ago", " minutes ago", " hours ago", " days ago"};
 
-	/**
-	 * 将毫秒数转换为：xx天，xx时，xx分，xx秒（v5.1 替换为 formatTime）
-	 */
-	@Deprecated
-	public static String formatDateAgo(long millisecond) {
-		return formatTime(millisecond, CN);
-	}
-	
 	/**
 	 * 将毫秒数转换为：xx天，xx时，xx分，xx秒
 	 */
@@ -52,20 +44,32 @@ public class TimeUtils {
 			sb.append(ms).append(lang[0]);
 		} else {
 			if (day > 0) {
+				ms -= day * dd;
 				sb.append(day).append(lang[4]);
 			}
-			if (hour > 0) {
+			if (day > 0 || hour > 0) {
+				ms -= hour * hh;
 				sb.append(hour).append(lang[3]);
 			}
-			if (minute > 0) {
+			if (day > 0 || hour > 0 || minute > 0) {
+				ms -= minute * mi;
 				sb.append(minute).append(lang[2]);
 			}
-			if (second > 0) {
-				sb.append(second).append(lang[1]);
+			if (hour > 0 || minute > 0 || second > 0) {
+				ms -= second * ss;
+				sb.append(second).append(".").append(ms).append(lang[1]);
 			}
 		}
 		return sb.toString();
 	}
+
+//	/**
+//	 * 将毫秒数转换为：xx天，xx时，xx分，xx秒（v5.1 替换为 formatTime）
+//	 */
+//	@Deprecated
+//	public static String formatDateAgo(long millisecond) {
+//		return formatTime(millisecond, CN);
+//	}
 
 	/**
 	 * 将过去的时间转为为，刚刚，xx秒，xx分钟，xx小时前、xx天前，大于3天的显示日期
