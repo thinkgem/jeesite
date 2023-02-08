@@ -4,40 +4,6 @@
  */
 package com.jeesite.common.utils.excel;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.formula.eval.ErrorEval;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.CellValue;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
@@ -50,6 +16,23 @@ import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.FieldType;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.formula.eval.ErrorEval;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.*;
 
 /**
  * 导入Excel文件（支持“XLS”和“XLSX”格式）
@@ -334,23 +317,20 @@ public class ExcelImport implements Closeable {
 	 * @param groups 导入分组
 	 */
 	public <E> List<E> getDataList(Class<E> cls, final boolean isThrowException, String... groups) throws Exception{
-		return getDataList(cls, new MethodCallback() {
-			@Override
-			public Object execute(Object... params) {
-				if (isThrowException){
-					Exception ex = (Exception)params[0];
-					int rowNum = (int)params[1];
-					int columnNum = (int)params[2];
-					throw new ExcelException("Get cell value ["+rowNum+","+columnNum+"]", ex);
-				}
-				return null;
+		return getDataList(cls, params -> {
+			if (isThrowException){
+				Exception ex = (Exception)params[0];
+				int rowNum = (int)params[1];
+				int columnNum = (int)params[2];
+				throw new ExcelException("Get cell value ["+rowNum+","+columnNum+"]", ex);
 			}
+			return null;
 		}, groups);
 	}
 	/**
 	 * 获取导入数据列表
 	 * @param cls 导入对象类型
-	 * @param isThrowException 遇见错误是否抛出异常
+	 * @param exceptionCallback 遇见异常时回调方法
 	 * @param groups 导入分组
 	 */
 	@SuppressWarnings("unchecked")

@@ -4,11 +4,6 @@
  */
 package com.jeesite.modules.cms.db;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
-
-import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.cms.dao.ArticleDao;
@@ -20,6 +15,9 @@ import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
 import com.jeesite.modules.gen.utils.GenUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 /**
  * 初始化CMS表及数据
@@ -51,72 +49,60 @@ public class InitCmsData extends BaseInitDataTests {
 	@Autowired
 	private SiteService siteService;
 	public void initSite() throws Exception{
-		initExcelData(Site.class, new MethodCallback() {
-			@Override
-			public Object execute(Object... params) {
-				String action = (String)params[0];
-				if("save".equals(action)){
-					Site entity = (Site)params[1];
-					entity.setIsNewRecord(true);
-					siteService.save(entity);
-					return null;
-				}
+		initExcelData(Site.class, params -> {
+			String action = (String)params[0];
+			if("save".equals(action)){
+				Site entity = (Site)params[1];
+				entity.setIsNewRecord(true);
+				siteService.save(entity);
 				return null;
 			}
+			return null;
 		});
 	}
 	
 	@Autowired
 	private CategoryService categoryService;
 	public void initCategory() throws Exception{
-		initExcelData(Category.class, new MethodCallback() {
-			@Override
-			public Object execute(Object... params) {
-				String action = (String)params[0];
-				if("save".equals(action)){
-					Category entity = (Category)params[1];
-					entity.setIsNewRecord(true);
-					categoryService.save(entity);
-					return null;
-				}
+		initExcelData(Category.class, params -> {
+			String action = (String)params[0];
+			if("save".equals(action)){
+				Category entity = (Category)params[1];
+				entity.setIsNewRecord(true);
+				categoryService.save(entity);
 				return null;
 			}
+			return null;
 		});
 	}
 	
 	@Autowired
 	private ArticleDao articleDao;
 	public void initArticle() throws Exception{
-		initExcelData(Article.class, new MethodCallback() {
-			@Override
-			public Object execute(Object... params) {
-				String action = (String)params[0];
-				if("save".equals(action)){
-					Article entity = (Article)params[1];
-					entity.setIsNewRecord(true);
-					articleDao.insert(entity);
-					return null;
-				}
+		initExcelData(Article.class, params -> {
+			String action = (String)params[0];
+			if("save".equals(action)){
+				Article entity = (Article)params[1];
+				entity.setIsNewRecord(true);
+				articleDao.insert(entity);
 				return null;
 			}
+			return null;
 		});
 	}
 	
 	@Autowired
 	private ArticleDataDao articleDataDao;
 	public void initArticleData() throws Exception{
-		initExcelData(ArticleData.class, new MethodCallback() {
-			@Override
-			public Object execute(Object... params) {
-				String action = (String)params[0];
-				if("save".equals(action)){
-					ArticleData entity = (ArticleData)params[1];
-					entity.setIsNewRecord(true);
-					articleDataDao.insert(entity);
-					return null;
-				}
+		initExcelData(ArticleData.class, params -> {
+			String action = (String)params[0];
+			if("save".equals(action)){
+				ArticleData entity = (ArticleData)params[1];
+				entity.setIsNewRecord(true);
+				articleDataDao.insert(entity);
 				return null;
 			}
+			return null;
 		});
 	}
 	
