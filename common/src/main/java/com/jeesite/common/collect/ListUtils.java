@@ -409,22 +409,19 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 			final String[] ss = orderBy.trim().split(" ");
 			if (ss != null){
 				final String t = ss.length==2 ? ss[1] : "asc";
-				Collections.sort(list, new Comparator<T>() {
-					@Override
-					public int compare(T o1, T o2) {
-						String s1 = StringUtils.EMPTY, s2 = StringUtils.EMPTY;
-						if (o1 instanceof Map){
-							s1 = ObjectUtils.toString(((Map)o1).get(ss[0]));
-							s2 = ObjectUtils.toString(((Map)o2).get(ss[0]));
-						}else{
-							s1 = ObjectUtils.toString(ReflectUtils.invokeGetter(o1, ss[0]));
-							s2 = ObjectUtils.toString(ReflectUtils.invokeGetter(o2, ss[0]));
-						}
-						if ("asc".equalsIgnoreCase(t)){
-							return s1.compareTo(s2);
-						}else{
-							return s2.compareTo(s1);
-						}
+				Collections.sort(list, (o1, o2) -> {
+					String s1, s2;
+					if (o1 instanceof Map){
+						s1 = ObjectUtils.toString(((Map)o1).get(ss[0]));
+						s2 = ObjectUtils.toString(((Map)o2).get(ss[0]));
+					}else{
+						s1 = ObjectUtils.toString(ReflectUtils.invokeGetter(o1, ss[0]));
+						s2 = ObjectUtils.toString(ReflectUtils.invokeGetter(o2, ss[0]));
+					}
+					if ("asc".equalsIgnoreCase(t)){
+						return s1.compareTo(s2);
+					}else{
+						return s2.compareTo(s1);
 					}
 				});
 			}
