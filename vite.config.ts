@@ -1,5 +1,5 @@
 import type { UserConfig, ConfigEnv } from 'vite';
-import pkg from './package.json';
+import { dependencies, devDependencies, name, version } from './package.json';
 import dayjs from 'dayjs';
 import { loadEnv } from 'vite';
 import { resolve } from 'path';
@@ -13,7 +13,6 @@ function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
 
-const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
   pkg: { dependencies, devDependencies, name, version },
   lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
@@ -81,7 +80,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // },
       // Turning off brotliSize display can slightly reduce packaging time
       reportCompressedSize: false,
-      chunkSizeWarningLimit: 2000,
+      chunkSizeWarningLimit: 3000,
     },
     define: {
       // setting vue-i18-next

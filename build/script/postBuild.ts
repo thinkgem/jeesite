@@ -3,7 +3,7 @@
 import { runBuildConfig } from './buildConf';
 import colors from 'picocolors';
 
-import pkg from '../../package.json';
+import { name } from '../../package.json';
 
 export const runBuild = async () => {
   try {
@@ -14,7 +14,7 @@ export const runBuild = async () => {
       runBuildConfig();
     }
 
-    console.log(`✨ ${colors.cyan(`[${pkg.name}]`)}` + ' - build successfully!');
+    console.log(`✨ ${colors.cyan(`[${name}]`)}` + ' - build successfully!');
   } catch (error) {
     console.log(colors.red('vite build error:\n' + error));
     process.exit(1);

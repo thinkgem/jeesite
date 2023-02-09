@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import inquirer from 'inquirer';
 import colors from 'picocolors';
-import pkg from '../../../package.json';
+import { name } from '../../../package.json';
 
 async function generateIcon() {
   const dir = path.resolve(process.cwd(), 'node_modules/@iconify/json');
@@ -64,7 +64,7 @@ async function generateIcon() {
       }
       fs.emptyDir(path.join(process.cwd(), 'node_modules/.vite'));
       console.log(
-        `✨ ${colors.cyan(`[${pkg.name}]`)}` + ' - Icon generated successfully:' + `[${prefixSet}]`,
+        `✨ ${colors.cyan(`[${name}]`)}` + ' - Icon generated successfully:' + `[${prefixSet}]`,
       );
     });
 }

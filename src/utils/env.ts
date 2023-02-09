@@ -1,7 +1,7 @@
 import type { GlobEnvConfig } from '/#/config';
 
 import { warn } from '/@/utils/log';
-import pkg from '../../package.json';
+import { version } from '../../package.json';
 import { getConfigFileName } from '../../build/getConfigFileName';
 
 export function getCommonStoragePrefix() {
@@ -11,7 +11,7 @@ export function getCommonStoragePrefix() {
 
 // Generate cache key according to version
 export function getStorageShortName() {
-  return `${getCommonStoragePrefix()}${`__${pkg.version}`}__`.toUpperCase();
+  return `${getCommonStoragePrefix()}${`__${version}`}__`.toUpperCase();
 }
 
 export function getAppEnvConfig() {
