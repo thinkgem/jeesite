@@ -40,6 +40,10 @@ export const basicProps = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
+  disabled: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
   // 秒传功能（标准版/专业版）
   checkmd5: {
     type: Boolean as PropType<boolean>,
@@ -96,6 +100,10 @@ export const previewProps = {
   value: {
     type: Array as PropType<FileUpload[]>,
     default: () => [],
+  },
+  readonly: {
+    type: Boolean as PropType<boolean>,
+    default: false,
   },
 };
 
