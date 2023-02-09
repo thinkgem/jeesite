@@ -158,13 +158,16 @@ export function createPreviewColumns(): BasicColumn[] {
   ];
 }
 
-export function createPreviewActionColumn({
-  handleRemove,
-  handleDownload,
-}: {
-  handleRemove: Fn;
-  handleDownload: Fn;
-}): BasicColumn {
+export function createPreviewActionColumn(
+  {
+    handleRemove,
+    handleDownload,
+  }: {
+    handleRemove: Fn;
+    handleDownload: Fn;
+  },
+  readonly = false,
+): BasicColumn {
   return {
     width: 160,
     title: t('component.upload.operating'),
@@ -172,20 +175,21 @@ export function createPreviewActionColumn({
     align: 'center',
     fixed: false,
     customRender: ({ record }) => {
-      const actions: ActionItem[] = [
-        {
+      const actions: ActionItem[] = [];
+      if (!readonly) {
+        actions.push({
           label: t('component.upload.del'),
           color: 'error',
           popConfirm: {
             title: t('component.upload.delConfirm'),
             confirm: handleRemove.bind(null, record),
           },
-        },
-        {
-          label: t('component.upload.download'),
-          onClick: handleDownload.bind(null, record),
-        },
-      ];
+        });
+      }
+      actions.push({
+        label: t('component.upload.download'),
+        onClick: handleDownload.bind(null, record),
+      });
       return <TableAction actions={actions} outside={true} />;
     },
   };
