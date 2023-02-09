@@ -2,7 +2,7 @@
   <div>
     <Space>
       <a-button
-        v-if="!readonly"
+        v-if="!(readonly || disabled)"
         type="primary"
         @click="openUploadModal"
         preIcon="carbon:cloud-upload"
@@ -33,6 +33,7 @@
     />
     <UploadPreviewModal
       :value="fileList"
+      :readonly="readonly || disabled"
       @register="registerPreviewModal"
       @change="handlePreviewChange"
       @delete="handleDelete"
