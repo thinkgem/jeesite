@@ -38,9 +38,11 @@
                 {columnList.map((item) => {
                   const { title = '', align = 'center', dataIndex } = item;
                   return (
-                    <th class={['file-table-th', align]} key={dataIndex}>
-                      {title}
-                    </th>
+                    dataIndex && (
+                      <th class={['file-table-th', align]} key={dataIndex}>
+                        {title}
+                      </th>
+                    )
                   );
                 })}
               </tr>
@@ -53,11 +55,13 @@
                       const { dataIndex = '', customRender, align = 'center' } = item;
                       const render = customRender && isFunction(customRender);
                       return (
-                        <td class={['file-table-td', align]} key={dataIndex}>
-                          {render
-                            ? customRender?.({ text: get(record, dataIndex), record, index })
-                            : get(record, dataIndex)}
-                        </td>
+                        dataIndex && (
+                          <td class={['file-table-td', align]} key={dataIndex}>
+                            {render
+                              ? customRender?.({ text: get(record, dataIndex), record, index })
+                              : get(record, dataIndex)}
+                          </td>
+                        )
                       );
                     })}
                   </tr>
