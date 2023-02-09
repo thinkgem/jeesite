@@ -39,27 +39,27 @@
           splitNumber: 8,
           indicator: [
             {
-              text: '2017',
+              name: '2017',
               max: 100,
             },
             {
-              text: '2017',
+              name: '2017',
               max: 100,
             },
             {
-              text: '2018',
+              name: '2018',
               max: 100,
             },
             {
-              text: '2019',
+              name: '2019',
               max: 100,
             },
             {
-              text: '2020',
+              name: '2020',
               max: 100,
             },
             {
-              text: '2021',
+              name: '2021',
               max: 100,
             },
           ],
