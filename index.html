@@ -10,16 +10,7 @@
     <link rel="stylesheet" href="/resource/css/index.css">
   </head>
   <body>
-    <script>
-      (() => {
-        var htmlRoot = document.getElementById('htmlRoot');
-        var theme = window.localStorage.getItem('__APP__DARK__MODE__');
-        if (htmlRoot && theme) {
-          htmlRoot.setAttribute('data-theme', theme);
-          theme = htmlRoot = null;
-        }
-      })();
-    </script>
+    <script>if(navigator.userAgent.indexOf("MSIE")>0||navigator.userAgent.indexOf("rv:11")>0){alert('不支持 IE 访问，请使用现代浏览器访问。')};(()=>{var htmlRoot=document.getElementById('htmlRoot'),theme=window.localStorage.getItem('__APP__DARK__MODE__');if(htmlRoot&&theme){htmlRoot.setAttribute('data-theme',theme);theme=htmlRoot=null}})()</script>
     <div id="app">
       <div class="app-loading">
         <div class="app-loading-wrap">
@@ -33,10 +24,5 @@
     </div>
     <script type="module" src="/src/main.ts"></script>
     <script src="/resource/layer/layer.js"></script>
-    <script>
-      if (navigator.userAgent.indexOf("MSIE") > 0 || navigator.userAgent.indexOf("rv:11") > 0) {
-        alert('不支持 IE 访问，请使用现代浏览器访问。');
-      };
-    </script>
   </body>
 </html>
