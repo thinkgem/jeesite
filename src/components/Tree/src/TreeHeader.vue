@@ -10,7 +10,7 @@
     >
       <div :class="getInputSearchCls" v-if="search">
         <FormItemRest>
-          <InputSearch
+          <AInput
             :placeholder="t('common.searchText')"
             size="small"
             allowClear
@@ -69,7 +69,7 @@
       AMenu: Menu,
       MenuItem: Menu.Item,
       MenuDivider: Menu.Divider,
-      InputSearch: Input.Search,
+      AInput: Input,
       FormItemRest: Form.ItemRest,
     },
     props: {
