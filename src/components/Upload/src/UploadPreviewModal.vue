@@ -8,7 +8,12 @@
     @register="register"
     :showOkBtn="false"
   >
-    <FileList :dataSource="fileList" :columns="columns" :actionColumn="actionColumn" />
+    <FileList
+      :dataSource="fileList"
+      :columns="columns"
+      :actionColumn="actionColumn"
+      :readonly="readonly"
+    />
   </BasicModal>
 </template>
 <script lang="ts">
@@ -53,14 +58,6 @@
         }
       }
 
-      // // 预览
-      // function handlePreview(record: PreviewFileItem) {
-      //   const { url = '' } = record;
-      //   createImgPreview({
-      //     imageList: [url],
-      //   });
-      // }
-
       // 下载
       function handleDownload(record: FileUpload) {
         downloadByUrl({ url: ctxAdminPath + '/file/download/' + record.id });
@@ -72,7 +69,13 @@
         closeModal,
         fileList,
         columns: createPreviewColumns() as any[],
-        actionColumn: createPreviewActionColumn({ handleRemove, handleDownload }) as any,
+        actionColumn: createPreviewActionColumn(
+          {
+            handleRemove,
+            handleDownload,
+          },
+          props.readonly,
+        ) as any,
       };
     },
   });
