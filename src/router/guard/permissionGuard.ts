@@ -1,19 +1,16 @@
 import type { Router, RouteRecordRaw } from 'vue-router';
-
 import { usePermissionStoreWithOut } from '/@/store/modules/permission';
-
+import { RootRoute } from '/@/router/routes';
 import { PageEnum } from '/@/enums/pageEnum';
 import { useUserStoreWithOut } from '/@/store/modules/user';
-
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
-import { RootRoute } from '/@/router/routes';
-
+const ROOT_PATH = RootRoute.path;
+const HOME_PATH = PageEnum.BASE_HOME;
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 const MOD_PWD_PAGE = PageEnum.MOD_PWD_PAGE;
 
-const ROOT_PATH = RootRoute.path;
-
+// 白名单路由列表，无需权限即可访问的页面
 const whitePathList: PageEnum[] = [LOGIN_PATH, MOD_PWD_PAGE];
 
 export function createPermissionGuard(router: Router) {
@@ -22,9 +19,9 @@ export function createPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     if (
       from.path === ROOT_PATH &&
-      to.path === PageEnum.BASE_HOME &&
+      to.path === HOME_PATH &&
       userStore.getUserInfo.homePath &&
-      userStore.getUserInfo.homePath !== PageEnum.BASE_HOME
+      userStore.getUserInfo.homePath !== HOME_PATH
     ) {
       next(userStore.getUserInfo.homePath);
       return;
@@ -92,9 +89,9 @@ export function createPermissionGuard(router: Router) {
     if (
       from.path === LOGIN_PATH &&
       to.name === PAGE_NOT_FOUND_ROUTE.name &&
-      to.fullPath !== (userStore.getUserInfo.homePath || PageEnum.BASE_HOME)
+      to.fullPath !== (userStore.getUserInfo.homePath || HOME_PATH)
     ) {
-      next(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
+      next(userStore.getUserInfo.homePath || HOME_PATH);
       return;
     }
 
