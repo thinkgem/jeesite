@@ -62,7 +62,9 @@ public class ExcelImport implements Closeable {
 	 * 存储字段类型临时数据
 	 */
 	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
-	
+
+	private static Class dictUtilsClass = null;
+
 	/**
 	 * 构造函数
 	 * @param path 导入文件对象，读取第一个工作表
@@ -75,7 +77,7 @@ public class ExcelImport implements Closeable {
 	
 	/**
 	 * 构造函数
-	 * @param path 导入文件对象，读取第一个工作表
+	 * @param file 导入文件对象，读取第一个工作表
 	 * @param headerNum 标题行数，数据行号=标题行数+1
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
@@ -87,7 +89,7 @@ public class ExcelImport implements Closeable {
 
 	/**
 	 * 构造函数
-	 * @param path 导入文件对象
+	 * @param file 导入文件对象
 	 * @param headerNum 标题行数，数据行号=标题行数+1
 	 * @param sheetIndexOrName 工作表编号或名称，从0开始
 	 * @throws InvalidFormatException 
@@ -100,7 +102,7 @@ public class ExcelImport implements Closeable {
 	
 	/**
 	 * 构造函数
-	 * @param file 导入文件对象
+	 * @param multipartFile 导入文件对象
 	 * @param headerNum 标题行数，数据行号=标题行数+1
 	 * @param sheetIndexOrName 工作表编号或名称，从0开始
 	 * @throws InvalidFormatException 
@@ -113,7 +115,7 @@ public class ExcelImport implements Closeable {
 
 	/**
 	 * 构造函数
-	 * @param path 导入文件对象
+	 * @param fileName 导入文件对象
 	 * @param headerNum 标题行数，数据行号=标题行数+1
 	 * @param sheetIndexOrName 工作表编号或名称
 	 * @throws InvalidFormatException 
@@ -357,6 +359,7 @@ public class ExcelImport implements Closeable {
 			}
 			ExcelField ef = f.getAnnotation(ExcelField.class);
 			addAnnotation(annotationList, ef, f, Type.IMPORT, groups);
+			ReflectUtils.makeAccessible(f);
 		}
 		// Get annotation method
 		Method[] ms = cls.getDeclaredMethods();
@@ -369,6 +372,7 @@ public class ExcelImport implements Closeable {
 			}
 			ExcelField ef = m.getAnnotation(ExcelField.class);
 			addAnnotation(annotationList, ef, m, Type.IMPORT, groups);
+			ReflectUtils.makeAccessible(m);
 		}
 		// Field sorting
 		Collections.sort(annotationList, new Comparator<Object[]>() {
@@ -397,15 +401,19 @@ public class ExcelImport implements Closeable {
 					// If is dict type, get dict value
 					if (StringUtils.isNotBlank(ef.dictType())){
 						try{
-							Class<?> dictUtils = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
-							val = dictUtils.getMethod("getDictValues", String.class, String.class,
-										String.class).invoke(null, ef.dictType(), val.toString(), "");
+							if (dictUtilsClass == null) {
+								dictUtilsClass = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
+							}
+							val = ReflectUtils.invokeMethodByAsm(dictUtilsClass, "getDictValues",
+									ef.dictType(), val.toString(), "");
+							//val = dictUtilsClass.getMethod("getDictValues", String.class, String.class,
+							//			String.class).invoke(null, ef.dictType(), val.toString(), "");
+							//val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
+							//log.debug("Dictionary type value: ["+i+","+colunm+"] " + val);
 						} catch (Exception ex) {
 							log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
 							val = null;
 						}
-						//val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
-						//log.debug("Dictionary type value: ["+i+","+colunm+"] " + val);
 					}
 					// Get param type and type cast
 					Class<?> valType = Class.class;
@@ -480,13 +488,15 @@ public class ExcelImport implements Closeable {
 						ReflectUtils.invokeSetter(e, ef.attrName(), val);
 					}else{
 						if (os[1] instanceof Field){
-							ReflectUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
+							//ReflectUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
+							((Field)os[1]).set(e, val);
 						}else if (os[1] instanceof Method){
-							String mthodName = ((Method)os[1]).getName();
-							if ("get".equals(mthodName.substring(0, 3))){
-								mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
-							}
-							ReflectUtils.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
+							//String mthodName = ((Method)os[1]).getName();
+							//if ("get".equals(mthodName.substring(0, 3))){
+							//	mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
+							//}
+							//ReflectUtils.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
+							((Method)os[1]).invoke(e, val);
 						}
 					}
 				}

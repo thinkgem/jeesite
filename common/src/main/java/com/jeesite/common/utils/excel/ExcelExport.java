@@ -4,44 +4,6 @@
  */
 package com.jeesite.common.utils.excel;
 
-import java.io.Closeable;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Comment;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -53,6 +15,22 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.FieldType;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
@@ -92,7 +70,9 @@ public class ExcelExport implements Closeable{
 	 * 存储字段类型临时数据
 	 */
 	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
-	
+
+	private static Class dictUtilsClass = null;
+
 	/**
 	 * 构造函数
 	 * @param title 表格标题，传“空值”，表示无标题
@@ -224,6 +204,7 @@ public class ExcelExport implements Closeable{
 			}
 			ExcelField ef = f.getAnnotation(ExcelField.class);
 			addAnnotation(annotationList, ef, f, type, groups);
+			ReflectUtils.makeAccessible(f);
 		}
 		// Get annotation method
 		Method[] ms = cls.getDeclaredMethods();
@@ -236,6 +217,7 @@ public class ExcelExport implements Closeable{
 			}
 			ExcelField ef = m.getAnnotation(ExcelField.class);
 			addAnnotation(annotationList, ef, m, type, groups);
+			ReflectUtils.makeAccessible(m);
 		}
 		// Field sorting
 		Collections.sort(annotationList, new Comparator<Object[]>() {
@@ -542,16 +524,22 @@ public class ExcelExport implements Closeable{
 						val = ReflectUtils.invokeGetter(e, ef.attrName());
 					}else{
 						if (os[1] instanceof Field){
-							val = ReflectUtils.invokeGetter(e, ((Field)os[1]).getName());
+							//val = ReflectUtils.invokeGetter(e, ((Field)os[1]).getName());
+							val = ((Field)os[1]).get(e);
 						}else if (os[1] instanceof Method){
-							val = ReflectUtils.invokeMethod(e, ((Method)os[1]).getName(), new Class[] {}, new Object[] {});
+							//val = ReflectUtils.invokeMethod(e, ((Method)os[1]).getName(), new Class[] {}, new Object[] {});
+							val = ((Method)os[1]).invoke(e);
 						}
 					}
 					// If is dict, get dict label
 					if (StringUtils.isNotBlank(ef.dictType())){
-						Class<?> dictUtils = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
-						val = dictUtils.getMethod("getDictLabels", String.class, String.class,
-									String.class).invoke(null, ef.dictType(), val==null?"":val.toString(), "");
+						if (dictUtilsClass == null) {
+							dictUtilsClass = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
+						}
+						val = ReflectUtils.invokeMethodByAsm(dictUtilsClass, "getDictLabels",
+									ef.dictType(), val == null ? "" : val.toString(), "");
+						//val = dictUtils.getMethod("getDictLabels", String.class, String.class,
+						//			String.class).invoke(null, ef.dictType(), val==null?"":val.toString(), "");
 						//val = DictUtils.getDictLabel(val==null?"":val.toString(), ef.dictType(), "");
 					}
 				}catch(Exception ex) {
@@ -611,7 +599,7 @@ public class ExcelExport implements Closeable{
 	
 	/**
 	 * 输出到文件
-	 * @param fileName 输出文件名
+	 * @param name 输出文件名
 	 */
 	public ExcelExport writeFile(String name) throws FileNotFoundException, IOException{
 		FileOutputStream os = new FileOutputStream(name);
