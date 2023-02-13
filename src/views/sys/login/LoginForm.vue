@@ -179,6 +179,11 @@
   onMounted(async () => {
     setTimeout(() => message.destroy());
     const res = await userInfoApi('none');
+    if (res.result == 'true') {
+      // 如果已经登录，根据业务需要，是否自动跳转到系统首页
+      const publicPath = import.meta.env.VITE_PUBLIC_PATH || '/';
+      window.location.href = publicPath.substring(1) + PageEnum.BASE_HOME;
+    }
     refreshValidCodeStatus(res);
   });
 
