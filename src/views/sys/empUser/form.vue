@@ -154,6 +154,15 @@
       },
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
+    {
+      label: t('性别'),
+      field: 'sex',
+      component: 'RadioGroup',
+      componentProps: {
+        dictType: 'sys_user_sex',
+      },
+      ifShow: () => op.value === 'add' || op.value === 'edit',
+    },
 
     {
       label: t('员工信息'),
