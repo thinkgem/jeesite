@@ -66,6 +66,10 @@ spring:
           - data-id: application.yml
             group: jeesite-cloud-yml
 
+    # 服务发现与注册优选IP前缀
+    #inetutils:
+    #  preferred-networks: 192.168.56.
+
   # 打印横幅
   main:
     bannerMode: "off"

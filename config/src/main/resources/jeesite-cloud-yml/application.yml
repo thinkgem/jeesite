@@ -227,6 +227,7 @@ seata:
       log-serialization: kryo
   registry:
     type: nacos
+    #preferred-networks: 192.168.*
     nacos:
       application: seata-server
       server-addr: 127.0.0.1:8848
