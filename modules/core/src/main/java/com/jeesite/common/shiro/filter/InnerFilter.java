@@ -29,7 +29,7 @@ public class InnerFilter extends AccessControlFilter {
 					"shiro.innerFilterAllowRemoteAddrs", "127.0.0.1"), ",");
 		}
 		if (prefixes != null && request instanceof HttpServletRequest){
-			String ip = ((HttpServletRequest)request).getRemoteAddr();
+			String ip = request.getRemoteAddr();
 			for (String prefix : prefixes){
 				result = StringUtils.startsWithIgnoreCase(ip, StringUtils.trim(prefix));
 				if (result){

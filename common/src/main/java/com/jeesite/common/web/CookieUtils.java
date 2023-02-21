@@ -4,12 +4,12 @@
  */
 package com.jeesite.common.web;
 
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.lang.StringUtils;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.lang.StringUtils;
 
 /**
  * Cookie工具类
@@ -31,8 +31,7 @@ public class CookieUtils {
 	 * 设置 Cookie
 	 * @param name 名称
 	 * @param value 值
-	 * @param maxAge 生存时间（单位秒）
-	 * @param uri 路径
+	 * @param path 路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, String path) {
 		setCookie(response, name, value, path, 60*60*24*30);
@@ -43,7 +42,6 @@ public class CookieUtils {
 	 * @param name 名称
 	 * @param value 值
 	 * @param maxAge 生存时间（单位秒）
-	 * @param uri 路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge) {
 		setCookie(response, name, value, "/", maxAge);
@@ -53,8 +51,8 @@ public class CookieUtils {
 	 * 设置 Cookie
 	 * @param name 名称
 	 * @param value 值
+	 * @param path 路径
 	 * @param maxAge 生存时间（单位秒）
-	 * @param uri 路径
 	 */
 	public static void setCookie(HttpServletResponse response, String name, String value, String path, int maxAge) {
 		if (StringUtils.isNotBlank(name)){
