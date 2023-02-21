@@ -4,22 +4,6 @@
  */
 package com.jeesite.common.shiro.realm;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ValidationException;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.cas.CasToken;
-import org.jasig.cas.client.authentication.AttributePrincipal;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
-import org.jasig.cas.client.validation.TicketValidationException;
-import org.jasig.cas.client.validation.TicketValidator;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.ObjectUtils;
@@ -35,6 +19,20 @@ import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.cas.CasToken;
+import org.jasig.cas.client.authentication.AttributePrincipal;
+import org.jasig.cas.client.validation.Assertion;
+import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
+import org.jasig.cas.client.validation.TicketValidationException;
+import org.jasig.cas.client.validation.TicketValidator;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ValidationException;
+import java.util.Map;
 
 /**
  * 系统认证授权实现类
@@ -181,20 +179,11 @@ public class CasAuthorizingRealm extends BaseAuthorizingRealm  {
 	
 	@Override
 	public void onLoginSuccess(LoginInfo loginInfo, HttpServletRequest request) {
-		super.onLoginSuccess(loginInfo, request);
-
 		// 单点登录登出句柄（登录时注入session），在这之前必须获取下授权信息
 		String ticket = loginInfo.getParam("ticket");
 		casOutHandler.recordSession(request, ticket);
 		//System.out.print("__sid: "+request.getSession().getId());
 		//System.out.println(" == "+UserUtils.getSession().getId());
-		
-		// 更新登录IP、时间、会话ID等
-		User user = UserUtils.get(loginInfo.getId());
-		getUserService().updateUserLoginInfo(user);
-		
-		// 记录用户登录日志
-		LogUtils.saveLog(user, ServletUtils.getRequest(), "系统登录", Log.TYPE_LOGIN_LOGOUT);
 	}
 	
 	@Override

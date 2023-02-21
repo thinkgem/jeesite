@@ -4,19 +4,19 @@
  */
 package com.jeesite.common.shiro.filter;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.lang.ExceptionUtils;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.jeesite.common.lang.ExceptionUtils;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * CAS过滤器
@@ -25,12 +25,15 @@ import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
  */
 @SuppressWarnings("deprecation")
 public class CasFilter extends org.apache.shiro.cas.CasFilter {
+
+	private BaseAuthorizingRealm authorizingRealm;
 	
 	/**
 	 * 登录成功调用事件
 	 */
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), (HttpServletRequest)request);
 		return FormFilter.onLoginSuccess((HttpServletRequest)request, (HttpServletResponse)response);
 	}
 	
@@ -66,7 +69,7 @@ public class CasFilter extends org.apache.shiro.cas.CasFilter {
 	}
 
 	public void setAuthorizingRealm(BaseAuthorizingRealm authorizingRealm) {
-		
+		this.authorizingRealm = authorizingRealm;
 	}
 
 }
