@@ -538,6 +538,9 @@ mybatis:
   
   # TypeHandlers 扫描基础包，如果多个，用“,”分隔
   scanTypeHandlersPackage: ~
+
+  # 自定义 Mapper 文件扫描路径，如果多个，用“,”分隔 v4.2.3
+  scanMapperLocations: classpath*:/mappings/**/*.xml
   
   # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
   jdbcTransaction: false
