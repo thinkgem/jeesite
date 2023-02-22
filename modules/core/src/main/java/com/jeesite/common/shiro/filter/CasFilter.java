@@ -7,6 +7,7 @@ package com.jeesite.common.shiro.filter;
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -34,7 +35,8 @@ public class CasFilter extends org.apache.shiro.cas.CasFilter {
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
 		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), (HttpServletRequest)request);
-		return FormFilter.onLoginSuccess((HttpServletRequest)request, (HttpServletResponse)response);
+		ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, getSuccessUrl());
+		return false;
 	}
 	
 	/**
@@ -44,12 +46,7 @@ public class CasFilter extends org.apache.shiro.cas.CasFilter {
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException ae, ServletRequest request, ServletResponse response) {
 		Subject subject = getSubject(request, response);
 		if (subject.isAuthenticated() || subject.isRemembered()) {
-			try {
-				// AJAX不支持Redirect改用Forward
-				request.getRequestDispatcher(getSuccessUrl()).forward(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, getSuccessUrl());
 			return false;
 		} else {
 			try {
