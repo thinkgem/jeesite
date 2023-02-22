@@ -100,7 +100,11 @@ public class ServletUtils {
 			if (ServletUtils.isAjaxRequest(request)){
 				request.getRequestDispatcher(url).forward(request, response); // AJAX不支持Redirect改用Forward
 			}else{
-				response.sendRedirect(request.getContextPath() + url);
+				if (StringUtils.contains(url, "://")){
+					response.sendRedirect(url);
+				}else{
+					response.sendRedirect(request.getContextPath() + url);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
