@@ -4,29 +4,6 @@
  */
 package com.jeesite.common.shiro.filter;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.servlet.Cookie;
-import org.apache.shiro.web.servlet.SimpleCookie;
-import org.apache.shiro.web.servlet.Cookie.SameSiteOptions;
-import org.apache.shiro.web.util.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -43,6 +20,27 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.Cookie.SameSiteOptions;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * 表单验证（包含验证码）过滤类
@@ -59,7 +57,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	
 	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
 	private static FormFilter instance;
-	
+
 	private BaseAuthorizingRealm authorizingRealm;
 	private Cookie rememberUserCodeCookie; 	// 记住用户名Cookie
 	
@@ -295,15 +293,16 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	 * 登录成功调用事件
 	 */
 	@Override
-	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest servletRequest, ServletResponse response) throws Exception {
+		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		// 登录成功后初始化授权信息并处理登录后的操作
-		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), (HttpServletRequest)request);
-		// AJAX不支持Redirect改用Forward
-		try {
-			request.getRequestDispatcher(getSuccessUrl()).forward(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
+		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), request);
+		// 跳转到登录成功页面
+		String successUrl = getSuccessUrl(); // shiro.successUrl in application.yml
+		if (StringUtils.contains((request).getRequestURI(), "/oauth2/")) {
+			successUrl = Global.getConfig("oauth2.successUrl", successUrl);
 		}
+		ServletUtils.redirectUrl(request, (HttpServletResponse)response, successUrl);
 		return false;
 	}
 
@@ -330,14 +329,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		request.setAttribute(EXCEPTION_ATTRIBUTE_NAME, e);
 		request.setAttribute(MESSAGE_PARAM, message);
-		
-		// AJAX不支持Redirect改用Forward
-		try {
-			String loginFailureUrl = Global.getProperty("adminPath")+"/loginFailure";
-			request.getRequestDispatcher(loginFailureUrl).forward(request, response);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		// 跳转到登录失败页面
+		String loginFailureUrl = Global.getProperty("adminPath") + "/loginFailure";
+		ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, loginFailureUrl);
 		return false;
 	}
 	
