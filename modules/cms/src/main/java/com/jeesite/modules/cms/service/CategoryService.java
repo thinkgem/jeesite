@@ -4,18 +4,17 @@
  */
 package com.jeesite.modules.cms.service;
 
-import java.util.List;
-
-import org.apache.commons.text.StringEscapeUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.cms.dao.CategoryDao;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import org.apache.commons.text.StringEscapeUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 栏目表Service
@@ -75,7 +74,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@Override
 	protected void updateChildNode(Category childEntity, Category parentEntity) {
 		childEntity.setSite(parentEntity.getSite());
-		childEntity.getSqlMap().updateTreeDataExtSql("site_code = #{site.siteCode}");
+		childEntity.sqlMap().updateTreeDataExtSql("site_code = #{site.siteCode}");
 		super.updateChildNode(childEntity, parentEntity);
 	}
 

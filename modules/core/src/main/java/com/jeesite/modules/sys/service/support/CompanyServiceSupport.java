@@ -46,7 +46,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	 */
 	@Override
 	public void addDataScopeFilter(Company company, String ctrlPermi) {
-		company.getSqlMap().getDataScope().addFilter("dsf", "Company", "a.company_code",
+		company.sqlMap().getDataScope().addFilter("dsf", "Company", "a.company_code",
 				null, ctrlPermi, "office_user");
 	}
 

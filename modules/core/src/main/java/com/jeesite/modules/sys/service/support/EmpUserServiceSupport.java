@@ -72,10 +72,10 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	 */
 	@Override
 	public void addDataScopeFilter(EmpUser empUser, String ctrlPermi) {
-		empUser.getSqlMap().getDataScope().addFilter("dsfOffice",
+		empUser.sqlMap().getDataScope().addFilter("dsfOffice",
 				"Office", "e.office_code", "a.create_by", ctrlPermi, "office_user");
 		if (StringUtils.isNotBlank(EmpUtils.getCompany().getCompanyCode())){
-			empUser.getSqlMap().getDataScope().addFilter("dsfCompany",
+			empUser.sqlMap().getDataScope().addFilter("dsfCompany",
 					"Company", "e.company_code", "a.create_by", ctrlPermi, "office_user");
 		}
 	}

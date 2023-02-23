@@ -184,7 +184,7 @@ public class OfficeController extends BaseController {
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			officeService.addDataScopeFilter(office, ctrlPermi);
 		}
-		office.getSqlMap().getOrder().setOrderBy("a.tree_sorts");
+		office.sqlMap().getOrder().setOrderBy("a.tree_sorts");
 		List<Office> list = officeService.findList(office);
 		String fileName = "机构数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
 		try(ExcelExport ee = new ExcelExport("机构数据", Office.class)){

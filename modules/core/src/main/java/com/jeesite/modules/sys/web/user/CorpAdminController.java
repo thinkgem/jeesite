@@ -77,7 +77,7 @@ public class CorpAdminController extends BaseController {
 	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response) {
 		user.setMgrType(User.MGR_TYPE_CORP_ADMIN);	// 租户管理员
 		// 禁用自动添加租户代码条件，添加自定义租户查询条件
-		user.getSqlMap().getWhere().disableAutoAddCorpCodeWhere()
+		user.sqlMap().getWhere().disableAutoAddCorpCodeWhere()
 			.and("corp_code", QueryType.EQ, user.getCorpCode_())
 			.and("corp_name", QueryType.LIKE, user.getCorpName_());
 		user.setPage(new Page<>(request, response));

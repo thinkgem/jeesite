@@ -72,11 +72,11 @@ public class Post extends DataEntity<Post> {
 	}
 	
 	public String getPostName_like() {
-		return getSqlMap().getWhere().getValue("post_name", QueryType.LIKE);
+		return sqlMap().getWhere().getValue("post_name", QueryType.LIKE);
 	}
 
 	public void setPostName_like(String roleName) {
-		getSqlMap().getWhere().and("post_name", QueryType.LIKE, roleName);
+		sqlMap().getWhere().and("post_name", QueryType.LIKE, roleName);
 	}
 	
 	@Size(min=0, max=100, message="岗位分类长度不能超过 100 个字符")

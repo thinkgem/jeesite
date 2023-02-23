@@ -48,7 +48,7 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 	 */
 	@Override
 	public void addDataScopeFilter(Office office, String ctrlPermi) {
-		office.getSqlMap().getDataScope().addFilter("dsf", "Office", "a.office_code",
+		office.sqlMap().getDataScope().addFilter("dsf", "Office", "a.office_code",
 				null, ctrlPermi , "office_user");
 	}
 
