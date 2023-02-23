@@ -7,7 +7,6 @@ package com.jeesite.modules.sys.web.user;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -56,7 +55,7 @@ public class UserController extends BaseController {
 //		if (User.USER_TYPE_NONE.equals(user.getUserType())){
 //			return new Page<User>(request, response);
 //		}
-		if (Global.isStrictMode() && !user.getCurrentUser().isAdmin()){
+		if (Global.isStrictMode() && !user.currentUser().isAdmin()){
 			return new Page<User>(request, response);
 		}
 		user.setPage(new Page<>(request, response));

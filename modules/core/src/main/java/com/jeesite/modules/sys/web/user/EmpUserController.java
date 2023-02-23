@@ -286,7 +286,7 @@ public class EmpUserController extends BaseController {
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
-		if (empUser.getCurrentUser().getUserCode().equals(empUser.getUserCode())) {
+		if (empUser.currentUser().getUserCode().equals(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
 		}
 		empUser.setStatus(User.STATUS_DISABLE);
@@ -350,7 +350,7 @@ public class EmpUserController extends BaseController {
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
-		if (empUser.getCurrentUser().getUserCode().equals(empUser.getUserCode())) {
+		if (empUser.currentUser().getUserCode().equals(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, text("删除用户失败，不允许删除当前用户"));
 		}
 		empUserService.delete(empUser);

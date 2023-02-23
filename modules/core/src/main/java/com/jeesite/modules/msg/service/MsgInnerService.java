@@ -83,7 +83,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	@Transactional
 	public void save(MsgInner msgInner) {
 		if (msgInner.getIsNewRecord()){
-			User user = msgInner.getCurrentUser();
+			User user = msgInner.currentUser();
 			msgInner.setSendUserCode(user.getUserCode());
 			msgInner.setSendUserName(user.getUserName());
 			// 没有设置状态，则默认新增后是草稿状态
@@ -206,7 +206,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	public void readMsgInnerRecord(MsgInner msgInner){
 		MsgInnerRecord msgInnerRecord = new MsgInnerRecord();
 		msgInnerRecord.setMsgInnerId(msgInner.getId());
-		msgInnerRecord.setReceiveUserCode(msgInner.getCurrentUser().getUserCode());
+		msgInnerRecord.setReceiveUserCode(msgInner.currentUser().getUserCode());
 		msgInnerRecord.setReadStatus(MsgInnerRecord.READ_STATUS_READ);
 		msgInnerRecord.setReadDate(new Date());
 		msgInnerRecordDao.updateReadStatus(msgInnerRecord);

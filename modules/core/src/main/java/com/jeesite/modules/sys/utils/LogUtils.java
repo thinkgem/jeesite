@@ -103,7 +103,7 @@ public class LogUtils {
 			log.setCorpName(user.getCorpName());
 		}
 		log.setExecuteTime(executeTime);
-		log.setCurrentUser(user);
+		log.currentUser(user);
         log.preInsert();
         
         // 获取异常对象

@@ -34,8 +34,8 @@ public class LogServiceSupport extends CrudService<LogDao, Log>
 //			log.setCreateDate_lte(DateUtils.addDays(DateUtils.addMonths(log.getCreateDate_gte(), 1), -1));
 //		}
 		// 普通用户看自己的，管理员看全部的。
-		if (!log.getCurrentUser().isAdmin()){
-			log.setCreateBy(log.getCurrentUser().getUserCode());
+		if (!log.currentUser().isAdmin()){
+			log.setCreateBy(log.currentUser().getUserCode());
 		}
 		return super.findPage(log);
 	}

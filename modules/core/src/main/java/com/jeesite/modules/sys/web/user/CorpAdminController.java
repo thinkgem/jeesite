@@ -65,8 +65,8 @@ public class CorpAdminController extends BaseController {
 		user.setCorpCode(null);
 		user.setCorpName(null);
 		model.addAttribute("user", user);
-		model.addAttribute("currentCorpCode", user.getCurrentUser().getCorpCode_());
-		model.addAttribute("currentCorpName", user.getCurrentUser().getCorpName_());
+		model.addAttribute("currentCorpCode", user.currentUser().getCorpCode_());
+		model.addAttribute("currentCorpName", user.currentUser().getCorpName_());
 		model.addAttribute("useCorpModel", Global.getConfigToBoolean("user.useCorpModel", "false"));
 		return "modules/sys/user/corpAdminList";
 	}
@@ -113,7 +113,7 @@ public class CorpAdminController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated User user, String op, HttpServletRequest request) {
-		if (!user.getCurrentUser().isSuperAdmin()){
+		if (!user.currentUser().isSuperAdmin()){
 			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
 		}
 		if (User.isSuperAdmin(user.getUserCode())) {
@@ -175,7 +175,7 @@ public class CorpAdminController extends BaseController {
 		if (User.isSuperAdmin(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
-		if (user.getCurrentUser().getUserCode().equals(user.getUserCode())) {
+		if (user.currentUser().getUserCode().equals(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
 		}
 		user.setStatus(User.STATUS_DISABLE);
@@ -228,7 +228,7 @@ public class CorpAdminController extends BaseController {
 		if (User.isSuperAdmin(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
-		if (user.getCurrentUser().getUserCode().equals(user.getUserCode())) {
+		if (user.currentUser().getUserCode().equals(user.getUserCode())) {
 			return renderResult(Global.FALSE, text("删除用户失败，不允许删除当前用户"));
 		}
 		if (User.USER_TYPE_NONE.equals(user.getUserType())){

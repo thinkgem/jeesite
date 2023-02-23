@@ -4,22 +4,6 @@
  */
 package com.jeesite.modules.cms.web;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
@@ -33,6 +17,20 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.FileTempleteService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 文章表Controller
@@ -100,12 +98,12 @@ public class ArticleController extends BaseController {
 		if (!(isAll != null && isAll)) {
 			articleService.addDataScopeFilter(article);
 		}
-		if (!article.getCurrentUser().isAdmin()) {
+		if (!article.currentUser().isAdmin()) {
 			// 如果没有审核权限，或者 草稿状态的文章 则只查看自己创建的文章。
 			if (!UserUtils.getSubject().isPermitted("cms:article:audit")) {
-				article.setCreateBy(article.getCurrentUser().getUserCode());
+				article.setCreateBy(article.currentUser().getUserCode());
 			} else if (Article.STATUS_DRAFT.equals(article.getStatus())) {
-				article.setCreateBy(article.getCurrentUser().getUserCode());
+				article.setCreateBy(article.currentUser().getUserCode());
 			}
 		}
 		Page<Article> page = articleService.findPage(article);

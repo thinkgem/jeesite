@@ -67,7 +67,7 @@ public class MsgInnerController extends BaseController {
 	public Page<MsgInner> listData(MsgInner msgInner, HttpServletRequest request, HttpServletResponse response) {
 		msgInner.setPage(new Page<>(request, response));
 		msgInner.setRecord(new MsgInnerRecord());
-		msgInner.getRecord().setReceiveUserCode(msgInner.getCurrentUser().getUserCode());
+		msgInner.getRecord().setReceiveUserCode(msgInner.currentUser().getUserCode());
 		Page<MsgInner> page = msgInnerService.findPage(msgInner);
 		return page;
 	}
