@@ -86,13 +86,6 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		
-		<!-- Core Extend
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-core-extend</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency> -->
-		
 	</dependencies>
 	
 	<developers>  

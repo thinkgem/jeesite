@@ -33,18 +33,18 @@ public class EmailUtils {
 		return send(fromAddress, fromPassword, fromHostName, smtpPort, sslOnConnect, sslSmtpPort, toAddress, subject, content);
 	}
 
-	/**
-	 * 发送邮件
-	 * @param toAddress 接收地址
-	 * @param subject 标题
-	 * @param content 内容
-	 * @return
-	 */
-	@Deprecated
-	public static boolean send(String fromAddress, String fromPassword, String fromHostName,
-							   String sslOnConnect, String sslSmtpPort, String toAddress, String subject, String content) {
-		return send(fromAddress, fromPassword, fromHostName, 25, sslOnConnect, sslSmtpPort, toAddress, subject, content);
-	}
+//	/**
+//	 * 发送邮件
+//	 * @param toAddress 接收地址
+//	 * @param subject 标题
+//	 * @param content 内容
+//	 * @return
+//	 */
+//	@Deprecated
+//	public static boolean send(String fromAddress, String fromPassword, String fromHostName,
+//							   String sslOnConnect, String sslSmtpPort, String toAddress, String subject, String content) {
+//		return send(fromAddress, fromPassword, fromHostName, 25, sslOnConnect, sslSmtpPort, toAddress, subject, content);
+//	}
 
 	/**
 	 * 发送邮件
