@@ -4,24 +4,6 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import io.swagger.annotations.Api;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -34,6 +16,22 @@ import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.AreaUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 区域Controller
@@ -108,7 +106,7 @@ public class AreaController extends BaseController {
 				|| StringUtils.isNotBlank(area.getAreaName())){
 			area.setParentCode(null);
 		}
-		area.setPage(new Page<>(request, response, !area.getIsRoot() ? Page.PAGE_SIZE_NOT_PAGING : null));
+		area.setPage(new Page<>(request, response, area.getIsRoot()));
 		Page<Area> page = areaService.findPage(area);
 		return page;
 	}
