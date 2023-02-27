@@ -4,20 +4,6 @@
  */
 package com.jeesite.modules.cms.web;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -33,6 +19,20 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.utils.DictUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 栏目表Controller
@@ -252,7 +252,7 @@ public class CategoryController extends BaseController {
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @return
 	 */
-	@RequiresPermissions("cms:category:view")
+	@RequiresPermissions(value = {"cms:category:view", "cms:article:view"}, logical = Logical.OR)
 	@RequestMapping(value = "treeData")
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String siteCode, String module, String excludeCode, Boolean isAll, String isShowCode) {
