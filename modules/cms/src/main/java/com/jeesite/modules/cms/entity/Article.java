@@ -4,13 +4,6 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
@@ -19,6 +12,11 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.modules.cms.utils.CmsUtils;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * 文章表Entity
@@ -83,11 +81,12 @@ public class Article extends DataEntity<Article> {
 	private Integer wordCount; 			// 字数（不包含html）
 	private String customContentView; 	// 自定义内容视图
 	private String viewConfig; 			// 视图配置
+
 	private ArticleData articleData; 	//文章副表
+	private Boolean isQueryArticleData; // 是否查询文章内容
+
 	private Date beginDate; 			// 开始时间
 	private Date endDate; 				// 结束时间
-
-	private Boolean isQueryArticleData; // 是否查询文章内容
 
 	public Article() {
 		super();
@@ -223,8 +222,6 @@ public class Article extends DataEntity<Article> {
 		this.hits = hits;
 	}
 
-	
-
 	public Integer getHitsPlus() {
 		return hitsPlus;
 	}
@@ -275,6 +272,18 @@ public class Article extends DataEntity<Article> {
 		this.articleData = articleData;
 	}
 
+	/**
+	 * 是否查询文章内容
+	 * @return
+	 */
+	public Boolean getIsQueryArticleData() {
+		return isQueryArticleData;
+	}
+
+	public void setIsQueryArticleData(Boolean isQueryArticleData) {
+		this.isQueryArticleData = isQueryArticleData;
+	}
+
 	public Date getBeginDate() {
 		return beginDate;
 	}
@@ -290,20 +299,6 @@ public class Article extends DataEntity<Article> {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-	/**
-	 * 是否查询文章内容
-	 * @return
-	 */
-	public Boolean getIsQueryArticleData() {
-		return isQueryArticleData;
-	}
-
-	public void setIsQueryArticleData(Boolean isQueryArticleData) {
-		this.isQueryArticleData = isQueryArticleData;
-	}
-
-	 
 
 	public String getUrl() {
 		return CmsUtils.getUrlDynamic(this);

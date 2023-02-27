@@ -2,15 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeesite.modules.cms.dao.ArticleDao">
 	
-	<!-- 查询数据
-	<select id="findList" resultType="CmsArticle">
+	<!-- 查询数据 -->
+	<select id="findList" resultType="Article">
 		SELECT ${sqlMap.column.toSql()}
+			<if test="isQueryArticleData">,
+				ad.content AS "articleData.content",
+				ad.relation AS "articleData.relation",
+				ad.is_can_comment AS "articleData.isCanComment"
+			</if>
 		FROM ${sqlMap.table.toSql()}
+		<if test="isQueryArticleData">
+			JOIN ${_prefix}cms_article_data ad ON ad.id = a.id
+		</if>
 		<where>
 			${sqlMap.where.toSql()}
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
-	</select> -->
+	</select>
 	
 	<update id="updateExpiredWeight">
 		update ${_prefix}cms_article SET weight = 0

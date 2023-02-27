@@ -79,7 +79,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	/**
 	 * 查询分页数据
 	 * @param article 查询条件
-	 * @param article.page 分页对象
+	 * @param article page 分页对象
 	 * @return
 	 */
 	@Override
