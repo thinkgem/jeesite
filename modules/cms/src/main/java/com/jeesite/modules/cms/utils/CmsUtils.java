@@ -4,14 +4,6 @@
  */
 package com.jeesite.modules.cms.utils;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletContext;
-
-import org.springframework.ui.Model;
-
 import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
@@ -26,6 +18,12 @@ import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
+import org.springframework.ui.Model;
+
+import javax.servlet.ServletContext;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * CmsUtils
@@ -191,7 +189,7 @@ public class CmsUtils {
 	 * @param siteCode 站点编号
 	 * @param categoryCode 分类编号
 	 * @param number 获取数目
-	 * @param param 预留参数，例： key1:'value1', key2:'value2' ...<br>
+	 * @param params 预留参数，例： key1:'value1', key2:'value2' ...<br>
 	 *        posid : 推荐位（1：首页焦点图；2：栏目页文章推荐；）<br>
 	 *        image : 文章图片（1：有图片的文章）<br>
 	 *        isQueryArticleData : 是否查询文章详情信息，查询会影响效率<br>
