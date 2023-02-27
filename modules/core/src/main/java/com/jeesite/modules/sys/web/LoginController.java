@@ -194,6 +194,7 @@ public class LoginController extends BaseController{
 		model.addAttribute("useCorpModel", Global.isUseCorpModel());
 		model.addAttribute("currentCorpCode", CorpUtils.getCurrentCorpCode());
 		model.addAttribute("currentCorpName", CorpUtils.getCurrentCorpName());
+		model.addAttribute("msgEnabled", Global.getPropertyToBoolean("msg.enabled", "false"));
 		model.addAttribute("sysCode", session.getAttribute("sysCode"));
 
 		// 是否是登录操作
