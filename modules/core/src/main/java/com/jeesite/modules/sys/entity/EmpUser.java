@@ -4,8 +4,6 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import javax.validation.Valid;
-
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
@@ -19,6 +17,9 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.CompanyType;
 import com.jeesite.common.utils.excel.fieldtype.OfficeType;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.Valid;
 
 /**
  * 员工用户管理Entity
@@ -123,7 +124,8 @@ public class EmpUser extends User {
 	public void setEmployee(Employee employee){
 		super.setRefObj(employee);
 	}
-	
+
+	@ApiModelProperty("根据各种编码查询")
 	public String[] getCodes() {
 		return codes;
 	}

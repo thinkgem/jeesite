@@ -4,12 +4,6 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
@@ -19,6 +13,11 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * 员工管理Entity
@@ -130,6 +129,7 @@ public class Employee extends DataEntity<Employee> {
 		this.company = company;
 	}
 
+	@ApiModelProperty("根据岗位编码查询")
 	public String getPostCode() {
 		return postCode;
 	}
@@ -146,6 +146,7 @@ public class Employee extends DataEntity<Employee> {
 		this.employeePostList = employeePostList;
 	}
 
+	@ApiModelProperty("员工岗位关系")
 	public String getEmployeePosts() {
 		List<String> list = ListUtils.extractToList(employeePostList, "postCode");
 		return StringUtils.join(list, ",");

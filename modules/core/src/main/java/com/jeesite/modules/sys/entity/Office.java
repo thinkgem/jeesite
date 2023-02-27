@@ -4,10 +4,6 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
@@ -20,6 +16,11 @@ import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * 组织机构Entity
@@ -137,7 +138,8 @@ public class Office extends TreeEntity<Office> {
 	public void setOfficeType(String officeType) {
 		this.officeType = officeType;
 	}
-	
+
+	@ApiModelProperty("包含某机构类型")
 	public String[] getOfficeType_in(){
 		return sqlMap.getWhere().getValue("office_type", QueryType.IN);
 	}
@@ -198,7 +200,8 @@ public class Office extends TreeEntity<Office> {
 	public void setExtend(Extend extend) {
 		this.extend = extend;
 	}
-	
+
+	@ApiModelProperty("公司编码")
 	public String getCompanyCode() {
 		return companyCode;
 	}

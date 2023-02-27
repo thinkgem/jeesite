@@ -4,15 +4,16 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Table(name="${_prefix}sys_post", alias="a", label="岗位信息", columns={
 		@Column(includeEntity=BaseEntity.class),
@@ -70,7 +71,8 @@ public class Post extends DataEntity<Post> {
 	public void setPostName(String postName) {
 		this.postName = postName;
 	}
-	
+
+	@ApiModelProperty("模糊查询岗位名称")
 	public String getPostName_like() {
 		return sqlMap().getWhere().getValue("post_name", QueryType.LIKE);
 	}
@@ -96,6 +98,7 @@ public class Post extends DataEntity<Post> {
 		this.postSort = postSort;
 	}
 
+	@ApiModelProperty("根据员工编码查询")
 	public String getEmpCode() {
 		return empCode;
 	}
