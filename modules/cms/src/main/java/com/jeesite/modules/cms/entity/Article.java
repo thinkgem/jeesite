@@ -43,7 +43,12 @@ import java.util.Date;
 		@Column(name = "word_count", attrName = "wordCount", label = "字数", comment = "字数（不包含html）"),
 		@Column(name = "custom_content_view", attrName = "customContentView", label = "自定义内容视图"),
 		@Column(name = "view_config", attrName = "viewConfig", label = "视图配置"),
-		@Column(includeEntity = DataEntity.class),
+		@Column(name="status", 		attrName="status", 		label="状态", isUpdate=false),
+		@Column(name="create_by", 	attrName="createBy", 	label="创建者", isUpdate=true),
+		@Column(name="create_date", attrName="createDate", 	label="创建时间", isUpdate=false, isQuery=false),
+		@Column(name="update_by", 	attrName="updateBy", 	label="更新者", isUpdate=true),
+		@Column(name="update_date", attrName="updateDate", 	label="更新时间", isUpdate=true, isQuery=false),
+		@Column(name="remarks", 	attrName="remarks", 	label="备注信息", queryType=QueryType.LIKE),
 		@Column(includeEntity = BaseEntity.class),
 	}, joinTable = {
 		@JoinTable(entity = Category.class, alias = "c",
