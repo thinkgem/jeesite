@@ -28,7 +28,7 @@
 		
 		<!-- docker setting -->
         <docker.run.port>8980:8980</docker.run.port>
-		
+
 	</properties>
 
 	<dependencies>
@@ -37,6 +37,11 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty</artifactId>
+			<version>1.30.2</version>
 		</dependency>
 		
 		<!-- 流量防卫兵 -->
