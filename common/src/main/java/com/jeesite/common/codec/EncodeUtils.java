@@ -5,15 +5,10 @@
  */
 package com.jeesite.common.codec;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.lang.ExceptionUtils;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.http.ServletUtils;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -21,9 +16,13 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.lang.ExceptionUtils;
-import com.jeesite.common.lang.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 封装各种格式的编码解码工具类.
@@ -238,7 +237,8 @@ public class EncodeUtils {
 					&& !StringUtils.contains(value, "id=\"FormHtml\"") 		// JFlow
 					&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
 					&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
-					&& !(request != null && StringUtils.contains(request.getRequestURI(), "/ureport/")) // UReport
+					&& !(StringUtils.containsAny((request != null ? request : ServletUtils.getRequest())
+							.getRequestURI(), "/ureport/", "/visual/")) // UReport、Visual
 				){
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < value.length(); i++) {
