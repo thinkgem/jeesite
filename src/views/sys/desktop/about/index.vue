@@ -57,17 +57,22 @@
     {
       label: '文档地址',
       field: 'doc',
-      render: commonLinkRender('文档地址'),
+      render: commonLinkRender(DOC_URL),
     },
     {
       label: '官方网站',
       field: 'preview',
-      render: commonLinkRender('官方网站'),
+      render: commonLinkRender(SITE_URL),
     },
     {
       label: 'Gitee',
       field: 'github',
       render: commonLinkRender('https://gitee.com/thinkgem'),
+    },
+    {
+      label: '联系我',
+      field: 'linker',
+      render: commonLinkRender('http://s.jeesite.com'),
     },
   ];
 
