@@ -100,11 +100,13 @@
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <GithubFilled />
-      <WechatFilled />
-      <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
+      <Icon icon="ant-design:qq-circle-filled" size="28" />
+      <Icon icon="ant-design:wechat-filled" size="28" />
+      <Icon icon="ant-design:github-filled" size="28" />
+      <a href="https://gitee.com/thinkgem/jeesite-client" target="_blank">
+        <Icon icon="ant-design:windows-filled" size="28" style="vertical-align: middle" />
+        <span class="pl-1" style="vertical-align: middle">客户端下载</span>
+      </a>
     </div>
   </Form>
 </template>
@@ -112,13 +114,7 @@
   import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
 
   import { Checkbox, Form, Input, Row, Col, Button, Divider, message } from 'ant-design-vue';
-  import {
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
-  } from '@ant-design/icons-vue';
+  import { Icon } from '/@/components/Icon';
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
