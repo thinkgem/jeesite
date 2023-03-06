@@ -82,7 +82,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	/**
 	 * 查询分页数据
 	 * @param ${className} 查询条件
-	 * @param ${className}.page 分页对象
+	 * @param ${className} page 分页对象
 	 * @return
 	 */
 	@Override
