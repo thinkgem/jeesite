@@ -366,8 +366,8 @@ shiro:
     # 登录提交信息安全Key，加密用户名、密码、验证码，后再提交（key设置为3个，用逗号分隔）
     secretKey: Base64
   
-  # 是否允许跨域访问，如果允许，设置允许的域名，全部域名设置*号，如果不允许，此设置应该为空
-  accessControlAllowOrigin: '*'
+  # 关闭各自微服务的跨域设置，因为已经在 GatewayCorsFilter 类里全局启用跨域，如果不想跨域，可删除该类
+  accessControlAllowOrigin: ~
   
   # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
   innerFilterAllowRemoteAddrs: 127.0.0.1,10.,172.,192.

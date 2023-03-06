@@ -17,4 +17,4 @@ ENTRYPOINT jar -xvf app.war && rm app.war && cd WEB-INF && sh startup.sh
 
 EXPOSE 9311
 
-#docker run -p 9311:9311 thinkgem/jeesite-cloud-sentinel:5.1
+#docker run -p 9311:9311 thinkgem/jeesite-cloud-sentinel:5.3
