@@ -18,4 +18,4 @@ ENTRYPOINT jar -xvf app.war && rm app.war && cd WEB-INF && sh startup.sh
 
 EXPOSE 8980
 
-#docker run -p 8980:8980 thinkgem/jeesite-web:5.1
+#docker run -p 8980:8980 thinkgem/jeesite-web:5.3
