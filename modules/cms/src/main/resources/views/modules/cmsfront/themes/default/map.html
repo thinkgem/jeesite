@@ -1,6 +1,6 @@
 <% layout('layouts/default.html', {title: '站点地图', libs: []}){ %>
 <style type="text/css">
-	h2 {padding-left:10px;}
+	h2 {padding-left:10px;text-align:center;}
 	h3.title {padding:5px 5px;margin:15px 8px 10px;}
 	dl.map{border:1px solid #ddd;border-top:0;margin:10px 8px 8px;}
 	dl.map dt{border-top:1px solid #ddd;padding:10px 15px;} dl.map dd{margin:20px 30px 30px;}
@@ -8,7 +8,7 @@
 	dl.map span:hover{border:1px solid #bbb;background:#f1f1f1;}
 	dl.map span a:hover{text-decoration:none;color:#333;}
 </style>
-<div class="row">
+<div class="row main">
 	<h2>站点地图</h2>
 	<#html:foreach items="${siteList()}" var="site">
 		<h3 class="title breadcrumb">${site.siteName}</h3>

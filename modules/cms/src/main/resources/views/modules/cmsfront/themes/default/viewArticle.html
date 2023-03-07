@@ -1,6 +1,6 @@
 <% layout('layouts/default.html', {title:'文章查看',libs: []}){ %>
 <% include('include/banner.html'){} %>
-<div class="row article-view">
+<div class="row main article-view">
 	<h3 class="article-title">${article.title}</h3>
 	<blockquote class="article-desc">摘要：${article.description}</blockquote>
 	<div class="article-content uparse">${article.articleData.content}</div>
