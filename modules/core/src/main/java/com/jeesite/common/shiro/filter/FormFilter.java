@@ -71,7 +71,8 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		rememberUserCodeCookie.setPath(Global.getProperty("session.sessionIdCookiePath"));
 		rememberUserCodeCookie.setSecure(Global.getPropertyToBoolean("session.sessionIdCookieSecure", "false"));
 		rememberUserCodeCookie.setHttpOnly(Global.getPropertyToBoolean("session.sessionIdCookieHttpOnly", "true"));
-		rememberUserCodeCookie.setSameSite(SameSiteOptions.valueOf(Global.getProperty("session.sessionIdCookieSameSite", "LAX")));
+		String sameSite = Global.getProperty("session.sessionIdCookieSameSite", "Lax"); // Null、None、Lax、Strict
+		rememberUserCodeCookie.setSameSite(!"Null".equalsIgnoreCase(sameSite) ? SameSiteOptions.valueOf(StringUtils.upperCase(sameSite)) : null);
 		rememberUserCodeCookie.setMaxAge(Cookie.ONE_YEAR);
         instance = this;
 	}

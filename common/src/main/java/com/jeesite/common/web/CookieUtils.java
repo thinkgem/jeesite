@@ -5,6 +5,7 @@
 package com.jeesite.common.web;
 
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -58,10 +59,12 @@ public class CookieUtils {
 		if (StringUtils.isNotBlank(name)){
 			name = EncodeUtils.encodeUrl(name);
 			value = EncodeUtils.encodeUrl(value);
-			Cookie cookie = new Cookie(name, null);
+			Cookie cookie = new Cookie(name, value);
 			cookie.setPath(path);
 			cookie.setMaxAge(maxAge);
-			cookie.setValue(value);
+			PropertiesUtils props = PropertiesUtils.getInstance();
+			cookie.setSecure(props.getPropertyToBoolean("session.sessionIdCookieSecure", "false"));
+			cookie.setHttpOnly(props.getPropertyToBoolean("session.sessionIdCookieHttpOnly", "true"));
 			response.addCookie(cookie);
 		}
 	}
