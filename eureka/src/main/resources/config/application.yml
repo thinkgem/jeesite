@@ -41,7 +41,8 @@ eureka:
     # 由于注册中心的职责就是维护服务实例，它不需要去检索服务，所以设置为false
     fetchRegistry: false
     # 注册中心地址（集群时指定另外一个注册中心地址）
-    serviceUrl.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
 #======================================#
 #========== Spring settings ===========#
