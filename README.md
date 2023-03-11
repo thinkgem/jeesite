@@ -428,7 +428,7 @@ yarn build
     }
     // 子表验证事件，抛出异常消息
     if (!testDataChildListValid) {
-      throw new Error('testDataChildList valid.');
+      throw { errorFields: [{ name: ['testDataChildList'] }] };
     }
     return testDataChildList;
   }

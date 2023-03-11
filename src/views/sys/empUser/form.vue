@@ -349,7 +349,7 @@
       }
     }
     if (!employeeOfficeListValid) {
-      throw new Error('employeeOfficeList valid.');
+      throw { errorFields: [{ name: ['employeeOfficeList'] }] };
     }
     return employeeOfficeList;
   }

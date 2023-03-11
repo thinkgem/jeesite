@@ -499,6 +499,7 @@
   }
 
   .edit-cell-rule-popover {
+    left: 50px !important;
     .ant-popover-inner-content {
       padding: 4px 8px;
       color: @error-color;

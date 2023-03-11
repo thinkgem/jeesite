@@ -428,7 +428,7 @@
       });
     }
     if (!testDataChildListValid) {
-      throw new Error('testDataChildList valid.');
+      throw { errorFields: [{ name: ['testDataChildList'] }] };
     }
     return testDataChildList;
   }
