@@ -49,9 +49,13 @@
               :dictValue="getColumnValue(data)"
               :defaultValue="data.column.defaultValue"
             />
-            <slot v-else-if="data.column.slot" :name="data.column.slot" v-bind="data || {}"></slot>
+            <slot
+              v-else-if="data.column.slot"
+              :name="data.column.slot"
+              v-bind="getSlotData(data)"
+            ></slot>
           </template>
-          <slot v-else name="bodyCell" v-bind="data || {}"></slot>
+          <slot v-else name="bodyCell" v-bind="getSlotData(data)"></slot>
         </template>
       </ATable>
     </FormItemRest>
@@ -395,6 +399,18 @@
 
       emit('register', tableAction, formActions);
 
+      function getSlotData(data: Recordable) {
+        if (data) {
+          if (!data.record) {
+            data.record = {};
+          }
+          if (!data.record.dataMap) {
+            data.record.dataMap = {};
+          }
+        }
+        return data || {};
+      }
+
       return {
         formRef,
         tableElRef,
@@ -416,6 +432,7 @@
         columns: getViewColumns,
         getColumnValue,
         tableActions,
+        getSlotData,
       };
     },
   });
