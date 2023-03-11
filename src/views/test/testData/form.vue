@@ -392,7 +392,6 @@
 
   function handleTestDataChildRowClick(record: Recordable) {
     record.onEdit?.(true, false);
-    record.dataMap = record.dataMap || {};
   }
 
   function handleTestDataChildAdd() {
@@ -400,7 +399,6 @@
       id: new Date().getTime(),
       isNewRecord: true,
       editable: true,
-      dataMap: {},
     });
   }
 
