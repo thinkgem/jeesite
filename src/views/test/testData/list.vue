@@ -22,6 +22,7 @@
       </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
+    <InputFormTabs @register="registerDrawer2" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -43,6 +44,7 @@
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
+  import InputFormTabs from './formTabs.vue';
 
   const { t } = useI18n('test.testData');
   const { showMessage } = useMessage();
@@ -305,8 +307,14 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 160,
+    width: 180,
     actions: (record: Recordable) => [
+      {
+        icon: 'clarity:timeline-line',
+        title: t('页签方式编辑'),
+        onClick: handleForm2.bind(this, { id: record.id }),
+        auth: 'test:testData:edit',
+      },
       {
         icon: 'clarity:note-edit-line',
         title: t('编辑数据'),
@@ -349,6 +357,7 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
+  const [registerDrawer2, { openDrawer: openDrawer2 }] = useDrawer();
   const [registerTable, { reload }] = useTable({
     api: testDataListData,
     beforeFetch: (params) => {
@@ -364,6 +373,10 @@
 
   function handleForm(record: Recordable) {
     openDrawer(true, record);
+  }
+
+  function handleForm2(record: Recordable) {
+    openDrawer2(true, record);
   }
 
   async function handleDisable(record: Recordable) {
