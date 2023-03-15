@@ -9,6 +9,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
 源码仓库地址：<https://gitee.com/thinkgem/jeesite4-cloud>
+分离版前端源码仓库：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 优势（只写别人没有的）
 
@@ -21,13 +22,14 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 7. 微服务组件 Nacos、Sentinel、Zipkin 提供源码方式启动部署，方便开发调试。
 8. 写一个别人有的，使用柔性事务入侵性小，跨 web 服务的情况，支持单个微服务独立数据库。
 9. 集成工作流，提供BPM引擎独立的服务，客户端只需调用API，无需加载复杂流程引擎。
-10. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
+10. 支持两套前端技术选型实现，全栈版(Bootstrap+Beetl)、分离版（TS+Vue3+Antdv)。
+11. 其它优势（按 Ctrl + Shift 点击链接）：<http://jeesite.com/docs/feature/>
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud 2021.0.4 + Alibaba 2021.0.4
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.1
-* 分布式统一配置中心：Spring Cloud Config / Nacos 2.1
+* 分布式系统套件版本：Spring Cloud 2021.0.5 + Alibaba 2021.0.4
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.2
+* 分布式统一配置中心：Spring Cloud Config / Nacos 2.2
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
