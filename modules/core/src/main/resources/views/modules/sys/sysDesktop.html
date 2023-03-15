@@ -732,7 +732,9 @@ $(function(){
         var footerHeight = $('.main-footer').outerHeight() || 0;
         var windowHeight = $(window).height();
         $('.content').css('min-height', windowHeight - footerHeight);
-        myChart1.resize(); myChart2.resize(); myChart3.resize();
+        if(myChart1) myChart1.resize();
+        if(myChart2) myChart2.resize();
+        if(myChart3) myChart3.resize();
     }).resize();
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         $(window).resize();
