@@ -43,7 +43,6 @@ public class CmsUtils {
 
 	/**
 	 * 获得当前站点信息
-	 * @param siteCode 站点编号
 	 */
 	public static Site getCurrentSite() {
 		return getSite(Site.getCurrentSiteCode());
@@ -293,6 +292,26 @@ public class CmsUtils {
 			}
 		}
 		str.append("/list-").append(category.getCategoryCode()).append(".html");
+		return str.toString();
+	}
+
+	/**
+	 * 获得站点动态URL地址
+	 * @param site
+	 * @return url
+	 */
+	public static String getUrlDynamic(Site site) {
+		StringBuilder str = new StringBuilder();
+		str.append(Static.context.getContextPath()).append(Global.getFrontPath());
+		if (StringUtils.isNotBlank(site.getDomain())) {
+			if (site.getDomain().contains("://")) {
+				return site.getDomain();
+			} else {
+				str.append(site.getDomain());
+				return str.toString();
+			}
+		}
+		str.append("/index-").append(site.getSiteCode()).append(".html");
 		return str.toString();
 	}
 

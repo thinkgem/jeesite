@@ -4,19 +4,19 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * 站点表Entity
@@ -209,14 +209,15 @@ public class Site extends DataEntity<Site> {
 		this.categoryList = categoryList;
 	}
 
-	
-	
-
 	/**
 	 * 判断是否为当前站点
 	 */
 	public Boolean getIsCurrentSite(){
 		return getCurrentSiteCode().equals(siteCode);
+	}
+
+	public String getUrl() {
+		return CmsUtils.getUrlDynamic(this);
 	}
 	
 	/**

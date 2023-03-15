@@ -4,7 +4,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a href="${ctx}/index-${site.siteCode}" class="navbar-brand">${site.title}</a>
+      <a href="${site.url}" class="navbar-brand">${site.title}</a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -16,7 +16,7 @@
         <#html:foreach items="${categoryList(site.siteCode, '0', 4, '')}" var="c">
         	<#html:if test="${c.inMenu == @Global.YES}">
 	          <li class="${c.categoryCode == category.categoryCode! ? 'active' : ''}"><a
-	            href="${ctx}/list-${c.categoryCode}">${c.categoryName}</a></li>
+	            href="${c.url}">${c.categoryName}</a></li>
             </#html:if>
         </#html:foreach>
         <li><a href="http://s.jeesite.com" target="_blank">技术服务</a></li>
@@ -24,7 +24,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="站点">子站切换 <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <#html:foreach items="${siteList()}" var="site,status">
-              <li><a href="#" onclick="location='${ctx}/index-${site.id}'">${site.title}</a></li>
+              <li><a href="#" onclick="location='${site.url}'">${site.title}</a></li>
             </#html:foreach>
           </ul>
         </li>
