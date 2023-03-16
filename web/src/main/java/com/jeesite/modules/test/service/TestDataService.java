@@ -38,19 +38,25 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	 */
 	@Override
 	public TestData get(TestData testData) {
-		TestData entity = super.get(testData);
-		if (entity != null){
-			TestDataChild testDataChild = new TestDataChild(entity);
+		return super.get(testData);
+	}
+
+	/**
+	 * 加载子表数据
+	 */
+	public TestData loadChildData(TestData testData) {
+		if (testData != null && !testData.getIsNewRecord()){
+			TestDataChild testDataChild = new TestDataChild(testData);
 			testDataChild.setStatus(TestDataChild.STATUS_NORMAL);
-			entity.setTestDataChildList(testDataChildDao.findList(testDataChild));
+			testData.setTestDataChildList(testDataChildDao.findList(testDataChild));
 		}
-		return entity;
+		return testData;
 	}
 	
 	/**
 	 * 查询分页数据
-	 * @param page 分页对象
 	 * @param testData
+	 * @param testData page 分页对象
 	 * @return
 	 */
 	@Override
@@ -146,7 +152,7 @@ public class TestDataService extends CrudService<TestDataDao, TestData> {
 	/**
 	 * 事务测试，若 Child 报错，则回滚
 	 */
-	@Transactional//(propagation = Propagation.NOT_SUPPORTED)
+	@Transactional//(propagation=Propagation.NOT_SUPPORTED)
 	public void transTest(TestData testData) {
 		testData.setTestInput("transTest");
 		testData.setTestTextarea(IdGen.randomBase62(5));

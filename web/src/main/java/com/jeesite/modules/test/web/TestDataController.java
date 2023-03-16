@@ -4,11 +4,13 @@
  */
 package com.jeesite.modules.test.web;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.entity.TestDataChild;
+import com.jeesite.modules.test.service.TestDataService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.test.entity.TestData;
-import com.jeesite.modules.test.entity.TestDataChild;
-import com.jeesite.modules.test.service.TestDataService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 测试数据Controller
@@ -83,9 +82,10 @@ public class TestDataController extends BaseController {
 	 */
 	@RequiresPermissions("test:testData:view")
 	@RequestMapping(value = "form")
-	public String form(TestData testData, Model model) {
+	public String form(TestData testData, String flag, Model model) {
+		testDataService.loadChildData(testData);
 		model.addAttribute("testData", testData);
-		return "modules/test/testDataForm";
+		return "modules/test/testDataForm"+ StringUtils.defaultString(flag, "");
 	}
 
 	/**
