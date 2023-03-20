@@ -300,7 +300,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), request);
 		// 跳转到登录成功页面
 		String successUrl = getSuccessUrl(); // shiro.successUrl in application.yml
-		if (StringUtils.contains((request).getRequestURI(), "/oauth2/")) {
+		if (StringUtils.contains((request).getRequestURI(), "/oauth2/callback/")) {
 			successUrl = Global.getConfig("oauth2.successUrl", successUrl);
 		}
 		ServletUtils.redirectUrl(request, (HttpServletResponse)response, successUrl);
