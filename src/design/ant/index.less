@@ -68,3 +68,26 @@ span.anticon:not(.app-iconify) {
   border-top: 0 !important;
   border-left: 0 !important;
 }
+
+.ant-tree,
+.ant-select-tree {
+  // &-list-holder {
+  //   overflow-x: hidden !important;
+  // }
+  &-list-scrollbar-show {
+    display: block !important;
+    width: 6px !important;
+  }
+  &-list-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+html[data-theme='dark'] {
+  .ant-tree,
+  .ant-select-tree {
+    &-list-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2) !important;
+    }
+  }
+}

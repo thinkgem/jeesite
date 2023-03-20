@@ -60,7 +60,7 @@
       if (treeAction) {
         const children = await areaTreeData({ parentCode: treeNode.eventKey });
         treeAction.updateNodeByKey(treeNode.eventKey, { children });
-        treeAction.setExpandedKeys(uniq([treeNode.eventKey, ...treeAction.getExpandedKeys()]));
+        //treeAction.setExpandedKeys(uniq([treeNode.eventKey, ...treeAction.getExpandedKeys()]));
       }
       resolve();
       return;
