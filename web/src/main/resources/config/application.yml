@@ -697,8 +697,11 @@ session:
 # MyBatis 相关
 mybatis:
 
-  # @MyBatisDao、Aliases 扫描基础包，如果多个，用“,”分隔
-  scanBasePackage: com.jeesite.modules
+  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules.**.dao
+
+  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
+  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
 
 #  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
 #  scanTypeHandlersPackage: ~
