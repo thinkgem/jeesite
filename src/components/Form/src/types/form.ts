@@ -168,7 +168,7 @@ export interface FormSchema {
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
 
-  suffix?: string | number | ((values: RenderCallbackParams) => string | number);
+  suffix?: string | number | ((values: RenderCallbackParams) => string | number) | VNode | VNode[];
 
   // Validation rules
   rules?: Rule[];

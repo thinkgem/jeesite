@@ -64,6 +64,8 @@ export function useFormEvents({
         value = processNumberValue(value, component);
         value = processDateValue(value, component, props);
         // console.log('1', key, value);
+      } else if (key == 'dataMap') {
+        value = {};
       }
       formModel[key] = value;
       const labelKey = schema?.fieldLabel;

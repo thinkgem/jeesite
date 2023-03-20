@@ -16,32 +16,43 @@
       <Icon :icon="getTitle.icon" class="pr-1 m-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <BasicForm @register="registerForm">
-      <template #remarks="{ model, field }">
-        <WangEditor
-          v-model:value="model[field]"
-          :bizKey="record.id"
-          :bizType="'testDataChild_' + field"
-          :height="300"
-        />
-      </template>
-      <template #testDataChildList>
-        <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
-          <template #testDataChildUpload="{ record: childRecord }">
-            <BasicUpload
-              v-model:value="childRecord.dataMap"
-              :bizKey="childRecord.id"
-              :bizType="'testDataChild_file'"
-              :uploadType="'all'"
-              :loadTime="record.__t"
+    <Tabs v-model:activeKey="activeKey" tabPosition="left">
+      <Tabs.TabPane key="1" :forceRender="true" tab="基本信息">
+        <BasicForm @register="registerForm1">
+          <template #remarks="{ model, field }">
+            <WangEditor
+              v-model:value="model[field]"
+              :bizKey="record.id"
+              :bizType="'testDataChild_' + field"
+              :height="300"
             />
           </template>
-        </BasicTable>
-        <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
-          <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
-        </a-button>
-      </template>
-    </BasicForm>
+        </BasicForm>
+      </Tabs.TabPane>
+      <Tabs.TabPane key="2" :forceRender="true" tab="详细信息">
+        <BasicForm @register="registerForm2">
+          <template #testDataChildList>
+            <BasicTable
+              @register="registerTestDataChildTable"
+              @row-click="handleTestDataChildRowClick"
+            >
+              <template #testDataChildUpload="{ record: childRecord }">
+                <BasicUpload
+                  v-model:value="childRecord.dataMap"
+                  :bizKey="childRecord.id"
+                  :bizType="'testDataChild_file'"
+                  :uploadType="'all'"
+                  :loadTime="record.__t"
+                />
+              </template>
+            </BasicTable>
+            <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
+              <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+            </a-button>
+          </template>
+        </BasicForm>
+      </Tabs.TabPane>
+    </Tabs>
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -50,7 +61,8 @@
   });
 </script>
 <script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+  import { defineComponent, ref, computed, h } from 'vue';
+  import { Tabs } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -74,7 +86,9 @@
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
   }));
 
-  const inputFormSchemas: FormSchema[] = [
+  const activeKey = ref<string>('1');
+
+  const inputFormSchemas1: FormSchema[] = [
     {
       label: t('单行文本'),
       field: 'testInput',
@@ -85,12 +99,18 @@
       required: true,
     },
     {
+      field: 'testInputHelpMessage',
+      component: 'Text',
+      render: () => h('div', { class: 'ml-4 text-gray-500' }, '这是栅格帮助信息，优点是可以对齐。'),
+    },
+    {
       label: t('多行文本'),
       field: 'testTextarea',
       component: 'InputTextArea',
       componentProps: {
         maxlength: 200,
       },
+      suffix: h('div', { class: 'ml-4 text-gray-500' }, 'Suffix帮助信息，优点是自由嵌入组件后。'),
       rules: [{ required: true }],
       colProps: { lg: 24, md: 24 },
     },
@@ -197,6 +217,8 @@
       slot: 'remarks',
       colProps: { lg: 24, md: 24 },
     },
+  ];
+  const inputFormSchemas2: FormSchema[] = [
     {
       label: t('图片上传'),
       field: 'dataMap',
@@ -207,6 +229,10 @@
         bizType: 'testData_image',
         uploadType: 'image',
       },
+      suffix: [
+        h('div', { class: 'ml-4 text-gray-500' }, '请上传图片格式，文件小于 5 M。'),
+        h('a', { href: 'https://jeesite.com', target: '_blank', class: 'mr-8' }, '查看模板'),
+      ],
       colProps: { lg: 24, md: 24 },
     },
     {
@@ -219,6 +245,10 @@
         bizType: 'testData_file',
         uploadType: 'all',
       },
+      suffix: [
+        h('div', { class: 'ml-4 text-gray-500' }, '请上传文档格式，文件小于 5 M。'),
+        h('a', { href: 'https://jeesite.com', target: '_blank', class: 'mr-8' }, '查看模板'),
+      ],
       colProps: { lg: 24, md: 24 },
     },
     {
@@ -230,11 +260,32 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+  const [registerForm1, formAction1] = useForm({
     labelWidth: 120,
-    schemas: inputFormSchemas,
+    schemas: inputFormSchemas1,
     baseColProps: { lg: 12, md: 24 },
   });
+
+  const [registerForm2, formAction2] = useForm({
+    labelWidth: 120,
+    schemas: inputFormSchemas2,
+    baseColProps: { lg: 12, md: 24 },
+  });
+
+  async function resetFields() {
+    activeKey.value = '1';
+    await formAction1.resetFields();
+    await formAction2.resetFields();
+  }
+
+  async function setFieldsValue(values: Recordable) {
+    await formAction1.setFieldsValue(values);
+    await formAction2.setFieldsValue(values);
+  }
+
+  async function validate(): Promise<Recordable<any>> {
+    return Object.assign(await formAction1.validate(), await formAction2.validate());
+  }
 
   const [registerTestDataChildTable, testDataChildTable] = useTable({
     actionColumn: {
