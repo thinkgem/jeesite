@@ -89,11 +89,7 @@ $('#btnDraft').click(function(){
 });
 // 流程按钮操作事件
 BpmButton = window.BpmButton || {};
-BpmButton.init = function(task){
-	if (task && task.priority){
-		$('#bpm_priority').val(task.priority).trigger('change'); // 设置下一个任务的优先级
-	}
-}
+BpmButton.init = function(task){}
 BpmButton.complete = function($this, task){
 	$('#status').val(Global.STATUS_AUDIT);
 };
