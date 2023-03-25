@@ -868,7 +868,7 @@ layer.iframeAuto = function(index, diffVal, $this){
       var layero = $('#'+ doms[0] + index);
       var titHeight = layero.find(doms[1]).outerHeight() || 0;
       var btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
-  //			var heg = layer.getChildFrame('html', index).outerHeight();
+      //var heg = layer.getChildFrame('html', index).outerHeight();
       var heg = iframeWin.document.body.scrollHeight;
       var layerHeight = heg + titHeight + btnHeight;
       var layerTop = ($(window).height() - layerHeight) / 2;
@@ -876,7 +876,7 @@ layer.iframeAuto = function(index, diffVal, $this){
         var $iframe = layero.find('iframe');
         if (Math.abs($iframe.height() - heg) < (diffVal || 9000)){
           layero.animate({height: layerHeight, top: layerTop}, 20);
-          $iframe.animate({height: heg}, 20);
+          $iframe.animate({height: heg + 1}, 20);
         }
       }
     }
