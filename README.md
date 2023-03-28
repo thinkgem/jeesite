@@ -8,8 +8,8 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
-源码仓库地址：<https://gitee.com/thinkgem/jeesite4-cloud>
-分离版前端源码仓库：<https://gitee.com/thinkgem/jeesite-vue>
+* 源码仓库地址：<https://gitee.com/thinkgem/jeesite4-cloud>
+* 分离版前端源码仓库：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 优势（只写别人没有的）
 
