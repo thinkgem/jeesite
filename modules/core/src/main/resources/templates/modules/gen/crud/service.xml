@@ -104,7 +104,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	/**
 	 * 查询子表分页数据
 	 * @param ${@StringUtils.uncap(child.className)}
-	 * @param ${@StringUtils.uncap(child.className)}.page 分页对象
+	 * @param ${@StringUtils.uncap(child.className)} page 分页对象
 	 * @return
 	 */
 	public Page<${@StringUtils.cap(child.className)}> findSubPage(${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)}) {

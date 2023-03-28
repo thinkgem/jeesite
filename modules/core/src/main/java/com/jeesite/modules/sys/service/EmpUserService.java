@@ -26,7 +26,7 @@ public interface EmpUserService extends CrudServiceApi<EmpUser> {
 	
 	/**
 	 * 添加数据权限过滤条件
-	 * @param entity 控制对象
+	 * @param empUser 控制对象
 	 * @param ctrlPermi 控制权限类型（拥有的数据权限：DataScope.CTRL_PERMI_HAVE、可管理的数据权限：DataScope.CTRL_PERMI_HAVE）
 	 */
 	@Override
