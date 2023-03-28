@@ -23,7 +23,7 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param testData
+	 * @param id
 	 * @return
 	 */
 	@RequiresPermissions("test:testData:view")
@@ -32,7 +32,8 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param testData
+	 * @param id
+	 * @param isNewRecord
 	 * @return
 	 */
 	@RequiresPermissions("test:testData:view")
@@ -50,8 +51,8 @@ public interface TestDataServiceApi {
 	
 	/**
 	 * 查询分页数据
-	 * @param page 分页对象
-	 * @param testData
+	 * @param testData 查询条件
+	 * @param testData page 分页对象
 	 * @return
 	 */
 	@RequiresPermissions("test:testData:view")

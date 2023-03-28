@@ -23,7 +23,7 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param testTree
+	 * @param id
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
@@ -32,7 +32,8 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 获取单条数据
-	 * @param testTree
+	 * @param id
+	 * @param isNewRecord
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")
@@ -59,8 +60,8 @@ public interface TestTreeServiceApi {
 	
 	/**
 	 * 查询分页数据
-	 * @param page 分页对象
-	 * @param testTree
+	 * @param testTree 查询条件
+	 * @param testTree page 分页对象
 	 * @return
 	 */
 	@RequiresPermissions("test:testTree:view")

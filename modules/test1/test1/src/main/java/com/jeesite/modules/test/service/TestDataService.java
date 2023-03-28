@@ -54,8 +54,8 @@ public class TestDataService extends CrudService<TestDataDao, TestData>
 	
 	/**
 	 * 查询分页数据
-	 * @param page 分页对象
-	 * @param testData
+	 * @param testData 查询条件
+	 * @param testData page 分页对象
 	 * @return
 	 */
 	@Override
