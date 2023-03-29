@@ -208,6 +208,19 @@
         uploadType: 'image',
       },
       colProps: { lg: 24, md: 24 },
+      // 文件上传的必填验证实例
+      // rules: [
+      //   { required: true },
+      //   {
+      //     validator(_rule, value) {
+      //       return new Promise((resolve, reject) => {
+      //         const len = !value || value['testData_image__len'] || 0;
+      //         if (len == 0) reject(t('请上传图片'));
+      //         else resolve();
+      //       });
+      //     },
+      //   },
+      // ],
     },
     {
       label: t('文件上传'),
