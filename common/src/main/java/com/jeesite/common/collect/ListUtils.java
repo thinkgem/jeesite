@@ -65,17 +65,26 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	
 	@SafeVarargs
 	public static <E> ArrayList<E> newArrayList(E... elements) {
+		if (elements == null) {
+			return newArrayList();
+		}
 		ArrayList<E> list = new ArrayList<E>(elements.length);
 		Collections.addAll(list, elements);
 		return list;
 	}
 	
 	public static <E> ArrayList<E> newArrayList(Iterable<? extends E> elements) {
+		if (elements == null) {
+			return newArrayList();
+		}
 		return (elements instanceof Collection) ? new ArrayList<E>(cast(elements))
 				: newArrayList(elements.iterator());
 	}
 	
 	public static <E> ArrayList<E> newArrayList(Iterator<? extends E> elements) {
+		if (elements == null) {
+			return newArrayList();
+		}
 		ArrayList<E> list = newArrayList();
 		addAll(list, elements);
 		return list;
@@ -86,6 +95,9 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	}
 	
 	public static <E> LinkedList<E> newLinkedList(Iterable<? extends E> elements) {
+		if (elements == null) {
+			return newLinkedList();
+		}
 		LinkedList<E> list = newLinkedList();
 		addAll(list, elements);
 		return list;
@@ -96,6 +108,9 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	}
 	
 	public static <E> CopyOnWriteArrayList<E> newCopyOnWriteArrayList(Iterable<? extends E> elements) {
+		if (elements == null) {
+			return new CopyOnWriteArrayList<E>();
+		}
 		Collection<? extends E> elementsCollection = (elements instanceof Collection)
 				? cast(elements) : newArrayList(elements);
 		return new CopyOnWriteArrayList<E>(elementsCollection);
@@ -106,6 +121,9 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	}
 
 	private static <T> boolean addAll(Collection<T> addTo, Iterator<? extends T> iterator) {
+		if (addTo == null || iterator == null) {
+			return false;
+		}
 		boolean wasModified = false;
 		while (iterator.hasNext()) {
 			wasModified |= addTo.add(iterator.next());
@@ -114,6 +132,9 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 	}
 
 	public static <T> boolean addAll(Collection<T> addTo, Iterable<? extends T> elementsToAdd) {
+		if (addTo == null || elementsToAdd == null) {
+			return false;
+		}
 		if (elementsToAdd instanceof Collection) {
 			Collection<? extends T> c = cast(elementsToAdd);
 			return addTo.addAll(c);

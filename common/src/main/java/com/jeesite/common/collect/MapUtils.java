@@ -4,25 +4,14 @@
  */
 package com.jeesite.common.collect;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
+import com.jeesite.common.lang.StringUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
-import com.jeesite.common.lang.StringUtils;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Map工具类，实现 Map <-> Bean 互相转换
@@ -85,8 +74,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
 	 * @param clazz
 	 * @param list
 	 */
-	public static <T, V> List<T> toObjectList(Class<T> clazz, List<HashMap<String, V>> list) throws Exception,
-			InvocationTargetException, NoSuchMethodException, InstantiationException {
+	public static <T, V> List<T> toObjectList(Class<T> clazz, List<HashMap<String, V>> list) throws Exception {
 		List<T> retList = new ArrayList<T>();
 		if (list != null && !list.isEmpty()) {
 			for (HashMap<String, V> m : list) {
@@ -101,8 +89,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
 	 * @param clazz 目标对象的类
 	 * @param map 待转换Map
 	 */
-	public static <T, V> T toObject(Class<T> clazz, Map<String, V> map) throws Exception,
-			InvocationTargetException {
+	public static <T, V> T toObject(Class<T> clazz, Map<String, V> map) throws Exception {
 		T object = clazz.getDeclaredConstructor().newInstance();
 		return toObject(object, map);
 	}
@@ -113,15 +100,13 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
 	 * @param map 待转换Map
 	 * @param toCamelCase 是否去掉下划线
 	 */
-	public static <T, V> T toObject(Class<T> clazz, Map<String, V> map, boolean toCamelCase) throws Exception,
-			InvocationTargetException {
+	public static <T, V> T toObject(Class<T> clazz, Map<String, V> map, boolean toCamelCase) throws Exception {
 		T object = clazz.getDeclaredConstructor().newInstance();
 		return toObject(object, map, toCamelCase);
 	}
 
 	/**
 	 * 将Map转换为Object
-	 * @param clazz 目标对象的类
 	 * @param map 待转换Map
 	 */
 	public static <T, V> T toObject(T object, Map<String, V> map) throws InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -203,9 +188,7 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
 
 	/**
 	 * 转换成Map并提供字段命名驼峰转平行
-	 * @param clazz 目标对象所在类
 	 * @param object 目标对象
-	 * @param map 待转换Map
 	 * @throws NoSuchMethodException
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
