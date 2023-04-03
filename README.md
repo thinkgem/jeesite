@@ -35,7 +35,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 客户端负载均衡：Spring Cloud LoadBalancer
 * 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
 * 分布式事务框架：Seata 1.5 (可选组件)
-* 分布式链路追踪：Zipkin 2.23 (可选组件)
+* 分布式链路追踪：Zipkin / SkyWalking (可选组件)
 * 工作流引擎框架：Flowable 6.6 (可选组件)
 
 ## 子项目介绍
@@ -153,6 +153,8 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 2. 运行 ZipkinApplication 类的 main 方法，即可启动服务。
 
 浏览器访问：<http://127.0.0.1:9411>
+
+如果使用 SkyWalking，安装文档见：<https://jeesite.com/docs/skywalking/>
 
 ### 启动微服务项目
 
