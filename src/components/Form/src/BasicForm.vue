@@ -239,12 +239,12 @@
         if (labelKey) {
           formModel[labelKey] = labelValue;
         }
-        const { validateTrigger } = unref(getBindValue);
-        if (!validateTrigger || validateTrigger === 'change') {
-          setTimeout(() => {
-            validateFields([key]).catch((_) => {});
-          });
-        }
+        // const { validateTrigger } = unref(getBindValue);
+        // if (!validateTrigger || validateTrigger === 'change') {
+        //   setTimeout(() => {
+        //     validateFields([key]).catch((_) => {});
+        //   });
+        // }
       }
 
       function handleEnterPress(e: KeyboardEvent) {

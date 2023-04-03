@@ -103,6 +103,7 @@
                 .catch((err) => reject(err.message || t('验证失败')));
             });
           },
+          trigger: 'blur',
         },
       ],
     },
@@ -190,6 +191,7 @@
                 .catch((err) => reject(err.message || t('验证失败')));
             });
           },
+          trigger: 'blur',
         },
       ],
       ifShow: () => op.value === 'add' || op.value === 'edit',

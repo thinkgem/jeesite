@@ -271,6 +271,7 @@ yarn build
                 .catch((err) => reject(err.message || t('验证失败')));
             });
           },
+          trigger: 'blur', // 如果是远程验证，可以减少请求频率
         },
       ],
       colProps: { lg: 24, md: 24 }, // 栅格布局（遵循 Ant Design 风格）
