@@ -17,8 +17,8 @@
       <span> {{ getTitle.value }} </span>
     </template>
     <template #centerFooter>
-      <a-button type="danger" @click="handleSubmit('2')">
-        <Icon icon="ant-design:bug-outlined" /> {{ t('保存并生成代码') }}
+      <a-button v-if="isCustomModule" type="danger" @click="handleSubmit('2')">
+        <Icon icon="ant-design:bug-outlined" /> {{ t('确认并生成代码') }}
       </a-button>
     </template>
     <BasicForm @register="registerForm">
