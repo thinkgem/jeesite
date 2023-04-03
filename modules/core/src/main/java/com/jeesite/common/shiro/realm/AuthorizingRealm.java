@@ -4,12 +4,6 @@
  */
 package com.jeesite.common.shiro.realm;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.codec.Sha1Utils;
 import com.jeesite.common.shiro.authc.FormToken;
@@ -19,6 +13,11 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 系统认证授权实现类
@@ -51,12 +50,13 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	
 	/**
 	 * 用于用户根据登录信息获取用户信息<br>
-	 * 1、默认根据登录账号登录信息，如：UserUtils.getByLoginCode(token.getUsername(), token.getParam("corpCode"));<br>
-	 * 2、如果增加其它登录，请重写此方法，如根据手机号或邮箱登录返回用户信息。
+	 * 1、默认根据登录账号登录信息，如：UserUtils.getByLoginCode(formToken.getUsername(), formToken.getParam("corpCode"));<br>
+	 * 2、中断操作，可抛出异常提示用户 throw new AuthenticationException("msg:登录失败");<br>
+	 * 3、如果增加其它登录方式，请重写此方法，如根据手机号或邮箱登录返回用户信息。
 	 */
 	@Override
-	protected User getUserInfo(FormToken token) {
-		return super.getUserInfo(token);
+	protected User getUserInfo(FormToken formToken) {
+		return super.getUserInfo(formToken);
 	}
 	
 	/**
