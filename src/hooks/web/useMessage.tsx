@@ -113,7 +113,10 @@ function contains(str, searchs) {
   if (typeof str === 'object' && str.content) {
     str = str.content;
   }
-  if (str && searchs) {
+  if (typeof str === 'object' && str.props?.innerHTML) {
+    str = str.props?.innerHTML;
+  }
+  if (typeof str === 'string' && searchs) {
     const ss = searchs.split(',');
     for (let i = 0; i < ss.length; i++) {
       if (str.indexOf(ss[i]) >= 0) {
@@ -126,7 +129,7 @@ function contains(str, searchs) {
 
 function showMessageModal(options: ModalOptionsPartial, type?: string) {
   const { t } = useI18n();
-  if (options.content && options.content.startsWith('posfull:')) {
+  if (typeof options.content === 'string' && options.content.startsWith('posfull:')) {
     options.content =
       '<div class="modal-posfull-content">' + options.content.substring(8) + '</div>';
     options.width = '80%';
@@ -145,12 +148,16 @@ declare type JointContent = VNodeTypes | MessageArgsProps;
 declare type ConfigDuration = number | (() => void);
 
 function showMessage(
-  content: JointContent,
+  content: JointContent | any,
   type?: string,
-  duration?: ConfigDuration,
+  duration?: ConfigDuration | any,
   onClose?: ConfigOnClose,
 ) {
   const { t } = useI18n();
+  if (typeof content === 'string' && content.startsWith('posfull:')) {
+    // content = { content: h('div', { class: 'text-left', innerHTML: content.substring(8) }) };
+    return showMessageModal({ content });
+  }
   if (type === 'error' || contains(content, t('sys.message.error'))) {
     return Message.error(content, duration, onClose);
   } else if (type === 'warning' || contains(content, t('sys.message.warning'))) {
