@@ -16,7 +16,22 @@
       <Icon :icon="getTitle.icon" class="pr-1 m-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <BasicForm @register="registerForm" />
+    <template #centerFooter>
+      <a-button type="danger" @click="handleSubmit('2')">
+        <Icon icon="ant-design:bug-outlined" /> {{ t('保存并生成代码') }}
+      </a-button>
+    </template>
+    <BasicForm @register="registerForm">
+      <template #genBaseDir>
+        <Input v-model:value="genBaseDir">
+          <template #addonAfter>
+            <Dropdown class="cursor-pointer" :trigger="['click']" :dropMenuList="genBaseDirList">
+              {{ t('生成路径快速选择') }} <Icon icon="ant-design:down-outlined" />
+            </Dropdown>
+          </template>
+        </Input>
+      </template>
+    </BasicForm>
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -26,6 +41,7 @@
 </script>
 <script lang="ts" setup>
   import { defineComponent, ref, computed } from 'vue';
+  import { Input } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -33,16 +49,36 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { Module, moduleSave, moduleForm } from '/@/api/sys/module';
+  import { Dropdown, DropMenu } from '/@/components/Dropdown';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.module');
   const { showMessage } = useMessage();
   const record = ref<Module>({} as Module);
+  const genBaseDir = ref<string>('');
+  const genBaseDirList = ref<DropMenu[]>([]);
+  const genTplCategoryList = ref<string[]>([]);
   const getTitle = computed(() => ({
     icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增模块') : t('编辑模块'),
   }));
+  const moduleNames = [
+    'app',
+    'bpm',
+    'cms',
+    'core',
+    'filemanager',
+    'filepreview',
+    'oauth2',
+    'oss-client',
+    'sharding',
+    'swagger',
+    'ureport',
+    'visual',
+    'weixin',
+  ];
+  const isCustomModule = ref<boolean>(false);
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -106,6 +142,38 @@
       },
       ifShow: () => !record.value.isNewRecord,
     },
+
+    {
+      label: t('生成工程代码'),
+      field: 'genModule',
+      component: 'FormGroup',
+      colProps: { lg: 24, md: 24 },
+      ifShow: () => isCustomModule.value,
+    },
+    {
+      label: t('生成基础路径'),
+      field: 'genBaseDir',
+      component: 'Input',
+      slot: 'genBaseDir',
+      colProps: { lg: 24, md: 24 },
+      ifShow: () => isCustomModule.value,
+    },
+    {
+      label: t('代码生成模板'),
+      field: 'tplCategory',
+      component: 'Select',
+      componentProps: {
+        options: genTplCategoryList,
+        allowClear: true,
+      },
+      ifShow: () => isCustomModule.value,
+    },
+    {
+      field: 'replaceFile',
+      component: 'Checkbox',
+      renderComponentContent: t('是否替换现有文件'),
+      ifShow: () => isCustomModule.value,
+    },
   ];
 
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
@@ -119,6 +187,17 @@
     await resetFields();
     const res = await moduleForm(data);
     record.value = (res.module || {}) as Module;
+    genBaseDir.value = res.genBaseDir || '';
+    genBaseDirList.value = (res.genBaseDirList || []).map((s: string) => {
+      return {
+        text: s,
+        onClick: () => {
+          genBaseDir.value = s;
+        },
+      };
+    });
+    genTplCategoryList.value = res.config?.moduleTplCategory?.tplCategoryList || [];
+    isCustomModule.value = !moduleNames.includes(record.value.moduleCode || '');
     setFieldsValue(record.value);
     updateSchema([
       {
@@ -137,7 +216,7 @@
     setDrawerProps({ loading: false });
   });
 
-  async function handleSubmit() {
+  async function handleSubmit(flag: string) {
     try {
       const data = await validate();
       setDrawerProps({ confirmLoading: true });
@@ -145,7 +224,10 @@
         isNewRecord: record.value.isNewRecord,
         moduleCode: record.value.moduleCode,
       };
-      // console.log('submit', params, data, record);
+      data.genBaseDir = genBaseDir.value;
+      data.genFlag = flag ? flag : '1';
+      data.replaceFile = data.replaceFile ? '1' : '0';
+      //console.log('submit', params, data, record);
       const res = await moduleSave(params, data);
       showMessage(res.message);
       setTimeout(closeDrawer);
