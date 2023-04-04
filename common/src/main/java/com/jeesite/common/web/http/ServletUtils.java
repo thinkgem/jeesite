@@ -183,7 +183,6 @@ public class ServletUtils {
 	 * 返回结果JSON字符串（支持JsonP，请求参数加：__callback=回调函数名）
 	 * @param result Global.TRUE or Globle.False
 	 * @param message 执行消息
-	 * @param data 消息数据
 	 * @return JSON字符串：{result:'true',message:''}
 	 */
 	public static String renderResult(String result, String message) {
@@ -304,7 +303,6 @@ public class ServletUtils {
 	
 	/**
 	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
-	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
 	 * @param response 渲染对象
 	 * @param object 待转换JSON并渲染的对象
 	 * @return null
@@ -315,7 +313,6 @@ public class ServletUtils {
 	
 	/**
 	 * 将对象转换为JSON、XML、JSONP字符串渲染到客户端（JsonP，请求参数加：__callback=回调函数名）
-	 * @param request 请求对象，用来得到输出格式的指令：JSON、XML、JSONP
 	 * @param response 渲染对象
 	 * @param object 待转换JSON并渲染的对象
 	 * @param jsonView 根据 JsonView 过滤
