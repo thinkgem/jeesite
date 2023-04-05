@@ -18,10 +18,10 @@
 		<relativePath>../../../parent/web/pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jeesite-cloud-module-${moduleCode}</artifactId>
+	<artifactId>jeesite-cloud-module-${moduleCode}-web</artifactId>
 	<packaging>war</packaging>
 	
-	<name>JeeSite Cloud Module ${moduleName}</name>
+	<name>JeeSite Cloud Module ${moduleName} Web</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	

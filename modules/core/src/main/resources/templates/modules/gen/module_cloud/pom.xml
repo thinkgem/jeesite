@@ -1,24 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>pom</name>
+	<filePath>${baseDir}/${moduleCode}</filePath>
+	<fileName>pom.xml</fileName>
+	<charset></charset>
+	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.jeesite</groupId>
-	<artifactId>jeesite-root</artifactId>
-	<version>5.3.1-SNAPSHOT</version>
+	<artifactId>jeesite-cloud-module-${moduleCode}</artifactId>
+	<version>${jeesiteVersion}-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
-	<name>JeeSite Root</name>
+	<name>JeeSite Cloud Module ${moduleName}</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-        <module>../parent</module>
-        <module>../common</module>
-        <module>../modules</module>
-        <module>../web</module>
-        <module>../web-api</module>
-        <module>../web-fast</module>
+		<module>${moduleCode}</module>
+		<module>${moduleCode}-client</module>
     </modules>
 	
 	<developers>  
@@ -37,3 +41,6 @@
 	</organization>
 	
 </project>
+]]>
+	</content>
+</template>

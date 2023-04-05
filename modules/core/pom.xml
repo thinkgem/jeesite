@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.3.0-SNAPSHOT</version>
+		<version>5.3.1-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -40,11 +40,13 @@
 		<dependency>
 			<groupId>com.oracle.ojdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
+			<version>19.3.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.ojdbc</groupId>
 			<artifactId>orai18n</artifactId>
+			<version>19.3.0.0</version>
 			<scope>runtime</scope>
 		</dependency> -->
 		<!-- SqlServer 2008 -->
