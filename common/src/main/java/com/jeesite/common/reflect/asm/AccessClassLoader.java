@@ -23,6 +23,7 @@ import java.security.ProtectionDomain;
 import java.util.HashSet;
 import java.util.WeakHashMap;
 
+@SuppressWarnings({"restriction", "rawtypes", "unchecked"})
 class AccessClassLoader extends ClassLoader {
 	// Weak-references to class loaders, to avoid perm gen memory leaks, for example in app servers/web containters if the
 	// reflectasm library (including this class) is loaded outside the deployed applications (WAR/EAR) using ReflectASM/Kryo (exts,

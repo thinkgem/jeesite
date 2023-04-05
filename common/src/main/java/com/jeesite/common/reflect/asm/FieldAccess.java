@@ -27,6 +27,7 @@ import java.util.Map;
 
 import static org.springframework.asm.Opcodes.*;
 
+@SuppressWarnings("rawtypes")
 public abstract class FieldAccess {
 	private String[] fieldNames;
 	private Class[] fieldTypes;

@@ -71,6 +71,7 @@ public class ExcelExport implements Closeable{
 	 */
 	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
 
+	@SuppressWarnings("rawtypes")
 	private static Class dictUtilsClass = null;
 
 	/**

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import static org.springframework.asm.Opcodes.*;
 
+@SuppressWarnings("rawtypes")
 public abstract class MethodAccess {
 	private String[] methodNames;
 	private Class[][] parameterTypes;

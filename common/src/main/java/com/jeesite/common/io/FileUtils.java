@@ -4,36 +4,26 @@
  */
 package com.jeesite.common.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.lang.StringUtils;
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicMatch;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.lang.StringUtils;
-
-import net.sf.jmimemagic.Magic;
-import net.sf.jmimemagic.MagicMatch;
+import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 文件操作工具类
@@ -41,6 +31,7 @@ import net.sf.jmimemagic.MagicMatch;
  * @author ThinkGem
  * @version 2015-3-16
  */
+@SuppressWarnings("deprecation")
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
