@@ -6,13 +6,14 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [信息] 安装到本地仓库。
+echo [信息] 打包安装工程，生成jar包文件。
 echo.
 
 %~d0
 cd %~dp0
 
 cd ..
-call mvn clean package -Dmaven.test.skip=true
+call mvn clean install -Dmaven.test.skip=true -Ppackage
 
+cd bin
 pause
