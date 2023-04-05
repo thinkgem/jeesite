@@ -3,30 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<parent>
-		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-cloud-parent</artifactId>
-		<version>5.3.1-SNAPSHOT</version>
-		<relativePath>../../../parent/pom.xml</relativePath>
-	</parent>
+	<groupId>com.jeesite</groupId>
+	<artifactId>jeesite-cloud-modules</artifactId>
+	<version>5.3.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	
-	<artifactId>jeesite-cloud-module-test2-client</artifactId>
-	<packaging>jar</packaging>
-	
-	<name>JeeSite Cloud Module Test2 Client</name>
+	<name>JeeSite Cloud Modules</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
-	<dependencies>
-		
-		<!-- 云客户端 -->
-		<dependency>
-			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-cloud-framework</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		
-	</dependencies>
+	<modules>
+		<module>core</module>
+		<module>test1</module>
+		<module>test2</module>
+		<module>test3</module>
+    </modules>
 	
 	<developers>  
 		<developer>
