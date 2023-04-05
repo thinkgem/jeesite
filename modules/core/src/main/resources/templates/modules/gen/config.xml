@@ -233,6 +233,7 @@
 			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.bat.xml</template>
 			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.sh.xml</template>
 			<template>module_cloud/web/pom.xml</template>
+			<template>module_cloud/pom.xml</template>
 		</category>
 	</moduleTplCategory>
 </config>

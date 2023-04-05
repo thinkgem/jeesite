@@ -4,21 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.jeesite</groupId>
-	<artifactId>jeesite-root</artifactId>
+	<artifactId>jeesite-modules</artifactId>
 	<version>5.3.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
-	<name>JeeSite Root</name>
+	<name>JeeSite Modules</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-        <module>../parent</module>
-        <module>../common</module>
-        <module>../modules</module>
-        <module>../web</module>
-        <module>../web-api</module>
-        <module>../web-fast</module>
+        <module>core</module>
+        <module>cms</module>
     </modules>
 	
 	<developers>  
