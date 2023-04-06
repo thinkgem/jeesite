@@ -168,6 +168,10 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
   - 访问地址：<http://127.0.0.1:8980/js>  用户名密码： system  admin
   - 若访问报错，请再等待一会，可能服务未完全启动完成
 
+**常见问题：**
+
+* 如果提示 `获取不到 ${service.core.name} 属性，请检查配置` 错误，说明没有从 nacos 或 config 配置中心获取到配置信息。一般有以下原因。1：Nacos 里未导入 `jeesite-cloud-yml.zip` 配置文件；2：如果你自定义了 Nacos 的 Group Name，请于 bootstrap.yml 里的 Group Name 一致；3：如果 Nacos 提示了 yml 读取错误，请在启动参数，配上环境变量 JAVA_OPTS，值为 `-Dfile.encoding=UTF-8`（不同IDE里的设置方法：Eclipse：Window->Preferences->General->Workspace->Text file encoding->Other->UTF-8；IDEA：File->Settings->Editor->FileEncodings->Project Encodeing->UTF-8）
+
 ![](https://images.gitee.com/uploads/images/2020/0120/235836_b3da5155_6732.png)
 
 ## 调用实例演示
