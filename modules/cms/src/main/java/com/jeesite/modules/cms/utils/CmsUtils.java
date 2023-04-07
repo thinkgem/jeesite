@@ -327,7 +327,7 @@ public class CmsUtils {
 		// 如果试图配置里配置了管理路径，则使用视图中的管理路径
 		if (StringUtils.isNotBlank(category.getViewConfig())) {
 			@SuppressWarnings("rawtypes")
-			Map map = JsonMapper.fromJson("{" + category.getViewConfig().trim() + "}", Map.class);
+			Map map = JsonMapper.fromJson(category.getViewConfig(), Map.class);
 			if (map != null) {
 				// 管理地址
 				String adminUrl = ObjectUtils.toString(map.get("adminUrl"));
@@ -465,11 +465,11 @@ public class CmsUtils {
 	public static void addViewConfigAttribute(Model model, String params) {
 		if (StringUtils.isNotBlank(params)) {
 			@SuppressWarnings("rawtypes")
-			Map map = JsonMapper.fromJson("{" + params.trim() + "}", Map.class);
+			Map map = JsonMapper.fromJson(params, Map.class);
 			if (map != null) {
-				for (Object o : map.keySet()) {
-					model.addAttribute("viewConfig_" + o.toString(), map.get(o));
-				}
+				map.forEach((k, v) -> {
+					model.addAttribute("viewConfig_" + k, v);
+				});
 			}
 		}
 	}

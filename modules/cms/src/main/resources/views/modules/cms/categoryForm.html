@@ -213,8 +213,8 @@
 							<#form:input path="viewConfig" maxlength="1000" class="form-control"
 								placeholder="视图参数例如: {count:2, title_show:'yes'} 则在视图文件中的获取方法是：${'${'}viewConfig_count}、${'${'}viewConfig_titleShow}" />
 							<br />
-							<ul class="text-muted  well well-lg no-shadow">
-								<li>例如视图参数设置为：count:2,titleShow:'yes'则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}。</li>
+							<ul class="text-muted well well-lg no-shadow m0 pt10 pb10">
+								<li>例如视图参数设置为：{count:2,titleShow:'yes'} 则在视图文件中的获取方法是：\${viewConfig_count}、\${viewConfig_titleShow}。</li>
 								<li>设置栏目的管理地址：若设置【adminUrl:false】表示无管理地址，在内容发布栏目列表中不显示该栏目；</li>
 								<li>设置【adminUrl:'/cms/guestbook'】表示有管理地址，在内容发布栏目列表中点击该栏目链接到该地址。</li>
 								<!-- <li>管理地址参数：若设置【adminUrlParam:'fileDownload=true'】则代表链接模型为文件下载的栏目，新增链接的时候出现文件上传对话框。</li>
