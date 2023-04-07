@@ -21,7 +21,7 @@
 			<div class="pagination">${@page.toHtml()}</div>
 			<script type="text/javascript">
 			function page(n,s){
-				location="${ctx}/${category.url}?pageNo="+n+"&pageSize="+s;
+				location="${category.url}?pageNo="+n+"&pageSize="+s;
 			}
 			</script>
 		</#html:if>
