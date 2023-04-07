@@ -60,7 +60,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 	
 	/**
 	 * 查询分页数据
-	 * @param msgInner 查询条件；.page 分页对象
+	 * @param msgInner 查询条件； page 分页对象
 	 * @return
 	 */
 	@Override

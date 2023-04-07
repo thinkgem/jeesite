@@ -34,7 +34,7 @@ public class ReportService extends CrudService<ReportDao, Report> {
 	/**
 	 * 查询分页数据
 	 * @param report 查询条件
-	 * @param report.page 分页对象
+	 * @param report page 分页对象
 	 * @return
 	 */
 	@Override

@@ -33,7 +33,7 @@ public class TagService extends CrudService<TagDao, Tag> {
 	/**
 	 * 查询分页数据
 	 * @param tag 查询条件
-	 * @param tag.page 分页对象
+	 * @param tag page 分页对象
 	 * @return
 	 */
 	@Override

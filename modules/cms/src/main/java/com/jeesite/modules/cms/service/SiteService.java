@@ -35,7 +35,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	/**
 	 * 查询分页数据
 	 * @param site 查询条件
-	 * @param site.page 分页对象
+	 * @param site page 分页对象
 	 * @return
 	 */
 	@Override

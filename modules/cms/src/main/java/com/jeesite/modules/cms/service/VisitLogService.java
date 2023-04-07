@@ -34,7 +34,7 @@ public class VisitLogService extends CrudService<VisitLogDao, VisitLog> {
 	/**
 	 * 查询分页数据
 	 * @param visitLog 查询条件
-	 * @param visitLog.page 分页对象
+	 * @param visitLog page 分页对象
 	 * @return
 	 */
 	@Override

@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -84,12 +83,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 */
 	@Override
 	public Page<Article> findPage(Article article) {
-		updateExpiredWeightThreadPool.submit(new Runnable() {
-			@Override
-			public void run() {
-				updateExpiredWeight(article);
-			}
-		});
+		updateExpiredWeightThreadPool.submit(() -> updateExpiredWeight(article));
 		return super.findPage(article);
 	}
 
@@ -98,17 +92,15 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @return new Object[]{栏目Id,内容Id,内容标题}
 	 */
 	public List<Object[]> findByIds(String ids) {
-		if (ids == null) {
-			return new ArrayList<Object[]>();
-		}
 		List<Object[]> list = ListUtils.newArrayList();
-		String[] idss = StringUtils.split(ids, ",");
-		Article where = new Article();
-		where.setId_in(idss);
-		List<Article> l = dao.findList(where);
-		for (Article e : l) {
-			list.add(new Object[] { e.getCategory().getId(), e.getId(), StringUtils.abbr(e.getTitle(), 50) });
+		if (ids == null) {
+			return list;
 		}
+		Article where = new Article();
+		where.setId_in(StringUtils.split(ids, ","));
+		dao.findList(where).forEach((e) -> {
+			list.add(new Object[] { e.getCategory().getId(), e.getId(), StringUtils.abbr(e.getTitle(), 50) });
+		});
 		return list;
 	}
 	

@@ -34,7 +34,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	/**
 	 * 查询分页数据
 	 * @param comment 查询条件
-	 * @param comment.page 分页对象
+	 * @param comment page 分页对象
 	 * @return
 	 */
 	@Override
