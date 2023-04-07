@@ -71,8 +71,9 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * 添加数据权限
 	 */
 	@Override
-	public void addDataScopeFilter(Article entity) {
-		
+	public void addDataScopeFilter(Article entity, String ctrlPermi) {
+		entity.sqlMap().getDataScope().addFilter("dsfCategory",
+				"Category", "a.category_code", "a.create_by", ctrlPermi);
 	}
 	
 	/**

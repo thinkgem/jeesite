@@ -4,12 +4,6 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.Size;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
@@ -19,6 +13,10 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import com.jeesite.modules.cms.utils.CmsUtils;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * 栏目表Entity
@@ -45,7 +43,7 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 			on = "s.site_code = a.site_code", columns = {
 				@Column(name = "site_name"),
 			})
-	}, orderBy = "a.tree_sorts, a.category_code"
+	}, orderBy = "a.tree_sorts, a.category_code", extWhereKeys = "dsfCategory"
 )
 public class Category extends TreeEntity<Category> {
 

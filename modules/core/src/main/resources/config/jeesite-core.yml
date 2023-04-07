@@ -187,6 +187,16 @@ user:
       chkboxType: {"Y":"ps","N":"ps"},
       expandLevel: -1,
       remarks: ""
+    },{
+      moduleCode: "cms",
+      ctrlName: "栏目权限",
+      ctrlName_en: "Category",
+      ctrlType: "Category",
+      ctrlPermi: "0",
+      ctrlDataUrl: "/cms/category/treeData",
+      chkboxType: {"Y":"ps","N":"ps"},
+      expandLevel: -1,
+      remarks: ""
     }]
     
   # 数据权限调试模式（会输出一些日志）

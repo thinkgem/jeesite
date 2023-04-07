@@ -4,13 +4,11 @@
  */
 package com.jeesite.modules.cms.service;
 
-import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.cms.dao.CategoryDao;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +36,9 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 添加数据权限
 	 */
 	@Override
-	public void addDataScopeFilter(Category entity) {
-		
+	public void addDataScopeFilter(Category entity, String ctrlPermi) {
+		entity.sqlMap().getDataScope().addFilter("dsfCategory",
+				"Category", "a.category_code", "a.create_by", ctrlPermi);
 	}
 	
 	/**
@@ -59,9 +58,6 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@Override
 	@Transactional
 	public void save(Category category) {
-		if (StringUtils.isNotBlank(category.getViewConfig())){
-            category.setViewConfig(StringEscapeUtils.unescapeHtml4(category.getViewConfig()));
-        }
 		super.save(category);
 		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		// 保存上传图片
