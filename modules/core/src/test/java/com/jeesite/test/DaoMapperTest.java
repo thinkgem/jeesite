@@ -178,7 +178,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			System.out.println("============ 分页测试，查询子节点 ============");
 			Company company4 = new Company("1");
 			company4.setFullName(company.getFullName());
-			company4.setPage(new Page<Company>(1, 2));
+			company4.setPage(new Page<>(1, 2));
 			company4.setIsQueryChildren(true);
 			List<Company> companyListPage = companyDao.findList(company4);
 			Assert.assertEquals("find page list size", companyListPage.size(), 2);

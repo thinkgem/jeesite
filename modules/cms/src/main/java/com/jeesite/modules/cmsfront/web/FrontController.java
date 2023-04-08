@@ -313,7 +313,7 @@ public class FrontController extends BaseController {
 	@RequestMapping(value = "comment-{theme}", method = RequestMethod.GET)
 	public String comment(Comment comment, @PathVariable String theme, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
-		Page<Comment> page = new Page<Comment>(request, response);
+		Page<Comment> page = new Page<>(request, response);
 		Comment c = new Comment();
 		c.setCategory(comment.getCategory());
 		c.setArticleId(comment.getArticleId());

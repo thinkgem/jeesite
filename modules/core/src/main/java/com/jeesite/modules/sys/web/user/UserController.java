@@ -53,10 +53,10 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response) {
 //		if (User.USER_TYPE_NONE.equals(user.getUserType())){
-//			return new Page<User>(request, response);
+//			return new Page<>(request, response);
 //		}
 		if (Global.isStrictMode() && !user.currentUser().isAdmin()){
-			return new Page<User>(request, response);
+			return new Page<>(request, response);
 		}
 		user.setPage(new Page<>(request, response));
 		Page<User> page = userService.findPage(user);

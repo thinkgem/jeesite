@@ -56,7 +56,7 @@ public class FrontSearchController extends BaseController{
 			
 			// 文章检索
 			if (StringUtils.isBlank(t) || "article".equals(t)){
-				Page<Map<String, Object>> page = new Page<Map<String, Object>>(request, response);
+				Page<Map<String, Object>> page = new Page<>(request, response);
 				Map<String, String> parmas = MapUtils.newHashMap();
 				if (StringUtils.isNotBlank(siteCode)){
 					parmas.put("siteCode", siteCode);
