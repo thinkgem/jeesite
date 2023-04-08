@@ -25,7 +25,7 @@ import java.util.Date;
  */
 @Table(name = "${_prefix}cms_article", alias = "a", columns = {
 		@Column(name = "id", attrName = "id", label = "编号", isPK = true),
-		@Column(name = "category_code", attrName = "category.categoryCode", label = "栏目编码"),
+		@Column(name = "category_code", attrName = "category.categoryCode", label = "栏目编码", isQuery = false),
 		@Column(name = "module_type", attrName = "moduleType", label = "模块类型"),
 		@Column(name = "title", attrName = "title", label = "内容标题", queryType = QueryType.LIKE),
 		@Column(name = "href", attrName = "href", label = "外部链接"),
@@ -43,16 +43,17 @@ import java.util.Date;
 		@Column(name = "word_count", attrName = "wordCount", label = "字数", comment = "字数（不包含html）"),
 		@Column(name = "custom_content_view", attrName = "customContentView", label = "自定义内容视图"),
 		@Column(name = "view_config", attrName = "viewConfig", label = "视图配置"),
-		@Column(name="status", 		attrName="status", 		label="状态", isUpdate=false),
-		@Column(name="create_by", 	attrName="createBy", 	label="创建者", isUpdate=true),
-		@Column(name="create_date", attrName="createDate", 	label="创建时间", isUpdate=false, isQuery=false),
-		@Column(name="update_by", 	attrName="updateBy", 	label="更新者", isUpdate=true),
-		@Column(name="update_date", attrName="updateDate", 	label="更新时间", isUpdate=true, isQuery=false),
-		@Column(name="remarks", 	attrName="remarks", 	label="备注信息", queryType=QueryType.LIKE),
+		@Column(name = "status", attrName = "status", label = "状态", isUpdate = false),
+		@Column(name = "create_by", attrName = "createBy", label = "创建者"),
+		@Column(name = "create_date", attrName = "createDate", label = "创建时间", isUpdate = false, isQuery = false),
+		@Column(name = "update_by", attrName = "updateBy", label = "更新者"),
+		@Column(name = "update_date", attrName = "updateDate", label = "更新时间", isQuery = false),
+		@Column(name = "remarks", attrName = "remarks", label = "备注信息", queryType = QueryType.LIKE),
 		@Column(includeEntity = BaseEntity.class),
 	}, joinTable = {
 		@JoinTable(entity = Category.class, alias = "c",
 			on = "c.category_code = a.category_code", columns = {
+				@Column(name = "category_code", isPK = true),
 				@Column(name = "category_name"),
 			}),
 		@JoinTable(entity = Site.class, attrName = "category.site", alias = "s",

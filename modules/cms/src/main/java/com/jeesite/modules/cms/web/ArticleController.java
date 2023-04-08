@@ -70,7 +70,7 @@ public class ArticleController extends BaseController {
 		// 栏目展现模式，当为（3：简介类栏目，栏目第一条内容）时，自动维护第一条内容
 		if (Category.SHOW_MODES_FIRST_CONTENT.equals(article.getCategory().getShowModes())) {
 			// 获取文章内容
-			Page<Article> page = new Page<Article>(1, 1, -1);
+			Page<Article> page = new Page<>(1, 1, -1);
 			article.setPage(page);
 			page = articleService.findPage(article);
 			if (page.getList().size() > 0) {
@@ -94,8 +94,12 @@ public class ArticleController extends BaseController {
 		if (StringUtils.isBlank(article.getCategory().getSite().getSiteCode())) {
 			article.getCategory().setSite(new Site(Site.getCurrentSiteCode()));
 		}
+		// 查询指定栏目以及下级栏目的文章（如果不需要，可以注释掉）
+		if (StringUtils.isNotBlank(article.getCategory().getCategoryCode())) {
+			article.getCategory().setIsQueryChildren(true);
+		}
 		// 是否查询全部，不过滤权限
-		if (!(isAll != null && isAll)) {
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			articleService.addDataScopeFilter(article);
 		}
 		if (!article.currentUser().isAdmin()) {
@@ -123,14 +127,11 @@ public class ArticleController extends BaseController {
 			categoryParam.setParentCode(article.getCategory().getCategoryCode());
 			List<Category> list = categoryService.findList(categoryParam);
 			if (list.size() > 0) {
-				article.setCategory(null);
+				article.setCategory(null); // 不允许在父节点上添加文章
 			} else {
-				article.setCategory(categoryService.get(article.getCategory().getId()));
+				article.setCategory(CmsUtils.getCategory(article.getCategory().getCategoryCode()));
 			}
 		}
-//		if (article.getCategory()=null && StringUtils.isNotBlank(article.getCategory().getId())){
-//			Category category = categoryService.get(article.getCategory().getId());
-//		}
 		if (StringUtils.isBlank(article.getId())) {
 			article.setStatus(Article.STATUS_DRAFT);
 		}

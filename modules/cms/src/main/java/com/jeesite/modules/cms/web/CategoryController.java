@@ -103,7 +103,7 @@ public class CategoryController extends BaseController {
 		// 创建并初始化下一个节点信息
 		category = createNextNode(category);
 		if (category.getParent() != null && StringUtils.isNotBlank(category.getParent().getId())) {
-			category.setParent(categoryService.get(category.getParent().getCategoryCode()));
+			category.setParent(CmsUtils.getCategory(category.getParent().getCategoryCode()));
 			if (category.getIsNewRecord()) {
 				Category categoryChild = new Category();
 				categoryChild.setParent(new Category(category.getParentCode()));
@@ -270,7 +270,7 @@ public class CategoryController extends BaseController {
 			category.setModuleType(module);
 		}
 		// 是否查询全部，不过滤权限
-		if (!(isAll != null && isAll)) {
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
 			categoryService.addDataScopeFilter(category);
 		}
 		list = categoryService.findList(category);
