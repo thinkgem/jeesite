@@ -142,16 +142,6 @@ CREATE TABLE js_cms_category
 );
 
 
--- 栏目与角色关联表
-CREATE TABLE js_cms_category_role
-(
-	category_code varchar(64) NOT NULL,
-	role_code varchar(64) NOT NULL,
-	ctrl_type varchar(32),
-	PRIMARY KEY (category_code, role_code)
-);
-
-
 -- 文章评论表
 CREATE TABLE js_cms_comment
 (

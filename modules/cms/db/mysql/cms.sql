@@ -143,16 +143,6 @@ CREATE TABLE js_cms_category
 ) COMMENT = '栏目表';
 
 
--- 栏目与角色关联表
-CREATE TABLE js_cms_category_role
-(
-	category_code varchar(64) NOT NULL COMMENT '栏目编码',
-	role_code varchar(64) NOT NULL COMMENT '角色编码',
-	ctrl_type varchar(32) COMMENT '控制类型（view查看、edit编辑）',
-	PRIMARY KEY (category_code, role_code)
-) COMMENT = '栏目与角色关联表';
-
-
 -- 文章评论表
 CREATE TABLE js_cms_comment
 (

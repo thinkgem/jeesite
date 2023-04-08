@@ -142,16 +142,6 @@ CREATE TABLE js_cms_category
 );
 
 
--- 栏目与角色关联表
-CREATE TABLE js_cms_category_role
-(
-	category_code varchar2(64) NOT NULL,
-	role_code varchar2(64) NOT NULL,
-	ctrl_type varchar2(32),
-	PRIMARY KEY (category_code, role_code)
-);
-
-
 -- 文章评论表
 CREATE TABLE js_cms_comment
 (
@@ -434,10 +424,6 @@ COMMENT ON COLUMN js_cms_category.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_cms_category.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_cms_category.extend_d4 IS '扩展 Date 4';
 COMMENT ON COLUMN js_cms_category.extend_json IS '扩展 JSON';
-COMMENT ON TABLE js_cms_category_role IS '栏目与角色关联表';
-COMMENT ON COLUMN js_cms_category_role.category_code IS '栏目编码';
-COMMENT ON COLUMN js_cms_category_role.role_code IS '角色编码';
-COMMENT ON COLUMN js_cms_category_role.ctrl_type IS '控制类型（view查看、edit编辑）';
 COMMENT ON TABLE js_cms_comment IS '文章评论表';
 COMMENT ON COLUMN js_cms_comment.id IS '编号';
 COMMENT ON COLUMN js_cms_comment.category_code IS '栏目编码';
