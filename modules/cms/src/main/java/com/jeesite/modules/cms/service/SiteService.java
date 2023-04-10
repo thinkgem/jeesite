@@ -4,6 +4,9 @@
  */
 package com.jeesite.modules.cms.service;
 
+import com.jeesite.common.service.ServiceException;
+import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +21,13 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
 /**
  * 站点表Service
  * @author 长春叭哥、ThinkGem
- * @version 2020-7-24
+ * @version 2023-4-10
  */
 @Service
 public class SiteService extends CrudService<SiteDao, Site> {
 
+	@Autowired(required = false)
+	private ArticleIndexService articleIndexService;
 	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
@@ -102,6 +107,17 @@ public class SiteService extends CrudService<SiteDao, Site> {
 		site.setStatus(isRe != null && isRe ? Site.STATUS_NORMAL : Site.STATUS_DELETE);
 		super.delete(site);
 		CmsUtils.removeCache("siteList");
+	}
+
+	/**
+	 * 重建索引
+	 * @author ThinkGem
+	 */
+	public void rebuildIndex(Site site) {
+		if (articleIndexService == null) {
+			throw new ServiceException(text("未安装全文检索模块"));
+		}
+		articleIndexService.rebuild(new Article(new Category(site)));
 	}
 	
 }

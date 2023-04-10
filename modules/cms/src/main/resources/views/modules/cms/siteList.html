@@ -78,6 +78,9 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/cms/site/enable?siteCode='+row.siteCode+'" class="btnList" title="${text("启用站点")}" data-confirm="${text("确认要启用该站点吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/cms/site/delete?siteCode='+row.siteCode+'" class="btnList" title="${text("删除站点")}" data-confirm="${text("确认要删除该站点吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				//<% if(hasPermi('cms:site:rebuildIndex')){ %>
+				actions.push('<a href="${ctx}/cms/site/rebuildIndex?siteCode='+row.siteCode+'" class="btnList" title="${text("重建该站点索引")}" data-confirm="${text("确认重建该站点文章索引吗")}？"><i class="fa fa-crosshairs"></i></a>&nbsp;');
+				//<% } %>
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctxFront}/index-'+row.siteCode+'" target="_blank" title="${text("访问站点")}"><i class="fa fa-globe"></i></a>&nbsp;');
 				}

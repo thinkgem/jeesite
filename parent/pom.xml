@@ -40,6 +40,9 @@
 		<poi.version>4.1.2</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<groovy.version>3.0.10</groovy.version>
+		<joda-time.version>2.10.4</joda-time.version>
+		<elasticsearch.version>7.17.8</elasticsearch.version>
+		<lucene.version>8.11.1</lucene.version>
 
 		<!-- framework version setting -->
 		<mybatis.version>3.5.11</mybatis.version>

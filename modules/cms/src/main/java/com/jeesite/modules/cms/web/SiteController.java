@@ -4,11 +4,17 @@
  */
 package com.jeesite.modules.cms.web;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.lang.TimeUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.common.web.CookieUtils;
+import com.jeesite.modules.cms.entity.Site;
+import com.jeesite.modules.cms.service.FileTempleteService;
+import com.jeesite.modules.cms.service.SiteService;
+import com.jeesite.modules.sys.utils.CorpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,21 +25,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.common.web.CookieUtils;
-import com.jeesite.modules.cms.entity.Site;
-import com.jeesite.modules.cms.service.FileTempleteService;
-import com.jeesite.modules.cms.service.SiteService;
-import com.jeesite.modules.sys.utils.CorpUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 站点表Controller
  * @author 长春叭哥、ThinkGem
- * @version 2020-7-24
+ * @version 2023-4-10
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cms/site")
@@ -134,6 +133,20 @@ public class SiteController extends BaseController {
 	public String delete(Site site) {
 		siteService.delete(site);
 		return renderResult(Global.TRUE, text("删除站点表成功！"));
+	}
+
+	/**
+	 * 重建索引
+	 * @author ThinkGem
+	 */
+	@RequiresPermissions("cms:site:rebuildIndex")
+	@ResponseBody
+	@RequestMapping(value = "rebuildIndex")
+	public String rebuildIndex(Site site)  {
+		long start = System.currentTimeMillis();
+		siteService.rebuildIndex(site);
+		return renderResult(Global.TRUE, "重建索引成功！ 用时"
+				+ TimeUtils.formatTime(System.currentTimeMillis() - start) + "。");
 	}
 	
 	/**

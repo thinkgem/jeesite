@@ -4,8 +4,10 @@
  */
 package com.jeesite.modules.cms.service;
 
+import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.cms.dao.CategoryDao;
+import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
@@ -18,11 +20,13 @@ import java.util.List;
 /**
  * 栏目表Service
  * @author 长春叭哥、ThinkGem
- * @version 2020-7-24
+ * @version 2023-4-10
  */
 @Service
 public class CategoryService extends TreeService<CategoryDao, Category> {
 
+	@Autowired(required = false)
+	private ArticleIndexService articleIndexService;
 	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
@@ -108,6 +112,17 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(category);
 		}
+	}
+
+	/**
+	 * 重建索引
+	 * @author ThinkGem
+	 */
+	public void rebuildIndex(Category category) {
+		if (articleIndexService == null) {
+			throw new ServiceException(text("未安装全文检索模块"));
+		}
+		articleIndexService.rebuild(new Article(category));
 	}
 
 }

@@ -9,6 +9,7 @@ import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
@@ -37,7 +38,7 @@ import java.util.Map;
 /**
  * 栏目表Controller
  * @author 长春叭哥、ThinkGem
- * @version 2020-7-24
+ * @version 2023-4-10
  */
 @Controller
 @RequestMapping(value = "${adminPath}/cms/category")
@@ -244,6 +245,20 @@ public class CategoryController extends BaseController {
 	public String delete(Category category) {
 		categoryService.delete(category);
 		return renderResult(Global.TRUE, text("删除栏目表成功！"));
+	}
+
+	/**
+	 * 重建索引
+	 * @author ThinkGem
+	 */
+	@RequiresPermissions("cms:category:rebuildIndex")
+	@ResponseBody
+	@RequestMapping(value = "rebuildIndex")
+	public String rebuildIndex(Category category)  {
+		long start = System.currentTimeMillis();
+		categoryService.rebuildIndex(category);
+		return renderResult(Global.TRUE, "重建索引成功！ 用时"
+				+ TimeUtils.formatTime(System.currentTimeMillis() - start) + "。");
 	}
 
 	/**

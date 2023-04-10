@@ -21,10 +21,11 @@ import java.util.List;
 /**
  * 栏目表Entity
  * @author 长春叭哥、ThinkGem
- * @version 2018-10-15
+ * @version 2023-4-10
  */
 @Table(name = "${_prefix}cms_category", alias = "a", columns = {
-		@Column(name = "category_code", attrName = "categoryCode", label = "栏目编码", isPK = true), @Column(includeEntity = TreeEntity.class),
+		@Column(includeEntity = TreeEntity.class),
+		@Column(name = "category_code", attrName = "categoryCode", label = "栏目编码", isPK = true),
 		@Column(name = "category_name", attrName = "categoryName", label = "栏目名称", queryType = QueryType.LIKE, isTreeName = true),
 		@Column(name = "site_code", attrName = "site.siteCode", label = "站点编码", queryType = QueryType.EQ),
 		@Column(name = "module_type", attrName = "moduleType", label = "模块类型"), @Column(name = "image", attrName = "image", label = "栏目图片"),
@@ -78,15 +79,15 @@ public class Category extends TreeEntity<Category> {
 	private List<String> roleCodeList = ListUtils.newArrayList(); 		// 根据角色查询有权限的栏目列表
 
 	public Category() {
-		this(null);
+		super();
 	}
 
 	public Category(String id) {
 		super(id);
 	}
 
-	public Category(String id, Site site) {
-		super(id);
+	public Category(Site site) {
+		super();
 		this.setSite(site);
 	}
 

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * 网站Controller
  * @author ThinkGem、三片叶子、长春八哥
- * @version 2020-7-24
+ * @version 2023-4-10
  */
 @Controller
 @RequestMapping(value = "${frontPath}")
@@ -154,8 +154,8 @@ public class FrontController extends BaseController {
 				else {
 					// 文章模型
 					if ("article".equals(category.getModuleType())) {
-						Page<Article> page = new Page<Article>(pageNo, pageSize);
-						Article searchArticle=		 new Article(category);
+						Page<Article> page = new Page<>(pageNo, pageSize);
+						Article searchArticle= new Article(category);
 						searchArticle.setPage(page);
 						page = articleService.findPage(searchArticle);
 						model.addAttribute("page", page);

@@ -10,6 +10,7 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
+import com.jeesite.common.service.ServiceException;
 import com.jeesite.modules.cms.dao.ArticleDao;
 import com.jeesite.modules.cms.dao.ArticleDataDao;
 import com.jeesite.modules.cms.entity.Article;
@@ -34,13 +35,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * 文章表Service
  * @author 长春叭哥、ThinkGem
- * @version 2020-7-24
+ * @version 2023-4-10
  */
 @Service
 public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	@Autowired
 	private ArticleDataDao articleDataDao;
+	@Autowired(required = false)
+	private ArticleIndexService articleIndexService;
 	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
@@ -160,6 +163,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		}
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(article, article.getId(), "article_image");
+		// 保存文章全文检索索引
+		if (articleIndexService != null && Article.STATUS_NORMAL.equals(article.getStatus())) {
+			articleIndexService.save(article);
+		}
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(article);
@@ -174,6 +181,14 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Transactional
 	public void updateStatus(Article article) {
 		super.updateStatus(article);
+		// 保存文章全文检索索引
+		if (articleIndexService != null) {
+			if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+				articleIndexService.save(article);
+			} else {
+				articleIndexService.delete(article);
+			}
+		}
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(article);
@@ -203,10 +218,25 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Transactional
 	public void delete(Article article) {
 		super.delete(article);
+		// 保存文章全文检索索引
+		if (articleIndexService != null) {
+			articleIndexService.delete(article);
+		}
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(article);
 		}
+	}
+
+	/**
+	 * 重建索引
+	 * @author ThinkGem
+	 */
+	public void rebuildIndex(Article article) {
+		if (articleIndexService == null) {
+			throw new ServiceException(text("未安装全文检索模块"));
+		}
+		articleIndexService.rebuild(article);
 	}
 
 	/**
@@ -217,10 +247,14 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	 * @param qnot 不包含的字符串
 	 * @param bd 开始日期
 	 * @param ed 结束日期
+	 * @author ThinkGem
 	 */
 	public Page<Map<String, Object>> searchPage(Page<Map<String, Object>> page, String qStr,
 			String qand, String qnot, String bd, String ed, Map<String, String> params) {
-		return page;
+		if (articleIndexService == null) {
+			throw new ServiceException(text("未安装全文检索模块"));
+		}
+		return articleIndexService.searchPage(page, qStr, qand, qnot, bd, ed, params);
 	}
 
 }

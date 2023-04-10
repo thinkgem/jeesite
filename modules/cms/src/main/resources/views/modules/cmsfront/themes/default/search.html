@@ -2,17 +2,18 @@
 <script src="${ctxStatic}/laydate/5.3/laydate.js?${_version}"></script>
 <style type="text/css">
 	form.search {margin:12px 20px 5px;}
-	form.search input.txt {padding:4px 8px;font-size:16px;width:300px;margin:5px;border:1px solid #bbb;border-radius:3px;}
+	form.search input.txt {padding:4px 8px;font-size:18px;width:300px;margin:5px;border:1px solid #bbb;border-radius:3px;}
 	form.search input.txt.date {width:133px;}
-	form.search .sel {margin:15px 0;padding:10px 5px;border-bottom:1px solid #efefef;font-size:16px;}
+	form.search input.txt:hover, form.search input.txt:focus {outline:none;border:1px solid #4e71f2;}
+	form.search .sel {margin:0 0 15px 0;padding:10px 5px;border-bottom:1px solid #efefef;font-size:18px;}
 	form.search .act {font-weight:bold;}
-	form.search .btn {padding:4px 18px;font-size:16px;margin-top:-3px;margin-right:5px;border:1px solid #bbb;border-radius:3px;}
-	form.search .btn:hover {color:#333;background:#d1d1d1}
+	form.search .btn {padding:4px 18px;font-size:18px;margin-top:-3px;margin-right:5px;border:1px solid #bbb;border-radius:3px;}
+	form.search .btn:hover, form.search .btn:focus {outline:none;color:#333;background:#d1d1d1}
 	dl.search {line-height:25px;border-bottom:1px solid #efefef;margin:10px 20px 15px 20px;}
-	dl.search dt {border-top:1px solid #efefef;padding:13px 5px 5px;font-size:16px;}
+	dl.search dt {border-top:1px solid #efefef;padding:13px 5px 5px;font-size:18px;font-weight:normal;font-family:Arial,sans-serif;}
 	dl.search dt a {color:#0000cc;text-decoration:underline;}
-	dl.search dd {margin:0 5px 13px;font-size:13px;color:#333;word-break:break-all;word-wrap:break-word;}
-	dl.search dd .info, dl.search dd .info a {margin-top:3px;font-size:12px;color:#008000;}
+	dl.search dd {margin:0 5px 13px;font-size:14px;color:#333;word-break:break-all;word-wrap:break-word;}
+	dl.search dd .info, dl.search dd .info a {margin-top:3px;font-size:14px;color:#008000;}
 	dl.search .highlight {color:#DF0037;}
 	.pagination{margin:0 0 10px 10px;}
 </style>
@@ -67,23 +68,28 @@ $(function(){
 	</form>
 	<dl class="search">
 		<#html:if test="${page! != null && (isBlank(t) || t == 'article')}">
-			<#html:foreach items="${page.list}" var="article">
-				<dt><a href="${article.url}" target="_blank">${article.title}</a></dt>
-				<dd>${article.content}
+			<#html:foreach items="${page.list}" var="obj">
+				<dt><a href="${obj.data.url!}" target="_blank">${obj.data.title!}</a></dt>
+				<dd>
+					${obj.text}
 					<div class="info">
-						发布者：${article.createBy} &nbsp; 点击数：${article.hits} &nbsp; 
-						发布时间：${article.createDateStr} &nbsp; 更新时间：${article.updateDateStr} &nbsp;
-						<a href="${article.url}" target="_blank">查看全文</a><br/>
+						发布者：${obj.data.createBy!} &nbsp;
+						发布时间：${obj.data.createDate!,dateFormat='yyyy-MM-dd'} &nbsp;
+						更新时间：${obj.data.updateDate!,dateFormat='yyyy-MM-dd'} &nbsp;
+						<a href="${obj.data.url!}" target="_blank">查看全文</a><br/>
 					</div>
 				</dd>
 			</#html:foreach>
 		</#html:if>
 		<#html:if test="${page! != null && t == 'link'}">
-			<#html:forEach items="${page.list}" var="link">
-				<dt><a href="${link.url}" target="_blank">${link.title}</a></dt>
-				<dd><div class="info">
-						发布者：${link.createBy} &nbsp; 发布时间：${link.createDateStr} &nbsp; 更新时间：${link.updateDateStr} &nbsp;
-						<a href="${link.url}" target="_blank">打开链接</a><br/>
+			<#html:forEach items="${page.list}" var="obj">
+				<dt><a href="${obj.data.url!}" target="_blank">${link.title}</a></dt>
+				<dd>
+					<div class="info">
+						发布者：${obj.data.createBy!} &nbsp;
+						发布时间：${link.createDate!,dateFormat='yyyy-MM-dd'} &nbsp;
+						更新时间：${link.updateDate!,dateFormat='yyyy-MM-dd'} &nbsp;
+						<a href="${obj.data.url!}" target="_blank">打开链接</a><br/>
 					</div>
 				</dd>
 			</#html:forEach>
