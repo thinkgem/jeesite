@@ -4,14 +4,14 @@
  */
 package com.jeesite.common.lang;
 
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.collect.ListUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.collect.ListUtils;
 
 /**
  * 字符串工具类, 继承org.apache.commons.lang3.StringUtils类
@@ -99,14 +99,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 */
 	public static String stripHtml(String html) {
 		if (isBlank(html)){
-			return "";
+			return EMPTY;
 		}
 		//html.replaceAll("\\&[a-zA-Z]{0,9};", "").replaceAll("<[^>]*>", "");
 		String regEx = "<.+?>";
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(html);
-		String s = m.replaceAll("");
-		return s;
+		return m.replaceAll(EMPTY);
 	}
 	
 	/**
@@ -115,8 +114,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return
 	 */
 	public static String toMobileHtml(String html){
-		if (html == null){
-			return "";
+		if (isBlank(html)){
+			return EMPTY;
 		}
 		return html.replaceAll("<([a-z]+?)\\s+?.*?>", "<$1>");
 	}
@@ -127,8 +126,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return
 	 */
 	public static String toHtml(String txt){
-		if (txt == null){
-			return "";
+		if (isBlank(txt)){
+			return EMPTY;
 		}
 		return replace(replace(EncodeUtils.encodeHtml(trim(txt)), "\n", "<br/>"), "\t", "&nbsp; &nbsp; ");
 	}
@@ -140,8 +139,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return
 	 */
 	public static String abbr(String str, int length) {
-		if (str == null) {
-			return "";
+		if (isBlank(str)){
+			return EMPTY;
 		}
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -159,7 +158,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return "";
+		return EMPTY;
 	}
 	
 	// 缩略字符串替换Html正则表达式预编译
@@ -172,8 +171,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return
 	 */
 	public static String htmlAbbr(String param, int length) {
-		if (param == null) {
-			return "";
+		if (isBlank(param)){
+			return EMPTY;
 		}
 		StringBuffer result = new StringBuffer();
 		int n = 0;
