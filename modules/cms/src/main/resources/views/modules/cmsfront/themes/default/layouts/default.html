@@ -6,11 +6,11 @@
  * @param bodyClass body标签的class内容
  */
 %>
-<!DOCTYPE html><html><head>
+<% print('<'+'!DOC'+'TYPE html'+'>'); %><html><head>
 <% include('../include/head.html', {title: text(title!)}){} %>
 </head><body class="${bodyClass!}">
 <div class="container">
-<% include('../include/header.html'){} %>
-${layoutContent}
-<% include('../include/footer.html'){} %>
+<% include('../include/header.html'){}
+    %>${layoutContent}<%
+include('../include/footer.html'){} %>
 </div>

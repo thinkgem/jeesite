@@ -4,37 +4,27 @@
  */
 package com.jeesite.modules.cmsfront.web;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.ArticleData;
-import com.jeesite.modules.cms.entity.Category;
-import com.jeesite.modules.cms.entity.Comment;
-import com.jeesite.modules.cms.entity.Site;
+import com.jeesite.modules.cms.entity.*;
 import com.jeesite.modules.cms.service.ArticleService;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.CommentService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 网站Controller
@@ -274,9 +264,6 @@ public class FrontController extends BaseController {
 				return "error/404";
 			}
 
-			// 文章阅读次数+1
-			articleService.updateHitsAddOne(contentId);
-
 			// 如果设置了外部链接，则跳转到指定链接
 			if (StringUtils.isNotBlank(article.getHref())) {
 				if (article.getHref().startsWith(request.getContextPath())) {
@@ -305,6 +292,16 @@ public class FrontController extends BaseController {
 			return "modules/cmsfront/themes/" + site.getTheme() + "/" + CmsUtils.getArticleView(article);
 		}
 		return "error/404";
+	}
+
+	/**
+	 * 获取文章读取次数并加一
+	 */
+	@RequestMapping(value = { "article-hits-{articleId}" })
+	@ResponseBody
+	public long articleHits(@PathVariable String articleId) {
+		articleService.updateHitsAddOne(articleId);
+		return articleService.getHits(articleId);
 	}
 
 	/**
@@ -347,12 +344,12 @@ public class FrontController extends BaseController {
 				comment.setStatus(isAudit ? Comment.STATUS_AUDIT : Comment.STATUS_NORMAL);
 				comment.setStatus(Comment.STATUS_AUDIT);
 				commentService.save(comment);
-				return "{result:1, message:'提交成功" + (isAudit ? "，请等待审核" : "") + "。'}";
+				return renderResult("1", "提交成功" + (isAudit ? "，请等待审核" : "") + "。");
 			} else {
-				return "{result:2, message:'验证码不正确。'}";
+				return renderResult("2", "验证码不正确。");
 			}
 		} else {
-			return "{result:2, message:'验证码不能为空。'}";
+			return renderResult("2", "验证码不能为空。");
 		}
 	}
 

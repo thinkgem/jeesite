@@ -21,14 +21,19 @@
 	</select>
 	
 	<update id="updateExpiredWeight">
-		update ${_prefix}cms_article SET weight = 0
+		UPDATE ${_prefix}cms_article SET weight = 0
 		WHERE weight &gt; 0 AND weight_date &lt; #{weightDate}
 	</update>
 	
 	<update id="updateHitsAddOne">
-		update ${_prefix}cms_article set
+		UPDATE ${_prefix}cms_article SET
 			 hits = hits + 1
-		 WHERE id = #{id}
+		WHERE id = #{id}
 	</update>
+
+	<select id="getHits" resultType="long">
+		SELECT hits FROM ${_prefix}cms_article
+		WHERE id = #{id}
+	</select>
 	
 </mapper>

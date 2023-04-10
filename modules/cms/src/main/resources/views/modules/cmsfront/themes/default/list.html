@@ -19,13 +19,12 @@
 				</#html:foreach>
 			</ul>
 			<div class="pagination">${@page.toHtml()}</div>
-			<script type="text/javascript">
-			function page(n,s){
-				location="${category.url}?pageNo="+n+"&pageSize="+s;
-			}
+			<script>
+				function page(n, s){
+					location = "${category.url}?pageNo=" + n + "&pageSize=" + s;
+				}
 			</script>
 		</#html:if>
 	</div>
 </div>
 <% } %>
-

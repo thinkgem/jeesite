@@ -24,7 +24,7 @@
 									<ul class="article-list">
 										<#html:foreach items="${articleList(site.siteCode, category.categoryCode, 5)}" var="article,status">
 											<li>${status.index}. &nbsp; <span class="pull-right">${article.updateDate,'yyyy-MM-dd'}</span>
-												<a href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a> </li>
+												<a href="${article.url}" style="color:${article.color}">${abbr(article.title,28)}</a></li>
 										</#html:foreach>
 									</ul>
 								</div>
@@ -38,4 +38,3 @@
 	</div>
 </div>
 <% } %>
-
