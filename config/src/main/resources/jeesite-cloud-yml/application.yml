@@ -353,6 +353,13 @@ lang:
 job:
   enabled: false
 
+  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+  # 在微服务模式情况下，请将instanceName名称设置为当前微服务的名称
+  # 每一个instanceId必须不同，设置AUTO则自动生成
+  scheduler:
+    instanceName: ${spring.application.name}
+    instanceId: AUTO
+
 #======================================#
 #========= Framework settings =========#
 #======================================#
