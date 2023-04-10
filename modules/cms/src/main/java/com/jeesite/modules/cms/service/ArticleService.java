@@ -41,6 +41,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 	@Autowired
 	private ArticleDataDao articleDataDao;
+	@Autowired(required = false)
+	private PageCacheService pageCacheService;
 
 	private static ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
@@ -158,8 +160,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		}
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(article, article.getId(), "article_image");
-//		// 保存上传附件
-//		FileUploadUtils.saveFileUpload(article, article.getId(), "article_file");
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(article);
+		}
 	}
 
 	/**
@@ -170,14 +174,25 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Transactional
 	public void updateStatus(Article article) {
 		super.updateStatus(article);
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(article);
+		}
 	}
 
 	/**
-	 * 获取文章获取文章并点击数加一
+	 * 文章点击次数数加一
 	 */
 	@Transactional
 	public void updateHitsAddOne(String id) {
 		dao.updateHitsAddOne(id);
+	}
+
+	/**
+	 * 获取文章点击次数
+	 */
+	public long getHits(String id) {
+		return dao.getHits(id);
 	}
 
 	/**
@@ -188,6 +203,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Transactional
 	public void delete(Article article) {
 		super.delete(article);
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(article);
+		}
 	}
 
 	/**

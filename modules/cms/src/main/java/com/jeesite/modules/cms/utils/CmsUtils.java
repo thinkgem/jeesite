@@ -32,14 +32,14 @@ import java.util.Map;
  */
 public class CmsUtils {
 
+	private static final String CMS_CACHE = "cmsCache";
+
 	private static final class Static {
 		private static SiteService siteService = SpringUtils.getBean(SiteService.class);
 		private static CategoryService categoryService = SpringUtils.getBean(CategoryService.class);
 		private static ArticleService articleService = SpringUtils.getBean(ArticleService.class);
 		private static ServletContext context = SpringUtils.getBean(ServletContext.class);
 	}
-
-	private static final String CMS_CACHE = "cmsCache";
 
 	/**
 	 * 获得当前站点信息
@@ -124,7 +124,7 @@ public class CmsUtils {
 		if (StringUtils.isBlank(siteCode) || StringUtils.isBlank(parentCode)) {
 			return ListUtils.newArrayList();
 		}
-		Page<Category> page = new Page<Category>(1, number, -1);
+		Page<Category> page = new Page<>(1, number, -1);
 		Category category = new Category();
 		category.setSite(new Site(siteCode));
 		category.setParentCode(parentCode);
@@ -234,23 +234,6 @@ public class CmsUtils {
 		article.setPage(page);
 		page = Static.articleService.findPage(article);
 		return page.getList();
-	}
-
-	public static <V> V getCache(String key) {
-		return CacheUtils.get(CMS_CACHE, key);
-	}
-
-	public static <V> V getCache(String key, V defaultValue) {
-		V value = CacheUtils.get(CMS_CACHE, key);
-		return value != null ? value : defaultValue;
-	}
-
-	public static void putCache(String key, Object value) {
-		CacheUtils.put(CMS_CACHE, key, value);
-	}
-
-	public static void removeCache(String key) {
-		CacheUtils.remove(CMS_CACHE, key);
 	}
 
 	/**
@@ -497,6 +480,39 @@ public class CmsUtils {
 		for (Category ca : categoryList) {
 			addViewConfigAttribute(model, ca.getViewConfig());
 		}
+	}
+
+	public static SiteService getSiteService() {
+		return Static.siteService;
+	}
+
+	public static CategoryService getCategoryService() {
+		return Static.categoryService;
+	}
+
+	public static ArticleService getArticleService() {
+		return Static.articleService;
+	}
+
+	public static ServletContext getServletContext() {
+		return Static.context;
+	}
+
+	public static <V> V getCache(String key) {
+		return CacheUtils.get(CMS_CACHE, key);
+	}
+
+	public static <V> V getCache(String key, V defaultValue) {
+		V value = CacheUtils.get(CMS_CACHE, key);
+		return value != null ? value : defaultValue;
+	}
+
+	public static void putCache(String key, Object value) {
+		CacheUtils.put(CMS_CACHE, key, value);
+	}
+
+	public static void removeCache(String key) {
+		CacheUtils.remove(CMS_CACHE, key);
 	}
 
 }

@@ -9,6 +9,7 @@ import com.jeesite.modules.cms.dao.CategoryDao;
 import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ import java.util.List;
  */
 @Service
 public class CategoryService extends TreeService<CategoryDao, Category> {
+
+	@Autowired(required = false)
+	private PageCacheService pageCacheService;
 
 	/**
 	 * 获取单条数据
@@ -62,6 +66,10 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		// 保存上传图片
 		FileUploadUtils.saveFileUpload(category, category.getId(), "category_image");
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(category);
+		}
 	}
 	
 	/**
@@ -82,6 +90,10 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@Transactional
 	public void updateStatus(Category category) {
 		super.updateStatus(category);
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(category);
+		}
 	}
 
 	/**
@@ -92,6 +104,10 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@Transactional
 	public void delete(Category category) {
 		super.delete(category);
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(category);
+		}
 	}
 
 }

@@ -20,4 +20,6 @@ public interface ArticleDao extends CrudDao<Article> {
 
 	long updateHitsAddOne(String id);
 
+	long getHits(String id);
+
 }

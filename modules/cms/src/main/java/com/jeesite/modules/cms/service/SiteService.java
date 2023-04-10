@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.cms.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,10 @@ import com.jeesite.modules.file.utils.FileUploadUtils;
  */
 @Service
 public class SiteService extends CrudService<SiteDao, Site> {
-	
+
+	@Autowired(required = false)
+	private PageCacheService pageCacheService;
+
 	/**
 	 * 获取单条数据
 	 * @param site
@@ -54,6 +58,10 @@ public class SiteService extends CrudService<SiteDao, Site> {
 		CmsUtils.removeCache("siteList");
 		// 保存logo
 		FileUploadUtils.saveFileUpload(site, site.getId(), "site_logo");
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(site);
+		}
 	}
 
 	/**
@@ -64,6 +72,10 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Transactional
 	public void updateStatus(Site site) {
 		super.updateStatus(site);
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(site);
+		}
 	}
 
 	/**
@@ -74,6 +86,10 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Transactional
 	public void delete(Site site) {
 		super.delete(site);
+		// 清理首页、栏目和文章页面缓存
+		if (pageCacheService != null) {
+			pageCacheService.clearCache(site);
+		}
 	}
 
 	/**

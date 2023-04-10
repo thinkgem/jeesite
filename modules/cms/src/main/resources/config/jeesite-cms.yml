@@ -1,0 +1,13 @@
+# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
+
+cms:
+  pageCache:
+    enabled: true
+    cacheName: cmsPageCache
+    urlPatterns: ${frontPath}/*
+    urlSuffixes: .html
+
+j2cache:
+  caffeine:
+    region:
+      cmsPageCache: 100000, 7d
