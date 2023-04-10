@@ -406,8 +406,7 @@ public class AccountController extends BaseController{
 		UserUtils.putCache("regLoginCode", user.getLoginCode());
 		UserUtils.putCache("regUserName", user.getUserName());
 		// 账号注册类型
-		String[] userTypes = StringUtils.split(Global.getConfig(
-				"sys.account.registerUser.userTypes", "-1"), ",");
+		String[] userTypes = Global.getConfigToArray("sys.account.registerUser.userTypes", "-1");
 		if (StringUtils.inString(user.getUserType(), userTypes)){
 			UserUtils.putCache("regUserType", user.getUserType());
 		}else{

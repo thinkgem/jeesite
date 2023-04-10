@@ -4,6 +4,16 @@
  */
 package com.jeesite.common.io;
 
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.collect.SetUtils;
+import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,17 +22,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
-
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.collect.SetUtils;
-import com.jeesite.common.lang.ObjectUtils;
-import com.jeesite.common.lang.StringUtils;
 
 /**
  * Properties工具类， 可载入多个properties、yml文件，
@@ -205,6 +204,15 @@ public class PropertiesUtils {
 	public String getProperty(String key, String defaultValue) {
 		String value = getProperty(key);
 		return value != null ? value : defaultValue;
+	}
+
+	/**
+	 * 获取配置文件中String类型的值，取不到从System.getProperty获取，取不到，返回空。
+	 * 对属性值进行 “,“ 逗号进行 split 分割，并返回
+	 * @return 获取不到，返回空defValue默认值
+	 */
+	public String[] getPropertyToArray(String key, String defValue) {
+		return StringUtils.split(getProperty(key, defValue), ",");
 	}
 
 	/**

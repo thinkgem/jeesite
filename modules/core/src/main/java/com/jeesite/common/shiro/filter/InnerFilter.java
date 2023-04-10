@@ -4,14 +4,13 @@
  */
 package com.jeesite.common.shiro.filter;
 
+import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
+import org.apache.shiro.web.filter.AccessControlFilter;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.web.filter.AccessControlFilter;
-
-import com.jeesite.common.config.Global;
-import com.jeesite.common.lang.StringUtils;
 
 /**
  * 内部系统访问过滤器
@@ -25,8 +24,7 @@ public class InnerFilter extends AccessControlFilter {
 		boolean result = false;
 		String[] prefixes = (String[])mappedValue;
 		if (prefixes == null){
-			prefixes = StringUtils.split(Global.getProperty(
-					"shiro.innerFilterAllowRemoteAddrs", "127.0.0.1"), ",");
+			prefixes = Global.getPropertyToArray("shiro.innerFilterAllowRemoteAddrs", "127.0.0.1");
 		}
 		if (prefixes != null && request instanceof HttpServletRequest){
 			String ip = request.getRemoteAddr();
