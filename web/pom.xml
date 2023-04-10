@@ -56,6 +56,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- 内容管理扩展模块（标准版）
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cms-extend</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
 		<!-- 移动端模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
