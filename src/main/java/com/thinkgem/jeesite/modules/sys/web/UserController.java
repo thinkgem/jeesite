@@ -129,7 +129,7 @@ public class UserController extends BaseController {
 		systemService.saveUser(user);
 		// 清除当前用户缓存
 		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
-			UserUtils.clearCache();
+			UserUtils.clearCache(UserUtils.getUser());
 			//UserUtils.getCacheMap().clear();
 		}
 		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
