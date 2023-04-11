@@ -32,7 +32,7 @@ public interface ArticleIndexService {
 	 * 重建索引
 	 * @author ThinkGem
 	 */
-	void rebuild(Article article);
+	String rebuild(Article article);
 
 	/**
 	 * 文章高级搜索

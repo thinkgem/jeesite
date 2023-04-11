@@ -95,7 +95,15 @@ $(function(){
 			</#html:forEach>
 		</#html:if>
 		<#html:if test="${page! == null || page.list.~size == 0}">
-			<dt><#html:if test="${isBlank(q)}">请键入要查找的关键字。</#html:if><#html:if test="${isNotBlank(q)}">抱歉，没有找到与“${q}”相关内容。</#html:if><br/><br/>建议：</dt>
+			<dt>
+				<% if (isNotBlank(page.otherData.message!)){ %>
+					${page.otherData.message!}
+				<% } else if (isBlank(q)){ %>
+					请键入要查找的关键字。
+				<% } else if (isNotBlank(q)){ %>
+					抱歉，没有找到与 “${q}” 相关内容。
+				<% } %>
+				<br/><br/>建议：</dt>
 			<dd><ul><li>检查输入是否正确；</li><li>简化输入词；</li><li>尝试其他相关词，如同义、近义词等。</li></ul></dd>
 		</#html:if>
 	</dl>

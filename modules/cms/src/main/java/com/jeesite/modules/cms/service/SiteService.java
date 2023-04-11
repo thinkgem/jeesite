@@ -4,19 +4,17 @@
  */
 package com.jeesite.modules.cms.service;
 
-import com.jeesite.common.service.ServiceException;
-import com.jeesite.modules.cms.entity.Article;
-import com.jeesite.modules.cms.entity.Category;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.cms.dao.SiteDao;
+import com.jeesite.modules.cms.entity.Article;
+import com.jeesite.modules.cms.entity.Category;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 站点表Service
@@ -113,11 +111,11 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	 * 重建索引
 	 * @author ThinkGem
 	 */
-	public void rebuildIndex(Site site) {
+	public String rebuildIndex(Site site) {
 		if (articleIndexService == null) {
-			throw new ServiceException(text("未安装全文检索模块"));
+			return text("您好，系统未安装全文检索模块");
 		}
-		articleIndexService.rebuild(new Article(new Category(site)));
+		return articleIndexService.rebuild(new Article(new Category(site)));
 	}
 	
 }

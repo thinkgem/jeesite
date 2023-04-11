@@ -4,7 +4,6 @@
  */
 package com.jeesite.modules.cms.service;
 
-import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.cms.dao.CategoryDao;
 import com.jeesite.modules.cms.entity.Article;
@@ -118,11 +117,11 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	 * 重建索引
 	 * @author ThinkGem
 	 */
-	public void rebuildIndex(Category category) {
+	public String rebuildIndex(Category category) {
 		if (articleIndexService == null) {
-			throw new ServiceException(text("未安装全文检索模块"));
+			return text("您好，系统未安装全文检索模块");
 		}
-		articleIndexService.rebuild(new Article(category));
+		return articleIndexService.rebuild(new Article(category));
 	}
 
 }

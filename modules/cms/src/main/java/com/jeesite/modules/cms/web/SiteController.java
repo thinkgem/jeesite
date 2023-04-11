@@ -7,7 +7,6 @@ package com.jeesite.modules.cms.web;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.modules.cms.entity.Site;
@@ -143,10 +142,7 @@ public class SiteController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "rebuildIndex")
 	public String rebuildIndex(Site site)  {
-		long start = System.currentTimeMillis();
-		siteService.rebuildIndex(site);
-		return renderResult(Global.TRUE, "重建索引成功！ 用时"
-				+ TimeUtils.formatTime(System.currentTimeMillis() - start) + "。");
+		return renderResult(Global.TRUE, siteService.rebuildIndex(site));
 	}
 	
 	/**

@@ -10,7 +10,6 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.common.service.ServiceException;
 import com.jeesite.modules.cms.dao.ArticleDao;
 import com.jeesite.modules.cms.dao.ArticleDataDao;
 import com.jeesite.modules.cms.entity.Article;
@@ -229,17 +228,6 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	}
 
 	/**
-	 * 重建索引
-	 * @author ThinkGem
-	 */
-	public void rebuildIndex(Article article) {
-		if (articleIndexService == null) {
-			throw new ServiceException(text("未安装全文检索模块"));
-		}
-		articleIndexService.rebuild(article);
-	}
-
-	/**
 	 * 文章高级搜索
 	 * @param page 分页对象
 	 * @param qStr 搜索字符串
@@ -252,7 +240,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	public Page<Map<String, Object>> searchPage(Page<Map<String, Object>> page, String qStr,
 			String qand, String qnot, String bd, String ed, Map<String, String> params) {
 		if (articleIndexService == null) {
-			throw new ServiceException(text("未安装全文检索模块"));
+			page.addOtherData("message", text("您好，系统未安装全文检索模块。"));
+			return page;
 		}
 		return articleIndexService.searchPage(page, qStr, qand, qnot, bd, ed, params);
 	}

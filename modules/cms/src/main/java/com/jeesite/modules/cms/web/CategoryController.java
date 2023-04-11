@@ -255,10 +255,7 @@ public class CategoryController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "rebuildIndex")
 	public String rebuildIndex(Category category)  {
-		long start = System.currentTimeMillis();
-		categoryService.rebuildIndex(category);
-		return renderResult(Global.TRUE, "重建索引成功！ 用时"
-				+ TimeUtils.formatTime(System.currentTimeMillis() - start) + "。");
+		return renderResult(Global.TRUE, categoryService.rebuildIndex(category));
 	}
 
 	/**
