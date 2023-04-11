@@ -1,17 +1,7 @@
-import { Ref, unref, computed } from 'vue';
+import { Ref, unref, computed, onMounted, ref } from 'vue';
+import { uploadParams } from '/@/api/sys/upload';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
-
-const imageAllowSuffixes = '.gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff'.split(',');
-const mediaAllowSuffixes =
-  '.flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv'.split(
-    ',',
-  );
-const fileAllowSuffixes =
-  '.doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso'.split(
-    ',',
-  );
-const allowSuffixes = [...imageAllowSuffixes, ...mediaAllowSuffixes, ...fileAllowSuffixes];
 
 export function useUploadType({
   uploadTypeRef,
@@ -26,6 +16,23 @@ export function useUploadType({
   maxNumberRef: Ref<number>;
   maxSizeRef: Ref<number>;
 }) {
+  const imageAllowSuffixes = ref<string[]>([]);
+  const mediaAllowSuffixes = ref<string[]>([]);
+  const fileAllowSuffixes = ref<string[]>([]);
+  const allowSuffixes = ref<string[]>([]);
+
+  onMounted(async () => {
+    const params = await uploadParams();
+    imageAllowSuffixes.value = params.imageAllowSuffixes.split(',');
+    mediaAllowSuffixes.value = params.mediaAllowSuffixes.split(',');
+    fileAllowSuffixes.value = params.fileAllowSuffixes.split(',');
+    allowSuffixes.value = [
+      ...unref(imageAllowSuffixes),
+      ...unref(mediaAllowSuffixes),
+      ...unref(fileAllowSuffixes),
+    ];
+  });
+
   // 文件类型限制
   const getAccept = computed(() => {
     const accept = unref(acceptRef);
@@ -34,18 +41,19 @@ export function useUploadType({
     }
     const uploadType = unref(uploadTypeRef);
     if (uploadType == 'image') {
-      return imageAllowSuffixes;
+      return unref(imageAllowSuffixes);
     } else if (uploadType == 'media') {
-      return mediaAllowSuffixes;
+      return unref(mediaAllowSuffixes);
     } else if (uploadType == 'file') {
-      return fileAllowSuffixes;
+      return unref(fileAllowSuffixes);
     } else {
-      return allowSuffixes;
+      return unref(allowSuffixes);
     }
   });
+
   const getStringAccept = computed(() => {
-    return unref(getAccept)
-      .map((item) => {
+    const accept = unref(getAccept)
+      .map((item: any) => {
         if (item.indexOf('/') > 0 || item.startsWith('.')) {
           return item;
         } else {
@@ -53,6 +61,7 @@ export function useUploadType({
         }
       })
       .join(',');
+    return accept;
   });
 
   // 支持jpg、jpeg、png格式，不超过2M，最多可选择10张图片，。
