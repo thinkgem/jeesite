@@ -133,6 +133,9 @@
 								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+							</manifestEntries>
 						</archive>
 					</configuration>
 					<executions>
@@ -173,6 +176,9 @@
 								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+							</manifestEntries>
 						</archive>
 					</configuration>
 				</plugin>
