@@ -7,7 +7,7 @@
         <groupId>com.jeesite</groupId>
         <artifactId>jeesite-cloud-parent</artifactId>
         <version>5.3.1-SNAPSHOT</version>
-        <relativePath>../parent/web/pom.xml</relativePath>
+        <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>jeesite-cloud-sentinel</artifactId>
