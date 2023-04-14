@@ -89,12 +89,14 @@ public class PropertiesUtils {
 			for (String location : configFiles){
 				configSet.add(location);
 				if (StringUtils.isNotBlank(profiles)){
-					if (location.endsWith(".properties")){
-						configSet.add(StringUtils.substringBeforeLast(location, ".properties")
-								+ "-" + profiles + ".properties");
-					}else if (location.endsWith(".yml")){
-						configSet.add(StringUtils.substringBeforeLast(location, ".yml")
-								+ "-" + profiles + ".yml");
+					for (String pf : StringUtils.split(profiles, ",")) {
+						if (location.endsWith(".properties")){
+							configSet.add(StringUtils.substringBeforeLast(location, ".properties")
+									+ "-" + pf + ".properties");
+						}else if (location.endsWith(".yml")){
+							configSet.add(StringUtils.substringBeforeLast(location, ".yml")
+									+ "-" + pf + ".yml");
+						}
 					}
 				}
 			}
