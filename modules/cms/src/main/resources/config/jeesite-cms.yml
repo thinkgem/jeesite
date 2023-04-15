@@ -2,12 +2,34 @@
 
 cms:
   pageCache:
-    enabled: true
+    # 是否开启页面静态化缓存
+    #enabled: true
+    # 缓存名称标识
     cacheName: cmsPageCache
+    # 拦截的网页地址
     urlPatterns: ${frontPath}/*
+    # 只静态化 .html 后缀的网页
     urlSuffixes: .html
 
 j2cache:
   caffeine:
     region:
+      # 设置缓存的超期时间，默认 7天，根据需要可以设置更久。
       cmsPageCache: 100000, 7d
+
+#spring:
+#  data:
+#    elasticsearch:
+#      # 开启 ES 功能
+#      enabled: true
+#
+#      # 设置 ES 服务地址
+#      client:
+#        reactive:
+#          endpoints: 127.0.0.1:9200
+#
+#      # 连接超时的时间
+#      properties:
+#        transport:
+#          tcp:
+#            connect_timeout: 120s
