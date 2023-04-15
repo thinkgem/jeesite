@@ -4,31 +4,15 @@
 	<!-- Log file path  -Dspring.profiles.active=prod -->
 	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
 	
-	<!-- Framework level setting -->
-	<include resource="config/logger-core.xml"/>
-	
 	<!-- Project level setting -->
-	<!-- <logger name="your.package" level="DEBUG" /> -->
-	<logger name="io.seata" level="INFO" />
-	<logger name="zipkin2.reporter.AsyncReporter$BoundedAsyncReporter" level="ERROR" />
-	<logger name="org.springframework.cloud.openfeign.FeignClientFactoryBean" level="ERROR" />
-<!-- 	<logger name="org.springframework.cloud.openfeign.support.SpringMvcContract" level="DEBUG" /> -->
-	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<logger name="com.netflix.config.sources.URLConfigurationSource" level="ERROR" />
+	<logger name="org.springframework.web.reactive.DispatcherHandler" level="DEBUG" />
+	<logger name="org.springframework.boot.web.embedded" level="INFO" />
+	<logger name="org.springframework.cloud" level="INFO" />
+	<logger name="com.jeesite" level="DEBUG" />
+	<logger name="reactor.netty.http.client.HttpClientConnect" level="DEBUG" />
 
-	<!-- Production level setting -->
-	<logger name="org.mybatis.spring.transaction" level="INFO" />
-	<logger name="org.flowable.ui.modeler.domain" level="INFO" />
-	<logger name="org.flowable.idm.engine.impl.persistence" level="INFO" />
-	<logger name="org.flowable.task.service.impl.persistence" level="INFO" />
-	<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
-	<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
-	<logger name="org.flowable.engine.impl.persistence" level="INFO" />
-	<logger name="com.jeesite" level="INFO" />
-	<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
-	
-	<!-- Project level setting -->
-	<!-- <logger name="your.package" level="DEBUG" /> -->
-	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>

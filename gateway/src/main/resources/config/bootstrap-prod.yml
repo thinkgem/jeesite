@@ -34,14 +34,14 @@ eureka:
 #======================================#
 
 spring:
-  
+
   # 分布式配置中心
   cloud:
     config:
       discovery:
         enabled: true
         serviceId: jeesite-cloud-config
-        
+
     # Consul 服务发现
     consul:
       host: 192.168.56.1
@@ -49,7 +49,7 @@ spring:
       discovery:
         hostname: 192.168.56.1
         preferIpAddress: false
-        
+
     # 服务注册和配置
     nacos:
       discovery:
@@ -58,9 +58,6 @@ spring:
         server-addr: 192.168.56.1:8848
         file-extension: yml
         group: jeesite-cloud-yml
-        extension-configs:
-          - data-id: application.yml
-            group: jeesite-cloud-yml
 
     # 服务发现与注册优选IP前缀
     #inetutils:

@@ -1,0 +1,6 @@
+
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod,elk
+
+# 日志配置
+logging:
+  config: classpath:config/logback-spring-elk.xml

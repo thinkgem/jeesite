@@ -3,17 +3,18 @@
 
 	<!-- Log file path -->
 	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
-
+	
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
-
+	
 	<!-- Project level setting -->
-	<!-- 	<logger name="your.package" level="DEBUG" /> -->
+	<!-- <logger name="your.package" level="DEBUG" /> -->
 	<logger name="io.seata" level="INFO" />
 	<logger name="zipkin2.reporter.AsyncReporter$BoundedAsyncReporter" level="ERROR" />
 	<logger name="org.springframework.cloud.openfeign.FeignClientFactoryBean" level="ERROR" />
+<!-- 	<logger name="org.springframework.cloud.openfeign.support.SpringMvcContract" level="DEBUG" /> -->
 	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
-
+	
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -30,7 +31,7 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] - %m%n%wEx</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] [%X{TRACE_ID}] - %m%n%wEx</pattern>
 		</encoder>
 		<!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>ERROR</level>
@@ -48,7 +49,7 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] - %m%n%wEx</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p ${PID:- } [%15.15t] [%-39logger{39}] [%X{TRACE_ID}] - %m%n%wEx</pattern>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>ERROR</level>

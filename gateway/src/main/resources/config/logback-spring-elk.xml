@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+
+	<!-- Log file path  -Dspring.profiles.active=prod,elk -->
+	<property name="log.path" value="${logPath:-${java.io.tmpdir:-.}}/logs" />
+	<springProperty name="appname" source="spring.application.name" />
+
+	<!-- Project level setting -->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<logger name="com.netflix.config.sources.URLConfigurationSource" level="ERROR" />
+	<logger name="org.springframework.web.reactive.DispatcherHandler" level="DEBUG" />
+	<logger name="org.springframework.boot.web.embedded" level="INFO" />
+	<logger name="org.springframework.cloud" level="INFO" />
+	<logger name="com.jeesite" level="DEBUG" />
+	<logger name="reactor.netty.http.client.HttpClientConnect" level="DEBUG" />
+
+	<!-- Console log output -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{MM-dd HH:mm:ss.SSS} %clr(%-5p) %clr([%-39logger{39}]){cyan} - %m%n%wEx</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>localhost:5055</destination> <!-- 注意：替换为您的 Logstash 服务地址 -->
+		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
+			<customFields>{"appname":"${appname}"}</customFields>
+		</encoder>
+	</appender>
+
+	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
+	<root level="WARN">
+		<appender-ref ref="console" />
+		<appender-ref ref="logstash" />
+	</root>
+
+</configuration>
