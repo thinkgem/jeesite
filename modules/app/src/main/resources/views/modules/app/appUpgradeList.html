@@ -1,0 +1,101 @@
+<% layout('/layouts/default.html', {title: '版本管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('版本管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('app:appUpgrade:edit')){ %>
+					<a href="${ctx}/app/appUpgrade/form" class="btn btn-default btnTool" title="${text('新增版本')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${appUpgrade}" action="${ctx}/app/appUpgrade/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('应用代号')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="appCode" dictType="app_code" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('升级标题')}：</label>
+					<div class="control-inline">
+						<#form:input path="upTitle" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('升级类型')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="upType" dictType="app_upgrade_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('发布时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="upDate" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("升级标题")}', name:'upTitle', index:'a.up_title', width:350, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/app/appUpgrade/form?id='+row.id+'" class="btnList" data-title="${text("编辑版本")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("应用代号")}', name:'appCode', index:'a.app_code', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('app_code')}, val, val, true);
+		}},
+		{header:'${text("版本号码")}', name:'upVersion', index:'a.up_version', width:100, align:"center"},
+		{header:'${text("升级类型")}', name:'upType', index:'a.up_type', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('app_upgrade_type')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("发布时间")}', name:'upDate', index:'a.up_date', width:150, align:"center"},
+		{header:'${text("升级内容")}', name:'upContent', index:'a.up_content', width:250, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			//<% if(hasPermi('app:appUpgrade:edit')){ %>
+				actions.push('<a href="${ctx}/app/appUpgrade/form?id='+row.id+'" class="btnList" title="${text("编辑版本")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/app/appUpgrade/disable?id='+row.id+'" class="btnList" title="${text("停用版本")}" data-confirm="${text("确认要停用该版本吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/app/appUpgrade/enable?id='+row.id+'" class="btnList" title="${text("启用版本")}" data-confirm="${text("确认要启用该版本吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/app/appUpgrade/delete?id='+row.id+'" class="btnList" title="${text("删除版本")}" data-confirm="${text("确认要删除该版本吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			//<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

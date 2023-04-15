@@ -1,0 +1,101 @@
+<% layout('/layouts/default.html', {title: '意见管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('意见管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('app:appComment:edit')){ %>
+					<a href="${ctx}/app/appComment/form" class="btn btn-default btnTool" title="${text('新增意见')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${appComment}" action="${ctx}/app/appComment/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('问题分类')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="category" dictType="app_comment_category" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('问题和意见')}：</label>
+					<div class="control-inline">
+						<#form:input path="content" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('联系方式')}：</label>
+					<div class="control-inline">
+						<#form:input path="contact" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="status" dictType="app_comment_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('回复人员')}：</label>
+					<div class="control-inline width-120">
+						<#form:listselect id="userSelect" title="用户选择" path="replyUserCode"
+							url="${ctx}/sys/empUser/empUserSelect" allowClear="false" 
+							checkbox="false" itemCode="userCode" itemName="userName"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("问题和意见")}', name:'content', index:'a.content', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/app/appComment/form?id='+row.id+'" class="btnList" data-title="${text("编辑意见")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("问题分类")}', name:'category', index:'a.category', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('app_comment_category')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("联系方式")}', name:'contact', index:'a.contact', width:150, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('app_comment_status')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("提问时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text("提问人员")}', name:'createByName', index:'a.create_by_name', width:150, align:"center"},
+		{header:'${text("回复时间")}', name:'replyDate', index:'a.reply_date', width:150, align:"center"},
+		{header:'${text("回复意见")}', name:'replyContent', index:'a.reply_content', width:150, align:"left"},
+		{header:'${text("回复人员")}', name:'replyUserName', index:'a.reply_user_name', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			//<% if(hasPermi('app:appComment:edit')){ %>
+				actions.push('<a href="${ctx}/app/appComment/form?id='+row.id+'" class="btnList" title="${text("编辑意见")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/app/appComment/disable?id='+row.id+'" class="btnList" title="${text("停用意见")}" data-confirm="${text("确认要停用该意见吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/app/appComment/enable?id='+row.id+'" class="btnList" title="${text("启用意见")}" data-confirm="${text("确认要启用该意见吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/app/appComment/delete?id='+row.id+'" class="btnList" title="${text("删除意见")}" data-confirm="${text("确认要删除该意见吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			//<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

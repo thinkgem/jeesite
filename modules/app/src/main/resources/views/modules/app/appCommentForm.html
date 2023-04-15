@@ -1,0 +1,175 @@
+<% layout('/layouts/default.html', {title: '意见管理', libs: ['validate','fileupload']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text(appComment.isNewRecord ? '新增意见' : '编辑意见')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${appComment}" action="${ctx}/app/appComment/save" method="post" class="form-horizontal nofocus">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('问题分类')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="category" dictType="app_comment_category" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('问题和意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="content" rows="4" minlength="10" maxlength="500" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('联系方式')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="contact" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">
+								<span class="required hide">*</span> ${text('图片上传')}：</label>
+							<div class="col-sm-8">
+								<#form:fileupload id="uploadImage" bizKey="${appComment.id}" bizType="appComment_image"
+									uploadType="image" class="" readonly="false" preview="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('设备信息')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="deviceInfo" rows="4" minlength="10" maxlength="500" class="form-control " readonly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ${isBlank(appComment.createDate)?'hide':''}">
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-6" title="">
+								<span class="required hide">*</span> ${text('回复时间')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-6 control-text">
+								${appComment.createDate, 'yyyy-MM-dd'}
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('回复人员')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-6 control-text">
+								${appComment.createByName}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">${text('回复信息')}</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('回复意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="replyContent" maxlength="500" rows="5" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ${isBlank(appComment.replyDate)?'hide':''}">
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-6" title="">
+								<span class="required hide">*</span> ${text('回复时间')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-6 control-text">
+								${appComment.replyDate, 'yyyy-MM-dd'}
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label class="control-label col-sm-3" title="">
+								<span class="required hide">*</span> ${text('回复人员')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-6 control-text">
+								${appComment.replyUserName}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">${text('其它信息')}</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required ">*</span> ${text('修改状态')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="status" dictType="app_comment_status" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('app:appComment:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>
