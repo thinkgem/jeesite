@@ -42,6 +42,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- 移动端模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-app</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -56,19 +63,19 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 内容管理扩展模块（标准版）
+		<!-- 内容管理-页面静态化（标准版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-cms-extend</artifactId>
+			<artifactId>jeesite-module-cms-pagecache</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
-		<!-- 移动端模块 -->
+		<!-- 内容管理-网站全文检索（专业版）
 		<dependency>
 			<groupId>com.jeesite</groupId>
-			<artifactId>jeesite-module-app</artifactId>
+			<artifactId>jeesite-module-cms-elasticsearch</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- 文件管理共享（标准版）
 		<dependency>

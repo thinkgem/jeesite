@@ -4,8 +4,11 @@
 <template>
 	<name>bootstrap</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
-	<fileName>bootstrap.yml</fileName>
+	<fileName>bootstrap-prod.yml</fileName>
 	<content><![CDATA[
+
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod
+
 #======================================#
 #========== Server settings ===========#
 #======================================#
@@ -13,7 +16,7 @@
 server:
 
   port: \${random.int[10000,19999]}
-    
+
 #======================================#
 #========== Cloud settings ============#
 #======================================#
@@ -24,7 +27,7 @@ eureka:
   # 实例设置
   instance:
     # 实例主机名称
-    hostname: 127.0.0.1
+    hostname: 192.168.56.1
     # 实例是否允许使用IP
     preferIpAddress: false
 
@@ -32,43 +35,35 @@ eureka:
   client:
     # 注册中心地址（集群时指定另外一个注册中心地址）
     serviceUrl:
-      defaultZone: http://127.0.0.1:8970/eureka/
+      defaultZone: http://192.168.56.1:8970/eureka/
 
 #======================================#
 #========== Spring settings ===========#
 #======================================#
 
 spring:
-  
-  # 应用程序名称
-  application:
-    name: jeesite-cloud-module-${moduleCode}
 
-  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
-  profiles:
-    active: default
-    
   # 分布式配置中心
   cloud:
     config:
       discovery:
         enabled: true
         serviceId: jeesite-cloud-config
-    
+
     # Consul 服务发现
     consul:
-      host: 127.0.0.1
+      host: 192.168.56.1
       port: 8500
       discovery:
-        hostname: 127.0.0.1
+        hostname: 192.168.56.1
         preferIpAddress: false
-        
+
     # 服务注册和配置
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.56.1:8848
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.56.1:8848
         file-extension: yml
         group: jeesite-cloud-yml
         extension-configs:
@@ -79,14 +74,9 @@ spring:
     #inetutils:
     #  preferred-networks: 192.168.56.
 
-  # 打印横幅
-  main:
-    bannerMode: "off"
-    allow-bean-definition-overriding: true
-    
 # 日志配置
 logging:
-  config: classpath:config/logback-spring.xml
+  config: classpath:config/logback-spring-prod.xml
 ]]>
 	</content>
 </template>

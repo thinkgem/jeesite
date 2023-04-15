@@ -41,6 +41,7 @@
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<groovy.version>3.0.10</groovy.version>
 		<joda-time.version>2.10.4</joda-time.version>
+		<logstash-logback.version>7.3</logstash-logback.version>
 		<elasticsearch.version>7.17.8</elasticsearch.version>
 		<lucene.version>8.11.1</lucene.version>
 

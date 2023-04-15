@@ -8,7 +8,7 @@
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
 
-	<!-- Log file path -->
+	<!-- Log file path  -Dspring.profiles.active=prod -->
 	<property name="log.path" value="\${logPath:-\${java.io.tmpdir:-.}}/logs" />
 
 	<!-- Framework level setting -->
@@ -21,6 +21,20 @@
 	<logger name="org.springframework.cloud.openfeign.FeignClientFactoryBean" level="ERROR" />
 <!-- 	<logger name="org.springframework.cloud.openfeign.support.SpringMvcContract" level="DEBUG" /> -->
 	<logger name="org.springframework.context.annotation.AnnotationConfigApplicationContext" level="ERROR" />
+
+	<!-- Production level setting -->
+	<logger name="org.mybatis.spring.transaction" level="INFO" />
+	<logger name="org.flowable.ui.modeler.domain" level="INFO" />
+	<logger name="org.flowable.idm.engine.impl.persistence" level="INFO" />
+	<logger name="org.flowable.task.service.impl.persistence" level="INFO" />
+	<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
+	<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
+	<logger name="org.flowable.engine.impl.persistence" level="INFO" />
+	<logger name="com.jeesite" level="INFO" />
+	<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
+
+	<!-- Project level setting -->
+	<!-- <logger name="your.package" level="DEBUG" /> -->
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

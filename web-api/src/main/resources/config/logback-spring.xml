@@ -8,7 +8,7 @@
 	<include resource="config/logger-core.xml"/>
 	
 	<!-- Project level setting -->
-<!-- 	<logger name="your.package" level="DEBUG" /> -->
+	<!-- <logger name="your.package" level="DEBUG" /> -->
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">

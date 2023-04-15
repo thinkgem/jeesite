@@ -228,7 +228,11 @@
 			<template>module_cloud/web/src/main/java/package.xml</template>
 			<template>module_cloud/web/src/main/java/startClass.xml</template>
 			<template>module_cloud/web/src/main/resources/config/bootstrap.xml</template>
+			<template>module_cloud/web/src/main/resources/config/bootstrap-elk.xml</template>
+			<template>module_cloud/web/src/main/resources/config/bootstrap-prod.xml</template>
 			<template>module_cloud/web/src/main/resources/config/logback-spring.xml</template>
+			<template>module_cloud/web/src/main/resources/config/logback-spring-elk.xml</template>
+			<template>module_cloud/web/src/main/resources/config/logback-spring-prod.xml</template>
 			<template>module_cloud/web/src/main/resources/static/static.xml</template>
 			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.bat.xml</template>
 			<template>module_cloud/web/src/main/webapp/WEB-INF/startup.sh.xml</template>

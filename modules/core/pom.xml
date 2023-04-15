@@ -87,6 +87,13 @@
 			<artifactId>jeesite-framework</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+
+		<!-- ELK 日志收集 -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash-logback.version}</version>
+		</dependency>
 		
 	</dependencies>
 	

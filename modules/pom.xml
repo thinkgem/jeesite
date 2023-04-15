@@ -15,6 +15,7 @@
 	<modules>
         <module>core</module>
         <module>cms</module>
+		<module>app</module>
     </modules>
 	
 	<developers>  

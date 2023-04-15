@@ -8,8 +8,9 @@
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
 
-	<!-- Log file path -->
+	<!-- Log file path  -Dspring.profiles.active=prod,elk -->
 	<property name="log.path" value="\${logPath:-\${java.io.tmpdir:-.}}/logs" />
+	<springProperty name="appname" source="spring.application.name" />
 
 	<!-- Framework level setting -->
 	<include resource="config/logger-core.xml"/>
@@ -29,45 +30,17 @@
 		</encoder>
 	</appender>
 
-	<!-- Log file debug output -->
-	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>\${log.path}/debug.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>\${log.path}/debug.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
-			<maxFileSize>50MB</maxFileSize>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p \${PID:- } [%15.15t] [%-39logger{39}] [%X{TRACE_ID}] - %m%n%wEx</pattern>
+	<appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>localhost:5055</destination> <!-- 注意：替换为您的 Logstash 服务地址 -->
+		<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
+			<customFields>{"appname":"\${appname}"}</customFields>
 		</encoder>
-		<!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>DENY</onMatch>
-			<onMismatch>NEUTRAL</onMismatch>
-		</filter>-->
-	</appender>
-
-	<!-- Log file error output -->
-	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>\${log.path}/error.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<fileNamePattern>\${log.path}/error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
-			<maxFileSize>50MB</maxFileSize>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p \${PID:- } [%15.15t] [%-39logger{39}] [%X{TRACE_ID}] - %m%n%wEx</pattern>
-		</encoder>
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>ERROR</level>
-		</filter>
 	</appender>
 
 	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
 	<root level="WARN">
 		<appender-ref ref="console" />
-		<appender-ref ref="debug" />
-		<appender-ref ref="error" />
+		<appender-ref ref="logstash" />
 	</root>
 
 </configuration>]]>

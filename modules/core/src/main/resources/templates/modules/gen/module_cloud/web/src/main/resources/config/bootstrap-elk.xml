@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>bootstrap</name>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
+	<fileName>bootstrap-elk.yml</fileName>
+	<content><![CDATA[
+
+# 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod,elk
+
+# 日志配置
+logging:
+  config: classpath:config/logback-spring-elk.xml
+]]>
+	</content>
+</template>

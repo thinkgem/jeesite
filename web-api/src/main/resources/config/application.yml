@@ -275,7 +275,7 @@ spring:
 #        maxIdle: 3
 #        # 最大活动连接数
 #        maxActive: 20
-#
+
 #  # 缓存配置
 #  cache:
 #    # 缓存及会话共享（专业版）
