@@ -114,29 +114,45 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_log_type')}, val, '未知', true);
 		}},
 		{header:'${text("操作用户")}', name:'createByName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
-			return '<span title="${text("账号")}：'+row.createBy+'">'+ row.createByName;
+			return '<a href="javascript:" class="search" data-cid="userSelectCode" data-cval="'+row.createBy
+						+'" data-nid="userSelectName" title="${text("账号")}：'+row.createBy+'">'+(val||'')+'</a>';
 		}},
 		{header:'${text("异常")}', name:'isException', index:'a.is_exception', width:60, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);
 		}},
-		{header:'${text("业务类型")}', name:'bizType', index:'a.biz_type', width:90, align:"center"},
-		{header:'${text("业务主键")}', name:'bizKey', index:'a.biz_key', width:90, align:"center"},
+		{header:'${text("业务类型")}', name:'bizType', index:'a.biz_type', width:90, align:"center", formatter: function(val, obj, row, act){
+			return '<a href="javascript:" class="search" data-cid="bizType">'+(val||'')+'</a>';
+		}},
+		{header:'${text("业务主键")}', name:'bizKey', index:'a.biz_key', width:90, align:"center", formatter: function(val, obj, row, act){
+			return '<a href="javascript:" class="search" data-cid="bizKey">'+(val||'')+'</a>';
+		}},
 		{header:'${text("操作时间")}', name:'createDate', index:'a.create_date', width:100, align:"center"},
-		{header:'${text("客户端IP")}', name:'remoteAddr', index:'a.remote_addr', width:100, align:"center"},
+		{header:'${text("客户端IP")}', name:'remoteAddr', index:'a.remote_addr', width:100, align:"center", formatter: function(val, obj, row, act){
+			return '<a href="javascript:" class="search" data-cid="remoteAddr">'+(val||'')+'</a>';
+		}},
 		{header:'${text("设备名称")}', name:'deviceName', index:'a.device_name', width:100, align:"center"},
 		{header:'${text("浏览器名")}', name:'browserName', index:'a.browser_name', width:100, align:"center"},
 		{header:'${text("响应时间")}', name:'executeTimeFormat', index:'a.execute_time', width:100, align:"center"}/* ,
 		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
-			var actions = [];
-			//<% if(hasPermi('sys:log:edit')){ %>
-				actions.push('<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa fa-pencil"></i></a>&nbsp;');
-			//<% } %>
-			return actions.join('');
+			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa fa-pencil"></i></a>&nbsp;';
 		}} */
 	],
 	// 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}
+}).on('click', '.search', function(){
+	var $this = $(this),
+		cid = $this.data('cid'),
+		cval = $this.data('cval') || $this.text(),
+		nid = $this.data('nid'),
+		nval = $this.data('nval') || $this.text();
+	if (cid) {
+		$('#' + cid).val(cval);
+	}
+	if (nid) {
+		$('#' + nid).val(nval);
+	}
+	$('#searchForm').submit();
 });
 </script>
