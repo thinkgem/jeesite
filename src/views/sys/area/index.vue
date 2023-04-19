@@ -34,7 +34,7 @@
   import { areaTreeData } from '/@/api/sys/area';
   import ListView from './list.vue';
   import { isArray } from '/@/utils/is';
-  import { uniq } from 'lodash-es';
+  //import { uniq } from 'lodash-es';
 
   const { t } = useI18n('sys.menu');
   const treeCode = ref<string>('');
