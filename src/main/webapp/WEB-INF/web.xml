@@ -47,7 +47,14 @@
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	<filter>
+		<filter-name>xssFilter</filter-name>
+		<filter-class>com.jl.unicom.modules.act.rest.servlet.XSSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>xssFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<!-- PageCache, cache .html suffix.
 	<filter>
 		<filter-name>PageCacheFilter</filter-name>
