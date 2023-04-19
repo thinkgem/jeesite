@@ -23,6 +23,7 @@
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
     <FormAuthDataScope @register="registerAuthDataSourceDrawer" @success="handleSuccess" />
+    <FormAuthUser @register="registerAuthUserDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -43,6 +44,7 @@
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
   import FormAuthDataScope from './formAuthDataScope.vue';
+  import FormAuthUser from './formAuthUser.vue';
 
   const { t } = useI18n('sys.role');
   const { showMessage } = useMessage();
@@ -255,20 +257,21 @@
       {
         icon: 'ant-design:check-circle-outlined',
         label: t('数据权限'),
-        onClick: handleFormAuthDataScope.bind(this, { roleCode: record.roleCode, op: 'auth' }),
+        onClick: handleFormAuthDataScope.bind(this, { roleCode: record.roleCode }),
         auth: 'sys:role:edit',
       },
-      // {
-      //   icon: 'ant-design:user-outlined',
-      //   label: t('分配用户'),
-      //   onClick: handleForm.bind(this, { roleCode: record.roleCode }),
-      //   auth: 'sys:role:edit',
-      // },
+      {
+        icon: 'ant-design:user-outlined',
+        label: t('分配用户'),
+        onClick: handleFormAuthUser.bind(this, { roleCode: record.roleCode }),
+        auth: 'sys:role:edit',
+      },
     ],
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerAuthDataSourceDrawer, { openDrawer: openAuthDataScopeDrawer }] = useDrawer();
+  const [registerAuthUserDrawer, { openDrawer: openAuthUserDrawer }] = useDrawer();
   const [registerTable, { reload }] = useTable({
     api: roleListData,
     beforeFetch: (params) => {
@@ -306,6 +309,10 @@
 
   function handleFormAuthDataScope(record: Recordable) {
     openAuthDataScopeDrawer(true, record);
+  }
+
+  function handleFormAuthUser(record: Recordable) {
+    openAuthUserDrawer(true, record);
   }
 
   function handleSuccess() {
