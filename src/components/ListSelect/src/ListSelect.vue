@@ -22,7 +22,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef } from 'vue';
+  import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef, h } from 'vue';
   import { Input } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
   import { useAttrs } from '/@/hooks/core/useAttrs';
@@ -38,6 +38,7 @@
     props: {
       value: propTypes.string,
       labelValue: propTypes.string,
+      selectList: propTypes.array,
 
       // 选择类型，加载 ./selectType/*.ts 的配置。
       selectType: {
@@ -59,6 +60,7 @@
       const attrs = useAttrs();
       const valueRef = ref<string>(props.value);
       const labelValueRef = ref<string>(props.labelValue);
+      const selectListRef = ref<any[]>(props.selectList);
       const itemCode = ref<string>(props.itemCode);
       const itemName = ref<string>(props.itemName);
       const configRef = ref<any>();
@@ -88,6 +90,27 @@
         },
       );
 
+      watch(
+        () => props.selectList,
+        () => {
+          setSelectList(props.selectList);
+        },
+        { deep: true },
+      );
+
+      function setSelectList(selectList: any[]) {
+        selectListRef.value = selectList;
+        const codes: string[] = [];
+        const names: string[] = [];
+        selectList &&
+          selectList.forEach((e: Recordable) => {
+            codes.push(e[itemCode.value]);
+            names.push(e[itemName.value]);
+          });
+        valueRef.value = codes.join(',');
+        labelValueRef.value = names.join(',');
+      }
+
       onMounted(async () => {
         configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
         modalComponent.value = createAsyncComponent(() => import('./ListSelectModal.vue'));
@@ -99,17 +122,25 @@
         }
       });
 
+      function openSelectModal() {
+        let selectList: Recordable[];
+        if (selectListRef.value) {
+          selectList = selectListRef.value;
+        } else {
+          selectList = getSelectList();
+        }
+        openModal(true, { selectList });
+      }
+
       function handleInputClick() {
         if (!props.readonly && !props.allowInput) {
-          const selectList = getSelectList();
-          openModal(true, { selectList });
+          openSelectModal();
         }
       }
 
       async function handleInputSelect() {
         if (!props.readonly) {
-          const selectList = getSelectList();
-          openModal(true, { selectList });
+          openSelectModal();
         }
         emit('click');
       }
@@ -169,6 +200,8 @@
         handleInputClick,
         handleInputSelect,
         handleSelect,
+        openSelectModal,
+        setSelectList,
       };
     },
   });
