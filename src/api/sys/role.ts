@@ -65,5 +65,14 @@ export const ctrlDataTreeData = (params?: any) => {
 export const saveAuthDataScope = (params?: Role | any) =>
   defHttp.post<Role>({ url: adminPath + '/sys/role/saveAuthDataScope', params });
 
+export const formAuthUser = (params?: Role | any) =>
+  defHttp.get<Role>({ url: adminPath + '/sys/role/formAuthUser', params });
+
+export const saveAuthUser = (params?: Role | any) =>
+  defHttp.post<Role>({ url: adminPath + '/sys/role/saveAuthUser', params });
+
+export const deleteAuthUser = (params?: Role | any) =>
+  defHttp.post<Role>({ url: adminPath + '/sys/role/deleteAuthUser', params });
+
 export const roleTreeData = (params?: any) =>
   defHttp.get<TreeDataModel[]>({ url: adminPath + '/sys/role/treeData', params });
