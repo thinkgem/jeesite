@@ -16,8 +16,8 @@
     <Upload
       accept=".xls,.xlsx"
       :file-list="fileList"
-      :remove="handleRemove"
       :before-upload="beforeUpload"
+      @remove="handleRemove"
     >
       <a-button> <Icon icon="ant-design:upload-outlined" /> {{ t('选择文件') }} </a-button>
       <span class="ml-4">{{ uploadInfo }}</span>
