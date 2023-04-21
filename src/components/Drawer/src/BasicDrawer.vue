@@ -1,5 +1,5 @@
 <template>
-  <Drawer :class="prefixCls" @close="onClose" :closable="false" v-bind="getBindValues">
+  <Drawer v-bind="getBindValues" :closable="false" @close="onClose">
     <template #title v-if="!$slots.title">
       <DrawerHeader
         :title="getMergeProps.title"
@@ -88,6 +88,10 @@
         return deepMerge(toRaw(props), unref(propsRef));
       });
 
+      const getWrapClassName = computed(() => {
+        return `${prefixCls} ${props.wrapClassName || ''}`;
+      });
+
       const getProps = computed((): DrawerProps => {
         const opt = {
           placement: 'right',
@@ -109,15 +113,21 @@
             opt.getContainer = `.${prefixVar}-layout-content` as any;
           }
         }
-        return opt as DrawerProps;
+        return {
+          ...opt,
+          class: unref(getWrapClassName),
+        } as DrawerProps;
       });
 
       const getBindValues = computed((): DrawerProps => {
-        return {
+        const values = {
           ...attrs,
           ...unref(getProps),
           visible: unref(visibleRef),
+          class: unref(getWrapClassName),
         };
+        delete values['wrapClassName'];
+        return values;
       });
 
       // Custom implementation of the bottom button,

@@ -38,5 +38,6 @@ export const basicProps = {
     default: null,
   },
   destroyOnClose: { type: Boolean },
+  wrapClassName: { type: String },
   ...footerProps,
 };
