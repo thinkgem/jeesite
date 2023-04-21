@@ -24,3 +24,11 @@
     },
   });
 </script>
+<style lang="less">
+  .setting-drawer.ant-drawer.ant-drawer-open {
+    .ant-drawer-mask {
+      animation: none;
+      opacity: 0;
+    }
+  }
+</style>

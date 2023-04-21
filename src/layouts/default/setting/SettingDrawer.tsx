@@ -31,6 +31,7 @@ import {
   routerTransitionOptions,
   menuTypeList,
   mixSidebarTriggerOptions,
+  tabsStyleOptions,
 } from './enum';
 
 import {
@@ -89,7 +90,8 @@ export default defineComponent({
       getShowSearch,
     } = useHeaderSetting();
 
-    const { getShowMultipleTab, getShowQuick, getShowRedo, getShowFold } = useMultipleTabSetting();
+    const { getShowMultipleTab, getTabsStyle, getShowQuick, getShowRedo, getShowFold } =
+      useMultipleTabSetting();
 
     const getShowMenuRef = computed(() => {
       return unref(getShowMenu) && !unref(getIsHorizontal);
@@ -100,7 +102,7 @@ export default defineComponent({
         <>
           <TypePicker
             menuTypeList={menuTypeList}
-            handler={(item: typeof menuTypeList[0]) => {
+            handler={(item: (typeof menuTypeList)[0]) => {
               baseHandler(HandlerEnum.CHANGE_LAYOUT, {
                 mode: item.mode,
                 type: item.type,
@@ -282,10 +284,11 @@ export default defineComponent({
     function renderContent() {
       return (
         <>
-          <SwitchItem
+          <SelectItem
             title={t('layout.setting.tabs')}
             event={HandlerEnum.TABS_SHOW}
-            def={unref(getShowMultipleTab)}
+            def={unref(getTabsStyle)}
+            options={tabsStyleOptions}
           />
 
           <SwitchItem
@@ -402,8 +405,8 @@ export default defineComponent({
         {...attrs}
         title={t('layout.setting.drawerTitle')}
         width={330}
-        class="setting-drawer"
-        mask={false}
+        wrapClassName="setting-drawer"
+        mask={true}
       >
         {/* {unref(getShowDarkModeToggle) && <Divider>{() => t('layout.setting.darkMode')}</Divider>} */}
         {unref(getShowDarkModeToggle) && <AppDarkModeToggle class="mx-auto" />}
