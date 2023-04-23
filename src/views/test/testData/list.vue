@@ -20,6 +20,36 @@
           {{ record.testInput }}
         </a>
       </template>
+      <template #customFilterIcon="filter">
+        <Icon
+          icon="ant-design:search-outlined"
+          :style="{ color: filter.filtered ? '#108ee9' : undefined }"
+        />
+      </template>
+      <template #customFilterDropdown="filter">
+        <div class="p-2" v-if="filter.column.dataIndex == 'testInput'">
+          <a-input
+            ref="searchInput"
+            :placeholder="`${t('搜索')}${filter.column.customTitle}`"
+            :value="filter.selectedKeys[0]"
+            style="width: 168px; margin-bottom: 8px; display: block"
+            @change="(e: any) => filter.setSelectedKeys(e.target.value ? [e.target.value] : [])"
+          />
+          <a-button type="primary" size="small" class="w-20 mr-2" @click="filter.confirm()">
+            {{ t('确定') }}
+          </a-button>
+          <a-button
+            size="small"
+            class="w-20"
+            @click="
+              filter.clearFilters();
+              filter.confirm();
+            "
+          >
+            {{ t('重置') }}
+          </a-button>
+        </div>
+      </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
     <InputFormTabs @register="registerDrawer2" @success="handleSuccess" />
@@ -194,6 +224,16 @@
       width: 130,
       align: 'center',
       slot: 'firstColumn',
+      // filters: [
+      //   { text: 'Male', value: '1' },
+      //   { text: 'Female', value: '2' },
+      // ],
+      // filterMultiple: true,
+      // onFilter: (value: string, record: Recordable) => {
+      //   console.log('onFilter', value, record);
+      //   return record.userName === value;
+      // },
+      customFilterDropdown: true,
     },
     {
       title: t('多行文本'),
@@ -369,6 +409,15 @@
     showTableSetting: true,
     useSearchForm: true,
     canResize: true,
+    filterFn: (data: Partial<Recordable<string[]>>) => {
+      const testInput = 'a.test_input';
+      if (data[testInput]) {
+        data['testInput'] = data[testInput]?.join(',') as any;
+        delete data[testInput];
+      }
+      console.log(data);
+      return data;
+    },
   });
 
   function handleForm(record: Recordable) {
