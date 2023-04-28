@@ -34,9 +34,10 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('cms:template:edit')){ %>
-<!-- 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit" onclick="saveFile()"><i class="fa fa-check"></i> ${text('保 存')}</button> &nbsp; -->
-						<% } %>
+						<% /*if (hasPermi('cms:template:edit')){ %>
+ 							<button type="button" class="btn btn-sm btn-primary" id="btnSave"><i class="fa fa-check"></i> ${text('保 存')}</button> &nbsp;
+ 							<button type="button" class="btn btn-sm btn-danger" id="btnDelete"><i class="fa fa-trash-o"></i> ${text('删 除')}</button> &nbsp;
+						<% }*/ %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
 					</div>
 				</div>
@@ -45,13 +46,32 @@
 	</div>
 </div>
 <% } %>
+<% /*if (hasPermi('cms:template:edit')){ %>
 <script>
-	function saveFile() {
-		js.ajaxSubmit("${ctx}/cms/template/saveFileTemplate", {filePath: "${template.fileName}",fileName:$("#file_name").val(),fileSource:$("#fileSource").val()}, function(data) {
-			if(data.result=='1'){
-				window.self.parent.loadTree();
-			}
-			js.showMessage(data.message);
+	$('#btnSave').click(function(){
+		js.confirm('${text("确认要保存当前模板吗？")}', function(){
+			js.ajaxSubmit("${ctx}/cms/template/saveFileTemplate", {
+				fileName: $("#fileName").val(),
+				fileContent: Base64.encode($("#fileContent").val())
+			}, function(data) {
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					window.self.parent.loadTree();
+				}
+			});
 		});
-	}
+	});
+	$('#btnDelete').click(function(){
+		js.confirm('${text("确认要删除当前模板吗？")}', function(){
+			js.ajaxSubmit("${ctx}/cms/template/deleteFileTemplate", {
+				fileName: $("#fileName").val()
+			}, function(data) {
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					window.self.parent.loadTree();
+				}
+			});
+		});
+	});
 </script>
+<% }*/ %>

@@ -4,10 +4,20 @@
  */
 package com.jeesite.modules.cms.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.io.FileUtils;
+import com.jeesite.common.io.ResourceUtils;
+import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.modules.gen.entity.GenTable;
+import com.jeesite.modules.gen.utils.GenTableUtils;
+import com.jeesite.modules.gen.utils.GenUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,12 +40,6 @@ import com.jeesite.modules.cms.service.FileTempleteService;
 @Controller
 @RequestMapping(value = "${adminPath}/cms/template")
 public class FileTemplateController extends BaseController {
-
-	//构想，给一个模板列表，模板下存放一個screenshots1~10.png,做为模版快照。
-	//README.md模版使用与说明文件
-	//zip上传模版文件
-	//模版目录格式：{design:{index.png,list-x.png,detail-x.png},readme.md,shots}
-	//支持在线 安装与卸载 模板   if（）是否存在这个主题文件夹，  存在则判断init内配置文件 开启|关闭的配置
 	
 	@Autowired
 	private FileTempleteService fileTempleteService;
@@ -62,26 +66,34 @@ public class FileTemplateController extends BaseController {
 		return "modules/cms/tplForm";
 	}
 
-//	@RequiresPermissions("cms:template:edit")
-//	@RequestMapping(value = "saveFileTemplate")
-//	@ResponseBody
-//	public String saveFileTemplate(String filePath, String fileName, String fileSource, Model model) throws IOException {
-//
-//		FileTemplete currentFile = FilesTempleteUtils.getFileTempleteByResource(filePath);
-//		//在修改文件之前，开启模版的备份模式
-//		FileUtils.copyDirectory(currentFile.getFile().getAbsolutePath(),
-//				currentFile.getFile().getAbsolutePath().replaceAll(currentFile.getFile().getName(), "") + DateUtils.getDate()
-//						+ currentFile.getFile());
-//		FileUtils.writeToFile(currentFile.getFile().getAbsolutePath(), EncodeUtils.decodeHtml(fileSource), false);
-//
-//		if (!currentFile.getFile().getName().equals(fileName)) {
-//			String path = currentFile.getFile().getAbsolutePath().replaceAll(currentFile.getFile().getName(), "") + fileName;
-//			currentFile.getFile().renameTo(new File(path));
-//			return renderResult(Global.SHOW, "模版保存成功,请左侧菜单刷新后再操作模版！");
-//		}
-//
-//		return renderResult(Global.TRUE, "模版保存成功！");
-//	}
+	/*@RequiresPermissions("cms:template:edit")
+	@RequestMapping(value = "saveFileTemplate")
+	@ResponseBody
+	public String saveFileTemplate(String fileName, String fileContent) throws IOException {
+		FileTemplete template = fileTempleteService.getFileTemplete(fileName);
+		String newFileName = FileUtils.path(FileUtils.getWebappPath() + "/WEB-INF/classes/" + fileName);
+		File templateFile = template.resource().getFile();
+		if (templateFile.getAbsoluteFile().exists()) {
+			String bakFileName = StringUtils.replace(templateFile.getAbsolutePath(), templateFile.getName(),
+					templateFile.getName() + "." + DateUtils.getDate("yyyyMMddHHmmssSSS"));
+			FileUtils.copyFile(templateFile.getAbsolutePath(), bakFileName);
+		}
+		FileUtils.writeToFile(newFileName, EncodeUtils.decodeBase64String(fileContent), false);
+		return renderResult(Global.TRUE, "模版保存成功！");
+	}
+
+	@RequiresPermissions("cms:template:edit")
+	@RequestMapping(value = "deleteFileTemplate")
+	@ResponseBody
+	public String deleteFileTemplate(String fileName) throws IOException {
+		FileTemplete template = fileTempleteService.getFileTemplete(fileName);
+		File templateFile = template.resource().getFile();
+		if (templateFile.getAbsoluteFile().exists()) {
+			FileUtils.deleteFile(templateFile.getAbsolutePath());
+			return renderResult(Global.TRUE, "模版删除成功！");
+		}
+		return renderResult(Global.FALSE, "模版文件不存在！");
+	}*/
 
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "help")
@@ -91,21 +103,13 @@ public class FileTemplateController extends BaseController {
 
 	/**
 	 * 获取树结构数据
-	 * @param excludeCode 排除的Code
-	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
-	 * @return
-	 * @throws IOException
 	 */
 	@RequiresPermissions("cms:template:edit")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
-	public List<Map<String, Object>> treeData(String siteCode, String module, String extCode, Boolean isAll, String isShowCode)
-			throws IOException {
+	public List<Map<String, Object>> treeData() throws IOException {
 		List<Map<String, Object>> mapList = ListUtils.newArrayList();
-		//根据系统默认的主题获取模板地址
-		List<FileTemplete> listFileTemplete = fileTempleteService
-				.getFileTempleteListForEdit(Site.TEMPLETE_BASE_DIRECTION);
-		// 处理转换数据，并返回ztree支持的格式
+		List<FileTemplete> listFileTemplete = fileTempleteService.getFileTempleteListForEdit(Site.TEMPLETE_BASE_DIRECTION);
 		for (int i = 0; i < listFileTemplete.size(); i++) {
 			FileTemplete e = listFileTemplete.get(i);
 			Map<String, Object> map = MapUtils.newHashMap();

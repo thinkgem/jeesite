@@ -65,12 +65,8 @@ public class FileTemplete implements Comparable<FileTemplete>, Serializable {
 		this.resource = null;
 	}
 
-	public Resource getResource() {
+	public Resource resource() {
 		return resource;
-	}
-
-	public void setResource(Resource resource) {
-		this.resource = resource;
 	}
 
 	public String getFileName() {
