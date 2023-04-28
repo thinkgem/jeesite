@@ -61,6 +61,8 @@ export const basicProps = {
     },
   },
   rulesMessageJoinLabel: propTypes.bool.def(true),
+  // 表单验证触发规则（失去焦点的时候再触发）
+  validateTrigger: propTypes.string.def('blur'),
   // 超过1行自动折叠
   autoAdvancedLine: propTypes.number.def(1),
   // 不受折叠影响的行数
