@@ -80,6 +80,7 @@ public class LoginController extends BaseController{
 		model.addAllAttributes(FormFilter.getLoginData(request, response));
 		model.addAttribute("useCorpModel", Global.isUseCorpModel()
 				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
+		model.addAttribute("title", Global.getProperty("productName"));
 
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
@@ -198,6 +199,7 @@ public class LoginController extends BaseController{
 		model.addAttribute("currentCorpName", CorpUtils.getCurrentCorpName());
 		model.addAttribute("msgEnabled", Global.getPropertyToBoolean("msg.enabled", "false"));
 		model.addAttribute("sysCode", session.getAttribute("sysCode"));
+		model.addAttribute("title", Global.getProperty("productName"));
 
 		// 是否是登录操作
 		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));
