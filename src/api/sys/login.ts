@@ -24,6 +24,7 @@ export interface LoginResult {
   result: string;
   message: string;
   sessionid: string;
+  isValidCodeLogin: boolean;
   user: UserInfo;
   demoMode: boolean;
   useCorpModel: boolean;
@@ -31,8 +32,9 @@ export interface LoginResult {
   currentCorpName: string;
   modifyPasswordTip: string;
   modifyPasswordMsg: string;
+  msgEnabled: boolean;
   sysCode: string;
-  isValidCodeLogin: boolean;
+  title: string;
 }
 
 export interface AuthInfo {

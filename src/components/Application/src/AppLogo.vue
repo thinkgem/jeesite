@@ -6,7 +6,7 @@
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
     <img src="../../../assets/images/logo.png" v-show="!!!showTitle" />
     <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
-      {{ title }}
+      {{ getTitle }}
     </div>
   </div>
 </template>
@@ -37,8 +37,12 @@
   const { prefixCls } = useDesign('app-logo');
   const { getCollapsedShowTitle } = useMenuSetting();
   const userStore = useUserStore();
-  const { title } = useGlobSetting();
   const go = useGo();
+
+  const getTitle = computed(() => {
+    const { title } = useGlobSetting();
+    return userStore.getPageCacheByKey('title', title);
+  });
 
   const getAppLogoClass = computed(() => [
     prefixCls,

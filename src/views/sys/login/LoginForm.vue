@@ -181,6 +181,7 @@
       const publicPath = import.meta.env.VITE_PUBLIC_PATH || '/';
       window.location.href = publicPath.substring(1) + PageEnum.BASE_HOME;
     }
+    userStore.initPageCache(res);
     refreshValidCodeStatus(res);
   });
 

@@ -127,6 +127,7 @@ export const useUserStore = defineStore({
       const res = await loginApi(loginParams, mode);
       if (res.result !== 'true') {
         showMessage(res.message);
+        this.initPageCache(res);
         return res;
       }
       const userInfo = res.user;
@@ -189,14 +190,15 @@ export const useUserStore = defineStore({
       return userInfo;
     },
     initPageCache(res: LoginResult) {
-      this.setUserInfo(res.user);
       this.setPageCache('demoMode', res.demoMode);
       this.setPageCache('useCorpModel', res.useCorpModel);
       this.setPageCache('currentCorpCode', res.currentCorpCode);
       this.setPageCache('currentCorpName', res.currentCorpName);
       this.setPageCache('modifyPasswordTip', res.modifyPasswordTip);
       this.setPageCache('modifyPasswordMsg', res.modifyPasswordMsg);
+      this.setPageCache('msgEnabled', res.msgEnabled);
       this.setPageCache('sysCode', res.sysCode);
+      this.setPageCache('title', res.title);
     },
     /**
      * @description: logout

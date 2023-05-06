@@ -31,7 +31,6 @@ import {
   routerTransitionOptions,
   menuTypeList,
   mixSidebarTriggerOptions,
-  tabsStyleOptions,
 } from './enum';
 
 import {
@@ -284,13 +283,6 @@ export default defineComponent({
     function renderContent() {
       return (
         <>
-          <SelectItem
-            title={t('layout.setting.tabs')}
-            event={HandlerEnum.TABS_SHOW}
-            def={unref(getTabsStyle)}
-            options={tabsStyleOptions}
-          />
-
           <SwitchItem
             title={t('layout.setting.tabsRedoBtn')}
             event={HandlerEnum.TABS_SHOW_REDO}
