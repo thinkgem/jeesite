@@ -25,7 +25,6 @@ import { baseHandler } from './handler';
 
 import {
   HandlerEnum,
-  contentModeOptions,
   topMenuAlignOptions,
   getMenuTriggerOptions,
   routerTransitionOptions,
@@ -45,12 +44,8 @@ export default defineComponent({
   name: 'SettingDrawer',
   setup(_, { attrs }) {
     const {
-      getContentMode,
-      getShowFooter,
       getShowBreadCrumb,
       getShowBreadCrumbIcon,
-      getShowLogo,
-      getFullContent,
       getColorWeak,
       getGrayMode,
       getLockTime,
@@ -58,18 +53,13 @@ export default defineComponent({
       getThemeColor,
     } = useRootSetting();
 
-    const { getOpenPageLoading, getBasicTransition, getEnableTransition, getOpenNProgress } =
-      useTransitionSetting();
-
     const {
       getIsHorizontal,
       getShowMenu,
       getMenuType,
       getTrigger,
       getCollapsedShowTitle,
-      getMenuFixed,
       getCollapsed,
-      getCanDrag,
       getTopMenuAlign,
       getAccordion,
       getMenuWidth,
@@ -82,15 +72,9 @@ export default defineComponent({
       getMixSideFixed,
     } = useMenuSetting();
 
-    const {
-      getShowHeader,
-      getFixed: getHeaderFixed,
-      getHeaderBgColor,
-      getShowSearch,
-    } = useHeaderSetting();
+    const { getShowHeader, getHeaderBgColor, getShowSearch } = useHeaderSetting();
 
-    const { getShowMultipleTab, getTabsStyle, getShowQuick, getShowRedo, getShowFold } =
-      useMultipleTabSetting();
+    const { getShowMultipleTab, getShowQuick, getShowRedo } = useMultipleTabSetting();
 
     const getShowMenuRef = computed(() => {
       return unref(getShowMenu) && !unref(getIsHorizontal);
@@ -185,12 +169,6 @@ export default defineComponent({
             disabled={!unref(getShowMenuRef)}
           />
 
-          {/* <SwitchItem
-            title={t('layout.setting.menuDrag')}
-            event={HandlerEnum.MENU_HAS_DRAG}
-            def={unref(getCanDrag)}
-            disabled={!unref(getShowMenuRef)}
-          /> */}
           <SwitchItem
             title={t('layout.setting.menuSearch')}
             event={HandlerEnum.HEADER_SEARCH}
@@ -211,18 +189,6 @@ export default defineComponent({
             disabled={!unref(getShowMenuRef) || !unref(getCollapsed) || unref(getIsMixSidebar)}
           />
 
-          {/* <SwitchItem
-            title={t('layout.setting.fixedHeader')}
-            event={HandlerEnum.HEADER_FIXED}
-            def={unref(getHeaderFixed)}
-            disabled={!unref(getShowHeader)}
-          />
-          <SwitchItem
-            title={t('layout.setting.fixedSideBar')}
-            event={HandlerEnum.MENU_FIXED}
-            def={unref(getMenuFixed)}
-            disabled={!unref(getShowMenuRef) || unref(getIsMixSidebar)}
-          /> */}
           <SelectItem
             title={t('layout.setting.mixSidebarTrigger')}
             event={HandlerEnum.MENU_TRIGGER_MIX_SIDEBAR}
@@ -249,12 +215,6 @@ export default defineComponent({
             options={triggerOptions}
             disabled={!unref(getShowMenuRef) || unref(getIsMixSidebar)}
           />
-          {/* <SelectItem
-            title={t('layout.setting.contentMode')}
-            event={HandlerEnum.CONTENT_MODE}
-            def={unref(getContentMode)}
-            options={contentModeOptions}
-          /> */}
           <InputNumberItem
             title={t('layout.setting.autoScreenLock')}
             min={0}
@@ -296,12 +256,6 @@ export default defineComponent({
             def={unref(getShowQuick)}
             disabled={!unref(getShowMultipleTab)}
           />
-          {/* <SwitchItem
-            title={t('layout.setting.tabsFoldBtn')}
-            event={HandlerEnum.TABS_SHOW_FOLD}
-            def={unref(getShowFold)}
-            disabled={!unref(getShowMultipleTab)}
-          /> */}
 
           <SwitchItem
             title={t('layout.setting.breadcrumb')}
@@ -317,35 +271,6 @@ export default defineComponent({
             disabled={!unref(getShowHeader)}
           />
 
-          {/* <SwitchItem
-            title={t('layout.setting.sidebar')}
-            event={HandlerEnum.MENU_SHOW_SIDEBAR}
-            def={unref(getShowMenu)}
-            disabled={unref(getIsHorizontal)}
-          />
-
-          <SwitchItem
-            title={t('layout.setting.header')}
-            event={HandlerEnum.HEADER_SHOW}
-            def={unref(getShowHeader)}
-          />
-          <SwitchItem
-            title="Logo"
-            event={HandlerEnum.SHOW_LOGO}
-            def={unref(getShowLogo)}
-            disabled={unref(getIsMixSidebar)}
-          />
-          <SwitchItem
-            title={t('layout.setting.footer')}
-            event={HandlerEnum.SHOW_FOOTER}
-            def={unref(getShowFooter)}
-          />
-          <SwitchItem
-            title={t('layout.setting.fullContent')}
-            event={HandlerEnum.FULL_CONTENT}
-            def={unref(getFullContent)}
-          /> */}
-
           <SwitchItem
             title={t('layout.setting.grayMode')}
             event={HandlerEnum.GRAY_MODE}
@@ -356,37 +281,6 @@ export default defineComponent({
             title={t('layout.setting.colorWeak')}
             event={HandlerEnum.COLOR_WEAK}
             def={unref(getColorWeak)}
-          />
-        </>
-      );
-    }
-
-    function renderTransition() {
-      return (
-        <>
-          <SwitchItem
-            title={t('layout.setting.progress')}
-            event={HandlerEnum.OPEN_PROGRESS}
-            def={unref(getOpenNProgress)}
-          />
-          <SwitchItem
-            title={t('layout.setting.switchLoading')}
-            event={HandlerEnum.OPEN_PAGE_LOADING}
-            def={unref(getOpenPageLoading)}
-          />
-
-          <SwitchItem
-            title={t('layout.setting.switchAnimation')}
-            event={HandlerEnum.OPEN_ROUTE_TRANSITION}
-            def={unref(getEnableTransition)}
-          />
-
-          <SelectItem
-            title={t('layout.setting.animationType')}
-            event={HandlerEnum.ROUTER_TRANSITION}
-            def={unref(getBasicTransition)}
-            options={routerTransitionOptions}
-            disabled={!unref(getEnableTransition)}
           />
         </>
       );
@@ -414,8 +308,6 @@ export default defineComponent({
         {renderFeatures()}
         <Divider>{() => t('layout.setting.interfaceDisplay')}</Divider>
         {renderContent()}
-        {/* <Divider>{() => t('layout.setting.animation')}</Divider>
-        {renderTransition()} */}
         <Divider />
         <SettingFooter />
       </BasicDrawer>
