@@ -78,9 +78,6 @@ public class LoginController extends BaseController{
 
 		// 获取登录数据
 		model.addAllAttributes(FormFilter.getLoginData(request, response));
-		model.addAttribute("useCorpModel", Global.isUseCorpModel()
-				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
-		model.addAttribute("title", Global.getProperty("productName"));
 
 		// 如果是Ajax请求，返回Json字符串。
 		if (ServletUtils.isAjaxRequest((HttpServletRequest)request)){
