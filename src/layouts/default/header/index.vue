@@ -179,7 +179,7 @@
           return {};
         }
         const width = unref(getMenuWidth) < 180 ? 180 : unref(getMenuWidth);
-        return { width: `${width}px` };
+        return { minWidth: `${width}px` };
       });
 
       const getSplitType = computed(() => {
