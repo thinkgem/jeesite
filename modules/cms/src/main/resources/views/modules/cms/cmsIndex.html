@@ -60,8 +60,8 @@ var setting = {
 				var win = ifr[0].contentWindow, conts = ifr.contents();
 				conts.find('input[type=reset]').click();
 				conts.find('#categoryCode').val(treeNode.id);
-				conts.find('#outlineView').val(adminUrl.indexOf("outlineView=true") != -1); // 文章模型是否显示大纲视图
-				conts.find('#fileDownload').val(adminUrl.indexOf("fileDownload=true") != -1); // 链接模型是否是下载栏目
+				conts.find('#outline').val(adminUrl.indexOf("outline=true") != -1); // 文章模型是否显示大纲视图
+				conts.find('#fileDown').val(adminUrl.indexOf("fileDown=true") != -1); // 链接模型是否是下载栏目
 				var caption = conts.find('.portlet-title .caption');
 				caption.html(caption.find('i').prop("outerHTML") + " " + treeNode.name);
 				win.page();

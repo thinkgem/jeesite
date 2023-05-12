@@ -30,27 +30,30 @@
         UEDITOR_HOME_URL: URL
 
         // 服务器统一请求接口路径
-//        , serverUrl: URL + "jsp/controller.jsp"
         , newServerUrl: ctx + "/file/ueditor/"
 
-        //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
+        // 工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
         , toolbars: [[
           'fullscreen', /*'source', '|', */'undo', 'redo', '|',
-          'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+          'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|',
+          'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', /*'cleardoc', */'|',
           'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
           /*'directionalityltr', 'directionalityrtl', */'indent', '|',
-          'paragraph', 'fontfamily', 'fontsize', 'customstyle', 'insertcode', '|', 
           'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+          'paragraph', 'fontfamily', 'fontsize', 'customstyle', 'insertcode', '|',
           'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-          'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map',/* 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', */'template', 'background', '|',
+          /*'simpleupload', */'insertimage', 'emotion', 'scrawl', 'insertvideo', /*'music', */'attachment', 'map',/* 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', */'template', 'background', '|',
           'horizontal', 'date', 'time', 'spechars', /*'snapscreen', */'wordimage', '|',
-          'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+          'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', /*'charts', */'|',
           'print', 'preview', 'searchreplace', 'drafts', 'help'
         ]]
-//    	, toolbars: [['fullscreen', 'undo', 'redo', '|', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 
-//		  'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 
-//		  'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|', 'simpleupload', 'insertimage', 'emotion'
-//		]]
+
+        // 简单的工具栏
+        , simpleToolbars: [['fullscreen', 'undo', 'redo', '|', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough',
+            'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor',
+            'insertorderedlist', 'insertunorderedlist', 'selectall', '|', /*'simpleupload', */'insertimage',
+            'emotion', 'scrawl', 'insertvideo', 'attachment']]
+
         //当鼠标放在工具栏上时显示的tooltip提示,留空支持自动多语言配置，否则以配置值为准
         //,labelMap:{
         //    'anchor':'', 'undo':''
@@ -63,8 +66,8 @@
 
         //主题配置项,默认是default。有需要的话也可以使用如下这样的方式来自动多主题切换，当然，前提条件是themes文件夹下存在对应的主题文件：
         //现有如下皮肤:default
-        //,theme:'default'
-        //,themePath:URL +"themes/"
+        ,theme:'simple'
+        ,themePath:URL +"themes/"
 
         //,zIndex : 900     //编辑器层级的基数,默认是900
 

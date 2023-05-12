@@ -1,0 +1,2128 @@
+/*基础UI构建
+*/
+
+:root{
+    --edui-color-active-bg: rgba(200,200,200,0.3);
+}
+
+@font-face {
+  font-family: "edui-iconfont"; /* Project id 2897874 */
+  src: url('./../font/iconfont.woff2?t=1651572942270') format('woff2'),
+  url('./../font/iconfont.woff?t=1651572942270') format('woff'),
+  url('./../font/iconfont.ttf?t=1651572942270') format('truetype');
+}
+
+.edui-simple {
+  accent-color: #333;
+}
+
+/* common layer */
+.edui-simple .edui-box {
+    border: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    line-height: 25px;
+}
+
+.edui-simple a.edui-box {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.edui-simple a.edui-box:hover {
+    text-decoration: none;
+}
+
+.edui-simple a.edui-box:active {
+    text-decoration: none;
+}
+
+.edui-simple table.edui-box {
+    border-collapse: collapse;
+}
+
+.edui-simple ul.edui-box {
+    list-style-type: none;
+}
+
+div.edui-box {
+    position: relative;
+    display: -moz-inline-box !important;
+    display: inline-block !important;
+    vertical-align: middle;
+}
+
+.edui-simple .edui-clearfix {
+    zoom: 1
+}
+
+.edui-simple .edui-clearfix:after {
+    content: '\20';
+    display: block;
+    clear: both;
+}
+
+ * html div.edui-box {
+    display: inline !important;
+}
+
+*:first-child+html div.edui-box {
+    display: inline !important;
+}
+
+/* control layout */
+.edui-simple .edui-button-body, .edui-splitbutton-body, .edui-menubutton-body, .edui-combox-body {
+    position: relative;
+}
+
+.edui-simple .edui-popup {
+    position: absolute;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.edui-simple .edui-popup .edui-shadow {
+    position: absolute;
+    z-index: -1;
+}
+
+.edui-simple .edui-popup .edui-bordereraser {
+    position: absolute;
+    overflow: hidden;
+}
+
+.edui-simple .edui-tablepicker .edui-canvas {
+    position: relative;
+}
+
+.edui-simple .edui-tablepicker .edui-canvas .edui-overlay {
+    position: absolute;
+}
+
+.edui-simple .edui-dialog-modalmask, .edui-dialog-dragmask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.edui-simple .edui-toolbar {
+    position: relative;
+}
+
+/*
+ * default theme
+ */
+.edui-simple .edui-label {
+    cursor: pointer;
+}
+
+.edui-simple span.edui-clickable {
+    color: #666;
+    cursor: pointer;
+    text-decoration: none;
+}
+.edui-simple span.edui-clickable:hover{
+    color: #333;
+}
+
+.edui-simple span.edui-unclickable {
+    color: gray;
+    cursor: default;
+}
+
+.edui-simple span.edui-popup-action-item {
+  margin-right: 5px;
+}
+.edui-simple span.edui-popup-action-item:last-child {
+  margin-right: 0;
+}
+
+/* 工具栏 */
+.edui-simple .edui-toolbar {
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    padding: 1px;
+    overflow: hidden; /*全屏下单独一行不占位*/
+    zoom: 1;
+    width:auto;
+    height:auto;
+}
+
+.edui-simple .edui-toolbar .edui-button,
+.edui-simple .edui-toolbar .edui-splitbutton,
+.edui-simple .edui-toolbar .edui-menubutton,
+.edui-simple .edui-toolbar .edui-combox {
+    margin: 1px;
+}
+/*UI工具栏、编辑区域、底部*/
+.edui-simple .edui-editor {
+    border: 1px solid #d4d4d4;
+    background-color: white;
+    position: relative;
+    overflow: visible;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.edui-editor div{
+    width:auto;
+    height:auto;
+}
+.edui-simple .edui-editor-toolbarbox {
+    position: relative;
+    zoom: 1;
+    /*-webkit-box-shadow:0 1px 4px rgba(204, 204, 204, 0.6);*/
+    /*-moz-box-shadow:0 1px 4px rgba(204, 204, 204, 0.6);*/
+    /*box-shadow:0 1px 4px rgba(204, 204, 204, 0.6);*/
+    border-top-left-radius:2px;
+    border-top-right-radius:2px;
+}
+
+.edui-simple .edui-editor-toolbarboxouter {
+    border-bottom: 1px solid #d4d4d4;
+    background-color: #fafafa;
+    /*background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);*/
+    /*background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));*/
+    /*background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);*/
+    /*background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);*/
+    /*background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);*/
+    /*background-repeat: repeat-x;*/
+    /*border: 1px solid #d4d4d4;*/
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);*/
+    /**zoom: 1;*/
+    /*-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);*/
+    /*-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);*/
+    /*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);*/
+}
+
+.edui-simple .edui-editor-toolbarboxinner {
+    padding: 2px;
+}
+
+.edui-simple .edui-editor-iframeholder {
+    position: relative;
+    /*for fix ie6 toolbarmsg under iframe bug. relative -> static */
+    /*_position: static !important;*
+}
+
+.edui-simple .edui-editor-iframeholder textarea {
+    font-family: consolas, "Courier New", "lucida console", monospace;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.edui-simple .edui-editor-bottombar {
+    /*border-top: 1px solid #ccc;*/
+    /*height: 20px;*/
+    /*width: 40%;*/
+    /*float: left;*/
+    /*overflow: hidden;*/
+}
+
+.edui-simple .edui-editor-bottomContainer {
+    overflow: hidden;
+}
+
+.edui-simple .edui-editor-bottomContainer table {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    border-spacing: 0;
+}
+
+.edui-simple .edui-editor-bottomContainer td {
+    white-space: nowrap;
+    border-top: 1px solid #ccc;
+    line-height: 20px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, Tahoma, Verdana, Sans-Serif;
+}
+
+.edui-simple .edui-editor-wordcount {
+    text-align: right;
+    margin-right: 5px;
+    color: #aaa;
+}
+.edui-simple .edui-editor-scale {
+    width: 12px;
+}
+.edui-simple .edui-editor-scale .edui-editor-icon {
+    float: right;
+    width: 100%;
+    height: 12px;
+    margin-top: 10px;
+    background: url(../images/scale.png) no-repeat;
+    cursor: se-resize;
+}
+.edui-simple .edui-editor-breadcrumb {
+    margin: 2px 0 0 3px;
+  color: #666;
+}
+
+.edui-simple .edui-editor-breadcrumb span {
+    cursor: pointer;
+    color: #666;
+    line-height: 16px;
+    display: inline-block;
+}
+
+.edui-simple .edui-toolbar .edui-for-fullscreen {
+    float: right;
+}
+
+.edui-simple .edui-bubble .edui-popup-content {
+  font-size: 13px;
+  box-shadow: 0 0 10px #0000001f;
+  transition: .25s;
+  color: #666;
+  background-color: #FFF;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.edui-simple .edui-bubble .edui-shadow {
+    /*box-shadow: 1px 1px 3px #818181;*/
+    /*-webkit-box-shadow: 2px 2px 3px #818181;*/
+    /*-moz-box-shadow: 2px 2px 3px #818181;*/
+    /*filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius = '2', MakeShadow = 'true', ShadowOpacity = '0.5');*/
+}
+
+.edui-simple .edui-editor-toolbarmsg {
+    background-color: #FFF6D9;
+    border-bottom: 1px solid #ccc;
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    z-index: 1009;
+    width: 99.9%;
+}
+
+.edui-simple .edui-editor-toolbarmsg-upload {
+    font-size: 14px;
+    color: blue;
+    width: 100px;
+    height: 16px;
+    line-height: 16px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    left: 350px;
+}
+
+.edui-simple .edui-editor-toolbarmsg-label {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 4px;
+}
+
+.edui-simple .edui-editor-toolbarmsg-close {
+    float: right;
+    width: 20px;
+    height: 16px;
+    line-height: 16px;
+    cursor: pointer;
+    color: red;
+}
+
+/*可选中菜单按钮*/
+.edui-simple .edui-list .edui-bordereraser {
+    display: none;
+}
+
+.edui-simple .edui-listitem {
+    padding: 1px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.edui-simple .edui-list .edui-state-hover {
+    position: relative;
+    background-color: #EEE;
+    border: 1px solid #EEE;
+    padding: 0;
+    border-radius: 3px;
+}
+
+.edui-simple .edui-for-fontfamily .edui-listitem-label {
+    min-width: 130px;
+    _width: 120px;
+    font-size: 12px;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 5px;
+}
+.edui-simple .edui-for-insertcode .edui-listitem-label {
+    min-width: 120px;
+    _width: 120px;
+    font-size: 12px;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 5px;
+}
+.edui-simple .edui-for-underline .edui-listitem-label {
+    min-width: 120px;
+    _width: 120px;
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+.edui-simple .edui-for-fontsize .edui-listitem-label {
+    min-width: 120px;
+    _width: 120px;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label {
+    min-width: 200px;
+    _width: 200px;
+    padding: 2px 5px;
+}
+
+.edui-simple .edui-for-rowspacingtop .edui-listitem-label,
+.edui-simple .edui-for-rowspacingbottom .edui-listitem-label {
+    min-width: 53px;
+    _width: 53px;
+    padding: 2px 5px;
+}
+
+.edui-simple .edui-for-lineheight .edui-listitem-label {
+    min-width: 53px;
+    _width: 53px;
+    padding: 2px 5px;
+}
+
+.edui-simple .edui-for-customstyle .edui-listitem-label {
+    min-width: 200px;
+    _width: 200px;
+    width: 200px !important;
+    padding: 2px 5px;
+}
+
+/* 可选中按钮弹出菜单*/
+.edui-simple .edui-menu {
+    z-index: 3000;
+}
+
+.edui-simple .edui-menu .edui-popup-content {
+    padding: 3px;
+}
+
+.edui-simple .edui-menu-body {
+    _width: 150px;
+    min-width: 170px;
+    background: url("../images/sparator_v.png") repeat-y 25px;
+}
+
+.edui-simple .edui-menuitem-body {
+}
+
+.edui-simple .edui-menuitem {
+    height: 24px;
+    line-height: 22px;
+    cursor: default;
+    vertical-align: top;
+}
+
+.edui-simple .edui-menuitem .edui-icon {
+    width: 20px !important;
+    height: 20px !important;
+    /*background: url(../images/icons.png) 0 -4000px;*/
+    /*background: url(../images/icons.gif) 0 -4000px\9;*/
+    font-family: 'edui-iconfont';
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.edui-simple .edui-menuitem .edui-menuitem-body .edui-icon:before{
+    display:none;
+}
+
+.edui-simple .edui-contextmenu .edui-popup-content .edui-menuitem-body .edui-icon:before{
+    display: inline-block;
+}
+
+.edui-simple .edui-menuitem .edui-label {
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px;
+    padding-left: 10px;
+}
+
+.edui-simple .edui-state-checked .edui-menuitem-body .edui-icon{
+    line-height:20px;
+    text-align:center;
+}
+.edui-simple .edui-state-checked .edui-menuitem-body .edui-icon:before{
+    content: "\e7fc";
+    font-size: 10px;
+    display:inline-block;
+}
+
+.edui-simple .edui-state-disabled .edui-menuitem-label {
+    color: gray;
+}
+
+
+/*不可选中菜单按钮 */
+.edui-simple .edui-toolbar .edui-combox-body .edui-button-body {
+    width: 60px;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 5px;
+    white-space: nowrap;
+    margin: 0 3px 0 0;
+    cursor: pointer;
+}
+
+.edui-simple .edui-toolbar .edui-combox-body .edui-arrow {
+    height: 30px;
+    width: 13px;
+    cursor: pointer;
+}
+
+.edui-simple .edui-toolbar .edui-combox-body .edui-arrow:before{
+    content: "\e9f0";
+    font-family: "edui-iconfont";
+    font-size: 8px;
+}
+
+.edui-simple .edui-toolbar .edui-combox .edui-combox-body {
+    border: 1px solid #CCC;
+    background-color: white;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+.edui-simple .edui-toolbar .edui-combox .edui-combox-body > div {
+    vertical-align: top;
+}
+
+.edui-simple .edui-toolbar .edui-combox-body .edui-splitborder {
+    display: none;
+}
+
+.edui-simple .edui-toolbar .edui-combox-body .edui-arrow {
+    border-left: 1px solid #CCC;
+}
+
+.edui-simple .edui-toolbar .edui-state-hover .edui-combox-body {
+    /*background-color: #fff5d4;*/
+    /*border: 1px solid #dcac6c;*/
+}
+
+.edui-simple .edui-toolbar .edui-state-hover .edui-combox-body .edui-arrow {
+    /*border-left: 1px solid #dcac6c;*/
+}
+
+.edui-simple .edui-toolbar .edui-state-checked .edui-combox-body {
+    background-color: #FFE69F;
+    border: 1px solid #DCAC6C;
+}
+
+.edui-toolbar .edui-state-checked .edui-combox-body .edui-arrow {
+    border-left: 1px solid #DCAC6C;
+}
+
+.edui-toolbar .edui-state-disabled .edui-combox-body {
+    background-color: #F0F0EE;
+    opacity: 0.3;
+}
+
+.edui-toolbar .edui-state-opened .edui-combox-body {
+    background-color: white;
+    border: 1px solid gray;
+}
+
+/*普通按钮样式及状态*/
+.edui-simple .edui-toolbar .edui-button .edui-icon,
+.edui-simple .edui-toolbar .edui-menubutton .edui-icon,
+.edui-simple .edui-toolbar .edui-splitbutton .edui-icon {
+    height: 26px !important;
+    width: 26px !important;
+    /*background-image: url(../images/icons.png);*/
+    /*background-image: url(../images/icons.gif) \9;*/
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: "edui-iconfont";
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.edui-simple .edui-toolbar .edui-button .edui-button-wrap {
+    padding: 1px;
+    position: relative;
+    border-radius: 3px;
+}
+
+.edui-simple .edui-toolbar .edui-button .edui-state-hover .edui-button-wrap {
+    background-color: #EEE;
+    border: 1px solid #EEE;
+    padding: 0;
+}
+
+.edui-simple .edui-toolbar .edui-button .edui-state-checked .edui-button-wrap {
+    background-color: #F0F0EE;
+    padding: 0;
+    border: 1px solid #EEE;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+.edui-simple .edui-toolbar .edui-button .edui-state-active .edui-button-wrap {
+    background-color: #ffffff;
+    padding: 0;
+    border: 1px solid gray;
+}
+.edui-simple .edui-toolbar .edui-state-disabled .edui-label {
+    color: #ccc;
+}
+.edui-simple .edui-toolbar .edui-state-disabled .edui-icon {
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
+}
+
+.edui-simple .edui-toolbar-button-custom{
+  display: inline-block !important;
+  line-height: 30px;
+  vertical-align: middle;
+  padding: 0 10px;
+  border-radius: 3px;
+  margin: 0 5px;
+}
+
+.edui-simple .edui-toolbar-button-custom:hover{
+  background: #EEE;
+}
+
+/* toolbar icons */
+.edui-simple .edui-toolbar .edui-for-undo .edui-icon,
+.edui-simple .edui-toolbar .edui-for-redo .edui-icon {
+    font-size: 14px;
+}
+
+.edui-simple .edui-for-undo .edui-icon:before {
+     content: "\e60f";
+}
+
+.edui-simple  .edui-for-redo .edui-icon:before {
+    content: "\e60c";
+}
+
+.edui-simple  .edui-for-bold .edui-icon:before {
+    content: "\e628";
+}
+
+.edui-simple  .edui-for-italic .edui-icon:before {
+    content: "\e62a";
+}
+
+.edui-simple  .edui-for-fontborder .edui-icon:before {
+    content: '\e62d';
+}
+.edui-simple  .edui-for-underline .edui-icon:before {
+    content: "\e63e";
+}
+
+.edui-simple  .edui-for-strikethrough .edui-icon:before {
+    content: "\e64a";
+}
+
+.edui-simple  .edui-for-subscript .edui-icon:before {
+    content: "\ece9";
+}
+
+.edui-simple  .edui-for-superscript .edui-icon:before {
+    content: "\e83e";
+}
+
+.edui-simple  .edui-for-blockquote .edui-icon:before {
+    content: "\e6d8";
+}
+
+.edui-simple  .edui-for-forecolor .edui-icon:before {
+    content: "\e7f8";
+}
+
+.edui-simple  .edui-for-backcolor .edui-icon:before {
+    content: "\e71a";
+}
+
+.edui-simple  .edui-for-inserttable .edui-icon:before {
+    content: "\e60d";
+}
+
+.edui-simple  .edui-for-autotypeset .edui-icon:before {
+    content: "\e662";
+}
+
+.edui-simple  .edui-for-justifyleft .edui-icon:before {
+    content: "\e7f7";
+}
+
+.edui-simple  .edui-for-justifycenter .edui-icon:before {
+    content: "\e7f6";
+}
+
+.edui-simple  .edui-for-justifyright .edui-icon:before {
+    content: "\e7f5";
+}
+
+.edui-simple  .edui-for-justifyjustify .edui-icon:before {
+    content: "\e87c";
+}
+
+.edui-simple  .edui-for-insertorderedlist .edui-icon:before {
+    content: "\e737";
+}
+
+.edui-simple  .edui-for-insertunorderedlist .edui-icon:before {
+    content: "\e7f4";
+}
+
+.edui-simple  .edui-for-lineheight .edui-icon:before {
+    content: "\e638";
+}
+
+.edui-simple  .edui-for-rowspacingbottom .edui-icon:before {
+    content: '\eb09';
+}
+
+.edui-simple  .edui-for-rowspacingtop .edui-icon:before {
+    content: '\eb0a';
+}
+
+.edui-simple  .edui-for-horizontal .edui-icon:before {
+    content: "\e617";
+}
+
+.edui-simple  .edui-for-link .edui-icon:before {
+    content: "\e648";
+}
+
+.edui-simple  .edui-for-code .edui-icon:before {
+    background-position: -440px -40px;
+}
+
+.edui-simple  .edui-for-insertimage .edui-icon:before {
+    content: "\e605";
+}
+
+.edui-simple  .edui-for-insertframe .edui-icon:before {
+    content: "\e6c0";
+}
+
+.edui-simple  .edui-for-emoticon .edui-icon:before {
+    content: "\e60e";
+}
+
+.edui-simple  .edui-for-spechars .edui-icon:before {
+    content: "\e891";
+}
+
+.edui-simple  .edui-for-help .edui-icon:before {
+    content: "\e752";
+}
+
+.edui-simple  .edui-for-print .edui-icon:before {
+    content: "\e67a";
+}
+
+.edui-simple  .edui-for-preview .edui-icon:before {
+    content: "\e644";
+}
+
+.edui-simple  .edui-for-selectall .edui-icon:before {
+    content: '\e62f';
+}
+
+.edui-simple  .edui-for-searchreplace .edui-icon:before {
+    content: "\eb6c";
+}
+
+.edui-simple  .edui-for-drafts .edui-icon:before {
+    content: "\e61e";
+}
+
+.edui-simple  .edui-for-map .edui-icon:before {
+    content: "\e649";
+}
+
+.edui-simple  .edui-for-insertvideo .edui-icon:before {
+    content: "\e636";
+}
+
+.edui-simple  .edui-for-time .edui-icon:before {
+    content: "\e680";
+}
+
+.edui-simple  .edui-for-date .edui-icon:before {
+    content: "\e697";
+}
+
+.edui-simple  .edui-for-cut .edui-icon:before {
+    background-position: -680px 0;
+}
+
+.edui-simple  .edui-for-copy .edui-icon:before {
+    background-position: -700px 0;
+}
+
+.edui-simple  .edui-for-paste .edui-icon:before {
+    background-position: -560px 0;
+}
+
+.edui-simple  .edui-for-formatmatch .edui-icon:before {
+    content: "\e637";
+}
+
+.edui-simple  .edui-for-pasteplain .edui-icon:before {
+    content: '\edfb';
+}
+
+.edui-simple  .edui-for-directionalityltr .edui-icon:before {
+    content: "\e623";
+}
+
+.edui-simple  .edui-for-directionalityrtl .edui-icon:before {
+    content: "\e7bc";
+}
+
+.edui-simple  .edui-for-source .edui-icon:before {
+    content: "\e608";
+}
+
+.edui-simple  .edui-for-removeformat .edui-icon:before {
+    content: "\e782";
+}
+
+.edui-simple  .edui-for-unlink .edui-icon:before {
+    content: "\e92b";
+}
+
+.edui-simple  .edui-for-touppercase .edui-icon:before {
+    content: "\e619";
+}
+
+.edui-simple  .edui-for-tolowercase .edui-icon:before {
+    content: "\e61a";
+}
+
+.edui-simple  .edui-for-insertrow .edui-icon:before {
+    content: "\e603";
+}
+
+.edui-simple  .edui-for-insertrownext .edui-icon:before {
+    content: "\e602";
+}
+
+.edui-simple  .edui-for-insertcol .edui-icon:before {
+    content: "\e601";
+}
+
+.edui-simple  .edui-for-insertcolnext  .edui-icon:before {
+    content: "\e600";
+}
+
+.edui-simple  .edui-for-mergeright .edui-icon:before {
+    content: "\e615";
+}
+
+.edui-simple  .edui-for-mergedown .edui-icon:before {
+    content: "\e613";
+}
+
+.edui-simple  .edui-for-splittorows .edui-icon:before {
+    content: "\e610";
+}
+
+.edui-simple  .edui-for-splittocols .edui-icon:before {
+    content: "\e611";
+}
+
+.edui-simple  .edui-for-insertparagraphbeforetable .edui-icon:before {
+    content: '\e901';
+}
+
+.edui-simple  .edui-for-deleterow .edui-icon:before {
+    content: "\e609";
+}
+
+.edui-simple  .edui-for-deletecol .edui-icon:before {
+    content: "\e604";
+}
+
+.edui-simple  .edui-for-splittocells .edui-icon:before {
+    content: "\e612";
+}
+
+.edui-simple  .edui-for-mergecells .edui-icon:before {
+    content: "\e606";
+}
+
+.edui-simple  .edui-for-deletetable .edui-icon:before {
+    content: "\e60a";
+}
+
+.edui-simple  .edui-for-cleardoc .edui-icon:before {
+    content: "\e61e";
+}
+
+.edui-simple  .edui-for-fullscreen .edui-icon:before {
+    content: "\e675";
+}
+
+.edui-simple  .edui-for-anchor .edui-icon:before {
+    content: "\e61b";
+}
+
+.edui-simple  .edui-for-pagebreak .edui-icon:before {
+    content: "\e61d";
+}
+
+.edui-simple  .edui-for-imagenone .edui-icon:before {
+    content: "\e61f";
+}
+
+.edui-simple  .edui-for-imageleft .edui-icon:before {
+    content: "\e621";
+}
+
+.edui-simple  .edui-for-wordimage .edui-icon:before {
+    content: "\e618";
+}
+
+.edui-simple  .edui-for-imageright .edui-icon:before {
+    content: "\e622";
+}
+
+.edui-simple  .edui-for-imagecenter .edui-icon:before {
+    content: "\e620";
+}
+
+.edui-simple  .edui-for-indent .edui-icon:before {
+    content: "\e7f3";
+}
+
+.edui-simple  .edui-for-outdent .edui-icon:before {
+    background-position: -540px 0;
+}
+
+.edui-simple  .edui-for-table .edui-icon:before {
+    background-position: -580px -20px;
+}
+
+.edui-simple  .edui-for-edittable .edui-icon:before {
+    background-position: -420px -40px;
+}
+
+.edui-simple  .edui-for-template .edui-icon:before {
+    content: "\e6ad";
+}
+
+.edui-simple  .edui-for-delete .edui-icon:before {
+    background-position: -360px -40px;
+}
+
+.edui-simple  .edui-for-attachment .edui-icon:before {
+    content: "\e704";
+}
+
+.edui-simple  .edui-for-edittd .edui-icon:before {
+    background-position: -700px -40px;
+}
+
+.edui-simple  .edui-for-scrawl .edui-icon:before {
+    content: "\e70b";
+}
+
+.edui-simple  .edui-for-background .edui-icon:before {
+    content: "\e624";
+}
+
+.edui-simple  .edui-for-formula .edui-icon:before {
+    content: "\e616";
+}
+
+.edui-simple  .edui-for-aligntd  .edui-icon:before {
+    background-position: -236px -76px;
+}
+
+.edui-simple  .edui-for-insertparagraphtrue  .edui-icon:before {
+    background-position: -625px -76px;
+}
+
+.edui-simple  .edui-for-insertparagraph  .edui-icon:before {
+    background-position: -602px -76px;
+}
+
+.edui-simple  .edui-for-insertcaption  .edui-icon:before {
+    background-position: -336px -76px;
+}
+
+.edui-simple  .edui-for-deletecaption  .edui-icon:before {
+    background-position: -362px -76px;
+}
+
+.edui-simple  .edui-for-inserttitle  .edui-icon:before {
+    background-position: -286px -76px;
+}
+
+.edui-simple  .edui-for-deletetitle  .edui-icon:before {
+    background-position: -311px -76px;
+}
+
+.edui-simple  .edui-for-aligntable  .edui-icon:before {
+    background-position: -440px 0;
+}
+
+.edui-simple  .edui-for-tablealignment-left  .edui-icon:before {
+    background-position: -460px 0;
+}
+
+.edui-simple  .edui-for-tablealignment-center  .edui-icon:before {
+    background-position: -420px 0;
+}
+
+.edui-simple  .edui-for-tablealignment-right  .edui-icon:before {
+    background-position: -480px 0;
+}
+
+.edui-simple  .edui-for-inserttitlecol  .edui-icon:before {
+    background-position: -673px -76px;
+}
+
+.edui-simple  .edui-for-deletetitlecol  .edui-icon:before {
+    background-position: -698px -76px;
+}
+
+.edui-simple  .edui-for-simpleupload  .edui-icon:before {
+  content: "\edfc";
+}
+
+/*splitbutton*/
+.edui-simple .edui-toolbar .edui-splitbutton-body .edui-arrow,
+.edui-simple .edui-toolbar .edui-menubutton-body .edui-arrow {
+    height: 30px;
+    width: 13px;
+    cursor: pointer;
+}
+.edui-simple .edui-toolbar .edui-splitbutton-body .edui-arrow:before,
+.edui-simple .edui-toolbar .edui-menubutton-body .edui-arrow:before {
+    content: "\e9f0";
+    font-family: "edui-iconfont";
+    font-size: 8px;
+}
+
+.edui-simple .edui-toolbar .edui-splitbutton .edui-splitbutton-body,
+.edui-simple .edui-toolbar .edui-menubutton .edui-menubutton-body {
+    padding: 1px;
+    border-radius: 3px;
+}
+
+.edui-simple .edui-toolbar .edui-splitborder {
+    width: 1px;
+    height: 30px;
+}
+
+.edui-simple .edui-toolbar .edui-state-hover .edui-splitborder {
+    width: 1px;
+    border-left: 0px solid #dcac6c;
+}
+
+.edui-simple .edui-toolbar .edui-state-active .edui-splitborder {
+    width: 0;
+    border-left: 1px solid #EEE;
+}
+
+.edui-simple .edui-toolbar .edui-state-opened .edui-splitborder {
+    width: 1px;
+    border: 0;
+}
+
+.edui-simple .edui-toolbar .edui-splitbutton .edui-state-hover .edui-splitbutton-body,
+.edui-simple .edui-toolbar .edui-menubutton .edui-state-hover .edui-menubutton-body {
+    background-color: #EEE;
+    border: 1px solid #EEE;
+    padding: 0;
+}
+
+.edui-simple .edui-toolbar .edui-splitbutton .edui-state-checked .edui-splitbutton-body,
+.edui-simple .edui-toolbar .edui-menubutton .edui-state-checked .edui-menubutton-body {
+    background-color: #ffffff;
+    border: 1px solid #EEE;
+    padding: 0;
+}
+
+.edui-simple .edui-toolbar .edui-splitbutton .edui-state-active .edui-splitbutton-body,
+.edui-simple .edui-toolbar .edui-menubutton .edui-state-active .edui-menubutton-body {
+    background-color: #ffffff;
+    border: 1px solid #EEE;
+    padding: 0;
+}
+
+.edui-simple .edui-state-disabled .edui-arrow {
+    opacity: 0.3;
+    _filter: alpha(opacity = 30);
+}
+
+.edui-simple .edui-toolbar .edui-splitbutton .edui-state-opened .edui-splitbutton-body,
+.edui-simple .edui-toolbar .edui-menubutton .edui-state-opened .edui-menubutton-body {
+    background-color: white;
+    border: 1px solid #EEE;
+    padding: 0;
+}
+
+.edui-simple .edui-for-insertorderedlist .edui-bordereraser,
+.edui-simple .edui-for-lineheight .edui-bordereraser,
+.edui-simple .edui-for-rowspacingtop .edui-bordereraser,
+.edui-simple .edui-for-rowspacingbottom .edui-bordereraser,
+.edui-simple .edui-for-insertunorderedlist .edui-bordereraser {
+    background-color: white;
+}
+
+/* 解决嵌套导致的图标问题 */
+.edui-simple .edui-for-insertorderedlist .edui-popup-body .edui-icon,
+.edui-simple .edui-for-lineheight .edui-popup-body .edui-icon,
+.edui-simple .edui-for-rowspacingtop .edui-popup-body .edui-icon,
+.edui-simple .edui-for-rowspacingbottom .edui-popup-body .edui-icon,
+.edui-simple .edui-for-insertunorderedlist .edui-popup-body .edui-icon {
+    /*background-position: 0 -40px;*/
+    background-image: none  ;
+}
+
+/* 弹出菜单 */
+.edui-simple .edui-popup {
+    z-index: 3000;
+    background-color: #ffffff;
+    width:auto;
+    height:auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-top:1px;
+}
+
+.edui-simple .edui-popup .edui-shadow {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.edui-simple .edui-popup-content {
+    font-size: 13px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transition: .25s;
+    color: #333;
+    background-color: #FFF;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.edui-simple .edui-popup .edui-bordereraser {
+    background-color: transparent;
+    height: 3px;
+}
+
+.edui-simple .edui-menu .edui-bordereraser {
+    height: 3px;
+}
+
+.edui-simple .edui-anchor-topleft .edui-bordereraser {
+    left: 1px;
+    top: -2px;
+}
+
+.edui-simple .edui-anchor-topright .edui-bordereraser {
+    right: 1px;
+    top: -2px;
+}
+
+.edui-simple .edui-anchor-bottomleft .edui-bordereraser {
+    left: 0;
+    bottom: -6px;
+    height: 7px;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+.edui-simple .edui-anchor-bottomright .edui-bordereraser {
+    right: 0;
+    bottom: -6px;
+    height: 7px;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+.edui-popup div{
+    width:auto;
+    height:auto;
+}
+
+.edui-simple .edui-editor-messageholder {
+    display: block;
+    width: 150px;
+    height: auto;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 28px;
+    right: 3px;
+}
+
+.edui-simple .edui-message{
+    min-height: 10px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    padding: 0;
+    margin-bottom: 3px;
+    position: relative;
+}
+.edui-simple .edui-message-body{
+    border-radius: 3px;
+    padding: 8px 15px 8px 8px;
+    color: #c09853;
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+}
+.edui-simple .edui-message-type-info{
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1
+}
+.edui-simple .edui-message-type-success{
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6
+}
+.edui-simple .edui-message-type-danger,
+.edui-simple .edui-message-type-error{
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7
+}
+.edui-simple .edui-message .edui-message-closer {
+    display: block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #999;
+    text-shadow: 0 1px 0 #fff;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.edui-simple .edui-message .edui-message-content {
+    font-size: 10pt;
+    word-wrap: break-word;
+    word-break: normal;
+}
+/* 弹出对话框按钮和对话框大小 */
+.edui-simple .edui-dialog {
+    z-index: 2000;
+    position: absolute;
+
+}
+
+.edui-dialog div{
+    width:auto;
+}
+
+.edui-simple .edui-dialog-wrap {
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.edui-simple .edui-dialog-fullscreen-flag {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.edui-simple .edui-dialog-body {
+    position: relative;
+    /*padding:2px 0 0 2px;*/
+    /*_zoom: 1;*/
+}
+
+.edui-simple .edui-dialog-fullscreen-flag .edui-dialog-body {
+    padding: 0;
+}
+
+.edui-simple .edui-dialog-shadow {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.edui-simple .edui-dialog-foot {
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    height: 40px;
+}
+
+.edui-simple .edui-dialog-titlebar {
+    height: 32px;
+    background: #FFF;
+    position: relative;
+    cursor: move;
+    border-radius:5px 5px 0 0;
+    padding: 5px;
+}
+.edui-simple .edui-dialog-caption {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 30px;
+    padding-left: 5px;
+}
+
+.edui-simple .edui-dialog-draghandle {
+    height: 30px;
+}
+
+.edui-simple .edui-dialog-closebutton {
+    position: absolute !important;
+    right: 5px;
+    top: 3px;
+}
+
+.edui-simple .edui-dialog-closebutton .edui-button-body {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.edui-simple .edui-dialog-closebutton .edui-button-body .edui-icon{
+    width: 20px;
+    height: 20px;
+    font-family: 'edui-iconfont';
+    line-height: 26px;
+    font-size: 20px;
+    text-align: center;
+    color:#999;
+    vertical-align: top;
+}
+.edui-simple .edui-dialog-closebutton .edui-button-body .edui-icon:before{
+    content: "\e6a7";
+}
+
+.edui-simple .edui-dialog-closebutton .edui-state-hover .edui-button-body .edui-icon{
+    color:#333;
+}
+
+.edui-simple .edui-dialog-buttons {
+    position: absolute;
+    right: 0;
+}
+
+.edui-simple .edui-dialog-buttons .edui-button {
+    margin-right: 10px;
+}
+
+.edui-simple .edui-dialog-buttons .edui-button .edui-button-body .edui-icon{
+    display: none !important;
+}
+
+.edui-simple .edui-dialog-buttons .edui-button .edui-button-body {
+    height: 30px;
+    font-size: 12px;
+    line-height: 28px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #F8F8F8;
+    border: 1px solid #EEE;
+    padding:0 15px;
+}
+
+.edui-simple .edui-dialog-buttons .edui-button .edui-state-hover .edui-button-body {
+
+}
+
+.edui-simple .edui-dialog iframe {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+}
+
+.edui-simple .edui-dialog-modalmask {
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
+    background-color: #ccc;
+    position: absolute;
+    /*z-index: 1999;*/
+}
+
+.edui-simple .edui-dialog-dragmask {
+    position: absolute;
+    /*z-index: 2001;*/
+    background-color: transparent;
+    cursor: move;
+}
+
+.edui-simple .edui-dialog-content {
+    position: relative;
+}
+
+.edui-simple .dialogcontmask {
+    cursor: move;
+    visibility: hidden;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+}
+
+/*link-dialog*/
+.edui-simple .edui-for-link .edui-dialog-content {
+    width: 420px;
+    height: 200px;
+    overflow: hidden;
+}
+/*background-dialog*/
+.edui-simple .edui-for-background .edui-dialog-content {
+    width: 440px;
+    height: 280px;
+    overflow: hidden;
+}
+
+/*template-dialog*/
+.edui-simple .edui-for-template .edui-dialog-content {
+    width: 630px;
+    height: 390px;
+    overflow: hidden;
+}
+
+/*scrawl-dialog*/
+.edui-simple .edui-for-scrawl .edui-dialog-content {
+    width: 515px;
+    *width: 506px;
+    height: 360px;
+}
+
+/*spechars-dialog*/
+.edui-simple .edui-for-spechars .edui-dialog-content {
+    width: 620px;
+    height: 500px;
+    *width: 630px;
+    *height: 570px;
+}
+
+/*image-dialog*/
+.edui-simple .edui-for-insertimage .edui-dialog-content {
+    width: 650px;
+    height: 400px;
+    overflow: hidden;
+}
+
+/*image-insertframe*/
+.edui-simple .edui-for-insertframe .edui-dialog-content {
+    width: 350px;
+    height: 230px;
+    overflow: hidden;
+}
+
+/*wordImage-dialog*/
+.edui-simple .edui-for-wordimage .edui-dialog-content {
+  width: 620px;
+  height: 380px;
+  overflow: hidden;
+}
+
+/*formula-dialog*/
+.edui-simple .edui-for-formula .edui-dialog-content {
+  width: 620px;
+  height: 300px;
+  overflow: hidden;
+}
+
+/*attachment-dialog*/
+.edui-simple .edui-for-attachment .edui-dialog-content {
+    width: 650px;
+    height: 400px;
+    overflow: hidden;
+}
+
+
+/*map-dialog*/
+.edui-simple .edui-for-map .edui-dialog-content {
+    width: 550px;
+    height: 400px;
+}
+
+/*video-dialog*/
+.edui-simple .edui-for-insertvideo .edui-dialog-content {
+    width: 590px;
+    height: 420px;
+}
+
+/*anchor-dialog*/
+.edui-simple .edui-for-anchor .edui-dialog-content {
+    width: 320px;
+    height: 60px;
+    overflow: hidden;
+}
+
+/*searchreplace-dialog*/
+.edui-simple .edui-for-searchreplace .edui-dialog-content {
+    width: 400px;
+    height: 220px;
+}
+
+/*help-dialog*/
+.edui-simple .edui-for-help .edui-dialog-content {
+    width: 400px;
+    height: 420px;
+}
+
+/*edittable-dialog*/
+.edui-simple .edui-for-edittable .edui-dialog-content {
+    width: 540px;
+    _width:590px;
+    height: 335px;
+}
+
+/*edittip-dialog*/
+.edui-simple .edui-for-edittip .edui-dialog-content {
+    width: 225px;
+    height: 60px;
+}
+
+/*edittd-dialog*/
+.edui-simple .edui-for-edittd .edui-dialog-content {
+    width: 240px;
+    height: 50px;
+}
+
+/*段落弹出菜单*/
+.edui-simple .edui-for-paragraph .edui-listitem-label {
+    font-family: Tahoma, Verdana, Arial, Helvetica;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-p {
+    font-size: 22px;
+    line-height: 27px;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-h1 {
+    font-weight: bolder;
+    font-size: 32px;
+    line-height: 36px;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-h2 {
+    font-weight: bolder;
+    font-size: 27px;
+    line-height: 29px;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-h3 {
+    font-weight: bolder;
+    font-size: 19px;
+    line-height: 23px;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-h4 {
+    font-weight: bolder;
+    font-size: 16px;
+    line-height: 19px
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-h5 {
+    font-weight: bolder;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.edui-simple .edui-for-paragraph .edui-listitem-label .edui-for-h6 {
+    font-weight: bolder;
+    font-size: 12px;
+    line-height: 14px;
+}
+/* 表格弹出菜单 */
+.edui-simple .edui-for-inserttable .edui-splitborder {
+    display: none
+}
+.edui-simple .edui-for-inserttable  .edui-splitbutton-body .edui-arrow {
+    width: 0
+}
+.edui-simple .edui-toolbar .edui-for-inserttable  .edui-state-active .edui-splitborder{
+    border-left: 1px solid transparent;
+}
+.edui-simple .edui-tablepicker .edui-infoarea {
+    height: 14px;
+    line-height: 14px;
+    font-size: 12px;
+    width: 220px;
+    margin-bottom: 3px;
+    clear: both;
+}
+
+.edui-simple .edui-tablepicker .edui-infoarea .edui-label {
+    float: left;
+}
+
+.edui-simple .edui-dialog-buttons .edui-label {
+    line-height: 30px;
+}
+
+.edui-simple .edui-tablepicker .edui-infoarea .edui-clickable {
+    float: right;
+}
+
+.edui-simple .edui-tablepicker .edui-pickarea {
+    background: url("../images/unhighlighted.gif") repeat;
+    height: 220px;
+    width: 220px;
+}
+
+.edui-simple .edui-tablepicker .edui-pickarea .edui-overlay {
+    background: url("../images/highlighted.gif") repeat;
+}
+
+/* 颜色弹出菜单 */
+.edui-simple .edui-colorpicker-topbar {
+    height: 27px;
+    width: 200px;
+    /*border-bottom: 1px gray dashed;*/
+}
+
+.edui-simple .edui-colorpicker-preview {
+    height: 20px;
+    border: 1px inset black;
+    margin-left: 1px;
+    width: 128px;
+    float: left;
+    border-radius:3px;
+    position: relative;
+}
+
+.edui-simple .edui-colorpicker-preview input{
+    padding: 0;
+    left: 0;
+    border: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.edui-simple .edui-colorpicker-nocolor {
+    float: right;
+    margin-right: 1px;
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px;
+    border: 1px solid #333;
+    padding: 0 5px;
+    cursor: pointer;
+    border-radius: 3px;
+    box-sizing: content-box;
+}
+
+.edui-simple .edui-colorpicker-tablefirstrow {
+    height: 30px;
+}
+
+.edui-simple .edui-colorpicker-colorcell {
+    width: 14px;
+    height: 14px;
+    display: block;
+    margin: 0;
+    cursor: pointer;
+    border-radius:2px;
+}
+
+.edui-simple .edui-colorpicker-colorcell:hover {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+}
+.edui-simple .edui-colorpicker-advbtn{
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    height:20px;
+}
+.arrow_down{
+    background: white url('../images/arrow_down.png') no-repeat center;
+}
+.arrow_up{
+    background: white url('../images/arrow_up.png') no-repeat center;
+}
+/*高级的样式*/
+.edui-colorpicker-adv{
+    position: relative;
+    overflow: hidden;
+    height: 180px;
+    display: none;
+}
+.edui-colorpicker-plant, .edui-colorpicker-hue {
+    border: solid 1px #666;
+}
+.edui-colorpicker-pad {
+    width: 150px;
+    height: 150px;
+    left: 14px;
+    top: 13px;
+    position: absolute;
+    background: red;
+    overflow: hidden;
+    cursor: crosshair;
+}
+.edui-colorpicker-cover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background: url("../images/tangram-colorpicker.png") -160px -200px;
+}
+.edui-colorpicker-padDot{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    overflow: hidden;
+    background: url(../images/tangram-colorpicker.png) 0px -200px repeat-x;
+    z-index: 1000;
+
+}
+.edui-colorpicker-sliderMain {
+    position: absolute;
+    left: 171px;
+    top: 13px;
+    width: 19px;
+    height: 152px;
+    background: url(../images/tangram-colorpicker.png) -179px -12px no-repeat;
+
+}
+.edui-colorpicker-slider {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.edui-colorpicker-thumb{
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    height: 3px;
+    left: -1px;
+    right: -1px;
+    border: 1px solid black;
+    background: white;
+    opacity: .8;
+}
+
+/*自动排版弹出菜单*/
+.edui-simple .edui-autotypesetpicker .edui-autotypesetpicker-body {
+    font-size: 12px;
+    margin-bottom: 3px;
+    clear: both;
+}
+
+.edui-simple .edui-autotypesetpicker-body table {
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+.edui-simple .edui-autotypesetpicker-body td {
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+.edui-simple .edui-autotypesetpicker-body td input {
+    margin: 3px 3px 3px 4px;
+    *margin: 1px 0 0 0;
+}
+
+.edui-simple .edui-autotypesetpicker-body td button {
+    border: none;
+    padding: 5px 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    border-radius: 4rem;
+    -webkit-appearance: none;
+    cursor: pointer;
+    margin-bottom: 5px;
+    background-color: #EEE;
+}
+
+/*自动排版弹出菜单*/
+.edui-simple .edui-cellalignpicker .edui-cellalignpicker-body {
+    width: 70px;
+    font-size: 12px;
+    cursor: default;
+}
+
+.edui-simple .edui-cellalignpicker-body table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.edui-simple .edui-cellalignpicker-body td{
+    padding: 1px;
+}
+.edui-simple .edui-cellalignpicker-body .edui-icon{
+    height: 20px;
+    width: 20px;
+    padding: 1px;
+    background-image: url(../images/table-cell-align.png);
+}
+
+.edui-simple .edui-cellalignpicker-body .edui-left{
+    background-position: 0 0;
+}
+
+.edui-simple .edui-cellalignpicker-body .edui-center{
+    background-position: -25px 0;
+}
+.edui-simple .edui-cellalignpicker-body .edui-right{
+    background-position: -51px 0;
+}
+
+.edui-simple .edui-cellalignpicker-body td.edui-state-hover .edui-left{
+    background-position: -73px 0;
+}
+
+.edui-simple .edui-cellalignpicker-body td.edui-state-hover .edui-center{
+    background-position: -98px 0;
+}
+
+.edui-simple .edui-cellalignpicker-body td.edui-state-hover .edui-right{
+    background-position: -124px 0;
+}
+
+.edui-simple .edui-cellalignpicker-body td.edui-cellalign-selected .edui-left {
+    background-position: -146px 0;
+    background-color: #f1f4f5;
+}
+
+.edui-simple .edui-cellalignpicker-body td.edui-cellalign-selected .edui-center {
+    background-position: -245px 0;
+}
+
+.edui-simple .edui-cellalignpicker-body td.edui-cellalign-selected .edui-right {
+    background-position: -271px 0;
+}
+/*分隔线*/
+.edui-simple .edui-toolbar .edui-separator {
+    width: 1px;
+    height: 20px;
+    margin: 5px 5px;
+    background: #CCC;
+}
+
+/*颜色按钮 */
+.edui-simple .edui-toolbar .edui-colorbutton .edui-colorlump {
+    position: absolute;
+    overflow: hidden;
+    bottom: 1px;
+    left: 5px;
+    width: 20px;
+    height: 4px;
+}
+
+/*表情按钮及弹出菜单*/
+/*去除了表情的下拉箭头*/
+.edui-simple .edui-for-emotion .edui-icon:before {
+    content: "\e60e";
+}
+.edui-simple .edui-for-emotion .edui-popup-content iframe
+{
+    width: 514px;
+    height: 380px;
+    overflow: hidden;
+}
+.edui-simple .edui-for-emotion .edui-popup-content
+{
+    position: relative;
+    z-index: 555
+}
+
+.edui-simple .edui-for-emotion .edui-splitborder {
+    display: none
+}
+
+.edui-simple .edui-for-emotion .edui-splitbutton-body .edui-arrow
+{
+    width: 0
+}
+.edui-simple .edui-toolbar .edui-for-emotion  .edui-state-active .edui-splitborder
+{
+    border-left: 1px solid transparent;
+}
+
+/*contextmenu*/
+.edui-simple .edui-hassubmenu .edui-arrow {
+    height: 20px;
+    width: 20px;
+    float: right;
+    /*background: url("../images/icons-all.gif") no-repeat 10px -233px;*/
+    font-family: 'edui-iconfont';
+    font-size:12px;
+    line-height:20px;
+    text-align:center;
+}
+
+.edui-simple .edui-hassubmenu .edui-arrow:before{
+  content: "\e665";
+}
+
+.edui-simple .edui-menu-body .edui-menuitem {
+    padding: 1px;
+}
+
+.edui-simple .edui-menuseparator {
+    margin: 2px 0;
+    height: 1px;
+    overflow: hidden;
+}
+
+.edui-simple .edui-menuseparator-inner {
+    border-bottom: 1px solid #e2e3e3;
+    margin-left: 29px;
+    margin-right: 1px;
+}
+
+.edui-simple .edui-menu-body .edui-state-hover {
+    padding: 0 !important;
+    background-color: var(--edui-color-active-bg);
+    border-radius:3px;
+    border:1px solid var(--edui-color-active-bg);
+}
+
+/*弹出菜单*/
+.edui-simple .edui-shortcutmenu {
+    padding: 2px;
+    width: 300px;
+    height: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/*粘贴弹出菜单*/
+.edui-simple .edui-wordpastepop .edui-popup-content{
+    border: none;
+    padding: 0;
+    width: 54px;
+    height: 21px;
+}
+.edui-simple  .edui-pasteicon {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/wordpaste.png');
+    background-position: 0 0;
+}
+
+.edui-simple  .edui-pasteicon.edui-state-opened {
+    background-position: 0 -34px;
+}
+
+.edui-simple  .edui-pastecontainer {
+    position: relative;
+    visibility: hidden;
+    width: 97px;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.edui-simple  .edui-pastecontainer .edui-title {
+    font-weight: bold;
+    background: #F8F8FF;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    padding-left: 5px;
+}
+
+.edui-simple  .edui-pastecontainer .edui-button {
+    overflow: hidden;
+    margin: 3px 0;
+}
+
+.edui-simple  .edui-pastecontainer .edui-button .edui-richtxticon,
+.edui-simple  .edui-pastecontainer .edui-button .edui-tagicon,
+.edui-simple  .edui-pastecontainer .edui-button .edui-plaintxticon{
+    float: left;
+    cursor: pointer;
+    width: 29px;
+    height: 29px;
+    margin-left: 5px;
+    background-image: url('../images/wordpaste.png');
+    background-repeat: no-repeat;
+}
+.edui-simple  .edui-pastecontainer .edui-button .edui-richtxticon {
+    margin-left: 0;
+    background-position: -109px 0;
+}
+.edui-simple  .edui-pastecontainer .edui-button .edui-tagicon {
+    background-position: -148px 1px;
+}
+
+.edui-simple  .edui-pastecontainer .edui-button .edui-plaintxticon {
+    background-position: -72px 0;
+}
+
+.edui-simple  .edui-pastecontainer .edui-button .edui-state-hover .edui-richtxticon {
+    background-position: -109px -34px;
+}
+.edui-simple  .edui-pastecontainer .edui-button .edui-state-hover .edui-tagicon{
+    background-position: -148px -34px;
+}
+.edui-simple  .edui-pastecontainer .edui-button  .edui-state-hover .edui-plaintxticon{
+    background-position: -72px -34px;
+}
+.edui-quick-operate {
+    position: relative;
+    margin: -10px;
+    /*width: 40px;*/
+    height: 40px;
+    background: #FFF;
+    width: 50px !important;
+    border-radius: 4px;
+}
+
+.edui-quick-operate:hover .edui-quick-operate-menu {
+    display: block;
+}
+
+.edui-quick-operate-status {
+    display: flex;
+}
+
+.edui-quick-operate-icon {
+    display: inline-block;
+    line-height: 30px !important;
+    width: 30px !important;
+    text-align: center;
+    cursor: pointer;
+    color: #2A57FE;
+}
+
+.edui-quick-operate-icon:last-child {
+    width: 20px !important;
+    font-size: 0;
+    color: #999;
+}
+
+.edui-quick-operate-icon:last-child svg {
+    vertical-align: middle;
+}
+
+.edui-quick-operate-menu {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #CCC;
+    position: absolute;
+    left: 50px;
+    top: 0;
+    background: #FFF;
+    width: 100px !important;
+    display: none;
+}
+
+.edui-quick-operate-menu .item {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.edui-quick-operate-menu .item:hover {
+    background: #F5F5F5;
+}
+
+.edui-quick-operate-menu .item i {
+    display: inline-block;
+    width: 2em;
+}
+
+.edui-quick-operate .icon {
+    font-family: "edui-iconfont";
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+}
+
+.edui-quick-operate .icon.icon-image:before {
+    content: "\e605";
+}
+
+.edui-quick-operate .icon.icon-list:before {
+    content: "\e87c";
+}
+.edui-quick-operate .icon.icon-trash:before {
+    content: "\e87c";
+}
+
+/* 样式新增和覆盖 ThinkGem */
+.edui-textarea {position:absolute;z-index:-1000;top:20%;left:15%;width:200px;}
+.edui-default .edui-editor {border-radius:0;-webkit-border-radius:0;-moz-border-radius:0;}
+
+/* 大纲视图样式  ThinkGem */
+.edui-outline {margin:0!important;position:relative;}
+.edui-outline .left {padding:0;}
+.edui-outline .right {padding-right:0;padding-left:0px;}
+.edui-outline .open-close {width:6px;cursor:pointer;margin-left:1px;position:absolute;top:200px!important;z-index:100;display:inline-block;}
+.edui-outline .toc-close {opacity:0.3;filter:alpha(opacity=30);}
+.edui-outline .toc-close:hover {opacity:0.8;filter:alpha(opacity=80);}
+.edui-outline .toc-open, .edui-outline .toc-close {background:#fff url("../images/openclose.png") no-repeat 1px center !important;}
+.edui-outline .toc-close {background-position:-29px center !important;opacity:0.5;filter:alpha(opacity=50)}
+.edui-outline .wrapper{border:1px solid #CCC;border-left-width: 0;}
+.edui-outline .wrapperTitle{font-weight:bold;font-size:14px;padding:6px 10px;border-bottom:1px dashed #ccc;}
+.edui-outline .wrapperContainer{min-height:100px;max-height:430px;overflow:auto;padding:10px 13px;}
+.edui-outline .wrapperContainer ul{margin:0px;padding:0px 0px 0px 20px;}
+.edui-outline .wrapperContainer ul li{width:100%;margin:0px;padding:0px;line-height:22px;list-style:circle;white-space:nowrap;}
+.edui-outline .wrapperContainer ul span{display:block;margin:3px;padding:0px 3px;overflow:hidden;}
+.edui-outline .wrapperContainer > ul{padding:0;}
+.edui-outline .wrapperContainer > ul > li{list-style:none;}
+.edui-outline .wrapperContainer > ul > li > span{background-color:#ddd;margin:4px 0px;font-weight:bold;}
+.edui-outline .sectionItem{cursor:pointer;padding:4px;}
+.edui-outline .sectionItem:hover{color:#f00;}
+.edui-outline .fixTop{position:fixed!important;top:-3px;}
