@@ -93,8 +93,12 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			area2.setAreaCode("2");
 			Area area3 = (Area) area.clone();
 			area3.setAreaCode("3");
-			long areaInsertNum = areaDao.insertBatch(ListUtils.newArrayList(area, area2, area3));
-			Assert.assertEquals("areaDao.insert", areaInsertNum , 3);
+			Area area4 = (Area) area.clone();
+			area4.setAreaCode("4");
+			Area area5 = (Area) area.clone();
+			area5.setAreaCode("5");
+			long areaInsertNum = areaDao.insertBatch(ListUtils.newArrayList(area, area2, area3, area4, area5));
+			Assert.assertEquals("areaDao.insert", areaInsertNum , 5);
 			area.setAreaName("你好2");
 			long areaUpdateNum = areaDao.update(area);
 			Assert.assertEquals("areaDao.update", areaUpdateNum , 1);
@@ -123,18 +127,21 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			System.out.println("============ 逻辑删除测试 ============");
 			long areaDeleteNum = areaDao.delete(area);
 			Assert.assertEquals("areaDao.delete", areaDeleteNum , 1);
-			where.setStatus("1");
+			where.setId(area2.getId());
+			where.setId_in(new String[]{area2.getId()});
+			where.setAreaName(area2.getAreaName());
+			where.setStatus(area2.getStatus());
 			long areaDeleteByEntityNum = areaDao.deleteByEntity(where);
 			Assert.assertEquals("areaDao.deleteByEntity", areaDeleteByEntityNum , 1);
 
 			System.out.println("============ 物理删除测试 ============");
-			long areaPhyDeleteNum = areaDao.phyDelete(area2);
+			long areaPhyDeleteNum = areaDao.phyDelete(area3);
 			Assert.assertEquals("areaDao.phyDelete", areaPhyDeleteNum , 1);
-			long areaPhyDeleteByEntityNum = areaDao.phyDeleteByEntity(area3);
+			long areaPhyDeleteByEntityNum = areaDao.phyDeleteByEntity(area4);
 			Assert.assertEquals("areaDao.phyDeleteByEntity", areaPhyDeleteByEntityNum , 1);
 
 			System.out.println("============ 基本查询测试 ============");
-			List<Area> areaList = areaDao.findList(area);
+			List<Area> areaList = areaDao.findList(area5);
 			Assert.assertEquals("areaDao.findList", areaList.size() , 1);
 			User user = new User();
 			user.setUserType(User.USER_TYPE_NONE);
