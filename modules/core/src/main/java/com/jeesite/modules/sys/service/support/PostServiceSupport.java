@@ -92,6 +92,7 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	@Override
 	@Transactional
 	public void delete(Post post) {
+		post.sqlMap().markIdDelete();
 		super.delete(post);
 	}
 

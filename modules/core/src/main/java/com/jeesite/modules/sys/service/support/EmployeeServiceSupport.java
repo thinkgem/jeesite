@@ -88,6 +88,7 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	@Override
 	@Transactional
 	public void delete(Employee employee) {
+		employee.sqlMap().markIdDelete();
 		super.delete(employee);
 	}
 	

@@ -269,6 +269,9 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	@GlobalTransactional
 	@Transactional
 	public void delete(${ClassName} ${className}) {
+	<% if (table.pkList.~size > 0 && table.pkList[0].showType == 'input') { %>
+		${className}.sqlMap().markIdDelete(); // 逻辑删除时标记ID值
+	<% } %>
 		super.delete(${className});
 	<% for (child in table.childList) { %>
 		${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} = new ${@StringUtils.cap(child.className)}();

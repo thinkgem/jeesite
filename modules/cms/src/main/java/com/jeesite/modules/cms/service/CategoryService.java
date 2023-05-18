@@ -106,6 +106,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@Override
 	@Transactional
 	public void delete(Category category) {
+		category.sqlMap().markIdDelete();
 		super.delete(category);
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {

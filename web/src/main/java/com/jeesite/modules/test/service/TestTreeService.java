@@ -4,15 +4,14 @@
  */
 package com.jeesite.modules.test.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jeesite.common.service.TreeService;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 import com.jeesite.modules.test.dao.TestTreeDao;
 import com.jeesite.modules.test.entity.TestTree;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 测试树表Service
@@ -73,6 +72,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree> {
 	@Override
 	@Transactional
 	public void delete(TestTree testTree) {
+		testTree.sqlMap().markIdDelete(); // 逻辑删除时标记ID值
 		super.delete(testTree);
 	}
 	

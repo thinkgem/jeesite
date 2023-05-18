@@ -75,6 +75,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Transactional
 	public void updateStatus(Site site) {
 		super.updateStatus(site);
+		CmsUtils.removeCache("siteList");
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(site);
@@ -88,24 +89,26 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Override
 	@Transactional
 	public void delete(Site site) {
+		site.sqlMap().markIdDelete();
 		super.delete(site);
+		CmsUtils.removeCache("siteList");
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(site);
 		}
 	}
 
-	/**
-	 * 删除站点
-	 * @param site
-	 * @param isRe
-	 */
-	@Transactional
-	public void delete(Site site, Boolean isRe) {
-		site.setStatus(isRe != null && isRe ? Site.STATUS_NORMAL : Site.STATUS_DELETE);
-		super.delete(site);
-		CmsUtils.removeCache("siteList");
-	}
+//	/**
+//	 * 删除站点
+//	 * @param site
+//	 * @param isRe
+//	 */
+//	@Transactional
+//	public void delete(Site site, Boolean isRe) {
+//		site.setStatus(isRe != null && isRe ? Site.STATUS_NORMAL : Site.STATUS_DELETE);
+//		super.delete(site);
+//		CmsUtils.removeCache("siteList");
+//	}
 
 	/**
 	 * 重建索引

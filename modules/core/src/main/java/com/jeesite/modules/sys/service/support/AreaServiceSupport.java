@@ -53,6 +53,7 @@ public class AreaServiceSupport extends TreeService<AreaDao, Area>
 	@Override
 	@Transactional
 	public void delete(Area area) {
+		area.sqlMap().markIdDelete();
 		super.delete(area);
 		AreaUtils.clearCache();
 	}

@@ -4,15 +4,6 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import java.util.List;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.service.TreeService;
@@ -23,6 +14,13 @@ import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.DataScopeService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 /**
  * 机构Service
@@ -158,6 +156,7 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 	@Override
 	@Transactional
 	public void delete(Office office) {
+		office.sqlMap().markIdDelete();
 		super.delete(office);
 		// 清理部门相关缓存
 		clearOfficeCache();
