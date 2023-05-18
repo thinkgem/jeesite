@@ -78,6 +78,7 @@ public class TestTreeService extends TreeService<TestTreeDao, TestTree>
 	@Override
 	@Transactional
 	public void delete(TestTree testTree) {
+		testTree.sqlMap().markIdDelete(); // 逻辑删除时标记ID值
 		super.delete(testTree);
 	}
 	
