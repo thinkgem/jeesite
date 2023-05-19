@@ -14,10 +14,7 @@
 
 package com.jeesite.common.reflect.asm;
 
-import sun.misc.Unsafe;
-
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.ProtectionDomain;
 import java.util.HashSet;
@@ -39,18 +36,18 @@ class AccessClassLoader extends ClassLoader {
 
 	private final HashSet<String> localClassNames = new HashSet();
 
-	static {
-		try {
-			Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
-			theUnsafe.setAccessible(true);
-			Unsafe u = (Unsafe) theUnsafe.get(null);
-			Class cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
-			Field logger = cls.getDeclaredField("logger");
-			u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
-		} catch (Exception e) {
-			// ignore
-		}
-	}
+//	static {
+//		try {
+//			java.lang.reflect.Field theUnsafe = sun.misc.Unsafe.class.getDeclaredField("theUnsafe");
+//			theUnsafe.setAccessible(true);
+//			sun.misc.Unsafe u = (sun.misc.Unsafe) theUnsafe.get(null);
+//			Class cls = Class.forName("jdk.internal.module.IllegalAccessLogger");
+//			java.lang.reflect.Field logger = cls.getDeclaredField("logger");
+//			u.putObjectVolatile(cls, u.staticFieldOffset(logger), null);
+//		} catch (Exception e) {
+//			// ignore
+//		}
+//	}
 
 	private AccessClassLoader (ClassLoader parent) {
 		super(parent);
