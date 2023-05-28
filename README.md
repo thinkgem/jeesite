@@ -11,10 +11,11 @@
 
 <br/>
 
-### 关注 JeeSite V4.0 请点击: <https://gitee.com/thinkgem/jeesite4>
-### 关注 JeeSite 微服务 请点击: <https://gitee.com/thinkgem/jeesite4-cloud>
-### 关注 JeeSite 移动端 请点击: <https://gitee.com/thinkgem/jeesite4-uniapp>
-### 关注 JeeSite Vue 请点击: <https://gitee.com/thinkgem/jeesite-vue>
+### 关注 JeeSite V4.x / 5.x 请点击: <https://gitee.com/thinkgem/jeesite4>
+### 关注 JeeSite Cloud 微服务 请点击: <https://gitee.com/thinkgem/jeesite4-cloud>
+### 关注 JeeSite Mobile 移动端 请点击: <https://gitee.com/thinkgem/jeesite4-uniapp>
+### 关注 JeeSite PC 客户端程序 请点击: <https://gitee.com/thinkgem/jeesite-client>
+### 关注 JeeSite Vue 前后分离 请点击: <https://gitee.com/thinkgem/jeesite-vue>
 
 <br/>
 
