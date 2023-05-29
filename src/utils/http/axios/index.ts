@@ -23,6 +23,7 @@ const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
 const { showMessageModal, showMessage } = useMessage();
 let isShowMessage = false;
+let isShowMessageModal = false;
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -86,10 +87,23 @@ const transform: AxiosTransform = {
       } else if (result === 'false') {
         const errorMessage = message || t('sys.api.apiRequestFailed');
         if (options.errorMessageMode === 'modal') {
-          showMessageModal({ content: errorMessage });
+          if (!isShowMessageModal) {
+            isShowMessageModal = true;
+            showMessageModal({
+              content: errorMessage,
+              onOk() {
+                isShowMessageModal = false;
+                return Promise.resolve();
+              },
+            });
+          }
           throw new Error(errorMessage);
         } else if (options.errorMessageMode === 'message') {
-          showMessage(errorMessage);
+          if (!isShowMessage) {
+            isShowMessage = true;
+            showMessage(errorMessage);
+            setTimeout(() => (isShowMessage = false), 1000);
+          }
           throw new Error(errorMessage);
         }
       }
@@ -187,16 +201,31 @@ const transform: AxiosTransform = {
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
         errMessage = t('sys.api.apiTimeoutMessage');
-      }
-      if (err?.includes('Network Error')) {
+      } else if (err?.includes('Network Error')) {
         errMessage = t('sys.api.networkExceptionMsg');
+      } else if (code === 'ERR_BAD_RESPONSE') {
+        errMessage = t('sys.api.apiRequestFailed');
       }
 
       if (errMessage) {
         if (errorMessageMode === 'modal') {
-          showMessageModal({ title: t('sys.api.errorTip'), content: errMessage }, 'error');
+          if (!isShowMessageModal) {
+            isShowMessageModal = true;
+            showMessageModal({
+              title: t('sys.api.errorTip'),
+              content: errMessage,
+              onOk() {
+                isShowMessageModal = false;
+                return Promise.resolve();
+              },
+            });
+          }
         } else if (errorMessageMode === 'message') {
-          showMessage({ content: errMessage }, 'error');
+          if (!isShowMessage) {
+            isShowMessage = true;
+            showMessage({ content: errMessage }, 'error');
+            setTimeout(() => (isShowMessage = false), 1000);
+          }
         }
         return Promise.reject(error);
       }

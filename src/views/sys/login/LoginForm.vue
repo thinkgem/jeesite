@@ -178,8 +178,9 @@
     const res = await userInfoApi('none');
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
-      const publicPath = import.meta.env.VITE_PUBLIC_PATH || '/';
-      window.location.href = publicPath.substring(1) + PageEnum.BASE_HOME;
+      const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
+      window.location.href =
+        (publicPath == '' ? publicPath : publicPath.substring(1)) + PageEnum.BASE_HOME;
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
@@ -212,6 +213,8 @@
         showMessage(t('sys.api.apiTimeoutMessage'));
       } else if (err.indexOf('Network Error') !== -1) {
         showMessage(t('sys.api.networkExceptionMsg'));
+      } else if (error?.code === 'ERR_BAD_RESPONSE') {
+        showMessage(t('sys.api.apiRequestFailed'));
       }
       console.log(error);
     } finally {

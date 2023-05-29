@@ -5,7 +5,7 @@ export default {
     errorMessage: '操作失败,系统异常!',
     timeoutMessage: '登录超时,请重新登录!',
     apiTimeoutMessage: '接口请求超时,请刷新页面重试!',
-    apiRequestFailed: '请求出错，请稍候重试',
+    apiRequestFailed: '接口请求出错,请稍候重试!',
     networkException: '网络异常',
     networkExceptionMsg: '网络异常,请稍后重试!',
 
@@ -96,6 +96,7 @@ export default {
     mobilePlaceholder: '请输入手机号码',
     policyPlaceholder: '勾选后才能注册',
     diffPwd: '两次输入密码不一致',
+    corpPlaceholder: '请选择租户',
 
     userName: '账号',
     password: '密码',
@@ -110,5 +111,18 @@ export default {
     userInfo: '个人信息',
     modifyPwd: '修改密码',
     modifyPqa: '修改密保',
+  },
+  msg: {
+    title: '消息',
+    listTitle: '消息列表',
+    viewTitle: '消息详情',
+    viewButton: '详情',
+    mergeMsgTitle: '系统消息',
+    mergeMsgContent: '您有 {0} 条新消息，由于消息太多，这里为您合并，请点击查看按钮看详情。',
+    viewAllMsgButton: '查看全部消息',
+    unreadMsgTitle: '未读消息',
+    readMsgTitle: '已读消息',
+    readAllMsgButton: '全部标记为已读',
+    readAllMsgConfirm: '是否要将全部未读信息标记为已读？',
   },
 };
