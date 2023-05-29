@@ -145,14 +145,14 @@
 
       const initOptions = computed((): RawEditorSettings => {
         const { height, options, toolbar, plugins } = props;
-        const publicPath = import.meta.env.VITE_PUBLIC_PATH || '/';
+        const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
         return {
           selector: `#${unref(tinymceId)}`,
           height,
           toolbar,
           menubar: 'file edit insert view format table',
           plugins,
-          language_url: publicPath + 'resource/tinymce/langs/' + langName.value + '.js',
+          language_url: publicPath + '/resource/tinymce/langs/' + langName.value + '.js',
           language: langName.value,
           branding: false,
           default_link_target: '_blank',
@@ -160,9 +160,9 @@
           object_resizing: false,
           auto_focus: true,
           skin: skinName.value,
-          skin_url: publicPath + 'resource/tinymce/skins/ui/' + skinName.value,
+          skin_url: publicPath + '/resource/tinymce/skins/ui/' + skinName.value,
           content_css:
-            publicPath + 'resource/tinymce/skins/ui/' + skinName.value + '/content.min.css',
+            publicPath + '/resource/tinymce/skins/ui/' + skinName.value + '/content.min.css',
           ...options,
           setup: (editor: Editor) => {
             editorRef.value = editor;
