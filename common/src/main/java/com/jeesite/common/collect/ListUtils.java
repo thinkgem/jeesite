@@ -8,7 +8,6 @@ import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.reflect.ReflectUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @version 2015-1-23
  */
 @SuppressWarnings("rawtypes")
-public class ListUtils extends org.apache.commons.collections.ListUtils {
+public class ListUtils {
 
 	/**
      * 是否包含字符串
@@ -141,107 +140,107 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 		}
 		return addAll(addTo, elementsToAdd.iterator());
 	}
-	
-	/**
-	 * 提取集合中的对象的两个属性(通过Getter函数), 组合成Map.
-	 * @param collection 来源集合.
-	 * @param keyPropertyName 要提取为Map中的Key值的属性名.
-	 * @param valuePropertyName 要提取为Map中的Value值的属性名.
-	 */
-	@SuppressWarnings("unchecked")
-	public static Map extractToMap(final Collection collection, final String keyPropertyName,
-			final String valuePropertyName) {
-		Map map = new HashMap(collection.size());
-		try {
-			for (Object obj : collection) {
-				map.put(PropertyUtils.getProperty(obj, keyPropertyName),
-						PropertyUtils.getProperty(obj, valuePropertyName));
-			}
-		} catch (Exception e) {
-			throw ReflectUtils.convertReflectionExceptionToUnchecked("", e);
-		}
-		return map;
-	}
 
-	/**
-	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
-	 * @param collection 来源集合.
-	 * @param propertyName 要提取的属性名.
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> List<T> extractToList(final Collection collection, final String propertyName) {
-		if (collection == null){
-			return newArrayList();
-		}
-		List list = new ArrayList(collection.size());
-		try {
-			for (Object obj : collection) {
-				list.add(PropertyUtils.getProperty(obj, propertyName));
-			}
-		} catch (Exception e) {
-			throw ReflectUtils.convertReflectionExceptionToUnchecked("", e);
-		}
-		return list;
-	}
-
-	/**
-	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
-	 * @param collection 来源集合.
-	 * @param propertyName 要提取的属性名.
-	 * @param prefix 符合前缀的信息(为空则忽略前缀)
-	 * @param isNotBlank 仅包含不为空值(空字符串也排除)
-	 */
-	public static List<String> extractToList(final Collection collection, final String propertyName, 
-			final String prefix, final boolean isNotBlank) {
-		List<String> list = new ArrayList<String>(collection.size());
-		try {
-			for (Object obj : collection) {
-				String value = (String)PropertyUtils.getProperty(obj, propertyName);
-				if (StringUtils.isBlank(prefix) || StringUtils.startsWith(value, prefix)){
-					if (isNotBlank){
-						if (StringUtils.isNotBlank(value)){
-							list.add(value);
-						}
-					}else{
-						list.add(value);
-					}					
-				}				
-			}
-		} catch (Exception e) {
-			throw ReflectUtils.convertReflectionExceptionToUnchecked("", e);
-		}
-		return list;
-	}
-
-	/**
-	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成由分割符分隔的字符串.
-	 * 
-	 * @param collection 来源集合.
-	 * @param propertyName 要提取的属性名.
-	 * @param separator 分隔符.
-	 */
-	public static String extractToString(final Collection collection, final String propertyName, final String separator) {
-		List list = extractToList(collection, propertyName);
-		return StringUtils.join(list, separator);
-	}
-
-	/**
-	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
-	 */
-	public static String convertToString(final Collection collection, final String separator) {
-		return StringUtils.join(collection, separator);
-	}
-
-	/**
-	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>mymessage</div>。
-	 */
-	public static String convertToString(final Collection collection, final String prefix, final String postfix) {
-		StringBuilder builder = new StringBuilder();
-		for (Object o : collection) {
-			builder.append(prefix).append(o).append(postfix);
-		}
-		return builder.toString();
-	}
+//	/**
+//	 * 提取集合中的对象的两个属性(通过Getter函数), 组合成Map.
+//	 * @param collection 来源集合.
+//	 * @param keyPropertyName 要提取为Map中的Key值的属性名.
+//	 * @param valuePropertyName 要提取为Map中的Value值的属性名.
+//	 */
+//	@SuppressWarnings("unchecked")
+//	public static Map extractToMap(final Collection collection, final String keyPropertyName,
+//			final String valuePropertyName) {
+//		Map map = new HashMap(collection.size());
+//		try {
+//			for (Object obj : collection) {
+//				map.put(ReflectUtils.getFieldValue(obj, keyPropertyName),
+//						ReflectUtils.getFieldValue(obj, valuePropertyName));
+//			}
+//		} catch (Exception e) {
+//			throw ReflectUtils.convertReflectionExceptionToUnchecked("", e);
+//		}
+//		return map;
+//	}
+//
+//	/**
+//	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
+//	 * @param collection 来源集合.
+//	 * @param propertyName 要提取的属性名.
+//	 */
+//	@SuppressWarnings("unchecked")
+//	public static <T> List<T> extractToList(final Collection collection, final String propertyName) {
+//		if (collection == null){
+//			return newArrayList();
+//		}
+//		List list = new ArrayList(collection.size());
+//		try {
+//			for (Object obj : collection) {
+//				list.add(ReflectUtils.getFieldValue(obj, propertyName));
+//			}
+//		} catch (Exception e) {
+//			throw ReflectUtils.convertReflectionExceptionToUnchecked("", e);
+//		}
+//		return list;
+//	}
+//
+//	/**
+//	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成List.
+//	 * @param collection 来源集合.
+//	 * @param propertyName 要提取的属性名.
+//	 * @param prefix 符合前缀的信息(为空则忽略前缀)
+//	 * @param isNotBlank 仅包含不为空值(空字符串也排除)
+//	 */
+//	public static List<String> extractToList(final Collection collection, final String propertyName,
+//			final String prefix, final boolean isNotBlank) {
+//		List<String> list = new ArrayList<String>(collection.size());
+//		try {
+//			for (Object obj : collection) {
+//				String value = ReflectUtils.getFieldValue(obj, propertyName);
+//				if (StringUtils.isBlank(prefix) || StringUtils.startsWith(value, prefix)){
+//					if (isNotBlank){
+//						if (StringUtils.isNotBlank(value)){
+//							list.add(value);
+//						}
+//					}else{
+//						list.add(value);
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			throw ReflectUtils.convertReflectionExceptionToUnchecked("", e);
+//		}
+//		return list;
+//	}
+//
+//	/**
+//	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成由分割符分隔的字符串.
+//	 *
+//	 * @param collection 来源集合.
+//	 * @param propertyName 要提取的属性名.
+//	 * @param separator 分隔符.
+//	 */
+//	public static String extractToString(final Collection collection, final String propertyName, final String separator) {
+//		List list = extractToList(collection, propertyName);
+//		return StringUtils.join(list, separator);
+//	}
+//
+//	/**
+//	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
+//	 */
+//	public static String convertToString(final Collection collection, final String separator) {
+//		return StringUtils.join(collection, separator);
+//	}
+//
+//	/**
+//	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>mymessage</div>。
+//	 */
+//	public static String convertToString(final Collection collection, final String prefix, final String postfix) {
+//		StringBuilder builder = new StringBuilder();
+//		for (Object o : collection) {
+//			builder.append(prefix).append(o).append(postfix);
+//		}
+//		return builder.toString();
+//	}
 
 	/**
 	 * 判断是否为空.
@@ -257,70 +256,70 @@ public class ListUtils extends org.apache.commons.collections.ListUtils {
 		return !(isEmpty(collection));
 	}
 
-	/**
-	 * 取得Collection的第一个元素，如果collection为空返回null.
-	 */
-	public static <T> T getFirst(Collection<T> collection) {
-		if (isEmpty(collection)) {
-			return null;
-		}
-		return collection.iterator().next();
-	}
-
-	/**
-	 * 获取Collection的最后一个元素 ，如果collection为空返回null.
-	 */
-	public static <T> T getLast(Collection<T> collection) {
-		if (isEmpty(collection)) {
-			return null;
-		}
-		//当类型为List时，直接取得最后一个元素 。
-		if (collection instanceof List) {
-			List<T> list = (List<T>) collection;
-			return list.get(list.size() - 1);
-		}
-		//其他类型通过iterator滚动到最后一个元素.
-		Iterator<T> iterator = collection.iterator();
-		while (true) {
-			T current = iterator.next();
-			if (!iterator.hasNext()) {
-				return current;
-			}
-		}
-	}
-
-	/**
-	 * 返回a+b的新List.
-	 */
-	public static <T> List<T> union(final Collection<T> a, final Collection<T> b) {
-		List<T> result = new ArrayList<T>(a);
-		result.addAll(b);
-		return result;
-	}
-
-	/**
-	 * 返回a-b的新List.
-	 */
-	public static <T> List<T> subtract(final Collection<T> a, final Collection<T> b) {
-		List<T> list = new ArrayList<T>(a);
-		for (T element : b) {
-			list.remove(element);
-		}
-		return list;
-	}
-
-	/**
-	 * 返回a与b的交集的新List.
-	 */
-	public static <T> List<T> intersection(Collection<T> a, Collection<T> b) {
-		List<T> list = new ArrayList<T>();
-		for (T element : a) {
-			if (b.contains(element)) {
-				list.add(element);
-			}
-		}
-		return list;
-	}
+//	/**
+//	 * 取得Collection的第一个元素，如果collection为空返回null.
+//	 */
+//	public static <T> T getFirst(Collection<T> collection) {
+//		if (isEmpty(collection)) {
+//			return null;
+//		}
+//		return collection.iterator().next();
+//	}
+//
+//	/**
+//	 * 获取Collection的最后一个元素 ，如果collection为空返回null.
+//	 */
+//	public static <T> T getLast(Collection<T> collection) {
+//		if (isEmpty(collection)) {
+//			return null;
+//		}
+//		//当类型为List时，直接取得最后一个元素 。
+//		if (collection instanceof List) {
+//			List<T> list = (List<T>) collection;
+//			return list.get(list.size() - 1);
+//		}
+//		//其他类型通过iterator滚动到最后一个元素.
+//		Iterator<T> iterator = collection.iterator();
+//		while (true) {
+//			T current = iterator.next();
+//			if (!iterator.hasNext()) {
+//				return current;
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * 返回a+b的新List.
+//	 */
+//	public static <T> List<T> union(final Collection<T> a, final Collection<T> b) {
+//		List<T> result = new ArrayList<T>(a);
+//		result.addAll(b);
+//		return result;
+//	}
+//
+//	/**
+//	 * 返回a-b的新List.
+//	 */
+//	public static <T> List<T> subtract(final Collection<T> a, final Collection<T> b) {
+//		List<T> list = new ArrayList<T>(a);
+//		for (T element : b) {
+//			list.remove(element);
+//		}
+//		return list;
+//	}
+//
+//	/**
+//	 * 返回a与b的交集的新List.
+//	 */
+//	public static <T> List<T> intersection(Collection<T> a, Collection<T> b) {
+//		List<T> list = new ArrayList<T>();
+//		for (T element : a) {
+//			if (b.contains(element)) {
+//				list.add(element);
+//			}
+//		}
+//		return list;
+//	}
 	
 //	/**
 //	 * 将字符串使用“,”分隔，转换为，多对多中间表列表的转换

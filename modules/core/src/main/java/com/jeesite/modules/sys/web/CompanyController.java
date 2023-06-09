@@ -4,11 +4,17 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.Company;
+import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.service.CompanyService;
+import com.jeesite.modules.sys.service.OfficeService;
+import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +27,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.idgen.IdGen;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.Company;
-import com.jeesite.modules.sys.entity.Office;
-import com.jeesite.modules.sys.service.CompanyService;
-import com.jeesite.modules.sys.service.OfficeService;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 公司管理Controller
@@ -113,12 +111,16 @@ public class CompanyController extends BaseController {
 		company = createNextNode(company);
 		// 查询公司所关联的机构信息
 		if (StringUtils.isNotBlank(company.getCompanyCode())){
-			Office office = new Office();
-			office.setCompanyCode(company.getCompanyCode());
-			List<Office> officeList = officeService.findList(office);
-			model.addAttribute("officeList", officeList);
-			model.addAttribute("officeCodes", ListUtils.extractToString(officeList, "officeCode", ","));
-			model.addAttribute("officeNames", ListUtils.extractToString(officeList, "officeName", ","));
+			Office where = new Office();
+			where.setCompanyCode(company.getCompanyCode());
+			List<String> officeCodes = ListUtils.newArrayList();
+			List<String> officeNames = ListUtils.newArrayList();
+			officeService.findList(where).forEach(e -> {
+				officeCodes.add(e.getOfficeCode());
+				officeNames.add(e.getOfficeCode());
+			});
+			model.addAttribute("officeCodes", StringUtils.join(officeCodes, ","));
+			model.addAttribute("officeNames", StringUtils.join(officeNames, ","));
 		}
 		model.addAttribute("company", company);
 		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));

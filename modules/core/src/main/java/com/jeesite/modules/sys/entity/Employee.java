@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 员工管理Entity
@@ -148,8 +149,9 @@ public class Employee extends DataEntity<Employee> {
 
 	@ApiModelProperty("员工岗位关系")
 	public String getEmployeePosts() {
-		List<String> list = ListUtils.extractToList(employeePostList, "postCode");
-		return StringUtils.join(list, ",");
+//		List<String> list = ListUtils.extractToList(employeePostList, "postCode");
+//		return StringUtils.join(list, ",");
+		return employeePostList.stream().map(EmployeePost::getPostCode).collect(Collectors.joining(","));
 	}
 
 	public void setEmployeePosts(String employeePosts) {

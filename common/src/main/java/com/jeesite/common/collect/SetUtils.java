@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author ThinkGem
  * @version 2015-01-15
  */
-public class SetUtils extends org.apache.commons.collections.SetUtils {
+public class SetUtils {
 
 	public static <E> HashSet<E> newHashSet() {
 		return new HashSet<E>();

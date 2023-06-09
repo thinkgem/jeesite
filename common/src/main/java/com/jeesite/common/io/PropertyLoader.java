@@ -4,11 +4,8 @@
  */
 package com.jeesite.common.io;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.jeesite.common.lang.StringUtils;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.boot.env.PropertiesPropertySourceLoader;
 import org.springframework.boot.env.YamlPropertySourceLoader;
@@ -16,8 +13,10 @@ import org.springframework.core.Ordered;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.jeesite.common.lang.StringUtils;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * 配置文件加载（Boot）
@@ -40,7 +39,11 @@ public class PropertyLoader implements org.springframework.boot.env.PropertySour
 		List<PropertySource<?>> propertySources = new ArrayList<>();
 		if (!isLoadJeeSitePropertySource) {
 			isLoadJeeSitePropertySource = true;
-			ParserConfig.getGlobalInstance().setSafeMode(true); // 开启 FastJSON 安全模式
+			try {
+				ParserConfig.getGlobalInstance().setSafeMode(true); // 开启 FastJSON 安全模式
+			} catch (Exception ignored) {
+				// 兼容 fastjson2 的调用，不返回异常
+			}
 			Properties properties = PropertiesUtils.getInstance().getProperties();
 			propertySources.add(new OriginTrackedMapPropertySource("jeesite", properties));
 		} else {

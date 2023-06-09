@@ -4,14 +4,14 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.service.RoleService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 字段类型转换
@@ -21,7 +21,7 @@ import com.jeesite.modules.sys.service.RoleService;
  */
 public class RoleListType implements FieldType {
 
-	private List<Role> roleList;
+	private final List<Role> roleList;
 	
 	public RoleListType() {
 		RoleService roleService = SpringUtils.getBean(RoleService.class);
@@ -49,10 +49,11 @@ public class RoleListType implements FieldType {
 	 */
 	@Override
 	public String setValue(Object val) {
-		if (val != null) {
+		if (val instanceof List) {
 			@SuppressWarnings("unchecked")
 			List<Role> roleList = (List<Role>) val;
-			return ListUtils.extractToString(roleList, "roleName", ", ");
+//			return ListUtils.extractToString(roleList, "roleName", ", ");
+			return roleList.stream().map(Role::getRoleName).collect(Collectors.joining(", "));
 		}
 		return StringUtils.EMPTY;
 	}
