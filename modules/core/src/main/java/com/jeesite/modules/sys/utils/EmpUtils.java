@@ -32,9 +32,9 @@ public class EmpUtils {
 	 * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
 	 */
 	private static final class Static {
-		private static OfficeService officeService = SpringUtils.getBean(OfficeService.class);
-		private static CompanyService companyService = SpringUtils.getBean(CompanyService.class);
-		private static EmployeeService employeeService = SpringUtils.getBean(EmployeeService.class);
+		private static final OfficeService officeService = SpringUtils.getBean(OfficeService.class);
+		private static final CompanyService companyService = SpringUtils.getBean(CompanyService.class);
+		private static final EmployeeService employeeService = SpringUtils.getBean(EmployeeService.class);
 	}
 	
 	/**

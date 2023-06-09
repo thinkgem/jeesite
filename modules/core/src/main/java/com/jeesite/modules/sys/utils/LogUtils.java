@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class LogUtils {
 
-	private static ExecutorService logThreadPool = new ThreadPoolExecutor(5, 20,
+	private static final ExecutorService logThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
 			new DefaultThreadFactory("log-save"));
 
@@ -53,12 +53,12 @@ public class LogUtils {
 	 * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
 	 */
 	private static final class Static {
-		private static LogService logService = SpringUtils.getBean(LogService.class);
-		private static MenuService menuService = SpringUtils.getBean(MenuService.class);
+		private static final LogService logService = SpringUtils.getBean(LogService.class);
+		private static final MenuService menuService = SpringUtils.getBean(MenuService.class);
 	}
 	
 	// 参数名获取工具（尝试获取标注为@ModelAttribute注解的方法，第一个参数名一般为主键名）
-	private static ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
+	private static final ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
 	
 	/**
 	 * 保存日志

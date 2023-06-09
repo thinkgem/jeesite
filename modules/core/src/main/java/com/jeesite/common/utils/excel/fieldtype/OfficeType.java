@@ -18,7 +18,7 @@ import com.jeesite.modules.sys.utils.EmpUtils;
  */
 public class OfficeType implements FieldType {
 
-	private List<Office> list;
+	private final List<Office> list;
 	
 	public OfficeType() {
 		list = EmpUtils.getOfficeAllList();

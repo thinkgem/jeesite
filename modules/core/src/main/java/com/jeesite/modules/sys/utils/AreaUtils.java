@@ -24,7 +24,7 @@ public class AreaUtils {
 	 * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
 	 */
 	private static final class Static {
-		private static AreaService areaService = SpringUtils.getBean(AreaService.class);
+		private static final AreaService areaService = SpringUtils.getBean(AreaService.class);
 	}
 	
 	/**

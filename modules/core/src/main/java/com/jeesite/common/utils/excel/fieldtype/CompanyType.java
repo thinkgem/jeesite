@@ -4,11 +4,11 @@
  */
 package com.jeesite.common.utils.excel.fieldtype;
 
-import java.util.List;
-
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.utils.EmpUtils;
+
+import java.util.List;
 
 /**
  * 字段类型转换
@@ -18,7 +18,7 @@ import com.jeesite.modules.sys.utils.EmpUtils;
  */
 public class CompanyType implements FieldType {
 
-	private List<Company> list;
+	private final List<Company> list;
 	
 	public CompanyType() {
 		list = EmpUtils.getCompanyAllList();
