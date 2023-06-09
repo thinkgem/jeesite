@@ -35,10 +35,10 @@ public class CmsUtils {
 	private static final String CMS_CACHE = "cmsCache";
 
 	private static final class Static {
-		private static SiteService siteService = SpringUtils.getBean(SiteService.class);
-		private static CategoryService categoryService = SpringUtils.getBean(CategoryService.class);
-		private static ArticleService articleService = SpringUtils.getBean(ArticleService.class);
-		private static ServletContext context = SpringUtils.getBean(ServletContext.class);
+		private static final SiteService siteService = SpringUtils.getBean(SiteService.class);
+		private static final CategoryService categoryService = SpringUtils.getBean(CategoryService.class);
+		private static final ArticleService articleService = SpringUtils.getBean(ArticleService.class);
+		private static final ServletContext context = SpringUtils.getBean(ServletContext.class);
 	}
 
 	/**
