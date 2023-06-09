@@ -4,10 +4,10 @@
  */
 package com.jeesite.common.codec;
 
+import com.jeesite.common.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.jeesite.common.lang.StringUtils;
 
 /**
  * DES加密解密工具
@@ -17,23 +17,23 @@ import com.jeesite.common.lang.StringUtils;
  */
 public class DesUtils {
 
-	private static DesCore desCore = new DesCore();
+	private static final DesCore desCore = new DesCore();
 
 	/**
 	 * DES加密（secretKey代表3个key，用逗号分隔）
 	 */
 	public static String encode(String data, String secretKey) {
 		if (StringUtils.isBlank(data)){
-			return "";
+			return StringUtils.EMPTY;
 		}
-		if ("Base64".equals(secretKey)) {
+		if ("Base64".equalsIgnoreCase(secretKey)) {
 			return EncodeUtils.encodeBase64(data);
 		}
-		String[] ks = StringUtils.split(secretKey, ",");
+		String[] ks = StringUtils.split(secretKey, StringUtils.COMMA);
 		if (ks.length >= 3){
 			return desCore.strEnc(data, ks[0], ks[1], ks[2]);
 		}
-		return desCore.strEnc(data, secretKey, "", "");
+		return desCore.strEnc(data, secretKey, StringUtils.EMPTY, StringUtils.EMPTY);
 	}
 
 	/**
@@ -43,18 +43,18 @@ public class DesUtils {
 		if (StringUtils.isBlank(data)){
 			return "";
 		}
-		if ("Base64".equals(secretKey)) {
+		if ("Base64".equalsIgnoreCase(secretKey)) {
 			try {
 				return EncodeUtils.decodeBase64String(data);
 			}catch (IllegalArgumentException e) {
-				return "";
+				return StringUtils.EMPTY;
 			}
 		}
-		String[] ks = StringUtils.split(secretKey, ",");
+		String[] ks = StringUtils.split(secretKey, StringUtils.COMMA);
 		if (ks.length >= 3){
 			return desCore.strDec(data, ks[0], ks[1], ks[2]);
 		}
-		return desCore.strDec(data, secretKey, "", "");
+		return desCore.strDec(data, secretKey, StringUtils.EMPTY, StringUtils.EMPTY);
 	}
 
 	/**
@@ -69,7 +69,6 @@ public class DesUtils {
 		 * encrypt the string to string made up of hex return the encrypted string
 		 */
 		public String strEnc(String data, String firstKey, String secondKey, String thirdKey) {
-
 			int leng = data.length();
 			String encData = "";
 			List firstKeyBt = null, secondKeyBt = null, thirdKeyBt = null;
