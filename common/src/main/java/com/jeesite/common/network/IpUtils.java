@@ -1,10 +1,10 @@
 package com.jeesite.common.network;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class IpUtils {
 
@@ -28,7 +28,7 @@ public class IpUtils {
 		}
 		if (StringUtils.isNotBlank(ip)){
 			ip = EncodeUtils.xssFilter(ip, request);
-			ip = StringUtils.split(ip, ",")[0];
+			ip = StringUtils.splitComma(ip)[0];
 		}
 		if (StringUtils.isBlank(ip)){
 			ip = "unknown";

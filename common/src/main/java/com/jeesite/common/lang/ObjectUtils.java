@@ -4,19 +4,18 @@
  */
 package com.jeesite.common.lang;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationTargetException;
-
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.nustaq.serialization.FSTConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.NamedThreadLocal;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * 对象操作工具类，继承 org.apache.commons.lang3.ObjectUtils 类
@@ -29,7 +28,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	private static final boolean isJavaSerialize; 
 	
 	static {
-		String[] ver = StringUtils.split(System.getProperty("java.version"), '.');
+		String[] ver = StringUtils.split(System.getProperty("java.version"), StringUtils.DOT);
 		isJavaSerialize = ver.length > 0 && Integer.parseInt(ver[0]) > 1;
 	}
 	

@@ -6,9 +6,9 @@ package com.jeesite.test;
 
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.reflect.ReflectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
@@ -244,7 +244,7 @@ class ReflectUtils2 {
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeGetter(Object obj, String propertyName) {
 		Object object = obj;
-		for (String name : StringUtils.split(propertyName, ".")){
+		for (String name : StringUtils.split(propertyName, StringUtils.DOT)){
 			if (obj instanceof Map){
 				object = ((Map)obj).get(name);
 			}else{
@@ -264,7 +264,7 @@ class ReflectUtils2 {
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeGetterCache(Object obj, String propertyName) {
 		Object object = obj;
-		for (String name : StringUtils.split(propertyName, ".")){
+		for (String name : StringUtils.split(propertyName, StringUtils.DOT)){
 			if (obj instanceof Map){
 				object = ((Map)obj).get(name);
 			}else{
@@ -284,7 +284,7 @@ class ReflectUtils2 {
 	@SuppressWarnings("unchecked")
 	public static <E> void invokeSetter(Object obj, String propertyName, E value) {
 		Object object = obj;
-		String[] names = StringUtils.split(propertyName, ".");
+		String[] names = StringUtils.split(propertyName, StringUtils.DOT);
 		for (int i=0; i<names.length; i++){
 			if(i<names.length-1){
 				if (obj instanceof Map){
@@ -333,7 +333,7 @@ class ReflectUtils2 {
 	@SuppressWarnings("unchecked")
 	public static <E> void invokeSetterCache(Object obj, String propertyName, E value) {
 		Object object = obj;
-		String[] names = StringUtils.split(propertyName, ".");
+		String[] names = StringUtils.split(propertyName, StringUtils.DOT);
 		for (int i=0; i<names.length; i++){
 			if(i<names.length-1){
 				if (obj instanceof Map){

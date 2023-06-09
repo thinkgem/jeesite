@@ -69,7 +69,7 @@ public class PropertiesUtils {
 			// 获取 spring.config.location 外部自定义的配置文件
 			String customConfigs = System.getProperty("spring.config.location");
 			if (StringUtils.isNotBlank(customConfigs)){
-				for (String customConfig : StringUtils.split(customConfigs, ",")){
+				for (String customConfig : StringUtils.splitComma(customConfigs)){
 					if (!customConfig.contains("$")){
 						customConfig = org.springframework.util.StringUtils.cleanPath(customConfig);
 						if (!ResourceUtils.isUrl(customConfig)){
@@ -89,7 +89,7 @@ public class PropertiesUtils {
 			for (String location : configFiles){
 				configSet.add(location);
 				if (StringUtils.isNotBlank(profiles)){
-					for (String pf : StringUtils.split(profiles, ",")) {
+					for (String pf : StringUtils.splitComma(profiles)) {
 						if (location.endsWith(".properties")){
 							configSet.add(StringUtils.substringBeforeLast(location, ".properties")
 									+ "-" + pf + ".properties");
@@ -214,7 +214,7 @@ public class PropertiesUtils {
 	 * @return 获取不到，返回空defValue默认值
 	 */
 	public String[] getPropertyToArray(String key, String defValue) {
-		return StringUtils.split(getProperty(key, defValue), ",");
+		return StringUtils.splitComma(getProperty(key, defValue));
 	}
 
 	/**

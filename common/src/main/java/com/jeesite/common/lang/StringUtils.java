@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
+	public static final String DOT = ".";
 	public static final String COMMA = ",";
 	public static final String COLON = ":";
 	public static final String TILDE = "~";
@@ -31,8 +32,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @param str
 	 * @return
 	 */
-	public static String[] split(final String str) {
+	public static String[] splitComma(final String str) {
 		return split(str, COMMA);
+	}
+
+	/**
+	 * 连接字符串（默认逗号分隔）
+	 * @param iterable
+	 * @return
+	 */
+	public static String joinComma(final Iterable<?> iterable) {
+		return join(iterable, COMMA);
 	}
 
     /**

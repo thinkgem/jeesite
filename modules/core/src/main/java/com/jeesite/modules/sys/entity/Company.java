@@ -4,24 +4,22 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.Extend;
 import com.jeesite.common.entity.TreeEntity;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * 公司管理Entity
@@ -32,35 +30,35 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 		@Column(includeEntity=BaseEntity.class),
 		@Column(includeEntity=DataEntity.class),
 		@Column(includeEntity=TreeEntity.class),
-		@Column(name="company_code", 	attrName="companyCode", 	label="公司编码", isPK=true),
-		@Column(name="view_code", 		attrName="viewCode", 		label="公司代码"),
-		@Column(name="company_name", 	attrName="companyName", 	label="公司名称", queryType=QueryType.LIKE, isTreeName=true),
-		@Column(name="full_name", 		attrName="fullName", 		label="公司全称", queryType=QueryType.LIKE),
-		@Column(name="area_code", 		attrName="area.areaCode", 	label="区域编码"),
+		@Column(name="company_code", attrName="companyCode", label="公司编码", isPK=true),
+		@Column(name="view_code", attrName="viewCode", label="公司代码"),
+		@Column(name="company_name", attrName="companyName", label="公司名称", queryType=QueryType.LIKE, isTreeName=true),
+		@Column(name="full_name", attrName="fullName", label="公司全称", queryType=QueryType.LIKE),
+		@Column(name="area_code", attrName="area.areaCode", label="区域编码"),
 		@Column(includeEntity=Extend.class, attrName="extend"),
 	}, joinTable={
 		@JoinTable(type=Type.LEFT_JOIN, entity=Area.class, alias="b",
 			on="b.area_code = a.area_code",
 			columns={
-					@Column(name="area_code", label="区域代码", isPK=true),
-					@Column(name="area_name", label="区域名称", isQuery=false),
-					@Column(name="area_type", label="区域类型"),
-					@Column(name="tree_names", label="区域全称"),
-		}),
+				@Column(name="area_code", label="区域代码", isPK=true),
+				@Column(name="area_name", label="区域名称", isQuery=false),
+				@Column(name="area_type", label="区域类型"),
+				@Column(name="tree_names", label="区域全称"),
+			}),
 	}, extWhereKeys="dsf", orderBy="a.tree_sorts, a.company_code"
 )
 public class Company extends TreeEntity<Company> {
-	
-	private static final long serialVersionUID = 1L;
-	private String companyCode;		// 公司编码
-	private String viewCode;		// 公司代码
-	private String companyName;		// 公司名称
-	private String fullName;		// 公司全称
-	private Area area;				// 区域编码
-	private Extend extend;			// 扩展字段
 
-	private List<CompanyOffice> companyOfficeList = ListUtils.newArrayList();	// 公司所包含的部门信息
-	
+	private static final long serialVersionUID = 1L;
+	private String companyCode;     // 公司编码
+	private String viewCode;        // 公司代码
+	private String companyName;     // 公司名称
+	private String fullName;        // 公司全称
+	private Area area;              // 区域编码
+	private Extend extend;          // 扩展字段
+
+	private final List<CompanyOffice> companyOfficeList = ListUtils.newArrayList();    // 公司所包含的部门信息
+
 	public Company() {
 		this(null);
 	}
@@ -68,7 +66,7 @@ public class Company extends TreeEntity<Company> {
 	public Company(String id){
 		super(id);
 	}
-	
+
 	@Override
 	public Company getParent() {
 		return parent;
@@ -78,7 +76,7 @@ public class Company extends TreeEntity<Company> {
 	public void setParent(Company parent) {
 		this.parent = parent;
 	}
-	
+
 	public String getCompanyCode() {
 		return companyCode;
 	}
@@ -86,7 +84,7 @@ public class Company extends TreeEntity<Company> {
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
 	}
-	
+
 	@NotBlank(message="公司代码不能为空")
 	@Pattern(regexp="[a-zA-Z0-9_]{0,30}", message="代码长度不能大于 30 个字符，并且只能包含字母、数字、下划线")
 	public String getViewCode() {
@@ -96,7 +94,7 @@ public class Company extends TreeEntity<Company> {
 	public void setViewCode(String viewCode) {
 		this.viewCode = viewCode;
 	}
-	
+
 	@NotBlank(message="公司名称不能为空")
 	@Size(min=0, max=200, message="公司名称长度不能超过 200 个字符")
 	public String getCompanyName() {
@@ -106,7 +104,7 @@ public class Company extends TreeEntity<Company> {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	
+
 	@NotBlank(message="公司全称不能为空")
 	@Size(min=0, max=200, message="公司全称长度不能超过 200 个字符")
 	public String getFullName() {
@@ -116,7 +114,7 @@ public class Company extends TreeEntity<Company> {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	
+
 	public Area getArea() {
 		return area;
 	}
@@ -124,7 +122,7 @@ public class Company extends TreeEntity<Company> {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-	
+
 	public Extend getExtend() {
 		return extend;
 	}
@@ -136,9 +134,9 @@ public class Company extends TreeEntity<Company> {
 	public List<CompanyOffice> getCompanyOfficeList() {
 		return companyOfficeList;
 	}
-	
+
 	public void setOfficeCodes(String officeCodes) {
-		String[] list = StringUtils.split(officeCodes, ",");
+		String[] list = StringUtils.splitComma(officeCodes);
 		if (list != null){
 			for (String val : list){
 				if (StringUtils.isNotBlank(val)){
@@ -151,5 +149,5 @@ public class Company extends TreeEntity<Company> {
 			}
 		}
 	}
-	
+
 }

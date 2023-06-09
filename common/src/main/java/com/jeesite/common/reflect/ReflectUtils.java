@@ -7,8 +7,8 @@ package com.jeesite.common.reflect;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.ObjectUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.reflect.asm.MethodAccess;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
@@ -26,11 +26,11 @@ import java.util.Map;
 @SuppressWarnings("rawtypes")
 public class ReflectUtils {
 	
-	private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
 	private static final String SETTER_PREFIX = "set";
 	private static final String GETTER_PREFIX = "get";
 	private static final String CGLIB_CLASS_SEPARATOR = "$$";
-	private static Map<String, Map<String, Method>> methodClassCache = MapUtils.newHashMap();
+	private static final Map<String, Map<String, Method>> methodClassCache = MapUtils.newHashMap();
 
 	/**
 	 * 调用Getter方法，v5.3.0+ 变更为ASM方式，不支持私有方法调用，高性能，
@@ -41,7 +41,7 @@ public class ReflectUtils {
 	@SuppressWarnings("unchecked")
 	public static <E> E invokeGetter(Object obj, String propertyName) {
 		Object object = obj;
-		for (String name : StringUtils.split(propertyName, ".")){
+		for (String name : StringUtils.split(propertyName, StringUtils.DOT)){
 			if (obj instanceof Map){
 				object = ((Map)obj).get(name);
 			}else{
@@ -62,7 +62,7 @@ public class ReflectUtils {
 	@SuppressWarnings("unchecked")
 	public static <E> void invokeSetter(Object obj, String propertyName, Object... args) {
 		Object object = obj;
-		String[] names = StringUtils.split(propertyName, ".");
+		String[] names = StringUtils.split(propertyName, StringUtils.DOT);
 		for (int i=0; i<names.length; i++){
 			if(i<names.length-1){
 				if (obj instanceof Map){

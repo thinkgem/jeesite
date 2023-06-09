@@ -29,7 +29,7 @@ public class DesUtils {
 		if ("Base64".equalsIgnoreCase(secretKey)) {
 			return EncodeUtils.encodeBase64(data);
 		}
-		String[] ks = StringUtils.split(secretKey, StringUtils.COMMA);
+		String[] ks = StringUtils.splitComma(secretKey);
 		if (ks.length >= 3){
 			return desCore.strEnc(data, ks[0], ks[1], ks[2]);
 		}
@@ -50,7 +50,7 @@ public class DesUtils {
 				return StringUtils.EMPTY;
 			}
 		}
-		String[] ks = StringUtils.split(secretKey, StringUtils.COMMA);
+		String[] ks = StringUtils.splitComma(secretKey);
 		if (ks.length >= 3){
 			return desCore.strDec(data, ks[0], ks[1], ks[2]);
 		}

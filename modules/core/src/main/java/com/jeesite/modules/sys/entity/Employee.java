@@ -155,7 +155,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 
 	public void setEmployeePosts(String employeePosts) {
-		String[] list = StringUtils.split(employeePosts, ",");
+		String[] list = StringUtils.splitComma(employeePosts);
 		for (String val : list){
 			if (StringUtils.isNotBlank(val)){
 				EmployeePost e = new EmployeePost();

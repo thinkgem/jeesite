@@ -35,8 +35,8 @@ public class ServletUtils {
 	
 	// 定义静态文件后缀；静态文件排除URI地址
 	private static final PropertiesUtils PROPS = PropertiesUtils.getInstance();
-	private static final String[] STATIC_FILE = StringUtils.split(PROPS.getProperty("web.staticFile"), ",");
-	private static final String[] STATIC_FILE_EXCLUDE_URI = StringUtils.split(PROPS.getProperty("web.staticFileExcludeUri"), ",");
+	private static final String[] STATIC_FILE = StringUtils.splitComma(PROPS.getProperty("web.staticFile"));
+	private static final String[] STATIC_FILE_EXCLUDE_URI = StringUtils.splitComma(PROPS.getProperty("web.staticFileExcludeUri"));
 
 	// AJAX 请求参数和请求头名
 	public static final String AJAX_PARAM_NAME = PROPS.getProperty("web.ajaxParamName", "__ajax");

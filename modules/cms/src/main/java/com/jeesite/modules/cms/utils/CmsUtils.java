@@ -147,7 +147,7 @@ public class CmsUtils {
 
 				// 增加获取层次级别条件
 				List<Integer> sortGradeList = ListUtils.newArrayList();
-				for (String s : StringUtils.split(sortGrades, ",")) {
+				for (String s : StringUtils.splitComma(sortGrades)) {
 					sortGradeList.add(ObjectUtils.toInteger(s));
 				}
 				category.setSortGradeList(sortGradeList);
@@ -370,7 +370,7 @@ public class CmsUtils {
 		String outlineViewOfSiteCodes = Global.getConfig("cms.article.outlineViewOfSiteCodes");
 		if (StringUtils.isNotBlank(outlineViewOfSiteCodes) && !"0".equals(outlineViewOfSiteCodes)) {
 			if (category.getSite() != null && StringUtils.isNotBlank(category.getSite().getSiteCode())) {
-				if (StringUtils.inString(category.getSite().getSiteCode(), StringUtils.split(outlineViewOfSiteCodes, ","))) {
+				if (StringUtils.inString(category.getSite().getSiteCode(), StringUtils.splitComma(outlineViewOfSiteCodes))) {
 					if (!StringUtils.contains(str.toString(), "&outlineView=")) {
 						str.append("&outlineView=true");
 					}

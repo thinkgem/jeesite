@@ -33,8 +33,8 @@ public class RoleListType implements FieldType {
 	 */
 	@Override
 	public Object getValue(String val) {
-		List<String> list = new ArrayList<String>();
-		for (String s : StringUtils.split(val, ",")) {
+		List<String> list = new ArrayList<>();
+		for (String s : StringUtils.splitComma(val)) {
 			for (Role e : roleList) {
 				if (StringUtils.trimToEmpty(s).equals(e.getRoleName())) {
 					list.add(e.getRoleCode());

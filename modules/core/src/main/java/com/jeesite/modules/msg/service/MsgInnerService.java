@@ -106,8 +106,8 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 				empUser.setCodes(new String[]{});
 				empUserList = empUserService.findUserList(empUser);
 			}else{
-				String[] codes = StringUtils.split(msgInner.getReceiveCodes(), ",");
-				String[] names = StringUtils.split(msgInner.getReceiveNames(), ",");
+				String[] codes = StringUtils.splitComma(msgInner.getReceiveCodes());
+				String[] names = StringUtils.splitComma(msgInner.getReceiveNames());
 				if (codes != null && names != null && codes.length > 0 && codes.length == names.length){
 					EmpUser empUser = new EmpUser();
 					empUser.setCodes(codes);
@@ -144,7 +144,7 @@ public class MsgInnerService extends CrudService<MsgInnerDao, MsgInner> {
 		if (empUserList == null || empUserList.size() <= 0){
 			return;
 		}
-		String[] notifyTypes = StringUtils.split(msgInner.getNotifyTypes(), ",");
+		String[] notifyTypes = StringUtils.splitComma(msgInner.getNotifyTypes());
 		List<MsgInnerRecord> recordList = ListUtils.newArrayList();
 		empUserList.forEach(user -> {
 			MsgInnerRecord r = new MsgInnerRecord();

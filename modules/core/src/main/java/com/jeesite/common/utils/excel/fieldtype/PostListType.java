@@ -33,8 +33,8 @@ public class PostListType implements FieldType {
 	 */
 	@Override
 	public Object getValue(String val) {
-		List<String> list = new ArrayList<String>();
-		for (String s : StringUtils.split(val, ",")) {
+		List<String> list = new ArrayList<>();
+		for (String s : StringUtils.splitComma(val)) {
 			for (Post e : postList) {
 				if (StringUtils.trimToEmpty(s).equals(e.getPostName())) {
 					list.add(e.getPostCode());

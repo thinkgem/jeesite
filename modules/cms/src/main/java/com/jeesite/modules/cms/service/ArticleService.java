@@ -102,7 +102,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 			return list;
 		}
 		Article where = new Article();
-		where.setId_in(StringUtils.split(ids, ","));
+		where.setId_in(StringUtils.splitComma(ids));
 		dao.findList(where).forEach((e) -> {
 			list.add(new Object[] { e.getCategory().getId(), e.getId(), StringUtils.abbr(e.getTitle(), 50) });
 		});

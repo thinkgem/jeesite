@@ -28,14 +28,12 @@ public class LogInterceptorConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		InterceptorRegistration registration = registry.addInterceptor(new LogInterceptor());
-		String apps = Global.getProperty("web.interceptor.log.addPathPatterns");
-		String epps = Global.getProperty("web.interceptor.log.excludePathPatterns");
-		for (String uri : StringUtils.split(apps, ",")){
+		for (String uri : StringUtils.splitComma(Global.getProperty("web.interceptor.log.addPathPatterns"))){
 			if (StringUtils.isNotBlank(uri)){
 				registration.addPathPatterns(StringUtils.trim(uri));
 			}
 		}
-		for (String uri : StringUtils.split(epps, ",")){
+		for (String uri : StringUtils.splitComma(Global.getProperty("web.interceptor.log.excludePathPatterns"))){
 			if (StringUtils.isNotBlank(uri)){
 				registration.excludePathPatterns(StringUtils.trim(uri));
 			}
