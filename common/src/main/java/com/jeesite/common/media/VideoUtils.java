@@ -1,20 +1,18 @@
 package com.jeesite.common.media;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.image.ImageUtils;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.lang.TimeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 视频工具类
@@ -170,7 +168,7 @@ public class VideoUtils {
 		command.add(getFfmpegFile());
 		command.add("-i");
 		command.add(inputFile);
-		if ("gif".equals(imgFileExtension.toLowerCase())) {
+		if ("gif".equalsIgnoreCase(imgFileExtension)) {
 			command.add("-vframes");
 			command.add("30");
 			command.add("-f");
@@ -281,7 +279,7 @@ public class VideoUtils {
 	 */
 	private boolean process(List<String> command) {
 		try {
-			log.debug(ListUtils.convertToString(command, " "));
+			log.debug(StringUtils.join(command, " "));
 //			Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
 			Process process = Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
 			new PrintErrorReader(process.getErrorStream()).start();
@@ -395,7 +393,7 @@ public class VideoUtils {
 		this.height = height;
 	}
 
-	class PrintInputStream extends Thread {
+	static class PrintInputStream extends Thread {
 		java.io.InputStream __is = null;
 
 		public PrintInputStream(java.io.InputStream is) {
@@ -416,7 +414,7 @@ public class VideoUtils {
 		}
 	}
 
-	class PrintErrorReader extends Thread {
+	static class PrintErrorReader extends Thread {
 		java.io.InputStream __is = null;
 
 		public PrintErrorReader(java.io.InputStream is) {
