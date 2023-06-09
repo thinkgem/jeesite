@@ -8,6 +8,7 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -19,9 +20,21 @@ import java.util.regex.Pattern;
  * @version 2018-1-6
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
-	
-    private static final char SEPARATOR = '_';
-    
+
+	public static final String COMMA = ",";
+	public static final String COLON = ":";
+	public static final String TILDE = "~";
+	public static final String UNDERLINE = "_";
+
+	/**
+	 * 分隔字符串（默认逗号分隔）
+	 * @param str
+	 * @return
+	 */
+	public static String[] split(final String str) {
+		return split(str, COMMA);
+	}
+
     /**
      * 转换为字节数组
      * @param str
@@ -29,28 +42,20 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static byte[] getBytes(String str){
     	if (str != null){
-    		try {
-				return str.getBytes(EncodeUtils.UTF_8);
-			} catch (UnsupportedEncodingException e) {
-				return null;
-			}
-    	}else{
+			return str.getBytes(StandardCharsets.UTF_8);
+		}else{
     		return null;
     	}
     }
     
     /**
      * 转换为字节数组
-     * @param str
+     * @param bytes
      * @return
      */
     public static String toString(byte[] bytes){
-    	try {
-			return new String(bytes, EncodeUtils.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			return EMPTY;
-		}
-    }
+		return new String(bytes, StandardCharsets.UTF_8);
+	}
     
     /**
      * 是否包含字符串
@@ -260,8 +265,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         boolean upperCase = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-
-            if (c == SEPARATOR) {
+            if (c == UNDERLINE.charAt(0)) {
                 upperCase = i != 1; // 不允许第二个字符是大写
             } else if (upperCase) {
                 sb.append(Character.toUpperCase(c));
@@ -309,7 +313,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             }
             if ((i > 0) && Character.isUpperCase(c)) {
                 if (!upperCase || !nextUpperCase) {
-                    sb.append(SEPARATOR);
+                    sb.append(UNDERLINE);
                 }
                 upperCase = true;
             } else {
@@ -362,7 +366,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * @return
 	 */
 	public static String getRandomNum(int count) {
-		char[] codeSeq = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		char[] codeSeq = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 		Random random = new Random();
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < count; i++) {
@@ -384,7 +388,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 */
 	public static String getTreeNodeName(String isShowCode, String code, String name) {
 		if ("true".equals(isShowCode) || "1".equals(isShowCode)) {
-			return "(" + code + ") " + StringUtils.replace(name, " ", "");
+			return "(" + code + ") " + StringUtils.replace(name, SPACE, EMPTY);
 		} else if ("2".equals(isShowCode)) {
 			return name/*StringUtils.replace(name, " ", "")*/ + " (" + code + ")";
 		} else {

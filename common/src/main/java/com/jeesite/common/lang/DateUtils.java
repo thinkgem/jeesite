@@ -4,13 +4,12 @@
  */
 package com.jeesite.common.lang;
 
+import org.apache.commons.lang3.time.FastDateFormat;
+
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * 日期工具类, 继承org.apache.commons.lang.time.DateUtils类
@@ -272,7 +271,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	
 	/**
 	 * 获取服务器启动时间
-	 * @param date
 	 * @return
 	 */
 	public static Date getServerStartDate(){
@@ -305,7 +303,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static Date[] parseDateBetweenString(String dateString){
 		Date beginDate = null; Date endDate = null;
 		if (StringUtils.isNotBlank(dateString)){
-			String[] ss = StringUtils.split(dateString, "~");
+			String[] ss = StringUtils.split(dateString, StringUtils.TILDE);
 			if (ss != null && ss.length == 2){
 				String begin = StringUtils.trim(ss[0]);
 				String end = StringUtils.trim(ss[1]);
