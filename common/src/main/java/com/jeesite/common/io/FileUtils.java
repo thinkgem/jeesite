@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -34,7 +35,9 @@ import java.util.zip.ZipOutputStream;
 @SuppressWarnings("deprecation")
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
-	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
+	public static final String SEPARATOR = "/";
+	public static final String WIN_SEPARATOR = "\\";
+	private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 	private static MimetypesFileTypeMap mimetypesFileTypeMap;
 	
 	/**
@@ -409,7 +412,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 写入文件
-	 * @param file 要写入的文件
+	 * @param fileName 要写入的文件
 	 */
 	public static void writeToFile(String fileName, String content, boolean append) {
 		try {
@@ -422,7 +425,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 写入文件
-	 * @param file 要写入的文件
+	 * @param fileName 要写入的文件
 	 */
 	public static void writeToFile(String fileName, String content, String encoding, boolean append) {
 		try {
@@ -479,7 +482,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		File descFile = new File(descFileName);
 		try {
 			ZipOutputStream zouts = new ZipOutputStream(new FileOutputStream(descFile));
-			if ("*".equals(fileName) || "".equals(fileName)) {
+			if ("*".equals(fileName) || StringUtils.EMPTY.equals(fileName)) {
 				FileUtils.zipDirectoryToZipFile(dirPath, fileDir, zouts);
 			} else {
 				File file = new File(fileDir, fileName);
@@ -622,7 +625,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 获取待压缩文件在ZIP文件中entry的名字，即相对于跟目录的相对路径名
-	 * @param dirPat 目录名
+	 * @param dirPath 目录名
 	 * @param file entry文件名
 	 * @return
 	 */
@@ -634,7 +637,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		String filePath = file.getAbsolutePath();
 		// 对于目录，必须在entry名字后面加上"/"，表示它将以目录项存储
 		if (file.isDirectory()) {
-			filePath += "/";
+			filePath += SEPARATOR;
 		}
 		int index = filePath.indexOf(dirPaths);
 		return filePath.substring(index + dirPaths.length());
@@ -768,21 +771,21 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 修正路径，将 \\ 或 / 等替换为 File.separator
+	 * 修正路径，将 \\ 或 / 等替换为 /
 	 * @param path 待修正的路径
 	 * @return 修正后的路径
 	 */
 	public static String path(String path){
-		String p = StringUtils.replace(path, "\\", "/");
-		p = StringUtils.join(StringUtils.split(p, "/"), "/");
-		if (!StringUtils.startsWithAny(p, "/") && StringUtils.startsWithAny(path, "\\", "/")){
-			p += "/";
+		String p = StringUtils.replace(path, WIN_SEPARATOR, SEPARATOR);
+		p = StringUtils.join(StringUtils.split(p, SEPARATOR), SEPARATOR);
+		if (!StringUtils.startsWithAny(p, SEPARATOR) && StringUtils.startsWithAny(path, WIN_SEPARATOR, SEPARATOR)){
+			p += SEPARATOR;
 		}
-		if (!StringUtils.endsWithAny(p, "/") && StringUtils.endsWithAny(path, "\\", "/")){
-			p = p + "/";
+		if (!StringUtils.endsWithAny(p, SEPARATOR) && StringUtils.endsWithAny(path, WIN_SEPARATOR, SEPARATOR)){
+			p = p + SEPARATOR;
 		}
-		if (path != null && path.startsWith("/")){
-			p = "/" + p; // linux下路径
+		if (path != null && path.startsWith(SEPARATOR)){
+			p = SEPARATOR + p; // linux下路径
 		}
 		return p;
 	}
@@ -795,8 +798,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static List<String> findChildrenList(File dir, boolean searchDirs) {
 		List<String> files = ListUtils.newArrayList();
-		for (String subFiles : dir.list()) {
-			File file = new File(dir + "/" + subFiles);
+		for (String subFiles : Objects.requireNonNull(dir.list())) {
+			File file = new File(dir + SEPARATOR + subFiles);
 			if (((searchDirs) && (file.isDirectory())) || ((!searchDirs) && (!file.isDirectory()))) {
 				files.add(file.getName());
 			}
@@ -806,7 +809,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 获取文件名(带扩展名)
-	 * @param pathname 文件路径名
+	 * @param fileName 文件路径名
 	 */
 	public static String getFileName(String fileName) {
         return new File(fileName).getName();
