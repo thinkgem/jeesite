@@ -279,7 +279,7 @@ public class VideoUtils {
 	 */
 	private boolean process(List<String> command) {
 		try {
-			log.debug(StringUtils.join(command, " "));
+			log.debug(StringUtils.join(command, StringUtils.SPACE));
 //			Process process = new ProcessBuilder(command).redirectErrorStream(true).start();
 			Process process = Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
 			new PrintErrorReader(process.getErrorStream()).start();

@@ -152,7 +152,7 @@ public class LogUtils {
 					Method m = hm.getMethod();
 					// 获取权限字符串
 					RequiresPermissions rp = m.getAnnotation(RequiresPermissions.class);
-					permission = (rp != null ? StringUtils.join(rp.value(), ",") : "");
+					permission = (rp != null ? StringUtils.joinComma(rp.value()) : "");
 					
 					// 尝试获取BaseEntity的设置的主键值
 					for (Class<?> type : m.getParameterTypes()){

@@ -14,6 +14,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
+import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.PwdUtils;
@@ -197,6 +198,12 @@ public class LoginController extends BaseController{
 		model.addAttribute("msgEnabled", Global.getPropertyToBoolean("msg.enabled", "false"));
 		model.addAttribute("sysCode", session.getAttribute("sysCode"));
 		model.addAttribute("title", Global.getProperty("productName"));
+		for (Role role : user.getRoleList()){
+			if (StringUtils.isNotBlank(role.getDesktopUrl())) {
+				model.addAttribute("desktopUrl", role.getDesktopUrl()); // 设置当前用户信息
+				break;
+			}
+		}
 
 		// 是否是登录操作
 		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));

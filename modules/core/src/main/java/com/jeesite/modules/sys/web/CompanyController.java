@@ -119,8 +119,8 @@ public class CompanyController extends BaseController {
 				officeCodes.add(e.getOfficeCode());
 				officeNames.add(e.getOfficeCode());
 			});
-			model.addAttribute("officeCodes", StringUtils.join(officeCodes, ","));
-			model.addAttribute("officeNames", StringUtils.join(officeNames, ","));
+			model.addAttribute("officeCodes", StringUtils.joinComma(officeCodes));
+			model.addAttribute("officeNames", StringUtils.joinComma(officeNames));
 		}
 		model.addAttribute("company", company);
 		model.addAttribute("ctrlPermi", Global.getConfig("user.adminCtrlPermi", "2"));

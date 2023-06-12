@@ -28,8 +28,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	public static final String UNDERLINE = "_";
 
 	/**
-	 * 分隔字符串（默认逗号分隔）
-	 * @param str
+	 * 分隔字符串（逗号分隔）
+	 * @param str 字符串
 	 * @return
 	 */
 	public static String[] splitComma(final String str) {
@@ -37,8 +37,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
-	 * 连接字符串（默认逗号分隔）
-	 * @param iterable
+	 * 连接字符串（逗号分隔）
+	 * @param array 字符串数组
+	 * @return
+	 */
+	public static String joinComma(final Object[] array) {
+		return join(array, COMMA);
+	}
+
+	/**
+	 * 连接字符串（逗号分隔）
+	 * @param iterable 字符串集合
 	 * @return
 	 */
 	public static String joinComma(final Iterable<?> iterable) {

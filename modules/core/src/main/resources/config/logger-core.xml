@@ -29,6 +29,7 @@
 	<logger name="org.flowable.identitylink.service.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.variable.service.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.engine.impl.persistence" level="DEBUG" />
+	<logger name="com.bstek.ureport" level="DEBUG" />
 	
 	<logger name="com.jeesite" level="DEBUG" />
 	<logger name="com.jeesite.common.i18n" level="INFO" />

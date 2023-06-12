@@ -138,7 +138,7 @@ public class PropertiesUtils {
     			}
 			}
 		}
-		properties.put("configFiles", StringUtils.join(configFiles, ","));
+		properties.put("configFiles", StringUtils.joinComma(configFiles));
 	}
 	
 	/**

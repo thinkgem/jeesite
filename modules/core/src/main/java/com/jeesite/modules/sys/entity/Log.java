@@ -259,7 +259,8 @@ public class Log extends DataEntity<Log> {
 			if (StringUtils.endsWithIgnoreCase(param.getKey(), "password")){
 				params.append("*");
 			}else if (param.getValue() != null) {
-				params.append(EncodeUtils.xssFilter(StringUtils.abbr(StringUtils.join(param.getValue(), ","), 1000)));
+				params.append(EncodeUtils.xssFilter(StringUtils.abbr(
+						StringUtils.joinComma(param.getValue()), 1000)));
 			}
 			String[] values = param.getValue();
 			if (values != null) {
