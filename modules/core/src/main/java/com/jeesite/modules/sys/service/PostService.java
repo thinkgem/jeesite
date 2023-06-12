@@ -7,6 +7,9 @@ package com.jeesite.modules.sys.service;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.service.api.CrudServiceApi;
 import com.jeesite.modules.sys.entity.Post;
+import com.jeesite.modules.sys.entity.PostRole;
+
+import java.util.List;
 
 /**
  * 岗位管理Service
@@ -31,6 +34,11 @@ public interface PostService extends CrudServiceApi<Post> {
 	 */
 	@Override
 	Page<Post> findPage(Post post);
+
+	/**
+	 * 查询岗位角色列表
+	 */
+	List<PostRole> findPostRoleList(PostRole postRole);
 
 	/**
 	 * 保存岗位

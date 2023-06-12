@@ -4,17 +4,22 @@
  */
 package com.jeesite.modules.sys.service.support;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.PostDao;
+import com.jeesite.modules.sys.dao.PostRoleDao;
 import com.jeesite.modules.sys.entity.Post;
+import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.utils.CorpUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 岗位管理Service
@@ -23,6 +28,9 @@ import com.jeesite.modules.sys.utils.CorpUtils;
  */
 public class PostServiceSupport extends CrudService<PostDao, Post>
 		implements PostService{
+
+	@Autowired
+	private PostRoleDao postRoleDao;
 
 	/**
 	 * 查询岗位
@@ -51,6 +59,13 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	}
 
 	/**
+	 * 查询岗位角色关系
+	 */
+	public List<PostRole> findPostRoleList(PostRole postRole) {
+		return postRoleDao.findList(postRole);
+	}
+
+	/**
 	 * 保存岗位
 	 */
 	@Override
@@ -61,6 +76,23 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 			genIdAndValid(post, post.getViewCode());
 		}
 		super.save(post);
+		// 重新绑定岗位和角色之间的关系
+		if (StringUtils.isNotBlank(post.getPostCode()) && post.getRoleCodes() != null) {
+			PostRole where = new PostRole();
+			where.setPostCode(post.getPostCode());
+			postRoleDao.deleteByEntity(where);
+			List<PostRole> list = ListUtils.newArrayList();
+			for (String code : StringUtils.splitComma(post.getRoleCodes())) {
+				PostRole e = new PostRole();
+				e.setPostCode(post.getPostCode());
+				e.setRoleCode(code);
+				e.setIsNewRecord(true);
+				list.add(e);
+			}
+			if (ListUtils.isNotEmpty(list)) {
+				postRoleDao.insertBatch(list, null);
+			}
+		}
 	}
 
 	/**

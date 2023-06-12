@@ -4,12 +4,15 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.Post;
+import com.jeesite.modules.sys.entity.PostRole;
+import com.jeesite.modules.sys.service.PostService;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +25,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.Post;
-import com.jeesite.modules.sys.service.PostService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 岗位管理Controller
@@ -44,25 +43,25 @@ public class PostController extends BaseController {
 
 	@Autowired
 	private PostService postService;
-	
+
 	@ModelAttribute
 	public Post get(String postCode, boolean isNewRecord) {
 		return postService.get(postCode, isNewRecord);
 	}
-	
+
 	@RequiresPermissions("sys:post:view")
 	@RequestMapping(value = "list")
 	public String list(Post post, Model model) {
 		model.addAttribute("post", post);
 		return "modules/sys/postList";
 	}
-	
+
 	@RequiresPermissions("sys:post:view")
 	@RequestMapping(value = {"listData"})
 	@ResponseBody
 	public Page<Post> listData(Post post, HttpServletRequest request, HttpServletResponse response) {
 		post.setPage(new Page<>(request, response));
-		Page<Post> page = postService.findPage(post); 
+		Page<Post> page = postService.findPage(post);
 		return page;
 	}
 
@@ -71,6 +70,22 @@ public class PostController extends BaseController {
 	public String form(Post post, Model model) {
 		if(post.getIsNewRecord()){
 			post.setPostSort((int)postService.findCount(post) * 10);
+		}
+		// 查询岗位所关联的角色信息
+		if (StringUtils.isNotBlank(post.getPostCode())){
+			PostRole where = new PostRole();
+			where.setPostCode(post.getPostCode());
+			where.sqlMap().loadJoinTableAlias("r");
+			List<String> roleCodes = ListUtils.newArrayList();
+			List<String> roleNames = ListUtils.newArrayList();
+			postService.findPostRoleList(where).forEach(e -> {
+				if (e.getRole() != null) {
+					roleCodes.add(e.getRoleCode());
+					roleNames.add(e.getRole().getRoleName());
+				}
+			});
+			model.addAttribute("roleCodes", StringUtils.joinComma(roleCodes));
+			model.addAttribute("roleNames", StringUtils.joinComma(roleNames));
 		}
 		model.addAttribute("post", post);
 		return "modules/sys/postForm";
@@ -86,7 +101,7 @@ public class PostController extends BaseController {
 		postService.save(post);
 		return renderResult(Global.TRUE, text("保存岗位''{0}''成功", post.getPostName()));
 	}
-	
+
 	@RequiresPermissions("sys:post:edit")
 	@RequestMapping(value = "disable")
 	@ResponseBody
@@ -95,7 +110,7 @@ public class PostController extends BaseController {
 		postService.updateStatus(post);
 		return renderResult(Global.TRUE, text("停用岗位''{0}''成功", post.getPostName()));
 	}
-	
+
 	@RequiresPermissions("sys:post:edit")
 	@RequestMapping(value = "enable")
 	@ResponseBody
@@ -104,7 +119,7 @@ public class PostController extends BaseController {
 		postService.updateStatus(post);
 		return renderResult(Global.TRUE, text("启用岗位''{0}''成功", post.getPostName()));
 	}
-	
+
 	@RequiresPermissions("sys:post:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
@@ -112,11 +127,11 @@ public class PostController extends BaseController {
 		postService.delete(post);
 		return renderResult(Global.TRUE, text("删除岗位''{0}''成功", post.getPostName()));
 	}
-	
+
 	/**
 	 * 验证岗位名是否有效
 	 * @param oldPostName
-	 * @param name
+	 * @param postName
 	 * @return
 	 */
 	@RequiresPermissions("user")
@@ -135,7 +150,7 @@ public class PostController extends BaseController {
 
 	/**
 	 * 获取岗位树结构数据
-	 * @param isShowCode	是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
+	 * @param isShowCode    是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @return
 	 */
 	@RequiresPermissions("user")
@@ -156,5 +171,5 @@ public class PostController extends BaseController {
 		});
 		return mapList;
 	}
-	
+
 }
