@@ -26,8 +26,8 @@ import java.util.Properties;
 public class PropertyLoader implements org.springframework.boot.env.PropertySourceLoader, Ordered{
 	
 	private static boolean isLoadJeeSitePropertySource = false;
-	private PropertiesPropertySourceLoader propertiesPropertySourceLoader = new PropertiesPropertySourceLoader();
-	private YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
+	private final PropertiesPropertySourceLoader propertiesPropertySourceLoader = new PropertiesPropertySourceLoader();
+	private final YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
 	
 	@Override
 	public String[] getFileExtensions() {

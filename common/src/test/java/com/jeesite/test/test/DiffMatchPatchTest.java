@@ -16,22 +16,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jeesite.common.text;
+package com.jeesite.test.test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Assert;
-
+import com.jeesite.common.io.FileUtils;
+import com.jeesite.common.text.DiffMatchPatch;
 import com.jeesite.common.text.DiffMatchPatch.Diff;
 import com.jeesite.common.text.DiffMatchPatch.LinesToCharsResult;
 import com.jeesite.common.text.DiffMatchPatch.Patch;
+import org.junit.Assert;
 
+import java.util.*;
+
+/**
+ * 差异工具分析工具类
+ * @author ThinkGem
+ */
 public class DiffMatchPatchTest {
+
+  public static void main(String[] args) {
+
+//	DiffMatchPatchTest d = new DiffMatchPatchTest();
+//	d.testDiffCleanupEfficiency();
+//	d.testDiffPrettyHtml();
+
+	String text1 = "花<b>一样</b>的你，花一样的我，花一样的年华，花一样的世界，花一样的未来。";
+	String text2 = "花<b>一</b>样的你，花一样的年华，花一样的我，花一样的未来，花一样的世界。";
+
+	DiffMatchPatch dmp = new DiffMatchPatch();
+
+	LinkedList<Diff> diffs = dmp.diff_main(text1, text2);
+	String result = dmp.diff_prettyHtml(diffs);
+
+	FileUtils.writeToFile("x:\\test.html", result, false);
+	System.out.println(result);
+
+  }
 
   private DiffMatchPatch dmp;
   private DiffMatchPatch.Operation DELETE = DiffMatchPatch.Operation.DELETE;
@@ -878,8 +897,7 @@ public class DiffMatchPatchTest {
     assertEquals(error_msg, list_a, list_b);
   }
 
-  private void assertLinesToCharsResultEquals(String error_msg,
-      LinesToCharsResult a, LinesToCharsResult b) {
+  private void assertLinesToCharsResultEquals(String error_msg, LinesToCharsResult a, LinesToCharsResult b) {
     assertEquals(error_msg, a.chars1, b.chars1);
     assertEquals(error_msg, a.chars2, b.chars2);
     assertEquals(error_msg, a.lineArray, b.lineArray);
@@ -931,24 +949,5 @@ public class DiffMatchPatchTest {
   private static void fail(String message) {
       Assert.fail(message);
   }
-  
-//  public static void main(String[] args) {
-//	  
-////	DiffMatchPatchTest d = new DiffMatchPatchTest();
-////	d.testDiffCleanupEfficiency();
-////	d.testDiffPrettyHtml();
-//	  
-//	String text1 = "花<b>一样</b>的你，花一样的我，花一样的年华，花一样的世界，花一样的未来。";
-//	String text2 = "花<b>一</b>样的你，花一样的年华，花一样的我，花一样的未来，花一样的世界。";
-//	
-//	DiffMatchPatch dmp = new DiffMatchPatch();
-//	
-//	LinkedList<Diff> diffs = dmp.diff_main(text1, text2);
-//	String result = dmp.diff_prettyHtml(diffs);
-//	
-//	FileUtils.writeToFile("x:\\test.html", result, false);
-//	System.out.println(result);
-//	
-//  }
-  
+
 }

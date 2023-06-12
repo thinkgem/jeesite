@@ -4,19 +4,18 @@
  */
 package com.jeesite.common.mapper;
 
-import java.io.IOException;
-import java.util.TimeZone;
-
+import com.fasterxml.jackson.databind.JavaType;
+import com.jeesite.common.io.PropertiesUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.jeesite.common.io.PropertiesUtils;
+import java.io.IOException;
+import java.util.TimeZone;
 
 /**
- * XML <-> Map、Object
+ * 简单封装Jackson，实现XML String<->Java Object的Mapper.
  * @author ThinkGem
  * @version 2016-9-2
  */
@@ -24,7 +23,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = LoggerFactory.getLogger(XmlMapper.class);
+	private static final Logger logger = LoggerFactory.getLogger(XmlMapper.class);
 
 	/**
 	 * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
@@ -275,38 +274,4 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 //		return map;
 //	}
 
-//	public static void main(String[] args) throws Exception {
-//		
-//		File file = new File(FileUtils.getProjectPath() 
-//				+ "/../modules/core/src/main/resources/spring/spring-context-core.xml");
-//		String xml = FileUtils.readFileToString(file, Charset.defaultCharset());
-//		
-//		System.out.println(xmlToMap(xml, true));
-//		System.out.println(xmlToMapWithAttr(xml, true));
-//		
-//		XmlMapper m = XmlMapper.getInstance();
-//		System.out.println(m.readValue(xml, List.class));
-//		System.out.println(m.readValue(xml, Map.class));
-//		
-//		List<Map<String, Object>> list = ListUtils.newArrayList();
-//		Map<String, Object> map = MapUtils.newHashMap();
-//		map.put("id", 1);
-//		map.put("pId", -1);
-//		map.put("name", "根节点");
-//		list.add(map);
-//		map = MapUtils.newHashMap();
-//		map.put("id", 2);
-//		map.put("pId", 1);
-//		map.put("name", "你好");
-//		map.put("open", true);
-//		list.add(map);
-//
-//		String s = XmlMapper.getInstance().writeValueAsString(list);
-//		System.out.println(s);
-//		
-//		list = XmlMapper.getInstance().readValue(s, List.class);
-//		System.out.println(list);
-//		
-//	}
-	
 }

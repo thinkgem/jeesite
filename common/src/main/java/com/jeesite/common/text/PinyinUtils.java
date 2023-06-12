@@ -1,13 +1,13 @@
 package com.jeesite.common.text;
 
-import java.util.regex.Pattern;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
+import java.util.regex.Pattern;
 
 /**
  * 拼音工具类
@@ -153,13 +153,5 @@ public class PinyinUtils {
 		}
 		return new String(c);
 	}
-	
-//	public static void main(String[] args) {
-//		String str = "你好，123，🅻🅾🆅🅴、世界abc,~!#$_Sdf，女；ｈｅｌｌｏ！-";
-//		String str = "你好，123，世界abc,~!#$_Sdf，女；ｈｅｌｌｏ！-";
-//		System.out.println(getFirstSpell(str));
-//		System.out.println(getFirstSpell(str, false));
-//		System.out.println(getFullSpell(str));
-//		System.out.println(getFullSpell(str, false));
-//	}
+
 }

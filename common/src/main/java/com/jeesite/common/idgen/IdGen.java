@@ -4,12 +4,12 @@
  */
 package com.jeesite.common.idgen;
 
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.UUID;
-
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.lang.StringUtils;
 
 /**
  * 封装各种生成唯一性ID算法的工具类.
@@ -87,38 +87,5 @@ public class IdGen {
 		}
 		return null;
 	}
-	
-//	public static void main(String[] args) {
-//		System.out.println(nextCode("8") + " = 9");
-//		System.out.println(nextCode("09") + " = 10");
-//		System.out.println(nextCode("009") + " = 010");
-//		System.out.println(nextCode("T09") + " = T10");
-//		System.out.println(nextCode("TG09") + " = TG10");
-//		System.out.println(nextCode("TG0101") + " = TG0102");
-//		System.out.println(nextCode("TG0109") + " = TG0110");
-//		System.out.println(nextCode("TG02T03") + " = TG02T04");
-//		System.out.println(nextCode("TG02T099") + " = TG02T100");
-//		System.out.println(nextCode("TG02T100") + " = TG02T101");
-//		System.out.println(nextCode("TG02T10A") + " = TG02T10A001");
-//		System.out.println(nextCode("1123117153417957377") + " = 1123117153417957379");
-//		System.out.println(nextCode("0040009") + " = 0040010");
-//		System.out.println(uuid());
-//		System.out.println(nextId());
-//		// 数值型ID重复验证测试
-//		Set<String> set = SetUtils.newHashSet();
-//		try{
-//			for (int i=0; i<100; i++){
-//				String id = String.valueOf(nextId());
-//				if (set.contains(id)){
-//					throw new Exception(id + " exists");
-//				}
-//				set.add(id);
-//				System.out.println(id);
-//				Thread.sleep(100);
-//			}
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 }

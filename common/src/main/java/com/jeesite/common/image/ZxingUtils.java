@@ -4,25 +4,17 @@
  */
 package com.jeesite.common.image;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Hashtable;
-
-import javax.imageio.ImageIO;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.Result;
+import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Hashtable;
 
 /**
  * 条形码和二维码编码解码
@@ -33,7 +25,7 @@ public class ZxingUtils {
 
 	/**
 	 * 条形码编码
-	 * 
+	 *
 	 * @param contents
 	 * @param width
 	 * @param height
@@ -56,7 +48,7 @@ public class ZxingUtils {
 
 	/**
 	 * 条形码解码
-	 * 
+	 *
 	 * @param imgPath
 	 * @return String
 	 */
@@ -80,7 +72,7 @@ public class ZxingUtils {
 
 	/**
 	 * 二维码编码
-	 * 
+	 *
 	 * @param contents
 	 * @param width
 	 * @param height
@@ -102,7 +94,7 @@ public class ZxingUtils {
 
 	/**
 	 * 二维码解码
-	 * 
+	 *
 	 * @param imgPath
 	 * @return String
 	 */
@@ -125,33 +117,5 @@ public class ZxingUtils {
 		}
 		return null;
 	}
-
-//	public static void main(String[] args) {
-//
-//		// 条形码
-//		String imgPath = "target\\zxing_EAN13.png";
-//		String contents = "6923450657713";
-//		int width = 105, height = 50;
-//
-//		ZxingUtils.encode(contents, width, height, imgPath);
-//		System.out.println("finished zxing EAN-13 encode.");
-//
-//		String decodeContent = ZxingUtils.decode(imgPath);
-//		System.out.println("解码内容如下：" + decodeContent);
-//		System.out.println("finished zxing EAN-13 decode.");
-//
-//		// 二维码
-//		String imgPath2 = "target\\zxing.png";
-//		String contents2 = "Hello Gem, welcome to Zxing!" + "\nBlog [ http://thinkgem.iteye.com ]" + "\nEMail [ thinkgem@163.com ]";
-//		int width2 = 300, height2 = 300;
-//
-//		ZxingUtils.encode2(contents2, width2, height2, imgPath2);
-//		System.out.println("finished zxing encode.");
-//
-//		String decodeContent2 = ZxingUtils.decode2(imgPath2);
-//		System.out.println("解码内容如下：" + decodeContent2);
-//		System.out.println("finished zxing decode.");
-//
-//	}
 
 }

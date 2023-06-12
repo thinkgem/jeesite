@@ -4,17 +4,16 @@
  */
 package com.jeesite.common.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.lang.ExceptionUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.lang.ExceptionUtils;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 资源供给类
@@ -23,8 +22,8 @@ import com.jeesite.common.lang.ExceptionUtils;
  */
 public class ResourceUtils extends org.springframework.util.ResourceUtils {
 	
-	private static ResourceLoader resourceLoader;
-	private static ResourcePatternResolver resourceResolver;
+	private static final ResourceLoader resourceLoader;
+	private static final ResourcePatternResolver resourceResolver;
 	static{
 		resourceLoader = new DefaultResourceLoader();
 		resourceResolver = new PathMatchingResourcePatternResolver(resourceLoader);

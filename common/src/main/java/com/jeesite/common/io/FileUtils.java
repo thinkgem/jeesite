@@ -829,7 +829,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 获取文件扩展名(返回小写)
-	 * @param pathname 文件名
+	 * @param fileName 文件名
 	 * @return 例如：test.jpg  返回：  jpg
 	 */
 	public static String getFileExtension(String fileName) {

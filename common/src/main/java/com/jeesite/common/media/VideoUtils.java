@@ -435,22 +435,4 @@ public class VideoUtils {
 		}
 	}
 
-//	public static void main(String[] args) {
-////		VideoUtils.setFfmpegFile("d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe");
-//		VideoUtils.setFfmpegFile("d:/tools/video/libav-10.6-win64/bin/avconv.exe");
-//		VideoUtils.setMencoderFile("d:/tools/video/mencoder-4.9/mencoder.exe");
-//		VideoUtils.setQtFaststartFile("d:/tools/video/qt-faststart/qt-faststart.exe");
-//		final VideoUtils v = new VideoUtils("e:/Users/Administrator/Desktop/mp4/20150001.mp4");
-////		new Thread(new Runnable() {
-////			@Override
-////			public void run() {
-//				System.out.println("img：转换" + (v.cutPic()?"成功":"失败"));
-//				System.out.println("file：转换" + (v.convert()?"成功":"失败"));
-////			}
-////		}).start();
-//		System.out.println("inputFile: " + v.getInputFile());
-//		System.out.println("imageFile: " + v.getImgFile());
-//		System.out.println("outputFile: " + v.getOutputFile());
-//	}
-
 }

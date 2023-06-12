@@ -20,13 +20,13 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
 
 	/**
 	 * 根据文件路径创建文件输入流处理 以字节为单位（非 unicode ）
-	 * @param path
+	 * @param filePath
 	 * @return
 	 */
-	public static FileInputStream getFileInputStream(String filepath) {
+	public static FileInputStream getFileInputStream(String filePath) {
 		FileInputStream fileInputStream = null;
 		try {
-			fileInputStream = new FileInputStream(filepath);
+			fileInputStream = new FileInputStream(filePath);
 		} catch (FileNotFoundException e) {
 			System.out.println("错误信息:文件不存在");
 			e.printStackTrace();
@@ -36,7 +36,7 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
 
 	/**
 	 * 根据文件对象创建文件输入流处理 以字节为单位（非 unicode ）
-	 * @param path
+	 * @param file
 	 * @return
 	 */
 	public static FileInputStream getFileInputStream(File file) {
@@ -69,14 +69,14 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
 
 	/**
 	 * 根据文件路径创建文件输出流处理 以字节为单位（非 unicode ）
-	 * @param path
+	 * @param filePath
 	 * @param append true:文件以追加方式打开,false:则覆盖原文件的内容
 	 * @return
 	 */
-	public static FileOutputStream getFileOutputStream(String filepath, boolean append) {
+	public static FileOutputStream getFileOutputStream(String filePath, boolean append) {
 		FileOutputStream fileOutputStream = null;
 		try {
-			fileOutputStream = new FileOutputStream(filepath, append);
+			fileOutputStream = new FileOutputStream(filePath, append);
 		} catch (FileNotFoundException e) {
 			System.out.println("错误信息:文件不存在");
 			e.printStackTrace();

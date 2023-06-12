@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.test;
+package com.jeesite.test.reflect;
 
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.lang.ObjectUtils;

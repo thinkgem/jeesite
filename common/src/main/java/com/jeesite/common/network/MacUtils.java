@@ -188,25 +188,5 @@ public class MacUtils {
 		}
 		return mac == null ? "" : mac;
 	}
-	
-	/**
-	 * 测试用的main方法.
-	 * 
-	 * @param argc 运行参数.
-	 */
-	public static void main(String[] argc) {
-		String os = getOSName();
-		System.out.println("os: " + os);
-		if (os.startsWith("windows")) {
-			String mac = getWindowsMACAddress();
-			System.out.println("mac: " + mac);
-		} else if (os.startsWith("linux")) {
-			String mac = getLinuxMACAddress();
-			System.out.println("mac: " + mac);
-		} else {
-			String mac = getUnixMACAddress();
-			System.out.println("mac: " + mac);
-		}
-	}
 
 }

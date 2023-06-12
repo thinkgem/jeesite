@@ -4,30 +4,12 @@
  */
 package com.jeesite.common.mapper;
 
-import java.io.IOException;
-import java.lang.reflect.AnnotatedElement;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
@@ -35,6 +17,18 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.DateUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+
+import java.io.IOException;
+import java.lang.reflect.AnnotatedElement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
@@ -292,30 +286,5 @@ public class JsonMapper extends ObjectMapper {
 		}
 		return result;
 	}
-	
-//	public static void main(String[] args) {
-//		List<Map<String, Object>> list = ListUtils.newArrayList();
-//		Map<String, Object> map = MapUtils.newHashMap();
-//		map.put("id", 1);
-//		map.put("pId", -1);
-//		map.put("name", "根节点");
-//		list.add(map);
-//		map = MapUtils.newHashMap();
-//		map.put("id", 2);
-//		map.put("pId", 1);
-//		map.put("name", "你好");
-//		map.put("open", true);
-//		list.add(map);
-//		String json = JsonMapper.toJson(list);
-//		System.out.println(json);
-//		List<Map<String, Object>> map2 = JsonMapper.fromJson(json, List.class);
-//		System.out.println(map2);
-//		Map<String, Object> map3 = JsonMapper.fromJson("{extendS1:{title:'站牌号',"
-//				+ "sort:1,type:'text',maxlength:0,maxlength:30},extendS2:{title:'规模分类',"
-//				+ "sort:2,type:'dict',dictType:'scope_category'}}", Map.class);
-//		System.out.println(map3);
-//		List<String> list2 = fromJson("[1,2]", List.class);
-//		System.out.println(list2);
-//	}
-	
+
 }
