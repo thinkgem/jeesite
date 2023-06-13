@@ -696,6 +696,15 @@ CREATE TABLE ${_prefix}sys_post
 );
 
 
+-- 岗位与角色关联表
+CREATE TABLE ${_prefix}sys_post_role
+(
+	post_code varchar2(64) NOT NULL,
+	role_code varchar2(64) NOT NULL,
+	PRIMARY KEY (post_code, role_code)
+);
+
+
 -- 角色表
 CREATE TABLE ${_prefix}sys_role
 (
@@ -705,7 +714,9 @@ CREATE TABLE ${_prefix}sys_role
 	role_type varchar2(100),
 	role_sort number(10),
 	is_sys char(1),
+	is_show char(1) DEFAULT '1',
 	user_type varchar2(16),
+	desktop_url varchar2(255),
 	data_scope char(1),
 	biz_scope varchar2(255),
 	status char(1) DEFAULT '0' NOT NULL,
@@ -1512,6 +1523,9 @@ COMMENT ON COLUMN ${_prefix}sys_post.update_date IS '更新时间';
 COMMENT ON COLUMN ${_prefix}sys_post.remarks IS '备注信息';
 COMMENT ON COLUMN ${_prefix}sys_post.corp_code IS '租户代码';
 COMMENT ON COLUMN ${_prefix}sys_post.corp_name IS '租户名称';
+COMMENT ON TABLE ${_prefix}sys_post_role IS '岗位与角色关联表';
+COMMENT ON COLUMN ${_prefix}sys_post_role.post_code IS '岗位编码';
+COMMENT ON COLUMN ${_prefix}sys_post_role.role_code IS '角色编码';
 COMMENT ON TABLE ${_prefix}sys_role IS '角色表';
 COMMENT ON COLUMN ${_prefix}sys_role.role_code IS '角色编码';
 COMMENT ON COLUMN ${_prefix}sys_role.role_name IS '角色名称';
@@ -1519,7 +1533,9 @@ COMMENT ON COLUMN ${_prefix}sys_role.view_code IS '角色代码';
 COMMENT ON COLUMN ${_prefix}sys_role.role_type IS '角色分类（高管、中层、基层、其它）';
 COMMENT ON COLUMN ${_prefix}sys_role.role_sort IS '角色排序（升序）';
 COMMENT ON COLUMN ${_prefix}sys_role.is_sys IS '系统内置（1是 0否）';
+COMMENT ON COLUMN ${_prefix}sys_role.is_show IS '是否显示';
 COMMENT ON COLUMN ${_prefix}sys_role.user_type IS '用户类型（employee员工 member会员）';
+COMMENT ON COLUMN ${_prefix}sys_role.desktop_url IS '桌面地址（仪表盘地址）';
 COMMENT ON COLUMN ${_prefix}sys_role.data_scope IS '数据范围设置（0未设置  1全部数据 2自定义数据）';
 COMMENT ON COLUMN ${_prefix}sys_role.biz_scope IS '适应业务范围（不同的功能，不同的数据权限支持）';
 COMMENT ON COLUMN ${_prefix}sys_role.status IS '状态（0正常 1删除 2停用）';

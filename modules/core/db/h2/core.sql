@@ -696,6 +696,15 @@ CREATE TABLE js_sys_post
 );
 
 
+-- 岗位与角色关联表
+CREATE TABLE js_sys_post_role
+(
+	post_code varchar(64) NOT NULL,
+	role_code varchar(64) NOT NULL,
+	PRIMARY KEY (post_code, role_code)
+);
+
+
 -- 角色表
 CREATE TABLE js_sys_role
 (
@@ -705,7 +714,9 @@ CREATE TABLE js_sys_role
 	role_type varchar(100),
 	role_sort decimal(10),
 	is_sys char(1),
+	is_show char(1) DEFAULT '1',
 	user_type varchar(16),
+	desktop_url varchar(255),
 	data_scope char(1),
 	biz_scope varchar(255),
 	status char(1) DEFAULT '0' NOT NULL,
