@@ -13,7 +13,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 				if(c.attrName == table.treeViewNameAttrName){
 		%>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.${table.treeViewCodeAttrName}+' ) '+(val||row.id);
+			return <% if(table.isPkCustom){ %>'( '+row.${table.treeViewCodeAttrName}+' ) '+<% } %>(val||row.id);
 		}},
 		<%
 					firstColumn = false;

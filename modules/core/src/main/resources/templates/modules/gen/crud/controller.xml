@@ -11,8 +11,8 @@ package ${packageName}.${moduleName}.web${isNotEmpty(subModuleName)?'.'+subModul
 <% if (table.isTreeEntity){ %>
 import java.util.Map;
 <% } %>
-<% if (!table.isTreeEntity || toBoolean(table.optionMap['isImportExport'])){ %>
 import java.util.List;
+<% if (!table.isTreeEntity || toBoolean(table.optionMap['isImportExport'])){ %>
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 <% } %>
@@ -345,7 +345,11 @@ public class ${ClassName}Controller extends BaseController {
 			Map<String, Object> map = MapUtils.newHashMap();
 			map.put("id", e.getId());
 			map.put("pId", e.getParentCode());
+			<% if(table.isPkCustom){ %>
 			map.put("name", StringUtils.getTreeNodeName(isShowCode, e.get${@StringUtils.cap(table.treeViewCodeAttrName)}(), e.get${@StringUtils.cap(table.treeViewNameAttrName)}()));
+			<% }else{ %>
+			map.put("name", e.get${@StringUtils.cap(table.treeViewNameAttrName)}());
+			<% } %>
 			map.put("isParent", !e.getIsTreeLeaf());
 			mapList.add(map);
 		}

@@ -190,7 +190,7 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 			}
 		}
 		// 如果不是基类属性
-		else if(!@StringUtils.equalsIgnoreCase(c.columnName, 'id') && !c.isSuperColumn){
+		else if(!@StringUtils.equalsIgnoreCase(c.simpleAttrName, 'id') && !c.isSuperColumn){
 			// 父类对象
 			if(table.parentExists && table.parentTableFkName == c.columnName){
 	%>
@@ -297,7 +297,7 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	<%
 				}
 		// 如果不是基类属性
-		}else if(!@StringUtils.equalsIgnoreCase(c.columnName, 'id') && !c.isSuperColumn){
+		}else if(!@StringUtils.equalsIgnoreCase(c.simpleAttrName, 'id') && !c.isSuperColumn){
 	%>
 	
 	<%

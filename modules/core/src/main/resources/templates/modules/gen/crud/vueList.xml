@@ -50,9 +50,11 @@ for(pk in table.pkList){
 }
 if(table.isTreeEntity){
 %>
+	<% if(table.isPkCustom){ %>
         <span class="cursor-pointer" @click="expandCollapse(record)">
           ( {{ record.${table.treeViewCodeAttrName} }} )
         </span>
+    <% } %>
         <a @click="handleForm({ ${idParam} })">
           {{ record.${table.treeViewNameAttrName} }}
         </a>
