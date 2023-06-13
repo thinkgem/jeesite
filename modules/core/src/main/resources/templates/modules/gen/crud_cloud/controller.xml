@@ -56,6 +56,8 @@ import ${packageName}.${moduleName}.entity${isNotEmpty(subModuleName)?'.'+subMod
 <% } %>
 import ${packageName}.${moduleName}.service${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${ClassName}Service;
 
+import io.seata.spring.annotation.GlobalTransactional;
+
 /**
  * ${functionName}Controller
  * @author ${functionAuthor}
@@ -209,6 +211,7 @@ public class ${ClassName}Controller extends BaseController {
 	@RequiresPermissions("${permissionPrefix}:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
+	@GlobalTransactional
 	public String save(@Validated ${ClassName} ${className}) {
 		${className}Service.save(${className});
 		return renderResult(Global.TRUE, text("保存${functionNameSimple}成功！"));
@@ -248,6 +251,7 @@ public class ${ClassName}Controller extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("${permissionPrefix}:edit")
 	@PostMapping(value = "importData")
+	@GlobalTransactional
 	public String importData(MultipartFile file) {
 		try {
 			String message = ${className}Service.importData(file);
@@ -265,6 +269,7 @@ public class ${ClassName}Controller extends BaseController {
 	@RequiresPermissions("${permissionPrefix}:edit")
 	@RequestMapping(value = "disable")
 	@ResponseBody
+	@GlobalTransactional
 	public String disable(${ClassName} ${className}) {
 		<% if(table.isTreeEntity){ %>
 		${ClassName} where = new ${ClassName}();
@@ -286,6 +291,7 @@ public class ${ClassName}Controller extends BaseController {
 	@RequiresPermissions("${permissionPrefix}:edit")
 	@RequestMapping(value = "enable")
 	@ResponseBody
+	@GlobalTransactional
 	public String enable(${ClassName} ${className}) {
 		${className}.setStatus(${ClassName}.STATUS_NORMAL);
 		${className}Service.updateStatus(${className});
@@ -300,6 +306,7 @@ public class ${ClassName}Controller extends BaseController {
 	@RequiresPermissions("${permissionPrefix}:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
+	@GlobalTransactional
 	public String delete(${ClassName} ${className}) {
 		${className}Service.delete(${className});
 		return renderResult(Global.TRUE, text("删除${functionNameSimple}成功！"));
