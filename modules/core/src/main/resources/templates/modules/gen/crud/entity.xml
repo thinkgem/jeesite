@@ -64,6 +64,11 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 				}
 			// ● 如果是TreeEntity类属性
 			}else if(table.isTreeEntity && c.isTreeEntityColumn){
+				if(c.columnName == 'parent_code'){
+		%>
+		@Column(name="${c.columnName}", attrName="${c.attrName}", label="${c.columnLabel}", isParentCode=true),
+		<%
+				}
 				if(!isTree){
 					isTree = true;
 		%>
