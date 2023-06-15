@@ -60,6 +60,7 @@ CREATE TABLE ${_prefix}gen_table_column
 CREATE TABLE ${_prefix}sys_area
 (
 	area_code varchar(100) NOT NULL,
+	area_name vargraphic(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -67,7 +68,6 @@ CREATE TABLE ${_prefix}sys_area
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	area_name vargraphic(100) NOT NULL,
 	area_type char(1),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
@@ -83,6 +83,9 @@ CREATE TABLE ${_prefix}sys_area
 CREATE TABLE ${_prefix}sys_company
 (
 	company_code varchar(64) NOT NULL,
+	view_code varchar(100) NOT NULL,
+	company_name vargraphic(200) NOT NULL,
+	full_name vargraphic(200) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -90,9 +93,6 @@ CREATE TABLE ${_prefix}sys_company
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	view_code varchar(100) NOT NULL,
-	company_name vargraphic(200) NOT NULL,
-	full_name vargraphic(200) NOT NULL,
 	area_code varchar(100),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
@@ -157,6 +157,7 @@ CREATE TABLE ${_prefix}sys_config
 CREATE TABLE ${_prefix}sys_dict_data
 (
 	dict_code varchar(64) NOT NULL,
+	dict_label vargraphic(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -164,7 +165,6 @@ CREATE TABLE ${_prefix}sys_dict_data
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	dict_label vargraphic(100) NOT NULL,
 	dict_value varchar(100) NOT NULL,
 	dict_icon varchar(100),
 	dict_type varchar(100) NOT NULL,
@@ -435,6 +435,7 @@ CREATE TABLE ${_prefix}sys_log
 CREATE TABLE ${_prefix}sys_menu
 (
 	menu_code varchar(64) NOT NULL,
+	menu_name varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -442,7 +443,6 @@ CREATE TABLE ${_prefix}sys_menu
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	menu_name varchar(100) NOT NULL,
 	menu_type char(1) NOT NULL,
 	menu_href varchar(1000),
 	menu_target varchar(20),
@@ -627,6 +627,9 @@ CREATE TABLE ${_prefix}sys_msg_template
 CREATE TABLE ${_prefix}sys_office
 (
 	office_code varchar(64) NOT NULL,
+	view_code varchar(100) NOT NULL,
+	office_name vargraphic(100) NOT NULL,
+	full_name varchar(200) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -634,9 +637,6 @@ CREATE TABLE ${_prefix}sys_office
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	view_code varchar(100) NOT NULL,
-	office_name vargraphic(100) NOT NULL,
-	full_name varchar(200) NOT NULL,
 	office_type char(1) NOT NULL,
 	leader varchar(100),
 	phone varchar(100),

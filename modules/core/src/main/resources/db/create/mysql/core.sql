@@ -61,6 +61,7 @@ CREATE TABLE ${_prefix}gen_table_column
 CREATE TABLE ${_prefix}sys_area
 (
 	area_code varchar(100) NOT NULL COMMENT '区域编码',
+	area_name varchar(100) NOT NULL COMMENT '区域名称',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
 	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
@@ -68,7 +69,6 @@ CREATE TABLE ${_prefix}sys_area
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
 	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	area_name varchar(100) NOT NULL COMMENT '区域名称',
 	area_type char(1) COMMENT '区域类型',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
@@ -84,6 +84,9 @@ CREATE TABLE ${_prefix}sys_area
 CREATE TABLE ${_prefix}sys_company
 (
 	company_code varchar(64) NOT NULL COMMENT '公司编码',
+	view_code varchar(100) NOT NULL COMMENT '公司代码',
+	company_name varchar(200) NOT NULL COMMENT '公司名称',
+	full_name varchar(200) NOT NULL COMMENT '公司全称',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
 	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
@@ -91,9 +94,6 @@ CREATE TABLE ${_prefix}sys_company
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
 	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	view_code varchar(100) NOT NULL COMMENT '公司代码',
-	company_name varchar(200) NOT NULL COMMENT '公司名称',
-	full_name varchar(200) NOT NULL COMMENT '公司全称',
 	area_code varchar(100) COMMENT '区域编码',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
@@ -158,6 +158,7 @@ CREATE TABLE ${_prefix}sys_config
 CREATE TABLE ${_prefix}sys_dict_data
 (
 	dict_code varchar(64) NOT NULL COMMENT '字典编码',
+	dict_label varchar(100) NOT NULL COMMENT '字典标签',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
 	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
@@ -165,7 +166,6 @@ CREATE TABLE ${_prefix}sys_dict_data
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
 	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	dict_label varchar(100) NOT NULL COMMENT '字典标签',
 	dict_value varchar(100) NOT NULL COMMENT '字典键值',
 	dict_icon varchar(100) COMMENT '字典图标',
 	dict_type varchar(100) NOT NULL COMMENT '字典类型',
@@ -436,6 +436,7 @@ CREATE TABLE ${_prefix}sys_log
 CREATE TABLE ${_prefix}sys_menu
 (
 	menu_code varchar(64) NOT NULL COMMENT '菜单编码',
+	menu_name varchar(100) NOT NULL COMMENT '菜单名称',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
 	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
@@ -443,7 +444,6 @@ CREATE TABLE ${_prefix}sys_menu
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
 	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	menu_name varchar(100) NOT NULL COMMENT '菜单名称',
 	menu_type char(1) NOT NULL COMMENT '菜单类型（1菜单 2权限 3开发）',
 	menu_href varchar(1000) COMMENT '链接',
 	menu_target varchar(20) COMMENT '目标',
@@ -628,6 +628,9 @@ CREATE TABLE ${_prefix}sys_msg_template
 CREATE TABLE ${_prefix}sys_office
 (
 	office_code varchar(64) NOT NULL COMMENT '机构编码',
+	view_code varchar(100) NOT NULL COMMENT '机构代码',
+	office_name varchar(100) NOT NULL COMMENT '机构名称',
+	full_name varchar(200) NOT NULL COMMENT '机构全称',
 	parent_code varchar(64) NOT NULL COMMENT '父级编号',
 	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
 	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
@@ -635,9 +638,6 @@ CREATE TABLE ${_prefix}sys_office
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
 	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	view_code varchar(100) NOT NULL COMMENT '机构代码',
-	office_name varchar(100) NOT NULL COMMENT '机构名称',
-	full_name varchar(200) NOT NULL COMMENT '机构全称',
 	office_type char(1) NOT NULL COMMENT '机构类型',
 	leader varchar(100) COMMENT '负责人',
 	phone varchar(100) COMMENT '办公电话',

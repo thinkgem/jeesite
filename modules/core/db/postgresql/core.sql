@@ -60,6 +60,7 @@ CREATE TABLE js_gen_table_column
 CREATE TABLE js_sys_area
 (
 	area_code varchar(100) NOT NULL,
+	area_name varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -67,7 +68,6 @@ CREATE TABLE js_sys_area
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	area_name varchar(100) NOT NULL,
 	area_type char(1),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
@@ -83,6 +83,9 @@ CREATE TABLE js_sys_area
 CREATE TABLE js_sys_company
 (
 	company_code varchar(64) NOT NULL,
+	view_code varchar(100) NOT NULL,
+	company_name varchar(200) NOT NULL,
+	full_name varchar(200) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -90,9 +93,6 @@ CREATE TABLE js_sys_company
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	view_code varchar(100) NOT NULL,
-	company_name varchar(200) NOT NULL,
-	full_name varchar(200) NOT NULL,
 	area_code varchar(100),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
@@ -157,6 +157,7 @@ CREATE TABLE js_sys_config
 CREATE TABLE js_sys_dict_data
 (
 	dict_code varchar(64) NOT NULL,
+	dict_label varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -164,7 +165,6 @@ CREATE TABLE js_sys_dict_data
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	dict_label varchar(100) NOT NULL,
 	dict_value varchar(100) NOT NULL,
 	dict_icon varchar(100),
 	dict_type varchar(100) NOT NULL,
@@ -435,6 +435,7 @@ CREATE TABLE js_sys_log
 CREATE TABLE js_sys_menu
 (
 	menu_code varchar(64) NOT NULL,
+	menu_name varchar(100) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -442,7 +443,6 @@ CREATE TABLE js_sys_menu
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	menu_name varchar(100) NOT NULL,
 	menu_type char(1) NOT NULL,
 	menu_href varchar(1000),
 	menu_target varchar(20),
@@ -627,6 +627,9 @@ CREATE TABLE js_sys_msg_template
 CREATE TABLE js_sys_office
 (
 	office_code varchar(64) NOT NULL,
+	view_code varchar(100) NOT NULL,
+	office_name varchar(100) NOT NULL,
+	full_name varchar(200) NOT NULL,
 	parent_code varchar(64) NOT NULL,
 	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
@@ -634,9 +637,6 @@ CREATE TABLE js_sys_office
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	view_code varchar(100) NOT NULL,
-	office_name varchar(100) NOT NULL,
-	full_name varchar(200) NOT NULL,
 	office_type char(1) NOT NULL,
 	leader varchar(100),
 	phone varchar(100),
@@ -1035,6 +1035,7 @@ COMMENT ON COLUMN js_gen_table_column.show_type IS '表单类型';
 COMMENT ON COLUMN js_gen_table_column.options IS '其它生成选项';
 COMMENT ON TABLE js_sys_area IS '行政区划';
 COMMENT ON COLUMN js_sys_area.area_code IS '区域编码';
+COMMENT ON COLUMN js_sys_area.area_name IS '区域名称';
 COMMENT ON COLUMN js_sys_area.parent_code IS '父级编号';
 COMMENT ON COLUMN js_sys_area.parent_codes IS '所有父级编号';
 COMMENT ON COLUMN js_sys_area.tree_sort IS '排序号（升序）';
@@ -1042,7 +1043,6 @@ COMMENT ON COLUMN js_sys_area.tree_sorts IS '所有排序号';
 COMMENT ON COLUMN js_sys_area.tree_leaf IS '是否最末级';
 COMMENT ON COLUMN js_sys_area.tree_level IS '层次级别';
 COMMENT ON COLUMN js_sys_area.tree_names IS '全节点名';
-COMMENT ON COLUMN js_sys_area.area_name IS '区域名称';
 COMMENT ON COLUMN js_sys_area.area_type IS '区域类型';
 COMMENT ON COLUMN js_sys_area.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_area.create_by IS '创建者';
@@ -1052,6 +1052,9 @@ COMMENT ON COLUMN js_sys_area.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_area.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_company IS '公司表';
 COMMENT ON COLUMN js_sys_company.company_code IS '公司编码';
+COMMENT ON COLUMN js_sys_company.view_code IS '公司代码';
+COMMENT ON COLUMN js_sys_company.company_name IS '公司名称';
+COMMENT ON COLUMN js_sys_company.full_name IS '公司全称';
 COMMENT ON COLUMN js_sys_company.parent_code IS '父级编号';
 COMMENT ON COLUMN js_sys_company.parent_codes IS '所有父级编号';
 COMMENT ON COLUMN js_sys_company.tree_sort IS '排序号（升序）';
@@ -1059,9 +1062,6 @@ COMMENT ON COLUMN js_sys_company.tree_sorts IS '所有排序号';
 COMMENT ON COLUMN js_sys_company.tree_leaf IS '是否最末级';
 COMMENT ON COLUMN js_sys_company.tree_level IS '层次级别';
 COMMENT ON COLUMN js_sys_company.tree_names IS '全节点名';
-COMMENT ON COLUMN js_sys_company.view_code IS '公司代码';
-COMMENT ON COLUMN js_sys_company.company_name IS '公司名称';
-COMMENT ON COLUMN js_sys_company.full_name IS '公司全称';
 COMMENT ON COLUMN js_sys_company.area_code IS '区域编码';
 COMMENT ON COLUMN js_sys_company.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN js_sys_company.create_by IS '创建者';
@@ -1108,6 +1108,7 @@ COMMENT ON COLUMN js_sys_config.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_config.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_dict_data IS '字典数据表';
 COMMENT ON COLUMN js_sys_dict_data.dict_code IS '字典编码';
+COMMENT ON COLUMN js_sys_dict_data.dict_label IS '字典标签';
 COMMENT ON COLUMN js_sys_dict_data.parent_code IS '父级编号';
 COMMENT ON COLUMN js_sys_dict_data.parent_codes IS '所有父级编号';
 COMMENT ON COLUMN js_sys_dict_data.tree_sort IS '排序号（升序）';
@@ -1115,7 +1116,6 @@ COMMENT ON COLUMN js_sys_dict_data.tree_sorts IS '所有排序号';
 COMMENT ON COLUMN js_sys_dict_data.tree_leaf IS '是否最末级';
 COMMENT ON COLUMN js_sys_dict_data.tree_level IS '层次级别';
 COMMENT ON COLUMN js_sys_dict_data.tree_names IS '全节点名';
-COMMENT ON COLUMN js_sys_dict_data.dict_label IS '字典标签';
 COMMENT ON COLUMN js_sys_dict_data.dict_value IS '字典键值';
 COMMENT ON COLUMN js_sys_dict_data.dict_icon IS '字典图标';
 COMMENT ON COLUMN js_sys_dict_data.dict_type IS '字典类型';
@@ -1314,6 +1314,7 @@ COMMENT ON COLUMN js_sys_log.corp_code IS '租户代码';
 COMMENT ON COLUMN js_sys_log.corp_name IS '租户名称';
 COMMENT ON TABLE js_sys_menu IS '菜单表';
 COMMENT ON COLUMN js_sys_menu.menu_code IS '菜单编码';
+COMMENT ON COLUMN js_sys_menu.menu_name IS '菜单名称';
 COMMENT ON COLUMN js_sys_menu.parent_code IS '父级编号';
 COMMENT ON COLUMN js_sys_menu.parent_codes IS '所有父级编号';
 COMMENT ON COLUMN js_sys_menu.tree_sort IS '排序号（升序）';
@@ -1321,7 +1322,6 @@ COMMENT ON COLUMN js_sys_menu.tree_sorts IS '所有排序号';
 COMMENT ON COLUMN js_sys_menu.tree_leaf IS '是否最末级';
 COMMENT ON COLUMN js_sys_menu.tree_level IS '层次级别';
 COMMENT ON COLUMN js_sys_menu.tree_names IS '全节点名';
-COMMENT ON COLUMN js_sys_menu.menu_name IS '菜单名称';
 COMMENT ON COLUMN js_sys_menu.menu_type IS '菜单类型（1菜单 2权限 3开发）';
 COMMENT ON COLUMN js_sys_menu.menu_href IS '链接';
 COMMENT ON COLUMN js_sys_menu.menu_target IS '目标';
@@ -1464,6 +1464,9 @@ COMMENT ON COLUMN js_sys_msg_template.update_date IS '更新时间';
 COMMENT ON COLUMN js_sys_msg_template.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_office IS '组织机构表';
 COMMENT ON COLUMN js_sys_office.office_code IS '机构编码';
+COMMENT ON COLUMN js_sys_office.view_code IS '机构代码';
+COMMENT ON COLUMN js_sys_office.office_name IS '机构名称';
+COMMENT ON COLUMN js_sys_office.full_name IS '机构全称';
 COMMENT ON COLUMN js_sys_office.parent_code IS '父级编号';
 COMMENT ON COLUMN js_sys_office.parent_codes IS '所有父级编号';
 COMMENT ON COLUMN js_sys_office.tree_sort IS '排序号（升序）';
@@ -1471,9 +1474,6 @@ COMMENT ON COLUMN js_sys_office.tree_sorts IS '所有排序号';
 COMMENT ON COLUMN js_sys_office.tree_leaf IS '是否最末级';
 COMMENT ON COLUMN js_sys_office.tree_level IS '层次级别';
 COMMENT ON COLUMN js_sys_office.tree_names IS '全节点名';
-COMMENT ON COLUMN js_sys_office.view_code IS '机构代码';
-COMMENT ON COLUMN js_sys_office.office_name IS '机构名称';
-COMMENT ON COLUMN js_sys_office.full_name IS '机构全称';
 COMMENT ON COLUMN js_sys_office.office_type IS '机构类型';
 COMMENT ON COLUMN js_sys_office.leader IS '负责人';
 COMMENT ON COLUMN js_sys_office.phone IS '办公电话';
