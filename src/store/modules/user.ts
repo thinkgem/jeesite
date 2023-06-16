@@ -87,12 +87,15 @@ export const useUserStore = defineStore({
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
     },
-    setUserInfo(info: UserInfo | null) {
-      if (info) {
+    setUserInfo(res: Recordable | null) {
+      const info: UserInfo = res?.user;
+      if (res && info) {
         const { ctxPath } = useGlobSetting();
         let url = info.avatarUrl || '/ctxPath/static/images/user1.jpg';
         url = url.replace('/ctxPath/', ctxPath + '/');
         info.avatarUrl = url || logoImg;
+        info.homePath = res.desktopUrl;
+        info.roleList = res.roleList;
       }
       this.userInfo = info;
       this.lastUpdateTime = new Date().getTime();
@@ -130,8 +133,7 @@ export const useUserStore = defineStore({
         this.initPageCache(res);
         return res;
       }
-      const userInfo = res.user;
-      this.setUserInfo(userInfo);
+      this.setUserInfo(res);
       this.initPageCache(res);
       this.setSessionTimeout(false);
       await this.afterLoginAction(res, goHome);
@@ -182,12 +184,11 @@ export const useUserStore = defineStore({
     async getUserInfoAction() {
       // if (!this.getToken) return null;
       const res = await userInfoApi();
-      const userInfo = res.user;
-      this.setUserInfo(userInfo);
+      this.setUserInfo(res);
       this.initPageCache(res);
       // this.setRoleList(roleList);
       this.setSessionTimeout(false);
-      return userInfo;
+      return res.user;
     },
     initPageCache(res: LoginResult) {
       this.setPageCache('demoMode', res.demoMode);
@@ -198,6 +199,7 @@ export const useUserStore = defineStore({
       this.setPageCache('modifyPasswordMsg', res.modifyPasswordMsg);
       this.setPageCache('msgEnabled', res.msgEnabled);
       this.setPageCache('sysCode', res.sysCode);
+      this.setPageCache('roleCode', res.roleCode);
       this.setPageCache('title', res.title);
     },
     /**

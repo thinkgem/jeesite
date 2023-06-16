@@ -48,13 +48,40 @@
           icon="ion:power-outline"
         />
         <MenuDivider v-if="sysListRef.length > 0" />
-        <MenuItem :text="t('系统切换：')" :class="`${prefixCls}-menu-subtitle`" />
+        <MenuItem
+          v-if="sysListRef.length > 0"
+          :class="`${prefixCls}-menu-subtitle`"
+          :text="t('系统切换：')"
+        />
         <MenuItem
           v-for="item in sysListRef"
           :key="item.value"
           :value="'sysCode-' + item.value"
           :text="item.name"
           :icon="sysCodeRef == item.value ? 'ant-design:check-outlined' : 'radix-icons:dot'"
+        />
+        <MenuDivider v-if="getUserInfo.roleList.length > 0" />
+        <MenuItem
+          v-if="getUserInfo.roleList.length > 0"
+          :class="`${prefixCls}-menu-subtitle`"
+          :text="t('选择身份：')"
+        >
+          <template #menuItemAfter>
+            <Icon
+              v-if="roleCodeRef"
+              icon="ant-design:close-circle-outlined"
+              class="ml-1"
+              @click="handleMenuClick({ key: 'roleCode-' })"
+              :title="t('取消设置')"
+            />
+          </template>
+        </MenuItem>
+        <MenuItem
+          v-for="item in getUserInfo.roleList"
+          :key="item.roleCode"
+          :value="'roleCode-' + item.roleCode"
+          :text="item.roleName"
+          :icon="roleCodeRef == item.roleCode ? 'ant-design:check-outlined' : 'radix-icons:dot'"
         />
       </Menu>
     </template>
@@ -83,10 +110,10 @@
   import Icon from '/@/components/Icon/src/Icon.vue';
 
   import { useDict } from '/@/components/Dict';
-  import { switchSys } from '/@/api/sys/login';
+  import { switchSys, switchRole } from '/@/api/sys/login';
   import { PageEnum } from '/@/enums/pageEnum';
 
-  type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock' | 'roleCode-';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -109,17 +136,24 @@
       const userStore = useUserStore();
       const go = useGo();
 
-      const getUserInfo = computed(() => {
-        const { userName = '', avatarUrl, remarks } = userStore.getUserInfo || {};
-        return { userName, avatarUrl, remarks };
-      });
-
       const sysCodeRef = ref<string>('default');
       const sysListRef = ref<Recordable[]>([]);
+      const roleCodeRef = ref<string>('');
+
+      const getUserInfo = computed(() => {
+        const { userName = '', avatarUrl, remarks, roleList } = userStore.getUserInfo || {};
+        return {
+          userName,
+          avatarUrl,
+          remarks,
+          roleList: (roleList || []).filter((e) => e.isShow == '1'),
+        };
+      });
 
       if (!props.sidebar) {
         onMounted(async () => {
           sysCodeRef.value = userStore.getPageCacheByKey('sysCode', 'default');
+          roleCodeRef.value = userStore.getPageCacheByKey('roleCode', '');
           const sysList = await useDict().initGetDictList('sys_menu_sys_code');
           if (sysList.length > 1) {
             sysListRef.value = sysList;
@@ -167,11 +201,18 @@
             handleLock();
             break;
           default:
-            const keyPrefix = 'sysCode-';
-            if (String(e.key).startsWith(keyPrefix)) {
+            const sysCodePrefix = 'sysCode-';
+            if (String(e.key).startsWith(sysCodePrefix)) {
               go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
-              const sysCode = String(e.key).substring(keyPrefix.length);
+              const sysCode = String(e.key).substring(sysCodePrefix.length);
               await switchSys(sysCode);
+              location.reload();
+            }
+            const roleCodePrefix = 'roleCode-';
+            if (String(e.key).startsWith(roleCodePrefix)) {
+              go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
+              const roleCode = String(e.key).substring(roleCodePrefix.length);
+              await switchRole(roleCode);
               location.reload();
             }
             break;
@@ -189,6 +230,7 @@
         handleLoginOut,
         sysCodeRef,
         sysListRef,
+        roleCodeRef,
         userStore,
       };
     },
@@ -253,6 +295,9 @@
       span {
         font-weight: bold;
         opacity: 0.7;
+        svg {
+          padding-top: 3px;
+        }
       }
     }
 

@@ -3,6 +3,7 @@
     <span class="flex items-center">
       <Icon v-if="icon" :icon="icon" class="mr-1" />
       <span>{{ text }}</span>
+      <slot name="menuItemAfter"></slot>
     </span>
   </MenuItem>
 </template>

@@ -111,7 +111,7 @@
       if (avatarBase64.value != '') {
         user.avatarUrl = avatarBase64.value;
       }
-      userStore.setUserInfo(user);
+      userStore.setUserInfo(userInfoRes);
       showMessage(res.message);
     } catch (error: any) {
       if (error && error.errorFields) {

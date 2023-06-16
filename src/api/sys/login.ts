@@ -34,6 +34,7 @@ export interface LoginResult {
   modifyPasswordMsg: string;
   msgEnabled: boolean;
   sysCode: string;
+  roleCode: string;
   title: string;
 }
 
@@ -56,6 +57,10 @@ export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') =
 
 export const switchSys = (sysCode: string) => {
   return defHttp.get({ url: adminPath + '/switch/' + sysCode });
+};
+
+export const switchRole = (roleCode: string) => {
+  return defHttp.get({ url: adminPath + '/switchRole/' + roleCode });
 };
 
 export const switchSkin = (name = '') => {

@@ -41,6 +41,7 @@ export interface UserInfo {
   userName: string;
   avatarUrl: string;
   remarks?: string;
+  roleList?: any[];
   homePath?: string;
   // roles: RoleInfo[];
 }
