@@ -30,4 +30,8 @@ export const onlineListData = (params?: Online | any) =>
 export const onlineTickOut = (params?: Online | any) =>
   defHttp.post<Result>({ url: adminPath + '/sys/online/tickOut', params });
 
-export const onlineCount = () => defHttp.post<Number>({ url: adminPath + '/sys/online/count' });
+export const onlineCount = () =>
+  defHttp.post<Number>(
+    { url: adminPath + '/sys/online/count?__notUpdateSession=true' },
+    { errorMessageMode: 'none' },
+  );
