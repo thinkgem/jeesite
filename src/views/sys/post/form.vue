@@ -33,6 +33,7 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { Post, postSave, postForm } from '/@/api/sys/post';
+  import { roleTreeData } from '/@/api/sys/role';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -83,6 +84,17 @@
       required: true,
     },
     {
+      label: t('关联角色'),
+      field: 'roleCodes',
+      fieldLabel: 'roleNames',
+      component: 'TreeSelect',
+      componentProps: {
+        api: roleTreeData,
+        treeCheckable: true,
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+    {
       label: t('备注信息'),
       field: 'remarks',
       component: 'InputTextArea',
@@ -104,6 +116,8 @@
     await resetFields();
     const res = await postForm(data);
     record.value = (res.post || {}) as Post;
+    record.value.roleCodes = res.roleCodes || '';
+    record.value.roleNames = res.roleNames || '';
     setFieldsValue(record.value);
     updateSchema([
       {
