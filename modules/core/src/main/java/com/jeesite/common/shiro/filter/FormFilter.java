@@ -6,6 +6,7 @@ package com.jeesite.common.shiro.filter;
 
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
@@ -16,7 +17,9 @@ import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Log;
+import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
@@ -39,6 +42,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -426,6 +430,38 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("useCorpModel", Global.isUseCorpModel()
 				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
 		data.put("title", Global.getProperty("productName"));
+		return data;
+	}
+
+	/**
+	 * 获取登录页面数据
+	 * @author ThinkGem
+	 */
+	public static Map<String, Object> getLoginSuccessData(User user, Session session) {
+		Map<String, Object> data = MapUtils.newHashMap();
+		data.put("user", user); // 设置当前用户信息
+		data.put("demoMode", Global.isDemoMode());
+		data.put("useCorpModel", Global.isUseCorpModel());
+		data.put("currentCorpCode", CorpUtils.getCurrentCorpCode());
+		data.put("currentCorpName", CorpUtils.getCurrentCorpName());
+		data.put("msgEnabled", Global.getPropertyToBoolean("msg.enabled", "false"));
+		data.put("sysCode", session.getAttribute("sysCode"));
+		data.put("roleCode", session.getAttribute("roleCode"));
+		data.put("title", Global.getProperty("productName"));
+		List<Map<String, Object>> roleList = ListUtils.newArrayList();
+		String desktopUrl = null;
+		for (Role role : user.getRoleList()){
+			Map<String, Object> roleMap = MapUtils.newHashMap();
+			roleMap.put("roleCode", role.getRoleCode());
+			roleMap.put("roleName", role.getRoleName());
+			roleMap.put("isShow", role.getIsShow());
+			roleList.add(roleMap);
+			if (desktopUrl == null && StringUtils.isNotBlank(role.getDesktopUrl())) {
+				desktopUrl = role.getDesktopUrl();
+			}
+		}
+		data.put("roleList", roleList);
+		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
 		return data;
 	}
 	
