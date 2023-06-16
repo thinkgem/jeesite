@@ -9,6 +9,7 @@ import { Page, TreeDataModel } from '../model/baseModel';
 import { User } from './user';
 import { UploadApiResult } from './upload';
 import { UploadFileParams } from '/#/axios';
+import { AxiosProgressEvent } from 'axios';
 
 const { ctxPath, adminPath } = useGlobSetting();
 
@@ -39,7 +40,7 @@ export const checkEmpNo = (oldEmpNo: string, empNo: string) =>
 
 export const empUserImportData = (
   params: UploadFileParams,
-  onUploadProgress: (progressEvent: ProgressEvent) => void,
+  onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
 ) =>
   defHttp.uploadFile<UploadApiResult>(
     {

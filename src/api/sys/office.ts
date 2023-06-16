@@ -6,8 +6,11 @@
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 import { TreeDataModel, TreeModel } from '../model/baseModel';
+import { UploadApiResult } from './upload';
+import { UploadFileParams } from '/#/axios';
+import { AxiosProgressEvent } from 'axios';
 
-const { adminPath } = useGlobSetting();
+const { ctxPath, adminPath } = useGlobSetting();
 
 export interface Office extends TreeModel<Office> {
   officeCode?: string; // 机构编码
@@ -39,6 +42,18 @@ export const officeCreateNextNode = (params?: Office | any) =>
 
 export const officeSave = (params?: any, data?: Office | any) =>
   defHttp.postJson<Office>({ url: adminPath + '/sys/office/save', params, data });
+
+export const officeImportData = (
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: AxiosProgressEvent) => void,
+) =>
+  defHttp.uploadFile<UploadApiResult>(
+    {
+      url: ctxPath + adminPath + '/sys/office/importData',
+      onUploadProgress,
+    },
+    params,
+  );
 
 export const officeDisable = (params?: Office | any) =>
   defHttp.get<Office>({ url: adminPath + '/sys/office/disable', params });

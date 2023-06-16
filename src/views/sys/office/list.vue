@@ -17,6 +17,12 @@
         <a-button @click="collapseAll" :title="t('展开全部')">
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
+        <a-button type="default" @click="handleExport()">
+          <Icon icon="ant-design:download-outlined" /> {{ t('导出') }}
+        </a-button>
+        <a-button type="default" @click="handleImport()">
+          <Icon icon="ant-design:upload-outlined" /> {{ t('导入') }}
+        </a-button>
         <a-button type="primary" @click="handleForm({})" v-auth="'sys:office:edit'">
           <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
@@ -31,6 +37,7 @@
       </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
+    <FormImport @register="registerImportModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -42,14 +49,18 @@
   import { defineComponent, watch, nextTick } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useGlobSetting } from '/@/hooks/setting';
+  import { downloadByUrl } from '/@/utils/file/download';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { officeDelete, officeListData } from '/@/api/sys/office';
   import { officeDisable, officeEnable } from '/@/api/sys/office';
   import { useDrawer } from '/@/components/Drawer';
+  import { useModal } from '/@/components/Modal';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
+  import FormImport from './formImport.vue';
 
   const props = defineProps({
     treeCode: String,
@@ -276,6 +287,20 @@
 
   function handleForm(record: Recordable) {
     openDrawer(true, record);
+  }
+
+  async function handleExport() {
+    const { ctxAdminPath } = useGlobSetting();
+    downloadByUrl({
+      url: ctxAdminPath + '/sys/office/exportData',
+      target: '_self',
+    });
+  }
+
+  const [registerImportModal, { openModal: importModal }] = useModal();
+
+  function handleImport() {
+    importModal(true, {});
   }
 
   async function handleDisable(record: Recordable) {
