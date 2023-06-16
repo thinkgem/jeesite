@@ -122,6 +122,16 @@
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
     {
+      label: t('用户类型'),
+      field: 'userType',
+      component: 'Select',
+      componentProps: {
+        dictType: 'sys_user_type',
+        allowClear: true,
+      },
+      ifShow: () => op.value === 'add' || op.value === 'edit',
+    },
+    {
       label: t('角色分类'),
       field: 'roleType',
       component: 'Select',
@@ -143,11 +153,22 @@
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
     {
-      label: t('用户类型'),
-      field: 'userType',
-      component: 'Select',
+      label: t('桌面地址'),
+      field: 'desktopUrl',
+      helpMessage: '仪表盘地址，如果当前多个角色，则根据角色的排序优先级选择。',
+      component: 'Input',
       componentProps: {
-        dictType: 'sys_user_type',
+        maxlength: 250,
+      },
+      ifShow: () => op.value === 'add' || op.value === 'edit',
+    },
+    {
+      label: t('是否可见'),
+      field: 'isShow',
+      helpMessage: '切换身份列表中是否显示该角色',
+      component: 'RadioGroup',
+      componentProps: {
+        dictType: 'sys_show_hide',
         allowClear: true,
       },
       ifShow: () => op.value === 'add' || op.value === 'edit',
