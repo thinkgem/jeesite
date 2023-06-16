@@ -13,11 +13,12 @@
   import { computed, ref, unref } from 'vue';
   import { useRouter } from 'vue-router';
   import { PageWrapper } from '/@/components/Page';
+  import { propTypes } from '/@/utils/propTypes';
 
   const props = defineProps({
-    id: {
-      type: String,
-    },
+    id: propTypes.string,
+    aa: propTypes.string,
+    bb: propTypes.string,
   });
 
   const { currentRoute, push } = useRouter();
