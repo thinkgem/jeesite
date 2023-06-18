@@ -10,7 +10,7 @@
 		<right_margin>30</right_margin>
 	</page_setting>
 	<category_index>0</category_index>
-	<zoom>1.0</zoom>
+	<zoom>0.8</zoom>
 	<x>0</x>
 	<y>0</y>
 	<default_color>
@@ -1800,22 +1800,6 @@
 			<type>nvarchar(n)</type>
 		</word>
 		<word>
-			<id>6c2473c9a63d2ad405655d7adff7591d6d6c532c</id>
-			<length>null</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description></description>
-			<logical_name>最后心跳时间</logical_name>
-			<physical_name>heart_time</physical_name>
-			<type>datetime</type>
-		</word>
-		<word>
 			<id>869fc70cf3a4e92e8056b40814df8e03f9f9efde</id>
 			<length>64</length>
 			<decimal>null</decimal>
@@ -2310,22 +2294,6 @@
 			<logical_name>负责人</logical_name>
 			<physical_name>leader</physical_name>
 			<type>varchar(n)</type>
-		</word>
-		<word>
-			<id>7eedb24c45d73dd56887eefd7e438528fbf4cf10</id>
-			<length>10</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description>社区版、标准版、专业版</description>
-			<logical_name>系统许可版本</logical_name>
-			<physical_name>lic_version</physical_name>
-			<type>nvarchar(n)</type>
 		</word>
 		<word>
 			<id>b6a52f87ba533a819eb169768b846266226d641c</id>
@@ -3704,38 +3672,6 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>a08bfaf64f7f083d4150eb89f91545da11aea32c</id>
-			<length>50</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description></description>
-			<logical_name>系统节点名称</logical_name>
-			<physical_name>server_name</physical_name>
-			<type>nvarchar(n)</type>
-		</word>
-		<word>
-			<id>471884a5e2033e41803feef5822bdd0fe52abe3c</id>
-			<length>500</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description></description>
-			<logical_name>系统节点地址</logical_name>
-			<physical_name>server_url</physical_name>
-			<type>nvarchar(n)</type>
-		</word>
-		<word>
 			<id>b63e72d00089330f9932863eeb972e87d94cabce</id>
 			<length>1</length>
 			<decimal>null</decimal>
@@ -3814,22 +3750,6 @@
 			<logical_name>触发器启动时间</logical_name>
 			<physical_name>start_time</physical_name>
 			<type>datetime</type>
-		</word>
-		<word>
-			<id>cae139cc445b5d645601b0ef865245c1a57ac0cb</id>
-			<length>1</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description>在线、在线许可不正确、离线</description>
-			<logical_name>服务状态</logical_name>
-			<physical_name>state</physical_name>
-			<type>character(n)</type>
 		</word>
 		<word>
 			<id>cf949a5f8d12902f0a8384fa68c72f55e6136812</id>
@@ -3974,22 +3894,6 @@
 			<logical_name>表名</logical_name>
 			<physical_name>table_name</physical_name>
 			<type>varchar(n)</type>
-		</word>
-		<word>
-			<id>cac7cfc71f4053cb77cde93a010175137825a041</id>
-			<length>10</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<char_semantics>false</char_semantics>
-			<description></description>
-			<logical_name>超时时间</logical_name>
-			<physical_name>timeout</physical_name>
-			<type>decimal(p)</type>
 		</word>
 		<word>
 			<id>3c113dc08971de6b9b524afdcb41a1562f130081</id>
@@ -9187,13 +9091,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>f601342fb06ad38b177f54ec4e118bcf71904894</id>
+			<id>744bd0eebeda4ed126427b8f2eb9916fcc2859bb</id>
 			<height>308</height>
 			<width>335</width>
 				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
-			<x>3864</x>
-			<y>2952</y>
+			<x>3984</x>
+			<y>972</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -14813,269 +14717,6 @@
 						</column>
 					</columns>
 				</inidex>
-			</indexes>
-			<complex_unique_key_list>
-			</complex_unique_key_list>
-			<table_properties>
-				<schema></schema>
-			</table_properties>
-		</table>
-		<table>
-			<id>585cc27f9a416513a84c6652cb4728c790bf3e6b</id>
-			<height>386</height>
-			<width>383</width>
-				<font_name>Segoe UI</font_name>
-				<font_size>9</font_size>
-			<x>3951</x>
-			<y>876</y>
-			<color>
-				<r>128</r>
-				<g>128</g>
-				<b>192</b>
-			</color>
-			<connections>
-			</connections>
-			<physical_name>js_sys_health_check</physical_name>
-			<logical_name>系统健康检查</logical_name>
-			<description></description>
-			<constraint></constraint>
-			<primary_key_name></primary_key_name>
-			<option></option>
-			<columns>
-				<normal_column>
-					<word_id>869fc70cf3a4e92e8056b40814df8e03f9f9efde</word_id>
-					<id>903225e50be8c13dd9607b80b238e5689ecf425c</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>varchar(n)</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>true</not_null>
-					<primary_key>true</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<normal_column>
-					<word_id>a08bfaf64f7f083d4150eb89f91545da11aea32c</word_id>
-					<id>b651f63db113013221940195d72f8742c6aa080e</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>nvarchar(n)</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
-					<primary_key>false</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<normal_column>
-					<word_id>471884a5e2033e41803feef5822bdd0fe52abe3c</word_id>
-					<id>13be59535841c33bdf1402552eb15a4f40dbf8d4</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>nvarchar(n)</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
-					<primary_key>false</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<normal_column>
-					<word_id>7eedb24c45d73dd56887eefd7e438528fbf4cf10</word_id>
-					<id>9ea3d2ee0c298406c51bc1452f706153ae4b005a</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>nvarchar(n)</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
-					<primary_key>false</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<normal_column>
-					<word_id>6c2473c9a63d2ad405655d7adff7591d6d6c532c</word_id>
-					<id>e36b0b6edc64bd0f397c41372a501c3e1426f65c</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>datetime</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
-					<primary_key>false</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<normal_column>
-					<word_id>cac7cfc71f4053cb77cde93a010175137825a041</word_id>
-					<id>0fcf0332920224c88dec71a0ffecaf688b60e48e</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>decimal(p)</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
-					<primary_key>false</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<normal_column>
-					<word_id>cae139cc445b5d645601b0ef865245c1a57ac0cb</word_id>
-					<id>3cfa7de8639e8f7f1ddf28638698ff90818bb0fc</id>
-					<description></description>
-					<unique_key_name></unique_key_name>
-					<logical_name></logical_name>
-					<physical_name></physical_name>
-					<type>character(n)</type>
-					<constraint></constraint>
-					<default_value></default_value>
-					<auto_increment>false</auto_increment>
-					<foreign_key>false</foreign_key>
-					<not_null>false</not_null>
-					<primary_key>false</primary_key>
-					<unique_key>false</unique_key>
-					<character_set></character_set>
-					<collation></collation>
-					<sequence>
-						<name></name>
-						<schema></schema>
-						<increment></increment>
-						<min_value></min_value>
-						<max_value></max_value>
-						<start></start>
-						<cache></cache>
-						<nocache>false</nocache>
-						<cycle>false</cycle>
-						<order>false</order>
-						<description></description>
-						<data_type></data_type>
-						<decimal_size>0</decimal_size>
-					</sequence>
-				</normal_column>
-				<column_group>35ae805d1da92afdb99b2fe8c536d1649356fccd</column_group>
-			</columns>
-			<indexes>
 			</indexes>
 			<complex_unique_key_list>
 			</complex_unique_key_list>

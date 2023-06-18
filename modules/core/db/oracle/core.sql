@@ -321,26 +321,6 @@ CREATE TABLE js_sys_file_upload
 );
 
 
--- 系统健康检查
-CREATE TABLE js_sys_health_check
-(
-	id varchar2(64) NOT NULL,
-	server_name nvarchar2(50),
-	server_url nvarchar2(500),
-	lic_version nvarchar2(10),
-	heart_time timestamp,
-	timeout number(10),
-	state char(1),
-	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar2(64) NOT NULL,
-	create_date timestamp NOT NULL,
-	update_by varchar2(64) NOT NULL,
-	update_date timestamp NOT NULL,
-	remarks nvarchar2(500),
-	PRIMARY KEY (id)
-);
-
-
 -- 作业调度表
 CREATE TABLE js_sys_job
 (
@@ -1232,20 +1212,6 @@ COMMENT ON COLUMN js_sys_file_upload.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN js_sys_file_upload.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN js_sys_file_upload.extend_d4 IS '扩展 Date 4';
 COMMENT ON COLUMN js_sys_file_upload.extend_json IS '扩展 JSON';
-COMMENT ON TABLE js_sys_health_check IS '系统健康检查';
-COMMENT ON COLUMN js_sys_health_check.id IS '编号';
-COMMENT ON COLUMN js_sys_health_check.server_name IS '系统节点名称';
-COMMENT ON COLUMN js_sys_health_check.server_url IS '系统节点地址';
-COMMENT ON COLUMN js_sys_health_check.lic_version IS '系统许可版本';
-COMMENT ON COLUMN js_sys_health_check.heart_time IS '最后心跳时间';
-COMMENT ON COLUMN js_sys_health_check.timeout IS '超时时间';
-COMMENT ON COLUMN js_sys_health_check.state IS '服务状态';
-COMMENT ON COLUMN js_sys_health_check.status IS '状态（0正常 1删除 2停用）';
-COMMENT ON COLUMN js_sys_health_check.create_by IS '创建者';
-COMMENT ON COLUMN js_sys_health_check.create_date IS '创建时间';
-COMMENT ON COLUMN js_sys_health_check.update_by IS '更新者';
-COMMENT ON COLUMN js_sys_health_check.update_date IS '更新时间';
-COMMENT ON COLUMN js_sys_health_check.remarks IS '备注信息';
 COMMENT ON TABLE js_sys_job IS '作业调度表';
 COMMENT ON COLUMN js_sys_job.job_name IS '任务名称';
 COMMENT ON COLUMN js_sys_job.job_group IS '任务组名';

@@ -321,26 +321,6 @@ CREATE TABLE [${_prefix}sys_file_upload]
 );
 
 
--- 系统健康检查
-CREATE TABLE [${_prefix}sys_health_check]
-(
-	[id] varchar(64) NOT NULL,
-	[server_name] nvarchar(50),
-	[server_url] nvarchar(500),
-	[lic_version] nvarchar(10),
-	[heart_time] datetime,
-	[timeout] decimal(10),
-	[state] char(1),
-	[status] char(1) DEFAULT '0' NOT NULL,
-	[create_by] varchar(64) NOT NULL,
-	[create_date] datetime NOT NULL,
-	[update_by] varchar(64) NOT NULL,
-	[update_date] datetime NOT NULL,
-	[remarks] nvarchar(500),
-	PRIMARY KEY ([id])
-);
-
-
 -- 作业调度表
 CREATE TABLE [${_prefix}sys_job]
 (

@@ -322,26 +322,6 @@ CREATE TABLE ${_prefix}sys_file_upload
 ) COMMENT = '文件上传表';
 
 
--- 系统健康检查
-CREATE TABLE ${_prefix}sys_health_check
-(
-	id varchar(64) NOT NULL COMMENT '编号',
-	server_name varchar(50) COMMENT '系统节点名称',
-	server_url varchar(500) COMMENT '系统节点地址',
-	lic_version varchar(10) COMMENT '系统许可版本',
-	heart_time datetime COMMENT '最后心跳时间',
-	timeout decimal(10) COMMENT '超时时间',
-	state char(1) COMMENT '服务状态',
-	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
-	create_by varchar(64) NOT NULL COMMENT '创建者',
-	create_date datetime NOT NULL COMMENT '创建时间',
-	update_by varchar(64) NOT NULL COMMENT '更新者',
-	update_date datetime NOT NULL COMMENT '更新时间',
-	remarks varchar(500) COMMENT '备注信息',
-	PRIMARY KEY (id)
-) COMMENT = '系统健康检查';
-
-
 -- 作业调度表
 CREATE TABLE ${_prefix}sys_job
 (

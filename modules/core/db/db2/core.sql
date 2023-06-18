@@ -321,26 +321,6 @@ CREATE TABLE js_sys_file_upload
 );
 
 
--- 系统健康检查
-CREATE TABLE js_sys_health_check
-(
-	id varchar(64) NOT NULL,
-	server_name vargraphic(50),
-	server_url vargraphic(500),
-	lic_version vargraphic(10),
-	heart_time timestamp,
-	timeout decimal(10),
-	state char(1),
-	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar(64) NOT NULL,
-	create_date timestamp NOT NULL,
-	update_by varchar(64) NOT NULL,
-	update_date timestamp NOT NULL,
-	remarks vargraphic(500),
-	PRIMARY KEY (id)
-);
-
-
 -- 作业调度表
 CREATE TABLE js_sys_job
 (
