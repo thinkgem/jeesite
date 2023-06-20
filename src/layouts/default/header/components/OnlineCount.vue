@@ -38,7 +38,11 @@
       const count = ref<Number>(0);
 
       async function refreshOnlineCount() {
-        count.value = Number(await onlineCount());
+        let num = Number(await onlineCount());
+        if (!num || Number.isNaN(num)) {
+          num = 0;
+        }
+        count.value = num;
       }
 
       onMounted(async () => {
