@@ -521,7 +521,7 @@ j2cache:
     # 存储模式 （generic|hash）
     storage: hash
     # 通知订阅的通道名
-    channel: j2cache
+    channel: jeesite
     # 缓存命名空间名
     namespace: jeesite
     # 消息监听器
