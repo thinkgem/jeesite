@@ -69,10 +69,11 @@
 
 		<!-- Servlet Api -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 
 		<!-- Spring Boot Tomcat
 		<dependency>
