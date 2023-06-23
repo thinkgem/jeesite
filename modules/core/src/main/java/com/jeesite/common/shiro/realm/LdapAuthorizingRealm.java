@@ -7,7 +7,7 @@ package com.jeesite.common.shiro.realm;
 import javax.naming.AuthenticationNotSupportedException;
 import javax.naming.NamingException;
 import javax.naming.ldap.LdapContext;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

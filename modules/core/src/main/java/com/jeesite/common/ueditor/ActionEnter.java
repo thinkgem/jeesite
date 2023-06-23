@@ -2,7 +2,7 @@ package com.jeesite.common.ueditor;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.ueditor.define.ActionMap;

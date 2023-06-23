@@ -6,8 +6,8 @@ package com.jeesite.common.shiro.filter;
 
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

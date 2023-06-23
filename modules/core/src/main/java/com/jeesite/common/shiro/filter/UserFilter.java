@@ -6,8 +6,8 @@ package com.jeesite.common.shiro.filter;
 
 import java.io.IOException;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 /**
  * 用户权限过滤器

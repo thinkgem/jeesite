@@ -4,7 +4,7 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class IpUtils {
 

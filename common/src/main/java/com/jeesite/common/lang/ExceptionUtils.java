@@ -8,7 +8,7 @@ package com.jeesite.common.lang;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 关于异常的工具类.

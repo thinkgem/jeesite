@@ -7,7 +7,7 @@ package com.jeesite.modules.config;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cas.CasSubjectFactory;

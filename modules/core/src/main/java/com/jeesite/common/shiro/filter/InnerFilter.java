@@ -8,9 +8,9 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 内部系统访问过滤器

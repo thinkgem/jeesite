@@ -20,7 +20,7 @@ import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.SiteService;
 import org.springframework.ui.Model;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

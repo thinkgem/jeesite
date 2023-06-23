@@ -8,9 +8,9 @@ import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Cookie工具类
