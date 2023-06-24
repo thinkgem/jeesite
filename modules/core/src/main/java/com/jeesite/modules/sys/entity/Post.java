@@ -11,9 +11,9 @@ import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Table(name="${_prefix}sys_post", alias="a", label="岗位信息", columns={
 		@Column(includeEntity=BaseEntity.class),

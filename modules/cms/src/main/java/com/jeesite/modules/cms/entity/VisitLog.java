@@ -6,7 +6,7 @@ package com.jeesite.modules.cms.entity;
 
 import java.util.Date;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.BaseEntity;

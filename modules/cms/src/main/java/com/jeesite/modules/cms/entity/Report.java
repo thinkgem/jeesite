@@ -4,7 +4,7 @@
  */
 package com.jeesite.modules.cms.entity;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;

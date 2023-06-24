@@ -14,8 +14,8 @@ import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 /**
