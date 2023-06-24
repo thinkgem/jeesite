@@ -18,9 +18,9 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * 组织机构Entity

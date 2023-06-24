@@ -9,7 +9,7 @@
 package ${packageName}.${moduleName}.entity${isNotBlank(subModuleName)?'.'+subModuleName:''};
 
 <% if(table.childList.~size > 0){ %>
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 <% } %>
 <% for(i in table.importList){ %>
 import ${i};

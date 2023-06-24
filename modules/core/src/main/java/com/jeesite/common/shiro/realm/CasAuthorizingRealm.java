@@ -31,7 +31,7 @@ import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import jakarta.servlet.http.HttpServletRequest;
-import javax.validation.ValidationException;
+import jakarta.validation.ValidationException;
 import java.util.Map;
 
 /**

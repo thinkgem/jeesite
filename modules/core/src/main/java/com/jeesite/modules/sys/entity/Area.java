@@ -4,8 +4,8 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
