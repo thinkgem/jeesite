@@ -24,7 +24,7 @@
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
 		<nacos.version>2.2.0.2</nacos.version>
-		<seata.version>1.4.2</seata.version>
+		<seata.version>1.6.1</seata.version>
 		<eureka.version>1.10.18</eureka.version>
 		<xstream.version>1.4.20</xstream.version>
 		
