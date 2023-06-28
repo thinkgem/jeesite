@@ -5,9 +5,9 @@
 
     <parent>
         <groupId>com.jeesite</groupId>
-        <artifactId>jeesite-cloud-parent</artifactId>
+        <artifactId>jeesite-cloud-parent-javax</artifactId>
         <version>5.4.boot3-SNAPSHOT</version>
-        <relativePath>../parent/pom.xml</relativePath>
+        <relativePath>../parent/javax/pom.xml</relativePath>
     </parent>
 
     <artifactId>jeesite-cloud-sentinel</artifactId>
@@ -22,24 +22,21 @@
 		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.SentinelApplication</start-class>
 		
-		<!-- environment setting -->
-		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
-		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
-		
 		<!-- version setting -->
 		<sentinel.version>1.8.5</sentinel.version>
         <curator.version>4.0.1</curator.version>
-        
+
 		<!-- docker setting -->
         <docker.run.port>9311:9311</docker.run.port>
         
 	</properties>
 	
     <dependencies>
-		
+
 		<dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-core</artifactId>
+            <version>${sentinel.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <dependency>
             <groupId>com.alibaba.csp</groupId>
@@ -49,6 +46,7 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-transport-simple-http</artifactId>
+            <version>${sentinel.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <dependency>
             <groupId>com.alibaba.csp</groupId>
@@ -63,18 +61,23 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-<!--             <version>${spring.boot.version}</version> -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
-<!--             <version>${spring.boot.version}</version> -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-<!--             <version>${spring.boot.version}</version> -->
             <scope>test</scope>
         </dependency>
 
@@ -159,7 +162,6 @@
         	<version>1.16.1</version>
         	<scope>test</scope>
         </dependency>
-        
     </dependencies>
 
     <build>

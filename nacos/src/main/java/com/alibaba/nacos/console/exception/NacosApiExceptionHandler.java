@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import jakarta.servlet.ServletException;
+import javax.servlet.ServletException;
 import java.io.IOException;
 
 /**

@@ -15,7 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard.auth;
 
-import jakarta.servlet.Filter;
+import javax.servlet.Filter;
 
 /**
  * <p>The Servlet filter for authentication.</p>

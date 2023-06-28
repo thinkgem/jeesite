@@ -37,7 +37,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
-import jakarta.servlet.Filter;
+import javax.servlet.Filter;
 
 /**
  * @author leyou

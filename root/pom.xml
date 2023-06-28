@@ -16,6 +16,7 @@
 		<!--<module>../common</module>-->
 		<module>../parent</module>
 		<module>../parent/web</module>
+		<module>../parent/javax</module>
 		<module>../eureka</module>
 		<module>../config</module>
         <module>../nacos</module>

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.13</version>
+		<relativePath />
+	</parent>
+
+	<groupId>com.jeesite</groupId>
+	<artifactId>jeesite-cloud-parent-javax</artifactId>
+	<version>5.4.boot3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>JeeSite Cloud Parent Javax</name>
+	<url>http://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+
+	<properties>
+
+		<!-- version setting -->
+		<spring-cloud.version>2021.0.7</spring-cloud.version>
+		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+		<nacos.version>2.2.0.2</nacos.version>
+
+		<!-- environment setting -->
+		<java.version>17</java.version>
+		<!--<tomcat.version>9.0.58</tomcat.version>-->
+		<maven.test.skip>true</maven.test.skip>
+		<resource.delimiter>@</resource.delimiter>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version><!-- 其它版本可能会出现VM崩溃 -->
+		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- docker setting -->
+		<docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
+		<docker.imageName>thinkgem/${project.artifactId}:5.0</docker.imageName>
+		<docker.run.port>8980:8980</docker.run.port>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-client</artifactId>
+				<version>${nacos.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-common</artifactId>
+				<version>${nacos.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.nacos</groupId>
+				<artifactId>nacos-api</artifactId>
+				<version>${nacos.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+
+		<plugins>
+
+			<!-- compiler插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<!-- jar插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+
+			<!-- resource插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+
+			<plugins>
+
+				<!-- compiler插件，设定JDK版本 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<parameters>true</parameters>
+						<showWarnings>true</showWarnings>
+						<!-- <compilerArguments>
+							<verbose /> 输出有关编译器正在执行的操作的消息
+							<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
+						</compilerArguments> -->
+					</configuration>
+				</plugin>
+
+				<!-- jar插件，配置manifest文件，加入lib包的jar依赖 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.2.2</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<!--suppress UnresolvedMavenProperty -->
+								<mainClass>${start-class}</mainClass>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<addMavenDescriptor>false</addMavenDescriptor>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+							</manifestEntries>
+						</archive>
+					</configuration>
+					<executions>
+						<execution>
+							<configuration>
+								<excludes>
+									<exclude>userfiles/**</exclude>
+								</excludes>
+								<finalName>${project.artifactId}</finalName>
+								<archive>
+									<manifest>
+										<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+										<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+										<addClasspath>true</addClasspath>
+									</manifest>
+								</archive>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- war插件，war包名称不带版本号 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.3.2</version>
+					<configuration>
+						<warSourceExcludes>
+							userfiles/**
+						</warSourceExcludes>
+						<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+						<warName>${project.artifactId}</warName>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<archive>
+							<manifest>
+								<!--suppress UnresolvedMavenProperty -->
+								<mainClass>${start-class}</mainClass>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<addMavenDescriptor>false</addMavenDescriptor>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+
+				<!-- resource插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.2.0</version>
+					<configuration>
+						<propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
+						<delimiters>
+							<delimiter>${resource.delimiter}</delimiter>
+						</delimiters>
+						<useDefaultDelimiters>false</useDefaultDelimiters>
+					</configuration>
+				</plugin>
+
+				<!-- exec插件 -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+
+				<!-- springboot插件 -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>repackage</id>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<!--suppress UnresolvedMavenProperty -->
+						<mainClass>${start-class}</mainClass>
+					</configuration>
+				</plugin>
+
+				<!-- Eclipse 插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.10</version>
+					<configuration>
+						<downloadSources>${eclipse-plugin-download-sources}</downloadSources>
+						<downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
+						<wtpversion>2.0</wtpversion>
+						<jeeversion>6.0</jeeversion>
+						<additionalConfig>
+							<file>
+								<name>.settings/org.eclipse.core.resources.prefs</name>
+								<content>
+									<![CDATA[eclipse.preferences.version=1${line.separator}encoding/<project>=${project.build.sourceEncoding}${line.separator}]]>
+								</content>
+							</file>
+						</additionalConfig>
+						<additionalProjectnatures>
+							<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+						</additionalProjectnatures>
+					</configuration>
+				</plugin>
+
+				<!-- Java Document Generate -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.2.0</version>
+					<executions>
+						<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+							<!-- <configuration>
+								<additionalparam>-Xdoclint:none</additionalparam>
+							</configuration> -->
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- JavaScript CSS Compress -->
+				<plugin>
+					<groupId>com.jeesite.maven</groupId>
+					<artifactId>compressor-maven-plugin</artifactId>
+					<version>1.0.0-SNAPSHOT</version>
+					<executions>
+						<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>compress</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<jswarn>false</jswarn>
+						<nosuffix>true</nosuffix>
+						<linebreakpos>30000</linebreakpos>
+						<force>true</force>
+						<includes>
+							<include>**/*.js</include>
+							<include>**/*.css</include>
+						</includes>
+						<excludes>
+							<exclude>**/WEB-INF/classes/**</exclude>
+							<exclude>**/*.min.js</exclude>
+							<exclude>**/*.min.css</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+
+				<!-- Eclipse m2e settings only -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<!--suppress UnresolvedMavenProperty -->
+										<versionRange>${maven-dependency-plugin.version}</versionRange>
+										<goals>
+											<goal>copy-dependencies</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+
+				<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin -->
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.39.1</version>
+					<configuration>
+						<dockerHost>${docker.dockerHost}</dockerHost>
+						<verbose>true</verbose>
+						<images>
+							<image>
+								<name>${docker.imageName}</name>
+								<alias>${project.artifactId}</alias>
+								<build>
+									<dockerFile>${project.basedir}/bin/docker/Dockerfile</dockerFile>
+									<assembly>
+										<descriptorRef>artifact</descriptorRef>
+									</assembly>
+								</build>
+								<run>
+									<ports>
+										<port>${docker.run.port}</port>
+									</ports>
+									<network>
+										<mode>host</mode>
+									</network>
+								</run>
+							</image>
+						</images>
+					</configuration>
+				</plugin>
+
+			</plugins>
+
+		</pluginManagement>
+
+		<!-- 资源文件配置 -->
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>rebel.xml</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+	</build>
+
+	<developers>
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>JeeSite</name>
+		<url>http://jeesite.com</url>
+	</organization>
+
+	<repositories>
+		<repository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>aliyun-repos</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>false</enabled></snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>jeesite-repos</id>
+			<url>http://maven.jeesite.net/repository/maven-public</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<profiles>
+
+		<profile>
+			<id>javadoc</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>package</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.jeesite.maven</groupId>
+						<artifactId>compressor-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>deploy</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.jeesite.maven</groupId>
+						<artifactId>compressor-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>jeesite-repos-s</id>
+					<url>http://maven.jeesite.net/repository/maven-snapshots</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+
+</project>
