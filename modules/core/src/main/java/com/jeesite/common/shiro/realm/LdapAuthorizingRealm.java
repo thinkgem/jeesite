@@ -4,11 +4,17 @@
  */
 package com.jeesite.common.shiro.realm;
 
-import javax.naming.AuthenticationNotSupportedException;
-import javax.naming.NamingException;
-import javax.naming.ldap.LdapContext;
+import com.jeesite.common.shiro.authc.FormToken;
+import com.jeesite.common.shiro.authc.LdapToken;
+import com.jeesite.common.utils.SpringUtils;
+import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.sys.entity.Log;
+import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.service.EmpUserService;
+import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.utils.LogUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -21,20 +27,13 @@ import org.apache.shiro.realm.ldap.LdapContextFactory;
 import org.apache.shiro.realm.ldap.LdapUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
-import com.jeesite.common.shiro.authc.FormToken;
-import com.jeesite.common.shiro.authc.LdapToken;
-import com.jeesite.common.utils.SpringUtils;
-import com.jeesite.common.web.http.ServletUtils;
-import com.jeesite.modules.sys.entity.Log;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.UserService;
-import com.jeesite.modules.sys.utils.LogUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.naming.AuthenticationNotSupportedException;
+import javax.naming.NamingException;
+import javax.naming.ldap.LdapContext;
 
 /**
  * 系统认证授权实现类

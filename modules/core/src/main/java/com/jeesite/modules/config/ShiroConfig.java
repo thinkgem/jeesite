@@ -10,7 +10,7 @@ import java.util.Map;
 import jakarta.servlet.Filter;
 
 import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cas.CasSubjectFactory;
+import com.jeesite.common.shiro.cas.CasSubjectFactory;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.ldap.JndiLdapContextFactory;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
