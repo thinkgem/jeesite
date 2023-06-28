@@ -786,6 +786,9 @@ web:
 #  
 #  # 严格模式（更严格的数据安全验证）
 #  strictMode: false
+#
+#  # 所有请求信息将进行xss过滤，这里列出不被xss过滤的地址
+#  xssFilterExcludeUri: /ureport/,/visual/
 #  
 #  # 自定义正则表达式验证（主键、登录名）
 #  validator:

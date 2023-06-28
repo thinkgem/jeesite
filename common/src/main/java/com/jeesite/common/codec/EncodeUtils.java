@@ -35,9 +35,9 @@ import java.util.regex.Pattern;
  * @version 2022-2-17
  */
 public class EncodeUtils {
-	
+
 	public static final String UTF_8 = "UTF-8";
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(EncodeUtils.class);
 	private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
@@ -65,7 +65,7 @@ public class EncodeUtils {
 	public static String encodeBase64(byte[] input) {
 		return new String(Base64.encodeBase64(input));
 	}
-	
+
 	/**
 	 * Base64编码.
 	 */
@@ -97,7 +97,7 @@ public class EncodeUtils {
 			throw ExceptionUtils.unchecked(e);
 		}
 	}
-	
+
 	/**
 	 * Base64解码.
 	 */
@@ -152,14 +152,14 @@ public class EncodeUtils {
 	}
 
 	/**
-	 * URL 编码, Encode默认为UTF-8. 
+	 * URL 编码, Encode默认为UTF-8.
 	 */
 	public static String encodeUrl(String part) {
 		return encodeUrl(part, EncodeUtils.UTF_8);
 	}
 
 	/**
-	 * URL 编码, Encode默认为UTF-8. 
+	 * URL 编码, Encode默认为UTF-8.
 	 */
 	public static String encodeUrl(String part, String encoding) {
 		if (part == null){
@@ -173,14 +173,14 @@ public class EncodeUtils {
 	}
 
 	/**
-	 * URL 解码, Encode默认为UTF-8. 
+	 * URL 解码, Encode默认为UTF-8.
 	 */
 	public static String decodeUrl(String part) {
 		return decodeUrl(part, EncodeUtils.UTF_8);
 	}
 
 	/**
-	 * URL 解码, Encode默认为UTF-8. 
+	 * URL 解码, Encode默认为UTF-8.
 	 */
 	public static String decodeUrl(String part, String encoding) {
 		if (part == null){
@@ -192,9 +192,9 @@ public class EncodeUtils {
 			throw ExceptionUtils.unchecked(e);
 		}
 	}
-	
+
 	/**
-	 * URL 解码（两次）, Encode默认为UTF-8. 
+	 * URL 解码（两次）, Encode默认为UTF-8.
 	 */
 	public static String decodeUrl2(String part) {
 		return decodeUrl(decodeUrl(part));
@@ -207,7 +207,7 @@ public class EncodeUtils {
 			Pattern.compile("\\s*on[a-z]+\\s*=\\s*(\"[^\"]+\"|'[^']+'|[^\\s]+)\\s*(?=>)", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("(eval\\((.*?)\\)|xpression\\((.*?)\\))", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("^(javascript:|vbscript:)", Pattern.CASE_INSENSITIVE)
-		);
+	);
 
 	/**
 	 * XSS 非法字符过滤，内容以<!--HTML-->开头的用以下规则（保留标签）
@@ -216,12 +216,16 @@ public class EncodeUtils {
 	public static String xssFilter(String text) {
 		return xssFilter(text, null);
 	}
-	
+
 	/**
 	 * XSS 非法字符过滤，内容以<!--HTML-->开头的用以下规则（保留标签）
 	 * @author ThinkGem
 	 */
 	public static String xssFilter(String text, HttpServletRequest request) {
+		request = (request != null ? request : ServletUtils.getRequest());
+		if (request != null && StringUtils.containsAny(request.getRequestURI(), ServletUtils.XSS_FILE_EXCLUDE_URI)) {
+			return text;
+		}
 		String oriValue = StringUtils.trim(text);
 		if (text != null){
 			String value = oriValue;
@@ -232,39 +236,37 @@ public class EncodeUtils {
 				}
 			}
 			// 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
-			if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->") 	// HTML
-					&& !StringUtils.startsWithIgnoreCase(value, "<?xml ") 	// XML
-					&& !StringUtils.contains(value, "id=\"FormHtml\"") 		// JFlow
+			if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->")     // HTML
+					&& !StringUtils.startsWithIgnoreCase(value, "<?xml ")     // XML
+					&& !StringUtils.contains(value, "id=\"FormHtml\"")         // JFlow
 					&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
 					&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
-					&& !(StringUtils.containsAny((request != null ? request : ServletUtils.getRequest())
-							.getRequestURI(), "/ureport/", "/visual/")) // UReport、Visual
-				){
+			){
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < value.length(); i++) {
 					char c = value.charAt(i);
 					switch (c) {
-					case '>':
-						sb.append("＞");
-						break;
-					case '<':
-						sb.append("＜");
-						break;
-					case '\'':
-						sb.append("＇");
-						break;
-					case '\"':
-						sb.append("＂");
-						break;
-//					case '&':
-//						sb.append("＆");
-//						break;
-//					case '#':
-//						sb.append("＃");
-//						break;
-					default:
-						sb.append(c);
-						break;
+						case '>':
+							sb.append("＞");
+							break;
+						case '<':
+							sb.append("＜");
+							break;
+						case '\'':
+							sb.append("＇");
+							break;
+						case '\"':
+							sb.append("＂");
+							break;
+//						case '&':
+//							sb.append("＆");
+//							break;
+//						case '#':
+//							sb.append("＃");
+//							break;
+						default:
+							sb.append(c);
+							break;
 					}
 				}
 				value = sb.toString();
@@ -277,12 +279,12 @@ public class EncodeUtils {
 		}
 		return null;
 	}
-	
+
 	// 预编译SQL过滤正则表达式
 	private static Pattern sqlPattern = Pattern.compile(
 			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database|rand|user)([\\s]*?)\\()|"
-			+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|"
-			+ "drop|execute|case when|sleep|union|load_file)\\b)",
+					+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|"
+					+ "drop|execute|case when|sleep|union|load_file)\\b)",
 			Pattern.CASE_INSENSITIVE);
 	private static Pattern orderByPattern = Pattern.compile("[a-z0-9_\\.\\, ]*", Pattern.CASE_INSENSITIVE);
 
@@ -293,6 +295,7 @@ public class EncodeUtils {
 	public static String sqlFilter(String text){
 		return sqlFilter(text, "common");
 	}
+
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
 	 * @author ThinkGem
@@ -319,7 +322,7 @@ public class EncodeUtils {
 		}
 		return null;
 	}
-	
+
 //	public static void main(String[] args) {
 //		xssFilter("1 你好 <script>alert(document.cookie)</script>我还在。");
 //		xssFilter("2 你好 <strong>加粗文字</strong>我还在。");
@@ -353,5 +356,5 @@ public class EncodeUtils {
 //		sqlFilter("5 if(1=2,1,SLEEP(10)), if(mid(database(),{},1)=\\\"{}\\\",a.id,a.login_name)", "orderBy");
 //		sqlFilter("6 a.audit_result asc, b.audit_result2 desc, b.AuditResult3 desc", "orderBy");
 //	}
-	
+
 }

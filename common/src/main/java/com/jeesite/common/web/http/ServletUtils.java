@@ -38,6 +38,9 @@ public class ServletUtils {
 	private static final String[] STATIC_FILE = StringUtils.splitComma(PROPS.getProperty("web.staticFile"));
 	private static final String[] STATIC_FILE_EXCLUDE_URI = StringUtils.splitComma(PROPS.getProperty("web.staticFileExcludeUri"));
 
+	// XSS 过滤器要排除的URI地址
+	public static final String[] XSS_FILE_EXCLUDE_URI = StringUtils.splitComma(PROPS.getProperty("web.xssFilterExcludeUri"));
+
 	// AJAX 请求参数和请求头名
 	public static final String AJAX_PARAM_NAME = PROPS.getProperty("web.ajaxParamName", "__ajax");
 	public static final String AJAX_HEADER_NAME = PROPS.getProperty("web.ajaxHeaderName", "x-ajax");
@@ -125,12 +128,8 @@ public class ServletUtils {
 				e.printStackTrace();
 			}
 		}
-		if (STATIC_FILE_EXCLUDE_URI != null){
-			for (String s : STATIC_FILE_EXCLUDE_URI){
-				if (StringUtils.contains(uri, s)){
-					return false;
-				}
-			}
+		if (StringUtils.containsAny(uri, STATIC_FILE_EXCLUDE_URI)) {
+			return false;
 		}
 		if (StringUtils.endsWithAny(uri, STATIC_FILE)){
 			return true;
