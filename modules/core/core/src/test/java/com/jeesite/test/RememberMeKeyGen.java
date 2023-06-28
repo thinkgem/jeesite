@@ -4,7 +4,8 @@
  */
 package com.jeesite.test;
 
-import org.apache.shiro.crypto.AesCipherService;
+import org.apache.shiro.crypto.cipher.AesCipherService;
+import org.apache.shiro.lang.codec.Base64;
 
 /**
  * v4.1.8 开始将不为记住我功能，设置默认密钥，即启动系统时生成新密钥。
@@ -18,7 +19,7 @@ public class RememberMeKeyGen {
 
 	public static void main(String[] args) {
 		byte[] cipherKey = new AesCipherService().generateNewKey().getEncoded();
-		String secretKey = org.apache.shiro.codec.Base64.encodeToString(cipherKey);
+		String secretKey = Base64.encodeToString(cipherKey);
 		System.out.println("shiro.rememberMe.secretKey = " + secretKey);
 	}
 	

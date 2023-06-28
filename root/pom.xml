@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-cloud-root</artifactId>
-	<version>5.4.boot3-SNAPSHOT</version>
+	<version>5.4.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Cloud Root</name>
