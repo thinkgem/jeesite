@@ -56,12 +56,12 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 技术选型
 
-* 主框架：Spring Boot 2.7、Spring Framework 5.3、Apache Shiro 1.11、J2Cache
-* 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
-* 视图层：Spring MVC 5.3、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
-* 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
+* 主框架：Spring Boot 3.1、Spring Framework 6.0、Apache Shiro 2.0、J2Cache
+* 持久层：Apache MyBatis 3.5、Hibernate Validator 8.0、Alibaba Druid 1.2
+* 视图层：Spring MVC 6.0、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
+* 前端组件：jQuery 3.7、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
 * 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue3、Vue Vben Admin
-* 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
+* 工作流引擎：Flowable 7.0、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * Bootstrap 版 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
@@ -93,7 +93,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ### 本地运行
 
-1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
+1. 环境准备：`JDK 17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
 2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.3.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
@@ -104,7 +104,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ### 快速运行
 
-1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB）
+1. 环境准备：`JDK 17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB）
 2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.3.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
 4. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin

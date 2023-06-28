@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.12</version>
+		<version>3.1.1</version>
 		<relativePath />
 	</parent>
 
@@ -25,10 +25,11 @@
 		<commons-io.version>2.13.0</commons-io.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<commons-email.version>1.5</commons-email.version>
-		<fst.version>2.57</fst.version>
+		<fst.version>3.0.4-jdk17</fst.version>
 		<fastjson.version>2.0.33</fastjson.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
 		<!--<jackson.version>2.12.6</jackson.version>-->
+		<httpclient.version>4.5.14</httpclient.version>
 		<!--<activation.version>1.1.1</activation.version>-->
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<!--<metadata-extractor.version>2.11.0</metadata-extractor.version>-->
@@ -39,7 +40,7 @@
 		<zxing.version>3.5.1</zxing.version>
 		<poi.version>5.2.3</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
-		<groovy.version>3.0.17</groovy.version>
+		<!--<groovy.version>4.0.12</groovy.version>-->
 		<joda-time.version>2.10.4</joda-time.version>
 		<logstash-logback.version>7.3</logstash-logback.version>
 		<elasticsearch.version>7.17.8</elasticsearch.version>
@@ -47,10 +48,11 @@
 
 		<!-- framework version setting -->
 		<mybatis.version>3.5.13</mybatis.version>
-		<mybatis-spring.version>2.0.7</mybatis-spring.version>
+		<mybatis-spring.version>3.0.2</mybatis-spring.version>
 		<jsqlparser.version>4.6</jsqlparser.version>
+		<atomikos.version>6.0.0</atomikos.version>
 		<druid.version>1.2.18</druid.version>
-		<shiro.version>1.11.0</shiro.version>
+		<shiro.version>2.0.0-alpha-2</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<swagger.version>1.6.6</swagger.version>
 		<log4j2.version>2.18.0</log4j2.version>
@@ -59,7 +61,7 @@
 		<h2.version>1.4.200</h2.version>
 
 		<!-- environment setting -->
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 		<!--<tomcat.version>9.0.58</tomcat.version>-->
 		<maven.test.skip>true</maven.test.skip>
 		<resource.delimiter>@</resource.delimiter>
