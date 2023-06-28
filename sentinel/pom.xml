@@ -22,10 +22,6 @@
 		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.SentinelApplication</start-class>
 		
-		<!-- environment setting -->
-		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
-		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
-		
 		<!-- version setting -->
 		<sentinel.version>1.8.5</sentinel.version>
         <curator.version>4.0.1</curator.version>
