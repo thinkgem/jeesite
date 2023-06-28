@@ -29,11 +29,7 @@
 		
 		<finalName>web</finalName><!-- war包的名称 -->
 		<start-class>com.jeesite.modules.${@StringUtils.cap(module.moduleCode)}Application</start-class>
-		
-		<!-- environment setting -->
-		<eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
-		<eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
-		
+
 		<!-- docker setting -->
         <docker.run.port>8989:8989</docker.run.port>
         
@@ -103,11 +99,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
-					<downloadSources>\${eclipse-plugin-download-sources}</downloadSources>
-					<downloadJavadocs>\${eclipse-plugin-download-javadocs}</downloadJavadocs>
 					<wtpContextName>\${finalName}</wtpContextName>
-					<wtpversion>2.0</wtpversion>
-					<jeeversion>6.0</jeeversion>
 				</configuration>
 			</plugin>
 			
