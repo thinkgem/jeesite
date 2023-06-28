@@ -7,7 +7,7 @@
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
  <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-3.2" src="https://img.shields.io/badge/Ant Design Vue-3.2-blue.svg"></a>
- <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.2-blue.svg"></a>
+ <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.4-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
 </p>
@@ -74,7 +74,7 @@
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
 - [Vue-Vben-Admin](https://vvbin.cn/doc-next/) - 熟悉 UI 及表单列表及常用组件使用
 - [Ant-Design-Vue](https://antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
-- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.2/) - 安装后台服务
+- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.4/) - 安装后台服务
 
 ## 安装使用
 
