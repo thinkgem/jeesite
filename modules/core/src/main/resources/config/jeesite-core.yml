@@ -53,19 +53,6 @@ jdbc:
     # 设置连接属性，可获取到表的 remark (备注)
     remarksReporting: false
 
-  # JTA XA 事务（v4.0.4+）
-  jta:
-    enabled: false
-
-#  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
-#  grant select on sys.dba_pending_transactions to jeesite;
-#  grant select on sys.pending_trans$ to jeesite;
-#  grant select on sys.dba_2pc_pending to jeesite;
-#  grant execute on sys.dbms_system to jeesite;
-    
-  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
-  transactionTimeout: 1800
-  
 #  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
 #  tableAndColumn: 
 #    prefixSuffix: "`|`"

@@ -45,12 +45,12 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
-		<!-- 在线文档接口
+		<!-- 在线文档接口 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-swagger</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency> -->
+		</dependency>
 
 		<!-- 内容管理模块 -->
 		<dependency>

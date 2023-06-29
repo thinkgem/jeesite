@@ -21,7 +21,7 @@
 
 	<properties>
 
-		<!-- common version setting -->
+		<!-- common tools version setting -->
 		<commons-io.version>2.13.0</commons-io.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<commons-email.version>1.5</commons-email.version>
@@ -30,7 +30,6 @@
 		<snakeyaml.version>2.0</snakeyaml.version>
 		<!--<jackson.version>2.12.6</jackson.version>-->
 		<httpclient.version>4.5.14</httpclient.version>
-		<!--<activation.version>1.1.1</activation.version>-->
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 		<!--<metadata-extractor.version>2.11.0</metadata-extractor.version>-->
 		<thumbnailator.version>0.4.19</thumbnailator.version>
