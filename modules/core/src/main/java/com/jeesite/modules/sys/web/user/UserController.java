@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.web.user;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -29,7 +30,6 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 用户Controller
@@ -37,9 +37,9 @@ import springfox.documentation.annotations.ApiIgnore;
  * @version 2017-3-21
  */
 @Controller
-@ApiIgnore
 @RequestMapping(value = "${adminPath}/sys/user")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
+@Hidden
 public class UserController extends BaseController {
 
 	@Autowired

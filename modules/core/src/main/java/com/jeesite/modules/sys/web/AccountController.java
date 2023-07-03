@@ -4,22 +4,6 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.Date;
-import java.util.Map;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -35,12 +19,25 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.shiro.authc.AuthenticationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 账号自助服务Controller
@@ -48,7 +45,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @version 2020-9-20
  */
 @Controller
-@Api(tags = "Account - 账号服务")
+@Tag(name = "Account - 账号服务")
 @RequestMapping(value = "/account")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class AccountController extends BaseController{
@@ -64,11 +61,11 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "getLoginValidCode")
 	@ResponseBody
-	@ApiOperation(value = "获取登录的短信或邮件验证码")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "username", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
-		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
+	@Operation(summary = "获取登录的短信或邮件验证码")
+	@Parameters({
+		@Parameter(name = "username", description = "登录账号", required = true),
+		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
+		@Parameter(name = "validType", description = "验证方式（mobile、email）", required = true),
 	})
 	public String getLoginValidCode(String username, String validCode, String validType, HttpServletRequest request) {
 		return getValidCode("login", username, validCode, validType, request, "登录验证码");
@@ -80,10 +77,10 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "loginByValidCode")
 	@ResponseBody
-	@ApiOperation(value = "根据短信或邮件验证码登录系统")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "username", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "loginValidCode", value = "手机或邮箱接受的验证码", required = true),
+	@Operation(summary = "根据短信或邮件验证码登录系统")
+	@Parameters({
+		@Parameter(name = "username", description = "登录账号", required = true),
+		@Parameter(name = "loginValidCode", description = "手机或邮箱接受的验证码", required = true),
 	})
 	public String loginByValidCode(String username, String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
 		if (!Global.getConfigToBoolean("user.loginByValidCode", "true")) {
@@ -109,7 +106,7 @@ public class AccountController extends BaseController{
 	 * 忘记密码页面
 	 */
 	@GetMapping(value = "forgetPwd")
-	@ApiIgnore
+	@Hidden
 	public String forgetPwd(Model model) {
 		return "modules/sys/forgetPwd";
 	}
@@ -121,11 +118,11 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "getFpValidCode")
 	@ResponseBody
-	@ApiOperation(value = "获取找回密码的短信或邮件验证码")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
-		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
+	@Operation(summary = "获取找回密码的短信或邮件验证码")
+	@Parameters({
+		@Parameter(name = "loginCode", description = "登录账号", required = true),
+		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
+		@Parameter(name = "validType", description = "验证方式（mobile、email）", required = true),
 	})
 	public String getFpValidCode(User user, String validCode, String validType, HttpServletRequest request) {
 		return getValidCode("fp", user.getLoginCode(), validCode, validType, request, "找回密码");
@@ -136,11 +133,11 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "savePwdByValidCode")
 	@ResponseBody
-	@ApiOperation(value = "根据短信或邮件验证码重置密码")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "fpValidCode", value = "手机或邮箱接受的验证码", required = true),
-		@ApiImplicitParam(name = "password", value = "新密码", required = true, paramType="query", type="String"),
+	@Operation(summary = "根据短信或邮件验证码重置密码")
+	@Parameters({
+		@Parameter(name = "loginCode", description = "登录账号", required = true),
+		@Parameter(name = "fpValidCode", description = "手机或邮箱接受的验证码", required = true),
+		@Parameter(name = "password", description = "新密码", required = true),
 	})
 	public String savePwdByValidCode(User user, String fpValidCode, HttpServletRequest request) {
 		String userCode = UserUtils.getCache("fp" + "UserCode");
@@ -243,10 +240,10 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "getPwdQuestion")
 	@ResponseBody
-	@ApiOperation(value = "获取找回密码的保密问题")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
+	@Operation(summary = "获取找回密码的保密问题")
+	@Parameters({
+		@Parameter(name = "loginCode", description = "登录账号", required = true),
+		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
 	})
 	public String getPwdQuestion(User user, String validCode, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
@@ -289,13 +286,13 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "savePwdByPwdQuestion")
 	@ResponseBody
-	@ApiOperation(value = "根据保密问题重置密码")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "pwdQuestionAnswer", value = "保密问题答案（1）", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "pwdQuestionAnswer2", value = "保密问题答案（2）", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "pwdQuestionAnswer3", value = "保密问题答案（3）", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "password", value = "新密码", required = true, paramType="query", type="String"),
+	@Operation(summary = "根据保密问题重置密码")
+	@Parameters({
+		@Parameter(name = "loginCode", description = "登录账号", required = true),
+		@Parameter(name = "pwdQuestionAnswer", description = "保密问题答案（1）", required = true),
+		@Parameter(name = "pwdQuestionAnswer2", description = "保密问题答案（2）", required = true),
+		@Parameter(name = "pwdQuestionAnswer3", description = "保密问题答案（3）", required = true),
+		@Parameter(name = "password", description = "新密码", required = true),
 	})
 	public String savePwdByPwdQuestion(User user, HttpServletRequest request) {
 		String userCode = UserUtils.getCache("fpUserCode");
@@ -342,7 +339,7 @@ public class AccountController extends BaseController{
 	 * @param user 用户信息参数
 	 */
 	@GetMapping(value = "registerUser")
-	@ApiIgnore
+	@Hidden
 	public String registerUser(User user, HttpServletRequest request) {
 		return "modules/sys/registerUser";
 	}
@@ -354,17 +351,17 @@ public class AccountController extends BaseController{
 	 */
 	@PostMapping(value = "getRegValidCode")
 	@ResponseBody
-	@ApiOperation(value = "获取注册用户短信或邮件验证码")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "userName", value = "用户姓名", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "email", value = "电子邮箱", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "mobile", value = "手机号码", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "corpCode_", value = "租户编号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "corpName_", value = "租户名称", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "userType", value = "用户类型（employee）", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
-		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
+	@Operation(summary = "获取注册用户短信或邮件验证码")
+	@Parameters({
+		@Parameter(name = "loginCode", description = "登录账号", required = true),
+		@Parameter(name = "userName", description = "用户姓名", required = true),
+		@Parameter(name = "email", description = "电子邮箱", required = true),
+		@Parameter(name = "mobile", description = "手机号码", required = true),
+		@Parameter(name = "corpCode_", description = "租户编号", required = true),
+		@Parameter(name = "corpName_", description = "租户名称", required = true),
+		@Parameter(name = "userType", description = "用户类型（employee）", required = true),
+		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
+		@Parameter(name = "validType", description = "验证方式（mobile、email）", required = true),
 	})
 	public String getRegValidCode(User user, String validCode, String validType, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
@@ -427,15 +424,15 @@ public class AccountController extends BaseController{
 	/**
 	 * 根据短信或邮件验证码注册用户（通过邮箱、手机号）
 	 * @param user 用户信息参数
-	 * @param validType 验证方式：mobile、email
+	 * @param regValidCode 注册验证码
 	 */
 	@PostMapping(value = "saveRegByValidCode")
 	@ResponseBody
-	@ApiOperation(value = "根据短信或邮件验证码注册用户")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "password", value = "登录密码", required = true, paramType="query", type="String"),
-		@ApiImplicitParam(name = "regValidCode", value = "手机或邮箱接受的验证码", required = true),
+	@Operation(summary = "根据短信或邮件验证码注册用户")
+	@Parameters({
+		@Parameter(name = "loginCode", description = "登录账号", required = true),
+		@Parameter(name = "password", description = "登录密码", required = true),
+		@Parameter(name = "regValidCode", description = "手机或邮箱接受的验证码", required = true),
 	})
 	public String saveRegByValidCode(User user, String regValidCode, HttpServletRequest request) {
 		if (!"true".equals(Global.getConfig("sys.account.registerUser"))){

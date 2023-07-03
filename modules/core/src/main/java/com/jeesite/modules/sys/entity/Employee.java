@@ -13,7 +13,7 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -130,7 +130,7 @@ public class Employee extends DataEntity<Employee> {
 		this.company = company;
 	}
 
-	@ApiModelProperty("根据岗位编码查询")
+	@Schema(description = "根据岗位编码查询")
 	public String getPostCode() {
 		return postCode;
 	}
@@ -147,7 +147,7 @@ public class Employee extends DataEntity<Employee> {
 		this.employeePostList = employeePostList;
 	}
 
-	@ApiModelProperty("员工岗位关系")
+	@Schema(description = "员工岗位关系")
 	public String getEmployeePosts() {
 //		List<String> list = ListUtils.extractToList(employeePostList, "postCode");
 //		return StringUtils.join(list, ",");

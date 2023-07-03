@@ -9,7 +9,7 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -75,7 +75,7 @@ public class Post extends DataEntity<Post> {
 		this.postName = postName;
 	}
 
-	@ApiModelProperty("模糊查询岗位名称")
+	@Schema(description = "模糊查询岗位名称")
 	public String getPostName_like() {
 		return sqlMap().getWhere().getValue("post_name", QueryType.LIKE);
 	}
@@ -101,7 +101,7 @@ public class Post extends DataEntity<Post> {
 		this.postSort = postSort;
 	}
 
-	@ApiModelProperty("根据员工编码查询")
+	@Schema(description = "根据员工编码查询")
 	public String getEmpCode() {
 		return empCode;
 	}

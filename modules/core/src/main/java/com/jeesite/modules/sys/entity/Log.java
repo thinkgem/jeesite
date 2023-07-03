@@ -14,7 +14,7 @@ import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -230,7 +230,7 @@ public class Log extends DataEntity<Log> {
 		this.executeTime = executeTime;
 	}
 
-	@ApiModelProperty("格式化后的执行时间")
+	@Schema(description = "格式化后的执行时间")
 	public String getExecuteTimeFormat(){
 		if (executeTime == null) {
 			executeTime = 0L;

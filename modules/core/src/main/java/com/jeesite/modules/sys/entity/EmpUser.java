@@ -17,7 +17,7 @@ import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.CompanyType;
 import com.jeesite.common.utils.excel.fieldtype.OfficeType;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.Valid;
 
@@ -125,7 +125,7 @@ public class EmpUser extends User {
 		super.setRefObj(employee);
 	}
 
-	@ApiModelProperty("根据各种编码查询")
+	@Schema(description = "根据各种编码查询")
 	public String[] getCodes() {
 		return codes;
 	}

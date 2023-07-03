@@ -16,8 +16,8 @@ import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Align;
 import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.modules.sys.utils.EmpUtils;
-import io.swagger.annotations.ApiModelProperty;
-
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -44,6 +44,7 @@ import jakarta.validation.constraints.Size;
 		@Column(includeEntity=Extend.class, attrName="extend"),
 	}, extWhereKeys="dsf", orderBy="a.tree_sorts, a.office_code"
 )
+@Schema
 public class Office extends TreeEntity<Office> {
 	
 	private static final long serialVersionUID = 1L;
@@ -57,6 +58,9 @@ public class Office extends TreeEntity<Office> {
 	private String address;		// 联系地址
 	private String zipCode;		// 邮政编码
 	private String email;		// 邮箱
+
+	@Hidden
+	@Schema(hidden = true)
 	private Extend extend;		// 扩展字段
 
 	private String companyCode; // 根据公司查询机构，组织机构所属公司
@@ -82,6 +86,8 @@ public class Office extends TreeEntity<Office> {
 	}
 	
 	@Override
+	@Hidden
+	@Schema(hidden = true)
 	public Office getParent() {
 		return parent;
 	}
@@ -139,7 +145,7 @@ public class Office extends TreeEntity<Office> {
 		this.officeType = officeType;
 	}
 
-	@ApiModelProperty("包含某机构类型")
+	@Schema(description = "包含某机构类型")
 	public String[] getOfficeType_in(){
 		return sqlMap.getWhere().getValue("office_type", QueryType.IN);
 	}
@@ -192,7 +198,9 @@ public class Office extends TreeEntity<Office> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	@Hidden
+	@Schema(hidden = true)
 	public Extend getExtend() {
 		return extend;
 	}
@@ -201,7 +209,7 @@ public class Office extends TreeEntity<Office> {
 		this.extend = extend;
 	}
 
-	@ApiModelProperty("公司编码")
+	@Schema(description = "公司编码")
 	public String getCompanyCode() {
 		return companyCode;
 	}

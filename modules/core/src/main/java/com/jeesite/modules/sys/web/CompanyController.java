@@ -15,7 +15,7 @@ import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.UserUtils;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -37,7 +37,7 @@ import java.util.Map;
  * @version 2014-8-19
  */
 @Controller
-@Api(tags = "Company - 公司管理")
+@Tag(name = "Company - 公司管理")
 @RequestMapping(value = "${adminPath}/sys/company")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class CompanyController extends BaseController {

@@ -9,7 +9,7 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,7 +36,7 @@ import com.jeesite.modules.sys.utils.ModuleUtils;
  * @version 2017-12-12
  */
 @Controller
-@Api(tags = "SecAdmin - 二级管理员管理")
+@Tag(name = "SecAdmin - 二级管理员管理")
 @RequestMapping(value = "${adminPath}/sys/secAdmin")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class SecAdminController extends BaseController {

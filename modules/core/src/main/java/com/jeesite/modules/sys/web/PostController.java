@@ -13,7 +13,9 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Post;
 import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.service.PostService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,8 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +36,7 @@ import java.util.Map;
  * @version 2017-03-25
  */
 @Controller
-@Api(tags = "Post - 岗位管理")
+@Tag(name = "Post - 岗位管理")
 @RequestMapping(value = "${adminPath}/sys/post")
 @ConditionalOnProperty(name={"user.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 public class PostController extends BaseController {
