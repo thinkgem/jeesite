@@ -35,7 +35,7 @@
 				<div class="form-unit">${text('数据权限')}</div>
 				<div id="dataScopeTrees"></div>
 				<script id="dataScopeTpl" type="text/template">
-					<div class="pull-left" style="padding:0 15px;min-width:300px;">
+					<div id="dataScope_{{d.key}}" class="pull-left" style="padding:0 15px;min-width:300px;">
 						<div class="box box-solid box-trees">
 							<div class="box-header">
 								<div class="box-title icheck">
@@ -163,6 +163,10 @@ for (var i=0; i<dataScopes.length; i++){
 			}).attr("ctrlType", dataScope.ctrlType);
 			// 将树对象存储到全局数组里
 			dataScopeTrees[dataScope.ctrlType] = tree;
+			// 如果没有数据，则隐藏选择框
+			if (data.length == 0) {
+				$("#dataScope_"+dataScope.ctrlType).hide();
+			}
 		}
 	});
 }
