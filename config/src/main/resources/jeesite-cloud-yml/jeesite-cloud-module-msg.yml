@@ -1,0 +1,31 @@
+
+#productName: JeeSite Msg
+
+#======================================#
+#========= Message settings ===========#
+#======================================#
+
+# 消息服务（专业版）
+msg:
+  enabled: true
+
+  # 关闭客户端服务，使用自身的消息服务
+  client:
+    enabled: false
+
+# 任务调度（个人版）
+job:
+  enabled: true
+
+  # 调度设置，集群中每一个实例都必须使用相同的instanceName名称 （区分特定的调度器实例）
+  # 每一个instanceId必须不同，设置AUTO则自动生成
+  # 启用调度后，请修改 js_sys_job 表中的 MsgLocalMergePushTask 和 MsgLocalPushTask 数据的 instance_name 字段为 JeeSiteSchedulerMsg
+  # 然后访问地址 http://127.0.0.1:8980/js/jeesite-cloud-module-msg/job/list 即可查询到消息的job服务
+  scheduler:
+    instanceName: JeeSiteSchedulerMsg
+    instanceId: AUTO
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
+    
