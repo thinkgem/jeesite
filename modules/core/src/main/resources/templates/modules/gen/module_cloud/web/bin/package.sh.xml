@@ -13,14 +13,14 @@
 #  * Author: ThinkGem@163.com
 #  */
 echo ""
-echo "[信息] 打包安装工程，生成jar包文件。"
+echo "[信息] 打包Web工程，生成war/jar包文件。"
 echo ""
 
 mvn -v
 echo ""
 
 cd ..
-mvn clean install -Dmaven.test.skip=true -Ppackage
+mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
 
 cd bin]]>
 	</content>
