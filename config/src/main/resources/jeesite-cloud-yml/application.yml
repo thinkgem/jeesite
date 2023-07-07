@@ -426,11 +426,28 @@ error:
     printErrorInfo: true
 
 #======================================#
+#========= Message settings ===========#
+#======================================#
+
+# 消息服务
+msg:
+  enabled: false
+
+  # 消息客户端服务
+  client:
+    enabled: true
+
+#======================================#
 #======== FileUpload settings =========#
 #======================================#
 
+# 文件服务
 file:
   enabled: true
+
+  # 文件客户端服务
+  client:
+    enabled: true
 
   # 文件上传根路径，设置路径中不允许包含“userfiles”，在指定目录中系统会自动创建userfiles目录，如果不设置默认为contextPath路径
 #  baseDir: D:/jeesite

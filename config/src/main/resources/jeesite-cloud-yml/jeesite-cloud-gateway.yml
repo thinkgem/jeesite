@@ -32,13 +32,31 @@ spring:
           predicates:
             - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
             
-        # 业务流程模块
+        # 业务流程模块（cms）
         - id: bpm
           uri: lb://jeesite-cloud-module-bpm
           predicates:
             - Path=/js/a/bpm/**,/js/bpm/**,/js/inner/api/bpm/**,/js/static/modules/bpm/**,/js/static/htmltags/bpm/**,/js/a/jeesite-cloud-module-bpm/**,/js/a/oa/oaLeave/**
-            
-        # 基础权限模块
+
+        # 扩展模块（app、cms、filemanager、ureport、visual）
+        - id: extend
+          uri: lb://jeesite-cloud-module-extend
+          predicates:
+            - Path=/js/a/app/**,/js/a/cms/**,/js/f/**,/js/static/modules/cmsfront/**,/js/a/filemanager/**,/js/ureport/**,/js/visual/**
+
+        # 文件服务（file、filepreview）
+        - id: files
+          uri: lb://jeesite-cloud-module-files
+          predicates:
+            - Path=/js/a/file/**,/js/userfiles/**,/js/static/filePreview/**
+
+        # 消息服务（msg）
+        - id: msg
+          uri: lb://jeesite-cloud-module-msg
+          predicates:
+            - Path=/js/a/msg/**,/js/a/jeesite-cloud-module-msg/**
+
+        # 核心模块（core）
         - id: core
           uri: lb://jeesite-cloud-module-core
           predicates:
