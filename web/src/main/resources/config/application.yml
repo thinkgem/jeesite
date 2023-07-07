@@ -263,19 +263,21 @@ spring:
     default-timeout: 30m
 
 #  # Redis 连接参数 （RedisProperties）
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
-#    ssl: false
-#    database: 0
-#    password: 1234
-#    timeout: 20000
-#    lettuce:
-#      pool:
-#        # 最大空闲连接数
-#        maxIdle: 3
-#        # 最大活动连接数
-#        maxActive: 20
+#  data:
+#    redis:
+#      host: 127.0.0.1
+#      port: 6379
+#      ssl:
+#        enabled: false
+#      database: 0
+#      password: 1234
+#      timeout: 20000
+#      lettuce:
+#        pool:
+#          # 最大空闲连接数
+#          maxIdle: 3
+#          # 最大活动连接数
+#          maxActive: 20
 
 #  # 缓存配置
 #  cache:
