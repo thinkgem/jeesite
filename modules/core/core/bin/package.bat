@@ -6,7 +6,7 @@ rem  *
 rem  * Author: ThinkGem@163.com
 rem  */
 echo.
-echo [信息] 打包安装工程，生成jar包文件。
+echo [信息] 打包Web工程，生成war/jar包文件。
 echo.
 
 %~d0
@@ -16,7 +16,7 @@ call mvn -v
 echo.
 
 cd ..
-call mvn clean install -Dmaven.test.skip=true -Ppackage
+call mvn clean package spring-boot:repackage -Dmaven.test.skip=true -U
 
 cd bin
 pause
