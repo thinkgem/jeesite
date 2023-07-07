@@ -807,7 +807,7 @@ web:
 #    enabled: false
 #    callback: __callback
 
-  # 核心模块的Web功能（仅作为微服务时设为false）
+  # 核心模块的Web功能开启（其它微服务时设为false）
   core:
     enabled: true
 
