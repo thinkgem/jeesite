@@ -4,29 +4,6 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import java.util.List;
-import java.util.Map;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
@@ -41,20 +18,29 @@ import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.EmpUser;
-import com.jeesite.modules.sys.entity.Employee;
-import com.jeesite.modules.sys.entity.Post;
-import com.jeesite.modules.sys.entity.Role;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.entity.UserDataScope;
-import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.EmployeeService;
-import com.jeesite.modules.sys.service.PostService;
-import com.jeesite.modules.sys.service.RoleService;
-import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.entity.*;
+import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 员工用户Controller
@@ -110,7 +96,10 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public Page<EmpUser> listData(EmpUser empUser, Boolean isAll, String ctrlPermi, HttpServletRequest request, HttpServletResponse response) {
+	public Page<EmpUser> listData(EmpUser empUser,
+								  @Parameter(description = "查询全部数据") @RequestParam(required = false) Boolean isAll,
+								  @Parameter(description = "数据控制权限") @RequestParam(required = false) String ctrlPermi,
+								  HttpServletRequest request, HttpServletResponse response) {
 		empUser.getEmployee().getOffice().setIsQueryChildren(true);
 		empUser.getEmployee().getCompany().setIsQueryChildren(true);
 		if (!(isAll != null && isAll) || Global.isStrictMode()){
@@ -123,7 +112,7 @@ public class EmpUserController extends BaseController {
 
 	@RequiresPermissions("sys:empUser:view")
 	@RequestMapping(value = "form")
-	public String form(EmpUser empUser, String op, Model model) {
+	public String form(EmpUser empUser, @Parameter(description = "操作类型") String op, Model model) {
 		
 		Employee employee = empUser.getEmployee();
 		
@@ -170,7 +159,7 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions(value={"sys:empUser:edit","sys:empUser:authRole"}, logical=Logical.OR)
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated EmpUser empUser, String op, HttpServletRequest request) {
+	public String save(@Validated EmpUser empUser, @Parameter(description = "操作类型") String op, HttpServletRequest request) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
@@ -206,7 +195,8 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("user")
 	@RequestMapping(value = "checkEmpNo")
 	@ResponseBody
-	public String checkEmpNo(String oldEmpNo, @RequestParam("employee.empNo") String empNo) {
+	public String checkEmpNo(@Parameter(description = "旧员工编号") @RequestParam String oldEmpNo,
+							 @Parameter(description = "新员工编号") @RequestParam("employee.empNo") String empNo) {
 		Employee employee = new Employee();
 		employee.setEmpNo(empNo);
 		if (empNo != null && empNo.equals(oldEmpNo)) {

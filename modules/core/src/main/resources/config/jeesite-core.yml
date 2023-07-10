@@ -444,6 +444,7 @@ shiro:
     ${adminPath}/file/** = user
     ${adminPath}/switchSkin/* = anon
     ${adminPath}/sys/corpAdmin/treeData = anon
+    ${adminPath}/${spring.application.name}/swagger/** = perms[sys:swagger]
     ${adminPath}/cms/* = perms[cms:view]
     ${adminPath}/cms/site/select = user
     ${adminPath}/cms/site/* = perms[cms:site:view]

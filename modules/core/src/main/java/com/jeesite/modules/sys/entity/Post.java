@@ -110,6 +110,7 @@ public class Post extends DataEntity<Post> {
 		this.empCode = empCode;
 	}
 
+	@Schema(description = "岗位绑定角色编码")
 	public String getRoleCodes() {
 		return roleCodes;
 	}
@@ -118,6 +119,7 @@ public class Post extends DataEntity<Post> {
 		this.roleCodes = roleCodes;
 	}
 
+	@Schema(description = "岗位绑定角色名称")
 	public String getRoleNames() {
 		return roleNames;
 	}
