@@ -60,12 +60,13 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 6.2、Alibaba Druid 1.2
 * 视图层：Spring MVC 5.3、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.5、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
-* 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue3、Vue Vben Admin
+* 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * Bootstrap 版 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
-* JeeSite Vue：<https://gitee.com/thinkgem/jeesite-vue>
+* JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
+* Spring Boot 3.x 版本：https://gitee.com/thinkgem/jeesite4/tree/v5.springboot3/
 
 ## 更多介绍
 
@@ -113,7 +114,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ### 容器运行
 
-- 拉取 Docker 镜像：
+- 拉取 Docker 镜像（演示使用，JeeSite版本较久）：
 ```
 docker pull thinkgem/jeesite-web
 ```
@@ -195,7 +196,7 @@ thinkgem/jeesite-web && docker logs -f jeesite-web
 5. 任何基于本软件而产生的一切法律纠纷和责任，均于我司无关。
 6. 如果你对本软件有改进，希望可以贡献给我们，共同进步。
 7. 本项目已申请软件著作权，请尊重开源，感谢阅读。
-8. 本版本无用户数限制，无在线人数限制。
+8. 无用户数限制，无在线人数限制，放心使用。
 
 ## 技术服务与支持
 
