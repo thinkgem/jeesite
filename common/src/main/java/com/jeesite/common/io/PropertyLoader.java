@@ -40,9 +40,10 @@ public class PropertyLoader implements org.springframework.boot.env.PropertySour
 		if (!isLoadJeeSitePropertySource) {
 			isLoadJeeSitePropertySource = true;
 			try {
-				ParserConfig.getGlobalInstance().setSafeMode(true); // 开启 FastJSON 安全模式
+				// 默认开启 FastJSON 1.x 的，安全模式
+				ParserConfig.getGlobalInstance().setSafeMode(true);
 			} catch (Exception ignored) {
-				// 兼容 fastjson2 的调用，不返回异常
+				// 兼容 FastJSON 2.x 的调用，忽略异常
 			}
 			Properties properties = PropertiesUtils.getInstance().getProperties();
 			propertySources.add(new OriginTrackedMapPropertySource("jeesite", properties));
