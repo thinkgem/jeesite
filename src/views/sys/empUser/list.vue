@@ -114,6 +114,7 @@
         component: 'TreeSelect',
         componentProps: {
           api: officeTreeData,
+          allowClear: true,
         },
       },
       {
@@ -123,6 +124,7 @@
         component: 'TreeSelect',
         componentProps: {
           api: companyTreeData,
+          allowClear: true,
         },
       },
       {

@@ -20,6 +20,7 @@ const searchForm: FormProps = {
       component: 'TreeSelect',
       componentProps: {
         api: officeTreeData,
+        allowClear: true,
       },
       show: false,
     },
@@ -48,6 +49,7 @@ const searchForm: FormProps = {
       component: 'TreeSelect',
       componentProps: {
         api: companyTreeData,
+        allowClear: true,
       },
     },
     {
