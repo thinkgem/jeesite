@@ -25,21 +25,25 @@
 		<commons-io.version>2.13.0</commons-io.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<commons-email.version>1.5</commons-email.version>
-		<fst.version>2.57</fst.version>
+
+		<jackson-bom2.version>2.13.5</jackson-bom2.version>
 		<fastjson.version>2.0.33</fastjson.version>
+		<fst.version>2.57</fst.version>
 		<snakeyaml.version>2.0</snakeyaml.version>
-		<!--<jackson.version>2.12.6</jackson.version>-->
-		<!--<activation.version>1.1.1</activation.version>-->
+		<activation.version>1.1.1</activation.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
-		<!--<metadata-extractor.version>2.11.0</metadata-extractor.version>-->
+
+		<metadata-extractor.version>2.11.0</metadata-extractor.version>
 		<thumbnailator.version>0.4.19</thumbnailator.version>
 		<twelvemonkeys.version>3.9.3</twelvemonkeys.version>
 		<blade-patchca.version>1.1.2</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.5.1</zxing.version>
+
 		<poi.version>5.2.3</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<groovy.version>3.0.17</groovy.version>
+
 		<joda-time.version>2.10.4</joda-time.version>
 		<logstash-logback.version>7.3</logstash-logback.version>
 		<elasticsearch.version>7.17.8</elasticsearch.version>
@@ -60,7 +64,7 @@
 
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
-		<!--<tomcat.version>9.0.58</tomcat.version>-->
+		<tomcat2.version>9.0.75</tomcat2.version>
 		<maven.test.skip>true</maven.test.skip>
 		<resource.delimiter>@</resource.delimiter>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
