@@ -167,7 +167,7 @@ div.edui-box {
     overflow: visible;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 .edui-editor div{
     width:auto;
@@ -285,7 +285,7 @@ div.edui-box {
   color: #666;
   background-color: #FFF;
   padding: 10px;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
 }
 
 .edui-simple .edui-bubble .edui-shadow {
@@ -2126,3 +2126,15 @@ div.edui-box {
 .edui-outline .sectionItem{cursor:pointer;padding:4px;}
 .edui-outline .sectionItem:hover{color:#f00;}
 .edui-outline .fixTop{position:fixed!important;top:-3px;}
+
+.skin-dark .edui-simple .edui-editor,
+.skin-dark .edui-simple .edui-editor-toolbarboxouter,
+.skin-dark .edui-simple .edui-toolbar .edui-combox .edui-combox-body,
+.skin-dark .edui-simple .edui-popup-content {background: #1a1a1a;border-color:#414141;color:#ddd;}
+.skin-dark .edui-simple .edui-toolbar .edui-button .edui-state-hover .edui-button-wrap,
+.skin-dark .edui-simple .edui-toolbar .edui-splitbutton .edui-state-hover .edui-splitbutton-body,
+.skin-dark .edui-simple .edui-toolbar .edui-menubutton .edui-state-hover .edui-menubutton-body,
+.skin-dark .edui-simple .edui-toolbar .edui-splitbutton .edui-state-opened .edui-splitbutton-body,
+.skin-dark .edui-simple .edui-toolbar .edui-menubutton .edui-state-opened .edui-menubutton-body,
+.skin-dark .edui-simple .edui-toolbar .edui-button .edui-state-checked .edui-button-wrap,
+.skin-dark .edui-simple .edui-list .edui-state-hover {background:#4b4a4a;border-color:#414141;color:#ddd;}

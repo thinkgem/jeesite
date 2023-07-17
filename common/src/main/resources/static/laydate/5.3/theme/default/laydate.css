@@ -72,7 +72,7 @@ html #layuicss-laydate{display: none; position: absolute; width: 1989px;}
 .layui-laydate-content{position: relative; padding: 5px; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;}
 .layui-laydate-content table{border-collapse: collapse; border-spacing: 0;}
 .layui-laydate-content th,
-.layui-laydate-content td{width: 36px; height: 30px; padding: 5px; text-align: center;}
+.layui-laydate-content td{width: 36px; height: 30px; padding: 5px; text-align: center; border-radius: 4px;}
 .layui-laydate-content th{font-weight: 400;}
 .layui-laydate-content td{position: relative; cursor: pointer;}
 .laydate-day-mark{position: absolute; left: 0; top: 0; width: 100%; line-height: 30px; font-size: 12px; overflow: hidden;}
@@ -111,7 +111,7 @@ html #layuicss-laydate{display: none; position: absolute; width: 1989px;}
 
 
 /* 默认简约主题 */
-.layui-laydate, .layui-laydate-hint{border: 1px solid #d2d2d2; box-shadow: 0 2px 4px rgba(0,0,0,.12); background-color: #fff; color: #666;}
+.layui-laydate, .layui-laydate-hint{border: 1px solid #d2d2d2; box-shadow: 0 2px 4px rgba(0,0,0,.12); background-color: #fff; color: #666; border-radius: 4px;}
 .layui-laydate-header{border-bottom: 1px solid #e2e2e2;}
 .layui-laydate-header i:hover,
 .layui-laydate-header span:hover{color: #08c;}
