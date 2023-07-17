@@ -448,6 +448,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("sysCode", session.getAttribute("sysCode"));
 		data.put("roleCode", session.getAttribute("roleCode"));
 		data.put("title", Global.getProperty("productName"));
+		data.put("lang", Global.getLang());
 		List<Map<String, Object>> roleList = ListUtils.newArrayList();
 		String desktopUrl = null;
 		for (Role role : user.getRoleList()){
