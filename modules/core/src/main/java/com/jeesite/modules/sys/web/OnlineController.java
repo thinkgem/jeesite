@@ -4,15 +4,17 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.lang.TimeUtils;
+import com.jeesite.common.shiro.realm.LoginInfo;
+import com.jeesite.common.shiro.session.SessionDAO;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.utils.SysCacheUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -25,17 +27,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.lang.DateUtils;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.lang.TimeUtils;
-import com.jeesite.common.shiro.realm.LoginInfo;
-import com.jeesite.common.shiro.session.SessionDAO;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.utils.SysCacheUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 /**
  * 在线用户Controller
@@ -66,8 +60,6 @@ public class OnlineController extends BaseController{
 
 	/**
 	 * 在线用户列表
-	 * @param request
-	 * @param response
 	 * @param model
 	 */
 	@RequiresPermissions("sys:online:view")
@@ -78,8 +70,6 @@ public class OnlineController extends BaseController{
 	
 	/**
 	 * 在线用户列表数据
-	 * @param request
-	 * @param response
 	 * @author ThinkGem
 	 */
 	@RequiresPermissions("sys:online:view")
