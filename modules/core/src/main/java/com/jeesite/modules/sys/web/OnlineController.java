@@ -60,8 +60,6 @@ public class OnlineController extends BaseController{
 
 	/**
 	 * 在线用户列表
-	 * @param request
-	 * @param response
 	 * @param model
 	 */
 	@RequiresPermissions("sys:online:view")
@@ -72,8 +70,6 @@ public class OnlineController extends BaseController{
 	
 	/**
 	 * 在线用户列表数据
-	 * @param request
-	 * @param response
 	 * @author ThinkGem
 	 */
 	@RequiresPermissions("sys:online:view")

@@ -23,7 +23,7 @@
         <a-button @click="expandAll" :title="t('展开一级')">
           <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
-        <a-button @click="collapseAll" :title="t('展开全部')">
+        <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <% } %>
@@ -363,7 +363,7 @@ for(c in table.columnList){
       <% if(table.isTreeEntity){ %>
       {
         icon: 'fluent:add-circle-24-regular',
-        title: t('新建下级${functionNameSimple}'),
+        title: t('新增下级${functionNameSimple}'),
         onClick: handleForm.bind(this, {
           parentCode: record.id,
           parentName: record.${table.treeViewNameAttrName},
