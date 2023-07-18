@@ -33,8 +33,8 @@
     preview?:
       | boolean
       | {
-          visible?: boolean;
-          onVisibleChange?: (visible: boolean, prevVisible: boolean) => void;
+          open?: boolean;
+          onOpenChange?: (open: boolean, prevOpen: boolean) => void;
           getContainer: string | HTMLElement | (() => HTMLElement);
         };
   }

@@ -32,13 +32,8 @@
     <FormImport @register="registerImportModal" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysEmpUserList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, onMounted, watch, ref } from 'vue';
+<script lang="ts" setup name="ViewsSysEmpUserList">
+  import { onMounted, watch, ref, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGlobSetting } from '/@/hooks/setting';
@@ -56,6 +51,8 @@
   import InputForm from './form.vue';
   import FormAuthDataScope from './formAuthDataScope.vue';
   import FormImport from './formImport.vue';
+  import { useLocaleStore } from '/@/store/modules/locale';
+  import { LOCALE } from '/@/settings/localeSetting';
 
   const props = defineProps({
     treeCode: String,
@@ -64,17 +61,19 @@
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'simple-line-icons:user',
-    value: router.currentRoute.value.meta.title || t('用户管理'),
+    icon: meta.icon || 'simple-line-icons:user',
+    value: meta.title || t('用户管理'),
   };
   const ctrlPermi = ref('');
   const postList = ref<Recordable>([]);
   const roleList = ref<Recordable>([]);
+  const localeStore = useLocaleStore();
 
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
-    labelWidth: 60,
+    labelWidth: localeStore.getLocale == LOCALE.ZH_CN ? 60 : 100,
     schemas: [
       {
         label: t('账号'),

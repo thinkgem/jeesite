@@ -32,13 +32,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysModuleList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent } from 'vue';
+<script lang="ts" setup name="ViewsSysModuleList">
+  import { unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -53,9 +48,10 @@
 
   const { t } = useI18n('sys.module');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('模块管理'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('模块管理'),
   };
 
   const searchForm: FormProps = {

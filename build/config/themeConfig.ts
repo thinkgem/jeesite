@@ -2,6 +2,7 @@ import { generate } from '@ant-design/colors';
 import { APP_PRESET_COLOR_LIST } from '../../src/settings/designSetting';
 
 export const primaryColor = APP_PRESET_COLOR_LIST[0];
+export const darkPrimaryColor = '#2a50ec';
 
 export const darkMode = 'light';
 
@@ -23,12 +24,11 @@ export function generateAntColors(color: string, theme: GenerateTheme = 'default
 }
 
 export function getThemeColors(color?: string) {
-  const tc = color || primaryColor;
-  const lightColors = generateAntColors(tc);
-  const primary = lightColors[5];
-  const modeColors = generateAntColors(primary, 'dark');
-
-  return [...lightColors, ...modeColors];
+  const primary = color || primaryColor;
+  const lightColors = generateAntColors(primary);
+  const darkPrimary = darkPrimaryColor; //lightColors[5];
+  const darkColors = generateAntColors(darkPrimary, 'dark');
+  return [...lightColors, ...darkColors];
 }
 
 export function generateColors({
@@ -38,13 +38,16 @@ export function generateColors({
   tinycolor,
 }: GenerateColorsParams) {
   const arr = new Array(19).fill(0);
+
   const lightens = arr.map((_t, i) => {
     return mixLighten(color, i / 5);
   });
 
-  const darkens = arr.map((_t, i) => {
-    return mixDarken(color, i / 5);
-  });
+  const darkens = arr
+    .map((_t, i) => {
+      return mixDarken(color, i / 5);
+    })
+    .filter((item) => !item.includes('-'));
 
   const alphaColors = arr.map((_t, i) => {
     return tinycolor(color)
@@ -69,6 +72,14 @@ export function generateColors({
         .toHexString();
     })
     .filter((item) => item !== '#000000');
+
+  // console.log('lightens', lightens);
+  // console.log('darkens', darkens);
+  // console.log('alphaColors', alphaColors);
+  // console.log('shortAlphaColors', shortAlphaColors);
+  // console.log('tinycolorLightens', tinycolorLightens);
+  // console.log('tinycolorDarkens', tinycolorDarkens);
+
   return [
     ...lightens,
     ...darkens,
@@ -76,5 +87,5 @@ export function generateColors({
     ...shortAlphaColors,
     ...tinycolorDarkens,
     ...tinycolorLightens,
-  ].filter((item) => !item.includes('-'));
+  ];
 }

@@ -24,7 +24,7 @@
               v-if="moduleCodes.includes(item.moduleCode) && ['0', '1'].includes(item.ctrlPermi)"
               class="bg-gray"
               style="min-width: 300px"
-              :title="t(item['ctrlName' + localeStore.getLocale] || item.ctrlName)"
+              :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
               :toolbar="true"
               :checkable="true"
               :api="ctrlDataTreeData"
@@ -40,13 +40,8 @@
     </BasicForm>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysRoleAuthDataScope',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, nextTick } from 'vue';
+<script lang="ts" setup name="ViewsSysRoleAuthDataScope">
+  import { ref, unref, nextTick } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useLocaleStore } from '/@/store/modules/locale';
@@ -61,10 +56,11 @@
 
   const { t } = useI18n('sys.role');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const localeStore = useLocaleStore();
   const record = ref<Recordable>({});
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: t('数据权限'),
   };
   const moduleCodes = ref<Array<String>>([]);
@@ -213,7 +209,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

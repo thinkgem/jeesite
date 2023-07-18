@@ -6,7 +6,7 @@
     <Popover
       placement="bottomLeft"
       trigger="click"
-      @visible-change="handleVisibleChange"
+      @open-change="handleOpenChange"
       :overlayClassName="`${prefixCls}__cloumn-list`"
       :getPopupContainer="getPopupContainer"
     >
@@ -47,7 +47,6 @@
                 <Checkbox :value="item.value">
                   {{ item.label }}
                 </Checkbox>
-
                 <Tooltip
                   placement="left"
                   :mouseLeaveDelay="0.4"
@@ -258,14 +257,15 @@
       const indeterminate = computed(() => {
         const len = plainOptions.value.length;
         let checkedLen = state.checkedList.length;
+        if (checkedLen == len) return null;
         unref(checkIndex) && checkedLen--;
-        return checkedLen > 0 && checkedLen < len;
+        return checkedLen >= 0 && checkedLen < len;
       });
 
       // Trigger when check/uncheck a column
       function onChange(checkedList: string[]) {
         const len = plainSortOptions.value.length;
-        state.checkAll = checkedList.length === len;
+        state.checkAll = checkedList.length === len && len > 0;
         const sortList = unref(plainSortOptions).map((item) => item.value);
         checkedList.sort((prev, next) => {
           return sortList.indexOf(prev) - sortList.indexOf(next);
@@ -286,7 +286,7 @@
       }
 
       // Open the pop-up window for drag and drop initialization
-      function handleVisibleChange() {
+      function handleOpenChange() {
         if (inited) return;
         nextTick(() => {
           const columnListEl = unref(columnListRef);
@@ -365,12 +365,12 @@
       function setColumns(columns: BasicColumn[] | string[]) {
         table.setColumns(columns);
         const data: ColumnChangeParam[] = unref(plainSortOptions).map((col) => {
-          const visible =
+          const open =
             columns.findIndex(
               (c: BasicColumn | string) =>
                 c === col.value || (typeof c !== 'string' && c.dataIndex_ === col.value),
             ) !== -1;
-          return { dataIndex_: col.value, fixed: col.fixed, visible };
+          return { dataIndex_: col.value, fixed: col.fixed, open };
         });
 
         emit('columns-change', data);
@@ -392,7 +392,7 @@
         reset,
         prefixCls,
         columnListRef,
-        handleVisibleChange,
+        handleOpenChange,
         checkIndex,
         checkSelect,
         handleIndexCheckChange,
@@ -470,8 +470,9 @@
       }
 
       .ant-checkbox-group {
-        width: 100%;
         min-width: 260px;
+        // width: 100%;
+        width: 300px;
         // flex-wrap: wrap;
       }
 

@@ -134,7 +134,7 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-layout-sideBar';
 
-  .@{prefix-cls} {
+  .ant-layout .ant-layout-sider.@{prefix-cls} {
     z-index: @layout-sider-fixed-z-index;
 
     &--fixed {

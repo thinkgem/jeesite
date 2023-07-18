@@ -7,13 +7,13 @@
     <ScrollContainer>
       <div ref="wrapperRef" class="account-setting">
         <Tabs tab-position="left" :tabBarStyle="{ width: '220px' }">
-          <Tabs.TabPane key="1" tab="基本设置">
+          <Tabs.TabPane key="1" :tab="t('sys.account.basicTab')">
             <UserInfo />
           </Tabs.TabPane>
-          <Tabs.TabPane key="2" tab="安全设置">
+          <Tabs.TabPane key="2" :tab="t('sys.account.securityTab')">
             <SecureSettings />
           </Tabs.TabPane>
-          <Tabs.TabPane key="3" tab="账号绑定">
+          <Tabs.TabPane key="3" :tab="t('sys.account.bindingTab')">
             <Oauth2Binder />
           </Tabs.TabPane>
         </Tabs>
@@ -21,13 +21,7 @@
     </ScrollContainer>
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'AccountCenter',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent } from 'vue';
+<script lang="ts" setup name="AccountCenter">
   import { Tabs } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { Icon } from '/@/components/Icon';

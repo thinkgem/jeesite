@@ -24,13 +24,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysPostList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent } from 'vue';
+<script lang="ts" setup name="ViewsSysPostList">
+  import { unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -44,9 +39,10 @@
 
   const { t } = useI18n('sys.post');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('岗位管理'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('岗位管理'),
   };
 
   const searchForm: FormProps = {
@@ -113,7 +109,7 @@
       dictType: 'sys_post_type',
     },
     {
-      title: t('岗位排序'),
+      title: t('排序'),
       dataIndex: 'postSort',
       key: 'a.post_sort',
       sorter: true,

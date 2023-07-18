@@ -82,11 +82,12 @@
         color: @primary-color;
       }
 
-      .ant-tabs-nav {
+      .ant-tabs-card .ant-tabs-nav {
         margin: 0;
         &-list {
           .ant-tabs-tab {
             padding: 5px 8px;
+            border-bottom: 0;
             color: @text-color-call-out;
             .anticon {
               color: @text-color-call-out;
@@ -113,10 +114,11 @@
       }
 
       .ant-btn {
-        border-radius: 4px;
+        // border-radius: 4px;
         padding: 2px 10px;
         line-height: 1.5;
         height: 30px;
+        margin-top: 2px;
       }
     }
   }

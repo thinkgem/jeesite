@@ -26,13 +26,8 @@
     </BasicForm>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysCorpAdminForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsSysCorpAdminForm">
+  import { ref, unref, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -46,11 +41,12 @@
 
   const emit = defineEmits(['success', 'register']);
 
-  const { t } = useI18n('sys.corpAdmin');
+  const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<User>({} as User);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增管理员') : t('编辑管理员'),
   }));
   const useCorpModel = ref<boolean>(false);
@@ -58,29 +54,6 @@
   const op = ref<string>('');
 
   const inputFormSchemas: FormSchema[] = [
-    {
-      label: t('租户代码'),
-      field: 'corpCode_',
-      component: 'Input',
-      componentProps: {
-        maxlength: 20,
-      },
-      rules: [
-        { required: true },
-        { pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字或下划线') },
-      ],
-      show: () => useCorpModel.value,
-    },
-    {
-      label: t('租户昵称'),
-      field: 'corpName_',
-      component: 'Input',
-      componentProps: {
-        maxlength: 32,
-      },
-      required: true,
-      show: () => useCorpModel.value,
-    },
     {
       label: t('登录账号'),
       field: 'loginCode',
@@ -142,7 +115,7 @@
     {
       label: t('权重'),
       field: 'userWeight',
-      helpMessage: '排序，权重越大排名越靠前，请填写数字。',
+      helpMessage: t('排序，权重越大排名越靠前，请填写数字。'),
       component: 'InputNumber',
       defaultValue: 0,
       componentProps: {
@@ -161,7 +134,7 @@
     },
 
     {
-      label: t('角色信息'),
+      label: t('用户分配角色'),
       field: 'roleInfo',
       component: 'FormGroup',
       colProps: { lg: 24, md: 24 },
@@ -228,20 +201,6 @@
     useCorpModel.value = res.useCorpModel;
     corpAdminRoleCode.value = res.corpAdminRoleCode;
     setFieldsValue(record.value);
-    updateSchema([
-      {
-        field: 'corpCode_',
-        componentProps: {
-          disabled: !record.value.isNewRecord || op.value === 'addAdmin',
-        },
-      },
-      {
-        field: 'corpName_',
-        componentProps: {
-          disabled: !record.value.isNewRecord || op.value === 'addAdmin',
-        },
-      },
-    ]);
     setUserRoleTableData(res);
     setDrawerProps({ loading: false });
   });
@@ -255,6 +214,8 @@
         userCode: record.value.userCode,
         op: op.value,
       };
+      data.corpCode_ = '0';
+      data.corpName_ = 'JeeSite';
       data.userType = 'employee';
       data.userRoleString = userRoleTable.getSelectRowKeys().join(',');
       // console.log('submit', params, data, record);
@@ -264,7 +225,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

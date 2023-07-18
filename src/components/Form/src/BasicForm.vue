@@ -309,8 +309,11 @@
     padding-right: 20px;
 
     .ant-form-item {
-      &-label label::after {
-        margin: 0 6px 0 2px;
+      &-label {
+        line-height: 14px;
+        label::after {
+          margin: 0 4px 0 2px !important;
+        }
       }
 
       &-with-help {
@@ -350,6 +353,10 @@
     &--compact {
       .ant-form-item {
         margin-bottom: 7px !important;
+      }
+
+      .jeesite-basic-help {
+        margin-left: 3px;
       }
 
       .ant-form-item-label > label {

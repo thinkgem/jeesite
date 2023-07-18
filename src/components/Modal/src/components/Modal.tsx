@@ -10,10 +10,10 @@ export default defineComponent({
   inheritAttrs: false,
   props: basicProps,
   setup(props, { slots }) {
-    const { visible, draggable, destroyOnClose } = toRefs(props);
+    const { open, draggable, destroyOnClose } = toRefs(props);
     const attrs = useAttrs();
     useModalDragMove({
-      visible,
+      open,
       destroyOnClose,
       draggable,
     });

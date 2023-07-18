@@ -5,7 +5,7 @@ export interface ListItem {
   title: string;
   // 是否在标题上显示删除线
   titleDelete?: boolean;
-  datetime: string;
+  datetime?: string;
   type: string;
   read?: boolean;
   description: string;
@@ -17,6 +17,9 @@ export interface ListItem {
 export interface TabItem {
   key: string;
   name: string;
+  count?: number;
+  btnHref?: string;
+  btnText?: string;
   list: ListItem[];
   unreadlist?: ListItem[];
 }
@@ -116,7 +119,7 @@ export const tabListData: TabItem[] = [
     list: [
       {
         id: '000000006',
-        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
+        avatar: 'ant-design:message-outlined',
         title: '彩虹 评论了你',
         description: '描述信息描述信息描述信息',
         datetime: '2022-08-07',

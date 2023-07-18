@@ -8,7 +8,7 @@
     <template #sidebar>
       <BasicTree
         ref="treeRef"
-        :title="t('行政区划')"
+        :title="t('区域管理')"
         :search="true"
         :toolbar="true"
         :showIcon="true"
@@ -21,13 +21,8 @@
     <ListView :treeCode="treeCode" />
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysAreaIndex',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, unref, onMounted } from 'vue';
+<script lang="ts" setup name="ViewsSysAreaIndex">
+  import { ref, unref, onMounted } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { PageWrapper } from '/@/components/Page';
   import { BasicTree, TreeActionType, TreeItem } from '/@/components/Tree';
@@ -36,7 +31,7 @@
   import { isArray } from '/@/utils/is';
   //import { uniq } from 'lodash-es';
 
-  const { t } = useI18n('sys.menu');
+  const { t } = useI18n('sys.area');
   const treeCode = ref<string>('');
 
   function handleSelect(keys: string[]) {

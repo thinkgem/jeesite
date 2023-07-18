@@ -36,6 +36,7 @@ export interface LoginResult {
   sysCode: string;
   roleCode: string;
   title: string;
+  lang: string;
 }
 
 export interface AuthInfo {

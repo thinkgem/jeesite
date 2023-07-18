@@ -7,7 +7,7 @@ import { empUserListData } from '/@/api/sys/empUser';
 const { t } = useI18n('sys.empUser');
 
 const modalProps = {
-  title: t('人员选择'),
+  title: t('用户选择'),
 };
 
 const searchForm: FormProps = {
@@ -164,7 +164,7 @@ const tableProps: BasicTableProps = {
 const treeProps: Recordable = {
   api: officeTreeData,
   params: { isAll: true },
-  title: t('部门'),
+  title: t('机构'),
 };
 
 const treeTableFieldName = 'employee.office.officeCode';

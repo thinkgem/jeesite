@@ -130,7 +130,7 @@
           name,
           percent: 0,
           type: name.split('.').pop(),
-          fileMd5: buildUUID(),
+          fileMd5: buildUUID(), // 专业版支持 MD5 秒传
           fileName: name,
           fileUploadId: '',
           fileEntityId: '',
@@ -172,13 +172,6 @@
         }
       }
 
-      // 预览
-      // function handlePreview(record: FileItem) {
-      //   const { thumbUrl = '' } = record;
-      //   createImgPreview({
-      //     imageList: [thumbUrl],
-      //   });
-      // }
 
       async function uploadApiByItem(item: FileItem) {
         const { api } = props;
@@ -187,24 +180,26 @@
         }
         try {
           item.status = UploadResultStatus.UPLOADING;
-          const { data } = await props.api?.(
-            {
-              bizKey: item.bizKey,
-              bizType: item.bizType,
-              uploadType: item.uploadType,
-              fileMd5: item.fileMd5,
-              fileName: item.fileName,
-              fileUploadId: item.fileUploadId,
-              fileEntityId: item.fileEntityId,
-              ...(props.uploadParams || {}),
-              file: item.file,
-            },
-            function onUploadProgress(progressEvent: ProgressEvent) {
-              const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-              item.percent = complete;
-            },
-          );
-          item.responseData = data;
+          if (item.percent != 100) {
+            const { data } = await props.api?.(
+              {
+                bizKey: item.bizKey,
+                bizType: item.bizType,
+                uploadType: item.uploadType,
+                fileMd5: item.fileMd5,
+                fileName: item.fileName,
+                fileUploadId: item.fileUploadId,
+                fileEntityId: item.fileEntityId,
+                ...(props.uploadParams || {}),
+                file: item.file,
+              },
+              function onUploadProgress(progressEvent: ProgressEvent) {
+                const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+                item.percent = complete;
+              },
+            );
+            item.responseData = data;
+          }
           item.status = UploadResultStatus.SUCCESS;
           return {
             success: true,

@@ -196,6 +196,10 @@
       font-size: 16px;
       line-height: 15px;
     }
+
+    .anticon {
+      color: @text-color-call-out;
+    }
   }
 
   html[data-theme='dark'] {

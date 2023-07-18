@@ -37,10 +37,10 @@
       />
     </template>
     <Popover
+      v-if="dropDownActions && getDropdownList.length > 0"
       :trigger="['hover']"
       :dropMenuList="getDropdownList"
       popconfirm
-      v-if="dropDownActions && getDropdownList.length > 0"
     >
       <slot name="more"></slot>
       <a-button type="link" size="small" v-if="!$slots.more">
@@ -220,6 +220,7 @@
       svg {
         font-size: 1.1em;
         font-weight: 700;
+        vertical-align: baseline;
       }
     }
 
@@ -227,10 +228,4 @@
       font-size: 18px;
     }
   }
-
-  // .jeesite-action-tooltip {
-  //   .ant-popover {
-  //     min-width: 150px;
-  //   }
-  // }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <transition name="zoom-fade" mode="out-in">
-      <div :class="getClass" @click.stop v-if="visible">
+      <div :class="getClass" @click.stop v-if="open">
         <div :class="`${prefixCls}-content`" v-click-outside="handleClose">
           <div :class="`${prefixCls}-input__wrapper`">
             <a-input
@@ -71,7 +71,7 @@
   import { useAppInject } from '/@/hooks/web/useAppInject';
 
   const props = defineProps({
-    visible: { type: Boolean },
+    open: { type: Boolean },
   });
 
   const emit = defineEmits(['close']);
@@ -99,9 +99,9 @@
   });
 
   watch(
-    () => props.visible,
-    (visible: boolean) => {
-      visible &&
+    () => props.open,
+    (open: boolean) => {
+      open &&
         nextTick(() => {
           unref(inputRef)?.focus();
         });

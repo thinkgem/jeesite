@@ -88,7 +88,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       __INTLIFY_PROD_DEVTOOLS__: false,
       __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
-
     css: {
       preprocessorOptions: {
         less: {

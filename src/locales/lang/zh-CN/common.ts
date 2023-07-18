@@ -6,6 +6,8 @@ export default {
   saveText: '保存',
   delText: '删除',
   resetText: '重置',
+  modifyText: '修改',
+  submitText: '提交',
   searchText: '搜索',
   queryText: '查询',
 
@@ -17,4 +19,7 @@ export default {
 
   light: '亮色主题',
   dark: '黑暗主题',
+
+  notYetRealized: '暂未实现',
+  validateError: '您填写的信息有误，请根据提示修正。',
 };

@@ -19,13 +19,8 @@
     <BasicForm @register="registerForm" />
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysConfigForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsSysConfigForm">
+  import { ref, unref, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -38,9 +33,10 @@
 
   const { t } = useI18n('sys.config');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<Config>({} as Config);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增参数') : t('编辑参数'),
   }));
 
@@ -135,7 +131,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

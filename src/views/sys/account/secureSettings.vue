@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer title="安全设置" :canExpan="false">
+  <CollapseContainer :title="t('sys.account.securityTab')" :canExpan="false">
     <List>
       <template v-for="item in secureSettingList" :key="item.key">
         <List.Item>
@@ -28,9 +28,11 @@
 <script lang="ts" setup>
   import { List } from 'ant-design-vue';
   import { CollapseContainer } from '/@/components/Container';
+  import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGo } from '/@/hooks/web/usePage';
 
+  const { t } = useI18n();
   const { showMessage } = useMessage();
   const go = useGo();
 
@@ -46,15 +48,15 @@
   const secureSettingList: ListItem[] = [
     {
       key: '1',
-      title: '账户密码',
-      description: '当前密码强度：强',
-      extra: '修改',
+      title: t('sys.account.modifyPwd'),
+      description: t('sys.account.modifyPwdTip'),
+      extra: t('common.modifyText'),
     },
     {
       key: '3',
-      title: '密保问题',
-      description: '未设置密保问题，密保问题可有效保护账户安全',
-      extra: '修改',
+      title: t('sys.account.modifyPqa'),
+      description: t('sys.account.modifyPqaTip'),
+      extra: t('common.modifyText'),
     },
   ];
 
@@ -64,7 +66,7 @@
         go('/account/modPwd');
         break;
       default:
-        showMessage(title + '，暂未实现');
+        showMessage(title + '，' + t('common.notYetRealized'));
     }
   }
 </script>

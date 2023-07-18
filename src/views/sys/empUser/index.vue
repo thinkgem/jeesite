@@ -7,7 +7,7 @@
   <PageWrapper :sidebarWidth="230">
     <template #sidebar>
       <BasicTree
-        :title="t('部门')"
+        :title="t('机构')"
         :search="true"
         :toolbar="true"
         :showIcon="true"

@@ -47,7 +47,8 @@ export default {
     fireResourceError: 'Fire resource error',
     fireAjaxError: 'Fire ajax error',
 
-    enableMessage: 'Only effective when useErrorHandle=true in `/src/settings/projectSetting.ts`.',
+    enableMessage:
+      'Only effective when useErrorHandle is true in `/src/settings/projectSetting.ts`.',
   },
   exception: {
     backLogin: 'Back Login',
@@ -97,6 +98,7 @@ export default {
     mobilePlaceholder: 'Please input mobile',
     policyPlaceholder: 'Register after checking',
     diffPwd: 'The two passwords are inconsistent',
+    corpPlaceholder: 'Please selection tenant',
 
     userName: 'Username',
     password: 'Password',
@@ -110,6 +112,27 @@ export default {
     center: 'Account Center',
     userInfo: 'User Info',
     modifyPwd: 'Modify Password',
+    modifyPwdTip: 'Change the password periodically',
     modifyPqa: 'Security Question',
+    modifyPqaTip: 'Please change the security periodically',
+
+    basicTab: 'Basic Setting',
+    securityTab: 'Security Setting',
+    bindingTab: 'Account Binding',
+
+    userName: 'Nick name',
+    email: 'Email',
+    mobile: 'Mobile',
+    phone: 'Phone',
+    sign: 'Sign',
+    changeAvatar: 'Change Avatar',
+    updateBtn: 'Update Info',
+
+    oldPassword: 'Current Password',
+    newPassword: 'New Password',
+    confirmNewPassword: 'Password',
+    newPasswordInputTip: 'Please input new password',
+    newPasswordNotBlank: 'Password not blank',
+    newPasswordNotEquals: 'The two password entries are inconsistent',
   },
 };

@@ -3,6 +3,12 @@
 @import './btn.less';
 // @import './table.less';
 
+html[data-theme=dark] {
+  h1, h2, h3, h4, h5, h6 {
+    color: rgba(255, 255, 255, .65);
+  }
+}
+
 // TODO beta.11 fix
 .ant-col {
   width: 100%;
@@ -14,9 +20,9 @@
   }
 }
 
-span.anticon:not(.app-iconify) {
-  vertical-align: 0.125em !important;
-}
+// span.anticon:not(.app-iconify) {
+//   vertical-align: 0.125em !important;
+// }
 
 .ant-back-top {
   right: 20px;
@@ -40,7 +46,7 @@ span.anticon:not(.app-iconify) {
 }
 
 // =================================
-// ==============modal message======
+// ========= modal message =========
 // =================================
 .modal-icon-warning {
   color: @warning-color !important;
@@ -63,6 +69,9 @@ span.anticon:not(.app-iconify) {
   overflow-y: auto;
 }
 
+// =================================
+// ======= common components =======
+// =================================
 .ant-checkbox-checked .ant-checkbox-inner::after,
 .ant-tree-checkbox-checked .ant-tree-checkbox-inner::after {
   border-top: 0 !important;
@@ -81,6 +90,10 @@ span.anticon:not(.app-iconify) {
   &-list-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2) !important;
   }
+}
+
+.ant-tag {
+  font-size: 14px !important;
 }
 
 html[data-theme='dark'] {

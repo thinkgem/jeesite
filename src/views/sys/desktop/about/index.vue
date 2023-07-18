@@ -21,13 +21,8 @@
     <Description @register="registerDev" class="enter-y" />
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'AboutPage',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, h } from 'vue';
+<script lang="ts" setup name="AboutPage">
+  import { h } from 'vue';
   import { Tag } from 'ant-design-vue';
   import { PageWrapper } from '/@/components/Page';
   import { Description, DescItem, useDescription } from '/@/components/Description/index';

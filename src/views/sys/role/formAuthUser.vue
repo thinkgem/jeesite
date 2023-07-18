@@ -36,13 +36,8 @@
     <BasicTable @register="registerTable" />
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysRoleAuthDataScope',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsSysRoleAuthDataScope">
+  import { ref, unref, computed } from 'vue';
   import { Popconfirm } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -60,12 +55,13 @@
 
   const { t } = useI18n('sys.role');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<Recordable>({});
   const getTitle = computed(() => {
     const r = record.value;
     const { getDictLabel } = useDict();
     return {
-      icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+      icon: meta.icon || 'ant-design:book-outlined',
       value:
         t('角色分配用户') +
         ' (' +

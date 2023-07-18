@@ -8,11 +8,13 @@
       <Alert :message="getModifyPasswordMsg" type="info" show-icon />
     </div>
     <div class="py-8 bg-white flex flex-col justify-center items-center">
-      <BasicForm @register="register" />
+      <BasicForm @register="register" class="w-9/12" />
       <div class="flex justify-center">
-        <a-button @click="resetFields"> <Icon icon="ant-design:undo-outlined" /> 重置 </a-button>
+        <a-button @click="resetFields">
+          <Icon icon="ant-design:undo-outlined" /> {{ t('common.resetText') }}
+        </a-button>
         <a-button class="!ml-4" type="primary" @click="handleSubmit">
-          <Icon icon="ant-design:check-outlined" /> 提交
+          <Icon icon="ant-design:check-outlined" /> {{ t('common.submitText') }}
         </a-button>
       </div>
     </div>
@@ -45,27 +47,27 @@
   const formSchema: FormSchema[] = [
     {
       field: 'oldPassword',
-      label: '当前密码',
+      label: t('sys.account.oldPassword'),
       component: 'InputPassword',
       required: true,
     },
     {
       field: 'newPassword',
-      label: '新密码',
+      label: t('sys.account.newPassword'),
       component: 'StrengthMeter',
       componentProps: {
-        placeholder: '新密码',
+        placeholder: t('sys.account.newPassword'),
       },
       rules: [
         {
           required: true,
-          message: '请输入新密码',
+          message: t('sys.account.newPasswordInputTip'),
         },
       ],
     },
     {
       field: 'confirmNewPassword',
-      label: '确认密码',
+      label: t('sys.account.confirmNewPassword'),
       component: 'InputPassword',
       dynamicRules: ({ values }) => {
         return [
@@ -73,10 +75,10 @@
             required: true,
             validator: (_, value) => {
               if (!value) {
-                return Promise.reject('密码不能为空');
+                return Promise.reject(t('sys.account.newPasswordNotBlank'));
               }
               if (value !== values.newPassword) {
-                return Promise.reject('两次输入的密码不一致!');
+                return Promise.reject(t('sys.account.newPasswordNotEquals'));
               }
               return Promise.resolve();
             },
@@ -88,7 +90,7 @@
 
   const [register, { validate, resetFields }] = useForm({
     size: 'large',
-    labelWidth: 100,
+    labelWidth: 150,
     showActionButtonGroup: false,
     schemas: formSchema,
   });
@@ -104,7 +106,7 @@
       }
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     }

@@ -32,13 +32,8 @@
     </BasicForm>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysEmpUserForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsSysEmpUserForm">
+  import { ref, unref, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -56,9 +51,10 @@
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<EmpUser>({} as EmpUser);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
   }));
   const ctrlPermi = ref<String>('');
@@ -147,7 +143,7 @@
     {
       label: t('权重'),
       field: 'userWeight',
-      helpMessage: '排序，权重越大排名越靠前，请填写数字。',
+      helpMessage: t('排序，权重越大排名越靠前，请填写数字。'),
       component: 'InputNumber',
       defaultValue: 0,
       componentProps: {
@@ -166,7 +162,7 @@
     },
 
     {
-      label: t('员工信息'),
+      label: t('详细信息'),
       field: 'employeeInfo',
       component: 'FormGroup',
       colProps: { lg: 24, md: 24 },
@@ -246,7 +242,7 @@
     },
 
     {
-      label: t('角色信息'),
+      label: t('用户分配角色'),
       field: 'roleInfo',
       component: 'FormGroup',
       colProps: { lg: 24, md: 24 },
@@ -475,7 +471,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

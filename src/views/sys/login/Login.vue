@@ -136,6 +136,7 @@
   .@{prefix-cls} {
     min-height: 100%;
     overflow: hidden;
+    //background-color: #f2fafd;
 
     @media (max-width: @screen-lg) {
       background-color: #3f60b5;

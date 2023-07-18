@@ -34,13 +34,8 @@
     </BasicForm>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysModuleForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsSysModuleForm">
+  import { ref, unref, computed } from 'vue';
   import { Input } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -55,12 +50,13 @@
 
   const { t } = useI18n('sys.module');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<Module>({} as Module);
   const genBaseDir = ref<string>('');
   const genBaseDirList = ref<DropMenu[]>([]);
   const genTplCategoryList = ref<string[]>([]);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增模块') : t('编辑模块'),
   }));
   const moduleNames = [
@@ -234,7 +230,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

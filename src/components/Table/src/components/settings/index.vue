@@ -66,6 +66,7 @@
   .table-settings {
     & > * {
       margin-right: 12px;
+      margin-top: 6px;
     }
 
     svg {

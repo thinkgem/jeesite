@@ -76,11 +76,15 @@
       &--active {
         border: 1px solid lighten(@primary-color, 10%);
 
+        .anticon {
+          vertical-align: 1px;
+        }
+
         svg {
           display: inline-block;
           margin: 0 0 3px 3px;
           font-size: 12px;
-          fill: @white !important;
+          fill: #ddd !important;
         }
       }
     }

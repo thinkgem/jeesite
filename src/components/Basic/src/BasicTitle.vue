@@ -45,7 +45,7 @@
   .@{prefix-cls} {
     position: relative;
     display: flex;
-    padding-left: 7px;
+    padding-left: 3px;
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;

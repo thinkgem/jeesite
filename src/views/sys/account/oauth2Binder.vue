@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer title="账号绑定" :canExpan="false">
+  <CollapseContainer :title="t('账号绑定')" :canExpan="false">
     <List>
       <template v-for="item in accountBindList" :key="item.key">
         <List.Item>
@@ -32,8 +32,10 @@
   import { List } from 'ant-design-vue';
   import { CollapseContainer } from '/@/components/Container';
   import Icon from '/@/components/Icon/index';
+  import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
 
+  const { t } = useI18n();
   const { showMessage } = useMessage();
 
   interface ListItem {
@@ -48,32 +50,32 @@
   const accountBindList: ListItem[] = [
     {
       key: '1',
-      title: '绑定QQ',
-      description: '当前未绑定QQ账号',
-      extra: '绑定',
+      title: t('绑定QQ'),
+      description: t('当前未绑定QQ账号'),
+      extra: t('绑定'),
       avatar: 'ant-design:qq-circle-filled',
       color: '#2eabff',
     },
     {
       key: '2',
-      title: '绑定微信',
-      description: '当前未绑定微信账号',
-      extra: '绑定',
+      title: t('绑定微信'),
+      description: t('当前未绑定微信账号'),
+      extra: t('绑定'),
       avatar: 'ant-design:wechat-filled',
       color: '#2aae67',
     },
     {
       key: '3',
-      title: '绑定钉钉',
-      description: '当前未绑定钉钉账号',
-      extra: '绑定',
+      title: t('绑定钉钉'),
+      description: t('当前未绑定钉钉账号'),
+      extra: t('绑定'),
       avatar: 'ant-design:dingtalk-circle-filled',
       color: '#1890ff',
     },
   ];
 
   function handleBind(title: string) {
-    showMessage(title + '，暂未实现');
+    showMessage(title + '，' + t('common.notYetRealized'));
   }
 </script>
 <style lang="less" scoped>

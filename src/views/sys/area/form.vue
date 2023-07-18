@@ -19,13 +19,8 @@
     <BasicForm @register="registerForm" />
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysAreaForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsSysAreaForm">
+  import { ref, unref, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -39,8 +34,9 @@
   const { t } = useI18n('sys.area');
   const { showMessage } = useMessage();
   const record = ref<Area>({} as Area);
+  const { meta } = unref(router.currentRoute);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增区域') : t('编辑区域'),
   }));
 
@@ -161,7 +157,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

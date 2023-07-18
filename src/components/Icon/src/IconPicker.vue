@@ -10,7 +10,7 @@
       <a-popover
         placement="bottomLeft"
         trigger="click"
-        v-model="visible"
+        v-model="open"
         :overlayClassName="`${prefixCls}-popover`"
       >
         <template #title>
@@ -31,7 +31,7 @@
                   v-for="icon in getPaginationList"
                   :key="icon"
                   :class="currentSelect === icon ? 'border border-primary' : ''"
-                  class="p-2 w-1/8 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
+                  class="p-2 w-1/16 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
                   @click="handleClick(icon)"
                   :title="icon"
                 >
@@ -43,10 +43,11 @@
             </ScrollContainer>
             <div class="flex py-2 items-center justify-center" v-if="getTotal >= pageSize">
               <a-pagination
-                showLessItems
                 size="small"
                 :pageSize="pageSize"
                 :total="getTotal"
+                :showLessItems="true"
+                :showSizeChanger="false"
                 @change="handlePageChange"
               />
             </div>
@@ -106,9 +107,9 @@
   const props = defineProps({
     value: propTypes.string,
     width: propTypes.string.def('100%'),
-    pageSize: propTypes.number.def(140),
+    pageSize: propTypes.number.def(70),
     copy: propTypes.bool.def(false),
-    mode: propTypes.oneOf<('svg' | 'iconify')[]>(['svg', 'iconify']).def('iconify'),
+    mode: propTypes.oneOf(['svg', 'iconify']).def('iconify'),
   });
 
   const emit = defineEmits(['change', 'update:value']);
@@ -117,7 +118,7 @@
   const icons = isSvgMode ? getSvgIcons() : getIcons();
 
   const currentSelect = ref('');
-  const visible = ref(false);
+  const open = ref(false);
   const currentList = ref(icons);
 
   const { t } = useI18n();
@@ -177,14 +178,14 @@
     }
 
     &-popover {
-      width: 300px;
+      width: 500px;
 
       .ant-popover-inner-content {
         padding: 0;
       }
 
       .scrollbar {
-        height: 220px;
+        height: 185px;
       }
     }
   }

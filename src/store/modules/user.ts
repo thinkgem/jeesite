@@ -193,11 +193,8 @@ export const useUserStore = defineStore({
     initPageCache(res: LoginResult) {
       this.setPageCache('demoMode', res.demoMode);
       this.setPageCache('useCorpModel', res.useCorpModel);
-      this.setPageCache('currentCorpCode', res.currentCorpCode);
-      this.setPageCache('currentCorpName', res.currentCorpName);
       this.setPageCache('modifyPasswordTip', res.modifyPasswordTip);
       this.setPageCache('modifyPasswordMsg', res.modifyPasswordMsg);
-      this.setPageCache('msgEnabled', res.msgEnabled);
       this.setPageCache('sysCode', res.sysCode);
       this.setPageCache('roleCode', res.roleCode);
       this.setPageCache('title', res.title);

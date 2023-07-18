@@ -14,7 +14,7 @@
         <a-button @click="expandAll" :title="t('展开一级')">
           <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
-        <a-button @click="collapseAll" :title="t('展开全部')">
+        <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <a-button type="primary" @click="handleForm({})" v-auth="'sys:menu:edit'">
@@ -35,13 +35,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysMenuList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, watch, nextTick } from 'vue';
+<script lang="ts" setup name="ViewsSysMenuList">
+  import { unref, watch, nextTick } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -59,9 +54,10 @@
 
   const { t } = useI18n('sys.menu');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('菜单管理'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('菜单管理'),
   };
 
   const searchForm: FormProps = {
@@ -106,7 +102,7 @@
       width: 130,
     },
     {
-      title: t('排序'),
+      title: t('排序号'),
       dataIndex: 'treeSort',
       width: 80,
     },
@@ -185,7 +181,7 @@
       },
       {
         icon: 'fluent:add-circle-24-regular',
-        title: t('新建下级菜单'),
+        title: t('新增下级菜单'),
         onClick: handleForm.bind(this, {
           parentCode: record.menuCode,
           parentName: record.menuNameRaw,

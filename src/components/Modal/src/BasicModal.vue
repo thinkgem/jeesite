@@ -34,9 +34,9 @@
       :loading-tip="getProps.loadingTip"
       :minHeight="getProps.minHeight"
       :height="getWrapperHeight"
-      :visible="visibleRef"
+      :open="openRef"
       :modalFooterHeight="footer !== undefined && !footer ? 0 : undefined"
-      v-bind="omit(getProps.wrapperProps, 'visible', 'height', 'modalFooterHeight')"
+      v-bind="omit(getProps.wrapperProps, 'open', 'height', 'modalFooterHeight')"
       @ext-height="handleExtHeight"
       @height-change="handleHeightChange"
     >
@@ -78,9 +78,9 @@
     components: { Modal, ModalWrapper, ModalClose, ModalFooter, ModalHeader },
     inheritAttrs: false,
     props: basicProps,
-    emits: ['visible-change', 'height-change', 'cancel', 'ok', 'register', 'update:visible'],
+    emits: ['open-change', 'height-change', 'cancel', 'ok', 'register', 'update:open'],
     setup(props, { emit, attrs }) {
-      const visibleRef = ref(false);
+      const openRef = ref(false);
       const propsRef = ref<Partial<ModalProps> | null>(null);
       const modalWrapperRef = ref<any>(null);
 
@@ -88,7 +88,7 @@
       const extHeightRef = ref(0);
       const modalMethods: ModalMethods = {
         setModalProps,
-        emitVisible: undefined,
+        emitOpen: undefined,
         redoModalHeight: () => {
           nextTick(() => {
             if (unref(modalWrapperRef)) {
@@ -121,7 +121,7 @@
       const getProps = computed((): Recordable => {
         const opt = {
           ...unref(getMergeProps),
-          visible: unref(visibleRef),
+          // open: unref(openRef),
           okButtonProps: undefined,
           cancelButtonProps: undefined,
           title: undefined,
@@ -136,8 +136,10 @@
         const attr = {
           ...attrs,
           ...unref(getMergeProps),
-          visible: unref(visibleRef),
+          open: unref(openRef),
           wrapClassName: unref(getWrapClassName),
+          maskTransitionName: 'ant-fade',
+          transitionName: 'ant-fade',
         };
         if (unref(fullScreenRef)) {
           return omit(attr, ['height', 'title']);
@@ -151,16 +153,16 @@
       });
 
       watchEffect(() => {
-        visibleRef.value = !!props.visible;
+        openRef.value = !!props.open;
         fullScreenRef.value = !!props.defaultFullscreen;
       });
 
       watch(
-        () => unref(visibleRef),
+        () => unref(openRef),
         (v) => {
-          emit('visible-change', v);
-          emit('update:visible', v);
-          instance && modalMethods.emitVisible?.(v, instance.uid);
+          emit('open-change', v);
+          emit('update:open', v);
+          instance && modalMethods.emitOpen?.(v, instance.uid);
           nextTick(() => {
             if (props.scrollTop && v && unref(modalWrapperRef)) {
               (unref(modalWrapperRef) as any).scrollTop();
@@ -178,11 +180,11 @@
 
         if (props.closeFunc && isFunction(props.closeFunc)) {
           const isClose: boolean = await props.closeFunc();
-          visibleRef.value = !isClose;
+          openRef.value = !isClose;
           return;
         }
 
-        visibleRef.value = false;
+        openRef.value = false;
         emit('cancel', e);
       }
 
@@ -195,8 +197,8 @@
         }
         // Keep the last setModalProps
         propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
-        if (Reflect.has(props, 'visible')) {
-          visibleRef.value = !!props.visible;
+        if (Reflect.has(props, 'open')) {
+          openRef.value = !!props.open;
         }
         if (Reflect.has(props, 'defaultFullscreen')) {
           fullScreenRef.value = !!props.defaultFullscreen;
@@ -229,7 +231,7 @@
         fullScreenRef,
         getMergeProps,
         handleOk,
-        visibleRef,
+        openRef,
         omit,
         modalWrapperRef,
         handleExtHeight,
@@ -244,10 +246,149 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-modal';
 
-  .@{prefix-cls} {
+  .ant-modal.@{prefix-cls} {
     .ant-modal-title {
       .anticon {
         color: @primary-color;
+      }
+    }
+
+    .ant-modal {
+      width: 520px;
+      padding-bottom: 0;
+
+      .ant-modal-body > .scrollbar {
+        padding: 14px;
+      }
+
+      &-title {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 16px;
+
+        .base-title {
+          cursor: move !important;
+        }
+      }
+
+      .ant-modal-body {
+        padding: 0;
+
+        > .scrollbar > .scrollbar__bar.is-horizontal {
+          display: none;
+        }
+      }
+
+      &-large {
+        top: 60px;
+
+        &--mini {
+          top: 16px;
+        }
+      }
+
+      &-header {
+        padding: 0 0 10px;
+      }
+
+      &-content {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding: 15px;
+      }
+
+      &-footer {
+        button + button {
+          margin-left: 10px;
+        }
+      }
+
+      &-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: auto;
+        height: auto;
+        font-weight: normal;
+        outline: none;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+
+      &-close-x {
+        display: inline-block;
+        width: 96px;
+        height: 56px;
+        line-height: 56px;
+      }
+
+      &-confirm-body {
+        .ant-modal-confirm-content {
+          // color: #fff;
+
+          > * {
+            color: @text-color-help-dark;
+          }
+        }
+      }
+
+      &-confirm-confirm.error .ant-modal-confirm-body > .anticon {
+        color: @error-color;
+      }
+
+      &-confirm-btns {
+        .ant-btn:last-child {
+          margin-right: 0;
+        }
+      }
+
+      &-confirm-info {
+        .ant-modal-confirm-body > .anticon {
+          color: @warning-color;
+        }
+      }
+
+      &-confirm-confirm.success {
+        .ant-modal-confirm-body > .anticon {
+          color: @success-color;
+        }
+      }
+    }
+
+    .ant-modal-confirm .ant-modal-body {
+      padding: 24px !important;
+    }
+    @media screen and (max-height: 600px) {
+      .ant-modal {
+        top: 60px;
+      }
+    }
+    @media screen and (max-height: 540px) {
+      .ant-modal {
+        top: 30px;
+      }
+    }
+    @media screen and (max-height: 480px) {
+      .ant-modal {
+        top: 10px;
+      }
+    }
+  }
+
+  .fullscreen-modal {
+    overflow: hidden;
+
+    .ant-modal {
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      // height: 100%;
+
+      &-content {
+        height: 100%;
       }
     }
   }

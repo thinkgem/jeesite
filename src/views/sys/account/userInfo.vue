@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer title="基本设置" :canExpan="false">
+  <CollapseContainer :title="t('sys.account.basicTab')" :canExpan="false" class="overflow-x-hidden">
     <ARow :gutter="24" class="mt-3">
       <ACol :span="14">
         <BasicForm @register="register" />
@@ -8,7 +8,7 @@
         <div class="change-avatar mt-6">
           <CropperAvatar
             :value="avatar"
-            btnText="更换头像"
+            :btnText="t('sys.account.changeAvatar')"
             :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
             @change="updateAvatar"
             width="150"
@@ -18,7 +18,7 @@
     </ARow>
     <div class="ml-30">
       <Button type="primary" @click="handleSubmit">
-        <Icon icon="ant-design:check-outlined" /> 更新
+        <Icon icon="ant-design:check-outlined" /> {{ t('sys.account.updateBtn') }}
       </Button>
     </div>
   </CollapseContainer>
@@ -48,31 +48,31 @@
     {
       field: 'userName',
       component: 'Input',
-      label: '用户昵称',
+      label: t('sys.account.userName'),
       colProps: { span: 18 },
     },
     {
       field: 'email',
       component: 'Input',
-      label: '电子邮箱',
+      label: t('sys.account.email'),
       colProps: { span: 18 },
     },
     {
       field: 'mobile',
       component: 'Input',
-      label: '手机号码',
+      label: t('sys.account.mobile'),
       colProps: { span: 18 },
     },
     {
       field: 'phone',
       component: 'Input',
-      label: '办公电话',
+      label: t('sys.account.phone'),
       colProps: { span: 18 },
     },
     {
       field: 'sign',
       component: 'InputTextArea',
-      label: '个性签名',
+      label: t('sys.account.sign'),
       colProps: { span: 18 },
     },
   ];
@@ -115,7 +115,7 @@
       showMessage(res.message);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     }

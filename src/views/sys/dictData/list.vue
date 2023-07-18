@@ -15,7 +15,7 @@
         <a-button @click="expandAll" :title="t('展开一级')">
           <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
-        <a-button @click="collapseAll" :title="t('展开全部')">
+        <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <a-button type="primary" @click="handleForm({ dictType })" v-auth="'sys:dictData:edit'">
@@ -37,13 +37,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysDictDataList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, watch, nextTick, ref } from 'vue';
+<script lang="ts" setup name="ViewsSysDictDataList">
+  import { watch, nextTick, ref, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -61,11 +56,12 @@
 
   const { t } = useI18n('sys.dictData');
   const { showMessage } = useMessage();
+  const { query } = unref(router.currentRoute);
   const getTitle = {
     icon: 'ant-design:book-outlined',
     value: t('字典选项'),
   };
-  const dictType = ref<string>(router.currentRoute.value.query.dictType as string);
+  const dictType = ref<string>(query.dictType as string);
 
   const searchForm: FormProps = {
     baseColProps: { lg: 4, md: 8 },
@@ -124,7 +120,7 @@
     {
       title: t('系统内置'),
       dataIndex: 'isSys',
-      width: 60,
+      width: 70,
       dictType: 'sys_yes_no',
     },
     {
@@ -157,20 +153,20 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 130,
+    width: 150,
     actions: (record: Recordable) => [
       {
         icon: 'clarity:note-edit-line',
-        title: t('编辑字典'),
+        title: t('编辑选项'),
         onClick: handleForm.bind(this, { dictCode: record.dictCode }),
         auth: 'sys:dictData:edit',
       },
       {
         icon: 'ant-design:stop-outlined',
         color: 'error',
-        title: t('停用字典'),
+        title: t('停用选项'),
         popConfirm: {
-          title: t('是否确认停用字典'),
+          title: t('是否确认停用选项'),
           confirm: handleDisable.bind(this, { dictCode: record.dictCode }),
         },
         auth: 'sys:dictData:edit',
@@ -179,9 +175,9 @@
       {
         icon: 'ant-design:check-circle-outlined',
         color: 'success',
-        title: t('启用字典'),
+        title: t('启用选项'),
         popConfirm: {
-          title: t('是否确认启用字典'),
+          title: t('是否确认启用选项'),
           confirm: handleEnable.bind(this, { dictCode: record.dictCode }),
         },
         auth: 'sys:dictData:edit',
@@ -190,16 +186,16 @@
       {
         icon: 'ant-design:delete-outlined',
         color: 'error',
-        title: t('删除字典'),
+        title: t('删除选项'),
         popConfirm: {
-          title: t('是否确认删除'),
+          title: t('是否确认删除选项'),
           confirm: handleDelete.bind(this, { dictCode: record.dictCode }),
         },
         auth: 'sys:dictData:edit',
       },
       {
         icon: 'fluent:add-circle-24-regular',
-        title: t('新建下级字典'),
+        title: t('新增下级选项'),
         onClick: handleForm.bind(this, {
           dictType,
           parentCode: record.dictCode,

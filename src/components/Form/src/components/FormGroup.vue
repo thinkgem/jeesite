@@ -25,10 +25,15 @@
       width: 100%;
       font-size: 15px;
       font-style: oblique;
-      color: @primary-color;
       padding: 0 0 3px 5px;
       margin: 0 10px 20px;
       border-bottom: 1px solid @header-light-bottom-border-color;
+    }
+  }
+
+  .@{prefix-cls} {
+    .title {
+      color: @primary-color;
     }
   }
 </style>

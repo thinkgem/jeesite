@@ -4,13 +4,13 @@ import type { ScrollContainerOptions } from '/@/components/Container/index';
 
 export interface DrawerInstance {
   setDrawerProps: (props: Partial<DrawerProps> | boolean) => void;
-  emitVisible?: (visible: boolean, uid: number) => void;
+  emitOpen?: (open: boolean, uid: number) => void;
 }
 
 export interface ReturnMethods extends DrawerInstance {
-  openDrawer: <T = any>(visible?: boolean, data?: T, openOnSet?: boolean) => void;
+  openDrawer: <T = any>(open?: boolean, data?: T, openOnSet?: boolean) => void;
   closeDrawer: () => void;
-  getVisible?: ComputedRef<boolean>;
+  getOpen?: ComputedRef<boolean>;
   setDrawerData: (data: any) => void;
 }
 
@@ -20,7 +20,7 @@ export interface ReturnInnerMethods extends DrawerInstance {
   closeDrawer: () => void;
   changeLoading: (loading: boolean) => void;
   changeOkLoading: (loading: boolean) => void;
-  getVisible?: ComputedRef<boolean>;
+  getOpen?: ComputedRef<boolean>;
 }
 
 export type UseDrawerReturnType = [RegisterFn, ReturnMethods];
@@ -75,7 +75,7 @@ export interface DrawerProps extends DrawerFooterProps {
   isDetail?: boolean;
   loading?: boolean;
   showDetailBack?: boolean;
-  visible?: boolean;
+  open?: boolean;
   /**
    * Built-in ScrollContainer component configuration
    * @type ScrollContainerOptions
@@ -84,7 +84,7 @@ export interface DrawerProps extends DrawerFooterProps {
   closeFunc?: () => Promise<any>;
   triggerWindowResize?: boolean;
   /**
-   * Whether a close (x) button is visible on top right of the Drawer dialog or not.
+   * Whether a close (x) button is open on top right of the Drawer dialog or not.
    * @default true
    * @type boolean
    */
@@ -183,7 +183,7 @@ export interface DrawerProps extends DrawerFooterProps {
    * @type string
    */
   placement?: 'top' | 'right' | 'bottom' | 'left';
-  afterVisibleChange?: (visible?: boolean) => void;
+  afterOpenChange?: (open?: boolean) => void;
   keyboard?: boolean;
   /**
    * Specify a callback that will be called when a user clicks mask, close button or Cancel button.

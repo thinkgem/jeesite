@@ -65,9 +65,9 @@
     components: { Drawer, Tooltip, CloseOutlined, ScrollContainer, DrawerFooter, DrawerHeader },
     inheritAttrs: false,
     props: basicProps,
-    emits: ['visible-change', 'ok', 'close', 'register', 'update:visible'],
+    emits: ['open-change', 'ok', 'close', 'register', 'update:open'],
     setup(props, { emit }) {
-      const visibleRef = ref(false);
+      const openRef = ref(false);
       const attrs = useAttrs();
       const propsRef = ref<Partial<Nullable<DrawerProps>>>(null);
 
@@ -76,7 +76,7 @@
 
       const drawerInstance: DrawerInstance = {
         setDrawerProps: setDrawerProps,
-        emitVisible: undefined,
+        emitOpen: undefined,
       };
 
       const instance = getCurrentInstance();
@@ -97,7 +97,7 @@
           placement: 'right',
           ...unref(attrs),
           ...unref(getMergeProps),
-          visible: unref(visibleRef),
+          open: unref(openRef),
         };
         opt.title = undefined;
         const { isDetail, width, class: wrapClassName, getContainer } = opt;
@@ -123,7 +123,7 @@
         const values = {
           ...attrs,
           ...unref(getProps),
-          visible: unref(visibleRef),
+          open: unref(openRef),
           class: unref(getWrapClassName),
         };
         delete values['wrapClassName'];
@@ -154,15 +154,15 @@
       });
 
       watchEffect(() => {
-        visibleRef.value = !!props.visible;
+        openRef.value = !!props.open;
       });
 
       watch(
-        () => unref(visibleRef),
+        () => unref(openRef),
         (v) => {
-          emit('visible-change', v);
-          emit('update:visible', v);
-          instance && drawerInstance.emitVisible?.(v, instance.uid);
+          emit('open-change', v);
+          emit('update:open', v);
+          instance && drawerInstance.emitOpen?.(v, instance.uid);
         },
         {
           immediate: false,
@@ -174,10 +174,10 @@
         const { closeFunc } = unref(getProps);
         if (closeFunc && isFunction(closeFunc)) {
           const res = await closeFunc();
-          visibleRef.value = !res;
+          openRef.value = !res;
           return;
         }
-        visibleRef.value = false;
+        openRef.value = false;
         emit('close', e);
       }
 
@@ -188,8 +188,8 @@
         // Keep the last setDrawerProps
         propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
 
-        if (Reflect.has(props, 'visible')) {
-          visibleRef.value = !!props.visible;
+        if (Reflect.has(props, 'open')) {
+          openRef.value = !!props.open;
         }
       }
 
@@ -218,21 +218,24 @@
   @prefix-cls: ~'jeesite-basic-drawer';
   @prefix-cls-detail: ~'jeesite-basic-drawer__detail';
 
-  .@{prefix-cls} {
-    .ant-drawer-content,
+  .ant-drawer .@{prefix-cls} {
+    overflow: hidden;
     .ant-drawer-wrapper-body {
       overflow: hidden;
     }
 
     .ant-drawer-title {
+      font-weight: normal;
       .anticon {
         color: @primary-color;
       }
     }
 
-    .ant-drawer-close {
+    .ant-drawer-extra .anticon-close {
+      opacity: 0.6;
       &:hover {
         color: @error-color;
+        opacity: 1;
       }
     }
 

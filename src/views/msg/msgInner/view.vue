@@ -5,7 +5,7 @@
 -->
 <template>
   <PageWrapper :sidebarWidth="230" title="false">
-    <div class="text-xl text-center pt-4 pb-6 ml-2 mr-2 mb-5 border-b-1">
+    <div class="text-xl text-center pt-4 pb-6 ml-2 mr-2 mb-5 jeesite-msg-title">
       {{ record.msgTitle }}
     </div>
     <BasicForm @register="registerForm">
@@ -33,48 +33,23 @@
     </div>
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsMsgMsgInnerView',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed, onMounted } from 'vue';
+<script lang="ts" setup name="ViewsMsgMsgInnerView">
+  import { ref, computed, onMounted } from 'vue';
   import { Tag } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { PageWrapper } from '/@/components/Page';
-  import { useMessage } from '/@/hooks/web/useMessage';
-  import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { MsgInner, msgInnerView } from '/@/api/msg/msgInner';
-  import { WangEditor } from '/@/components/WangEditor';
   import { useTabs } from '/@/hooks/web/useTabs';
   import { useQuery } from '/@/hooks/web/usePage';
 
   const { t } = useI18n('msg.msgInner');
-  const { showMessage } = useMessage();
   const { closeCurrent } = useTabs();
   const getQuery = useQuery();
   const record = ref<MsgInner>({ id: getQuery.value.id } as MsgInner);
-  const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: t('查看消息'),
-  }));
 
   const inputFormSchemas: FormSchema[] = [
-    // {
-    //   label: t('查看消息'),
-    //   field: 'basicInfo',
-    //   component: 'FormGroup',
-    //   colProps: { lg: 24, md: 24 },
-    // },
-    // {
-    //   label: t('标题'),
-    //   field: 'msgTitle',
-    //   component: 'Text',
-    //   colProps: { lg: 24, md: 24 },
-    // },
     {
       label: t('等级'),
       field: 'contentLevel',
@@ -161,3 +136,13 @@
     setFieldsValue(record.value);
   });
 </script>
+<style lang="less">
+  .jeesite-msg-title {
+    border-bottom: 1px solid #ddd;
+  }
+  [data-theme='dark'] {
+    .jeesite-msg-title {
+      border-bottom: 1px solid #303030;
+    }
+  }
+</style>

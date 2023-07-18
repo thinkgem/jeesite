@@ -9,13 +9,8 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'Analysis',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref } from 'vue';
+<script lang="ts" setup name="Analysis">
+  import { ref } from 'vue';
   import GrowCard from './components/GrowCard.vue';
   import SiteAnalysis from './components/SiteAnalysis.vue';
   import VisitSource from './components/VisitSource.vue';

@@ -6,7 +6,7 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
- <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-3.2" src="https://img.shields.io/badge/Ant Design Vue-3.2-blue.svg"></a>
+ <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.0" src="https://img.shields.io/badge/Ant Design Vue-4.0-blue.svg"></a>
  <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.4-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
@@ -72,9 +72,8 @@
 - [TypeScript](https://www.typescriptlang.org/) - 熟悉 TS 基本语法
 - [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
-- [Vue-Vben-Admin](https://vvbin.cn/doc-next/) - 熟悉 UI 及表单列表及常用组件使用
-- [Ant-Design-Vue](https://antdv.com/docs/vue/introduce-cn/) - 熟悉 UI 基本使用
-- [JeeSite-v5](https://gitee.com/thinkgem/jeesite4/tree/v5.4/) - 安装后台服务
+- [Vue-Vben-Admin](https://jeesite.com/front/vben-admin/) - 熟悉 UI 及表单列表及常用组件使用
+- [Ant-Design-Vue](https://antdv.com/components/overview-cn/) - 熟悉 UI 基本使用
 
 ## 安装使用
 
@@ -108,16 +107,21 @@ yarn config set registry https://registry.npm.taobao.org
 yarn install
 ```
 
-- 运行访问
+- 开发环境运行访问（方式一）
 
 ```bash
 yarn serve
 ```
 开发环境会加载文件较多，便于调试，请耐心等待。
 
-编译打包后，会合并这些文件，所以访问性能会大大提高。
+- 编译打包后运行访问（方式二）
 
-- 打包
+```bash
+yarn preview
+```
+编译打包后，会整合这些文件，所以访问性能会大大提高，生产环境可以开启 gzip
+
+- 打包发布程序
 
 ```bash
 yarn build
@@ -125,6 +129,23 @@ yarn build
 打包完成后，会在根目录生成 dist 文件夹，发布 nginx。
 
 详见文档：<https://jeesite.com/docs/vue-install-deploy/#部署到正式服务器>
+
+### 后端服务
+
+- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite4/tree/v5.4/)
+- 打开 [.env.development](https://jeesite.com/docs/vue-settings/#env-development-详解) 文件，修改后台接口：
+
+```bash
+# 代理设置，可配置多个，不能换行，格式：[访问接口的根路径, 代理地址, 是否保持Host头]
+# VITE_PROXY = [["/js","https://vue.jeesite.com/js",true]]
+VITE_PROXY = [["/js","http://127.0.0.1:8980/js",false]]
+
+# 访问接口的根路径
+VITE_GLOB_API_URL = 
+
+# 访问接口的前缀，在根路径之后
+VITE_GLOB_API_URL_PREFIX = /js
+```
 
 ### 如果您使用的 VSCode 的话，推荐安装以下插件：
 
@@ -163,6 +184,7 @@ yarn build
 3. 租户管理功能
 4. 文件上传秒传
 5. 消息提醒
+6. 国际化
 
 ## 技术服务与支持
 
@@ -216,16 +238,11 @@ yarn build
     </BasicForm>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    // 当前组件名称（与路由名一致，如果不一致会页面缓存失效）
-    name: 'ViewsTestTestDataForm',
-  });
-</script>
-<script lang="ts" setup>
+<!-- script name: 当前组件名称（与路由名一致，如果不一致会页面缓存失效）-->
+<script lang="ts" setup name="ViewsTestTestDataForm">
 
   // 导入当前用到的对象，部分省略
-  import { defineComponent, ref, computed } from 'vue';
+  import { ref, unref, computed } from 'vue';
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
 
@@ -238,12 +255,15 @@ yarn build
   // 消息弹窗方法
   const { showMessage } = useMessage();
 
+  // 路由meta信息
+  const { meta } = unref(router.currentRoute);
+
   // 当前页面数据记录
   const record = ref<Recordable>({});
 
   // 当前页面标题定义，来自菜单管理定义
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
   }));
 
@@ -504,13 +524,8 @@ yarn build
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    // 当前组件名称（与路由名一致，如果不一致会页面缓存失效）
-    name: 'ViewsTestTestDataList',
-  });
-</script>
-<script lang="ts" setup>
+<!-- script name: 当前组件名称（与路由名一致，如果不一致会页面缓存失效）-->
+<script lang="ts" setup name="ViewsTestTestDataList">
 
   // 导入当前用到的对象，部分省略
   import { defineComponent } from 'vue';
@@ -522,10 +537,13 @@ yarn build
   // 消息弹窗方法
   const { showMessage } = useMessage();
 
+  // 路由meta信息
+  const { meta } = unref(router.currentRoute);
+
   // 当前页面标题定义，来自菜单管理定义
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('数据管理'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('数据管理'),
   };
 
   // 表格搜索表单控件定义

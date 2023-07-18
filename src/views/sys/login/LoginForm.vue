@@ -105,7 +105,7 @@
       <Icon icon="ant-design:github-filled" size="28" />
       <a href="https://gitee.com/thinkgem/jeesite-client" target="_blank">
         <Icon icon="ant-design:windows-filled" size="28" style="vertical-align: middle" />
-        <span class="pl-1" style="vertical-align: middle">客户端下载</span>
+        <span class="pl-1" style="vertical-align: middle"> {{ t('客户端下载') }}</span>
       </a>
     </div>
   </Form>

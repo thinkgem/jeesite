@@ -24,13 +24,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysEmpUserList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, onMounted, watch, ref } from 'vue';
+<script lang="ts" setup name="ViewsSysEmpUserList">
+  import { onMounted, watch, ref, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -45,11 +40,12 @@
     treeCode: String,
   });
 
-  const { t } = useI18n('sys.secAdmin');
+  const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'simple-line-icons:user-female',
-    value: router.currentRoute.value.meta.title || t('二级管理员'),
+    icon: meta.icon || 'simple-line-icons:user-female',
+    value: meta.title || t('二级管理员'),
   };
   const ctrlPermi = ref('');
   const postList = ref<Recordable>([]);
@@ -57,7 +53,7 @@
 
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
-    labelWidth: 60,
+    labelWidth: 100,
     schemas: [
       {
         label: t('账号'),

@@ -32,13 +32,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysCorpAdminList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, onMounted, ref } from 'vue';
+<script lang="ts" setup name="ViewsSysCorpAdminList">
+  import { onMounted, ref, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -50,19 +45,20 @@
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
 
-  const { t } = useI18n('sys.corpAdmin');
+  const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'simple-line-icons:badge',
-    value: router.currentRoute.value.meta.title || t('租户管理员'),
+    icon: meta.icon || 'simple-line-icons:badge',
+    value: meta.title || t('租户管理员'),
   };
   const useCorpModel = ref<boolean>(false);
   const currentCorpCode = ref<string>('');
   const currentCorpName = ref<string>('');
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 4, md: 8 },
-    labelWidth: 80,
+    baseColProps: { lg: 6, md: 8 },
+    labelWidth: 100,
     schemas: [
       {
         label: t('登录账号'),
@@ -75,18 +71,6 @@
         component: 'Input',
       },
       {
-        label: t('租户代码'),
-        field: 'corpCode_',
-        component: 'Input',
-        ifShow: () => useCorpModel.value,
-      },
-      {
-        label: t('租户名称'),
-        field: 'corpName_',
-        component: 'Input',
-        ifShow: () => useCorpModel.value,
-      },
-      {
         label: t('状态'),
         field: 'status',
         component: 'Select',
@@ -95,8 +79,6 @@
           allowClear: true,
           onChange: handleSuccess,
         },
-        colProps: { lg: 3, md: 8 },
-        labelWidth: 60,
       },
     ],
   };
@@ -116,23 +98,6 @@
       key: 'a.user_name',
       sorter: true,
       width: 100,
-    },
-    {
-      title: t('租户代码'),
-      dataIndex: 'corpCode_',
-      key: 'a.corp_code',
-      sorter: true,
-      width: 100,
-      slot: 'corpColumn',
-      ifShow: () => useCorpModel.value,
-    },
-    {
-      title: t('租户名称'),
-      dataIndex: 'corpName_',
-      key: 'a.corp_name',
-      sorter: true,
-      width: 100,
-      ifShow: () => useCorpModel.value,
     },
     {
       title: t('状态'),

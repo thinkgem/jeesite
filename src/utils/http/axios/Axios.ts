@@ -171,6 +171,7 @@ export class VAxios {
       }
       return config;
     }
+
     return {
       ...config,
       data: qs.stringify(config.data, { arrayFormat: 'indices' }),

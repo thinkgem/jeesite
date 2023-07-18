@@ -30,17 +30,19 @@
           @register="registerTable"
           @row-db-click="rowDbClick"
           :minHeight="treeHeight - 160"
+          class="jeesite-listselect-table"
         />
       </ACol>
       <ACol :span="props.config.treeProps ? 3 : 6" class="pl-3">
-        {{ t('当前已选择') }} {{ selectList.length }} {{ t('项') }}：
+        {{ t('当前已选择 {0} 项', [selectList.length]) }}：
         <div class="mt-2" v-if="selectList && selectList.length > 0">
           <Tag
             v-for="(item, index) in selectList"
             :key="item[props.config.itemCode]"
             :closable="true"
             @close="closeTag(index)"
-            color="#2a50ec"
+            style="margin: 3px 5px 0 0"
+            :color="token.colorPrimary"
           >
             {{ item[props.config.itemName] + ' (' + item[props.config.itemCode] + ')' }}
           </Tag>
@@ -51,7 +53,7 @@
 </template>
 <script lang="ts" setup>
   import { ref, CSSProperties, computed } from 'vue';
-  import { Row, Col, Tag } from 'ant-design-vue';
+  import { Row, Col, Tag, theme } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { BasicTree } from '/@/components/Tree';
   import { BasicModal, useModalInner } from '/@/components/Modal';
@@ -62,6 +64,7 @@
   const ARow = Row;
   const ACol = Col;
 
+  const { token } = theme.useToken();
   const { t } = useI18n('listselect');
 
   const props = defineProps({
@@ -87,10 +90,15 @@
 
   const selectList = ref<Recordable[]>([]);
 
+  type Key = string | number;
+  const selectedRowKeys = ref<Key[]>([]);
+
   const rowSelection: TableRowSelection = {
     type: props.checkbox ? 'checkbox' : 'radio',
     columnWidth: props.checkbox ? undefined : 0,
-    onChange: (_selectedRowKeys: string[], selectedRows: Recordable[]) => {
+    selectedRowKeys: selectedRowKeys as unknown as Key[],
+    onChange: (_selectedRowKeys: Key[], selectedRows: Recordable[]) => {
+      selectedRowKeys.value = _selectedRowKeys;
       selectList.value = selectedRows;
     },
   };
@@ -111,6 +119,7 @@
     //setModalProps({ loading: true });
     //console.log(data);
     selectList.value = data.selectList;
+    selectedRowKeys.value = selectList.value.map((e) => e[props.config.itemCode]);
     setModalProps({ loading: false });
   });
 
@@ -144,3 +153,14 @@
     await tableAction.reload();
   }
 </script>
+<style lang="less">
+  .jeesite-listselect-table {
+    .ant-table-wrapper {
+      .ant-table {
+        td {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+</style>

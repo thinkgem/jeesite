@@ -18,13 +18,8 @@
     <BasicForm @register="registerForm" />
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysLogForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed, h } from 'vue';
+<script lang="ts" setup name="ViewsSysLogForm">
+  import { ref, unref, computed, h } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   // import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -36,9 +31,10 @@
 
   const { t } = useI18n('sys.log');
   // const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<Log>({} as Log);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增日志') : t('日志详情'),
   }));
 

@@ -8,7 +8,7 @@
 @breadcrumb-prefix-cls: ~'jeesite-layout-breadcrumb';
 @logo-prefix-cls: ~'jeesite-app-logo';
 
-.@{header-prefix-cls} {
+.ant-layout .ant-layout-header.@{header-prefix-cls} {
   display: flex;
   height: @header-height;
   padding: 0;
@@ -18,6 +18,9 @@
   background-color: @white;
   align-items: center;
   justify-content: space-between;
+}
+
+.@{header-prefix-cls} {
 
   &--mobile {
     .@{breadcrumb-prefix-cls},
@@ -116,28 +119,25 @@
     &__item {
       display: flex !important;
       height: @header-height;
+      line-height: @header-height;
       padding: 0 2px;
       font-size: 1.2em;
       cursor: pointer;
       align-items: center;
 
-      .ant-badge {
-        height: @header-height;
-        line-height: @header-height;
-      }
-
-      .ant-badge-dot {
-        top: 10px;
-        right: 2px;
-      }
-
-      .ant-badge-count {
-        min-width: 14px;
-        height: 14px;
-        padding: 0 4px;
-        box-shadow: 0 0 0 1px #d1d1d1;
-        font-size: 9px;
-        line-height: 15px;
+      &.ant-badge {
+        .ant-badge-dot {
+          top: 10px;
+          right: 2px;
+        }
+        .ant-badge-count {
+          min-width: 14px;
+          height: 14px;
+          padding: 0 4px;
+          box-shadow: 0 0 0 1px #d1d1d1;
+          font-size: 9px;
+          line-height: 15px;
+        }
       }
     }
 

@@ -1,6 +1,6 @@
 html[data-theme='dark'] {
-  .ant-pagination {
-    &.mini {
+  .ant-pagination.ant-pagination {
+    &-mini {
       .ant-pagination-prev,
       .ant-pagination-next,
       .ant-pagination-item {
@@ -16,7 +16,8 @@ html[data-theme='dark'] {
       }
 
       .ant-pagination-item-active {
-        background-color: @primary-color !important;
+        // background-color: @primary-color !important;
+        background: fade(#2a50ed, 85) !important;
         border: none;
         border-radius: none !important;
 
@@ -28,8 +29,8 @@ html[data-theme='dark'] {
   }
 }
 
-.ant-pagination {
-  &.mini {
+.ant-pagination.ant-pagination {
+  &-mini {
     .ant-pagination-prev,
     .ant-pagination-next {
       font-size: 12px;

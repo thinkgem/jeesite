@@ -31,7 +31,7 @@
 
   const props = {
     /**
-     * Waiting time, if the time is specified, whether visible or not, it will be automatically loaded after the specified time
+     * Waiting time, if the time is specified, whether open or not, it will be automatically loaded after the specified time
      */
     timeout: { type: Number },
     /**

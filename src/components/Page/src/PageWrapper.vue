@@ -338,8 +338,8 @@
       }
     }
 
-    .sidebar {
-      background: transparent;
+    .ant-layout .sidebar {
+      background-color: @content-bg;
       transition: none;
       min-height: 400px;
 

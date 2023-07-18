@@ -18,13 +18,8 @@
     </div>
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'Workbench',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref } from 'vue';
+<script lang="ts" setup name="Workbench">
+  import { ref } from 'vue';
   import { Card } from 'ant-design-vue';
   import { PageWrapper } from '/@/components/Page';
   import WorkbenchHeader from './components/WorkbenchHeader.vue';

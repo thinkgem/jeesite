@@ -14,7 +14,7 @@
         <a-button @click="expandAll" :title="t('展开一级')">
           <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
-        <a-button @click="collapseAll" :title="t('展开全部')">
+        <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <a-button type="default" @click="handleExport()">
@@ -40,13 +40,8 @@
     <FormImport @register="registerImportModal" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysOfficeList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, watch, nextTick } from 'vue';
+<script lang="ts" setup name="ViewsSysOfficeList">
+  import { watch, nextTick, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGlobSetting } from '/@/hooks/setting';
@@ -68,9 +63,10 @@
 
   const { t } = useI18n('sys.office');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('机构管理'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('机构管理'),
   };
 
   const searchForm: FormProps = {
@@ -245,7 +241,7 @@
       },
       {
         icon: 'fluent:add-circle-24-regular',
-        title: t('新建下级机构'),
+        title: t('新增下级机构'),
         onClick: handleForm.bind(this, {
           parentCode: record.id,
           parentName: record.officeName,

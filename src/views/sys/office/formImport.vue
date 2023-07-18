@@ -41,13 +41,8 @@
     </div>
   </BasicModal>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysOfficeForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref } from 'vue';
+<script lang="ts" setup name="ViewsSysOfficeForm">
+  import { ref } from 'vue';
   import { Upload, Checkbox, Tooltip } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -115,7 +110,7 @@
       emit('success');
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

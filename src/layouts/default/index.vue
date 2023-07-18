@@ -75,30 +75,21 @@
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-default-layout';
-
-  .@{prefix-cls} {
+  .ant-layout.@{prefix-cls} {
     display: flex;
     width: 100%;
     min-height: 100%;
-    background-color: @content-bg;
     flex-direction: column;
+    background-color: @content-bg;
 
-    > .ant-layout {
-      min-height: 100%;
-      // background-color: @content-bg; // 2
-    }
+    // .ant-layout {
+    //   min-height: 100%;
+    //   background-color: @content-bg;
+    // }
 
     &-main {
       width: 100%;
       margin-left: 1px;
     }
   }
-
-  // html[data-theme='dark'] { // 2
-  //   .@{prefix-cls} {
-  //     > .ant-layout {
-  //       background: #000;
-  //     }
-  //   }
-  // }
 </style>

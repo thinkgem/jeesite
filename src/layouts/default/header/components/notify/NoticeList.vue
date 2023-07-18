@@ -136,7 +136,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-header-notify-list';
 
   .@{prefix-cls} {
@@ -185,5 +185,9 @@
         }
       }
     }
+  }
+
+  .ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title {
+    margin-top: 0;
   }
 </style>

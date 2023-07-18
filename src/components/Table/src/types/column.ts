@@ -22,7 +22,7 @@ export interface FilterDropdownProps {
   clearFilters?: () => void;
   filters?: ColumnFilterItem[];
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
-  visible?: boolean;
+  open?: boolean;
 }
 
 export declare type CustomRenderFunction<T> = (record: RecordProps<T>) => VNodeChild | JSX.Element;
@@ -77,10 +77,10 @@ export interface ColumnProps<T> {
     | ((props: FilterDropdownProps) => VNodeChild | JSX.Element);
 
   /**
-   * Whether filterDropdown is visible
+   * Whether filterDropdown is open
    * @type boolean
    */
-  filterDropdownVisible?: boolean;
+  filterDropdownOpen?: boolean;
 
   /**
    * Whether the dataSource is filtered
@@ -184,10 +184,10 @@ export interface ColumnProps<T> {
   onFilter?: (value: any, record: T) => boolean;
 
   /**
-   * Callback executed when filterDropdownVisible is changed, Use as a filterDropdownVisible event when using template or jsx
+   * Callback executed when filterDropdownOpen is changed, Use as a filterDropdownOpen event when using template or jsx
    * @type Function
    */
-  onFilterDropdownVisibleChange?: (visible: boolean) => void;
+  onFilterDropdownOpenChange?: (open: boolean) => void;
 
   /**
    * When using columns, you can setting this property to configure the properties that support the slot,

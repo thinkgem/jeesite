@@ -1,5 +1,5 @@
 <template>
-  <Header :class="getHeaderClass">
+  <ALayoutHeader :class="getHeaderClass">
     <!-- left start -->
     <div :class="`${prefixCls}-left`">
       <!-- logo -->
@@ -43,18 +43,11 @@
 
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
-      <AppLocalePicker
-        v-if="getShowLocalePicker"
-        :reload="true"
-        :showText="false"
-        :class="`${prefixCls}-action__item`"
-      />
-
       <UserDropDown :theme="getHeaderTheme" />
 
       <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
     </div>
-  </Header>
+  </ALayoutHeader>
 </template>
 <script lang="ts">
   import { defineComponent, unref, computed } from 'vue';
@@ -95,7 +88,7 @@
   export default defineComponent({
     name: 'LayoutHeader',
     components: {
-      Header: Layout.Header,
+      ALayoutHeader: Layout.Header,
       AppLogo,
       LayoutTrigger,
       LayoutBreadcrumb,

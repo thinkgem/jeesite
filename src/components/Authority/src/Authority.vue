@@ -12,7 +12,7 @@
     name: 'Authority',
     props: {
       /**
-       * Specified role is visible
+       * Specified role is open
        * When the permission mode is the role mode, the value value can pass the role value.
        * When the permission mode is background, the value value can pass the code permission value
        * @default ''

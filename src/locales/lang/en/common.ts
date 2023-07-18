@@ -6,6 +6,8 @@ export default {
   saveText: 'Save',
   delText: 'Delete',
   resetText: 'Reset',
+  modifyText: 'Modify',
+  submitText: 'Submit',
   searchText: 'Search',
   queryText: 'Search',
 
@@ -17,4 +19,8 @@ export default {
 
   light: 'Light',
   dark: 'Dark',
+
+  notYetRealized: 'Not yet realized',
+  validateError:
+    'The information you have filled in is incorrect, please correct it according to the prompt.',
 };

@@ -8,7 +8,7 @@
   <div class="jeesite-text">
     <DictLabel v-if="dictType" :dictType="dictType" :dictValue="value" />
     <!-- eslint-disable vue/no-v-html -->
-    <div v-else-if="isHtml" v-html="labelValue || value"></div>
+    <div v-else-if="isHtml" v-html="labelValue || value" class="p-1"></div>
     <div v-else>
       {{ labelValue || value }}
     </div>
@@ -43,6 +43,5 @@
 
   .@{prefix-cls} {
     width: 100%;
-    padding-left: 5px;
   }
 </style>

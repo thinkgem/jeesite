@@ -60,7 +60,7 @@
       const table = useTableContext();
       const isEdit = ref(false);
       const elRef = ref();
-      const ruleVisible = ref(false);
+      const ruleOpen = ref(false);
       const ruleMessage = ref('');
       const currentValueRef = ref<any>(props.value);
       const defaultValueRef = ref<any>(props.value);
@@ -74,8 +74,8 @@
       const getComponent = computed(() => props.column?.editComponent || 'Input');
       const getRule = computed(() => props.column?.editRule);
 
-      const getRuleVisible = computed(() => {
-        return unref(ruleMessage) && unref(ruleVisible);
+      const getRuleOpen = computed(() => {
+        return unref(ruleMessage) && unref(ruleOpen);
       });
 
       const getIsCheckComp = computed(() => {
@@ -236,7 +236,7 @@
 
         if (editRule) {
           if (isBoolean(editRule) && !currentValue && !isNumber(currentValue)) {
-            ruleVisible.value = true;
+            ruleOpen.value = true;
             const component = unref(getComponent);
             ruleMessage.value = createPlaceholderMessage(component);
             return false;
@@ -249,7 +249,7 @@
               })
               .catch((msg) => {
                 ruleMessage.value = msg;
-                ruleVisible.value = true;
+                ruleOpen.value = true;
                 return false;
               });
           }
@@ -401,7 +401,7 @@
         getRule,
         onClickOutside,
         ruleMessage,
-        getRuleVisible,
+        getRuleOpen,
         getComponentProps,
         getWrapperStyle,
         getWrapperClass,
@@ -446,7 +446,7 @@
                   {...this.getComponentProps}
                   component={this.getComponent}
                   style={this.getWrapperStyle}
-                  popoverVisible={this.getRuleVisible}
+                  popoverOpen={this.getRuleOpen}
                   rule={this.getRule}
                   ruleMessage={this.ruleMessage}
                   class={this.getWrapperClass}

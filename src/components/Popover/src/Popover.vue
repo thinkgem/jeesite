@@ -7,7 +7,7 @@
   <Popover
     :trigger="trigger"
     v-bind="$attrs"
-    v-model:visible="visible"
+    v-model:open="open"
     overlayClassName="jeesite-basic-popover"
     :mouseEnterDelay="0.05"
     :placement="placement"
@@ -112,11 +112,11 @@
     },
     emits: ['menuEvent'],
     setup(props, { emit }) {
-      const visible = ref(false);
+      const open = ref(false);
 
       function handleClickMenu(item: DropMenu) {
         if (!item['popConfirm']) {
-          visible.value = false;
+          open.value = false;
         }
         const { event } = item;
         const menu = props.dropMenuList.find((item) => `${item.event}` === `${event}`);
@@ -136,7 +136,7 @@
       });
 
       return {
-        visible,
+        open,
         handleClickMenu,
         getPopConfirmAttrs,
         getAttr: (key: string | number) => ({ key }),
@@ -145,11 +145,12 @@
   });
 </script>
 <style lang="less">
-  .jeesite-basic-popover {
+  .ant-popover.jeesite-basic-popover {
     .ant-popover-content,
     .ant-popover-inner,
     .ant-menu-horizontal {
       border-radius: 6px;
+      padding: 0;
     }
 
     .ant-popover-inner-content {
@@ -162,10 +163,15 @@
       padding-bottom: 2px;
 
       > .ant-menu-item,
-      > .ant-menu-submenu,
-      > .ant-menu-item:hover,
-      > .ant-menu-submenu:hover {
+      > .ant-menu-submenu {
         padding: 0 10px;
+
+        .ant-menu-title-content {
+          transition: none;
+          &:hover {
+            color: @primary-color !important;
+          }
+        }
 
         &::after {
           border-bottom: 0 !important;
@@ -175,7 +181,7 @@
   }
 
   html[data-theme='dark'] {
-    .jeesite-basic-popover {
+    .ant-popover.jeesite-basic-popover {
       .ant-menu-horizontal:not(.ant-menu-dark) {
         > .ant-menu-item:hover,
         > .ant-menu-submenu:hover,

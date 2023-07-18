@@ -5,7 +5,7 @@ import { userListData } from '/@/api/sys/user';
 const { t } = useI18n('sys.empUser');
 
 const modalProps = {
-  title: t('人员选择'),
+  title: t('用户选择'),
 };
 
 const searchForm: FormProps = {

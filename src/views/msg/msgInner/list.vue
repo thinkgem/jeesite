@@ -18,19 +18,15 @@
       <template #firstColumn="{ record }">
         <a @click="handleForm({ id: record.id, status: record.status })">
           {{ record.msgTitle }}
+          <Icon v-if="record.isAttac == '1'" icon="fa fa-paperclip" />
         </a>
       </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsMsgMsgInnerList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent } from 'vue';
+<script lang="ts" setup name="ViewsMsgMsgInnerList">
+  import { unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -44,9 +40,10 @@
 
   const { t } = useI18n('msg.msgInner');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('站内消息'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('站内消息'),
   };
   const go = useGo();
 

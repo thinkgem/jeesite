@@ -20,11 +20,12 @@
   // }
 }
 
-.@{menu-prefix-cls}-menu-popover {
+.ant-popover.@{menu-prefix-cls}-menu-popover {
   .ant-popover-arrow {
     display: none;
   }
 
+  .ant-popover-inner,
   .ant-popover-inner-content {
     padding: 0;
   }
@@ -62,11 +63,12 @@
 
         &:hover {
           color: #fff;
+          background-color: @header-dark-bg-hover-color;
         }
 
         &-selected {
           color: #fff;
-          background-color: @primary-color !important;
+          background-color: @header-dark-bg-color;
         }
       }
     }
@@ -78,6 +80,7 @@
 
         &:hover {
           color: @primary-color;
+          background-color: fade(@primary-color, 5);
         }
 
         &-selected {

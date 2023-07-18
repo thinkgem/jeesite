@@ -83,6 +83,7 @@ export class Persistent {
     sessionMemory.remove(key);
     immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory.getCache);
   }
+
   static clearSession(immediate = false): void {
     sessionMemory.clear();
     immediate && ss.clear();

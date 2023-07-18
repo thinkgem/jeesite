@@ -1,19 +1,43 @@
 <template>
-  <ConfigProvider :locale="getAntdLocale">
-    <AppProvider prefixCls="jeesite">
-      <RouterView />
-    </AppProvider>
-  </ConfigProvider>
+  <StyleProvider hash-priority="high" :transformers="[legacyLogicalPropertiesTransformer]">
+    <ConfigProvider :locale="getAntdLocale" :theme="getTheme">
+      <AppProvider prefixCls="jeesite">
+        <RouterView />
+      </AppProvider>
+    </ConfigProvider>
+  </StyleProvider>
 </template>
 <script lang="ts" setup>
-  import { ConfigProvider } from 'ant-design-vue';
+  import { computed, unref } from 'vue';
+  import {
+    StyleProvider,
+    legacyLogicalPropertiesTransformer,
+    ConfigProvider,
+    theme,
+  } from 'ant-design-vue';
   import { AppProvider } from '/@/components/Application';
-  import { useTitle } from '/@/hooks/web/useTitle';
+  import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+  import { ThemeEnum } from '/@/enums/appEnum';
   import { useLocale } from '/@/locales/useLocale';
-
+  import { useTitle } from '/@/hooks/web/useTitle';
+  import { darkPrimaryColor } from '../build/config/themeConfig';
   import 'dayjs/locale/zh-cn';
+
   // support Multi-language
   const { getAntdLocale } = useLocale();
+  const { getDarkMode, getThemeColor } = useRootSetting();
+
+  const getTheme = computed(() => {
+    const isDark = unref(getDarkMode) === ThemeEnum.DARK;
+    return {
+      algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      token: {
+        colorPrimary: isDark ? darkPrimaryColor : getThemeColor,
+        colorLink: isDark ? darkPrimaryColor : getThemeColor,
+        colorInfo: isDark ? darkPrimaryColor : getThemeColor,
+      },
+    };
+  });
 
   // Listening to page changes and dynamically changing site titles
   useTitle();

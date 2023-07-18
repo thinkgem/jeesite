@@ -503,7 +503,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
 export type ColumnChangeParam = {
   dataIndex: string;
   fixed: boolean | 'left' | 'right' | undefined;
-  visible: boolean;
+  open: boolean;
 };
 
 export interface InnerHandlers {

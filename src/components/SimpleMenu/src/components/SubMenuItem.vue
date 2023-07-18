@@ -20,8 +20,8 @@
       placement="right"
       :overlayClassName="`${prefixCls}-menu-popover`"
       v-else
-      :visible="getIsOpend"
-      @visibleChange="handleVisibleChange"
+      :open="getIsOpend"
+      @openChange="handleOpenChange"
       :overlayStyle="getOverlayStyle"
       :align="{ offset: [0, 0] }"
     >
@@ -296,8 +296,8 @@
         });
       });
 
-      function handleVisibleChange(visible: boolean) {
-        state.opened = visible;
+      function handleOpenChange(open: boolean) {
+        state.opened = open;
       }
 
       // provide
@@ -319,7 +319,7 @@
         getCollapse,
         getItemStyle,
         handleClick,
-        handleVisibleChange,
+        handleOpenChange,
         getParentSubMenu,
         getOverlayStyle,
         getTheme,

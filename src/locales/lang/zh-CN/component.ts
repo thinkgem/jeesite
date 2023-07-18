@@ -63,7 +63,7 @@ export default {
     settingColumn: '列设置',
     settingColumnShow: '列展示',
     settingIndexColumnShow: '序号列',
-    settingSelectColumnShow: '勾选列',
+    settingSelectColumnShow: '复选框',
     settingFixedLeft: '固定到左侧',
     settingFixedRight: '固定到右侧',
     settingFullScreen: '全屏',

@@ -18,13 +18,8 @@
     </BasicTable>
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysOnlineList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, h } from 'vue';
+<script lang="ts" setup name="ViewsSysOnlineList">
+  import { h, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -33,11 +28,12 @@
   import { onlineListData, onlineTickOut } from '/@/api/sys/online';
   import { FormProps } from '/@/components/Form';
 
-  const { t } = useI18n('sys.log');
+  const { t } = useI18n('sys.online');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('在线用户'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('在线用户'),
   };
 
   const searchForm: FormProps = {
@@ -56,7 +52,7 @@
       {
         label: t('查询所有在线'),
         field: 'isAllOnline',
-        helpMessage: '包含3分钟以上未操作的用户',
+        helpMessage: t('包含3分钟以上未操作的用户'),
         component: 'Select',
         componentProps: {
           dictType: 'sys_yes_no',
@@ -67,7 +63,7 @@
       {
         label: t('包含游客用户'),
         field: 'isVisitor',
-        helpMessage: '包含未登录的用户',
+        helpMessage: t('包含未登录的用户'),
         component: 'Select',
         componentProps: {
           dictType: 'sys_yes_no',

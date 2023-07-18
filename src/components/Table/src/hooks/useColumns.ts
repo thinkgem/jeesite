@@ -303,15 +303,6 @@ export function useColumns(
 
     const column: BasicColumn[] = [];
     updateData.forEach((item) => {
-      // const dataIndex = item.dataIndex;
-      // if (dataIndex && isString(dataIndex) && dataIndex.indexOf('.') != -1) {
-      //   item.dataIndex = dataIndex.split('.');
-      //   item.dataIndex_ = dataIndex;
-      // } else if (isArray(dataIndex)) {
-      //   item.dataIndex_ = dataIndex.join('.');
-      // } else {
-      //   item.dataIndex_ = dataIndex?.toString() || '';
-      // }
       columnsRef.value.forEach((val) => {
         if (val.dataIndex_ === item.dataIndex) {
           const newColumn = deepMerge(val, item);

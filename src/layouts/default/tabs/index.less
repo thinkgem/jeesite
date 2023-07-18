@@ -3,11 +3,11 @@
   * No deletion without permission, or be held responsible to law.
   * @author Vben、ThinkGem
   */
-@prefix-cls: ~'jeesite-multiple-tabs';
+@prefix-cls-3: ~'jeesite-multiple-tabs';
 @multiple-height-large: 39px; // TABS_HEIGHT_LARGE
 
 html[data-theme='dark'] {
-  .@{prefix-cls} {
+  .@{prefix-cls-3} {
     .ant-tabs.ant-tabs-card {
       .ant-tabs-nav {
         background: #000;
@@ -26,7 +26,7 @@ html[data-theme='dark'] {
           }
         }
         .ant-tabs-tab-active {
-          background: #2975bc !important;
+          background: fade(#2a50ed, 85) !important;
           svg {
             fill: #fff !important;
           }
@@ -40,7 +40,7 @@ html[data-theme='dark'] {
   }
 }
 
-.@{prefix-cls} {
+.@{prefix-cls-3} {
   z-index: 10;
   height: @multiple-height-large + 2;
   line-height: @multiple-height-large + 2;
@@ -53,13 +53,17 @@ html[data-theme='dark'] {
       border: 0;
       box-shadow: none;
 
+      &::before {
+        border-bottom: 0;
+      }
+
       .ant-tabs-tab {
         height: calc(@multiple-height-large - 12px);
         line-height: calc(@multiple-height-large - 13px);
         color: @text-color-base;
         background-color: @component-background;
         transition: none;
-        border-radius: 4px;
+        border-radius: 4px !important;
         margin: 10px 0 0 0;
         padding-left: 10px;
         padding-right: 11px;
@@ -86,7 +90,7 @@ html[data-theme='dark'] {
 
         .ant-tabs-tab-remove {
           width: 12px;
-          height: 24px;
+          height: 16px;
           color: inherit;
           transition: none;
           padding: 0;
@@ -212,7 +216,7 @@ html[data-theme='dark'] {
     display: flex;
     align-items: center;
     padding-left: 8px;
-    .@{prefix-cls} {
+    .@{prefix-cls-3} {
       &-content__info {
         width: auto;
         margin-left: 0;

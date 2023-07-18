@@ -88,13 +88,8 @@
     </BasicForm>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsMsgMsgInnerForm',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="ViewsMsgMsgInnerForm">
+  import { ref, unref, computed } from 'vue';
   import { Form } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -113,9 +108,10 @@
 
   const { t } = useI18n('msg.msgInner');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<MsgInner>({} as MsgInner);
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增消息') : t('编辑消息'),
   }));
   const receivers = ref({});
@@ -286,7 +282,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

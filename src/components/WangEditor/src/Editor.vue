@@ -9,7 +9,6 @@
     <Editor
       class="editor"
       :style="{ height: containerHeight }"
-      v-model="valueHtml"
       :defaultConfig="editorConfig"
       :mode="mode"
       @on-created="handleCreated"
@@ -20,7 +19,15 @@
 
 <script lang="ts">
   import '@wangeditor/editor/dist/css/style.css'; // 引入 css
-  import { defineComponent, computed, ref, watch, onBeforeUnmount, shallowRef } from 'vue';
+  import {
+    defineComponent,
+    computed,
+    watch,
+    onBeforeUnmount,
+    shallowRef,
+    nextTick,
+    onMounted,
+  } from 'vue';
   import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
   import { i18nChangeLanguage, IDomEditor } from '@wangeditor/editor';
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -56,6 +63,27 @@
 
   type InsertFnType = (url: string, alt: string, href?: string) => void;
 
+  let isLock = false;
+  let lockList: any[] = [];
+  async function lock(): Promise<Fn<any, any>> {
+    function unlock() {
+      let waitFunc = lockList.shift();
+      if (waitFunc) {
+        waitFunc.resolve(unlock);
+      } else {
+        isLock = false;
+      }
+    }
+    if (isLock) {
+      return new Promise((resolve, reject) => {
+        lockList.push({ resolve, reject });
+      });
+    } else {
+      isLock = true;
+      return unlock;
+    }
+  }
+
   export default defineComponent({
     name: 'WangEditor',
     components: { Editor, Toolbar },
@@ -65,6 +93,7 @@
     setup(props, { emit, attrs }) {
       const { prefixCls } = useDesign('editor-container');
       const { ctxAdminPath } = useGlobSetting();
+
       const containerWidth = computed(() => {
         const width = props.width;
         if (isNumber(width)) {
@@ -111,28 +140,47 @@
 
       // 编辑器实例，必须用 shallowRef
       const editorRef = shallowRef();
-      const valueHtml = ref('');
 
-      watch(
-        () => props.value,
-        (val: string, _prevVal: string) => {
-          valueHtml.value = val;
-        },
-        { immediate: true },
-      );
+      let isSetHtml = false;
+      function setHtml(val: string) {
+        const editor = editorRef.value;
+        if (editor == null) return;
+        isSetHtml = true;
+        editor.setHtml(val);
+      }
 
-      watch(
-        () => attrs.disabled,
-        () => {
-          const editor = editorRef.value;
-          if (editor == null) return;
-          if (attrs.disabled) {
-            editor.disable();
-          } else {
-            editor.enable();
-          }
-        },
-      );
+      onMounted(() => {
+        watch(
+          () => props.value,
+          (val: string, _prevVal: string) => {
+            nextTick(async () => {
+              let unlock = await lock();
+              try {
+                setHtml(val);
+              } catch (e) {
+                setTimeout(() => {
+                  setHtml(val);
+                }, 500);
+              } finally {
+                unlock();
+              }
+            });
+          },
+          { immediate: true },
+        );
+        watch(
+          () => attrs.disabled,
+          () => {
+            const editor = editorRef.value;
+            if (editor == null) return;
+            if (attrs.disabled) {
+              editor.disable();
+            } else {
+              editor.enable();
+            }
+          },
+        );
+      });
 
       // 组件销毁时，也及时销毁编辑器
       onBeforeUnmount(() => {
@@ -149,6 +197,10 @@
       };
 
       const handleChange = (editor: IDomEditor) => {
+        if (isSetHtml) {
+          isSetHtml = false;
+          return;
+        }
         let content = editor.getHtml();
         content = content.replace('<!--HTML-->', '');
         content = '<!--HTML-->' + content;
@@ -161,7 +213,6 @@
         containerWidth,
         containerHeight,
         editorRef,
-        valueHtml,
         mode: 'default',
         toolbarConfig,
         editorConfig,

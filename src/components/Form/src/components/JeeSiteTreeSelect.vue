@@ -92,6 +92,7 @@
           },
           treeDataSimpleMode: false,
           dropdownStyle: { maxHeight: '300px' },
+          popupClassName: 'jeesite-tree-select-popup',
           getPopupContainer: () => document.body,
           ...unref(attrs),
           ...(props as Recordable),
@@ -198,17 +199,15 @@
     .ant-select {
       width: 100%;
     }
+  }
 
-    .ant-select-tree {
-      padding: 4px;
-
-      li {
-        margin: 3px 0;
-
-        .ant-select-tree-switcher {
-          line-height: normal;
-          vertical-align: baseline;
-        }
+  .ant-select-dropdown.@{prefix-cls}-popup .ant-select-tree {
+    .ant-select-tree-switcher {
+      &.ant-select-tree-switcher-noop {
+        width: 15px;
+      }
+      .ant-select-tree-switcher-icon svg {
+        margin-top: -3px;
       }
     }
   }

@@ -16,13 +16,15 @@
     watchEffect,
     toRaw,
     watch,
-    CSSProperties,
     onMounted,
+    onBeforeUnmount,
+    CSSProperties,
   } from 'vue';
   import { Tree, Empty, Spin } from 'ant-design-vue';
   import { TreeIcon } from './TreeIcon';
   import TreeHeader from './TreeHeader.vue';
   import { ScrollContainer } from '/@/components/Container';
+  import { addResizeListener, removeResizeListener } from '/@/utils/event';
 
   import { omit, get, difference, intersection, cloneDeep } from 'lodash-es';
   import { isArray, isBoolean, isEmpty, isFunction } from '/@/utils/is';
@@ -558,15 +560,29 @@
         return data;
       });
 
+      const treeHeight = ref<number>();
+      const treeRef = ref<HTMLDivElement>();
+      const treeResize = () => {
+        const el = unref(treeRef) as HTMLDivElement;
+        if (!el || el.clientHeight <= 0) return;
+        if (!el.parentElement?.classList.contains('sidebar-content')) return;
+        let height = el.clientHeight;
+        const header = el.querySelector('.basic-tree-header');
+        if (header) height -= header.clientHeight;
+        treeHeight.value = height - 5;
+      };
+      onMounted(() => addResizeListener(unref(treeRef), treeResize));
+      onBeforeUnmount(() => removeResizeListener(unref(treeRef), treeResize));
+
       return () => {
         const { title, helpMessage, toolbar, search, checkable, showIcon } = props;
         const showTitle = title || toolbar || search || slots.headerTitle;
         const scrollStyle: CSSProperties = {
-          height: 'calc(100%' + (showTitle ? ' - 35px)' : ')'),
+          height: unref(treeHeight) + 'px',
         };
         const TreeComp = showIcon ? Tree.DirectoryTree : Tree;
         return (
-          <div class={[prefixCls, 'h-full', attrs.class]}>
+          <div ref={treeRef} class={[prefixCls, 'h-full', attrs.class]}>
             {showTitle && (
               <TreeHeader
                 checkable={checkable}
@@ -585,7 +601,7 @@
               </TreeHeader>
             )}
             <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound)}>
-              <TreeComp {...unref(getBindValues)} treeData={treeData.value} />
+              <TreeComp {...unref(getBindValues)} treeData={unref(treeData.value)} />
             </ScrollContainer>
             <Spin spinning={unref(loading)}>
               <Empty
@@ -608,11 +624,21 @@
     border-radius: 5px;
 
     .ant-tree {
-      margin: 10px 15px 10px 10px;
+      margin: 10px 6px 10px 10px;
       background-color: transparent;
+
+      .ant-tree-checkbox {
+        margin-top: 1px;
+      }
+
+      .ant-tree-switcher-icon svg {
+        margin-top: -1px;
+      }
 
       .ant-tree-node-content-wrapper {
         position: relative;
+        margin-top: 3px !important;
+
         .ant-tree-title {
           position: absolute;
           left: 0;
@@ -628,6 +654,15 @@
           background-color: transparent;
         }
         .ant-tree-treenode {
+          .ant-tree-switcher {
+            color: fade(@text-color-base, 70);
+            width: 20px;
+          }
+
+          .ant-tree-switcher-icon svg {
+            margin-top: 1px;
+          }
+
           .ant-tree-node-content-wrapper {
             transition: none;
             .ant-tree-title {
@@ -636,13 +671,12 @@
             .@{prefix-cls}-title {
               padding-left: 3px;
             }
-            .ant-tree-switcher,
             .ant-tree-iconEle {
               color: fade(@text-color-base, 70);
               width: 20px;
             }
             &:hover {
-              background-color: fade(@primary-color, 8);
+              background-color: fade(@primary-color, 5);
               border-radius: 3px;
             }
             &.ant-tree-node-selected {

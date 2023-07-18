@@ -5,7 +5,7 @@
     :class="prefixCls"
     :width="getMenuWidth"
     :getContainer="null"
-    :visible="!getCollapsed"
+    :open="!getCollapsed"
     @close="handleClose"
   >
     <Sider />

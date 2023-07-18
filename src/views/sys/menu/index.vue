@@ -25,13 +25,8 @@
     <ListView :treeCode="treeCode" :sysCode="sysCode" />
   </PageWrapper>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysMenuIndex',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, onMounted } from 'vue';
+<script lang="ts" setup name="ViewsSysMenuIndex">
+  import { ref, onMounted } from 'vue';
   import { DownOutlined } from '@ant-design/icons-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDict } from '/@/components/Dict';

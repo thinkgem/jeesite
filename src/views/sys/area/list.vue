@@ -14,7 +14,7 @@
         <a-button @click="expandAll" :title="t('展开一级')">
           <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
-        <a-button @click="collapseAll" :title="t('展开全部')">
+        <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <a-button type="primary" @click="handleForm({})" v-auth="'sys:area:edit'">
@@ -33,13 +33,8 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: 'ViewsSysAreaList',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, watch, nextTick } from 'vue';
+<script lang="ts" setup name="ViewsSysAreaList">
+  import { watch, nextTick, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -57,9 +52,10 @@
 
   const { t } = useI18n('sys.area');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('行政区划'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('行政区划'),
   };
 
   const searchForm: FormProps = {
@@ -72,13 +68,9 @@
         component: 'Input',
       },
       {
-        label: t('区域类型'),
-        field: 'areaType',
-        component: 'Select',
-        componentProps: {
-          dictType: 'sys_area_type',
-          allowClear: true,
-        },
+        label: t('区域代码'),
+        field: 'areaCode',
+        component: 'Input',
       },
       {
         label: t('状态'),
@@ -183,7 +175,7 @@
       },
       {
         icon: 'fluent:add-circle-24-regular',
-        title: t('新建下级区域'),
+        title: t('新增下级区域'),
         onClick: handleForm.bind(this, {
           parentCode: record.id,
           parentName: record.areaName,
