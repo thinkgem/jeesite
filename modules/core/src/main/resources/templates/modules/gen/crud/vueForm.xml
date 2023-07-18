@@ -60,13 +60,8 @@
     <% } %>
   </BasicDrawer>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: '${compNamePrefix}Form',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent, ref, computed } from 'vue';
+<script lang="ts" setup name="${compNamePrefix}Form">
+  import { ref, unref, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -107,9 +102,10 @@ for(c in table.columnList){
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const record = ref<${ClassName}>({} as ${ClassName});
   const getTitle = computed(() => ({
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
+    icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
   }));
 <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
@@ -607,7 +603,7 @@ for (c in table.columnList){
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('您填写的信息有误，请根据提示修正。'));
+        showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {

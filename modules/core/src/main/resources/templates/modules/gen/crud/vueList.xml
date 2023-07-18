@@ -90,13 +90,8 @@ if(table.isTreeEntity){
     <% } %>
   </div>
 </template>
-<script lang="ts">
-  export default defineComponent({
-    name: '${compNamePrefix}List',
-  });
-</script>
-<script lang="ts" setup>
-  import { defineComponent<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
+<script lang="ts" setup name="${compNamePrefix}List">
+  import { unref<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
   	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -154,9 +149,10 @@ for(c in table.columnList){
 <% } %>
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
+  const { meta } = unref(router.currentRoute);
   const getTitle = {
-    icon: router.currentRoute.value.meta.icon || 'ant-design:book-outlined',
-    value: router.currentRoute.value.meta.title || t('${functionNameSimple}管理'),
+    icon: meta.icon || 'ant-design:book-outlined',
+    value: meta.title || t('${functionNameSimple}管理'),
   };
 
   const searchForm: FormProps = {
