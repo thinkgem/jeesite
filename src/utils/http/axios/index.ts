@@ -213,7 +213,7 @@ const transform: AxiosTransform = {
             isShowMessageModal = true;
             showMessageModal({
               title: t('sys.api.errorTip'),
-              content: errMessage,
+              content: msg || errMessage,
               onOk() {
                 isShowMessageModal = false;
                 return Promise.resolve();
@@ -223,7 +223,7 @@ const transform: AxiosTransform = {
         } else if (errorMessageMode === 'message') {
           if (!isShowMessage) {
             isShowMessage = true;
-            showMessage({ content: errMessage }, 'error');
+            showMessage({ content: msg || errMessage }, 'error');
             setTimeout(() => (isShowMessage = false), 1000);
           }
         }

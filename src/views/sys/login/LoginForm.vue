@@ -43,6 +43,14 @@
         </template>
       </Input>
     </FormItem>
+    <FormItem v-if="useCorpModel" name="corpCode" class="enter-x">
+      <Select
+        showSearch
+        :options="corpOptions"
+        @change="handleSwitchCorp"
+        :placeholder="t('sys.login.corpPlaceholder')"
+      />
+    </FormItem>
 
     <div class="gp" v-if="gp">
       Tip：发送 <a href="https://gitee.com/thinkgem/jeesite4" target="_blank">JeeSite</a> 和
@@ -100,9 +108,9 @@
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <Icon icon="ant-design:qq-circle-filled" size="28" />
-      <Icon icon="ant-design:wechat-filled" size="28" />
-      <Icon icon="ant-design:github-filled" size="28" />
+      <Icon icon="ant-design:qq-circle-filled" size="28" @click="handleOauth2" />
+      <Icon icon="ant-design:wechat-filled" size="28" @click="handleOauth2" />
+      <Icon icon="ant-design:github-filled" size="28" @click="handleOauth2" />
       <a href="https://gitee.com/thinkgem/jeesite-client" target="_blank">
         <Icon icon="ant-design:windows-filled" size="28" style="vertical-align: middle" />
         <span class="pl-1" style="vertical-align: middle"> {{ t('客户端下载') }}</span>
@@ -127,6 +135,8 @@
   import { userInfoApi } from '/@/api/sys/login';
   import { PageEnum } from '/@/enums/pageEnum';
   // import { onKeyStroke } from '@vueuse/core';
+  import { Select } from '/@/components/Form';
+  import { corpAdminTreeData } from '/@/api/sys/corpAdmin';
 
   const ACol = Col;
   const ARow = Row;
@@ -145,11 +155,14 @@
   const loading = ref(false);
   const rememberMe = ref(false);
   const isValidCodeLogin = ref(false);
+  const useCorpModel = ref(false);
+  const corpOptions = ref<Recordable[]>([]);
 
   const formData = reactive({
     account: 'system',
     password: '',
     validCode: '',
+    corpCode: '',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -184,7 +197,18 @@
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
+    useCorpModel.value = res.useCorpModel || false;
+    if (useCorpModel.value) {
+      corpOptions.value = (await corpAdminTreeData({ isShowCode: true })).map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+    }
   });
+
+  async function handleSwitchCorp(corpCode) {
+    formData.corpCode = corpCode;
+  }
 
   async function handleLogin() {
     try {
@@ -197,6 +221,7 @@
           username: data.account,
           validCode: data.validCode,
           rememberMe: unref(rememberMe.value),
+          param_corpCode: formData.corpCode,
         }),
       );
       refreshValidCodeStatus(res);
@@ -231,6 +256,10 @@
       selection.removeAllRanges();
       selection.addRange(range);
     }
+  }
+
+  function handleOauth2() {
+    showMessage('未开放第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
   }
 
   const gp = location.href.indexOf('.jeesite.com') != -1 || import.meta.env.DEV;

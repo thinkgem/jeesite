@@ -188,6 +188,7 @@
 </script>
 <style lang="less" scoped>
   .basic-tree-header {
+    color: @text-color-base;
     border-bottom: 1px solid #f0f0f0;
     min-height: 35px;
     overflow: hidden;

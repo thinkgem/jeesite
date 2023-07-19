@@ -1,6 +1,7 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
+    <div class="gp mt-4 mb-2"> Tip：演示系统未开放手机登录，请联系官方人员获取账号密码。 </div>
     <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="mobile" class="enter-x">
         <Input
