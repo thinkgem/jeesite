@@ -39,6 +39,7 @@
       },
       dictType: propTypes.string,
     },
+    emits: ['change'],
     setup(props) {
       const attrs = useAttrs();
       const [state] = useRuleFormItem(props);
