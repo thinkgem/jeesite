@@ -12,6 +12,9 @@ echo.
 %~d0
 cd %~dp0
 
+call mvn -v
+echo.
+
 cd ..
 call mvn clean install -Dmaven.test.skip=true -Ppackage
 
