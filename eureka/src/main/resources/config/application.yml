@@ -24,6 +24,10 @@ eureka:
     hostname: 127.0.0.1
     # 实例是否允许使用IP
     preferIpAddress: false
+    # 实例状态监控参数
+    homePageUrl: ${server.servlet.context-path}
+    statusPageUrlPath: ${server.servlet.context-path}/actuator
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
 
   # 服务端设置
   server:
