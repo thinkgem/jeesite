@@ -10,6 +10,7 @@ import { configHtmlPlugin } from './html';
 import { configPwaConfig } from './pwa';
 import { configMockPlugin } from './mock';
 import { configCompressPlugin } from './compress';
+// import { configStyleImportPlugin } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configSvgIconsPlugin } from './svgSprite';
@@ -29,6 +30,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     vueJsx(),
     // support name
     vueSetupExtend(),
+    // support https
     VitePluginCertificate({
       source: 'coding',
     }),
