@@ -1,4 +1,4 @@
 import { withInstall } from '/@/utils/index';
-import editor from './src/Editor.vue';
+import wangEditor from './src/WangEditor.vue';
 
-export const WangEditor = withInstall(editor);
+export const WangEditor = withInstall(wangEditor);
