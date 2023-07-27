@@ -29,7 +29,7 @@ export function updateHeaderBgColor(color?: string) {
   setCssVar(HEADER_BG_COLOR_VAR, color);
 
   // hover color
-  const hoverColor = darken(color!, 30);
+  const hoverColor = darken(color!, 5);
   setCssVar(HEADER_BG_HOVER_COLOR_VAR, hoverColor);
   setCssVar(HEADER_MENU_ACTIVE_BG_COLOR_VAR, hoverColor);
 
