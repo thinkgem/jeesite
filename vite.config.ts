@@ -80,7 +80,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // },
       // Turning off brotliSize display can slightly reduce packaging time
       reportCompressedSize: false,
-      chunkSizeWarningLimit: 3000,
+      chunkSizeWarningLimit: 9000,
     },
     define: {
       // setting vue-i18-next
@@ -103,7 +103,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     optimizeDeps: {
       // @iconify/iconify: The dependency is dynamically and virtually loaded by @purge-icons/generated, so it needs to be specified explicitly
       include: [
-        '@iconify/iconify',
         '@vue/shared',
         '@iconify/iconify',
         'ant-design-vue/es/locale/zh_CN',
