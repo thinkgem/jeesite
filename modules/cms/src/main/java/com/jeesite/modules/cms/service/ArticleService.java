@@ -46,7 +46,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
-	private static ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
+	private static final ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
 			60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
 			new DefaultThreadFactory("cms-update-expired-weight"));
 	
