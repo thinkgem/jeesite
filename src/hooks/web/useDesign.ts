@@ -1,5 +1,5 @@
 import { useAppProviderContext } from '/@/components/Application';
-import { theme } from 'ant-design-vue/lib';
+import { theme } from 'ant-design-vue';
 // import { computed } from 'vue';
 // import { lowerFirst } from 'lodash-es';
 
