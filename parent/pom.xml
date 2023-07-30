@@ -164,6 +164,7 @@
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
+								<!--suppress UnresolvedMavenProperty -->
 								<Build-Time>${build.time}</Build-Time>
 							</manifestEntries>
 						</archive>
@@ -207,6 +208,7 @@
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
+								<!--suppress UnresolvedMavenProperty -->
 								<Build-Time>${build.time}</Build-Time>
 							</manifestEntries>
 						</archive>
