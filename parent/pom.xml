@@ -106,6 +106,12 @@
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
 
+			<!-- timestamp插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+
 		</plugins>
 
 		<pluginManagement>
@@ -127,6 +133,25 @@
 					</configuration>
 				</plugin>
 
+				<!-- timestamp插件，生成编译时间 -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>timestamp-property</id>
+							<goals>
+								<goal>timestamp-property</goal>
+							</goals>
+							<configuration>
+								<name>build.time</name>
+								<pattern>yyyy-MM-dd HH:mm</pattern>
+								<timeZone>GMT+8</timeZone>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
 				<!-- jar插件，配置manifest文件，加入lib包的jar依赖 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -141,7 +166,8 @@
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
-								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<!--suppress UnresolvedMavenProperty -->
+								<Build-Time>${build.time}</Build-Time>
 							</manifestEntries>
 						</archive>
 					</configuration>
@@ -184,7 +210,8 @@
 							</manifest>
 							<addMavenDescriptor>false</addMavenDescriptor>
 							<manifestEntries>
-								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<!--suppress UnresolvedMavenProperty -->
+								<Build-Time>${build.time}</Build-Time>
 							</manifestEntries>
 						</archive>
 					</configuration>
