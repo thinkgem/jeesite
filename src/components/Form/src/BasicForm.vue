@@ -320,10 +320,6 @@
         margin-bottom: 0;
       }
 
-      &:not(.ant-form-item-with-help) {
-        margin-bottom: 20px;
-      }
-
       &.suffix-item {
         .ant-form-item-children {
           display: flex;
@@ -341,8 +337,19 @@
           align-items: center;
         }
       }
+
       &.no-label {
         margin-left: 20px;
+      }
+
+      &:not(.ant-form-item-with-help) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .ant-row > .ant-col:last-child > .ant-form-item {
+      &:not(.ant-form-item-with-help) {
+        margin-bottom: 10px;
       }
     }
 
