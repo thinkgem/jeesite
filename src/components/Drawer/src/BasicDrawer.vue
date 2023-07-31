@@ -20,7 +20,6 @@
         <CloseOutlined @click="onClose" />
       </Tooltip>
     </template>
-
     <ScrollContainer
       :style="getScrollContentStyle"
       v-loading="getLoading"
@@ -112,11 +111,10 @@
             // TODO type error?
             opt.getContainer = `.${prefixVar}-layout-content` as any;
           }
+        } else {
+          opt.class = unref(getWrapClassName);
         }
-        return {
-          ...opt,
-          class: unref(getWrapClassName),
-        } as DrawerProps;
+        return opt as DrawerProps;
       });
 
       const getBindValues = computed((): DrawerProps => {
@@ -124,7 +122,6 @@
           ...attrs,
           ...unref(getProps),
           open: unref(openRef),
-          class: unref(getWrapClassName),
         };
         delete values['wrapClassName'];
         return values;
@@ -220,67 +217,81 @@
 
   .ant-drawer .@{prefix-cls} {
     overflow: hidden;
-    .ant-drawer-wrapper-body {
-      overflow: hidden;
-    }
 
-    .ant-drawer-title {
-      font-weight: normal;
-      .anticon {
-        color: @primary-color;
-      }
-    }
+    .ant-drawer {
+      &-body {
+        height: calc(100% - @header-height);
+        padding: 0;
+        background-color: @component-background;
 
-    .ant-drawer-extra .anticon-close {
-      opacity: 0.6;
-      &:hover {
-        color: @error-color;
-        opacity: 1;
-      }
-    }
+        > .scrollbar {
+          .scrollbar__wrap {
+            margin: 16px;
+            padding-bottom: 30px;
+          }
 
-    .ant-drawer-body {
-      height: calc(100% - @header-height);
-      padding: 0;
-      background-color: @component-background;
-
-      > .scrollbar > .scrollbar__wrap {
-        padding: 16px !important;
-        margin-bottom: 0 !important;
+          .is-horizontal {
+            display: none;
+          }
+        }
       }
 
-      > .scrollbar > .scrollbar__bar.is-horizontal {
-        display: none;
+      &-title {
+        font-weight: normal;
+        .anticon {
+          color: @primary-color;
+        }
+      }
+
+      &-extra {
+        .anticon-close {
+          opacity: 0.6;
+          &:hover {
+            color: @error-color;
+            opacity: 1;
+          }
+        }
       }
     }
   }
 
   .@{prefix-cls-detail} {
     position: absolute;
+    overflow: hidden;
 
-    .ant-drawer-header {
-      width: 100%;
-      height: @detail-header-height;
-      padding: 0;
-      border-top: 1px solid @border-color-base;
-      box-sizing: border-box;
-    }
+    .ant-drawer {
+      &-body {
+        height: calc(100% - @detail-header-height);
+        padding: 0 !important;
 
-    .ant-drawer-title {
-      height: 100%;
-    }
+        > .scrollbar {
+          .scrollbar__wrap {
+            margin: 10px;
+            padding-bottom: 10px;
+          }
 
-    .ant-drawer-close {
-      height: @detail-header-height;
-      line-height: @detail-header-height;
-    }
+          .is-horizontal {
+            display: none;
+          }
+        }
+      }
 
-    .scrollbar__wrap {
-      padding: 0 !important;
-    }
+      &-header {
+        width: 100%;
+        height: @detail-header-height;
+        padding: 0;
+        border-top: 1px solid @border-color-base;
+        box-sizing: border-box;
+      }
 
-    .ant-drawer-body {
-      height: calc(100% - @detail-header-height);
+      &-title {
+        height: 100%;
+      }
+
+      &-close {
+        height: @detail-header-height;
+        line-height: @detail-header-height;
+      }
     }
   }
 </style>
