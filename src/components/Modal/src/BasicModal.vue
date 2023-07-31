@@ -247,18 +247,21 @@
   @prefix-cls: ~'jeesite-basic-modal';
 
   .ant-modal.@{prefix-cls} {
-    .ant-modal-title {
-      .anticon {
-        color: @primary-color;
-      }
-    }
-
     .ant-modal {
-      width: 520px;
-      padding-bottom: 0;
+      &-body {
+        padding: 0;
+        background-color: @component-background;
 
-      .ant-modal-body > .scrollbar {
-        padding: 14px;
+        > .scrollbar {
+          .scrollbar__wrap {
+            margin: 15px;
+            padding: 1px;
+          }
+
+          .is-horizontal {
+            display: none;
+          }
+        }
       }
 
       &-title {
@@ -269,13 +272,9 @@
         .base-title {
           cursor: move !important;
         }
-      }
 
-      .ant-modal-body {
-        padding: 0;
-
-        > .scrollbar > .scrollbar__bar.is-horizontal {
-          display: none;
+        .anticon {
+          color: @primary-color;
         }
       }
 
@@ -287,16 +286,22 @@
         }
       }
 
-      &-header {
-        padding: 0 0 10px;
-      }
-
       &-content {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        padding: 15px;
+        padding: 0;
+      }
+
+      &-header {
+        padding: 14px;
+        margin-bottom: 0;
+        border-bottom: 1px solid fade(@border-color-base, 50%);
       }
 
       &-footer {
+        padding: 14px;
+        margin-top: 0;
+        border-top: 1px solid fade(@border-color-base, 50%);
+
         button + button {
           margin-left: 10px;
         }
