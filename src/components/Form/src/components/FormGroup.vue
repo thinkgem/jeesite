@@ -25,8 +25,8 @@
       width: 100%;
       font-size: 15px;
       font-style: oblique;
-      padding: 0 0 3px 5px;
-      margin: 0 10px 20px;
+      padding: 0 0 3px 10px;
+      margin: 0 0 20px;
       border-bottom: 1px solid @header-light-bottom-border-color;
     }
   }
