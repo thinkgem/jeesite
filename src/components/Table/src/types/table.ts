@@ -142,9 +142,10 @@ export interface TableSetting {
 }
 
 export interface BasicTableProps<T = any> {
+  // 是否树表
+  isTreeTable?: boolean;
   // 点击行选中
   clickToRowSelect?: boolean;
-  isTreeTable?: boolean;
   // 自定义排序方法
   sortFn?: (sortInfo: SorterResult) => any;
   // 自定义过滤方法
@@ -203,10 +204,9 @@ export interface BasicTableProps<T = any> {
   canResize?: boolean;
   // 自适应高度偏移， 计算结果-偏移量
   resizeHeightOffset?: number;
-
   // 在分页改变的时候清空选项
   clearSelectOnPageChange?: boolean;
-  //
+  // 主键名称
   rowKey?: string | ((record: Recordable, defaultValue: any) => string);
   // 数据
   dataSource?: Recordable[];

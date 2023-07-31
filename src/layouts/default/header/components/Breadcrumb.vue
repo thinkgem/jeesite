@@ -157,16 +157,20 @@
     padding: 0 8px;
     align-items: center;
 
-    .ant-breadcrumb-link {
+    .ant-breadcrumb-overlay-link {
       .anticon {
         margin-right: 4px;
         margin-bottom: 2px;
       }
     }
 
-    &--light {
-      .ant-breadcrumb-link {
+    &--light .ant-breadcrumb {
+      .ant-breadcrumb-overlay-link {
         color: @breadcrumb-item-normal-color;
+
+        &:hover a {
+          color: @primary-color;
+        }
 
         a {
           color: rgba(0, 0, 0, 0.65);
@@ -180,11 +184,19 @@
       .ant-breadcrumb-separator {
         color: @breadcrumb-item-normal-color;
       }
+
+      .ant-breadcrumb-link span {
+        color: rgba(0, 0, 0, 0.65);
+      }
     }
 
-    &--dark {
-      .ant-breadcrumb-link {
+    &--dark .ant-breadcrumb {
+      .ant-breadcrumb-overlay-link {
         color: rgba(255, 255, 255, 0.6);
+
+        &:hover a {
+          color: @white;
+        }
 
         a {
           color: rgba(255, 255, 255, 0.8);
@@ -197,6 +209,10 @@
 
       .ant-breadcrumb-separator,
       .anticon {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .ant-breadcrumb-link span {
         color: rgba(255, 255, 255, 0.8);
       }
     }
