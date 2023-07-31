@@ -13,6 +13,7 @@ import com.jeesite.modules.job.entity.JobEntity;
 import com.jeesite.modules.msg.task.impl.MsgLocalMergePushTask;
 import com.jeesite.modules.msg.task.impl.MsgLocalPushTask;
 import com.jeesite.modules.sys.dao.RoleMenuDao;
+import com.jeesite.modules.sys.entity.Module;
 import com.jeesite.modules.sys.entity.*;
 import com.jeesite.modules.sys.service.*;
 import org.quartz.CronTrigger;
