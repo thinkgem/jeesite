@@ -37,6 +37,7 @@
     flex: 1 1 auto;
     min-height: 0;
     padding: 14px 14px 13px 15px;
+    background-color: @content-bg;
 
     &.fixed {
       width: 1200px;
@@ -47,6 +48,12 @@
       position: absolute;
       top: 200px;
       z-index: @page-loading-z-index;
+    }
+  }
+
+  html[data-theme='dark'] {
+    .@{prefix-cls} {
+      background: transparent;
     }
   }
 </style>

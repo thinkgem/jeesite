@@ -87,7 +87,7 @@
     padding-right: 8px;
     text-align: right;
     background-color: @component-background;
-    border-top: 1px solid @border-color-base;
+    // border-top: 1px solid @border-color-base;
     z-index: 100; // 设置下，否则 BasicTable 空白图标会覆盖 actions 上边框线
 
     > * {

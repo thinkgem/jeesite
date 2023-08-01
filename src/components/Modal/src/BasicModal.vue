@@ -300,7 +300,7 @@
       &-footer {
         padding: 14px;
         margin-top: 0;
-        border-top: 1px solid fade(@border-color-base, 50%);
+        // border-top: 1px solid fade(@border-color-base, 50%);
 
         button + button {
           margin-left: 10px;

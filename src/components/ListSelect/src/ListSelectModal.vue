@@ -9,6 +9,7 @@
     v-bind="$attrs"
     @register="register"
     :title="props.config.modalProps?.title || t('数据选择')"
+    wrapClassName="jeesite-listselect"
     @ok="handleSubmit"
     width="80%"
   >
@@ -159,6 +160,19 @@
       .ant-table {
         td {
           cursor: pointer;
+        }
+      }
+    }
+  }
+  .jeesite-listselect {
+    .ant-modal.jeesite-basic-modal {
+      .ant-modal {
+        &-body {
+          > .scrollbar {
+            .scrollbar__wrap {
+              margin-bottom: 0;
+            }
+          }
         }
       }
     }

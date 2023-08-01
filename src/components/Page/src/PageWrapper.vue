@@ -338,46 +338,53 @@
       }
     }
 
-    .ant-layout .sidebar {
+    .ant-layout {
       background-color: @content-bg;
-      transition: none;
-      min-height: 400px;
 
-      &-content {
-        // margin: 15px 0 0 15px;
-        // margin-right: 15px;
-        height: calc(100% - 29px);
-      }
+      .sidebar {
+        background-color: @content-bg;
+        transition: none;
+        min-height: 400px;
 
-      &-open,
-      &-close {
-        cursor: pointer;
-        border: 1px solid #ddd;
-        padding: 1px 1px 2.5px;
-        background: #fff;
-        position: absolute;
-        z-index: 100;
-        opacity: 0.7;
-        top: 55px;
-      }
+        &-content {
+          // margin: 15px 0 0 15px;
+          // margin-right: 15px;
+          height: calc(100% - 29px);
+        }
 
-      &-open {
-        left: -15px;
-        padding-right: 0;
-        border-left-width: 0;
-        border-radius: 0 3px 3px 0;
-      }
+        &-open,
+        &-close {
+          cursor: pointer;
+          border: 1px solid #ddd;
+          padding: 1px 1px 2.5px;
+          background: #fff;
+          position: absolute;
+          z-index: 100;
+          opacity: 0.7;
+          top: 55px;
+        }
 
-      &-close {
-        right: 0;
-        border-right-width: 0;
-        border-radius: 3px 0 0 3px;
+        &-open {
+          left: -15px;
+          padding-right: 0;
+          border-left-width: 0;
+          border-radius: 0 3px 3px 0;
+        }
+
+        &-close {
+          right: 0;
+          border-right-width: 0;
+          border-radius: 3px 0 0 3px;
+        }
       }
     }
   }
 
   html[data-theme='dark'] {
     .@{prefix-cls} {
+      .ant-layout {
+        background: transparent;
+      }
       .sidebar {
         &-open,
         &-close {
