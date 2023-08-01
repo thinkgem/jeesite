@@ -43,7 +43,7 @@
       {
         label: t('操作用户'),
         field: 'userCode',
-        fieldLabel: 'userName',
+        // fieldLabel: 'userName',
         component: 'ListSelect',
         componentProps: {
           selectType: 'userSelect',
@@ -53,23 +53,23 @@
         label: t('查询所有在线'),
         field: 'isAllOnline',
         helpMessage: t('包含3分钟以上未操作的用户'),
-        component: 'Select',
+        component: 'Switch',
         componentProps: {
-          dictType: 'sys_yes_no',
-          allowClear: true,
+          checkedValue: '1',
         },
-        labelWidth: 140,
+        labelWidth: 170,
+        colProps: { lg: 5 },
       },
       {
         label: t('包含游客用户'),
         field: 'isVisitor',
         helpMessage: t('包含未登录的用户'),
-        component: 'Select',
+        component: 'Switch',
         componentProps: {
-          dictType: 'sys_yes_no',
-          allowClear: true,
+          checkedValue: '1',
         },
-        labelWidth: 140,
+        labelWidth: 160,
+        colProps: { lg: 5 },
       },
     ],
   };
