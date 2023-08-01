@@ -78,16 +78,16 @@ public class OnlineController extends BaseController{
 	public List<Map<String, Object>> listData(String isAllOnline, String isVisitor, String sessionId, 
 			String userCode, String userName, String userType, String orderBy) {
 		List<Map<String, Object>> list = ListUtils.newArrayList();
-		boolean excludeLeave = isAllOnline==null || !Global.YES.equals(isAllOnline);
-		boolean excludeVisitor = isVisitor==null || !Global.YES.equals(isVisitor);
+		boolean excludeLeave = !Global.YES.equals(isAllOnline);
+		boolean excludeVisitor = !Global.YES.equals(isVisitor);
  		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave, 
 				excludeVisitor, null, sessionId, userCode);
 		long currentTime = System.currentTimeMillis();
 		for (Session session : sessions){
-			if (StringUtils.isNotBlank(userName) && ((String)session.getAttribute("userName")).contains(userName)){
+			if (StringUtils.isNotBlank(userName) && !StringUtils.contains((String)session.getAttribute("userName"), userName)){
 				continue;
 			}
-			if (StringUtils.isNotBlank(userType) && ((String)session.getAttribute("userType")).equals(userType)){
+			if (StringUtils.isNotBlank(userType) && !StringUtils.equals((String)session.getAttribute("userType"), userType)){
 				continue;
 			}
 			Map<String, Object> map = MapUtils.newLinkedHashMap();
@@ -110,21 +110,19 @@ public class OnlineController extends BaseController{
 			orderBy = "lastAccessTime desc";
 		}
 		final String[] ss = orderBy.trim().split(" ");
-		if (ss != null && ss.length == 2){
-			Collections.sort(list, new Comparator<Map<String, Object>>() {
-				@Override
-				public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-					String s1 = (String)o1.get(ss[0]);
-					String s2 = (String)o2.get(ss[0]);
-					if (s1 == null || s2 == null){
-						return -1;
-					}
-					if ("asc".equals(ss[1])){
-						return s1.compareTo(s2);
-					}else{
-						return s2.compareTo(s1);
-					}
-				}});
+		if (ss.length == 2){
+			list.sort((o1, o2) -> {
+				String s1 = (String) o1.get(ss[0]);
+				String s2 = (String) o2.get(ss[0]);
+				if (s1 == null || s2 == null) {
+					return -1;
+				}
+				if ("asc".equals(ss[1])) {
+					return s1.compareTo(s2);
+				} else {
+					return s2.compareTo(s1);
+				}
+			});
 		}
 		return list;
 	}
