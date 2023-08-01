@@ -169,7 +169,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 /* 页签添加内边距 */
 .content-wrapper, .tabpanel_content, .tabpanel_content .html_content, body {background-color:#f0f2f5;}
 .box-main, .nav-main, .ui-layout-pane, iframe {border-radius:5px;}
-.tabpanel_content .html_content {padding:14px 14px 13px 15px;}
+.tabpanel_content .html_content {padding:13px 14px 13px 15px;}
 .tabpanel_tab_content {border-bottom:0;}
 .ui-layout-resizer {background:none;}
 .content {padding:0!important}
