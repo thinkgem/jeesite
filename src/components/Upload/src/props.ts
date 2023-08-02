@@ -69,6 +69,19 @@ export const basicProps = {
     type: String as PropType<UploadType>,
     default: 'all',
   },
+  imageMaxWidth: {
+    type: Number as PropType<number>,
+    default: '',
+  },
+  imageMaxHeight: {
+    type: Number as PropType<number>,
+    default: '',
+  },
+  // 如果开启了图片缩略图，这里可以指定缩略图名称，例如：150x150.jpg  v5.4.2
+  imageThumbName: {
+    type: String as PropType<string>,
+    default: '',
+  },
 };
 
 export const uploadContainerProps = {
@@ -104,6 +117,10 @@ export const previewProps = {
   readonly: {
     type: Boolean as PropType<boolean>,
     default: false,
+  },
+  imageThumbName: {
+    type: String as PropType<string>,
+    default: '',
   },
 };
 

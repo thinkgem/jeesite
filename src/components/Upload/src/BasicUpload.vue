@@ -34,6 +34,7 @@
     <UploadPreviewModal
       :value="fileList"
       :readonly="readonly || disabled"
+      :imageThumbName="imageThumbName"
       @register="registerPreviewModal"
       @change="handlePreviewChange"
       @delete="handleDelete"

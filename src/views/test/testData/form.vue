@@ -202,6 +202,9 @@
         bizKey: computed(() => record.value.id),
         bizType: 'testData_image',
         uploadType: 'image',
+        // imageMaxWidth: 1024,
+        // imageMaxHeight: 768,
+        // imageThumbName: '150x150.jpg',
       },
       colProps: { lg: 24, md: 24 },
       // 文件上传的必填验证实例

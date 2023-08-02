@@ -190,6 +190,8 @@
                 fileName: item.fileName,
                 fileUploadId: item.fileUploadId,
                 fileEntityId: item.fileEntityId,
+                imageMaxWidth: props.imageMaxWidth,
+                imageMaxHeight: props.imageMaxHeight,
                 ...(props.uploadParams || {}),
                 file: item.file,
               },
@@ -278,7 +280,7 @@
 
       return {
         columns: createTableColumns() as any[],
-        actionColumn: createActionColumn(handleRemove) as any,
+        actionColumn: createActionColumn(handleRemove, handlePreview) as any,
         register,
         closeModal,
         getHelpText,

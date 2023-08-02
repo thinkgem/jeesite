@@ -68,7 +68,7 @@
         register,
         closeModal,
         fileList,
-        columns: createPreviewColumns() as any[],
+        columns: createPreviewColumns(props) as any[],
         actionColumn: createPreviewActionColumn(
           {
             handleRemove,

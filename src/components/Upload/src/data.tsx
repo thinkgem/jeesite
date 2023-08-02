@@ -116,7 +116,7 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
   };
 }
 // 文件预览列表
-export function createPreviewColumns(): BasicColumn[] {
+export function createPreviewColumns(props: any): BasicColumn[] {
   return [
     {
       dataIndex: 'fileUrl',
@@ -125,11 +125,20 @@ export function createPreviewColumns(): BasicColumn[] {
       customRender: ({ record, index }) => {
         const { fileUrl, type, fileEntity } = (record as FileUpload) || {};
         let url = fileUrl || '';
+        let previewUrl;
         if (!url.startsWith('data:image/') && url.indexOf('://') == -1) {
           url = ctxPath + url;
+          if (props.imageThumbName) {
+            previewUrl = url;
+            if (url.indexOf('?') == -1) {
+              url += '.' + props.imageThumbName;
+            } else {
+              url = url.replace('?', '.' + props.imageThumbName + '?');
+            }
+          }
         }
         if (isImgTypeByName(url)) {
-          return <ThumbUrl fileUrl={url} />;
+          return <ThumbUrl fileUrl={url} previewUrl={previewUrl} />;
         }
         const ext = type || fileEntity?.fileExtension || <FileOutlined />;
         const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
