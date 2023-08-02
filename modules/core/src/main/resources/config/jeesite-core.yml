@@ -707,6 +707,10 @@ file:
   # 上传图片自动压缩宽高，指定为 -1 不进行压缩（全局设置）  v4.1.7
   imageMaxWidth: 1024
   imageMaxHeight: 768
+
+  # 缩略图设定，生成的尺寸（宽x高,宽x高）、格式（jpg,png）  v5.4.2
+  #imageThumbConfig: 150x150,300x300
+  #imageThumbFormat: jpg
   
   # 是否启用秒传
   checkmd5: true
