@@ -24,11 +24,18 @@ import java.io.IOException;
 public class ImageUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(ImageUtils.class);
-	
+
 	/**
 	 * 缩略图生成，处理一些较大的图片，防止占用太多的网络资源
 	 */
 	public static void thumbnails(File imageFile, int maxWidth, int maxHeight, String outputFormat){
+		thumbnails(imageFile, maxWidth, maxHeight, outputFormat, imageFile);
+	}
+
+	/**
+	 * 缩略图生成，处理一些较大的图片，防止占用太多的网络资源
+	 */
+	public static void thumbnails(File imageFile, int maxWidth, int maxHeight, String outputFormat, File targetFile){
 		if (imageFile == null || !imageFile.exists() || (maxWidth <= 0 && maxHeight <= 0)){
 			return;
 		}
@@ -58,7 +65,7 @@ public class ImageUtils {
 				if (StringUtils.isNotBlank(outputFormat)){
 					bilder.outputFormat(outputFormat);
 				}
-				bilder.toFile(imageFile);
+				bilder.toFile(targetFile);
 			}
 		}catch(IOException e){
 			logger.error("图片压缩失败：" + imageFile.getAbsoluteFile(), e);
