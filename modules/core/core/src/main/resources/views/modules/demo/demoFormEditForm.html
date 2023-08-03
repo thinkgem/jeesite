@@ -310,7 +310,7 @@
 //初始化测试数据子表DataGrid对象
 $("#testDataChildDataGrid").dataGrid({
 
-	data: ${toJson(testData.testDataChildList)},
+	data: "#{toJson(testData.testDataChildList)}",
 	datatype: "local", // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 	
@@ -331,7 +331,7 @@ $("#testDataChildDataGrid").dataGrid({
 		{header:'多行文本', name:'testTextarea', width:150, editable:true, edittype:'textarea', editoptions:{'maxlength':'200', 'class':'form-control', 'rows':'1'}},
 		{header:'下拉框', name:'testSelect', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
-				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
@@ -339,7 +339,7 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'下拉多选', name:'testSelectMultiple', width:100, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
-				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
@@ -347,7 +347,7 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'单选框', name:'testRadio', width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
-				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
@@ -355,7 +355,7 @@ $("#testDataChildDataGrid").dataGrid({
 		},
 		{header:'复选框', name:'testCheckbox', width:100, 
 			editable:true, edittype:'select', editoptions:{multiple:true, 'class':'form-control',
-				items: $.merge([], ${@DictUtils.getDictListJson('sys_menu_type')}),
+				items: $.merge([], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
@@ -455,7 +455,7 @@ $("#testDataChildDataGrid").dataGrid({
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
 	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testOffice.officeCode,testAreaCode,testAreaName,', // 提交数据列表的属性字段
 	
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

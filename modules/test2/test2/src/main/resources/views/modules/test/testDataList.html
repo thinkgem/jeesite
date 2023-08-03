@@ -117,7 +117,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -128,16 +128,16 @@ $('#dataGrid').dataGrid({
 		}}},
 		{header:'${text("多行文本")}', name:'testTextarea', index:'a.test_textarea', width:150, align:"left"},
 		{header:'${text("下拉框")}', name:'testSelect', index:'a.test_select', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("下拉多选")}', name:'testSelectMultiple', index:'a.test_select_multiple', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("单选框")}', name:'testRadio', index:'a.test_radio', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("复选框")}', name:'testCheckbox', index:'a.test_checkbox', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("日期选择")}', name:'testDate', index:'a.test_date', width:150, align:"center"},
 		{header:'${text("日期时间")}', name:'testDatetime', index:'a.test_datetime', width:150, align:"center"},
@@ -146,13 +146,13 @@ $('#dataGrid').dataGrid({
 		{header:'${text("区域选择")}', name:'testAreaName', index:'a.test_area_code', width:150, align:"center"},
 		{header:'${text("区域名称")}', name:'testAreaName', index:'a.test_area_name', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_search_status')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', firstsortorder:'desc', width:150, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:100, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('test:testData:edit')){ %>
+			//# if(hasPermi('test:testData:edit')){
 				actions.push('<a href="${ctx}/test2/testData/form?id='+row.id+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/test2/testData/disable?id='+row.id+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -160,7 +160,7 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/test2/testData/enable?id='+row.id+'" class="btnList" title="${text("启用数据")}" data-confirm="${text("确认要启用该数据吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/test2/testData/delete?id='+row.id+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
@@ -184,16 +184,16 @@ $('#dataGrid').dataGrid({
 				{header:'${text("单行文本")}', name:'testInput', width:150},
 				{header:'${text("多行文本")}', name:'testTextarea', width:150},
 				{header:'${text("下拉框")}', name:'testSelect', width:150, align:"center", formatter: function(val, obj, row, act){
-					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+					return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 				}},
 				{header:'${text("下拉多选")}', name:'testSelectMultiple', width:150, align:"center", formatter: function(val, obj, row, act){
-					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+					return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 				}},
 				{header:'${text("单选框")}', name:'testRadio', width:150, align:"center", formatter: function(val, obj, row, act){
-					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+					return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 				}},
 				{header:'${text("复选框")}', name:'testCheckbox', width:150, align:"center", formatter: function(val, obj, row, act){
-					return js.getDictLabel(${@DictUtils.getDictListJson('sys_menu_type')}, val, '${text("未知")}', true);
+					return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '${text("未知")}', true);
 				}},
 				{header:'${text("日期时间")}', name:'testDatetime', width:150, align:"center"},
 				{header:'${text("用户名称")}', name:'testUser.userName', sortable:false, width:150, align:"center"},
@@ -201,7 +201,7 @@ $('#dataGrid').dataGrid({
 				{header:'${text("区域名称")}', name:'testAreaName', width:150, align:"center"}
 			],
 			emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
-			// 加载成功后执行事件
+			//# // 加载成功后执行事件
 			ajaxSuccess: function(data){
 				$(window).resize();
 			}
@@ -211,7 +211,7 @@ $('#dataGrid').dataGrid({
 	multiSort: true,		// 是否支持多列排序，给列指定 firstsortorder 可设定初次排序方式
 	emptyDataHint: true, 	// 表格内没有数据的时候提示 “无数据显示” v4.1.7
 	
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 //		// 无数据显示，v4.1.7 之前版本
 // 		if (data.count == 0){
