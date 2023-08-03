@@ -82,7 +82,7 @@ function formatter(val, obj, row, act) {
     }
 }
 
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
     searchForm: $("#searchForm"),
     data: dataGridData.data,
@@ -133,7 +133,7 @@ $('#dataGrid').dataGrid({
     },
     showRownum: true,	// 是否显示行号，默认true
     showFooter: true,	// 是否显示底部合计行，数据载入详见 ajaxSuccess
-    // 加载成功后执行事件
+    //# // 加载成功后执行事件
     ajaxSuccess: function (data) {
         $('#dataGrid').dataGrid('mergeCell', 'parentArea,childArea');
         $('#dataGrid').dataGrid("footerData", "set", {

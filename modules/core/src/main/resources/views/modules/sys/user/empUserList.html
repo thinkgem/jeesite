@@ -119,7 +119,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -135,42 +135,42 @@ $('#dataGrid').dataGrid({
 		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:120, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:125, align:"center", frozen:true},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:60, align:"center", frozen:true, formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('sys:empUser:edit')){ %>
+			//# if(hasPermi('sys:empUser:edit')){
 				actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');
-			//<% } %>
-			//<% if(hasPermi('sys:empUser:updateStatus')){ %>
+			//# }
+			//# if(hasPermi('sys:empUser:updateStatus')){
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
 				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_FREEZE || row.status == Global.STATUS_AUDIT){
 					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-			//<% } %>
-			//<% if(hasPermi('sys:empUser:edit')){ %>
+			//# }
+			//# if(hasPermi('sys:empUser:edit')){
 				actions.push('<a href="${ctx}/sys/empUser/delete?userCode='+row.userCode+'" class="btnList" title="${text("删除用户")}" data-confirm="${text("确认要删除该用户吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			//<% } %>
-			//<% if(hasPermi('sys:empUser:authRole,sys:empUser:authDataScope,sys:empUser:resetpwd', 'or')){ %>
+			//# }
+			//# if(hasPermi('sys:empUser:authRole,sys:empUser:authDataScope,sys:empUser:resetpwd', 'or')){
 				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
 				actions.push('<div class="moreItems">');
-				//<% if(hasPermi('sys:empUser:authRole')){ %>
+				//# if(hasPermi('sys:empUser:authRole')){
 					actions.push('<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=auth" class="btn btn-default btn-xs btnList" title="${text("用户分配角色")}"><i class="fa fa-check-square-o"></i> ${text("分配角色")}</a>&nbsp;');
-				//<% } %>
-				//<% if(hasPermi('sys:empUser:authDataScope')){ %>
+				//# }
+				//# if(hasPermi('sys:empUser:authDataScope')){
 					actions.push('<a href="${ctx}/sys/empUser/formAuthDataScope?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户分配数据权限")}"><i class="fa fa-check-circle-o"></i> ${text("数据权限")}</a>&nbsp;');
-				//<% } %>
-				//<% if(hasPermi('sys:empUser:resetpwd')){ %>
+				//# }
+				//# if(hasPermi('sys:empUser:resetpwd')){
 					actions.push('<a href="${ctx}/sys/empUser/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户密码重置")}" data-confirm="${text("确认要将该用户密码重置到初始状态吗？")}"><i class="fa fa-reply-all"></i> ${text("重置密码")}</a>&nbsp;');
-				//<% } %>
+				//# }
 				actions.push('</div>');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
 	frozenCols: true,
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

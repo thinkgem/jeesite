@@ -100,7 +100,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -111,14 +111,14 @@ $('#dataGrid').dataGrid({
 			return '<span title="['+row.requestMethod+'] '+row.serverAddr+row.requestUri+'">'+row.requestUri+'</span>';
 		}},
 		{header:'${text("日志类型")}', name:'logType', index:'a.log_type', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_log_type')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_log_type')}", val, '未知', true);
 		}},
 		{header:'${text("操作用户")}', name:'createByName', index:'a.create_by_name', width:100, align:"center", formatter: function(val, obj, row, act){
 			return '<a href="javascript:" class="search" data-cid="userSelectCode" data-cval="'+row.createBy
 						+'" data-nid="userSelectName" title="${text("账号")}：'+row.createBy+'">'+(val||'')+'</a>';
 		}},
 		{header:'${text("异常")}', name:'isException', index:'a.is_exception', width:60, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_yes_no')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_yes_no')}", val, '未知', true);
 		}},
 		{header:'${text("业务类型")}', name:'bizType', index:'a.biz_type', width:90, align:"center", formatter: function(val, obj, row, act){
 			return '<a href="javascript:" class="search" data-cid="bizType">'+(val||'')+'</a>';
@@ -137,7 +137,7 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" title="${text('日志详情')}"><i class="fa fa-pencil"></i></a>&nbsp;';
 		}} */
 	],
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

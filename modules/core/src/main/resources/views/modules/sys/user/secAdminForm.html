@@ -74,7 +74,7 @@
 <script>
 $("#inputForm").validate({
 	submitHandler: function(form){
-		// 获取数据权限数据
+		//# // 获取数据权限数据
 		var dataScopeData = [];
 		$.each(dataScopeTrees, function(key, dataScopeTree){
 			var treeNodes = dataScopeTree.getCheckedNodes(true);
@@ -85,7 +85,7 @@ $("#inputForm").validate({
 			}
 		});
 		$("#userDataScopeListJson").val(JSON.stringify(dataScopeData));
-		// 提交表单数据
+		//# // 提交表单数据
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
@@ -96,7 +96,7 @@ $("#inputForm").validate({
 		}, "json");
     }
 });
-//加载数据权限树结构
+//# // 加载数据权限树结构
 var setting = {
 	check:{enable:true,nocheckInherit:true},
 	view:{selectedMulti:false,nameIsHTML: true},
@@ -110,21 +110,21 @@ var setting = {
 		onCheck: function (event, treeId, treeNode){ }
 	}
 },
-moduleCodes = '${toJson(moduleCodes)}';
-dataScopes = ${toJson(dataScopes)},
-dataScopeTrees = {}; // 用sysCode分类存储所有菜单树
+moduleCodes = '"#{toJson(moduleCodes)}"';
+dataScopes = "#{toJson(dataScopes)}",
+dataScopeTrees = {};
 for (var i=0; i<dataScopes.length; i++){
 	var dataScope = dataScopes[i];
-	// 验证模块是否开启，如果未开启，则跳过
+	//# // 验证模块是否开启，如果未开启，则跳过
 	if (moduleCodes.indexOf("\""+dataScope.moduleCode+"\"") == -1){
 		continue;
 	}
-	// 控制权限 ctrlPermi: 0全部  1拥有权限  2管理权限
+	//# // 控制权限 ctrlPermi: 0全部  1拥有权限  2管理权限
 	if (!(dataScope.ctrlPermi == '0' || dataScope.ctrlPermi == '2')){
 		continue;
 	}
  	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
- 		key: dataScope.ctrlType, label: dataScope.ctrlName_${lang()} || dataScope.ctrlName}));
+ 		key: dataScope.ctrlType, label: dataScope["${'ctrlName_'+lang()}"] || dataScope.ctrlName}));
  	var ctrlDataUrl = dataScope.ctrlDataUrl || '';
 	$.ajax({
 		type: 'POST',
@@ -136,12 +136,12 @@ for (var i=0; i<dataScopes.length; i++){
 			js.showErrorMessage(data.responseText);
 		},
 		success: function(data, status, xhr){
-			// 初始化树结构
+			//# // 初始化树结构
 			var tree = $.fn.zTree.init($("#dataScopeTree_"+dataScope.ctrlType), setting, data);
 			tree.setting.check.chkboxType = dataScope.chkboxType;
-			// 默认展开节点（如果级别设置为-1，则：如果有1个根节点，则展开一级节点，否则不展开）
+			//# // 默认展开节点（如果级别设置为-1，则：如果有1个根节点，则展开一级节点，否则不展开）
 			$.fn.zTree.expandNodeByLevel(tree, dataScope.expandLevel);
-			// 树结构：全选、取消全选
+			//# // 树结构：全选、取消全选
 			$('#checkall_'+dataScope.ctrlType).iCheck({
 		 		checkboxClass:'icheckbox_minimal-grey'
 		 	}).on('ifChecked ifUnchecked', function(){
@@ -152,7 +152,7 @@ for (var i=0; i<dataScopes.length; i++){
 					dataScopeTrees[ctrlType].checkAllNodes(false);
 				}
 			}).attr("ctrlType", dataScope.ctrlType);
-			// 展开和折叠按钮绑定
+			//# // 展开和折叠按钮绑定
 			$('#expand_'+dataScope.ctrlType).click(function(){
 				var ctrlType = $(this).attr('ctrlType');
 				dataScopeTrees[ctrlType].expandAll(true);
@@ -161,14 +161,14 @@ for (var i=0; i<dataScopes.length; i++){
 				var ctrlType = $(this).attr('ctrlType');
 				dataScopeTrees[ctrlType].expandAll(false);
 			}).attr("ctrlType", dataScope.ctrlType);
-			// 将树对象存储到全局数组里
+			//# // 将树对象存储到全局数组里
 			dataScopeTrees[dataScope.ctrlType] = tree;
 		}
 	});
 }
-// 默认选择节点
-//<% for(dataScope in userDataScopeList){ %>
+//# // 默认选择节点
+//# for(dataScope in userDataScopeList){
 try{dataScopeTrees['${dataScope.ctrlType}'].checkNode(dataScopeTrees['${dataScope.ctrlType}']
 	.getNodeByParam("id","${dataScope.ctrlData}"), true, false);}catch(e){}
-//<% } %>
+//# }
 </script>
