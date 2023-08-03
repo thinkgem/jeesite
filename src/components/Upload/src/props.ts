@@ -71,11 +71,9 @@ export const basicProps = {
   },
   imageMaxWidth: {
     type: Number as PropType<number>,
-    default: '',
   },
   imageMaxHeight: {
     type: Number as PropType<number>,
-    default: '',
   },
   // 如果开启了图片缩略图，这里可以指定缩略图名称，例如：150x150.jpg  v5.4.2
   imageThumbName: {
