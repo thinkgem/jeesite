@@ -48,7 +48,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -58,13 +58,13 @@ $('#dataGrid').dataGrid({
 		{header:'${text("排序号")}', name:'treeSort', index:'a.tree_sort', width:150, align:"center"},
 		{header:'${text("节点名称")}', name:'treeName', index:'a.tree_name', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_search_status')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
 		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('test:testTree:edit')){ %>
+			//# if(hasPermi('test:testTree:edit')){
 				actions.push('<a href="${ctx}/test1/testTree/form?treeCode='+row.treeCode+'" class="btnList" title="${text("编辑数据")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/test1/testTree/disable?treeCode='+row.treeCode+'" class="btnList" title="${text("停用数据")}" data-confirm="${text("确认要停用该数据吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -73,19 +73,20 @@ $('#dataGrid').dataGrid({
 				}
 				actions.push('<a href="${ctx}/test1/testTree/delete?treeCode='+row.treeCode+'" class="btnList" title="${text("删除数据")}" data-confirm="${text("确认要删除该数据及所有子数据吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/test1/testTree/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级数据")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
 	treeGrid: true,			// 启用树结构表格
 	defaultExpandLevel: 0,	// 默认展开的层次
-	expandNodeClearPostData: 'treeName,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+	expandNodeClearPostData: 'treeName,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}
 });
 
-// 修复树表数据（包含字段：parentCodes、treeLeaf、treeLevel、treeSorts、treeNames）
+//# // 修复树表数据（包含字段：parentCodes、treeLeaf、treeLevel、treeSorts、treeNames）
 $("#btnFixTreeData").click(function(){ 
 	js.ajaxSubmit("${ctx}/test1/testTree/fixTreeData", function(data){
 		js.showMessage(data.message);
