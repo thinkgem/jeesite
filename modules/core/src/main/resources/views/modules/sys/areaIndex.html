@@ -24,14 +24,14 @@
 </div>
 <% } %>
 <script>
-// 初始化布局
+//# // 初始化布局
 $('body').layout({
 	west__initClosed: $(window).width() <= 767, // 是否默认关闭
 	west__size: 200
 });
-// 主页框架
+//# // 主页框架
 var win = $("#mainFrame")[0].contentWindow;
-// 树结构初始化加载
+//# // 树结构初始化加载
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
 	async:{enable:true,autoParam:["id=parentCode"],url:"${ctx}/sys/area/treeData"},
 	callback:{onClick:function(event, treeId, treeNode){
@@ -54,7 +54,7 @@ var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{
 		}
 	}, null, null, js.text('loading.message'));
 };loadTree();
-// 工具栏按钮绑定
+//# // 工具栏按钮绑定
 $('#btnExpand').click(function(){
 	tree.expandAll(true);
 	$(this).hide();
@@ -68,7 +68,7 @@ $('#btnCollapse').click(function(){
 $('#btnRefresh').click(function(){
 	loadTree();
 });
-// 调用子页分页函数
+//# // 调用子页分页函数
 function page(){
 	win.page();
 }

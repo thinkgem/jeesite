@@ -34,13 +34,13 @@
 </div>
 <% } %>
 <script>
-// 初始化布局
+//# // 初始化布局
 $('body').layout({
 	west__size : 180
 });
-// 主页框架
+//# // 主页框架
 var win = $("#mainFrame")[0].contentWindow;
-// 树结构初始化加载
+//# // 树结构初始化加载
 var setting = {
 	view : {selectedMulti : false},
 	data : {key : {title : "title"}, simpleData : {enable : true}},
@@ -85,7 +85,7 @@ var setting = {
 	}, null, null, js.text('loading.message'));
 };
 loadTree();
-// 工具栏按钮绑定
+//# // 工具栏按钮绑定
 $('#btnExpand').click(function() {
 	tree.expandAll(true);
 	$(this).hide();

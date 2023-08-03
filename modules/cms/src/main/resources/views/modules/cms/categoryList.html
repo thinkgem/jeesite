@@ -67,7 +67,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -77,17 +77,17 @@ $('#dataGrid').dataGrid({
 		{header:'${text("模型")}', name:'moduleType', index:'a.module_type', width:100, align:"center"},
 		{header:'${text("排序")}', name:'treeSort', index:'a.tree_sort', width:50, align:"center"},
 		{header:'${text("导航栏目")}', name:'inMenu', index:'a.in_menu', width:80, fixed:true, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_show_hide')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_show_hide')}", val, '未知', true);
 		}},
 		{header:'${text("栏目列表")}', name:'inList', index:'a.in_list', width:80, fixed:true, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_show_hide')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_show_hide')}", val, '未知', true);
 		}},
 		{header:'${text("展现方式")}', name:'showModes', index:'a.show_modes', width:150, fixed:true, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('cms_show_modes')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('cms_show_modes')}", val, '未知', true);
 		}},
 		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('cms:category:edit')){ %>
+			//# if(hasPermi('cms:category:edit')){
 				actions.push('<a href="${ctx}/cms/category/form?categoryCode='+row.categoryCode+'" class="btnList" title="${text("编辑栏目表")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/cms/category/disable?categoryCode='+row.categoryCode+'" class="btnList" title="${text("停用栏目表")}" data-confirm="${text("确认要停用该栏目表吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -97,19 +97,20 @@ $('#dataGrid').dataGrid({
 				}
 				actions.push('<a href="${ctx}/cms/category/delete?categoryCode='+row.categoryCode+'" class="btnList" title="${text("删除栏目表")}" data-confirm="${text("确认要删除该栏目表及所有子栏目表吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/cms/category/form?parentCode='+row.id+'&site.siteCode=${category.site.siteCode}" class="btnList" title="${text("新增下级栏目表")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
-				//<% if(hasPermi('cms:category:rebuildIndex')){ %>
+				//# if(hasPermi('cms:category:rebuildIndex')){
 				actions.push('<a href="${ctx}/cms/category/rebuildIndex?categoryCode='+row.categoryCode+'" class="btnList" title="${text("重建该栏目索引")}" data-confirm="${text("确认重建该栏目下文章索引吗")}？"><i class="fa fa-crosshairs"></i></a>&nbsp;');
-				//<% } %>
+				//# }
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctxFront}/list-'+row.categoryCode+'" target="_blank" title="${text("访问栏目")}"><i class="fa fa-globe"></i></a>&nbsp;');
 				}
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
 	treeGrid: true,			// 启用树结构表格
 	defaultExpandLevel: 0,	// 默认展开的层次
-	expandNodeClearPostData: 'categoryName,siteCode,moduleType,image,href,target,keywords,description,inMenu,inList,showModes,isNeedAudit,isCanComment,customListView,customContentView,viewConfig,status,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+	expandNodeClearPostData: 'categoryName,siteCode,moduleType,image,href,target,keywords,description,inMenu,inList,showModes,isNeedAudit,isCanComment,customListView,customContentView,viewConfig,status,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

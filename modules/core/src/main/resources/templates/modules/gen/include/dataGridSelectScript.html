@@ -42,7 +42,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		}},
 				<% }else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(\${@DictUtils.getDictListJson('${c.optionMap['dictType']}')}, val, '\${text("未知")}', true);
+			return js.getDictLabel(\"#{@DictUtils.getDictListJson('${c.optionMap['dictType']}')}", val, '\${text("未知")}', true);
 		}},
 				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},

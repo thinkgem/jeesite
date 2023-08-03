@@ -93,14 +93,14 @@
 </div>
 <% } %>
 <script>
-// 初始化布局
+//# // 初始化布局
 $('body').layout({
 	west__size: window.lang == 'en' ? 225 : 200,
 	onresize_end: function(){
 		$('#dataGrid').dataGrid('resize');
 	}
 });
-//树结构初始化加载
+//# // 树结构初始化加载
 var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
@@ -130,9 +130,9 @@ var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 	if (queryType == 'userType'){
 		$('#queryTypeName').text('${text("按用户类型")}');
 		tree = $.fn.zTree.init($("#tree"), setting, [
-			//<% for(dict in @DictUtils.getDictList('sys_user_type')){ %>
+			//# for(dict in @DictUtils.getDictList('sys_user_type')){
 			{id: '${dict.dictValue}', name: '${text(dict.dictLabel + "类型")}'},
-			//<% } %>
+			//# }
 			{id: 'none', name: '${text("系统管理员")}'}
 		]);
 		tree.expandAll(true);
@@ -160,7 +160,7 @@ var setting = {view:{selectedMulti:false},data:{simpleData:{enable:true}},
 		}, null, null, js.text('loading.message'));
 	}
 };loadTree();
-// 工具栏按钮绑定
+//# // 工具栏按钮绑定
 $('#btnExpand').click(function(){
 	tree.expandAll(true);
 	$(this).hide();
@@ -174,9 +174,9 @@ $('#btnCollapse').click(function(){
 $('#btnRefresh').click(function(){
 	loadTree();
 });
-// 加载用户列表
-var selectData = ${isNotBlank(selectData!) ? selectData! : "{\}"},
-selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
+//# // 加载用户列表
+var selectData = "#{isNotBlank(selectData!) ? selectData! : '{}'}",
+	selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
 		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center"},
@@ -187,7 +187,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:140, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
 		{header:'行数据', name:'rowData', hidden:true, formatter: function(val, obj, row, act){
 			return JSON.stringify(row);

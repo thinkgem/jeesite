@@ -62,7 +62,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -76,31 +76,31 @@ $('#dataGrid').dataGrid({
 			}
 		}},
 		{header:'${text("等级")}', name:'contentLevel', index:'a.content_level', width:80, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('msg_inner_content_level')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('msg_inner_content_level')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("类型")}', name:'contentType', index:'a.content_type', width:80, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('msg_inner_content_type')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('msg_inner_content_type')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("发送者")}', name:'sendUserName', index:'a.send_user_name', width:100, align:"center"},
 		{header:'${text("发送时间")}', name:'sendDate', index:'a.send_date', width:150, align:"center"},
 // 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('msg_inner_msg_status')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('msg_inner_msg_status')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
 			if(row.status == Global.STATUS_DRAFT){
-			//<% if(hasPermi('msg:msgInner:edit')){ %>
+			//# if(hasPermi('msg:msgInner:edit')){
 				actions.push('<a href="${ctx}/msg/msgInner/form?id='+row.id+'" class="btnList" title="${text("编辑消息")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/msg/msgInner/delete?id='+row.id+'" class="btnList" title="${text("删除消息")}" data-confirm="${text("确认要删除该消息吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			//<% } %>
+			//# }
 			}else{
 				actions.push('<a href="${ctx}/msg/msgInner/view?id='+row.id+'" class="btnList" title="${text("查看消息")}"><i class="fa fa-book"></i></a>&nbsp;');
 			}
 			return actions.join('');
 		}}
 	],
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

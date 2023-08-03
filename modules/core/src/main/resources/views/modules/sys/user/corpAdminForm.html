@@ -201,9 +201,9 @@ var roleGrid = $("#roleGrid").dataGrid({
 		}
 	},
 	ajaxSuccess: function(){
-		//<% for (role in roleList!){ %>
+		//# for (role in roleList!){
  		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
-		//<% } %>
+		//# }
 	}
 });
 </script>

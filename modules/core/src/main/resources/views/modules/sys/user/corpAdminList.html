@@ -62,7 +62,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -70,22 +70,22 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text("编辑用户")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},
-		//<% if(useCorpModel){ %>
+		//# if(useCorpModel){
 		{header:'${text("租户代码")}', name:'corpCode_', index:'a.corp_code', width:200, align:"center", formatter: function(val, obj, row, act){
 			return '<a href="javascript:" onclick="$(\'#corpCode_\').val(\''+val+'\');$(\'#searchForm\').submit()">'+val+'</a>';
 		}},
 		{header:'${text("租户名称")}', name:'corpName_', index:'a.corp_name', width:200, align:"center"},
-		//<% } %>
+		//# }
 		{header:'${text("电子邮箱")}', name:'email', index:'a.email', width:200, align:"center"},
 		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
 		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
 		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('sys:corpAdmin:edit')){ %>
+			//# if(hasPermi('sys:corpAdmin:edit')){
 				actions.push('<a href="${ctx}/sys/corpAdmin/form?userCode='+row.userCode+'&op=edit" class="btnList" title="${text("编辑用户")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/corpAdmin/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -93,18 +93,18 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/sys/corpAdmin/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/sys/corpAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("删除用户")}" data-confirm="${text("确认要删除该用户吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				//<% if(useCorpModel){ %>
+				//# if(useCorpModel){
 				actions.push('<a href="${ctx}/sys/corpAdmin/form?corpCode_='+row.corpCode_+'&corpName_='+row.corpName_+'&op=addAdmin" class="btnList" title="${text("新增管理员")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
-				//<% } %>
+				//# }
 				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
 				actions.push('<div class="moreItems">');
 				actions.push('<a href="${ctx}/sys/corpAdmin/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户密码重置")}" data-confirm="${text("确认要将该用户密码重置到初始状态吗？")}"><i class="fa fa-reply-all"></i> ${text("重置密码")}</a>&nbsp;');
 				actions.push('</div>');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

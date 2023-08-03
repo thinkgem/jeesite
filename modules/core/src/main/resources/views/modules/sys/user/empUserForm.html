@@ -231,7 +231,7 @@
 </div>//--></script>
 <script>
 $("#empOfficeGrid").dataGrid({
-	data: ${toJson(empUser.employee.employeeOfficeList)},
+	data: "#{toJson(empUser.employee.employeeOfficeList)}",
 	datatype: "local", // 设置本地数据
 	columnModel: [
 		{header:'${text("附属机构")}', name:'officeName', sortable:false, width:100,
@@ -250,7 +250,7 @@ $("#empOfficeGrid").dataGrid({
 		},
 		{header:'${text("附属岗位")}', name:'postCode', sortable:false, width:100, 
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
-				items: $.merge([{postName:'&nbsp;',postCode:''}], ${toJson(postList)}),
+				items: $.merge([{postName:'&nbsp;',postCode:''}], "#{toJson(postList)}"),
 				itemLabel: 'postName', itemValue: 'postCode', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
@@ -278,8 +278,7 @@ $("#empOfficeGrid").dataGrid({
 		
 	}
 });
-//<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
-// 加载角色列表
+//# if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) {
 var roleGrid = $("#roleGrid").dataGrid({
 	url: '${ctx}/sys/role/treeData',
 	postData: [
@@ -298,17 +297,17 @@ var roleGrid = $("#roleGrid").dataGrid({
 		return $('#inputForm .box-body').width()-20;
 	},
 	ajaxSuccess: function(){
-		//<% for (role in roleList!){ %>
+		//# for (role in roleList!){
  		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
-		//<% } %>
+		//# }
 	}
 });
-//<% } %>
+//# }
 $("#inputForm").validate({
 	submitHandler: function(form){
-		//<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
+		//# if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) {
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));
-		//<% } %>
+		//# }
 		var empNo = $('#employee_empNo').val();
 		if (empNo == ''){
 			$('#employee_empNo').val($('#loginCode').val());

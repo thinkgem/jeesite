@@ -60,7 +60,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -68,11 +68,11 @@ $('#dataGrid').dataGrid({
 			return '<a href="${ctx}/app/appComment/form?id='+row.id+'" class="btnList" data-title="${text("编辑意见")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("问题分类")}', name:'category', index:'a.category', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('app_comment_category')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('app_comment_category')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("联系方式")}', name:'contact', index:'a.contact', width:150, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('app_comment_status')}, val, '${text("未知")}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('app_comment_status')}", val, '${text("未知")}', true);
 		}},
 		{header:'${text("提问时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
 		{header:'${text("提问人员")}', name:'createByName', index:'a.create_by_name', width:150, align:"center"},
@@ -81,7 +81,7 @@ $('#dataGrid').dataGrid({
 		{header:'${text("回复人员")}', name:'replyUserName', index:'a.reply_user_name', width:150, align:"center"},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('app:appComment:edit')){ %>
+			//# if(hasPermi('app:appComment:edit')){
 				actions.push('<a href="${ctx}/app/appComment/form?id='+row.id+'" class="btnList" title="${text("编辑意见")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/app/appComment/disable?id='+row.id+'" class="btnList" title="${text("停用意见")}" data-confirm="${text("确认要停用该意见吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -89,11 +89,11 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/app/appComment/enable?id='+row.id+'" class="btnList" title="${text("启用意见")}" data-confirm="${text("确认要启用该意见吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/app/appComment/delete?id='+row.id+'" class="btnList" title="${text("删除意见")}" data-confirm="${text("确认要删除该意见吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

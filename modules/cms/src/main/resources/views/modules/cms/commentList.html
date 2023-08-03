@@ -105,7 +105,7 @@
 </div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -125,11 +125,11 @@ $('#dataGrid').dataGrid({
 		{header:'${text('支持数')}', name:'hitsPlus', index:'a.hits_plus', width:150, align:"center"},
 		{header:'${text('反对数')}', name:'hitsMinus', index:'a.hits_minus', width:150, align:"center"},
 		{header:'${text('状态')}', name:'status', index:'a.status', width:150, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_search_status')}, val, '${text('未知')}', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_search_status')}", val, '${text('未知')}', true);
 		}},
 		{header:'${text('操作')}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('cms:comment:edit')){ %>
+			//# if(hasPermi('cms:comment:edit')){
 				actions.push('<a href="${ctx}/cms/comment/form?id='+row.id+'" class="btnList" title="${text('编辑文章评论表')}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/cms/comment/disable?id='+row.id+'" class="btnList" title="${text('停用文章评论表')}" data-confirm="${text('确认要停用该文章评论表吗？')}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
@@ -138,11 +138,11 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/cms/comment/enable?id='+row.id+'" class="btnList" title="${text('启用文章评论表')}" data-confirm="${text('确认要启用该文章评论表吗？')}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 				actions.push('<a href="${ctx}/cms/comment/delete?id='+row.id+'" class="btnList" title="${text('删除文章评论表')}" data-confirm="${text('确认要删除该文章评论表吗？')}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}

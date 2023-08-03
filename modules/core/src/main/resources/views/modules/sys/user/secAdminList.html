@@ -74,7 +74,7 @@
 	checkbox="false" itemCode="userCode" itemName="userName"/></div>
 <% } %>
 <script>
-// 初始化DataGrid对象
+//# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $("#searchForm"),
 	columnModel: [
@@ -87,18 +87,18 @@ $('#dataGrid').dataGrid({
 		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
-			return js.getDictLabel(${@DictUtils.getDictListJson('sys_status')}, val, '未知', true);
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
 		{header:'${text("操作")}', name:'actions', width:150, formatter: function(val, obj, row, act){
 			var actions = [];
-			//<% if(hasPermi('sys:secAdmin:edit')){ %>
+			//# if(hasPermi('sys:secAdmin:edit')){
 				actions.push('<a href="${ctx}/sys/secAdmin/form?userCode='+row.userCode+'" class="btnList" title="${text("管理数据权限")}"><i class="fa fa-pencil"></i></a>&nbsp;');
 				actions.push('<a href="${ctx}/sys/secAdmin/delete?userCode='+row.userCode+'" class="btnList" title="${text("取消二级管理员身份")}" data-confirm="${text("确认要取消该用户的二级管理员身份吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
-			//<% } %>
+			//# }
 			return actions.join('');
 		}}
 	],
-	// 加载成功后执行事件
+	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
 		
 	}
