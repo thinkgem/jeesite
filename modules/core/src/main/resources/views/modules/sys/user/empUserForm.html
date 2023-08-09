@@ -315,6 +315,7 @@ $("#inputForm").validate({
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
 			if(data.result == Global.TRUE){
+				// emitter.emit('emp-user-list-page');
 				js.closeCurrentTabPage(function(contentWindow){
 					contentWindow.page();
 				});

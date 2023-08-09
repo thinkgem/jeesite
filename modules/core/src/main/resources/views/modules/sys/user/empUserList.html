@@ -177,8 +177,9 @@ $('#dataGrid').dataGrid({
 });
 $('#btnExport').click(function(){
 	js.ajaxSubmitForm($('#searchForm'), {
-		url:'${ctx}/sys/empUser/exportData',
-		downloadFile:true
+		url: '${ctx}/sys/empUser/exportData',
+		clearParams: 'pageNo,pageSize',
+		downloadFile: true
 	});
 });
 $('#btnImport').click(function(){
@@ -214,6 +215,7 @@ $('#btnImport').click(function(){
 		}
 	});
 });
+// emitter.on('emp-user-list-page', page);
 </script>
 <script id="importTpl" type="text/template">//<!--
 <form id="inputForm" action="${ctx}/sys/empUser/importData" method="post" enctype="multipart/form-data"

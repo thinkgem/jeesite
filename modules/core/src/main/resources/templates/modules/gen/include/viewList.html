@@ -41,8 +41,9 @@
 <script>
 $('#btnExport').click(function(){
 	js.ajaxSubmitForm($('#searchForm'), {
-		url:'\${ctx}/${urlPrefix}/exportData',
-		downloadFile:true
+		url: '\${ctx}/${urlPrefix}/exportData',
+		clearParams: 'pageNo,pageSize',
+		downloadFile: true
 	});
 });
 $('#btnImport').click(function(){

@@ -109,8 +109,9 @@ $('#dataGrid').dataGrid({
 });
 $('#btnExport').click(function(){
 	js.ajaxSubmitForm($('#searchForm'), {
-		url:'${ctx}/sys/office/exportData',
-		downloadFile:true
+		url: '${ctx}/sys/office/exportData',
+		clearParams: 'pageNo,pageSize',
+		downloadFile: true
 	});
 });
 $('#btnImport').click(function(){
