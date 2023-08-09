@@ -194,10 +194,10 @@
         let value;
         if (!e) {
           value = e;
-        } else if (e?.target && Reflect.has(e.target, 'value')) {
-          value = (e as ChangeEvent).target.value;
         } else if (component === 'Checkbox') {
           value = (e as ChangeEvent).target.checked;
+        } else if (e?.target && Reflect.has(e.target, 'value')) {
+          value = (e as ChangeEvent).target.value;
         } else {
           // } else if (isString(e) || isBoolean(e) || isNumber(e)) {
           value = e;
