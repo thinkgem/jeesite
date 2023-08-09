@@ -431,7 +431,7 @@ for(c in table.columnList){
     const { ctxAdminPath } = useGlobSetting();
     downloadByUrl({
       url: ctxAdminPath + '/${urlPrefix}/exportData',
-      target: '_self',
+      params: getForm().getFieldsValue(),
     });
   }
 
