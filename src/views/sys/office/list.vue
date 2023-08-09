@@ -252,7 +252,7 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable({
+  const [registerTable, { reload, expandAll, collapseAll, expandCollapse, getForm }] = useTable({
     api: officeListData,
     beforeFetch: (params) => {
       params.officeCode = props.treeCode;
@@ -289,7 +289,7 @@
     const { ctxAdminPath } = useGlobSetting();
     downloadByUrl({
       url: ctxAdminPath + '/sys/office/exportData',
-      target: '_self',
+      params: getForm().getFieldsValue(),
     });
   }
 

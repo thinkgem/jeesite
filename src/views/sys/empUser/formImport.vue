@@ -78,10 +78,7 @@
 
   async function handleDownloadTemplate() {
     const { ctxAdminPath } = useGlobSetting();
-    downloadByUrl({
-      url: ctxAdminPath + '/sys/empUser/importTemplate',
-      target: '_self',
-    });
+    downloadByUrl({ url: ctxAdminPath + '/sys/empUser/importTemplate' });
   }
 
   function onUploadProgress(progressEvent: ProgressEvent) {

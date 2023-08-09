@@ -350,7 +350,7 @@
     const { ctxAdminPath } = useGlobSetting();
     downloadByUrl({
       url: ctxAdminPath + '/sys/empUser/exportData',
-      target: '_self',
+      params: getForm().getFieldsValue(),
     });
   }
 
