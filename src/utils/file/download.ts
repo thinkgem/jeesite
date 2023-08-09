@@ -1,5 +1,6 @@
-import { openWindow } from '..';
+// import { openWindow } from '..';
 import { dataURLtoBlob, urlToBase64 } from './base64Conver';
+import { defHttp } from '/@/utils/http/axios';
 
 /**
  * Download online pictures
@@ -58,42 +59,72 @@ export function downloadByData(data: BlobPart, filename: string, mime?: string, 
  * Download file according to file address
  * @param {*} sUrl
  */
-export function downloadByUrl({
+export async function downloadByUrl({
   url,
-  target = '_blank',
+  params,
+  data,
+  // target = '_self',
   fileName,
 }: {
   url: string;
-  target?: TargetContext;
+  params?: any;
+  data?: any;
+  // target?: TargetContext;
   fileName?: string;
-}): boolean {
-  const isChrome = window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-  const isSafari = window.navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+}): Promise<boolean> {
+  const res = await defHttp.post(
+    { url, params, data, responseType: 'blob' },
+    { isReturnNativeResponse: true, joinPrefix: false },
+  );
+  let name = res.headers['content-disposition'];
+  name = name && name.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+  name = name && name.length >= 1 && name[1].replace("utf-8'zh_cn'", '');
+  name = name && (decodeURIComponent(name) || fileName || 'jeesite');
+  downloadByData(res.data, name);
+  // axios({
+  //   url: url,
+  //   method: 'post',
+  //   data: data,
+  //   responseType: 'blob',
+  // })
+  //   .then((response) => {
+  //     let name = response.headers['content-disposition'];
+  //     name = name && name.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+  //     name = name && name.length >= 1 && name[1].replace("utf-8'zh_cn'", '');
+  //     name = name && (decodeURIComponent(name) || fileName || 'jeesite');
+  //     downloadByData(response.data, name);
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
 
-  if (/(iP)/g.test(window.navigator.userAgent)) {
-    console.error('Your browser does not support download!');
-    return false;
-  }
-  if (isChrome || isSafari) {
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = target;
+  // const isChrome = window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+  // const isSafari = window.navigator.userAgent.toLowerCase().indexOf('safari') > -1;
 
-    if (link.download !== undefined) {
-      link.download = fileName || url.substring(url.lastIndexOf('/') + 1, url.length);
-    }
+  // if (/(iP)/g.test(window.navigator.userAgent)) {
+  //   console.error('Your browser does not support download!');
+  //   return false;
+  // }
+  // if (isChrome || isSafari) {
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.target = target;
 
-    if (document.createEvent) {
-      const e = document.createEvent('MouseEvents');
-      e.initEvent('click', true, true);
-      link.dispatchEvent(e);
-      return true;
-    }
-  }
-  if (url.indexOf('?') === -1) {
-    url += '?download';
-  }
+  //   if (link.download !== undefined) {
+  //     link.download = fileName || url.substring(url.lastIndexOf('/') + 1, url.length);
+  //   }
 
-  openWindow(url, { target });
+  //   if (document.createEvent) {
+  //     const e = document.createEvent('MouseEvents');
+  //     e.initEvent('click', true, true);
+  //     link.dispatchEvent(e);
+  //     return true;
+  //   }
+  // }
+  // if (url.indexOf('?') === -1) {
+  //   url += '?download';
+  // }
+
+  // openWindow(url, { target });
   return true;
 }
