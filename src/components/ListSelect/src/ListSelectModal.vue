@@ -116,11 +116,15 @@
 
   const [registerTable, tableAction] = useTable(tableProps);
 
-  const [register, { closeModal, setModalProps }] = useModalInner((data) => {
+  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
     //setModalProps({ loading: true });
     //console.log(data);
     selectList.value = data.selectList;
     selectedRowKeys.value = selectList.value.map((e) => e[props.config.itemCode]);
+    if (data.queryParams) {
+      const params = Object.assign(tableAction.getForm().getFieldsValue(), data.queryParams);
+      await tableAction.getForm().setFieldsValue(params);
+    }
     setModalProps({ loading: false });
   });
 

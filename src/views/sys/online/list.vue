@@ -47,6 +47,9 @@
         component: 'ListSelect',
         componentProps: {
           selectType: 'userSelect',
+          // queryParams: {
+          //   loginCode: 'sys',
+          // },
         },
       },
       {

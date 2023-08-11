@@ -46,6 +46,12 @@
         default: 'userSelect',
       },
 
+      // 请求参数（列表查询默认值）
+      queryParams: {
+        type: Object as PropType<Recordable>,
+        default: () => {},
+      },
+
       // 选择结果或回显数据中的编码和名称属性名（默认使用 selectType 里指定的）
       itemCode: propTypes.string,
       itemName: propTypes.string,
@@ -129,7 +135,7 @@
         } else {
           selectList = getSelectList();
         }
-        openModal(true, { selectList });
+        openModal(true, { selectList, queryParams: props.queryParams });
       }
 
       function handleInputClick() {
