@@ -139,7 +139,7 @@
       componentProps: {
         maxlength: 500,
       },
-      show: ({ values }) => values.menuType === '1',
+      // show: ({ values }) => values.menuType === '1',
     },
     {
       label: t('组件参数'),
@@ -152,7 +152,7 @@
       componentProps: {
         maxlength: 500,
       },
-      show: ({ values }) => values.menuType === '1',
+      // show: ({ values }) => values.menuType === '1',
     },
 
     {
