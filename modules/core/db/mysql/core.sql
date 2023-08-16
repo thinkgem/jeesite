@@ -700,6 +700,7 @@ CREATE TABLE js_sys_role
 	desktop_url varchar(255) COMMENT '桌面地址（仪表盘地址）',
 	data_scope char(1) COMMENT '数据范围设置（0未设置  1全部数据 2自定义数据）',
 	biz_scope varchar(255) COMMENT '适应业务范围（不同的功能，不同的数据权限支持）',
+	sys_codes varchar(500) COMMENT '包含系统（多个用逗号隔开）',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
 	create_by varchar(64) NOT NULL COMMENT '创建者',
 	create_date datetime NOT NULL COMMENT '创建时间',

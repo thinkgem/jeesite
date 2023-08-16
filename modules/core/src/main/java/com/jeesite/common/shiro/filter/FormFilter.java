@@ -456,6 +456,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			roleMap.put("roleCode", role.getRoleCode());
 			roleMap.put("roleName", role.getRoleName());
 			roleMap.put("isShow", role.getIsShow());
+			roleMap.put("sysCodes", role.getSysCodes());
 			roleList.add(roleMap);
 			if (desktopUrl == null && StringUtils.isNotBlank(role.getDesktopUrl())) {
 				desktopUrl = role.getDesktopUrl();

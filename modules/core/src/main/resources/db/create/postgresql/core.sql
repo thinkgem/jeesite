@@ -321,7 +321,6 @@ CREATE TABLE ${_prefix}sys_file_upload
 ) WITHOUT OIDS;
 
 
-
 -- 作业调度表
 CREATE TABLE ${_prefix}sys_job
 (
@@ -700,6 +699,7 @@ CREATE TABLE ${_prefix}sys_role
 	desktop_url varchar(255),
 	data_scope char(1),
 	biz_scope varchar(255),
+	sys_codes varchar(500),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -1505,6 +1505,7 @@ COMMENT ON COLUMN ${_prefix}sys_role.user_type IS '用户类型（employee员工
 COMMENT ON COLUMN ${_prefix}sys_role.desktop_url IS '桌面地址（仪表盘地址）';
 COMMENT ON COLUMN ${_prefix}sys_role.data_scope IS '数据范围设置（0未设置  1全部数据 2自定义数据）';
 COMMENT ON COLUMN ${_prefix}sys_role.biz_scope IS '适应业务范围（不同的功能，不同的数据权限支持）';
+COMMENT ON COLUMN ${_prefix}sys_role.sys_codes IS '包含系统（多个用逗号隔开）';
 COMMENT ON COLUMN ${_prefix}sys_role.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN ${_prefix}sys_role.create_by IS '创建者';
 COMMENT ON COLUMN ${_prefix}sys_role.create_date IS '创建时间';
