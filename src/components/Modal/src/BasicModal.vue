@@ -253,12 +253,12 @@
         background-color: @component-background;
 
         > .scrollbar {
-          .scrollbar__wrap {
+          > .scrollbar__wrap {
             margin: 15px;
             padding: 1px;
           }
 
-          .is-horizontal {
+          > .is-horizontal {
             display: none;
           }
         }
