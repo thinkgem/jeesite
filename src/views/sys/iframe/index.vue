@@ -8,7 +8,7 @@
     <Spin :spinning="loading" size="large" :style="getWrapStyle">
       <iframe
         :src="frameSrc"
-        :class="`${prefixCls}__main`"
+        :class="`${prefixCls}__main ${props.frame?.name}`"
         ref="frameRef"
         @load="hideLoading"
       ></iframe>
@@ -27,6 +27,7 @@
 
   const props = defineProps({
     frame: { type: Object as PropType<AppRouteRecordRaw> },
+    query: { type: Object as PropType<Recordable> },
   });
 
   const loading = ref(true);
@@ -38,15 +39,33 @@
   const { prefixCls } = useDesign('iframe-page');
   useWindowSizeFn(calcHeight, 150, { immediate: true });
 
-  const frameSrc = ref(props.frame?.meta?.frameSrc);
+  // const frameSrc = ref(props.frame?.meta?.frameSrc);
+  const frameSrc = ref<string>();
+
+  watch(
+    () => router.currentRoute.value.query,
+    () => {
+      // jee site iframe query
+      let src = props.frame?.meta?.frameSrc || '';
+      let search = window.location.search;
+      if (search && search != '') {
+        src += search;
+      }
+      const path = window.location.pathname.replace(/\/\//g, '/');
+      if (frameSrc.value != src && src.indexOf(path) != -1) {
+        frameSrc.value = src;
+      }
+    },
+    { immediate: true },
+  );
 
   watch(
     () => router.currentRoute.value.name,
     () => {
       // jee site iframe refresh
-      var params = router.currentRoute.value.params;
+      let params = router.currentRoute.value.params;
       if (params && params.path == props.frame?.path) {
-        var src = props.frame?.meta?.frameSrc;
+        let src = props.frame?.meta?.frameSrc;
         src += src?.indexOf('?') != -1 ? '&' : '?';
         frameSrc.value = src + '__t' + new Date().getTime();
       }
