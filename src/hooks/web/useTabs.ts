@@ -90,6 +90,7 @@ export function useTabs(_router?: Router) {
   }
 
   return {
+    tabStore,
     refreshPage: () => handleTabAction(TableActionEnum.REFRESH),
     closeAll: () => handleTabAction(TableActionEnum.CLOSE_ALL),
     closeLeft: () => handleTabAction(TableActionEnum.CLOSE_LEFT),
