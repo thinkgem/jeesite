@@ -53,6 +53,19 @@ jdbc:
     # 设置连接属性，可获取到表的 remark (备注)
     remarksReporting: false
 
+  # JTA XA 事务（v4.0.4+）
+  jta:
+    enabled: false
+
+#  注意：如果报  oracle.jdbc.xa.OracleXAResource.recover 错误，则需要授权如下：
+#  grant select on sys.dba_pending_transactions to jeesite;
+#  grant select on sys.pending_trans$ to jeesite;
+#  grant select on sys.dba_2pc_pending to jeesite;
+#  grant execute on sys.dbms_system to jeesite;
+    
+  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
+  transactionTimeout: 1800
+  
 #  # 表名和字段名（前缀|后缀）是否强制大写（v4.1.8+）
 #  tableAndColumn: 
 #    prefixSuffix: "`|`"
@@ -444,7 +457,6 @@ shiro:
     ${adminPath}/file/** = user
     ${adminPath}/switchSkin/* = anon
     ${adminPath}/sys/corpAdmin/treeData = anon
-    ${adminPath}/${spring.application.name}/swagger/** = perms[sys:swagger]
     ${adminPath}/cms/* = perms[cms:view]
     ${adminPath}/cms/site/select = user
     ${adminPath}/cms/site/* = perms[cms:site:view]
@@ -696,7 +708,7 @@ file:
   imageMaxWidth: 1024
   imageMaxHeight: 768
 
-  # 缩略图设定，生成的尺寸（宽x高,宽x高）、格式（jpg,png）  v5.4.2
+  # 缩略图设定，生成的尺寸（宽x高,宽x高）、格式（jpg,png）  v5.5.0
   #imageThumbConfig: 150x150,300x300
   #imageThumbFormat: jpg
   

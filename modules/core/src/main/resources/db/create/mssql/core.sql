@@ -699,6 +699,7 @@ CREATE TABLE [${_prefix}sys_role]
 	[desktop_url] varchar(255),
 	[data_scope] char(1),
 	[biz_scope] varchar(255),
+	[sys_codes] nvarchar(500),
 	[status] char(1) DEFAULT '0' NOT NULL,
 	[create_by] varchar(64) NOT NULL,
 	[create_date] datetime NOT NULL,
