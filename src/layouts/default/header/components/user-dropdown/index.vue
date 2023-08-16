@@ -156,7 +156,16 @@
           roleCodeRef.value = userStore.getPageCacheByKey('roleCode', '');
           const sysList = await useDict().initGetDictList('sys_menu_sys_code');
           if (sysList.length > 1) {
-            sysListRef.value = sysList;
+            var sysCodes: string[] = [];
+            for (let role of getUserInfo.value.roleList) {
+              if (role.sysCodes) {
+                for (let code of role.sysCodes.split(',')) {
+                  if (code != '') sysCodes.push(code);
+                }
+              }
+            }
+            sysListRef.value =
+              sysCodes.length === 0 ? sysList : sysList.filter((e) => sysCodes.includes(e.value));
           }
         });
       }

@@ -21,6 +21,7 @@
         <div class="flex flex-row flex-wrap">
           <div class="mr-5 mb-5" v-for="item in sysCodeRef" :key="item.id">
             <BasicTree
+              v-show="sysCodesRef.length == 0 || sysCodesRef.includes(item.value)"
               class="bg-gray"
               style="width: 500px"
               :title="item.name"
@@ -60,6 +61,7 @@
   }));
   const op = ref<String>('');
   const sysCodeRef = ref<Array<Recordable>>([]);
+  const sysCodesRef = ref<Array<string>>([]);
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -170,6 +172,22 @@
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
     {
+      label: t('包含系统'),
+      field: 'sysCodes',
+      helpMessage: '不设置时，为包含全部系统，否则展示子系统列表的时候会根据此条件进行过滤',
+      component: 'Select',
+      componentProps: {
+        dictType: 'sys_menu_sys_code',
+        allowClear: true,
+        mode: 'multiple',
+        onChange: (val) => {
+          sysCodesRef.value = val.split(',');
+        },
+      },
+      colProps: { lg: 24, md: 24 },
+      ifShow: () => op.value === 'add' || op.value === 'auth',
+    },
+    {
       label: t('备注信息'),
       field: 'remarks',
       component: 'InputTextArea',
@@ -236,6 +254,7 @@
 
   async function loadSysCode() {
     sysCodeRef.value = await useDict().initGetDictList('sys_menu_sys_code');
+    sysCodesRef.value = record.value.sysCodes?.split(',') || [];
   }
 
   async function loadTreeDatas() {
@@ -257,9 +276,11 @@
     const keys = Object.keys(treeRefs);
     let menuData: Array<any> = [];
     for (const key of keys) {
-      const ks = treeRefs[key].getCheckedKeys();
-      for (const k of ks as Array<any>) {
-        menuData.push(k);
+      if (sysCodesRef.value.length == 0 || sysCodesRef.value.includes(key)) {
+        const ks = treeRefs[key].getCheckedKeys();
+        for (const k of ks as Array<any>) {
+          menuData.push(k);
+        }
       }
     }
     return JSON.stringify(menuData);

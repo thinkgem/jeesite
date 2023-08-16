@@ -18,6 +18,7 @@ export interface Role extends BasicModel<Role> {
   userType?: string; // 用户类型（employee员工 member会员）
   dataScope?: string; // 数据范围设置（0未设置  1全部数据 2自定义数据）
   bizScope?: string; // 适应业务范围（不同的功能，不同的数据权限支持）
+  sysCodes?: string; // 包含系统
   extend?: any; // 扩展字段
   viewCode?: string; // 角色代码
 
