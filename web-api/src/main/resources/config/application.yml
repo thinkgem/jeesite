@@ -75,10 +75,10 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # Sql Server 数据库配置（2012以上版本）（请修改 /modules/core/pom.xml 文件，打开 SqlServer 2012 依赖）
+#  # Sql Server 数据库配置（2012以上版本）（请修改 /modules/core/pom.xml 文件，打开 SqlServer 2012 依赖并编译打包）
 #  type: mssql2012
 #  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite
+#  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite;encrypt=true;trustServerCertificate=true
 #  username: jeesite
 #  password: jeesite
 #  testSql: SELECT 1
