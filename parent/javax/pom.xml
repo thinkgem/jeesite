@@ -410,7 +410,7 @@
 		</repository>
 		<repository>
 			<id>jeesite-repos</id>
-			<url>http://maven.jeesite.net/repository/maven-public</url>
+			<url>https://maven.jeesite.net/repository/maven-public</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -422,7 +422,7 @@
 		</pluginRepository>
 		<pluginRepository>
 			<id>jeesite-repos</id>
-			<url>http://maven.jeesite.net/repository/maven-public</url>
+			<url>https://maven.jeesite.net/repository/maven-public</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -465,7 +465,7 @@
 			<distributionManagement>
 				<snapshotRepository>
 					<id>jeesite-repos-s</id>
-					<url>http://maven.jeesite.net/repository/maven-snapshots</url>
+					<url>https://maven.jeesite.net/repository/maven-snapshots</url>
 				</snapshotRepository>
 			</distributionManagement>
 		</profile>
