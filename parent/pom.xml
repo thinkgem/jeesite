@@ -30,7 +30,7 @@
 		<fastjson.version>2.0.33</fastjson.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 
-		<snakeyaml.version>2.0</snakeyaml.version>
+		<snakeyaml.version>1.33</snakeyaml.version>
 		<httpclient.version>4.5.14</httpclient.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 
