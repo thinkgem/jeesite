@@ -174,7 +174,7 @@
     {
       label: t('包含系统'),
       field: 'sysCodes',
-      helpMessage: '不设置时，为包含全部系统，否则展示子系统列表的时候会根据此条件进行过滤',
+      helpMessage: '展示子系统列表的时候会根据此条件进行过滤，否则展示全部子系统',
       component: 'Select',
       componentProps: {
         dictType: 'sys_menu_sys_code',
