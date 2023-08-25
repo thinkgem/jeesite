@@ -11,7 +11,7 @@
         <span> {{ getTitle.value }} </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleForm({})" v-auth="'test:testData:edit'">
+        <a-button type="primary" @click="handleForm3({})" v-auth="'test:testData:edit'">
           <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
@@ -55,7 +55,8 @@
       </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
-    <InputFormTabs @register="registerDrawer2" @success="handleSuccess" />
+    <InputFormTabs @register="registerDrawerTabs" @success="handleSuccess" />
+    <InputFormModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts" setup name="ViewsTestTestDataList">
@@ -70,9 +71,11 @@
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
   import { useDrawer } from '/@/components/Drawer';
+  import { useModal } from '/@/components/Modal';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
   import InputFormTabs from './formTabs.vue';
+  import InputFormModal from './formModal.vue';
 
   const { t } = useI18n('test.testData');
   const { showMessage } = useMessage();
@@ -346,18 +349,30 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 180,
+    width: 250,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:timeline-line',
-        title: t('页签方式编辑'),
-        onClick: handleForm2.bind(this, { id: record.id }),
+        icon: 'clarity:note-edit-line',
+        title: t('抽屉模式编辑'),
+        onClick: handleForm.bind(this, { id: record.id }),
         auth: 'test:testData:edit',
       },
       {
-        icon: 'clarity:note-edit-line',
-        title: t('编辑数据'),
-        onClick: handleForm.bind(this, { id: record.id }),
+        icon: 'clarity:timeline-line',
+        title: t('表单页签编辑'),
+        onClick: handleFormTabs.bind(this, { id: record.id }),
+        auth: 'test:testData:edit',
+      },
+      {
+        icon: 'ant-design:file-markdown-outlined',
+        title: t('弹窗模式编辑'),
+        onClick: handleFormModal.bind(this, { id: record.id }),
+        auth: 'test:testData:edit',
+      },
+      {
+        icon: 'ant-design:layout-outlined',
+        title: t('路由模式编辑'),
+        onClick: handleFormRoute.bind(this, { id: record.id }),
         auth: 'test:testData:edit',
       },
       {
@@ -396,7 +411,9 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerDrawer2, { openDrawer: openDrawer2 }] = useDrawer();
+  const [registerDrawerTabs, { openDrawer: openDrawerTabs }] = useDrawer();
+  const [registerModal, { openModal }] = useModal();
+
   const [registerTable, { reload }] = useTable({
     api: testDataListData,
     beforeFetch: (params) => {
@@ -408,6 +425,7 @@
     showTableSetting: true,
     useSearchForm: true,
     canResize: true,
+    // expandRowByClick: true,
     filterFn: (data: Partial<Recordable<string[]>>) => {
       const testInput = 'a.test_input';
       if (data[testInput]) {
@@ -423,8 +441,19 @@
     openDrawer(true, record);
   }
 
-  function handleForm2(record: Recordable) {
-    openDrawer2(true, record);
+  function handleFormTabs(record: Recordable) {
+    openDrawerTabs(true, record);
+  }
+
+  function handleFormModal(record: Recordable) {
+    openModal(true, record);
+  }
+
+  function handleFormRoute(record: Recordable) {
+    router.push({
+      path: '/test/testData/formRoute',
+      query: record,
+    });
   }
 
   async function handleDisable(record: Recordable) {
