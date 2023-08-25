@@ -283,8 +283,8 @@
           ...attrs,
           customRow,
           expandIcon:
-            (!isTreeTable && !slots.expandedRowRender) || slots.expandIcon
-              ? null
+            (!isTreeTable && slots.expandedRowRender) || slots.expandIcon
+              ? undefined
               : expandIcon(expandCollapse, handleTableExpand, !!slots.expandedRowRender),
           ...unref(getProps),
           ...unref(getHeaderProps),
@@ -543,6 +543,10 @@
             }
           }
         }
+      }
+
+      .ant-table-row-expand-icon {
+        margin-left: 7px;
       }
     }
 
