@@ -52,7 +52,7 @@
         src += search;
       }
       const path = window.location.pathname.replace(/\/\//g, '/');
-      if (frameSrc.value != src && src.indexOf(path) != -1) {
+      if (!frameSrc.value || (frameSrc.value != src && src.indexOf(path) != -1)) {
         frameSrc.value = src;
       }
     },
