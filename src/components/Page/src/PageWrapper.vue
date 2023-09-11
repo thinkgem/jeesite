@@ -46,10 +46,10 @@
           </div>
           <template v-if="!sidebarResizer">
             <div class="sidebar-close" v-if="!collapsed" @click="collapsed = !collapsed">
-              <Icon icon="ant-design:double-left-outlined" />
+              <Icon icon="fa fa-angle-left" />
             </div>
             <div class="sidebar-open" v-else @click="collapsed = !collapsed">
-              <Icon icon="ant-design:double-right-outlined" />
+              <Icon icon="fa fa-angle-left" style="transform: rotate(180deg)" />
             </div>
           </template>
         </a-layout-sider>
@@ -355,26 +355,46 @@
         &-open,
         &-close {
           cursor: pointer;
-          border: 1px solid #ddd;
-          padding: 1px 1px 2.5px;
           background: #fff;
           position: absolute;
           z-index: 100;
-          opacity: 0.7;
-          top: 55px;
+          // border: 1px solid #ddd;
+          // padding: 1px 1px 2.5px;
+          // opacity: 0.7;
+          // top: 55px;
+          top: 54px;
+          width: 24px;
+          height: 24px;
+          text-align: center;
+          transition: transform 0.3s;
+          color: rgba(0, 0, 0, 0.5);
+          border-radius: 40px;
+          box-shadow:
+            0 2px 8px -2px rgba(0, 0, 0, 0.05),
+            0 1px 4px -1px rgba(25, 15, 15, 0.07),
+            0 0 1px 0 rgba(0, 0, 0, 0.08);
+
+          &:hover {
+            color: rgba(0, 0, 0, 0.8);
+          }
+          svg {
+            font-size: 12px;
+          }
         }
 
         &-open {
-          left: -15px;
-          padding-right: 0;
-          border-left-width: 0;
-          border-radius: 0 3px 3px 0;
+          // left: -15px;
+          // padding-right: 0;
+          // border-left-width: 0;
+          // border-radius: 0 3px 3px 0;
+          left: -12px;
         }
 
         &-close {
-          right: 0;
-          border-right-width: 0;
-          border-radius: 3px 0 0 3px;
+          // right: 0;
+          // border-right-width: 0;
+          // border-radius: 3px 0 0 3px;
+          right: -12px;
         }
       }
     }
