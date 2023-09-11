@@ -381,7 +381,7 @@ export function useDataSource(
   async function reload(opt?: FetchParams) {
     if (opt?.parentCode && opt?.parentCode != '0') {
       const row = findTableDataRecord(opt.parentCode);
-      await expandCollapse(row, false, true);
+      if (row) await expandCollapse(row, false, true);
     } else {
       await fetch(opt);
     }
