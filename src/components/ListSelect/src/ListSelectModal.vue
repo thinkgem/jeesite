@@ -93,12 +93,14 @@
 
   type Key = string | number;
   const selectedRowKeys = ref<Key[]>([]);
+  const initialize = ref<boolean>(false);
 
   const rowSelection: TableRowSelection = {
     type: props.checkbox ? 'checkbox' : 'radio',
     columnWidth: props.checkbox ? undefined : 0,
     selectedRowKeys: selectedRowKeys as unknown as Key[],
     onChange: (_selectedRowKeys: Key[], selectedRows: Recordable[]) => {
+      if (!initialize.value) return; // 首次加载不更新状态，会将初始值清空
       selectedRowKeys.value = _selectedRowKeys;
       selectList.value = selectedRows;
     },
@@ -112,6 +114,9 @@
     // ...(props.checkbox ? { rowSelection } : {}),
     rowSelection,
     ...props.config?.tableProps,
+    afterFetch: () => {
+      initialize.value = true;
+    },
   };
 
   const [registerTable, tableAction] = useTable(tableProps);
