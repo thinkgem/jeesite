@@ -10,7 +10,9 @@
       :title="title"
       v-bind="omit($attrs, 'class')"
       ref="headerRef"
-      v-if="!title && (content || $slots.headerContent || title || getHeaderSlots.length)"
+      v-if="
+        title !== 'false' && (content || $slots.headerContent || title || getHeaderSlots.length)
+      "
     >
       <template #title v-if="$slots.headerTitle">
         <slot name="headerTitle"></slot>
