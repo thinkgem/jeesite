@@ -33,8 +33,6 @@
 
     <!-- action  -->
     <div :class="`${prefixCls}-action`">
-      <SwitchCorp v-if="getUseCorpModel" :class="`${prefixCls}-action__item switch-corp`" />
-
       <AppSearch v-if="getShowSearch" :class="`${prefixCls}-action__item `" />
 
       <OnlineCount :class="`${prefixCls}-action__item online-count`" />
@@ -44,13 +42,6 @@
       <ErrorAction v-if="getUseErrorHandle" :class="`${prefixCls}-action__item error-action`" />
 
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
-
-      <AppLocalePicker
-        v-if="getShowLocalePicker"
-        :reload="true"
-        :showText="false"
-        :class="`${prefixCls}-action__item`"
-      />
 
       <UserDropDown :theme="getHeaderTheme" />
 
@@ -76,7 +67,6 @@
 
   import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
   import { SettingButtonPositionEnum } from '/@/enums/appEnum';
-  import { AppLocalePicker } from '/@/components/Application';
 
   import {
     UserDropDown,
@@ -85,7 +75,6 @@
     Notify,
     ErrorAction,
     OnlineCount,
-    SwitchCorp,
   } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -105,13 +94,11 @@
       LayoutBreadcrumb,
       LayoutMenu,
       UserDropDown,
-      AppLocalePicker,
       FullScreen,
       Notify,
       AppSearch,
       ErrorAction,
       OnlineCount,
-      SwitchCorp,
       SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue'), {
         loading: true,
       }),
