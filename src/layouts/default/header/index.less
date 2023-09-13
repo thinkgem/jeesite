@@ -73,6 +73,7 @@
     display: flex;
     height: 100%;
     align-items: center;
+    flex-shrink: 0;
 
     .@{header-trigger-prefix-cls} {
       display: flex;
@@ -108,6 +109,8 @@
     min-width: 0;
     flex: 1;
     align-items: center;
+    // overflow-x: hidden;
+    // position: relative;
   }
 
   &-action {
@@ -115,6 +118,7 @@
     min-width: 180px;
     // padding-right: 12px;
     align-items: center;
+    flex-shrink: 0;
 
     &__item {
       display: flex !important;
