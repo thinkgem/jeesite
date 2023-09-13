@@ -1,5 +1,5 @@
 <template>
-  <Menu
+  <AMenu
     :selectedKeys="selectedKeys"
     :defaultSelectedKeys="defaultSelectedKeys"
     :mode="mode"
@@ -17,7 +17,7 @@
       <BasicSubMenuItem :item="item" :theme="theme" :isHorizontal="isHorizontal" />
     </template>
     <slot name="menuAfter"></slot>
-  </Menu>
+  </AMenu>
 </template>
 <script lang="ts">
   import type { MenuState } from './types';
@@ -39,7 +39,7 @@
   export default defineComponent({
     name: 'BasicMenu',
     components: {
-      Menu,
+      AMenu: Menu,
       BasicSubMenuItem,
     },
     props: basicProps,

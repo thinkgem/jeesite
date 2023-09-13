@@ -21,7 +21,7 @@
     <!-- left end -->
 
     <!-- menu start -->
-    <div :class="`${prefixCls}-menu`" v-if="getShowTopMenu && !getIsMobile">
+    <div :class="`${prefixCls}-menu`" v-if="getIsInitMenu && getShowTopMenu && !getIsMobile">
       <LayoutMenu
         :isHorizontal="true"
         :theme="getHeaderTheme"
@@ -33,6 +33,8 @@
 
     <!-- action  -->
     <div :class="`${prefixCls}-action`">
+      <SwitchCorp v-if="getUseCorpModel" :class="`${prefixCls}-action__item switch-corp`" />
+
       <AppSearch v-if="getShowSearch" :class="`${prefixCls}-action__item `" />
 
       <OnlineCount :class="`${prefixCls}-action__item online-count`" />
@@ -43,6 +45,13 @@
 
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
+      <AppLocalePicker
+        v-if="getShowLocalePicker"
+        :reload="true"
+        :showText="false"
+        :class="`${prefixCls}-action__item`"
+      />
+
       <UserDropDown :theme="getHeaderTheme" />
 
       <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
@@ -50,7 +59,7 @@
   </ALayoutHeader>
 </template>
 <script lang="ts">
-  import { defineComponent, unref, computed } from 'vue';
+  import { defineComponent, ref, unref, computed } from 'vue';
 
   import { propTypes } from '/@/utils/propTypes';
 
@@ -76,6 +85,7 @@
     Notify,
     ErrorAction,
     OnlineCount,
+    SwitchCorp,
   } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -84,6 +94,7 @@
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
   import { useLocale } from '/@/locales/useLocale';
   import { useUserStore } from '/@/store/modules/user';
+  import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -100,6 +111,7 @@
       AppSearch,
       ErrorAction,
       OnlineCount,
+      SwitchCorp,
       SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue'), {
         loading: true,
       }),
@@ -109,6 +121,13 @@
     },
     setup(props) {
       const { prefixCls } = useDesign('layout-header');
+      // 增加延迟，修复Safari下首次加载顶部菜单重叠问题。
+      const getIsInitMenu = ref<boolean>(false);
+      onMountedOrActivated(() => {
+        setTimeout(() => {
+          getIsInitMenu.value = true;
+        }, 100);
+      });
       const {
         getShowTopMenu,
         getShowHeaderTrigger,
@@ -195,6 +214,7 @@
         getSplitType,
         getSplit,
         getMenuMode,
+        getIsInitMenu,
         getShowTopMenu,
         getShowLocalePicker,
         getShowFullScreen,
