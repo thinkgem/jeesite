@@ -126,6 +126,14 @@ db.password=123456
 # 如果是 application.properties 文件，将 key 后的冒号换为等号即可。
 ```
 
+**注意事项：**
+
+生产环境，请务必修改 `application.properties` 配置文件中的秘钥，
+
+属性 `nacos.core.auth.plugin.nacos.token.secret.key` 值，为一个新的秘钥。
+
+支持自定义鉴权：<https://nacos.io/zh-cn/docs/v2/plugin/auth-plugin.html>
+
 **启动完成后：**
 
 浏览器访问：<http://127.0.0.1:8848/nacos/index.html>  用户名密码：nacos
