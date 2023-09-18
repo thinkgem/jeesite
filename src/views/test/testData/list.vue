@@ -11,7 +11,7 @@
         <span> {{ getTitle.value }} </span>
       </template>
       <template #toolbar>
-        <a-button type="primary" @click="handleForm3({})" v-auth="'test:testData:edit'">
+        <a-button type="primary" @click="handleForm({})" v-auth="'test:testData:edit'">
           <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
