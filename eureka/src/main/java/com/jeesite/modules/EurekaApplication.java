@@ -13,7 +13,6 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 /**
  * Application
  * @author ThinkGem
- * @version 2018-10-13
  */
 @SpringBootApplication
 @EnableEurekaServer
