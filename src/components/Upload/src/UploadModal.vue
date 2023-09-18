@@ -280,7 +280,7 @@
 
       return {
         columns: createTableColumns() as any[],
-        actionColumn: createActionColumn(handleRemove, handlePreview) as any,
+        actionColumn: createActionColumn(handleRemove) as any,
         register,
         closeModal,
         getHelpText,
