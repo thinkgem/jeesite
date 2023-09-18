@@ -21,7 +21,6 @@ import java.net.UnknownHostException;
 /**
  * Application
  * @author ThinkGem
- * @version 2018-10-13
  */
 @SpringBootApplication
 public class FastApplication extends SpringBootServletInitializer {
