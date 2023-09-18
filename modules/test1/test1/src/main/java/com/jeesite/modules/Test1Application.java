@@ -14,7 +14,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * Application
  * @author ThinkGem
- * @version 2018-10-13
  */
 @SpringBootApplication
 @EnableDiscoveryClient

@@ -11,7 +11,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * Gateway Application
  * @author ThinkGem
- * @version 2018-10-13
  */
 @SpringBootApplication
 @EnableDiscoveryClient

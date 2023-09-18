@@ -12,7 +12,6 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 /**
  * Config Application
  * @author ThinkGem
- * @version 2018-10-13
  */
 @SpringBootApplication
 @EnableDiscoveryClient
