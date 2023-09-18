@@ -784,7 +784,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		if (!StringUtils.endsWithAny(p, SEPARATOR) && StringUtils.endsWithAny(path, WIN_SEPARATOR, SEPARATOR)){
 			p = p + SEPARATOR;
 		}
-		if (path != null && path.startsWith(SEPARATOR)){
+		if (path != null && path.startsWith(SEPARATOR) && !p.startsWith(SEPARATOR)){
 			p = SEPARATOR + p; // linux下路径
 		}
 		return p;
