@@ -12,7 +12,7 @@
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-parent</artifactId>
-	<version>5.5.springboot3-SNAPSHOT</version>
+	<version>5.5.1.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Parent</name>
