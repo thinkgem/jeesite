@@ -195,34 +195,39 @@ export function useColumns(
 
   const getViewColumns = computed(() => {
     const viewColumns = sortFixedColumn(unref(getColumnsRef));
-
     const columns = cloneDeep(viewColumns);
-    return columns
-      .filter((column) => {
-        return hasPermission(column.auth) && isIfShow(column);
-      })
-      .map((column) => {
-        // const { slots, dataIndex, customRender, format, edit, editRow, flag } = column;
-        const { customRender, format, edit, editRow, flag } = column;
+    function buildColumns(columns: BasicColumn[]) {
+      return columns
+        .filter((column) => {
+          return hasPermission(column.auth) && isIfShow(column);
+        })
+        .map((column) => {
+          if (column.children) {
+            buildColumns(column.children);
+          }
+          // const { slots, dataIndex, customRender, format, edit, editRow, flag } = column;
+          const { customRender, format, edit, editRow, flag } = column;
 
-        //if (!slots || !slots?.title) {
-        //  //column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
-        column.customTitle = column.title as any;
-        Reflect.deleteProperty(column, 'title');
-        //}
-        const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
-        if (!customRender && format && !edit && !isDefaultAction) {
-          column.customRender = ({ text, record, index }) => {
-            return formatCell(text, format, record, index);
-          };
-        }
+          //if (!slots || !slots?.title) {
+          //  //column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
+          column.customTitle = column.title as any;
+          Reflect.deleteProperty(column, 'title');
+          //}
+          const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
+          if (!customRender && format && !edit && !isDefaultAction) {
+            column.customRender = ({ text, record, index }) => {
+              return formatCell(text, format, record, index);
+            };
+          }
 
-        // edit table
-        if ((edit || editRow) && !isDefaultAction) {
-          column.customRender = renderEditCell(column);
-        }
-        return reactive(column);
-      });
+          // edit table
+          if ((edit || editRow) && !isDefaultAction) {
+            column.customRender = renderEditCell(column);
+          }
+          return reactive(column);
+        });
+    }
+    return buildColumns(columns);
   });
 
   watch(
