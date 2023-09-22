@@ -153,6 +153,7 @@
         params: { isLoadUser: true, userIdPrefix: '' },
         canSelectParent: false,
         allowClear: true,
+        treeCheckable: true,
       },
     },
     {
@@ -161,6 +162,7 @@
       component: 'ListSelect',
       componentProps: {
         selectType: 'empUserSelect',
+        checkbox: true,
       },
     },
     {
