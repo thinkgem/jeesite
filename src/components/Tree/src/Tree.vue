@@ -117,9 +117,9 @@
             let currentValue = toRaw(state.checkedKeys) as Keys;
             if (isArray(currentValue) && searchState.startSearch) {
               const { key } = unref(getFieldNames);
-              currentValue = difference(currentValue, getChildrenKeys(e.node.$attrs.node[key]));
+              currentValue = difference(currentValue, getChildrenKeys(e.node.dataRef[key]));
               if (e.checked) {
-                currentValue.push(e.node.$attrs.node[key]);
+                currentValue.push(e.node.dataRef[key]);
               }
               state.checkedKeys = currentValue;
             } else {
