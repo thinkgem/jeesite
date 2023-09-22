@@ -203,9 +203,9 @@
 
   .ant-select-dropdown.@{prefix-cls}-popup .ant-select-tree {
     .ant-select-tree-switcher {
-      &.ant-select-tree-switcher-noop {
-        width: 15px;
-      }
+      // &.ant-select-tree-switcher-noop {
+      //   width: 15px;
+      // }
       .ant-select-tree-switcher-icon svg {
         margin-top: -3px;
       }
