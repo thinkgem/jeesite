@@ -284,6 +284,9 @@
     bordered: true,
     size: 'small',
     inset: true,
+    // canResize: true,
+    // minHeight: 100,
+    // maxHeight: 100,
   });
 
   async function setEmployeeOfficeTableData(res: Recordable) {
@@ -327,11 +330,12 @@
     record.onEdit?.(true, false);
   }
 
-  function handleEmployeeOfficeAdd() {
-    employeeOfficeTable.insertTableDataRecord({
+  async function handleEmployeeOfficeAdd() {
+    await employeeOfficeTable.insertTableDataRecord({
       id: 'rid_' + new Date().getTime(),
       editable: true,
     });
+    // await employeeOfficeTable.scrollTo('bottom');
   }
 
   function handleEmployeeOfficeDelete(record: Recordable) {
