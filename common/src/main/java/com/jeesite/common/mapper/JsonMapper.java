@@ -7,13 +7,16 @@ package com.jeesite.common.mapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.DateUtils;
@@ -31,16 +34,15 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
- * 封装不同的输出风格, 使用不同的builder函数创建实例.
+ * 封装 Jackson，实现 JSON String 与 Java Object 互转
  * @author ThinkGem
- * @version 2016-3-2
+ * @version 2023-09-26
  */
 public class JsonMapper extends ObjectMapper {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
+	private static final Logger logger = LoggerFactory.getLogger(JsonMapper.class);
 
 	/**
 	 * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
@@ -48,7 +50,7 @@ public class JsonMapper extends ObjectMapper {
 	private static final class JsonMapperHolder {
 		private static final JsonMapper INSTANCE = new JsonMapper();
 	}
-	
+
 	public JsonMapper() {
 		// Spring ObjectMapper 初始化配置，支持 @JsonView
 		new Jackson2ObjectMapperBuilder().configure(this);
@@ -59,9 +61,30 @@ public class JsonMapper extends ObjectMapper {
 		// 允许不带引号的字段名称
 		this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		// 设置默认时区
+		this.setDefaultTimeZone();
+		// 设置默认日期格式
+		this.setDefaultDateFormat();
+        // 遇到空值处理为空串
+		this.enabledNullValueToEmpty();
+		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
+		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+	}
+
+	/**
+	 * 开启日期类型默认格式化
+	 * @author ThinkGem
+	 */
+	public JsonMapper setDefaultTimeZone(){
 		this.setTimeZone(TimeZone.getTimeZone(PropertiesUtils.getInstance()
 					.getProperty("lang.defaultTimeZone", "GMT+08:00")));
-		// 设置默认日期格式
+		return this;
+	}
+
+	/**
+	 * 开启日期类型默认格式化
+	 * @author ThinkGem
+	 */
+	public JsonMapper setDefaultDateFormat(){
 		this.setDateFormat(new SimpleDateFormat(PropertiesUtils.getInstance()
 				.getProperty("web.json.defaultDateFormat", "yyyy-MM-dd HH:mm:ss")));
 		this.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
@@ -74,8 +97,7 @@ public class JsonMapper extends ObjectMapper {
 					if (jf != null) {
 						return new JsonSerializer<Date>(){
 							@Override
-							public void serialize(Date value, JsonGenerator jgen,
-									SerializerProvider provider) throws IOException, JsonProcessingException {
+							public void serialize(Date value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
 								if (value != null){
 									jgen.writeString(DateUtils.formatDate(value, jf.pattern()));
 								}
@@ -86,27 +108,39 @@ public class JsonMapper extends ObjectMapper {
 				return super.findSerializer(a);
 			}
 		});
-		// 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
-		this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        // 遇到空值处理为空串
+		return this;
+	}
+
+	/**
+	 * 开启将空值转换为空字符串
+	 * @author ThinkGem
+	 */
+	public JsonMapper enabledNullValueToEmpty(){
 		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
 			@Override
-			public void serialize(Object value, JsonGenerator jgen,
-					SerializerProvider provider) throws IOException, JsonProcessingException {
+			public void serialize(Object value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
 				jgen.writeString(StringUtils.EMPTY);
 			}
         });
-//		// 进行HTML解码（先注释掉，否则会造成XSS攻击，比如菜单名称里输入<script>alert(123)</script>转josn后就会还原这个编码 ，并在浏览器中运行）。
-//		this.registerModule(new SimpleModule().addSerializer(String.class, new JsonSerializer<String>(){
-//			@Override
-//			public void serialize(String value, JsonGenerator jgen,
-//					SerializerProvider provider) throws IOException,
-//					JsonProcessingException {
-//				if (value != null){
-//					jgen.writeString(StringEscapeUtils.unescapeHtml4(value));
-//				}
-//			}
-//        }));
+		return this;
+	}
+
+	/**
+	 * 开启 XSS 过滤器
+	 * @author ThinkGem
+	 */
+	public JsonMapper enabledXssFilter(){
+		this.registerModule(new SimpleModule().addDeserializer(String.class, new JsonDeserializer<String>() {
+				@Override
+				public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+					String text = p.getText();
+					if (text != null) {
+						return EncodeUtils.xssFilter(text);
+					}
+					return null;
+				}
+		}));
+		return this;
 	}
 	
 	/**
