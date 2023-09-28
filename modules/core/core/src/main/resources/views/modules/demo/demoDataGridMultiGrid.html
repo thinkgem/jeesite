@@ -59,7 +59,7 @@ $('body').layout({
 });
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	dataGridPage: $('#dataGridPage'),
 	autoGridHeight: function(){
 		return $('#searchForm').parent().height() - $('#dataGridPage').height() - 45;
@@ -88,7 +88,7 @@ $('#dataGrid').dataGrid({
 });
 //# // 初始化DataGrid对象
 $('#dataGrid2').dataGrid({
-	searchForm: $("#searchForm2"),
+	searchForm: $('#searchForm2'),
 	dataGridPage: $('#dataGrid2Page'),
 	autoGridHeight: function(){
 		return $('#searchForm2').parent().height() - $('#dataGrid2Page').height() - 45;

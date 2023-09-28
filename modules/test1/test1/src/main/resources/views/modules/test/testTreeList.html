@@ -50,7 +50,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("节点名称")}', name:'treeName', index:'a.tree_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.treeCode+' ) '+'<a href="${ctx}/test1/testTree/form?treeCode='+row.treeCode+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';

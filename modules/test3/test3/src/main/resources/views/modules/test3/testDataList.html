@@ -122,7 +122,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("单行文本")}', name:'testInput', index:'a.test_input', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/test3/testData/form?id='+row.id+'" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';

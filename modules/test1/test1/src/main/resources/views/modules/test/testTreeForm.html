@@ -104,7 +104,7 @@
 </div>
 <% } %>
 <script>
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);

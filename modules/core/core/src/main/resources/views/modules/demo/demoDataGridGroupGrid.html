@@ -122,7 +122,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'单行文本', name:'testInput', index:'a.test_input', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			if(obj.rowId == ''){ return '小计:'; }
