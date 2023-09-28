@@ -1,0 +1,15 @@
+.strength {position:relative;}
+.strength .strength_input {position:absolute;left:0;top:0;height:30px;background:transparent;border:transparent;z-index:2;color:#333;}
+.strength .strength_input:focus {background:transparent;}
+.strength .strength_meter {position:absolute;left:0;top:0;width:100%;height:30px;z-index:1;border:1px solid #dedede;border-radius:4px;}
+.strength .strength_meter.veryweak {border-color:#F04040!important;}
+.strength .strength_meter.weak {border-color:#FF853C!important;}
+.strength .strength_meter.medium {border-color:#FC0!important;}
+.strength .strength_meter.strong {border-color:#8DFF1C!important;}
+.strength .strength_meter div {width:0%;height:28px;text-align:right;-webkit-transition:all .3s ease-in-out;border-radius:4px;}
+.strength .strength_meter div.veryweak {background-color:#FFA0A0;width:25%!important;}
+.strength .strength_meter div.weak {background-color:#FFB78C;width:50%!important;}
+.strength .strength_meter div.medium {background-color:#FFEC8B;width:75%!important;}
+.strength .strength_meter div.strong {background-color:#C3FF88;width:100%!important;}
+.strength .strength_meter div p {position:absolute;right:15px;font-size:13px;line-height:29px;font-weight:bold;color:#333}
+.strength .button_strength {text-decoration:none;display:block;padding-top:43px;color:#f59942;}
