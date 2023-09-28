@@ -67,12 +67,16 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
       config:
         server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
         file-extension: yml
         group: jeesite-cloud-yml
 
-    # 服务发现与注册优选IP前缀
+      # 服务发现与注册优选IP前缀
     #inetutils:
     #  preferred-networks: 192.168.56.
       
