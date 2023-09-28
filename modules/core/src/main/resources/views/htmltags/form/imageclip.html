@@ -1,0 +1,77 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：图片裁剪，返回image/base64
+ * @author ThinkGem
+ * @version 2017-12-16
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	class: class!'',			// 隐藏域的CSS类名
+	
+	btnText: btnText!text('选择图片'),		// 按钮的名字
+	btnClass: btnClass!'',					// 按钮的CSS类名
+	
+	imageId: imageId!'',					// 裁剪后base64返回到img的id
+	imageDefaultSrc: imageDefaultSrc!'',	// 图片默认地址，清除后使用地址
+	
+	ratio: ratio!'1/1', 		// 图片裁剪比例 v4.1.7
+	circle: circle!'false', 	// 是否圆形图片
+	
+	maxWidth: maxWidth!'', 		// 裁剪图片后返回的最大宽度 v4.2.1
+	maxHeight: maxHeight!'', 	// 裁剪图片后返回的最大高度 v4.2.1
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 编译绑定参数
+form.path(p);
+
+%>
+<input id="${p.id}" name="${p.name}" type="hidden" value="${p.value}" class="${p.class}">
+<a id="${p.id}Button" href="javascript:" class="btn btn-default ${p.btnClass}">${p.btnText}</a>
+<script>
+$("#${p.id}Button,#${p.imageId}").click(function(){
+	js.layer.open({
+		type: 2,
+		maxmin: true,
+		shadeClose: true,
+		title: '${text("图片裁剪")}',
+		area: [(js.layer.$(js.layer.window).width() - 150) + 'px',
+		       (js.layer.$(js.layer.window).height() - 100) + 'px'],
+		content: '${ctxPath}/tags/imageclip',
+		contentFormData: {
+			ratio: '${p.ratio}',
+			circle: '${p.circle}',
+			maxWidth: '${p.maxWidth}',
+			maxHeight: '${p.maxHeight}',
+			imageSrc: $("#${p.imageId}").attr('src'),
+			imageDefaultSrc: '${p.imageDefaultSrc}'
+		},
+		btn: ['<i class="fa fa-check"></i> ${text("确定")}',
+			'<i class="fa fa-eraser"></i> ${text("清除")}',
+			'<i class="fa fa-close"></i> ${text("关闭")}'],
+		btn1: function(index, layero){
+			var win = layero.iframeWindow();
+			win.getImageBase64(win.$image, function(imageBase64){
+				$("#${p.imageId}").attr("src", imageBase64);
+				$("#${p.id}").val(imageBase64).change();
+				try { $('#${p.id}').resetValid(); }catch(e){}
+			});
+		},
+		btn2: function(index, layero){
+			$("#${p.imageId}").attr("src","${p.imageDefaultSrc}");
+            $("#${p.id}").val("EMPTY").change();
+		}
+	});
+});
+</script>

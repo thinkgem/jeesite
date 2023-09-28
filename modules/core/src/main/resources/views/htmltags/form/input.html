@@ -1,0 +1,67 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：输入框
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	type: type!'text',			// 元素的类型，默认text
+	
+	dataFormat: dataFormat!'',	// 数据格式化，支持如下值：
+								// date: 日期；默认值设置：defaultValue="${date()}"
+								// yyyy: 年；默认值设置：defaultValue="${date('2019','yyyy')}"
+								// yyyy-MM: 年月；默认值设置：defaultValue="${date('2019-11','yyyy-MM')}"
+								// datetime: 日期时间 yyyy-MM-dd HH:mm 格式化
+								// datetime2: 日期时间，带秒  yyyy-MM-dd HH:mm:ss 格式化
+								// 自定义日期  path 改为  name 加 value="${@DateUtils.formatDate(model.field,'yyyyMMdd')}}"
+								// number: 数值类型 #.## 格式化，默认值设置：defaultValue="${0}"
+								// number2: 数值类型 0.00 格式化，默认值设置：defaultValue="${0}"  v4.1.8
+								// 自定义数值  path 改为  name 加 value="${@NumberUtils.formatNumber(model.field,'0.0')}}"
+	
+	// 内置参数
+	thisTag: thisTag,
+	exclAttrs: ['id', 'path', 'name', 'value', 'defaultValue', 'type', 'dataFormat']
+};
+
+// 编译绑定参数
+form.path(p);
+
+var df = '';
+// 日期类型格式化（后台实体属性必须是 Date 类型的属性）
+if (p.dataFormat == 'date'){
+	df = {%> value="${p.value,dateFormat='yyyy-MM-dd'}"<%};
+}else if (p.dataFormat == 'yyyy'){
+	df = {%> value="${p.value,dateFormat='yyyy'}"<%};
+}else if (p.dataFormat == 'yyyy-MM'){
+	df = {%> value="${p.value,dateFormat='yyyy-MM'}"<%};
+}else if (p.dataFormat == 'MM-dd'){
+	df = {%> value="${p.value,dateFormat='MM-dd'}"<%};
+}else if (p.dataFormat == 'datetime'){
+	df = {%> value="${p.value,dateFormat='yyyy-MM-dd HH:mm'}"<%};
+}else if (p.dataFormat == 'datetime2'){
+	df = {%> value="${p.value,dateFormat='yyyy-MM-dd HH:mm:ss'}"<%};
+}
+// 数值类型格式化（后台实体属性必须是 数值 类型的属性）
+else if (p.dataFormat == 'number'){
+	df = {%> value="${p.value,numberFormat='#.##'}"<%};
+}else if (p.dataFormat == 'number2'){
+	df = {%> value="${p.value,numberFormat='0.00'}"<%};
+}else{
+	df = {%> value="${p.value}"<%};
+}
+p.attrs = p.attrs!'' + df;
+
+// 编译属性参数
+form.attrs(p);
+		
+%><input type="${p.type}" id="${p.id}" name="${p.name}"${p.attrs}/>

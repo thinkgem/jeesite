@@ -1,0 +1,72 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：单选按钮
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	dictType: dictType!,		// 字典类型，从字典里获取，自动设置items、itemLabel、itemValue
+	
+	items: items!([]),			// 列表数据，可接受对象集合，如：List<DictData>
+	itemLabel: itemLabel!'',	// 指定列表数据中的什么属性名作为option的标签名
+	itemValue: itemValue!'',	// 指定列表数据中的什么属性名作为option的value值
+	
+	readonly: toBoolean(readonly!false),		// 是否只读模式 v4.2.0
+	
+	blankOption: toBoolean(blankOption!false), // 是否默认有个空白选择项目 v4.2.0
+	blankOptionValue: blankOptionValue!'', // 给空白选择项目设置一个值，默认：空字符串 v4.2.0
+	blankOptionLabel: blankOptionLabel!'全部', // 给空白选择项目设置一个标签，如：请选择、全部 v4.2.0
+	
+	// 内置参数
+	thisTag: thisTag,
+	exclAttrs: ['id', 'path', 'name', 'value', 'defaultValue', 'dictType',
+		'items', 'itemLabel', 'itemValue']
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 编译属性参数
+form.attrs(p);
+
+// 编译集合参数
+form.items(p);
+
+// 如果只读模式，则禁用，并加默认值为value
+if (p.readonly){
+	p.attrs = p.attrs + ' disabled="true"';
+	%><input type="hidden" name="!${p.name}" value="${p.value}"/><%
+}else{
+	%><input type="hidden" name="!${p.name}" value=""/><%
+}
+
+// 输出选项
+var body = {
+	if (p.blankOption){
+		%><label><input type="radio" id="${p.id}_" name="${p.name}"
+			value="${p.blankOptionValue}"${p.attrs} checked> ${p.blankOptionLabel}</label><%
+	}
+	var checked, title;
+	for (var item in p.items){
+		checked = (@ObjectUtils.toString(p.value) == item[p.itemValue] ? ' checked' : '');
+		if (type.name(item) == 'DictData' && isNotBlank(item['description'])){
+			title = ' title="' + item['description'] + '"';
+		}
+		%><label${title}><input type="radio" id="${p.id}${itemLP.index}" name="${p.name}"
+			value="${item[p.itemValue]}"${p.attrs}${checked}> ${item[p.itemLabel]}</label><%
+	}
+};
+
+%>
+<span id="${p.id}" class="icheck">
+${body}</span>

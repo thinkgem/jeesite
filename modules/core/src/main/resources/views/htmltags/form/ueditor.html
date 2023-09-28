@@ -1,0 +1,174 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：输入框
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	class: class!'',			// 标签框的CSS类名，设置 required 加入必填验证
+	
+	maxlength: maxlength!'',	// 编辑器最大输入字数，为空代表无限制
+	height: height!'200',		// 编辑器的高度，默认200
+	maxHeight: maxHeight!,		// 编辑器的最大高度
+	
+	simpleToolbars: toBoolean(simpleToolbars!false), // 是否是简单的工具条
+	
+	readonly: toBoolean(readonly!false), 	// 是否只读模式
+	
+	outline: toBoolean(outline!false), 		// 大纲视图
+	
+	options: options!'',		// UE附加选项，逗号隔开。
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 编译绑定参数
+form.path(p);
+
+%>
+<% if(p.outline){ %>
+	<div class="row edui-outline" id="${p.id}outline">
+		<div class="col-xs-9 left">
+			<textarea id="${p.id}" name="${p.name}" rows="4" class="edui-textarea form-control ${p.class}"></textarea>
+			<script id="${p.id}UE" type="text/plain" style="width:100%;height:${p.height}px;">${p.value}</script>
+		</div>
+		<div id="${p.id}OpenClose" class="open-close toc-close">&nbsp;</div>
+		<div class="col-xs-3 right">
+		    <div class="wrapper" id="${p.id}Wrapper">
+		        <div class="wrapperTitle">${text('目录标题')}：</div>
+		        <div class="wrapperContainer" id="${p.id}Container"></div>
+		        <div class="clearfix"></div>
+		    </div>
+		</div>
+	</div>
+<% }else{ %>
+	<textarea id="${p.id}" name="${p.name}" rows="4" class="edui-textarea form-control ${p.class}"></textarea>
+	<script id="${p.id}UE" type="text/plain" style="width:100%;height:${p.height}px;">${p.value}</script>
+<% } %>
+<script type="text/javascript">
+var ${p.id}UE;
+$(function() {
+	${p.id}UE = UE.getEditor('${p.id}UE', {
+		<% if(isNotBlank(p.maxlength)){ %>maximumWords: ${p.maxlength}, <% } %>
+		<% if(p.simpleToolbars){ %>toolbars: window.UEDITOR_CONFIG.simpleToolbars, <% } %>
+		${p.options} readonly: ${p.readonly}, initialFrameHeight: ${p.height},
+	});
+	// 更新编辑器内容  ${p.id}UE.updateContent();
+	${p.id}UE.updateContent = function(){
+		if (!${p.id}UE.hasContents()){
+			$('#${p.id}').val("").change();
+		}else{
+			var html = ${p.id}UE.getContent().replace('<!--HTML-->','');
+			$('#${p.id}').val("<!--HTML-->" + html).change();
+		}
+		if (typeof window.webuploaderRefresh == 'function'){
+			window.webuploaderRefresh();
+		}
+	};
+	<% if(p.outline){ %>
+	// 刷新目录表题树 ${p.id}UE.refreshDirectiontion();
+	${p.id}UE.refreshDirection = function(){
+	    var dirmap = {}, dir = ${p.id}UE.execCommand('getsections');
+	    // 更新目录树
+	    $('#${p.id}Container').html(traversal(dir) || '${text("暂无大纲标题")}.');
+	    // 点击章节触发
+	    $('#${p.id}Container .sectionItem').click(function(e){
+	        var $target = $(this), address = $target.attr('data-address');
+	        ${p.id}UE.execCommand('selectsection', dirmap[address], true);
+	    });
+		// 生成更新目录树
+	    function traversal(section) {
+	        var $list, $item, $itemContent, child, childList;
+	        if(section.children.length) {
+	            $list = $('<ul>');
+	            for(var i = 0; i< section.children.length; i++) {
+	                child = section.children[i];
+	                //设置目录节点内容标签
+	                $itemContent = $('<span class="sectionItem">' + child['title'] + '</span>');
+	                $itemContent.attr('data-address', child['startAddress'].join(','));
+	                dirmap[child['startAddress'].join(',')] = child;
+	                //设置目录节点容器标签
+	                $item = $('<li>');
+	                $item.append($itemContent);
+	                //继续遍历子节点
+	                if($item.children.length) {
+	                    childList = traversal(child);
+	                    childList && $item.append(childList);
+	                }
+	                $list.append($item);
+	            }
+	        }
+	        return $list;
+	    }
+		// 重设大纲视图宽度
+    	$('#${p.id}Wrapper').css('width', $('#${p.id}outline .right').width()+'px');
+	};
+	// 页面网上滚动时，让目录固定在顶部
+    $(window).scroll(function(e) {
+    	var scrollTop = (document.body.scrollTop||document.documentElement.scrollTop), leftTop = $('.left').offset().top,
+    		wrapperHeight = ($('#${p.id}Wrapper').height()), wrapperHeight = (wrapperHeight > 0 ? wrapperHeight : 200);
+    	if(leftTop < scrollTop && leftTop + $('.left').height() - scrollTop - wrapperHeight > 0) {
+            $('#${p.id}Wrapper').addClass('fixTop');
+            $('#${p.id}OpenClose').addClass('fixTop');
+        } else {
+            $('#${p.id}Wrapper').removeClass('fixTop');
+            $('#${p.id}OpenClose').removeClass('fixTop')
+        }
+		// 重设大纲视图宽度
+    	$('#${p.id}Wrapper').css('width', $('#${p.id}outline .right').width()+'px');
+    }).resize(function(){
+		// 重设大纲视图宽度
+    	$('#${p.id}Wrapper').css('width', $('#${p.id}outline .right').width()+'px');
+    });
+    // 显示或隐藏目录树
+    $('#${p.id}OpenClose').click(function(){
+    	if($(this).hasClass("toc-close")){
+    		$(this).removeClass("toc-close");
+    		$(this).addClass("toc-open");
+    		$("#${p.id}outline .right").hide();
+    		$("#${p.id}outline .left").removeClass('col-xs-9');
+    		$("#${p.id}outline .left").addClass('col-xs-12');
+    	}else{
+    		$(this).addClass("toc-close");
+    		$(this).removeClass("toc-open");
+    		$("#${p.id}outline .right").show();
+    		$("#${p.id}outline .left").removeClass('col-xs-12');
+    		$("#${p.id}outline .left").addClass('col-xs-9');
+    	}
+    	${p.id}UE.fireEvent('keydown', 0); // 重置工具栏大小
+    });
+    <% } %>
+    // 编辑器加载完成事件
+	${p.id}UE.ready(function(){
+		<% if (isNotBlank(p.maxHeight)){ %>
+		${p.id}UE.setHeight(${p.maxHeight});
+		<% } %>
+		${p.id}UE.addListener('contentchange', function(){
+			${p.id}UE.updateContent();
+		});
+		<% if(p.outline){ %>
+		${p.id}UE.addListener('updateSections', function(){
+			${p.id}UE.refreshDirection();
+		});
+		${p.id}UE.refreshDirection();
+		<% } %>
+		if (typeof window.webuploaderRefresh == 'function'){
+			window.webuploaderRefresh();
+		}
+    });
+});
+$('#${p.id}').parents('form').submit(function(){
+	${p.id}UE.updateContent();
+});
+</script>

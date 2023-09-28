@@ -1,0 +1,116 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 侧边栏菜单
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = para0; p.html = '';
+p.loadType = p.loadType!'2';
+p.parentCode = p.parentCode!'0';
+p.paddingLeft = p.paddingLeft!14;
+p.paddingInitLeft = p.paddingInitLeft!(@Global.getConfig('sys.index.menuStyle', '1') == '2' ? 0 : p.paddingLeft);
+if (p.loadType == '1'){
+	p.menuList = @UserUtils.getMenuListByParentCode(p.parentCode);
+}else if (p.loadType == '2'){
+	if (p.children!false){
+		p.menuList = p.childList![];
+	}else{
+		if (p.children!true){
+			if (p.parentCode == '0'){
+				p.parentCode = '0,';
+			}else{
+				p.parentCode = '0,' + p.parentCode + ',';
+			}
+		}
+		p.menuList = @UserUtils.getMenuTreeByParentCode(p.parentCode);
+	}
+}
+for (var menu in p.menuList![]){
+	if ((p.loadType == '2' || p.parentCode == menu.parentCode)
+			&& menu.isMenu && menu.isShow == @Global.YES){
+		var attrs = ' ', style = '', menuIcon;
+		if (isBlank(menu.menuTarget)){
+			attrs = attrs + 'href="javascript:" data-';
+		}
+		if (isNotBlank(menu.menuUrl)){
+			var href = menu.menuUrl;
+			if (@StringUtils.startsWith(href, "///")){
+				href = @StringUtils.substring(href, 2);
+			} else if (@StringUtils.startsWith(href, "//")){
+				href = @request.getContextPath() + @StringUtils.substring(href, 1);
+			} else if (@StringUtils.startsWith(href, "/")){
+				href = @request.getContextPath() + @Global.getAdminPath() + href;
+			}
+			attrs = attrs + 'href="' + href + '"';
+		}else{
+			attrs = attrs + 'href="blank"';
+		}
+		if (isNotBlank(menu.menuTarget)){
+			attrs = attrs + ' target="' + menu.menuTarget + '"';
+		}
+		if (isBlank(menu.menuTarget)){
+			attrs = attrs + ' class="addTabPage"';
+		}
+		if (isNotBlank(menu.menuColor)){
+			style = style + 'color:' + menu.menuColor + ';';
+		}
+		if (menu.treeLevel > 1) {
+			style = style + 'padding-left:' + (toInteger(menu.treeLevel) * p.paddingLeft + p.paddingInitLeft) + 'px;';
+		}
+		if (style != '') {
+			attrs = attrs + ' style="' + style + '"';
+		}
+		if (isNotBlank(menu.menuTitle)){
+			attrs = attrs + ' title="' + menu.menuTitle + '"';
+		}else{
+			attrs = attrs + ' title="' + menu.menuName + '"';
+		}
+		attrs = attrs + ' data-code="' + menu.menuCode + '"';
+		if (isNotBlank(menu.menuIcon)){
+			if (@StringUtils.contains(menu.menuIcon, '://')){
+				menuIcon = '<img src="' + menu.menuIcon + '" width="20" height="20">';
+			}else if (@StringUtils.startsWith(menu.menuIcon, '/')){
+				menuIcon = '<img src="' + ctxPath + menu.menuIcon + '" width="20" height="20">';
+			}else{
+				menuIcon = '<i class="fa fa-fw ' + menu.menuIcon + '"></i>';
+			}
+		}else{
+			menuIcon = '<i class="fa fa-fw fa-circle-o"></i>';
+		}
+		var h = {
+%>
+<li class="treeview"><%	
+	%><a${attrs}>${menuIcon} <span>${menu.menuName}</span><%
+	// 输出子节点（递归调用）
+	var p2 = null;
+	if (p.loadType == '1'){
+		p2 = {loadType: '1', children: !menu.isTreeLeaf, parentCode: menu.menuCode,
+				paddingLeft: p.paddingLeft, paddingInitLeft: p.paddingInitLeft};
+	}else if (p.loadType == '2'){
+		p2 = {loadType: '2', children: isNotBlank(menu.childList), childList: menu.childList,
+				paddingLeft: p.paddingLeft, paddingInitLeft: p.paddingInitLeft};
+	}
+	if (p2 != null && p2.children && p.children!true){ 
+		menu.tree(p2);
+		if (isNotBlank(p2.html)){
+			%>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span><%
+		}
+	}
+	%></a><%
+	if (isNotBlank(p2.html)){ 
+		%><ul class="treeview-menu">
+
+			<% print(p2.html);
+		%></ul><%
+	}
+%></li>
+
+<%
+		};
+		p.html = p.html + h;
+	}
+}
+%>

@@ -1,0 +1,95 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：单选按钮
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	dictType: dictType!'',		// 字典类型，从字典里获取，自动设置items、itemLabel、itemValue
+	
+	items: items!([]),			// 列表数据，可接受对象集合，如：List<DictData>
+	itemLabel: itemLabel!'',	// 指定列表数据中的什么属性名作为option的标签名
+	itemValue: itemValue!'',	// 指定列表数据中的什么属性名作为option的value值
+	
+	label: label!,				// 只有一个复选按钮的情况下设置（开关）
+	
+	readonly: toBoolean(readonly!false),		// 是否只读模式 v4.2.0
+	
+	// 内置参数
+	thisTag: thisTag,
+	exclAttrs: ['id', 'path', 'name', 'value', 'defaultValue', 'dictType', 
+		'items', 'itemLabel', 'itemValue', 'label']
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 编译属性参数
+form.attrs(p);
+
+// 编译集合参数
+form.items(p);
+
+// 只有一个复选按钮的情况下
+if (isNotBlank(p.label)){
+	p.items = [{label:p.label,value:'1'}];
+	p.itemLabel = 'label';
+	p.itemValue = 'value';
+}
+
+// 如果不是字符串，则转换为字符串
+if (type.name(p.value) != 'String'){
+	p.value = @ObjectUtils.toString(p.value);
+}
+
+// 转换为字符串数组
+if (type.name(p.value) == 'String'){
+	p.value = @StringUtils.split(p.value, ',');
+}
+
+// 如果只读模式，则禁用，并加默认值为value
+if (p.readonly){
+	p.attrs = p.attrs + ' disabled="true"';
+}
+
+// 输出选项
+var body = {
+	var checked,title;
+	for (var item in p.items){
+		checked = (@StringUtils.inString(item[p.itemValue], p.value)  ? ' checked' : '');
+		if (type.name(item) == 'DictData' && isNotBlank(item['description'])){
+			title = ' title="' + item['description'] + '"';
+		}
+		%><label${title}><input type="checkbox" id="${p.id}${itemLP.index}" name="${p.name}"
+			value="${item[p.itemValue]}"${p.attrs}${checked}> ${item[p.itemLabel]}</label><%
+	}
+	/**
+	 * 1.若复选框不被选中时，服务端将不能接受这个参数，也就得不到选择的状态。
+	 * 2.如果有一个复选框参数前加“_”时，这个不被选中的参数，将被设置为null。
+	 * 3.如果有一个复选框参数前加“!”时，这个不被选中的参数，将被设置为该值，作为默认值。
+	 * 4.详见org.springframework.web.bind.WebDataBinder类的Prefix注释。
+	 */
+	if (isNotBlank(p.name)){
+		if (p.readonly){
+			for(var val in p.value){
+				%><input type="hidden" name="!${p.name}" value="${val}"/><%
+			}
+		}else{
+			%><input type="hidden" name="!${p.name}" value="${isNotBlank(p.label)?'0':''}"/><%
+		}
+	}
+};
+
+%>
+<span id="${p.id}" class="icheck"${p.attrs}>
+${body}</span>
