@@ -120,7 +120,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("单行文本")}', name:'testInput', index:'a.test_input', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/test/testData/form?id='+row.id+'&flag=2" class="btnList" data-title="${text("编辑数据")}">'+(val||row.id)+'</a>';
@@ -216,7 +216,7 @@ $('#dataGrid').dataGrid({
 	ajaxSuccess: function(data){
 //		// 无数据显示，v4.1.7 之前版本
 // 		if (data.count == 0){
-//			$("#dataGrid").parent().append("<div class=\"ml10\">没有符合数据</div>");
+//			$('#dataGrid').parent().append("<div class=\"ml10\">没有符合数据</div>");
 //		}
 //		// 分页控件后面追加附加信息实例
 // 		$('#dataGridPage ul:last').after('<ul class="pagination"><li class="disabled controls">分页附加信息</li></ul>');

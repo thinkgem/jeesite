@@ -53,7 +53,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("站点名称")}', name:'siteName', index:'a.site_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/cms/site/form?siteCode='+row.siteCode+'" class="btnList" data-title="${text("编辑站点")}">'+(val||row.id)+'</a>';

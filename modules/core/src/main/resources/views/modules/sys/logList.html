@@ -102,7 +102,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("日志标题")}', name:'logTitle', index:'a.log_title', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/log/form?id='+row.id+'" class="btnList" data-title="${text("日志详情")}">'+(val||row.id)+'</a>';

@@ -54,7 +54,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("岗位名称")}', name:'postName', index:'a.post_name', width:200, align:"center", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/post/form?postCode='+row.postCode+'" class="btnList" data-title="${text("编辑岗位")}">'+(val||row.id)+'</a>';

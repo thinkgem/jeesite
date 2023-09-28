@@ -14,9 +14,10 @@
 	
 	<modules>
 		<module>core</module>
+		<module>app</module>
 		<module>cas</module>
         <module>cms</module>
-		<module>app</module>
+		<module>static</module>
     </modules>
 	
 	<developers>  

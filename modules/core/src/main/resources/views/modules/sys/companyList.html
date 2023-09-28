@@ -58,7 +58,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("公司名称")}', name:'companyName', index:'a.company_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/company/form?companyCode='+row.companyCode+'" class="btnList" data-title="${text("编辑公司")}">'+(val||row.id)+'</a>';

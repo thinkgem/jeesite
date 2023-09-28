@@ -177,7 +177,7 @@ $('#btnRefresh').click(function(){
 //# // 加载用户列表
 var selectData = "#{isNotBlank(selectData!) ? selectData! : '{}'}",
 	selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center"},
 		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},

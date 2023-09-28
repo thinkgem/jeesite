@@ -59,7 +59,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text('举报来源')}', name:'reportSource', index:'a.report_source', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/cms/report/form?id='+row.id+'" class="btnList" data-title="${text('编辑内容举报表')}">'+(val||row.id)+'</a>';

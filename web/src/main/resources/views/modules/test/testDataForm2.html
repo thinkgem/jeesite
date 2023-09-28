@@ -209,10 +209,10 @@
 </div>//--></script>
 <script>
 //初始化测试数据子表DataGrid对象
-$("#testDataChildDataGrid").dataGrid({
+$('#testDataChildDataGrid').dataGrid({
 
 	data: "#{toJson(testData.testDataChildList)}",
-	datatype: "local", // 设置本地数据
+	datatype: 'local', // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 
 	// 设置数据表格列
@@ -463,7 +463,7 @@ $('#testDataChildDataGrid').on('click', '.uploaderFile', function(){
 		})
 	});
 });
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);

@@ -61,7 +61,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("升级标题")}', name:'upTitle', index:'a.up_title', width:350, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/app/appUpgrade/form?id='+row.id+'" class="btnList" data-title="${text("编辑版本")}">'+(val||row.id)+'</a>';

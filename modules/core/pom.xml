@@ -88,6 +88,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- Core Static -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-static</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- CAS 单点登录模块 -->
 		<dependency>
 			<groupId>com.jeesite</groupId>

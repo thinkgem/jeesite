@@ -6,10 +6,10 @@ var treeselectExists = false;
 for(child in table.childList){
 %>
 \//# // 初始化${child.comments}DataGrid对象
-$("#${@StringUtils.uncap(child.className)}DataGrid").dataGrid({
+$('#${@StringUtils.uncap(child.className)}DataGrid').dataGrid({
 
 	data: \"#{toJson(${className}.${@StringUtils.uncap(child.className)}List)}",
-	datatype: "local", // 设置本地数据
+	datatype: 'local', // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 	
 	\//# // 设置数据表格列

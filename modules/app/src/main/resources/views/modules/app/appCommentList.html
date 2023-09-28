@@ -62,7 +62,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("问题和意见")}', name:'content', index:'a.content', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/app/appComment/form?id='+row.id+'" class="btnList" data-title="${text("编辑意见")}">'+(val||row.id)+'</a>';

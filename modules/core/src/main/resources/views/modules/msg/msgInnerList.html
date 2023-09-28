@@ -64,7 +64,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("标题")}', name:'msgTitle', index:'a.msg_title', width:280, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			if(row.status == Global.STATUS_DRAFT){

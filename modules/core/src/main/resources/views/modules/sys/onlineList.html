@@ -46,7 +46,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("用户名称")}', name:'userName', index:'userName', width:100, align:"center", formatter: function(val, obj, row, act){
 			return '<span title="${text("账号")}：'+(row.userCode||'')+'">'+(val||'${text("游客")}');

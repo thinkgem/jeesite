@@ -51,7 +51,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("区域名称")}', name:'areaName', index:'a.area_name', width:230, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.areaCode+' ) '+'<a href="${ctx}/sys/area/form?areaCode='+row.areaCode+'" class="btnList" data-title="${text("编辑区域")}">'+(val||row.id)+'</a>';

@@ -1,0 +1,12 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<!--[if lte IE 9]><a style="position:absolute;top:0;left:0;z-index:100000;display:block;width:100%;font-size:14px;color:#F00;text-decoration:none;background-color:#faffb3;text-align:center;"
+href="${ctxStatic}/upbw/index.html" target="_blank" onclick="$(this).remove()">您的浏览器版本过低或在兼容模式下，导致打开速度过慢，提升速度您可以切换到极速模式或升级为最新版，点击此处查看详情。</a><![endif]-->
+<!--[if lte IE 8]><script>window.location.href='${ctxStatic}/upbw/index.html';</script><![endif]-->
+<%/*
+
+IE9给予警告提示，IE8及以下禁止使用，调用举例如下：
+
+< % include('/include/upgrade.html'){} // 如果客户浏览器版本过低，则显示浏览器升级提示。 % >
+
+*/%>

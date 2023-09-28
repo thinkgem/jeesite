@@ -84,9 +84,9 @@ function formatter(val, obj, row, act) {
 
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-    searchForm: $("#searchForm"),
+    searchForm: $('#searchForm'),
     data: dataGridData.data,
-    datatype: "local", // 设置本地数据
+    datatype: 'local', // 设置本地数据
     columnModel: [
         {
             header: '大区', name: 'parentArea', align: 'center', width: 150, sortable: false, formatter: formatter,
