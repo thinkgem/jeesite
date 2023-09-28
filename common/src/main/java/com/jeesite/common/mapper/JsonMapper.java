@@ -131,14 +131,14 @@ public class JsonMapper extends ObjectMapper {
 	 */
 	public JsonMapper enabledXssFilter(){
 		this.registerModule(new SimpleModule().addDeserializer(String.class, new JsonDeserializer<String>() {
-				@Override
-				public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-					String text = p.getText();
-					if (text != null) {
-						return EncodeUtils.xssFilter(text);
-					}
-					return null;
+			@Override
+			public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+				String text = p.getText();
+				if (text != null) {
+					return EncodeUtils.xssFilter(text);
 				}
+				return null;
+			}
 		}));
 		return this;
 	}
