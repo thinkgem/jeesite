@@ -1,0 +1,38 @@
+/*!
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ * @version 2019-2-16
+ */
+.login-page {background:#E3E7EC;}
+.login-page .login-box {width:auto;}
+.login-page .login-logo a {color:#666;}
+.login-page .login-logo small {font-size:16px;}
+.login-page .login-box-body {width:360px;margin:auto;padding:28px;background:#fff;box-shadow:0 0 8px #999;border-radius:10px;}
+.login-page .login-box-body .nav-tabs {margin-bottom:25px;}
+.login-page .login-box-body .form-control-feedback {cursor:pointer;pointer-events:auto;}
+.login-page .form-group {margin-top:5px;margin-bottom:23px;}
+.login-page .has-feedback .form-control {height:34px;padding:4px 10px;padding-right:20px;}
+.login-page .input-group-btn .btn {height:34px;background:#efefef;}
+.login-page .strength .strength_meter {height:34px}
+.login-page .strength .strength_meter div {height:32px}
+.login-page .btn {padding:5px 10px 4px 10px;font-size:15px;}
+.login-page .select2-container .select2-selection--single {padding:6px 12px;height:34px;}
+.login-page .select2-container--default.select2-container--focus .select2-selection--single {border-color:#3c8dbc;}
+.login-page .select2-container .select2-selection--single .select2-selection__rendered {margin-top:-4px;}
+.login-page .select2-container .select2-selection--single .select2-selection__arrow {top:1px;}
+.login-page .select2-search--dropdown .select2-search__field {padding:4px;}
+.login-page .select2-results__option {padding:6px 12px;}
+.login-page .login-copyright {text-align:center;margin-top:25px;}
+.login-page .login-copyright, .login-page .login-copyright a {color:#666}
+
+.skin-dark .login-page {background-color:#293146;}
+.skin-dark .login-page .login-box-body {background-color:#1c2333;box-shadow:none;}
+.skin-dark .login-page .login-logo a {color:#a8a4a4;}
+.skin-dark .nav-tabs {border-color:#6c6c6c;}
+.skin-dark .nav-tabs>li.active>a, .skin-dark .nav-tabs>li.active>a:focus, .skin-dark .nav-tabs>li.active>a:hover {background-color:#1c2333;border-color:#6c6c6c;border-bottom-color:#1c2333;color:#d6d6d6;}
+.skin-dark .nav>li>a:hover, .skin-dark .nav>li>a:active, .skin-dark .nav>li>a:focus {background-color:#1c2333;border-color:#4b4b4b;border-bottom-color:#1c2333;color:#ddd;}
+.skin-dark .login-page .input-group-btn .btn {background-color:#313131;}
+.skin-dark .btn-primary {background-color:#054d81!important;border-color:#054d81!important;color:#ddd;}
+.skin-dark a, .skin-dark a:hover, .skin-dark a:active, .skin-dark a:focus, .skin-dark .form-unit {color:#3799cf;}
+.switchSkin, .switchSkin:hover{position:absolute;top:10px;right:20px;font-size:24px;opacity:0.8}

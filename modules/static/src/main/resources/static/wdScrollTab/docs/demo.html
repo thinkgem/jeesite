@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>sample</title>
+<style type="text/css">
+html, body { 
+	width : 100%;
+	height : 100%;
+	padding : 0; 
+	margin : 10px; 
+	overflow : hidden;
+	font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+}
+.jcTab { width:100%; height:100%;}
+</style>
+<link href="../css/TabPanel.css" rel="stylesheet" type="text/css"/>
+<script src="../../jquery/jquery-3.7.0.min.js"></script>
+<script src="../../jquery/jquery-migrate-3.4.0.min.js"></script>
+<script src="../js/TabPanel.js"></script>
+<script>
+var tabpanel;  
+var jcTabs = [
+	'<iframe src="http://jeesite.com" width="100%" height="100%" frameborder="0"></iframe>',
+	'1', '2', '3'
+];
+$(document).ready(function(){  
+    tabpanel = new TabPanel({  
+        renderTo:'tab',  
+        width: 800,  
+        height: 400,  
+        //border:'none',  
+        active : 0,
+        //maxLength : 10,  
+        items : [
+            {id:'toolbarPlugin1',title:'首页',html:jcTabs[0],closable: false},  
+            {id:'toolbarPlugin2',title:'不能关闭',html:jcTabs[1],closable: false},  
+            {id:'toolbarPlugin3',title:'能关闭',html:jcTabs[2],closable: true}
+        ]
+    });  
+}); 
+
+function addTab(){
+	tabpanel.addTab({
+		title: '新页签',
+		html: new Date(),
+		closable: true,
+		disabled: false
+	});
+}
+</script>
+</head>
+<body>
+	<div>
+		<div id="tab"></div>
+		<button onclick="addTab()">新增页签</button>
+	</div>
+</body>
+</html>
