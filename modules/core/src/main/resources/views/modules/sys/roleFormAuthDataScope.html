@@ -1,0 +1,216 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '角色管理', libs: ['validate', 'zTree']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-people"></i> ${text('角色分配数据权限')}
+			</div>
+			<div class="box-tools pull-right hide">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${role}" action="${ctx}/sys/role/saveAuthDataScope" method="post" class="form-horizontal">
+			<div class="box-body"><br/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('角色名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden name="oldRoleName" value="${role.roleName}"/>
+								<#form:input path="roleName" maxlength="100" readonly="true" class="form-control required "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('角色编码')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord"/>
+								<#form:hidden path="roleCode"/>
+								<#form:input path="viewCode" maxlength="64" readonly="true" class="form-control required abc"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="${text('指定数据权限范围类型，多个角色同时指定，之间为或者关系')}">
+								<span class="required ">*</span> ${text('数据范围')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-10">
+								<#form:radio path="dataScope" dictType="sys_role_data_scope" class="form-control required " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="${text('在 addFilter 权限过滤的时候指定适应的业务范围，不指定代表所有生效，如：有的功能看本部门，有的功能看本公司；新的业务范围从字典 sys_role_biz_scope 类型添加。')}">
+								<span class="required hide">*</span> ${text('控制业务范围')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-10">
+								<#form:select path="bizScope" dictType="sys_role_biz_scope" class="form-control " multiple="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">${text('授权数据权限')}</div>
+				<div id="dataScopeTrees"></div>
+				<script id="dataScopeTpl" type="text/template">
+					<div id="dataScope_{{d.key}}" class="pull-left" style="padding:0 15px;min-width:300px;">
+						<div class="box box-solid box-trees">
+							<div class="box-header">
+								<div class="box-title icheck">
+									<label><input type="checkbox" id="checkall_{{d.key}}"
+										class="checkall"/> {{d.label}}</label>
+								</div>
+								<div class="box-tools pull-right" style="top:8px;">
+									<a class="btn btn-box-tool" id="expand_{{d.key}}"
+										value="dataScopeTree_{{d.key}}" >${text('展开')}</a>/<a
+										class="btn btn-box-tool" id="collapse_{{d.key}}"
+										value="dataScopeTree_{{d.key}}" >${text('折叠')}</a>
+								</div>
+							</div>
+							<div class="box-body">
+								<div id="dataScopeTree_{{d.key}}" class="ztree"></div>
+							</div>
+						</div>
+					</div>
+				</script>
+			    <#form:hidden name="roleDataScopeListJson"/>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:role:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$('#dataScope input').on('ifCreated ifChecked', function(){
+	if ($(this).is(':checked')){
+		if ($(this).val() == '2'){ // 2 自定义数据
+			$('#dataScopeTrees').show().prev().show();
+		}else{
+			$('#dataScopeTrees').hide().prev().hide();
+		}
+	}
+}).change();
+$('#inputForm').validate({
+	submitHandler: function(form){
+		//# // 获取数据权限数据
+		var dataScopeData = [];
+		$.each(dataScopeTrees, function(key, dataScopeTree){
+			var treeNodes = dataScopeTree.getCheckedNodes(true);
+			for(var i=0; i<treeNodes.length; i++) {
+				dataScopeData.push({
+					ctrlType: key, ctrlData: treeNodes[i].id
+				});
+			}
+		});
+		$("#roleDataScopeListJson").val(JSON.stringify(dataScopeData));
+		//# // 提交表单数据
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+//# // 加载数据权限树结构
+var setting = {
+	check:{enable:true,nocheckInherit:true},
+	view:{selectedMulti:false,nameIsHTML: true},
+	data:{simpleData:{enable:true},key:{title:"title"}},
+	callback:{
+		beforeClick: function (treeId, treeNode, clickFlag) {
+			var tree = $.fn.zTree.getZTreeObj(treeId);
+			tree.checkNode(treeNode, !treeNode.checked, true, true);
+			return false;
+		},
+		onCheck: function (event, treeId, treeNode){
+			$('#dataScope3').parent().click(); // 选中“自定义权限”单选按钮
+		}
+	}
+},
+moduleCodes = '"#{toJson(moduleCodes)}"';
+dataScopes = "#{toJson(dataScopes)}",
+dataScopeTrees = {};
+for (var i=0; i<dataScopes.length; i++){
+	var dataScope = dataScopes[i];
+	//# // 验证模块是否开启，如果未开启，则跳过
+	if (moduleCodes.indexOf("\""+dataScope.moduleCode+"\"") == -1){
+		continue;
+	}
+	//# // 控制权限 ctrlPermi: 0全部  1拥有权限  2管理权限
+	if (!(dataScope.ctrlPermi == '0'
+			|| dataScope.ctrlPermi == '1')){
+		continue;
+	}
+ 	$('#dataScopeTrees').append(js.template('dataScopeTpl', {
+ 		key: dataScope.ctrlType, label: dataScope["${'ctrlName_'+lang()}"] || dataScope.ctrlName}));
+ 	var ctrlDataUrl = dataScope.ctrlDataUrl || '';
+	$.ajax({
+		type: 'POST',
+		url: "${ctx}" + ctrlDataUrl + (ctrlDataUrl.indexOf("?")!=-1?'&':'?') + "___t=" + new Date().getTime(),
+		data: {ctrlPermi: '2'},
+		dataType: 'json',
+		async: false,
+		error: function(data){
+			js.showErrorMessage(data.responseText);
+		},
+		success: function(data, status, xhr){
+			//# // 初始化树结构
+			var tree = $.fn.zTree.init($("#dataScopeTree_"+dataScope.ctrlType), setting, data);
+			tree.setting.check.chkboxType = dataScope.chkboxType;
+			//# // 默认展开节点（如果级别设置为-1，则：如果有1个根节点，则展开一级节点，否则不展开）
+			$.fn.zTree.expandNodeByLevel(tree, dataScope.expandLevel);
+			//# // 树结构：全选、取消全选
+			$('#checkall_'+dataScope.ctrlType).iCheck({
+		 		checkboxClass:'icheckbox_minimal-grey'
+		 	}).on('ifChecked ifUnchecked', function(){
+	        	var ctrlType = $(this).attr('ctrlType');
+				if(this.checked){
+					dataScopeTrees[ctrlType].checkAllNodes(true);
+				}else{
+					dataScopeTrees[ctrlType].checkAllNodes(false);
+				}
+			}).attr("ctrlType", dataScope.ctrlType);
+			//# // 展开和折叠按钮绑定
+			$('#expand_'+dataScope.ctrlType).click(function(){
+				var ctrlType = $(this).attr('ctrlType');
+				dataScopeTrees[ctrlType].expandAll(true);
+			}).attr("ctrlType", dataScope.ctrlType);
+			$('#collapse_'+dataScope.ctrlType).click(function(){
+				var ctrlType = $(this).attr('ctrlType');
+				dataScopeTrees[ctrlType].expandAll(false);
+			}).attr("ctrlType", dataScope.ctrlType);
+			//# // 将树对象存储到全局数组里
+			dataScopeTrees[dataScope.ctrlType] = tree;
+			//# // 如果没有数据，则隐藏选择框
+			if (data.length == 0) {
+				$("#dataScope_"+dataScope.ctrlType).hide();
+			}
+		}
+	});
+}
+//# // 默认选择节点
+//# for(dataScope in roleDataScopeList){
+try{dataScopeTrees['${dataScope.ctrlType}'].checkNode(dataScopeTrees['${dataScope.ctrlType}']
+	.getNodeByParam("id","${dataScope.ctrlData}"), true, false);}catch(e){}
+//# }
+</script>

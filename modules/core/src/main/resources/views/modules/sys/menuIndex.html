@@ -1,0 +1,88 @@
+<% layout('/layouts/default.html', {title: '菜单管理', libs: ['layout','zTree']}){ %>
+<div class="ui-layout-west">
+	<div class="main-content">
+		<div class="box box-main">
+			<div class="box-header">
+				<div class="box-title">
+					<div class="dropdown-toggle pointer" data-hover="dropdown" data-toggle="dropdown">
+						<span id="sysCode" data-code="${menu.sysCode}">${@DictUtils.getDictLabel('sys_menu_sys_code',
+							menu.sysCode, text('全部菜单'))}</span><b class="caret"></b>
+					</div>
+					<ul class="dropdown-menu">
+						<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
+						<li><a href="javascript:" onclick="$('#sysCode').data('code', '${dict.dictValue}').text('${dict.dictLabel}');loadTree();"> <i
+								class="fa fa-angle-right"></i> ${dict.dictLabel}
+						</a></li>
+						<% } %>
+					</ul>
+				</div>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" id="btnExpand" title="${text('展开')}" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="${text('折叠')}"><i class="fa fa-chevron-down"></i></button>
+					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="${text('刷新')}"><i class="fa fa-refresh"></i></button>
+				</div>
+			</div>
+			<div class="ui-layout-content">
+				<div id="tree" class="ztree"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ui-layout-center">
+	<iframe id="mainFrame" name="mainFrame" class="ui-layout-content p0"
+		src="${ctx}/sys/menu/list"></iframe>
+</div>
+<% } %>
+<script>
+//# // 初始化布局
+$('body').layout({
+	west__initClosed: $(window).width() <= 767, // 是否默认关闭
+	west__size: 200
+});
+//# // 主页框架
+var win = $("#mainFrame")[0].contentWindow;
+//# // 树结构初始化加载
+var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
+	async:{enable:true,autoParam:["id=parentCode"],url:"${ctx}/sys/menu/treeData"},
+	callback:{onClick:function(event, treeId, treeNode){
+		tree.expandNode(treeNode);
+		//win.$('button[type=reset]').click();
+		win.$('#menuCode').val(treeNode.id);
+		win.$('#sysCode').val($('#sysCode').data('code'));
+		win.$('#sysCodeLabel').text($('#sysCode').text());
+		win.page();
+	}}
+}, tree, loadTree = function(){
+	js.ajaxSubmit(setting.async.url+"?___t="+new Date().getTime(), {
+			sysCode:$('#sysCode').data('code'),
+			parentCode:'${parameter.parentCode!}'}, function(data){
+		tree = $.fn.zTree.init($("#tree"), setting, data);
+		var level = -1, nodes;
+		while (++level <= 1) {
+			nodes = tree.getNodesByParam("level", level);
+			if (nodes.length > 10) { break; }
+			for(var i=0; i<nodes.length; i++) {
+	 			tree.expandNode(nodes[i], true, false, false);
+			}
+		}
+	}, null, null, js.text('loading.message'));
+};loadTree();
+//# // 工具栏按钮绑定
+$('#btnExpand').click(function(){
+	tree.expandAll(true);
+	$(this).hide();
+	$('#btnCollapse').show();
+});
+$('#btnCollapse').click(function(){
+	tree.expandAll(false);
+	$(this).hide();
+	$('#btnExpand').show();
+});
+$('#btnRefresh').click(function(){
+	loadTree();
+});
+//# // 调用子页分页函数
+function page(){
+	win.page();
+}
+</script>

@@ -1,0 +1,160 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '模块管理', libs: ['validate']}){ %>
+<% var moduleNames = [
+		'app','bpm','cms','core','filemanager','filepreview','oauth2',
+		'oss-client','sharding','swagger','ureport','visual','weixin'
+], isCustomModule = !@moduleNames.contains(module.moduleCode); %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-grid f14"></i> ${text(module.isNewRecord ? '新增模块' : '编辑模块')}
+			</div>
+			<div class="box-tools pull-right hide">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${module}" action="${ctx}/sys/module/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('模块名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="moduleName" maxlength="100" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('模块编码')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord"/>
+								<#form:input path="moduleCode" maxlength="64" readonly="${!module.isNewRecord}" class="form-control abc2 required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="该模块的状态验证类，如果该类检测不存在，则该模块状态提示 “未安装” ，验证原理：Class.forName(\"com.jeesite.modules.sys.web.LoginController\")">
+								<span class="required hide">*</span> ${text('主类全名')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-10">
+								<#form:input path="mainClassName" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('模块描述')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="description" rows="4" maxlength="500" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('当前版本')}：<i class="fa icon-question hide"></i></label>
+							<% if(isNotBlank(module.upgradeInfo)){ %>
+								<div class="col-sm-6 control-text">
+									${module.currentVersion} &nbsp; ${module.upgradeInfo}
+								</div>
+							<% }else{ %>
+								<div class="col-sm-4">
+									<#form:input path="currentVersion" maxlength="50" class="form-control"/>
+								</div>
+							<% } %>
+						</div>
+					</div>
+				</div>
+				<% if (hasPermi('sys:module:edit') && isCustomModule){ %>
+				<div class="form-unit">${text('生成工程代码')}</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="${text('填写磁盘绝对路径，若不填写，则生成到默认的模块目录下')}">
+								<span class="required hide">*</span> ${text('生成基础路径')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<div class="input-group input-group-sm">
+									<#form:input name="genBaseDir" value="${genBaseDir}" maxlength="2000" class="form-control"/>
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+											${text('生成路径快速选择')} <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu" style="max-height:100px;max-width:700px;${genBaseDirList.~size>2?'overflow:scroll;':''}">
+											<% for(var e in genBaseDirList){ %>
+											<li><a href="javascript:$('#genBaseDir').val('${@StringUtils.replace(e,'\\','\\\\')}')">${e}</a></li>
+											<% } %>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('代码生成模板')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-4">
+								<#form:select path="tplCategory" items="${config.moduleTplCategoryList}" itemLabel="label" itemValue="value" blankOption="true" class="form-control "/>
+							</div>
+							<div class="col-sm-4">
+								<#form:checkbox path="replaceFile" label="${text('是否替换现有文件')}" class="form-control" title="${text('如果生成文件已经存在，选中该选项原文件则被覆盖。')}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:module:edit')){ %>
+							<#form:hidden path="genFlag"/>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"
+									onclick="$('#genFlag').val('1');"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<% if (hasPermi('sys:module:edit') && isCustomModule){ %>
+							<button type="submit" class="btn btn-sm btn-danger" id="btnSubmitAndGen"
+									onclick="$('#genFlag').val('2');"><i class="fa fa-bug"></i> ${text('保存并生成代码')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+			<%/* 乐观锁，前台提交时间戳作为该表单的版本号，后台更新数据前只要调用baseValidator即可验证版本。
+			<input type="hidden" name="lastUpdateDateTime" value="${module.updateDate.time!}" /> */%>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+jQuery.validator.addMethod("abc2",function(value, element) {
+	return this.optional(element) || /^[a-zA-Z]([a-zA-Z0-9_\-])*[a-zA-Z0-9]$/.test(value);
+}, "${text('请输入2个以上字符，字母开头、允许字母数字下划线或减号、字母数字结尾')}");
+$('#inputForm').validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

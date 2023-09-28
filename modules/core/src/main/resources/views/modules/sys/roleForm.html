@@ -1,0 +1,310 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '角色管理', libs: ['validate', 'zTree']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-people"></i> ${text(role.isNewRecord ? '新增角色' : op == 'auth' ? '角色分配功能权限' : '编辑角色')}
+			</div>
+			<div class="box-tools pull-right hide">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${role}" action="${ctx}/sys/role/save" method="post" class="form-horizontal">
+			<#form:hidden name="op" value="${op}"/>
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('角色名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden name="oldRoleName" value="${role.roleName}"/>
+								<#form:input path="roleName" maxlength="100" readonly="${op=='auth'}" class="form-control required "
+									remote="${ctx}/sys/role/checkRoleName?oldRoleName=${role.roleName}"
+									data-msg-remote="${text('角色名称已存在')}"/>
+							</div>
+						</div>
+					</div>
+					<% if(!role.isNewRecord) { %>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('角色编码')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord"/>
+								<#form:hidden path="viewCode"/>
+								<#form:input path="roleCode" maxlength="64" readonly="${!role.isNewRecord}" class="form-control required abc"/>
+							</div>
+						</div>
+					</div>
+					<% } else { %>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('角色代码')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:hidden path="isNewRecord"/>
+								<#form:hidden path="roleCode"/>
+								<#form:input path="viewCode" maxlength="64" readonly="${!role.isNewRecord}" class="form-control required abc"/>
+							</div>
+						</div>
+					</div>
+					<% } %>
+				</div>
+				<% if(op == 'add' || op == 'edit') {%>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('排序号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="roleSort" maxlength="10" class="form-control required digits"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('用户类型')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="userType" dictType="sys_user_type" blankOption="true" class="form-control " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required hide">*</span> ${text('角色分类')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="roleType" dictType="sys_role_type" blankOption="true" class="form-control " />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="只有超管可以维护，多租户情况下系统角色为共享角色">
+								<span class="required ">*</span> ${text('系统角色')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="isSys" dictType="sys_yes_no" class="form-control required " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="仪表盘地址，如果当前多个角色，则根据角色的排序优先级选择。">
+								<span class="required hide">*</span> ${text('桌面地址')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-8">
+								<#form:input path="desktopUrl" maxlength="250" class="form-control " />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="切换身份列表中是否显示该角色">
+								<span class="required ">*</span> ${text('是否可见')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="isShow" dictType="sys_show_hide" class="form-control required " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+				<% if(op == 'add' || op == 'auth') {%>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="${text('展示子系统列表的时候会根据此条件进行过滤，否则展示全部子系统')}">
+								<span class="required hide">*</span> ${text('包含系统')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-10">
+								<#form:select path="sysCodes" dictType="sys_menu_sys_code" multiple="true" class="form-control " />
+							</div>
+						</div>
+					</div>
+				</div>
+				<% } %>
+				<% if(op == 'add' || op == 'edit') {%>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="500" class="form-control "/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<#form:extend collapsed="true" />
+				<% } %>
+				<% if(op == 'add' || op == 'auth') {%>
+				<div class="form-unit">${text('授权功能菜单')}</div>
+				<div id="menuTrees"></div>
+				<script id="menuTpl" type="text/template">
+					<div id="menuDiv_{{d.key}}" class="pull-left" style="padding:0 15px;min-width:300px;">
+						<div class="box box-solid box-trees">
+							<div class="box-header">
+								<div class="box-title icheck">
+									<label><input type="checkbox" id="checkall_{{d.key}}"
+										class="checkall"/> {{d.label}}</label>
+								</div>
+								<div class="box-tools pull-right" style="top:8px;">
+									<a class="btn btn-box-tool" id="expand_{{d.key}}"
+										value="menuTree_{{d.key}}" >${text('展开')}</a>/<a
+										class="btn btn-box-tool" id="collapse_{{d.key}}"
+										value="menuTree_{{d.key}}" >${text('折叠')}</a>
+								</div>
+							</div>
+							<div class="box-body">
+								<div id="menuTree_{{d.key}}" class="ztree"></div>
+							</div>
+						</div>
+					</div>
+				</script>
+			    <#form:hidden name="roleMenuListJson"/>
+			    <% } %>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:role:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+$('#inputForm').validate({
+	submitHandler: function(form){
+		//# if(op == 'add' || op == 'auth') {
+		//# // 获取数据权限数据
+		var menuData = [];
+		$.each(menuTrees, function(key, menuTree){
+			if ($('#'+menuTree.setting.treeId).is(':visible')) {
+				var treeNodes = menuTree.getCheckedNodes(true);
+				for(var i=0; i<treeNodes.length; i++) {
+					menuData.push(treeNodes[i].id);
+				}
+			}
+		});
+		$("#roleMenuListJson").val(JSON.stringify(menuData));
+		//# }
+		//# // 提交表单数据
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+//# if(op == 'add' || op == 'auth') {
+//# // 加载数据权限树结构
+var setting = {
+	check:{enable:true,nocheckInherit:true,chkboxType:{"Y":"ps","N":"ps"}},
+	view:{selectedMulti:false,nameIsHTML: true},
+	data:{simpleData:{enable:true},key:{title:"title"}},
+	callback:{
+		beforeClick: function (treeId, treeNode, clickFlag) {
+			var tree = $.fn.zTree.getZTreeObj(treeId);
+			tree.checkNode(treeNode, !treeNode.checked, true, true);
+			return false;
+		},
+		onCheck: function (event, treeId, treeNode){ }
+	}
+},
+sysCodeDict = "#{@DictUtils.getDictListJson('sys_menu_sys_code')}",
+menuTrees = {};
+$.ajax({
+	type: 'POST',
+	url: "${ctx}/sys/role/menuTreeData?___t=" + new Date().getTime(),
+	data: {roleCode: '${role.roleCode}'},
+	dataType: 'json',
+	async: false,
+	error: function(data){
+		js.showErrorMessage(data.responseText);
+	},
+	success: function(data, status, xhr){
+		for (var sysCode in data.menuMap){
+		 	var menuMap = data.menuMap[sysCode];
+		 	$('#menuTrees').append(js.template('menuTpl', {key: sysCode, 
+		 		label: js.getDictLabel(sysCodeDict, sysCode, '未知', true)}));
+			//# // 初始化树结构
+			var tree = $.fn.zTree.init($("#menuTree_"+sysCode), setting, menuMap);
+			var level = -1, nodes;
+			while (++level <= 1) {
+				nodes = tree.getNodesByParam("level", level);
+				if (nodes.length > 10) { break; }
+				for(var i=0; i<nodes.length; i++) {
+					tree.expandNode(nodes[i], true, false, false);
+				}
+			}
+			//# // 树结构：全选、取消全选
+			$('#checkall_'+sysCode).iCheck({
+	        	checkboxClass:'icheckbox_minimal-grey'
+   			}).on('ifChecked ifUnchecked', function(){
+				var sysCode = $(this).attr('sysCode');
+				if(this.checked){
+					menuTrees[sysCode].checkAllNodes(true);
+				}else{
+					menuTrees[sysCode].checkAllNodes(false);
+				}
+			}).attr("sysCode", sysCode);
+			//# // 展开和折叠按钮绑定
+			$('#expand_'+sysCode).click(function(){
+				var sysCode = $(this).attr('sysCode');
+				menuTrees[sysCode].expandAll(true);
+			}).attr("sysCode", sysCode);
+			$('#collapse_'+sysCode).click(function(){
+				var sysCode = $(this).attr('sysCode');
+				menuTrees[sysCode].expandAll(false);
+			}).attr("sysCode", sysCode);
+			//# // 将树对象存储到全局数组里
+			menuTrees[sysCode] = tree;
+			//# // 如果没有数据，则隐藏选择框
+			if (data.length === 0) {
+				$("#menuDiv_"+sysCode).hide();
+			}
+		}
+		//# // 默认选择节点
+		for (var idx in data.roleMenuList || []){
+			var roleMenu = data.roleMenuList[idx], sysCode = roleMenu.sysCode;
+			if (menuTrees[sysCode]) {
+				var node = menuTrees[sysCode].getNodeByParam("id", roleMenu.menuCode);
+				try{menuTrees[sysCode].checkNode(node, true, false);}catch(e){}
+			}
+		}
+		$('#sysCodes').on('change', function(){
+			var sysCodes = $(this).val();
+			if (sysCodes.length === 0) {
+				$('#menuTrees > div').show();
+				return;
+			}
+			$.each(sysCodeDict, function(idx, val){
+				var code = val['dictValue'], isShow = false;
+				for (var i in sysCodes) {
+					if (sysCodes[i] === code) {
+						isShow = true;
+						break;
+					}
+				}
+				$('#menuDiv_' + code).toggle(isShow);
+			});
+		}).change();
+	}
+});
+//# }
+</script>

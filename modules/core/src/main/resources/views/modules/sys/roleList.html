@@ -1,0 +1,124 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '角色管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-people"></i> ${text('角色管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('sys:role:edit')){ %>
+					<a href="${ctx}/sys/role/form?op=add" class="btn btn-default btnTool" title="${text('新增角色')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${role}" action="${ctx}/sys/role/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<#form:hidden name="ctrlPermi" value="${ctrlPermi}"/>
+				<div class="form-group">
+					<label class="control-label">${text('角色名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="roleName_like" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('角色编码')}：</label>
+					<div class="control-inline">
+						<#form:input path="roleCode_like" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('用户类型')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="userType" dictType="sys_user_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('系统角色')}：</label>
+					<div class="control-inline width-60">
+						<#form:select path="isSys" dictType="sys_yes_no" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<!-- <div class="form-group">
+					<label class="control-label">${text('角色分类')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="roleType" dictType="sys_role_type" blankOption="true" class="form-control"/>
+					</div>
+				</div> -->
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-60">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick">${text('重置')}</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+//# // 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $('#searchForm'),
+	columnModel: [
+		{header:'${text("角色名称")}', name:'roleName', index:'a.role_name', width:150, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" data-title="${text("编辑角色")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("角色编码")}', name:'roleCode', index:'a.role_code', width:150, align:"center"},
+		{header:'${text("排序号")}', name:'roleSort', index:'a.role_sort', width:80, align:"center"},
+// 		{header:'${text("角色分类")}', name:'roleType', index:'a.role_type', width:100, align:"center", formatter: function(val, obj, row, act){
+// 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_role_type')}", val, '未知', true);
+// 		}},
+		{header:'${text("用户类型")}', name:'userType', index:'a.user_type', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_user_type')}", val, '<font color=#aaa>${text("未设置")}</font>', true);
+		}},
+		{header:'${text("系统角色")}', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_yes_no')}", val, '未知', true);
+		}},
+		{header:'${text("数据范围")}', name:'dataScope', index:'a.data_scope', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_role_data_scope')}", val, '${text("未设置")}', true);
+		}},
+		{header:'${text("业务范围")}', name:'bizScope', index:'a.biz_scope', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_role_biz_scope')}", val, '${text("未设置")}', true);
+		}},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:130, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:160, align:"left"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
+		}},
+		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
+			var actions = [];
+			//# if(hasPermi('sys:role:edit')){
+				actions.push('<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" title="${text("编辑角色")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/sys/role/disable?roleCode='+row.roleCode+'" class="btnList" title="${text("停用角色")}" data-confirm="${text("确认要停用该角色吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/sys/role/enable?roleCode='+row.roleCode+'" class="btnList" title="${text("启用角色")}" data-confirm="${text("确认要启用该角色吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/sys/role/delete?roleCode='+row.roleCode+'" class="btnList" title="${text("删除角色")}" data-confirm="${text("确认要删除该角色吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="javascript:" class="btnMore" title="${text("更多操作")}"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+				actions.push('<div class="moreItems">');
+				actions.push('<a href="${ctx}/sys/role/form?roleCode='+row.id+'&op=auth" class="btn btn-default btn-xs btnList" title="${text("角色分配功能权限")}"><i class="fa fa-check-square-o"></i> ${text("授权菜单")}</a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/role/formAuthDataScope?roleCode='+row.id+'" class="btn btn-default btn-xs btnList" title="${text("角色分配数据权限")}"><i class="fa fa-check-circle-o"></i> ${text("数据权限")}</a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/role/formAuthUser?roleCode='+row.id+'" class="btn btn-default btn-xs btnList" title="${text("角色分配用户")}"><i class="fa fa-user"></i> ${text("分配用户")}</a>&nbsp;');
+				actions.push('</div>');			
+			//# }
+			return actions.join('');
+		}}
+	],
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

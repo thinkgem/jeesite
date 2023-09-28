@@ -1,0 +1,186 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '安全审计', libs: ['layout', 'zTree', 'dataGrid']}){ %>
+<div class="main-content">
+	<div class="nav-tabs-custom nav-main">
+		<ul class="nav nav-tabs">
+			<li><a href="${ctx}/sys/audit/list"><i class="fa icon-energy"></i> ${text('账号密码审计')}</a></li>
+			<li><a  href="${ctx}/sys/audit/userList"><i class="fa icon-book-open"></i> ${text('菜单权限审计')}</a></li>
+			<li class="active"><a href="${ctx}/sys/audit/menuList"><i class="fa icon-user"></i> ${text('用户权限审计')}</a></li>
+		</ul>
+		<div id="layout">
+			<div class="ui-layout-east">
+				<div class="main-content">
+					<div class="box box-main">
+						<div class="box-header">
+							<div class="box-title">
+								${text('菜单权限')}
+							</div>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" id="btnRefresh" title="${text('刷新')}"><i class="fa fa-refresh"></i></button>
+							</div>
+						</div>
+						<div class="ui-layout-content">
+							<div id="menuTrees"></div>
+							<script id="menuTpl" type="text/template">
+								<div class="pull-left" style="width:100%;overflow:hidden">
+									<div class="box box-solid box-trees">
+										<div class="box-header">
+											<div class="box-title">
+												<label>{{d.label}}</label>
+											</div>
+											<div class="box-tools pull-right" style="top:8px;">
+												<a class="btn btn-box-tool" id="expand_{{d.key}}"
+													value="menuTree_{{d.key}}" >${text('展开')}</a>/<a
+													class="btn btn-box-tool" id="collapse_{{d.key}}"
+													value="menuTree_{{d.key}}" >${text('折叠')}</a>
+											</div>
+										</div>
+										<div class="box-body">
+											<div id="menuTree_{{d.key}}" class="ztree"></div>
+										</div>
+									</div>
+								</div>
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui-layout-center">
+				<div class="ui-layout-content box-body">
+					<#form:form id="searchForm" model="${audit}" action="${ctx}/sys/audit/userListData" method="post" class="form-inline"
+							data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+						<#form:hidden name="isAll" value="true"/>
+						<div class="form-group">
+							<label class="control-label">${text('账号')}：</label>
+							<div class="control-inline">
+								<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">${text('昵称')}：</label>
+							<div class="control-inline">
+								<#form:input path="userName" maxlength="100" class="form-control width-90"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">${text('机构')}：</label>
+							<div class="control-inline width-90">
+								<#form:treeselect id="office" title="${text('机构选择')}"
+										path="officeCode" labelPath="officeName"
+										url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+							<button type="reset" class="btn btn-default btn-sm isQuick">${text('重置')}</button>
+						</div>
+					</#form:form>
+					<table id="dataGrid"></table>
+					<div id="dataGridPage"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+//# // 初始化大小
+$(window).resize(function(){
+	$('#layout').height($(window).height() - $('.nav-tabs').height() - 6);
+}).resize();
+//# // 初始化布局
+$('#layout').layout({
+	east__size: '40%',
+	onresize_end: function(){
+		$('#dataGrid').dataGrid('resize');
+	}
+});
+//# // 树结构初始化加载
+var setting = {view:{selectedMulti:false,nameIsHTML: true},data:{key:{title:"title"},simpleData:{enable:true}},
+	callback:{onClick:function(event, treeId, treeNode){
+		var tree = $.fn.zTree.getZTreeObj(treeId);
+		tree.expandNode(treeNode);
+		$('#menuCode').val(treeNode.id);
+		page();
+	}}
+}, 
+sysCodeDict = "#{@DictUtils.getDictListJson('sys_menu_sys_code')}",
+userCode = '', menuTrees = {},
+loadTree = function(){
+	$('#menuTrees').empty();
+	js.ajaxSubmit("${ctx}/sys/audit/menuTreeData?___t=" + new Date().getTime(), 
+			{userCode: userCode}, function(data){
+		for (var sysCode in data.menuMap){
+		 	var menuMap = data.menuMap[sysCode];
+		 	$('#menuTrees').append(js.template('menuTpl', {key: sysCode, 
+		 		label: js.getDictLabel(sysCodeDict, sysCode, '未知', true)}));
+			//# // 初始化树结构
+			var tree = $.fn.zTree.init($("#menuTree_"+sysCode), setting, menuMap);
+			var level = -1, nodes;
+			while (++level <= 1) {
+				nodes = tree.getNodesByParam("level", level);
+				if (nodes.length > 10) { break; }
+				for(var i=0; i<nodes.length; i++) {
+					tree.expandNode(nodes[i], true, false, false);
+				}
+			}
+			//# // 展开和折叠按钮绑定
+			$('#expand_'+sysCode).click(function(){
+				var sysCode = $(this).attr('sysCode');
+				menuTrees[sysCode].expandAll(true);
+			}).attr("sysCode", sysCode);
+			$('#collapse_'+sysCode).click(function(){
+				var sysCode = $(this).attr('sysCode');
+				menuTrees[sysCode].expandAll(false);
+			}).attr("sysCode", sysCode);
+			//# // 将树对象存储到全局数组里
+			menuTrees[sysCode] = tree;
+		}
+	}, null, null, js.text('loading.message'));
+};loadTree();
+$('#btnRefresh').click(function(){
+	loadTree();
+});
+//# // 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $('#searchForm'),
+	autoGridHeight: function(){
+		return $('.ui-layout-content').height()
+			- $('#searchForm').height() - $('#dataGridPage').height() - 16;
+	},
+	columnModel: [ 
+		{header:'${text("登录账号")}', name:'loginCode', index:'u.login_code', width:80, align:"center"},
+		{header:'${text("用户昵称")}', name:'userName', index:'u.user_name', width:80, align:"center"},
+		{header:'${text("归属机构")}', name:'officeName', index:'o.office_name', width:90, align:"center"},
+		{header:'${text("创建时间")}', name:'createDate', index:'u.create_date', width:100, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'u.update_date', width:100, align:"center"},
+	    {header:'${text("状态")}', name:'status', index:'u.status', width:50, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
+		}},
+		{header:'${text("类型")}', name:'userType', index:'u.user_type', width:50, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_user_type')}", val, '无', true);
+		}},
+	],
+	onSelectRow: function(id, isSelect, event){
+		userCode = id;
+		loadTree();
+	},
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+$('#btnAuditType button').click(function(){
+	$('#btnAuditType button').removeClass('active');
+	$('#auditType').val($(this).addClass('active').data('type'));
+	$('#searchForm').submit();
+});
+$('#btnExport').click(function(){
+	js.ajaxSubmitForm($('#searchForm'), {
+		url: '${ctx}/sys/audit/exportData',
+		clearParams: 'pageNo,pageSize',
+		downloadFile: true
+	});
+});
+</script>

@@ -1,0 +1,95 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '国际化管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-globe"></i> ${text('国际化管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('sys:lang:edit')){ %>
+					<a href="${ctx}/sys/lang/form" class="btn btn-default btnTool" title="${text('新增语言')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="#" class="btn btn-default" id="btnUpdateCache" title="${text('清理国际化缓存')}"><i class="fa fa-refresh"></i> ${text('清理缓存')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${lang}" action="${ctx}/sys/lang/listData" method="post" class="form-inline "
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('语言编码')}：</label>
+					<div class="control-inline">
+						<#form:input path="langCode_like" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('语言译文')}：</label>
+					<div class="control-inline">
+						<#form:input path="langText" maxlength="500" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('语言类型')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="langType" dictType="sys_lang_type" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('归属模块')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="module.moduleCode" items="${moduleList}" itemLabel="moduleName" 
+							itemValue="moduleCode" class="form-control" blankOption="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick">${text('重置')}</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+//# // 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $('#searchForm'),
+	columnModel: [
+		{header:'${text("语言编码")}', name:'langCode', index:'a.lang_code', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" data-title="${text("编辑语言")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("语言译文")}', name:'langText', index:'a.lang_text', width:200, align:"left"},
+		{header:'${text("语言类型")}', name:'langType', index:'a.lang_type', width:200, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_lang_type')}", val, '未知', true);
+		}},
+		{header:'${text("归属模块")}', name:'module.moduleName', index:'a.module_code', width:200, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
+			var actions = [];
+			//# if(hasPermi('sys:lang:edit')){
+				actions.push('<a href="${ctx}/sys/lang/form?id='+row.id+'" class="btnList" title="${text("编辑语言")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/lang/delete?id='+row.id+'" class="btnList" title="${text("删除语言")}" data-confirm="${text("确认要删除该语言吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			//# }
+			return actions.join('');
+		}}
+	],
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+
+//更新国际化缓存，包含语言属性文件。
+$("#btnUpdateCache").click(function(){ 
+	js.ajaxSubmit("${ctx}/sys/lang/clearCache", function(data){
+		js.showMessage(data.message);
+	});
+	return false;
+});
+</script>
