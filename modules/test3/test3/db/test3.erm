@@ -23,8 +23,8 @@
 		<g>255</g>
 		<b>255</b>
 	</color>
-	<font_name>Segoe UI</font_name>
-	<font_size>9</font_size>
+	<font_name>Arial</font_name>
+	<font_size>14</font_size>
 	<settings>
 		<database>StandardSQL</database>
 		<capital>false</capital>
@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path>db\test3.sql</output_path>
+				<output_path>db/test3.sql</output_path>
 				<encoding>UTF-8</encoding>
 				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>false</is_open_after_saved>
@@ -73,7 +73,7 @@
 			</export_ddl_setting>
 			<export_excel_setting>
 				<category_id>null</category_id>
-				<output_path>db\test3.xls</output_path>
+				<output_path>db/test3.xls</output_path>
 				<template></template>
 				<template_path></template_path>
 				<used_default_template_lang>en</used_default_template_lang>
@@ -89,7 +89,7 @@
 				<is_open_after_saved>true</is_open_after_saved>
 			</export_html_setting>
 			<export_image_setting>
-				<output_file_path>db\test3.png</output_file_path>
+				<output_file_path>db/test3.png</output_file_path>
 				<category_dir_path></category_dir_path>
 				<with_category_image>true</with_category_image>
 				<is_open_after_saved>true</is_open_after_saved>
@@ -122,8 +122,8 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>Microsoft YaHei UI</font_name>
-				<font_size>9</font_size>
+				<font_name>Arial</font_name>
+				<font_size>14</font_size>
 			<x>50</x>
 			<y>50</y>
 			<color>
@@ -1023,8 +1023,8 @@
 			<id>e553474c37270813e70025e433a4cf8a64653e13</id>
 			<height>438</height>
 			<width>387</width>
-				<font_name>Segoe UI</font_name>
-				<font_size>9</font_size>
+				<font_name>Arial</font_name>
+				<font_size>14</font_size>
 			<x>864</x>
 			<y>36</y>
 			<color>
@@ -1122,8 +1122,8 @@
 			<id>5435ef11ea53f170fe3491b199c113e47932e175</id>
 			<height>401</height>
 			<width>320</width>
-				<font_name>Segoe UI</font_name>
-				<font_size>9</font_size>
+				<font_name>Arial</font_name>
+				<font_size>14</font_size>
 			<x>36</x>
 			<y>36</y>
 			<color>
@@ -1583,8 +1583,8 @@
 			<id>5a836e654b7b7d19f102e87336fefa079d98a2e6</id>
 			<height>438</height>
 			<width>346</width>
-				<font_name>Segoe UI</font_name>
-				<font_size>9</font_size>
+				<font_name>Arial</font_name>
+				<font_size>14</font_size>
 			<x>468</x>
 			<y>36</y>
 			<color>
