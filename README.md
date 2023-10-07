@@ -34,7 +34,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
 * 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
-* 分布式事务框架：Seata 1.5 (可选组件)
+* 分布式事务框架：Seata 1.6 (可选组件)
 * 分布式链路追踪：Zipkin / SkyWalking (可选组件)
 * 工作流引擎框架：Flowable 6.6 (可选组件)
 
@@ -98,8 +98,8 @@ JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src �
 
 **jar 方式：**
 
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.1.1/nacos-server-2.1.1.zip>
-2. 解压 `nacos-server-2.1.1.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2.2.3.zip>
+2. 解压 `nacos-server-2.2.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **src 方式：**
 
