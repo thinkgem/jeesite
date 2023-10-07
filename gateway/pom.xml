@@ -51,6 +51,15 @@
 			<artifactId>grpc-netty-shaded</artifactId>
 			<version>${grpc.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-resolver-dns-native-macos</artifactId>
+			<classifier>osx-aarch_64</classifier>
+		</dependency>
 		
 		<!-- 流量防卫兵 -->
 		<dependency>
