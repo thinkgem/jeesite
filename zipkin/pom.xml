@@ -5,9 +5,9 @@
 
     <parent>
         <groupId>com.jeesite</groupId>
-        <artifactId>jeesite-parent</artifactId>
+        <artifactId>jeesite-cloud-parent-javax</artifactId>
         <version>5.5.1.springboot3-SNAPSHOT</version>
-		<relativePath>../../jeesite/parent/pom.xml</relativePath>
+        <relativePath>../parent/javax/pom.xml</relativePath>
     </parent>
 
     <artifactId>jeesite-cloud-zipkin</artifactId>

@@ -9,7 +9,7 @@
 		<version>5.5.1.springboot3-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	
+
 	<artifactId>jeesite-cloud-eureka</artifactId>
 	<packaging>war</packaging>
 	

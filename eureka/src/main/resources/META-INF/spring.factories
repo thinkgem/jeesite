@@ -1,3 +1,0 @@
-# PropertySource Loaders
-org.springframework.boot.env.PropertySourceLoader=\
-com.jeesite.common.io.PropertyLoader
