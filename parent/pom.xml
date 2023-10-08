@@ -21,13 +21,12 @@
 	<properties>
 		
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2022.0.3</spring-cloud.version>
-		<spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+		<spring-cloud.version>2022.0.4</spring-cloud.version>
+		<spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
 		<nacos.version>2.2.4.1</nacos.version>
 		<seata.version>1.6.1</seata.version>
-		<eureka.version>1.10.18</eureka.version>
 		<xstream.version>1.4.20</xstream.version>
-		
+
 	</properties>
 	
 	<dependencyManagement>
@@ -80,11 +79,6 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.netflix.eureka</groupId>
-				<artifactId>eureka-client</artifactId>
-				<version>${eureka.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.thoughtworks.xstream</groupId>

@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-     <parent>
-         <groupId>com.jeesite</groupId>
-		 <artifactId>jeesite-cloud-parent-javax</artifactId>
-		 <version>5.5.1.springboot3-SNAPSHOT</version>
-		 <relativePath>../parent/javax/pom.xml</relativePath>
-     </parent>
+	<parent>
+		<groupId>com.jeesite</groupId>
+		<artifactId>jeesite-cloud-parent-javax</artifactId>
+		<version>5.5.1.springboot3-SNAPSHOT</version>
+		<relativePath>../parent/javax/pom.xml</relativePath>
+	</parent>
 
     <artifactId>jeesite-cloud-nacos</artifactId>
     <packaging>war</packaging>
