@@ -5,7 +5,7 @@
 	<name>Dockerfile</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/bin/docker</filePath>
 	<fileName>Dockerfile</fileName>
-	<content><![CDATA[FROM openjdk:8-slim
+	<content><![CDATA[FROM openjdk:17-slim
 LABEL maintainer="ThinkGem@163.com"
 ENV TZ "Asia/Shanghai"
 ENV LANG C.UTF-8
