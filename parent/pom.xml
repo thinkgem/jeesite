@@ -76,8 +76,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- docker setting -->
-		<docker.dockerHost>http://192.168.56.102:2375</docker.dockerHost>
-		<docker.imageName>thinkgem/${project.artifactId}:5.0</docker.imageName>
+		<docker.dockerHost>http://centos9:2375</docker.dockerHost>
+		<docker.imageName>thinkgem/${project.artifactId}:5.5</docker.imageName>
 		<docker.run.port>8980:8980</docker.run.port>
 
 	</properties>

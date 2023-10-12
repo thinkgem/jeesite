@@ -126,13 +126,14 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 容器运行
 
 - 拉取 Docker 镜像（演示使用，JeeSite版本较久）：
-```
+```sh
 docker pull thinkgem/jeesite-web
 ```
 - 启动脚本：
-```
-docker run -d -p 8980:8980 --name jeesite-web -v /data:/data \
-thinkgem/jeesite-web && docker logs -f jeesite-web
+```sh
+docker run --name jeesite-web \
+    -p 8980:8980 --privileged -d --restart unless-stopped \
+    -v ~:/data thinkgem/jeesite-web && docker logs -f jeesite-web
 ```
 - 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
 - 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
