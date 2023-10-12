@@ -1,4 +1,4 @@
-FROM openjdk:8-slim
+FROM openjdk:17-slim
 LABEL maintainer="ThinkGem@163.com"
 ENV TZ "Asia/Shanghai"
 ENV LANG C.UTF-8
