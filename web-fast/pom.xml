@@ -25,9 +25,9 @@
 		<start-class>com.jeesite.modules.FastApplication</start-class>
 
 		<!-- docker setting -->
-        <docker.dockerHost>http://docker.local:2375</docker.dockerHost>
-        <docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>
-        <docker.run.port>8980:8980</docker.run.port>
+		<docker.dockerHost>http://docker.local:2375</docker.dockerHost>
+		<docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>
+		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 
