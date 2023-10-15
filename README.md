@@ -8,7 +8,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
-* 源码仓库地址：<https://gitee.com/thinkgem/jeesite4-cloud>
+* 源码仓库地址：<https://gitee.com/thinkgem/jeesite-cloud>
 * 分离版前端源码仓库：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 优势（只写别人没有的）
@@ -79,7 +79,7 @@ Redis 是一个缓存数据库，主要用来集中式管理共享会话和系�
 
 由于 Windows 版本的 Redis 安装不太方便，所以我们提供了该版本的安装文件和安装脚本。
 
-下载地址：<https://gitee.com/thinkgem/jeesite4-cloud/attach_files> 找到 `Redis-x64-4.0.2.2.zip` 下载文件。
+下载地址：<https://gitee.com/thinkgem/jeesite-cloud/attach_files> 找到 `Redis-x64-4.0.2.2.zip` 下载文件。
 
 解压  `Redis-x64-4.0.2.2.zip` 压缩包，运行 `service-install.bat` 安装 Windows 系统服务。
 
@@ -309,15 +309,29 @@ spring:
 # 技术交流方式
 
 * QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite4-cloud/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite4-cloud>
-* GitHub：<https://github.com/thinkgem/jeesite4-cloud>
+* 问题反馈：<https://gitee.com/thinkgem/jeesite-cloud/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite-cloud>
+* GitHub：<https://github.com/thinkgem/jeesite-cloud>
 * 作者博客：<https://my.oschina.net/thinkgem>
 * 官方网站：<http://jeesite.com>
 * 官方论坛：<http://jeesite.net>
 * 微信公众号：
 
 ![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0120/235836_3018847b_6732.jpeg "JeeSite4微信公众号")
+
+## 生态系统
+
+* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
+* Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
+* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
+* 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
+* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
+* PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
+* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
+* JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
+* MybatisPlus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
 
 # Git 全局设置技巧
 
