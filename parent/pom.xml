@@ -76,7 +76,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- docker setting -->
-		<docker.dockerHost>http://centos9:2375</docker.dockerHost>
+		<docker.dockerHost>http://docker.local:2375</docker.dockerHost>
 		<docker.imageName>thinkgem/${project.artifactId}:5.5</docker.imageName>
 		<docker.run.port>8980:8980</docker.run.port>
 
@@ -354,11 +354,11 @@
 					</configuration>
 				</plugin>
 
-				<!-- Docker 插件 https://github.com/fabric8io/docker-maven-plugin -->
+				<!-- Docker 插件 https://dmp.fabric8.io - https://github.com/fabric8io/docker-maven-plugin -->
 				<plugin>
 					<groupId>io.fabric8</groupId>
 					<artifactId>docker-maven-plugin</artifactId>
-					<version>0.39.1</version>
+					<version>0.43.4</version>
 					<configuration>
 						<dockerHost>${docker.dockerHost}</dockerHost>
 						<verbose>true</verbose>

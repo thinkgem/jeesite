@@ -85,11 +85,11 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ## 生态系统
 
-* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite4-cloud>
+* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
 * Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
-* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite4-jflow>
+* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
 * 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
-* 手机端移动端：<https://gitee.com/thinkgem/jeesite4-uniapp>
+* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
 * PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
 * Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
 * JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>

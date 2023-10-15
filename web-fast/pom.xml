@@ -25,7 +25,7 @@
 		<start-class>com.jeesite.modules.FastApplication</start-class>
 		
 		<!-- docker setting -->
-        <docker.dockerHost>http://centos9:2375</docker.dockerHost>
+		<docker.dockerHost>http://docker.local:2375</docker.dockerHost>
         <docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>
         <docker.run.port>8980:8980</docker.run.port>
 		
@@ -122,7 +122,43 @@
 					<wtpContextName>${finalName}</wtpContextName>
 				</configuration>
 			</plugin>
-			
+
+			<!-- Docker 插件 https://dmp.fabric8.io - https://github.com/fabric8io/docker-maven-plugin -->
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.43.4</version>
+				<configuration>
+					<dockerHost>${docker.dockerHost}</dockerHost>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<name>${docker.imageName}</name>
+							<alias>${project.artifactId}</alias>
+							<build>
+								<dockerFile>${project.basedir}/bin/docker/Dockerfile</dockerFile>
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<buildx>
+									<platforms>
+										<platform>linux/amd64</platform>
+										<platform>linux/arm64</platform>
+									</platforms>
+								</buildx>
+							</build>
+							<run>
+								<ports>
+									<port>${docker.run.port}</port>
+								</ports>
+								<network>
+									<mode>host</mode>
+								</network>
+							</run>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	
