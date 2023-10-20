@@ -65,7 +65,8 @@
 <style lang="less">
   .table-settings {
     & > * {
-      margin-right: 12px;
+      margin-left: 4px;
+      margin-right: 8px;
       margin-top: 6px;
     }
 
