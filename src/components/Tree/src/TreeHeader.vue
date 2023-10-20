@@ -196,6 +196,7 @@
     .jeesite-basic-title {
       font-size: 16px;
       line-height: 15px;
+      font-weight: normal;
     }
 
     .anticon {

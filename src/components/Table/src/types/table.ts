@@ -187,6 +187,8 @@ export interface BasicTableProps<T = any> {
   defSort?: Recordable;
   // 使用搜索表单
   useSearchForm?: boolean;
+  // 是否显示搜索表单
+  showSearchForm?: boolean;
   // 表单配置
   formConfig?: Partial<FormProps>;
   // 列配置

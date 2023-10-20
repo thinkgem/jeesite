@@ -103,7 +103,7 @@
           style: {
             paddingLeft: '20px',
             paddingRight: '22px',
-            // textAlign: showAdvancedButton && !hideAdvanceBtn ? 'right' : 'left',
+            // showAdvancedButton && !hideAdvanceBtn ? 'right' : 'left',
             marginLeft: showAdvancedButton && !hideAdvanceBtn ? 'auto' : 'inherit',
           },
           ...baseColProps,

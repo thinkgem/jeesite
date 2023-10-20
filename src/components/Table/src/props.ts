@@ -79,6 +79,8 @@ export const basicProps = {
   },
   // 使用搜索表单
   useSearchForm: propTypes.bool,
+  // 是否显示搜索表单
+  showSearchForm: propTypes.bool.def(true),
   // 表单配置
   formConfig: {
     type: Object as PropType<Partial<FormProps>>,

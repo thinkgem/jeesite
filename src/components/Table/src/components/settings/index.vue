@@ -63,6 +63,12 @@
   });
 </script>
 <style lang="less">
+  html[data-theme='dark'] {
+    .table-settings {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
   .table-settings {
     & > * {
       margin-left: 4px;

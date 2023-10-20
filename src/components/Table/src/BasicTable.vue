@@ -5,9 +5,30 @@
 -->
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
+    <TableHeader v-bind="getHeaderProps">
+      <template v-if="getBindValues.useSearchForm || $slots.toolbar" #toolbar>
+        <a-button v-if="getBindValues.useSearchForm && !formShow" @click="handleFormShowToggle()">
+          <Icon icon="ant-design:filter-twotone" /> {{ t('common.queryText') }}
+        </a-button>
+        <a-button v-if="getBindValues.useSearchForm && formShow" @click="handleFormShowToggle()">
+          <Icon icon="ant-design:filter-outlined" /> {{ t('common.hideText') }}
+        </a-button>
+        <slot v-if="$slots.toolbar" name="toolbar"></slot>
+      </template>
+      <template v-if="$slots.tableTitle" #tableTitle>
+        <slot name="tableTitle"></slot>
+      </template>
+      <template v-if="$slots.headerTop" #headerTop>
+        <slot name="headerTop"></slot>
+      </template>
+      <template v-if="$slots.tableTop" #tableTop>
+        <slot name="tableTop"></slot>
+      </template>
+    </TableHeader>
     <BasicForm
       ref="formRef"
       submitOnReset
+      v-show="formShow"
       v-bind="getFormProps"
       v-if="getBindValues.useSearchForm"
       :tableAction="tableAction"
@@ -76,9 +97,12 @@
   import expandIcon from './components/ExpandIcon';
   import HeaderCell from './components/HeaderCell.vue';
   import TableAction from './components/TableAction.vue';
+  import TableHeader from './components/TableHeader.vue';
   import { InnerHandlers } from './types/table';
   import { DictLabel } from '/@/components/Dict';
+  import { Icon } from '/@/components/Icon';
 
+  import { useI18n } from '/@/hooks/web/useI18n';
   import { usePagination } from './hooks/usePagination';
   import { useColumns } from './hooks/useColumns';
   import { useDataSource } from './hooks/useDataSource';
@@ -88,7 +112,7 @@
   import { useTableScrollTo } from './hooks/useScrollTo';
   import { useCustomRow } from './hooks/useCustomRow';
   import { useTableStyle } from './hooks/useTableStyle';
-  import { useTableHeader } from './hooks/useTableHeader';
+  // import { useTableHeader } from './hooks/useTableHeader';
   import { useTableExpand } from './hooks/useTableExpand';
   import { createTableContext } from './hooks/useTableContext';
   import { useTableFooter } from './hooks/useTableFooter';
@@ -97,7 +121,7 @@
 
   import { omit } from 'lodash-es';
   import { basicProps } from './props';
-  import { isFunction, isArray } from '/@/utils/is';
+  import { isFunction, isArray, isString } from '/@/utils/is';
   import { warn } from '/@/utils/log';
 
   export default defineComponent({
@@ -107,7 +131,9 @@
       BasicForm,
       HeaderCell,
       TableAction,
+      TableHeader,
       DictLabel,
+      Icon,
     },
     props: basicProps,
     emits: [
@@ -130,6 +156,7 @@
       'columns-change',
     ],
     setup(props, { attrs, emit, slots, expose }) {
+      const { t } = useI18n();
       const tableElRef = ref(null);
       const tableData = ref<Recordable[]>([]);
 
@@ -261,7 +288,22 @@
         },
       };
 
-      const { getHeaderProps } = useTableHeader(getProps, slots, handlers);
+      // const { getHeaderProps } = useTableHeader(getProps, slots, handlers);
+      const getHeaderProps = computed(() => {
+        const { title, showTableSetting, titleHelpMessage, tableSetting } = unref(getProps);
+        const hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting;
+        if (hideTitle && !isString(title)) {
+          return {};
+        }
+        return {
+          title,
+          titleHelpMessage,
+          showTableSetting,
+          tableSetting,
+          onColumnsChange: handlers.onColumnsChange,
+          class: prefixCls + '-header-container',
+        } as Recordable;
+      });
 
       const { getFooterProps } = useTableFooter(
         getProps,
@@ -287,7 +329,7 @@
               ? undefined
               : expandIcon(expandCollapse, handleTableExpand, !!slots.expandedRowRender),
           ...unref(getProps),
-          ...unref(getHeaderProps),
+          // ...unref(getHeaderProps),
           scroll: unref(getScrollRef),
           loading: unref(getLoading),
           tableLayout: 'fixed',
@@ -411,7 +453,14 @@
         return data || {};
       }
 
+      const formShow = ref(unref(getProps).showSearchForm);
+      function handleFormShowToggle() {
+        formShow.value = !formShow.value;
+        redoHeight();
+      }
+
       return {
+        t,
         formRef,
         tableElRef,
         getBindValues,
@@ -432,7 +481,10 @@
         columns: getViewColumns,
         getColumnValue,
         tableActions,
+        getHeaderProps,
         getSlotData,
+        handleFormShowToggle,
+        formShow,
       };
     },
   });
@@ -464,11 +516,16 @@
           }
         }
       }
+      &-header-container {
+        color: rgba(255, 255, 255, 0.85);
+      }
     }
   }
 
   .@{prefix-cls} {
     max-width: 100%;
+    background-color: @component-background;
+    border-radius: 5px;
 
     a,
     .ant-btn-link {
@@ -550,6 +607,12 @@
       }
     }
 
+    &-header-container {
+      padding: 5px 2px 5px 7px;
+      border-radius: 5px;
+      min-height: 44px;
+    }
+
     &-form-container {
       // padding: 15px 15px 0 15px;
 
@@ -557,7 +620,9 @@
         padding: 12px 10px 6px 10px;
         margin-bottom: 15px;
         background-color: @component-background;
-        border-radius: 5px;
+        // border-radius: 5px;
+        border-top: 1px solid @table-border-color !important;
+        margin-bottom: 0;
       }
     }
 
