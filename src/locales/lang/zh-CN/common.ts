@@ -11,6 +11,9 @@ export default {
   searchText: '搜索',
   queryText: '查询',
 
+  showText: '显示',
+  hideText: '隐藏',
+
   inputText: '请输入',
   chooseText: '请选择',
 
