@@ -1,5 +1,14 @@
 package com.jeesite.common.ueditor.upload;
 
+import com.jeesite.common.image.ImageUtils;
+import com.jeesite.common.io.FileUtils;
+import com.jeesite.common.media.VideoUtils;
+import com.jeesite.common.ueditor.PathFormat;
+import com.jeesite.common.ueditor.define.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,21 +16,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.jeesite.common.image.ImageUtils;
-import com.jeesite.common.io.FileUtils;
-import com.jeesite.common.media.VideoUtils;
-import com.jeesite.common.ueditor.PathFormat;
-import com.jeesite.common.ueditor.define.ActionMap;
-import com.jeesite.common.ueditor.define.AppInfo;
-import com.jeesite.common.ueditor.define.BaseState;
-import com.jeesite.common.ueditor.define.FileType;
-import com.jeesite.common.ueditor.define.State;
 
 public class BinaryUploader {
 
@@ -64,7 +58,7 @@ public class BinaryUploader {
 
             savePath = PathFormat.parse(savePath, originFileName);
 
-            String physicalPath = FileUtils.path((String) conf.get("rootPath") + savePath);
+            String physicalPath = FileUtils.path(conf.get("rootPath") + savePath);
 
             InputStream is = null;
             State storageState = null;
