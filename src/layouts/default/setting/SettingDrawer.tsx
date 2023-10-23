@@ -18,7 +18,6 @@ import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
 import { useMultipleTabSetting } from '/@/hooks/setting/useMultipleTabSetting';
-import { useTransitionSetting } from '/@/hooks/setting/useTransitionSetting';
 import { useI18n } from '/@/hooks/web/useI18n';
 
 import { baseHandler } from './handler';
@@ -27,7 +26,6 @@ import {
   HandlerEnum,
   topMenuAlignOptions,
   getMenuTriggerOptions,
-  routerTransitionOptions,
   menuTypeList,
   mixSidebarTriggerOptions,
 } from './enum';
@@ -291,8 +289,8 @@ export default defineComponent({
         {...attrs}
         title={t('layout.setting.drawerTitle')}
         width={330}
-        wrapClassName="setting-drawer"
         mask={true}
+        maskStyle="animation: none; opacity: 0;"
       >
         {/* {unref(getShowDarkModeToggle) && <Divider>{() => t('layout.setting.darkMode')}</Divider>} */}
         {unref(getShowDarkModeToggle) && <AppDarkModeToggle class="mx-auto" />}
