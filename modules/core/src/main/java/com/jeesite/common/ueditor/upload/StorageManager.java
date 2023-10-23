@@ -1,12 +1,6 @@
 package com.jeesite.common.ueditor.upload;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
+import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.io.PropertiesUtils;
@@ -14,6 +8,11 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
 import com.jeesite.common.ueditor.define.State;
+import com.jeesite.common.web.http.ServletUtils;
+import com.jeesite.modules.file.utils.FileUploadUtils;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.io.*;
 
 public class StorageManager {
 
@@ -194,12 +193,21 @@ public class StorageManager {
 
     /**
      * UEditor上传文件成功后调用事件
-     *
      * @param physicalPath 上传文件实际路径
      * @param storageState url 返回到客户端的文件访问地址
      */
     public static void uploadFileSuccess(String physicalPath, State storageState) {
-
+        if (!Global.getPropertyToBoolean("file.enabled", "true")) {
+            return;
+        }
+        File file = new File(physicalPath);
+        String url = FileUploadUtils.ossFileUpload(file, StringUtils.substringAfter(
+                FileUtils.path(file.getAbsolutePath()), Global.USERFILES_BASE_URL));
+        if (!StringUtils.contains(url, "://")) {
+            HttpServletRequest request = ServletUtils.getRequest();
+            url = FileUtils.path((request != null ? request.getContextPath() : StringUtils.EMPTY) + url);
+        }
+        storageState.putInfo("url", url);
     }
 
 }
