@@ -517,7 +517,7 @@
         }
       }
       &-header-container {
-        color: rgba(255, 255, 255, 0.85);
+        color: rgba(255, 255, 255, 0.75);
       }
     }
   }
@@ -608,6 +608,7 @@
     }
 
     &-header-container {
+      color: fade(@text-color-base, 75);
       padding: 5px 2px 5px 7px;
       border-radius: 5px;
       min-height: 44px;

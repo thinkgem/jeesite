@@ -4,7 +4,7 @@ html[data-theme='dark'] .app-loading {
 }
 
 html[data-theme='dark'] .app-loading .app-loading-title {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 body,

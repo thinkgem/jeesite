@@ -187,6 +187,13 @@
   });
 </script>
 <style lang="less" scoped>
+  html[data-theme='dark'] {
+    .basic-tree-header {
+      border-bottom: 1px solid #303030;
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+
   .basic-tree-header {
     color: @text-color-base;
     border-bottom: 1px solid #f0f0f0;
@@ -201,12 +208,6 @@
 
     .anticon {
       color: @text-color-call-out;
-    }
-  }
-
-  html[data-theme='dark'] {
-    .basic-tree-header {
-      border-bottom: 1px solid #303030;
     }
   }
 </style>

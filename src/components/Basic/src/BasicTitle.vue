@@ -49,7 +49,7 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
-    color: @text-color-base;
+    color: fade(@text-color-base, 75);
     cursor: pointer;
     user-select: none;
 
