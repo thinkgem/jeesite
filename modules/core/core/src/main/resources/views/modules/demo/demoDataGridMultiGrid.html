@@ -12,8 +12,8 @@
 						data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize!3}"
 						data-order-by="${parameter.orderBy!'post_code desc'}">
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
-						<button type="reset" class="btn btn-default btn-sm isQuick">${text('重置')}</button>
+						<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i> ${text('查询')}</button>
+						<button type="reset" class="btn btn-default btn-sm isQuick"><i class="glyphicon glyphicon-repeat"></i> ${text('重置')}</button>
 					</div>
 				</#form:form>
 				<table id="dataGrid"></table>
