@@ -82,7 +82,52 @@
         color: @primary-color;
       }
 
-      .ant-tabs-card .ant-tabs-nav {
+      > .ant-tabs {
+        & .ant-tabs-tab {
+          padding: 4px 0;
+          margin-left: 5px;
+          & + .ant-tabs-tab {
+            margin: 0 0 0 15px;
+          }
+          .ant-tabs-tab-btn {
+            .anticon {
+              margin-left: 3px;
+              margin-right: 8px;
+            }
+          }
+          .ant-tabs-tab-btn,
+          .ant-tabs-tab-btn .anticon {
+            color: fade(@text-color-base, 60);
+            font-size: 16px;
+            text-shadow: none;
+          }
+          &.ant-tabs-tab-active {
+            .ant-tabs-tab-btn,
+            .ant-tabs-tab-btn .anticon {
+              color: fade(@primary-color, 90);
+            }
+          }
+        }
+      }
+
+      > .ant-tabs-top,
+      > .ant-tabs-bottom {
+        & > .ant-tabs-nav,
+        & > div > .ant-tabs-nav {
+          margin: 0;
+        }
+      }
+
+      > .ant-tabs-top {
+        // margin-bottom: -15px;
+        & > .ant-tabs-nav {
+          &::before {
+            border-bottom: 0;
+          }
+        }
+      }
+
+      > .ant-tabs-card .ant-tabs-nav {
         margin: 0;
         &-list {
           .ant-tabs-tab {
