@@ -2873,7 +2873,7 @@
     "@vue/compiler-core" "3.3.6"
     "@vue/shared" "3.3.6"
 
-"@vue/compiler-sfc@3.3.6", "@vue/compiler-sfc@^3.3.5":
+"@vue/compiler-sfc@3.3.6", "@vue/compiler-sfc@^3.3.6":
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.3.6.tgz#00dce2e7aa569101009c5eedec4a69e2f831d8cc"
   integrity sha512-/Kms6du2h1VrXFreuZmlvQej8B1zenBqIohP0690IUBkJjsFvJxY0crcvVRJ0UhMgSR9dewB+khdR1DfbpArJA==
@@ -2976,7 +2976,7 @@
   dependencies:
     "@vue/shared" "3.3.4"
 
-"@vue/runtime-core@3.3.6", "@vue/runtime-core@^3.3.5":
+"@vue/runtime-core@3.3.6", "@vue/runtime-core@^3.3.6":
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.3.6.tgz#749ff325c95bb3a690c512da0215339fd241872c"
   integrity sha512-qp7HTP1iw1UW2ZGJ8L3zpqlngrBKvLsDAcq5lA6JvEXHmpoEmjKju7ahM9W2p/h51h0OT5F2fGlP/gMhHOmbUA==
@@ -3006,7 +3006,7 @@
   resolved "https://registry.npmmirror.com/@vue/shared/-/shared-3.3.4.tgz#06e83c5027f464eef861c329be81454bc8b70780"
   integrity sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==
 
-"@vue/shared@3.3.6", "@vue/shared@^3.3.5":
+"@vue/shared@3.3.6", "@vue/shared@^3.3.6":
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.3.6.tgz#bd97c22972c6519250069297d01cbed077054b7e"
   integrity sha512-Xno5pEqg8SVhomD0kTSmfh30ZEmV/+jZtyh39q6QflrjdJCXah5lrnOLi9KB6a5k5aAHXMXjoMnxlzUkCNfWLQ==
@@ -5427,7 +5427,7 @@ eslint-visitor-keys@^3.4.3:
   resolved "https://registry.npmmirror.com/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8.51.0:
+eslint@^8.52.0:
   version "8.52.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.52.0.tgz#d0cd4a1fac06427a61ef9242b9353f36ea7062fc"
   integrity sha512-zh/JHnaixqHZsolRB/w9/02akBk9EPrOs9JwcTP2ek7yL5bVvXuRariiaAjjoJ5DvuwQ1WAE/HsMz+w17YgBCg==
@@ -11618,7 +11618,7 @@ vue-types@^5.1.1:
   dependencies:
     is-plain-object "5.0.0"
 
-vue@^3.3.5:
+vue@^3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.6.tgz#bc1b129a73705db16da90aa1edde539d7401ca9d"
   integrity sha512-jJIDETeWJnoY+gfn4ZtMPMS5KtbP4ax+CT4dcQFhTnWEk8xMupFyQ0JxL28nvT/M4+p4a0ptxaV2WY0LiIxvRg==
