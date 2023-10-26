@@ -20,4 +20,10 @@
 		<if test="global.dbName == 'postgresql'"></if>
 	</select> -->
 	
+	<!-- 删除某个日期之前创建的日志 -->
+	<delete id="deleteLogBefore">
+		DELETE FROM ${_prefix}sys_log
+		WHERE create_date &lt; #{createDate}
+	</delete>
+	
 </mapper>
