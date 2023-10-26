@@ -4,10 +4,13 @@
  */
 package com.jeesite.modules.sys.service.support;
 
+import java.util.Date;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.datasource.DataSourceHolder;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.LogDao;
 import com.jeesite.modules.sys.entity.Log;
@@ -49,5 +52,31 @@ public class LogServiceSupport extends CrudService<LogDao, Log>
 		DataSourceHolder.setJdbcTransaction(false);
 		dao.insert(entity);
 	}
+	
+	/**
+	 * 清理指定日期之前的日志（可新建job定时调用）
+	 * 1、清理1年前的所有日志：logService.deleteLogBefore(1, 0, 0);
+	 * 2、清理6个月前的所有日志：logService.deleteLogBefore(0, 6, 0);
+	 * 3、清理7天前的所有日志：logService.deleteLogBefore(0, 0, 7);
+	 * 4、清理1年6个月前的所有日志：logService.deleteLogBefore(1, 6, 0);
+	 */
+	@Override
+	@Transactional
+	public void deleteLogBefore(Integer year, Integer months, Integer days) {
+		Date date = DateUtils.getOfDayLast(new Date());
+		if (year != null && year != 0) {
+			date = DateUtils.addYears(date, -year);
+		}
+		if (months != null && months != 0) {
+			date = DateUtils.addMonths(date, -months);
+		}
+		if (days != null && days != 0) {
+			date = DateUtils.addDays(date, -days);
+		}
+		Log log = new Log();
+		log.setCreateDate(date);
+		dao.deleteLogBefore(log);
+	}
+	
 	
 }

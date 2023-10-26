@@ -18,4 +18,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public interface LogDao extends CrudDao<Log> {
 	
+	/**
+	 * 删除某个日期之前创建的日志
+	 * @param log .createDate
+	 */
+	int deleteLogBefore(Log log);
+	
 }
