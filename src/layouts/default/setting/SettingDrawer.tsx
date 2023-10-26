@@ -290,7 +290,7 @@ export default defineComponent({
         title={t('layout.setting.drawerTitle')}
         width={330}
         mask={true}
-        maskStyle="animation: none; opacity: 0;"
+        maskStyle={{ animation: 'none', opacity: 0 }}
       >
         {/* {unref(getShowDarkModeToggle) && <Divider>{() => t('layout.setting.darkMode')}</Divider>} */}
         {unref(getShowDarkModeToggle) && <AppDarkModeToggle class="mx-auto" />}
