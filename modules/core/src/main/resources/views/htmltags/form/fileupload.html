@@ -37,7 +37,7 @@ var p = {
 	imageThumbName: imageThumbName!'', 	// 如果开启了图片缩略图，这里可以指定缩略图名称，例如：150x150.jpg  v5.4.2
 	
 	serviceUpload: serviceUpload!(ctxAdmin+'/file/upload'),			// 上传文件后台服务  v4.1.5
-	serviceDownload: serviceDownload!(ctxAdmin+'/file/download/'),	// 下载文件后台服务  v4.1.5
+	serviceDownload: serviceDownload!(ctxAdmin+'/file/download'),	// 下载文件后台服务  v4.1.5
 	serviceFileList: serviceFileList!(ctxAdmin+'/file/fileList'),	// 查询文件后台服务  v4.1.5
 	
 	extendParams: extendParams!'',		// 提交的上传扩展参数，例如：n1:'v1',n2:'v2'，后台接受：fileEntity.getFileUploadParams().getExtend() v4.1.3
