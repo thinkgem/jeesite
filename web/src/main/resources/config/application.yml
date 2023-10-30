@@ -117,6 +117,10 @@ jdbc:
     # 最大激活连接数
     maxActive: 20
 
+#    # 连接超时参数，单位毫秒 （v5.5.2+）
+#    connectTimeout: ~
+#    socketTimeout: ~
+#
 #    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
 #    maxWait: 60000
 #
