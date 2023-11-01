@@ -27,7 +27,6 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isArray } from '/@/utils/is';
   import { FileUpload } from '/@/api/sys/upload';
-  import { useGlobSetting } from '/@/hooks/setting';
 
   export default defineComponent({
     components: { BasicModal, FileList },
@@ -36,7 +35,6 @@
     setup(props, { emit }) {
       const [register, { closeModal }] = useModalInner();
       const { t } = useI18n();
-      const { ctxAdminPath } = useGlobSetting();
       const fileList = ref<FileUpload[]>([]);
 
       watch(
@@ -60,7 +58,7 @@
 
       // 下载
       function handleDownload(record: FileUpload) {
-        downloadByUrl({ url: ctxAdminPath + '/file/download/' + record.id });
+        downloadByUrl({ url: props.apiDownloadUrl + '/' + record.id });
       }
 
       return {

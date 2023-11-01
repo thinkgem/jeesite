@@ -4,7 +4,7 @@ import { useGlobSetting } from '/@/hooks/setting';
 import { BasicModel } from '../model/baseModel';
 import { AxiosProgressEvent } from 'axios';
 
-const { ctxPath, adminPath, uploadUrl } = useGlobSetting();
+const { ctxPath, adminPath } = useGlobSetting();
 
 export interface UploadApiResult {
   code: string;
@@ -53,27 +53,28 @@ export interface UploadParams {
 export function uploadFile(
   params: UploadFileParams,
   onUploadProgress: (progressEvent: ProgressEvent | AxiosProgressEvent) => void,
+  apiUploadUrl?: string,
 ) {
   if (params.file != undefined) {
     return defHttp.uploadFile<UploadApiResult>(
       {
-        url: ctxPath + adminPath + '/file/' + uploadUrl,
+        url: apiUploadUrl || ctxPath + adminPath + '/file/upload',
         onUploadProgress,
       },
       params,
     );
   } else {
     return defHttp.post(
-      { url: adminPath + '/file/' + uploadUrl, params },
-      { errorMessageMode: 'none' },
+      { url: apiUploadUrl || ctxPath + adminPath + '/file/upload', params },
+      { errorMessageMode: 'none', apiUrl: '', urlPrefix: '' },
     );
   }
 }
 
-export const uploadFileList = (params?: FileUpload | any) =>
+export const uploadFileList = (params?: FileUpload | any, apiFileListUrl?: string) =>
   defHttp.get<FileUpload[]>(
-    { url: adminPath + '/file/fileList', params },
-    { errorMessageMode: 'none' },
+    { url: apiFileListUrl || ctxPath + adminPath + '/file/fileList', params },
+    { errorMessageMode: 'none', apiUrl: '', urlPrefix: '' },
   );
 
 export const uploadParams = () => defHttp.get<UploadParams>({ url: adminPath + '/file/params' });

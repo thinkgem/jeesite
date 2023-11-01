@@ -27,6 +27,8 @@
     <UploadModal
       v-bind="bindValue"
       :previewFileList="fileList"
+      :apiUploadUrl="apiUploadUrl"
+      :apiDownloadUrl="apiDownloadUrl"
       @register="registerUploadModal"
       @change="handleChange"
       @delete="handleDelete"
@@ -35,6 +37,7 @@
       :value="fileList"
       :readonly="readonly || disabled"
       :imageThumbName="imageThumbName"
+      :apiDownloadUrl="apiDownloadUrl"
       @register="registerPreviewModal"
       @change="handlePreviewChange"
       @delete="handleDelete"
@@ -106,10 +109,13 @@
         fileList.value = [];
         fileListDel.value = [];
         if (props.bizKey != '') {
-          uploadFileList({
-            bizKey: props.bizKey,
-            bizType: props.bizType,
-          }).then((res) => {
+          uploadFileList(
+            {
+              bizKey: props.bizKey,
+              bizType: props.bizType,
+            },
+            props.apiFileListUrl,
+          ).then((res) => {
             if (isArray(res)) {
               fileList.value = res;
               dataMap.value[props.bizType + '__len'] = fileList.value.length;

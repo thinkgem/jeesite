@@ -1,8 +1,11 @@
 import type { PropType } from 'vue';
 import { FileBasicColumn } from './typing';
 import { FileUpload, uploadFile } from '/@/api/sys/upload';
+import { useGlobSetting } from '/@/hooks/setting';
 
 type UploadType = 'image' | 'media' | 'file' | 'all';
+
+const { ctxAdminPath } = useGlobSetting();
 
 export const basicProps = {
   uploadText: {
@@ -53,6 +56,18 @@ export const basicProps = {
     type: Function as PropType<PromiseFn>,
     default: uploadFile,
   },
+  apiUploadUrl: {
+    type: String as PropType<string>,
+    default: ctxAdminPath + '/file/upload',
+  },
+  apiDownloadUrl: {
+    type: String as PropType<string>,
+    default: ctxAdminPath + '/file/download',
+  },
+  apiFileListUrl: {
+    type: String as PropType<string>,
+    default: ctxAdminPath + '/file/fileList',
+  },
   isLazy: {
     type: Boolean as PropType<boolean>,
     default: false,
@@ -83,11 +98,11 @@ export const basicProps = {
 };
 
 export const uploadContainerProps = {
+  ...basicProps,
   value: {
     type: Object as PropType<{}>,
     default: {},
   },
-  ...basicProps,
   showPreview: {
     type: Boolean as PropType<boolean>,
     default: true,
@@ -107,18 +122,19 @@ export const uploadContainerProps = {
   },
 };
 
-export const previewProps = {
-  value: {
+export const uploadProps = {
+  ...basicProps,
+  previewFileList: {
     type: Array as PropType<FileUpload[]>,
     default: () => [],
   },
-  readonly: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
-  imageThumbName: {
-    type: String as PropType<string>,
-    default: '',
+};
+
+export const previewProps = {
+  ...basicProps,
+  value: {
+    type: Array as PropType<FileUpload[]>,
+    default: () => [],
   },
 };
 

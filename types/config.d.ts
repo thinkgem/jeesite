@@ -141,8 +141,8 @@ export interface GlobConfig {
   title: string;
   // Service interface url，如：/js
   apiUrl: string;
-  // Upload url
-  uploadUrl?: string;
+  // // Upload url（5.5.2+弃用）
+  // uploadUrl?: string;
   //  Service interface url prefix
   urlPrefix?: string;
   // Project abbreviation
@@ -163,6 +163,6 @@ export interface GlobEnvConfig {
   VITE_GLOB_API_URL_PREFIX?: string;
   // Project abbreviation
   VITE_GLOB_APP_SHORT_NAME: string;
-  // Upload url
-  VITE_GLOB_UPLOAD_URL?: string;
+  // Upload url（5.5.2+弃用）
+  // VITE_GLOB_UPLOAD_URL?: string;
 }

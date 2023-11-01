@@ -43,17 +43,17 @@
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, toRefs, unref, computed, PropType } from 'vue';
+  import { defineComponent, ref, toRefs, unref, computed } from 'vue';
   import { Upload, Alert } from 'ant-design-vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   // import { BasicTable, useTable } from '/@/components/Table';
   import FileList from './FileList.vue';
+  import { uploadProps } from './props';
   import { useUploadType } from './useUpload';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { FileItem, UploadResultStatus } from './typing';
-  import { basicProps } from './props';
   import { createTableColumns, createActionColumn } from './data';
-  import { checkImgType, getBase64WithFile, getMd5WithFile } from './helper';
+  import { checkImgType, getBase64WithFile } from './helper';
   import { buildUUID } from '/@/utils/uuid';
   import { isFunction } from '/@/utils/is';
   import { warn } from '/@/utils/log';
@@ -62,13 +62,7 @@
 
   export default defineComponent({
     components: { BasicModal, Upload, Alert, FileList },
-    props: {
-      ...basicProps,
-      previewFileList: {
-        type: Array as PropType<FileUpload[]>,
-        default: () => [],
-      },
-    },
+    props: uploadProps,
     emits: ['change', 'register', 'delete'],
     setup(props, { emit }) {
       const { uploadType, accept, helpText, maxNumber, maxSize } = toRefs(props);
@@ -172,7 +166,6 @@
         }
       }
 
-
       async function uploadApiByItem(item: FileItem) {
         const { api } = props;
         if (!api || !isFunction(api)) {
@@ -195,10 +188,11 @@
                 ...(props.uploadParams || {}),
                 file: item.file,
               },
-              function onUploadProgress(progressEvent: ProgressEvent) {
+              (progressEvent: ProgressEvent) => {
                 const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
                 item.percent = complete;
               },
+              props.apiUploadUrl,
             );
             item.responseData = data;
           }
