@@ -65,10 +65,10 @@ export function useRuleFormItem<T extends Recordable>(
       if (props.labelInValue) {
         const values: Recordable = [];
         if (isMultiple.value && !(value instanceof Array)) {
-          const vals = (value as string).split(',');
-          const lbls = (props.labelValue as string).split(',');
+          const vals = (value as string)?.split(',');
+          const lbls = (props.labelValue as string)?.split(',');
           for (const i in vals) {
-            values.push({ value: vals[i], label: lbls[i] });
+            values.push({ value: vals && vals[i], label: lbls && lbls[i] });
           }
           value = values as T[keyof T];
         } else if (!isObject(value) && !(value instanceof Array)) {
