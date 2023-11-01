@@ -294,6 +294,8 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid tr.jqgrow, .ui-jqgrid tr.ui-row-ltr, .ui-jqgrid tr.ui-row-rtl {border:none;}
 .ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {border-bottom:1px solid #ddd;border-color:#E1E1E1;}
 .ui-jqgrid tr.jqgrow td {height:39px;padding:3px 6px;white-space:nowrap;text-overflow:ellipsis;} /* 溢出省略 */
+.ui-jqgrid tr.jqgrow td.clip {text-overflow:clip;} /* 不显示省略号，截断显示 */
+.ui-jqgrid tr.jqgrow td.actions {overflow-x:auto;text-overflow:clip;} /* 操作列样式 */
 .ui-jqgrid tr.jqgrow td.textarea {white-space:normal;} /* 允许单元格换行 */
 .ui-jqgrid td.jqgrid-rownum {padding:0 !important;margin:0;border:0 none;} /* 序号 */
 .ui-jqgrid tr.jqgrow td.jqgrid-multibox {text-overflow:clip;} /* 复选框列样式 */

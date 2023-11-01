@@ -98,7 +98,7 @@ $('#dataGrid').dataGrid({
 			return '<a href="javascript:" title="按模块查询" onclick="$(\'#moduleCodes\').val($(this).text());$(\'#dataGrid\').dataGrid(\'refreshTree\',1);">'+val+'</a>';
 		}},
 		{header:'${text("链接")}', name:'menuHref', width:150},
-		{header:'${text("排序")}', name:'treeSort', width:63, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("排序")}', name:'treeSort', width:63, align:"center", classes:"clip p0", formatter: function(val, obj, row, act){
 			var html = [];
 			//# if(hasPermi('sys:menu:edit')){
 			html.push('<input type="hidden" name="ids" value="'+row.id+'"/>');
