@@ -5,10 +5,10 @@
  */
 package com.jeesite.common.lang;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 关于异常的工具类.
@@ -26,8 +26,8 @@ public class ExceptionUtils {
 		Throwable ex = null;
 		if (request.getAttribute("exception") != null) {
 			ex = (Throwable) request.getAttribute("exception");
-		} else if (request.getAttribute("javax.servlet.error.exception") != null) {
-			ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
+		} else if (request.getAttribute("jakarta.servlet.error.exception") != null) {
+			ex = (Throwable) request.getAttribute("jakarta.servlet.error.exception");
 		}
 		return ex;
 	}
