@@ -66,9 +66,9 @@ public class ByteUtils {
     private static String format(double size, String type) {
         int precision = 0;
 
-        if(size * 1000 % 10 > 0) {
+        /*if(size * 1000 % 10 > 0) {
             precision = 3;
-        } else if(size * 100 % 10 > 0) {
+        } else */if(size * 100 % 10 > 0) {
             precision = 2;
         } else if(size * 10 % 10 > 0) {
             precision = 1;
