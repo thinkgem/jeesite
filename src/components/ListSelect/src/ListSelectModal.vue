@@ -30,11 +30,13 @@
         <BasicTable
           @register="registerTable"
           @row-db-click="rowDbClick"
-          :minHeight="treeHeight - 160"
+          :canResize="true"
+          :minHeight="tableHeight"
+          :maxHeight="tableHeight"
           class="jeesite-listselect-table"
         />
       </ACol>
-      <ACol :span="props.config.treeProps ? 3 : 6" class="pl-3">
+      <ACol :span="props.config.treeProps ? 3 : 6" class="pl-3 pt-3">
         {{ t('当前已选择 {0} 项', [selectList.length]) }}：
         <div class="mt-2" v-if="selectList && selectList.length > 0">
           <Tag
@@ -76,6 +78,7 @@
   const emit = defineEmits(['select', 'register']);
 
   const treeHeight = ref(400);
+  const tableHeight = ref(400);
   const getTreeStyle = computed((): CSSProperties => {
     return {
       height: `${treeHeight.value}px`,
@@ -83,8 +86,9 @@
     };
   });
   function calcTreeHeight() {
-    let height = document.documentElement.clientHeight - 160;
-    treeHeight.value = height;
+    let height = document.documentElement.clientHeight;
+    treeHeight.value = height - 280;
+    tableHeight.value = height - 380;
   }
   useWindowSizeFn(calcTreeHeight, 280);
   onMountedOrActivated(calcTreeHeight);
@@ -172,6 +176,11 @@
         }
       }
     }
+    &.jeesite-basic-table-form-container {
+      .ant-form.jeesite-basic-form {
+        border-top: 0 !important;
+      }
+    }
   }
   .jeesite-listselect {
     .ant-modal.jeesite-basic-modal {
@@ -179,6 +188,7 @@
         &-body {
           > .scrollbar {
             .scrollbar__wrap {
+              margin-top: 0;
               margin-bottom: 0;
             }
           }

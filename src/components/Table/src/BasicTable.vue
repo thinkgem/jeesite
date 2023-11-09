@@ -6,7 +6,10 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
     <TableHeader v-bind="getHeaderProps">
-      <template v-if="getBindValues.useSearchForm || $slots.toolbar" #toolbar>
+      <template
+        v-if="$slots.tableTitle && (getBindValues.useSearchForm || $slots.toolbar)"
+        #toolbar
+      >
         <a-button v-if="getBindValues.useSearchForm && !formShow" @click="handleFormShowToggle()">
           <Icon icon="ant-design:filter-twotone" /> {{ t('common.queryText') }}
         </a-button>
