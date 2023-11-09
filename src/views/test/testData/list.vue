@@ -21,7 +21,7 @@
         </a>
       </template>
       <!-- <template #expandedRowRender="{ record }">
-        <span>ID: {{ record.id }} </span>
+        <div>编号: {{ record.id }} </div>
       </template> -->
       <template #customFilterIcon="filter">
         <Icon
@@ -244,6 +244,14 @@
       sorter: true,
       width: 130,
       align: 'left',
+      // 根据数据状态改变单元格的颜色（例子）
+      customCell: (record: Recordable) => {
+        const color = record.status === '2' ? '#f8d8d8' : '';
+        return {
+          // innerHTML: record.testTextarea, // 原样输出，不进行html编码（例子）
+          style: `background-color: ${color} !important`,
+        };
+      },
     },
     {
       title: t('下拉框'),
@@ -425,7 +433,9 @@
     showTableSetting: true,
     useSearchForm: true,
     canResize: true,
-    // expandRowByClick: true,
+    // 如果启用了 expandedRowRender 插槽，则可以通过点击行来展开（例子）
+    expandRowByClick: true,
+    // 给单行文本列标题上添加一个过滤按钮（例子）
     filterFn: (data: Partial<Recordable<string[]>>) => {
       const testInput = 'a.test_input';
       if (data[testInput]) {
@@ -434,6 +444,10 @@
       }
       console.log(data);
       return data;
+    },
+    // 根据数据状态改变行的颜色（例子）
+    rowClassName: (record: Recordable) => {
+      return record.status === '2' ? 'table-tr-red' : '';
     },
   });
 
@@ -478,3 +492,10 @@
     reload();
   }
 </script>
+<style lang="less">
+  .table-tr-red {
+    td {
+      background-color: #fde7e7 !important;
+    }
+  }
+</style>
