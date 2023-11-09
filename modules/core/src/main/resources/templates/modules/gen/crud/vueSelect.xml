@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueSelect</name>
+	<filePath>${frontDir}/src/components/ListSelect/src/selectType</filePath>
+	<fileName>${urlPrefix}Select.ts</fileName>
+	<content><![CDATA[
+import { useI18n } from '/@/hooks/web/useI18n';
+import { BasicColumn, BasicTableProps, FormProps } from '/@/components/Table';
+import { ${className}ListData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+<%
+var userselectExists = false;
+var officeselectExists = false;
+var areaselectExists = false;
+for(c in table.columnList){
+  if(c.isQuery == "1" && !c.isTreeEntityColumn){
+    if(c.showType == 'userselect'){
+      userselectExists = true;
+    }else if(c.showType == 'officeselect'){
+      officeselectExists = true;
+    }else if(c.showType == 'areaselect'){
+      areaselectExists = true;
+    }
+  }
+}
+%>
+<% if(userselectExists || officeselectExists) { %>
+import { officeTreeData } from '/@/api/sys/office';
+<% } %>
+<% if(areaselectExists) { %>
+import { areaTreeData } from '/@/api/sys/area';
+<% } %>
+
+const { t } = useI18n('sys.${className}');
+
+const modalProps = {
+  title: t('${functionNameSimple}选择'),
+};
+
+const searchForm: FormProps = {
+  baseColProps: { lg: 6, md: 8 },
+  labelWidth: 90,
+  schemas: [
+<% for(c in table.columnList){ %>
+<% if(c.isQuery == "1" && !c.isTreeEntityColumn){ %>
+    {
+      label: t('${c.columnLabel}${c.queryType == 'BETWEEN'?'起':''}'),
+      field: '${c.attrName}${c.queryType == 'BETWEEN'?'_gte':''}',
+  <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+      component: 'Input',
+    <% if (c.queryType == 'BETWEEN'){ %>
+    },
+    {
+      field: '${c.attrName}${c.queryType == 'BETWEEN'?'_lte':''}',
+      label: t('${c.columnLabel}${c.queryType == 'BETWEEN'?'止':''}'),
+      component: 'Input',
+    <% } %>
+  <% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
+  var isMultiple = (c.showType == 'select_multiple'); %>
+      component: 'Select',
+      componentProps: {
+        dictType: '${c.optionMap['dictType']}',
+        allowClear: true,
+        <% if(isMultiple){ %>
+        mode: 'multiple',
+        <% } %>
+      },
+  <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
+      component: '${@StringUtils.cap(c.showType)}Group',
+      componentProps: {
+        dictType: '${c.optionMap['dictType']}',
+      },
+  <% }else if(c.showType == 'date' || c.showType == 'datetime'){
+  var isTime = (c.showType == 'datetime'); %>
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+        showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+      },
+    <% if (c.queryType == 'BETWEEN'){ %>
+    },
+    {
+      label: t('${c.columnLabel}${c.queryType == 'BETWEEN'?'止':''}'),
+      field: '${c.attrName}${c.queryType == 'BETWEEN'?'_lte':''}',
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+        showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+      },
+    <% } %>
+  <% }else if(c.showType == 'userselect'){ %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: officeTreeData,
+        params: { isLoadUser: true, userIdPrefix: '' },
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'officeselect'){ %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: officeTreeData,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'areaselect'){ %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: areaTreeData,
+        allowClear: true,
+      },
+  <% }else{ %>
+      component: 'Input',
+  <% } %>
+    },
+<% } %>
+<% } %>
+  ],
+};
+
+const tableColumns: BasicColumn[] = [
+<%
+var firstColumn = true;
+// 生成树表的节点列
+if(table.isTreeEntity){
+  for(c in table.columnList){
+    if(c.attrName == table.treeViewNameAttrName){
+  %>
+  {
+    title: t('${c.columnLabel}'),
+    dataIndex: '${c.attrName}',
+    width: 230,
+    align: 'left',
+    slot: 'firstColumn',
+  },
+  <%
+      firstColumn = false;
+      break;
+    }
+  }
+}
+for(c in table.columnList){
+  if(c.isList == "1"){
+    // 如果是树结构的字段，则自动忽略
+    if(table.isTreeEntity && (@StringUtils.inString(c.columnName, 'parent_code',
+      'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+        || c.attrName == table.treeViewCodeAttrName
+        || c.attrName == table.treeViewNameAttrName)){
+      continue;
+    }
+%>
+  {
+    title: t('${c.columnLabel}'),
+  <% if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
+    dataIndex: '${c.attrName2}',
+  <% }else{ %>
+    dataIndex: '${c.attrName}',
+  <% } %>
+  <% if(!table.isTreeEntity){ %>
+    key: 'a.${c.columnName}',
+    sorter: true,
+  <% } %>
+  <% if(firstColumn){ %>
+    width: 230,
+  <% }else{ %>
+    width: 130,
+  <% } %>
+  <% if ((isNotBlank(c.optionMap['dictType']) || @StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')) && !firstColumn){ %>
+    align: 'center',
+  <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double') && !firstColumn){ %>
+    align: 'right',
+  <% }else{ %>
+    align: 'left',
+  <% } %>
+  <% if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
+    dictType: '${c.optionMap['dictType']}',
+  <% } %>
+  <% if(firstColumn){ %>
+    slot: 'firstColumn',
+  <% } %>
+  },
+<%
+    if(firstColumn){
+      firstColumn = false;
+    }
+  }
+}
+%>
+];
+
+const tableProps: BasicTableProps = {
+  api: ${className}ListData,
+  beforeFetch: (params) => {
+    params['isAll'] = true;
+    return params;
+  },
+  columns: tableColumns,
+  formConfig: searchForm,
+  rowKey: '<% for(pk in table.pkList){ %>${pk.attrName}<% } %>',
+};
+
+export default {
+  modalProps,
+  tableProps,
+  itemCode: '<% for(pk in table.pkList){ %>${pk.attrName}<% } %>',
+  itemName: '<% for(pk in table.pkList){ %>${pk.attrName}<% } %>',
+};
+<% %>
+]]>
+	</content>
+</template>
