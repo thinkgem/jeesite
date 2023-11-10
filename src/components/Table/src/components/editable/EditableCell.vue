@@ -20,7 +20,7 @@
   import { propTypes } from '/@/utils/propTypes';
   import { isArray, isBoolean, isDef, isFunction, isNumber, isObject } from '/@/utils/is';
   import { createPlaceholderMessage } from './helper';
-  import { pick, set } from 'lodash-es';
+  import { omit, pick, set } from 'lodash-es';
   // import { treeToList } from '/@/utils/helper/treeHelper';
   import { Spin } from 'ant-design-vue';
   import { DictLabel } from '/@/components/Dict';
@@ -125,7 +125,7 @@
           getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
           placeholder: createPlaceholderMessage(unref(getComponent)),
           dropdownMatchSelectWidth: false,
-          ...compProps,
+          ...omit(compProps, ['onChange']),
           [valueField]: value,
           labelValue: labelVal,
           labelInValue: !!props.column?.dataLabel,
