@@ -29,7 +29,7 @@ public class MiniApplication extends SpringBootServletInitializer {
 				+ "\r\n   启动完成，系统监控地址：http://127.0.0.1:"
 				+ Global.getProperty("server.port") + FileUtils.path("/"
 				+ Global.getProperty("server.servlet.context-path")
-				+ Global.getAdminPath()) + "state/server/index"
+				+ Global.getAdminPath()) + "/state/server/index"
 				+ "\r\n\r\n==============================================================\r\n");
 	}
 	
