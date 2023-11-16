@@ -33,7 +33,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/dictType")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @Hidden
 public class DictTypeController extends BaseController {
 

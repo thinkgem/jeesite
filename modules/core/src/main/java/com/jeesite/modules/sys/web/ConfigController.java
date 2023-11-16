@@ -34,7 +34,7 @@ import com.jeesite.modules.sys.service.ConfigService;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/config")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @Hidden
 public class ConfigController extends BaseController {
 

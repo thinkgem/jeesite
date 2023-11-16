@@ -40,7 +40,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/dictData")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @Hidden
 public class DictDataController extends BaseController {
 

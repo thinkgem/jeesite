@@ -38,7 +38,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/module")
-@ConditionalOnProperty(name="web.core.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"config.enabled","web.core.enabled"}, havingValue="true", matchIfMissing=true)
 @Hidden
 public class ModuleController extends BaseController {
 

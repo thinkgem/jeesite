@@ -57,7 +57,7 @@ jdbc:
 #  # Mysql 数据库配置
 #  type: mysql
 #  driver: com.mysql.cj.jdbc.Driver
-#  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#  url: jdbc:mysql://127.0.0.1:3306/jeesite_mini?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
 #  username: root
 #  password: 123456
 #  testSql: SELECT 1
@@ -114,7 +114,11 @@ adminPath: /a
 # 前端基础路径
 frontPath: /f
 
-# 用户权限相关
+# 配置相关功能（参数、模块、字典）
+config:
+  enabled: false
+
+# 用户权限相关（用户、角色、菜单）
 user:
   enabled: false
 
