@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>0.75</zoom>
 	<x>0</x>
-	<y>0</y>
+	<y>74</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -73,7 +73,7 @@
 			</export_ddl_setting>
 			<export_excel_setting>
 				<category_id>null</category_id>
-				<output_path>db\bpm.xls</output_path>
+				<output_path>db/job.xls</output_path>
 				<template></template>
 				<template_path></template_path>
 				<used_default_template_lang>en</used_default_template_lang>
@@ -1066,7 +1066,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>97d4028757140d4aad6461748d1da1fc13331e3f</id>
+					<id>6aeb7041ffe823d9828e82925c9cc2b2f59cabeb</id>
 					<source>6bc57d78a1e278688bd2243aa44245ceff3762e0</source>
 					<target>0a669d2ca807e09513e934569f80c3818164267a</target>
 						<source_xp>-1</source_xp>
@@ -1089,7 +1089,7 @@
 				</relation>
 			</connections>
 			<physical_name>js_job_blob_triggers</physical_name>
-			<logical_name>js_job_blob_triggers</logical_name>
+			<logical_name>Blob的触发器表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1098,7 +1098,7 @@
 				<normal_column>
 					<id>c08d94d55d4ccbb15aa585a32f536d38ba637a2f</id>
 					<referenced_column>bef43cda7135e2ad5244f31539e87f72869d4d50</referenced_column>
-					<relation>97d4028757140d4aad6461748d1da1fc13331e3f</relation>
+					<relation>6aeb7041ffe823d9828e82925c9cc2b2f59cabeb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -1132,7 +1132,7 @@
 				<normal_column>
 					<id>7e232d13f76fcaada864ac8f3e5c96f35936f481</id>
 					<referenced_column>479aea404d425bc2539586eea354d2dd7d7c4fbf</referenced_column>
-					<relation>97d4028757140d4aad6461748d1da1fc13331e3f</relation>
+					<relation>6aeb7041ffe823d9828e82925c9cc2b2f59cabeb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -1166,7 +1166,7 @@
 				<normal_column>
 					<id>d4a879db54ce0a79f584b8fea8972f0738a487a6</id>
 					<referenced_column>3506a9e682ab1f467e0110291032ab961dd60dcc</referenced_column>
-					<relation>97d4028757140d4aad6461748d1da1fc13331e3f</relation>
+					<relation>6aeb7041ffe823d9828e82925c9cc2b2f59cabeb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -1255,7 +1255,7 @@
 			<connections>
 			</connections>
 			<physical_name>js_job_calendars</physical_name>
-			<logical_name>js_job_calendars</logical_name>
+			<logical_name>调度日历表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1385,7 +1385,7 @@
 			<connections>
 			</connections>
 			<physical_name>js_job_job_details</physical_name>
-			<logical_name>js_job_job_details</logical_name>
+			<logical_name>作业详情表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1780,7 +1780,7 @@
 			<connections>
 			</connections>
 			<physical_name>js_job_locks</physical_name>
-			<logical_name>js_job_locks</logical_name>
+			<logical_name>调度数据锁表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1877,7 +1877,7 @@
 			<connections>
 			</connections>
 			<physical_name>js_job_paused_trigger_grps</physical_name>
-			<logical_name>js_job_paused_trigger_grps</logical_name>
+			<logical_name>已暂停的触发器组</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -1974,7 +1974,7 @@
 			<connections>
 			</connections>
 			<physical_name>js_job_scheduler_state</physical_name>
-			<logical_name>js_job_scheduler_state</logical_name>
+			<logical_name>调度状态检查表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -2136,7 +2136,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>a384f9748ab9c79c6a4bf5915f657b74e868cd64</id>
+					<id>ba36e142cc5d5fd6b5a727496c53cdadf1a67853</id>
 					<source>6bc57d78a1e278688bd2243aa44245ceff3762e0</source>
 					<target>54776d97b42964ac7ce49ad4b0ba9fa277d74461</target>
 						<source_xp>-1</source_xp>
@@ -2159,7 +2159,7 @@
 				</relation>
 			</connections>
 			<physical_name>js_job_simple_triggers</physical_name>
-			<logical_name>js_job_simple_triggers</logical_name>
+			<logical_name>简单的触发器表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -2168,7 +2168,7 @@
 				<normal_column>
 					<id>2b891a84b19252ca0933447a82587d81ed0fb401</id>
 					<referenced_column>bef43cda7135e2ad5244f31539e87f72869d4d50</referenced_column>
-					<relation>a384f9748ab9c79c6a4bf5915f657b74e868cd64</relation>
+					<relation>ba36e142cc5d5fd6b5a727496c53cdadf1a67853</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2202,7 +2202,7 @@
 				<normal_column>
 					<id>dec12b6c308687428126f8179c412725f6cdaa66</id>
 					<referenced_column>479aea404d425bc2539586eea354d2dd7d7c4fbf</referenced_column>
-					<relation>a384f9748ab9c79c6a4bf5915f657b74e868cd64</relation>
+					<relation>ba36e142cc5d5fd6b5a727496c53cdadf1a67853</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2236,7 +2236,7 @@
 				<normal_column>
 					<id>1b12095d3efc75a5347fd8c5ec89231813ca72bf</id>
 					<referenced_column>3506a9e682ab1f467e0110291032ab961dd60dcc</referenced_column>
-					<relation>a384f9748ab9c79c6a4bf5915f657b74e868cd64</relation>
+					<relation>ba36e142cc5d5fd6b5a727496c53cdadf1a67853</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2390,7 +2390,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>e976cd5ed8e4d9356c7e74abeed46869336b5d76</id>
+					<id>d8587efa8d383378d951a147eee889773e5fa7fb</id>
 					<source>6bc57d78a1e278688bd2243aa44245ceff3762e0</source>
 					<target>949d0666b959a724d98e2950a1558a79ab5963a7</target>
 						<source_xp>-1</source_xp>
@@ -2413,7 +2413,7 @@
 				</relation>
 			</connections>
 			<physical_name>js_job_simprop_triggers</physical_name>
-			<logical_name>js_job_simprop_triggers</logical_name>
+			<logical_name>日历的触发器表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -2422,7 +2422,7 @@
 				<normal_column>
 					<id>71e10881adbb474de7f49f2d40827986d0ede709</id>
 					<referenced_column>bef43cda7135e2ad5244f31539e87f72869d4d50</referenced_column>
-					<relation>e976cd5ed8e4d9356c7e74abeed46869336b5d76</relation>
+					<relation>d8587efa8d383378d951a147eee889773e5fa7fb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2456,7 +2456,7 @@
 				<normal_column>
 					<id>568c8fb076378cf4f6f33460a34fd393c67f899a</id>
 					<referenced_column>479aea404d425bc2539586eea354d2dd7d7c4fbf</referenced_column>
-					<relation>e976cd5ed8e4d9356c7e74abeed46869336b5d76</relation>
+					<relation>d8587efa8d383378d951a147eee889773e5fa7fb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2490,7 +2490,7 @@
 				<normal_column>
 					<id>bf1a46c68ff9dcb56c9903c4b46942de00e2af4b</id>
 					<referenced_column>3506a9e682ab1f467e0110291032ab961dd60dcc</referenced_column>
-					<relation>e976cd5ed8e4d9356c7e74abeed46869336b5d76</relation>
+					<relation>d8587efa8d383378d951a147eee889773e5fa7fb</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2909,7 +2909,7 @@
 			<connections>
 			</connections>
 			<physical_name>js_job_fired_triggers</physical_name>
-			<logical_name>js_job_fired_triggers</logical_name>
+			<logical_name>已触发的作业表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -3482,7 +3482,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>6c82a101c74bfb81a3bc9a2a620781c622913b0d</id>
+					<id>411c9b3243030c6503ab26503e39ad2e733b9040</id>
 					<source>5a7b42fcb919ebc8bfe84df047923c6cc95cbbd8</source>
 					<target>6bc57d78a1e278688bd2243aa44245ceff3762e0</target>
 						<source_xp>-1</source_xp>
@@ -3505,7 +3505,7 @@
 				</relation>
 			</connections>
 			<physical_name>js_job_triggers</physical_name>
-			<logical_name>js_job_triggers</logical_name>
+			<logical_name>作业触发器表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -3514,7 +3514,7 @@
 				<normal_column>
 					<id>bef43cda7135e2ad5244f31539e87f72869d4d50</id>
 					<referenced_column>0877af097636bb4eac55b4c6e41438d1eb3e1fed</referenced_column>
-					<relation>6c82a101c74bfb81a3bc9a2a620781c622913b0d</relation>
+					<relation>411c9b3243030c6503ab26503e39ad2e733b9040</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3614,7 +3614,7 @@
 				<normal_column>
 					<id>12b02a5d0594a292344aea350c589dfbe568e3a3</id>
 					<referenced_column>486e71379ac8ae8e87211cda02b1bb32cadd4b7f</referenced_column>
-					<relation>6c82a101c74bfb81a3bc9a2a620781c622913b0d</relation>
+					<relation>411c9b3243030c6503ab26503e39ad2e733b9040</relation>
 					<description>作业名称</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>作业名称</logical_name>
@@ -3648,7 +3648,7 @@
 				<normal_column>
 					<id>ce0c63dcd207036a6722c80172644ab7838b94b0</id>
 					<referenced_column>4a837efa64308c42bd503992dde096366924fb0f</referenced_column>
-					<relation>6c82a101c74bfb81a3bc9a2a620781c622913b0d</relation>
+					<relation>411c9b3243030c6503ab26503e39ad2e733b9040</relation>
 					<description>作业组名称</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>作业组名称</logical_name>
@@ -4314,7 +4314,7 @@
 			</color>
 			<connections>
 				<relation>
-					<id>9c69cbc110ec05e961cec3e887bd3a189735299d</id>
+					<id>8b6275bc330475f6e06cb92eae84d91d99bc407e</id>
 					<source>6bc57d78a1e278688bd2243aa44245ceff3762e0</source>
 					<target>cb6e0bced6631e13b509fdfff94c032ace5d1a05</target>
 						<source_xp>-1</source_xp>
@@ -4337,7 +4337,7 @@
 				</relation>
 			</connections>
 			<physical_name>js_job_cron_triggers</physical_name>
-			<logical_name>js_job_cron_triggers</logical_name>
+			<logical_name>Cron的触发器表</logical_name>
 			<description></description>
 			<constraint></constraint>
 			<primary_key_name></primary_key_name>
@@ -4346,7 +4346,7 @@
 				<normal_column>
 					<id>0b96d67d14af20c7fa602fba0c9a846f49790da5</id>
 					<referenced_column>bef43cda7135e2ad5244f31539e87f72869d4d50</referenced_column>
-					<relation>9c69cbc110ec05e961cec3e887bd3a189735299d</relation>
+					<relation>8b6275bc330475f6e06cb92eae84d91d99bc407e</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -4380,7 +4380,7 @@
 				<normal_column>
 					<id>65a769649d9af73f3ffb59b8ab14f28c29775120</id>
 					<referenced_column>479aea404d425bc2539586eea354d2dd7d7c4fbf</referenced_column>
-					<relation>9c69cbc110ec05e961cec3e887bd3a189735299d</relation>
+					<relation>8b6275bc330475f6e06cb92eae84d91d99bc407e</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -4414,7 +4414,7 @@
 				<normal_column>
 					<id>901e42d7b8eb8f2962594b6a4194d945023cd10e</id>
 					<referenced_column>3506a9e682ab1f467e0110291032ab961dd60dcc</referenced_column>
-					<relation>9c69cbc110ec05e961cec3e887bd3a189735299d</relation>
+					<relation>8b6275bc330475f6e06cb92eae84d91d99bc407e</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
