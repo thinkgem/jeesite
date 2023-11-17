@@ -61,6 +61,7 @@
 </template>
 <script lang="ts" setup name="ViewsTestTestDataList">
   import { unref } from 'vue';
+  import { useEmitter } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -491,6 +492,9 @@
   function handleSuccess() {
     reload();
   }
+
+  const emitter = useEmitter();
+  emitter.on('test-testData-reload', reload, true);
 </script>
 <style lang="less">
   .table-tr-red {

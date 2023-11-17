@@ -20,11 +20,11 @@ export type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHan
 export interface Emitter {
   all: EventHandlerMap;
 
-  on<T = any>(type: EventType, handler: Handler<T>): void;
-  on(type: '*', handler: WildcardHandler): void;
+  on<T = any>(type: EventType, handler: Handler<T>, isOne?: boolean): void;
+  on(type: '*', handler: WildcardHandler, isOne?: boolean): void;
 
-  off<T = any>(type: EventType, handler: Handler<T>): void;
-  off(type: '*', handler: WildcardHandler): void;
+  off<T = any>(type: EventType, handler: Handler<T>, isAll?: boolean): void;
+  off(type: '*', handler: WildcardHandler, isAll?: boolean): void;
 
   emit<T = any>(type: EventType, event?: T): void;
   emit(type: '*', event?: any): void;
@@ -49,9 +49,14 @@ export default function mitt(all?: EventHandlerMap): Emitter {
      * Register an event handler for the given type.
      * @param {string|symbol} type Type of event to listen for, or `"*"` for all events
      * @param {Function} handler Function to call in response to given event
+     * @param [isOne=false] 只存一份事件，而不是追加事件
      * @memberOf mitt
      */
-    on<T = any>(type: EventType, handler: Handler<T>) {
+    on<T = any>(type: EventType, handler: Handler<T>, isOne = false) {
+      if (isOne) {
+        all?.set(type, [handler]);
+        return;
+      }
       const handlers = all?.get(type);
       const added = handlers && handlers.push(handler);
       if (!added) {
@@ -63,9 +68,14 @@ export default function mitt(all?: EventHandlerMap): Emitter {
      * Remove an event handler for the given type.
      * @param {string|symbol} type Type of event to unregister `handler` from, or `"*"`
      * @param {Function} handler Handler function to remove
+     * @param [isAll=false] 是否取消绑定 type 的所有事件
      * @memberOf mitt
      */
-    off<T = any>(type: EventType, handler: Handler<T>) {
+    off<T = any>(type: EventType, handler: Handler<T>, isAll = false) {
+      if (!isAll) {
+        all?.set(type, []);
+        return;
+      }
       const handlers = all?.get(type);
       if (handlers) {
         handlers.splice(handlers.indexOf(handler) >>> 0, 1);

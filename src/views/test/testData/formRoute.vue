@@ -43,6 +43,7 @@
 </template>
 <script lang="ts" setup name="ViewsTestTestDataForm">
   import { ref, unref, computed, onMounted, watchEffect } from 'vue';
+  import { useEmitter } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
@@ -464,6 +465,8 @@
     setTimeout(close);
   }
 
+  const emitter = useEmitter();
+
   async function handleSubmit() {
     try {
       loading.value = true;
@@ -477,6 +480,7 @@
       const res = await testDataSave(params, data);
       showMessage(res.message);
       // emit('success', data);
+      emitter.emit('test-testData-reload');
       handleClose();
     } catch (error: any) {
       if (error && error.errorFields) {
