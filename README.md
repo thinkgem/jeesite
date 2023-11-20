@@ -131,8 +131,7 @@ docker pull thinkgem/jeesite-web:latest(arm64)
 ```
 - 启动脚本：
 ```sh
-docker run --name jeesite-web \
-    -p 8980:8980 --privileged -d --restart unless-stopped \
+docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
     -v ~:/data thinkgem/jeesite-web:latest(arm64) && docker logs -f jeesite-web
 ```
 - 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
