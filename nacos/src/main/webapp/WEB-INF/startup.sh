@@ -9,6 +9,8 @@ echo ""
 echo "[信息] 运行Web工程。"
 echo ""
 
+cd "$(cd "$(dirname "$0")"; pwd)"
+
 # 设置JDK目录
 # JAVA_HOME="$PWD/jdk1.8.0_x64"
 
@@ -32,4 +34,4 @@ else
   RUN_JAVA="$JAVA_HOME"/bin/java
 fi
 
-exec $RUN_JAVA -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.WarLauncher
