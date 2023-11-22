@@ -710,6 +710,7 @@ Class.pt.callback = function(){
   var that = this, layero = that.layero, config = that.config;
   that.openLayer();
   if(config.success){
+    layero.find('.layui-layer-close').focus(); // 弹窗后首先关闭获取焦点，防止回车弹出多个
     if(config.type == 2){
       layero.find('iframe').on('load', function(){
         config.success(layero, that.index);
