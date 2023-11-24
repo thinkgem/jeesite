@@ -78,7 +78,7 @@
     &__title {
       font-size: 16px;
 
-      .anticon {
+      > .anticon {
         color: @primary-color;
       }
 
@@ -157,9 +157,11 @@
       > * {
         margin-right: 8px;
       }
+    }
 
+    &__title,
+    &__toolbar {
       .ant-btn {
-        // border-radius: 4px;
         padding: 2px 10px;
         line-height: 1.5;
         height: 30px;
