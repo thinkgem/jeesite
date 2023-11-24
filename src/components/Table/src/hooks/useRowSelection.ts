@@ -21,10 +21,13 @@ export function useRowSelection(
 
     return {
       selectedRowKeys: unref(selectedRowKeysRef),
-      onChange: (selectedRowKeys: string[]) => {
+      onChange: (selectedRowKeys: string[], selectedRows: Recordable[]) => {
         setSelectedRowKeys(selectedRowKeys);
         // selectedRowKeysRef.value = selectedRowKeys;
         // selectedRowRef.value = selectedRows;
+        if (rowSelection && rowSelection.onChange) {
+          rowSelection.onChange(selectedRowKeys, selectedRows);
+        }
       },
       ...omit(rowSelection, ['onChange']),
     };
@@ -46,7 +49,7 @@ export function useRowSelection(
           const { onChange } = rowSelection;
           if (onChange && isFunction(onChange)) onChange(getSelectRowKeys(), getSelectRows());
         }
-        // 有数据时，再调用选择变更事件
+        // 鏈夋暟鎹椂锛屽啀璋冪敤閫夋嫨鍙樻洿浜嬩欢
         if (unref(tableData).length > 0) {
           emit('selection-change', {
             keys: getSelectRowKeys(),
