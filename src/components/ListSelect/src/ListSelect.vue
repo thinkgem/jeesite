@@ -22,7 +22,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef, h } from 'vue';
+  import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef } from 'vue';
   import { Input } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
   import { useAttrs } from '/@/hooks/core/useAttrs';
