@@ -154,7 +154,7 @@
   },
   "homepage": "https://jeesite.com",
   "engines": {
-    "node": "^16 || >=16"
+    "node": "^18 || >=18"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
