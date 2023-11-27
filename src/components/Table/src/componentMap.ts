@@ -14,6 +14,7 @@ import { Select, TreeSelect } from '/@/components/Form';
 const componentMap = new Map<ComponentType, Component>();
 
 componentMap.set('Input', Input);
+componentMap.set('InputTextArea', Input.TextArea);
 componentMap.set('InputNumber', InputNumber);
 componentMap.set('Select', Select);
 componentMap.set('TreeSelect', TreeSelect);

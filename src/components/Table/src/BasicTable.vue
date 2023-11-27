@@ -719,6 +719,15 @@
           }
         }
       }
+
+      textarea.ant-input {
+        min-height: 32px;
+        height: 32px;
+        &-sm {
+          min-height: 24px;
+          height: 24px;
+        }
+      }
     }
   }
 </style>
