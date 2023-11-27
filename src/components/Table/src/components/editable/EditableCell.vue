@@ -121,7 +121,7 @@
         }
 
         return {
-          size: 'small',
+          // size: 'small',
           getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
           placeholder: createPlaceholderMessage(unref(getComponent)),
           dropdownMatchSelectWidth: false,
