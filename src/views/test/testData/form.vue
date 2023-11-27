@@ -289,7 +289,7 @@
         width: 130,
         align: 'left',
         editRow: true,
-        editComponent: 'Input',
+        editComponent: 'InputTextArea',
         editRule: false,
       },
       {
