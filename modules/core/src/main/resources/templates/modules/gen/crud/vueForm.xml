@@ -438,7 +438,7 @@ for (c in table.columnList){
         editComponent: 'InputNumber',
         editDefaultValue: '30',
         <% }else{ %>
-        editComponent: 'Input',
+        editComponent: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
         <% } %>
         <% if (c.dataLength != '0'){ %>
         editComponentProps: {
