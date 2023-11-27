@@ -32,7 +32,7 @@ interface ActionType {
   clearSelectedRowKeys: () => void;
   tableData: Ref<Recordable[]>;
   collapseAll: () => void;
-  expandCollapse: (record: Recordable, onlyLoadData: boolean, forceLoad: boolean) => void;
+  expandCollapse: (record: Recordable, onlyLoadData: boolean, forceLoad: boolean) => Promise<any>;
 }
 
 interface SearchState {
@@ -379,10 +379,33 @@ export function useDataSource(
   }
 
   async function reload(opt?: FetchParams) {
-    if (opt?.parentCode && opt?.parentCode != '0') {
+    // 如果是树表，则刷新上一个父节点和要转移到目标的父节点下的数据 v5.6.0+
+    if (
+      unref(propsRef).isTreeTable &&
+      opt?.record &&
+      opt?.record.parentCode &&
+      opt?.record.parentCode != '0'
+    ) {
+      // 刷新移动前的父节点 v5.6.0+
+      if (opt?.record.oldParentCode && opt?.record.oldParentCode != '0') {
+        const row = findTableDataRecord(opt?.record.oldParentCode);
+        if (row) await expandCollapse(row, false, true);
+      } else {
+        await fetch(opt);
+      }
+      // 刷新移动后的父节点 v5.6.0+
+      if (opt?.record.oldParentCode != opt?.record.parentCode) {
+        const row = findTableDataRecord(opt?.record.parentCode);
+        if (row) await expandCollapse(row, false, true);
+      }
+    }
+    // 旧版兼容，建议使用 record 参数替换 v5.6.0 之前
+    else if (opt?.parentCode && opt?.parentCode != '0') {
       const row = findTableDataRecord(opt.parentCode);
       if (row) await expandCollapse(row, false, true);
-    } else {
+    }
+    // 重载表格数据
+    else {
       await fetch(opt);
     }
   }

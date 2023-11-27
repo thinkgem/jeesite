@@ -75,6 +75,7 @@ export interface FetchParams {
   sortInfo?: Recordable;
   filterInfo?: Recordable;
   parentCode?: string;
+  record?: Recordable;
 }
 
 export interface GetColumnsParams {
