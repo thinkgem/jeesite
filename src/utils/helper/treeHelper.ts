@@ -3,12 +3,14 @@ interface TreeHelperConfig {
   pid: string;
   children: string;
   callback: Fn;
+  fullNameSplit: string;
 }
 const DEFAULT_CONFIG: TreeHelperConfig = {
   id: 'id',
   pid: 'pId',
   children: 'children',
   callback: () => {},
+  fullNameSplit: '/',
 };
 
 const getConfig = (config: Partial<TreeHelperConfig>) => Object.assign({}, DEFAULT_CONFIG, config);
@@ -18,7 +20,7 @@ export function listToTree<T = any>(list?: any[], config: Partial<TreeHelperConf
   const conf = getConfig(config) as TreeHelperConfig;
   const nodeMap = new Map();
   const result: T[] = [];
-  const { id, pid, children } = conf;
+  const { id, pid, children, fullNameSplit } = conf;
 
   for (const node of list || []) {
     node[children] = node[children] || [];
@@ -27,7 +29,14 @@ export function listToTree<T = any>(list?: any[], config: Partial<TreeHelperConf
   for (const node of list || []) {
     const parent = nodeMap.get(node[pid]);
     (parent ? parent[children] : result).push(node);
-    if (node.name) node._name = node.name;
+    if (node.name) {
+      node._name = node.name;
+      if (parent && parent._fullName) {
+        node._fullName = parent._fullName + fullNameSplit + node._name;
+      } else {
+        node._fullName = node._name;
+      }
+    }
     conf.callback(parent, node);
   }
   return result;
