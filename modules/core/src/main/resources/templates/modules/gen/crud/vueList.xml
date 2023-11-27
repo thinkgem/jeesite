@@ -324,7 +324,7 @@ for(c in table.columnList){
         title: t('停用${functionNameSimple}'),
         popConfirm: {
           title: t('是否确认停用${functionNameSimple}'),
-          confirm: handleDisable.bind(this, { ${idParam} }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: '${permissionPrefix}:edit',
         ifShow: () => record.status === '0',
@@ -335,7 +335,7 @@ for(c in table.columnList){
         title: t('启用${functionNameSimple}'),
         popConfirm: {
           title: t('是否确认启用${functionNameSimple}'),
-          confirm: handleEnable.bind(this, { ${idParam} }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: '${permissionPrefix}:edit',
         ifShow: () => record.status === '2',
@@ -348,7 +348,7 @@ for(c in table.columnList){
         title: t('删除${functionNameSimple}'),
         popConfirm: {
           title: t('是否确认删除${functionNameSimple}'),
-          confirm: handleDelete.bind(this, { ${idParam} }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: '${permissionPrefix}:edit',
         <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
@@ -444,26 +444,29 @@ for(c in table.columnList){
 <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 
   async function handleDisable(record: Recordable) {
-    const res = await ${className}Disable(record);
+    const params = { ${idParam} };
+    const res = await ${className}Disable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await ${className}Enable(record);
+    const params = { ${idParam} };
+    const res = await ${className}Enable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 <% } %>
 
   async function handleDelete(record: Recordable) {
-    const res = await ${className}Delete(record);
+    const params = { ${idParam} };
+    const res = await ${className}Delete(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
-  function handleSuccess() {
-    reload();
+  function handleSuccess(record: Recordable) {
+    reload({ record });
   }
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 
