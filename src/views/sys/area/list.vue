@@ -147,7 +147,7 @@
         title: t('停用区域'),
         popConfirm: {
           title: t('是否确认停用区域'),
-          confirm: handleDisable.bind(this, { areaCode: record.areaCode }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: 'sys:area:edit',
         ifShow: () => record.status === '0',
@@ -158,7 +158,7 @@
         title: t('启用区域'),
         popConfirm: {
           title: t('是否确认启用区域'),
-          confirm: handleEnable.bind(this, { areaCode: record.areaCode }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: 'sys:area:edit',
         ifShow: () => record.status === '2',
@@ -169,7 +169,7 @@
         title: t('删除区域'),
         popConfirm: {
           title: t('是否确认删除区域'),
-          confirm: handleDelete.bind(this, { areaCode: record.areaCode }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: 'sys:area:edit',
       },
@@ -220,24 +220,27 @@
   }
 
   async function handleDisable(record: Recordable) {
-    const res = await areaDisable(record);
+    const params = { areaCode: record.areaCode };
+    const res = await areaDisable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await areaEnable(record);
+    const params = { areaCode: record.areaCode };
+    const res = await areaEnable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const res = await areaDelete(record);
+    const params = { areaCode: record.areaCode };
+    const res = await areaDelete(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
-  function handleSuccess() {
-    reload();
+  function handleSuccess(record: Recordable) {
+    reload({ record });
   }
 </script>

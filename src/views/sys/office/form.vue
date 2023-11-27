@@ -208,6 +208,7 @@
         isNewRecord: record.value.isNewRecord,
         officeCode: record.value.officeCode,
       };
+      data.oldParentCode = record.value.parentCode;
       // console.log('submit', params, data, record);
       const res = await officeSave(params, data);
       showMessage(res.message);

@@ -138,6 +138,7 @@
         isNewRecord: record.value.isNewRecord,
         treeCode: record.value.treeCode,
       };
+      data.oldParentCode = record.value.parentCode;
       // console.log('submit', params, data, record);
       const res = await testTreeSave(params, data);
       showMessage(res.message);

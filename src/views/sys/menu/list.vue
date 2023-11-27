@@ -27,7 +27,7 @@
           @click="expandCollapse(record)"
           class="text-base w-5 mr-2"
         />
-        <a @click="handleForm(record)" :title="record.menuNameRaw">
+        <a @click="handleForm({ menuCode: record.menuCode })" :title="record.menuNameRaw">
           {{ record.menuNameRaw }}
         </a>
       </template>
@@ -144,7 +144,7 @@
       {
         icon: 'clarity:note-edit-line',
         title: t('编辑菜单'),
-        onClick: handleForm.bind(this, record),
+        onClick: handleForm.bind(this, { menuCode: record.menuCode }),
         auth: 'sys:menu:edit',
       },
       {
@@ -220,37 +220,32 @@
   }
 
   function handleForm(record: Recordable) {
-    const data = {
-      menuCode: record.menuCode,
-      parentCode: record.parentCode,
-      parentName: record.parentName,
-      sysCode: props.sysCode,
-    };
-    openDrawer(true, data);
+    record.sysCode = props.sysCode;
+    openDrawer(true, record);
   }
 
   async function handleDisable(record: Recordable) {
-    const data = { menuCode: record.menuCode };
-    const res = await menuDisable(data);
+    const params = { menuCode: record.menuCode };
+    const res = await menuDisable(params);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const data = { menuCode: record.menuCode };
-    const res = await menuEnable(data);
+    const params = { menuCode: record.menuCode };
+    const res = await menuEnable(params);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const data = { menuCode: record.menuCode };
-    const res = await menuDelete(data);
+    const params = { menuCode: record.menuCode };
+    const res = await menuDelete(params);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   function handleSuccess(record: Recordable) {
-    reload({ parentCode: record.parentCode });
+    reload({ record });
   }
 </script>

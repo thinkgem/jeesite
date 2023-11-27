@@ -195,6 +195,7 @@
         dictCode: record.value.dictCode,
       };
       data.dictType = record.value.dictType;
+      data.oldParentCode = record.value.parentCode;
       // console.log('submit', params, data, record);
       const res = await dictDataSave(params, data);
       showMessage(res.message);

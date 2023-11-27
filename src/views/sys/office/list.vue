@@ -213,7 +213,7 @@
         title: t('停用机构'),
         popConfirm: {
           title: t('是否确认停用机构'),
-          confirm: handleDisable.bind(this, { officeCode: record.officeCode }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: 'sys:office:edit',
         ifShow: () => record.status === '0',
@@ -224,7 +224,7 @@
         title: t('启用机构'),
         popConfirm: {
           title: t('是否确认启用机构'),
-          confirm: handleEnable.bind(this, { officeCode: record.officeCode }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: 'sys:office:edit',
         ifShow: () => record.status === '2',
@@ -235,7 +235,7 @@
         title: t('删除机构'),
         popConfirm: {
           title: t('是否确认删除机构'),
-          confirm: handleDelete.bind(this, { officeCode: record.officeCode }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: 'sys:office:edit',
       },
@@ -300,24 +300,27 @@
   }
 
   async function handleDisable(record: Recordable) {
-    const res = await officeDisable(record);
+    const params = { officeCode: record.officeCode };
+    const res = await officeDisable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await officeEnable(record);
+    const params = { officeCode: record.officeCode };
+    const res = await officeEnable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const res = await officeDelete(record);
+    const params = { officeCode: record.officeCode };
+    const res = await officeDelete(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
-  function handleSuccess() {
-    reload();
+  function handleSuccess(record: Recordable) {
+    reload({ record });
   }
 </script>

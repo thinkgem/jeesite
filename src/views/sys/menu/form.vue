@@ -283,6 +283,7 @@
         menuCode: record.value.menuCode,
       };
       data.sysCode = record.value.sysCode;
+      data.oldParentCode = record.value.parentCode;
       // console.log('submit', params, data, record);
       const res = await menuSave(params, data);
       showMessage(res.message);

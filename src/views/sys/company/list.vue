@@ -152,7 +152,7 @@
         title: t('停用公司'),
         popConfirm: {
           title: t('是否确认停用公司'),
-          confirm: handleDisable.bind(this, { companyCode: record.companyCode }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: 'sys:company:edit',
         ifShow: () => record.status === '0',
@@ -163,7 +163,7 @@
         title: t('启用公司'),
         popConfirm: {
           title: t('是否确认启用公司'),
-          confirm: handleEnable.bind(this, { companyCode: record.companyCode }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: 'sys:company:edit',
         ifShow: () => record.status === '2',
@@ -174,7 +174,7 @@
         title: t('删除公司'),
         popConfirm: {
           title: t('是否确认删除公司'),
-          confirm: handleDelete.bind(this, { companyCode: record.companyCode }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: 'sys:company:edit',
       },
@@ -225,24 +225,27 @@
   }
 
   async function handleDisable(record: Recordable) {
-    const res = await companyDisable(record);
+    const params = { companyCode: record.companyCode };
+    const res = await companyDisable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await companyEnable(record);
+    const params = { companyCode: record.companyCode };
+    const res = await companyEnable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const res = await companyDelete(record);
+    const params = { companyCode: record.companyCode };
+    const res = await companyDelete(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
-  function handleSuccess() {
-    reload();
+  function handleSuccess(record: Recordable) {
+    reload({ record });
   }
 </script>

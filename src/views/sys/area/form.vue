@@ -150,6 +150,7 @@
         isNewRecord: record.value.isNewRecord,
         areaCode: data.areaCode || record.value.areaCode,
       };
+      data.oldParentCode = record.value.parentCode;
       // console.log('submit', params, data, record);
       const res = await areaSave(params, data);
       showMessage(res.message);

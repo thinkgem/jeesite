@@ -176,6 +176,7 @@
         isNewRecord: record.value.isNewRecord,
         companyCode: record.value.companyCode,
       };
+      data.oldParentCode = record.value.parentCode;
       // console.log('submit', params, data, record);
       const res = await companySave(params, data);
       showMessage(res.message);

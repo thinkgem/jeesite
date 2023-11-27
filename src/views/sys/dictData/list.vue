@@ -167,7 +167,7 @@
         title: t('停用选项'),
         popConfirm: {
           title: t('是否确认停用选项'),
-          confirm: handleDisable.bind(this, { dictCode: record.dictCode }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: 'sys:dictData:edit',
         ifShow: () => record.status === '0',
@@ -178,7 +178,7 @@
         title: t('启用选项'),
         popConfirm: {
           title: t('是否确认启用选项'),
-          confirm: handleEnable.bind(this, { dictCode: record.dictCode }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: 'sys:dictData:edit',
         ifShow: () => record.status === '2',
@@ -189,7 +189,7 @@
         title: t('删除选项'),
         popConfirm: {
           title: t('是否确认删除选项'),
-          confirm: handleDelete.bind(this, { dictCode: record.dictCode }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: 'sys:dictData:edit',
       },
@@ -242,27 +242,27 @@
   }
 
   async function handleDisable(record: Recordable) {
-    const res = await dictDataDisable(record);
+    const params = { dictCode: record.dictCode };
+    const res = await dictDataDisable(params);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await dictDataEnable(record);
+    const params = { dictCode: record.dictCode };
+    const res = await dictDataEnable(params);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const res = await dictDataDelete(record);
+    const params = { dictCode: record.dictCode };
+    const res = await dictDataDelete(params);
     showMessage(res.message);
     handleSuccess(record);
   }
 
   function handleSuccess(record: Recordable) {
-    if (record.parentCode) {
-      // showMessage('刷新节点：' + record.parentCode);
-    }
-    reload();
+    reload({ record });
   }
 </script>

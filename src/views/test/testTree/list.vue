@@ -135,7 +135,7 @@
         title: t('停用数据'),
         popConfirm: {
           title: t('是否确认停用数据'),
-          confirm: handleDisable.bind(this, { treeCode: record.treeCode }),
+          confirm: handleDisable.bind(this, record),
         },
         auth: 'test:testTree:edit',
         ifShow: () => record.status === '0',
@@ -146,7 +146,7 @@
         title: t('启用数据'),
         popConfirm: {
           title: t('是否确认启用数据'),
-          confirm: handleEnable.bind(this, { treeCode: record.treeCode }),
+          confirm: handleEnable.bind(this, record),
         },
         auth: 'test:testTree:edit',
         ifShow: () => record.status === '2',
@@ -157,7 +157,7 @@
         title: t('删除数据'),
         popConfirm: {
           title: t('是否确认删除数据'),
-          confirm: handleDelete.bind(this, { treeCode: record.treeCode }),
+          confirm: handleDelete.bind(this, record),
         },
         auth: 'test:testTree:edit',
       },
@@ -208,24 +208,27 @@
   }
 
   async function handleDisable(record: Recordable) {
-    const res = await testTreeDisable(record);
+    const params = { treeCode: record.treeCode };
+    const res = await testTreeDisable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleEnable(record: Recordable) {
-    const res = await testTreeEnable(record);
+    const params = { treeCode: record.treeCode };
+    const res = await testTreeEnable(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
   async function handleDelete(record: Recordable) {
-    const res = await testTreeDelete(record);
+    const params = { treeCode: record.treeCode };
+    const res = await testTreeDelete(params);
     showMessage(res.message);
-    handleSuccess();
+    handleSuccess(record);
   }
 
-  function handleSuccess() {
-    reload();
+  function handleSuccess(record: Recordable) {
+    reload({ record });
   }
 </script>
