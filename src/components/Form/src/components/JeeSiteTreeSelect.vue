@@ -72,6 +72,10 @@
       treeCheckable: propTypes.bool,
       treeDataSimpleMode: propTypes.bool.def(true),
       canSelectParent: propTypes.bool.def(true),
+      // 是否返回全路径，包含所有上级信息，以 returnFullNameSplit 参数分隔
+      returnFullName: propTypes.bool.def(false),
+      // 是否返回全路径，的分隔符，默认“/”
+      returnFullNameSplit: propTypes.string.def('/'),
     },
     emits: ['options-change', 'change', 'click'],
     setup(props, { emit }) {
@@ -96,7 +100,10 @@
           getPopupContainer: () => document.body,
           ...unref(attrs),
           ...(props as Recordable),
-        };
+        } as any;
+        if (props.returnFullName) {
+          propsData.treeNodeLabelProp = '_fullName';
+        }
         return omit(propsData, 'treeData');
       });
 
@@ -174,6 +181,7 @@
                 }
               }
             },
+            fullNameSplit: props.returnFullNameSplit,
           });
         }
         return treeData;
