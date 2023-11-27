@@ -51,7 +51,7 @@
         formKey="${table.optionMap['bpmFormKey']}"
         completeText="提交"
         :loading="loadingRef"
-        :auth="'oa:oaLeave:edit'"
+        :auth="'${permissionPrefix}:edit'"
         @complete="handleSubmit"
         @success="handleSuccess"
         @close="closeDrawer"
@@ -576,17 +576,17 @@ for (c in table.columnList){
   async function handleSubmit() {
     try {
       const data = await validate();
-      <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
       data.bpm = record.value.bpm; // 流程信息
       data.status = record.value.status; // 提交状态
       loadingRef.value = true;
-      <% } %>
+    <% } %>
       setDrawerProps({ confirmLoading: true });
       const params: any = {
         isNewRecord: record.value.isNewRecord,
   <%
   for (c in table.columnList){
-  if (c.isPk == '1' || c.showType == 'hidden'){ %>
+    if (c.isPk == '1' || c.showType == 'hidden'){ %>
         ${c.attrName}: record.value.${c.attrName},
       <% 
     }
@@ -595,6 +595,9 @@ for (c in table.columnList){
       };
     <% for (child in table.childList){ %>
       data.${@StringUtils.uncap(child.className)}List = await get${child.className}List();
+    <% } %>
+    <% if(table.isTreeEntity){ %>
+      data.oldParentCode = record.value.parentCode;
     <% } %>
       // console.log('submit', params, data, record);
       const res = await ${className}Save(params, data);
