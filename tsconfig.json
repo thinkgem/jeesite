@@ -27,11 +27,11 @@
     }
   },
   "include": [
-    "tests/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "tests/**/*.ts",
     "types/**/*.d.ts",
     "types/**/*.ts",
     "build/**/*.ts",

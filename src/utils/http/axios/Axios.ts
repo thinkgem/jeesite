@@ -78,7 +78,7 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // Request interceptor configuration processing
-    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig | any) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
       const ignoreCancelToken = config.headers?.ignoreCancelToken;
 
@@ -134,7 +134,7 @@ export class VAxios {
         formData.append(key, params.data[key]);
       });
     }
-    formData.append(params.name || 'file', params.file, params.filename);
+    formData.append(params.name || 'file', params.file as any, params.filename);
     const customParams = omit(params, 'file', 'filename');
 
     Object.keys(customParams).forEach((key) => {

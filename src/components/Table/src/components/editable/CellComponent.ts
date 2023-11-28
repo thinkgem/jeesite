@@ -14,7 +14,7 @@ export interface ComponentProps {
 }
 
 export const CellComponent: FunctionalComponent = (
-  { component = 'Input', rule = true, ruleMessage, popoverOpen, getPopupContainer }: ComponentProps,
+  { component = 'Input', rule = true, ruleMessage, popoverOpen }: ComponentProps,
   { attrs },
 ) => {
   const Comp = componentMap.get(component) as typeof defineComponent;
@@ -31,7 +31,7 @@ export const CellComponent: FunctionalComponent = (
       //...(getPopupContainer ? { getPopupContainer } : {}),
       placement: 'right',
       autoAdjustOverflow: false,
-      getPopupContainer: (trigger: HTMLElement) => {
+      getPopupContainer: (trigger: HTMLElement | any) => {
         return trigger.parentElement;
       },
     },

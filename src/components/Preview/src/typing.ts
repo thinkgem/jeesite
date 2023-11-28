@@ -1,3 +1,5 @@
+export type OptionsImgEvent = { index: number; url: string; dom: HTMLImageElement };
+
 export interface Options {
   show?: boolean;
   imageList: string[];
@@ -6,8 +8,8 @@ export interface Options {
   defaultWidth?: number;
   maskClosable?: boolean;
   rememberState?: boolean;
-  onImgLoad?: ({ index: number, url: string, dom: HTMLImageElement }) => void;
-  onImgError?: ({ index: number, url: string, dom: HTMLImageElement }) => void;
+  onImgLoad?: (event: OptionsImgEvent) => void;
+  onImgError?: (event: OptionsImgEvent) => void;
 }
 
 export interface Props {

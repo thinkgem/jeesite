@@ -14,7 +14,7 @@ interface Options {
 
 function getKey(
   record: Recordable,
-  rowKey: string | ((record: Record<string, any>) => string) | undefined,
+  rowKey: string | ((record: Recordable, defaultValue?: any) => string) | undefined,
   autoCreateKey?: boolean,
 ) {
   if (!rowKey || autoCreateKey) {

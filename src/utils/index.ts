@@ -55,11 +55,35 @@ export function openWindow(
   window.open(url, target, feature.join(','));
 }
 
+export function openWindowLayer(url: string, opt?: { width?: number; height?: number }) {
+  let layerWidth = opt?.width || $(window).width();
+  if (layerWidth < 800) {
+    layerWidth -= 15 * 2;
+  } else {
+    layerWidth -= 100 * 2;
+  }
+  let layerHeight = opt?.height || $(window).height();
+  if (layerHeight < 500) {
+    layerHeight -= 15 * 2;
+  } else {
+    layerHeight -= 25 * 2;
+  }
+  window.layer.open({
+    type: 2,
+    maxmin: true,
+    shadeClose: true, // 点击背景关闭
+    title: false,
+    area: [layerWidth + 'px', layerHeight + 'px'],
+    method: 'get',
+    content: url,
+  });
+}
+
 // dynamic use hook props
 export function getDynamicProps<T, U>(props: T): Partial<U> {
   const ret: Recordable = {};
 
-  Object.keys(props).map((key) => {
+  Object.keys(props as any).map((key) => {
     ret[key] = unref((props as Recordable)[key]);
   });
 

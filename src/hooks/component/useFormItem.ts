@@ -91,7 +91,7 @@ export function useRuleFormItem<T extends Recordable>(
       innerState.value = value as T[keyof T];
       return innerState.value;
     },
-    set(value) {
+    set(value: any) {
       if (isEqual(value, defaultState.value)) return;
       innerState.value = value as T[keyof T];
       nextTick(() => {

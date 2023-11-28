@@ -35,15 +35,16 @@ export function renderThumbStyle({ move, size, bar }) {
   return style;
 }
 
-function extend<T, K>(to: T, _from: K): T & K {
-  return Object.assign(to, _from);
-}
+// function extend<T, K>(to: T, from: K): T & K {
+//   return Object.assign(to, from);
+// }
 
 export function toObject<T>(arr: Array<T>): Recordable<T> {
   const res = {};
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]) {
-      extend(res, arr[i]);
+      // extend(res, arr[i]);
+      Object.assign(res, arr[i]);
     }
   }
   return res;

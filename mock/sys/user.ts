@@ -40,11 +40,9 @@ export function createFakeUserList() {
 
 const fakeCodeList: any = {
   '1': ['1000', '3000', '5000'],
-
   '2': ['2000', '4000', '6000'],
 };
 export default [
-  // mock user login
   {
     url: '/basic-api/login',
     timeout: 200,
