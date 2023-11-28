@@ -9,6 +9,17 @@
       <template #tableTitle>
         <Icon :icon="getTitle.icon" class="pr-1 m-1" />
         <span> {{ getTitle.value }} </span>
+        <Popconfirm :title="t('是否确认删除选中的用户吗？')" @confirm="handleDeleteSelected()">
+          <a-button
+            danger
+            type="default"
+            v-if="selectedRowKeysRef.length > 0"
+            v-auth="'sys:empUser:edit'"
+            class="ml-4"
+          >
+            <Icon icon="ant-design:delete-outlined" color="error" /> {{ t('删除') }}
+          </a-button>
+        </Popconfirm>
       </template>
       <template #toolbar>
         <a-button type="default" @click="handleExport()">
@@ -34,6 +45,7 @@
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserList">
   import { onMounted, watch, ref, unref } from 'vue';
+  import { Popconfirm } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGlobSetting } from '/@/hooks/setting';
@@ -299,6 +311,7 @@
     ],
   };
 
+  const selectedRowKeysRef = ref<string[]>([]);
   const [registerDrawer, { openDrawer }] = useDrawer();
   const [registerAuthDataSourceDrawer, { openDrawer: openAuthDataScopeDrawer }] = useDrawer();
   const [registerTable, { reload, getForm }] = useTable({
@@ -315,6 +328,11 @@
     useSearchForm: true,
     canResize: true,
     // pagination: { defaultPageSize: 10 },
+    defaultRowSelection: {
+      onChange: (selectedRowKeys: string[], _selectedRows: Recordable[]) => {
+        selectedRowKeysRef.value = selectedRowKeys;
+      },
+    },
   });
 
   onMounted(async () => {
@@ -376,6 +394,23 @@
     const res = await empUserDelete(record);
     showMessage(res.message);
     handleSuccess(record);
+  }
+
+  async function handleDeleteSelected() {
+    let message: any[] = [];
+    for (const userCode of selectedRowKeysRef.value) {
+      try {
+        await empUserDelete({ userCode });
+      } catch (e: any) {
+        message.push(e.message);
+      }
+    }
+    if (message.length == 0) {
+      message.push(t('批量删除成功！'));
+    }
+    selectedRowKeysRef.value = [];
+    showMessage(message.join(', '));
+    handleSuccess({});
   }
 
   function handleFormAuthDataScope(record: Recordable) {
