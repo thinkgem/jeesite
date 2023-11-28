@@ -29,8 +29,8 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { infoSavePwd } from '/@/api/sys/user';
   import { useUserStore } from '/@/store/modules/user';
+  import { PageEnum } from '/@/enums/pageEnum';
   import { Alert } from 'ant-design-vue';
-  import { router } from '/@/router';
 
   const userStore = useUserStore();
   const getModifyPasswordMsg = computed(() => {
@@ -38,7 +38,7 @@
   });
 
   const { t } = useI18n();
-  const { showMessage } = useMessage();
+  const { showMessage, createSuccessModal } = useMessage();
   const getTitle = {
     icon: 'ion:key-outline',
     value: t('sys.account.modifyPwd'),
@@ -99,10 +99,19 @@
     try {
       const data = await validate();
       const res = await infoSavePwd(data);
-      showMessage(res.message);
-      if (res.result == 'true' && getModifyPasswordMsg.value) {
-        userStore.setPageCache('modifyPasswordMsg', undefined);
-        router.replace('/');
+      if (res.result == 'true') {
+        if (getModifyPasswordMsg.value) {
+          userStore.setPageCache('modifyPasswordMsg', undefined);
+        }
+        createSuccessModal({
+          content: res.message,
+          onOk: () => {
+            const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
+            window.location.href = (publicPath == '/' ? '' : publicPath) + PageEnum.BASE_HOME;
+          },
+        });
+      } else {
+        showMessage(res.message);
       }
     } catch (error: any) {
       if (error && error.errorFields) {
