@@ -4,7 +4,7 @@
 <template>
 	<name>vueSelect</name>
 	<filePath>${frontDir}/src/components/ListSelect/src/selectType</filePath>
-	<fileName>${urlPrefix}Select.ts</fileName>
+	<fileName>${className}Select.ts</fileName>
 	<content><![CDATA[
 import { useI18n } from '/@/hooks/web/useI18n';
 import { BasicColumn, BasicTableProps, FormProps } from '/@/components/Table';

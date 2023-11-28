@@ -340,6 +340,52 @@ for (c in table.columnList){
     },
 <%
   }
+  if(toBoolean(table.optionMap['isBpmForm'])){
+%>
+    {
+      label: t('审批意见'),
+      field: 'bpm.comment',
+      component: 'InputTextArea',
+      componentProps: {
+        maxlength: 500,
+      },
+      colProps: { lg: 24, md: 24 },
+      show: () => record.value.bpm.status != '2',
+    },
+    {
+      label: t('下一步流程信息'),
+      field: 'nextTaskInfo',
+      component: 'FormGroup',
+      colProps: { lg: 24, md: 24 },
+    },
+    {
+      label: t('要求完成时间'),
+      field: 'bpm.dueDate',
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD HH:mm',
+        showTime: { format: 'HH:mm' },
+      },
+    },
+    {
+      label: t('任务优先级'),
+      field: 'bpm.priority',
+      component: 'Select',
+      componentProps: {
+        dictType: 'bpm_task_priority',
+        allowClear: true,
+      },
+    },
+    {
+      label: t('下一步处理人'),
+      field: 'bpm.nextUserCodes',
+      component: 'ListSelect',
+      componentProps: {
+        selectType: 'empUserSelect',
+      },
+    },
+<%
+  }
 %>
   ];
 <%
