@@ -331,9 +331,9 @@ $("#inputFormPwd").validate({
 			if(data.result == Global.TRUE){
 				js.alert(data.message, function(){
 					if ('${parameter.url}'!=''){
-						location = '${ctxPath}${parameter.url}';
+						js.window.location = '${ctxPath}${parameter.url}';
 					}else{
-						location = '${ctx}/sys/user/info?op=mpd';
+						js.window.location = '${ctx}/sys/user/info?op=mpd';
 					}
 				});
 			}else{
