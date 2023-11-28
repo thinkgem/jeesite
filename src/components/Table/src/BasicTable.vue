@@ -202,6 +202,10 @@
         setSelectedRowKeys,
       } = useRowSelection(getProps, tableData, emit);
 
+      const getDefaultRowSelection = () => {
+        return unref(getProps).defaultRowSelection || getRowSelection();
+      };
+
       const { getExpandOption, expandAll, collapseAll, expandRows, expandCollapse } =
         useTableExpand(getProps, tableData, formActions.getFieldsValue, emit, setLoading);
 
@@ -421,6 +425,7 @@
         getRawDataSource,
         setProps,
         getRowSelection,
+        getDefaultRowSelection,
         getPaginationRef: getPagination,
         getColumns,
         getCacheColumns,

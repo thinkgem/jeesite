@@ -156,7 +156,7 @@
       const { t } = useI18n();
       const table = useTableContext();
 
-      const defaultRowSelection = omit(table.getRowSelection(), 'selectedRowKeys');
+      const defaultRowSelection = omit(table.getDefaultRowSelection(), 'selectedRowKeys');
       let inited = false;
 
       const cachePlainOptions = ref<Options[]>([]);

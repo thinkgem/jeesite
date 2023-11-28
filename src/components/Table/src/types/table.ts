@@ -116,6 +116,7 @@ export interface TableActionType {
   getPaginationRef: () => PaginationProps | boolean;
   getSize: () => SizeType;
   getRowSelection: () => TableRowSelection<Recordable>;
+  getDefaultRowSelection?: () => TableRowSelection<Recordable>;
   getCacheColumns: () => BasicColumn[];
   emit?: EmitType;
   updateTableData: (index: number, key: string, value: any) => Recordable;
@@ -210,7 +211,7 @@ export interface BasicTableProps<T = any> {
   // 在分页改变的时候清空选项
   clearSelectOnPageChange?: boolean;
   // 主键名称
-  rowKey?: string | ((record: Recordable, defaultValue: any) => string);
+  rowKey?: string | ((record: Recordable, defaultValue?: any) => string);
   // 数据
   dataSource?: Recordable[];
   // 标题右侧提示
@@ -313,6 +314,7 @@ export interface BasicTableProps<T = any> {
    * @type object
    */
   rowSelection?: TableRowSelection;
+  defaultRowSelection?: TableRowSelection;
 
   /**
    * Set horizontal or vertical scrolling, can also be used to specify the width and height of the scroll area.
