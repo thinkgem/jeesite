@@ -623,7 +623,7 @@ for (c in table.columnList){
     try {
       const data = await validate();
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
-      data.bpm = record.value.bpm; // 流程信息
+      data.bpm = Object.assign(data.bpm || {}, record.value.bpm); // 流程信息
       data.status = record.value.status; // 提交状态
       loadingRef.value = true;
     <% } %>
