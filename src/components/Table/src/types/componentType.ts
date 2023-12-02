@@ -5,6 +5,7 @@ export type ComponentType =
   | 'Select'
   | 'AutoComplete'
   | 'TreeSelect'
+  | 'ListSelect'
   | 'Checkbox'
   | 'Switch'
   | 'DatePicker'

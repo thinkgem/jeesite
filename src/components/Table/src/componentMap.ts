@@ -10,6 +10,7 @@ import {
 } from 'ant-design-vue';
 import type { ComponentType } from './types/componentType';
 import { Select, TreeSelect } from '/@/components/Form';
+import { ListSelect } from '/@/components/ListSelect';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -18,6 +19,7 @@ componentMap.set('InputTextArea', Input.TextArea);
 componentMap.set('InputNumber', InputNumber);
 componentMap.set('Select', Select);
 componentMap.set('TreeSelect', TreeSelect);
+componentMap.set('ListSelect', ListSelect);
 componentMap.set('Switch', Switch);
 componentMap.set('Checkbox', Checkbox);
 componentMap.set('DatePicker', DatePicker);
