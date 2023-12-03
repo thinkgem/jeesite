@@ -363,13 +363,13 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid tr.dragClass td,
 .ui-jqgrid tr.dragClass td input,
 .ui-jqgrid tr.dragClass td .select2-container--default .select2-selection--single {
-    color:yellow!important;
-    background-color:#999!important;
-    text-shadow:0 0 10px black, 0 0 10px black, 0 0 8px black, 0 0 6px black, 0 0 6px black;
-    box-shadow:0 12px 14px -12px #111 inset, 0 -2px 2px -1px #333 inset;
+    /*color:yellow!important;*/
+    background-color:rgb(240 242 245 / 57%)!important;
+    /*text-shadow:0 0 10px #ddd, 0 0 10px #ddd, 0 0 8px #ddd, 0 0 6px #ddd, 0 0 6px #ddd;*/
+    /*box-shadow:0 12px 14px -12px #111 inset, 0 -2px 2px -1px #333 inset;*/
 }
 .ui-jqgrid tr.dragClass td .select2-container--default .select2-selection--single .select2-selection__rendered {
-	color:yellow!important;
+	/*color:yellow!important;*/
 }
 /* 拖拽表头目标样式 */
 .ui-jqgrid .ui-state-highlight {background:#eee;}
