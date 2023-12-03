@@ -1,5 +1,5 @@
 <script>
-var selectData = \${isNotBlank(selectData!) ? selectData! : "{\}"},
+var selectData = \"#{isNotBlank(selectData!) ? selectData! : '{}'}",
 selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
@@ -81,7 +81,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		} %>', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
 	<% } %>
 	autoGridHeight: function(){
-		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 74;
+		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 76;
 		$('.tags-input').height($('.ui-jqgrid').height() - 10);
 		return height;
 	},

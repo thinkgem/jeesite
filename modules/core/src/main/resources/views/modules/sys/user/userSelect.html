@@ -58,7 +58,7 @@
 </div>
 <% } %>
 <script>
-var selectData = ${isNotBlank(selectData!) ? selectData! : "{\}"},
+var selectData = "#{isNotBlank(selectData!) ? selectData! : '{}'}",
 selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
