@@ -42,7 +42,7 @@ public class PropertyLoader implements org.springframework.boot.env.PropertySour
 			try {
 				// 默认开启 FastJSON 1.x 的，安全模式
 				ParserConfig.getGlobalInstance().setSafeMode(true);
-			} catch (NoSuchMethodError ignored) {
+			} catch (Throwable ignored) {
 				// 兼容 FastJSON 2.x 的调用，忽略异常
 			}
 			Properties properties = PropertiesUtils.getInstance().getProperties();
