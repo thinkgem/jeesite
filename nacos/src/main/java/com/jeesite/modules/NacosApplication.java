@@ -27,7 +27,7 @@ public class NacosApplication extends SpringBootServletInitializer {
 	private static void initialize() {
 		System.setProperty("nacos.standalone", "true");
 		if (StringUtils.isBlank(System.getProperty("nacos.home"))) {
-			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5boot3");
+			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5");
 		}
 		System.setProperty("derby.stream.error.file", System.getProperty("nacos.home") + "/.derby.log");
 	}
