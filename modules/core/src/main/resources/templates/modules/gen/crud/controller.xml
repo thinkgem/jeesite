@@ -301,6 +301,11 @@ public class ${ClassName}Controller extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(${ClassName} ${className}) {
+		<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+		if (!${ClassName}.STATUS_DRAFT.equals(${className}.getStatus())){
+			return renderResult(Global.FALSE, text("只能删除草稿状态的数据！"));
+		}
+		<% } %>
 		${className}Service.delete(${className});
 		return renderResult(Global.TRUE, text("删除${functionNameSimple}成功！"));
 	}

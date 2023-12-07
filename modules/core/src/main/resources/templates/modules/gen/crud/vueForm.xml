@@ -50,8 +50,10 @@
         bpmEntityKey="id"
         formKey="${table.optionMap['bpmFormKey']}"
         completeText="提交"
+        :completeModal="true"
         :loading="loadingRef"
         :auth="'${permissionPrefix}:edit'"
+        @validate="handleValidate"
         @complete="handleSubmit"
         @success="handleSuccess"
         @close="closeDrawer"
@@ -215,7 +217,7 @@ for (c in table.columnList){
       },
   <% }else{ %>
       component: 'Input',
-  <% } 
+  <% }
   var fieldValid = c.optionMap['fieldValid'], fvs = [], rules = [];
   if(isNotEmpty(fieldValid)){
     var t = type.name(fieldValid);
@@ -278,7 +280,7 @@ for (c in table.columnList){
     }
   } else { %>
       rules: [<%
-    if(c.isRequired == '1'){ 
+    if(c.isRequired == '1'){
           %>{ required: true }, <%
         }
         for (var rule in rules){
@@ -340,7 +342,7 @@ for (c in table.columnList){
     },
 <%
   }
-  if(toBoolean(table.optionMap['isBpmForm'])){
+  if(false && toBoolean(table.optionMap['isBpmForm'])){
 %>
     {
       label: t('审批意见'),
@@ -612,20 +614,36 @@ for (c in table.columnList){
   <% if(updateSchemas.~size > 0){ %>
     updateSchema([
     <% for(updateSchema in updateSchemas){
-      print(updateSchema + '\n');  
+      print(updateSchema + '\n');
     } %>
     ]);
   <% } %>
     setDrawerProps({ loading: false });
   });
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 
-  async function handleSubmit() {
+  async function handleValidate(_event: any, formData: any) {
     try {
       const data = await validate();
+      formData(true, data); // 将表单数据传递给 BpmButton
+    } catch (error: any) {
+      if (error && error.errorFields) {
+        showMessage(t('common.validateError'));
+      }
+      console.log('error', error);
+    }
+  }
+  <% } %>
+
+  async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event: any<% } %>) {
+    try {
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+      const data = event.formData; // 接受 BpmButton 传递过来的表单数据
       data.bpm = Object.assign(data.bpm || {}, record.value.bpm); // 流程信息
       data.status = record.value.status; // 提交状态
       loadingRef.value = true;
+    <% } else { %>
+      const data = await validate();
     <% } %>
       setDrawerProps({ confirmLoading: true });
       const params: any = {
