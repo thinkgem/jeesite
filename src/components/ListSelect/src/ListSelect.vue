@@ -46,6 +46,9 @@
         default: 'userSelect',
       },
 
+      // 配置文件地址，是 selectType 更自由的设置，不限定路径
+      configUrl: propTypes.string,
+
       // 请求参数（列表查询默认值）
       queryParams: {
         type: Object as PropType<Recordable>,
@@ -118,7 +121,11 @@
       }
 
       onMounted(async () => {
-        configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
+        if (props.configUrl) {
+          configRef.value = (await import(`/@/views/${props.configUrl}.ts`)).default as any;
+        } else {
+          configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
+        }
         modalComponent.value = createAsyncComponent(() => import('./ListSelectModal.vue'));
         if (!itemCode.value) {
           itemCode.value = configRef.value.itemCode;

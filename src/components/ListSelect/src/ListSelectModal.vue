@@ -7,9 +7,9 @@
 <template>
   <BasicModal
     v-bind="$attrs"
-    @register="register"
     :title="props.config.modalProps?.title || t('数据选择')"
     wrapClassName="jeesite-listselect"
+    @register="registerModal"
     @ok="handleSubmit"
     width="80%"
   >
@@ -47,7 +47,8 @@
             style="margin: 3px 5px 0 0"
             :color="token.colorPrimary"
           >
-            {{ item[props.config.itemName] + ' (' + item[props.config.itemCode] + ')' }}
+            {{ item[props.config.itemName] }}
+            {{ props.config.showCode !== false ? ' (' + item[props.config.itemCode] + ')' : '' }}
           </Tag>
         </div>
       </ACol>
@@ -115,7 +116,6 @@
     useSearchForm: true,
     canResize: true,
     resizeHeightOffset: 100,
-    // ...(props.checkbox ? { rowSelection } : {}),
     rowSelection,
     ...props.config?.tableProps,
     afterFetch: () => {
@@ -125,7 +125,7 @@
 
   const [registerTable, tableAction] = useTable(tableProps);
 
-  const [register, { closeModal, setModalProps }] = useModalInner(async (data) => {
+  const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data) => {
     //setModalProps({ loading: true });
     //console.log(data);
     selectList.value = data.selectList;
