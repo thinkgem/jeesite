@@ -85,6 +85,7 @@
 可带变量，变量格式  {变量名}
    1、{ssoToken} : 单点登录的token编码，url参数中的参数分隔符请使用“%26”进行转义，
 	例如：{projectUrl}/sso/{ssoToken}?url=/sys/user/list?p1=v1%26p2=v2&relogin=true
+	{sessionId} : 当前会话编号 v5.3.0
    2、{userCode} : 当前用户编码 
    3、{userName} : 当前用户名称 
    4、{userType} : 当前用户类型
@@ -107,6 +108,29 @@
 								${text('目标(Target)')}：<i class="fa icon-question"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="menuTarget" maxlength="10" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="设置 vue 组件名称，一般不需要填写，默认是根据 “链接地址” 进行自动生成，
+只有个性化的时候才需要设置，如果填写 IFRAME 则强制使用 iframe 打开链接；
+如果填写 LAYOUT 将不在 Beetl 视图中显示菜单项
+如果填写 BEETL 则只在 Beetl 视图中显示菜单项">${text('组件名称')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="component" maxlength="9" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="可选，给组件传参，请填写 JSON 格式，前端通过定义 props 获取
+举例：链接地址填写：/test/params   组件参数填写：{aa:'aa1',bb:'bb2'}">
+								${text('组件参数')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="params" maxlength="100" class="form-control"/>
 							</div>
 						</div>
 					</div>
