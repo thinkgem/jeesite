@@ -46,8 +46,8 @@
         default: 'userSelect',
       },
 
-      // 配置文件地址，是 selectType 更自由的设置，不限定路径
-      configUrl: propTypes.string,
+      // 配置文件，是 selectType 更自由的设置，不限定路径
+      configFile: propTypes.any,
 
       // 请求参数（列表查询默认值）
       queryParams: {
@@ -121,8 +121,8 @@
       }
 
       onMounted(async () => {
-        if (props.configUrl) {
-          configRef.value = (await import(`/@/views/${props.configUrl}.ts`)).default as any;
+        if (props.configFile) {
+          configRef.value = (await props.configFile).default as any;
         } else {
           configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
         }

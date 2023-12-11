@@ -48,7 +48,7 @@
             :color="token.colorPrimary"
           >
             {{ item[props.config.itemName] }}
-            {{ props.config.showCode !== false ? ' (' + item[props.config.itemCode] + ')' : '' }}
+            {{ props.config.isShowCode !== false ? ' (' + item[props.config.itemCode] + ')' : '' }}
           </Tag>
         </div>
       </ACol>
