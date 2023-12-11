@@ -100,6 +100,7 @@
         '三、可带变量： 格式为  {变量名} ',
         '　1、{ssoToken} : 单点登录的token编码，url参数中的参数分隔符请使用“%26”进行转义，',
         '　　　例如：{projectUrl}/sso/{ssoToken}?url=/sys/user/list?p1=v1%26p2=v2&relogin=true',
+        '　　　{sessionId} : 当前会话编号 v5.3.0',
         '　2、{userCode} : 当前用户编码',
         '　3、{userName} : 当前用户名称',
         '　4、{userType} : 当前用户类型',
