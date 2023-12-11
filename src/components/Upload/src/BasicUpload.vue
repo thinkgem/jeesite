@@ -93,6 +93,7 @@
         () => props.value,
         (value) => {
           dataMap.value = value;
+          emit('update:value', dataMap.value);
         },
         { immediate: true },
       );
