@@ -7,7 +7,7 @@ jdbc:
   # Mysql 数据库配置
   type: h2
   driver: org.h2.Driver
-  url: jdbc:h2:/data/jeesite-db/jeesite552
+  url: jdbc:h2:/data/jeesite-db/jeesite560
   username: jeesite
   password: jeesite
   testSql: SELECT 1
