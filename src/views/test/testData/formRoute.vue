@@ -42,7 +42,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsTestTestDataForm">
-  import { ref, unref, computed, onMounted, watchEffect } from 'vue';
+  import { ref, unref, computed, onMounted } from 'vue';
   import { useEmitter } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -69,9 +69,9 @@
 
   const { setTitle, close } = useTabs(router);
 
-  watchEffect(() => {
+  const updateTabTitle = () => {
     setTitle(record.value.isNewRecord ? t('新增数据') : t('编辑数据'));
-  });
+  };
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -459,6 +459,7 @@
     record.value.__t = new Date().getTime();
     setFieldsValue(record.value);
     setTestDataChildTableData(res);
+    updateTabTitle();
   });
 
   function handleClose() {
