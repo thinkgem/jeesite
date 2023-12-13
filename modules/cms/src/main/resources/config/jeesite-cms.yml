@@ -18,18 +18,7 @@ j2cache:
       cmsPageCache: 100000, 7d
 
 #spring:
-#  data:
-#    elasticsearch:
-#      # 开启 ES 功能
-#      enabled: true
-#
-#      # 设置 ES 服务地址
-#      client:
-#        reactive:
-#          endpoints: 127.0.0.1:9200
-#
-#      # 连接超时的时间
-#      properties:
-#        transport:
-#          tcp:
-#            connect_timeout: 120s
+#  elasticsearch:
+#    enabled: true
+#    uris: http://Win11:9200
+#    connection-timeout: 120s
