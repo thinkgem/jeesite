@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.2.0</version>
 		<relativePath />
 	</parent>
 
@@ -26,47 +26,46 @@
 		<commons-text.version>1.10.0</commons-text.version>
 		<commons-email.version>1.5</commons-email.version>
 
-		<jackson-bom2.version>2.15.2</jackson-bom2.version>
-		<fastjson.version>2.0.33</fastjson.version>
+		<jackson-bom2.version>2.16.0</jackson-bom2.version>
+		<fastjson.version>2.0.43</fastjson.version>
 		<fst.version>3.0.4-jdk17</fst.version>
 
-		<snakeyaml.version>1.33</snakeyaml.version>
+		<!--<snakeyaml.version>1.33</snakeyaml.version>-->
 		<httpclient.version>4.5.14</httpclient.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 
-		<metadata-extractor.version>2.11.0</metadata-extractor.version>
-		<thumbnailator.version>0.4.19</thumbnailator.version>
-		<twelvemonkeys.version>3.9.3</twelvemonkeys.version>
+		<metadata-extractor.version>2.19.0</metadata-extractor.version>
+		<thumbnailator.version>0.4.20</thumbnailator.version>
+		<twelvemonkeys.version>3.10.1</twelvemonkeys.version>
 		<blade-patchca.version>1.1.2</blade-patchca.version>
 		<jmimemagic.version>0.1.5</jmimemagic.version>
-		<zxing.version>3.5.1</zxing.version>
+		<zxing.version>3.5.2</zxing.version>
 
 		<poi.version>5.2.3</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
-		<groovy2.version>4.0.12</groovy2.version>
+		<!--<groovy.version>4.0.15</groovy2.version>-->
 
-		<joda-time.version>2.10.4</joda-time.version>
-		<logstash-logback.version>7.3</logstash-logback.version>
-		<elasticsearch.version>7.17.8</elasticsearch.version>
-		<lucene.version>8.11.1</lucene.version>
+		<joda-time.version>2.12.5</joda-time.version>
+		<logstash-logback.version>7.4</logstash-logback.version>
+		<!--<elasticsearch.version>8.11.1</elasticsearch.version>-->
 
 		<!-- framework version setting -->
-		<mybatis.version>3.5.13</mybatis.version>
-		<mybatis-spring.version>3.0.2</mybatis-spring.version>
+		<mybatis.version>3.5.14</mybatis.version>
+		<mybatis-spring.version>3.0.3</mybatis-spring.version>
 		<jsqlparser.version>4.6</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
-		<druid.version>1.2.18</druid.version>
-		<shiro.version>2.0.0-alpha-3</shiro.version>
+		<druid.version>1.2.20</druid.version>
+		<shiro.version>2.0.0-alpha-4</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
-		<swagger3.version>2.2.8</swagger3.version>
-		<log4j2.version>2.18.0</log4j2.version>
+		<swagger3.version>2.2.19</swagger3.version>
+		<!--<log4j2.version>2.21.1</log4j2.version>-->
 
 		<!-- jdbc setting -->
 		<h2.version>1.4.200</h2.version>
 
 		<!-- environment setting -->
 		<java.version>17</java.version>
-		<tomcat2.version>10.1.10</tomcat2.version>
+		<!--<tomcat.version>10.1.16</tomcat.version>-->
 		<maven.test.skip>true</maven.test.skip>
 		<resource.delimiter>@</resource.delimiter>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
@@ -122,7 +121,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
+					<!--<version>3.8.1</version>-->
 					<configuration>
 						<parameters>true</parameters>
 						<showWarnings>true</showWarnings>
@@ -156,7 +155,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.2</version>
+					<!--<version>3.2.2</version>-->
 					<configuration>
 						<archive>
 							<manifest>
@@ -194,7 +193,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.3.2</version>
+					<!--<version>3.3.2</version>-->
 					<configuration>
 						<warSourceExcludes>
 							userfiles/**
@@ -221,7 +220,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.2.0</version>
+					<!--<version>3.2.0</version>-->
 					<configuration>
 						<propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
 						<delimiters>
@@ -235,7 +234,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<version>3.1.0</version>
+					<!--<version>3.1.0</version>-->
 				</plugin>
 
 				<!-- springboot插件 -->
@@ -260,7 +259,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.10</version>
+					<!--<version>2.10</version>-->
 					<configuration>
 						<downloadSources>${eclipse-plugin-download-sources}</downloadSources>
 						<downloadJavadocs>${eclipse-plugin-download-javadocs}</downloadJavadocs>
