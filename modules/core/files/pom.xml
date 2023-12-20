@@ -43,6 +43,20 @@
 			<version>${project.parent.version}</version>
 		</dependency> -->
 
+		<!-- 文件管理共享
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-filemanager</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
+		<!-- 对象存储（MinIO、阿里、腾讯、七牛）
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-oss-client</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency> -->
+
 		<!-- Spring Boot Tomcat
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
