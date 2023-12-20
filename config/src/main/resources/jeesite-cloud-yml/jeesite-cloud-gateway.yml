@@ -39,16 +39,16 @@ spring:
             - Path=/js/a/bpm/**,/js/bpm/**,/js/inner/api/bpm/**,/js/static/modules/bpm/**,/js/static/htmltags/bpm/**,/js/a/jeesite-cloud-module-bpm/**,/js/a/oa/oaLeave/**
 
         # 扩展模块（app、cms、filemanager、ureport、visual）
-        - id: extend
-          uri: lb://jeesite-cloud-module-extend
+        - id: extends
+          uri: lb://jeesite-cloud-module-extends
           predicates:
-            - Path=/js/a/app/**,/js/a/cms/**,/js/f/**,/js/static/modules/cmsfront/**,/js/a/filemanager/**,/js/ureport/**,/js/visual/**
+            - Path=/js/a/app/**,/js/a/cms/**,/js/f/**,/js/static/modules/cmsfront/**,/js/ureport/**,/js/visual/**,/js/static/modules/visual/**
 
         # 文件服务（file、filepreview）
         - id: files
           uri: lb://jeesite-cloud-module-files
           predicates:
-            - Path=/js/a/file/**,/js/userfiles/**,/js/static/filePreview/**
+            - Path=/js/a/file/**,/js/userfiles/**,/js/static/filePreview/**,/js/a/filemanager/**
 
         # 消息服务（msg）
         - id: msg
