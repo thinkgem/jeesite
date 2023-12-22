@@ -105,4 +105,12 @@
       text-align: right;
     }
   }
+
+  html[data-theme='dark'] {
+    .file-table {
+      thead {
+        background-color: #1a1a1a;
+      }
+    }
+  }
 </style>
