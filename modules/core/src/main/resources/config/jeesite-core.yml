@@ -451,6 +451,9 @@ shiro:
     /userfiles/** = anon
     /validCode = anon
     /static/** = anon
+    /oauth2/login/** = anon
+    /oauth2/binder/** = anon
+    /oauth2/callback/** = anon
     /oauth2/authorize = user
     /druid/** = perms[sys:state:druid]
     /bpm/modeler/** = perms[bpm:modeler]
