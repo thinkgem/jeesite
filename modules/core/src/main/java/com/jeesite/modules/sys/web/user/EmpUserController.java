@@ -4,29 +4,6 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import io.swagger.annotations.Api;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
@@ -41,20 +18,28 @@ import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.EmpUser;
-import com.jeesite.modules.sys.entity.Employee;
-import com.jeesite.modules.sys.entity.Post;
-import com.jeesite.modules.sys.entity.Role;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.entity.UserDataScope;
-import com.jeesite.modules.sys.service.EmpUserService;
-import com.jeesite.modules.sys.service.EmployeeService;
-import com.jeesite.modules.sys.service.PostService;
-import com.jeesite.modules.sys.service.RoleService;
-import com.jeesite.modules.sys.service.UserService;
+import com.jeesite.modules.sys.entity.*;
+import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.ModuleUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 员工用户Controller
@@ -279,19 +264,20 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
 	@RequestMapping(value = "disable")
-	public String disable(EmpUser empUser) {
+	public String disable(EmpUser empUser, boolean freeze) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
+		String text = freeze ? "冻结" : "停用";
 		if (empUser.currentUser().getUserCode().equals(empUser.getUserCode())) {
-			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
+			return renderResult(Global.FALSE, text(text + "用户失败，不允许" + text + "当前用户"));
 		}
-		empUser.setStatus(User.STATUS_DISABLE);
+		empUser.setStatus(freeze ? User.STATUS_FREEZE : User.STATUS_DISABLE);
 		empUserService.updateStatus(empUser);
-		return renderResult(Global.TRUE, text("停用用户''{0}''成功", empUser.getUserName()));
+		return renderResult(Global.TRUE, text(text + "用户''{0}''成功", empUser.getUserName()));
 	}
 	
 	/**
@@ -302,17 +288,18 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
 	@RequestMapping(value = "enable")
-	public String enable(EmpUser empUser) {
+	public String enable(EmpUser empUser, boolean freeze) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
+		String text = freeze ? "解冻" : "启用";
 		empUser.setStatus(User.STATUS_NORMAL);
 		empUserService.updateStatus(empUser);
 		AuthorizingRealm.isValidCodeLogin(empUser.getLoginCode(), empUser.getCorpCode_(), null, "success");
-		return renderResult(Global.TRUE, text("启用用户''{0}''成功", empUser.getUserName()));
+		return renderResult(Global.TRUE, text(text + "用户''{0}''成功", empUser.getUserName()));
 	}
 	
 	/**

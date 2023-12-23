@@ -70,7 +70,7 @@
 						<label class="control-label">${text('机构')}：</label>
 						<div class="control-inline width-90">
 							<#form:treeselect id="office" title="${text('机构选择')}"
-									path="employee.office.officeCode" labelPath="employee.office.officeName" 
+									path="employee.office.officeCode" labelPath="employee.office.officeName"
 									url="${ctx}/sys/office/treeData?ctrlPermi=${ctrlPermi}"
 									btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 						</div>
@@ -79,7 +79,7 @@
 						<label class="control-label">${text('公司')}：</label>
 						<div class="control-inline width-90">
 							<#form:treeselect id="company" title="${text('公司选择')}"
-									path="employee.company.companyCode" labelPath="employee.company.companyName" 
+									path="employee.company.companyCode" labelPath="employee.company.companyName"
 									url="${ctx}/sys/company/treeData?ctrlPermi=${ctrlPermi}"
 									btnClass="btn-sm" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 						</div>
@@ -123,7 +123,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:125, align:"center", frozen:true, fixed:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/sys/empUser/form?userCode='+row.userCode+'&op=edit" class="btnList" data-title="${text("编辑用户")}">'+(val||row.id)+'</a>';
@@ -147,8 +147,10 @@ $('#dataGrid').dataGrid({
 			//# if(hasPermi('sys:empUser:updateStatus')){
 				if (row.status == Global.STATUS_NORMAL){
 					actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'" class="btnList" title="${text("停用用户")}" data-confirm="${text("确认要停用该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
-				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_FREEZE || row.status == Global.STATUS_AUDIT){
+				}else if (row.status == Global.STATUS_DISABLE || row.status == Global.STATUS_AUDIT){
 					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'" class="btnList" title="${text("启用用户")}" data-confirm="${text("确认要启用该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}else if (row.status == Global.STATUS_FREEZE){
+					actions.push('<a href="${ctx}/sys/empUser/enable?userCode='+row.userCode+'&freeze=true" class="btnList" title="${text("解冻用户")}" data-confirm="${text("确认要解冻该用户吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
 			//# }
 			//# if(hasPermi('sys:empUser:edit')){
@@ -164,7 +166,12 @@ $('#dataGrid').dataGrid({
 					actions.push('<a href="${ctx}/sys/empUser/formAuthDataScope?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户分配数据权限")}"><i class="fa fa-check-circle-o"></i> ${text("数据权限")}</a>&nbsp;');
 				//# }
 				//# if(hasPermi('sys:empUser:resetpwd')){
-					actions.push('<a href="${ctx}/sys/empUser/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户密码重置")}" data-confirm="${text("确认要将该用户密码重置到初始状态吗？")}"><i class="fa fa-reply-all"></i> ${text("重置密码")}</a>&nbsp;');
+					actions.push('<a href="${ctx}/sys/empUser/resetpwd?userCode='+row.userCode+'" class="btn btn-default btn-xs btnList" title="${text("用户密码重置")}" data-confirm="${text("确认要将该用户密码重置到初始状态吗？")}"><i class="fa fa-key"></i> ${text("重置密码")}</a>&nbsp;');
+				//# }
+				//# if(hasPermi('sys:empUser:updateStatus')){
+				// 	if (row.status == Global.STATUS_NORMAL){
+				// 		actions.push('<a href="${ctx}/sys/empUser/disable?userCode='+row.userCode+'&freeze=true" class="btn btn-default btn-xs btnList" title="${text("冻结用户")}" data-confirm="${text("确认要冻结该用户吗？")}"><i class="glyphicon glyphicon-ban-circle"></i> ${text("冻结用户")}</a>&nbsp;');
+				// 	}
 				//# }
 				actions.push('</div>');
 			//# }
@@ -174,7 +181,7 @@ $('#dataGrid').dataGrid({
 	frozenCols: true,
 	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+
 	}
 });
 $('#btnExport').click(function(){
