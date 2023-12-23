@@ -49,7 +49,7 @@
 					<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i> ${text('查询')}</button>
 					<button type="reset" class="btn btn-default btn-sm isQuick"><i class="glyphicon glyphicon-repeat"></i> ${text('重置')}</button>
 				</div>
-			</#form:form>			
+			</#form:form>
 			<table id="dataGrid"></table>
 		</div>
 	</div>
@@ -65,9 +65,9 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("公司全称")}', name:'fullName', index:'a.full_name', width:200, align:"left"},
 		{header:'${text("排序号")}', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
-		{header:'${text("归属区域")}', name:'area.treeNames', index:'a.areaCode', width:200, align:"center"},
+		{header:'${text("归属区域")}', name:'area.treeNames', index:'a.areaCode', width:100, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
-		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:200, align:"left"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:150, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},

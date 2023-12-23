@@ -76,13 +76,13 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("角色编码")}', name:'roleCode', index:'a.role_code', width:150, align:"center"},
 		{header:'${text("排序号")}', name:'roleSort', index:'a.role_sort', width:80, align:"center"},
-// 		{header:'${text("角色分类")}', name:'roleType', index:'a.role_type', width:100, align:"center", formatter: function(val, obj, row, act){
-// 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_role_type')}", val, '未知', true);
-// 		}},
+		{header:'${text("角色分类")}', name:'roleType', index:'a.role_type', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_role_type')}", val, '未知', true);
+		}},
 		{header:'${text("用户类型")}', name:'userType', index:'a.user_type', width:100, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_user_type')}", val, '<font color=#aaa>${text("未设置")}</font>', true);
 		}},
-		{header:'${text("系统角色")}', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("系统角色")}', name:'isSys', index:'a.is_sys', width:90, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_yes_no')}", val, '未知', true);
 		}},
 		{header:'${text("数据范围")}', name:'dataScope', index:'a.data_scope', width:100, align:"center", formatter: function(val, obj, row, act){
@@ -92,11 +92,11 @@ $('#dataGrid').dataGrid({
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_role_biz_scope')}", val, '${text("未设置")}', true);
 		}},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:130, align:"center"},
-		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:160, align:"left"},
+		{header:'${text("备注信息")}', name:'remarks', index:'a.remarks', width:130, align:"left"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
 		}},
-		{header:'${text("操作")}', name:'actions', width:130, formatter: function(val, obj, row, act){
+		{header:'${text("操作")}', name:'actions', width:110, formatter: function(val, obj, row, act){
 			var actions = [];
 			//# if(hasPermi('sys:role:edit')){
 				actions.push('<a href="${ctx}/sys/role/form?roleCode='+row.roleCode+'&op=edit" class="btnList" title="${text("编辑角色")}"><i class="fa fa-pencil"></i></a>&nbsp;');
