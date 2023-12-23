@@ -269,19 +269,20 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
 	@RequestMapping(value = "disable")
-	public String disable(EmpUser empUser) {
+	public String disable(EmpUser empUser, boolean freeze) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
+		String text = freeze ? "冻结" : "停用";
 		if (empUser.currentUser().getUserCode().equals(empUser.getUserCode())) {
-			return renderResult(Global.FALSE, text("停用用户失败，不允许停用当前用户"));
+			return renderResult(Global.FALSE, text(text + "用户失败，不允许" + text + "当前用户"));
 		}
-		empUser.setStatus(User.STATUS_DISABLE);
+		empUser.setStatus(freeze ? User.STATUS_FREEZE : User.STATUS_DISABLE);
 		empUserService.updateStatus(empUser);
-		return renderResult(Global.TRUE, text("停用用户''{0}''成功", empUser.getUserName()));
+		return renderResult(Global.TRUE, text(text + "用户''{0}''成功", empUser.getUserName()));
 	}
 	
 	/**
@@ -292,17 +293,18 @@ public class EmpUserController extends BaseController {
 	@RequiresPermissions("sys:empUser:updateStatus")
 	@ResponseBody
 	@RequestMapping(value = "enable")
-	public String enable(EmpUser empUser) {
+	public String enable(EmpUser empUser, boolean freeze) {
 		if (User.isSuperAdmin(empUser.getUserCode())) {
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
+		String text = freeze ? "解冻" : "启用";
 		empUser.setStatus(User.STATUS_NORMAL);
 		empUserService.updateStatus(empUser);
 		AuthorizingRealm.isValidCodeLogin(empUser.getLoginCode(), empUser.getCorpCode_(), null, "success");
-		return renderResult(Global.TRUE, text("启用用户''{0}''成功", empUser.getUserName()));
+		return renderResult(Global.TRUE, text(text + "用户''{0}''成功", empUser.getUserName()));
 	}
 	
 	/**
