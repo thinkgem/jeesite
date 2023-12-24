@@ -41,19 +41,13 @@
       selectList: propTypes.array,
 
       // 选择类型，加载 ./selectType/*.ts 的配置。
-      selectType: {
-        type: String as PropType<string>,
-        default: 'userSelect',
-      },
+      selectType: propTypes.string.def('userSelect'),
 
       // 配置文件，是 selectType 更自由的设置，不限定路径
-      configFile: propTypes.any,
+      configFile: propTypes.any, // 例如：import('./select'),
 
       // 请求参数（列表查询默认值）
-      queryParams: {
-        type: Object as PropType<Recordable>,
-        default: () => {},
-      },
+      queryParams: propTypes.object.def({}),
 
       // 选择结果或回显数据中的编码和名称属性名（默认使用 selectType 里指定的）
       itemCode: propTypes.string,
