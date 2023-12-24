@@ -2,50 +2,46 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>vueForm</name>
+	<name>vueFormRoute</name>
 	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
-	<fileName>form.vue</fileName>
+	<fileName>formRoute.vue</fileName>
 	<content><![CDATA[
-<% var modalOrDrawer = @StringUtils.contains(table.tplCategory, '_modal') ? 'Modal' : 'Drawer'; %>
 <!--
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  * @author ${functionAuthor}
 -->
 <template>
-  <Basic${modalOrDrawer}
-    v-bind="$attrs"
-    :showFooter="true"
+  <FormPage
+    :config="formSettings"
+    :storeKey="'${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-route'"
     :okAuth="'${permissionPrefix}:edit'"
-    @register="register${modalOrDrawer}"
+    :loading="loadingRef"
+    @close="handleClose"
     @ok="handleSubmit"
-    width="60%"
   >
-    <template #title>
-      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
-      <span> {{ getTitle.value }} </span>
+    <template #main>
+      <BasicForm @register="registerForm" />
     </template>
-    <% if (table.childList.~size > 0){ %>
-    <BasicForm @register="registerForm">
-      <% for (child in table.childList){ %>
-      <template #${@StringUtils.uncap(child.className)}List>
-        <BasicTable
-          @register="register${child.className}Table"
-          @row-click="handle${child.className}RowClick"
-        />
-        <% if(table.tplCategory != 'query'){ %>
-        <a-button class="mt-2" @click="handle${child.className}Add" v-auth="'${permissionPrefix}:edit'">
-          <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
-        </a-button>
-        <% } %>
-      </template>
-      <% } %>
-    </BasicForm>
-    <% }else{ %>
-    <BasicForm @register="registerForm" />
+    <% for (child in table.childList){ %>
+    <template #${@StringUtils.uncap(child.className)}>
+      <BasicForm @register="register${child.className}Form">
+        <template #${@StringUtils.uncap(child.className)}List>
+          <BasicTable
+            @register="register${child.className}Table"
+            @row-click="handle${child.className}RowClick"
+          />
+          <% if(table.tplCategory != 'query'){ %>
+          <a-button class="mt-2" @click="handle${child.className}Add" v-auth="'${permissionPrefix}:edit'">
+            <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+          </a-button>
+          <% } %>
+        </template>
+      </BasicForm>
+    </template>
     <% } %>
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
-    <template #footer>
+    <template #actions>
       <BpmButton
         v-model:bpmEntity="record"
         bpmEntityKey="id"
@@ -57,23 +53,28 @@
         @validate="handleValidate"
         @complete="handleSubmit"
         @success="handleSuccess"
-        @close="close${modalOrDrawer}"
+        @close="handleClose"
+        size="small"
       />
     </template>
     <% } %>
-  </Basic${modalOrDrawer}>
+    <template #other>
+      <div>其它选项的内容，按需添加，也可以删除。</div>
+    </template>
+  </FormPage>
 </template>
 <script lang="ts" setup name="${compNamePrefix}Form">
-  import { ref, unref, computed } from 'vue';
+  import { ref, unref, computed, onMounted } from 'vue';
+  import { useEmitter } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
+  import { FormPage } from '/@/components/FormPage';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
 <% if (table.childList.~size > 0){ %>
   import { BasicTable, useTable } from '/@/components/Table';
 <% } %>
-  import { Basic${modalOrDrawer}, use${modalOrDrawer}Inner } from '/@/components/${modalOrDrawer}';
   import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
 <%
 var userselectExists = false;
@@ -100,21 +101,41 @@ for(c in table.columnList){
 <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
   import { BpmButton } from '/@/components/Bpm';
 <% } %>
+  import { useQuery } from '/@/hooks/web/usePage';
+  import { useTabs } from '/@/hooks/web/useTabs';
 
-  const emit = defineEmits(['success', 'register']);
+  const formSettings = ref<any[]>([
+    {
+      label: '基础表单',
+      value: 'main',
+      show: true,
+    },
+    <% for (child in table.childList){ %>
+    {
+      label: '${child.comments}',
+      value: '${@StringUtils.uncap(child.className)}',
+      show: true,
+    },
+    <% } %>
+    {
+      label: '其它选项',
+      value: 'other',
+      show: false,
+    },
+  ]);
+
+  const emitter = useEmitter();
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
-  const { meta } = unref(router.currentRoute);
+  const { setTitle, close } = useTabs(router);
   const record = ref<${ClassName}>({} as ${ClassName});
-<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
-  const loadingRef = ref(false);
-<% } %>
+  const loadingRef = ref<boolean>(false);
+  const query = useQuery();
 
-  const getTitle = computed(() => ({
-    icon: meta.icon || 'ant-design:book-outlined',
-    value: record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'),
-  }));
+  const updateTabTitle = () => {
+    setTitle(record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'));
+  };
 
   const inputFormSchemas: FormSchema[] = [
   <% if(table.isTreeEntity){ %>
@@ -331,20 +352,25 @@ for (c in table.columnList){
       },
       colProps: { lg: 24, md: 24 },
     },
+  ];
   <%
   }
   for (child in table.childList){ %>
+
+  const input${child.className}FormSchemas: FormSchema[] = [
     {
-      label: t('${child.comments}'),
       field: '${@StringUtils.uncap(child.className)}List',
       component: 'Input',
       colProps: { lg: 24, md: 24 },
       slot: '${@StringUtils.uncap(child.className)}List',
     },
+  ];
 <%
   }
   if(false && toBoolean(table.optionMap['isBpmForm'])){
 %>
+
+  const inputBpmFormSchemas: FormSchema[] = [
     {
       label: t('审批意见'),
       field: 'bpm.comment',
@@ -387,10 +413,10 @@ for (c in table.columnList){
         selectType: 'empUserSelect',
       },
     },
+  ];
 <%
   }
 %>
-  ];
 <%
 var updateSchemas = [];
 if(table.isTreeEntity){
@@ -422,13 +448,19 @@ for (c in table.columnList){
   }
 }
 %>
-  const [registerForm, { resetFields, setFieldsValue<% if(updateSchemas.~size > 0){ %>, updateSchema<% } %>, validate }] = useForm({
+  const [registerForm, formAction] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
     <% var formColNum = table.optionMap['formColNum']; %>
     baseColProps: { lg: ${formColNum=="1"?24:formColNum=="3"?8:12}, md: 24 },
   });
 <% for (child in table.childList){ %>
+
+  const [register${child.className}Form, ${@StringUtils.uncap(child.className)}Form] = useForm({
+    labelWidth: 120,
+    schemas: input${child.className}FormSchemas,
+    baseColProps: { lg: 24, md: 24 },
+  });
 
   const [register${child.className}Table, ${@StringUtils.uncap(child.className)}Table] = useTable({
     actionColumn: {
@@ -596,10 +628,32 @@ for (c in table.columnList){
   }
 <% } %>
 
-  const [register${modalOrDrawer}, { set${modalOrDrawer}Props, close${modalOrDrawer} }] = use${modalOrDrawer}Inner(async (data) => {
-    set${modalOrDrawer}Props({ loading: true });
+  async function resetFields() {
+    await formAction.resetFields();
+    <% for (child in table.childList){ %>
+    await ${@StringUtils.uncap(child.className)}Form.resetFields();
+    <% } %>
+  }
+
+  async function setFieldsValue(values: Recordable) {
+    await formAction.setFieldsValue(values);
+    <% for (child in table.childList){ %>
+    await ${@StringUtils.uncap(child.className)}Form.setFieldsValue(values);
+    <% } %>
+  }
+
+  async function validate(): Promise<Recordable<any>> {
+    return Object.assign(
+      await formAction.validate(),
+      <% for (child in table.childList){ %>
+      await ${@StringUtils.uncap(child.className)}Form.validate(),
+      <% } %>
+    );
+  }
+
+  onMounted(async () => {
     await resetFields();
-    const res = await ${className}Form(data);
+    const res = await ${className}Form(unref(query));
     record.value = (res.${className} || {}) as ${ClassName};
     record.value.__t = new Date().getTime();
   <% if(table.isTreeEntity){ %>
@@ -613,14 +667,18 @@ for (c in table.columnList){
     set${child.className}TableData(res);
   <% } %>
   <% if(updateSchemas.~size > 0){ %>
-    updateSchema([
+    formAction.updateSchema([
     <% for(updateSchema in updateSchemas){
       print(updateSchema + '\n');  
     } %>
     ]);
   <% } %>
-    set${modalOrDrawer}Props({ loading: false });
+    updateTabTitle();
   });
+
+  function handleClose() {
+    setTimeout(close);
+  }
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 
   async function handleValidate(_event: any, formData: any) {
@@ -638,15 +696,14 @@ for (c in table.columnList){
 
   async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event: any<% } %>) {
     try {
-    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
       loadingRef.value = true;
+    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
       const data = event?.formData || (await validate()); // 接受 BpmButton 传递过来的表单数据
       data.bpm = Object.assign(data.bpm || {}, record.value.bpm); // 流程信息
       data.status = record.value.status; // 提交状态
     <% } else { %>
       const data = await validate();
     <% } %>
-      set${modalOrDrawer}Props({ confirmLoading: true });
       const params: any = {
         isNewRecord: record.value.isNewRecord,
   <%
@@ -667,24 +724,21 @@ for (c in table.columnList){
       // console.log('submit', params, data, record);
       const res = await ${className}Save(params, data);
       showMessage(res.message);
-      setTimeout(close${modalOrDrawer});
-      emit('success', data);
+      emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
+      handleClose();
     } catch (error: any) {
       if (error && error.errorFields) {
         showMessage(t('common.validateError'));
       }
       console.log('error', error);
     } finally {
-      <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
       loadingRef.value = false;
-      <% } %>
-      set${modalOrDrawer}Props({ confirmLoading: false });
     }
   }
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 
   async function handleSuccess() {
-    emit('success');
+    emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
   }
   <% } %>
 </script>

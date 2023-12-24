@@ -6,6 +6,7 @@
 	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
 	<fileName>list.vue</fileName>
 	<content><![CDATA[
+<% var modalOrDrawer = @StringUtils.contains(table.tplCategory, '_modal') ? 'Modal' : 'Drawer'; %>
 <!--
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
@@ -81,7 +82,9 @@ if(table.isTreeEntity){
 %>
       </template>
     </BasicTable>
-    <InputForm @register="registerDrawer" @success="handleSuccess" />
+    <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
+    <InputForm @register="register${modalOrDrawer}" @success="handleSuccess" />
+    <% } %>
     <% if(toBoolean(table.optionMap['isImportExport'])){ %>
     <FormImport @register="registerImportModal" @success="handleSuccess" />
     <% } %>
@@ -93,6 +96,9 @@ if(table.isTreeEntity){
 <script lang="ts" setup name="${compNamePrefix}List">
   import { unref<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
   	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
+  <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
+  import { useEmitter } from '/@/store/modules/user';
+  <% } %>
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   <% if(toBoolean(table.optionMap['isImportExport'])){ %>
@@ -128,28 +134,38 @@ for(c in table.columnList){
 <% if(areaselectExists) { %>
   import { areaTreeData } from '/@/api/sys/area';
 <% } %>
+<% if(modalOrDrawer == 'Drawer' && !@StringUtils.contains(table.tplCategory, '_route')){ %>
   import { useDrawer } from '/@/components/Drawer';
-  <% if(toBoolean(table.optionMap['isBpmForm']) || toBoolean(table.optionMap['isImportExport'])){ %>
+<% } %>
+<% if(modalOrDrawer == 'Modal' || (toBoolean(table.optionMap['isBpmForm'])
+       || toBoolean(table.optionMap['isImportExport']))){ %>
   import { useModal } from '/@/components/Modal';
-  <% } %>
-  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+<% } %>
+<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
   import { BpmRuntimeTrace } from '/@/components/Bpm';
-  <% } %>
+<% } %>
   import { FormProps } from '/@/components/Form';
+<% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
   import InputForm from './form.vue';
-  <% if(toBoolean(table.optionMap['isImportExport'])){ %>
+<% } %>
+<% if(toBoolean(table.optionMap['isImportExport'])){ %>
   import FormImport from './formImport.vue';
-  <% } %>
-
+<% } %>
 <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
+
   const props = defineProps({
     treeCode: String,
   });
-
 <% } %>
+<% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
+
+  const emitter = useEmitter();
+<% } %>
+
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
+
   const getTitle = {
     icon: meta.icon || 'ant-design:book-outlined',
     value: meta.title || t('${functionNameSimple}管理'),
@@ -378,8 +394,12 @@ for(c in table.columnList){
     ],
   };
 
-  const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %>, getForm }] = useTable({
+  <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
+  const [register${modalOrDrawer}, { open${modalOrDrawer} }] = use${modalOrDrawer}();
+  <% } %>
+  const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %><%
+  		if (table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])
+  		    || toBoolean(table.optionMap['isImportExport'])){ %>, getForm<% } %> }] = useTable({
     api: ${className}ListData,
     beforeFetch: (params) => {
       return params;
@@ -423,7 +443,14 @@ for(c in table.columnList){
 <% } %>
 
   function handleForm(record: Recordable) {
-    openDrawer(true, record);
+    <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
+    open${modalOrDrawer}(true, record);
+    <% } else { %>
+    router.push({
+      path: '/${urlPrefix}/formRoute',
+      query: record,
+    });
+    <% } %>
   }
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
 
@@ -475,6 +502,10 @@ for(c in table.columnList){
   function handleTrace(record: Recordable) {
     traceModel(true, { formKey: '${table.optionMap['bpmFormKey']}', bizKey: record.id });
   }
+  <% } %>
+  <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
+
+  emitter.on('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload', reload, true);
   <% } %>
 </script>
 <% %>

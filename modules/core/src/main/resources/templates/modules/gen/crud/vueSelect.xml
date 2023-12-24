@@ -204,6 +204,7 @@ export default {
   tableProps,
   itemCode: '<% for(pk in table.pkList){ %>${pk.attrName}<% } %>',
   itemName: '<% for(pk in table.pkList){ %>${pk.attrName}<% } %>',
+  isShowCode: false,
 };
 <% %>
 ]]>
