@@ -14,7 +14,11 @@
         :helpMessage="getProps.helpMessage"
         :title="getMergeProps.title"
         @dblclick="handleTitleDbClick"
-      />
+      >
+        <template #[item]="data" v-for="item in Object.keys($slots)">
+          <slot :name="item" v-bind="data || {}"></slot>
+        </template>
+      </ModalHeader>
     </template>
 
     <template #footer v-if="!$slots.footer">
@@ -266,7 +270,7 @@
 
       &-title {
         font-size: 16px;
-        font-weight: bold;
+        font-weight: normal;
         line-height: 16px;
 
         .base-title {
@@ -364,22 +368,27 @@
     .ant-modal-confirm .ant-modal-body {
       padding: 24px !important;
     }
-    @media screen and (max-height: 600px) {
-      .ant-modal {
-        top: 60px;
-      }
-    }
-    @media screen and (max-height: 540px) {
-      .ant-modal {
-        top: 30px;
-      }
-    }
-    @media screen and (max-height: 480px) {
-      .ant-modal {
-        top: 10px;
-      }
-    }
   }
+
+  // .ant-modal.@{prefix-cls} {
+  //   top: 150px !important;
+  //   vertical-align: top !important;
+  // }
+  // @media screen and (max-height: 600px) {
+  //   .ant-modal.@{prefix-cls} {
+  //     top: 60px !important;
+  //   }
+  // }
+  // @media screen and (max-height: 540px) {
+  //   .ant-modal.@{prefix-cls} {
+  //     top: 30px !important;
+  //   }
+  // }
+  // @media screen and (max-height: 480px) {
+  //   .ant-modal.@{prefix-cls} {
+  //     top: 10px !important;
+  //   }
+  // }
 
   .fullscreen-modal {
     overflow: hidden;

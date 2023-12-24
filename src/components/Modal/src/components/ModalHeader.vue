@@ -1,6 +1,7 @@
 <template>
   <BasicTitle :helpMessage="helpMessage">
     {{ title }}
+    <slot name="appendHeader"></slot>
   </BasicTitle>
 </template>
 <script lang="ts">
