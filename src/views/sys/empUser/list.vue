@@ -267,13 +267,16 @@
       {
         icon: 'ant-design:check-circle-outlined',
         color: 'success',
-        title: t('启用用户'),
+        title: t((record.status === '3' ? '解冻' : '启用') + '用户'),
         popConfirm: {
-          title: t('是否确认启用用户'),
-          confirm: handleEnable.bind(this, { userCode: record.userCode }),
+          title: t('是否确认' + (record.status === '3' ? '解冻' : '启用') + '用户'),
+          confirm: handleEnable.bind(this, {
+            userCode: record.userCode,
+            freeze: record.status === '3',
+          }),
         },
         auth: 'sys:empUser:updateStatus',
-        ifShow: () => record.status === '2',
+        ifShow: () => record.status === '2' || record.status === '3' || record.status === '4',
       },
       {
         icon: 'ant-design:delete-outlined',
