@@ -77,6 +77,7 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<TestData>({} as TestData);
+
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),

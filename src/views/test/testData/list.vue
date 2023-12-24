@@ -78,9 +78,12 @@
   import InputFormTabs from './formTabs.vue';
   import InputFormModal from './formModal.vue';
 
+  const emitter = useEmitter();
+
   const { t } = useI18n('test.testData');
-  const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
+  const { showMessage } = useMessage();
+
   const getTitle = {
     icon: meta.icon || 'ant-design:book-outlined',
     value: meta.title || t('数据管理'),
@@ -493,7 +496,6 @@
     reload();
   }
 
-  const emitter = useEmitter();
   emitter.on('test-testData-reload', reload, true);
 </script>
 <style lang="less">
