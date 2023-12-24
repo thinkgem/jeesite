@@ -130,4 +130,5 @@ export default {
   tableProps,
   itemCode: 'userCode',
   itemName: 'userName',
+  isShowCode: true,
 };
