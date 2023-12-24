@@ -65,6 +65,7 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<TestData>({} as TestData);
+
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增数据') : t('编辑数据'),
@@ -79,6 +80,16 @@
         maxlength: 200,
       },
       required: true,
+    },
+    {
+      label: t('列表选择'),
+      field: 'testTextarea',
+      fieldLabel: 'testTextarea',
+      component: 'ListSelect',
+      componentProps: {
+        configFile: import('./select'),
+        checkbox: true,
+      },
     },
     {
       label: t('多行文本'),

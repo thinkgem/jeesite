@@ -90,6 +90,16 @@
       required: true,
     },
     {
+      label: t('列表选择'),
+      field: 'testTextarea',
+      fieldLabel: 'testTextarea',
+      component: 'ListSelect',
+      componentProps: {
+        configFile: import('./select'),
+        checkbox: true,
+      },
+    },
+    {
       label: t('多行文本'),
       field: 'testTextarea',
       component: 'InputTextArea',
