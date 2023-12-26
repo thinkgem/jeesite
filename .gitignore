@@ -1,14 +1,16 @@
 node_modules
+Thumbs.db
 .DS_Store
-dist
 .npmrc
 .cache
+dist
 
+# Test files
 tests/server/static
 tests/server/static/upload
 
+# Local files
 .local
-# local env files
 .env.local
 .env.*.local
 .eslintcache
@@ -19,9 +21,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Editor directories and files
+# IDE files
 .idea
-# .vscode
 *.suo
 *.ntvs*
 *.njsproj
