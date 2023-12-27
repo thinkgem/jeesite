@@ -67,7 +67,7 @@ public class OnlineController extends BaseController{
 	public String list(Model model) {
 		return "modules/sys/onlineList";
 	}
-	
+
 	/**
 	 * 在线用户列表数据
 	 * @author ThinkGem
@@ -75,12 +75,12 @@ public class OnlineController extends BaseController{
 	@RequiresPermissions("sys:online:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
-	public List<Map<String, Object>> listData(String isAllOnline, String isVisitor, String sessionId, 
+	public List<Map<String, Object>> listData(String isAllOnline, String isVisitor, String sessionId,
 			String userCode, String userName, String userType, String orderBy) {
 		List<Map<String, Object>> list = ListUtils.newArrayList();
 		boolean excludeLeave = !Global.YES.equals(isAllOnline);
 		boolean excludeVisitor = !Global.YES.equals(isVisitor);
- 		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave, 
+ 		Collection<Session> sessions = sessionDAO.getActiveSessions(excludeLeave,
 				excludeVisitor, null, sessionId, userCode);
 		long currentTime = System.currentTimeMillis();
 		for (Session session : sessions){
@@ -93,10 +93,11 @@ public class OnlineController extends BaseController{
 			Map<String, Object> map = MapUtils.newLinkedHashMap();
 			// 为了安全性，需要有权限的人才能看
 			if (UserUtils.getSubject().isPermitted("sys:online:edit")){
-				map.put("id", session.getId().toString()); 
+				map.put("id", session.getId().toString());
 			}
 			map.put("startTimestamp", DateUtils.formatDateTime(session.getStartTimestamp()));
 			map.put("lastAccessTime", DateUtils.formatDateTime(session.getLastAccessTime()));
+			map.put("timeoutLong", session.getTimeout()-(currentTime-session.getLastAccessTime().getTime()));
 			map.put("timeout", TimeUtils.formatTime(session.getTimeout()-(currentTime-session.getLastAccessTime().getTime())));
 			map.put("userCode", session.getAttribute("userCode"));
 			map.put("userName", session.getAttribute("userName"));
@@ -109,18 +110,27 @@ public class OnlineController extends BaseController{
 		if (StringUtils.isBlank(orderBy)){
 			orderBy = "lastAccessTime desc";
 		}
+		orderBy = StringUtils.replace(orderBy, "timeout", "timeoutLong");
 		final String[] ss = orderBy.trim().split(" ");
 		if (ss.length == 2){
 			list.sort((o1, o2) -> {
-				String s1 = (String) o1.get(ss[0]);
-				String s2 = (String) o2.get(ss[0]);
+				Object s1 = o1.get(ss[0]);
+				Object s2 = o2.get(ss[0]);
 				if (s1 == null || s2 == null) {
 					return -1;
 				}
-				if ("asc".equals(ss[1])) {
-					return s1.compareTo(s2);
-				} else {
-					return s2.compareTo(s1);
+				if (StringUtils.endsWith(ss[0], "Long")) {
+					if ("asc".equals(ss[1])) {
+						return ((Long)s1).compareTo((Long)s2);
+					} else {
+						return ((Long)s2).compareTo((Long)s1);
+					}
+				}else{
+					if ("asc".equals(ss[1])) {
+						return ((String)s1).compareTo((String)s2);
+					} else {
+						return ((String)s2).compareTo((String)s1);
+					}
 				}
 			});
 		}
