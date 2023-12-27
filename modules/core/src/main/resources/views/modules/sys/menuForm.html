@@ -118,9 +118,9 @@
 							<label class="control-label col-sm-4" title="设置 vue 组件名称，一般不需要填写，默认是根据 “链接地址” 进行自动生成，
 只有个性化的时候才需要设置，如果填写 IFRAME 则强制使用 iframe 打开链接；
 如果填写 LAYOUT 将不在 Beetl 视图中显示菜单项
-如果填写 BEETL 则只在 Beetl 视图中显示菜单项">${text('组件名称')}：<i class="fa icon-question"></i></label>
+如果填写 BEETL 则只在 Beetl 视图中显示菜单项">${text('组件名称')}：<i class="fa icon-question hide"></i></label>
 							<div class="col-sm-8">
-								<#form:input path="component" maxlength="9" class="form-control required"/>
+								<#form:input path="component" maxlength="9" class="form-control "/>
 							</div>
 						</div>
 					</div>
