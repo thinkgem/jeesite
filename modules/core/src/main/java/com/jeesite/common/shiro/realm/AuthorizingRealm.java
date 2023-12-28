@@ -16,6 +16,9 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,13 +28,13 @@ import javax.servlet.http.HttpServletRequest;
  * @version 2018-7-11
  */
 public class AuthorizingRealm extends BaseAuthorizingRealm  {
-	
+
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
-	
+
 	private UserService userService;
-	
+
 	public AuthorizingRealm() {
 		super();
 //		// 设定密码校验的Hash算法与迭代次数（V4.1.4及以上版本不需要了，统一使用validatePassword验证密码）
@@ -39,7 +42,7 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 //		matcher.setHashIterations(HASH_INTERATIONS);
 //		this.setCredentialsMatcher(matcher);
 	}
-	
+
 	/**
 	 * 获取登录凭证，将 authcToken 转换为 FormToken，参考 CAS 实现
 	 */
@@ -47,7 +50,7 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	protected FormToken getFormToken(AuthenticationToken authcToken) {
 		return super.getFormToken(authcToken);
 	}
-	
+
 	/**
 	 * 用于用户根据登录信息获取用户信息<br>
 	 * 1、默认根据登录账号登录信息，如：UserUtils.getByLoginCode(formToken.getUsername(), formToken.getParam("corpCode"));<br>
@@ -58,13 +61,21 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	protected User getUserInfo(FormToken formToken) {
 		return super.getUserInfo(formToken);
 	}
-	
+
 	/**
 	 * 校验登录凭证，如密码验证，token验证，验证失败抛出 AuthenticationException 异常
 	 */
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken authcToken, AuthenticationInfo authcInfo) throws AuthenticationException {
 		super.assertCredentialsMatch(authcToken, authcInfo);
+	}
+
+	/**
+	 * 获取用户授权信息，默认返回类型 SimpleAuthorizationInfo
+	 */
+	@Override
+	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, Subject subject, Session session, User user) {
+		return super.doGetAuthorizationInfo(loginInfo, subject, session, user);
 	}
 	
 	/**
