@@ -18,6 +18,9 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 
 /**
  * 系统认证授权实现类
@@ -65,6 +68,14 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	@Override
 	protected void assertCredentialsMatch(AuthenticationToken authcToken, AuthenticationInfo authcInfo) throws AuthenticationException {
 		super.assertCredentialsMatch(authcToken, authcInfo);
+	}
+
+	/**
+	 * 获取用户授权信息，默认返回类型 SimpleAuthorizationInfo
+	 */
+	@Override
+	protected AuthorizationInfo doGetAuthorizationInfo(LoginInfo loginInfo, Subject subject, Session session, User user) {
+		return super.doGetAuthorizationInfo(loginInfo, subject, session, user);
 	}
 	
 	/**
