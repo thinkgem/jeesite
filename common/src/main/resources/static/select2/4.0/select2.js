@@ -4469,7 +4469,7 @@ S2.define('select2/dropdown/closeOnSelect',[
 });
 
 // ThinkGem 默认为中文
-S2.define('select2/i18n/en',[],function () {
+S2.define('select2/i18n/zh_CN',[],function () {
   // English
   return {
     errorLoading: function () {
@@ -4549,7 +4549,7 @@ S2.define('select2/defaults',[
   './dropdown/selectOnClose',
   './dropdown/closeOnSelect',
 
-  './i18n/en'
+  './i18n/zh_CN'
 ], function ($, require,
 
              ResultsList,
@@ -4763,7 +4763,7 @@ S2.define('select2/defaults',[
 
     if ($.isArray(options.language)) {
       var languages = new Translation();
-      options.language.push('en');
+      options.language.push('zh_CN');
 
       var languageNames = options.language;
 
@@ -4800,7 +4800,7 @@ S2.define('select2/defaults',[
       options.translations = languages;
     } else {
       var baseTranslation = Translation.loadPath(
-        this.defaults.amdLanguageBase + 'en'
+        this.defaults.amdLanguageBase + 'zh_CN'
       );
       var customTranslation = new Translation(options.language);
 
@@ -4952,6 +4952,8 @@ S2.define('select2/options',[
         this.options.language = $e.prop('lang').toLowerCase();
       } else if ($e.closest('[lang]').prop('lang')) {
         this.options.language = $e.closest('[lang]').prop('lang');
+      } else if (window.lang) {
+        this.options.language = window.lang;
       }
     }
 
