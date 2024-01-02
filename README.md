@@ -7,7 +7,7 @@
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
  <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.0" src="https://img.shields.io/badge/Ant Design Vue-4.0-blue.svg"></a>
- <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.5-blue.svg"></a>
+ <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.6-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
 </p>
@@ -66,9 +66,9 @@
 ## 学习准备
 
 - [VSCode](https://code.visualstudio.com/) - 推荐 IDE 集成开发工具
-- [Node.js 16](http://nodejs.org/) 和 [git](https://git-scm.com/) - 开发环境
+- [Node.js 18](https://nodejs.org/dist/latest-v18.x/) 和 [git](https://git-scm.com/) - 开发环境
 - [Vite](https://vitejs.dev/) - 熟悉 Vite 特性
-- [Vue-v3](https://v3.vuejs.org/) - 熟悉 Vue 基础语法
+- [Vue-v3](https://cn.vuejs.org/) - 熟悉 Vue 基础语法
 - [TypeScript](https://www.typescriptlang.org/) - 熟悉 TS 基本语法
 - [ES6+](http://es6.ruanyifeng.com/) - 熟悉 ES6 基本语法
 - [Vue-Router-v4](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
@@ -132,7 +132,7 @@ yarn build
 
 ### 后端服务
 
-- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite4/tree/v5.5/)
+- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite4/tree/v5.6/)
 - 打开 [.env.development](https://jeesite.com/docs/vue-settings/#env-development-详解) 文件，修改后台接口：
 
 ```bash
@@ -140,7 +140,7 @@ yarn build
 # VITE_PROXY = [["/js","https://vue.jeesite.com/js",true]]
 VITE_PROXY = [["/js","http://127.0.0.1:8980/js",false]]
 
-# 访问接口的根路径
+# 访问接口的根路径（例如：https://vue.jeesite.com）
 VITE_GLOB_API_URL = 
 
 # 访问接口的前缀，在根路径之后
@@ -160,8 +160,10 @@ VITE_GLOB_API_URL_PREFIX = /js
 
 ## 常见问题
 
-* 如何将表单抽屉改为弹窗，替换 list 和 form 页面的 Drawer 为 Modal 即可。
-* 浏览器支持情况：支持所有现代浏览器，Vue3 已不再支持 IE 浏览器。
+* Vue 版本的浏览器支持情况：支持所有现代浏览器，Vue3 已不再支持 IE 浏览器。
+* 为什么使用抽屉作为表单组件，因为抽屉空间更大，可以展示更多内容，且操作更友好。
+* 如何将表单抽屉改为弹窗，替换 list 和 form 页面的 Drawer 为 Modal 即可，V5.6增加了路由表单和弹窗表单的代码生成。
+* 打不开代码生成工具怎么办？提示 404，请检查 .env.development 中的代理配置 VITE_PROXY 最后一个参数（是否保持Host头），本地服务 127.0.0.1 应设置为 false，远程服务设置为 true。
 
 ## 授权许可协议条款
 
@@ -179,9 +181,10 @@ VITE_GLOB_API_URL_PREFIX = /js
 
 ## 专业版增加的功能
 
-1. 主题的标签页风格切换
-2. 业务流程-流程办理
-3. 租户管理功能
-4. 文件上传秒传
-5. 消息提醒
-6. 国际化
+1. 主题标签页的三种风格自由切换
+2. 业务流程、流程设计、流程办理
+3. 文件管理、上传秒传、文件预览
+4. 租户管理功能、租户切换
+5. 消息推送、消息提醒
+6. 语言国际化、本地化
+7. 等等
