@@ -157,6 +157,7 @@
   const isValidCodeLogin = ref(false);
   const useCorpModel = ref(false);
   const corpOptions = ref<Recordable[]>([]);
+  const gp = ref(false);
 
   const formData = reactive({
     account: 'system',
@@ -192,11 +193,11 @@
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
       const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
-      window.location.href =
-        (publicPath == '' ? publicPath : publicPath.substring(1)) + PageEnum.BASE_HOME;
+      window.location.href = (publicPath == '/' ? '' : publicPath) + PageEnum.BASE_HOME;
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
+    gp.value = res.demoMode || false;
     useCorpModel.value = res.useCorpModel || false;
     if (useCorpModel.value) {
       corpOptions.value = (await corpAdminTreeData({ isShowCode: true })).map((item) => ({
@@ -261,8 +262,6 @@
   function handleOauth2() {
     showMessage('未开放第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
   }
-
-  const gp = location.href.indexOf('.jeesite.com') != -1 || import.meta.env.DEV;
 </script>
 <style>
   .gp {
