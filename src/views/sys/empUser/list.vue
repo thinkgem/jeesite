@@ -405,7 +405,12 @@
       try {
         await empUserDelete({ userCode });
       } catch (e: any) {
-        message.push(e.message);
+        const msg = e.response?.data?.message || e.message;
+        if (msg === '演示模式，不允许操作！') {
+          showMessage(msg);
+          return;
+        }
+        message.push(msg);
       }
     }
     if (message.length == 0) {
