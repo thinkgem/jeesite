@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.config;
+package com.jeesite.autoconfigure.core;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
@@ -25,11 +25,12 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.filter.InvalidRequestFilter;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -40,17 +41,16 @@ import java.util.Map;
 /**
  * Shiro配置
  * @author ThinkGem
- * @version 2021-7-6
+ * @version 2023-12-20
  */
-@SuppressWarnings("deprecation")
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration(before = SessionAutoConfiguration.class)
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
-public class ShiroConfig {
+public class ShiroAutoConfiguration {
 
 	/**
 	 * Apache Shiro Filter
 	 */
-	@Bean
+	@Bean("shiroFilterProxy")
 	@Order(Ordered.HIGHEST_PRECEDENCE + 5000)
 	@ConditionalOnMissingBean(name="shiroFilterProxy")
 	public FilterRegistrationBean<Filter> shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
@@ -137,7 +137,7 @@ public class ShiroConfig {
 	/**
 	 * Shiro认证过滤器
 	 */
-	@Bean
+	@Bean("shiroFilter")
 	@ConditionalOnMissingBean(name="shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter(WebSecurityManager webSecurityManager, AuthorizingRealm authorizingRealm,
 			CasAuthorizingRealm casAuthorizingRealm, LdapAuthorizingRealm ldapAuthorizingRealm) {
@@ -165,9 +165,9 @@ public class ShiroConfig {
 	/**
 	 * 系统安全认证实现类
 	 */
-	@Bean
+	@Bean("authorizingRealm")
 	@ConditionalOnMissingBean(name="authorizingRealm")
-	public AuthorizingRealm authorizingRealm(SessionDAO sessionDAO) {
+	public AuthorizingRealm authorizingRealm(@Qualifier("sessionDAO") SessionDAO sessionDAO) {
 		AuthorizingRealm bean = new AuthorizingRealm();
 		bean.setSessionDAO(sessionDAO);
 		return bean;
@@ -176,7 +176,7 @@ public class ShiroConfig {
 	/**
 	 * 单点登录信息句柄，单点退出用
 	 */
-	@Bean
+	@Bean("casOutHandler")
 	@ConditionalOnMissingBean(name="casOutHandler")
 	public CasOutHandler casOutHandler() {
 		return new CasOutHandler();
@@ -185,9 +185,9 @@ public class ShiroConfig {
 	/**
 	 * CAS安全认证实现类
 	 */
-	@Bean
+	@Bean("casAuthorizingRealm")
 	@ConditionalOnMissingBean(name="casAuthorizingRealm")
-	public CasAuthorizingRealm casAuthorizingRealm(SessionDAO sessionDAO, CasOutHandler casOutHandler) {
+	public CasAuthorizingRealm casAuthorizingRealm(@Qualifier("sessionDAO") SessionDAO sessionDAO, CasOutHandler casOutHandler) {
 		CasAuthorizingRealm bean = new CasAuthorizingRealm();
 		bean.setSessionDAO(sessionDAO);
 		bean.setCasOutHandler(casOutHandler);
@@ -199,9 +199,9 @@ public class ShiroConfig {
 	/**
 	 * LDAP安全认证实现类
 	 */
-	@Bean
+	@Bean("ldapAuthorizingRealm")
 	@ConditionalOnMissingBean(name="ldapAuthorizingRealm")
-	public LdapAuthorizingRealm ldapAuthorizingRealm(SessionDAO sessionDAO, CasOutHandler casOutHandler) {
+	public LdapAuthorizingRealm ldapAuthorizingRealm(@Qualifier("sessionDAO") SessionDAO sessionDAO, CasOutHandler casOutHandler) {
 		LdapAuthorizingRealm bean = new LdapAuthorizingRealm();
 		JndiLdapContextFactory contextFactory = (JndiLdapContextFactory) bean.getContextFactory();
 		contextFactory.setUrl(Global.getProperty("shiro.ldapUrl"/*, "ldap://127.0.0.1:389"*/));
@@ -213,10 +213,10 @@ public class ShiroConfig {
 	/**
 	 * 定义Shiro安全管理配置
 	 */
-	@Bean
+	@Bean("webSecurityManager")
 	@ConditionalOnMissingBean(name="webSecurityManager")
 	public WebSecurityManager webSecurityManager(AuthorizingRealm authorizingRealm, CasAuthorizingRealm casAuthorizingRealm,
-			LdapAuthorizingRealm ldapAuthorizingRealm, SessionManager sessionManager, CacheManager shiroCacheManager) {
+			LdapAuthorizingRealm ldapAuthorizingRealm, SessionManager sessionManager, @Qualifier("shiroCacheManager") CacheManager shiroCacheManager) {
 		WebSecurityManager bean = new WebSecurityManager();
 		Collection<Realm> realms = ListUtils.newArrayList();
 		realms.add(authorizingRealm); // 第一个为权限授权控制类
@@ -233,19 +233,19 @@ public class ShiroConfig {
 	/**
 	 * Shiro 生命周期处理器，实现初始化和销毁回调
 	 */
-	@Bean(name="lifecycleBeanPostProcessor")
+	@Bean("lifecycleBeanPostProcessor")
 	@ConditionalOnMissingBean(name="lifecycleBeanPostProcessor")
-	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+	public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 		return new LifecycleBeanPostProcessor();
 	}
 
 	/**
 	 * Shiro 过滤器代理配置
 	 */
-	@Bean
+	@Bean("defaultAdvisorAutoProxyCreator")
 	@DependsOn({ "lifecycleBeanPostProcessor" })
 	@ConditionalOnMissingBean(name="defaultAdvisorAutoProxyCreator")
-	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+	public static DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
 		DefaultAdvisorAutoProxyCreator bean = new DefaultAdvisorAutoProxyCreator();
 		bean.setProxyTargetClass(true);
 		return bean;
@@ -254,23 +254,11 @@ public class ShiroConfig {
 	/**
 	 * 启用Shrio授权注解拦截方式，AOP式方法级权限检查
 	 */
-	@Bean
+	@Bean("authorizationAttributeSourceAdvisor")
 	@ConditionalOnMissingBean(name="authorizationAttributeSourceAdvisor")
 	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(WebSecurityManager webSecurityManager) {
 		AuthorizationAttributeSourceAdvisor bean = new AuthorizationAttributeSourceAdvisor();
 		bean.setSecurityManager(webSecurityManager);
 		return bean;
 	}
-	
-//	/**
-//	 * 在方法中 注入 webSecurityManager 进行代理控制
-//	 */
-//	@Bean
-//	public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager webSecurityManager) {
-//		MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
-//		bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-//		bean.setArguments(new Object[] { webSecurityManager });
-//		return bean;
-//	}
-	
 }
