@@ -1,1 +1,2 @@
+com.jeesite.autoconfigure.core.ShiroAutoConfiguration
 com.jeesite.autoconfigure.sys.SysAutoConfiguration
