@@ -3,8 +3,8 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>vueSelect</name>
-	<filePath>${frontDir}/src/components/ListSelect/src/selectType</filePath>
-	<fileName>${className}Select.ts</fileName>
+	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<fileName>select.ts</fileName>
 	<content><![CDATA[
 import { useI18n } from '/@/hooks/web/useI18n';
 import { BasicColumn, BasicTableProps, FormProps } from '/@/components/Table';
