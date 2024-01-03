@@ -352,9 +352,11 @@ for (c in table.columnList){
       },
       colProps: { lg: 24, md: 24 },
     },
-  ];
   <%
   }
+%>
+  ];
+<%
   for (child in table.childList){ %>
 
   const input${child.className}FormSchemas: FormSchema[] = [
