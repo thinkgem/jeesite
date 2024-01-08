@@ -81,15 +81,13 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [ 
 		{header:'${text("菜单名称")}', name:'menuNameRaw', width:200, formatter: function(val, obj, row, act){
-			var icon = row.menuIcon, iconHtml = '';
-			if (icon && icon != ''){
-				if (icon.indexOf('://') != -1){
-					iconHtml = '<img src="' + icon + '" width="20" height="20">';
-				}else if (icon.indexOf('/') == 0){
-					iconHtml = '<img src="' + ctxPath + icon + '" width="20" height="20">';
-				}else{
-					iconHtml = '<i class="fa fa-fw ' + icon + '"></i>&nbsp;';
-				}
+			var icon = row.menuIcon || 'fa-circle-o opa08', iconHtml = '';
+			if (icon.indexOf('://') != -1){
+				iconHtml = '<img src="' + icon + '" width="20" height="20">';
+			}else if (icon.indexOf('/') == 0){
+				iconHtml = '<img src="' + ctxPath + icon + '" width="20" height="20">';
+			}else{
+				iconHtml = '<i class="fa fa-fw ' + icon + '"></i>&nbsp;';
 			}
 			return '&nbsp;'+iconHtml+'&nbsp; <a href="${ctx}/sys/menu/form?menuCode='
 					+row.id+'" class="btnList" style="color:'+row.color+'" data-title="${text("编辑菜单")}">'+val+'</a>';
