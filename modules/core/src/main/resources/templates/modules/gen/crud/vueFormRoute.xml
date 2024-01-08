@@ -14,7 +14,6 @@
 <template>
   <FormPage
     :config="formSettings"
-    :storeKey="'${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-route'"
     :okAuth="'${permissionPrefix}:edit'"
     :loading="loadingRef"
     @close="handleClose"
