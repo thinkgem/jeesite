@@ -107,9 +107,8 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "loginFailure")
 	public String loginFailure(HttpServletRequest request, HttpServletResponse response, Model model) {
-		LoginInfo loginInfo = UserUtils.getLoginInfo();
-		
-		// 如果已经登录，则跳转到管理首页
+//		// 如果已经登录，则跳转到管理首页
+//		LoginInfo loginInfo = UserUtils.getLoginInfo();
 //		if(loginInfo != null){ // 注释掉，已经登录的账号，正常返回登录失败信息，方便前端判断。
 //			String queryString = request.getQueryString();
 //			queryString = queryString == null ? "" : "?" + queryString;
