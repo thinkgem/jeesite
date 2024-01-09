@@ -48,7 +48,7 @@ export default {
     fireAjaxError: 'Fire ajax error',
 
     enableMessage:
-      'Only effective when useErrorHandle is true in `/src/settings/projectSetting.ts`.',
+      'Only effective when useErrorHandle is true in `projectSetting.ts`.',
   },
   exception: {
     backLogin: 'Back Login',
