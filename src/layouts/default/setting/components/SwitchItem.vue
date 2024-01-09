@@ -55,12 +55,13 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-setting-switch-item';
 
   .@{prefix-cls} {
     display: flex;
     justify-content: space-between;
     margin: 16px 0;
+    color: @text-color-base;
   }
 </style>
