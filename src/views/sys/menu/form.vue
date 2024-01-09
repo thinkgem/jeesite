@@ -135,6 +135,7 @@
         '只有个性化的时候才需要设置，如果填写 IFRAME 则强制使用 iframe 打开链接；',
         '如果填写 LAYOUT 将不在 Beetl 视图中显示菜单项',
         '如果填写 BEETL 则只在 Beetl 视图中显示菜单项',
+        '如果填写 BLANK 则不显示主框架（仅顶部菜单设置）',
       ],
       component: 'Input',
       componentProps: {
@@ -159,7 +160,7 @@
     {
       label: t('排序号'),
       field: 'treeSort',
-      helpMessage: '升序',
+      helpMessage: '升序，当前级别的排序号',
       component: 'InputNumber',
       defaultValue: '30',
       componentProps: {
