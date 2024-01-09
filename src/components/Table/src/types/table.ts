@@ -122,7 +122,7 @@ export interface TableActionType {
   updateTableData: (index: number, key: string, value: any) => Recordable;
   setShowPagination: (show: boolean) => Promise<void>;
   getShowPagination: () => boolean;
-  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
+  // setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
 }
 
 export interface FetchSetting {
@@ -506,7 +506,8 @@ export interface BasicColumn extends ColumnProps<Recordable> {
 }
 
 export type ColumnChangeParam = {
-  dataIndex: string;
+  dataIndex?: string;
+  dataIndex_?: string;
   fixed: boolean | 'left' | 'right' | undefined;
   open: boolean;
 };

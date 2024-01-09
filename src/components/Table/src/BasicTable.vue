@@ -255,7 +255,7 @@
       const {
         getViewColumns,
         getColumns,
-        setCacheColumnsByField,
+        // setCacheColumnsByField,
         setColumns,
         updateColumn,
         getColumnsRef,
@@ -430,7 +430,7 @@
         updateTableData,
         setShowPagination,
         getShowPagination,
-        setCacheColumnsByField,
+        // setCacheColumnsByField,
         expandAll,
         expandRows,
         collapseAll,
