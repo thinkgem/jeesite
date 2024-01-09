@@ -238,17 +238,18 @@ export function useColumns(
     },
   );
 
-  function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
-    if (!dataIndex || !value) {
-      return;
-    }
-    cacheColumns.forEach((item) => {
-      if (item.dataIndex_ === dataIndex) {
-        Object.assign(item, value);
-        return;
-      }
-    });
-  }
+  // function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
+  //   if (!dataIndex || !value) {
+  //     return;
+  //   }
+  //   cacheColumns.forEach((item) => {
+  //     if (item.dataIndex_ === dataIndex) {
+  //       Object.assign(item, value);
+  //       return;
+  //     }
+  //   });
+  // }
+
   /**
    * set columns
    * @param columnList key｜column
@@ -272,10 +273,17 @@ export function useColumns(
       const columnKeys = (columns as (string | string[])[]).map((m) => m.toString());
       const newColumns: BasicColumn[] = [];
       cacheColumns.forEach((item) => {
-        newColumns.push({
+        const column = {
           ...item,
           defaultHidden: !columnKeys.includes(item.dataIndex_ || (item.key as string)),
+        };
+        columnsRef.value.forEach((item) => {
+          if (column.dataIndex_ == item.dataIndex_ && item.fixed) {
+            column.fixed = item.fixed;
+            return;
+          }
         });
+        newColumns.push(column);
       });
       // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
@@ -302,7 +310,7 @@ export function useColumns(
       (item) => Reflect.has(item, 'dataIndex') && item.dataIndex,
     );
     if (!hasDataIndex) {
-      error('必须包含 dataIndex  字段。');
+      error('必须包含 dataIndex 字段。');
       return;
     }
 
@@ -347,7 +355,7 @@ export function useColumns(
     setColumns,
     updateColumn,
     getViewColumns,
-    setCacheColumnsByField,
+    // setCacheColumnsByField,
   };
 }
 
