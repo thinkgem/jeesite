@@ -1,9 +1,10 @@
 <template>
   <Card
-    :tab-list="tabListTitle"
     v-bind="$attrs"
+    :loading="loading"
+    :tab-list="tabListTitle"
     :active-tab-key="activeKey"
-    @tabChange="onTabChange"
+    @tab-change="onTabChange"
   >
     <p v-if="activeKey === 'tab1'">
       <VisitAnalysis />
@@ -19,6 +20,7 @@
   import VisitAnalysis from './VisitAnalysis.vue';
   import VisitAnalysisBar from './VisitAnalysisBar.vue';
 
+  const loading = ref(true);
   const activeKey = ref('tab1');
 
   const tabListTitle = [
@@ -35,4 +37,8 @@
   function onTabChange(key) {
     activeKey.value = key;
   }
+
+  setTimeout(() => {
+    loading.value = false;
+  }, 700);
 </script>

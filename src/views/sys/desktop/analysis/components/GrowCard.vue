@@ -28,18 +28,70 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { CountTo } from '/@/components/CountTo/index';
+  import { ref, onMounted } from 'vue';
+  import { CountTo } from '/@/components/CountTo';
   import { Icon } from '/@/components/Icon';
   import { Tag, Card } from 'ant-design-vue';
-  import { growCardList } from '../data';
   import { useGo } from '/@/hooks/web/usePage';
 
+  const loading = ref(true);
+  const growCardList = ref<GrowCardItem[]>();
   const go = useGo();
 
-  defineProps({
-    loading: {
-      type: Boolean,
-    },
+  interface GrowCardItem {
+    icon: string;
+    title: string;
+    value: number;
+    total: number;
+    color: string;
+    action: string;
+    url: string;
+  }
+
+  onMounted(() => {
+    const list: GrowCardItem[] = [
+      {
+        title: '工作台',
+        icon: 'visit-count|svg',
+        value: 1999,
+        total: 120000,
+        color: 'green',
+        action: '时',
+        url: '/desktop/workbench',
+      },
+      {
+        title: '关于我们',
+        icon: 'total-sales|svg',
+        value: 2999,
+        total: 500000,
+        color: 'blue',
+        action: '日',
+        url: '/desktop/about',
+      },
+      {
+        title: '源码下载',
+        icon: 'download-count|svg',
+        value: 3999,
+        total: 120000,
+        color: 'orange',
+        action: '周',
+        url: 'https://gitee.com/thinkgem/jeesite-vue',
+      },
+      {
+        title: '官方网站',
+        icon: 'transaction|svg',
+        value: 9999,
+        total: 99999,
+        color: 'purple',
+        action: '月',
+        url: 'http://jeesite.com',
+      },
+    ];
+    // 此处写后端 API 获取 list 数据
+    growCardList.value = list;
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   });
 
   function navPage(url: string) {

@@ -1,19 +1,20 @@
 <template>
-  <div ref="chartRef" :style="{ height, width }"></div>
+  <Skeleton active :paragraph="{ rows: 5 }" :loading="loading">
+    <div ref="chartRef" class="w-full h-70"></div>
+  </Skeleton>
 </template>
 <script lang="ts" setup>
   import { onMounted, ref, Ref } from 'vue';
+  import { Skeleton } from 'ant-design-vue';
   import { useECharts } from '/@/hooks/web/useECharts';
-  import { basicProps } from './props';
+  import type { EChartsOption } from 'echarts';
 
-  defineProps({
-    ...basicProps,
-  });
+  const loading = ref(true);
   const chartRef = ref<HTMLDivElement | null>(null);
   const { setOptions } = useECharts(chartRef as Ref<HTMLDivElement>);
 
   onMounted(() => {
-    setOptions({
+    const options: EChartsOption = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -101,6 +102,9 @@
           },
         },
       ],
-    });
+    };
+    // 此处写后端 API 获取 options 数据
+    setOptions(options);
+    loading.value = false;
   });
 </script>
