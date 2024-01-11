@@ -25,7 +25,11 @@
             {{ t('component.table.settingColumnShow') }}
           </Checkbox>
 
-          <Checkbox v-model:checked="checkIndex" @change="handleIndexCheckChange">
+          <Checkbox
+            v-model:checked="checkIndex"
+            @change="handleIndexCheckChange"
+            v-if="!isTreeTable"
+          >
             {{ t('component.table.settingIndexColumnShow') }}
           </Checkbox>
 
@@ -205,6 +209,8 @@
           state.checkSelect = !!values.rowSelection;
         },
       );
+
+      const isTreeTable = computed(() => unref(table?.getBindValues).isTreeTable);
 
       function getColumns() {
         const ret: Options[] = [];
@@ -399,6 +405,7 @@
 
       return {
         t,
+        isTreeTable,
         ...toRefs(state),
         indeterminate,
         onCheckAllChange,
