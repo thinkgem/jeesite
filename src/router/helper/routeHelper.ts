@@ -9,7 +9,7 @@ import type { Router, RouteRecordNormalized } from 'vue-router';
 import { cloneDeep, omit } from 'lodash-es';
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
 import { LAYOUT, IFRAME_BLANK, IFRAME_SIMPLE, EXCEPTION_COMPONENT } from '/@/router/constant';
-import { warn } from '/@/utils/log';
+import { warn, env } from '/@/utils/log';
 
 // Dynamic introduction
 function asyncImportRoute(
@@ -106,7 +106,6 @@ export function flatMultiLevelRoutes(routeModules: AppRouteModule[]) {
 }
 
 export function createRouteHistory() {
-  const env = import.meta.env;
   if (env.VITE_ROUTE_WEB_HISTORY == 'true') {
     return createWebHistory(env.VITE_PUBLIC_PATH);
   } else {

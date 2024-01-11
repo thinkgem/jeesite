@@ -137,6 +137,7 @@
   // import { onKeyStroke } from '@vueuse/core';
   import { Select } from '/@/components/Form';
   import { corpAdminTreeData } from '/@/api/sys/corpAdmin';
+  import { publicPath } from '/@/utils/env';
 
   const ACol = Col;
   const ARow = Row;
@@ -192,8 +193,7 @@
     const res = await userInfoApi('none');
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
-      const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
-      window.location.href = (publicPath == '/' ? '' : publicPath) + PageEnum.BASE_HOME;
+      window.location.href = publicPath + PageEnum.BASE_HOME;
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
