@@ -49,6 +49,7 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-drawer-header';
   @footer-height: 60px;
+
   .@{prefix-cls} {
     display: flex;
     height: 100%;
