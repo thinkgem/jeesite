@@ -568,6 +568,18 @@
             }
           }
         }
+
+        td.ant-table-cell-fix-left,
+        td.ant-table-cell-fix-right {
+          .jeesite-basic-arrow {
+            vertical-align: middle;
+          }
+          .ant-table-cell-content {
+            margin-left: 3px;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
       }
 
       .@{prefix-cls}-row__striped {
