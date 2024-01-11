@@ -1,22 +1,20 @@
 import type { GlobConfig } from '/#/config';
 
-import { warn } from '/@/utils/log';
 import { getAppEnvConfig } from '/@/utils/env';
 
+let globCache: Readonly<GlobConfig>;
 export const useGlobSetting = (): Readonly<GlobConfig> => {
+  if (globCache) return globCache;
+
   const {
     VITE_GLOB_APP_TITLE,
     VITE_GLOB_API_URL,
     VITE_GLOB_APP_SHORT_NAME,
     VITE_GLOB_API_URL_PREFIX,
     // VITE_GLOB_UPLOAD_URL,
+    VITE_GLOB_ADMIN_PATH,
+    VITE_FILE_PREVIEW,
   } = getAppEnvConfig();
-
-  if (!/[a-zA-Z\_]*/.test(VITE_GLOB_APP_SHORT_NAME)) {
-    warn(
-      `VITE_GLOB_APP_SHORT_NAME Variables can only be characters/underscores, please modify in the environment variables and re-running.`,
-    );
-  }
 
   const ctxPath = ((): string => {
     let ctx = VITE_GLOB_API_URL + VITE_GLOB_API_URL_PREFIX;
@@ -33,7 +31,7 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     return ctx;
   })();
 
-  const adminPath = import.meta.env.VITE_GLOB_ADMIN_PATH as string;
+  const adminPath = VITE_GLOB_ADMIN_PATH as string;
   const ctxAdminPath = ctxPath + adminPath;
 
   // Take global configuration
@@ -46,6 +44,8 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     ctxPath: ctxPath,
     adminPath: adminPath,
     ctxAdminPath: ctxAdminPath,
+    filePreview: VITE_FILE_PREVIEW || 'true',
   };
+  globCache = glob;
   return glob as Readonly<GlobConfig>;
 };
