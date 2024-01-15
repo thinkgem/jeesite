@@ -18,7 +18,15 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<dependencies>
-			
+
+		<!-- Servlet Api -->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JeeSite -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-framework</artifactId>
