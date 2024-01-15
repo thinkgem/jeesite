@@ -6,7 +6,7 @@ import { getConfigFileName } from '../../build/getConfigFileName';
 
 export function getCommonStoragePrefix() {
   const { VITE_GLOB_APP_SHORT_NAME } = getAppEnvConfig();
-  return `${VITE_GLOB_APP_SHORT_NAME}__${getEnv()}`.toUpperCase();
+  return `${VITE_GLOB_APP_SHORT_NAME.replace(/\s/g, '_')}__${getEnv()}`.toUpperCase();
 }
 
 // Generate cache key according to version
@@ -17,8 +17,7 @@ export function getStorageShortName() {
 export function getAppEnvConfig() {
   const ENV_NAME = getConfigFileName(env);
   const ENV = (env.DEV
-    ? // Get the global configuration (the configuration will be extracted independently when packaging)
-      (env as unknown as GlobEnvConfig)
+    ? (env as unknown as GlobEnvConfig)
     : window[ENV_NAME as any]) as unknown as GlobEnvConfig;
 
   if (!/^[a-zA-Z\_]*$/.test(ENV.VITE_GLOB_APP_SHORT_NAME)) {
