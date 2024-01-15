@@ -32,9 +32,9 @@
     return {
       algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       token: {
-        colorPrimary: isDark ? darkPrimaryColor : getThemeColor,
-        colorLink: isDark ? darkPrimaryColor : getThemeColor,
-        colorInfo: isDark ? darkPrimaryColor : getThemeColor,
+        colorPrimary: isDark ? darkPrimaryColor : unref(getThemeColor),
+        colorLink: isDark ? darkPrimaryColor : unref(getThemeColor),
+        colorInfo: isDark ? darkPrimaryColor : unref(getThemeColor),
       },
     };
   });
