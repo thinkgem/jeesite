@@ -28,6 +28,13 @@
 	</properties>
 
 	<dependencies>
+
+		<!-- Servlet Api -->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		
 		<!-- 监控接口 -->
 		<dependency>
@@ -62,21 +69,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
 		</dependency>-->
-
-		<!-- Servlet Api -->
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-
-		<!-- Spring Boot Tomcat
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency> -->
 
 	</dependencies>
 	
