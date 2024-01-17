@@ -1,5 +1,4 @@
 <% layout('/layouts/default.html', {title: '站点管理', libs: ['validate','fileupload','ueditor','dataGrid']}){ %>
-
 <div class="main-content">
 	<div class="box box-main">
 		<div class="box-header with-border">
@@ -71,12 +70,10 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">${text('站点logo')}</label>
 							<div class="col-sm-10">
-							<#form:fileupload   id="uploadLogo"   bizKey="${site.id}" bizType="site_logo" returnPath="true"
-							    filePathInputId="logo" 
-							    uploadType="image" readonly="false" maxUploadNum="1" isMini="false"/>
-							<#form:input path="logo" class="form-control"/>
-
-
+								<#form:fileupload id="uploadLogo" bizKey="${site.id}" bizType="site_logo" returnPath="true"
+									filePathInputId="logo" uploadType="image" readonly="false" maxUploadNum="1" isMini="false"/>
+								<#form:input path="logo" class="form-control"/>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -163,7 +160,7 @@
 </div>
 <% } %>
 <script>
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
