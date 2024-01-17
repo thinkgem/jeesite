@@ -122,7 +122,11 @@
           ...attrs,
           ...unref(getProps),
           open: unref(openRef),
-        };
+        } as any;
+        if (typeof values?.width === 'string') {
+          let width = Number(values.width);
+          if (!isNaN(width)) values.width = width;
+        }
         delete values['wrapClassName'];
         return values;
       });
