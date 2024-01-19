@@ -301,7 +301,14 @@
         align: 'left',
         editRow: true,
         editComponent: 'InputTextArea',
-        editRule: false,
+        // 子表自定义验证实例
+        editRule: (value, _record) => {
+          return new Promise((resolve, reject) => {
+            if (!value || value === '') return resolve();
+            if (value.length < 3) return reject('至少3个字符');
+            return resolve(); // 验证成功
+          });
+        },
       },
       {
         title: t('下拉框'),
