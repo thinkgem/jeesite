@@ -82,8 +82,8 @@ export function useDataSource(
     filters: Partial<Recordable<string[]>>,
     sorter: SorterResult,
   ) {
-    const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
-    if (clearSelectOnPageChange) {
+    const { clearSelectedOnReload, sortFn, filterFn } = unref(propsRef);
+    if (clearSelectedOnReload) {
       clearSelectedRowKeys();
     }
     setPagination(pagination);
@@ -248,7 +248,7 @@ export function useDataSource(
     return findRow(dataSourceRef.value);
   }
 
-  async function fetch(opt?: FetchParams) {
+  async function fetch(opt?: FetchParams): Promise<any> {
     const {
       api,
       searchInfo,
@@ -260,6 +260,7 @@ export function useDataSource(
       pagination,
       isTreeTable,
     } = unref(propsRef);
+
     if (!api || !isFunction(api)) return;
     try {
       setLoading(true);
@@ -379,6 +380,10 @@ export function useDataSource(
   }
 
   async function reload(opt?: FetchParams) {
+    const { clearSelectedOnReload } = unref(propsRef);
+    if (clearSelectedOnReload) {
+      clearSelectedRowKeys();
+    }
     // 如果是树表，则刷新上一个父节点和要转移到目标的父节点下的数据 v5.6.0+
     if (
       unref(propsRef).isTreeTable &&
@@ -422,15 +427,15 @@ export function useDataSource(
     getDelDataSource,
     getRawDataSource,
     getRowKey,
-    setTableData,
     getAutoCreateKey,
-    fetch,
-    reload,
+    setTableData,
     updateTableData,
     updateTableDataRecord,
     deleteTableDataRecord,
     insertTableDataRecord,
     findTableDataRecord,
     handleTableChange,
+    fetch,
+    reload,
   };
 }
