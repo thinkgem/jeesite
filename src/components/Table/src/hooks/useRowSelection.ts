@@ -10,7 +10,7 @@ export function useRowSelection(
   tableData: Ref<Recordable[]>,
   emit: EmitType,
 ) {
-  const selectedRowKeysRef = ref<string[]>([]);
+  const selectedRowKeysRef = ref<string[] | number[]>([]);
   const selectedRowRef = ref<Recordable[]>([]);
 
   const getRowSelectionRef = computed((): TableRowSelection | null => {
@@ -21,10 +21,9 @@ export function useRowSelection(
 
     return {
       selectedRowKeys: unref(selectedRowKeysRef),
-      onChange: (selectedRowKeys: string[], selectedRows: Recordable[]) => {
+      preserveSelectedRowKeys: true, // 由 clearSelectedOnReload 选项控制是否保留选择项
+      onChange: (selectedRowKeys: string[] | number[], selectedRows: any[]) => {
         setSelectedRowKeys(selectedRowKeys);
-        // selectedRowKeysRef.value = selectedRowKeys;
-        // selectedRowRef.value = selectedRows;
         if (rowSelection && rowSelection.onChange) {
           rowSelection.onChange(selectedRowKeys, selectedRows);
         }
@@ -47,7 +46,9 @@ export function useRowSelection(
         const { rowSelection } = unref(propsRef);
         if (rowSelection) {
           const { onChange } = rowSelection;
-          if (onChange && isFunction(onChange)) onChange(getSelectRowKeys(), getSelectRows());
+          if (onChange && isFunction(onChange)) {
+            onChange(getSelectRowKeys(), getSelectRows());
+          }
         }
         // 有数据时，再调用选择变更事件
         if (unref(tableData).length > 0) {
@@ -70,17 +71,17 @@ export function useRowSelection(
     return unref(getAutoCreateKey) ? ROW_KEY : rowKey;
   });
 
-  function setSelectedRowKeys(rowKeys: string[]) {
+  function setSelectedRowKeys(rowKeys: string[] | number[]) {
     selectedRowKeysRef.value = rowKeys;
     const allSelectedRows = findNodeAll(
       toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))),
-      (item) => rowKeys.includes(item[unref(getRowKey) as string]),
+      (item) => rowKeys.includes(item[unref(getRowKey) as string] as never),
       {
         children: propsRef.value.childrenColumnName ?? 'children',
       },
     );
     const trueSelectedRows: any[] = [];
-    rowKeys.forEach((key: string) => {
+    rowKeys.forEach((key: string | number) => {
       const found = allSelectedRows.find((item) => item[unref(getRowKey) as string] === key);
       found && trueSelectedRows.push(found);
     });
