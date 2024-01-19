@@ -5,7 +5,7 @@
 -->
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
-    <TableHeader v-bind="getHeaderProps">
+    <TableHeader v-bind="getHeaderProps" :showSelectionBar="false">
       <template v-if="$slots.tableTitle" #tableTitle>
         <slot name="tableTitle"></slot>
       </template>
@@ -41,6 +41,12 @@
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
     </BasicForm>
+    <div v-if="showSelectionBar" class="m-3 mt-0">
+      <TableSelectionBar
+        :clearSelectedRowKeys="getHeaderProps.clearSelectedRowKeys!"
+        :count="getHeaderProps.count"
+      />
+    </div>
     <FormItemRest>
       <ATable
         ref="tableElRef"
@@ -53,9 +59,9 @@
           <slot :name="item" v-bind="data || {}"></slot>
         </template>
         <template #headerCell="{ column }">
-          <HeaderCell :column="column" />
+          <HeaderCell :column="column as any" />
         </template>
-        <template #bodyCell="data">
+        <template #bodyCell="data: any">
           <template v-if="!data.column.customRender">
             <TableAction
               v-if="data.column.slot === 'tableActions'"
@@ -89,7 +95,6 @@
     SizeType,
     ColumnChangeParam,
   } from './types/table';
-
   import { defineComponent, ref, computed, unref, toRaw, inject, watchEffect } from 'vue';
   import { Table, Form } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
@@ -123,9 +128,11 @@
   import { basicProps } from './props';
   import { isFunction, isArray, isString } from '/@/utils/is';
   import { warn } from '/@/utils/log';
+  import TableSelectionBar from '/@/components/Table/src/components/TableSelectionBar.vue';
 
   export default defineComponent({
     components: {
+      TableSelectionBar,
       ATable: Table,
       FormItemRest: Form.ItemRest,
       BasicForm,
@@ -217,11 +224,10 @@
         deleteTableDataRecord,
         insertTableDataRecord,
         findTableDataRecord,
-        fetch,
         getRowKey,
-        reload,
         getAutoCreateKey,
         updateTableData,
+        reload,
       } = useDataSource(
         getProps,
         {
@@ -292,9 +298,10 @@
         },
       };
 
-      // const { getHeaderProps } = useTableHeader(getProps, slots, handlers);
+      // const { getHeaderProps } = useTableHeader(getProps, slots, handlers, methods);
       const getHeaderProps = computed(() => {
-        const { title, showTableSetting, titleHelpMessage, tableSetting } = unref(getProps);
+        const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } =
+          unref(getProps);
         const hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting;
         if (hideTitle && !isString(title)) {
           return {};
@@ -306,6 +313,9 @@
           tableSetting,
           onColumnsChange: handlers.onColumnsChange,
           class: prefixCls + '-header-container',
+          showSelectionBar,
+          clearSelectedRowKeys,
+          count: getSelectRowKeys().length,
         } as Recordable;
       });
 
@@ -317,7 +327,7 @@
       );
 
       const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } =
-        useTableForm(getProps, slots, fetch, getLoading);
+        useTableForm(getProps, slots, reload, getLoading);
 
       const getBindValues = computed(() => {
         const dataSource = unref(getDataSourceRef);
@@ -446,16 +456,11 @@
 
       emit('register', tableAction, formActions);
 
-      function getSlotData(data: Recordable) {
-        if (data) {
-          if (!data.record) {
-            data.record = {};
-          }
-          if (!data.record.dataMap) {
-            data.record.dataMap = {};
-          }
-        }
-        return data || {};
+      function getSlotData(rawData: Recordable) {
+        let data = rawData || {};
+        if (!data.record) data.record = {};
+        if (!data.record.dataMap) data.record.dataMap = {};
+        return data;
       }
 
       const formShow = ref(unref(getProps).showSearchForm);
@@ -587,6 +592,9 @@
         td.ant-table-cell-fix-left,
         td.ant-table-cell-fix-right {
           background-color: @content-bg-striped;
+          .ant-table-cell-content {
+            width: auto;
+          }
         }
       }
 

@@ -7,7 +7,7 @@ import { isFunction } from '/@/utils/is';
 export function useTableForm(
   propsRef: ComputedRef<BasicTableProps>,
   slots: Slots,
-  fetch: (opt?: FetchParams | undefined) => Promise<void>,
+  reload: (opt?: FetchParams | undefined) => Promise<void>,
   getLoading: ComputedRef<boolean | undefined>,
 ) {
   const getFormProps = computed((): Partial<FormProps> => {
@@ -41,7 +41,7 @@ export function useTableForm(
     if (handleSearchInfoFn && isFunction(handleSearchInfoFn)) {
       info = handleSearchInfoFn(info) || info;
     }
-    fetch({ searchInfo: info, page: 1 });
+    reload({ searchInfo: info, page: 1 });
   }
 
   return {
