@@ -102,12 +102,13 @@ export const basicProps = {
   ellipsis: propTypes.bool.def(true),
   isCanResizeParent: propTypes.bool.def(false),
   canResize: propTypes.bool.def(false),
-  clearSelectOnPageChange: propTypes.bool,
   resizeHeightOffset: propTypes.number.def(0),
   rowSelection: {
     type: Object as PropType<TableRowSelection | null>,
     default: null,
   },
+  clearSelectedOnReload: propTypes.bool.def(true),
+  showSelectionBar: propTypes.bool.def(false),
   title: {
     type: [String, Function] as PropType<string | ((data: Recordable) => string)>,
     default: null,
