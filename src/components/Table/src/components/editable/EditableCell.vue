@@ -500,11 +500,14 @@
 
   .edit-cell-rule-popover {
     left: 50px !important;
-    .ant-popover-inner-content {
-      padding: 4px 8px;
-      color: @error-color;
-      // border: 1px solid @error-color;
-      border-radius: 2px;
+    .ant-popover-inner {
+      padding: 0 !important;
+
+      &-content {
+        padding: 4px 8px 4px 2px;
+        color: @error-color !important;
+        // border: 1px solid @error-color;
+      }
     }
   }
   .@{prefix-cls} {
