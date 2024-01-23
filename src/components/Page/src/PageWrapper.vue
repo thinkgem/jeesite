@@ -95,28 +95,30 @@
   import { Icon } from '/@/components/Icon';
   import { Resizer } from '/@/components/Resizer';
 
+  const props: any = {
+    title: propTypes.string,
+    dense: propTypes.bool,
+    ghost: propTypes.bool,
+    content: propTypes.string,
+    contentStyle: {
+      type: Object as PropType<CSSProperties>,
+    },
+    contentBackground: propTypes.bool.def(true),
+    contentFullHeight: propTypes.bool,
+    contentClass: propTypes.string,
+    fixedHeight: propTypes.bool,
+    upwardSpace: propTypes.oneOfType([propTypes.number, propTypes.string]).def(0),
+    sidebarWidth: propTypes.number.def(230),
+    sidebarResizer: propTypes.bool.def(true),
+    sidebarMinWidth: propTypes.number.def(0),
+    sidebarBreakpoint: propTypes.string.def('md'),
+  };
+
   export default defineComponent({
     name: 'PageWrapper',
     components: { PageFooter, PageHeader, Icon, Resizer },
     inheritAttrs: false,
-    props: {
-      title: propTypes.string,
-      dense: propTypes.bool,
-      ghost: propTypes.bool,
-      content: propTypes.string,
-      contentStyle: {
-        type: Object as PropType<CSSProperties>,
-      },
-      contentBackground: propTypes.bool.def(true),
-      contentFullHeight: propTypes.bool,
-      contentClass: propTypes.string,
-      fixedHeight: propTypes.bool,
-      upwardSpace: propTypes.oneOfType([propTypes.number, propTypes.string]).def(0),
-      sidebarWidth: propTypes.number.def(230),
-      sidebarResizer: propTypes.bool.def(true),
-      sidebarMinWidth: propTypes.number.def(0),
-      sidebarBreakpoint: propTypes.string.def('md'),
-    },
+    props,
     setup(props, { slots, attrs }) {
       const emitter = useEmitter();
       const wrapperRef = ref(null);
