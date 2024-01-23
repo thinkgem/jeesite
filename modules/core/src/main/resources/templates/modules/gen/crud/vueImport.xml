@@ -52,16 +52,18 @@
   import { Icon } from '/@/components/Icon';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { ${className}ImportData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+  import { FileType } from 'ant-design-vue/es/upload/interface';
+  import { AxiosProgressEvent } from 'axios';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage, showMessageModal } = useMessage();
 
-  const fileList = ref([]);
+  const fileList = ref(FileType[]);
   const uploadInfo = ref('');
 
-  const beforeUpload = (file: never) => {
+  const beforeUpload = (file: FileType) => {
     fileList.value = [file];
     return false;
   };
@@ -80,8 +82,8 @@
     downloadByUrl({ url: ctxAdminPath + '/${urlPrefix}/importTemplate' });
   }
 
-  function onUploadProgress(progressEvent: ProgressEvent) {
-    const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+  function onUploadProgress(progressEvent: AxiosProgressEvent) {
+    const complete = ((progressEvent.loaded / (progressEvent.total || 1)) * 100) | 0;
     if (complete != 100) {
       uploadInfo.value = t('正在导入，请稍后') + ' ' + complete + '%...';
     } else {
