@@ -46,7 +46,7 @@
 
       const selectedKeysRef = ref<SizeType[]>([table.getSize()]);
 
-      function handleTitleClick({ key }: { key: SizeType }) {
+      function handleTitleClick({ key }: { key: SizeType } | any) {
         selectedKeysRef.value = [key];
         table.setProps({
           size: key,
