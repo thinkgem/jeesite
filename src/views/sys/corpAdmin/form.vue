@@ -148,7 +148,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     schemas: inputFormSchemas,
     baseColProps: { lg: 12, md: 24 },
     labelWidth: 120,
