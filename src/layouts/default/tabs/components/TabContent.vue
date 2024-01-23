@@ -13,7 +13,7 @@
   import type { RouteLocationNormalized } from 'vue-router';
 
   import { defineComponent, computed, unref } from 'vue';
-  import { Dropdown } from '/@/components/Dropdown/index';
+  import { Dropdown } from '/@/components/Dropdown';
   import { Icon } from '/@/components/Icon';
 
   import { TabContentProps } from '../types';
