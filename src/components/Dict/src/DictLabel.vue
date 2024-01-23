@@ -19,12 +19,12 @@
             item.cssClass.indexOf(' error') >= 0
               ? 'error'
               : item.cssClass.indexOf(' success') >= 0
-              ? 'success'
-              : item.cssClass.indexOf(' warning') >= 0
-              ? 'warning'
-              : item.cssClass.indexOf(' processing') >= 0
-              ? 'processing'
-              : 'default'
+                ? 'success'
+                : item.cssClass.indexOf(' warning') >= 0
+                  ? 'warning'
+                  : item.cssClass.indexOf(' processing') >= 0
+                    ? 'processing'
+                    : 'default'
           "
           :text="item.name"
           :title="item.name"
@@ -55,15 +55,17 @@
   const { t } = useI18n();
   const { getDictList } = useDict();
 
+  const props: any = {
+    dictType: propTypes.string,
+    dictValue: propTypes.any,
+    defaultValue: propTypes.string.def(t('未知')),
+    icon: propTypes.bool.def(true),
+  };
+
   export default defineComponent({
     components: { Tag, Badge, Icon },
     inheritAttrs: false,
-    props: {
-      dictType: propTypes.string,
-      dictValue: propTypes.any,
-      defaultValue: propTypes.string.def(t('未知')),
-      icon: propTypes.bool.def(true),
-    },
+    props,
     setup(props) {
       const dictList = ref<any[]>([]);
       const { initDict } = useDict();
