@@ -104,8 +104,8 @@
         return uploading.value
           ? t('component.upload.uploading')
           : someError
-          ? t('component.upload.reUploadFailed')
-          : t('component.upload.startUpload');
+            ? t('component.upload.reUploadFailed')
+            : t('component.upload.startUpload');
       });
 
       // 上传前校验
@@ -148,7 +148,7 @@
 
       function addFileItem(record: FileItem) {
         const { maxNumber } = props;
-        if ((fileItemList.value.length + (props.previewFileList?.length || 0)) >= maxNumber) {
+        if (fileItemList.value.length + (props.previewFileList?.length || 0) >= maxNumber) {
           createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
           return;
         }

@@ -1,4 +1,3 @@
-import SparkMD5 from 'spark-md5';
 
 export function checkFileType(file: File, accepts: string[]) {
   const newTypes = accepts.join('|');
