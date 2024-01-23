@@ -1,46 +1,70 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
 import { PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import legacy from '@vitejs/plugin-legacy';
-import purgeIcons from 'vite-plugin-purge-icons';
-import windiCSS from 'vite-plugin-windicss';
-import VitePluginCertificate from 'vite-plugin-mkcert';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';
+import vitePluginCertificate from 'vite-plugin-mkcert';
+import { appConfigPlugin } from './appConfig';
+import { configUnoCSSPlugin } from './unocss';
+import { configIconsPlugin } from './icons';
 import { configHtmlPlugin } from './html';
-import { configPwaConfig } from './pwa';
 import { configMockPlugin } from './mock';
 import { configCompressPlugin } from './compress';
-// import { configStyleImportPlugin } from './styleImport';
-import { configVisualizerConfig } from './visualizer';
+import { configVisualizerPlugin } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configSvgIconsPlugin } from './svgSprite';
+import { PackageJson } from 'pkg-types';
 
-export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
-  const {
-    VITE_USE_MOCK,
-    VITE_LEGACY,
-    VITE_BUILD_COMPRESS,
-    VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
-  } = viteEnv;
-
+export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: PackageJson) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [
-    // have to
     vue(),
-    // have to
     vueJsx(),
-    // support name
     vueSetupExtend(),
-    // support https
-    VitePluginCertificate({
+    vitePluginCertificate({
       source: 'coding',
     }),
   ];
 
-  // vite-plugin-windicss
-  vitePlugins.push(windiCSS());
+  // app-config-plugin
+  vitePlugins.push(appConfigPlugin(isBuild, viteEnv, pkg));
+
+  // UnoCSS-vite-plugin
+  vitePlugins.push(configUnoCSSPlugin());
+
+  // vite-plugin-purge-icons
+  vitePlugins.push(configIconsPlugin());
+
+  // vite-plugin-html
+  vitePlugins.push(configHtmlPlugin(isBuild));
+
+  // vite-plugin-svg-icons
+  vitePlugins.push(configSvgIconsPlugin(isBuild));
+
+  // vite-plugin-mock
+  viteEnv.VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild));
+
+  // rollup-plugin-visualizer
+  vitePlugins.push(configVisualizerPlugin());
+
+  // vite-plugin-theme-vite3
+  vitePlugins.push(configThemePlugin(isBuild));
+
+  // rollup-plugin-gzip
+  isBuild &&
+    vitePlugins.push(
+      configCompressPlugin(
+        viteEnv.VITE_BUILD_COMPRESS,
+        viteEnv.VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
+      ),
+    );
 
   // @vitejs/plugin-legacy
-  VITE_LEGACY &&
+  viteEnv.VITE_LEGACY &&
     isBuild &&
     vitePlugins.push(
       legacy({
@@ -48,35 +72,6 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
         modernPolyfills: true,
       }),
     );
-
-  // vite-plugin-html
-  vitePlugins.push(configHtmlPlugin(viteEnv, isBuild));
-
-  // vite-plugin-svg-icons
-  vitePlugins.push(configSvgIconsPlugin(isBuild));
-
-  // vite-plugin-mock
-  VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild));
-
-  // vite-plugin-purge-icons
-  vitePlugins.push(purgeIcons());
-
-  // rollup-plugin-visualizer
-  vitePlugins.push(configVisualizerConfig());
-
-  // vite-plugin-theme-vite3
-  vitePlugins.push(configThemePlugin(isBuild));
-
-  // The following plugins only work in the production environment
-  if (isBuild) {
-    // rollup-plugin-gzip
-    vitePlugins.push(
-      configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE),
-    );
-
-    // vite-plugin-pwa
-    vitePlugins.push(configPwaConfig(viteEnv));
-  }
 
   return vitePlugins;
 }
