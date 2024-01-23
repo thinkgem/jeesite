@@ -37,8 +37,9 @@ export function downloadByBase64(buf: string, filename: string, mime?: string, b
 export function downloadByData(data: BlobPart, filename: string, mime?: string, bom?: BlobPart) {
   const blobData = typeof bom !== 'undefined' ? [bom, data] : [data];
   const blob = new Blob(blobData, { type: mime || 'application/octet-stream' });
-  if (typeof window.navigator.msSaveBlob !== 'undefined') {
-    window.navigator.msSaveBlob(blob, filename);
+  const nav = window.navigator as any;
+  if (typeof nav.msSaveBlob !== 'undefined') {
+    nav.msSaveBlob(blob, filename);
   } else {
     const blobURL = window.URL.createObjectURL(blob);
     const tempLink = document.createElement('a');
