@@ -37,7 +37,7 @@
   import { uploadFile } from '/@/api/sys/upload';
   import { buildUUID } from '/@/utils/uuid';
 
-  const tinymceProps = {
+  const editorProps = {
     value: {
       type: String,
     },
@@ -88,7 +88,7 @@
     name: 'WangEditor',
     components: { Editor, Toolbar },
     inheritAttrs: false,
-    props: tinymceProps,
+    props: editorProps,
     emits: ['update:value', 'change'],
     setup(props, { emit, attrs }) {
       const { prefixCls } = useDesign('editor-container');
@@ -152,14 +152,14 @@
       onMounted(() => {
         watch(
           () => props.value,
-          (val: string, _prevVal: string) => {
+          (val) => {
             nextTick(async () => {
               let unlock = await lock();
               try {
-                setHtml(val);
+                setHtml(val || '');
               } catch (e) {
                 setTimeout(() => {
-                  setHtml(val);
+                  setHtml(val || '');
                 }, 500);
               } finally {
                 unlock();
