@@ -5,10 +5,10 @@
 -->
 <template>
   <SvgIcon
-    :size="size"
-    :name="getSvgIcon"
     v-if="isSvgIcon"
+    :name="getSvgIcon"
     :class="[$attrs.class, 'anticon']"
+    :size="size"
     :spin="spin"
   />
   <span
@@ -31,6 +31,7 @@
     CSSProperties,
   } from 'vue';
   import SvgIcon from './SvgIcon.vue';
+  // import Iconify from '@iconify/iconify';
   import Iconify from '@purge-icons/generated';
   import { isString } from '/@/utils/is';
   import { propTypes } from '/@/utils/propTypes';
@@ -40,34 +41,34 @@
     name: 'BasicIcon',
     components: { SvgIcon },
     props: {
-      // icon name
+      prefix: propTypes.string.def(''),
       icon: propTypes.string,
-      // icon color
       color: propTypes.string,
-      // icon size
       size: {
         type: [String, Number] as PropType<string | number>,
-        // default: 16,
       },
       spin: propTypes.bool.def(false),
-      prefix: propTypes.string.def(''),
     },
     setup(props) {
       const elRef = ref<ElRef>(null);
 
       const isSvgIcon = computed(() => props.icon?.endsWith(SVG_END_WITH_FLAG));
-      const getSvgIcon = computed(() => props.icon.replace(SVG_END_WITH_FLAG, ''));
+      const getSvgIcon = computed(() => props.icon?.replace(SVG_END_WITH_FLAG, ''));
       const getIconRef = computed(() => `${props.prefix ? props.prefix + ':' : ''}${props.icon}`);
 
       const update = async () => {
         if (unref(isSvgIcon)) return;
-
         const el = unref(elRef);
         if (!el) return;
-
         await nextTick();
-        const icon = unref(getIconRef);
+        let icon = unref(getIconRef);
         if (!icon) return;
+
+        if (icon.startsWith('icon-')) {
+          icon = 'simple-line-icons:' + icon.substring(5);
+        } else if (icon.startsWith('fa fa-')) {
+          icon = 'fa:' + icon.substring(6);
+        }
 
         const svg = Iconify.renderSVG(icon, {});
         if (svg) {
@@ -76,11 +77,7 @@
         } else {
           const span = document.createElement('span');
           span.className = 'iconify';
-          if (icon.startsWith('icon-')) {
-            span.dataset.icon = 'simple-line-icons:' + icon.substring(5);
-          } else if (icon.startsWith('fa fa-')) {
-            span.dataset.icon = 'fa:' + icon.substring(6);
-          }
+          span.dataset.icon = icon;
           el.textContent = '';
           el.appendChild(span);
         }
