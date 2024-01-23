@@ -5,6 +5,7 @@ import type {
   ReturnMethods,
   UseModalInnerReturnType,
 } from '../typing';
+
 import {
   ref,
   onUnmounted,
@@ -32,9 +33,9 @@ const openData = reactive<{ [key: number]: boolean }>({});
 export function useModal(): UseModalReturnType {
   const modal = ref<Nullable<ModalMethods>>(null);
   const loaded = ref<Nullable<boolean>>(false);
-  const uid = ref<string>('');
+  const uid = ref<number>(0);
 
-  function register(modalMethod: ModalMethods, uuid: string) {
+  function register(modalMethod: ModalMethods, uuid: number) {
     if (!getCurrentInstance()) {
       throw new Error('useModal() can only be used inside setup() or functional components!');
     }
@@ -115,7 +116,7 @@ export function useModal(): UseModalReturnType {
 export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
   const modalInstanceRef = ref<Nullable<ModalMethods>>(null);
   const currentInstance = getCurrentInstance();
-  const uidRef = ref<string>('');
+  const uidRef = ref<number>(0);
 
   const getInstance = () => {
     const instance = unref(modalInstanceRef);
@@ -125,7 +126,7 @@ export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
     return instance;
   };
 
-  const register = (modalInstance: ModalMethods, uuid: string) => {
+  const register = (modalInstance: ModalMethods, uuid: number) => {
     isProdMode() &&
       tryOnUnmounted(() => {
         modalInstanceRef.value = null;

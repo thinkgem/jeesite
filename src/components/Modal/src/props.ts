@@ -16,7 +16,7 @@ export const modalProps = {
   closeFunc: Function as PropType<() => Promise<boolean>>,
 };
 
-export const basicProps = Object.assign({}, modalProps, {
+export const basicProps: any = Object.assign({}, modalProps, {
   defaultFullscreen: { type: Boolean },
   // Can it be full screen
   canFullscreen: { type: Boolean, default: true },
