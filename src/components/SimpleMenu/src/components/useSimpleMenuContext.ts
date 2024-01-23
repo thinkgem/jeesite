@@ -3,7 +3,7 @@ import type { Emitter } from '/@/utils/mitt';
 import { createContext, useContext } from '/@/hooks/core/useContext';
 
 export interface SimpleRootMenuContextProps {
-  rootMenuEmitter: Emitter;
+  rootMenuEmitter: Emitter<any>;
   activeName: Ref<string | number>;
 }
 
