@@ -20,6 +20,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+vite.config.ts.timestamp*
 
 # IDE files
 .idea
@@ -28,3 +29,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.iml
