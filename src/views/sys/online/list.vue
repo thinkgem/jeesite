@@ -10,11 +10,6 @@
         <Icon :icon="getTitle.icon" class="m-1 pr-1" />
         <span> {{ getTitle.value }} </span>
       </template>
-      <template #firstColumn="{ record }">
-        <a @click="handleForm({ id: record.id })">
-          {{ record.logTitle }}
-        </a>
-      </template>
     </BasicTable>
   </div>
 </template>
