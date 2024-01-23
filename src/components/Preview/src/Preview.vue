@@ -41,18 +41,20 @@
 
   type ImageItem = string | ImageProps;
 
+  const props: any = {
+    functional: propTypes.bool,
+    imageList: {
+      type: Array as PropType<ImageItem[]>,
+    },
+  };
+
   export default defineComponent({
     name: 'ImagePreview',
     components: {
       Image,
       PreviewGroup: Image.PreviewGroup,
     },
-    props: {
-      functional: propTypes.bool,
-      imageList: {
-        type: Array as PropType<ImageItem[]>,
-      },
-    },
+    props,
     setup(props) {
       const { prefixCls } = useDesign('image-preview');
 
