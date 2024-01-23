@@ -53,7 +53,7 @@
 
 ## 设计特点
 
-定义众多组件，非常贴心的组件属性及小功能，符合 JeeSite 以往的设计思想，列表和表单以数据驱动视图，极大简化了业务功能开发，注释分解详见本页最下【源码解析】
+定义众多组件，非常贴心的组件属性及小功能，符合 JeeSite 以往的设计思想，列表和表单以数据驱动视图，极大简化了业务功能开发，注释分解详见【[源码解析](https://jeesite.com/docs/vue-crud-view)】
 
 为什么做数据驱动视图？前端向下兼容一直是最大的问题，有了一套相应的标准，会对框架升级帮助很大。比如你可以非常小的成本，业务代码改动非常小的情况下，去升级前端；数据驱动视图可以为未来自定义拖拽表单做更好的铺垫，数据存储结构更清晰化，更利于维护。
 
@@ -149,8 +149,8 @@ VITE_GLOB_API_URL_PREFIX = /js
 
 ### 如果您使用的 VSCode 的话，推荐安装以下插件：
 
-* [Iconify IntelliSense](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Iconify 图标插件
-* [windicss IntelliSense](https://marketplace.visualstudio.com/items?itemName=voorjaar.windicss-intellisense) - windicss 提示插件
+* [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) - UnoCSS 提示插件
+* [Iconify](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Iconify 图标插件
 * [I18n-ally](https://marketplace.visualstudio.com/items?itemName=Lokalise.i18n-ally) - i18n 插件
 * [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) - Vue3 开发必备（Vetur禁用）
 * [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - 脚本代码检查
