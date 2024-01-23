@@ -115,6 +115,11 @@
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock' | 'roleCode-';
 
+  const props: any = {
+    theme: propTypes.oneOf(['dark', 'light']),
+    sidebar: propTypes.bool.def(false),
+  };
+
   export default defineComponent({
     name: 'UserDropdown',
     components: {
@@ -125,11 +130,8 @@
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue'), { loading: true }),
       Icon,
     },
-    props: {
-      theme: propTypes.oneOf(['dark', 'light']),
-      sidebar: propTypes.bool.def(false),
-    },
-    setup(props) {
+    props,
+    setup(props: any) {
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
@@ -240,7 +242,7 @@
         sysCodeRef,
         sysListRef,
         roleCodeRef,
-        userStore,
+        ...props,
       };
     },
   });
