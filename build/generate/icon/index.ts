@@ -2,10 +2,12 @@ import path from 'path';
 import fs from 'fs-extra';
 import inquirer from 'inquirer';
 import colors from 'picocolors';
-import { name } from '../../../package.json';
+import { readPackageJSON } from 'pkg-types';
 
 async function generateIcon() {
-  const dir = path.resolve(process.cwd(), 'node_modules/@iconify/json');
+  const root = process.cwd();
+  const { name } = await readPackageJSON(root);
+  const dir = path.resolve(root, 'node_modules/@iconify/json');
 
   const raw = await fs.readJSON(path.join(dir, 'collections.json'));
 
