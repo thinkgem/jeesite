@@ -26,14 +26,16 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
 
+  const props: any = {
+    value: propTypes.string,
+    showInput: propTypes.bool.def(true),
+    disabled: propTypes.bool,
+  };
+
   export default defineComponent({
     name: 'StrengthMeter',
     components: { InputPassword: Input.Password },
-    props: {
-      value: propTypes.string,
-      showInput: propTypes.bool.def(true),
-      disabled: propTypes.bool,
-    },
+    props,
     emits: ['score-change', 'change'],
     setup(props, { emit }) {
       const innerValueRef = ref('');
