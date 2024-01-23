@@ -1,16 +1,24 @@
-import type { Ref } from 'vue';
-import { ref, onBeforeUpdate } from 'vue';
+import type { ComponentPublicInstance, Ref } from 'vue';
+import { onBeforeUpdate, shallowRef } from 'vue';
 
-export function useRefs(): [Ref<HTMLElement[]>, (index: number) => (el: HTMLElement) => void] {
-  const refs = ref([]) as Ref<HTMLElement[]>;
+function useRefs<T = HTMLElement>(): {
+  refs: Ref<T[]>;
+  setRefs: (index: number) => (el: Element | ComponentPublicInstance | null) => void;
+} {
+  const refs = shallowRef([]) as Ref<T[]>;
 
   onBeforeUpdate(() => {
     refs.value = [];
   });
 
-  const setRefs = (index: number) => (el: HTMLElement) => {
-    refs.value[index] = el;
+  const setRefs = (index: number) => (el: Element | ComponentPublicInstance | null) => {
+    refs.value[index] = el as T;
   };
 
-  return [refs, setRefs];
+  return {
+    refs,
+    setRefs,
+  };
 }
+
+export { useRefs };
