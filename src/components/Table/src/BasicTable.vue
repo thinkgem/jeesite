@@ -243,19 +243,19 @@
         emit,
       );
 
-      function handleTableChange(...args: any[]) {
-        onTableChange.call(undefined, ...args);
-        emit('change', ...args);
+      function handleTableChange(pagination: any, filters: any, sorter: any, extra: any) {
+        onTableChange(pagination, filters, sorter);
+        emit('change', pagination, filters, sorter, extra);
         // 解决通过useTable注册onChange时不起作用的问题
         const { onChange } = unref(getProps);
-        onChange && isFunction(onChange) && onChange.call(undefined, ...args);
+        onChange && isFunction(onChange) && onChange(pagination, filters, sorter, extra);
       }
 
-      function handleTableExpand(...args: any[]) {
-        emit('expand', ...args);
+      function handleTableExpand(expanded: any, record: any) {
+        emit('expand', expanded, record);
         // 解决通过useTable注册onExpand时不起作用的问题
         const { onExpand } = unref(getProps);
-        onExpand && isFunction(onExpand) && onExpand.call(undefined, ...args);
+        onExpand && isFunction(onExpand) && onExpand(expanded, record);
       }
 
       const {

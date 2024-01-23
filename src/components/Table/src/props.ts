@@ -14,7 +14,7 @@ import type { FormProps } from '/@/components/Form';
 import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING, DEFAULT_SIZE } from './const';
 import { propTypes } from '/@/utils/propTypes';
 
-export const basicProps = {
+export const basicProps: any = {
   isTreeTable: propTypes.bool.def(false),
   clickToRowSelect: propTypes.bool.def(true),
   childrenColumnName: propTypes.string.def('childList'),
@@ -29,6 +29,8 @@ export const basicProps = {
     default: DEFAULT_FILTER_FN,
   },
   showTableSetting: propTypes.bool,
+  tableSettingStore: propTypes.bool.def(true),
+  tableSettingStoreKey: propTypes.string,
   autoCreateKey: propTypes.bool.def(true),
   striped: propTypes.bool.def(true),
   showSummary: propTypes.bool,
@@ -104,6 +106,10 @@ export const basicProps = {
   canResize: propTypes.bool.def(false),
   resizeHeightOffset: propTypes.number.def(0),
   rowSelection: {
+    type: Object as PropType<TableRowSelection | null>,
+    default: null,
+  },
+  defaultRowSelection: {
     type: Object as PropType<TableRowSelection | null>,
     default: null,
   },
