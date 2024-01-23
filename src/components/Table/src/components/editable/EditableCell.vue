@@ -26,6 +26,24 @@
   import { DictLabel } from '/@/components/Dict';
   import { dateUtil } from '/@/utils/dateUtil';
 
+  const props: any = {
+    value: {
+      type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
+      default: '',
+    },
+    labelValue: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    record: {
+      type: Object as PropType<EditRecordRow>,
+    },
+    column: {
+      type: Object as PropType<BasicColumn>,
+      default: () => ({}),
+    },
+    index: propTypes.number,
+  };
+
   export default defineComponent({
     name: 'EditableCell',
     components: {
@@ -39,24 +57,8 @@
     directives: {
       clickOutside,
     },
-    props: {
-      value: {
-        type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
-        default: '',
-      },
-      labelValue: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      record: {
-        type: Object as PropType<EditRecordRow>,
-      },
-      column: {
-        type: Object as PropType<BasicColumn>,
-        default: () => ({}),
-      },
-      index: propTypes.number,
-    },
-    setup(props) {
+    props,
+    setup(props: any) {
       const table = useTableContext();
       const isEdit = ref(false);
       const elRef = ref();
@@ -85,7 +87,9 @@
 
       const getIsDateComp = computed(() => {
         const component = unref(getComponent);
-        return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(component);
+        return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(
+          component,
+        );
       });
 
       const getEditComponentProps = computed(() => {
@@ -410,6 +414,7 @@
         handleEnter,
         handleSubmitClick,
         spinning,
+        ...props,
       };
     },
     render() {
