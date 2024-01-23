@@ -60,6 +60,22 @@
   interface MenuInfo {
     key: ToolbarEnum;
   }
+
+  const props: any = {
+    helpMessage: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: '',
+    },
+    title: propTypes.string,
+    toolbar: propTypes.bool,
+    checkable: propTypes.bool,
+    search: propTypes.bool,
+    reload: propTypes.func,
+    checkAll: propTypes.func,
+    expandAll: propTypes.func,
+    searchText: propTypes.string,
+  };
+
   export default defineComponent({
     name: 'BasicTreeHeader',
     components: {
@@ -72,20 +88,7 @@
       AInput: Input,
       FormItemRest: Form.ItemRest,
     },
-    props: {
-      helpMessage: {
-        type: [String, Array] as PropType<string | string[]>,
-        default: '',
-      },
-      title: propTypes.string,
-      toolbar: propTypes.bool,
-      checkable: propTypes.bool,
-      search: propTypes.bool,
-      reload: propTypes.func,
-      checkAll: propTypes.func,
-      expandAll: propTypes.func,
-      searchText: propTypes.string,
-    },
+    props,
     emits: ['strictly-change', 'search'],
     setup(props, { emit, slots }) {
       const { t } = useI18n();
@@ -103,7 +106,7 @@
         ];
       });
 
-      const toolbarList = computed(() => {
+      const toolbarList = computed<any>(() => {
         const { checkable } = props;
         const defaultToolbarList = [
           { label: t('component.tree.expandAll'), value: ToolbarEnum.EXPAND_ALL },

@@ -11,7 +11,7 @@ import type { ContextMenuItem } from '/@/hooks/web/useContextMenu';
 import type { TreeDataItem } from 'ant-design-vue/es/tree';
 import { propTypes } from '/@/utils/propTypes';
 
-export const basicProps = {
+export const basicProps: any = {
   value: {
     type: [Object, Array] as PropType<Keys | CheckKeys>,
   },

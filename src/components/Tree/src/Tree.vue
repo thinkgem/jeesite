@@ -46,6 +46,7 @@
     halfCheckedKeys: Keys;
     checkStrictly: boolean;
   }
+
   export default defineComponent({
     name: 'BasicTree',
     inheritAttrs: false,
