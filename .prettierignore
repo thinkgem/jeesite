@@ -1,9 +1,12 @@
-/dist/*
+dist
 .local
 .output.js
-/node_modules/**
+node_modules
 
 **/*.svg
 **/*.sh
 
-/public/*
+public
+.npmrc
+
+*-lock.yaml
