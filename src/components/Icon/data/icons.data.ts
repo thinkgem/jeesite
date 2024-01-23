@@ -1,5 +1,4 @@
 export default [
-  // Simple line icons
   'simple-line-icons:action-redo',
   'simple-line-icons:action-undo',
   'simple-line-icons:anchor',
@@ -189,8 +188,6 @@ export default [
   'simple-line-icons:volume-off',
   'simple-line-icons:wallet',
   'simple-line-icons:wrench',
-
-  // Ant Design Icons
   'ant-design:account-book-filled',
   'ant-design:account-book-outlined',
   'ant-design:account-book-twotone',
@@ -979,4 +976,6 @@ export default [
   'ant-design:zhihu-square-filled',
   'ant-design:zoom-in-outlined',
   'ant-design:zoom-out-outlined',
+  'fa:bug',
+  'fa:code',
 ];
