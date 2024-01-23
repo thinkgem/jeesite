@@ -14,14 +14,16 @@
   const ONE_HOUR = ONE_MINUTES * 60;
   const ONE_DAY = ONE_HOUR * 24;
 
+  const props: any = {
+    value: propTypes.oneOfType([propTypes.number, propTypes.instanceOf(Date), propTypes.string])
+      .isRequired,
+    step: propTypes.number.def(60),
+    mode: propTypes.oneOf(['date', 'datetime', 'relative']).def('relative'),
+  };
+
   export default defineComponent({
     name: 'Time',
-    props: {
-      value: propTypes.oneOfType([propTypes.number, propTypes.instanceOf(Date), propTypes.string])
-        .isRequired,
-      step: propTypes.number.def(60),
-      mode: propTypes.oneOf(['date', 'datetime', 'relative']).def('relative'),
-    },
+    props,
     setup(props) {
       const date = ref('');
 
@@ -58,9 +60,9 @@
           date.value = getRelativeTime(time);
         } else {
           if (mode === 'datetime') {
-            date.value = formatToDateTime(value);
+            date.value = formatToDateTime(value) || '';
           } else if (mode === 'date') {
-            date.value = formatToDate(value);
+            date.value = formatToDate(value) || '';
           }
         }
       }
