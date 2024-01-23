@@ -425,13 +425,14 @@
             class={{ [`${this.prefixCls}__normal`]: true, 'ellipsis-cell': this.column.ellipsis }}
             onClick={this.handleEdit}
           >
-            {this.column.dictType
-              ? <DictLabel
+            {this.column.dictType ? (
+              <DictLabel
                 dictType={this.column.dictType}
                 dictValue={this.currentValueRef}
                 defaultValue={this.column.defaultValue}
               />
-              : <div class="cell-content" title={this.column.ellipsis ? this.getValues ?? '' : ''}>
+            ) : (
+              <div class="cell-content" title={this.column.ellipsis ? this.getValues ?? '' : ''}>
                 {this.column.editRender
                   ? this.column.editRender({
                       text: this.value,
@@ -441,7 +442,7 @@
                     })
                   : this.getValues ?? '\u00A0'}
               </div>
-            }
+            )}
             {!this.column.editRow && <FormOutlined class={`${this.prefixCls}__normal-icon`} />}
           </div>
           {this.isEdit && (
