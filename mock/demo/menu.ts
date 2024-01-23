@@ -1,6 +1,6 @@
-import { resultSuccess, resultError, getRequestToken, requestParams } from '../_util';
+import { resultSuccess, resultError, getRequestToken, RequestParams } from '../mockUtils';
 import { MockMethod } from 'vite-plugin-mock';
-import { createFakeUserList } from './user';
+import { fakeUserList } from './user';
 
 // single
 const dashboardRoute = {
@@ -237,19 +237,19 @@ const linkRoute = {
 
 export default [
   {
-    url: '/basic-api/getMenuList',
+    url: '/sjs/a/demo/menuRoute',
     timeout: 1000,
     method: 'get',
-    response: (request: requestParams) => {
+    response: (request: RequestParams) => {
       const token = getRequestToken(request);
       if (!token) {
         return resultError('Invalid token!');
       }
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = fakeUserList.find((item) => item.token === token);
       if (!checkUser) {
         return resultError('Invalid user token!');
       }
-      const id = checkUser.userId;
+      const id = checkUser.userCode;
       let menu: Object[];
       switch (id) {
         case '1':
@@ -263,7 +263,6 @@ export default [
         default:
           menu = [];
       }
-
       return resultSuccess(menu);
     },
   },
