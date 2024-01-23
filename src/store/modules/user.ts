@@ -20,7 +20,7 @@ import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { useGlobSetting } from '/@/hooks/setting';
 import logoImg from '/@/assets/images/logo.png';
-import mitt, { Emitter } from '/@/utils/mitt';
+import { mitt, Emitter } from '/@/utils/mitt';
 
 const { showMessage, createConfirm } = useMessage();
 
@@ -31,7 +31,7 @@ interface UserState {
   sessionTimeout?: boolean;
   lastUpdateTime: number;
   pageCache: any;
-  emitter: Emitter;
+  emitter: Emitter<any>;
 }
 
 export const useUserStore = defineStore({
