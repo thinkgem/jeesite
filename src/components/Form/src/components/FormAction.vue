@@ -55,6 +55,31 @@
 
   type ButtonOptions = Partial<ButtonProps> & { text: string };
 
+  const props: any = {
+    showActionButtonGroup: propTypes.bool.def(true),
+    showResetButton: propTypes.bool.def(true),
+    showSubmitButton: propTypes.bool.def(true),
+    showAdvancedButton: propTypes.bool.def(true),
+    resetButtonOptions: {
+      type: Object as PropType<ButtonOptions>,
+      default: () => ({}),
+    },
+    submitButtonOptions: {
+      type: Object as PropType<ButtonOptions>,
+      default: () => ({}),
+    },
+    actionColOptions: {
+      type: Object as PropType<Partial<ColEx>>,
+      default: () => ({}),
+    },
+    actionSpan: propTypes.number.def(6),
+    isAdvanced: propTypes.bool,
+    hideAdvanceBtn: propTypes.bool,
+    baseColProps: {
+      type: Object as PropType<Partial<ColEx>>,
+    },
+  };
+
   export default defineComponent({
     name: 'JeeSiteFormAction',
     components: {
@@ -64,30 +89,7 @@
       BasicArrow,
       [Col.name]: Col,
     },
-    props: {
-      showActionButtonGroup: propTypes.bool.def(true),
-      showResetButton: propTypes.bool.def(true),
-      showSubmitButton: propTypes.bool.def(true),
-      showAdvancedButton: propTypes.bool.def(true),
-      resetButtonOptions: {
-        type: Object as PropType<ButtonOptions>,
-        default: () => ({}),
-      },
-      submitButtonOptions: {
-        type: Object as PropType<ButtonOptions>,
-        default: () => ({}),
-      },
-      actionColOptions: {
-        type: Object as PropType<Partial<ColEx>>,
-        default: () => ({}),
-      },
-      actionSpan: propTypes.number.def(6),
-      isAdvanced: propTypes.bool,
-      hideAdvanceBtn: propTypes.bool,
-      baseColProps: {
-        type: Object as PropType<Partial<ColEx>>,
-      },
-    },
+    props,
     emits: ['toggle-advanced'],
     setup(props, { emit }) {
       const { t } = useI18n();

@@ -38,47 +38,49 @@
   import { useDict } from '/@/components/Dict';
   import { TreeItem } from '/@/components/Tree';
 
+  const props: any = {
+    value: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    labelValue: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    labelInValue: propTypes.bool,
+    treeData: {
+      type: Array as PropType<Recordable[] | TreeItem[]>,
+      default: () => [],
+    },
+    api: {
+      type: Function as PropType<(arg?: Recordable) => Promise<Recordable[] | TreeItem[]>>,
+      default: null,
+    },
+    params: {
+      type: Object as PropType<Recordable>,
+      default: () => ({}),
+    },
+    isDisable: {
+      type: Function as PropType<(node: Recordable) => boolean>,
+      default: null,
+    },
+    resultField: propTypes.string.def(''),
+    immediate: propTypes.bool.def(false),
+    dictType: propTypes.string,
+    treeCheckable: propTypes.bool,
+    treeDataSimpleMode: propTypes.bool.def(true),
+    canSelectParent: propTypes.bool.def(true),
+    // 是否返回全路径，包含所有上级信息，以 returnFullNameSplit 参数分隔
+    returnFullName: propTypes.bool.def(false),
+    // 是否返回全路径，的分隔符，默认“/”
+    returnFullNameSplit: propTypes.string.def('/'),
+  };
+
   export default defineComponent({
     name: 'JeeSiteTreeSelect',
     components: { TreeSelect, LoadingOutlined },
     // inheritAttrs: false,
-    props: {
-      value: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      labelValue: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      labelInValue: propTypes.bool,
-      treeData: {
-        type: Array as PropType<Recordable[] | TreeItem[]>,
-        default: () => [],
-      },
-      api: {
-        type: Function as PropType<(arg?: Recordable) => Promise<Recordable[] | TreeItem[]>>,
-        default: null,
-      },
-      params: {
-        type: Object as PropType<Recordable>,
-        default: () => ({}),
-      },
-      isDisable: {
-        type: Function as PropType<(node: Recordable) => boolean>,
-        default: null,
-      },
-      resultField: propTypes.string.def(''),
-      immediate: propTypes.bool.def(false),
-      dictType: propTypes.string,
-      treeCheckable: propTypes.bool,
-      treeDataSimpleMode: propTypes.bool.def(true),
-      canSelectParent: propTypes.bool.def(true),
-      // 是否返回全路径，包含所有上级信息，以 returnFullNameSplit 参数分隔
-      returnFullName: propTypes.bool.def(false),
-      // 是否返回全路径，的分隔符，默认“/”
-      returnFullNameSplit: propTypes.string.def('/'),
-    },
+    props,
     emits: ['options-change', 'change', 'click'],
-    setup(props, { emit }) {
+    setup(props: any, { emit }) {
       const { t } = useI18n();
       const attrs = useAttrs();
       const treeDataRef = ref<Recordable[]>(props.treeData);

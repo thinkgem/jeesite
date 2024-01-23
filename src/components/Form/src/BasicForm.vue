@@ -115,7 +115,7 @@
       });
 
       const getBindValue = computed(
-        () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable),
+        () => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable,
       );
 
       const getSchema = computed((): FormSchema[] => {

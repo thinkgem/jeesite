@@ -31,7 +31,7 @@ export interface ButtonProps extends AntdButtonProps {
 
 export interface FormActionType {
   submit: () => Promise<void>;
-  setFieldsValue: <T>(values: T) => Promise<void>;
+  setFieldsValue: (values: Recordable) => Promise<void>;
   resetFields: () => Promise<void>;
   getFieldsValue: () => Recordable;
   clearValidate: (name?: string | string[]) => Promise<void>;
@@ -49,7 +49,7 @@ export interface FormActionType {
   scrollToField: (name: NamePath, options?: ScrollOptions) => Promise<void>;
 }
 
-export type RegisterFn = (formInstance: FormActionType) => void;
+export type RegisterFn = (formInstance: FormActionType, uuid: string) => void;
 
 export type UseFormReturnType = [RegisterFn, FormActionType];
 
