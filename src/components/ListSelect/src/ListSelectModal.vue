@@ -226,12 +226,14 @@
         }
       }
     }
+
     &.jeesite-basic-table-form-container {
       .ant-form.jeesite-basic-form {
         border-top: 0 !important;
       }
     }
   }
+
   .jeesite-listselect {
     .ant-modal.jeesite-basic-modal {
       .ant-modal {
@@ -245,15 +247,17 @@
         }
       }
     }
+
     .basic-tree-header {
       padding: 15px 0 4px;
       border: 0;
     }
+
     &-tags {
       overflow: auto;
 
       .ant-tag {
-        margin: 4px 0 0 0;
+        margin: 4px 0 0;
         padding: 0 4px;
         width: 100%;
         display: flex;

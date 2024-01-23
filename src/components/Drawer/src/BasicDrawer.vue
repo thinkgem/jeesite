@@ -242,6 +242,7 @@
 
       &-title {
         font-weight: normal;
+
         .anticon {
           color: @primary-color;
         }
@@ -251,6 +252,7 @@
         .anticon-close {
           opacity: 0.6;
           color: @text-color-base;
+
           &:hover {
             color: @error-color;
             opacity: 1;

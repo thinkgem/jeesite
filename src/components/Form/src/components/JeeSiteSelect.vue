@@ -164,6 +164,7 @@
 
   .@{prefix-cls} {
     width: 100%;
+
     .ant-select {
       width: 100%;
     }

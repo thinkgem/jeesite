@@ -313,7 +313,7 @@
       .ant-page-header-content {
         font-size: 14px;
         color: #666;
-        padding: 0 0 8px 0;
+        padding: 0 0 8px;
       }
 
       .anticon {
@@ -335,6 +335,7 @@
         padding: 0;
         border-radius: 0;
       }
+
       .ant-page-header {
         margin: 0;
         padding: 0;
@@ -376,16 +377,17 @@
           height: 24px;
           text-align: center;
           transition: transform 0.3s;
-          color: rgba(0, 0, 0, 0.5);
+          color: rgb(0 0 0 / 50%);
           border-radius: 40px;
           box-shadow:
-            0 2px 8px -2px rgba(0, 0, 0, 0.05),
-            0 1px 4px -1px rgba(25, 15, 15, 0.07),
-            0 0 1px 0 rgba(0, 0, 0, 0.08);
+            0 2px 8px -2px rgb(0 0 0 / 5%),
+            0 1px 4px -1px rgb(25 15 15 / 7%),
+            0 0 1px 0 rgb(0 0 0 / 8%);
 
           &:hover {
-            color: rgba(0, 0, 0, 0.8);
+            color: rgb(0 0 0 / 80%);
           }
+
           svg {
             font-size: 12px;
           }
@@ -414,6 +416,7 @@
       .ant-layout {
         background: transparent;
       }
+
       .sidebar {
         &-open,
         &-close {

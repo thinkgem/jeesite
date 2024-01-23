@@ -70,6 +70,7 @@
     padding-left: 7px;
     cursor: pointer;
     transition: all 0.2s ease;
+
     &.light {
       // border-bottom: 1px solid @border-color-base;
       border-bottom: 0;
@@ -90,10 +91,7 @@
     &__title {
       font-size: 20px;
       // font-weight: bold;
-      font-family:
-        Arial,
-        Microsoft YaHei,
-        sans-serif;
+      font-family: Arial, 'Microsoft YaHei', sans-serif;
       transition: all 0.5s;
     }
   }

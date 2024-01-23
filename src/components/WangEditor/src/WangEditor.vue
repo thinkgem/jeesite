@@ -242,14 +242,6 @@
   }
 
   [data-theme='dark'] {
-    .@{prefix-cls} {
-      border-color: #303030;
-
-      .w-e-toolbar {
-        border-bottom-color: #303030;
-      }
-    }
-
     // textarea - css vars
     --w-e-textarea-bg-color: #151515;
     --w-e-textarea-color: #c9d1d9;
@@ -263,7 +255,7 @@
     // toolbar - css vars
     --w-e-toolbar-color: #878787;
     --w-e-toolbar-bg-color: #1c1c1c;
-    --w-e-toolbar-active-color: #ffffff;
+    --w-e-toolbar-active-color: #fff;
     --w-e-toolbar-active-bg-color: #393939;
     --w-e-toolbar-disabled-color: #5f5f5f;
     --w-e-toolbar-border-color: #303030;
@@ -271,5 +263,12 @@
     // modal - css vars
     --w-e-modal-button-bg-color: #151515;
     --w-e-modal-button-border-color: #303030;
+    .@{prefix-cls} {
+      border-color: #303030;
+
+      .w-e-toolbar {
+        border-bottom-color: #303030;
+      }
+    }
   }
 </style>

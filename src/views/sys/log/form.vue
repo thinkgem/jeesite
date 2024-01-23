@@ -216,6 +216,7 @@
     td {
       width: 30%;
     }
+
     th:first-child,
     table.table {
       td:first-child {

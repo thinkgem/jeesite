@@ -16,7 +16,7 @@
     <div class="h-screen w-screen flex items-center justify-center">
       <div :class="`${prefixCls}__hour`" class="relative mr-5 h-2/5 w-2/5 md:mr-20 md:h-4/5">
         <span>{{ hour }}</span>
-        <span class="text-md meridiem absolute left-5 top-5 xl:text-xl" v-show="showDate">
+        <span class="meridiem text-md absolute left-5 top-5 xl:text-xl" v-show="showDate">
           {{ meridiem }}
         </span>
       </div>
@@ -169,6 +169,7 @@
           font-size: 90px;
         }
       }
+
       @media screen and (min-width: @screen-lg) {
         span:not(.meridiem) {
           font-size: 220px;
@@ -180,6 +181,7 @@
           font-size: 260px;
         }
       }
+
       @media screen and (min-width: @screen-2xl) {
         span:not(.meridiem) {
           font-size: 320px;
@@ -194,7 +196,7 @@
       display: flex;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgb(0 0 0 / 50%);
       backdrop-filter: blur(8px);
       justify-content: center;
       align-items: center;

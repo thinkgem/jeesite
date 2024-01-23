@@ -141,9 +141,8 @@
       height: inherit;
       border-radius: inherit;
       border: inherit;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgb(0 0 0 / 40%);
       cursor: pointer;
-      -webkit-transition: opacity 0.4s;
       transition: opacity 0.4s;
 
       ::v-deep(svg) {

@@ -296,8 +296,8 @@
 
       &-content {
         box-shadow:
-          0 4px 8px 0 rgba(0, 0, 0, 0.2),
-          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          0 4px 8px 0 rgb(0 0 0 / 20%),
+          0 6px 20px 0 rgb(0 0 0 / 19%);
         padding: 0;
       }
 
@@ -400,10 +400,7 @@
     overflow: hidden;
 
     .ant-modal {
-      top: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      left: 0 !important;
+      inset: 0 !important;
       width: 100% !important;
       // height: 100%;
 

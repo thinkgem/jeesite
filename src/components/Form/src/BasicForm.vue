@@ -311,6 +311,7 @@
     .ant-form-item {
       &-label {
         line-height: 14px;
+
         label::after {
           margin: 0 4px 0 2px !important;
         }

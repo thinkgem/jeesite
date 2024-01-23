@@ -140,6 +140,7 @@
   .jeesite-msg-title {
     border-bottom: 1px solid #ddd;
   }
+
   [data-theme='dark'] {
     .jeesite-msg-title {
       border-bottom: 1px solid #303030;

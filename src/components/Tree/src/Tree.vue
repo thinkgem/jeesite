@@ -654,6 +654,7 @@
         .ant-tree-treenode:hover::before {
           background-color: transparent;
         }
+
         .ant-tree-treenode {
           .ant-tree-switcher {
             color: fade(@text-color-base, 70);
@@ -666,20 +667,24 @@
 
           .ant-tree-node-content-wrapper {
             transition: none;
+
             .ant-tree-title {
               left: auto;
             }
             .@{prefix-cls}-title {
               padding-left: 3px;
             }
+
             .ant-tree-iconEle {
               color: fade(@text-color-base, 70);
               width: 20px;
             }
+
             &:hover {
               background-color: fade(@primary-color, 5);
               border-radius: 3px;
             }
+
             &.ant-tree-node-selected {
               color: @text-color-base;
               background-color: fade(@primary-color, 15);
@@ -687,12 +692,15 @@
             }
           }
         }
+
         .ant-tree-treenode-selected {
           color: @text-color-base;
+
           .ant-tree-switcher,
           .ant-tree-iconEle {
             color: fade(@text-color-base, 70);
           }
+
           &:hover::before,
           &::before {
             background-color: transparent !important;

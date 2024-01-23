@@ -303,9 +303,11 @@
 
     &-menu-subtitle {
       line-height: 13px;
+
       span {
         font-weight: bold;
         opacity: 0.7;
+
         svg {
           padding-top: 3px;
         }
@@ -316,7 +318,7 @@
       .@{prefix-cls} {
         height: auto;
         cursor: default;
-        padding: 8px 10px 10px 10px;
+        padding: 8px 10px 10px;
 
         img {
           width: 45px;

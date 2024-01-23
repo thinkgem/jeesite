@@ -506,6 +506,7 @@
 
   .edit-cell-rule-popover {
     left: 50px !important;
+
     .ant-popover-inner {
       padding: 0 !important;
 

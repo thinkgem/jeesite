@@ -72,6 +72,7 @@ module.exports = {
     // 'declaration-colon-space-after': 'always-single-line',
     // 'declaration-colon-space-before': 'never',
     // 'declaration-block-trailing-semicolon': 'always',
+    'media-query-no-invalid': null,
     'rule-empty-line-before': [
       'always',
       {

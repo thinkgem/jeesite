@@ -269,6 +269,7 @@
     padding-bottom: 15px;
     font-size: 16px;
   }
+
   .gp,
   .gp a {
     color: #d21919;

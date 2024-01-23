@@ -193,7 +193,7 @@
   html[data-theme='dark'] {
     .basic-tree-header {
       border-bottom: 1px solid #303030;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgb(255 255 255 / 75%);
     }
   }
 
