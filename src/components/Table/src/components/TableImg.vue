@@ -1,7 +1,7 @@
 <template>
   <div
     :class="prefixCls"
-    class="flex items-center mx-auto"
+    class="mx-auto flex items-center"
     v-if="imgList && imgList.length"
     :style="getWrapStyle"
   >

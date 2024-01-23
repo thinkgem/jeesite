@@ -56,7 +56,7 @@
             ><div class="p-5"><a-empty /></div>
           </template>
         </template>
-        <span class="cursor-pointer px-2 py-1 flex items-center">
+        <span class="flex cursor-pointer items-center px-2 py-1">
           <Icon :icon="currentSelect || 'ion:apps-outline'" />
         </span>
       </a-popover>

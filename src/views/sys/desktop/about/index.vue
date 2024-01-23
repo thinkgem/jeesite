@@ -1,7 +1,7 @@
 <template>
   <PageWrapper title="关于">
     <template #headerContent>
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <span class="flex-1">
           <a href="https://jeesite.com" target="_blank">JeeSite</a>
           快速开发平台，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，有平台来封装技术细节，
@@ -17,7 +17,7 @@
       </div>
     </template>
     <Description @register="infoRegister" class="enter-y" />
-    <Description @register="register" class="my-4 enter-y" />
+    <Description @register="register" class="enter-y my-4" />
     <Description @register="registerDev" class="enter-y" />
   </PageWrapper>
 </template>

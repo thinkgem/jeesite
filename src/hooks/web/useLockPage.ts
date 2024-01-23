@@ -33,9 +33,12 @@ export function useLockPage() {
     }
     clear();
 
-    timeId = setTimeout(() => {
-      lockPage();
-    }, lockTime * 60 * 1000);
+    timeId = setTimeout(
+      () => {
+        lockPage();
+      },
+      lockTime * 60 * 1000,
+    );
   }
 
   function lockPage(): void {

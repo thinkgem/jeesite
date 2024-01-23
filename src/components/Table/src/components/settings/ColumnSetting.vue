@@ -298,7 +298,7 @@
         });
         state.checkOptions = cloneDeep(unref(cacheCheckOptions));
         state.checkedList = cloneDeep(unref(cacheCheckList));
-        setColumns(table.getCacheColumns(), true);
+        setColumns(table.getCacheColumns());
         // sortable.sort(sortableOrder);
       }
 
@@ -382,7 +382,7 @@
         setColumns(columns);
       }
 
-      function setColumns(columns: BasicColumn[] | string[], reset = false) {
+      function setColumns(columns: BasicColumn[] | string[]) {
         table.setColumns(columns);
 
         const data: ColumnChangeParam[] = state.checkOptions.map((col) => {

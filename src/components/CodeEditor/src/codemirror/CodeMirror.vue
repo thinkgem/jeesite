@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative !h-full w-full overflow-hidden"
+    class="relative w-full overflow-hidden !h-full"
     :class="{ 'ant-input': props.bordered, 'css-dev-only-do-not-override-kqecok': props.bordered }"
     ref="el"
   ></div>

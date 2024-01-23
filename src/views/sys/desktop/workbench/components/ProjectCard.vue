@@ -5,13 +5,13 @@
     </template>
 
     <template v-for="item in items" :key="item">
-      <CardGrid class="!md:w-1/3 !w-full">
+      <CardGrid class="!w-full !md:w-1/3">
         <span class="flex">
           <Icon :icon="item.icon" :color="item.color" size="30" />
-          <span class="text-lg ml-4">{{ item.title }}</span>
+          <span class="ml-4 text-lg">{{ item.title }}</span>
         </span>
-        <div class="flex mt-2 h-10 text-secondary">{{ item.desc }}</div>
-        <div class="flex justify-between text-secondary">
+        <div class="text-secondary mt-2 h-10 flex">{{ item.desc }}</div>
+        <div class="text-secondary flex justify-between">
           <span>{{ item.group }}</span>
           <span>{{ item.date }}</span>
         </div>

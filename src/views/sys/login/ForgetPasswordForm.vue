@@ -1,7 +1,7 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
+    <Form class="enter-x p-4" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="account" class="enter-x">
         <Input
           size="large"

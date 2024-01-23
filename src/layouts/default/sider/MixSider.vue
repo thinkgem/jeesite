@@ -30,7 +30,7 @@
           v-for="item in menuModules"
           :key="item.path"
         >
-          <SimpleMenuTag :item="item" collapseParent dot />
+          <SimpleMenuTag :item="item" dot collapseparent />
           <Icon
             :class="`${prefixCls}-module__icon`"
             :size="getCollapsed ? 16 : 20"
@@ -66,7 +66,7 @@
           :items="childrenMenus"
           :theme="getMenuTheme"
           mixSider
-          @menuClick="handleMenuClick"
+          @menu-click="handleMenuClick"
         />
       </ScrollContainer>
       <div

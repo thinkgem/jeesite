@@ -1,26 +1,26 @@
 <template>
-  <div :class="prefixCls" class="relative w-full h-full px-4 bg-light-400">
+  <div :class="prefixCls" class="relative h-full w-full bg-light-400 px-4">
     <AppLocalePicker
-      class="absolute text-white top-4 right-4 enter-x lg:text-gray-600"
+      class="enter-x absolute right-4 top-4 text-white lg:text-gray-600"
       :showText="false"
       v-if="!sessionTimeout && showLocale"
     />
-    <AppDarkModeToggle class="absolute top-3 right-7 enter-x" v-if="!sessionTimeout" />
+    <AppDarkModeToggle class="enter-x absolute right-7 top-3" v-if="!sessionTimeout" />
 
     <span class="-enter-x lg:hidden">
       <AppLogo :alwaysShowTitle="true" />
     </span>
 
-    <div class="container relative h-full py-2 mx-auto">
-      <div class="flex h-full">
-        <div class="hidden min-h-full pl-4 mr-4 lg:flex lg:flex-col lg:w-13/24">
+    <div class="relative mx-auto h-full py-2 container">
+      <div class="h-full flex">
+        <div class="mr-4 hidden min-h-full pl-4 lg:w-13/24 lg:flex lg:flex-col">
           <div class="my-auto">
             <AppLogo class="-enter-x logo" />
-            <img :alt="title" src="../../../assets/svg/login-box-bg.svg" class="w-1/2 -enter-x" />
-            <div class="mt-10 font-medium text-white -enter-x">
-              <span class="inline-block mt-4 text-3xl"> 最好用的快速开发平台</span>
+            <img :alt="title" src="../../../assets/svg/login-box-bg.svg" class="-enter-x w-1/2" />
+            <div class="-enter-x mt-10 text-white font-medium">
+              <span class="mt-4 inline-block text-3xl"> 最好用的快速开发平台</span>
             </div>
-            <div class="mt-5 font-normal text-white text-md dark:text-gray-500 -enter-x">
+            <div class="text-md -enter-x mt-5 text-white font-normal dark:text-gray-500">
               JeeSite 是一个专业的平台，是一个让你使用放心的平台。<br />
               前端基于 Vue3、Vite、TypeScript、Ant-Design-Vue、Vben Admin，<br />
               后台基于 Spring Boot、Apache MyBatis 等，最先进、最经典的技术栈。<br />
@@ -28,10 +28,10 @@
             </div>
           </div>
         </div>
-        <div class="flex w-full h-full py-5 lg:h-auto lg:py-0 lg:my-0 lg:w-11/24 overflow-auto">
+        <div class="h-full w-full flex overflow-auto py-5 lg:my-0 lg:h-auto lg:w-11/24 lg:py-0">
           <div
             :class="`${prefixCls}-form`"
-            class="relative w-full px-5 py-8 mx-auto my-auto rounded-xl shadow-md sm:px-8 lg:px-10 lg:py-9 lg:ml-16 sm:w-3/4 lg:w-2/4 lg:w-auto enter-x"
+            class="enter-x relative mx-auto my-auto w-full rounded-xl px-5 py-8 shadow-md lg:ml-16 lg:w-2/4 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
           >
             <LoginForm />
             <ForgetPasswordForm />

@@ -67,9 +67,8 @@
           >
             <span
               :title="
-                item[props.config.itemName] + (props.config.isShowCode !== false
-                  ? ' (' + item[props.config.itemCode] + ')'
-                  : '')
+                item[props.config.itemName] +
+                (props.config.isShowCode !== false ? ' (' + item[props.config.itemCode] + ')' : '')
               "
             >
               {{ item[props.config?.itemName] }}

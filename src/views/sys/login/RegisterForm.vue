@@ -1,8 +1,8 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <div class="gp mt-4 mb-2"> Tip：演示系统无需注册，请联系官方人员获取账号密码。 </div>
-    <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
+    <div class="gp mb-2 mt-4"> Tip：演示系统无需注册，请联系官方人员获取账号密码。 </div>
+    <Form class="enter-x p-4" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="account" class="enter-x">
         <Input
           class="fix-auto-fill"
@@ -61,7 +61,7 @@
       >
         {{ t('sys.login.registerButton') }}
       </Button>
-      <Button size="large" block class="mt-4 enter-x" @click="handleBackLogin">
+      <Button size="large" block class="enter-x mt-4" @click="handleBackLogin">
         {{ t('sys.login.backSignIn') }}
       </Button>
     </Form>

@@ -174,7 +174,7 @@
         try {
           item.status = UploadResultStatus.UPLOADING;
           if (item.percent != 100) {
-            const { data } = await props.api?.(
+            const { data } = await api(
               {
                 bizKey: item.bizKey,
                 bizType: item.bizType,
@@ -227,8 +227,6 @@
           // 生产环境:抛出错误
           const errorList = data.filter((item: any) => item.result === 'false');
           if (errorList.length > 0) throw errorList;
-        } catch (e) {
-          throw e;
         } finally {
           uploading.value = false;
         }

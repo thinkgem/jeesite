@@ -20,7 +20,7 @@ export function getAppEnvConfig() {
     ? (env as unknown as GlobEnvConfig)
     : window[ENV_NAME as any]) as unknown as GlobEnvConfig;
 
-  if (!/^[a-zA-Z\_]*$/.test(ENV.VITE_GLOB_APP_SHORT_NAME)) {
+  if (!/^[a-zA-Z_]*$/.test(ENV.VITE_GLOB_APP_SHORT_NAME)) {
     warn(
       `VITE_GLOB_APP_SHORT_NAME Variables can only be characters/underscores, please modify in the environment variables and re-running.`,
     );

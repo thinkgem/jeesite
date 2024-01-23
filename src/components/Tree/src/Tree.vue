@@ -535,8 +535,8 @@
             ? item.isParent != undefined
               ? !item.isParent
               : item.isLeaf != undefined
-              ? item.isLeaf
-              : false
+                ? item.isLeaf
+                : false
             : !(item.children && item.children.length > 0);
 
           item[titleField] = (

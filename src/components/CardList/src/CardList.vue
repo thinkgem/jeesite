@@ -1,9 +1,9 @@
 <template>
   <div class="p-2">
-    <div class="p-4 mb-2 bg-white">
+    <div class="mb-2 bg-white p-4">
       <BasicForm @register="registerForm" />
     </div>
-    <div class="p-2 bg-white">
+    <div class="bg-white p-2">
       <List
         :grid="{ gutter: 5, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: grid }"
         :data-source="data"

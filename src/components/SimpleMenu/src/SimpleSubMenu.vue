@@ -7,7 +7,7 @@
     :style="`color: ${getColor}`"
   >
     <Icon v-if="getIcon" :icon="getIcon" :size="16" />
-    <div v-if="collapsedShowTitle && getIsCollapseParent" class="mt-1 collapse-title">
+    <div v-if="collapsedShowTitle && getIsCollapseParent" class="collapse-title mt-1">
       {{ getI18nName }}
     </div>
     <template #title>
@@ -27,7 +27,7 @@
     <template #title>
       <Icon v-if="getIcon" :icon="getIcon" :size="16" />
 
-      <div v-if="collapsedShowTitle && getIsCollapseParent" class="mt-2 collapse-title">
+      <div v-if="collapsedShowTitle && getIsCollapseParent" class="collapse-title mt-2">
         {{ getI18nName }}
       </div>
 

@@ -10,7 +10,7 @@
       {{ t('common.resetText') }}
     </a-button> -->
 
-    <a-button color="error" block @click="handleClearAndRedo" class="mt-3 mb-2">
+    <a-button color="error" block @click="handleClearAndRedo" class="mb-2 mt-3">
       <RedoOutlined class="mr-2" />
       {{ t('layout.setting.clearBtn') }}
     </a-button>

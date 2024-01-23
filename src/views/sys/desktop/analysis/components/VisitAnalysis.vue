@@ -1,6 +1,6 @@
 <template>
   <Skeleton active :paragraph="{ rows: 5 }" :loading="loading">
-    <div ref="chartRef" class="w-full h-70"></div>
+    <div ref="chartRef" class="h-70 w-full"></div>
   </Skeleton>
 </template>
 <script lang="ts" setup>

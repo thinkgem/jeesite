@@ -49,7 +49,7 @@ export function createTableColumns(): BasicColumn[] {
         }
         return (
           <span>
-            <p class="truncate mb-1" title={text}>
+            <p class="mb-1 truncate" title={text}>
               {text}
             </p>
             <Progress percent={percent} size="small" status={status} />

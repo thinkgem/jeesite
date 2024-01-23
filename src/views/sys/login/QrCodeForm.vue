@@ -1,15 +1,15 @@
 <template>
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
-    <div class="gp mt-4 mb-2"> Tip：演示系统未开放扫码登录，请联系官方人员获取账号密码。 </div>
-    <div class="enter-x min-w-64 min-h-64">
+    <div class="gp mb-2 mt-4"> Tip：演示系统未开放扫码登录，请联系官方人员获取账号密码。 </div>
+    <div class="enter-x min-h-64 min-w-64">
       <QrCode
         :value="qrCodeUrl"
         class="enter-x flex justify-center xl:justify-start"
         :width="280"
       />
       <Divider class="enter-x">{{ t('sys.login.scanSign') }}</Divider>
-      <Button size="large" block class="mt-4 enter-x" @click="handleBackLogin">
+      <Button size="large" block class="enter-x mt-4" @click="handleBackLogin">
         {{ t('sys.login.backSignIn') }}
       </Button>
     </div>

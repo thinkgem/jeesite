@@ -90,7 +90,10 @@
     &__title {
       font-size: 20px;
       // font-weight: bold;
-      font-family: Arial, Microsoft YaHei, sans-serif;
+      font-family:
+        Arial,
+        Microsoft YaHei,
+        sans-serif;
       transition: all 0.5s;
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <Dropdown :dropMenuList="getDropMenuList" :trigger="getTrigger" @menuEvent="handleMenuEvent">
+  <Dropdown :dropMenuList="getDropMenuList" :trigger="getTrigger" @menu-event="handleMenuEvent">
     <div :class="`${prefixCls}__info`" @contextmenu="handleContext" v-if="getIsTabs">
       <span class="ml-1"><Icon v-if="getIcon" :icon="getIcon" />{{ getTitle }}</span>
     </div>

@@ -1,11 +1,11 @@
 <template>
-  <div class="flex px-2 py-1.5 items-center basic-tree-header">
+  <div class="basic-tree-header flex items-center px-2 py-1.5">
     <slot name="headerTitle" v-if="$slots.headerTitle"></slot>
     <BasicTitle :helpMessage="helpMessage" v-if="!$slots.headerTitle && title">
       {{ title }}
     </BasicTitle>
     <div
-      class="flex items-center flex-1 cursor-pointer justify-self-stretch"
+      class="flex flex-1 cursor-pointer items-center justify-self-stretch"
       v-if="search || toolbar"
     >
       <div :class="getInputSearchCls" v-if="search">
