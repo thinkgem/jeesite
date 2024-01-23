@@ -58,8 +58,8 @@ export function useTabsDrag(affixTextList: string[]) {
     if (!multiTabsSetting.canDrag) return;
     const el = document.querySelectorAll(`.${prefixCls} .ant-tabs-nav > div`)?.[0] as HTMLElement;
     const { initSortable } = useSortable(el, {
-      filter: (e: ChangeEvent) => {
-        const text = e?.target?.innerText;
+      filter: (e: Event) => {
+        const text = (e as ChangeEvent)?.target?.innerText;
         if (!text) return false;
         return affixTextList.includes(text);
       },
