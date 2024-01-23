@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import type { App, Plugin } from 'vue';
 
-import { unref } from 'vue';
+import { unref, Component } from 'vue';
 import { isObject } from '/@/utils/is';
 
 export const noop = () => {};
@@ -56,19 +56,20 @@ export function openWindow(
 }
 
 export function openWindowLayer(url: string, opt?: { width?: number; height?: number }) {
-  let layerWidth = opt?.width || $(window).width();
+  const win = window as any;
+  let layerWidth = opt?.width || win.$(win).width();
   if (layerWidth < 800) {
     layerWidth -= 15 * 2;
   } else {
     layerWidth -= 100 * 2;
   }
-  let layerHeight = opt?.height || $(window).height();
+  let layerHeight = opt?.height || win.$(win).height();
   if (layerHeight < 500) {
     layerHeight -= 15 * 2;
   } else {
     layerHeight -= 25 * 2;
   }
-  window.layer.open({
+  win.layer.open({
     type: 2,
     maxmin: true,
     shadeClose: true, // 点击背景关闭
@@ -105,7 +106,7 @@ export function getRawRoute(route: RouteLocationNormalized): RouteLocationNormal
   };
 }
 
-export const withInstall = <T>(component: T, alias?: string) => {
+export const withInstall = <T extends Component>(component: T, alias?: string) => {
   const comp = component as any;
   comp.install = (app: App) => {
     app.component(comp.name || comp.displayName, component);
