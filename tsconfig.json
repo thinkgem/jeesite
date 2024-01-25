@@ -23,7 +23,7 @@
     "noUnusedParameters": false,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "declaration": true,
+    "declaration": false,
     "jsx": "preserve",
     "lib": [
       "ESNext",
