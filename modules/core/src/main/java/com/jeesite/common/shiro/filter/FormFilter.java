@@ -200,14 +200,6 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 		return (!isLoginRequest(request, response) && isPermissive(mappedValue)); // 不验证登录状态，只验证登录请求
 	}
-	
-	/**
-	 * 跳转登录页时，跳转到默认首页
-	 */
-	@Override
-	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsFilter.redirectToDefaultPath(request, response);
-	}
 
 	/**
 	 * 地址访问接入验证
@@ -254,6 +246,14 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected boolean isLoginSubmission(ServletRequest request, ServletResponse response) {
 		boolean isLogin = WebUtils.isTrue(request, LOGIN_PARAM);
 		return super.isLoginSubmission(request, response) || isLogin;
+	}
+
+	/**
+	 * 跳转登录页时，跳转到默认首页
+	 */
+	@Override
+	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
 	
 	/**

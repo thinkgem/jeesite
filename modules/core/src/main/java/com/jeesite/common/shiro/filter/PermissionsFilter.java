@@ -30,11 +30,6 @@ import com.jeesite.common.web.http.wrapper.GetHttpServletRequestWrapper;
 public class PermissionsFilter extends org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter {
 
 	@Override
-	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsFilter.redirectToDefaultPath(request, response);
-	}
-	
-	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         return PermissionsFilter.redirectTo403Page(request, response);
     }
@@ -98,6 +93,11 @@ public class PermissionsFilter extends org.apache.shiro.web.filter.authz.Permiss
     		loginUrl += "__url=" + EncodeUtils.encodeUrl(requestUrl.toString());
     		WebUtils.issueRedirect(request, response, loginUrl);
     	}
+	}
+
+	@Override
+	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
 	
 }
