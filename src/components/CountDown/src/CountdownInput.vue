@@ -1,7 +1,13 @@
 <template>
   <a-input v-bind="$attrs" :class="prefixCls" :size="size" :value="state">
     <template #addonAfter>
-      <CountButton :size="size" :count="count" :value="state" :beforeStartFunc="sendCodeApi" />
+      <CountButton
+        type="link"
+        :size="size === 'large' ? 'middle' : 'small'"
+        :count="count"
+        :value="state"
+        :beforeStartFunc="sendCodeApi"
+      />
     </template>
     <template #[item]="data" v-for="item in Object.keys($slots).filter((k) => k !== 'addonAfter')">
       <slot :name="item" v-bind="data || {}"></slot>
@@ -13,6 +19,7 @@
   import CountButton from './CountButton.vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
+  import {Button} from 'ant-design-vue';
 
   const props = {
     value: { type: String },
@@ -26,7 +33,7 @@
 
   export default defineComponent({
     name: 'CountDownInput',
-    components: { CountButton },
+    components: {Button, CountButton },
     inheritAttrs: false,
     props,
     setup(props) {
@@ -48,6 +55,12 @@
 
       button {
         font-size: 14px;
+
+        &.ant-btn-sm {
+          font-size: 13px;
+          height: 22px;
+          padding: 0 7px;
+        }
       }
     }
   }
