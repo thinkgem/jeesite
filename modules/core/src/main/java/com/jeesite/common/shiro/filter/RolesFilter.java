@@ -4,10 +4,10 @@
  */
 package com.jeesite.common.shiro.filter;
 
-import java.io.IOException;
-
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+
+import java.io.IOException;
 
 /**
  * 角色权限过滤器
@@ -17,13 +17,13 @@ import jakarta.servlet.ServletResponse;
 public class RolesFilter extends org.apache.shiro.web.filter.authz.RolesAuthorizationFilter {
 
 	@Override
-	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PermissionsFilter.redirectToDefaultPath(request, response);
-	}
-	
-	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
 		return PermissionsFilter.redirectTo403Page(request, response);
     }
+
+	@Override
+	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+		PermissionsFilter.redirectToDefaultPath(request, response);
+	}
 	
 }

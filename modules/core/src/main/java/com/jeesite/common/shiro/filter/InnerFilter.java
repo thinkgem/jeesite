@@ -19,15 +19,17 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class InnerFilter extends AccessControlFilter {
 
+	private static final String[] prefixes = Global.getPropertyToArray("shiro.innerFilterAllowRemoteAddrs", "127.0.0.1");
+
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 		boolean result = false;
 		String[] prefixes = (String[])mappedValue;
 		if (prefixes == null){
-			prefixes = Global.getPropertyToArray("shiro.innerFilterAllowRemoteAddrs", "127.0.0.1");
+			prefixes = InnerFilter.prefixes;
 		}
 		if (prefixes != null && request instanceof HttpServletRequest){
-			String ip = request.getRemoteAddr();
+			String ip = request.getRemoteAddr() + "]";
 			for (String prefix : prefixes){
 				result = StringUtils.startsWithIgnoreCase(ip, StringUtils.trim(prefix));
 				if (result){
