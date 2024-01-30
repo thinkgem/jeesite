@@ -187,7 +187,7 @@
 								<span class="required hide">*</span> \${text('图片上传')}：</label>
 							<div class="${txtGridRowCol[2]}">
 								<${'#'}form:fileupload id="uploadImage" bizKey="\${${className}.id}" bizType="${className}_image"
-									uploadType="image" class="" readonly="false" preview="true"/>
+									uploadType="image" class="" readonly="false" preview="true" dataMap="true"/>
 							</div>
 						</div>
 					</div>
@@ -204,7 +204,7 @@
 								<span class="required hide">*</span> \${text('附件上传')}：</label>
 							<div class="${txtGridRowCol[2]}">
 								<${'#'}form:fileupload id="uploadFile" bizKey="\${${className}.id}" bizType="${className}_file"
-									uploadType="all" class="" readonly="false" preview="true"/>
+									uploadType="all" class="" readonly="false" preview="true" dataMap="true"/>
 							</div>
 						</div>
 					</div>
