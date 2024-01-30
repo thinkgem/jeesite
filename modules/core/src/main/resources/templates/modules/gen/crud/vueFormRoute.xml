@@ -12,10 +12,11 @@
  * @author ${functionAuthor}
 -->
 <template>
-  <FormPage
-    :config="formSettings"
-    :okAuth="'${permissionPrefix}:edit'"
+  <CollapseForm
+    :config="formConfig"
     :loading="loadingRef"
+    :okLoading="okLoadingRef"
+    :okAuth="'${permissionPrefix}:edit'"
     @close="handleClose"
     @ok="handleSubmit"
   >
@@ -47,7 +48,7 @@
         formKey="${table.optionMap['bpmFormKey']}"
         completeText="提交"
         :completeModal="true"
-        :loading="loadingRef"
+        :loading="okLoadingRef"
         :auth="'${permissionPrefix}:edit'"
         @validate="handleValidate"
         @complete="handleSubmit"
@@ -57,10 +58,7 @@
       />
     </template>
     <% } %>
-    <template #other>
-      <div>其它选项的内容，按需添加，也可以删除。</div>
-    </template>
-  </FormPage>
+  </CollapseForm>
 </template>
 <script lang="ts" setup name="${compNamePrefix}Form">
   import { ref, unref, computed, onMounted } from 'vue';
@@ -69,7 +67,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
-  import { FormPage } from '/@/components/FormPage';
+  import { CollapseForm } from '/@/components/CollapseForm';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
 <% if (table.childList.~size > 0){ %>
   import { BasicTable, useTable } from '/@/components/Table';
@@ -103,24 +101,19 @@ for(c in table.columnList){
   import { useQuery } from '/@/hooks/web/usePage';
   import { useTabs } from '/@/hooks/web/useTabs';
 
-  const formSettings = ref<any[]>([
+  const formConfig = ref<any[]>([
     {
       label: '基础表单',
       value: 'main',
-      show: true,
+      open: true,
     },
     <% for (child in table.childList){ %>
     {
       label: '${child.comments}',
       value: '${@StringUtils.uncap(child.className)}',
-      show: true,
+      open: true,
     },
     <% } %>
-    {
-      label: '其它选项',
-      value: 'other',
-      show: false,
-    },
   ]);
 
   const emitter = useEmitter();
@@ -130,6 +123,7 @@ for(c in table.columnList){
   const { setTitle, close } = useTabs(router);
   const record = ref<${ClassName}>({} as ${ClassName});
   const loadingRef = ref<boolean>(false);
+  const okLoadingRef = ref<boolean>(false);
   const query = useQuery();
 
   const updateTabTitle = () => {
@@ -653,6 +647,7 @@ for (c in table.columnList){
   }
 
   onMounted(async () => {
+    loadingRef.value = true;
     await resetFields();
     const res = await ${className}Form(unref(query));
     record.value = (res.${className} || {}) as ${ClassName};
@@ -675,6 +670,7 @@ for (c in table.columnList){
     ]);
   <% } %>
     updateTabTitle();
+    loadingRef.value = false;
   });
 
   function handleClose() {
@@ -697,7 +693,7 @@ for (c in table.columnList){
 
   async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event: any<% } %>) {
     try {
-      loadingRef.value = true;
+      okLoadingRef.value = true;
     <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
       const data = event?.formData || (await validate()); // 接受 BpmButton 传递过来的表单数据
       data.bpm = Object.assign(data.bpm || {}, record.value.bpm); // 流程信息
@@ -733,7 +729,7 @@ for (c in table.columnList){
       }
       console.log('error', error);
     } finally {
-      loadingRef.value = false;
+      okLoadingRef.value = false;
     }
   }
   <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
