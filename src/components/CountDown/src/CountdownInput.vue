@@ -19,7 +19,6 @@
   import CountButton from './CountButton.vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
-  import {Button} from 'ant-design-vue';
 
   const props = {
     value: { type: String },
@@ -33,7 +32,7 @@
 
   export default defineComponent({
     name: 'CountDownInput',
-    components: {Button, CountButton },
+    components: { CountButton },
     inheritAttrs: false,
     props,
     setup(props) {
