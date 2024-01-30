@@ -9,7 +9,8 @@
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			</div>
 		</div>
-		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal">
+		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal"
+				enctype="application/json" data-params="isNewRecord,id">
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
@@ -154,7 +155,7 @@
 							<label class="control-label col-sm-2">${text('图片上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadImage" bizKey="${testData.id}" bizType="testData_image"
-									uploadType="image" class="" readonly="false" preview="true"/>
+									uploadType="image" class="" readonly="false" preview="true" dataMap="true"/>
 							</div>
 						</div>
 					</div>
@@ -165,7 +166,7 @@
 							<label class="control-label col-sm-2">${text('附件上传')}：</label>
 							<div class="col-sm-10">
 								<#form:fileupload id="uploadFile" bizKey="${testData.id}" bizType="testData_file"
-									uploadType="all" class="" readonly="false" preview="true"/>
+									uploadType="all" class="" readonly="false" preview="true" dataMap="true"/>
 							</div>
 						</div>
 					</div>
@@ -201,18 +202,18 @@
 <#form:listselect id="{{d.id}}" title="{{d.title}}" name="{{d.name}}" value="{{d.value}}"
 	labelName="{{d.labelName}}" labelValue="{{d.labelValue}}" url="{{d.url}}"
 	class="{{d.cssClass}}" btnClass="btn-sm" allowClear="true" readonly="{{d.readonly}}"
-	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
+	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}" dataMap="true"/>
 </div>//--></script>
 <script id="fileuploadTpl" type="text/template">//<!--<div>
 <#form:fileupload id="{{d.id}}" bizKey="{{d.bizKey}}" bizType="{{d.bizType}}" uploadType="all"
-	class="{{d.cssClass}}" isMini="true" preview="true" readonly="{{d.readonly}}"/>
+	class="{{d.cssClass}}" isMini="true" preview="true" readonly="{{d.readonly}}" dataMap="true"/>
 </div>//--></script>
 <script>
 //初始化测试数据子表DataGrid对象
-$("#testDataChildDataGrid").dataGrid({
+$('#testDataChildDataGrid').dataGrid({
 
 	data: "#{toJson(testData.testDataChildList)}",
-	datatype: "local", // 设置本地数据
+	datatype: 'local', // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 
 	// 设置数据表格列
@@ -419,7 +420,7 @@ $("#testDataChildDataGrid").dataGrid({
 			},
 			editable: true, edittype: "custom", editoptions: {
 				custom_element: function(val, editOptions) {
-					log(val, editOptions)
+					// log(val, editOptions)
 					return js.template('fileuploadTpl', {
 						id: 'fileupload_'+editOptions.rowId, bizKey: editOptions.rowId,
 						bizType: 'testDataChild_file', cssClass: '', readonly: false
@@ -447,7 +448,7 @@ $("#testDataChildDataGrid").dataGrid({
 	editGridInputFormListName: 'testDataChildList', // 提交的数据列表名
 	editGridInputFormListAttrs: 'status,id,testSort,testData.id,testInput,testTextarea,testSelect,testSelectMultiple,'
 		+'testRadio,testCheckbox,testDate,testDatetime,testUser.userCode,testUser.userName,testOffice.officeCode,'
-		+'testOffice.officeName,testAreaCode,testAreaName,testDataChild_file,testDataChild_file__del', // 提交数据列表的属性字段
+		+'testOffice.officeName,testAreaCode,testAreaName,dataMap[testDataChild_file],dataMap[testDataChild_file__del]', // 提交数据列表的属性字段
 
 	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
@@ -463,7 +464,7 @@ $('#testDataChildDataGrid').on('click', '.uploaderFile', function(){
 		})
 	});
 });
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
