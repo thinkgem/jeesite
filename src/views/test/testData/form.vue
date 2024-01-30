@@ -83,7 +83,7 @@
     },
     {
       label: t('列表选择'),
-      field: 'testTextarea',
+      field: 'testInput2',
       fieldLabel: 'testTextarea',
       component: 'ListSelect',
       componentProps: {
