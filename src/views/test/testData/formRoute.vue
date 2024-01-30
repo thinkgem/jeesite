@@ -4,51 +4,59 @@
  * @author ThinkGem
 -->
 <template>
-  <PageWrapper>
-    <BasicForm @register="registerForm">
-      <template #remarks="{ model, field }">
-        <WangEditor
-          v-model:value="model[field]"
-          :bizKey="record.id"
-          :bizType="'testDataChild_' + field"
-          :height="300"
-        />
-      </template>
-      <template #testDataChildList>
-        <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
-          <template #testDataChildUpload="{ record: childRecord }">
-            <BasicUpload
-              v-model:value="childRecord.dataMap"
-              :bizKey="childRecord.id"
-              :bizType="'testDataChild_file'"
-              :uploadType="'all'"
-              :loadTime="record.__t"
-            />
-          </template>
-        </BasicTable>
-        <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
-          <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
-        </a-button>
-      </template>
-    </BasicForm>
-    <div class="flex justify-center">
-      <a-button type="default" @click="handleClose">
-        <Icon icon="ant-design:close-outlined" /> {{ t('common.cancelText') }}
-      </a-button>
-      <a-button class="!ml-4" type="primary" @click="handleSubmit" :loading="loading">
-        <Icon icon="ant-design:check-outlined" /> {{ t('common.okText') }}
-      </a-button>
-    </div>
-  </PageWrapper>
+  <CollapseForm
+    :config="formConfig"
+    :loading="loadingRef"
+    :okLoading="okLoadingRef"
+    :okAuth="'test:testData:edit'"
+    @close="handleClose"
+    @ok="handleSubmit"
+  >
+    <template #form1>
+      <BasicForm @register="registerForm1">
+        <template #remarks="{ model, field }">
+          <WangEditor
+            v-model:value="model[field]"
+            :bizKey="record.id"
+            :bizType="'testDataChild_' + field"
+            :height="300"
+          />
+        </template>
+      </BasicForm>
+    </template>
+    <template #form2>
+      <BasicForm @register="registerForm2">
+        <template #testDataChildList>
+          <BasicTable
+            @register="registerTestDataChildTable"
+            @row-click="handleTestDataChildRowClick"
+          >
+            <template #testDataChildUpload="{ record: childRecord }">
+              <BasicUpload
+                v-model:value="childRecord.dataMap"
+                :bizKey="childRecord.id"
+                :bizType="'testDataChild_file'"
+                :uploadType="'all'"
+                :loadTime="record.__t"
+              />
+            </template>
+          </BasicTable>
+          <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
+            <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+          </a-button>
+        </template>
+      </BasicForm>
+    </template>
+  </CollapseForm>
 </template>
-<script lang="ts" setup name="ViewsTestTestDataForm">
+<script lang="ts" setup name="ViewsTestTestDataFormRoute">
   import { ref, unref, computed, onMounted } from 'vue';
   import { useEmitter } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
-  import { PageWrapper } from '/@/components/Page';
+  import { CollapseForm } from '/@/components/CollapseForm';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicTable, useTable } from '/@/components/Table';
   import { TestData, testDataSave, testDataForm } from '/@/api/test/testData';
@@ -59,27 +67,34 @@
   import { useQuery } from '/@/hooks/web/usePage';
   import { useTabs } from '/@/hooks/web/useTabs';
 
-  // const emit = defineEmits(['success', 'register']);
+  const formConfig = ref<any[]>([
+    {
+      label: '基础表单',
+      value: 'form1',
+      open: true,
+    },
+    {
+      label: '子表列表',
+      value: 'form2',
+      open: true,
+    },
+  ]);
+
+  const emitter = useEmitter();
 
   const { t } = useI18n('test.testData');
   const { showMessage } = useMessage();
-  const record = ref<TestData>({} as TestData);
-  const loading = ref<boolean>(false);
-  const query = useQuery();
-
   const { setTitle, close } = useTabs(router);
+  const record = ref<TestData>({} as TestData);
+  const loadingRef = ref<boolean>(false);
+  const okLoadingRef = ref<boolean>(false);
+  const query = useQuery();
 
   const updateTabTitle = () => {
     setTitle(record.value.isNewRecord ? t('新增数据') : t('编辑数据'));
   };
 
-  const inputFormSchemas: FormSchema[] = [
-    {
-      label: t('基本信息'),
-      field: 'basicInfo',
-      component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
-    },
+  const inputFormSchemas1: FormSchema[] = [
     {
       label: t('单行文本'),
       field: 'testInput',
@@ -91,7 +106,7 @@
     },
     {
       label: t('列表选择'),
-      field: 'testTextarea',
+      field: 'testInput2',
       fieldLabel: 'testTextarea',
       component: 'ListSelect',
       componentProps: {
@@ -180,6 +195,7 @@
       component: 'ListSelect',
       componentProps: {
         selectType: 'empUserSelect',
+        checkbox: true,
       },
     },
     {
@@ -252,8 +268,16 @@
       },
       colProps: { lg: 24, md: 24 },
     },
+  ];
+
+  const [registerForm1, formAction1] = useForm({
+    labelWidth: 120,
+    schemas: inputFormSchemas1,
+    baseColProps: { lg: 12, md: 24 },
+  });
+
+  const inputFormSchemas2: FormSchema[] = [
     {
-      label: t('子表数据'),
       field: 'testDataChildList',
       component: 'Input',
       colProps: { lg: 24, md: 24 },
@@ -261,9 +285,9 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+  const [registerForm2, formAction2] = useForm({
     labelWidth: 120,
-    schemas: inputFormSchemas,
+    schemas: inputFormSchemas2,
     baseColProps: { lg: 12, md: 24 },
   });
 
@@ -462,7 +486,22 @@
     return testDataChildList;
   }
 
+  async function resetFields() {
+    await formAction1.resetFields();
+    await formAction2.resetFields();
+  }
+
+  async function setFieldsValue(values: Recordable) {
+    await formAction1.setFieldsValue(values);
+    await formAction2.setFieldsValue(values);
+  }
+
+  async function validate(): Promise<Recordable<any>> {
+    return Object.assign(await formAction1.validate(), await formAction2.validate());
+  }
+
   onMounted(async () => {
+    loadingRef.value = true;
     await resetFields();
     const res = await testDataForm(unref(query));
     record.value = (res.testData || {}) as TestData;
@@ -470,17 +509,16 @@
     setFieldsValue(record.value);
     setTestDataChildTableData(res);
     updateTabTitle();
+    loadingRef.value = false;
   });
 
   function handleClose() {
     setTimeout(close);
   }
 
-  const emitter = useEmitter();
-
   async function handleSubmit() {
     try {
-      loading.value = true;
+      okLoadingRef.value = true;
       const data = await validate();
       const params: any = {
         isNewRecord: record.value.isNewRecord,
@@ -490,7 +528,6 @@
       // console.log('submit', params, data, record);
       const res = await testDataSave(params, data);
       showMessage(res.message);
-      // emit('success', data);
       emitter.emit('test-testData-reload');
       handleClose();
     } catch (error: any) {
@@ -499,7 +536,7 @@
       }
       console.log('error', error);
     } finally {
-      loading.value = true;
+      okLoadingRef.value = false;
     }
   }
 </script>
