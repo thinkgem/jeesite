@@ -79,6 +79,8 @@
 
       const getAttrs = computed(() => {
         return {
+          showSearch: true,
+          optionFilterProp: 'label',
           ...unref(attrs),
           ...(props as Recordable),
         };
