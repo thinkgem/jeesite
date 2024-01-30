@@ -77,9 +77,10 @@
   provide('scroll-bar-wrap', wrap);
 
   const handleScroll = () => {
-    if (!props.native) {
-      moveY.value = (unref(wrap).scrollTop * 100) / unref(wrap).clientHeight;
-      moveX.value = (unref(wrap).scrollLeft * 100) / unref(wrap).clientWidth;
+    const w = unref(wrap);
+    if (!props.native && w) {
+      moveY.value = (w.scrollTop * 100) / w.clientHeight;
+      moveX.value = (w.scrollLeft * 100) / w.clientWidth;
     }
   };
 
