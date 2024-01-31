@@ -6929,7 +6929,8 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 container.style.zIndex = options.zIndex;
 
                 var html = ( ie && browser.version < 9  ? '' : '<!DOCTYPE html>') +
-                    '<html xmlns=\'http://www.w3.org/1999/xhtml\' class=\'view\' ><head>' +
+                    '<html xmlns=\'http://www.w3.org/1999/xhtml\' class=\'view '
+						+ $('html').attr('class') + '\' ><head>' +
                     '<style type=\'text/css\'>' +
                     //设置四周的留边
                     '.view{padding:0;word-wrap:break-word;cursor:text;height:90%;}\n' +
