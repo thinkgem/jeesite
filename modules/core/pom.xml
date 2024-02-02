@@ -29,6 +29,7 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<!-- Oracle 11g -->
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -36,37 +37,33 @@
 			<version>11.2.0.3</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- Oracle 12c
+		<!-- Oracle 12c 及以上版本
 		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
+			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
-			<version>19.3.0.0</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>orai18n</artifactId>
-			<version>19.3.0.0</version>
 			<scope>runtime</scope>
 		</dependency> -->
-		<!-- SqlServer 2008 -->
+
+		<!-- SqlServer 2008
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-		<!-- SqlServer 2012
+		</dependency> -->
+		<!-- SqlServer 2012 及以上版本 -->
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency>
+
 		<!-- PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<!-- H2 DB
 		<dependency>
 			<groupId>com.h2database</groupId>
