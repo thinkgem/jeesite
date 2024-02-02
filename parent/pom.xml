@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
+		<version>3.1.8</version>
 		<relativePath />
 	</parent>
 
@@ -54,7 +54,7 @@
 		<mybatis-spring.version>3.0.3</mybatis-spring.version>
 		<jsqlparser.version>4.6</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
-		<druid.version>1.2.20</druid.version>
+		<druid.version>1.2.21</druid.version>
 		<shiro.version>2.0.0-alpha-4</shiro.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<swagger3.version>2.2.19</swagger3.version>

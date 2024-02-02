@@ -59,7 +59,7 @@ jdbc:
   password: 123456
   testSql: SELECT 1
 
-#  # Oracle 数据库配置（若使用 12c，请修改 /modules/core/pom.xml 文件，打开 12c 依赖，去掉 11g 依赖）
+#  # Oracle 数据库配置（11g，若使用 12c 以上版本，请打开 /modules/core/pom.xml 文件，替换为 Oracle 12c 驱动并编译打包 core 模块）
 #  type: oracle
 #  driver: oracle.jdbc.OracleDriver
 #  url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
@@ -67,7 +67,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1 FROM DUAL
 
-#  # Sql Server 数据库配置（2008）
+#  # Sql Server 数据库配置（2008 版本，请打开 /modules/core/pom.xml 文件，替换为 SqlServer 2008 驱动并编译打包 core 模块）
 #  type: mssql
 #  driver: net.sourceforge.jtds.jdbc.Driver
 #  url: jdbc:jtds:sqlserver://127.0.0.1:1433/jeesite
@@ -75,7 +75,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # Sql Server 数据库配置（2012以上版本）（请修改 /modules/core/pom.xml 文件，打开 SqlServer 2012 依赖并编译打包）
+#  # Sql Server 数据库配置（2012 及以上版本，请打开 /modules/core/pom.xml 文件，替换为 SqlServer 2021 驱动并编译打包 core 模块）
 #  type: mssql2012
 #  driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #  url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jeesite;encrypt=true;trustServerCertificate=true
@@ -91,7 +91,7 @@ jdbc:
 #  password: jeesite
 #  testSql: SELECT 1
 
-#  # H2 数据库配置（请修改 /modules/core/pom.xml 文件，打开 H2 DB 依赖）
+#  # H2 数据库配置（请打开 /modules/core/pom.xml 文件，打开 H2 DB 驱动并编译打包 core 模块）
 #  type: h2
 #  driver: org.h2.Driver
 #  url: jdbc:h2:~/jeesite-db/jeesite
@@ -143,7 +143,7 @@ jdbc:
 #    removeAbandoned: false
 #    removeAbandonedTimeout: 2100
 #
-#    # Oracle 下会自动开启 PSCache，并指定每个连接上 PSCache 大小。若不指定，则与 maxActive 相同（4.1.5+）
+#    # 是否缓存 PreparedStatement 对象的最大数量（4.1.5+）
 #    maxPoolPreparedStatementPerConnectionSize: ~
 #
 #    # 设置连接属性，可获取到表的 remark (备注)
