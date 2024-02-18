@@ -117,7 +117,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-layout-multiple-header';
 
   .@{prefix-cls} {

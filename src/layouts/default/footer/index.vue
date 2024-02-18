@@ -61,7 +61,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-layout-footer';
 
   @normal-color: rgba(0, 0, 0, 0.45);

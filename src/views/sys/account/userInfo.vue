@@ -121,7 +121,7 @@
     }
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   .change-avatar {
     img {
       display: block;

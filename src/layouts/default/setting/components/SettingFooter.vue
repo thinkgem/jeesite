@@ -90,7 +90,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-setting-footer';
 
   .@{prefix-cls} {
