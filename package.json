@@ -1,7 +1,6 @@
 {
   "name": "jeesite",
-  "version": "5.6.1",
-  "license": "Apache-2.0",
+  "version": "5.6.1.dev",
   "author": {
     "name": "ThinkGem",
     "email": "thinkgem@163.com",
