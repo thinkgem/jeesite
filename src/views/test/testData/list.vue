@@ -38,7 +38,7 @@
             style="width: 168px; margin-bottom: 8px; display: block"
             @change="(e: any) => filter.setSelectedKeys(e.target.value ? [e.target.value] : [])"
           />
-          <a-button type="primary" size="small" class="w-20 mr-2" @click="filter.confirm()">
+          <a-button type="primary" size="small" class="mr-2 w-20" @click="filter.confirm()">
             {{ t('确定') }}
           </a-button>
           <a-button
