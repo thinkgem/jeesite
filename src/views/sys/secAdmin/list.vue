@@ -24,7 +24,7 @@
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts" setup name="ViewsSysEmpUserList">
+<script lang="ts" setup name="ViewsSysSecAdminList">
   import { onMounted, watch, ref, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
