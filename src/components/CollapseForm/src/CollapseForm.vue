@@ -62,8 +62,8 @@
 
   function calcContentHeight() {
     const parentElement = contentRef.value?.$el.parentElement;
-    const actionsElement = parentElement.querySelector('.jeesite-collapse-form-actions');
-    if (parentElement) {
+    const actionsElement = parentElement?.querySelector('.jeesite-collapse-form-actions');
+    if (parentElement && actionsElement) {
       contentHeight.value =
         document.body.clientHeight - headerHeightRef.value - actionsElement.scrollHeight - 32;
     }
