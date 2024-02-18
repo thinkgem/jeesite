@@ -14,7 +14,7 @@
     width="80%"
   >
     <template #appendHeader>
-      <template v-for="(item, index) in headerButtons" :key="index">
+      <template v-for="(item, _index) in headerButtons" :key="_index">
         <a-button
           size="small"
           class="ml-4"
@@ -91,13 +91,7 @@
   import { BasicTree } from '/@/components/Tree';
   import { Icon } from '/@/components/Icon';
   import { BasicModal, useModal, useModalInner } from '/@/components/Modal';
-  import {
-    BasicTable,
-    useTable,
-    BasicTableProps,
-    TableRowSelection,
-    TableAction,
-  } from '/@/components/Table';
+  import { BasicTable, useTable, BasicTableProps, TableRowSelection } from '/@/components/Table';
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
   import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
   import { dynamicImport } from '/@/router/helper/routeHelper';
@@ -194,7 +188,7 @@
               modalComponentOpen.value = true;
             }
           },
-          handleSuccess: (tableAction: TableAction) => {
+          handleSuccess: (tableAction: any) => {
             tableAction.reload();
           },
         });

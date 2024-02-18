@@ -16,7 +16,7 @@
     <div class="h-screen w-screen flex items-center justify-center">
       <div :class="`${prefixCls}__hour`" class="relative mr-5 h-2/5 w-2/5 md:mr-20 md:h-4/5">
         <span>{{ hour }}</span>
-        <span class="meridiem text-md absolute left-5 top-5 xl:text-xl" v-show="showDate">
+        <span class="text-md meridiem absolute left-5 top-5 xl:text-xl" v-show="showDate">
           {{ meridiem }}
         </span>
       </div>
@@ -132,7 +132,7 @@
     showDate.value = show;
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-lock-page';
 
   .@{prefix-cls} {

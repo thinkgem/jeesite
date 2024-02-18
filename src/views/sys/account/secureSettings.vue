@@ -49,13 +49,13 @@
     {
       key: '1',
       title: t('sys.account.modifyPwd'),
-      description: t('sys.account.modifyPwdTip'),
+      description: '',
       extra: t('common.modifyText'),
     },
     {
       key: '3',
       title: t('sys.account.modifyPqa'),
-      description: t('sys.account.modifyPqaTip'),
+      description: '',
       extra: t('common.modifyText'),
     },
   ];
@@ -70,7 +70,7 @@
     }
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   .extra {
     float: right;
     margin-top: 10px;

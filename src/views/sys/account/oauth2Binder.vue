@@ -78,7 +78,7 @@
     showMessage(title + '，' + t('common.notYetRealized'));
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   .avatar {
     font-size: 40px !important;
   }

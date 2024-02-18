@@ -1,6 +1,6 @@
 <template>
-  <div v-if="sidebar" :class="`${prefixCls}-sidebar hidden lg:block think gem`">
-    <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
+  <div v-if="props.sidebar" :class="`${prefixCls}-sidebar hidden lg:block think gem`">
+    <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
       <span :class="`${prefixCls}__info`">
         <span :class="`${prefixCls}__name`" class="truncate">
@@ -16,7 +16,7 @@
     </span>
   </div>
   <Dropdown v-else placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
-    <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
+    <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name`" class="truncate">
@@ -86,7 +86,7 @@
       </Menu>
     </template>
   </Dropdown>
-  <LockAction v-if="!sidebar" @register="registerModal" />
+  <LockAction v-if="!props.sidebar" @register="registerModal" />
 </template>
 <script lang="ts">
   // components
@@ -194,7 +194,7 @@
         openModal(true);
       }
 
-      async function handleMenuClick(e: { key: MenuEvent }) {
+      async function handleMenuClick(e: { key: MenuEvent } | any) {
         switch (e.key) {
           case 'accountCenter':
             handleAccountCenter();
@@ -242,7 +242,7 @@
         sysCodeRef,
         sysListRef,
         roleCodeRef,
-        ...props,
+        props,
       };
     },
   });
@@ -279,6 +279,14 @@
       &:hover {
         background-color: @header-dark-bg-hover-color;
       }
+
+      .@{prefix-cls}__info {
+        color: @menu-dark-subsidiary-color;
+      }
+
+      .@{prefix-cls}__desc {
+        color: @menu-dark-subsidiary-color;
+      }
     }
 
     &--light {
@@ -286,7 +294,7 @@
         background-color: @header-light-bg-hover-color;
       }
 
-      .@{prefix-cls}__name {
+      .@{prefix-cls}__info {
         color: @text-color-base;
       }
 
