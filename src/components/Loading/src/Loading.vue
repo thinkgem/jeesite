@@ -38,7 +38,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   .full-loading {
     position: fixed;
     top: 0;

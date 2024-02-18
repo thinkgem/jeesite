@@ -24,7 +24,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-page-footer';
 
   .@{prefix-cls} {
