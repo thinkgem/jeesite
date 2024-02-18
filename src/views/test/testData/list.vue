@@ -20,9 +20,9 @@
           {{ record.testInput }}
         </a>
       </template>
-      <!-- <template #expandedRowRender="{ record }">
-        <div>编号: {{ record.id }} </div>
-      </template> -->
+      <template #expandedRowRender="{ record }">
+        <div>编号: {{ record.id }}（这里生成内容自定义，也可以加载子表）</div>
+      </template>
       <template #customFilterIcon="filter">
         <Icon
           icon="ant-design:search-outlined"
@@ -38,7 +38,7 @@
             style="width: 168px; margin-bottom: 8px; display: block"
             @change="(e: any) => filter.setSelectedKeys(e.target.value ? [e.target.value] : [])"
           />
-          <a-button type="primary" size="small" class="w-20 mr-2" @click="filter.confirm()">
+          <a-button type="primary" size="small" class="mr-2 w-20" @click="filter.confirm()">
             {{ t('确定') }}
           </a-button>
           <a-button
@@ -437,8 +437,8 @@
     showTableSetting: true,
     useSearchForm: true,
     canResize: true,
-    // 如果启用了 expandedRowRender 插槽，则可以通过点击行来展开（例子）
-    expandRowByClick: true,
+    // 设置为true可以通过点击行来展开 expandedRowRender 插槽（例子）
+    expandRowByClick: false,
     // 给单行文本列标题上添加一个过滤按钮（例子）
     filterFn: (data: Partial<Recordable<string[]>>) => {
       const testInput = 'a.test_input';

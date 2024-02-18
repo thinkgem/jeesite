@@ -102,6 +102,12 @@
       width: 130,
     },
     {
+      title: t('组件'),
+      dataIndex: 'component',
+      align: 'center',
+      width: 80,
+    },
+    {
       title: t('排序号'),
       dataIndex: 'treeSort',
       width: 80,

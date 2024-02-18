@@ -5,8 +5,8 @@ import { ROW_KEY } from '../const';
 import { isString, isFunction } from '/@/utils/is';
 
 interface Options {
-  setSelectedRowKeys: (keys: string[]) => void;
-  getSelectRowKeys: () => string[];
+  setSelectedRowKeys: (keys: string[] | number[]) => void;
+  getSelectRowKeys: () => string[] | number[];
   clearSelectedRowKeys: () => void;
   emit: EmitType;
   getAutoCreateKey: ComputedRef<boolean | undefined>;
@@ -54,7 +54,7 @@ export function useCustomRow(
             // 找到Checkbox，检查是否为disabled
             const checkBox = tr.querySelector('input[type=checkbox]');
             if (!checkBox || checkBox.hasAttribute('disabled')) return;
-            if (!keys.includes(key)) {
+            if (!keys.includes(key as never)) {
               setSelectedRowKeys([...keys, key]);
               return;
             }
@@ -66,7 +66,7 @@ export function useCustomRow(
 
           const isRadio = rowSelection.type === 'radio';
           if (isRadio) {
-            if (!keys.includes(key)) {
+            if (!keys.includes(key as never)) {
               if (keys.length) {
                 clearSelectedRowKeys();
               }

@@ -60,6 +60,8 @@ export default {
     settingDensSmall: 'Compact',
     settingColumn: 'Column settings',
     settingColumnShow: 'Display',
+    settingColumnCustom:
+      'If there is a personalized modification, the red icon is displayed. Click the "Reset" button to restore the display.',
     settingIndexColumnShow: 'Index',
     settingSelectColumnShow: 'Checkbox',
     settingFixedLeft: 'Fixed Left',
@@ -67,6 +69,9 @@ export default {
     settingFullScreen: 'Full Screen',
     index: 'Index',
     total: 'total of {total}',
+    selectionBarTips: '{count} records selected.',
+    selectionBarClear: 'Clear',
+    selectionBarEmpty: 'No records selected.',
   },
   time: {
     before: ' ago',

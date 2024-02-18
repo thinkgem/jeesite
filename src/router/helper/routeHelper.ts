@@ -6,53 +6,44 @@
 import type { AppRouteModule, AppRouteRecordRaw } from '/@/router/types';
 import type { Router, RouteRecordNormalized } from 'vue-router';
 
-import { getParentLayout, LAYOUT, IFRAME, EXCEPTION_COMPONENT } from '/@/router/constant';
 import { cloneDeep, omit } from 'lodash-es';
-import { warn } from '/@/utils/log';
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
-
-export type LayoutMapKey = 'LAYOUT';
-
-const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>();
-
-LayoutMap.set('LAYOUT', LAYOUT);
-LayoutMap.set('IFRAME', IFRAME);
-
-let dynamicViewsModules: Record<string, () => Promise<Recordable>>;
+import { LAYOUT, IFRAME_BLANK, IFRAME_SIMPLE, EXCEPTION_COMPONENT } from '/@/router/constant';
+import { warn, env } from '/@/utils/log';
 
 // Dynamic introduction
 function asyncImportRoute(
   routes: AppRouteRecordRaw[] | undefined,
   parent: AppRouteRecordRaw | undefined,
+  root: AppRouteRecordRaw | undefined,
 ) {
   if (!routes) return;
   routes.forEach((item) => {
+    item.meta = item.meta || {};
     if (!item.meta.icon) {
       item.meta.icon = 'bx:bx-circle';
     }
     if (parent && item.meta.hideMenu) {
       item.meta.currentActiveMenu = parent.path;
     }
-    const { component, name } = item;
-    const { children } = item;
-    if (component) {
-      const layoutFound = LayoutMap.get(component as string);
-      if (layoutFound) {
-        item.component = layoutFound;
-      } else {
-        item.component = dynamicImport(component as string);
-      }
-    } else if (name) {
-      item.component = getParentLayout();
+    const component = (item.component as string).toUpperCase();
+    if (!component || component === 'LAYOUT') {
+      item.component = LAYOUT;
+    } else if (component === 'IFRAME') {
+      item.component = root?.component ? IFRAME_BLANK : IFRAME_SIMPLE;
+    } else {
+      item.component = dynamicImport(item.component as string);
     }
     if (!item.component) {
       item.component = EXCEPTION_COMPONENT;
       item.props = item.props || {};
       item.props.status = 404;
     }
-    children && asyncImportRoute(children, item);
+    item.children && asyncImportRoute(item.children, item, root);
   });
 }
+
+let dynamicViewsModules: Record<string, () => Promise<Recordable>>;
 
 export function dynamicImport(component: string) {
   if (!dynamicViewsModules) {
@@ -79,23 +70,22 @@ export function dynamicImport(component: string) {
 
 // Turn background objects into routing objects
 export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModule[]): T[] {
-  routeList.forEach((route) => {
-    const component = (route.component || 'LAYOUT') as string;
-    if (component) {
-      if (component.toUpperCase() === 'LAYOUT') {
-        route.component = LayoutMap.get(component.toUpperCase());
-      } else {
-        route.children = [cloneDeep(route)];
-        route.component = LAYOUT;
-        route.name = `${route.name}Parent`;
-        route.path = '';
-        const meta = route.meta || {};
-        meta.single = true;
-        meta.affix = false;
-        route.meta = meta;
-      }
+  routeList.forEach((item) => {
+    const component = (item.component as string).toUpperCase();
+    if (component === 'BLANK') {
+      item.component = item.path;
+      item.children = [cloneDeep(item)];
+      item.component = undefined;
+    } else {
+      item.children = [cloneDeep(item)];
+      item.component = LAYOUT;
     }
-    route.children && asyncImportRoute(route.children, route);
+    item.path = '';
+    item.name = `${item.name}Parent`;
+    item.meta = item.meta || {};
+    item.meta.single = true;
+    item.meta.affix = false;
+    item.children && asyncImportRoute(item.children, item, item);
   });
   return routeList as unknown as T[];
 }
@@ -116,10 +106,10 @@ export function flatMultiLevelRoutes(routeModules: AppRouteModule[]) {
 }
 
 export function createRouteHistory() {
-  if (import.meta.env.VITE_ROUTE_WEB_HISTORY == 'true') {
-    return createWebHistory(import.meta.env.VITE_PUBLIC_PATH);
+  if (env.VITE_ROUTE_WEB_HISTORY == 'true') {
+    return createWebHistory(env.VITE_PUBLIC_PATH);
   } else {
-    return createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH);
+    return createWebHashHistory(env.VITE_PUBLIC_PATH);
   }
 }
 

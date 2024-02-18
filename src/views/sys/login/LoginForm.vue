@@ -108,11 +108,11 @@
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <Icon icon="ant-design:qq-circle-filled" size="28" @click="handleOauth2" />
-      <Icon icon="ant-design:wechat-filled" size="28" @click="handleOauth2" />
-      <Icon icon="ant-design:github-filled" size="28" @click="handleOauth2" />
+      <Icon icon="ant-design:qq-circle-filled" size="32" @click="handleOauth2" />
+      <Icon icon="ant-design:wechat-filled" size="32" @click="handleOauth2" />
+      <Icon icon="ant-design:github-filled" size="32" @click="handleOauth2" />
       <a href="https://gitee.com/thinkgem/jeesite-client" target="_blank">
-        <Icon icon="ant-design:windows-filled" size="28" style="vertical-align: middle" />
+        <Icon icon="ant-design:windows-filled" size="32" style="vertical-align: middle" />
         <span class="pl-1" style="vertical-align: middle"> {{ t('客户端下载') }}</span>
       </a>
     </div>
@@ -137,6 +137,7 @@
   // import { onKeyStroke } from '@vueuse/core';
   import { Select } from '/@/components/Form';
   import { corpAdminTreeData } from '/@/api/sys/corpAdmin';
+  import { publicPath } from '/@/utils/env';
 
   const ACol = Col;
   const ARow = Row;
@@ -192,8 +193,7 @@
     const res = await userInfoApi('none');
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
-      const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
-      window.location.href = (publicPath == '/' ? '' : publicPath) + PageEnum.BASE_HOME;
+      window.location.href = publicPath + PageEnum.BASE_HOME;
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
@@ -230,7 +230,7 @@
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
           description: `${t('sys.login.loginSuccessDesc')}: ${res.user.userName}`,
-          duration: 3,
+          duration: 1,
         });
       }
     } catch (error: any) {
@@ -259,8 +259,9 @@
     }
   }
 
-  function handleOauth2() {
-    showMessage('未开放第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
+  function handleOauth2(event: Event) {
+    showMessage('专业版实现第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
+    event.preventDefault();
   }
 </script>
 <style>

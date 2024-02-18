@@ -58,11 +58,11 @@ export default {
     minute: '分钟',
 
     operatingTitle: '操作成功',
-    operatingContent: '复制成功,请到 src/settings/projectSetting.ts 中修改配置！',
+    operatingContent: '复制成功,请到 projectSetting.ts 中修改配置！',
     resetSuccess: '重置成功！',
 
     copyBtn: '拷贝',
-    clearBtn: '清空缓存并返回登录页',
+    clearBtn: '清空缓存并刷新页面',
 
     drawerTitle: '主题配置',
 

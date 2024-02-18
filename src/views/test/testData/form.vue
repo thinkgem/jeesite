@@ -13,7 +13,7 @@
     width="70%"
   >
     <template #title>
-      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+      <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
     <BasicForm @register="registerForm">
@@ -83,7 +83,7 @@
     },
     {
       label: t('列表选择'),
-      field: 'testTextarea',
+      field: 'testInput2',
       fieldLabel: 'testTextarea',
       component: 'ListSelect',
       componentProps: {
@@ -301,7 +301,14 @@
         align: 'left',
         editRow: true,
         editComponent: 'InputTextArea',
-        editRule: false,
+        // 子表自定义验证实例
+        editRule: (value, _record) => {
+          return new Promise((resolve, reject) => {
+            if (!value || value === '') return resolve();
+            if (value.length < 3) return reject('至少3个字符');
+            return resolve(); // 验证成功
+          });
+        },
       },
       {
         title: t('下拉框'),

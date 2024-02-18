@@ -25,8 +25,7 @@
   import { h } from 'vue';
   import { Tag } from 'ant-design-vue';
   import { PageWrapper } from '/@/components/Page';
-  import { Description, DescItem, useDescription } from '/@/components/Description/index';
-  import { GITHUB_URL, SITE_URL, DOC_URL } from '/@/settings/siteSetting';
+  import { Description, DescItem, useDescription } from '/@/components/Description';
 
   const { pkg, lastBuildTime } = __APP_INFO__;
 
@@ -51,22 +50,22 @@
     },
     {
       label: '文档地址',
-      field: 'doc',
-      render: commonLinkRender(DOC_URL),
+      field: 'docs',
+      render: commonLinkRender('http://docs.jeesite.com'),
     },
     {
       label: '官方网站',
-      field: 'preview',
-      render: commonLinkRender(SITE_URL),
+      field: 'website',
+      render: commonLinkRender('https://jeesite.com'),
     },
     {
-      label: 'Gitee',
-      field: 'github',
+      label: '下载地址',
+      field: 'download',
       render: commonLinkRender('https://gitee.com/thinkgem'),
     },
     {
       label: '联系我',
-      field: 'linker',
+      field: 'linkers',
       render: commonLinkRender('http://s.jeesite.com'),
     },
   ];
@@ -74,9 +73,10 @@
   const infoData = {
     version,
     lastBuildTime,
-    doc: DOC_URL,
-    preview: SITE_URL,
-    github: GITHUB_URL,
+    docs: 'http://docs.jeesite.com',
+    website: 'https://jeesite.com',
+    download: 'https://gitee.com/thinkgem',
+    linkers: 'http://s.jeesite.com',
   };
 
   Object.keys(dependencies).forEach((key) => {

@@ -137,18 +137,22 @@
       });
 
       const getBindValue = computed((): Recordable => {
-        const attr = {
+        const values = {
           ...attrs,
           ...unref(getMergeProps),
           open: unref(openRef),
           wrapClassName: unref(getWrapClassName),
           maskTransitionName: 'ant-fade',
           transitionName: 'ant-fade',
-        };
-        if (unref(fullScreenRef)) {
-          return omit(attr, ['height', 'title']);
+        } as any;
+        if (typeof values?.width === 'string') {
+          let width = Number(values.width);
+          if (!isNaN(width)) values.width = width;
         }
-        return omit(attr, 'title');
+        if (unref(fullScreenRef)) {
+          return omit(values, ['height', 'title']);
+        }
+        return omit(values, 'title');
       });
 
       const getWrapperHeight = computed(() => {

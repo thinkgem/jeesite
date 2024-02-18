@@ -27,6 +27,7 @@ interface AppState {
   // When the window shrinks, remember some states, and restore these states when the window is restored
   beforeMiniInfo: BeforeMiniState;
 }
+
 let timeId: TimeoutHandle;
 export const useAppStore = defineStore({
   id: 'app',
@@ -87,7 +88,7 @@ export const useAppStore = defineStore({
 
     async resetAllState() {
       resetRouter();
-      Persistent.clearAll();
+      // Persistent.clearAll(); 退出时不清理本地存储
     },
     async setPageLoadingAction(loading: boolean): Promise<void> {
       if (loading) {

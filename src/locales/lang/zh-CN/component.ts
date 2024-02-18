@@ -62,15 +62,17 @@ export default {
     settingDensSmall: '紧凑',
     settingColumn: '列设置',
     settingColumnShow: '列展示',
+    settingColumnCustom: '有个性化修改时显示红色图标，点击 “重置” 按钮，恢复显示。',
     settingIndexColumnShow: '序号列',
     settingSelectColumnShow: '复选框',
     settingFixedLeft: '固定到左侧',
     settingFixedRight: '固定到右侧',
     settingFullScreen: '全屏',
-
     index: '序号',
-
     total: '共 {total} 条数据',
+    selectionBarTips: '已选择 {count} 条记录',
+    selectionBarClear: '清空',
+    selectionBarEmpty: '未选中任何记录',
   },
   time: {
     before: '前',

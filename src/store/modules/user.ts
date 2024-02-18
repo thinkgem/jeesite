@@ -83,9 +83,9 @@ export const useUserStore = defineStore({
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(TOKEN_KEY, token);
     },
-    setRoleList(roleList: RoleEnum[] | string[]) {
-      this.roleList = roleList;
-      setAuthCache(ROLES_KEY, roleList);
+    setSessionTimeout(flag: boolean) {
+      this.sessionTimeout = flag;
+      setAuthCache(SESSION_TIMEOUT_KEY, flag);
     },
     setUserInfo(res: Recordable | null) {
       const info: UserInfo = res?.user;
@@ -101,13 +101,13 @@ export const useUserStore = defineStore({
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(USER_INFO_KEY, info);
     },
-    setSessionTimeout(flag: boolean) {
-      this.sessionTimeout = flag;
-      setAuthCache(SESSION_TIMEOUT_KEY, flag);
+    setRoleList(roleList: RoleEnum[] | string[]) {
+      this.roleList = roleList;
+      setAuthCache(ROLES_KEY, roleList);
     },
     resetState() {
       this.userInfo = null;
-      // this.token = '';
+      this.token = '';
       this.roleList = [];
       this.sessionTimeout = true;
     },
@@ -213,6 +213,7 @@ export const useUserStore = defineStore({
       this.setToken(undefined);
       this.setSessionTimeout(true);
       this.setUserInfo(null);
+      this.setRoleList([]);
       goLogin && router.push(PageEnum.BASE_LOGIN);
     },
     /**

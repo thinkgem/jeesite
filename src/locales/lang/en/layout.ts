@@ -58,11 +58,11 @@ export default {
 
     operatingTitle: 'Successful!',
     operatingContent:
-      'The copy is successful, please go to src/settings/projectSetting.ts to modify the configuration!',
+      'The copy is successful, please go to projectSetting.ts to modify the configuration!',
     resetSuccess: 'Successfully reset!',
 
     copyBtn: 'Copy',
-    clearBtn: 'Clear cache and to the login page',
+    clearBtn: 'Clear cache and reload page',
 
     drawerTitle: 'Configuration',
 

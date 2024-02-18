@@ -48,7 +48,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
 
     return {
       current: 1,
-      //pageSize: PAGE_SIZE, // ×¢ÊÍµô£¬·ñÔò pagination: {defaultPageSize: 10 } ²»ÉúÐ§
+      //pageSize: PAGE_SIZE, // æ³¨é‡ŠæŽ‰ï¼Œå¦åˆ™ pagination: {defaultPageSize: 10 } ä¸ç”Ÿæ•ˆ
       size: 'small',
       defaultPageSize: PAGE_SIZE,
       showTotal: (total) => t('component.table.total', { total }),

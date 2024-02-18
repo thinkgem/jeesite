@@ -17,7 +17,7 @@
             v-auth="'sys:empUser:edit'"
             class="ml-4"
           >
-            <Icon icon="ant-design:delete-outlined" color="error" /> {{ t('删除') }}
+            <Icon icon="ant-design:delete-outlined" color="error" /> {{ t('删除') }} ({{ selectedRowKeysRef.length }})
           </a-button>
         </Popconfirm>
       </template>

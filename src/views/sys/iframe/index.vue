@@ -28,6 +28,7 @@
   const props = defineProps({
     frame: { type: Object as PropType<AppRouteRecordRaw> },
     query: { type: Object as PropType<Recordable> },
+    fullHeight: { type: Boolean, default: false },
   });
 
   const loading = ref(true);
@@ -83,6 +84,11 @@
   function calcHeight() {
     const iframe = unref(frameRef);
     if (!iframe) {
+      return;
+    }
+    if (props.fullHeight) {
+      const clientHeight = document.documentElement.clientHeight;
+      iframe.style.height = `${clientHeight}px`;
       return;
     }
     const top = headerHeightRef.value + padding;

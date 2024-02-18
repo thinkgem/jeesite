@@ -31,6 +31,7 @@
   import { useUserStore } from '/@/store/modules/user';
   import { PageEnum } from '/@/enums/pageEnum';
   import { Alert } from 'ant-design-vue';
+  import { publicPath } from '/@/utils/env';
 
   const userStore = useUserStore();
   const getModifyPasswordMsg = computed(() => {
@@ -106,8 +107,7 @@
         createSuccessModal({
           content: res.message,
           onOk: () => {
-            const publicPath = import.meta.env.VITE_PUBLIC_PATH || '';
-            window.location.href = (publicPath == '/' ? '' : publicPath) + PageEnum.BASE_HOME;
+            window.location.href = publicPath + PageEnum.BASE_HOME;
           },
         });
       } else {

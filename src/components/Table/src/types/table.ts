@@ -51,6 +51,7 @@ export interface ExpandedRowRenderRecord<T> extends TableCustomRecord<T> {
   indent?: number;
   expanded?: boolean;
 }
+
 export interface ColumnFilterItem {
   text?: string;
   value?: string;
@@ -95,7 +96,7 @@ export interface TableActionType {
   collapseAll: () => void;
   expandCollapse: (record: Recordable) => void;
   scrollTo: (pos: string) => void; // pos: id | "top" | "bottom"
-  getSelectRowKeys: () => string[];
+  getSelectRowKeys: () => string[] | number[];
   deleteSelectRowByKey: (key: string) => void;
   setPagination: (info: Partial<PaginationProps>) => void;
   setTableData: <T = Recordable>(values: T[]) => void;
@@ -122,7 +123,7 @@ export interface TableActionType {
   updateTableData: (index: number, key: string, value: any) => Recordable;
   setShowPagination: (show: boolean) => Promise<void>;
   getShowPagination: () => boolean;
-  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
+  // setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
 }
 
 export interface FetchSetting {
@@ -208,8 +209,6 @@ export interface BasicTableProps<T = any> {
   canResize?: boolean;
   // 自适应高度偏移， 计算结果-偏移量
   resizeHeightOffset?: number;
-  // 在分页改变的时候清空选项
-  clearSelectOnPageChange?: boolean;
   // 主键名称
   rowKey?: string | ((record: Recordable, defaultValue?: any) => string);
   // 数据
@@ -314,7 +313,15 @@ export interface BasicTableProps<T = any> {
    * @type object
    */
   rowSelection?: TableRowSelection;
+
+  // 默认不展示复选框，但是通过右上角给表格设置复选框的时候加载默认参数
   defaultRowSelection?: TableRowSelection;
+
+  // 重载表格数据的时候清空已选择选项
+  clearSelectedOnReload?: boolean;
+
+  // 是否在表格上方显示多选状态栏
+  showSelectionBar?: boolean;
 
   /**
    * Set horizontal or vertical scrolling, can also be used to specify the width and height of the scroll area.
@@ -506,7 +513,8 @@ export interface BasicColumn extends ColumnProps<Recordable> {
 }
 
 export type ColumnChangeParam = {
-  dataIndex: string;
+  dataIndex?: string;
+  dataIndex_?: string;
   fixed: boolean | 'left' | 'right' | undefined;
   open: boolean;
 };

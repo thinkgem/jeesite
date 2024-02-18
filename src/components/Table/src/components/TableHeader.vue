@@ -27,17 +27,21 @@
         />
       </div>
     </div>
+    <div v-if="showSelectionBar" class="m-1 mt-2">
+      <TableSelectionBar :clearSelectedRowKeys="props.clearSelectedRowKeys!" :count="props.count" />
+    </div>
     <slot name="tableTop"></slot>
   </div>
 </template>
 <script lang="ts">
-  import type { TableSetting, ColumnChangeParam } from '../types/table';
+  import type { TableSetting, ColumnChangeParam, TableActionType } from '../types/table';
   import type { PropType } from 'vue';
   import { defineComponent } from 'vue';
   // import { Divider } from 'ant-design-vue';
   import TableSettingComponent from './settings/index.vue';
   import TableTitle from './TableTitle.vue';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import TableSelectionBar from '../components/TableSelectionBar.vue';
 
   export default defineComponent({
     name: 'BasicTableHeader',
@@ -45,6 +49,7 @@
       // Divider,
       TableTitle,
       TableSetting: TableSettingComponent,
+      TableSelectionBar,
     },
     props: {
       title: {
@@ -60,14 +65,25 @@
         type: [String, Array] as PropType<string | string[]>,
         default: '',
       },
+      showSelectionBar: {
+        type: Boolean,
+        default: false,
+      },
+      clearSelectedRowKeys: {
+        type: Function as PropType<TableActionType['clearSelectedRowKeys']>,
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
     },
     emits: ['columns-change'],
-    setup(_, { emit }) {
+    setup(props, { emit }) {
       const { prefixCls } = useDesign('basic-table-header');
       function handleColumnChange(data: ColumnChangeParam[]) {
         emit('columns-change', data);
       }
-      return { prefixCls, handleColumnChange };
+      return { props, prefixCls, handleColumnChange };
     },
   });
 </script>

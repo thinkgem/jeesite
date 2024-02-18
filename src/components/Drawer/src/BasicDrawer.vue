@@ -122,7 +122,11 @@
           ...attrs,
           ...unref(getProps),
           open: unref(openRef),
-        };
+        } as any;
+        if (typeof values?.width === 'string') {
+          let width = Number(values.width);
+          if (!isNaN(width)) values.width = width;
+        }
         delete values['wrapClassName'];
         return values;
       });
@@ -246,6 +250,7 @@
       &-extra {
         .anticon-close {
           opacity: 0.6;
+          color: @text-color-base;
           &:hover {
             color: @error-color;
             opacity: 1;

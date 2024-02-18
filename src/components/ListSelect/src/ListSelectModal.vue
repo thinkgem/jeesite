@@ -13,6 +13,23 @@
     @ok="handleSubmit"
     width="80%"
   >
+    <template #appendHeader>
+      <a-button
+        @click="handleInputForm()"
+        v-if="props.config.isNewButton"
+        v-auth="props.config.newButtonAuth"
+        size="small"
+        class="ml-4"
+      >
+        <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+      </a-button>
+      <component
+        :is="inputFormComponent"
+        v-model:open="inputFormOpen"
+        @register="registerInputModal"
+        @success="handleSuccess"
+      />
+    </template>
     <ARow>
       <ACol :span="4" v-if="props.config.treeProps" :style="getTreeStyle">
         <BasicTree
@@ -26,7 +43,7 @@
           @select="handleTreeSelect"
         />
       </ACol>
-      <ACol :span="props.config.treeProps ? 17 : 18">
+      <ACol :span="props.config.treeProps ? 17 : 18" class="overflow-hidden">
         <BasicTable
           @register="registerTable"
           @row-db-click="rowDbClick"
@@ -37,18 +54,30 @@
         />
       </ACol>
       <ACol :span="props.config.treeProps ? 3 : 6" class="pl-3 pt-3">
-        {{ t('当前已选择 {0} 项', [selectList.length]) }}：
-        <div class="mt-2" v-if="selectList && selectList.length > 0">
+        {{ t('common.selectedItems', [selectList.length]) }}：
+        <div
+          class="jeesite-listselect-tags mt-2"
+          v-if="selectList && selectList.length > 0"
+          :style="`height:${treeHeight}px`"
+        >
           <Tag
             v-for="(item, index) in selectList"
             :key="item[props.config.itemCode]"
-            :closable="true"
-            @close="closeTag(index)"
-            style="margin: 3px 5px 0 0"
-            :color="token.colorPrimary"
+            color="processing"
           >
-            {{ item[props.config.itemName] }}
-            {{ props.config.isShowCode !== false ? ' (' + item[props.config.itemCode] + ')' : '' }}
+            <span
+              :title="
+                item[props.config.itemName] + (props.config.isShowCode !== false
+                  ? ' (' + item[props.config.itemCode] + ')'
+                  : '')
+              "
+            >
+              {{ item[props.config?.itemName] }}
+              {{
+                props.config?.isShowCode !== false ? ' (' + item[props.config?.itemCode] + ')' : ''
+              }}
+            </span>
+            <Icon icon="ant-design:close-outlined" @click="closeTag(index)" />
           </Tag>
         </div>
       </ACol>
@@ -56,20 +85,22 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { ref, CSSProperties, computed } from 'vue';
-  import { Row, Col, Tag, theme } from 'ant-design-vue';
+  import { defineComponent, ref, CSSProperties, computed, shallowRef } from 'vue';
+  import { Row, Col, Tag } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { BasicTree } from '/@/components/Tree';
-  import { BasicModal, useModalInner } from '/@/components/Modal';
+  import { Icon } from '/@/components/Icon';
+  import { BasicModal, useModal, useModalInner } from '/@/components/Modal';
   import { BasicTable, useTable, BasicTableProps, TableRowSelection } from '/@/components/Table';
   import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
   import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
+  import { dynamicImport } from '/@/router/helper/routeHelper';
+  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
   const ARow = Row;
   const ACol = Col;
 
-  const { token } = theme.useToken();
-  const { t } = useI18n('listselect');
+  const { t } = useI18n();
 
   const props = defineProps({
     config: { type: Object as PropType<any> },
@@ -117,6 +148,7 @@
     canResize: true,
     resizeHeightOffset: 100,
     rowSelection,
+    clearSelectedOnReload: false,
     ...props.config?.tableProps,
     afterFetch: () => {
       initialize.value = true;
@@ -136,6 +168,25 @@
     }
     setModalProps({ loading: false });
   });
+
+  const [registerInputModal, inputAction] = useModal();
+  const inputFormComponent = shallowRef<Nullable<any>>(null);
+  const inputFormOpen = ref<Boolean>(false);
+
+  function handleInputForm() {
+    let component: ReturnType<typeof defineComponent>;
+    const imp = dynamicImport(props.config.newButtonComp);
+    if (imp) component = createAsyncComponent(imp);
+    if (component) {
+      inputFormComponent.value = component;
+      inputAction.setModalData({});
+      inputFormOpen.value = true;
+    }
+  }
+
+  function handleSuccess() {
+    tableAction.reload();
+  }
 
   // const rowClick = (record: Recordable) => {
   //   if (!props.checkbox) {
@@ -198,6 +249,29 @@
     .basic-tree-header {
       padding: 15px 0 4px;
       border: 0;
+    }
+    &-tags {
+      overflow: auto;
+
+      .ant-tag {
+        margin: 4px 0 0 0;
+        padding: 0 4px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          overflow: hidden;
+          white-space: nowrap;
+          cursor: default;
+        }
+
+        .anticon {
+          margin-left: 4px !important;
+          height: 20px;
+          cursor: pointer;
+        }
+      }
     }
   }
 </style>

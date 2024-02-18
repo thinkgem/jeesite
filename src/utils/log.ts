@@ -1,9 +1,9 @@
-const projectName = import.meta.env.VITE_GLOB_APP_TITLE;
+export const env = import.meta.env;
 
 export function warn(message: string) {
-  console.warn(`[${projectName} warn]:${message}`);
+  console.warn(`[${env.VITE_GLOB_APP_TITLE} warn]:${message}`);
 }
 
 export function error(message: string) {
-  throw new Error(`[${projectName} error]:${message}`);
+  throw new Error(`[${env.VITE_GLOB_APP_TITLE} error]:${message}`);
 }

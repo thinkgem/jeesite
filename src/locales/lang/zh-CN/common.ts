@@ -25,4 +25,6 @@ export default {
 
   notYetRealized: '暂未实现',
   validateError: '您填写的信息有误，请根据提示修正。',
+
+  selectedItems: '当前已选择 {0} 项',
 };

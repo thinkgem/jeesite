@@ -33,6 +33,7 @@
 
   import { updateColorWeak } from '/@/logics/theme/updateColorWeak';
   import { updateGrayMode } from '/@/logics/theme/updateGrayMode';
+  import { Persistent } from '/@/utils/cache/persistent';
   import defaultSetting from '/@/settings/projectSetting';
 
   export default defineComponent({
@@ -65,19 +66,18 @@
           updateColorWeak(colorWeak);
           updateGrayMode(grayMode);
           createMessage.success(t('layout.setting.resetSuccess'));
-        } catch (error) {
+        } catch (error: any) {
           createMessage.error(error);
         }
         location.reload();
       }
 
       function handleClearAndRedo() {
-        localStorage.clear();
-        appStore.resetAllState();
-        permissionStore.resetState();
-        tabStore.resetState();
+        Persistent.clearAll(true);
+        // appStore.resetAllState();
+        // tabStore.resetState();
+        // permissionStore.resetState();
         // userStore.resetState();
-        userStore.logout();
         location.reload();
       }
       return {

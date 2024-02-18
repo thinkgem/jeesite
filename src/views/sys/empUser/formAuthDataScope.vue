@@ -19,22 +19,26 @@
     <BasicForm @register="registerForm">
       <template #dataScopeTrees>
         <div class="flex flex-row flex-wrap">
-          <div class="mr-5 mb-5" v-for="item in dataScopes" :key="item.moduleCode">
-            <BasicTree
+          <template v-for="item in dataScopes" :key="item.moduleCode">
+            <div
+              class="mb-5 mr-5"
               v-if="moduleCodes.includes(item.moduleCode) && ['0', '1'].includes(item.ctrlPermi)"
-              class="bg-gray"
-              style="min-width: 300px"
-              :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
-              :toolbar="true"
-              :checkable="true"
-              :api="ctrlDataTreeData"
-              :params="{ url: item.ctrlDataUrl, ctrlPermi }"
-              :immediate="immediate"
-              :defaultExpandLevel="2"
-              :ref="setTreeRefs(item.ctrlType)"
-              @tree-data-change="handleTreeDataChange"
-            />
-          </div>
+            >
+              <BasicTree
+                class="bg-gray"
+                style="min-width: 300px"
+                :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
+                :toolbar="true"
+                :checkable="true"
+                :api="ctrlDataTreeData"
+                :params="{ url: item.ctrlDataUrl, ctrlPermi }"
+                :immediate="immediate"
+                :defaultExpandLevel="2"
+                :ref="setTreeRefs(item.ctrlType)"
+                @tree-data-change="handleTreeDataChange"
+              />
+            </div>
+          </template>
         </div>
       </template>
     </BasicForm>

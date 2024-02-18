@@ -32,5 +32,5 @@
 
   setTimeout(() => {
     loading.value = false;
-  }, 1500);
+  }, 800);
 </script>
