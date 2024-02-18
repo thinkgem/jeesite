@@ -103,7 +103,7 @@ cd jeesite-vue
 - 安装依赖
 
 ```bash
-yarn config set registry https://registry.npm.taobao.org
+yarn config set registry https://registry.npmmirror.com
 yarn install
 ```
 
