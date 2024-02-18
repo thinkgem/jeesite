@@ -39,7 +39,7 @@
     { [`${prefixCls}-normal`]: props.normal },
   ]);
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-basic-title';
 
   .@{prefix-cls} {

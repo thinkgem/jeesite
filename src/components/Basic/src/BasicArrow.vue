@@ -63,7 +63,7 @@
     ];
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-basic-arrow';
 
   .@{prefix-cls} {
@@ -78,7 +78,7 @@
     }
 
     &.inset {
-      line-height: 0px;
+      line-height: 0;
     }
 
     &.up {

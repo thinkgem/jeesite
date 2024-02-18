@@ -17,7 +17,7 @@
   const { prefixCls } = useDesign('app-search-footer');
   const { t } = useI18n();
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-app-search-footer';
 
   .@{prefix-cls} {

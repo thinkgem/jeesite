@@ -113,7 +113,7 @@
     emit('close');
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-app-search-modal';
   @footer-prefix-cls: ~'jeesite-app-search-footer';
   .@{prefix-cls} {

@@ -61,7 +61,7 @@
     go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-app-logo';
 
   .@{prefix-cls} {
