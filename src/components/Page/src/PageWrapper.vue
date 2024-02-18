@@ -297,6 +297,7 @@
       // margin: 16px;
       padding: 15px;
       border-radius: 5px;
+      color: @text-color-base;
     }
 
     .ant-page-header {

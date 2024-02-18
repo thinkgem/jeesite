@@ -40,7 +40,7 @@
     }
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-st-login';
 
   .@{prefix-cls} {
