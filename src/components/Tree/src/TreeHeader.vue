@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-tree-header flex items-center px-2 py-1.5">
+  <div class="jeesite-basic-tree-header flex items-center px-2 py-1.5">
     <slot name="headerTitle" v-if="$slots.headerTitle"></slot>
     <BasicTitle :helpMessage="helpMessage" v-if="!$slots.headerTitle && title">
       {{ title }}
@@ -19,7 +19,7 @@
         </FormItemRest>
       </div>
       <Dropdown @click.prevent v-if="toolbar">
-        <Icon icon="ion:ellipsis-vertical" />
+        <Icon icon="ant-design:setting-outlined" class="pl-1" />
         <template #overlay>
           <AMenu @click="handleMenuClick">
             <template v-for="item in toolbarList" :key="item.value">
@@ -189,15 +189,15 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   html[data-theme='dark'] {
-    .basic-tree-header {
+    .jeesite-basic-tree-header {
       border-bottom: 1px solid #303030;
       color: rgb(255 255 255 / 75%);
     }
   }
 
-  .basic-tree-header {
+  .jeesite-basic-tree-header {
     color: @text-color-base;
     border-bottom: 1px solid #f0f0f0;
     min-height: 35px;
