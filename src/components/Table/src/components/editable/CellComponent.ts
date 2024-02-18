@@ -32,7 +32,7 @@ export const CellComponent = (
       placement: 'right',
       autoAdjustOverflow: false,
       getPopupContainer: (trigger: HTMLElement | any) => {
-        return trigger.parentElement;
+        return trigger?.parentElement;
       },
     },
     {

@@ -414,7 +414,10 @@
         handleEnter,
         handleSubmitClick,
         spinning,
-        ...props,
+        value: props.value,
+        record: props.record,
+        column: props.column,
+        index: props.index,
       };
     },
     render() {
@@ -452,7 +455,7 @@
                   {...this.getComponentProps}
                   component={this.getComponent}
                   style={this.getWrapperStyle}
-                  popoverOpen={this.getRuleOpen}
+                  popoverOpen={this.getRuleOpen as any}
                   rule={this.getRule}
                   ruleMessage={this.ruleMessage}
                   class={this.getWrapperClass}
