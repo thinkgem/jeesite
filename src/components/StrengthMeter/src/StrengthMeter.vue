@@ -74,7 +74,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-strength-meter';
 
   .@{prefix-cls} {
