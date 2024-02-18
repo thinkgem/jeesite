@@ -38,7 +38,7 @@
   );
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-table-select-bar';
 
   .@{prefix-cls} {
