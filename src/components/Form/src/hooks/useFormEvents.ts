@@ -200,7 +200,9 @@ export function useFormEvents({
         }
       });
     });
-    schemaRef.value = uniqBy(schema, 'field');
+    schemaRef.value = uniqBy(schema, (item) => {
+      return item.field + '|' + item.label;
+    });
   }
 
   function getFieldsValue(): Recordable {
