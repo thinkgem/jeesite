@@ -73,6 +73,11 @@ export function useTableScroll(
     const tableEl: Element = table.$el;
     if (!tableEl) return;
 
+    paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
+    if (paginationEl) {
+      paginationEl.style.display = 'flex';
+    }
+
     if (!bodyEl) {
       bodyEl = tableEl.querySelector('.ant-table-body');
       if (!bodyEl) return;
@@ -114,19 +119,14 @@ export function useTableScroll(
     let paddingHeight = 30;
     // Pager height
     let paginationHeight = 2;
-    //if (!isBoolean(pagination)) {
-    paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
     if (paginationEl) {
       const offsetHeight = paginationEl.offsetHeight;
       paginationHeight += offsetHeight || 0;
-      //} else {
-      //  // TODO First fix 24
-      //  paginationHeight += 24;
-      //}
     } else {
       paginationHeight = -8;
     }
 
+    // Footer height
     let footerHeight = 0;
     if (!isBoolean(pagination)) {
       if (!footerEl) {
@@ -144,6 +144,7 @@ export function useTableScroll(
       footerHeight += offsetHeight || 0;
     }
 
+    // Header height
     let headerHeight = 0;
     if (headEl) {
       headerHeight = (headEl as HTMLElement).offsetHeight;

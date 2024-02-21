@@ -620,18 +620,34 @@
       }
 
       .ant-table-pagination.ant-pagination {
+        transition: all 0.3s;
         margin: 10px 0 0;
+        display: none;
 
         &.ant-pagination-mini {
-          .ant-pagination-item {
-            line-height: 20px;
+          .ant-pagination-prev,
+          .ant-pagination-next {
+            line-height: 23px;
+          }
+          //.ant-pagination-item {
+          //  line-height: 20px;
+          //}
+
+          .ant-pagination-options-quick-jumper {
+            input {
+              width: 42px;
+            }
           }
 
           .ant-select {
             margin-left: 5px;
 
-            &.ant-select-in-form-item {
-              width: auto;
+            .ant-select-arrow {
+              right: 8px;
+            }
+
+            .ant-select-selection-item {
+              padding-right: 18px;
             }
           }
         }
