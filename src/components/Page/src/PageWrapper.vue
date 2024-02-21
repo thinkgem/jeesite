@@ -357,7 +357,7 @@
           // margin-right: 15px;
           height: calc(100% - 29px);
 
-          .basic-tree-header {
+          .jeesite-basic-tree-header {
             padding: 10px 6px;
             min-height: 44px;
           }

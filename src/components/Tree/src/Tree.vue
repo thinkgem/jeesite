@@ -568,7 +568,7 @@
         if (!el || el.clientHeight <= 0) return;
         if (!el.parentElement?.classList.contains('sidebar-content')) return;
         let height = el.clientHeight;
-        const header = el.querySelector('.basic-tree-header');
+        const header = el.querySelector('.jeesite-basic-tree-header');
         if (header) height -= header.clientHeight;
         treeHeight.value = height - 5;
       };

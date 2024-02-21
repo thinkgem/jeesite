@@ -258,7 +258,7 @@
       }
     }
 
-    .basic-tree-header {
+    .jeesite-basic-tree-header {
       padding: 15px 0 4px;
       border: 0;
     }
