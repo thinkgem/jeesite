@@ -198,8 +198,8 @@
   }
 
   .jeesite-basic-tree-header {
-    color: @text-color-base;
     border-bottom: 1px solid #f0f0f0;
+    color: @text-color-base;
     min-height: 35px;
     overflow: hidden;
 

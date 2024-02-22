@@ -738,10 +738,6 @@
       margin-left: 4px;
       visibility: hidden;
     }
-
-    &-header {
-      border-bottom: 1px solid @border-color-base;
-    }
   }
 
   html[data-theme='light'] {
