@@ -14,9 +14,13 @@ $.extend($.jgrid,{
 		btnHideSearch: '隠匿',
 		expandTooMany: '今回は“{0}”のノードを展開しなければならない。展開ノードが多すぎるため、キャンセルが実行される。',
 		pageTitle: '数字をクリックすると、ページ番号とページ数を入力して、リターンカーを押して有効になります。！',
-		pageLabelA: '現在の',
-		pageLabelB: 'ページは，各ページ',
-		pageLabelC: '枚，全部 で{0} つ',
+		// pageLabelA: '現在の',
+		// pageLabelB: 'ページは，各ページ',
+		// pageLabelC: '枚，全部 で{0} つ',
+		pageLabelA: '計 {0}',
+		pageLabelB: '',
+		pageLabelC: 'ページ',
+		pageLabelD: 'へ行き'
 	},
 	defaults : {
 		recordtext: "View {0} - {1} of {2}",

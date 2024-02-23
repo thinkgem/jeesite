@@ -14,9 +14,13 @@ $.extend($.jgrid,{
 		btnHideSearch: '隐藏',
 		expandTooMany: '本次需要展开“{0}”个节点，因为展开节点过多，执行取消。',
 		pageTitle: '点击数字，可填写页码和每页条数，按回车即可生效！',
-		pageLabelA: '当前',
-		pageLabelB: '页，每页',
-		pageLabelC: '条，共 {0} 条',
+		// pageLabelA: '当前',
+		// pageLabelB: '页，每页',
+		// pageLabelC: '条，共 {0} 条',
+		pageLabelA: '共 {0} 条数据',
+		pageLabelB: '每页',
+		pageLabelC: '条，跳至',
+		pageLabelD: '页'
 	},
     defaults : {
         recordtext: "{0} - {1}\u3000共 {2} 条", // 共字前是全角空格

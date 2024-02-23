@@ -14,9 +14,13 @@ $.extend($.jgrid,{
 		btnHideSearch: 'Hide Search',
 		expandTooMany: 'You need to expand the "{0}" node, because there are too many nodes, and the execution is canceled.',
 		pageTitle: 'Click the number, you can fill in the page number of pages, press enter to take effect!',
-		pageLabelA: 'Page',
-		pageLabelB: ' / ',
-		pageLabelC: 'of {0}',
+		// pageLabelA: 'Page',
+		// pageLabelB: ' / ',
+		// pageLabelC: 'of {0}',
+		pageLabelA: 'total of {0}',
+		pageLabelB: '',
+		pageLabelC: '/ page, Go to ',
+		pageLabelD: ''
 	},
 	defaults : {
 		recordtext: "View {0} - {1} of {2}",
