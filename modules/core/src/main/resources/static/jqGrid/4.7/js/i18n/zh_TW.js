@@ -10,6 +10,19 @@
 **/
 $.jgrid = $.jgrid || {};
 $.extend($.jgrid,{
+	extend : {
+		btnSearch: '查詢',
+		btnHideSearch: '隱藏',
+		expandTooMany: '本次需要展開“{0}”個節點，因爲展開節點過多，執行取消。',
+		pageTitle: '點擊數字，可填寫頁碼和每頁條數，按回車即可生效！',
+		// pageLabelA: '當前',
+		// pageLabelB: '頁，每頁',
+		// pageLabelC: '條，共 {0} 條',
+		pageLabelA: '共 {0} 條數據',
+		pageLabelB: '每頁',
+		pageLabelC: '條，跳至',
+		pageLabelD: '頁'
+	},
 	defaults : {
 		recordtext: "{0} - {1} 共 {2} 條",
 		emptyrecords: "沒有記錄",
