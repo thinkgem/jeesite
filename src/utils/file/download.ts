@@ -80,7 +80,7 @@ export async function downloadByUrl({
   let name = res.headers['content-disposition'];
   name = name && name.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
   name = name && name.length >= 1 && name[1].replace("utf-8'zh_cn'", '');
-  name = name && (decodeURIComponent(name) || fileName || 'jeesite');
+  name = (name && decodeURIComponent(name)) || fileName || 'jeesite';
   downloadByData(res.data, name);
   // axios({
   //   url: url,
