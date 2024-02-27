@@ -14,7 +14,7 @@ import java.util.Date;
 public class TimeUtils {
 	
 	public static final String[] CN = new String[] {"毫秒", "秒", "分", "时", "天"};
-	public static final String[] EN = new String[] {" millisecond ", " second ", " minute ", " hour ", " day "};
+	public static final String[] EN = new String[] {"ms", " second ", " minute ", " hour ", " day "};
 	
 	public static final String[] AGO_CN = new String[] {"刚刚", "秒前", "分钟前", "小时前", "天前"};
 	public static final String[] AGO_EN = new String[] {"just now", " seconds ago", " minutes ago", " hours ago", " days ago"};
