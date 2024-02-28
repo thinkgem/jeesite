@@ -77,7 +77,8 @@
 
 		<!-- docker setting -->
 		<docker.dockerHost>http://docker.local:2375</docker.dockerHost>
-		<docker.imageName>thinkgem/${project.artifactId}:5.5</docker.imageName>
+		<docker.imageName>thinkgem/${project.artifactId}:latest</docker.imageName>
+		<docker.platform>linux/amd64</docker.platform>
 		<docker.run.port>8980:8980</docker.run.port>
 
 	</properties>
@@ -368,6 +369,9 @@
 								<alias>${project.artifactId}</alias>
 								<build>
 									<dockerFile>${project.basedir}/bin/docker/Dockerfile</dockerFile>
+									<buildOptions>
+										<platform>${docker.platform}</platform>
+									</buildOptions>
 									<assembly>
 										<descriptorRef>artifact</descriptorRef>
 									</assembly>
