@@ -25,8 +25,12 @@
 		<start-class>com.jeesite.modules.FastApplication</start-class>
 
 		<!-- docker setting -->
-		<docker.dockerHost>http://docker.local:2375</docker.dockerHost>
+		<docker.dockerHost>unix:///var/run/docker.sock</docker.dockerHost>
 		<docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>
+<!--		<docker.imageName>thinkgem/jeesite-web:amd64</docker.imageName>-->
+<!--		<docker.platform>linux/amd64</docker.platform>-->
+<!--		<docker.imageName>thinkgem/jeesite-web:arm64</docker.imageName>-->
+<!--		<docker.platform>linux/arm64</docker.platform>-->
 		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
