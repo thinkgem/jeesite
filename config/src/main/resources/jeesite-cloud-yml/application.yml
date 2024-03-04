@@ -273,8 +273,8 @@ seata:
       server-addr: 127.0.0.1:8848
       username: nacos
       password: nacos
-      group : SEATA_GROUP
       namespace: ~
+      group : SEATA_GROUP
 
 #======================================#
 #========== Spring settings ===========#
@@ -320,6 +320,7 @@ spring:
           data-id: ${spring.application.name}-sentinel
           group-id: jeesite-cloud-yml
           rule-type: flow
+          namespace: ~
   
   # Spring Boot Admin 服务监控中心：https://codecentric.github.io/spring-boot-admin/2.0.6
   boot:
