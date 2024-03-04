@@ -19,6 +19,7 @@ package com.alibaba.nacos.console.config;
 import com.alibaba.nacos.console.filter.XssFilter;
 import com.alibaba.nacos.core.code.ControllerMethodsCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -40,11 +41,14 @@ import java.time.ZoneId;
  */
 @Component
 @EnableScheduling
-@PropertySource("classpath:application.properties")
+@PropertySource("/application.properties")
 public class ConsoleConfig {
     
     @Autowired
     private ControllerMethodsCache methodsCache;
+    
+    @Value("${nacos.console.ui.enabled:true}")
+    private boolean consoleUiEnabled;
     
     /**
      * Init.
@@ -78,5 +82,9 @@ public class ConsoleConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
         return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(ZoneId.systemDefault().toString());
+    }
+    
+    public boolean isConsoleUiEnabled() {
+        return consoleUiEnabled;
     }
 }
