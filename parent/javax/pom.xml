@@ -24,7 +24,7 @@
 		<!-- version setting -->
 		<spring-cloud.version>2021.0.8</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-		<nacos.version>2.2.4.1</nacos.version>
+		<nacos.version>2.3.0.1</nacos.version>
 		<druid.version>1.2.21</druid.version>
 
 		<!-- environment setting -->

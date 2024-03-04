@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 		
 		<!-- version setting -->
-		<nacos.version>2.2.4.1</nacos.version>
+		<nacos.version>2.3.0.1</nacos.version>
 		
 		<!-- docker setting -->
         <docker.run.port>8848:8848</docker.run.port>
@@ -45,7 +45,7 @@
 
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
-			<artifactId>nacos-plugin-default-impl</artifactId>
+			<artifactId>nacos-default-plugin-all</artifactId>
 			<version>${nacos.version}</version>
 		</dependency>
 		<dependency>
@@ -59,12 +59,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-prometheus</artifactId>
+			<artifactId>nacos-prometheus</artifactId>
 			<version>${nacos.version}</version>
-        </dependency>
-	
+		</dependency>
+
 		<!-- log -->
 		<!-- log4j通过slf4j来代理 -->
 		<dependency>
@@ -81,6 +81,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -109,15 +110,15 @@
 
     <build>
 		<finalName>${finalName}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>static/console-fe/.vscode/**</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>static/console-ui/.vscode/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
 
 			<!-- Spring Boot -->
 			<plugin>
