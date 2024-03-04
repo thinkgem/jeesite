@@ -41,7 +41,7 @@ import java.time.ZoneId;
  */
 @Component
 @EnableScheduling
-@PropertySource("/application.properties")
+@PropertySource("classpath:application.properties")
 public class ConsoleConfig {
     
     @Autowired
