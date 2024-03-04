@@ -264,7 +264,7 @@ seata:
       default_tx_group: default
   client:
     undo:
-      log-serialization: kryo
+      log-serialization: jackson
   registry:
     type: nacos
     #preferred-networks: 192.168.*

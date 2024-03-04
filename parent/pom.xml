@@ -24,7 +24,7 @@
 		<spring-cloud.version>2022.0.5</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.0.0-RC1</spring-cloud-alibaba.version>
 		<nacos.version>2.3.0.1</nacos.version>
-		<seata.version>1.6.1</seata.version>
+		<seata.version>1.8.0</seata.version>
 		<xstream.version>1.4.20</xstream.version>
 
 	</properties>
