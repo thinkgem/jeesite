@@ -62,10 +62,13 @@ spring:
         server-addr: 127.0.0.1:8848
         username: nacos
         password: nacos
+        namespace: ~
+        group: jeesite-cloud
       config:
         server-addr: 127.0.0.1:8848
         username: nacos
         password: nacos
+        namespace: ~
         file-extension: yml
         group: jeesite-cloud-yml
         extension-configs:

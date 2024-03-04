@@ -273,8 +273,8 @@ seata:
       server-addr: 127.0.0.1:8848
       username: nacos
       password: nacos
-      group : SEATA_GROUP
       namespace: ~
+      group : SEATA_GROUP
 
 #======================================#
 #========== Spring settings ===========#
@@ -317,6 +317,7 @@ spring:
           server-addr: 127.0.0.1:8848
           username: nacos
           password: nacos
+          namespace: ~
           data-id: ${spring.application.name}-sentinel
           group-id: jeesite-cloud-yml
           rule-type: flow
