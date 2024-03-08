@@ -194,6 +194,7 @@
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
       window.location.href = publicPath + PageEnum.BASE_HOME;
+      return;
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
