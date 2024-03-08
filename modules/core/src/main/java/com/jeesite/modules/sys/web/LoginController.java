@@ -14,6 +14,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
+import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -202,6 +203,23 @@ public class LoginController extends BaseController{
 			// 如果登录设置了语言，则切换语言
 			if (loginInfo.getParam("lang") != null){
 				Global.setLang(loginInfo.getParam("lang"), request, response);
+			}
+			// 根据当前用户子系统，切换到默认系统下
+			for(Role role : user.getRoleList()) {
+				if (role.getSysCodes() != null) {
+					String sysCode = null;
+					for (String code : StringUtils.splitComma(role.getSysCodes())) {
+						if (StringUtils.isNotBlank(code)) {
+							sysCode = code;
+							break;
+						}
+					}
+					if (sysCode != null) {
+						session.setAttribute("sysCode", sysCode);
+						UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+						break;
+					}
+				}
 			}
 		}
 
