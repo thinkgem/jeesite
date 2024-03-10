@@ -56,6 +56,12 @@
 							path="${c.attrName}" labelPath="${c.attrName2}" 
 							url="\${ctx}/sys/office/treeData" allowClear="true"/>
 					</div>
+				<% }else if(c.showType == 'companyselect'){ %>
+					<div class="control-inline width-120" >
+						<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('机构选择')}"
+							path="${c.attrName}" labelPath="${c.attrName2}"
+							url="\${ctx}/sys/company/treeData" allowClear="true"/>
+					</div>
 				<% }else if(c.showType == 'areaselect'){ %>
 					<div class="control-inline width-120" >
 						<${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('区域选择')}"

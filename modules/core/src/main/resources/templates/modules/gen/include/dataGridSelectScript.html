@@ -44,7 +44,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(\"#{@DictUtils.getDictListJson('${c.optionMap['dictType']}')}", val, '\${text("未知")}', true);
 		}},
-				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
+				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "companyselect" || c.showType == "areaselect"){ %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},
 				<% }else{
 						if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')){

@@ -197,6 +197,7 @@
 		<dict value="datetime" label="日期时间"/>
 		<dict value="userselect" label="人员选择"/>
 		<dict value="officeselect" label="机构选择"/>
+		<dict value="companyselect" label="公司选择"/>
 		<dict value="areaselect" label="区域选择"/>
 	</showType>
 	<!-- 字段验证 -->
