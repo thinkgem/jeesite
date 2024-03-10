@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueFormRoute</name>
+	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<fileName>formRoute.vue</fileName>
+	<content><![CDATA[
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+-->
+<template>
+  <CollapseForm
+    :config="formConfig"
+    :loading="loadingRef"
+    :okLoading="okLoadingRef"
+    :okAuth="'${permissionPrefix}:edit'"
+    @close="handleClose"
+    @ok="handleSubmit"
+  >
+    <template #main>
+      <BasicForm @register="registerForm" />
+    </template>
+    <% for (child in table.childList){ %>
+    <template #${@StringUtils.uncap(child.className)}>
+      <BasicForm @register="register${child.className}Form">
+        <template #${@StringUtils.uncap(child.className)}List>
+          <BasicTable
+            @register="register${child.className}Table"
+            @row-click="handle${child.className}RowClick"
+          />
+          <% if(table.tplCategory != 'query'){ %>
+          <a-button class="mt-2" @click="handle${child.className}Add" v-auth="'${permissionPrefix}:edit'">
+            <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+          </a-button>
+          <% } %>
+        </template>
+      </BasicForm>
+    </template>
+    <% } %>
+    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+    <template #actions>
+      <BpmButton
+        v-model:bpmEntity="record"
+        bpmEntityKey="id"
+        formKey="${table.optionMap['bpmFormKey']}"
+        completeText="提交"
+        :completeModal="true"
+        :loading="okLoadingRef"
+        :auth="'${permissionPrefix}:edit'"
+        @validate="handleValidate"
+        @complete="handleSubmit"
+        @success="handleSuccess"
+        @close="handleClose"
+        size="small"
+      />
+    </template>
+    <% } %>
+  </CollapseForm>
+</template>
+<script lang="ts" setup name="${compNamePrefix}Form">
+  import { ref, unref, computed, onMounted } from 'vue';
+  import { useEmitter } from '/@/store/modules/user';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { router } from '/@/router';
+  import { Icon } from '/@/components/Icon';
+  import { CollapseForm } from '/@/components/CollapseForm';
+  import { BasicForm, FormSchema, useForm } from '/@/components/Form';
+<% if (table.childList.~size > 0){ %>
+  import { BasicTable, useTable } from '/@/components/Table';
+<% } %>
+  import { ${ClassName}, ${className}Save, ${className}Form<% if(table.isTreeEntity){ %>, ${className}TreeData<% } %> } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
+<%
+var userselectExists = false;
+var officeselectExists = false;
+var companyselectExists = false;
+var areaselectExists = false;
+for(c in table.columnList){
+  if(c.isQuery == "1" && !c.isTreeEntityColumn){
+    if(c.showType == 'userselect'){
+      userselectExists = true;
+    }else if(c.showType == 'officeselect'){
+      officeselectExists = true;
+    }else if(c.showType == 'companyselect'){
+      companyselectExists = true;
+    }else if(c.showType == 'areaselect'){
+      areaselectExists = true;
+    }
+  }
+}
+%>
+<% if(userselectExists || officeselectExists) { %>
+  import { officeTreeData } from '/@/api/sys/office';
+<% } %>
+<% if(companyselectExists) { %>
+  import { companyTreeData } from '/@/api/sys/company';
+<% } %>
+<% if(areaselectExists) { %>
+  import { areaTreeData } from '/@/api/sys/area';
+<% } %>
+<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+  import { BpmButton } from '/@/components/Bpm';
+<% } %>
+  import { useQuery } from '/@/hooks/web/usePage';
+  import { useTabs } from '/@/hooks/web/useTabs';
+
+  const formConfig = ref<any[]>([
+    {
+      label: '基础表单',
+      value: 'main',
+      open: true,
+    },
+    <% for (child in table.childList){ %>
+    {
+      label: '${child.comments}',
+      value: '${@StringUtils.uncap(child.className)}',
+      open: true,
+    },
+    <% } %>
+  ]);
+
+  const emitter = useEmitter();
+
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const { showMessage } = useMessage();
+  const { setTitle, close } = useTabs(router);
+  const record = ref<${ClassName}>({} as ${ClassName});
+  const loadingRef = ref<boolean>(false);
+  const okLoadingRef = ref<boolean>(false);
+  const query = useQuery();
+
+  const updateTabTitle = () => {
+    setTitle(record.value.isNewRecord ? t('新增${functionNameSimple}') : t('编辑${functionNameSimple}'));
+  };
+
+  const inputFormSchemas: FormSchema[] = [
+  <% if(table.isTreeEntity){ %>
+    {
+      label: t('上级${functionNameSimple}'),
+      field: 'parentCode',
+      fieldLabel: 'parentName',
+      component: 'TreeSelect',
+      componentProps: {
+        allowClear: true,
+        style: 'width: calc(50% - 60px)',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+  <% }
+for (c in table.columnList){
+  if (c.isEdit == '1' && c.showType != 'hidden'){
+    // 如果是树结构的字段，则自动忽略
+    if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+      'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+        && c.attrName != table.treeViewCodeAttrName
+        && c.attrName != table.treeViewNameAttrName){
+      continue;
+    }
+    // 是否强制新行获取，生成字段界面用户设定的
+    var isNewLine = @Global.YES.equals(c.optionMap['isNewLine']);
+    if (isBlank(c.optionMap['isNewLine'])){
+      if (c.showType == 'textarea'){
+        isNewLine = true;
+      }
+    }
+%>
+    {
+      label: t('${c.columnLabel}'),
+      field: '${c.attrName}',
+  <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+    <% if (c.simpleAttrType == 'Integer' && c.attrName == 'treeSort'){ %>
+      helpMessage: '升序',
+      component: 'InputNumber',
+      defaultValue: '30',
+      <% }else{ %>
+      component: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
+      <% } %>
+      <% if (c.dataLength != '0'){ %>
+      componentProps: {
+        maxlength: ${c.dataLength},
+      },
+    <% } %>
+  <% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
+    var isMultiple = (c.showType == 'select_multiple'); %>
+      component: 'Select',
+      componentProps: {
+        dictType: '${c.optionMap['dictType']}',
+        allowClear: true,
+        <% if(isMultiple){ %>
+        mode: 'multiple',
+        <% } %>
+      },
+  <% }else if(c.showType == 'radio' || c.showType == 'checkbox'){ %>
+      component: '${@StringUtils.cap(c.showType)}Group',
+      componentProps: {
+        dictType: '${c.optionMap['dictType']}',
+      },
+  <% }else if(c.showType == 'date' || c.showType == 'datetime'){
+    var isTime = (c.showType == 'datetime'); %>
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+        showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+      },
+  <% }else if(c.showType == 'userselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: officeTreeData,
+        params: { isLoadUser: true, userIdPrefix: '' },
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'officeselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: officeTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'companyselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: companyTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'areaselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: areaTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else{ %>
+      component: 'Input',
+  <% } 
+  var fieldValid = c.optionMap['fieldValid'], fvs = [], rules = [];
+  if(isNotEmpty(fieldValid)){
+    var t = type.name(fieldValid);
+    if (t == 'String[]' || t == 'ArrayList'){
+      fvs = fieldValid;
+    }else if(t == 'String' && isNotBlank(fieldValid)){
+      @fvs.add(fieldValid);
+    }
+  }
+  for(var fv in fvs){
+    if (fv == 'email'){
+      var s = { %>{ type: 'email', message: t('请输入邮箱地址') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'number'){
+      var s = { %>{ pattern: /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/, message: t('请输入一个数值') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'integer'){
+      var s = { %>{ pattern: /^-?\d+$/, message: t('请输入一个整数') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'digits'){
+      var s = { %>{ pattern: /^\d+$/, message: t('请输入一个正整数') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'userName'){
+      var s = { %>{ pattern: /^[\u0391-\uFFE5\w]+$/, message: t('请输入登录账号') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'realName'){
+      var s = { %>{ pattern: /^[\u4e00-\u9fa5]{2,30}$/, message: t('请输入真实姓名') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'abc'){
+      var s = { %>{ pattern: /^[a-zA-Z0-9_]*$/, message: t('请输入字母数字下划线') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'mobile'){
+      var s = { %>{ pattern: /^1[3,4,5,6,7,8,9]\d{9}$/g, message: t('请输入手机号码') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'simplePhone'){
+      var s = { %>{ pattern: /^(\d{3,4}-?)?\d{7,9}$/g, message: t('请输入固话号码') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'phone'){
+      var s = { %>{ pattern: /(^0[1-9]{1}\d{8,10}$)|(^1[3,4,5,6,7,8,9]\d{9}$)/g, message: t('请输入固话或手机号码') }<% };
+      @rules.add(s);
+    }
+    if (fv == 'zipCode'){
+      var s = { %>{ pattern: /^[0-9]{6}$/, message: t('请输入邮政编码') }<% };
+      @rules.add(s);
+    }
+  }
+  if(rules.~size == 0){
+    if(c.isRequired == '1'){
+  %>      required: true,
+  <%
+    }
+  } else { %>
+      rules: [<%
+    if(c.isRequired == '1'){ 
+          %>{ required: true }, <%
+        }
+        for (var rule in rules){
+          print(rule);
+          if (ruleLP.index < rules.~size) {
+            print(', ');
+          }
+        } %>],
+  <%
+    }
+    if (isNewLine){ %>
+      colProps: { lg: 24, md: 24 },
+  <%
+    }
+  %>
+    },
+  <%
+  }
+}
+  if(toBoolean(table.optionMap['isImageUpload'])){
+  %>
+    {
+      label: t('图片上传'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: '${className}_image',
+        uploadType: 'image',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+  <%
+  }
+  if(toBoolean(table.optionMap['isFileUpload'])){
+  %>
+    {
+      label: t('附件上传'),
+      field: 'dataMap',
+      component: 'Upload',
+      componentProps: {
+        loadTime: computed(() => record.value.__t),
+        bizKey: computed(() => record.value.id),
+        bizType: '${className}_file',
+        uploadType: 'all',
+      },
+      colProps: { lg: 24, md: 24 },
+    },
+  <%
+  }
+%>
+  ];
+<%
+  for (child in table.childList){ %>
+
+  const input${child.className}FormSchemas: FormSchema[] = [
+    {
+      field: '${@StringUtils.uncap(child.className)}List',
+      component: 'Input',
+      colProps: { lg: 24, md: 24 },
+      slot: '${@StringUtils.uncap(child.className)}List',
+    },
+  ];
+<%
+  }
+  if(false && toBoolean(table.optionMap['isBpmForm'])){
+%>
+
+  const inputBpmFormSchemas: FormSchema[] = [
+    {
+      label: t('审批意见'),
+      field: 'bpm.comment',
+      component: 'InputTextArea',
+      componentProps: {
+        maxlength: 500,
+      },
+      colProps: { lg: 24, md: 24 },
+      show: () => record.value.bpm.status != '2',
+    },
+    {
+      label: t('下一步流程信息'),
+      field: 'nextTaskInfo',
+      component: 'FormGroup',
+      colProps: { lg: 24, md: 24 },
+    },
+    {
+      label: t('要求完成时间'),
+      field: 'bpm.dueDate',
+      component: 'DatePicker',
+      componentProps: {
+        format: 'YYYY-MM-DD HH:mm',
+        showTime: { format: 'HH:mm' },
+      },
+    },
+    {
+      label: t('任务优先级'),
+      field: 'bpm.priority',
+      component: 'Select',
+      componentProps: {
+        dictType: 'bpm_task_priority',
+        allowClear: true,
+      },
+    },
+    {
+      label: t('下一步处理人'),
+      field: 'bpm.nextUserCodes',
+      component: 'ListSelect',
+      componentProps: {
+        selectType: 'empUserSelect',
+      },
+    },
+  ];
+<%
+  }
+%>
+<%
+var updateSchemas = [];
+if(table.isTreeEntity){
+  var s = {
+%>      {
+        field: 'parentCode',
+        componentProps: {
+          api: ${className}TreeData,
+          params: {
+            excludeCode: record.value.id,
+            isShowRawName: true,
+          },
+        },
+      },<%
+  };
+  @updateSchemas.add(s);
+}
+for (c in table.columnList){
+  if (c.isPk == '1' && c.showType == 'input'){
+    var s = {
+%>      {
+        field: '${c.attrName}',
+        componentProps: {
+          disabled: !record.value.isNewRecord,
+        },
+      },<%
+    };
+    @updateSchemas.add(s);
+  }
+}
+%>
+  const [registerForm, formAction] = useForm({
+    labelWidth: 120,
+    schemas: inputFormSchemas,
+    <% var formColNum = table.optionMap['formColNum']; %>
+    baseColProps: { lg: ${formColNum=="1"?24:formColNum=="3"?8:12}, md: 24 },
+  });
+<% for (child in table.childList){ %>
+
+  const [register${child.className}Form, ${@StringUtils.uncap(child.className)}Form] = useForm({
+    labelWidth: 120,
+    schemas: input${child.className}FormSchemas,
+    baseColProps: { lg: 24, md: 24 },
+  });
+
+  const [register${child.className}Table, ${@StringUtils.uncap(child.className)}Table] = useTable({
+    actionColumn: {
+      width: 60,
+      actions: (record: Recordable) => [
+        {
+          icon: 'ant-design:delete-outlined',
+          color: 'error',
+          popConfirm: {
+            title: '是否确认删除',
+            confirm: handle${child.className}Delete.bind(this, record),
+          },
+          auth: '${permissionPrefix}:edit',
+        },
+      ],
+    },
+    rowKey: 'id',
+    pagination: false,
+    bordered: true,
+    size: 'small',
+    inset: true,
+  });
+
+  async function set${child.className}TableData(_res: Recordable) {
+    ${@StringUtils.uncap(child.className)}Table.setColumns([
+  <%
+  for (c in child.columnList){
+    if (c.isEdit != '1' || c.isPk == '1'){
+      continue;
+    }
+    if(child.parentExists && child.parentTableFkName == c.columnName){
+      continue;
+    }
+  %>
+      {
+        title: t('${c.columnLabel}'),
+        dataIndex: '${c.attrName}',
+      <% if(c.showType == 'datetime'){ %>
+        width: 215,
+      <% }else{ %>
+        width: 130,
+      <% } %>
+      <% if ((isNotBlank(c.optionMap['dictType']) || @StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long'))){ %>
+        align: 'center',
+      <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){ %>
+        align: 'right',
+      <% }else{ %>
+        align: 'left',
+      <% } %>
+      <% if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
+        dictType: '${c.optionMap['dictType']}',
+      <% } %>
+        editRow: true,
+    <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+      <% if (c.simpleAttrType == 'Integer' && c.attrName == 'treeSort'){ %>
+        editComponent: 'InputNumber',
+        editDefaultValue: '30',
+        <% }else{ %>
+        editComponent: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
+        <% } %>
+        <% if (c.dataLength != '0'){ %>
+        editComponentProps: {
+          maxlength: ${c.dataLength},
+        },
+      <% } %>
+    <% }else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'radio' || c.showType == 'checkbox'){
+      var isMultiple = (c.showType == 'select_multiple'); %>
+        editComponent: 'Select',
+        editComponentProps: {
+          dictType: '${c.optionMap['dictType']}',
+          allowClear: true,
+          <% if(isMultiple){ %>
+          mode: 'multiple',
+          <% } %>
+        },
+    <% }else if(c.showType == 'date' || c.showType == 'datetime'){
+      var isTime = (c.showType == 'datetime'); %>
+        editComponent: 'DatePicker',
+        editComponentProps: {
+          format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+          showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+        },
+    <% }else if(c.showType == 'userselect'){
+        if (isNotBlank(c.attrName2)){ %>
+        dataLabel: '${c.attrName2}',
+        <% } %>
+        editComponent: 'TreeSelect',
+        editComponentProps: {
+          api: officeTreeData,
+          params: { isLoadUser: true, userIdPrefix: '' },
+          canSelectParent: false,
+          allowClear: true,
+        },
+    <% }else if(c.showType == 'officeselect'){
+        if (isNotBlank(c.attrName2)){ %>
+        dataLabel: '${c.attrName2}',
+        <% } %>
+        editComponent: 'TreeSelect',
+        editComponentProps: {
+          api: officeTreeData,
+          canSelectParent: false,
+          allowClear: true,
+        },
+    <% }else if(c.showType == 'companyselect'){
+        if (isNotBlank(c.attrName2)){ %>
+        dataLabel: '${c.attrName2}',
+        <% } %>
+        editComponent: 'TreeSelect',
+        editComponentProps: {
+          api: companyTreeData,
+          canSelectParent: false,
+          allowClear: true,
+        },
+    <% }else if(c.showType == 'areaselect'){
+        if (isNotBlank(c.attrName2)){ %>
+        dataLabel: '${c.attrName2}',
+        <% } %>
+        editComponent: 'TreeSelect',
+        editComponentProps: {
+          api: areaTreeData,
+          canSelectParent: false,
+          allowClear: true,
+        },
+    <% }else{ %>
+        editComponent: 'Input',
+    <% } %>
+        editRule: ${c.isRequired == '1'},
+      },
+  <%
+  }
+  %>
+    ]);
+    ${@StringUtils.uncap(child.className)}Table.setTableData(record.value.${@StringUtils.uncap(child.className)}List || []);
+  }
+
+  function handle${child.className}RowClick(record: Recordable) {
+    record.onEdit?.(true, false);
+  }
+
+  function handle${child.className}Add() {
+    ${@StringUtils.uncap(child.className)}Table.insertTableDataRecord({
+      id: new Date().getTime(),
+      isNewRecord: true,
+      editable: true,
+    });
+  }
+
+  function handle${child.className}Delete(record: Recordable) {
+    ${@StringUtils.uncap(child.className)}Table.deleteTableDataRecord(record);
+  }
+
+  async function get${child.className}List() {
+    let ${@StringUtils.uncap(child.className)}ListValid = true;
+    let ${@StringUtils.uncap(child.className)}List: Recordable[] = [];
+    for (const record of ${@StringUtils.uncap(child.className)}Table.getDataSource()) {
+      if (!(await record.onEdit?.(false, true))) {
+        ${@StringUtils.uncap(child.className)}ListValid = false;
+      }
+      ${@StringUtils.uncap(child.className)}List.push({
+        ...record,
+        id: !!record.isNewRecord ? '' : record.id,
+      });
+    }
+    for (const record of ${@StringUtils.uncap(child.className)}Table.getDelDataSource()) {
+      if (!!record.isNewRecord) continue;
+      ${@StringUtils.uncap(child.className)}List.push({
+        ...record,
+        status: '1',
+      });
+    }
+    if (!${@StringUtils.uncap(child.className)}ListValid) {
+      throw { errorFields: [{ name: ['${@StringUtils.uncap(child.className)}List'] }] };
+    }
+    return ${@StringUtils.uncap(child.className)}List;
+  }
+<% } %>
+
+  async function resetFields() {
+    await formAction.resetFields();
+    <% for (child in table.childList){ %>
+    await ${@StringUtils.uncap(child.className)}Form.resetFields();
+    <% } %>
+  }
+
+  async function setFieldsValue(values: Recordable) {
+    await formAction.setFieldsValue(values);
+    <% for (child in table.childList){ %>
+    await ${@StringUtils.uncap(child.className)}Form.setFieldsValue(values);
+    <% } %>
+  }
+
+  async function validate(): Promise<Recordable<any>> {
+    return Object.assign(
+      await formAction.validate(),
+      <% for (child in table.childList){ %>
+      await ${@StringUtils.uncap(child.className)}Form.validate(),
+      <% } %>
+    );
+  }
+
+  onMounted(async () => {
+    loadingRef.value = true;
+    await resetFields();
+    const res = await ${className}Form(unref(query));
+    record.value = (res.${className} || {}) as ${ClassName};
+    record.value.__t = new Date().getTime();
+  <% if(table.isTreeEntity){ %>
+    if (data.parentCode && data.parentName) {
+      record.value.parentCode = data.parentCode;
+      record.value.parentName = data.parentName;
+    }
+  <% } %>
+    setFieldsValue(record.value);
+  <% for (child in table.childList){ %>
+    set${child.className}TableData(res);
+  <% } %>
+  <% if(updateSchemas.~size > 0){ %>
+    formAction.updateSchema([
+    <% for(updateSchema in updateSchemas){
+      print(updateSchema + '\n');  
+    } %>
+    ]);
+  <% } %>
+    updateTabTitle();
+    loadingRef.value = false;
+  });
+
+  function handleClose() {
+    setTimeout(close);
+  }
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+
+  async function handleValidate(_event: any, formData: any) {
+    try {
+      const data = await validate();
+      formData(true, data); // 将表单数据传递给 BpmButton
+    } catch (error: any) {
+      if (error && error.errorFields) {
+        showMessage(t('common.validateError'));
+      }
+      console.log('error', error);
+    }
+  }
+  <% } %>
+
+  async function handleSubmit(<% if(toBoolean(table.optionMap['isBpmForm'])){ %>event: any<% } %>) {
+    try {
+      okLoadingRef.value = true;
+    <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+      const data = event?.formData || (await validate()); // 接受 BpmButton 传递过来的表单数据
+      data.bpm = Object.assign(data.bpm || {}, record.value.bpm); // 流程信息
+      data.status = record.value.status; // 提交状态
+    <% } else { %>
+      const data = await validate();
+    <% } %>
+      const params: any = {
+        isNewRecord: record.value.isNewRecord,
+  <%
+  for (c in table.columnList){
+    if (c.isPk == '1' || c.showType == 'hidden'){ %>
+        ${c.attrName}: record.value.${c.attrName},
+      <% 
+    }
+  }
+  %>
+      };
+    <% for (child in table.childList){ %>
+      data.${@StringUtils.uncap(child.className)}List = await get${child.className}List();
+    <% } %>
+    <% if(table.isTreeEntity){ %>
+      data.oldParentCode = record.value.parentCode;
+    <% } %>
+      // console.log('submit', params, data, record);
+      const res = await ${className}Save(params, data);
+      showMessage(res.message);
+      emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
+      handleClose();
+    } catch (error: any) {
+      if (error && error.errorFields) {
+        showMessage(t('common.validateError'));
+      }
+      console.log('error', error);
+    } finally {
+      okLoadingRef.value = false;
+    }
+  }
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+
+  async function handleSuccess() {
+    emitter.emit('${moduleName}${isNotEmpty(subModuleName)?'-'+subModuleName:''}-${className}-reload');
+  }
+  <% } %>
+</script>
+<% %>
+]]>
+	</content>
+</template>
