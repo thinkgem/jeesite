@@ -56,7 +56,9 @@
       showBtn: { type: Boolean, default: true },
       btnProps: { type: Object as PropType<ButtonProps> },
       btnText: { type: String, default: '' },
-      uploadApi: { type: Function as PropType<({ file: Blob, name: string }) => Promise<void>> },
+      uploadApi: {
+        type: Function as PropType<({ file, name }: { file: Blob; name: string }) => Promise<void>>,
+      },
     },
     emits: ['update:value', 'change'],
     setup(props, { emit, expose }) {
@@ -113,7 +115,7 @@
   });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-cropper-avatar';
 
   .@{prefix-cls} {
@@ -139,9 +141,8 @@
       height: inherit;
       border-radius: inherit;
       border: inherit;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgb(0 0 0 / 40%);
       cursor: pointer;
-      -webkit-transition: opacity 0.4s;
       transition: opacity 0.4s;
 
       ::v-deep(svg) {

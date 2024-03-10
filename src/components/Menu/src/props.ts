@@ -6,7 +6,8 @@ import { ThemeEnum } from '/@/enums/appEnum';
 import { propTypes } from '/@/utils/propTypes';
 import type { MenuTheme } from 'ant-design-vue';
 import type { MenuMode } from 'ant-design-vue/lib/menu/src/interface';
-export const basicProps = {
+
+export const basicProps: any = {
   items: {
     type: Array as PropType<Menu[]>,
     default: () => [],
@@ -37,7 +38,7 @@ export const basicProps = {
   },
 };
 
-export const itemProps = {
+export const itemProps: any = {
   item: {
     type: Object as PropType<Menu>,
     default: {},
@@ -48,7 +49,7 @@ export const itemProps = {
   isHorizontal: propTypes.bool,
 };
 
-export const contentProps = {
+export const contentProps: any = {
   item: {
     type: Object as PropType<Menu>,
     default: null,

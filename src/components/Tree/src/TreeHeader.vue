@@ -1,11 +1,11 @@
 <template>
-  <div class="flex px-2 py-1.5 items-center basic-tree-header">
+  <div class="jeesite-basic-tree-header flex items-center px-2 py-1.5">
     <slot name="headerTitle" v-if="$slots.headerTitle"></slot>
     <BasicTitle :helpMessage="helpMessage" v-if="!$slots.headerTitle && title">
       {{ title }}
     </BasicTitle>
     <div
-      class="flex items-center flex-1 cursor-pointer justify-self-stretch"
+      class="flex flex-1 cursor-pointer items-center justify-self-stretch"
       v-if="search || toolbar"
     >
       <div :class="getInputSearchCls" v-if="search">
@@ -19,7 +19,7 @@
         </FormItemRest>
       </div>
       <Dropdown @click.prevent v-if="toolbar">
-        <Icon icon="ion:ellipsis-vertical" />
+        <Icon icon="ant-design:setting-outlined" class="pl-1" />
         <template #overlay>
           <AMenu @click="handleMenuClick">
             <template v-for="item in toolbarList" :key="item.value">
@@ -60,6 +60,22 @@
   interface MenuInfo {
     key: ToolbarEnum;
   }
+
+  const props: any = {
+    helpMessage: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: '',
+    },
+    title: propTypes.string,
+    toolbar: propTypes.bool,
+    checkable: propTypes.bool,
+    search: propTypes.bool,
+    reload: propTypes.func,
+    checkAll: propTypes.func,
+    expandAll: propTypes.func,
+    searchText: propTypes.string,
+  };
+
   export default defineComponent({
     name: 'BasicTreeHeader',
     components: {
@@ -72,20 +88,7 @@
       AInput: Input,
       FormItemRest: Form.ItemRest,
     },
-    props: {
-      helpMessage: {
-        type: [String, Array] as PropType<string | string[]>,
-        default: '',
-      },
-      title: propTypes.string,
-      toolbar: propTypes.bool,
-      checkable: propTypes.bool,
-      search: propTypes.bool,
-      reload: propTypes.func,
-      checkAll: propTypes.func,
-      expandAll: propTypes.func,
-      searchText: propTypes.string,
-    },
+    props,
     emits: ['strictly-change', 'search'],
     setup(props, { emit, slots }) {
       const { t } = useI18n();
@@ -103,7 +106,7 @@
         ];
       });
 
-      const toolbarList = computed(() => {
+      const toolbarList = computed<any>(() => {
         const { checkable } = props;
         const defaultToolbarList = [
           { label: t('component.tree.expandAll'), value: ToolbarEnum.EXPAND_ALL },
@@ -186,17 +189,17 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   html[data-theme='dark'] {
-    .basic-tree-header {
+    .jeesite-basic-tree-header {
       border-bottom: 1px solid #303030;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgb(255 255 255 / 75%);
     }
   }
 
-  .basic-tree-header {
-    color: @text-color-base;
+  .jeesite-basic-tree-header {
     border-bottom: 1px solid #f0f0f0;
+    color: @text-color-base;
     min-height: 35px;
     overflow: hidden;
 

@@ -13,11 +13,11 @@
     width="60%"
   >
     <template #title>
-      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+      <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
     <template #centerFooter>
-      <a-button v-if="isCustomModule" type="danger" @click="handleSubmit('2')">
+      <a-button v-if="isCustomModule" type="primary" danger @click="handleSubmit('2')">
         <Icon icon="ant-design:bug-outlined" /> {{ t('确认并生成代码') }}
       </a-button>
     </template>
@@ -96,7 +96,7 @@
       rules: [
         { required: true },
         {
-          pattern: /^[a-zA-Z]([a-zA-Z0-9_\-])*[a-zA-Z0-9]$/,
+          pattern: /^[a-zA-Z]([a-zA-Z0-9_-])*[a-zA-Z0-9]$/,
           message: t('请输入2个以上字符，字母开头、允许字母数字下划线或减号、字母数字结尾'),
         },
       ],

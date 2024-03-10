@@ -1,11 +1,11 @@
 import { Result } from '../utils';
 
 const fakeUserInfo = {
-  userId: '1',
+  userCode: '1',
   username: 'system',
   realName: 'ThinkGem',
-  desc: 'manager',
   password: 'admin',
+  desc: 'manager',
   token: 'fakeToken1',
   roles: [
     {

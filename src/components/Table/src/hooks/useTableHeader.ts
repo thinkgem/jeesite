@@ -12,7 +12,8 @@ export function useTableHeader(
   methods: InnerMethods,
 ) {
   const getHeaderProps = computed((): Recordable => {
-    const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } = unref(propsRef);
+    const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } =
+      unref(propsRef);
     const hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting;
     if (hideTitle && !isString(title)) {
       return {};

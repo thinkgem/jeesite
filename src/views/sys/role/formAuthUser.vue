@@ -13,7 +13,7 @@
     width="80%"
   >
     <template #title>
-      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+      <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
     <template #centerFooter>
@@ -241,16 +241,19 @@
     listSelectRef.value.setSelectList([]);
   }
 
-  async function handleDelete() {
-    const selectedRowKeys = getSelectRowKeys();
-    if (selectedRowKeys.length == 0) {
-      showMessage(t('请选中要取消角色的用户'));
-      return;
+  async function handleDelete(event: any) {
+    let userRoleString: string;
+    if (event && event.userCode) {
+      userRoleString = event.userCode;
+    } else {
+      const selectedRowKeys = getSelectRowKeys();
+      if (selectedRowKeys.length == 0) {
+        showMessage(t('请选中要取消角色的用户'));
+        return;
+      }
+      userRoleString = selectedRowKeys.join(',');
     }
-    const params = {
-      roleCode: record.value.roleCode,
-      userRoleString: selectedRowKeys.join(','),
-    };
+    const params = { roleCode: record.value.roleCode, userRoleString };
     const res = await deleteAuthUser(params);
     showMessage(res.message);
     handleSuccess();

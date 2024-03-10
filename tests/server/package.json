@@ -5,33 +5,35 @@
   "scripts": {
     "bootstrap": "yarn install",
     "start": "nodemon",
-    "build": "rimraf ./dist && tsup ./index.ts --dts --format cjs,esm  ",
+    "build": "rimraf ./dist && tsup ./index.ts --dts --format cjs,esm",
     "prod": "npx pm2 start ecosystem.config.js --env production",
     "restart": "pm2 restart ecosystem.config.js --env production",
-    "stop": "npx pm2 stop ecosystem.config.js"
+    "stop": "npx pm2 stop ecosystem.config.js",
+    "reinstall": "rimraf yarn.lock pnpm-lock.yaml package-lock.json node_modules; yarn bootstrap",
+    "update": "yarn global add npm-check-updates; ncu -u"
   },
   "dependencies": {
-    "fs-extra": "^10.0.1",
-    "koa": "^2.13.4",
-    "koa-body": "^4.2.0",
-    "koa-bodyparser": "^4.3.0",
+    "fs-extra": "^11.2.0",
+    "koa": "^2.15.0",
+    "koa-body": "^6.0.1",
+    "koa-bodyparser": "^4.4.1",
     "koa-route": "^3.2.0",
-    "koa-router": "^10.1.1",
+    "koa-router": "^12.0.1",
     "koa-static": "^5.0.0",
-    "koa-websocket": "^6.0.0",
+    "koa-websocket": "^7.0.0",
     "koa2-cors": "^2.0.6"
   },
   "devDependencies": {
-    "@types/koa": "^2.13.4",
+    "@types/koa": "^2.14.0",
     "@types/koa-bodyparser": "^5.0.2",
-    "@types/koa-router": "^7.4.4",
-    "@types/node": "^17.0.21",
-    "nodemon": "^2.0.15",
-    "pm2": "^5.2.0",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.7.0",
-    "tsconfig-paths": "^3.14.0",
-    "tsup": "^5.12.1",
-    "typescript": "^4.6.2"
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^20.11.6",
+    "nodemon": "^3.0.3",
+    "pm2": "^5.3.1",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
   }
 }

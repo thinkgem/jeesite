@@ -129,7 +129,9 @@
         if (!vditorInstance) return;
         try {
           vditorInstance?.destroy?.();
-        } catch (error) {}
+        } catch (error) {
+          /* empty */
+        }
         vditorRef.value = null;
         initedRef.value = false;
       }

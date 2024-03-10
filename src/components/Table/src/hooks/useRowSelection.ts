@@ -34,7 +34,7 @@ export function useRowSelection(
 
   watch(
     () => unref(propsRef).rowSelection?.selectedRowKeys,
-    (v: string[]) => {
+    (v: string[] | any) => {
       setSelectedRowKeys(v);
     },
   );

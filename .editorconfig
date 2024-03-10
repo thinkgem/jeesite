@@ -1,12 +1,21 @@
 root = true
 
 [*]
-charset=utf-8
-end_of_line=lf
-insert_final_newline=true
-indent_style=space
-indent_size=2
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 2
 max_line_length = 100
+
+[*.{ts,mts,tsx,vue}]
+ij_typescript_use_chained_calls_group_indents = false
+ij_typescript_use_double_quotes = false
+ij_typescript_use_explicit_js_extension = auto
+ij_typescript_use_import_type = auto
+ij_typescript_use_path_mapping = always
+ij_typescript_use_public_modifier = false
+ij_typescript_use_semicolon_after_statement = true
 
 [*.{yml,yaml,json}]
 indent_style = space

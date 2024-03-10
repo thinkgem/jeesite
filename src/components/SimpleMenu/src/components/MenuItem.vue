@@ -24,16 +24,19 @@
   import { useMenuItem } from './useMenu';
   import { Tooltip } from 'ant-design-vue';
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
+
+  const props: any = {
+    name: {
+      type: [String, Number] as PropType<string | number>,
+      required: true,
+    },
+    disabled: propTypes.bool,
+  };
+
   export default defineComponent({
     name: 'MenuItem',
     components: { Tooltip },
-    props: {
-      name: {
-        type: [String, Number] as PropType<string | number>,
-        required: true,
-      },
-      disabled: propTypes.bool,
-    },
+    props,
     setup(props, { slots }) {
       const instance = getCurrentInstance();
 
@@ -83,7 +86,7 @@
       }
       watch(
         () => activeName.value,
-        (name: string) => {
+        (name: string | number) => {
           if (name === props.name) {
             const { list, uidList } = getParentList();
             active.value = true;

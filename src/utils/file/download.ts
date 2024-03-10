@@ -37,8 +37,9 @@ export function downloadByBase64(buf: string, filename: string, mime?: string, b
 export function downloadByData(data: BlobPart, filename: string, mime?: string, bom?: BlobPart) {
   const blobData = typeof bom !== 'undefined' ? [bom, data] : [data];
   const blob = new Blob(blobData, { type: mime || 'application/octet-stream' });
-  if (typeof window.navigator.msSaveBlob !== 'undefined') {
-    window.navigator.msSaveBlob(blob, filename);
+  const nav = window.navigator as any;
+  if (typeof nav.msSaveBlob !== 'undefined') {
+    nav.msSaveBlob(blob, filename);
   } else {
     const blobURL = window.URL.createObjectURL(blob);
     const tempLink = document.createElement('a');
@@ -79,7 +80,7 @@ export async function downloadByUrl({
   let name = res.headers['content-disposition'];
   name = name && name.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
   name = name && name.length >= 1 && name[1].replace("utf-8'zh_cn'", '');
-  name = name && (decodeURIComponent(name) || fileName || 'jeesite');
+  name = (name && decodeURIComponent(name)) || fileName || 'jeesite';
   downloadByData(res.data, name);
   // axios({
   //   url: url,

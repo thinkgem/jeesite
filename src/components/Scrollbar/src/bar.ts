@@ -14,7 +14,6 @@ import { renderThumbStyle, BAR_MAP } from './util';
 
 export default defineComponent({
   name: 'Bar',
-
   props: {
     vertical: Boolean,
     size: String,

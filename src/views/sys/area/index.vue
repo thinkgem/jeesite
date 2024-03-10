@@ -46,6 +46,7 @@
   });
 
   const onLoadData: TreeItem['loadData'] = (treeNode) => {
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve: (value?: unknown) => void) => {
       if (isArray(treeNode.children) && treeNode.children.length > 0) {
         resolve();

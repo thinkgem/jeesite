@@ -34,7 +34,7 @@ export function removeResizeListener(element: any, fn: () => any) {
   }
 }
 
-export function triggerWindowResize() {
+export function triggerResize() {
   const event = document.createEvent('HTMLEvents');
   event.initEvent('resize', true, true);
   (event as any).eventType = 'message';

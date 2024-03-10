@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <div :class="prefixCls">
+    <div v-show="true" :class="prefixCls">
       <Login sessionTimeout />
     </div>
   </transition>
@@ -40,7 +40,7 @@
     }
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-st-login';
 
   .@{prefix-cls} {

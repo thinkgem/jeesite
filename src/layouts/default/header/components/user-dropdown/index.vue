@@ -1,6 +1,6 @@
 <template>
-  <div v-if="sidebar" :class="`${prefixCls}-sidebar hidden lg:block think gem`">
-    <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
+  <div v-if="props.sidebar" :class="`${prefixCls}-sidebar hidden lg:block think gem`">
+    <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
       <span :class="`${prefixCls}__info`">
         <span :class="`${prefixCls}__name`" class="truncate">
@@ -16,7 +16,7 @@
     </span>
   </div>
   <Dropdown v-else placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
-    <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
+    <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name`" class="truncate">
@@ -86,7 +86,7 @@
       </Menu>
     </template>
   </Dropdown>
-  <LockAction v-if="!sidebar" @register="registerModal" />
+  <LockAction v-if="!props.sidebar" @register="registerModal" />
 </template>
 <script lang="ts">
   // components
@@ -115,6 +115,11 @@
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock' | 'roleCode-';
 
+  const props: any = {
+    theme: propTypes.oneOf(['dark', 'light']),
+    sidebar: propTypes.bool.def(false),
+  };
+
   export default defineComponent({
     name: 'UserDropdown',
     components: {
@@ -125,11 +130,8 @@
       LockAction: createAsyncComponent(() => import('../lock/LockModal.vue'), { loading: true }),
       Icon,
     },
-    props: {
-      theme: propTypes.oneOf(['dark', 'light']),
-      sidebar: propTypes.bool.def(false),
-    },
-    setup(props) {
+    props,
+    setup(props: any) {
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
@@ -192,7 +194,7 @@
         openModal(true);
       }
 
-      async function handleMenuClick(e: { key: MenuEvent }) {
+      async function handleMenuClick(e: { key: MenuEvent } | any) {
         switch (e.key) {
           case 'accountCenter':
             handleAccountCenter();
@@ -240,7 +242,7 @@
         sysCodeRef,
         sysListRef,
         roleCodeRef,
-        userStore,
+        props,
       };
     },
   });
@@ -277,6 +279,14 @@
       &:hover {
         background-color: @header-dark-bg-hover-color;
       }
+
+      .@{prefix-cls}__info {
+        color: @menu-dark-subsidiary-color;
+      }
+
+      .@{prefix-cls}__desc {
+        color: @menu-dark-subsidiary-color;
+      }
     }
 
     &--light {
@@ -284,7 +294,7 @@
         background-color: @header-light-bg-hover-color;
       }
 
-      .@{prefix-cls}__name {
+      .@{prefix-cls}__info {
         color: @text-color-base;
       }
 
@@ -301,9 +311,11 @@
 
     &-menu-subtitle {
       line-height: 13px;
+
       span {
         font-weight: bold;
         opacity: 0.7;
+
         svg {
           padding-top: 3px;
         }
@@ -314,7 +326,7 @@
       .@{prefix-cls} {
         height: auto;
         cursor: default;
-        padding: 8px 10px 10px 10px;
+        padding: 8px 10px 10px;
 
         img {
           width: 45px;

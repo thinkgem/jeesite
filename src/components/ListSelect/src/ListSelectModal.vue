@@ -14,21 +14,22 @@
     width="80%"
   >
     <template #appendHeader>
-      <a-button
-        @click="handleInputForm()"
-        v-if="props.config.isNewButton"
-        v-auth="props.config.newButtonAuth"
-        size="small"
-        class="ml-4"
-      >
-        <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
-      </a-button>
-      <component
-        :is="inputFormComponent"
-        v-model:open="inputFormOpen"
-        @register="registerInputModal"
-        @success="handleSuccess"
-      />
+      <template v-for="(item, _index) in headerButtons" :key="_index">
+        <a-button
+          size="small"
+          class="ml-4"
+          v-auth="item.props.buttonAuth"
+          @click="item.handleOpenModal(item.props.buttonComp)"
+        >
+          <Icon icon="fluent:add-12-filled" /> {{ t(item.props.buttonText) }}
+        </a-button>
+        <component
+          :is="item.modalComponent"
+          v-model:open="item.modalComponentOpen"
+          @register="item.registerModal"
+          @success="item.handleSuccess(tableAction)"
+        />
+      </template>
     </template>
     <ARow>
       <ACol :span="4" v-if="props.config.treeProps" :style="getTreeStyle">
@@ -67,9 +68,8 @@
           >
             <span
               :title="
-                item[props.config.itemName] + (props.config.isShowCode !== false
-                  ? ' (' + item[props.config.itemCode] + ')'
-                  : '')
+                item[props.config.itemName] +
+                (props.config.isShowCode !== false ? ' (' + item[props.config.itemCode] + ')' : '')
               "
             >
               {{ item[props.config?.itemName] }}
@@ -156,6 +156,7 @@
   };
 
   const [registerTable, tableAction] = useTable(tableProps);
+  const headerButtons = ref<any[]>([]);
 
   const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data) => {
     //setModalProps({ loading: true });
@@ -166,27 +167,35 @@
       const params = Object.assign(tableAction.getForm().getFieldsValue(), data.queryParams);
       await tableAction.getForm().setFieldsValue(params);
     }
+    if (props.config.headerButtons) {
+      headerButtons.value = [];
+      for (const item of props.config.headerButtons) {
+        const [registerModal, inputAction] = useModal();
+        const modalComponent = shallowRef<Nullable<any>>(null);
+        const modalComponentOpen = ref<Boolean>(false);
+        headerButtons.value.push({
+          props: item,
+          registerModal,
+          modalComponent,
+          modalComponentOpen,
+          handleOpenModal: (buttonComp) => {
+            let component: ReturnType<typeof defineComponent>;
+            const imp = dynamicImport(buttonComp);
+            if (imp) component = createAsyncComponent(imp);
+            if (component) {
+              modalComponent.value = component;
+              inputAction.setModalData({});
+              modalComponentOpen.value = true;
+            }
+          },
+          handleSuccess: (tableAction: any) => {
+            tableAction.reload();
+          },
+        });
+      }
+    }
     setModalProps({ loading: false });
   });
-
-  const [registerInputModal, inputAction] = useModal();
-  const inputFormComponent = shallowRef<Nullable<any>>(null);
-  const inputFormOpen = ref<Boolean>(false);
-
-  function handleInputForm() {
-    let component: ReturnType<typeof defineComponent>;
-    const imp = dynamicImport(props.config.newButtonComp);
-    if (imp) component = createAsyncComponent(imp);
-    if (component) {
-      inputFormComponent.value = component;
-      inputAction.setModalData({});
-      inputFormOpen.value = true;
-    }
-  }
-
-  function handleSuccess() {
-    tableAction.reload();
-  }
 
   // const rowClick = (record: Recordable) => {
   //   if (!props.checkbox) {
@@ -227,12 +236,14 @@
         }
       }
     }
+
     &.jeesite-basic-table-form-container {
       .ant-form.jeesite-basic-form {
         border-top: 0 !important;
       }
     }
   }
+
   .jeesite-listselect {
     .ant-modal.jeesite-basic-modal {
       .ant-modal {
@@ -246,15 +257,17 @@
         }
       }
     }
-    .basic-tree-header {
+
+    .jeesite-basic-tree-header {
       padding: 15px 0 4px;
       border: 0;
     }
+
     &-tags {
       overflow: auto;
 
       .ant-tag {
-        margin: 4px 0 0 0;
+        margin: 4px 0 0;
         padding: 0 4px;
         width: 100%;
         display: flex;

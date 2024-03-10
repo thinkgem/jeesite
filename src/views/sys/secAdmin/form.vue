@@ -13,13 +13,13 @@
     width="75%"
   >
     <template #title>
-      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+      <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
     <BasicForm @register="registerForm">
       <template #dataScopeTrees>
         <div class="flex flex-row flex-wrap">
-          <div class="mr-5 mb-5" v-for="item in dataScopes" :key="item.moduleCode">
+          <div class="mb-5 mr-5" v-for="item in dataScopes" :key="item.moduleCode">
             <BasicTree
               v-if="moduleCodes.includes(item.moduleCode) && ['0', '2'].includes(item.ctrlPermi)"
               class="bg-gray"

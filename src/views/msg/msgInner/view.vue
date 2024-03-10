@@ -5,7 +5,7 @@
 -->
 <template>
   <PageWrapper :sidebarWidth="230" title="false">
-    <div class="text-xl text-center pt-4 pb-6 ml-2 mr-2 mb-5 jeesite-msg-title">
+    <div class="jeesite-msg-title mb-5 ml-2 mr-2 pb-6 pt-4 text-center text-xl">
       {{ record.msgTitle }}
     </div>
     <BasicForm @register="registerForm">
@@ -140,6 +140,7 @@
   .jeesite-msg-title {
     border-bottom: 1px solid #ddd;
   }
+
   [data-theme='dark'] {
     .jeesite-msg-title {
       border-bottom: 1px solid #303030;

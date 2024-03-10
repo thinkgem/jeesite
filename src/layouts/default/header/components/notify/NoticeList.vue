@@ -1,12 +1,11 @@
 <template>
   <a-list :class="prefixCls" bordered :pagination="getPagination">
     <template v-for="item in getData" :key="item.id">
-      <a-list-item class="list-item">
-        <a-list-item-meta>
+      <a-list-item class="list-item" v-if="!item.titleDelete">
+        <a-list-item-meta @click="handleTitleClick(item)">
           <template #title>
             <div class="title">
               <a-typography-paragraph
-                @click="handleTitleClick(item)"
                 style="width: 100%; margin-bottom: 0 !important"
                 :style="{ cursor: isTitleClickable ? 'pointer' : '' }"
                 :delete="!!item.titleDelete"
@@ -26,7 +25,17 @@
           </template>
 
           <template #avatar>
-            <a-avatar v-if="item.avatar" class="avatar" :src="item.avatar" />
+            <a-avatar
+              v-if="item.avatar && item.avatar.indexOf('://') != -1"
+              class="avatar"
+              :src="item.avatar"
+            />
+            <a-avatar
+              v-else-if="item.avatar && item.avatar.indexOf(':') != -1"
+              class="avatar avatar-icon"
+            >
+              <Icon :icon="item.avatar" />
+            </a-avatar>
             <span v-else> {{ item.avatar }}</span>
           </template>
 
@@ -58,7 +67,9 @@
   import { ListItem } from './data';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { List, Avatar, Tag, Typography } from 'ant-design-vue';
+  import { Icon } from '/@/components/Icon';
   import { isNumber } from '/@/utils/is';
+
   export default defineComponent({
     components: {
       [Avatar.name]: Avatar,
@@ -67,6 +78,7 @@
       AListItemMeta: List.Item.Meta,
       ATypographyParagraph: Typography.Paragraph,
       [Tag.name]: Tag,
+      Icon,
     },
     props: {
       list: {
@@ -97,7 +109,7 @@
     setup(props, { emit }) {
       const { prefixCls } = useDesign('header-notify-list');
       const current = ref(props.currentPage || 1);
-      const getData = computed(() => {
+      const getData = computed<ListItem[]>(() => {
         const { pageSize, list } = props;
         if (pageSize === false) return [];
         let size = isNumber(pageSize) ? pageSize : 5;
@@ -112,11 +124,11 @@
       const isTitleClickable = computed(() => !!props.onTitleClick);
       const getPagination = computed(() => {
         const { list, pageSize } = props;
-        if (pageSize > 0 && list && list.length > pageSize) {
+        if ((pageSize as number) > 0 && list && list.length > (pageSize as number)) {
           return {
             total: list.length,
             pageSize,
-            //size: 'small',
+            size: 'small',
             current: unref(current),
             onChange(page) {
               current.value = page;
@@ -139,7 +151,7 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-header-notify-list';
 
-  .@{prefix-cls} {
+  .ant-list.@{prefix-cls} {
     &::-webkit-scrollbar {
       display: none;
     }
@@ -148,19 +160,33 @@
       display: inline-block !important;
     }
 
-    &-item {
+    ::v-deep(.ant-list-pagination) {
+      margin: 12px 18px !important;
+    }
+
+    .ant-list-item.list-item {
       padding: 6px;
       overflow: hidden;
       cursor: pointer;
       transition: all 0.3s;
 
+      &:hover {
+        background-color: rgb(0 0 0 / 3%);
+      }
+
+      .ant-list-item-meta {
+        &-title {
+          margin-top: 3px;
+        }
+      }
+
       .title {
-        margin-bottom: 8px;
+        margin-bottom: 3px;
         font-weight: normal;
 
         .extra {
           float: right;
-          margin-top: -1.5px;
+          margin-top: -22px;
           margin-right: 0;
           font-weight: normal;
 
@@ -168,26 +194,26 @@
             margin-right: 0;
           }
         }
+      }
 
-        .avatar {
-          margin-top: 4px;
-        }
+      .avatar {
+        margin: 8px 0 0 8px;
+      }
 
-        .description {
-          font-size: 12px;
-          line-height: 18px;
-        }
+      .avatar-icon {
+        background-color: @primary-color;
+      }
 
-        .datetime {
-          margin-top: 4px;
-          font-size: 12px;
-          line-height: 18px;
-        }
+      .description {
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      .datetime {
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 18px;
       }
     }
-  }
-
-  .ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title {
-    margin-top: 0;
   }
 </style>

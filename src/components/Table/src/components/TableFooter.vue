@@ -24,21 +24,24 @@
 
   const SUMMARY_ROW_KEY = '_row';
   const SUMMARY_INDEX_KEY = '_index';
+
+  const props: any = {
+    summaryFunc: {
+      type: Function as PropType<Fn>,
+    },
+    summaryData: {
+      type: Array as PropType<Recordable[]>,
+    },
+    scroll: {
+      type: Object as PropType<Recordable>,
+    },
+    rowKey: propTypes.string.def('key'),
+  };
+
   export default defineComponent({
     name: 'BasicTableFooter',
     components: { Table },
-    props: {
-      summaryFunc: {
-        type: Function as PropType<Fn>,
-      },
-      summaryData: {
-        type: Array as PropType<Recordable[]>,
-      },
-      scroll: {
-        type: Object as PropType<Recordable>,
-      },
-      rowKey: propTypes.string.def('key'),
-    },
+    props,
     setup(props) {
       const table = useTableContext();
 

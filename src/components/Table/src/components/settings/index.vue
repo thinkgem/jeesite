@@ -65,7 +65,7 @@
 <style lang="less">
   html[data-theme='dark'] {
     .table-settings {
-      color: rgba(255, 255, 255, 0.75);
+      color: rgb(255 255 255 / 75%);
     }
   }
 

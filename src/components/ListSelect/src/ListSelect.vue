@@ -31,32 +31,34 @@
   import { useModal } from '/@/components/Modal';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
+  const props: any = {
+    value: propTypes.string,
+    labelValue: propTypes.string,
+    selectList: propTypes.array,
+
+    // 选择类型，加载 ./selectType/*.ts 的配置。
+    selectType: propTypes.string.def('userSelect'),
+
+    // 配置文件，是 selectType 更自由的设置，不限定路径
+    configFile: propTypes.any, // 例如：import('./select'),
+
+    // 请求参数（列表查询默认值）
+    queryParams: propTypes.object.def({}),
+
+    // 选择结果或回显数据中的编码和名称属性名（默认使用 selectType 里指定的）
+    itemCode: propTypes.string,
+    itemName: propTypes.string,
+
+    checkbox: propTypes.bool, // 是否多选
+    allowInput: propTypes.bool, // 允许输入
+    readonly: propTypes.bool, // 是否只读
+  };
+
   export default defineComponent({
     name: 'JeeSiteListSelect',
     components: { InputSearch: Input.Search },
     // inheritAttrs: false,
-    props: {
-      value: propTypes.string,
-      labelValue: propTypes.string,
-      selectList: propTypes.array,
-
-      // 选择类型，加载 ./selectType/*.ts 的配置。
-      selectType: propTypes.string.def('userSelect'),
-
-      // 配置文件，是 selectType 更自由的设置，不限定路径
-      configFile: propTypes.any, // 例如：import('./select'),
-
-      // 请求参数（列表查询默认值）
-      queryParams: propTypes.object.def({}),
-
-      // 选择结果或回显数据中的编码和名称属性名（默认使用 selectType 里指定的）
-      itemCode: propTypes.string,
-      itemName: propTypes.string,
-
-      checkbox: propTypes.bool, // 是否多选
-      allowInput: propTypes.bool, // 允许输入
-      readonly: propTypes.bool, // 是否只读
-    },
+    props,
     emits: ['change', 'select', 'click'],
     setup(props, { emit }) {
       const { t } = useI18n();

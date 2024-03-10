@@ -13,7 +13,7 @@
     width="60%"
   >
     <template #title>
-      <Icon :icon="getTitle.icon" class="pr-1 m-1" />
+      <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
     <BasicForm @register="registerForm">
@@ -148,7 +148,7 @@
     },
   ];
 
-  const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     schemas: inputFormSchemas,
     baseColProps: { lg: 12, md: 24 },
     labelWidth: 120,

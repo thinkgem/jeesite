@@ -80,7 +80,7 @@ export function useTree(treeDataRef: Ref<TreeDataItem[]>, getFieldNames: Compute
   }
 
   // Update node
-  function updateNodeByKey(key: string, node: TreeDataItem, list?: TreeDataItem[]) {
+  function updateNodeByKey(key: string, node: Omit<TreeDataItem, 'key'>, list?: TreeDataItem[]) {
     if (!key) return;
     const treeData = list || unref(treeDataRef);
     const { key: keyField, children: childrenField } = unref(getFieldNames);

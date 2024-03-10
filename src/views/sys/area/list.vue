@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <BasicTable @register="registerTable" @fetchSuccess="fetchSuccess">
+    <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
       <template #tableTitle>
         <Icon :icon="getTitle.icon" class="m-1 pr-1" />
         <span> {{ getTitle.value }} </span>

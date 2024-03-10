@@ -149,8 +149,8 @@ VITE_GLOB_API_URL_PREFIX = /js
 
 ### 如果您使用的 VSCode 的话，推荐安装以下插件：
 
-* [Iconify IntelliSense](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Iconify 图标插件
-* [windicss IntelliSense](https://marketplace.visualstudio.com/items?itemName=voorjaar.windicss-intellisense) - windicss 提示插件
+* [UnoCSS](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) - UnoCSS 提示插件
+* [Iconify](https://marketplace.visualstudio.com/items?itemName=antfu.iconify) - Iconify 图标插件
 * [I18n-ally](https://marketplace.visualstudio.com/items?itemName=Lokalise.i18n-ally) - i18n 插件
 * [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) - Vue3 开发必备（Vetur禁用）
 * [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - 脚本代码检查

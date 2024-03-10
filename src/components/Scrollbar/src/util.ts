@@ -1,4 +1,5 @@
-import type { BarMap } from './types';
+import type { BarMap, MergeAll } from './types';
+
 export const BAR_MAP: BarMap = {
   vertical: {
     offset: 'offsetHeight',
@@ -22,7 +23,6 @@ export const BAR_MAP: BarMap = {
   },
 };
 
-// @ts-ignore
 export function renderThumbStyle({ move, size, bar }) {
   const style = {} as any;
   const translate = `translate${bar.axis}(${move}%)`;
@@ -35,16 +35,23 @@ export function renderThumbStyle({ move, size, bar }) {
   return style;
 }
 
-// function extend<T, K>(to: T, from: K): T & K {
-//   return Object.assign(to, from);
-// }
+function extend<T extends object, K extends object>(to: T, _from: K): T & K {
+  return Object.assign(to, _from);
+}
 
-export function toObject<T>(arr: Array<T>): Recordable<T> {
-  const res = {};
+/**
+ * [
+ *  { name: 'zhangsan', age: 18 },
+ *  { sex: 'male', age: 20 }
+ * ]
+ * =>
+ * { name: 'zhangsan', sex: 'male', age: 20 }
+ */
+export function toObject<T extends object[]>(arr: T): MergeAll<T> {
+  const res = {} as MergeAll<T>;
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]) {
-      // extend(res, arr[i]);
-      Object.assign(res, arr[i]);
+      extend(res, arr[i]);
     }
   }
   return res;

@@ -1,7 +1,7 @@
 <template>
   <LoginFormTitle v-show="getShow" class="enter-x" />
   <Form
-    class="p-4 enter-x"
+    class="enter-x p-4"
     :model="formData"
     :rules="getFormRules"
     ref="formRef"
@@ -93,7 +93,7 @@
           {{ t('sys.login.mobileSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :md="8" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
+      <ACol :md="8" :xs="24" class="xs:mx-0 !my-2 md:mx-2 !md:my-0">
         <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
           {{ t('sys.login.qrSignInFormTitle') }}
         </Button>
@@ -107,7 +107,7 @@
 
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
-    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
+    <div class="enter-x flex justify-evenly" :class="`${prefixCls}-sign-in-way`">
       <Icon icon="ant-design:qq-circle-filled" size="32" @click="handleOauth2" />
       <Icon icon="ant-design:wechat-filled" size="32" @click="handleOauth2" />
       <Icon icon="ant-design:github-filled" size="32" @click="handleOauth2" />
@@ -194,6 +194,7 @@
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
       window.location.href = publicPath + PageEnum.BASE_HOME;
+      return;
     }
     userStore.initPageCache(res);
     refreshValidCodeStatus(res);
@@ -269,6 +270,7 @@
     padding-bottom: 15px;
     font-size: 16px;
   }
+
   .gp,
   .gp a {
     color: #d21919;

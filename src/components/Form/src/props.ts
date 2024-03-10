@@ -6,7 +6,7 @@ import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 import { propTypes } from '/@/utils/propTypes';
 
-export const basicProps = {
+export const basicProps: any = {
   model: {
     type: Object as PropType<Recordable>,
     default: {},
@@ -94,6 +94,7 @@ export const basicProps = {
   labelCol: Object as PropType<Partial<ColEx>>,
 
   layout: propTypes.oneOf(['horizontal', 'vertical', 'inline']).def('horizontal'),
+
   tableAction: {
     type: Object as PropType<TableActionType>,
   },

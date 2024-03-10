@@ -21,7 +21,7 @@
       :overlayClassName="`${prefixCls}-menu-popover`"
       v-else
       :open="getIsOpend"
-      @openChange="handleOpenChange"
+      @open-change="handleOpenChange"
       :overlayStyle="getOverlayStyle"
       :align="{ offset: [0, 0] }"
     >
@@ -77,9 +77,19 @@
   import Icon from '/@/components/Icon';
   import { Popover } from 'ant-design-vue';
   import { isBoolean, isObject } from '/@/utils/is';
-  import mitt from '/@/utils/mitt';
+  import { mitt } from '/@/utils/mitt';
 
   const DELAY = 200;
+
+  const props: any = {
+    name: {
+      type: [String, Number] as PropType<string | number>,
+      required: true,
+    },
+    disabled: propTypes.bool,
+    collapsedShowTitle: propTypes.bool,
+  };
+
   export default defineComponent({
     name: 'SubMenu',
     components: {
@@ -87,14 +97,7 @@
       CollapseTransition,
       Popover,
     },
-    props: {
-      name: {
-        type: [String, Number] as PropType<string | number>,
-        required: true,
-      },
-      disabled: propTypes.bool,
-      collapsedShowTitle: propTypes.bool,
-    },
+    props,
     setup(props) {
       const instance = getCurrentInstance();
 

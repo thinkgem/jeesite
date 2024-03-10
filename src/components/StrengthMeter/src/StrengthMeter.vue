@@ -26,14 +26,16 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
 
+  const props: any = {
+    value: propTypes.string,
+    showInput: propTypes.bool.def(true),
+    disabled: propTypes.bool,
+  };
+
   export default defineComponent({
     name: 'StrengthMeter',
     components: { InputPassword: Input.Password },
-    props: {
-      value: propTypes.string,
-      showInput: propTypes.bool.def(true),
-      disabled: propTypes.bool,
-    },
+    props,
     emits: ['score-change', 'change'],
     setup(props, { emit }) {
       const innerValueRef = ref('');
@@ -72,7 +74,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-strength-meter';
 
   .@{prefix-cls} {
@@ -93,7 +95,7 @@
         background-color: transparent;
         border-color: @white;
         border-style: solid;
-        border-width: 0 5px 0 5px;
+        border-width: 0 5px;
         content: '';
       }
 
@@ -111,7 +113,9 @@
         height: inherit;
         background-color: transparent;
         border-radius: inherit;
-        transition: width 0.5s ease-in-out, background 0.25s;
+        transition:
+          width 0.5s ease-in-out,
+          background 0.25s;
 
         &[data-score='0'] {
           width: 20%;

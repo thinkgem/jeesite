@@ -7,7 +7,7 @@
     <div v-if="getModifyPasswordMsg" class="pl-8 pr-8">
       <Alert :message="getModifyPasswordMsg" type="info" show-icon />
     </div>
-    <div class="py-8 bg-white flex flex-col justify-center items-center">
+    <div class="flex flex-col items-center justify-center bg-white py-8">
       <BasicForm @register="register" class="w-9/12" />
       <div class="flex justify-center">
         <a-button @click="resetFields">

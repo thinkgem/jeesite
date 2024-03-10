@@ -26,6 +26,24 @@
   import { DictLabel } from '/@/components/Dict';
   import { dateUtil } from '/@/utils/dateUtil';
 
+  const props: any = {
+    value: {
+      type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
+      default: '',
+    },
+    labelValue: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    record: {
+      type: Object as PropType<EditRecordRow>,
+    },
+    column: {
+      type: Object as PropType<BasicColumn>,
+      default: () => ({}),
+    },
+    index: propTypes.number,
+  };
+
   export default defineComponent({
     name: 'EditableCell',
     components: {
@@ -39,24 +57,8 @@
     directives: {
       clickOutside,
     },
-    props: {
-      value: {
-        type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
-        default: '',
-      },
-      labelValue: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      record: {
-        type: Object as PropType<EditRecordRow>,
-      },
-      column: {
-        type: Object as PropType<BasicColumn>,
-        default: () => ({}),
-      },
-      index: propTypes.number,
-    },
-    setup(props) {
+    props,
+    setup(props: any) {
       const table = useTableContext();
       const isEdit = ref(false);
       const elRef = ref();
@@ -85,7 +87,9 @@
 
       const getIsDateComp = computed(() => {
         const component = unref(getComponent);
-        return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(component);
+        return ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker', 'RangePicker'].includes(
+          component,
+        );
       });
 
       const getEditComponentProps = computed(() => {
@@ -410,6 +414,10 @@
         handleEnter,
         handleSubmitClick,
         spinning,
+        value: props.value,
+        record: props.record,
+        column: props.column,
+        index: props.index,
       };
     },
     render() {
@@ -420,13 +428,14 @@
             class={{ [`${this.prefixCls}__normal`]: true, 'ellipsis-cell': this.column.ellipsis }}
             onClick={this.handleEdit}
           >
-            {this.column.dictType
-              ? <DictLabel
+            {this.column.dictType ? (
+              <DictLabel
                 dictType={this.column.dictType}
                 dictValue={this.currentValueRef}
                 defaultValue={this.column.defaultValue}
               />
-              : <div class="cell-content" title={this.column.ellipsis ? this.getValues ?? '' : ''}>
+            ) : (
+              <div class="cell-content" title={this.column.ellipsis ? this.getValues ?? '' : ''}>
                 {this.column.editRender
                   ? this.column.editRender({
                       text: this.value,
@@ -436,7 +445,7 @@
                     })
                   : this.getValues ?? '\u00A0'}
               </div>
-            }
+            )}
             {!this.column.editRow && <FormOutlined class={`${this.prefixCls}__normal-icon`} />}
           </div>
           {this.isEdit && (
@@ -446,7 +455,7 @@
                   {...this.getComponentProps}
                   component={this.getComponent}
                   style={this.getWrapperStyle}
-                  popoverOpen={this.getRuleOpen}
+                  popoverOpen={this.getRuleOpen as any}
                   rule={this.getRule}
                   ruleMessage={this.ruleMessage}
                   class={this.getWrapperClass}
@@ -500,6 +509,7 @@
 
   .edit-cell-rule-popover {
     left: 50px !important;
+
     .ant-popover-inner {
       padding: 0 !important;
 

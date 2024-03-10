@@ -3,7 +3,7 @@ import type { CSSProperties, VNodeChild, ComputedRef } from 'vue';
 import type { ScrollContainerOptions } from '/@/components/Container/index';
 
 export interface DrawerInstance {
-  setDrawerProps: (props: Partial<DrawerProps> | boolean) => void;
+  setDrawerProps: (props: Partial<DrawerProps>) => void;
   emitOpen?: (open: boolean, uid: number) => void;
 }
 
@@ -14,7 +14,7 @@ export interface ReturnMethods extends DrawerInstance {
   setDrawerData: (data: any) => void;
 }
 
-export type RegisterFn = (drawerInstance: DrawerInstance, uuid?: string) => void;
+export type RegisterFn = (drawerInstance: DrawerInstance, uuid: number) => void;
 
 export interface ReturnInnerMethods extends DrawerInstance {
   closeDrawer: () => void;
@@ -102,7 +102,7 @@ export interface DrawerProps extends DrawerFooterProps {
    * @default 'body'
    * @type any ( HTMLElement| () => HTMLElement | string)
    */
-  getContainer?: () => HTMLElement | string;
+  getContainer?: string | false | HTMLElement | (() => HTMLElement);
 
   /**
    * Whether to show mask or not.

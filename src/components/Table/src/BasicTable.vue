@@ -243,19 +243,19 @@
         emit,
       );
 
-      function handleTableChange(...args: any[]) {
-        onTableChange.call(undefined, ...args);
-        emit('change', ...args);
+      function handleTableChange(pagination: any, filters: any, sorter: any, extra: any) {
+        onTableChange(pagination, filters, sorter);
+        emit('change', pagination, filters, sorter, extra);
         // 解决通过useTable注册onChange时不起作用的问题
         const { onChange } = unref(getProps);
-        onChange && isFunction(onChange) && onChange.call(undefined, ...args);
+        onChange && isFunction(onChange) && onChange(pagination, filters, sorter, extra);
       }
 
-      function handleTableExpand(...args: any[]) {
-        emit('expand', ...args);
+      function handleTableExpand(expanded: any, record: any) {
+        emit('expand', expanded, record);
         // 解决通过useTable注册onExpand时不起作用的问题
         const { onExpand } = unref(getProps);
-        onExpand && isFunction(onExpand) && onExpand.call(undefined, ...args);
+        onExpand && isFunction(onExpand) && onExpand(expanded, record);
       }
 
       const {
@@ -508,14 +508,17 @@
       .ant-btn-link {
         color: #42a4e0;
       }
+
       .ant-table {
         &-tbody > tr > td.ant-table-column-sort {
           background-color: #1e1e1e;
         }
+
         .ant-table-tbody > tr {
           &:hover > td.ant-table-cell-row-hover {
             background-color: #262626;
           }
+
           &.ant-table-row-selected,
           &.ant-table-row-selected:hover {
             td,
@@ -526,8 +529,9 @@
           }
         }
       }
+
       &-header-container {
-        color: rgba(255, 255, 255, 0.75);
+        color: rgb(255 255 255 / 75%);
       }
     }
   }
@@ -551,7 +555,6 @@
         .ant-table-container {
           border-radius: 8px !important;
           border: 1px solid @table-border-color !important;
-          border-radius: 8px;
 
           .ant-table-thead > tr > th {
             font-weight: normal;
@@ -560,7 +563,7 @@
 
         .ant-table-title {
           min-height: 40px;
-          padding: 6px 0 8px 0 !important;
+          padding: 6px 0 8px !important;
           border: none !important;
         }
 
@@ -568,6 +571,7 @@
           & > .ant-table-header > table,
           & > .ant-table-content > table {
             border-top: 0 !important;
+
             & > thead > tr > th:last-child {
               border-right: 0 !important;
             }
@@ -579,6 +583,7 @@
           .jeesite-basic-arrow {
             vertical-align: middle;
           }
+
           .ant-table-cell-content {
             margin-left: 3px;
             display: inline-block;
@@ -592,6 +597,7 @@
         td.ant-table-cell-fix-left,
         td.ant-table-cell-fix-right {
           background-color: @content-bg-striped;
+
           .ant-table-cell-content {
             width: auto;
           }
@@ -602,6 +608,7 @@
         &:hover > td.ant-table-cell-row-hover {
           background-color: lighten(@primary-color, 43%); // #f3f5fe
         }
+
         &.ant-table-row-selected,
         &.ant-table-row-selected:hover {
           td,
@@ -613,15 +620,34 @@
       }
 
       .ant-table-pagination.ant-pagination {
-        margin: 10px 0 0 0;
+        transition: all 0.3s;
+        margin: 10px 0 0;
+        display: none;
+
         &.ant-pagination-mini {
-          .ant-pagination-item {
-            line-height: 20px;
+          .ant-pagination-prev,
+          .ant-pagination-next {
+            line-height: 23px;
           }
+          //.ant-pagination-item {
+          //  line-height: 20px;
+          //}
+
+          .ant-pagination-options-quick-jumper {
+            input {
+              width: 42px;
+            }
+          }
+
           .ant-select {
             margin-left: 5px;
-            &.ant-select-in-form-item {
-              width: auto;
+
+            .ant-select-arrow {
+              right: 8px;
+            }
+
+            .ant-select-selection-item {
+              padding-right: 18px;
             }
           }
         }
@@ -643,8 +669,7 @@
       // padding: 15px 15px 0 15px;
 
       .ant-form {
-        padding: 12px 10px 6px 10px;
-        margin-bottom: 15px;
+        padding: 12px 10px 6px;
         background-color: @component-background;
         // border-radius: 5px;
         border-top: 1px solid @table-border-color !important;
@@ -745,6 +770,7 @@
       textarea.ant-input {
         min-height: 32px;
         height: 32px;
+
         &-sm {
           min-height: 24px;
           height: 24px;

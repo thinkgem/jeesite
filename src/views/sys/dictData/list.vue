@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <BasicTable @register="registerTable" @fetchSuccess="fetchSuccess">
+    <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
       <template #tableTitle>
         <Icon :icon="getTitle.icon" class="m-1 pr-1" />
         <span> {{ getTitle.value }} </span>
@@ -27,7 +27,7 @@
           v-if="record.dictIcon"
           :icon="record.dictIcon"
           @click="expandCollapse(record)"
-          class="text-base w-5 mr-2"
+          class="mr-2 w-5 text-base"
         />
         <a @click="handleForm({ dictCode: record.dictCode })" :title="record.dictCode">
           {{ record.dictLabelRaw }}

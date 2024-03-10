@@ -168,6 +168,7 @@
 
         .ant-menu-title-content {
           transition: none;
+
           &:hover {
             color: @primary-color !important;
           }

@@ -25,20 +25,22 @@
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
   type CheckboxItem = string | OptionsItem;
 
+  const props: any = {
+    value: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    options: {
+      type: Array as PropType<CheckboxItem[]>,
+      default: () => [],
+    },
+    dictType: propTypes.string,
+  };
+
   export default defineComponent({
     name: 'JeeSiteCheckboxGroup',
     components: { CheckboxGroup: Checkbox.Group, Checkbox },
     inheritAttrs: false,
-    props: {
-      value: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      options: {
-        type: Array as PropType<CheckboxItem[]>,
-        default: () => [],
-      },
-      dictType: propTypes.string,
-    },
+    props,
     setup(props) {
       const attrs = useAttrs();
       const [state] = useRuleFormItem(props);

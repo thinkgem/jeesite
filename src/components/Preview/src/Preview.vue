@@ -41,18 +41,20 @@
 
   type ImageItem = string | ImageProps;
 
+  const props: any = {
+    functional: propTypes.bool,
+    imageList: {
+      type: Array as PropType<ImageItem[]>,
+    },
+  };
+
   export default defineComponent({
     name: 'ImagePreview',
     components: {
       Image,
       PreviewGroup: Image.PreviewGroup,
     },
-    props: {
-      functional: propTypes.bool,
-      imageList: {
-        type: Array as PropType<ImageItem[]>,
-      },
-    },
+    props,
     setup(props) {
       const { prefixCls } = useDesign('image-preview');
 
@@ -88,7 +90,7 @@
     }
 
     .ant-image-preview-operations {
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgb(0 0 0 / 40%);
     }
   }
 </style>

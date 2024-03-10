@@ -35,6 +35,23 @@
   import { openWindow } from '/@/utils';
 
   import { useOpenKeys } from './useOpenKeys';
+
+  const props: any = {
+    items: {
+      type: Array as PropType<MenuType[]>,
+      default: () => [],
+    },
+    collapse: propTypes.bool,
+    mixSider: propTypes.bool,
+    theme: propTypes.string,
+    accordion: propTypes.bool.def(true),
+    collapsedShowTitle: propTypes.bool,
+    beforeClickFn: {
+      type: Function as PropType<(key: string) => Promise<boolean>>,
+    },
+    isSplitMenu: propTypes.bool,
+  };
+
   export default defineComponent({
     name: 'SimpleMenu',
     components: {
@@ -42,21 +59,7 @@
       SimpleSubMenu,
     },
     inheritAttrs: false,
-    props: {
-      items: {
-        type: Array as PropType<MenuType[]>,
-        default: () => [],
-      },
-      collapse: propTypes.bool,
-      mixSider: propTypes.bool,
-      theme: propTypes.string,
-      accordion: propTypes.bool.def(true),
-      collapsedShowTitle: propTypes.bool,
-      beforeClickFn: {
-        type: Function as PropType<(key: string) => Promise<boolean>>,
-      },
-      isSplitMenu: propTypes.bool,
-    },
+    props,
     emits: ['menuClick'],
     setup(props, { attrs, emit }) {
       // const currentActiveMenu = ref('');

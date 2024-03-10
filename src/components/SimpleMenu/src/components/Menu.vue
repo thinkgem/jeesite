@@ -22,33 +22,36 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
   import { createSimpleRootMenuContext } from './useSimpleMenuContext';
-  import mitt from '/@/utils/mitt';
+  import { mitt } from '/@/utils/mitt';
+
+  const props: any = {
+    theme: propTypes.oneOf(['light', 'dark']).def('light'),
+    activeName: propTypes.oneOfType([propTypes.string, propTypes.number]),
+    openNames: {
+      type: Array as PropType<string[]>,
+      default: () => [],
+    },
+    accordion: propTypes.bool.def(true),
+    width: propTypes.string.def('100%'),
+    collapsedWidth: propTypes.string.def('48px'),
+    indentSize: propTypes.number.def(16),
+    collapse: propTypes.bool.def(true),
+    activeSubMenuNames: {
+      type: Array as PropType<(string | number)[]>,
+      default: () => [],
+    },
+  };
+
   export default defineComponent({
     name: 'Menu',
-    props: {
-      theme: propTypes.oneOf(['light', 'dark']).def('light'),
-      activeName: propTypes.oneOfType([propTypes.string, propTypes.number]),
-      openNames: {
-        type: Array as PropType<string[]>,
-        default: () => [],
-      },
-      accordion: propTypes.bool.def(true),
-      width: propTypes.string.def('100%'),
-      collapsedWidth: propTypes.string.def('48px'),
-      indentSize: propTypes.number.def(16),
-      collapse: propTypes.bool.def(true),
-      activeSubMenuNames: {
-        type: Array as PropType<(string | number)[]>,
-        default: () => [],
-      },
-    },
+    props,
     emits: ['select', 'open-change'],
     setup(props, { emit }) {
-      const rootMenuEmitter = mitt();
+      const rootMenuEmitter = mitt<any>();
       const instance = getCurrentInstance();
 
       const currentActiveName = ref<string | number>('');
-      const openedNames = ref<string[]>([]);
+      const openedNames = ref<(string | number)[]>([]);
 
       const { prefixCls } = useDesign('menu');
 
@@ -94,13 +97,13 @@
         rootMenuEmitter.emit('on-update-opened', openedNames.value);
       }
 
-      function addSubMenu(name: string) {
+      function addSubMenu(name: string | number) {
         if (openedNames.value.includes(name)) return;
         openedNames.value.push(name);
         updateOpened();
       }
 
-      function removeSubMenu(name: string) {
+      function removeSubMenu(name: string | number) {
         openedNames.value = openedNames.value.filter((item) => item !== name);
         updateOpened();
       }
@@ -130,7 +133,7 @@
       onMounted(() => {
         openedNames.value = !props.collapse ? [...props.openNames] : [];
         updateOpened();
-        rootMenuEmitter.on('on-menu-item-select', (name: string) => {
+        rootMenuEmitter.on('on-menu-item-select', (name: string | number) => {
           currentActiveName.value = name;
 
           nextTick(() => {

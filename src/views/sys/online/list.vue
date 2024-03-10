@@ -10,11 +10,6 @@
         <Icon :icon="getTitle.icon" class="m-1 pr-1" />
         <span> {{ getTitle.value }} </span>
       </template>
-      <template #firstColumn="{ record }">
-        <a @click="handleForm({ id: record.id })">
-          {{ record.logTitle }}
-        </a>
-      </template>
     </BasicTable>
   </div>
 </template>
@@ -43,7 +38,7 @@
       {
         label: t('操作用户'),
         field: 'userCode',
-        // fieldLabel: 'userName',
+        fieldLabel: 'userName_',
         component: 'ListSelect',
         componentProps: {
           selectType: 'userSelect',

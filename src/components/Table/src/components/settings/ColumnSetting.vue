@@ -4,7 +4,7 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <Tooltip placement="top">
+  <Tooltip placement="topRight">
     <template #title>
       <span>{{ t('component.table.settingColumn') }}</span>
     </template>
@@ -46,7 +46,6 @@
           </a-button>
         </div>
       </template>
-
       <template #content>
         <ScrollContainer>
           <CheckboxGroup v-model:value="checkedList" @change="onChange" ref="columnListRef">
@@ -280,7 +279,7 @@
       });
 
       // Trigger when check/uncheck a column
-      function onChange(checkedList: string[]) {
+      function onChange(checkedList: string[] | any) {
         const len = state.checkOptions.length;
         state.checkAll = checkedList.length === len && len > 0;
         const sortList = state.checkOptions.map((item) => item.value);
@@ -299,7 +298,7 @@
         });
         state.checkOptions = cloneDeep(unref(cacheCheckOptions));
         state.checkedList = cloneDeep(unref(cacheCheckList));
-        setColumns(table.getCacheColumns(), true);
+        setColumns(table.getCacheColumns());
         // sortable.sort(sortableOrder);
       }
 
@@ -405,8 +404,8 @@
 
       return {
         t,
-        isTreeTable,
         ...toRefs(state),
+        isTreeTable,
         indeterminate,
         onCheckAllChange,
         onChange,

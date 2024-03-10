@@ -36,39 +36,41 @@
 
   type OptionsItem = { label: string; value: string; disabled?: boolean };
 
+  const props: any = {
+    value: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    labelValue: {
+      type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    labelInValue: propTypes.bool,
+    options: {
+      type: Array as PropType<Recordable[] | OptionsItem[]>,
+      default: () => [],
+    },
+    api: {
+      type: Function as PropType<(arg?: Recordable) => Promise<Recordable[] | OptionsItem[]>>,
+      default: null,
+    },
+    params: {
+      type: Object as PropType<Recordable>,
+      default: () => ({}),
+    },
+    resultField: propTypes.string.def(''),
+    immediate: propTypes.bool.def(false),
+    each: propTypes.bool.def(false),
+    dictType: propTypes.string,
+    mode: propTypes.string,
+  };
+
   export default defineComponent({
     name: 'JeeSiteSelect',
     // eslint-disable-next-line vue/no-reserved-component-names
     components: { Select, LoadingOutlined },
     // inheritAttrs: false,
-    props: {
-      value: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      labelValue: {
-        type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
-      },
-      labelInValue: propTypes.bool,
-      options: {
-        type: Array as PropType<Recordable[] | OptionsItem[]>,
-        default: () => [],
-      },
-      api: {
-        type: Function as PropType<(arg?: Recordable) => Promise<Recordable[] | OptionsItem[]>>,
-        default: null,
-      },
-      params: {
-        type: Object as PropType<Recordable>,
-        default: () => ({}),
-      },
-      resultField: propTypes.string.def(''),
-      immediate: propTypes.bool.def(false),
-      each: propTypes.bool.def(false),
-      dictType: propTypes.string,
-      mode: propTypes.string,
-    },
+    props,
     emits: ['options-change', 'change', 'click'],
-    setup(props, { emit }) {
+    setup(props: any, { emit }) {
       const { t } = useI18n();
       const attrs = useAttrs();
       const optionsRef = ref<Recordable[]>(props.options);
@@ -77,6 +79,8 @@
 
       const getAttrs = computed(() => {
         return {
+          showSearch: true,
+          optionFilterProp: 'label',
           ...unref(attrs),
           ...(props as Recordable),
         };
@@ -162,6 +166,7 @@
 
   .@{prefix-cls} {
     width: 100%;
+
     .ant-select {
       width: 100%;
     }

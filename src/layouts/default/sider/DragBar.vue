@@ -40,7 +40,7 @@
     },
   });
 </script>
-<style lang="less" scoped>
+<style lang="less">
   @prefix-cls: ~'jeesite-darg-bar';
 
   .@{prefix-cls} {
@@ -60,7 +60,7 @@
 
     &:hover {
       background-color: @primary-color;
-      box-shadow: 0 0 4px 0 rgba(28, 36, 56, 0.15);
+      box-shadow: 0 0 4px 0 rgb(28 36 56 / 15%);
     }
   }
 </style>

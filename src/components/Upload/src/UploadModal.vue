@@ -104,8 +104,8 @@
         return uploading.value
           ? t('component.upload.uploading')
           : someError
-          ? t('component.upload.reUploadFailed')
-          : t('component.upload.startUpload');
+            ? t('component.upload.reUploadFailed')
+            : t('component.upload.startUpload');
       });
 
       // 上传前校验
@@ -148,7 +148,7 @@
 
       function addFileItem(record: FileItem) {
         const { maxNumber } = props;
-        if ((fileItemList.value.length + (props.previewFileList?.length || 0)) >= maxNumber) {
+        if (fileItemList.value.length + (props.previewFileList?.length || 0) >= maxNumber) {
           createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
           return;
         }
@@ -174,7 +174,7 @@
         try {
           item.status = UploadResultStatus.UPLOADING;
           if (item.percent != 100) {
-            const { data } = await props.api?.(
+            const { data } = await api(
               {
                 bizKey: item.bizKey,
                 bizType: item.bizType,
@@ -227,8 +227,6 @@
           // 生产环境:抛出错误
           const errorList = data.filter((item: any) => item.result === 'false');
           if (errorList.length > 0) throw errorList;
-        } catch (e) {
-          throw e;
         } finally {
           uploading.value = false;
         }

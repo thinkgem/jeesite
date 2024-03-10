@@ -1,11 +1,11 @@
 <template>
   <div>
     <GrowCard class="enter-y" />
-    <SiteAnalysis class="!my-4 enter-y" />
-    <div class="md:flex enter-y">
-      <VisitRadar class="md:w-1/3 w-full" />
-      <VisitSource class="md:w-1/3 !md:mx-4 !md:my-0 !my-4 w-full" />
-      <SalesProductPie class="md:w-1/3 w-full" />
+    <SiteAnalysis class="enter-y !my-4" />
+    <div class="enter-y md:flex">
+      <VisitRadar class="w-full md:w-1/3" />
+      <VisitSource class="w-full !my-4 md:w-1/3 !md:mx-4 !md:my-0" />
+      <SalesProductPie class="w-full md:w-1/3" />
     </div>
   </div>
 </template>

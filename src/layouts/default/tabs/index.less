@@ -11,25 +11,32 @@ html[data-theme='dark'] {
     .ant-tabs.ant-tabs-card {
       .ant-tabs-nav {
         background: #000;
+
         &::before {
           border-bottom: 0;
         }
+
         .ant-tabs-tab {
           color: #aaa !important;
           background: #151515;
+
           svg {
             fill: #aaa !important;
           }
+
           &:hover,
           .ant-tabs-tab-btn:hover {
             color: #ddd !important;
           }
         }
+
         .ant-tabs-tab-active {
           background: fade(#2a50ed, 85) !important;
+
           svg {
             fill: #fff !important;
           }
+
           .ant-tabs-tab-btn,
           .ant-tabs-tab-btn:hover {
             color: #fff !important;
@@ -64,7 +71,7 @@ html[data-theme='dark'] {
         background-color: @component-background;
         transition: none;
         border-radius: 4px !important;
-        margin: 10px 0 0 0;
+        margin: 10px 0 0;
         padding-left: 10px;
         padding-right: 11px;
         border: 0 !important;
@@ -83,6 +90,7 @@ html[data-theme='dark'] {
           font-size: 16px;
           text-align: center;
           margin-right: 5px;
+
           svg {
             fill: @text-color-base;
           }
@@ -90,14 +98,16 @@ html[data-theme='dark'] {
 
         .ant-tabs-tab-remove {
           width: 12px;
-          height: 16px;
+          height: 23px;
           color: inherit;
           transition: none;
           padding: 0;
+
           .anticon {
             svg {
               width: 0.6em;
             }
+
             &:hover svg {
               width: 0.7em;
             }
@@ -133,6 +143,7 @@ html[data-theme='dark'] {
 
         .ant-tabs-tab-remove {
           opacity: 1;
+
           svg {
             fill: @white;
           }
@@ -141,9 +152,11 @@ html[data-theme='dark'] {
     }
 
     .ant-tabs-nav > div:nth-child(1) {
-      padding: 0 15px;
+      margin-left: 15px;
+
       .ant-tabs-tab {
-        margin-right: 10px !important;
+        margin-right: 6px !important;
+
         &:nth-last-child(2) {
           margin-right: 20px !important;
         }
@@ -174,11 +187,13 @@ html[data-theme='dark'] {
       cursor: pointer;
       user-select: none;
     }
+
     &__extra-redo {
       span[role='img'] {
         transform: rotate(0deg);
       }
     }
+
     &__extra-quick,
     &__extra-redo,
     &__extra-fold {
@@ -212,6 +227,7 @@ html[data-theme='dark'] {
 .ant-tabs-dropdown-menu {
   padding: 5px 0;
   max-height: 300px;
+
   &-title-content {
     display: flex;
     align-items: center;
@@ -223,11 +239,13 @@ html[data-theme='dark'] {
         line-height: 28px;
       }
     }
+
     .anticon:not(.anticon-close) {
       margin-left: -3px;
       margin-right: 3px;
     }
   }
+
   &-item-remove {
     margin-left: auto !important;
   }

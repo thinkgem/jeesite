@@ -9,16 +9,18 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
 
+  const props: any = {
+    item: {
+      type: Object as PropType<Menu>,
+      default: () => ({}),
+    },
+    dot: propTypes.bool,
+    collapseParent: propTypes.bool,
+  };
+
   export default defineComponent({
     name: 'SimpleMenuTag',
-    props: {
-      item: {
-        type: Object as PropType<Menu>,
-        default: () => ({}),
-      },
-      dot: propTypes.bool,
-      collapseParent: propTypes.bool,
-    },
+    props,
     setup(props) {
       const { prefixCls } = useDesign('simple-menu');
 

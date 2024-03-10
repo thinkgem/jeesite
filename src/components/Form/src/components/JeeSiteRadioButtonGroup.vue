@@ -25,20 +25,22 @@
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
   type RadioItem = string | OptionsItem;
 
+  const props: any = {
+    value: {
+      type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Object>,
+    },
+    options: {
+      type: Array as PropType<RadioItem[]>,
+      default: () => [],
+    },
+    dictType: propTypes.string,
+  };
+
   export default defineComponent({
     name: 'JeeSiteRadioButtonGroup',
     components: { RadioGroup: Radio.Group, RadioButton: Radio.Button },
     inheritAttrs: false,
-    props: {
-      value: {
-        type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Object>,
-      },
-      options: {
-        type: Array as PropType<RadioItem[]>,
-        default: () => [],
-      },
-      dictType: propTypes.string,
-    },
+    props,
     emits: ['change'],
     setup(props) {
       const attrs = useAttrs();

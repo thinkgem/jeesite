@@ -1,6 +1,7 @@
-import fs from 'fs';
 import path from 'path';
+import fs from 'fs-extra';
 import dotenv from 'dotenv';
+import { join } from 'node:path';
 
 export function isDevFn(mode: string): boolean {
   return mode === 'development';
@@ -64,16 +65,17 @@ function getConfFiles() {
  * @param match prefix
  * @param confFiles ext
  */
-export function getEnvConfig(match = 'VITE_GLOB_', confFiles = getConfFiles()) {
+export async function getEnvConfig(match = 'VITE_GLOB_', confFiles = getConfFiles()) {
   let envConfig = {};
-  confFiles.forEach((item) => {
+  for (const item of confFiles) {
     try {
-      const env = dotenv.parse(fs.readFileSync(path.resolve(process.cwd(), item)));
+      const envPath = await fs.readFile(join(process.cwd(), item), { encoding: 'utf8' });
+      const env = dotenv.parse(envPath);
       envConfig = { ...envConfig, ...env };
     } catch (e) {
       console.error(`Error in parsing ${item}`, e);
     }
-  });
+  }
   const reg = new RegExp(`^(${match})`);
   Object.keys(envConfig).forEach((key) => {
     if (!reg.test(key)) {

@@ -148,10 +148,6 @@
         padding: 15px 1px;
         font-size: 10px;
         color: @text-color-secondary;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        -khtml-user-select: none;
         user-select: none;
       }
 

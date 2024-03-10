@@ -21,7 +21,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when selected rows change
    * @type Function
    */
-  onChange?: (selectedRowKeys: string[] | number[], selectedRows: T[]) => any;
+  onChange?: (selectedRowKeys: string[] | number[] | any, selectedRows: T[]) => any;
 
   /**
    * Callback executed when select/deselect one row
@@ -39,7 +39,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when row selection is inverted
    * @type Function
    */
-  onSelectInvert?: (selectedRows: string[] | number[]) => any;
+  onSelectInvert?: (selectedRows: string[] | number[] | any) => any;
 }
 
 export interface TableCustomRecord<T> {
@@ -157,6 +157,8 @@ export interface BasicTableProps<T = any> {
   inset?: boolean;
   // 显示表格设置
   showTableSetting?: boolean;
+  tableSettingStore?: boolean;
+  tableSettingStoreKey?: string;
   tableSetting?: TableSetting;
   // 斑马纹
   striped?: boolean;
@@ -415,7 +417,7 @@ export interface BasicTableProps<T = any> {
    * @param expanded
    * @param record
    */
-  onExpand?: (expande: boolean, record: T) => void;
+  onExpand?: (expanded: boolean, record: T) => void;
 
   /**
    * Callback executed when the expanded rows change
@@ -521,4 +523,9 @@ export type ColumnChangeParam = {
 
 export interface InnerHandlers {
   onColumnsChange: (data: ColumnChangeParam[]) => void;
+}
+
+export interface InnerMethods {
+  clearSelectedRowKeys: TableActionType['clearSelectedRowKeys'];
+  getSelectRowKeys: TableActionType['getSelectRowKeys'];
 }

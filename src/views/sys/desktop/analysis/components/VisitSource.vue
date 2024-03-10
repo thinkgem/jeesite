@@ -1,6 +1,6 @@
 <template>
   <Card title="访问来源" :loading="loading">
-    <div ref="chartRef" class="w-full h-75"></div>
+    <div ref="chartRef" class="h-75 w-full"></div>
   </Card>
 </template>
 <script lang="ts" setup>
