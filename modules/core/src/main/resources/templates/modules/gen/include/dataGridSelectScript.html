@@ -1,7 +1,7 @@
 <script>
 var selectData = \"#{isNotBlank(selectData!) ? selectData! : '{}'}",
 selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		<%
 		// 是否是第一列
@@ -44,7 +44,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName}', index:'a.${c.columnName}', width:150, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel(\"#{@DictUtils.getDictListJson('${c.optionMap['dictType']}')}", val, '\${text("未知")}', true);
 		}},
-				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "areaselect"){ %>
+				<% }else if(c.showType == "userselect" || c.showType == "officeselect" || c.showType == "companyselect" || c.showType == "areaselect"){ %>
 		{header:'\${text("${c.columnLabel}")}', name:'${c.attrName2}', index:'a.${c.columnName}', width:150, align:"center"},
 				<% }else{
 						if (@StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long')){
@@ -81,7 +81,7 @@ selectNum = 0, dataGrid = $('#dataGrid').dataGrid({
 		} %>', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
 	<% } %>
 	autoGridHeight: function(){
-		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 74;
+		var height = $(window).height() - $('#searchForm').height() - $('#dataGridPage').height() - 76;
 		$('.tags-input').height($('.ui-jqgrid').height() - 10);
 		return height;
 	},

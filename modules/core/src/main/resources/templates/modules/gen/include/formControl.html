@@ -148,6 +148,12 @@
 									url="\${ctx}/sys/office/treeData"
 									class="${cssClass}" allowClear="true"/>
 							<%
+								} else if (c.showType == 'companyselect') {
+							%><${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('公司选择')}"
+									path="${c.attrName}" labelPath="${c.attrName2}"
+									url="\${ctx}/sys/company/treeData"
+									class="${cssClass}" allowClear="true"/>
+							<%
 								} else if (c.showType == 'areaselect') {
 							%><${'#'}form:treeselect id="${c.simpleAttrName}" title="\${text('区域选择')}"
 									path="${c.attrName}" labelPath="${c.attrName2}"

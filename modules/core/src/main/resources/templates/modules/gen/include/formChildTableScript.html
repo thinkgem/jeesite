@@ -6,10 +6,10 @@ var treeselectExists = false;
 for(child in table.childList){
 %>
 \//# // 初始化${child.comments}DataGrid对象
-$("#${@StringUtils.uncap(child.className)}DataGrid").dataGrid({
+$('#${@StringUtils.uncap(child.className)}DataGrid').dataGrid({
 
 	data: \"#{toJson(${className}.${@StringUtils.uncap(child.className)}List)}",
-	datatype: "local", // 设置本地数据
+	datatype: 'local', // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 	
 	\//# // 设置数据表格列
@@ -120,7 +120,25 @@ for (c in child.columnList){
 				}
 			}
 		},
-<% 
+<%
+	}else if(c.showType == 'companyselect'){
+		treeselectExists =  true;
+%>
+		{header:'\${text("${c.columnLabel}")}', name:'${c.simpleAttrName}', width:150,
+			formatter: function(val, obj, row, act){
+				return js.val(row, '${c.attrName}')+'|'+js.val(row, '${c.attrName2}');
+			}, editable: true, edittype: "custom", editoptions: {
+				custom_element: function(val, editOptions) {
+					return js.template('treeselectTpl', {
+						id: 'company_'+editOptions.id, title: '公司选择',
+						name: '${c.attrName}', value: val.split('|')[0],
+						labelName: '${c.attrName2}', labelValue: val.split('|')[1],
+						url: '\${ctx}/sys/company/treeData', cssClass: '${cssClass}'
+					});
+				}
+			}
+		},
+<%
 	}else if(c.showType == 'areaselect'){
 		treeselectExists =  true;
 %>

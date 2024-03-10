@@ -78,6 +78,7 @@
 <%
 var userselectExists = false;
 var officeselectExists = false;
+var companyselectExists = false;
 var areaselectExists = false;
 for(c in table.columnList){
   if(c.isQuery == "1" && !c.isTreeEntityColumn){
@@ -85,6 +86,8 @@ for(c in table.columnList){
       userselectExists = true;
     }else if(c.showType == 'officeselect'){
       officeselectExists = true;
+    }else if(c.showType == 'companyselect'){
+      companyselectExists = true;
     }else if(c.showType == 'areaselect'){
       areaselectExists = true;
     }
@@ -93,6 +96,9 @@ for(c in table.columnList){
 %>
 <% if(userselectExists || officeselectExists) { %>
   import { officeTreeData } from '/@/api/sys/office';
+<% } %>
+<% if(companyselectExists) { %>
+  import { companyTreeData } from '/@/api/sys/company';
 <% } %>
 <% if(areaselectExists) { %>
   import { areaTreeData } from '/@/api/sys/area';
@@ -203,6 +209,16 @@ for (c in table.columnList){
       component: 'TreeSelect',
       componentProps: {
         api: officeTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'companyselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      fieldLabel: '${c.attrName2}',
+      <% } %>
+      component: 'TreeSelect',
+      componentProps: {
+        api: companyTreeData,
         canSelectParent: false,
         allowClear: true,
       },
@@ -529,6 +545,16 @@ for (c in table.columnList){
         editComponent: 'TreeSelect',
         editComponentProps: {
           api: officeTreeData,
+          canSelectParent: false,
+          allowClear: true,
+        },
+    <% }else if(c.showType == 'companyselect'){
+        if (isNotBlank(c.attrName2)){ %>
+        dataLabel: '${c.attrName2}',
+        <% } %>
+        editComponent: 'TreeSelect',
+        editComponentProps: {
+          api: companyTreeData,
           canSelectParent: false,
           allowClear: true,
         },
