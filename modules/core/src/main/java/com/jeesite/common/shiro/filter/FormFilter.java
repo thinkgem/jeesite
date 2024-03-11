@@ -362,8 +362,10 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("isValidCodeLogin", Global.getConfigToInteger("sys.login.failedNumAfterValidCode", "200") == 0);
 
 		//获取当前会话对象
-		Session session = UserUtils.getSession();
-		data.put("sessionid", (String)session.getId());
+		if (ServletUtils.isAjaxRequest(request)) {
+			Session session = UserUtils.getSession();
+			data.put("sessionid", (String)session.getId());
+		}
 		
 		// 如果登录设置了语言，则切换语言
 		if (paramMap.get("lang") != null){

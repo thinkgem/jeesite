@@ -51,6 +51,14 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	}
 
 	/**
+	 * 查询数据
+	 */
+	@Override
+	public List<Post> findList(Post entity) {
+		return super.findList(entity);
+	}
+
+	/**
 	 * 查询岗位
 	 */
 	@Override

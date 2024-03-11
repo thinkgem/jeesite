@@ -240,7 +240,7 @@ public class Log extends DataEntity<Log> {
 
 	/**
 	 * 设置请求参数
-	 * @param paramMap
+	 * @param paramsMap
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setRequestParams(Map paramsMap){

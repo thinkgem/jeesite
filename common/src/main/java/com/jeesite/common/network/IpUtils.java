@@ -93,7 +93,7 @@ public class IpUtils {
 	}
 
 	public static byte[] textToNumericFormatV4(String paramString) {
-		if (paramString.length() == 0) {
+		if (paramString.isEmpty()) {
 			return null;
 		}
 		byte[] arrayOfByte = new byte[4];

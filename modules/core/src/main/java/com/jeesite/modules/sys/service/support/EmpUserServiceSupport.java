@@ -81,6 +81,14 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 	}
 
 	/**
+	 * 查询数据
+	 */
+	@Override
+	public List<EmpUser> findList(EmpUser entity) {
+		return super.findList(entity);
+	}
+
+	/**
 	 * 分页查询数据
 	 */
 	@Override
