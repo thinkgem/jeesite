@@ -18,7 +18,6 @@ import com.jeesite.common.utils.excel.annotation.ExcelFields;
 import com.jeesite.common.utils.excel.fieldtype.CompanyType;
 import com.jeesite.common.utils.excel.fieldtype.OfficeType;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import jakarta.validation.Valid;
 
 /**
@@ -27,6 +26,10 @@ import jakarta.validation.Valid;
  * @version 2017-03-25
  */
 @Table(name="${_prefix}sys_user", alias="a", label="员工信息", columns={
+		// 手机号加密脱敏例子，共同打开 EmpUserDao.java 和 EmpUserDao.xml 中的 result 注释
+		// 详细 typeHandler 用法，请看文档：https://jeesite.com/docs/dao-mybatis/#手机号加密脱敏
+//		@Column(name="mobile", attrName="mobile", label="手机号码", queryType=QueryType.EQ,
+//			javaType = String.class, typeHandler = AesTypeHandler.class),
 		@Column(includeEntity=User.class),
 	}, joinTable={
 		@JoinTable(type=Type.JOIN, entity=Employee.class, alias="e",

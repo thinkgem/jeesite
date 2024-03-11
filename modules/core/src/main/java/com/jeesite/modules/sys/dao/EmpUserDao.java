@@ -4,12 +4,12 @@
  */
 package com.jeesite.modules.sys.dao;
 
-import java.util.List;
-
 import com.jeesite.common.dao.CrudDao;
 import com.jeesite.common.mybatis.annotation.MyBatisDao;
 import com.jeesite.modules.sys.entity.EmpUser;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+
+import java.util.List;
 
 /**
  * 员工管理DAO接口
@@ -19,6 +19,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 @MyBatisDao
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public interface EmpUserDao extends CrudDao<EmpUser> {
+
+//	@Override
+//	@Results({
+//		@Result(column = "mobile", property = "mobile",
+//				javaType = String.class, typeHandler = AesTypeHandler.class)
+//	})
+//	@SelectProvider(type = SelectSqlProvider.class, method = "get")
+//	EmpUser get(EmpUser entity);
 
 	/**
 	 * 查询全部用户，仅返回基本信息
