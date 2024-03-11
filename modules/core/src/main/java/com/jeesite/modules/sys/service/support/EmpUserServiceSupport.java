@@ -23,13 +23,13 @@ import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -78,6 +78,14 @@ public class EmpUserServiceSupport extends CrudService<EmpUserDao, EmpUser>
 			empUser.sqlMap().getDataScope().addFilter("dsfCompany",
 					"Company", "e.company_code", "a.create_by", ctrlPermi, "office_user");
 		}
+	}
+
+	/**
+	 * 查询数据
+	 */
+	@Override
+	public List<EmpUser> findList(EmpUser entity) {
+		return super.findList(entity);
 	}
 
 	/**

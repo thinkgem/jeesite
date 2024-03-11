@@ -1,13 +1,13 @@
 package com.jeesite.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 身份证工具类
@@ -152,7 +152,7 @@ public class IdcardUtils extends StringUtils {
 				int iSum17 = getPowerSum(iCard);
 				// 获取校验位
 				String sVal = getCheckCode18(iSum17);
-				if (sVal.length() > 0) {
+				if (!sVal.isEmpty()) {
 					idCard18 += sVal;
 				} else {
 					return null;
@@ -205,7 +205,7 @@ public class IdcardUtils extends StringUtils {
 					int iSum17 = getPowerSum(iCard);
 					// 获取校验位
 					String val = getCheckCode18(iSum17);
-					if (val.length() > 0) {
+					if (!val.isEmpty()) {
 						if (val.equalsIgnoreCase(code18)) {
 							bTrue = true;
 						}

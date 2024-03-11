@@ -240,7 +240,7 @@ public class Log extends DataEntity<Log> {
 
 	/**
 	 * 设置请求参数
-	 * @param paramMap
+	 * @param paramsMap
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setRequestParams(Map paramsMap){
@@ -252,7 +252,7 @@ public class Log extends DataEntity<Log> {
 		}
 		StringBuilder params = new StringBuilder();
 		for (Map.Entry<String, String[]> param : ((Map<String, String[]>)paramsMap).entrySet()){
-			if (params.length() != 0) {
+			if (!params.isEmpty()) {
 				params.append("&");
 			}
 			params.append(param.getKey() + "=");

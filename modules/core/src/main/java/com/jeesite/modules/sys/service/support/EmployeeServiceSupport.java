@@ -49,7 +49,15 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 		where.setEmpNo(employee.getEmpNo());
 		return dao.getByEntity(where);
 	}
-	
+
+	/**
+	 * 查询数据
+	 */
+	@Override
+	public List<Employee> findList(Employee entity) {
+		return super.findList(entity);
+	}
+
 	/**
 	 * 查询分页数据
 	 */

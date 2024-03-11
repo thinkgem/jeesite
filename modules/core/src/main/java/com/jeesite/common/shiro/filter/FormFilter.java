@@ -263,21 +263,19 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
 		// 是否在登录后生成新的Session（默认false）
 		if (Global.getPropertyToBoolean("shiro.isGenerateNewSessionAfterLogin", "false")){
-			String[] keys = new String[] {ValidCodeUtils.VALID_CODE};
-			Map<String, Object> map = MapUtils.newHashMap();
+			String[] keys = new String[] { ValidCodeUtils.VALID_CODE };
+			Map<String, Object> attrMap = MapUtils.newHashMap();
 			final Session sessionOld = UserUtils.getSession();
 			for (String key : keys) {
 				Object value = sessionOld.getAttribute(key);
 				if (value != null) {
-					map.put(key, value);
+					attrMap.put(key, value);
 				}
 			}
 			UserUtils.getSubject().logout();
 			// 恢复生成新的Session之前的Session数据
 			final Session sessionNew = UserUtils.getSession();
-			map.forEach((key, value) -> {
-				sessionNew.setAttribute(key, value);
-			});
+			attrMap.forEach(sessionNew::setAttribute);
 		}
 		return super.executeLogin(request, response);
 	}
@@ -362,8 +360,10 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("isValidCodeLogin", Global.getConfigToInteger("sys.login.failedNumAfterValidCode", "200") == 0);
 
 		//获取当前会话对象
-		Session session = UserUtils.getSession();
-		data.put("sessionid", (String)session.getId());
+		if (ServletUtils.isAjaxRequest(request)) {
+			Session session = UserUtils.getSession();
+			data.put("sessionid", (String)session.getId());
+		}
 		
 		// 如果登录设置了语言，则切换语言
 		if (paramMap.get("lang") != null){
