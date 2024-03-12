@@ -36,7 +36,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
 			Object handler) throws Exception {
 		if (StringUtils.isBlank(MDC.get(TRACE_ID))) {
-            MDC.put(TRACE_ID, IdGen.nextId());
+            MDC.put(TRACE_ID, IdGen.randomBase62(4));
         }
 		long beginTime = System.currentTimeMillis();// 1、开始时间  
 		startTimeThreadLocal.set(beginTime);		// 线程绑定变量（该数据只有当前请求的线程可见）  
