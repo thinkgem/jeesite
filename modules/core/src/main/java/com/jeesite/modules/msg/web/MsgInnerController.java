@@ -4,9 +4,14 @@
  */
 package com.jeesite.modules.msg.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.msg.entity.MsgInner;
+import com.jeesite.modules.msg.entity.MsgInnerRecord;
+import com.jeesite.modules.msg.entity.MsgPush;
+import com.jeesite.modules.msg.service.MsgInnerService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,14 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.msg.entity.MsgInner;
-import com.jeesite.modules.msg.entity.MsgInnerRecord;
-import com.jeesite.modules.msg.entity.MsgPush;
-import com.jeesite.modules.msg.service.MsgInnerService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 内部消息Controller
@@ -122,7 +121,8 @@ public class MsgInnerController extends BaseController {
 			return renderResult(Global.FALSE, "数据已发布，不允许修改！");
 		}
 		msgInnerService.save(msgInner);
-		return renderResult(Global.TRUE, text("保存消息成功！"));
+		return renderResult(Global.TRUE, text((MsgInner.STATUS_NORMAL
+				.equals(msgInner.getStatus()) ? "发布" : "保存") + "消息成功！"));
 	}
 	
 	/**
