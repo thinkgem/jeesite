@@ -7,11 +7,16 @@
 		function refreshOnlineCount(){
 			$.get('${ctx}/sys/online/count?__notUpdateSession=true&__t='
 					+ new Date().getTime(), function(data){
+				if (!(data && data.result != 'login')){
+					if (window.rocInt) {
+						clearInterval(window.rocInt);
+					}
+				}
 				try{$('#onlineCount').html(Number(data))}catch(e){}
 			})
 		}
 		refreshOnlineCount(); // 先执行一次
-		setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
+		window.rocInt = setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
 		$(function(){$('#btnOnline').tooltip()});
 	</script>
 </li>
