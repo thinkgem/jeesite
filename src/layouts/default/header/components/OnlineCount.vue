@@ -40,6 +40,9 @@
       async function refreshOnlineCount() {
         let num = Number(await onlineCount());
         if (!num || Number.isNaN(num)) {
+          if ((window as any).rocInt) {
+            clearInterval((window as any).rocInt);
+          }
           num = 0;
         }
         count.value = num;
@@ -47,7 +50,7 @@
 
       onMounted(async () => {
         refreshOnlineCount(); // 先执行一次
-        setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
+        (window as any).rocInt = setInterval(refreshOnlineCount, 180000); // 3分钟执行一次
       });
 
       function handleToOnlineList() {
