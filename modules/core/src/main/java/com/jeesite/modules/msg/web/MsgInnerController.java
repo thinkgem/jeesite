@@ -122,7 +122,8 @@ public class MsgInnerController extends BaseController {
 			return renderResult(Global.FALSE, "数据已发布，不允许修改！");
 		}
 		msgInnerService.save(msgInner);
-		return renderResult(Global.TRUE, text("保存消息成功！"));
+		return renderResult(Global.TRUE, text((MsgInner.STATUS_NORMAL
+				.equals(msgInner.getStatus()) ? "发布" : "保存") + "消息成功！"));
 	}
 	
 	/**
