@@ -167,9 +167,9 @@
 		<dict value="Double" label="Double"/>
 		<dict value="java.math.BigDecimal" label="BigDecimal"/>
 		<dict value="java.util.Date" label="Date"/>
-		<dict value="com.jeesite.modules.sys.entity.User" label="User"/>
-		<dict value="com.jeesite.modules.sys.entity.Office" label="Office"/>
-		<dict value="com.jeesite.modules.sys.entity.Company" label="Company"/>
+		<dict value="com.jeesite.modules.sys.entity.User" label="User" attrName="userCode|userName"/>
+		<dict value="com.jeesite.modules.sys.entity.Office" label="Office" attrName="officeCode|officeName"/>
+		<dict value="com.jeesite.modules.sys.entity.Company" label="Company" attrName="companyCode|companyName"/>
 		<dict value="Parent" label="Parent" description="生成父对象"/>
 	</attrType>
 	<!-- 查询类型 -->
