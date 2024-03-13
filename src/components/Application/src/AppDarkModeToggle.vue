@@ -44,7 +44,8 @@
   }
 
   .@{prefix-cls} {
-    position: relative;
+    z-index: 10 !important;
+    position: relative !important;
     display: flex;
     width: 50px;
     height: 26px;
