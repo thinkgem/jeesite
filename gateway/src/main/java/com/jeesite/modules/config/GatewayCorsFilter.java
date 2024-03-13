@@ -40,6 +40,7 @@ public class GatewayCorsFilter implements WebFilter, Ordered {
             respHeaders.add("Access-Control-Allow-Origin", origin);
             respHeaders.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
             respHeaders.add("Access-Control-Allow-Headers", "content-type, x-requested-with, x-ajax, x-token, x-remember");
+            respHeaders.add("Access-Control-Expose-Headers", "x-token, x-remember");
         }
         if (HttpMethod.OPTIONS.equals(request.getMethod())){
             exchange.getResponse().setStatusCode(HttpStatus.OK);
