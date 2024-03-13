@@ -172,7 +172,7 @@ shiro:
   # 允许跨域访问时 CORS，可以获取和返回的方法和请求头
   accessControlAllowMethods: GET, POST, OPTIONS
   accessControlAllowHeaders: content-type, x-requested-with, x-ajax, x-token, x-remember
-  accessControlExposeHeaders: x-remember
+  accessControlExposeHeaders: x-token, x-remember
 
 # Session 相关
 session:
