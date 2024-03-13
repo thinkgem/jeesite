@@ -145,6 +145,9 @@ public class OnlineController extends BaseController{
 	@RequestMapping(value = "tickOut")
 	@ResponseBody
 	public String kickOut(String sessionId) {
+		if (Global.isDemoMode()){
+			return renderResult(Global.FALSE, "演示模式，不允许操作！");
+		}
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
 			Map<String, String> onlineTickOutMap = SysCacheUtils.get("onlineTickOutMap");
