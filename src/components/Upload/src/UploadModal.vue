@@ -31,6 +31,7 @@
         :accept="getStringAccept"
         :multiple="multiple"
         :before-upload="beforeUpload"
+        :directory="directory"
         :show-upload-list="false"
         class="upload-modal-toolbar__btn"
       >
@@ -65,7 +66,7 @@
     props: uploadProps,
     emits: ['change', 'register', 'delete'],
     setup(props, { emit }) {
-      const { uploadType, accept, helpText, maxNumber, maxSize } = toRefs(props);
+      const { uploadType, accept, helpText, maxNumber, maxSize, directory } = toRefs(props);
       const { t } = useI18n();
       const [register, { closeModal }] = useModalInner();
       const fileItemList = ref<FileItem[]>([]);
@@ -104,8 +105,8 @@
         return uploading.value
           ? t('component.upload.uploading')
           : someError
-          ? t('component.upload.reUploadFailed')
-          : t('component.upload.startUpload');
+            ? t('component.upload.reUploadFailed')
+            : t('component.upload.startUpload');
       });
 
       // 上传前校验
@@ -148,7 +149,7 @@
 
       function addFileItem(record: FileItem) {
         const { maxNumber } = props;
-        if ((fileItemList.value.length + (props.previewFileList?.length || 0)) >= maxNumber) {
+        if (fileItemList.value.length + (props.previewFileList?.length || 0) >= maxNumber) {
           createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
           return;
         }
@@ -273,6 +274,7 @@
       }
 
       return {
+        directory,
         columns: createTableColumns() as any[],
         actionColumn: createActionColumn(handleRemove) as any,
         register,
