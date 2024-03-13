@@ -52,6 +52,13 @@ const transform: AxiosTransform = {
     //   throw new Error(t('sys.api.apiRequestFailed'));
     // }
 
+    // 处理响应头中的令牌
+    const token = res?.headers[(config as any)?.authenticationHeader];
+    if (token) {
+      const userStore = useUserStoreWithOut();
+      userStore.setToken(token);
+    }
+
     // 非对象类型的直接返回数据
     if (typeof data !== 'object') return data;
 
@@ -60,8 +67,8 @@ const transform: AxiosTransform = {
     const { sessionid, result, message } = data;
 
     // 设置会话编码
-    const userStore = useUserStoreWithOut();
     if (data && Reflect.has(data, 'sessionid')) {
+      const userStore = useUserStoreWithOut();
       userStore.setToken(sessionid);
     }
 
@@ -165,15 +172,13 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config: Recordable, options) => {
     // 请求之前处理config
-    const token = getToken();
-    if (token && config?.requestOptions?.withToken !== false) {
-      // // jwt token
-      // config.headers.Authorization = options.authenticationScheme
-      //   ? `${options.authenticationScheme} ${token}`
-      //   : token;
-      config.headers['x-token'] = options.authenticationScheme
-        ? `${options.authenticationScheme} ${token}`
-        : token;
+    if (config?.requestOptions?.withToken !== false && options.authenticationHeader) {
+      const token = getToken();
+      if (token) {
+        config.headers[options.authenticationHeader] = options.authenticationScheme
+          ? `${options.authenticationScheme} ${token}`
+          : token;
+      }
     }
     return config;
   },
@@ -242,9 +247,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
     deepMerge(
       {
-        // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
-        // authentication schemes，e.g: Bearer
+        // authenticationHeader: 'Authorization',
         // authenticationScheme: 'Bearer',
+        authenticationHeader: 'x-token',
         authenticationScheme: '',
         // 请求超时时间，默认3分钟
         timeout: 3 * 60 * 1000,
