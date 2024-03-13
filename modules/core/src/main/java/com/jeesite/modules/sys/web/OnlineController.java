@@ -15,9 +15,7 @@ import com.jeesite.common.shiro.session.SessionDAO;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.SysCacheUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -29,6 +27,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -145,6 +145,9 @@ public class OnlineController extends BaseController{
 	@RequestMapping(value = "tickOut")
 	@ResponseBody
 	public String kickOut(String sessionId) {
+		if (Global.isDemoMode()){
+			return renderResult(Global.FALSE, "演示模式，不允许操作！");
+		}
 		Session session = sessionDAO.readSession(sessionId);
 		if (session != null){
 			Map<String, String> onlineTickOutMap = SysCacheUtils.get("onlineTickOutMap");
