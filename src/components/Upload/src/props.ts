@@ -95,6 +95,11 @@ export const basicProps = {
     type: String as PropType<string>,
     default: '',
   },
+  //支持上传文件夹（caniuse）
+  directory: {
+    type: Boolean as PropType<boolean>,
+    default: false,
+  },
 };
 
 export const uploadContainerProps = {
