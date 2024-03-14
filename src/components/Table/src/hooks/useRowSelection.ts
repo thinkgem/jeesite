@@ -71,18 +71,31 @@ export function useRowSelection(
     return unref(getAutoCreateKey) ? ROW_KEY : rowKey;
   });
 
+  function getKey(record: Recordable) {
+    const rowKey = unref(getRowKey);
+
+    if (isString(rowKey)) {
+      return record[rowKey];
+    }
+
+    if (isFunction(rowKey)) {
+      return rowKey(record, null);
+    }
+    return null;
+  }
+
   function setSelectedRowKeys(rowKeys: string[] | number[]) {
     selectedRowKeysRef.value = rowKeys;
     const allSelectedRows = findNodeAll(
       toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))),
-      (item) => rowKeys.includes(item[unref(getRowKey) as string] as never),
+      (item) => rowKeys.includes(getKey(item)),
       {
         children: propsRef.value.childrenColumnName ?? 'children',
       },
     );
     const trueSelectedRows: any[] = [];
     rowKeys.forEach((key: string | number) => {
-      const found = allSelectedRows.find((item) => item[unref(getRowKey) as string] === key);
+      const found = allSelectedRows.find((item) => getKey(item) === key);
       found && trueSelectedRows.push(found);
     });
     selectedRowRef.value = trueSelectedRows;

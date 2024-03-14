@@ -31,6 +31,7 @@
         :accept="getStringAccept"
         :multiple="multiple"
         :before-upload="beforeUpload"
+        :directory="directory"
         :show-upload-list="false"
         class="upload-modal-toolbar__btn"
       >
@@ -65,7 +66,7 @@
     props: uploadProps,
     emits: ['change', 'register', 'delete'],
     setup(props, { emit }) {
-      const { uploadType, accept, helpText, maxNumber, maxSize } = toRefs(props);
+      const { uploadType, accept, helpText, maxNumber, maxSize, directory } = toRefs(props);
       const { t } = useI18n();
       const [register, { closeModal }] = useModalInner();
       const fileItemList = ref<FileItem[]>([]);
@@ -271,6 +272,7 @@
       }
 
       return {
+        directory,
         columns: createTableColumns() as any[],
         actionColumn: createActionColumn(handleRemove) as any,
         register,
