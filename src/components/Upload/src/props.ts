@@ -95,7 +95,7 @@ export const basicProps = {
     type: String as PropType<string>,
     default: '',
   },
-  //支持上传文件夹（caniuse）
+  // 是否文件夹上传（caniuse）
   directory: {
     type: Boolean as PropType<boolean>,
     default: false,
