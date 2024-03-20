@@ -14,6 +14,7 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.network.IpUtils;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
+import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Log;
@@ -31,7 +32,6 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.servlet.Cookie;
-import org.apache.shiro.web.servlet.Cookie.SameSiteOptions;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -60,23 +60,21 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
     public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
 	
 	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
+
 	private static FormFilter instance;
+	private static Cookie sessionIdCookie;
+	private static Cookie rememberUserCodeCookie;
 
 	private BaseAuthorizingRealm authorizingRealm;
-	private Cookie rememberUserCodeCookie; 	// 记住用户名Cookie
-	
+
 	/**
 	 * 构造方法
 	 */
 	public FormFilter() {
 		super();
-		rememberUserCodeCookie = new SimpleCookie();
+		sessionIdCookie = SpringUtils.getBean("sessionIdCookie");
+		rememberUserCodeCookie = new SimpleCookie(sessionIdCookie);
 		rememberUserCodeCookie.setName(REMEMBER_USERCODE_PARAM);
-		rememberUserCodeCookie.setPath(Global.getProperty("session.sessionIdCookiePath"));
-		rememberUserCodeCookie.setSecure(Global.getPropertyToBoolean("session.sessionIdCookieSecure", "false"));
-		rememberUserCodeCookie.setHttpOnly(Global.getPropertyToBoolean("session.sessionIdCookieHttpOnly", "true"));
-		String sameSite = Global.getProperty("session.sessionIdCookieSameSite", "Lax"); // Null、None、Lax、Strict
-		rememberUserCodeCookie.setSameSite(!"Null".equalsIgnoreCase(sameSite) ? SameSiteOptions.valueOf(StringUtils.upperCase(sameSite)) : null);
 		rememberUserCodeCookie.setMaxAge(Cookie.ONE_YEAR);
         instance = this;
 	}
@@ -361,22 +359,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		// 是否显示验证码
 		data.put("isValidCodeLogin", Global.getConfigToInteger("sys.login.failedNumAfterValidCode", "200") == 0);
 
-		//获取当前会话对象
-		if (ServletUtils.isAjaxRequest(request)) {
-			Session session = UserUtils.getSession();
-			data.put("sessionid", (String)session.getId());
-		}
-		
-		// 如果登录设置了语言，则切换语言
-		if (paramMap.get("lang") != null){
-			Global.setLang((String)paramMap.get("lang"), request, response);
-		}
-		
+		// 设置公共结果数据
+		setCommonData(request, response, data, paramMap);
 		data.put("result", "login");
-		data.put("demoMode", Global.isDemoMode());
-		data.put("useCorpModel", Global.isUseCorpModel()
-				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
-		data.put("title", Global.getProperty("productName"));
 		return data;
 	}
 
@@ -417,30 +402,47 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		String corpCode = (String)paramMap.get("corpCode");
 		User user = UserUtils.getByLoginCode(username, corpCode);
 		LogUtils.saveLog(user, request, "登录失败", Log.TYPE_LOGIN_LOGOUT);
-		
-		//获取当前会话对象
-		Session session = UserUtils.getSession();
-		data.put("sessionid", (String)session.getId());
-		
-		// 如果登录设置了语言，则切换语言
+
+		// 设置公共结果数据
+		setCommonData(request, response, data, paramMap);
+		data.put("result", Global.FALSE);
+		return data;
+	}
+
+	/**
+	 * 设置公共数据
+	 * @author ThinkGem
+	 */
+	private static void setCommonData(HttpServletRequest request, HttpServletResponse response,
+									  Map<String, Object> data, Map<String, Object> paramMap) {
+		if (ServletUtils.isAjaxRequest(request)) {
+			Session session = UserUtils.getSession();
+			data.put("sessionid", session.getId());
+			Cookie cookie = new SimpleCookie(sessionIdCookie);
+			cookie.setValue((String)session.getId());
+			cookie.saveTo(request, response);
+		}
 		if (paramMap.get("lang") != null){
 			Global.setLang((String)paramMap.get("lang"), request, response);
 		}
-		
-		data.put("result", Global.FALSE);
 		data.put("demoMode", Global.isDemoMode());
 		data.put("useCorpModel", Global.isUseCorpModel()
 				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
 		data.put("title", Global.getProperty("productName"));
-		return data;
 	}
 
 	/**
 	 * 获取登录页面数据
 	 * @author ThinkGem
 	 */
-	public static Map<String, Object> getLoginSuccessData(User user, Session session) {
+	public static Map<String, Object> getLoginSuccessData(HttpServletRequest request, HttpServletResponse response,
+														  User user, Session session) {
 		Map<String, Object> data = MapUtils.newHashMap();
+		if (ServletUtils.isAjaxRequest(request)) {
+			Cookie cookie = new SimpleCookie(sessionIdCookie);
+			cookie.setValue((String)session.getId());
+			cookie.saveTo(request, response);
+		}
 		data.put("user", user); // 设置当前用户信息
 		data.put("demoMode", Global.isDemoMode());
 		data.put("useCorpModel", Global.isUseCorpModel());
