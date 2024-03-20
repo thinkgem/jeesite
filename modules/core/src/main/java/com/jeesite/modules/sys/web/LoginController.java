@@ -188,7 +188,7 @@ public class LoginController extends BaseController{
 
 		// 获取当前会话对象，并返回一些数据
 		Session session = UserUtils.getSession();
-		model.addAllAttributes(FormFilter.getLoginSuccessData(user, session));
+		model.addAllAttributes(FormFilter.getLoginSuccessData(request, response, user, session));
 
 		// 是否是登录操作
 		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));
