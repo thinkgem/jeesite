@@ -391,6 +391,18 @@ public class ListUtils {
 			pageNo++;
 		}
 	}
+
+	/**
+	 * 列表分页方法
+	 * @param list 源数据
+	 * @param pageNo 当前页码
+	 * @param pageSize 每页显示条数
+	 * @author ThinkGem
+	 */
+	public static <T> List<T> getPageList(List<T> list, int pageNo, int pageSize) {
+		int totalPage = (list.size() + pageSize - 1) / pageSize;
+		return getPageList(list, pageNo, pageSize, totalPage);
+	}
 	
 	/**
 	 * 列表分页方法
