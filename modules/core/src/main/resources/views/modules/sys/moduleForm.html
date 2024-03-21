@@ -42,7 +42,8 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
-							<label class="control-label col-sm-2" title="该模块的状态验证类，如果该类检测不存在，则该模块状态提示 “未安装” ，验证原理：Class.forName(\"com.jeesite.modules.sys.web.LoginController\")">
+							<label class="control-label col-sm-2" title="该模块的状态验证类，如果该类检测不存在，则该模块状态提示 “未安装” ，验证原理：
+Class.forName(“com.jeesite.modules.sys.web.LoginController”)；在微服务下不进行验证。">
 								<span class="required hide">*</span> ${text('主类全名')}：<i class="fa icon-question "></i></label>
 							<div class="col-sm-10">
 								<#form:input path="mainClassName" maxlength="500" class="form-control"/>
