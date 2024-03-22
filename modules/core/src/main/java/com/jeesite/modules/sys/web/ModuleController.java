@@ -104,7 +104,11 @@ public class ModuleController extends BaseController {
 		model.addAttribute("config", config);
 		List<String> genBaseDirList = GenModuleUtils.getGenBaseDirList();
 		model.addAttribute("genBaseDirList", genBaseDirList);
-		model.addAttribute("genBaseDir", genBaseDirList.get(0));
+		if (StringUtils.isNotBlank(module.getGenBaseDir())) {
+			model.addAttribute("genBaseDir", module.getGenBaseDir());
+		} else {
+			model.addAttribute("genBaseDir", genBaseDirList.get(0));
+		}
 		model.addAttribute("module", module);
 		return "modules/sys/moduleForm";
 	}

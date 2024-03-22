@@ -126,7 +126,7 @@ Class.forName(“com.jeesite.modules.sys.web.LoginController”)；在微服务�
 						<% if (hasPermi('sys:module:edit')){ %>
 							<#form:hidden path="genFlag"/>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"
-									onclick="$('#genFlag').val('1');"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+									onclick="$('#genFlag').val('0');"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
 						<% if (hasPermi('sys:module:edit') && isCustomModule){ %>
 							<button type="submit" class="btn btn-sm btn-danger" id="btnSubmitAndGen"
@@ -148,14 +148,23 @@ jQuery.validator.addMethod("abc2",function(value, element) {
 }, "${text('请输入2个以上字符，字母开头、允许字母数字下划线或减号、字母数字结尾')}");
 $('#inputForm').validate({
 	submitHandler: function(form){
-		js.ajaxSubmitForm($(form), function(data){
-			js.showMessage(data.message);
-			if(data.result == Global.TRUE){
-				js.closeCurrentTabPage(function(contentWindow){
-					contentWindow.page();
-				});
-			}
-		}, "json");
+		var submitFormFn = function() {
+			js.ajaxSubmitForm($(form), function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.closeCurrentTabPage(function(contentWindow){
+						contentWindow.page();
+					});
+				}
+			}, "json");
+		}
+		if ($('#genFlag').val() != '0'){
+			js.confirm('是否要生成模块源码到 ‘' + $('#genBaseDir').val() + '’ 目录下？', function() {
+				submitFormFn();
+			});
+		} else {
+			submitFormFn();
+		}
     }
 });
 </script>
