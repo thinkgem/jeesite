@@ -5,9 +5,11 @@
 package com.jeesite.modules.sys.web;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,7 +26,7 @@ import java.io.IOException;
 @Controller
 @Tag(name = "ValidCode - 验证码服务")
 public class ValidCodeController {
-	
+
 	@RequestMapping(value="/validCode")
 	public void validCode(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,6 +37,8 @@ public class ValidCodeController {
 			response.getOutputStream().print(result ? Global.TRUE : Global.FALSE);
 		}
 		else{
+			// 生成会话
+			Session session = UserUtils.getSession();
 			// 设置响应头
 			response.setContentType("image/png");
 	        response.setHeader("Cache-Control", "no-cache, no-store");
@@ -45,8 +49,8 @@ public class ValidCodeController {
 	        response.setDateHeader("Expires", time);
 	        // 生成输出验证码
 	        String s = ValidCodeUtils.generateCaptcha(response.getOutputStream());
+			session.setAttribute(ValidCodeUtils.VALID_CODE, s);
 //	        System.out.println(s);
-			request.getSession().setAttribute(ValidCodeUtils.VALID_CODE, s);
 		}
 	}
 	
