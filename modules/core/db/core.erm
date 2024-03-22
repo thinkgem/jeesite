@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.5</zoom>
-	<x>0</x>
-	<y>907</y>
+	<x>950</x>
+	<y>0</y>
 	<default_color>
 		<r>255</r>
 		<g>255</g>
@@ -7643,8 +7643,8 @@
 			</color>
 			<connections>
 				<relation>
-					<id>18cbb4e282687e3426340739152ce4dee33add59</id>
-					<source>29512414da8b1f7b0128b98f654788a1f2ab78a8</source>
+					<id>74561557dced8974f973e4f1f3c8233464123df0</id>
+					<source>77882d315a3a12c8239afc4172d122f36b944e07</source>
 					<target>3e5ba7b4b137ff0e53c3177fa69d25f7c92092ab</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -7708,7 +7708,7 @@
 				<normal_column>
 					<id>fc44d466dd6009e48b5222d1d71e38d025194ff0</id>
 					<referenced_column>54b86f255d95078898534902087fb704b4265b60</referenced_column>
-					<relation>18cbb4e282687e3426340739152ce4dee33add59</relation>
+					<relation>74561557dced8974f973e4f1f3c8233464123df0</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -8230,13 +8230,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>29512414da8b1f7b0128b98f654788a1f2ab78a8</id>
+			<id>77882d315a3a12c8239afc4172d122f36b944e07</id>
 			<height>256</height>
 			<width>397</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
-			<x>684</x>
-			<y>3252</y>
+			<x>708</x>
+			<y>3240</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -9730,13 +9730,13 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>5fc55290d31b22b17bfbd477a6000451879cb4bc</id>
-			<height>289</height>
+			<id>b5b96f0433e1d66dc673d0fea412adfdb1c0722d</id>
+			<height>412</height>
 			<width>454</width>
 				<font_name>Arial</font_name>
 				<font_size>14</font_size>
 			<x>3744</x>
-			<y>552</y>
+			<y>528</y>
 			<color>
 				<r>128</r>
 				<g>128</g>
@@ -9919,6 +9919,72 @@
 				<normal_column>
 					<word_id>b29b532ba37f4d8d291f1098707a80229f272b00</word_id>
 					<id>6281abb4d5813839a39d7d75ce39843c4467c390</id>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>varchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>false</foreign_key>
+					<not_null>false</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
+					<word_id>893d64272ea667d194b7302cffca1b3f52fa0a7b</word_id>
+					<id>e7eaf31498ae6187c1581c139231f45bf40ed94a</id>
+					<description></description>
+					<unique_key_name></unique_key_name>
+					<logical_name></logical_name>
+					<physical_name></physical_name>
+					<type>nvarchar(n)</type>
+					<constraint></constraint>
+					<default_value></default_value>
+					<auto_increment>false</auto_increment>
+					<foreign_key>false</foreign_key>
+					<not_null>false</not_null>
+					<primary_key>false</primary_key>
+					<unique_key>false</unique_key>
+					<character_set></character_set>
+					<collation></collation>
+					<sequence>
+						<name></name>
+						<schema></schema>
+						<increment></increment>
+						<min_value></min_value>
+						<max_value></max_value>
+						<start></start>
+						<cache></cache>
+						<nocache>false</nocache>
+						<cycle>false</cycle>
+						<order>false</order>
+						<description></description>
+						<data_type></data_type>
+						<decimal_size>0</decimal_size>
+					</sequence>
+				</normal_column>
+				<normal_column>
+					<word_id>e165345266c290425093cc0ba26c4644cc73b285</word_id>
+					<id>67c5d1f49d1ffb3943a65d6b561b0f4611fc2a45</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
