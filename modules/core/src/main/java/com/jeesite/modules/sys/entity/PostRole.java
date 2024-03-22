@@ -18,12 +18,12 @@ import com.jeesite.common.mybatis.annotation.Table;
 		@Column(name="role_code", attrName="roleCode", label="角色编码", isPK=true),
 		@Column(name="post_code", attrName="postCode", label="岗位编码", isPK=true),
 	},
-	joinTable = {
+	joinTable={
 		@JoinTable(type=JoinTable.Type.LEFT_JOIN, entity=Role.class, alias="r", lazy = true,
 			on="a.role_code = r.role_code", attrName="role",
 			columns={
-				@Column(name="role_code", 	attrName="roleCode", 	label="角色编码", isPK=true),
-				@Column(name="role_name", 	attrName="roleName", 	label="角色名称"),
+				@Column(name="role_code", attrName="roleCode", label="角色编码", isPK=true),
+				@Column(name="role_name", attrName="roleName", label="角色名称"),
 			})
 	}, orderBy=""
 )
@@ -33,7 +33,7 @@ public class PostRole extends DataEntity<PostRole> {
 	private String postCode;	// 岗位编码
 	private String roleCode;	// 角色编码
 
-	private Role role; // sqlMap().loadJoinTableAlias("r")的时候返回数据
+	private Role role; // sqlMap().loadJoinTableAlias("r") 的时候返回数据
 
 	public PostRole() {
 		this(null, null);
