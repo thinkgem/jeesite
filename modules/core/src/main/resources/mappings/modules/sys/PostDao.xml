@@ -7,12 +7,19 @@
 		SELECT ${sqlMap.column.toSql()}
 		FROM ${sqlMap.table.toSql()}
 		<if test="empCode != null and empCode != ''">
-			JOIN ${_prefix}sys_employee_post b on a.post_code = b.post_code
+			JOIN ${_prefix}sys_employee_post b ON b.post_code = a.post_code
+		</if>
+		<if test="userCode != null and userCode != ''">
+			JOIN ${_prefix}sys_employee_post b2 on b2.post_code = a.post_code
+			JOIN ${_prefix}sys_user u on u.ref_code = b2.emp_code AND u.user_type = 'employee'
 		</if>
 		<where>
 			${sqlMap.where.toSql()}
 			<if test="empCode != null and empCode != ''">
 				AND b.emp_code = #{empCode}
+			</if>
+			<if test="userCode != null and userCode != ''">
+				AND u.user_code = #{userCode}
 			</if>
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}

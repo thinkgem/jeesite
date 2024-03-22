@@ -35,6 +35,7 @@ public class Post extends DataEntity<Post> {
 	private Integer postSort;		// 岗位排序（升序）
 	
 	private String empCode; 		// 根据用户查询岗位
+	private String userCode;		// 根据用户编码查询
 
 	private String roleCodes;		// 关联的角色编号
 	private String roleNames;		// 关联的角色名称
@@ -110,6 +111,16 @@ public class Post extends DataEntity<Post> {
 		this.empCode = empCode;
 	}
 
+	@ApiModelProperty("根据用户编码查询")
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+
+	@ApiModelProperty("岗位绑定角色编码")
 	public String getRoleCodes() {
 		return roleCodes;
 	}
