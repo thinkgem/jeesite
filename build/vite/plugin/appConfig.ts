@@ -46,7 +46,7 @@ export function appConfigPlugin(
         });
         this.emitFile({
           type: 'asset',
-          fileName: 'build-time.txt',
+          fileName: 'timestamp.txt',
           source: `${new Date().getTime()}`,
         });
         console.log(colors.cyan(`✨configuration file is build successfully!`));
