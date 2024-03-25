@@ -1,4 +1,4 @@
-import { isFunction } from '/@/utils/is';
+import { isFunction, isString } from '/@/utils/is';
 import type { BasicTableProps, TableRowSelection } from '../types/table';
 import { computed, ComputedRef, nextTick, Ref, ref, toRaw, unref, watch } from 'vue';
 import { ROW_KEY } from '../const';
@@ -88,7 +88,7 @@ export function useRowSelection(
     selectedRowKeysRef.value = rowKeys;
     const allSelectedRows = findNodeAll(
       toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))),
-      (item) => rowKeys.includes(getKey(item)),
+      (item) => rowKeys.includes(getKey(item) as never),
       {
         children: propsRef.value.childrenColumnName ?? 'children',
       },

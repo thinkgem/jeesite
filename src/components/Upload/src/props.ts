@@ -100,11 +100,6 @@ export const basicProps = {
     type: Boolean as PropType<boolean>,
     default: false,
   },
-  // 是否文件夹上传
-  directory: {
-    type: Boolean as PropType<boolean>,
-    default: false,
-  },
 };
 
 export const uploadContainerProps = {
