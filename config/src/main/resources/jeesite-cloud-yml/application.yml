@@ -419,8 +419,8 @@ shiro:
   # 关闭各自微服务的跨域设置，因为已经在 GatewayCorsFilter 类里全局启用跨域，如果不想跨域，可删除该类
   accessControlAllowOrigin: ~
   
-  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开
-  innerFilterAllowRemoteAddrs: 127.0.0.1,10.,172.,192.
+  # 内部系统访问过滤器，可设置多个允许的内部系统IP地址串，多个用逗号隔开，完整的IP使用“]”符号结尾
+  innerFilterAllowRemoteAddrs: 127.0.0.1],10.,172.,192.
   
   # URI 权限过滤器定义
   filterChainDefinitions: |
