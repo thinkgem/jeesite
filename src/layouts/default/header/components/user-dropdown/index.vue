@@ -7,9 +7,9 @@
           {{ getUserInfo.userName }}
         </span>
         <span :class="`${prefixCls}__btns`" class="block">
-          <a class="online"><Icon icon="fa:circle" /> {{ t('layout.header.sidebarOnline') }}</a>
+          <a class="online"><Icon icon="i-fa:circle" /> {{ t('layout.header.sidebarOnline') }}</a>
           <a class="logout" @click="handleLoginOut">
-            <Icon icon="fa:sign-out" /> {{ t('layout.header.sidebarLogout') }}
+            <Icon icon="i-fa:sign-out" /> {{ t('layout.header.sidebarLogout') }}
           </a>
         </span>
       </span>
@@ -26,13 +26,13 @@
     </span>
     <template #overlay>
       <Menu @click="handleMenuClick">
-        <MenuItem value="accountCenter" :text="t('sys.account.center')" icon="ion:person-outline" />
-        <MenuItem value="modifyPwd" :text="t('sys.account.modifyPwd')" icon="ion:key-outline" />
+        <MenuItem value="accountCenter" :text="t('sys.account.center')" icon="i-ion:person-outline" />
+        <MenuItem value="modifyPwd" :text="t('sys.account.modifyPwd')" icon="i-ion:key-outline" />
         <MenuDivider />
         <MenuItem
           value="doc"
           :text="t('layout.header.dropdownItemDoc')"
-          icon="ion:document-text-outline"
+          icon="i-ion:document-text-outline"
           v-if="getShowDoc"
         />
         <MenuDivider v-if="getShowDoc" />
@@ -40,12 +40,12 @@
           v-if="getUseLockPage"
           value="lock"
           :text="t('layout.header.tooltipLock')"
-          icon="ion:lock-closed-outline"
+          icon="i-ion:lock-closed-outline"
         />
         <MenuItem
           value="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
-          icon="ion:power-outline"
+          icon="i-ion:power-outline"
         />
         <MenuDivider v-if="sysListRef.length > 0" />
         <MenuItem
@@ -58,7 +58,7 @@
           :key="item.value"
           :value="'sysCode-' + item.value"
           :text="item.name"
-          :icon="sysCodeRef == item.value ? 'ant-design:check-outlined' : 'radix-icons:dot'"
+          :icon="sysCodeRef == item.value ? 'i-ant-design:check-outlined' : 'i-radix-icons:dot'"
         />
         <MenuDivider v-if="getUserInfo.roleList.length > 0" />
         <MenuItem
@@ -69,7 +69,7 @@
           <template #menuItemAfter>
             <Icon
               v-if="roleCodeRef"
-              icon="ant-design:close-circle-outlined"
+              icon="i-ant-design:close-circle-outlined"
               class="ml-1"
               @click="handleMenuClick({ key: 'roleCode-' })"
               :title="t('取消设置')"
@@ -81,7 +81,7 @@
           :key="item.roleCode"
           :value="'roleCode-' + item.roleCode"
           :text="item.roleName"
-          :icon="roleCodeRef == item.roleCode ? 'ant-design:check-outlined' : 'radix-icons:dot'"
+          :icon="roleCodeRef == item.roleCode ? 'i-ant-design:check-outlined' : 'i-radix-icons:dot'"
         />
       </Menu>
     </template>

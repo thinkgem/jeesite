@@ -11,7 +11,7 @@
       :overflowCount="99"
       :number-style="{ backgroundColor: '#00a65a' }"
     >
-      <Icon icon="icon-people" />
+      <Icon icon="i-simple-line-icons:people" />
     </Badge>
   </Tooltip>
 </template>

@@ -50,40 +50,40 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
       index === tabStore.getTabList.length - 1 && tabStore.getLastDragEndIndex >= 0;
     const dropMenuList: DropMenu[] = [
       {
-        icon: 'ant-design:reload-outlined',
+        icon: 'i-ant-design:reload-outlined',
         event: MenuEventEnum.REFRESH_PAGE,
         text: t('layout.multipleTab.reload'),
         disabled: refreshDisabled,
       },
       {
-        icon: 'ant-design:close-outlined',
+        icon: 'i-ant-design:close-outlined',
         event: MenuEventEnum.CLOSE_CURRENT,
         text: t('layout.multipleTab.close'),
         disabled: !!meta?.affix || disabled,
         divider: true,
       },
       {
-        icon: 'ant-design:arrow-left-outlined',
+        icon: 'i-ant-design:arrow-left-outlined',
         event: MenuEventEnum.CLOSE_LEFT,
         text: t('layout.multipleTab.closeLeft'),
         disabled: closeLeftDisabled,
         divider: false,
       },
       {
-        icon: 'ant-design:arrow-right-outlined',
+        icon: 'i-ant-design:arrow-right-outlined',
         event: MenuEventEnum.CLOSE_RIGHT,
         text: t('layout.multipleTab.closeRight'),
         disabled: closeRightDisabled,
         divider: true,
       },
       {
-        icon: 'ant-design:pic-center-outlined',
+        icon: 'i-ant-design:pic-center-outlined',
         event: MenuEventEnum.CLOSE_OTHER,
         text: t('layout.multipleTab.closeOther'),
         disabled: disabled,
       },
       {
-        icon: 'ant-design:line-outlined',
+        icon: 'i-ant-design:line-outlined',
         event: MenuEventEnum.CLOSE_ALL,
         text: t('layout.multipleTab.closeAll'),
         disabled: disabled,

@@ -56,7 +56,7 @@
         <span class="text"> {{ title }}</span>
         <Icon
           :size="16"
-          :icon="getMixSideFixed ? 'ri:pushpin-2-fill' : 'ri:pushpin-2-line'"
+          :icon="getMixSideFixed ? 'i-ri:pushpin-2-fill' : 'i-ri:pushpin-2-line'"
           class="pushpin"
           @click="handleFixedMenu"
         />

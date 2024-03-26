@@ -6,7 +6,7 @@
     @click="handleToErrorList"
   >
     <Badge :count="getCount" :offset="[-6, 11]" :overflowCount="99">
-      <Icon icon="ion:bug-outline" />
+      <Icon icon="i-ion:bug-outline" />
     </Badge>
   </Tooltip>
 </template>
