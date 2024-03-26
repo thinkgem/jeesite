@@ -10,7 +10,7 @@ const desktop: AppRouteModule = {
   redirect: '/desktop/analysis',
   meta: {
     orderNo: 10,
-    icon: 'ant-design:home-outlined',
+    icon: 'i-ant-design:home-outlined',
     title: t('routes.dashboard.dashboard'),
   },
   children: [
@@ -20,8 +20,8 @@ const desktop: AppRouteModule = {
       component: () => import('/@/views/sys/desktop/analysis/index.vue'),
       meta: {
         // affix: true,
-        icon: 'ant-design:home-outlined',
-        tabIcon: 'ant-design:home-outlined',
+        icon: 'i-ant-design:home-outlined',
+        tabIcon: 'i-ant-design:home-outlined',
         title: t('routes.dashboard.analysis'),
       },
     },
@@ -30,7 +30,7 @@ const desktop: AppRouteModule = {
       name: 'Workbench',
       component: () => import('/@/views/sys/desktop/workbench/index.vue'),
       meta: {
-        icon: 'ant-design:read-outlined',
+        icon: 'i-ant-design:read-outlined',
         title: t('routes.dashboard.workbench'),
       },
     },
@@ -40,7 +40,7 @@ const desktop: AppRouteModule = {
       component: () => import('/@/views/sys/desktop/about/index.vue'),
       meta: {
         title: t('routes.dashboard.about'),
-        icon: 'ant-design:tag-outlined',
+        icon: 'i-ant-design:tag-outlined',
         hideMenu: true,
       },
     },

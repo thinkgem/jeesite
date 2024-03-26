@@ -11,7 +11,7 @@ const dashboardRoute = {
   meta: {
     title: 'routes.dashboard.dashboard',
     hideChildrenInMenu: true,
-    icon: 'bx:bx-home',
+    icon: 'i-bx:bx-home',
   },
   children: [
     {
@@ -23,7 +23,7 @@ const dashboardRoute = {
         hideBreadcrumb: true,
         title: 'routes.dashboard.analysis',
         currentActiveMenu: '/dashboard',
-        icon: 'bx:bx-home',
+        icon: 'i-bx:bx-home',
       },
     },
     {
@@ -35,7 +35,7 @@ const dashboardRoute = {
         hideBreadcrumb: true,
         title: 'routes.dashboard.workbench',
         currentActiveMenu: '/dashboard',
-        icon: 'bx:bx-home',
+        icon: 'i-bx:bx-home',
       },
     },
   ],
@@ -74,7 +74,7 @@ const authRoute = {
   component: 'LAYOUT',
   redirect: '/permission/front/page',
   meta: {
-    icon: 'carbon:user-role',
+    icon: 'i-carbon:user-role',
     title: 'routes.demo.permission.permission',
   },
   children: [backRoute],
@@ -86,7 +86,7 @@ const levelRoute = {
   component: 'LAYOUT',
   redirect: '/level/menu1/menu1-1',
   meta: {
-    icon: 'carbon:user-role',
+    icon: 'i-carbon:user-role',
     title: 'routes.demo.level.level',
   },
 
@@ -142,7 +142,7 @@ const sysRoute = {
   component: 'LAYOUT',
   redirect: '/system/account',
   meta: {
-    icon: 'ion:settings-outline',
+    icon: 'i-ion:settings-outline',
     title: 'routes.demo.system.moduleName',
   },
   children: [
@@ -212,7 +212,7 @@ const linkRoute = {
   name: 'Link',
   component: 'LAYOUT',
   meta: {
-    icon: 'ion:tv-outline',
+    icon: 'i-ion:tv-outline',
     title: 'routes.demo.iframe.frame',
   },
   children: [

@@ -9,7 +9,7 @@ const account: AppRouteModule = {
   component: LAYOUT,
   redirect: '/account/center',
   meta: {
-    icon: 'ion:person-outline',
+    icon: 'i-ion:person-outline',
     title: t('sys.account.center'),
     orderNo: 100000,
   },
@@ -19,7 +19,7 @@ const account: AppRouteModule = {
       name: 'AccountCenter',
       component: () => import('/@/views/sys/account/center.vue'),
       meta: {
-        icon: 'ion:person-outline',
+        icon: 'i-ion:person-outline',
         title: t('sys.account.center'),
       },
     },
@@ -28,7 +28,7 @@ const account: AppRouteModule = {
       name: 'AccountModPwd',
       component: () => import('/@/views/sys/account/modPwd.vue'),
       meta: {
-        icon: 'ion:key-outline',
+        icon: 'i-ion:key-outline',
         title: t('sys.account.modifyPwd'),
       },
     },
