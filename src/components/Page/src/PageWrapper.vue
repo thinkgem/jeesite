@@ -48,10 +48,10 @@
           </div>
           <template v-if="!sidebarResizer">
             <div class="sidebar-close" v-if="!collapsed" @click="collapsed = !collapsed">
-              <Icon icon="fa fa-angle-left" />
+              <Icon icon="i-fa:angle-left" />
             </div>
             <div class="sidebar-open" v-else @click="collapsed = !collapsed">
-              <Icon icon="fa fa-angle-left" style="transform: rotate(180deg)" />
+              <Icon icon="i-fa:angle-left" style="transform: rotate(180deg)" />
             </div>
           </template>
         </a-layout-sider>

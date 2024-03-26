@@ -12,7 +12,7 @@
     overlayClassName="app-locale-picker-overlay"
   >
     <span class="flex cursor-pointer items-center">
-      <Icon icon="ion:language" />
+      <Icon icon="i-ion:language" />
       <span v-if="showText" class="ml-1">{{ getLocaleText }}</span>
     </span>
   </Dropdown>

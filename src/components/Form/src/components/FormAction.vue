@@ -10,7 +10,7 @@
           @click="submitAction"
           v-if="showSubmitButton"
         >
-          <Icon icon="ant-design:search-outlined" />
+          <Icon icon="i-ant-design:search-outlined" />
           {{ getSubmitBtnOptions.text }}
         </Button>
         <slot name="resetBefore"></slot>
@@ -21,7 +21,7 @@
           @click="resetAction"
           v-if="showResetButton"
         >
-          <Icon icon="ant-design:reload-outlined" />
+          <Icon icon="i-ant-design:reload-outlined" />
           {{ getResetBtnOptions.text }}
         </Button>
         <slot name="advanceBefore"></slot>

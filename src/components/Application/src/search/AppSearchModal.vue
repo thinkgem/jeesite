@@ -46,7 +46,7 @@
                 {{ item.name }}
               </div>
               <div :class="`${prefixCls}-list__item-enter`">
-                <Icon icon="ant-design:enter-outlined" :size="20" />
+                <Icon icon="i-ant-design:enter-outlined" :size="20" />
               </div>
             </li>
           </ul>

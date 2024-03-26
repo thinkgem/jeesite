@@ -21,7 +21,7 @@
           v-auth="item.props.buttonAuth"
           @click="item.handleOpenModal(item.props.buttonComp)"
         >
-          <Icon icon="fluent:add-12-filled" /> {{ t(item.props.buttonText) }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t(item.props.buttonText) }}
         </a-button>
         <component
           :is="item.modalComponent"
@@ -77,7 +77,7 @@
                 props.config?.isShowCode !== false ? ' (' + item[props.config?.itemCode] + ')' : ''
               }}
             </span>
-            <Icon icon="ant-design:close-outlined" @click="closeTag(index)" />
+            <Icon icon="i-ant-design:close-outlined" @click="closeTag(index)" />
           </Tag>
         </div>
       </ACol>

@@ -11,10 +11,10 @@
       </template>
       <template v-if="$slots.tableTitle || $slots.toolbar" #toolbar>
         <a-button v-if="getBindValues.useSearchForm && !formShow" @click="handleFormShowToggle()">
-          <Icon icon="ant-design:filter-twotone" /> {{ t('common.queryText') }}
+          <Icon icon="i-ant-design:filter-twotone" /> {{ t('common.queryText') }}
         </a-button>
         <a-button v-if="getBindValues.useSearchForm && formShow" @click="handleFormShowToggle()">
-          <Icon icon="ant-design:filter-outlined" /> {{ t('common.hideText') }}
+          <Icon icon="i-ant-design:filter-outlined" /> {{ t('common.hideText') }}
         </a-button>
         <slot v-if="$slots.toolbar" name="toolbar"></slot>
       </template>

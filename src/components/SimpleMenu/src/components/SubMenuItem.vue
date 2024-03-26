@@ -4,7 +4,7 @@
       <div :class="`${prefixCls}-submenu-title`" @click.stop="handleClick" :style="getItemStyle">
         <slot name="title"></slot>
         <Icon
-          icon="eva:arrow-ios-downward-outline"
+          icon="i-eva:arrow-ios-downward-outline"
           :size="14"
           :class="`${prefixCls}-submenu-title-icon`"
         />
@@ -38,7 +38,7 @@
         </div>
         <Icon
           v-if="getParentSubMenu"
-          icon="eva:arrow-ios-downward-outline"
+          icon="i-eva:arrow-ios-downward-outline"
           :size="14"
           :class="`${prefixCls}-submenu-title-icon`"
         />

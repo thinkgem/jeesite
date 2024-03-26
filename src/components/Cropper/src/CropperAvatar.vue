@@ -3,7 +3,7 @@
     <div :class="`${prefixCls}-image-wrapper`" :style="getImageWrapperStyle" @click="openModal">
       <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
         <Icon
-          icon="ant-design:cloud-upload-outlined"
+          icon="i-ant-design:cloud-upload-outlined"
           :size="getIconWidth"
           :style="getImageWrapperStyle"
           color="#d6d6d6"

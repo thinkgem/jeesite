@@ -25,10 +25,10 @@
       <slot v-if="$slots.actions" name="actions"></slot>
       <template v-else>
         <a-button type="default" @click="handleClose" v-auth="props.okAuth">
-          <Icon icon="ant-design:close-outlined" /> {{ t('common.closeText') }}
+          <Icon icon="i-ant-design:close-outlined" /> {{ t('common.closeText') }}
         </a-button>
         <a-button type="primary" @click="handleSubmit" :loading="props.loading || props.okLoading">
-          <Icon icon="ant-design:check-outlined" /> {{ t('common.okText') }}
+          <Icon icon="i-ant-design:check-outlined" /> {{ t('common.okText') }}
         </a-button>
       </template>
     </div>

@@ -35,41 +35,41 @@
       const toolbarItemList = ref<ToolbarConfig[]>([
         {
           type: ToolbarTypeEnum.ZOOM_IN,
-          icon: 'codicon:zoom-out',
+          icon: 'i-codicon:zoom-out',
           tooltip: '缩小',
         },
         {
           type: ToolbarTypeEnum.ZOOM_OUT,
-          icon: 'codicon:zoom-in',
+          icon: 'i-codicon:zoom-in',
           tooltip: '放大',
         },
         {
           type: ToolbarTypeEnum.RESET_ZOOM,
-          icon: 'codicon:screen-normal',
+          icon: 'i-codicon:screen-normal',
           tooltip: '重置比例',
         },
         { separate: true },
         {
           type: ToolbarTypeEnum.UNDO,
-          icon: 'ion:arrow-undo-outline',
+          icon: 'i-ion:arrow-undo-outline',
           tooltip: '后退',
           disabled: true,
         },
         {
           type: ToolbarTypeEnum.REDO,
-          icon: 'ion:arrow-redo-outline',
+          icon: 'i-ion:arrow-redo-outline',
           tooltip: '前进',
           disabled: true,
         },
         { separate: true },
         {
           type: ToolbarTypeEnum.SNAPSHOT,
-          icon: 'ion:download-outline',
+          icon: 'i-ion:download-outline',
           tooltip: '下载',
         },
         {
           type: ToolbarTypeEnum.VIEW_DATA,
-          icon: 'carbon:document-view',
+          icon: 'i-carbon:document-view',
           tooltip: '查看数据',
         },
       ]);

@@ -1,11 +1,11 @@
 <template>
   <div :class="`${prefixCls}`">
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="ant-design:enter-outlined" />
+    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-ant-design:enter-outlined" />
     <span>{{ t('component.app.toSearch') }}</span>
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="ion:arrow-up-outline" />
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="ion:arrow-down-outline" />
+    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-ion:arrow-up-outline" />
+    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-ion:arrow-down-outline" />
     <span>{{ t('component.app.toNavigate') }}</span>
-    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="mdi:keyboard-esc" />
+    <AppSearchKeyItem :class="`${prefixCls}-item`" icon="i-mdi:keyboard-esc" />
     <span>{{ t('common.closeText') }}</span>
   </div>
 </template>

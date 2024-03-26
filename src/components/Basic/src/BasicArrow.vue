@@ -46,7 +46,7 @@
 
   const getIcon = computed(() => {
     const { leaf } = props;
-    return leaf ? 'radix-icons:dot' : 'ion:chevron-forward';
+    return leaf ? 'i-radix-icons:dot' : 'i-ion:chevron-forward';
   });
 
   // get component class

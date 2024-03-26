@@ -5,7 +5,7 @@
         v-if="!(readonly || disabled)"
         type="primary"
         @click="openUploadModal"
-        preIcon="carbon:cloud-upload"
+        preIcon="i-carbon:cloud-upload"
       >
         {{ uploadText || t('component.upload.upload') }}
       </a-button>
@@ -17,7 +17,7 @@
           </template>
         </template>
         <a-button @click="openPreviewModal">
-          <Icon icon="bi:eye" />
+          <Icon icon="i-bi:eye" />
           <template v-if="fileList.length && showPreviewNumber">
             {{ fileList.length }}
           </template>

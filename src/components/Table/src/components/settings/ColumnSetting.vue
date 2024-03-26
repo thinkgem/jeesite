@@ -64,7 +64,7 @@
                     {{ t('component.table.settingFixedLeft') }}
                   </template>
                   <Icon
-                    icon="line-md:arrow-align-left"
+                    icon="i-line-md:arrow-align-left"
                     :class="[
                       `${prefixCls}__fixed-left`,
                       {
@@ -85,7 +85,7 @@
                     {{ t('component.table.settingFixedRight') }}
                   </template>
                   <Icon
-                    icon="line-md:arrow-align-right"
+                    icon="i-line-md:arrow-align-right"
                     :class="[
                       `${prefixCls}__fixed-right`,
                       {

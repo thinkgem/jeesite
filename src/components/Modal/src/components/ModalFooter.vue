@@ -2,7 +2,7 @@
   <div>
     <slot name="insertFooter"></slot>
     <a-button v-bind="cancelButtonProps" @click="handleCancel" v-if="showCancelBtn">
-      <Icon icon="ant-design:close-outlined" />
+      <Icon icon="i-ant-design:close-outlined" />
       {{ cancelText || (getOkAuth && showOkBtn ? t('common.cancelText') : t('common.closeText')) }}
     </a-button>
     <slot name="centerFooter"></slot>
@@ -13,7 +13,7 @@
       v-bind="okButtonProps"
       v-if="showOkBtn && getOkAuth"
     >
-      <Icon icon="ant-design:check-outlined" />
+      <Icon icon="i-ant-design:check-outlined" />
       {{ okText || t('common.okText') }}
     </a-button>
     <slot name="appendFooter"></slot>
