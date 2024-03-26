@@ -5,6 +5,7 @@
     v-bind="$props"
     :class="getLevelClass"
     :style="`color: ${getColor}`"
+    :title="getI18nName"
   >
     <Icon v-if="getIcon" :icon="getIcon" :size="16" />
     <div v-if="collapsedShowTitle && getIsCollapseParent" class="collapse-title mt-1">
@@ -23,6 +24,7 @@
     :class="[getLevelClass, theme]"
     :collapsedShowTitle="collapsedShowTitle"
     :style="`color: ${getColor}`"
+    :title="getI18nName"
   >
     <template #title>
       <Icon v-if="getIcon" :icon="getIcon" :size="16" />
