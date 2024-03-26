@@ -13,7 +13,7 @@
   >
     <template #addonAfter>
       <a-popover
-        placement="bottomLeft"
+        placement="bottom"
         trigger="click"
         v-model="open"
         :overlayClassName="`${prefixCls}-popover`"
@@ -66,7 +66,7 @@
 <script lang="ts" setup>
   import { ref, watchEffect, watch, unref } from 'vue';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { Input, Popover, Pagination, Empty } from 'ant-design-vue';
+  import { Popover, Pagination, Empty } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
   import { usePagination } from '/@/hooks/web/usePagination';
   import { useDebounceFn } from '@vueuse/core';
@@ -74,22 +74,21 @@
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import svgIcons from 'virtual:svg-icons-names';
-  import iconsData from '../data/icons.data';
+  import IconData from './IconData';
   import Icon from './Icon.vue';
 
-  const AInput = Input;
   const APopover = Popover;
   const APagination = Pagination;
   const AEmpty = Empty;
 
   function getIcons() {
-    const data = iconsData as any;
+    const data = IconData as any;
     const prefix: string = data?.prefix ?? '';
     let result: string[] = [];
     if (prefix) {
       result = (data?.icons ?? []).map((item) => `${prefix}:${item}`);
-    } else if (Array.isArray(iconsData)) {
-      result = iconsData as string[];
+    } else if (Array.isArray(IconData)) {
+      result = IconData as string[];
     }
     return result;
   }
