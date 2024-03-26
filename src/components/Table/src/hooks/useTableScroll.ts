@@ -83,6 +83,7 @@ export function useTableScroll(
       if (!bodyEl) return;
     }
 
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight;
     const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth;
 
