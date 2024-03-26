@@ -19,7 +19,7 @@
       :before-upload="beforeUpload"
       @remove="handleRemove"
     >
-      <a-button> <Icon icon="ant-design:upload-outlined" /> {{ t('选择文件') }} </a-button>
+      <a-button> <Icon icon="i-ant-design:upload-outlined" /> {{ t('选择文件') }} </a-button>
       <span class="ml-4">{{ uploadInfo }}</span>
     </Upload>
     <div class="mt-4">
@@ -32,7 +32,7 @@
         </Tooltip>
       </Checkbox>
       <a-button @click="handleDownloadTemplate()" type="text">
-        <Icon icon="fa:file-excel-o" />
+        <Icon icon="i-fa:file-excel-o" />
         {{ t('下载模板') }}
       </a-button>
     </div>

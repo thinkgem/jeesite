@@ -23,32 +23,32 @@ interface DynamicInfoItem {
 export const navItems: NavItem[] = [
   {
     title: '首页',
-    icon: 'ion:home-outline',
+    icon: 'i-ion:home-outline',
     color: '#1fdaca',
   },
   {
     title: '仪表盘',
-    icon: 'ion:grid-outline',
+    icon: 'i-ion:grid-outline',
     color: '#bf0c2c',
   },
   {
     title: '组件',
-    icon: 'ion:layers-outline',
+    icon: 'i-ion:layers-outline',
     color: '#e18525',
   },
   {
     title: '系统管理',
-    icon: 'ion:settings-outline',
+    icon: 'i-ion:settings-outline',
     color: '#3fb27f',
   },
   {
     title: '权限管理',
-    icon: 'ion:key-outline',
+    icon: 'i-ion:key-outline',
     color: '#4daf1bc9',
   },
   {
     title: '图表',
-    icon: 'ion:bar-chart-outline',
+    icon: 'i-ion:bar-chart-outline',
     color: '#00d8ff',
   },
 ];
@@ -107,7 +107,7 @@ export const dynamicInfoItems: DynamicInfoItem[] = [
 export const groupItems: GroupItem[] = [
   {
     title: 'Gitee',
-    icon: 'simple-icons:gitee',
+    icon: 'i-simple-icons:gitee',
     color: '#ce2323',
     desc: '不要等待机会，而要创造机会。',
     group: '开源组',
@@ -115,7 +115,7 @@ export const groupItems: GroupItem[] = [
   },
   {
     title: 'Vue',
-    icon: 'ion:logo-vue',
+    icon: 'i-ion:logo-vue',
     color: '#3fb27f',
     desc: '现在的你决定将来的你。',
     group: '前端组',
@@ -123,7 +123,7 @@ export const groupItems: GroupItem[] = [
   },
   {
     title: 'Html5',
-    icon: 'ion:logo-html5',
+    icon: 'i-ion:logo-html5',
     color: '#e18525',
     desc: '没有什么才能比努力更重要。',
     group: '上班摸鱼',
@@ -131,7 +131,7 @@ export const groupItems: GroupItem[] = [
   },
   {
     title: 'Java',
-    icon: 'logos:java',
+    icon: 'i-logos:java',
     color: '#bf0c2c',
     desc: '热情和欲望可以突破一切难关。',
     group: '算法组',
@@ -139,7 +139,7 @@ export const groupItems: GroupItem[] = [
   },
   {
     title: 'Spring',
-    icon: 'bx:bxl-spring-boot',
+    icon: 'i-bx:bxl-spring-boot',
     color: '#00d8ff',
     desc: '健康的身体是实目标的基石。',
     group: '技术牛',
@@ -147,7 +147,7 @@ export const groupItems: GroupItem[] = [
   },
   {
     title: 'JeeSite',
-    icon: 'ion:logo-javascript',
+    icon: 'i-ion:logo-javascript',
     color: '#4daf1bc9',
     desc: '路是走出来的，而不是空想出来的。',
     group: '架构组',

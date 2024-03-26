@@ -12,7 +12,7 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleForm({})" v-auth="'sys:dictType:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -139,13 +139,13 @@
     width: 130,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑字典'),
         onClick: handleForm.bind(this, { id: record.id }),
         auth: 'sys:dictType:edit',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除字典'),
         popConfirm: {
@@ -155,7 +155,7 @@
         auth: 'sys:dictType:edit',
       },
       {
-        icon: 'ant-design:unordered-list-outlined',
+        icon: 'i-ant-design:unordered-list-outlined',
         title: t('字典数据'),
         onClick: handleDictData.bind(this, record),
         auth: 'sys:dictData:edit',

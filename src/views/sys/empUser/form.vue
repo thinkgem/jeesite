@@ -23,7 +23,7 @@
           @row-click="handleEmployeeOfficeRowClick"
         />
         <a-button class="mt-2" @click="handleEmployeeOfficeAdd">
-          <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+          <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #userRoleString>
@@ -269,7 +269,7 @@
       width: 60,
       actions: (record: Recordable) => [
         {
-          icon: 'ant-design:delete-outlined',
+          icon: 'i-ant-design:delete-outlined',
           color: 'error',
           popConfirm: {
             title: '是否确认删除',

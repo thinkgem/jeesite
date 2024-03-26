@@ -34,7 +34,7 @@
 
   const { t } = useI18n();
   const getTitle = {
-    icon: 'ion:person-outline',
+    icon: 'i-ion:person-outline',
     value: t('sys.account.center'),
   };
 </script>

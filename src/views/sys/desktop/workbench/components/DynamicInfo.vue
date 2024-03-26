@@ -23,7 +23,7 @@
 </template>
 <script lang="ts" setup>
   import { Card, List } from 'ant-design-vue';
-  import { dynamicInfoItems } from './data';
+  import { dynamicInfoItems } from './Data';
   import { Icon } from '/@/components/Icon';
 
   const ListItem = List.Item;

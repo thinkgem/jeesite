@@ -11,10 +11,10 @@
       <BasicForm @register="register" class="w-9/12" />
       <div class="flex justify-center">
         <a-button @click="resetFields">
-          <Icon icon="ant-design:undo-outlined" /> {{ t('common.resetText') }}
+          <Icon icon="i-ant-design:undo-outlined" /> {{ t('common.resetText') }}
         </a-button>
         <a-button class="!ml-4" type="primary" @click="handleSubmit">
-          <Icon icon="ant-design:check-outlined" /> {{ t('common.submitText') }}
+          <Icon icon="i-ant-design:check-outlined" /> {{ t('common.submitText') }}
         </a-button>
       </div>
     </div>
@@ -41,7 +41,7 @@
   const { t } = useI18n();
   const { showMessage, createSuccessModal } = useMessage();
   const getTitle = {
-    icon: 'ion:key-outline',
+    icon: 'i-ion:key-outline',
     value: t('sys.account.modifyPwd'),
   };
 

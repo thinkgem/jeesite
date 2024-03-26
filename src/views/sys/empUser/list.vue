@@ -17,7 +17,7 @@
             v-auth="'sys:empUser:edit'"
             class="ml-4"
           >
-            <Icon icon="ant-design:delete-outlined" color="error" /> {{ t('删除') }} ({{
+            <Icon icon="i-ant-design:delete-outlined" color="error" /> {{ t('删除') }} ({{
               selectedRowKeysRef.length
             }})
           </a-button>
@@ -25,13 +25,13 @@
       </template>
       <template #toolbar>
         <a-button type="default" @click="handleExport()">
-          <Icon icon="ant-design:download-outlined" /> {{ t('导出') }}
+          <Icon icon="i-ant-design:download-outlined" /> {{ t('导出') }}
         </a-button>
         <a-button type="default" @click="handleImport()">
-          <Icon icon="ant-design:upload-outlined" /> {{ t('导入') }}
+          <Icon icon="i-ant-design:upload-outlined" /> {{ t('导入') }}
         </a-button>
         <a-button type="primary" @click="handleForm({ op: 'add' })" v-auth="'sys:empUser:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -250,13 +250,13 @@
     width: 160,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑用户'),
         onClick: handleForm.bind(this, { userCode: record.userCode, op: 'edit' }),
         auth: 'sys:empUser:edit',
       },
       {
-        icon: 'ant-design:stop-outlined',
+        icon: 'i-ant-design:stop-outlined',
         color: 'error',
         title: t('停用用户'),
         popConfirm: {
@@ -267,7 +267,7 @@
         ifShow: () => record.status === '0',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         color: 'success',
         title: t((record.status === '3' ? '解冻' : '启用') + '用户'),
         popConfirm: {
@@ -281,7 +281,7 @@
         ifShow: () => record.status === '2' || record.status === '3' || record.status === '4',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除用户'),
         popConfirm: {
@@ -293,19 +293,19 @@
     ],
     dropDownActions: (record: Recordable) => [
       {
-        icon: 'ant-design:check-square-outlined',
+        icon: 'i-ant-design:check-square-outlined',
         label: t('分配角色'),
         onClick: handleForm.bind(this, { userCode: record.userCode, op: 'auth' }),
         auth: 'sys:empUser:authRole',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         label: t('数据权限'),
         onClick: handleFormAuthDataScope.bind(this, { userCode: record.userCode, op: 'auth' }),
         auth: 'sys:empUser:authDataScope',
       },
       {
-        icon: 'ant-design:reload-outlined',
+        icon: 'i-ant-design:reload-outlined',
         label: t('重置密码'),
         popConfirm: {
           title: t('是否确认重置密码'),

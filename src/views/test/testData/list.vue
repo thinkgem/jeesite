@@ -12,7 +12,7 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleForm({})" v-auth="'test:testData:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -25,7 +25,7 @@
       </template>
       <template #customFilterIcon="filter">
         <Icon
-          icon="ant-design:search-outlined"
+          icon="i-ant-design:search-outlined"
           :style="{ color: filter.filtered ? '#108ee9' : undefined }"
         />
       </template>
@@ -364,31 +364,31 @@
     width: 250,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('抽屉模式编辑'),
         onClick: handleForm.bind(this, { id: record.id }),
         auth: 'test:testData:edit',
       },
       {
-        icon: 'clarity:timeline-line',
+        icon: 'i-clarity:timeline-line',
         title: t('表单页签编辑'),
         onClick: handleFormTabs.bind(this, { id: record.id }),
         auth: 'test:testData:edit',
       },
       {
-        icon: 'ant-design:file-markdown-outlined',
+        icon: 'i-ant-design:file-markdown-outlined',
         title: t('弹窗模式编辑'),
         onClick: handleFormModal.bind(this, { id: record.id }),
         auth: 'test:testData:edit',
       },
       {
-        icon: 'ant-design:layout-outlined',
+        icon: 'i-ant-design:layout-outlined',
         title: t('路由模式编辑'),
         onClick: handleFormRoute.bind(this, { id: record.id }),
         auth: 'test:testData:edit',
       },
       {
-        icon: 'ant-design:stop-outlined',
+        icon: 'i-ant-design:stop-outlined',
         color: 'error',
         title: t('停用数据'),
         popConfirm: {
@@ -399,7 +399,7 @@
         ifShow: () => record.status === '0',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         color: 'success',
         title: t('启用数据'),
         popConfirm: {
@@ -410,7 +410,7 @@
         ifShow: () => record.status === '2',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除数据'),
         popConfirm: {

@@ -24,7 +24,7 @@
         v-if="!record.status || record.status == '9'"
         @click="handleSubmit('9')"
       >
-        <Icon icon="ant-design:save-outlined" />
+        <Icon icon="i-ant-design:save-outlined" />
         {{ t('草稿') }}
       </a-button>
     </template>

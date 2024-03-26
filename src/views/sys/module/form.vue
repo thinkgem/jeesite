@@ -18,7 +18,7 @@
     </template>
     <template #centerFooter>
       <a-button v-if="isCustomModule" type="primary" danger @click="handleSubmit('2')">
-        <Icon icon="ant-design:bug-outlined" /> {{ t('确认并生成代码') }}
+        <Icon icon="i-ant-design:bug-outlined" /> {{ t('确认并生成代码') }}
       </a-button>
     </template>
     <BasicForm @register="registerForm">
@@ -26,7 +26,7 @@
         <Input v-model:value="genBaseDir">
           <template #addonAfter>
             <Dropdown class="cursor-pointer" :trigger="['click']" :dropMenuList="genBaseDirList">
-              {{ t('生成路径快速选择') }} <Icon icon="ant-design:down-outlined" />
+              {{ t('生成路径快速选择') }} <Icon icon="i-ant-design:down-outlined" />
             </Dropdown>
           </template>
         </Input>

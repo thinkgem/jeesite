@@ -143,7 +143,7 @@
     width: 70,
     actions: (record: Recordable) => [
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('踢出在线用户'),
         popConfirm: {

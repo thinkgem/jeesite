@@ -108,11 +108,11 @@
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="enter-x flex justify-evenly" :class="`${prefixCls}-sign-in-way`">
-      <Icon icon="ant-design:qq-circle-filled" size="32" @click="handleOauth2" />
-      <Icon icon="ant-design:wechat-filled" size="32" @click="handleOauth2" />
-      <Icon icon="ant-design:github-filled" size="32" @click="handleOauth2" />
+      <Icon icon="i-ant-design:qq-circle-filled" size="32" @click="handleOauth2" />
+      <Icon icon="i-ant-design:wechat-filled" size="32" @click="handleOauth2" />
+      <Icon icon="i-ant-design:github-filled" size="32" @click="handleOauth2" />
       <a href="https://gitee.com/thinkgem/jeesite-client" target="_blank">
-        <Icon icon="ant-design:windows-filled" size="32" style="vertical-align: middle" />
+        <Icon icon="i-ant-design:windows-filled" size="32" style="vertical-align: middle" />
         <span class="pl-1" style="vertical-align: middle"> {{ t('客户端下载') }}</span>
       </a>
     </div>
@@ -261,7 +261,7 @@
   }
 
   function handleOauth2(event: Event) {
-    showMessage('专业版实现第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
+    showMessage('未开放第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
     event.preventDefault();
   }
 </script>

@@ -12,13 +12,13 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleForm({ status: '9' })" v-auth="'msg:msgInner:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
         <a @click="handleForm({ id: record.id, status: record.status })">
           {{ record.msgTitle }}
-          <Icon v-if="record.isAttac == '1'" icon="fa fa-paperclip" />
+          <Icon v-if="record.isAttac == '1'" icon="i-fa:paperclip" />
         </a>
       </template>
     </BasicTable>
@@ -153,7 +153,7 @@
     width: 160,
     actions: (record: Recordable) => [
       {
-        icon: 'ant-design:file-text-outlined',
+        icon: 'i-ant-design:file-text-outlined',
         title: t('查看消息'),
         onClick: handleForm.bind(this, { id: record.id, status: record.status }),
         auth: 'msg:msgInner:view',
@@ -161,14 +161,14 @@
         enable: true,
       },
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑消息'),
         onClick: handleForm.bind(this, { id: record.id, status: record.status }),
         auth: 'msg:msgInner:edit',
         ifShow: () => record.status === '9',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除消息'),
         popConfirm: {

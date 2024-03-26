@@ -12,7 +12,7 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleForm({ op: 'add' })" v-auth="'sys:corpAdmin:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -141,13 +141,13 @@
     width: 160,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑用户'),
         onClick: handleForm.bind(this, { userCode: record.userCode, op: 'edit' }),
         auth: 'sys:corpAdmin:edit',
       },
       {
-        icon: 'ant-design:stop-outlined',
+        icon: 'i-ant-design:stop-outlined',
         color: 'error',
         title: t('停用用户'),
         popConfirm: {
@@ -158,7 +158,7 @@
         ifShow: () => record.status === '0',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         color: 'success',
         title: t('启用用户'),
         popConfirm: {
@@ -169,7 +169,7 @@
         ifShow: () => record.status === '2',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除用户'),
         popConfirm: {
@@ -179,7 +179,7 @@
         auth: 'sys:corpAdmin:edit',
       },
       {
-        icon: 'fluent:add-12-filled',
+        icon: 'i-fluent:add-12-filled',
         title: t('新增管理员'),
         onClick: handleForm.bind(this, {
           corpCode_: record.corpCode_,
@@ -192,7 +192,7 @@
     ],
     dropDownActions: (record: Recordable) => [
       {
-        icon: 'ant-design:reload-outlined',
+        icon: 'i-ant-design:reload-outlined',
         label: t('重置密码'),
         onClick: handleResetpwd.bind(this, { userCode: record.userCode }),
         auth: 'sys:corpAdmin:resetpwd',

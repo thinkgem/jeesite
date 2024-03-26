@@ -12,7 +12,7 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleForm({ op: 'add' })" v-auth="'sys:role:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -205,13 +205,13 @@
     width: 160,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑角色'),
         onClick: handleForm.bind(this, { roleCode: record.roleCode, op: 'edit' }),
         auth: 'sys:role:edit',
       },
       {
-        icon: 'ant-design:stop-outlined',
+        icon: 'i-ant-design:stop-outlined',
         color: 'error',
         title: t('停用角色'),
         popConfirm: {
@@ -222,7 +222,7 @@
         ifShow: () => record.status === '0',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         color: 'success',
         title: t('启用角色'),
         popConfirm: {
@@ -233,7 +233,7 @@
         ifShow: () => record.status === '2',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除角色'),
         popConfirm: {
@@ -245,19 +245,19 @@
     ],
     dropDownActions: (record: Recordable) => [
       {
-        icon: 'ant-design:check-square-outlined',
+        icon: 'i-ant-design:check-square-outlined',
         label: t('授权菜单'),
         onClick: handleForm.bind(this, { roleCode: record.roleCode, op: 'auth' }),
         auth: 'sys:role:edit',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         label: t('数据权限'),
         onClick: handleFormAuthDataScope.bind(this, { roleCode: record.roleCode }),
         auth: 'sys:role:edit',
       },
       {
-        icon: 'ant-design:user-outlined',
+        icon: 'i-ant-design:user-outlined',
         label: t('分配用户'),
         onClick: handleFormAuthUser.bind(this, { roleCode: record.roleCode }),
         auth: 'sys:role:edit',

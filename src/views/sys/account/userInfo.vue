@@ -9,7 +9,7 @@
           <CropperAvatar
             :value="avatar"
             :btnText="t('sys.account.changeAvatar')"
-            :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+            :btnProps="{ preIcon: 'i-ant-design:cloud-upload-outlined' }"
             @change="updateAvatar"
             width="150"
           />
@@ -18,7 +18,7 @@
     </ARow>
     <div class="ml-30">
       <Button type="primary" @click="handleSubmit">
-        <Icon icon="ant-design:check-outlined" /> {{ t('sys.account.updateBtn') }}
+        <Icon icon="i-ant-design:check-outlined" /> {{ t('sys.account.updateBtn') }}
       </Button>
     </div>
   </CollapseContainer>

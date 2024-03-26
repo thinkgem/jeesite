@@ -12,7 +12,7 @@
       </template>
       <template #toolbar>
         <a-button type="primary" @click="handleForm({})" v-auth="'sys:config:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -111,13 +111,13 @@
     width: 100,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑参数'),
         onClick: handleForm.bind(this, { id: record.id }),
         auth: 'sys:config:edit',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除参数'),
         popConfirm: {

@@ -28,7 +28,7 @@
     </BasicForm>
     <div class="flex justify-center">
       <a-button type="primary" @click="closeCurrent">
-        <Icon icon="ant-design:close-outlined" /> {{ t('关闭') }}
+        <Icon icon="i-ant-design:close-outlined" /> {{ t('关闭') }}
       </a-button>
     </div>
   </PageWrapper>

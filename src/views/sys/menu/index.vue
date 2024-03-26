@@ -59,7 +59,7 @@
       return {
         text: item.name,
         event: item.value,
-        icon: 'radix-icons:dot',
+        icon: 'i-radix-icons:dot',
         onClick: () => {
           sysCode.value = item.value;
           sysName.value = item.name;

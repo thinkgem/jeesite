@@ -18,7 +18,7 @@
     </template>
     <template #centerFooter>
       <a-button type="primary" @click="handleForm" v-auth="'sys:role:edit'">
-        <Icon icon="fluent:add-12-filled" /> {{ t('添加用户') }}
+        <Icon icon="i-fluent:add-12-filled" /> {{ t('添加用户') }}
       </a-button>
       <ListSelect
         ref="listSelectRef"
@@ -29,7 +29,7 @@
       />
       <Popconfirm :title="t('是否确认取消选中用户的角色')" @confirm="handleDelete">
         <a-button type="error" v-auth="'sys:role:edit'">
-          <Icon icon="ant-design:close-outlined" /> {{ t('批量取消') }}
+          <Icon icon="i-ant-design:close-outlined" /> {{ t('批量取消') }}
         </a-button>
       </Popconfirm>
     </template>
@@ -180,7 +180,7 @@
     width: 60,
     actions: (record: Recordable) => [
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('取消授权'),
         popConfirm: {

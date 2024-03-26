@@ -12,13 +12,13 @@
       </template>
       <template #toolbar>
         <a-button @click="expandAll" :title="t('展开一级')">
-          <Icon icon="bi:chevron-double-down" /> {{ t('展开') }}
+          <Icon icon="i-bi:chevron-double-down" /> {{ t('展开') }}
         </a-button>
         <a-button @click="collapseAll" :title="t('折叠全部')">
-          <Icon icon="bi:chevron-double-up" /> {{ t('折叠') }}
+          <Icon icon="i-bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
         <a-button type="primary" @click="handleForm({})" v-auth="'sys:area:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <template #firstColumn="{ record }">
@@ -136,13 +136,13 @@
     width: 160,
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑区域'),
         onClick: handleForm.bind(this, { areaCode: record.areaCode }),
         auth: 'sys:area:edit',
       },
       {
-        icon: 'ant-design:stop-outlined',
+        icon: 'i-ant-design:stop-outlined',
         color: 'error',
         title: t('停用区域'),
         popConfirm: {
@@ -153,7 +153,7 @@
         ifShow: () => record.status === '0',
       },
       {
-        icon: 'ant-design:check-circle-outlined',
+        icon: 'i-ant-design:check-circle-outlined',
         color: 'success',
         title: t('启用区域'),
         popConfirm: {
@@ -164,7 +164,7 @@
         ifShow: () => record.status === '2',
       },
       {
-        icon: 'ant-design:delete-outlined',
+        icon: 'i-ant-design:delete-outlined',
         color: 'error',
         title: t('删除区域'),
         popConfirm: {
@@ -174,7 +174,7 @@
         auth: 'sys:area:edit',
       },
       {
-        icon: 'fluent:add-circle-24-regular',
+        icon: 'i-fluent:add-circle-24-regular',
         title: t('新增下级区域'),
         onClick: handleForm.bind(this, {
           parentCode: record.id,
