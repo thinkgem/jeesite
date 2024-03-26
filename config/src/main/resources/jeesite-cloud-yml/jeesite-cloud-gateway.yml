@@ -51,7 +51,11 @@ spring:
             - Path=/js/a/file/**,/js/userfiles/**,/js/static/filePreview/**,/js/a/filemanager/**
 
         # 消息服务（msg）
-        - id: msg
+        - id: msgInner
+          uri: lb://jeesite-cloud-module-core
+          predicates:
+            - Path=/js/a/msg/msgInner/**
+        - id: msgPush
           uri: lb://jeesite-cloud-module-msg
           predicates:
             - Path=/js/a/msg/**,/js/a/jeesite-cloud-module-msg/**
