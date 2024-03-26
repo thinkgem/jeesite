@@ -20,15 +20,15 @@ async function generateIcon() {
 
   inquirer
     .prompt([
-      {
-        type: 'list',
-        name: 'useType',
-        choices: [
-          { key: 'local', value: 'local', name: 'Local' },
-          { key: 'onLine', value: 'onLine', name: 'OnLine' },
-        ],
-        message: 'How to use icons?',
-      },
+      // {
+      //   type: 'list',
+      //   name: 'useType',
+      //   choices: [
+      //     { key: 'local', value: 'local', name: 'Local' },
+      //     { key: 'onLine', value: 'onLine', name: 'OnLine' },
+      //   ],
+      //   message: 'How to use icons?',
+      // },
       {
         type: 'list',
         name: 'iconSet',
@@ -39,11 +39,11 @@ async function generateIcon() {
         type: 'input',
         name: 'output',
         message: 'Select the icon set that needs to be generated?',
-        default: 'src/components/Icon/data',
+        default: 'src/components/Icon',
       },
     ])
     .then(async (answers) => {
-      const { iconSet, output, useType } = answers;
+      const { iconSet, output, useType = 'local' } = answers;
       const outputDir = path.resolve(process.cwd(), output);
       fs.ensureDir(outputDir);
       const genCollections = collections.filter((item) => [iconSet].includes(item.id));
@@ -54,11 +54,11 @@ async function generateIcon() {
           const { prefix } = data;
           const isLocal = useType === 'local';
           const icons = Object.keys(data.icons).map(
-            (item) => `${isLocal ? prefix + ':' : ''}${item}`,
+            (item) => `i-${isLocal ? prefix + ':' : ''}${item}`,
           );
 
           await fs.writeFileSync(
-            path.join(output, `icons.data.ts`),
+            path.join(output, `src/IconData.tsx`),
             `export default ${isLocal ? JSON.stringify(icons) : JSON.stringify({ prefix, icons })}`,
           );
           prefixSet.push(prefix);
