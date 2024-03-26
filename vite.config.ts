@@ -64,9 +64,7 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
           entryFileNames: `assets/[name]-[hash]-${timestamp}.js`,
           manualChunks: {
             vue: ['vue', 'vue-router', 'pinia'],
-            antd: ['ant-design-vue', '@ant-design/icons-vue'],
-            icon: ['src/components/Icon/index.ts'],
-            svg: ['virtual:svg-icons-register'],
+            antd: ['ant-design-vue'],
           },
         },
       },
