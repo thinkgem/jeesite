@@ -11,7 +11,6 @@ import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import vitePluginCertificate from 'vite-plugin-mkcert';
 import { appConfigPlugin } from './appConfig';
 import { configUnoCSSPlugin } from './unocss';
-import { configIconsPlugin } from './icons';
 import { configHtmlPlugin } from './html';
 import { configMockPlugin } from './mock';
 import { configCompressPlugin } from './compress';
@@ -35,9 +34,6 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
 
   // UnoCSS-vite-plugin
   vitePlugins.push(configUnoCSSPlugin());
-
-  // vite-plugin-purge-icons
-  vitePlugins.push(configIconsPlugin());
 
   // vite-plugin-html
   vitePlugins.push(configHtmlPlugin(isBuild));

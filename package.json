@@ -1,7 +1,6 @@
 {
   "name": "jeesite",
   "version": "5.7.0.dev",
-  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "bootstrap": "yarn install",
@@ -27,8 +26,6 @@
   "dependencies": {
     "@ant-design/colors": "^7.0.2",
     "@ant-design/icons-vue": "^7.0.1",
-    "@iconify/iconify": "^3.1.1",
-    "@iconify/vue": "^4.1.1",
     "@logicflow/core": "^1.2.18",
     "@logicflow/extension": "^1.2.19",
     "@vue/runtime-core": "^3.4.15",
@@ -68,6 +65,8 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@iconify/iconify": "^3.1.1",
+    "@iconify/json": "^2.2.195",
     "@types/codemirror": "^5.60.15",
     "@types/crypto-js": "^4.2.2",
     "@types/fs-extra": "^11.0.4",
@@ -129,7 +128,6 @@
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-mkcert": "^1.17.3",
     "vite-plugin-mock": "^3.0.1",
-    "vite-plugin-purge-icons": "^0.10.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-theme-vite3": "1.0.5",
     "vite-plugin-vue-setup-extend": "^0.4.0",
