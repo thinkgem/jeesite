@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import com.jeesite.common.callback.MethodCallback;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.tests.BaseInitDataTests;
 import com.jeesite.modules.app.entity.AppComment;
