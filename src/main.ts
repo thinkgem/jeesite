@@ -4,7 +4,6 @@
  * @author ThinkGem
  */
 import 'uno.css';
-import 'virtual:svg-icons-register';
 import 'ant-design-vue/dist/reset.css';
 import '/@/design/index.less';
 
