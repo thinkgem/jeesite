@@ -51,23 +51,23 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, unref, computed } from 'vue';
-
   import { propTypes } from '/@/utils/propTypes';
-
   import { Layout } from 'ant-design-vue';
   import { AppLogo } from '/@/components/Application';
-  import LayoutMenu from '../menu/index.vue';
-  import LayoutTrigger from '../trigger/index.vue';
-
   import { AppSearch } from '/@/components/Application';
-
+  import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
+  import { SettingButtonPositionEnum } from '/@/enums/appEnum';
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-
-  import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
-  import { SettingButtonPositionEnum } from '/@/enums/appEnum';
-
+  import { useAppInject } from '/@/hooks/web/useAppInject';
+  import { useDesign } from '/@/hooks/web/useDesign';
+  import { usePermission } from '/@/hooks/web/usePermission';
+  import { useLocale } from '/@/locales/useLocale';
+  import { useUserStore } from '/@/store/modules/user';
+  import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
+  import LayoutMenu from '../menu/index.vue';
+  import LayoutTrigger from '../trigger/index.vue';
   import {
     UserDropDown,
     LayoutBreadcrumb,
@@ -75,15 +75,8 @@
     Notify,
     ErrorAction,
     OnlineCount,
+    SettingDrawer,
   } from './components';
-  import { useAppInject } from '/@/hooks/web/useAppInject';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { usePermission } from '/@/hooks/web/usePermission';
-
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
-  import { useLocale } from '/@/locales/useLocale';
-  import { useUserStore } from '/@/store/modules/user';
-  import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -99,9 +92,7 @@
       AppSearch,
       ErrorAction,
       OnlineCount,
-      SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue'), {
-        loading: true,
-      }),
+      SettingDrawer,
     },
     props: {
       fixed: propTypes.bool,
