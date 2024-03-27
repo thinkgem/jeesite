@@ -10,7 +10,7 @@ declare module '*.vue' {
 //   export default locale as Locale & ReadonlyRecordable;
 // }
 
-declare module 'virtual:*' {
-  const result: any;
-  export default result;
-}
+// declare module 'virtual:*' {
+//   const result: any;
+//   export default result;
+// }

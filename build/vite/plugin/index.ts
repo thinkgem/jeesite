@@ -16,7 +16,6 @@ import { configMockPlugin } from './mock';
 import { configCompressPlugin } from './compress';
 import { configVisualizerPlugin } from './visualizer';
 import { configThemePlugin } from './theme';
-import { configSvgIconsPlugin } from './svgSprite';
 import { PackageJson } from 'pkg-types';
 
 export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: PackageJson) {
@@ -37,9 +36,6 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
 
   // vite-plugin-html
   vitePlugins.push(configHtmlPlugin(isBuild));
-
-  // vite-plugin-svg-icons
-  vitePlugins.push(configSvgIconsPlugin(isBuild));
 
   // vite-plugin-mock
   viteEnv.VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild));

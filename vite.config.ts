@@ -62,10 +62,10 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
         // maxParallelFileOps: 3,
         output: {
           entryFileNames: `assets/[name]-[hash]-${timestamp}.js`,
-          manualChunks: {
-            vue: ['vue', 'vue-router', 'pinia'],
-            antd: ['ant-design-vue'],
-          },
+          // manualChunks: {
+          //   vue: ['vue', 'vue-router', 'pinia'],
+          //   antdv: ['ant-design-vue', '@ant-design/icons-vue'],
+          // },
         },
       },
     },

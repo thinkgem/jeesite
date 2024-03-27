@@ -1,9 +1,7 @@
 import { type PluginOption } from 'vite';
-import { presetTypography, presetUno, presetIcons } from 'unocss';
+import UnoConfig from '../../../uno.config';
 import UnoCSS from 'unocss/vite';
 
 export function configUnoCSSPlugin(): PluginOption {
-  return UnoCSS({
-    presets: [presetUno(), presetTypography(), presetIcons()],
-  });
+  return UnoCSS(UnoConfig);
 }
