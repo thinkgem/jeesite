@@ -15,7 +15,7 @@
       </span>
     </span>
   </div>
-  <Dropdown v-else placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
+  <Dropdown v-else placement="bottom" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
       <span :class="`${prefixCls}__info hidden md:block`">
@@ -26,7 +26,11 @@
     </span>
     <template #overlay>
       <Menu @click="handleMenuClick">
-        <MenuItem value="accountCenter" :text="t('sys.account.center')" icon="i-ion:person-outline" />
+        <MenuItem
+          value="accountCenter"
+          :text="t('sys.account.center')"
+          icon="i-ion:person-outline"
+        />
         <MenuItem value="modifyPwd" :text="t('sys.account.modifyPwd')" icon="i-ion:key-outline" />
         <MenuDivider />
         <MenuItem
@@ -89,29 +93,23 @@
   <LockAction v-if="!props.sidebar" @register="registerModal" />
 </template>
 <script lang="ts">
-  // components
-  import { Dropdown, Menu } from 'ant-design-vue';
-
   import { defineComponent, computed, ref, onMounted } from 'vue';
-
+  import { Dropdown, Menu } from 'ant-design-vue';
   import { DOC_URL } from '/@/settings/siteSetting';
-
   import { useUserStore } from '/@/store/modules/user';
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useModal } from '/@/components/Modal';
   import { useGo } from '/@/hooks/web/usePage';
-
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
-
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
-  import Icon from '/@/components/Icon/src/Icon.vue';
-
   import { useDict } from '/@/components/Dict';
   import { switchSys, switchRole } from '/@/api/sys/login';
   import { PageEnum } from '/@/enums/pageEnum';
+  import Icon from '/@/components/Icon';
+  import MenuItem from './DropMenuItem.vue';
+  import LockAction from '../lock/LockModal.vue';
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock' | 'roleCode-';
 
@@ -125,9 +123,9 @@
     components: {
       Dropdown,
       Menu,
-      MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
+      MenuItem,
       MenuDivider: Menu.Divider,
-      LockAction: createAsyncComponent(() => import('../lock/LockModal.vue'), { loading: true }),
+      LockAction,
       Icon,
     },
     props,
@@ -305,7 +303,7 @@
 
     &-dropdown-overlay {
       .ant-dropdown-menu-item {
-        min-width: 160px;
+        min-width: 115px;
       }
     }
 
@@ -340,7 +338,7 @@
 
         &__btns {
           padding-top: 3px;
-          font-size: 10px;
+          font-size: 11px;
           white-space: nowrap;
 
           .anticon {
