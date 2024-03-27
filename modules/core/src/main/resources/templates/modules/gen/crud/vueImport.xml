@@ -36,7 +36,7 @@
     </div>
     <div class="mt-4">
       <a-button @click="handleDownloadTemplate()" type="text">
-        <Icon icon="fa:file-excel-o" />
+        <Icon icon="i-fa:file-excel-o" />
         {{ t('下载模板') }}
       </a-button>
     </div>
