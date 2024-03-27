@@ -52,7 +52,7 @@
     const list: GrowCardItem[] = [
       {
         title: '工作台',
-        icon: 'visit-count|svg',
+        icon: 'icons/visit-count.svg',
         value: 1999,
         total: 120000,
         color: 'green',
@@ -61,7 +61,7 @@
       },
       {
         title: '关于我们',
-        icon: 'total-sales|svg',
+        icon: 'icons/total-sales.svg',
         value: 2999,
         total: 500000,
         color: 'blue',
@@ -70,7 +70,7 @@
       },
       {
         title: '源码下载',
-        icon: 'download-count|svg',
+        icon: 'icons/download-count.svg',
         value: 3999,
         total: 120000,
         color: 'orange',
@@ -79,7 +79,7 @@
       },
       {
         title: '官方网站',
-        icon: 'transaction|svg',
+        icon: 'icons/transaction.svg',
         value: 9999,
         total: 99999,
         color: 'purple',
