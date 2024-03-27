@@ -121,7 +121,7 @@
         box-shadow: none;
       }
 
-      .app-iconify {
+      .jeesite-icon {
         color: #fff;
       }
     }
@@ -209,8 +209,9 @@
     }
 
     &-sign-in-way {
-      .anticon {
-        font-size: 22px;
+      .anticon,
+      .iconfont {
+        font-size: 28px;
         color: #888;
         cursor: pointer;
 
@@ -249,7 +250,7 @@
     }
 
     .ant-divider-inner-text {
-      font-size: 12px;
+      font-size: 14px;
       color: @text-color-secondary;
     }
   }
