@@ -19,7 +19,7 @@
         </FormItemRest>
       </div>
       <Dropdown @click.prevent v-if="toolbar">
-        <Icon icon="i-ant-design:setting-outlined" class="pl-1" />
+        <Icon icon="i-ant-design:setting-outlined" class="px-1" />
         <template #overlay>
           <AMenu @click="handleMenuClick">
             <template v-for="item in toolbarList" :key="item.value">
