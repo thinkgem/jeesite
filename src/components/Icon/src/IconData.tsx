@@ -979,4 +979,6 @@ export default [
   'i-bx:bx-circle',
   'i-fa:bug',
   'i-fa:code',
+  'i-svg:sun',
+  'i-svg:moon',
 ];

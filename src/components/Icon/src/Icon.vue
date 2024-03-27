@@ -4,26 +4,14 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <SvgIcon
-    v-if="isSvgIcon"
-    :name="getSvgIcon"
-    :class="[$attrs.class, 'anticon']"
-    :size="size"
-    :spin="spin"
-  />
   <img
-    v-else-if="isImgIcon"
+    v-if="isImgIcon"
     :src="`${publicPath}/resource/img/${getImgIcon}`"
     :style="`width: ${size}px; height: ${size}px`"
-    :class="[$attrs.class, 'anticon']"
-    :alt="getImgIcon"
+    :class="getClass"
+    alt=""
   />
-  <span
-    v-else
-    ref="elRef"
-    :class="[$attrs.class, 'app-iconify anticon', spin && 'app-iconify-spin']"
-    :style="getWrapStyle"
-  ></span>
+  <span v-else ref="elRef" :style="getWrapStyle" :class="getClass"></span>
 </template>
 <script lang="ts">
   import type { PropType } from 'vue';
@@ -37,17 +25,12 @@
     computed,
     CSSProperties,
   } from 'vue';
-  import SvgIcon from './SvgIcon.vue';
   import { isString } from '/@/utils/is';
   import { propTypes } from '/@/utils/propTypes';
   import { publicPath } from '/@/utils/env';
 
-  const SVG_END_WITH_FLAG = '|svg';
-  const IMG_END_WITH_FLAG = '|img';
-
   export default defineComponent({
     name: 'BasicIcon',
-    components: { SvgIcon },
     props: {
       icon: propTypes.string.def(''),
       color: propTypes.string.def(''),
@@ -56,14 +39,21 @@
       },
       spin: propTypes.bool.def(false),
     },
-    setup(props) {
+    setup(props, { attrs }) {
       const elRef = ref<ElRef>(null);
-
-      const isSvgIcon = computed(() => props.icon?.endsWith(SVG_END_WITH_FLAG));
-      const isImgIcon = computed(() => props.icon?.endsWith(IMG_END_WITH_FLAG));
-      const getSvgIcon = computed(() => props.icon?.replace(SVG_END_WITH_FLAG, ''));
-      const getImgIcon = computed(() => props.icon?.replace(IMG_END_WITH_FLAG, ''));
-
+      const getClass = computed(() => {
+        const prefixCls = 'jeesite-icon';
+        return [
+          attrs.class,
+          `${prefixCls} anticon`,
+          {
+            [`${prefixCls}-spin`]: props.spin,
+            [`${prefixCls}-fa`]: unref(getIconRef).startsWith('i-fa:'),
+          },
+        ];
+      });
+      const isImgIcon = computed(() => props.icon?.includes('.'));
+      const getImgIcon = computed(() => props.icon);
       const getIconRef = computed(() => {
         const prefix = 'i-';
         let icon = props.icon || '';
@@ -79,7 +69,7 @@
       });
 
       const update = async () => {
-        if (unref(isSvgIcon)) return;
+        if (unref(isImgIcon)) return;
         const el = unref(elRef);
         if (!el) return;
         await nextTick();
@@ -99,8 +89,8 @@
         }
 
         const icon = unref(getIconRef);
-        if (fs && icon && icon.startsWith('fa:')) {
-          fs = (fs as number) - 2; // fa 图标偏大，整体缩小下
+        if (fs && icon && icon.startsWith('i-fa:')) {
+          fs = (fs as number) - 1; // fa 图标偏大，整体缩小下
         }
 
         return {
@@ -118,38 +108,33 @@
 
       return {
         elRef,
+        getClass,
         getWrapStyle,
-        isSvgIcon,
         isImgIcon,
-        getSvgIcon,
         getImgIcon,
-        getIconRef,
         publicPath,
+        getIconRef,
       };
     },
   });
 </script>
 <style lang="less">
-  .app-iconify {
+  .jeesite-icon {
     display: inline-block;
-    // vertical-align: middle;
 
     &-spin {
-      svg {
-        animation: loadingCircle 1s infinite linear;
-      }
+      animation: loadingCircle 1s infinite linear;
     }
 
-    svg.iconify--fa {
+    &-fa {
       opacity: 0.8;
     }
-  }
 
-  span.iconify {
-    display: block;
-    min-width: 1em;
-    min-height: 1em;
-    background-color: @iconify-bg-color;
-    border-radius: 100%;
+    //span {
+    //  min-width: 1em;
+    //  min-height: 1em;
+    //  border-radius: 100%;
+    //  background-color: @iconify-bg-color;
+    //}
   }
 </style>

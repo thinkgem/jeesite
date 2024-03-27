@@ -73,7 +73,6 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import svgIcons from 'virtual:svg-icons-names';
   import IconData from './IconData';
   import Icon from './Icon.vue';
 
@@ -93,29 +92,16 @@
     return result;
   }
 
-  function getSvgIcons() {
-    return svgIcons.map((icon) => icon.replace('icon-', '') + '|svg');
-  }
-
   const props = defineProps({
     value: propTypes.string,
     width: propTypes.string.def('100%'),
     pageSize: propTypes.number.def(70),
     copy: propTypes.bool.def(false),
-    mode: propTypes.oneOf(['svg', 'iconify']),
   });
 
   const emit = defineEmits(['change', 'update:value']);
 
-  let iconsTemp: string[];
-  if (props.mode === 'svg') {
-    iconsTemp = getSvgIcons();
-  } else if (props.mode === 'iconify') {
-    iconsTemp = getIcons();
-  } else {
-    iconsTemp = [...getIcons(), ...getSvgIcons()];
-  }
-  const icons = iconsTemp;
+  const icons = getIcons();
 
   const currentSelect = ref('');
   const open = ref(false);
