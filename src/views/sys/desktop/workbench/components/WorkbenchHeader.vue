@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:flex">
+  <div class="lg:flex pt-2">
     <Avatar :src="userinfo.avatarUrl || headerImg" :size="72" class="!mx-auto !block" />
     <div class="mt-2 flex flex-col justify-center md:ml-6 md:mt-0">
       <h1 class="text-md md:text-lg">早安, {{ userinfo.userName }}, 开始您一天的工作吧！</h1>
