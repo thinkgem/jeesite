@@ -18,7 +18,7 @@
 <script lang="ts">
   import { defineComponent, onMounted, ref } from 'vue';
   import { Tooltip, Badge } from 'ant-design-vue';
-  import Icon from '/@/components/Icon';
+  import { Icon } from '/@/components/Icon';
 
   import { useI18n } from '/@/hooks/web/useI18n';
   import { usePermission } from '/@/hooks/web/usePermission';

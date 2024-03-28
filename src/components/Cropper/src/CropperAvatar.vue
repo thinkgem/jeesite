@@ -45,7 +45,7 @@
   // import { useMessage } from '/@/hooks/web/useMessage';
   import { useI18n } from '/@/hooks/web/useI18n';
   import type { ButtonProps } from '/@/components/Button';
-  import Icon from '/@/components/Icon';
+  import { Icon } from '/@/components/Icon';
 
   export default defineComponent({
     name: 'CropperAvatar',

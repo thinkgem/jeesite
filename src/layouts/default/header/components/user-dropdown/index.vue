@@ -107,7 +107,7 @@
   import { useDict } from '/@/components/Dict';
   import { switchSys, switchRole } from '/@/api/sys/login';
   import { PageEnum } from '/@/enums/pageEnum';
-  import Icon from '/@/components/Icon';
+  import { Icon } from '/@/components/Icon';
   import MenuItem from './DropMenuItem.vue';
   import LockAction from '../lock/LockModal.vue';
 
