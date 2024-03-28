@@ -16,7 +16,12 @@
         :immediate="immediate"
         :defaultExpandLevel="2"
         @select="handleSelect"
-      />
+      >
+        <!--<template #icon="item">
+          <Icon icon="i-ant-design:smile-filled" v-if="item.selected" />
+          <Icon icon="i-ant-design:smile-outlined" v-else />
+        </template>-->
+      </BasicTree>
     </template>
     <ListView :treeCode="treeCode" :treeName="treeName" />
   </PageWrapper>
@@ -24,6 +29,7 @@
 <script lang="ts" setup name="ViewsSysEmpUserIndex">
   import { onMounted, ref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
+  // import { Icon } from '/@/components/Icon';
   import { PageWrapper } from '/@/components/Page';
   import { BasicTree } from '/@/components/Tree';
   import { officeTreeData } from '/@/api/sys/office';

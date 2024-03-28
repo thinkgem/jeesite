@@ -597,12 +597,15 @@
                 onStrictlyChange={onStrictlyChange}
                 onSearch={handleSearch}
                 searchText={searchState.searchText}
-              >
-                {extendSlots(slots)}
-              </TreeHeader>
+                v-slots={extendSlots(slots)}
+              />
             )}
             <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound)}>
-              <TreeComp {...unref(getBindValues)} treeData={unref(treeData.value)} />
+              <TreeComp
+                {...unref(getBindValues)}
+                treeData={unref(treeData.value)}
+                v-slots={extendSlots(slots)}
+              />
             </ScrollContainer>
             <Spin spinning={unref(loading)}>
               <Empty
