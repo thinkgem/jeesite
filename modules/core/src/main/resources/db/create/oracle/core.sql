@@ -476,6 +476,8 @@ CREATE TABLE ${_prefix}sys_module
 	main_class_name varchar2(500),
 	current_version varchar2(50),
 	upgrade_info varchar2(300),
+	gen_base_dir nvarchar2(1000),
+	tpl_category varchar2(200),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,
 	create_date timestamp NOT NULL,
@@ -1336,6 +1338,8 @@ COMMENT ON COLUMN ${_prefix}sys_module.description IS '模块描述';
 COMMENT ON COLUMN ${_prefix}sys_module.main_class_name IS '主类全名';
 COMMENT ON COLUMN ${_prefix}sys_module.current_version IS '当前版本';
 COMMENT ON COLUMN ${_prefix}sys_module.upgrade_info IS '升级信息';
+COMMENT ON COLUMN ${_prefix}sys_module.gen_base_dir IS '生成基础路径';
+COMMENT ON COLUMN ${_prefix}sys_module.tpl_category IS '使用的模板';
 COMMENT ON COLUMN ${_prefix}sys_module.status IS '状态（0正常 1删除 2停用）';
 COMMENT ON COLUMN ${_prefix}sys_module.create_by IS '创建者';
 COMMENT ON COLUMN ${_prefix}sys_module.create_date IS '创建时间';

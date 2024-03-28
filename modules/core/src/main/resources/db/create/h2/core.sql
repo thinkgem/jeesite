@@ -476,6 +476,8 @@ CREATE TABLE ${_prefix}sys_module
 	main_class_name varchar(500),
 	current_version varchar(50),
 	upgrade_info varchar(300),
+	gen_base_dir varchar(1000),
+	tpl_category varchar(200),
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
 	create_date datetime NOT NULL,
