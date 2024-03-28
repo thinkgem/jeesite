@@ -2,11 +2,11 @@
   import type { CSSProperties, PropType } from 'vue';
   import { defineComponent, computed, unref } from 'vue';
   import { Tooltip } from 'ant-design-vue';
-  import { InfoCircleOutlined } from '@ant-design/icons-vue';
   import { getPopupContainer } from '/@/utils';
   import { isString, isArray } from '/@/utils/is';
   import { getSlot } from '/@/utils/helper/tsxHelper';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { Icon } from '/@/components/Icon';
 
   const props = {
     /**
@@ -41,7 +41,7 @@
 
   export default defineComponent({
     name: 'BasicHelp',
-    components: { Tooltip },
+    components: { Icon, Tooltip },
     props,
     setup(props, { slots }) {
       const { prefixCls } = useDesign('basic-help');
@@ -84,7 +84,9 @@
             placement={props.placement as 'right'}
             getPopupContainer={() => getPopupContainer()}
           >
-            <span class={prefixCls}>{getSlot(slots) || <InfoCircleOutlined />}</span>
+            <span class={prefixCls}>
+              {getSlot(slots) || <Icon icon="i-ant-design:info-circle-outlined" />}
+            </span>
           </Tooltip>
         );
       };
@@ -98,6 +100,7 @@
     display: inline-block;
     font-size: 14px;
     color: @text-color-help-dark;
+    vertical-align: middle;
     cursor: pointer;
 
     &:hover {

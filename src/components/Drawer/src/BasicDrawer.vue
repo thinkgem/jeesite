@@ -17,7 +17,11 @@
     </template>
     <template #extra>
       <Tooltip :title="t('component.drawer.cancelText')" placement="bottom">
-        <CloseOutlined @click="onClose" />
+        <Icon
+          icon="i-ant-design:close-outlined"
+          class="anticon-close cursor-pointer"
+          @click="onClose"
+        />
       </Tooltip>
     </template>
     <ScrollContainer
@@ -52,7 +56,7 @@
   import { isFunction, isNumber } from '/@/utils/is';
   import { deepMerge } from '/@/utils';
   import { Tooltip } from 'ant-design-vue';
-  import { CloseOutlined } from '@ant-design/icons-vue';
+  import { Icon } from '/@/components/Icon';
   import DrawerFooter from './components/DrawerFooter.vue';
   import DrawerHeader from './components/DrawerHeader.vue';
   import { ScrollContainer } from '/@/components/Container';
@@ -61,7 +65,7 @@
   import { useAttrs } from '/@/hooks/core/useAttrs';
 
   export default defineComponent({
-    components: { Drawer, Tooltip, CloseOutlined, ScrollContainer, DrawerFooter, DrawerHeader },
+    components: { Drawer, Tooltip, Icon, DrawerFooter, DrawerHeader, ScrollContainer },
     inheritAttrs: false,
     props: basicProps,
     emits: ['open-change', 'ok', 'close', 'register', 'update:open'],

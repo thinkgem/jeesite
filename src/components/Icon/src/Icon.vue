@@ -82,7 +82,7 @@
       };
 
       const getWrapStyle = computed((): CSSProperties => {
-        const { size, color } = props;
+        const { color, size } = props;
         let fs = size;
         if (isString(size)) {
           fs = parseInt(size, 10);
@@ -94,11 +94,11 @@
         }
 
         return {
-          fontSize: `${fs}px`,
           color: color,
-          display: 'inline-flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          fontSize: `${fs}px`,
+          // display: 'inline-flex',
+          // justifyContent: 'center',
+          // alignItems: 'center',
         };
       });
 
@@ -120,7 +120,9 @@
 </script>
 <style lang="less">
   .jeesite-icon {
-    display: inline-block;
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
 
     &-spin {
       animation: loadingCircle 1s infinite linear;

@@ -2,7 +2,7 @@ import type { BasicColumn, ActionItem } from '/@/components/Table';
 import { FileItem, UploadResultStatus } from './typing';
 import { formatSize, isImgTypeByName } from './helper';
 import { Avatar, Progress, Tag } from 'ant-design-vue';
-import { FileOutlined } from '@ant-design/icons-vue';
+import { Icon } from '/@/components/Icon';
 import TableAction from '/@/components/Table/src/components/TableAction.vue';
 import ThumbUrl from './ThumbUrl.vue';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -28,7 +28,7 @@ export function createTableColumns(): BasicColumn[] {
         if (isImgTypeByName(url)) {
           return <ThumbUrl fileUrl={url} />;
         }
-        const ext = type || fileEntity?.fileExtension || <FileOutlined />;
+        const ext = type || fileEntity?.fileExtension || <Icon icon="i-ant-design:file-outlined" />;
         const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
         return <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }}>{ext}</Avatar>;
       },
@@ -93,7 +93,7 @@ export function createTableColumns(): BasicColumn[] {
     },
   ];
 }
-export function createActionColumn(handleRemove: Function): BasicColumn {
+export function createActionColumn(handleRemove: Function, handlePreview: Function): BasicColumn {
   return {
     width: 120,
     title: t('component.upload.operating'),
@@ -111,6 +111,12 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
           },
         },
       ];
+      // if (checkImgType(record)) {
+      actions.unshift({
+        label: t('component.upload.preview'),
+        onClick: handlePreview.bind(null, record),
+      });
+      // }
       return <TableAction actions={actions} outside={true} />;
     },
   };
@@ -140,7 +146,7 @@ export function createPreviewColumns(props: any): BasicColumn[] {
         if (isImgTypeByName(url)) {
           return <ThumbUrl fileUrl={url} previewUrl={previewUrl} />;
         }
-        const ext = type || fileEntity?.fileExtension || <FileOutlined />;
+        const ext = type || fileEntity?.fileExtension || <Icon icon="i-ant-design:file-outlined" />;
         const color = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'][index % 4];
         return <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }}>{ext}</Avatar>;
       },
@@ -171,9 +177,11 @@ export function createPreviewActionColumn(
   {
     handleRemove,
     handleDownload,
+    handlePreview,
   }: {
     handleRemove: Fn;
     handleDownload: Fn;
+    handlePreview: Fn;
   },
   readonly = false,
 ): BasicColumn {
@@ -199,6 +207,12 @@ export function createPreviewActionColumn(
         label: t('component.upload.download'),
         onClick: handleDownload.bind(null, record),
       });
+      // if (checkImgType(record)) {
+      actions.unshift({
+        label: t('component.upload.preview'),
+        onClick: handlePreview.bind(null, record),
+      });
+      // }
       return <TableAction actions={actions} outside={true} />;
     },
   };

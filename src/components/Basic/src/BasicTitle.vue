@@ -50,7 +50,7 @@
     font-weight: 500;
     line-height: 24px;
     color: fade(@text-color-base, 75);
-    cursor: pointer;
+    //cursor: pointer;
     user-select: none;
 
     &-normal {

@@ -12,7 +12,7 @@
               @change="handleSearch"
             >
               <template #prefix>
-                <SearchOutlined />
+                <Icon icon="i-ant-design:search-outlined" class="text-gray-500" />
               </template>
             </a-input>
             <span :class="`${prefixCls}-cancel`" @click="handleClose">
@@ -59,7 +59,6 @@
 
 <script lang="ts" setup>
   import { computed, unref, ref, watch, nextTick } from 'vue';
-  import { SearchOutlined } from '@ant-design/icons-vue';
   import AppSearchFooter from './AppSearchFooter.vue';
   import { Icon } from '/@/components/Icon';
   // @ts-ignore
