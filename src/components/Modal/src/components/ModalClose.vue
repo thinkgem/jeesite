@@ -2,27 +2,31 @@
   <div :class="getClass">
     <template v-if="canFullscreen">
       <Tooltip :title="t('component.modal.restore')" placement="bottom" v-if="fullScreen">
-        <FullscreenExitOutlined role="full" @click="handleFullScreen" />
+        <Icon icon="i-ant-design:fullscreen-exit-outlined" role="full" @click="handleFullScreen" />
       </Tooltip>
       <Tooltip :title="t('component.modal.maximize')" placement="bottom" v-else>
-        <FullscreenOutlined role="close" @click="handleFullScreen" />
+        <Icon icon="i-ant-design:fullscreen-outlined" role="close" @click="handleFullScreen" />
       </Tooltip>
     </template>
     <Tooltip :title="t('component.modal.close')" placement="bottom">
-      <CloseOutlined @click="handleCancel" />
+      <Icon
+        icon="i-ant-design:close-outlined"
+        class="anticon-close cursor-pointer"
+        @click="handleCancel"
+      />
     </Tooltip>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, computed } from 'vue';
-  import { FullscreenExitOutlined, FullscreenOutlined, CloseOutlined } from '@ant-design/icons-vue';
+  import { Icon } from '/@/components/Icon';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { Tooltip } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
 
   export default defineComponent({
     name: 'ModalClose',
-    components: { Tooltip, FullscreenExitOutlined, FullscreenOutlined, CloseOutlined },
+    components: { Tooltip, Icon },
     props: {
       canFullscreen: { type: Boolean, default: true },
       fullScreen: { type: Boolean },
@@ -65,41 +69,26 @@
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-modal-close';
   .@{prefix-cls} {
-    display: flex;
-    height: 95%;
-    align-items: center;
+    float: right;
+    text-align: right;
+    margin-right: -8px;
 
-    > span {
-      margin-left: 48px;
-      font-size: 16px;
-    }
-
-    &--can-full {
-      > span {
-        margin-left: 12px;
-      }
-    }
-
-    &:not(&--can-full) {
-      > span:nth-child(1) {
-        &:hover {
-          font-weight: 700;
-        }
-      }
-    }
-
-    & span:nth-child(1) {
-      display: inline-block;
-      padding: 10px;
+    .jeesite-icon {
+      margin: 3px 9px;
+      font-size: 18px;
+      color: @text-color-base !important;
+      cursor: pointer;
+      opacity: 0.6;
 
       &:hover {
-        color: @primary-color;
+        opacity: 1;
       }
     }
 
-    & span:nth-child(2) {
+    .anticon-close {
       &:hover {
-        color: @error-color;
+        color: @error-color !important;
+        opacity: 1;
       }
     }
   }

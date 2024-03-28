@@ -1,15 +1,15 @@
 <template>
-  <Modal v-bind="getBindValue" @cancel="handleCancel">
+  <Modal v-bind="getBindValue" @cancel="handleCancel" :closable="false">
     <template #closeIcon v-if="!$slots.closeIcon">
+    </template>
+
+    <template #title v-if="!$slots.title">
       <ModalClose
         :canFullscreen="getProps.canFullscreen"
         :fullScreen="fullScreenRef"
         @cancel="handleCancel"
         @fullscreen="handleFullScreen"
       />
-    </template>
-
-    <template #title v-if="!$slots.title">
       <ModalHeader
         :helpMessage="getProps.helpMessage"
         :title="getMergeProps.title"
