@@ -205,7 +205,7 @@ VITE_GLOB_API_URL_PREFIX = /js
         />
         <!-- 子表新增按钮 -->
         <a-button class="mt-2" @click="handleTestDataChildAdd">
-          <Icon icon="ant-design:plus-circle-outlined" /> {{ t('新增') }}
+          <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
         </a-button>
       </template>
     </BasicForm>
@@ -331,7 +331,7 @@ VITE_GLOB_API_URL_PREFIX = /js
       width: 60,     // 操作列宽度
       actions: (record: Recordable) => [
         {
-          icon: 'ant-design:delete-outlined',
+          icon: 'i-ant-design:delete-outlined',
           color: 'error',
           popConfirm: { // 是否需要启用确认框
             title: '是否确认删除',
@@ -483,7 +483,7 @@ VITE_GLOB_API_URL_PREFIX = /js
       <!-- 表格右侧按钮插槽，其中 v-auth 是按钮权限控制 -->
       <template #toolbar>
         <a-button type="primary" @click="handleForm({})" v-auth="'test:testData:edit'">
-          <Icon icon="fluent:add-12-filled" /> {{ t('新增') }}
+          <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
         </a-button>
       </template>
       <!-- 首列插槽 -->
@@ -571,14 +571,14 @@ VITE_GLOB_API_URL_PREFIX = /js
     width: 160, // 操作列宽
     actions: (record: Recordable) => [
       {
-        icon: 'clarity:note-edit-line',
+        icon: 'i-clarity:note-edit-line',
         title: t('编辑数据'),
         onClick: handleForm.bind(this, { id: record.id }),
         // 按钮权限控制，指定权限字符串
         auth: 'test:testData:edit',
       },
       {
-        icon: 'ant-design:stop-outlined',
+        icon: 'i-ant-design:stop-outlined',
         color: 'error',
         title: t('停用数据'),
         // 是否需要启用确认框
@@ -596,7 +596,7 @@ VITE_GLOB_API_URL_PREFIX = /js
     // 操作列更多按钮定义
     dropDownActions: (record: Recordable) => [
       {
-        icon: 'ant-design:reload-outlined',
+        icon: 'i-ant-design:reload-outlined',
         label: t('重置密码'),
         onClick: handleResetpwd.bind(this, { userCode: record.userCode }),
         auth: 'sys:empUser:resetpwd',
