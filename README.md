@@ -1,8 +1,8 @@
 ## 引言
 
-JeeSite Cloud 具备 [JeeSite 5.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 5.x 的开发便利性巧妙地简化了分布式系统开发。
+JeeSite Cloud 具备 [JeeSite 4.x、5.x](https://gitee.com/thinkgem/jeesite4) 的所有功能，是在 JeeSite 4.x、5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x、5.x 的开发便利性巧妙地简化了分布式系统开发。
 
-JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
+JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装屏蔽掉了复杂的配置和实现原理，重新了设计架构和新增了很多实用的工具，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发平台。
 
 集成阿里优秀组件 Nacos 服务治理与配置中心、集成 Sentinel 流量卫兵；集成 Zipkin 链路追踪；集成 Seata 分布式事务等，详见技术选型章节。
 
@@ -37,6 +37,10 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 分布式事务框架：Seata 1.6 (可选组件)
 * 分布式链路追踪：Zipkin / SkyWalking (可选组件)
 * 工作流引擎框架：Flowable 7.0 (可选组件)
+* 多租户 Saas 架构：表共享、独立模式、独立库方式
+* ShardingSphere 分库分表、读写分离
+* Spring Boot Admin 监控系统
+* ELK 日志搜集分析
 
 ## 子项目介绍
 
@@ -70,8 +74,9 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 ### 初始化数据库
 
-JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，你可以 [下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite4/attach_files)
-或者使用 [init-data.bat(sh)](http://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种数据库）。
+JeeSite Cloud 版本的数据库与 JeeSite 单机版数据库相同，您可以 [下载最新的mysql脚本](https://gitee.com/thinkgem/jeesite4/attach_files)(仅适应于社区版)，推荐使用 [init-data.bat(sh)](http://jeesite.com/docs/install-deploy/#初始化数据库) 命令完成初始化（支持多种类型的数据库）
+
+数据库初始化文档：<http://jeesite.com/docs/install-deploy/#初始化数据库>
 
 ### 安装 Redis
 
