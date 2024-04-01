@@ -17,6 +17,7 @@
 	<logger name="com.atomikos.recovery.xa.XaResourceRecoveryManager" level="ERROR" />
 	<logger name="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator" level="DEBUG" />
 <!-- 	<logger name="org.springframework.transaction.support.TransactionSynchronizationManager" level="TRACE" /> -->
+	<logger name="org.springframework.web.servlet.PageNotFoundr" level="ERROR" />
 	
 	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
 	<logger name="springfox.documentation.schema.property.CachingModelPropertiesProvider" level="ERROR" />
