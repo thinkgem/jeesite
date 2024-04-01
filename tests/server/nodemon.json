@@ -1,7 +1,7 @@
 {
   "watch": ["src"],
   "ext": "ts",
-  "exec": "ts-node -r tsconfig-paths/register index.ts",
+  "exec": "ts-node -r tsconfig-paths/register src/index.ts",
   "events": {
     "restart": "clear"
   }

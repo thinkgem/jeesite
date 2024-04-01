@@ -6,4 +6,11 @@ export class Result {
       result: data,
     };
   }
+  static error(data: any) {
+    return {
+      code: 0,
+      success: false,
+      result: data,
+    };
+  }
 }

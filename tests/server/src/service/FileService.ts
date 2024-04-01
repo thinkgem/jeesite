@@ -1,10 +1,12 @@
 import path from 'path';
 import fs from 'fs-extra';
+import config from '../config';
 
-const uploadUrl = 'http://localhost:3300/static/upload';
-const filePath = path.join(__dirname, '../static/upload/');
+const uploadUrl = `http://${config.host}:${config.port}/static/upload`;
+const filePath = path.join(__dirname, '../../static/upload/');
 
 fs.ensureDir(filePath);
+
 export default class UserService {
   async upload(ctx, files, isMultiple) {
     let fileReader, fileResource, writeStream;
