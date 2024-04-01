@@ -6,12 +6,11 @@
 import type { UserConfig, ConfigEnv } from 'vite';
 import { AliasOptions, defineConfig, loadEnv, ResolveOptions } from 'vite';
 import { PackageJson, readPackageJSON } from 'pkg-types';
-import { resolve } from 'node:path';
+import { createVitePlugins } from './build/vite/plugin';
 import { generateModifyVars } from './build/generate/modifyVars';
 import { createProxy } from './build/vite/proxy';
 import { wrapperEnv } from './build/utils';
-import { createVitePlugins } from './build/vite/plugin';
-import { OUTPUT_DIR } from './build/constant';
+import { resolve } from 'node:path';
 import dayjs from 'dayjs';
 
 export default defineConfig(async ({ command, mode }: ConfigEnv) => {
@@ -46,7 +45,7 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
       // target: 'es2015',
       // 兼容 Chrome 内核比较低的浏览器，如 360、QQ 浏览器
       cssTarget: 'chrome80',
-      outDir: OUTPUT_DIR,
+      outDir: env.VITE_OUTPUT_DIR ?? 'dist',
       // 启用 terser 缩小器，当设置 terserOptions 时才会有效
       // minify: 'terser',
       // terserOptions: {
