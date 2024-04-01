@@ -10,6 +10,7 @@ import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,7 +59,7 @@ public class UserfilesController extends BaseController {
 			request.setAttribute("fileUri", fileUri);	// 文件下载地址（fileDown）
 			request.setAttribute("filePath", filePath);	// 文件相对路径或文件名
 			request.setAttribute("fileUrls", request.getParameter("urls"));	// 前后照片列表
-			request.setAttribute("javax.servlet.forward.request_uri", previewUrl);
+			request.setAttribute(RequestDispatcher.FORWARD_REQUEST_URI, previewUrl);
 			request.getRequestDispatcher(previewUrl).forward(request, response);
 			return null;
 		}

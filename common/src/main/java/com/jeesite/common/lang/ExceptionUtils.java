@@ -5,6 +5,7 @@
  */
 package com.jeesite.common.lang;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.PrintWriter;
@@ -26,8 +27,8 @@ public class ExceptionUtils {
 		Throwable ex = null;
 		if (request.getAttribute("exception") != null) {
 			ex = (Throwable) request.getAttribute("exception");
-		} else if (request.getAttribute("jakarta.servlet.error.exception") != null) {
-			ex = (Throwable) request.getAttribute("jakarta.servlet.error.exception");
+		} else if (request.getAttribute(RequestDispatcher.ERROR_EXCEPTION) != null) {
+			ex = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 		}
 		return ex;
 	}
