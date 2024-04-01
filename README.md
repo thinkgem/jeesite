@@ -73,7 +73,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 * JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
-* Spring Boot 3.x 版本：https://gitee.com/thinkgem/jeesite4/tree/v5.springboot3/
+* Spring Boot 3.x 版本：<https://gitee.com/thinkgem/jeesite4/tree/v5.springboot3>
 
 ## 更多介绍
 
@@ -101,27 +101,29 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 
 ### 在线演示
 
-1. 地址：<http://demo.jeesite.com/>
+1. 全栈版地址：<http://vue.jeesite.com/js>
+2. Vue3分离版地址：<http://vue.jeesite.com>
 
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.3.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.7.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
-6. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
+6. 浏览器访问：<http://127.0.0.1:8980/js>  账号 system 密码 admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
 8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
 
 ### 快速运行
 
-1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB）
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.3.zip> 并解压
+1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB、Vue资源包）
+2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.7.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
-4. 浏览器访问：<http://127.0.0.1:8980/js/>  账号 system 密码 admin
-5. 部署常见问题：<https://jeesite.com/docs/faq/>
-8. 分离端安装：<https://jeesite.com/docs/vue-install-deploy/>
+4. 全栈版本地址：<http://127.0.0.1:8980/a/login>
+5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
+6. 默认超级管理员账号：system 密码 admin
+7. 部署常见问题：<https://jeesite.com/docs/faq/>
 
 ### 容器运行
 
