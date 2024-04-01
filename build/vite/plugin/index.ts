@@ -12,7 +12,6 @@ import vitePluginCertificate from 'vite-plugin-mkcert';
 import { appConfigPlugin } from './appConfig';
 import { configUnoCSSPlugin } from './unocss';
 import { configHtmlPlugin } from './html';
-import { configMockPlugin } from './mock';
 import { configCompressPlugin } from './compress';
 import { configVisualizerPlugin } from './visualizer';
 import { configThemePlugin } from './theme';
@@ -36,9 +35,6 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
 
   // vite-plugin-html
   vitePlugins.push(configHtmlPlugin(isBuild));
-
-  // vite-plugin-mock
-  viteEnv.VITE_USE_MOCK && vitePlugins.push(configMockPlugin(isBuild));
 
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerPlugin());

@@ -18,7 +18,6 @@ import { setupRouter, router } from '/@/router';
 import { setupRouterGuard } from '/@/router/guard';
 import { setupStore } from '/@/store';
 import { isDevMode } from '/@/utils/env';
-import { env } from '/@/utils/log';
 
 async function bootstrap() {
   const app = createApp(App);
@@ -52,13 +51,6 @@ async function bootstrap() {
   // await router.isReady();
 
   app.mount('#app');
-
-  // production mock server
-  if (String(env.VITE_USE_MOCK) === 'true' && env.PROD) {
-    import('../mock/mockProdServer').then(({ setupProdMockServer }) => {
-      setupProdMockServer();
-    });
-  }
 }
 
 // 仅开发模式显示
