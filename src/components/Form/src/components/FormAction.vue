@@ -87,7 +87,7 @@
       Icon,
       Button,
       BasicArrow,
-      [Col.name]: Col,
+      [Col.name as string]: Col,
     },
     props,
     emits: ['toggle-advanced'],

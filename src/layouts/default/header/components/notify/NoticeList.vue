@@ -72,12 +72,12 @@
 
   export default defineComponent({
     components: {
-      [Avatar.name]: Avatar,
-      [List.name]: List,
-      [List.Item.name]: List.Item,
+      [Avatar.name as string]: Avatar,
+      [List.name as string]: List,
+      [List.Item.name as string]: List.Item,
       AListItemMeta: List.Item.Meta,
       ATypographyParagraph: Typography.Paragraph,
-      [Tag.name]: Tag,
+      [Tag.name as string]: Tag,
       Icon,
     },
     props: {

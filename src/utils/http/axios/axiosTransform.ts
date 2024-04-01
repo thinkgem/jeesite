@@ -5,6 +5,7 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { RequestOptions, Result } from '/#/axios';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
+  authenticationHeader?: string;
   authenticationScheme?: string;
   transform?: AxiosTransform;
   requestOptions?: RequestOptions;

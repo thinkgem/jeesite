@@ -1,7 +1,6 @@
 <template>
   <Modal v-bind="getBindValue" @cancel="handleCancel" :closable="false">
-    <template #closeIcon v-if="!$slots.closeIcon">
-    </template>
+    <template #closeIcon v-if="!$slots.closeIcon"> </template>
 
     <template #title v-if="!$slots.title">
       <ModalClose

@@ -38,7 +38,7 @@
 
   export default defineComponent({
     name: 'LayoutBreadcrumb',
-    components: { Icon, [Breadcrumb.name]: Breadcrumb },
+    components: { Icon, [Breadcrumb.name as string]: Breadcrumb },
     props: {
       theme: propTypes.oneOf(['dark', 'light']),
     },

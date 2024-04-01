@@ -93,7 +93,7 @@ export function createTableColumns(): BasicColumn[] {
     },
   ];
 }
-export function createActionColumn(handleRemove: Function, handlePreview: Function): BasicColumn {
+export function createActionColumn(handleRemove: Function): BasicColumn {
   return {
     width: 120,
     title: t('component.upload.operating'),
@@ -111,12 +111,6 @@ export function createActionColumn(handleRemove: Function, handlePreview: Functi
           },
         },
       ];
-      // if (checkImgType(record)) {
-      actions.unshift({
-        label: t('component.upload.preview'),
-        onClick: handlePreview.bind(null, record),
-      });
-      // }
       return <TableAction actions={actions} outside={true} />;
     },
   };
@@ -177,11 +171,9 @@ export function createPreviewActionColumn(
   {
     handleRemove,
     handleDownload,
-    handlePreview,
   }: {
     handleRemove: Fn;
     handleDownload: Fn;
-    handlePreview: Fn;
   },
   readonly = false,
 ): BasicColumn {
@@ -207,12 +199,6 @@ export function createPreviewActionColumn(
         label: t('component.upload.download'),
         onClick: handleDownload.bind(null, record),
       });
-      // if (checkImgType(record)) {
-      actions.unshift({
-        label: t('component.upload.preview'),
-        onClick: handlePreview.bind(null, record),
-      });
-      // }
       return <TableAction actions={actions} outside={true} />;
     },
   };
