@@ -47,8 +47,7 @@
     "types/**/*.ts",
     "build/**/*.d.ts",
     "build/**/*.ts",
-    "vite.config.ts",
-    "mock/**/*.ts"
+    "vite.config.ts"
   ],
   "exclude": [
     "tests/server/**/*.ts",
