@@ -107,6 +107,16 @@ logging:
 #========== System settings ===========#
 #======================================#
 
+# 管理基础路径
+adminPath: /a
+
+# 前端基础路径
+frontPath: /f
+
+# Vue 资源文件路径，与 VITE_PUBLIC_PATH 一致。
+# 映射到 src/main/resources/{vuePath} 文件夹
+vuePath: /vue
+
 # 用户相关
 user:
   
@@ -135,9 +145,10 @@ state:
 
 # Shiro 相关
 shiro:
-  
+
   # 主页路径
-  defaultPath: ${shiro.loginUrl}
+#  defaultPath: ${shiro.loginUrl}
+  defaultPath: ${vuePath}/login
 
   # 登录相关设置
   loginUrl: ${adminPath}/login

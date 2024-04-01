@@ -6,11 +6,13 @@ package com.jeesite.modules;
 
 import com.jeesite.common.config.Global;
 import com.jeesite.common.io.FileUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,16 @@ public class FastApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) throws UnknownHostException {
 		FastApplication.setJeeSiteInitDataProperty();
 		SpringApplication.run(FastApplication.class, args);
+		String vuePath = Global.getProperty("vuePath");
+		String ctxPath = Global.getProperty("server.servlet.context-path");
+		if (StringUtils.isNoneBlank(vuePath, ctxPath)) {
+			logger.info(
+				"\r\n\r\n==============================================================\r\n"
+				+ "\r\n   存在此提示：因为您修改了 server.servlet.context-path 参数，需要您"
+				+ "\r\n   同步修改 jeesite-vue/.env.tomcat 中的 VITE_PUBLIC_PATH 并重新打包 "
+				+ "\r\n   如：context-path: " + ctxPath +" 即对应为 VITE_PUBLIC_PATH = " + ctxPath + vuePath
+				+ "\r\n\r\n==============================================================\r\n");
+		}
 		logger.info(
 				"\r\n\r\n==============================================================\r\n"
 				+ "\r\n   启动完成，访问地址：http://127.0.0.1:"
@@ -52,11 +64,12 @@ public class FastApplication extends SpringBootServletInitializer {
 	}
 
 	@Controller
-	public class JeeSiteController extends BaseController {
+	@ConditionalOnProperty(name = "server.servlet.context-path", havingValue = "")
+	public static class JeeSiteController extends BaseController {
 
 		@RequestMapping(value = "/js/**")
 		public String login() {
-			return REDIRECT + adminPath + "/login";
+			return REDIRECT + Global.getProperty("defaultPath");
 		}
 
 	}
