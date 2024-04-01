@@ -26,11 +26,11 @@
 
 		<!-- docker setting -->
 		<docker.dockerHost>unix:///var/run/docker.sock</docker.dockerHost>
-		<docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>
+<!--		<docker.imageName>thinkgem/jeesite-web:latest</docker.imageName>-->
 <!--		<docker.imageName>thinkgem/jeesite-web:amd64</docker.imageName>-->
 <!--		<docker.platform>linux/amd64</docker.platform>-->
-<!--		<docker.imageName>thinkgem/jeesite-web:arm64</docker.imageName>-->
-<!--		<docker.platform>linux/arm64</docker.platform>-->
+		<docker.imageName>thinkgem/jeesite-web:arm64</docker.imageName>
+		<docker.platform>linux/arm64</docker.platform>
 		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
@@ -85,6 +85,13 @@
 			<artifactId>jeesite-module-filepreview</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency> -->
+
+		<!-- Vue发布包 https://gitee.com/thinkgem/jeesite-vue -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-vue-dist</artifactId>
+			<version>5.7.0-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 	
