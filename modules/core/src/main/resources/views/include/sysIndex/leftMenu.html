@@ -30,7 +30,7 @@
 	<%-->*/%>
 	<div id="leftMenu" data-widget="tree">
 		<% if(@Global.getConfig('sys.index.menuStyle', '1') == '1'){ %>
-		<ul class="sidebar-menu">
+		<ul class="sidebar-menu first-open">
 			<% 
 			var p = {parentCode: '0'};
 			menu.tree(p); print(p.html);
