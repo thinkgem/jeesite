@@ -67,7 +67,7 @@ public class PostController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Post post, Model model) {
 		if(post.getIsNewRecord()){
-			post.setPostSort((int)postService.findCount(post) * 10);
+			post.setPostSort(((int)postService.findCount(post) + 1) * 10);
 		}
 		// 查询岗位所关联的角色信息
 		if (StringUtils.isNotBlank(post.getPostCode())){

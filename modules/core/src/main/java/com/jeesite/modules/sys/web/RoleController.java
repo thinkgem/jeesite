@@ -82,7 +82,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Role role, String op, Model model) {
 		if(role.getIsNewRecord()){
-			role.setRoleSort((int)roleService.findCount(role) * 10);
+			role.setRoleSort(((int)roleService.findCount(role) + 1) * 10);
 			role.setUserType(User.USER_TYPE_EMPLOYEE);
 			role.setIsSys(Global.NO);
 			role.setIsShow(Global.SHOW);
