@@ -32,7 +32,7 @@ spring:
           predicates:
             - Path=/js/a/test3/**,/js/a/jeesite-cloud-module-test3/**,/js/static/modules/test3/**
             
-        # 业务流程模块（cms）
+        # 业务流程模块（bpm）
         - id: bpm
           uri: lb://jeesite-cloud-module-bpm
           predicates:
