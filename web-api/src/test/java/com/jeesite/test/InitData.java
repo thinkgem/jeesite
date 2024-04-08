@@ -14,7 +14,6 @@ import com.jeesite.modules.ApiApplication;
 /**
  * 初始化数据表
  * @author ThinkGem
- * @version 2020-5-26
  */
 @ActiveProfiles("test")
 @SpringBootTest(classes = ApiApplication.class)
