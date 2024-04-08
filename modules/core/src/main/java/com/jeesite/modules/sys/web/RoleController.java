@@ -102,7 +102,7 @@ public class RoleController extends BaseController {
 		if (old != null && Global.YES.equals(old.getIsSys()) && !role.currentUser().isSuperAdmin()){
 			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
 		}
-		// 只有系统管理员才能保存为系统字典！
+		// 只有系统管理员才能保存为系统角色！
 		if (!role.currentUser().isSuperAdmin() && Global.YES.equals(role.getIsSys())){
 			return renderResult(Global.FALSE, text("保存失败，只有系统管理员才能保存为系统角色！"));
 		}
