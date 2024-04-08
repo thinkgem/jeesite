@@ -185,13 +185,13 @@ public class DictDataController extends BaseController {
 		if (old != null && Global.YES.equals(old.getIsSys()) && !dictData.currentUser().isSuperAdmin()){
 			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
 		}
-		DictData where = new DictData();
-		where.setStatus(DictData.STATUS_NORMAL);
-		where.setParentCodes("," + dictData.getId() + ",");
-		long count = dictDataService.findCount(where);
-		if (count > 0) {
-			return renderResult(Global.FALSE, text("该字典包含未停用的子字典！"));
-		}
+//		DictData where = new DictData();
+//		where.setStatus(DictData.STATUS_NORMAL);
+//		where.setParentCodes("," + dictData.getId() + ",");
+//		long count = dictDataService.findCount(where);
+//		if (count > 0) {
+//			return renderResult(Global.FALSE, text("该字典包含未停用的子字典！"));
+//		}
 		dictData.setStatus(DictData.STATUS_DISABLE);
 		dictDataService.updateStatus(dictData);
 		return renderResult(Global.TRUE, text("停用字典成功"));
