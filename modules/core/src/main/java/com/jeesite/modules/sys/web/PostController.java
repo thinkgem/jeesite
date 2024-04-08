@@ -20,10 +20,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +66,7 @@ public class PostController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Post post, Model model) {
 		if(post.getIsNewRecord()){
-			post.setPostSort((int)postService.findCount(post) * 10);
+			post.setPostSort(((int)postService.findCount(post) + 1) * 10);
 		}
 		// 查询岗位所关联的角色信息
 		if (StringUtils.isNotBlank(post.getPostCode())){
