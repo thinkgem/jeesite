@@ -168,7 +168,7 @@ public class MenuController extends BaseController {
 	@ResponseBody
 	public String disable(Menu menu, HttpServletRequest request){
 		if (!menu.currentUser().isSuperAdmin()){
-			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
 		}
 		menu.setStatus(Menu.STATUS_DISABLE);
 		menuService.updateStatus(menu);
@@ -180,7 +180,7 @@ public class MenuController extends BaseController {
 	@ResponseBody
 	public String enable(Menu menu, HttpServletRequest request){
 		if (!menu.currentUser().isSuperAdmin()){
-			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改系统数据！"));
+			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
 		}
 		menu.setStatus(Menu.STATUS_NORMAL);
 		menuService.updateStatus(menu);
