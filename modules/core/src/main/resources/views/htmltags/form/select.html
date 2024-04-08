@@ -94,6 +94,9 @@ var body = {
 			attr = attr + (@ObjectUtils.toString(p.value) == iv ? ' selected' : '');
 		}
 		if (type.name(item) == 'DictData'){
+			if (!item['isRoot']) {
+				continue;
+			}
 			if (isNotBlank(item['description'])){
 				attr = attr + ' title="' + item['description'] + '"';
 			}

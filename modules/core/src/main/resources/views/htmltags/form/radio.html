@@ -59,8 +59,13 @@ var body = {
 	var checked, title;
 	for (var item in p.items){
 		checked = (@ObjectUtils.toString(p.value) == item[p.itemValue] ? ' checked' : '');
-		if (type.name(item) == 'DictData' && isNotBlank(item['description'])){
-			title = ' title="' + item['description'] + '"';
+		if (type.name(item) == 'DictData'){
+			if (!item['isRoot']) {
+				continue;
+			}
+			if (isNotBlank(item['description'])){
+				title = ' title="' + item['description'] + '"';
+			}
 		}
 		%><label${title}><input type="radio" id="${p.id}${itemLP.index}" name="${p.name}"
 			value="${item[p.itemValue]}"${p.attrs}${checked}> ${item[p.itemLabel]}</label><%
