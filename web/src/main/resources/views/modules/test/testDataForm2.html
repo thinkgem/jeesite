@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<#form:form id="inputForm" model="${testData}" action="${ctx}/test/testData/save" method="post" class="form-horizontal"
-				enctype="application/json" data-params="isNewRecord,id">
+				enctype="application/json" data-url-params="isNewRecord,id">
 			<div class="box-body">
 				<div class="form-unit">${text('基本信息')}</div>
 				<#form:hidden path="id"/>
