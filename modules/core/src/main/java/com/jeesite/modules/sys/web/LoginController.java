@@ -87,7 +87,7 @@ public class LoginController extends BaseController{
 		
 		// API 模式不返回视图页面
 		if (Global.isApiMode()) {
-			return null;
+			return ServletUtils.renderString(response, "Please visit front-end address.");
 		}
 		
 		// 返回指定用户类型的登录页视图
@@ -127,7 +127,7 @@ public class LoginController extends BaseController{
 		
 		// API 模式不返回视图页面
 		if (Global.isApiMode()) {
-			return null;
+			return ServletUtils.renderString(response, "Please visit front-end address.");
 		}
 		
 		// 返回指定用户类型的登录页视图
@@ -262,6 +262,11 @@ public class LoginController extends BaseController{
 		else if (isLogin){
 			return REDIRECT + successUrl;
 		}
+
+		// API 模式不返回视图页面
+		if (Global.isApiMode()) {
+			return ServletUtils.renderString(response, "Please visit front-end address.");
+		}
 		
 		// 是否允许刷新主页，如果已登录，再次访问主页，则退出原账号。
 		if (!Global.getConfigToBoolean("shiro.isAllowRefreshIndex", "true")){
@@ -298,11 +303,6 @@ public class LoginController extends BaseController{
 		//String roleCode = "dept";
 		//session.setAttribute("roleCode", roleCode);
 		//UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
-		
-		// API 模式不返回视图页面
-		if (Global.isApiMode()) {
-			return null;
-		}
 		
 		// 返回指定用户类型的首页视图
 		String userType = user.getUserType();
