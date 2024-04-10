@@ -4,14 +4,14 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotBlank;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 行政区划Entity
@@ -79,9 +79,9 @@ public class Area extends TreeEntity<Area> {
 		this.areaType = areaType;
 	}
 	
-	@Override
-	public String toString() {
-		return areaCode;
-	}
+//	@Override
+//	public String toString() {
+//		return areaCode;
+//	}
 	
 }
