@@ -247,9 +247,9 @@ public class Office extends TreeEntity<Office> {
 		return office;
 	}
 
-	@Override
-	public String toString() {
-		return officeCode;
-	}
+//	@Override
+//	public String toString() {
+//		return officeCode;
+//	}
 	
 }

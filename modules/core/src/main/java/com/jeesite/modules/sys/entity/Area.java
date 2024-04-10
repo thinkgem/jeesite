@@ -79,9 +79,9 @@ public class Area extends TreeEntity<Area> {
 		this.areaType = areaType;
 	}
 	
-	@Override
-	public String toString() {
-		return areaCode;
-	}
+//	@Override
+//	public String toString() {
+//		return areaCode;
+//	}
 	
 }
