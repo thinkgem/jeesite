@@ -65,7 +65,15 @@ public class Post extends DataEntity<Post> {
 	public void setViewCode(String viewCode) {
 		this.viewCode = viewCode;
 	}
-	
+
+	public String getViewCode_like() {
+		return sqlMap().getWhere().getValue("view_code", QueryType.LIKE);
+	}
+
+	public void setViewCode_like(String viewCode) {
+		sqlMap().getWhere().and("view_code", QueryType.LIKE, viewCode);
+	}
+
 	@NotBlank(message="岗位名称不能为空")
 	@Size(min=0, max=100, message="岗位名称长度不能超过 100 个字符")
 	public String getPostName() {
