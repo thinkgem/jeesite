@@ -121,7 +121,7 @@ public class ServletUtils {
 	public static boolean isStaticFile(String uri){
 		if (STATIC_FILE == null){
 			try {
-				throw new Exception("检测到“jeesite.yml”中没有配置“web.staticFile”属性。"
+				throw new Exception("检测到“application.yml”中没有配置“web.staticFile”属性。"
 						+ "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
 						+ ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
 			} catch (Exception e) {

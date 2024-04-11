@@ -398,20 +398,20 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 获取树节点名字
 	 * @param isShowCode 是否显示编码<br>
-	 * 		true or 1：显示在左侧：(code)name<br>
-	 * 		2：显示在右侧：name(code)<br>
+	 * 		true or 1：显示在左侧：(code) name<br>
+	 * 		2：显示在右侧：name (code)<br>
 	 * 		false or null：不显示编码：name
 	 * @param code 编码
 	 * @param name 名称
-	 * @return 
+	 * @return
 	 */
 	public static String getTreeNodeName(String isShowCode, String code, String name) {
 		if ("true".equals(isShowCode) || "1".equals(isShowCode)) {
 			return "(" + code + ") " + StringUtils.replace(name, SPACE, EMPTY);
 		} else if ("2".equals(isShowCode)) {
-			return name/*StringUtils.replace(name, " ", "")*/ + " (" + code + ")";
+			return name + " (" + code + ")";
 		} else {
-			return name/*StringUtils.replace(name, " ", "")*/;
+			return name;
 		}
 	}
 	
