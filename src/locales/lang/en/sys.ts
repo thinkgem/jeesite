@@ -1,7 +1,7 @@
 export default {
   api: {
     operationFailed: 'Operation failed',
-    errorTip: 'Error Tip',
+    errorTip: 'System Tip',
     errorMessage: 'The operation failed, the system is abnormal!',
     timeoutMessage: 'Login timed out, please log in again!',
     apiTimeoutMessage: 'The interface request timed out, please refresh the page and try again!',
