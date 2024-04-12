@@ -239,10 +239,10 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .select2-dropdown {background-color:#1a1a1a;border-color:#414141!important;color:#ddd;}
 .select2-container--default .select2-results__option[aria-selected=true] {background-color:#3c3c3c;color:#ddd;}
 
-.navbar-custom-menu>.navbar-nav>li>.dropdown-menu,
-.main-header .navbar .dropdown-menu li.divider {background-color:#1a1a1a;border-color:#414141!important;}
-.main-header .navbar .dropdown-menu li a {color:#ddd!important;}
-.main-header .navbar .dropdown-menu li a:hover {background: #4c4c4c!important;}
+.navbar-custom-menu>.navbar-nav>li>.dropdown-menu, .dropdown-menu, .dropdown .dropdown-menu,
+.main-header .navbar .dropdown-menu li.divider, .dropdown-menu li.divider {background-color:#1a1a1a;border-color:#414141!important;}
+.main-header .navbar .dropdown-menu li a, .dropdown-menu li a {color:#ddd!important;}
+.main-header .navbar .dropdown-menu li a:hover, .dropdown-menu li a:hover {background: #4c4c4c!important;}
 .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a {border-color:#414141!important;}
 .navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>h4 {color:#ddd!important;}
 .navbar-nav>.messages-menu>.dropdown-menu>li.header,.main-header .navbar .dropdown-menu li a,

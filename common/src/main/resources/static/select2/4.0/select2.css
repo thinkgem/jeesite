@@ -77,7 +77,7 @@
   left: 0; }
 
 .select2-container--open .select2-dropdown--above {
-  border-bottom: none;
+  /*border-bottom: none;*/
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0; }
 
