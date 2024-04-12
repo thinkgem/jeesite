@@ -604,7 +604,7 @@
               <TreeComp
                 {...unref(getBindValues)}
                 treeData={unref(treeData.value)}
-                v-slots={extendSlots(slots)}
+                v-slots={extendSlots(slots, ['default'])}
               />
             </ScrollContainer>
             <Spin spinning={unref(loading)}>
