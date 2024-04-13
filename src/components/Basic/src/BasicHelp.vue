@@ -85,7 +85,7 @@
             getPopupContainer={() => getPopupContainer()}
           >
             <span class={prefixCls}>
-              {getSlot(slots) || <Icon icon="i-ant-design:info-circle-outlined" />}
+              {getSlot(slots) || <Icon icon="i-ant-design:question-circle-outlined" />}
             </span>
           </Tooltip>
         );
@@ -98,7 +98,7 @@
 
   .@{prefix-cls} {
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
     color: @text-color-help-dark;
     vertical-align: middle;
     cursor: pointer;
@@ -112,5 +112,12 @@
         margin-bottom: 0;
       }
     }
+  }
+
+  .ant-form-item-label .@{prefix-cls} {
+    vertical-align: baseline;
+    margin-left: -7px;
+    margin-right: -4px;
+    opacity: 0.8;
   }
 </style>
