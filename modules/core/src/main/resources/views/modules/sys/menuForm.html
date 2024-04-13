@@ -78,32 +78,32 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="一、链接前缀：
-   1、链接支持 http(s):// 开头的链接，	链接地址路径，外部链接加 “http://” 开头
-   2、如果以  /// 开头，则代表是站点根路径（结果：http://localhost/{href}）
-   3、如果以  // 开头，则代表是工程根路径（结果：http://localhost/{ctxPath}/{href}）
-   4、如果以  / 开头（默认），则代表是管理根路径（结果：http://localhost/{ctxPath}/{adminPath}/{href}）
+   1、使用 / 开头（默认）则为管理根路径，例如：http://host/{ctxPath}/{adminPath}/{href}
+   2、使用 // 开头，则代表是工程根路径，例如：http://host/{ctxPath}/{href}
+   3、使用 /// 开头，则代表是站点根路径，例如：http://host/{href}
+   4、使用 http:// 或 https:// 开头，则为链接外部页面
 二、可带变量，格式为 {变量名}
    1、{ssoToken} : 单点登录的token编码，url参数中的参数分隔符请使用“%26”进行转义，
 	例如：{projectUrl}/sso/{ssoToken}?url=/sys/user/list?p1=v1%26p2=v2&relogin=true
-	{sessionId} : 当前会话编号 v5.3.0
-   2、{userCode} : 当前用户编码
-   3、{userName} : 当前用户名称
-   4、{userType} : 当前用户类型
-   5、{corpCode} : 当前用户编码
-   6、{corpName} : 当前用户名称
-   7、{menuCode} : 当前菜单编码
-   8、{menuParentCode} : 当前菜单上级编码
-   9、{menuParentCodes} : 当前菜单所有上级编码
-   10、userCache 中的 Key 可作为变量名
-   11、yml 或 sys_config 中的 Key 可作为变量名
+   2、{sessionId} : 当前会话编号 v5.3.0
+   3、{userCode} : 当前用户编码
+   4、{userName} : 当前用户名称
+   5、{userType} : 当前用户类型
+   6、{corpCode} : 当前用户编码
+   7、{corpName} : 当前用户名称
+   8、{menuCode} : 当前菜单编码
+   9、{menuParentCode} : 当前菜单上级编码
+   10、{menuParentCodes} : 当前菜单所有上级编码
+   11、userCache 中的 Key 可作为变量名
+   12、yml 或 sys_config 中的 Key 可作为变量名
 三、路由规则（Vue下使用）：
-　1、设置菜单的路由地址，对应组件目录为 /views/ 下的 vue 文件
-　2、路由名称定义规则为：Views + 去除地址的 “/”，并后一个字母大写，
-　　　例如：路由地址为：/sys/menu/list，路径名称为：ViewsSysMenuList
-　3、组件名称定义规则为：/views/ 目录 + 路由地址 目录，上面举例的路由地址
-　4、对应的组件名称应为：/views/sys/menu/list，组件名称：与路由名称相同
-　5、组件名称定义在 script 标签的 name 属性，如 name=“ViewsSysMenuList”
-　6、注意：如果组件名称与路由名称不同，会造成页面缓存失效。">
+　1、设置菜单的路由地址，对应组件目录为 /views/ 下的 .vue 文件
+　2、路由名称生成规则为：Views + 去除地址的 “/”，并后一个字母大写，
+　　　例如：路由地址为：/sys/menu/list，则生成路由名称为：ViewsSysMenuList
+　3、Vue 组件路径存放规则为：/views/ + 路由地址（上面举例的路由地址）
+　　　例如：组件路径应	为：/views/sys/menu/list，组件名称应与路由名称相同
+　4、组件名称定义在 script 标签的 name 属性，如 name=“ViewsSysMenuList”
+　5、注意：如果组件名称与路由名称不同，则会造成页面缓存失效。">
 								${text('链接(Href)')}：<i class="fa icon-question"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="menuHref" maxlength="2000" class="form-control"/>
@@ -123,11 +123,10 @@
 				<div class="row">
 					<div class="col-xs-6">
 						<div class="form-group">
-							<label class="control-label col-sm-4" title="一、内置路径（Vue下使用）：
-　1、自定义 vue 组件路径，一般不需要填写，默认是根据 “链接地址” 进行自动生成
-　2、当同一个 vue 组件文件，使用多个不同的 “链接地址” 或 “路由地址” 的时候配置
-　3、如果填写组件路径，则组件名称根据组件路径自动生成，而不是链接地址 v5.7.1
-二、内置组件名称（Vue下使用）：
+							<label class="control-label col-sm-4" title="一、组件路径说明（Vue下使用）：
+　1、自定义 Vue 组件路径，一般不需要填写，默认是根据 “链接地址” 进行自动生成
+　2、当 “链接地址” 或 “路由地址” 与 Vue 组件路径匹配规则不一致的时候配置
+二、也可以设置内置组件名称（Vue下使用）：
 　1、填写 IFRAME 则强制使用 iframe 打开链接
 　2、填写 LAYOUT 将不在 Beetl 视图中显示菜单项
 　3、填写 BEETL 则只在 Beetl 视图中显示菜单项
