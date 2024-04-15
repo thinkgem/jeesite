@@ -93,7 +93,7 @@
 			</childTable>
 		</category>
 		<category value="crud_cloud_select_vue" label="单表/主子表 （增删改查 Cloud，含 listselect 选择页面） vue">
-			<template>category-ref:crud_cloud</template>
+			<template>category-ref:crud_cloud_vue</template>
 			<template>crud/vueSelect.xml</template>
 			<childTable>
 				<template>category-ref:dao_cloud</template>
