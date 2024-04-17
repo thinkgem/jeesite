@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
 	
-	<!-- Framework level setting -->
-	<include resource="config/logger-core.xml"/>
+	<!-- Logger level setting -->
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<include resource="config/logger-core.xml"/>
+
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
