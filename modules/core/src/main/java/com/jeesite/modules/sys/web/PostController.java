@@ -13,7 +13,6 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Post;
 import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.service.PostService;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +22,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -92,8 +94,9 @@ public class PostController extends BaseController {
 	@RequiresPermissions("sys:post:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
-	public String save(@Validated Post post, @Parameter(description = "旧的角色名称") @RequestParam(required = false) String oldRoleName) {
-		if (!"true".equals(checkPostName(oldRoleName, post.getPostName()))) {
+	public String save(@Validated Post post, HttpServletRequest request) {
+		Post old = super.getWebDataBinderSource(request);
+		if (!"true".equals(checkPostName(old != null ? old.getPostName() : "", post.getPostName()))) {
 			return renderResult(Global.FALSE, text("保存岗位失败，岗位名称''{0}''已存在", post.getPostName()));
 		}
 		postService.save(post);
