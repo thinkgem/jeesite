@@ -88,6 +88,7 @@
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
     labelWidth: localeStore.getLocale == LOCALE.ZH_CN ? 60 : 100,
+    showAdvancedButton: true,
     schemas: [
       {
         label: t('账号'),
@@ -331,6 +332,7 @@
     formConfig: searchForm,
     showTableSetting: true,
     useSearchForm: true,
+    showSearchForm: true,
     canResize: true,
     // pagination: { defaultPageSize: 10 },
     defaultRowSelection: {
