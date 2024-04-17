@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "yarn install",
     "serve": "npm run dev",
-    "dev": "VITE_CJS_TRACE=true vite dev",
+    "dev": "cross-env VITE_CJS_TRACE=true vite dev",
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",
