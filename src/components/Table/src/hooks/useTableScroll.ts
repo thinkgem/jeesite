@@ -21,7 +21,7 @@ export function useTableScroll(
   const modalFn = useModalContext();
 
   // Greater than animation time 280
-  const debounceRedoHeight = useDebounceFn(redoHeight, 100);
+  const debounceRedoHeight = useDebounceFn(redoHeight, 200);
 
   const getCanResize = computed(() => {
     const { canResize, scroll } = unref(propsRef);
