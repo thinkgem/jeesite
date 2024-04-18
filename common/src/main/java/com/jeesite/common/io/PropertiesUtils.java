@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -239,6 +240,53 @@ public class PropertiesUtils {
 	 */
 	public Long getPropertyToLong(String key, String defValue) {
 		return ObjectUtils.toLong(getProperty(key, defValue));
+	}
+
+	/**
+	 * 获取配置文件中的值，如果存在则 Consumer
+	 * @author ThinkGem
+	 */
+	public void getPropertyIfNotBlank(String key, Consumer<String> consumer) {
+		String value = getProperty(key, StringUtils.EMPTY);
+		if (StringUtils.isNotBlank(value)) {
+			consumer.accept(value);
+		}
+	}
+
+	/**
+	 * 获取配置文件中的值，如果存在则转换为 String[] 并 Consumer
+	 */
+	public void getPropertyToArrayIfNotBlank(String key, Consumer<String[]> consumer) {
+		getPropertyIfNotBlank(key, value -> {
+			consumer.accept(StringUtils.splitComma(value));
+		});
+	}
+
+	/**
+	 * 获取配置文件中的值，如果存在则转换为 Boolean 并 Consumer
+	 */
+	public void getPropertyToBooleanIfNotBlank(String key, Consumer<Boolean> consumer) {
+		getPropertyIfNotBlank(key, value -> {
+			consumer.accept(ObjectUtils.toBoolean(value));
+		});
+	}
+
+	/**
+	 * 获取配置文件中的值，如果存在则转换为 Integer 并 Consumer
+	 */
+	public void getPropertyToIntegerIfNotBlank(String key, Consumer<Integer> consumer) {
+		getPropertyIfNotBlank(key, value -> {
+			consumer.accept(ObjectUtils.toInteger(value));
+		});
+	}
+
+	/**
+	 * 获取配置文件中的值，如果存在则转换为 Long 并 Consumer
+	 */
+	public void getPropertyToLongIfNotBlank(String key, Consumer<Long> consumer) {
+		getPropertyIfNotBlank(key, value -> {
+			consumer.accept(ObjectUtils.toLong(value));
+		});
 	}
 	
 	/**
