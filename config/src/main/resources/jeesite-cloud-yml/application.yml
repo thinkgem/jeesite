@@ -247,13 +247,6 @@ jdbc:
 #    com.jeesite.modules.sys = default
 #    com.jeesite.modules.filemanager = ds2
 
-  # JTA XA 事务
-  jta:
-    enabled: false
-    
-  # 事务超时时间，单位秒（30分钟）（v4.1.5+）
-  transactionTimeout: 1800
-
 # Seata 分布式事务
 seata:
   enabled: false
@@ -290,6 +283,10 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+
+  # JTA XA 事务（spring boot 3） 请在 jeesite-module-core/pom.xml 中打开 atomikos 依赖
+  jta:
+    enabled: false
 
   # Feign 序列化时区
   jackson:
