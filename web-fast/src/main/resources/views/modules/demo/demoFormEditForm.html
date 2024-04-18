@@ -284,7 +284,7 @@
 						</div>
 					</div>
 				</div>
-				<h4 class="form-unit">测试数据子表</h4>
+				<div class="form-unit">测试数据子表</div>
 				<div class="ml10 mr10 table-form">
 					<table id="testDataChildDataGrid"></table>
 					<% if (hasPermi('test:testData:edit')){ %>
@@ -308,10 +308,10 @@
 <% } %>
 <script>
 //初始化测试数据子表DataGrid对象
-$("#testDataChildDataGrid").dataGrid({
+$('#testDataChildDataGrid').dataGrid({
 
 	data: "#{toJson(testData.testDataChildList)}",
-	datatype: "local", // 设置本地数据
+	datatype: 'local', // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 	
 	// 设置数据表格列
@@ -473,7 +473,7 @@ $("#testDataChildDataGrid").dataGrid({
 	itemCode="{{d.itemCode}}" itemName="{{d.itemName}}"/>
 </div>//--></script>
 <script>
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		
 		// 数据格式化恢复（表单提交之前调用）

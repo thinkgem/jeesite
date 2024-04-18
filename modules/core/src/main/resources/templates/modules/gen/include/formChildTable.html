@@ -2,7 +2,7 @@
 	// 输出子表控件
 	for (child in table.childList){
 %>
-				<h4 class="form-unit">\${text('${child.comments}')}</h4>
+				<div class="form-unit">\${text('${child.comments}')}</div>
 				<div class="ml10 mr10 table-form">
 					<table id="${@StringUtils.uncap(child.className)}DataGrid"></table>
 				<% if(table.tplCategory != 'query'){ %>
