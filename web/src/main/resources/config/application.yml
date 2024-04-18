@@ -121,6 +121,10 @@ jdbc:
 #    connectTimeout: ~
 #    socketTimeout: ~
 #
+#    # 查询超时时间，事务超时时间 （v5.7.1+）
+#    queryTimeout: ~
+#    transactionQueryTimeout: ~
+#
 #    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
 #    maxWait: 60000
 #

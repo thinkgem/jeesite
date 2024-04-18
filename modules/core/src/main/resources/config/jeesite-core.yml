@@ -31,6 +31,10 @@ jdbc:
     # 连接超时参数，单位毫秒 （v5.5.2+）
     connectTimeout: ~
     socketTimeout: ~
+
+    # 查询超时时间，事务超时时间 （v5.7.1+）
+    queryTimeout: ~
+    transactionQueryTimeout: ~
     
     # 从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
     testOnBorrow: false
