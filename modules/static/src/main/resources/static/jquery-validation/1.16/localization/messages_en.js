@@ -18,7 +18,7 @@
 		errorMessage: "The information you filled in is wrong.",
 		userName: "Chinese characters, English letters, Numbers and underscores.",
 		realName: "Can only be 2-30 Chinese characters",
-		abc: "Please enter alphanumeric or underline",
+		abc: "Please enter alphanumeric or underline, a-Z start",
 		noEqualTo: "Please enter different values again",
 		mobile: "Please fill in your mobile number correctly, only 13,14,15,16,17,18,19",
 		simplePhone: "Please fill in your phone number correctly, and the fixed number is the area code (3-4 digits),",
