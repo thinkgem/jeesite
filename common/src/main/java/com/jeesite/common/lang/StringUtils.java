@@ -403,13 +403,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	 * 		false or null：不显示编码：name
 	 * @param code 编码
 	 * @param name 名称
-	 * @return
+	 * @return 
 	 */
 	public static String getTreeNodeName(String isShowCode, String code, String name) {
 		if ("true".equals(isShowCode) || "1".equals(isShowCode)) {
 			return "(" + code + ") " + StringUtils.replace(name, SPACE, EMPTY);
 		} else if ("2".equals(isShowCode)) {
-			return name + " (" + code + ")";
+			return defaultIfBlank(name, EMPTY) + "(" + code + ")";
 		} else {
 			return name;
 		}
