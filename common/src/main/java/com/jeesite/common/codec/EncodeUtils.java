@@ -258,12 +258,6 @@ public class EncodeUtils {
 						case '\"':
 							sb.append("＂");
 							break;
-//						case '&':
-//							sb.append("＆");
-//							break;
-//						case '#':
-//							sb.append("＃");
-//							break;
 						default:
 							sb.append(c);
 							break;
@@ -282,10 +276,9 @@ public class EncodeUtils {
 
 	// 预编译SQL过滤正则表达式
 	private static Pattern sqlPattern = Pattern.compile(
-			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database|rand|user)([\\s]*?)\\()|"
-					+ "(\\b(select|update|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|into|"
-					+ "drop|execute|case when|sleep|union|load_file)\\b)",
-			Pattern.CASE_INSENSITIVE);
+			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database|rand|user)([\\s]*?)\\()"
+			+ "|(\\b(select|update|and|or|delete|insert|trancate|substr|ascii|declare|exec|count|master|into"
+			+ "|drop|execute|case when|sleep|union|load_file)\\b)", Pattern.CASE_INSENSITIVE);
 	private static Pattern orderByPattern = Pattern.compile("[a-z0-9_\\.\\, ]*", Pattern.CASE_INSENSITIVE);
 
 	/**
