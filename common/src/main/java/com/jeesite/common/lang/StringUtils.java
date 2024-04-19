@@ -409,7 +409,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		if ("true".equals(isShowCode) || "1".equals(isShowCode)) {
 			return "(" + code + ") " + StringUtils.replace(name, SPACE, EMPTY);
 		} else if ("2".equals(isShowCode)) {
-			return name + " (" + code + ")";
+			return defaultIfBlank(name, EMPTY) + "(" + code + ")";
 		} else {
 			return name;
 		}
