@@ -1,0 +1,21 @@
+.modify-log {word-break:break-all;}
+.modify-log .table th {font-weight:normal;}
+.modify-log .table td {width:30%;vertical-align:middle!important;}
+.modify-log .table th:first-child,
+.modify-log table.table td:first-child {width:10%;}
+.modify-log .table,
+.modify-log .table .table {background:transparent;border-collapse:collapse!important;}
+.modify-log .table.table-bordered th,
+.modify-log .table.table-bordered td {border:1px solid #eaeaea!important;}
+.ui-jqgrid .modify-log tr.ui-state-hover.ui-row-ltr th,
+.ui-jqgrid .modify-log tr.ui-state-hover.ui-row-ltr td,
+.ui-jqgrid .modify-log tr.ui-state-highlight.ui-row-ltr th,
+.ui-jqgrid .modify-log tr.ui-state-highlight.ui-row-ltr td {background-color:#fafafa;}
+.ui-jqgrid .modify-log tr.jqgrow th,
+.ui-jqgrid .modify-log tr.jqgrow td {padding:3px 5px; height:auto;}
+.skin-dark .modify-log .table {color:#adadad!important;}
+.skin-dark .modify-log .table.table-bordered th {border:1px solid #3e3e3e!important;}
+.skin-dark .ui-jqgrid .modify-log tr.ui-state-hover.ui-row-ltr th,
+.skin-dark .ui-jqgrid .modify-log tr.ui-state-hover.ui-row-ltr td,
+.skin-dark .ui-jqgrid .modify-log tr.ui-state-highlight.ui-row-ltr th,
+.skin-dark .ui-jqgrid .modify-log tr.ui-state-highlight.ui-row-ltr td {background-color:#141414!important;}
