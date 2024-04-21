@@ -203,10 +203,10 @@ public class LogUtils {
 				if (StringUtils.startsWith(href, contextPath)){
 					href = StringUtils.substringAfter(href, contextPath);
 				}
-				if (StringUtils.startsWith(href, Global.getAdminPath())){
+				if (StringUtils.startsWith(href, Global.getAdminPath() + "/")){
 					href = StringUtils.substringAfter(href, Global.getAdminPath());
 				}
-				if (StringUtils.startsWith(href, Global.getFrontPath())){
+				if (StringUtils.startsWith(href, Global.getFrontPath() + "/")){
 					href = StringUtils.substringAfter(href, Global.getFrontPath());
 				}
 				log.setLogTitle(Static.menuService.getMenuNamePath(href, permission));
