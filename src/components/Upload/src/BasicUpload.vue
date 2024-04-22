@@ -6,6 +6,7 @@
         type="primary"
         @click="openUploadModal"
         preIcon="i-carbon:cloud-upload"
+        :size="size"
       >
         {{ uploadText || t('component.upload.upload') }}
       </a-button>
@@ -16,7 +17,7 @@
             {{ fileList.length }}
           </template>
         </template>
-        <a-button @click="openPreviewModal">
+        <a-button @click="openPreviewModal" :size="size">
           <Icon icon="i-bi:eye" />
           <template v-if="fileList.length && showPreviewNumber">
             {{ fileList.length }}
@@ -165,6 +166,7 @@
         getShowPreview,
         bindValue,
         handleDelete,
+        size: props.size,
         t,
       };
     },

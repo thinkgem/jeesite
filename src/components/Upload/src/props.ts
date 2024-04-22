@@ -2,6 +2,8 @@ import type { PropType } from 'vue';
 import { FileBasicColumn } from './typing';
 import { FileUpload, uploadFile } from '/@/api/sys/upload';
 import { useGlobSetting } from '/@/hooks/setting';
+import type { SizeType } from '/@/components/Table';
+import { DEFAULT_SIZE } from '/@/components/Table/src/const';
 
 type UploadType = 'image' | 'media' | 'file' | 'all';
 
@@ -99,6 +101,10 @@ export const basicProps = {
   directory: {
     type: Boolean as PropType<boolean>,
     default: false,
+  },
+  size: {
+    type: String as PropType<SizeType>,
+    default: DEFAULT_SIZE,
   },
 };
 
