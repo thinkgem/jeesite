@@ -27,6 +27,7 @@
               :title="item.name"
               :toolbar="true"
               :checkable="true"
+              :checkStrictly="false"
               :immediate="false"
               :defaultExpandLevel="2"
               :ref="setTreeRefs(item.value)"

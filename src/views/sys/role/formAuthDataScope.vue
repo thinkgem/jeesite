@@ -30,6 +30,7 @@
                 :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
                 :toolbar="true"
                 :checkable="true"
+                :checkStrictly="false"
                 :api="ctrlDataTreeData"
                 :params="{ url: item.ctrlDataUrl, ctrlPermi: '2' }"
                 :immediate="immediate"
