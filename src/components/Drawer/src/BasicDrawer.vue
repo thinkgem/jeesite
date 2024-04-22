@@ -24,6 +24,7 @@
         />
       </Tooltip>
     </template>
+    <div v-if="widthResize" class="ew-resize" @mousedown="onMousedown"></div>
     <ScrollContainer
       :style="getScrollContentStyle"
       v-loading="getLoading"
@@ -202,6 +203,25 @@
         emit('ok', e);
       }
 
+      const onMousedown = function (e) {
+        const wrapper = e.target.closest('.ant-drawer-content-wrapper') as HTMLElement;
+        if (!wrapper) return;
+        const w = wrapper.clientWidth;
+        const x = e.clientX;
+        const l = e.target.offsetLeft;
+        let isDown = true;
+        window.onmousemove = (e) => {
+          if (!isDown) {
+            return;
+          }
+          const nl = e.clientX - (x - l);
+          wrapper.style.width = w - nl + 'px';
+        };
+        window.onmouseup = () => {
+          window.onmousemove = null;
+        };
+      };
+
       return {
         onClose,
         t,
@@ -213,6 +233,8 @@
         getBindValues,
         getFooterHeight,
         handleOk,
+        widthResize: props.widthResize,
+        onMousedown,
       };
     },
   });
@@ -225,6 +247,18 @@
 
   .ant-drawer .@{prefix-cls} {
     overflow: hidden;
+
+    .ew-resize {
+      position: absolute;
+      left: 0;
+      height: 90%;
+      width: 5px;
+      z-index: 1000;
+      user-select: none;
+      &:hover {
+        cursor: ew-resize;
+      }
+    }
 
     .ant-drawer {
       &-body {
