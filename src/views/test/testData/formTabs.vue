@@ -43,6 +43,7 @@
                   :bizType="'testDataChild_file'"
                   :uploadType="'all'"
                   :loadTime="record.__t"
+                  :size="'small'"
                 />
               </template>
             </BasicTable>
