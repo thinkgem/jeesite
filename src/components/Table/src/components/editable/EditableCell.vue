@@ -522,6 +522,7 @@
   }
   .@{prefix-cls} {
     position: relative;
+    margin: -5px;
 
     &__wrapper {
       display: flex;
@@ -530,6 +531,48 @@
 
       > .ant-select {
         min-width: calc(100% - 50px);
+      }
+
+      .ant-input,
+      .ant-picker,
+      .ant-select-selector {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0;
+        box-shadow: none !important;
+        padding: 0 5px !important;
+
+        &:focus {
+          border-bottom: 1px dotted #999 !important;
+        }
+
+        .ant-select-selection-search {
+          left: 4px !important;
+        }
+
+        .ant-select-selection-placeholder {
+          left: 4px !important;
+        }
+      }
+
+      textarea.ant-input {
+        padding-top: 5px !important;
+      }
+
+      .ant-select-selector {
+        padding-top: 2px !important;
+      }
+
+      .ant-select-single.ant-select-open {
+        .ant-select-selection-item {
+          color: @text-color-base!important;
+        }
+      }
+
+      .ant-select-multiple {
+        .ant-select-selection-search {
+          left: -10px !important;
+        }
       }
     }
 
@@ -554,7 +597,9 @@
     }
 
     &__normal {
+      margin: 5px;
       // display: inline-block; // 去掉，否则编辑表格的 ellipsis 省略号失效
+
       &-icon {
         position: absolute;
         top: 4px;
