@@ -11,6 +11,7 @@
 	</parent>
 
 	<artifactId>jeesite-module-cms</artifactId>
+	<packaging>jar</packaging>
 
 	<name>JeeSite Module CMS</name>
 	<url>http://jeesite.com</url>
