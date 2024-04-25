@@ -1,12 +1,12 @@
 /**
- * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
  */
 package com.jeesite.common.lang;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -47,9 +47,7 @@ public class ExceptionUtils {
 				message = e.getMessage();
 				break;
 			}
-			if (StringUtils.isBlank(message)){
-				e = e.getCause();
-			}
+			e = e.getCause();
 		}
 		return message;
 	}
