@@ -27,13 +27,6 @@ public class IdGen {
 	public static String uuid() {
 		return StringUtils.replace(UUID.randomUUID().toString(),"-", "");
 	}
-	
-	/**
-	 * 使用SecureRandom随机生成Long. 
-	 */
-	public static long randomLong() {
-		return Math.abs(random.nextLong());
-	}
 
 	/**
 	 * 基于Base62编码的SecureRandom随机生成bytes.
@@ -45,10 +38,31 @@ public class IdGen {
 	}
 
 	/**
+	 * 随机小写字符串
+	 */
+	public static String randomString(int length) {
+		return randomBase62(length).toLowerCase();
+	}
+
+	/**
+	 * 随机简短小写字符串（对重复频率要求不高的使用）
+	 */
+	public static String randomShortString() {
+		return randomBase62(4).toLowerCase();
+	}
+
+	/**
 	 * 使用SecureRandom随机生成指定范围的Integer. 
 	 */
 	public static int randomInt(int min, int max) {
 		return random.nextInt(max) % (max - min + 1) + min;
+	}
+
+	/**
+	 * 使用SecureRandom随机生成Long.
+	 */
+	public static long randomLong() {
+		return Math.abs(random.nextLong());
 	}
 	
 	/**
