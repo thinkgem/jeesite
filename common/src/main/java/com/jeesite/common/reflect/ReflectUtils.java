@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013-Now http://jeesite.com、springside.org.cn All rights reserved.
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
 package com.jeesite.common.reflect;
