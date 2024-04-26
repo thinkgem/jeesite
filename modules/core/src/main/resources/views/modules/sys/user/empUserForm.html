@@ -201,7 +201,7 @@
 				<% } %>
 				<% if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) { %>
 				<div class="form-unit">${text('分配角色')}</div>
-				<div class="pl10 pb20">
+				<div class="form-unit-wrap table-form">
 					<table id="roleGrid"></table>
 					<#form:hidden name="userRoleString"/>
 				</div>
@@ -232,7 +232,7 @@
 <script>
 $("#empOfficeGrid").dataGrid({
 	data: "#{toJson(empUser.employee.employeeOfficeList)}",
-	datatype: "local", // 设置本地数据
+	datatype: 'local', // 设置本地数据
 	columnModel: [
 		{header:'${text("附属机构")}', name:'officeName', sortable:false, width:100,
 			formatter: function(val, obj, row, act){
@@ -293,9 +293,6 @@ var roleGrid = $("#roleGrid").dataGrid({
 	autoGridHeight: function(){
 		return 'auto';
 	},
-	autoGridWidth: function(){
-		return $('#inputForm .box-body').width()-20;
-	},
 	ajaxSuccess: function(){
 		//# for (role in roleList!){
  		roleGrid.dataGrid('setSelectRow', '${role.roleCode}');
@@ -303,7 +300,7 @@ var roleGrid = $("#roleGrid").dataGrid({
 	}
 });
 //# }
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		//# if(hasPermi('sys:empUser:authRole') && (op == 'add' || op == 'auth')) {
 		$("#userRoleString").val(roleGrid.dataGrid('getSelectRows').join(','));

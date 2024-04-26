@@ -33,9 +33,9 @@
 					</div>
 				</div>
 				<div class="form-unit">${text('数据权限')}</div>
-				<div id="dataScopeTrees"></div>
+				<div id="dataScopeTrees" class="pl20"></div>
 				<script id="dataScopeTpl" type="text/template">
-					<div id="dataScope_{{d.key}}" class="pull-left" style="padding:0 15px;min-width:300px;">
+					<div id="dataScope_{{d.key}}" class="pull-left" style="padding:0 10px;min-width:300px;">
 						<div class="box box-solid box-trees">
 							<div class="box-header">
 								<div class="box-title icheck">
@@ -72,7 +72,7 @@
 </div>
 <% } %>
 <script>
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		//# // 获取数据权限数据
 		var dataScopeData = [];

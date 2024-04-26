@@ -179,7 +179,7 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .tabpanel_mover li .title {padding-left:0;text-align:center;}
 .tabpanel_mover li.active {background-color:#316ee6;}
 .tabpanel_mover li.active div {color:#fff;}
-.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:6px;right:4px;background:none;opacity:0.7;}
+.tabpanel_mover li .closer {font:11px/1 FontAwesome;top:7px;right:4px;background:none;opacity:0.7;}
 .tabpanel_mover li .closer:before {content:"\f00d";}
 .tabpanel_mover li .closer:hover {background:none;-moz-transform:scale(1.2);-webkit-transform:scale(1.2); 
      -o-transform:scale(1.2);-ms-transform:scale(1.2);transform:scale(1.2);color:#d30606;}
@@ -225,7 +225,9 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .table thead tr, .ui-jqgrid-htable thead tr, .ui-jqgrid-hdiv, .ui-jqgrid-hbox {background-color:#fafafa;}
 .ui-jqgrid .ui-jqgrid-labels th, .ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td, .ui-jqgrid tr.ui-row-ltr td:last-child,
 .ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column,
-.ui-jqgrid.ui-widget-content, .ui-jqgrid .ui-widget-content {border-color:#f0f0f0;}
+.ui-jqgrid .frozen-right th.ui-th-ltr, .ui-jqgrid .frozen-right tr.ui-row-ltr td,
+.ui-jqgrid .frozen-left th.ui-th-ltr, .ui-jqgrid .frozen-left tr.ui-row-ltr td,
+.ui-jqgrid.ui-widget-content, .ui-jqgrid .ui-widget-content {border-color:#eeeeee;}
 .ui-state-hover td, .ui-widget-content .ui-state-hover td, .ui-widget-header .ui-state-hover td,
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {background:#f5f5f5;}
 .ui-jqgrid tr.ui-state-highlight.ui-row-ltr td {background-color:#f0f5ff;}
