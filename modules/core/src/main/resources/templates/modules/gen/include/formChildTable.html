@@ -3,7 +3,7 @@
 	for (child in table.childList){
 %>
 				<div class="form-unit">\${text('${child.comments}')}</div>
-				<div class="ml10 mr10 table-form">
+				<div class="form-unit-wrap table-form">
 					<table id="${@StringUtils.uncap(child.className)}DataGrid"></table>
 				<% if(table.tplCategory != 'query'){ %>
 					\<% if (hasPermi('${permissionPrefix}:edit')){ %>

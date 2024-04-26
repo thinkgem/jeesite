@@ -272,7 +272,7 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 /* header */
 .ui-jqgrid .ui-jqgrid-hdiv {line-height:15px;}
 .ui-jqgrid .ui-jqgrid-htable th {height:39px;}
-.ui-jqgrid .ui-jqgrid-htable th div {padding:9px 0px 8px 2px;line-height:17px;}
+.ui-jqgrid .ui-jqgrid-htable th div {padding:9px 0 8px 2px;line-height:17px;}
 .ui-jqgrid .ui-jqgrid-labels th {border-right:1px solid #ddd;font-weight:normal;text-align:center;}
 .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {border-bottom:1px solid #ddd;position:relative;overflow:visible;}
 .ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header {border-bottom:1px solid #ddd;padding:5px 4px;}
@@ -292,7 +292,7 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 /* body */ 
 .ui-jqgrid .ui-widget-content {border:1px solid #ddd;}
 .ui-jqgrid tr.jqgrow, .ui-jqgrid tr.ui-row-ltr, .ui-jqgrid tr.ui-row-rtl {border:none;}
-.ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {border-bottom:1px solid #ddd;border-color:#E1E1E1;}
+.ui-jqgrid tr.ui-row-ltr td, .ui-jqgrid tr.ui-row-rtl td {border-color:#e1e1e1;border-bottom:1px solid #e1e1e1;}
 .ui-jqgrid tr.jqgrow td {height:39px;padding:3px 6px;white-space:nowrap;text-overflow:ellipsis;} /* 溢出省略 */
 .ui-jqgrid tr.jqgrow td.clip {text-overflow:clip;} /* 不显示省略号，截断显示 */
 .ui-jqgrid tr.jqgrow td.actions {overflow-x:auto;text-overflow:clip;} /* 操作列样式 */
@@ -322,8 +322,8 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid .frozen-left tr.ui-row-ltr td {border-right:1px solid #eaeaea;}
 .ui-jqgrid .frozen-right th.ui-th-ltr,
 .ui-jqgrid .frozen-right tr.ui-row-ltr td {border-right:0;border-left:1px solid #eaeaea;}
-.ui-jqgrid .frozen-bdiv.frozen-left {box-shadow:6px 0px 8px -5px rgba(0,0,0,.12);}
-.ui-jqgrid .frozen-bdiv.frozen-right {box-shadow:-6px 0px 8px -5px rgba(0,0,0,.12);}
+.ui-jqgrid .frozen-bdiv.frozen-left {box-shadow:6px 0 8px -5px rgba(0,0,0,.12);}
+.ui-jqgrid .frozen-bdiv.frozen-right {box-shadow:-6px 0 8px -5px rgba(0,0,0,.12);}
 
 /* subgrid */
 .ui-jqgrid .tablediv{padding:3px;}
@@ -334,7 +334,7 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .ui-jqgrid .editable .input-group {z-index:1;/* 显示到锁定列下面 */}
 .ui-jqgrid .editable .wup_container .placeholder p {display:none;}
 .ui-jqgrid .editable .wup_container .queueList .table {margin-bottom:2px;}
-.ui-jqgrid .editable .wup_container .placeholder .webuploader-pick {margin:0px auto 0 auto;}
+.ui-jqgrid .editable .wup_container .placeholder .webuploader-pick {margin:0 auto 0 auto;}
 .ui-jqgrid .editable .wup_container .wup_img .placeholder {padding:0;}
 .ui-jqgrid .editable .wup_container .wup_img .placeholder .webuploader-pick {margin: 3px 0 0 0;}
 .ui-jqgrid .editable .wup_container .wup_input {top:10px;left:2%;}
@@ -379,14 +379,14 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 .check_all{position:absolute;left:20px;bottom:7px;}
 
 /* 标题自动换行 */
-/* th.ui-th-column div{white-space:normal!important;height:auto!important;padding:0px;}
+/* th.ui-th-column div{white-space:normal!important;height:auto!important;padding:0;}
 .ui-jqgrid .ui-jqgrid-htable th div{padding-top:2px;} */
 th.ui-th-column div{white-space:normal!important;height:auto!important;}
 /* .ui-jqgrid .ui-jqgrid-htable th div{height:auto!important;} */
 
 /* 调整标题高度
 .ui-jqgrid .ui-jqgrid-htable th {height:24px;}
-.ui-jqgrid .ui-jqgrid-htable th div {padding:4px 0px 3px 2px;}
+.ui-jqgrid .ui-jqgrid-htable th div {padding:4px 0 3px 2px;}
 .ui-jqgrid .ui-jqgrid-frozen .ui-jqgrid-htable th div {height:24px!important;} */
 
 /* print style */

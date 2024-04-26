@@ -7,8 +7,8 @@
 
 .tabpanel_tab_content {
 	width: 100%;
-	height: 39px;
-	line-height: 39px;
+	height: 38px;
+	line-height: 21px;
 	background-color: #F9F9F9;
 	border-bottom: 1px solid #e5e5e5;
 	overflow: hidden;
@@ -36,7 +36,7 @@
 
 .tabpanel_mover li {
 	width: 105px;
-	line-height: 20px;
+	/*line-height: 20px;*/
 	padding: 9px 16px 9px 5px;
 	background-color: #f4f6f8;
 	float: left;
@@ -79,7 +79,7 @@
 .tabpanel_mover li .title i{
 	font-size: 18px;
 	vertical-align: middle;
-	margin-top: -2px;
+	margin-top: -3px;
 	opacity: 0.8
 }
 
