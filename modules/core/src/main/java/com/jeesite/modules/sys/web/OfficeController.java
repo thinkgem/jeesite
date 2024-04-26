@@ -333,9 +333,9 @@ public class OfficeController extends BaseController {
 			mapList.add(map);
 		}
 		// 一次性后台加载用户，若数据量比较大，建议使用懒加载
-		if (StringUtils.equals(isLoadUser, "true") && idList.size() > 0) {
+		if (StringUtils.equals(isLoadUser, "true") && !idList.isEmpty()) {
 			List<Map<String, Object>> userList = 
-				empUserController.treeData(userIdPrefix, idList.toArray(new String[idList.size()]), 
+				empUserController.treeData(userIdPrefix, idList.toArray(new String[0]),
 						companyCode, postCode, roleCode, isAll, isShowCode, ctrlPermi);
 			mapList.addAll(userList);
 		}
