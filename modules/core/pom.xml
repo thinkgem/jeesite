@@ -85,6 +85,13 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- Data/Dynamic Base Manage -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-framework-dbm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
