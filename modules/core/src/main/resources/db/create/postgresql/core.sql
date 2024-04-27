@@ -79,6 +79,31 @@ CREATE TABLE ${_prefix}sys_area
 ) WITHOUT OIDS;
 
 
+-- 业务分类
+CREATE TABLE ${_prefix}sys_biz_category
+(
+	category_code varchar(64) NOT NULL,
+	view_code varchar(500),
+	category_name varchar(64) NOT NULL,
+	parent_code varchar(64) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
+	tree_sort decimal(10) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
+	tree_leaf char(1) NOT NULL,
+	tree_level decimal(4) NOT NULL,
+	tree_names varchar(767) NOT NULL,
+	status char(1) DEFAULT '0' NOT NULL,
+	create_by varchar(64) NOT NULL,
+	create_date timestamp NOT NULL,
+	update_by varchar(64) NOT NULL,
+	update_date timestamp NOT NULL,
+	remarks varchar(500),
+	corp_code varchar(64) DEFAULT '0' NOT NULL,
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL,
+	PRIMARY KEY (category_code)
+) WITHOUT OIDS;
+
+
 -- 公司表
 CREATE TABLE ${_prefix}sys_company
 (
@@ -1033,6 +1058,25 @@ COMMENT ON COLUMN ${_prefix}sys_area.create_date IS '创建时间';
 COMMENT ON COLUMN ${_prefix}sys_area.update_by IS '更新者';
 COMMENT ON COLUMN ${_prefix}sys_area.update_date IS '更新时间';
 COMMENT ON COLUMN ${_prefix}sys_area.remarks IS '备注信息';
+COMMENT ON TABLE ${_prefix}sys_biz_category IS '业务分类';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.category_code IS '流程分类';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.view_code IS '分类代码';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.category_name IS '分类名称';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.parent_code IS '父级编号';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.parent_codes IS '所有父级编号';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.tree_sort IS '排序号（升序）';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.tree_sorts IS '所有排序号';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.tree_leaf IS '是否最末级';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.tree_level IS '层次级别';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.tree_names IS '全节点名';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.status IS '状态（0正常 1删除 2停用）';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.create_by IS '创建者';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.create_date IS '创建时间';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.update_by IS '更新者';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.update_date IS '更新时间';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.remarks IS '备注信息';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.corp_code IS '租户代码';
+COMMENT ON COLUMN ${_prefix}sys_biz_category.corp_name IS '租户名称';
 COMMENT ON TABLE ${_prefix}sys_company IS '公司表';
 COMMENT ON COLUMN ${_prefix}sys_company.company_code IS '公司编码';
 COMMENT ON COLUMN ${_prefix}sys_company.view_code IS '公司代码';

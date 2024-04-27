@@ -80,6 +80,31 @@ CREATE TABLE ${_prefix}sys_area
 ) COMMENT = '行政区划';
 
 
+-- 业务分类
+CREATE TABLE ${_prefix}sys_biz_category
+(
+	category_code varchar(64) NOT NULL COMMENT '流程分类',
+	view_code varchar(500) COMMENT '分类代码',
+	category_name varchar(64) NOT NULL COMMENT '分类名称',
+	parent_code varchar(64) NOT NULL COMMENT '父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
+	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
+	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
+	tree_level decimal(4) NOT NULL COMMENT '层次级别',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
+	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
+	create_by varchar(64) NOT NULL COMMENT '创建者',
+	create_date datetime NOT NULL COMMENT '创建时间',
+	update_by varchar(64) NOT NULL COMMENT '更新者',
+	update_date datetime NOT NULL COMMENT '更新时间',
+	remarks varchar(500) COMMENT '备注信息',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
+	PRIMARY KEY (category_code)
+) COMMENT = '业务分类';
+
+
 -- 公司表
 CREATE TABLE ${_prefix}sys_company
 (

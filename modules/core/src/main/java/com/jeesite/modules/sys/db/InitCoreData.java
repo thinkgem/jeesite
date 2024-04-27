@@ -50,6 +50,7 @@ public class InitCoreData extends BaseInitDataTests {
 		this.initPost();
 		this.initEmpUser();
 		this.initJob();
+		this.initBizCategory();
 		return true;
 	}
 	
@@ -344,6 +345,22 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
 		job.setStatus(JobEntity.STATUS_PAUSED);
 		jobDao.insert(job);
+	}
+
+	@Autowired
+	private BizCategoryService bizCategoryService;
+	public void initBizCategory() throws Exception{
+//		clearTable(BizCategory.class);
+		initExcelData(BizCategory.class, params -> {
+			String action = (String)params[0];
+			if("save".equals(action)){
+				BizCategory entity = (BizCategory)params[1];
+				entity.setIsNewRecord(true);
+				bizCategoryService.save(entity);
+				return null;
+			}
+			return null;
+		});
 	}
 	
 	@Override
