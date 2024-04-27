@@ -12,11 +12,12 @@ import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Area;
-import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.AreaUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,8 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +59,7 @@ public class AreaController extends BaseController {
 	 */
 	@RequiresPermissions("sys:area:view")
 	@RequestMapping(value = "index")
-	public String index(Company area, Model model) {
+	public String index(Area area, Model model) {
 		model.addAttribute("area", area);
 		return "modules/sys/areaIndex";
 	}

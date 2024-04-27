@@ -71,5 +71,11 @@ public class SysAutoConfiguration {
 	public MsgInnerService msgInnerService(){
 		return new MsgInnerService();
 	}
-	
+
+	@Bean
+	@ConditionalOnMissingBean
+	public BizCategoryService bizCategoryService(){
+		return new BizCategoryServiceSupport();
+	}
+
 }

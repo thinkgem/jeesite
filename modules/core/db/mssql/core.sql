@@ -79,6 +79,31 @@ CREATE TABLE [js_sys_area]
 );
 
 
+-- 业务分类
+CREATE TABLE [js_sys_biz_category]
+(
+	[category_code] varchar(64) NOT NULL,
+	[view_code] varchar(500),
+	[category_name] varchar(64) NOT NULL,
+	[parent_code] varchar(64) NOT NULL,
+	[parent_codes] varchar(767) NOT NULL,
+	[tree_sort] decimal(10) NOT NULL,
+	[tree_sorts] varchar(767) NOT NULL,
+	[tree_leaf] char(1) NOT NULL,
+	[tree_level] decimal(4) NOT NULL,
+	[tree_names] varchar(767) NOT NULL,
+	[status] char(1) DEFAULT '0' NOT NULL,
+	[create_by] varchar(64) NOT NULL,
+	[create_date] datetime NOT NULL,
+	[update_by] varchar(64) NOT NULL,
+	[update_date] datetime NOT NULL,
+	[remarks] nvarchar(500),
+	[corp_code] varchar(64) DEFAULT '0' NOT NULL,
+	[corp_name] nvarchar(100) DEFAULT 'JeeSite' NOT NULL,
+	PRIMARY KEY ([category_code])
+);
+
+
 -- 公司表
 CREATE TABLE [js_sys_company]
 (
