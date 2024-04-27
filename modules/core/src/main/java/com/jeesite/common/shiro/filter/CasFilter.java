@@ -4,6 +4,7 @@
  */
 package com.jeesite.common.shiro.filter;
 
+import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
@@ -28,6 +29,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CasFilter extends org.apache.shiro.cas.CasFilter {
 
 	private BaseAuthorizingRealm authorizingRealm;
+
+	public CasFilter() {
+		this.setSuccessUrl(Global.getProperty("shiro.successUrl"));
+	}
 	
 	/**
 	 * 登录成功调用事件
