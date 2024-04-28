@@ -270,6 +270,13 @@
           > .scrollbar__wrap {
             margin: 16px;
             padding-bottom: 30px;
+            > .scrollbar__view {
+              > form:first-child,
+              > .ant-tabs:first-child {
+                margin-top: 13px;
+                margin-right: 5px;
+              }
+            }
           }
 
           > .is-horizontal {

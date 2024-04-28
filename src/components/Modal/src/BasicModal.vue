@@ -263,6 +263,12 @@
           > .scrollbar__wrap {
             margin: 15px;
             padding: 1px;
+            > .scrollbar__view > div {
+              > form:first-child {
+                margin-top: 13px;
+                margin-right: 5px;
+              }
+            }
           }
 
           > .is-horizontal {
