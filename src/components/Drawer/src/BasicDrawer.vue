@@ -100,7 +100,7 @@
         const opt = {
           placement: 'right',
           ...unref(attrs),
-          ...unref(getMergeProps),
+          ...deepMerge(toRaw(props), unref(propsRef)),
           open: unref(openRef),
         };
         opt.title = undefined;
