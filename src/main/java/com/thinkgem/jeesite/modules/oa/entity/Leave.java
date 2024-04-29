@@ -177,9 +177,9 @@ public class Leave extends DataEntity<Leave> {
 		if (StringUtils.isNotBlank(ids)){
 			String ss = ids.trim().replace("　", ",").replace(" ",",").replace("，", ",").replace("'", "");
 			for(String s : ss.split(",")) {
-//				if(s.matches("\\d*")) {
+				if(s.matches("\\d*")) {
 					idList.add("'"+s+"'");
-//				}
+				}
 			}
 		}
 		return StringUtils.join(idList, ",");
