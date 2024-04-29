@@ -29,7 +29,7 @@ import java.util.List;
 		@Column(name = "site_sort", attrName = "siteSort", label = "站点排序号"),
 		@Column(name = "title", attrName = "title", label = "站点标题", queryType = QueryType.LIKE),
 		@Column(name = "logo", attrName = "logo", label = "站点Logo"),
-		@Column(name = "domain", attrName = "domain", label = "站点域名"),
+		@Column(name = "domain_name", attrName = "domain", label = "站点域名"),
 		@Column(name = "keywords", attrName = "keywords", label = "关键字"),
 		@Column(name = "description", attrName = "description", label = "描述"),
 		@Column(name = "theme", attrName = "theme", label = "主题"),

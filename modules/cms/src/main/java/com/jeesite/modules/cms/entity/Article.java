@@ -35,7 +35,7 @@ import java.util.Date;
 		@Column(name = "description", attrName = "description", label = "描述"),
 		@Column(name = "weight", attrName = "weight", label = "权重，越大越靠前", isQuery = false),
 		@Column(name = "weight_date", attrName = "weightDate", label = "权重期限", isQuery = false),
-		@Column(name = "source", attrName = "source", label = "来源", comment = "来源（转载/原创）"),
+		@Column(name = "article_source", attrName = "source", label = "来源", comment = "来源（转载/原创）"),
 		@Column(name = "copyfrom", attrName = "copyfrom", label = "文章来源出处"),
 		@Column(name = "hits", attrName = "hits", label = "点击数"),
 		@Column(name = "hits_plus", attrName = "hitsPlus", label = "支持数"),
