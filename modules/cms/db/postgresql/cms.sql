@@ -16,7 +16,7 @@ CREATE TABLE js_cms_article
 	description varchar(500),
 	weight decimal(10) DEFAULT 0,
 	weight_date timestamp,
-	source char(1),
+	article_source char(1),
 	copyfrom varchar(255),
 	hits decimal(20) DEFAULT 0,
 	hits_plus numeric(10),
@@ -171,7 +171,7 @@ CREATE TABLE js_cms_comment
 CREATE TABLE js_cms_guestbook
 (
 	id varchar(64) NOT NULL,
-	type char(1) NOT NULL,
+	gb_type char(1) NOT NULL,
 	content varchar(255) NOT NULL,
 	name varchar(100) NOT NULL,
 	email varchar(100) NOT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE js_cms_site
 	site_sort decimal(10),
 	title varchar(100) NOT NULL,
 	logo varchar(1000),
-	domain varchar(500),
+	domain_name varchar(500),
 	keywords varchar(500),
 	description varchar(500),
 	theme varchar(500),
@@ -295,7 +295,7 @@ CREATE INDEX idx_cms_comment_cc ON js_cms_comment (corp_code);
 CREATE INDEX idx_cms_comment_status ON js_cms_comment (status);
 CREATE INDEX idx_cms_guestbook_cc ON js_cms_guestbook (corp_code);
 CREATE INDEX idx_cms_guestbook_status ON js_cms_guestbook (status);
-CREATE INDEX idx_cms_guestbook_type ON js_cms_guestbook (type);
+CREATE INDEX idx_cms_guestbook_type ON js_cms_guestbook (gb_type);
 CREATE INDEX idx_cms_site_status ON js_cms_site (status);
 CREATE INDEX cms_visit_log_cc ON js_cms_visit_log (category_code);
 CREATE INDEX cms_visit_log_ci ON js_cms_visit_log (content_id);
@@ -324,7 +324,7 @@ COMMENT ON COLUMN js_cms_article.keywords IS '关键字';
 COMMENT ON COLUMN js_cms_article.description IS '描述';
 COMMENT ON COLUMN js_cms_article.weight IS '权重，越大越靠前';
 COMMENT ON COLUMN js_cms_article.weight_date IS '权重期限';
-COMMENT ON COLUMN js_cms_article.source IS '来源（转载/原创）';
+COMMENT ON COLUMN js_cms_article.article_source IS '来源（转载/原创）';
 COMMENT ON COLUMN js_cms_article.copyfrom IS '文章来源出处';
 COMMENT ON COLUMN js_cms_article.hits IS '点击数';
 COMMENT ON COLUMN js_cms_article.hits_plus IS '支持数';
@@ -445,7 +445,7 @@ COMMENT ON COLUMN js_cms_comment.corp_code IS '租户代码';
 COMMENT ON COLUMN js_cms_comment.corp_name IS '租户名称';
 COMMENT ON TABLE js_cms_guestbook IS '留言板表';
 COMMENT ON COLUMN js_cms_guestbook.id IS '编号';
-COMMENT ON COLUMN js_cms_guestbook.type IS '留言分类';
+COMMENT ON COLUMN js_cms_guestbook.gb_type IS '留言分类';
 COMMENT ON COLUMN js_cms_guestbook.content IS '留言内容';
 COMMENT ON COLUMN js_cms_guestbook.name IS '姓名';
 COMMENT ON COLUMN js_cms_guestbook.email IS '邮箱';
@@ -473,7 +473,7 @@ COMMENT ON COLUMN js_cms_site.site_name IS '站点名称';
 COMMENT ON COLUMN js_cms_site.site_sort IS '站点排序号';
 COMMENT ON COLUMN js_cms_site.title IS '站点标题';
 COMMENT ON COLUMN js_cms_site.logo IS '站点Logo';
-COMMENT ON COLUMN js_cms_site.domain IS '站点域名';
+COMMENT ON COLUMN js_cms_site.domain_name IS '站点域名';
 COMMENT ON COLUMN js_cms_site.keywords IS '关键字';
 COMMENT ON COLUMN js_cms_site.description IS '描述';
 COMMENT ON COLUMN js_cms_site.theme IS '主题';

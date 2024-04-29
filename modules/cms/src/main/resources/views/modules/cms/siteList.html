@@ -53,14 +53,14 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("站点名称")}', name:'siteName', index:'a.site_name', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/cms/site/form?siteCode='+row.siteCode+'" class="btnList" data-title="${text("编辑站点")}">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("站点标题")}', name:'title', index:'a.title', width:150, align:"left"},
 // 		{header:'${text("站点Logo")}', name:'logo', index:'a.logo', width:150, align:"left"},
-		{header:'${text("站点域名")}', name:'domain', index:'a.domain', width:150, align:"center"},
+		{header:'${text("站点域名")}', name:'domain', index:'a.domain_name', width:150, align:"center"},
 		{header:'${text("描述")}', name:'description', index:'a.description', width:150, align:"left"},
 		{header:'${text("主题")}', name:'theme', index:'a.theme', width:150, align:"center"},
 		{header:'${text("状态")}', name:'status', index:'a.status', width:90, align:"center", formatter: function(val, obj, row, act){

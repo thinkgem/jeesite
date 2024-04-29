@@ -16,7 +16,7 @@ CREATE TABLE js_cms_article
 	description varchar(500),
 	weight decimal(10) DEFAULT 0,
 	weight_date datetime,
-	source char(1),
+	article_source char(1),
 	copyfrom varchar(255),
 	hits decimal(20) DEFAULT 0,
 	hits_plus numeric(10),
@@ -171,7 +171,7 @@ CREATE TABLE js_cms_comment
 CREATE TABLE js_cms_guestbook
 (
 	id varchar(64) NOT NULL,
-	type char(1) NOT NULL,
+	gb_type char(1) NOT NULL,
 	content varchar(255) NOT NULL,
 	name varchar(100) NOT NULL,
 	email varchar(100) NOT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE js_cms_site
 	site_sort decimal(10),
 	title varchar(100) NOT NULL,
 	logo varchar(1000),
-	domain varchar(500),
+	domain_name varchar(500),
 	keywords varchar(500),
 	description varchar(500),
 	theme varchar(500),
@@ -295,7 +295,7 @@ CREATE INDEX idx_cms_comment_cc ON js_cms_comment (corp_code);
 CREATE INDEX idx_cms_comment_status ON js_cms_comment (status);
 CREATE INDEX idx_cms_guestbook_cc ON js_cms_guestbook (corp_code);
 CREATE INDEX idx_cms_guestbook_status ON js_cms_guestbook (status);
-CREATE INDEX idx_cms_guestbook_type ON js_cms_guestbook (type);
+CREATE INDEX idx_cms_guestbook_type ON js_cms_guestbook (gb_type);
 CREATE INDEX idx_cms_site_status ON js_cms_site (status);
 CREATE INDEX cms_visit_log_cc ON js_cms_visit_log (category_code);
 CREATE INDEX cms_visit_log_ci ON js_cms_visit_log (content_id);
