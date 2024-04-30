@@ -365,7 +365,7 @@ public class InitCoreData extends BaseInitDataTests {
 	
 	@Override
 	public int getPhase() {
-		return Integer.MIN_VALUE + 1000;  // core 1000, other 2000, upgrade 10000
+		return Integer.MIN_VALUE + 1000;  // core 1000, other 5000, upgrade 10000
 	}
 	
 }

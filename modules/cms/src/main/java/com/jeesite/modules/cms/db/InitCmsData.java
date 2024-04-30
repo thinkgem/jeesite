@@ -33,7 +33,6 @@ public class InitCmsData extends BaseInitDataTests {
 		if (GenUtils.isTableExists(Global.getTablePrefix() + "cms_article")) {
 			return true; // 如果表已存在，则无需初始化
 		}
-
 		this.runCreateScript("cms.sql");
 		this.initModuleInfo("cms");
 		this.initModuleMenu("/cms/index");
@@ -42,7 +41,6 @@ public class InitCmsData extends BaseInitDataTests {
 		this.initCategory();
 		this.initArticle();
 		this.initArticleData();
-		
 		return true;
 	}
 
