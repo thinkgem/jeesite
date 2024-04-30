@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.test.db;
 
+import com.jeesite.common.datasource.DataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class InitTestData extends BaseInitDataTests {
 		initGenDemoData();
 		return true;
 	}
-	
+
 	@Autowired
 	private GenTableService genTableService;
 	/**
@@ -57,6 +58,7 @@ public class InitTestData extends BaseInitDataTests {
 		GenTable genTable = new GenTable();
 		genTable.setIsNewRecord(true);
 		genTable.setTableName("test_data");
+		genTable.setDataSourceName(dataSourceName);
 		genTable = genTableService.getFromDb(genTable);
 		genTable.setIsNewRecord(true);
 		genTable.setClassName("TestData");
@@ -72,11 +74,13 @@ public class InitTestData extends BaseInitDataTests {
 		genTable.getOptionMap().put("isFileUpload", Global.YES);
 		genTable.getOptionMap().put("isImageUpload", Global.YES);
 		initGenTableColumn(genTable);
+		DataSourceHolder.setDataSourceName(dataSourceName);
 		genTableService.save(genTable);
 		// 子表
 		GenTable genTableChild = new GenTable();
 		genTableChild.setIsNewRecord(true);
 		genTableChild.setTableName("test_data_child");
+		genTableChild.setDataSourceName(dataSourceName);
 		genTableChild = genTableService.getFromDb(genTableChild);
 		genTableChild.setIsNewRecord(true);
 		genTableChild.setClassName("TestDataChild");
@@ -90,9 +94,10 @@ public class InitTestData extends BaseInitDataTests {
 		genTableChild.setParentTableName("test_data");
 		genTableChild.setParentTableFkName("test_data_id");
 		initGenTableColumn(genTableChild);
+		DataSourceHolder.setDataSourceName(dataSourceName);
 		genTableService.save(genTableChild);
 	}
-	
+
 	/**
 	 * 代码生成测试数据（列初始化）
 	 */
@@ -151,7 +156,7 @@ public class InitTestData extends BaseInitDataTests {
 			}
 		}
 	}
-	
+
 	/**
 	 * 代码生成树表测试数据
 	 */
@@ -159,6 +164,7 @@ public class InitTestData extends BaseInitDataTests {
 		GenTable genTable = new GenTable();
 		genTable.setIsNewRecord(true);
 		genTable.setTableName("test_tree");
+		genTable.setDataSourceName(dataSourceName);
 		genTable = genTableService.getFromDb(genTable);
 		genTable.setIsNewRecord(true);
 		genTable.setClassName("TestTree");
@@ -176,6 +182,7 @@ public class InitTestData extends BaseInitDataTests {
 		genTable.getOptionMap().put("treeViewCode", "tree_code");
 		genTable.getOptionMap().put("treeViewName", "tree_name");
 		initGenTableColumn(genTable);
+		DataSourceHolder.setDataSourceName(dataSourceName);
 		genTableService.save(genTable);
 	}
 	
