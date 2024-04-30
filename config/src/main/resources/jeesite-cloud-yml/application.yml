@@ -238,14 +238,14 @@ jdbc:
 
 #  # 数据源映射（Dao类名 = 数据源名称），优先于 @MyBatisDao(dataSourceName="ds2") 设置 v4.3.0
 #  # Dao类名，不仅支持某个具体 Dao类名，还支持 Dao 里的某个方法指定数据源名称，还支持包路径指定数据源等
-#  # 数据源名指定 {empty} 时支持动态，相当于 @MyBatisDao(dataSourceName=DataSourceHolder.EMPTY)
+#  # 数据源名指定 {dynamic} 时支持动态，相当于 @MyBatisDao(dataSourceName=DataSourceHolder.DYNAMIC)
 #  # 数据源支持指定变量 {corpCode}、 {userCode}、{userCache中的Key名}、{yml或sys_config中的Key名}
 #  # 从上到下，先匹配先受用规则，默认数据源名为 default 扩展数据源为 dataSourceNames 列表里自定义的名字
 #  mybatisDaoAndDataSourceMappings: |
 #    TestDataChildDao = ds2
 #    EmpUserDao.findList = ds2
-#    com.jeesite.modules.sys = default
-#    com.jeesite.modules.filemanager = ds2
+#    com.jeesite.modules.sys. = default
+#    com.jeesite.modules.filemanager. = ds2
 
   # JTA XA 事务
   jta:
