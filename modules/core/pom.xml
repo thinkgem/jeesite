@@ -71,6 +71,27 @@
 			<scope>runtime</scope>
 		</dependency> -->
 
+		<!-- 达梦数据库
+		<dependency>
+		  <groupId>com.dameng</groupId>
+		  <artifactId>Dm8JdbcDriver18</artifactId>
+		  <version>8.1.1.49</version>
+		</dependency> -->
+
+		<!-- 人大金仓数据库
+		<dependency>
+		  <groupId>com.kingbase</groupId>
+		  <artifactId>kingbasejdbc8</artifactId>
+		  <version>8.6.0</version>
+		</dependency> -->
+
+		<!-- Web Server -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!--<artifactId>spring-boot-starter-undertow</artifactId>-->
+		</dependency>
+
 		<!-- Common -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -90,12 +111,6 @@
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-framework-dbm</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<!--<artifactId>spring-boot-starter-undertow</artifactId>-->
 		</dependency>
 
 		<!-- ELK 日志收集 -->
