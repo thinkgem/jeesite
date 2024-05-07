@@ -979,6 +979,10 @@ export default [
   'i-bx:bx-circle',
   'i-fa:bug',
   'i-fa:code',
+  'i-fa:database',
+  'i-fa:cube',
+  'i-fa:list',
+  'i-fa:wpforms',
   'i-svg:sun',
   'i-svg:moon',
 ];
