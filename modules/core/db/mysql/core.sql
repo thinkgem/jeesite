@@ -191,7 +191,7 @@ CREATE TABLE js_sys_dict_data
 	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
 	tree_level decimal(4) NOT NULL COMMENT '层次级别',
 	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	dict_value varchar(100) NOT NULL COMMENT '字典键值',
+	dict_value varchar(500) NOT NULL COMMENT '字典键值',
 	dict_icon varchar(100) COMMENT '字典图标',
 	dict_type varchar(100) NOT NULL COMMENT '字典类型',
 	is_sys char(1) NOT NULL COMMENT '系统内置（1是 0否）',

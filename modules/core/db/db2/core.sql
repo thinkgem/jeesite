@@ -190,7 +190,7 @@ CREATE TABLE js_sys_dict_data
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
 	tree_names varchar(767) NOT NULL,
-	dict_value varchar(100) NOT NULL,
+	dict_value varchar(500) NOT NULL,
 	dict_icon varchar(100),
 	dict_type varchar(100) NOT NULL,
 	is_sys char(1) NOT NULL,

@@ -190,7 +190,7 @@ CREATE TABLE ${_prefix}sys_dict_data
 	tree_leaf char(1) NOT NULL,
 	tree_level number(4) NOT NULL,
 	tree_names varchar2(767) NOT NULL,
-	dict_value varchar2(100) NOT NULL,
+	dict_value varchar2(500) NOT NULL,
 	dict_icon varchar2(100),
 	dict_type varchar2(100) NOT NULL,
 	is_sys char(1) NOT NULL,
