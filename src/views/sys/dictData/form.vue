@@ -71,7 +71,7 @@
       field: 'dictValue',
       component: 'Input',
       componentProps: {
-        maxlength: 100,
+        maxlength: 500,
       },
       required: true,
     },
