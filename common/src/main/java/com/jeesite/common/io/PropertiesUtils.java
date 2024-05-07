@@ -171,7 +171,7 @@ public class PropertiesUtils {
 	}
 	
 	// 正则表达式预编译
-	private static Pattern p1 = Pattern.compile("\\$\\{.*?\\}");
+	private static final Pattern p1 = Pattern.compile("\\$\\{.*?\\}");
 
 	/**
 	 * 获取属性值，取不到从System.getProperty()获取，都取不到返回null
