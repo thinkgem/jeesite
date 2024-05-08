@@ -1,12 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE test_data CASCADE CONSTRAINTS;
-DROP TABLE test_data_child CASCADE CONSTRAINTS;
-DROP TABLE test_tree CASCADE CONSTRAINTS;
-
-
-
 
 /* Create Tables */
 
@@ -63,12 +55,12 @@ CREATE TABLE test_tree
 (
 	tree_code varchar2(64) NOT NULL,
 	parent_code varchar2(64) NOT NULL,
-	parent_codes varchar2(1000) NOT NULL,
+	parent_codes varchar2(767) NOT NULL,
 	tree_sort number(10) NOT NULL,
-	tree_sorts varchar2(1000) NOT NULL,
+	tree_sorts varchar2(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level number(4) NOT NULL,
-	tree_names varchar2(1000) NOT NULL,
+	tree_names varchar2(767) NOT NULL,
 	tree_name nvarchar2(200) NOT NULL,
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar2(64) NOT NULL,

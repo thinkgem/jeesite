@@ -1,12 +1,4 @@
 
-/* Drop Tables */
-
-DROP TABLE IF EXISTS test_data;
-DROP TABLE IF EXISTS test_data_child;
-DROP TABLE IF EXISTS test_tree;
-
-
-
 
 /* Create Tables */
 
@@ -63,12 +55,12 @@ CREATE TABLE test_tree
 (
 	tree_code varchar(64) NOT NULL,
 	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(1000) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
 	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(1000) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
 	tree_leaf char(1) NOT NULL,
 	tree_level decimal(4) NOT NULL,
-	tree_names varchar(1000) NOT NULL,
+	tree_names varchar(767) NOT NULL,
 	tree_name varchar(200) NOT NULL,
 	status char(1) DEFAULT '0' NOT NULL,
 	create_by varchar(64) NOT NULL,
