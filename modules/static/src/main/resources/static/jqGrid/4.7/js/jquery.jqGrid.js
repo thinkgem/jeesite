@@ -4,7 +4,7 @@
  * Dual licensed under the MIT and GPL licenses
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl-2.0.html
- * https://gitee.com/thinkgem/jeesite4
+ * https://gitee.com/thinkgem/jeesite5
  * Date: 2023-09-20
  */
 (function ($) {

@@ -787,7 +787,7 @@ TabPanel.prototype = {
     // 静默kill掉页签 ThinkGem
     if (isNotUpdate != true){
     	var self = this;
-    	// 延迟更新下，否则出现滚动条后，快速关闭右侧导致左侧的菜单未显示 ThinkGem，https://gitee.com/thinkgem/jeesite4/issues/IR0LM
+    	// 延迟更新下，否则出现滚动条后，快速关闭右侧导致左侧的菜单未显示 ThinkGem，https://gitee.com/thinkgem/jeesite5/issues/IR0LM
     	setTimeout(function(){
     	    //update width
     		self.update();
