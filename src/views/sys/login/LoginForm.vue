@@ -53,7 +53,7 @@
     </FormItem>
 
     <div class="gp" v-if="gp">
-      Tip：发送 <a href="https://gitee.com/thinkgem/jeesite4" target="_blank">JeeSite</a> 和
+      Tip：发送 <a href="https://gitee.com/thinkgem/jeesite5" target="_blank">JeeSite</a> 和
       <a href="https://gitee.com/thinkgem/jeesite-vue" target="_blank">JeeSite Vue</a> 仓库 Star
       截图到邮箱：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <span @click="selectText('st')" id="st">jeesite_demo@163.com</span>
