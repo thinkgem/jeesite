@@ -6,24 +6,24 @@
 <p align="center">
  <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.7" src="https://img.shields.io/badge/JeeSite-V5.7-success.svg"></a>
  <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-3.1" src="https://img.shields.io/badge/SpringBoot-3.1-blue.svg"></a>
- <a href="https://gitee.com/thinkgem/jeesite4/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite4/badge/star.svg?theme=dark"></a>
- <a href="https://gitee.com/thinkgem/jeesite4/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite4/badge/fork.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite5/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite5/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite5/badge/fork.svg?theme=dark"></a>
 </p>
 
 ## 技术交流
 
 * 交流 QQ 群（千人大群）：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
-* GitHub：<https://github.com/thinkgem/jeesite4>
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite5>
+* GitHub：<https://github.com/thinkgem/jeesite5>
 * 作者博客：<https://my.oschina.net/thinkgem>
 * **帮助文档：**<http://docs.jeesite.com>
 * 官方网站：<http://jeesite.com>
-* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite4/issues/I18ARR)
+* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 关注微信公众号，了解最新动态：
 
 ![JeeSite微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite微信公众号")
 
-* 源码仓库地址：<https://gitee.com/thinkgem/jeesite4>
+* 源码仓库地址：<https://gitee.com/thinkgem/jeesite5>
 * 分离版前端源码仓库：<https://gitee.com/thinkgem/jeesite-vue>
 
 ## 平台介绍
@@ -73,7 +73,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 * JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
-* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite4/tree/v5.7>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.7>
 
 ## 更多介绍
 
@@ -107,7 +107,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 本地运行
 
 1. 环境准备：`JDK 17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.springboot3.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
@@ -118,7 +118,7 @@ JeeSite 是一个低代码开发平台，具有较高的封装度、扩展性，
 ### 快速运行
 
 1. 环境准备：`JDK 17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB、Vue资源包）
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/repository/archive/v5.springboot3.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.springboot3.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
 4. 全栈版本地址：<http://127.0.0.1:8980/a/login>
 5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>

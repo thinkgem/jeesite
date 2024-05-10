@@ -2,12 +2,12 @@
 # 技术交流
 
 * 交流 QQ 群（千人大群）：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite4>
-* GitHub：<https://github.com/thinkgem/jeesite4>
+* 码云Gitee：<https://gitee.com/thinkgem/jeesite5>
+* GitHub：<https://github.com/thinkgem/jeesite5>
 * 作者博客：<https://my.oschina.net/thinkgem>
 * **帮助文档：**<http://docs.jeesite.com>
 * 官方网站：<http://jeesite.com>
-* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite4/issues/I18ARR)
+* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 关注微信公众号，了解最新动态：
 
 ![JeeSite微信公众号](https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg "JeeSite微信公众号")
@@ -33,7 +33,7 @@ JeeSite CMS 内容管理，是一个轻量级的 Web 建站神器，可以快速
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、`MySQL 5.7 or 8.0`
-2. 下载源码：<https://gitee.com/thinkgem/jeesite4/tree/master/modules/cms>
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/tree/master/modules/cms>
 3. 打开文件：/web`/src/main/resources/config/application.yml` 配置JDBC连接
 4. 打开文件：/web`/pom.xml` 打开 `jeesite-module-cms` 模块（去掉的注释标记）
 5. 执行脚本：/web`/bin/init-data.bat` 初始化数据库
