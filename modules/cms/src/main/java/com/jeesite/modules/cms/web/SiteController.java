@@ -154,12 +154,6 @@ public class SiteController extends BaseController {
 			return REDIRECT + adminPath + "/cms/index";
 		}
 		UserUtils.putCache("currentSiteCode", siteCode);
-		// 保存到Cookie中，下次登录后自动切换到该站点
-		String cookieName = "siteCode";
-		if (Global.isUseCorpModel()){
-			cookieName = CorpUtils.getCurrentCorpCode() + "_" + cookieName;
-		}
-		CookieUtils.setCookie(response, cookieName, siteCode);
 		if (StringUtils.isNotBlank(redirect)){
 			return REDIRECT + redirect;
 		}

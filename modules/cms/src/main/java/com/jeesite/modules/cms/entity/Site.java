@@ -180,9 +180,8 @@ public class Site extends DataEntity<Site> {
 	 * 获取当前编辑的站点编号
 	 */
 	public static String getCurrentSiteCode() {
-		String siteCode = (String) UserUtils.getCache("currentSiteCode");
-		String defaultSiteCode = MAIN_SITE_CODE;
-		return StringUtils.isNotBlank(siteCode) ? siteCode : defaultSiteCode;
+		String siteCode = UserUtils.getCache("currentSiteCode");
+		return StringUtils.isNotBlank(siteCode) ? siteCode : MAIN_SITE_CODE;
 	}
 
 	/**
