@@ -2,10 +2,10 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.sys.service;
+package com.jeesite.modules.biz.service;
 
 import com.jeesite.common.service.api.TreeServiceApi;
-import com.jeesite.modules.sys.entity.BizCategory;
+import com.jeesite.modules.biz.entity.BizCategory;
 
 import java.util.List;
 

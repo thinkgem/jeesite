@@ -1,2 +1,4 @@
 com.jeesite.autoconfigure.core.ShiroAutoConfiguration
 com.jeesite.autoconfigure.sys.SysAutoConfiguration
+com.jeesite.autoconfigure.sys.BizAutoConfiguration
+com.jeesite.autoconfigure.sys.MsgAutoConfiguration

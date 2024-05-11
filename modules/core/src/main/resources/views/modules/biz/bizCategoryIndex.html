@@ -20,7 +20,7 @@
 </div>
 <div class="ui-layout-center">
 	<iframe id="mainFrame" name="mainFrame" class="ui-layout-content p0"
-		src="${ctx}/sys/bizCategory/list"></iframe>
+		src="${ctx}/biz/bizCategory/list"></iframe>
 </div>
 <% } %>
 <script>
@@ -33,7 +33,7 @@ $('body').layout({
 var win = $("#mainFrame")[0].contentWindow;
 //# // 树结构初始化加载
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
-	async:{enable:true,autoParam:["id=parentCode"],url:"${ctx}/sys/bizCategory/treeData"},
+	async:{enable:true,autoParam:["id=parentCode"],url:"${ctx}/biz/bizCategory/treeData"},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
 		win.$('button[type=reset]').click();

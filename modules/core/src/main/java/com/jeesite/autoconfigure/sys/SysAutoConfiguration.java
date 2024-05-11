@@ -5,7 +5,6 @@
 package com.jeesite.autoconfigure.sys;
 
 import com.jeesite.common.mybatis.MyBatisFactoryBean;
-import com.jeesite.modules.msg.service.MsgInnerService;
 import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.service.support.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -64,18 +63,6 @@ public class SysAutoConfiguration {
 	@ConditionalOnMissingBean
 	public PostService postService(){
 		return new PostServiceSupport();
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public MsgInnerService msgInnerService(){
-		return new MsgInnerService();
-	}
-
-	@Bean
-	@ConditionalOnMissingBean
-	public BizCategoryService bizCategoryService(){
-		return new BizCategoryServiceSupport();
 	}
 
 }

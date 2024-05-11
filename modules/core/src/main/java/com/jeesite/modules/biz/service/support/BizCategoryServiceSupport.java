@@ -2,12 +2,12 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.sys.service.support;
+package com.jeesite.modules.biz.service.support;
 
 import com.jeesite.common.service.TreeService;
-import com.jeesite.modules.sys.dao.BizCategoryDao;
-import com.jeesite.modules.sys.entity.BizCategory;
-import com.jeesite.modules.sys.service.BizCategoryService;
+import com.jeesite.modules.biz.dao.BizCategoryDao;
+import com.jeesite.modules.biz.entity.BizCategory;
+import com.jeesite.modules.biz.service.BizCategoryService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * @version 2019-08-12
  */
 public class BizCategoryServiceSupport extends TreeService<BizCategoryDao, BizCategory>
-		implements BizCategoryService{
+		implements BizCategoryService {
 	
 	/**
 	 * 获取单条数据

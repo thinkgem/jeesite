@@ -9,7 +9,7 @@
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 			</div>
 		</div>
-		<#form:form id="inputForm" model="${bizCategory}" action="${ctx}/sys/bizCategory/save" method="post" class="form-horizontal">
+		<#form:form id="inputForm" model="${bizCategory}" action="${ctx}/biz/bizCategory/save" method="post" class="form-horizontal">
 			<div class="box-body mt10">
 				<div class="row">
 					<div class="col-xs-6">
@@ -18,7 +18,7 @@
 							<div class="col-sm-8">
 								<#form:treeselect id="parent" title="${text('上级分类')}"
 									path="parent.id" labelPath="parent.categoryName"
-									url="${ctx}/sys/bizCategory/treeData?excludeCode=${bizCategory.id}"
+									url="${ctx}/biz/bizCategory/treeData?excludeCode=${bizCategory.id}"
 									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
 							</div>
 						</div>
@@ -70,7 +70,7 @@
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-10">
-						<% if (hasPermi('sys:bizCategory:edit')){ %>
+						<% if (hasPermi('biz:bizCategory:edit')){ %>
 							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
 						<% } %>
 						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
@@ -100,7 +100,7 @@ $('#inputForm').validate({
 function treeselectCallback(id, act, index, layero){
 	if (id == 'parent' && (act == 'ok' || act == 'clear')){
 		// 创建并初始化下一个节点信息，如：排序号、默认值
-		$.get('${ctx}/sys/bizCategory/createNextNode?parentCode='
+		$.get('${ctx}/biz/bizCategory/createNextNode?parentCode='
 				+$('#parentCode').val(), function(data){
 			$('#treeSort').val(data.treeSort);
 		});
