@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-vue-dist</artifactId>
-			<version>5.7.0-SNAPSHOT</version>
+			<version>5.7.1-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
