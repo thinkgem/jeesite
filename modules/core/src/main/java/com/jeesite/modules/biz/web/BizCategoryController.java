@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.sys.web;
+package com.jeesite.modules.biz.web;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -10,8 +10,8 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.entity.BizCategory;
-import com.jeesite.modules.sys.service.BizCategoryService;
+import com.jeesite.modules.biz.entity.BizCategory;
+import com.jeesite.modules.biz.service.BizCategoryService;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +34,7 @@ import java.util.Map;
  */
 @Controller
 @Api(tags = "BizCategory - 业务分类")
-@RequestMapping(value = "${adminPath}/sys/bizCategory")
+@RequestMapping(value = "${adminPath}/biz/bizCategory")
 public class BizCategoryController extends BaseController {
 
 	@Autowired
@@ -48,27 +51,27 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 管理首页
 	 */
-	@RequiresPermissions("sys:bizCategory:view")
+	@RequiresPermissions("biz:bizCategory:view")
 	@RequestMapping(value = "index")
 	public String index(BizCategory bizCategory, Model model) {
 		model.addAttribute("bizCategory", bizCategory);
-		return "modules/sys/bizCategoryIndex";
+		return "modules/biz/bizCategoryIndex";
 	}
 
 	/**
 	 * 查询列表
 	 */
-	@RequiresPermissions("sys:bizCategory:view")
+	@RequiresPermissions("biz:bizCategory:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(BizCategory bizCategory, Model model) {
 		model.addAttribute("bizCategory", bizCategory);
-		return "modules/sys/bizCategoryList";
+		return "modules/biz/bizCategoryList";
 	}
 	
 	/**
 	 * 查询列表数据
 	 */
-	@RequiresPermissions("sys:bizCategory:view")
+	@RequiresPermissions("biz:bizCategory:view")
 	@RequestMapping(value = "listData")
 	@ResponseBody
 	public List<BizCategory> listData(BizCategory bizCategory) {
@@ -91,19 +94,19 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 查看编辑表单
 	 */
-	@RequiresPermissions("sys:bizCategory:view")
+	@RequiresPermissions("biz:bizCategory:view")
 	@RequestMapping(value = "form")
 	public String form(BizCategory bizCategory, Model model) {
 		// 创建并初始化下一个节点信息
 		bizCategory = createNextNode(bizCategory);
 		model.addAttribute("bizCategory", bizCategory);
-		return "modules/sys/bizCategoryForm";
+		return "modules/biz/bizCategoryForm";
 	}
 	
 	/**
 	 * 创建并初始化下一个节点信息，如：排序号、默认值
 	 */
-	@RequiresPermissions("sys:bizCategory:edit")
+	@RequiresPermissions("biz:bizCategory:edit")
 	@RequestMapping(value = "createNextNode")
 	@ResponseBody
 	public BizCategory createNextNode(BizCategory bizCategory) {
@@ -132,7 +135,7 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 保存业务分类
 	 */
-	@RequiresPermissions("sys:bizCategory:edit")
+	@RequiresPermissions("biz:bizCategory:edit")
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated BizCategory bizCategory) {
@@ -143,7 +146,7 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 停用业务分类
 	 */
-	@RequiresPermissions("sys:bizCategory:edit")
+	@RequiresPermissions("biz:bizCategory:edit")
 	@RequestMapping(value = "disable")
 	@ResponseBody
 	public String disable(BizCategory bizCategory) {
@@ -162,7 +165,7 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 启用业务分类
 	 */
-	@RequiresPermissions("sys:bizCategory:edit")
+	@RequiresPermissions("biz:bizCategory:edit")
 	@RequestMapping(value = "enable")
 	@ResponseBody
 	public String enable(BizCategory bizCategory) {
@@ -174,7 +177,7 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 删除业务分类
 	 */
-	@RequiresPermissions("sys:bizCategory:edit")
+	@RequiresPermissions("biz:bizCategory:edit")
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(BizCategory bizCategory) {
@@ -189,7 +192,7 @@ public class BizCategoryController extends BaseController {
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）
 	 * @return
 	 */
-	@RequiresPermissions("sys:bizCategory:view")
+	@RequiresPermissions("biz:bizCategory:view")
 	@RequestMapping(value = "treeData")
 	@ResponseBody
 	public List<Map<String, Object>> treeData(String excludeCode, String parentCode, String isShowCode) {
@@ -229,7 +232,7 @@ public class BizCategoryController extends BaseController {
 	/**
 	 * 修复表结构相关数据
 	 */
-	@RequiresPermissions("sys:bizCategory:edit")
+	@RequiresPermissions("biz:bizCategory:edit")
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
 	public String fixTreeData(BizCategory bizCategory){

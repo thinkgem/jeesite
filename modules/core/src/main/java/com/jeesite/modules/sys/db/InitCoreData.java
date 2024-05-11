@@ -7,6 +7,8 @@ package com.jeesite.modules.sys.db;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.tests.BaseInitDataTests;
+import com.jeesite.modules.biz.entity.BizCategory;
+import com.jeesite.modules.biz.service.BizCategoryService;
 import com.jeesite.modules.gen.utils.GenUtils;
 import com.jeesite.modules.job.dao.JobDao;
 import com.jeesite.modules.job.entity.JobEntity;

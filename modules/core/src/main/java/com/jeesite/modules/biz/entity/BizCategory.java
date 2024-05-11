@@ -2,7 +2,7 @@
  * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
  * No deletion without permission, or be held responsible to law.
  */
-package com.jeesite.modules.sys.entity;
+package com.jeesite.modules.biz.entity;
 
 import com.jeesite.common.entity.BaseEntity;
 import com.jeesite.common.entity.DataEntity;
@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  * @author ThinkGem
  * @version 2019-08-12
  */
-@Table(name="${_prefix}sys_biz_category", alias="a", columns={
+@Table(name="${_prefix}biz_category", alias="a", columns={
 		@Column(name="category_code", attrName="categoryCode", label="业务分类", isPK=true),
 		@Column(name="view_code", attrName="viewCode", label="业务分类"),
 		@Column(includeEntity=TreeEntity.class),

@@ -10,14 +10,14 @@
 				<a href="#" class="btn btn-default" id="btnRefreshTree" title="${text('刷新')}"><i class="fa fa-refresh"></i> ${text('刷新')}</a>
 				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="${text('展开一级')}"><i class="fa fa-angle-double-down"></i> ${text('展开')}</a>
 				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a>
-				<% if(hasPermi('sys:bizCategory:edit')){ %>
-					<a href="${ctx}/sys/bizCategory/form" class="btn btn-default btnTool" title="${text('新增分类')}" data-layer="true" data-layer-width="900" data-layer-height="400"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% if(hasPermi('biz:bizCategory:edit')){ %>
+					<a href="${ctx}/biz/bizCategory/form" class="btn btn-default btnTool" title="${text('新增分类')}" data-layer="true" data-layer-width="900" data-layer-height="350"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
 				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${bizCategory}" action="${ctx}/sys/bizCategory/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${bizCategory}" action="${ctx}/biz/bizCategory/listData" method="post" class="form-inline hide"
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 			<#form:hidden path="categoryCode"/>
 			<div class="form-group">
@@ -60,7 +60,7 @@ $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("分类名称")}', name:'categoryName', index:'a.category_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
-			return '( '+row.viewCode+' ) '+'<a href="${ctx}/sys/bizCategory/form?categoryCode='+row.categoryCode+'" class="btnList" data-title="${text("编辑分类")}" data-layer="true" data-layer-width="900" data-layer-height="400">'+(val||row.id)+'</a>';
+			return '( '+row.viewCode+' ) '+'<a href="${ctx}/biz/bizCategory/form?categoryCode='+row.categoryCode+'" class="btnList" data-title="${text("编辑分类")}" data-layer="true" data-layer-width="900" data-layer-height="350">'+(val||row.id)+'</a>';
 		}},
 		{header:'${text("排序号")}', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
 		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:100, align:"center"},
@@ -70,15 +70,15 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
 			var actions = [];
-			//# if(hasPermi('sys:bizCategory:edit')){
-				actions.push('<a href="${ctx}/sys/bizCategory/form?categoryCode='+row.categoryCode+'" class="btnList" title="${text("编辑分类")}" data-layer="true" data-layer-width="900" data-layer-height="400"><i class="fa fa-pencil"></i></a>&nbsp;');
+			//# if(hasPermi('biz:bizCategory:edit')){
+				actions.push('<a href="${ctx}/biz/bizCategory/form?categoryCode='+row.categoryCode+'" class="btnList" title="${text("编辑分类")}" data-layer="true" data-layer-width="900" data-layer-height="350"><i class="fa fa-pencil"></i></a>&nbsp;');
 				if (row.status == Global.STATUS_NORMAL){
-					actions.push('<a href="${ctx}/sys/bizCategory/disable?categoryCode='+row.categoryCode+'" class="btnList" title="${text("停用分类")}" data-confirm="${text("确认要停用该分类吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/biz/bizCategory/disable?categoryCode='+row.categoryCode+'" class="btnList" title="${text("停用分类")}" data-confirm="${text("确认要停用该分类吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
 				} else if (row.status == Global.STATUS_DISABLE){
-					actions.push('<a href="${ctx}/sys/bizCategory/enable?categoryCode='+row.categoryCode+'" class="btnList" title="${text("启用分类")}" data-confirm="${text("确认要启用该分类吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/biz/bizCategory/enable?categoryCode='+row.categoryCode+'" class="btnList" title="${text("启用分类")}" data-confirm="${text("确认要启用该分类吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
 				}
-				actions.push('<a href="${ctx}/sys/bizCategory/delete?categoryCode='+row.categoryCode+'" class="btnList" title="${text("删除分类")}" data-confirm="${text("确认要删除该分类及所有子分类吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
-				actions.push('<a href="${ctx}/sys/bizCategory/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级分类")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/biz/bizCategory/delete?categoryCode='+row.categoryCode+'" class="btnList" title="${text("删除分类")}" data-confirm="${text("确认要删除该分类及所有子分类吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/biz/bizCategory/form?parentCode='+row.id+'" class="btnList" title="${text("新增下级分类")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
 			//# }
 			return actions.join('');
 		}}

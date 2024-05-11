@@ -81,7 +81,7 @@ CREATE TABLE js_sys_area
 
 
 -- 业务分类
-CREATE TABLE js_sys_biz_category
+CREATE TABLE js_biz_category
 (
 	category_code varchar(64) NOT NULL COMMENT '流程分类',
 	view_code varchar(500) COMMENT '分类代码',

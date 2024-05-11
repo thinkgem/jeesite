@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>2986</x>
-	<y>76</y>
+	<y>2631</y>
 	<default_color>
 		<r>255</r>
 		<g>255</g>
@@ -15575,7 +15575,7 @@
 			</table_properties>
 		</table>
 		<table>
-			<id>9edf3c2c370270e0c6347f407e110c3290775e6c</id>
+			<id>a64d0b2affcf44e1b808b1eebb910148e181f6b1</id>
 			<height>516</height>
 			<width>387</width>
 				<font_name>Arial</font_name>
@@ -15589,7 +15589,7 @@
 			</color>
 			<connections>
 			</connections>
-			<physical_name>js_sys_biz_category</physical_name>
+			<physical_name>js_biz_category</physical_name>
 			<logical_name>业务分类</logical_name>
 			<description></description>
 			<constraint></constraint>
@@ -15598,7 +15598,7 @@
 			<columns>
 				<normal_column>
 					<word_id>357974589f09f144661fe8f474cc2d5979820493</word_id>
-					<id>7505196c5a21b3bb056e1df83369ff81ad9c1577</id>
+					<id>98176cde85757b57e90dddbe852007438218ac8a</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -15631,7 +15631,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>53529e210393822d66f5a27a7ca5675ae83c22d0</word_id>
-					<id>17b0bdc72461220ac0ae5c283d325ebb54a41074</id>
+					<id>6a16f79e9d08547042dd5afbd37271114e518cf0</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -15664,7 +15664,7 @@
 				</normal_column>
 				<normal_column>
 					<word_id>d666d8f5ace8607bedbbc0307e66c40ce5bef233</word_id>
-					<id>efa6241a145d05fb1504a804a1ba16bbde058957</id>
+					<id>37e19231eb073064509e87a5a413c6b0271b901b</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
