@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.web;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.filter.FormFilter;
@@ -397,7 +398,7 @@ public class LoginController extends BaseController{
 	@RequestMapping(value = "switchSkin/{skinName}")
 	public String switchSkin(@PathVariable String skinName, HttpServletRequest request, HttpServletResponse response) {
 		if (StringUtils.isNotBlank(skinName) && !"select".equals(skinName)){
-			CookieUtils.setCookie(response, "skinName", skinName);
+			CookieUtils.setCookie(response, "skinName", EncodeUtils.encodeUrl(EncodeUtils.xssFilter(skinName, request)));
 			if (ServletUtils.isAjaxRequest(request)) {
 				return renderResult(response, Global.TRUE, text("主题切换成功"));
 			}
