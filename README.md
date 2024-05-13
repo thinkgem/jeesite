@@ -6,7 +6,7 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
- <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.0" src="https://img.shields.io/badge/Ant Design Vue-4.0-blue.svg"></a>
+ <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.1" src="https://img.shields.io/badge/Ant Design Vue-4.1-blue.svg"></a>
  <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.7-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
@@ -132,7 +132,7 @@ yarn build
 
 ### 后端服务
 
-- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite4/tree/v5.7/)
+- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite5/tree/v5.7/)
 - 打开 [.env.development](https://jeesite.com/docs/vue-settings/#env-development-详解) 文件，修改后台接口：
 
 ```bash
