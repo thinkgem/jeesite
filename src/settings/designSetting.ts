@@ -34,7 +34,7 @@ export const APP_PRESET_COLOR_LIST: string[] = [
 export const SIDE_BAR_BG_COLOR_LIST: string[] = [
   '#ffffff',
   '#001529',
-  '#212121',
+  '#151515',
   '#273352',
   '#191b24',
   '#191a23',

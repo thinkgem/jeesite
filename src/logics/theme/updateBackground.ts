@@ -54,7 +54,7 @@ export function updateSidebarBgColor(color?: string) {
   const darkMode = appStore.getDarkMode === ThemeEnum.DARK;
   if (!color) {
     if (darkMode) {
-      color = '#212121';
+      color = '#151515';
     } else {
       color = appStore.getMenuSetting.bgColor;
     }
