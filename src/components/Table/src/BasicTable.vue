@@ -619,7 +619,7 @@
         }
       }
 
-      .ant-table-pagination.ant-pagination {
+      .ant-pagination.ant-table-pagination {
         transition: all 0.3s;
         margin: 10px 0 0;
         display: none;

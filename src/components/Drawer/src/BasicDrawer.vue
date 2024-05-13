@@ -255,6 +255,7 @@
       width: 5px;
       z-index: 1000;
       user-select: none;
+
       &:hover {
         cursor: ew-resize;
       }
@@ -270,6 +271,7 @@
           > .scrollbar__wrap {
             margin: 16px;
             padding-bottom: 30px;
+
             > .scrollbar__view {
               > form:first-child,
               > .ant-tabs:first-child {
