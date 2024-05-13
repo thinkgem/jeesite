@@ -26,6 +26,12 @@ html[data-theme='dark'] {
         }
       }
     }
+
+    .ant-select-status-error {
+      .ant-select-selector {
+        border-color: #424242 !important;
+      }
+    }
   }
 }
 
@@ -91,7 +97,23 @@ html[data-theme='dark'] {
     }
   }
 
+  .ant-select.ant-select-in-form-item {
+    width: auto;
+  }
+
   &-disabled {
     display: none !important;
+  }
+
+  .ant-select-status-error {
+    .ant-select-selector {
+      border-color: @border-color-base !important;
+    }
+  }
+
+  .ant-select-focused.ant-select-status-error {
+    .ant-select-selector {
+      box-shadow: 0 0 0 2px fade(@border-color-base, 10%) !important;
+    }
   }
 }
