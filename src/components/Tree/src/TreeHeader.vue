@@ -212,5 +212,16 @@
     .anticon {
       color: @text-color-call-out;
     }
+
+    .ant-input-affix-wrapper-status-error {
+      &.ant-input-affix-wrapper {
+        border-color: @border-color-base !important;
+
+        &:focus,
+        &-focused {
+          box-shadow: 0 0 0 2px fade(@border-color-base, 10%) !important;
+        }
+      }
+    }
   }
 </style>
