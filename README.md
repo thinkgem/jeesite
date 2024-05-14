@@ -24,12 +24,12 @@
 * 使用文档：<https://jeesite.com/docs>
 * 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 需求收集：<https://gitee.com/thinkgem/jeesite5/issues/new>
-* QQ 交流群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 * 关注微信公众号，了解最新动态：
 
-<div style="padding-left:40px;">
+<p style="padding-left:40px">
  <img alt="JeeSite微信公众号" src="https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg" width="220" height="220">
-</div>
+</p>
 
 * 源码仓库地址1：<https://gitee.com/thinkgem/jeesite5>
 * 源码仓库地址2：<https://github.com/thinkgem/jeesite5>
