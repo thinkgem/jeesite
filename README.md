@@ -33,10 +33,10 @@
  <img alt="JeeSite微信公众号" src="https://images.gitee.com/uploads/images/2020/0727/091951_a3ab258c_6732.jpeg" width="220" height="220">
 </p>
 
-* 源码仓库地址1：<https://gitee.com/thinkgem/jeesite5>
-* 源码仓库地址2：<https://github.com/thinkgem/jeesite5>
-* 分离版前端源码仓库地址1：<https://gitee.com/thinkgem/jeesite-vue>
-* 分离版前端源码仓库地址2：<https://github.com/thinkgem/jeesite-vue>
+* 前端源码仓库地址1：<https://gitee.com/thinkgem/jeesite-vue>
+* 前端源码仓库地址2：<https://github.com/thinkgem/jeesite-vue>
+* 后端源码仓库地址1：<https://gitee.com/thinkgem/jeesite5>
+* 后端源码仓库地址2：<https://github.com/thinkgem/jeesite5>
 
 ## 框架介绍
 
