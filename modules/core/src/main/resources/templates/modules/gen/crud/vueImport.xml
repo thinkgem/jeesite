@@ -60,7 +60,7 @@
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage, showMessageModal } = useMessage();
 
-  const fileList = ref(FileType[]);
+  const fileList = ref<FileType[]>([]);
   const uploadInfo = ref('');
 
   const beforeUpload = (file: FileType) => {
