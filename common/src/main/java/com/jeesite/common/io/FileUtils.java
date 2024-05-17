@@ -7,6 +7,9 @@ package com.jeesite.common.io;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.lang.StringUtils;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicMatch;
 import org.apache.commons.io.IOUtils;
@@ -15,9 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.activation.MimetypesFileTypeMap;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.List;
@@ -710,11 +710,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 					end = Long.parseLong(values[1]);
 				}
 			}
-			int requestSize = 0;
+			long requestSize = 0;
 			if (end != 0 && end > start) {
 				requestSize = Long.valueOf(end - start + 1).intValue();
 			} else {
-				requestSize = Integer.MAX_VALUE;
+				requestSize = Long.MAX_VALUE;
 			}
 			response.setContentType(FileUtils.getContentType(file.getName()));
 			boolean isPreview = "preview".equalsIgnoreCase(request.getParameter("source"));
@@ -748,12 +748,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 				}
 			}
 			randomFile.seek(start);
-			int needSize = requestSize;
+			long needSize = requestSize;
 			while (needSize > 0) {
 				byte[] buffer = new byte[1024];
 				int len = randomFile.read(buffer);
 				if (needSize < buffer.length) {
-					out.write(buffer, 0, needSize);
+					out.write(buffer, 0, (int)needSize);
 				} else {
 					out.write(buffer, 0, len);
 					if (len < buffer.length) {
