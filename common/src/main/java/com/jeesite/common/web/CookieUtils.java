@@ -116,6 +116,7 @@ public class CookieUtils {
 				for (Cookie cookie : cookies) {
 					if (cookie.getName().equals(name)) {
 						value = EncodeUtils.decodeUrl(cookie.getValue());
+						value = EncodeUtils.xssFilter(value, request);
 						if (isRemove && response != null) {
 							cookie.setPath(path);
 							cookie.setMaxAge(0);
