@@ -364,7 +364,7 @@ public class LoginController extends BaseController{
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "switch/{sysCode}")
-	public String switchSys(@PathVariable String sysCode) {
+	public String switchSys(@PathVariable String sysCode, HttpServletRequest request) {
 		Session session = UserUtils.getSession();
 		if (StringUtils.isNotBlank(sysCode)){
 			session.setAttribute("sysCode", sysCode);
@@ -372,6 +372,9 @@ public class LoginController extends BaseController{
 			session.removeAttribute("sysCode");
 		}
 		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		if (ServletUtils.isAjaxRequest(request)) {
+			return renderResult(Global.TRUE, text("子系统切换成功"));
+		}
 		return REDIRECT + adminPath + "/index";
 	}
 
@@ -380,7 +383,7 @@ public class LoginController extends BaseController{
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = {"switchRole","switchRole/{roleCode}"})
-	public String switchRole(@PathVariable(required=false) String roleCode) {
+	public String switchRole(@PathVariable(required=false) String roleCode, HttpServletRequest request) {
 		Session session = UserUtils.getSession();
 		if (StringUtils.isNotBlank(roleCode)){
 			session.setAttribute("roleCode", roleCode);
@@ -388,6 +391,9 @@ public class LoginController extends BaseController{
 			session.removeAttribute("roleCode");
 		}
 		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		if (ServletUtils.isAjaxRequest(request)) {
+			return renderResult(Global.TRUE, text("角色切换成功"));
+		}
 		return REDIRECT + adminPath + "/index";
 	}
 	
