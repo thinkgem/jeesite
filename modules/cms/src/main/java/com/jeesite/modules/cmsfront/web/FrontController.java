@@ -108,7 +108,7 @@ public class FrontController extends BaseController {
 			if (category.getHref().startsWith(request.getContextPath())) {
 				category.setHref(category.getHref().replaceFirst(request.getContextPath(), ""));
 			}
-			return "redirect:" + category.getHref();
+			return REDIRECT + category.getHref();
 		}
 					
 		// 获取站点信息
@@ -269,7 +269,7 @@ public class FrontController extends BaseController {
 				if (article.getHref().startsWith(request.getContextPath())) {
 					article.setHref(article.getHref().replaceFirst(request.getContextPath(), ""));
 				}
-				return "redirect:" + article.getHref();
+				return REDIRECT + article.getHref();
 			}
 
 			model.addAttribute("article", article);

@@ -4,6 +4,7 @@
  */
 package com.jeesite.modules.sys.interceptor;
 
+import com.jeesite.common.web.BaseController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -32,7 +33,7 @@ public class MobileInterceptor extends BaseService implements HandlerInterceptor
 			ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null){
 			// 如果是手机或平板访问的话，则跳转到手机视图页面。
-			if(UserAgentUtils.isMobileOrTablet(request) && !StringUtils.startsWithIgnoreCase(modelAndView.getViewName(), "redirect:")){
+			if(UserAgentUtils.isMobileOrTablet(request) && !StringUtils.startsWithIgnoreCase(modelAndView.getViewName(), BaseController.REDIRECT)){
 				modelAndView.setViewName("mobile/" + modelAndView.getViewName());
 			}
 		}
