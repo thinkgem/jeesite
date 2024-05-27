@@ -4,15 +4,15 @@
  */
 package com.jeesite.modules.sys.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.service.BaseService;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.common.web.http.UserAgentUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.service.BaseService;
-import com.jeesite.common.web.http.UserAgentUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 手机端视图拦截器
@@ -32,7 +32,7 @@ public class MobileInterceptor extends BaseService implements HandlerInterceptor
 			ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null){
 			// 如果是手机或平板访问的话，则跳转到手机视图页面。
-			if(UserAgentUtils.isMobileOrTablet(request) && !StringUtils.startsWithIgnoreCase(modelAndView.getViewName(), "redirect:")){
+			if(UserAgentUtils.isMobileOrTablet(request) && !StringUtils.startsWithIgnoreCase(modelAndView.getViewName(), BaseController.REDIRECT)){
 				modelAndView.setViewName("mobile/" + modelAndView.getViewName());
 			}
 		}
