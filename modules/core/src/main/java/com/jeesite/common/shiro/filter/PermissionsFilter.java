@@ -4,23 +4,21 @@
  */
 package com.jeesite.common.shiro.filter;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.util.WebUtils;
-
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.common.web.http.wrapper.GetHttpServletRequestWrapper;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.WebUtils;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * 权限字符串过滤器
@@ -65,7 +63,8 @@ public class PermissionsFilter extends org.apache.shiro.web.filter.authz.Permiss
 		// AJAX不支持Redirect改用Forward
 		String loginUrl = Global.getProperty("shiro.defaultPath");
 		HttpServletRequest req = ((HttpServletRequest) request);
-		if (StringUtils.equals(req.getContextPath()+loginUrl, req.getRequestURI())){
+
+		if (StringUtils.equals(Global.getCtxPath() + loginUrl, req.getRequestURI())){
 			loginUrl = Global.getProperty("shiro.loginUrl");
 		}
 		if (ServletUtils.isAjaxRequest(req)) {

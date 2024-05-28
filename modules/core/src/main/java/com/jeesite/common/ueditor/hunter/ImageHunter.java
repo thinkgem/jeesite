@@ -1,5 +1,12 @@
 package com.jeesite.common.ueditor.hunter;
 
+import com.jeesite.common.config.Global;
+import com.jeesite.common.ueditor.PathFormat;
+import com.jeesite.common.ueditor.define.*;
+import com.jeesite.common.ueditor.upload.StorageManager;
+import org.apache.commons.io.IOUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
@@ -7,18 +14,6 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.io.IOUtils;
-
-import com.jeesite.common.ueditor.PathFormat;
-import com.jeesite.common.ueditor.define.AppInfo;
-import com.jeesite.common.ueditor.define.BaseState;
-import com.jeesite.common.ueditor.define.MIMEType;
-import com.jeesite.common.ueditor.define.MultiState;
-import com.jeesite.common.ueditor.define.State;
-import com.jeesite.common.ueditor.upload.StorageManager;
 
 /**
  * 图片抓取器
@@ -80,7 +75,7 @@ public class ImageHunter {
             String physicalPath = this.rootPath + savePath;
             State state = StorageManager.saveFileByInputStream(connection.getInputStream(), physicalPath);
             if (state.isSuccess()) {
-                state.putInfo("url", request.getContextPath() + PathFormat.format(savePath));
+                state.putInfo("url", Global.getCtxPath() + PathFormat.format(savePath));
                 state.putInfo("source", urlStr);
             }
             return state;

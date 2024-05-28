@@ -8,10 +8,8 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
 import com.jeesite.common.ueditor.define.State;
-import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.file.utils.FileUploadUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 public class StorageManager {
@@ -204,8 +202,7 @@ public class StorageManager {
         String url = FileUploadUtils.ossFileUpload(file, StringUtils.substringAfter(
                 FileUtils.path(file.getAbsolutePath()), Global.USERFILES_BASE_URL));
         if (!StringUtils.contains(url, "://")) {
-            HttpServletRequest request = ServletUtils.getRequest();
-            url = FileUtils.path((request != null ? request.getContextPath() : StringUtils.EMPTY) + url);
+            url = FileUtils.path(Global.getCtxPath() + url);
         }
         storageState.putInfo("url", url);
     }

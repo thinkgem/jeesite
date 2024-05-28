@@ -7,7 +7,6 @@ package com.jeesite.common.web;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.io.PropertiesUtils;
 import com.jeesite.common.lang.StringUtils;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -96,7 +95,8 @@ public class CookieUtils {
 	 * @return 值
 	 */
 	public static String getCookie(HttpServletRequest request, HttpServletResponse response, String name, boolean isRemove) {
-		return getCookie(request, response, name, request != null ? request.getContextPath() : "", false);
+		String ctxPath = PropertiesUtils.getInstance().getProperty("ctxPath", request != null ? request.getContextPath() : StringUtils.EMPTY);
+		return getCookie(request, response, name, ctxPath, isRemove);
 	}
 
 	/**

@@ -1,16 +1,15 @@
 package com.jeesite.common.ueditor.upload;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.codec.binary.Base64;
-
+import com.jeesite.common.config.Global;
 import com.jeesite.common.ueditor.PathFormat;
 import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
 import com.jeesite.common.ueditor.define.FileType;
 import com.jeesite.common.ueditor.define.State;
+import org.apache.commons.codec.binary.Base64;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public final class Base64Uploader {
 
@@ -27,8 +26,8 @@ public final class Base64Uploader {
         String physicalPath = (String) conf.get("rootPath") + savePath;
         State storageState = StorageManager.saveBinaryFile(data, physicalPath);
         if (storageState.isSuccess()) {
-            String ctx = request.getContextPath(); // ThinkGem 修正上传图片后返回无contextpath问题
-            storageState.putInfo("url", ctx + PathFormat.format(savePath));
+            String ctxPath = Global.getCtxPath(); // ThinkGem 修正上传图片后返回无contextpath问题
+            storageState.putInfo("url", ctxPath + PathFormat.format(savePath));
             storageState.putInfo("type", suffix);
             storageState.putInfo("original", "");
 
