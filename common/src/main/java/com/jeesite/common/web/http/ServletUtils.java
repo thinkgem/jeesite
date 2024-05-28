@@ -12,14 +12,14 @@ import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.Validate;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
@@ -56,7 +56,7 @@ public class ServletUtils {
 	
 	// 是否打印错误信息参数到视图页面（生产环境关闭）
 	private static final Boolean PRINT_ERROR_INFO = PROPS.getPropertyToBoolean("error.page.printErrorInfo", "true");
-	
+
 	/**
 	 * 获取当前请求对象
 	 * web.xml: <listener><listener-class>
@@ -106,7 +106,8 @@ public class ServletUtils {
 				if (StringUtils.contains(url, "://")){
 					response.sendRedirect(url);
 				}else{
-					response.sendRedirect(request.getContextPath() + url);
+					String ctxPath = PropertiesUtils.getInstance().getProperty("ctxPath", request.getContextPath());
+					response.sendRedirect(ctxPath + url);
 				}
 			}
 		} catch (Exception e) {

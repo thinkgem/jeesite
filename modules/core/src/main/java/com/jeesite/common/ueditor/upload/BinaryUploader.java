@@ -1,5 +1,6 @@
 package com.jeesite.common.ueditor.upload;
 
+import com.jeesite.common.config.Global;
 import com.jeesite.common.image.ImageUtils;
 import com.jeesite.common.io.FileUtils;
 import com.jeesite.common.media.VideoUtils;
@@ -73,7 +74,7 @@ public class BinaryUploader {
 
             if (storageState != null && storageState.isSuccess()) {
                 int actionCode = ((Integer) conf.get("actionCode")).intValue();
-                String ctx = request.getContextPath(); // ThinkGem 修正上传图片后返回无contextpath问题
+                String ctxPath = Global.getCtxPath(); // ThinkGem 修正上传图片后返回无contextpath问题
 
                 // 上传图片后，进行图片压缩
                 if (actionCode == ActionMap.UPLOAD_IMAGE) {
@@ -105,7 +106,7 @@ public class BinaryUploader {
                         };
                         thread.setDaemon(true);
                         thread.start();
-                        storageState.putInfo("url", ctx + PathFormat.format(savePath) + "." + v.getOutputFileExtension());
+                        storageState.putInfo("url", ctxPath + PathFormat.format(savePath) + "." + v.getOutputFileExtension());
                         storageState.putInfo("type", "." + v.getOutputFileExtension());
                         storageState.putInfo("original", originFileName + "." + v.getInputFileExtension());
 
@@ -115,7 +116,7 @@ public class BinaryUploader {
                         return storageState;
                     }
                 }
-                storageState.putInfo("url", ctx + PathFormat.format(savePath));
+                storageState.putInfo("url", ctxPath + PathFormat.format(savePath));
                 storageState.putInfo("type", suffix);
                 storageState.putInfo("original", originFileName + suffix);
 

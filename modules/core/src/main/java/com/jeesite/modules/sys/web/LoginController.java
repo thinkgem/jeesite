@@ -230,10 +230,11 @@ public class LoginController extends BaseController{
 			successUrl = (String)request.getAttribute("__url");
 		}
 		if (StringUtils.contains(successUrl, "://")){
+			String ctxPath = Global.getCtxPath();
 			String domain = ServletUtils.getRequestDomain(successUrl);
 			successUrl = StringUtils.substring(successUrl, domain.length());
-			if (StringUtils.startsWith(successUrl, request.getContextPath())) {
-				successUrl = StringUtils.substringAfter(successUrl, request.getContextPath());
+			if (StringUtils.startsWith(successUrl, ctxPath)) {
+				successUrl = StringUtils.substringAfter(successUrl, ctxPath);
 			}
 		}
 		if (StringUtils.isBlank(successUrl)){
@@ -251,7 +252,7 @@ public class LoginController extends BaseController{
 			}
 			model.addAttribute("sessionid", (String)session.getId());
 			if (!StringUtils.contains(successUrl, "://")){
-				successUrl = request.getContextPath() + successUrl;
+				successUrl = Global.getCtxPath() + successUrl;
 			}
 			model.addAttribute("__url", successUrl); // 告诉浏览器登录后跳转的页面
 			// 初始密码策略和密码修改策略验证（0：关闭；1：提醒用户；2：强制修改初始或旧密码）

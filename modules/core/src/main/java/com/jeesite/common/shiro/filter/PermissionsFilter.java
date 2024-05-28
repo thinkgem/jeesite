@@ -63,7 +63,8 @@ public class PermissionsFilter extends org.apache.shiro.web.filter.authz.Permiss
 		// AJAX不支持Redirect改用Forward
 		String loginUrl = Global.getProperty("shiro.defaultPath");
 		HttpServletRequest req = ((HttpServletRequest) request);
-		if (StringUtils.equals(req.getContextPath()+loginUrl, req.getRequestURI())){
+
+		if (StringUtils.equals(Global.getCtxPath() + loginUrl, req.getRequestURI())){
 			loginUrl = Global.getProperty("shiro.loginUrl");
 		}
 		if (ServletUtils.isAjaxRequest(req)) {

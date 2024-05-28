@@ -117,8 +117,7 @@ public class LogUtils {
         Object targetData = request.getAttribute(WebDataBinder.class.getName()+".TARGET");
 
 		// 异步保存日志
-		logThreadPool.submit(new SaveLogThread(log, handler, request.getContextPath(),
-				throwable, sourceData, targetData));
+		logThreadPool.submit(new SaveLogThread(log, handler, Global.getCtxPath(), throwable, sourceData, targetData));
 	}
 	/**
 	 * 保存日志线程

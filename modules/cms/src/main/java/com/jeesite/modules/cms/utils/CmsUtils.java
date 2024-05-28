@@ -38,7 +38,6 @@ public class CmsUtils {
 		private static final SiteService siteService = SpringUtils.getBean(SiteService.class);
 		private static final CategoryService categoryService = SpringUtils.getBean(CategoryService.class);
 		private static final ArticleService articleService = SpringUtils.getBean(ArticleService.class);
-		private static final ServletContext context = SpringUtils.getBean(ServletContext.class);
 	}
 
 	/**
@@ -243,7 +242,7 @@ public class CmsUtils {
 	 */
 	public static String getUrlDynamic(Article article) {
 		StringBuilder str = new StringBuilder();
-		str.append(Static.context.getContextPath());
+		str.append(Global.getCtxPath());
 		if (StringUtils.isNotBlank(article.getHref())) {
 			if (article.getHref().contains("://")) {
 				return article.getHref();
@@ -265,7 +264,7 @@ public class CmsUtils {
 	 */
 	public static String getUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
-		str.append(Static.context.getContextPath()).append(Global.getFrontPath());
+		str.append(Global.getCtxPath()).append(Global.getFrontPath());
 		if (StringUtils.isNotBlank(category.getHref())) {
 			if (category.getHref().contains("://")) {
 				return category.getHref();
@@ -285,7 +284,7 @@ public class CmsUtils {
 	 */
 	public static String getUrlDynamic(Site site) {
 		StringBuilder str = new StringBuilder();
-		str.append(Static.context.getContextPath()).append(Global.getFrontPath());
+		str.append(Global.getCtxPath()).append(Global.getFrontPath());
 		if (StringUtils.isNotBlank(site.getDomain())) {
 			if (site.getDomain().contains("://")) {
 				return site.getDomain();
@@ -305,7 +304,7 @@ public class CmsUtils {
 	 */
 	public static String getAdminUrlDynamic(Category category) {
 		StringBuilder str = new StringBuilder();
-		str.append(Static.context.getContextPath()).append(Global.getAdminPath());
+		str.append(Global.getCtxPath()).append(Global.getAdminPath());
 		String adminUrlParam = null; // 管理地址的参数
 		// 如果试图配置里配置了管理路径，则使用视图中的管理路径
 		if (StringUtils.isNotBlank(category.getViewConfig())) {
@@ -389,8 +388,8 @@ public class CmsUtils {
 		if (StringUtils.isBlank(src)) {
 			return src;
 		}
-		if (src.startsWith(Static.context.getContextPath() + "/userfiles")) {
-			return src.substring(Static.context.getContextPath().length());
+		if (src.startsWith(Global.getCtxPath() + "/userfiles")) {
+			return src.substring(Global.getCtxPath().length());
 		} else {
 			return src;
 		}
@@ -405,10 +404,10 @@ public class CmsUtils {
 		if (StringUtils.isBlank(src)) {
 			return src;
 		}
-		if (src.startsWith(Static.context.getContextPath() + "/userfiles")) {
+		if (src.startsWith(Global.getCtxPath() + "/userfiles")) {
 			return src;
 		} else {
-			return Static.context.getContextPath() + src;
+			return Global.getCtxPath() + src;
 		}
 	}
 
@@ -492,10 +491,6 @@ public class CmsUtils {
 
 	public static ArticleService getArticleService() {
 		return Static.articleService;
-	}
-
-	public static ServletContext getServletContext() {
-		return Static.context;
 	}
 
 	public static <V> V getCache(String key) {

@@ -1,19 +1,18 @@
 package com.jeesite.common.ueditor.hunter;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import org.apache.commons.io.FileUtils;
-
+import com.jeesite.common.config.Global;
 import com.jeesite.common.ueditor.PathFormat;
 import com.jeesite.common.ueditor.define.AppInfo;
 import com.jeesite.common.ueditor.define.BaseState;
 import com.jeesite.common.ueditor.define.MultiState;
 import com.jeesite.common.ueditor.define.State;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 
 public class FileManager {
 
@@ -70,7 +69,7 @@ public class FileManager {
             if (index >= 0) {
                 url = url.substring(index + USERFILES_BASE_URL.length());
             }
-            fileState.putInfo("url", request.getContextPath() + USERFILES_BASE_URL + url);
+            fileState.putInfo("url", Global.getCtxPath() + USERFILES_BASE_URL + url);
             state.addState(fileState);
         }
         return state;

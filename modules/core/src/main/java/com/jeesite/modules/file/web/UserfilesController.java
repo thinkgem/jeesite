@@ -49,7 +49,7 @@ public class UserfilesController extends BaseController {
 			String uid = request.getParameter("uid");
 			if (StringUtils.isNotBlank(url) && StringUtils.isNotBlank(uid)){
 				fileUrl = url; //EncodeUtils.decodeUrl(url); 不用解码，否则腾讯云存储的时候预览不能显示
-				fileUri = request.getContextPath() + Global.getAdminPath() + "/file/download/" + uid;
+				fileUri = Global.getCtxPath() + Global.getAdminPath() + "/file/download/" + uid;
 				filePath = fileName;
 			} else if (StringUtils.isNotBlank(fileName)){
 				fileUri += "?fileName=" + EncodeUtils.encodeUrl(fileName);

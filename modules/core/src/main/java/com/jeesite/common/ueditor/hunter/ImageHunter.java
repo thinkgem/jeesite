@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.jeesite.common.config.Global;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
@@ -80,7 +81,7 @@ public class ImageHunter {
             String physicalPath = this.rootPath + savePath;
             State state = StorageManager.saveFileByInputStream(connection.getInputStream(), physicalPath);
             if (state.isSuccess()) {
-                state.putInfo("url", request.getContextPath() + PathFormat.format(savePath));
+                state.putInfo("url", Global.getCtxPath() + PathFormat.format(savePath));
                 state.putInfo("source", urlStr);
             }
             return state;

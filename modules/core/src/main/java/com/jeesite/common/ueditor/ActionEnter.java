@@ -1,9 +1,5 @@
 package com.jeesite.common.ueditor;
 
-import java.util.Map;
-
-import jakarta.servlet.http.HttpServletRequest;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.ueditor.define.ActionMap;
 import com.jeesite.common.ueditor.define.AppInfo;
@@ -12,6 +8,9 @@ import com.jeesite.common.ueditor.define.State;
 import com.jeesite.common.ueditor.hunter.FileManager;
 import com.jeesite.common.ueditor.hunter.ImageHunter;
 import com.jeesite.common.ueditor.upload.Uploader;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 public class ActionEnter {
 
@@ -32,7 +31,7 @@ public class ActionEnter {
         this.request = request;
         this.rootPath = rootPath;
         this.actionType = actionType;
-        this.contextPath = request.getContextPath();
+        this.contextPath = Global.getCtxPath();
         this.configManager = ConfigManager.getInstance(this.rootPath, this.contextPath, request.getRequestURI());
     }
 

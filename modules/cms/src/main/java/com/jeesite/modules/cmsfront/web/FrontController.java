@@ -105,8 +105,9 @@ public class FrontController extends BaseController {
 
 		// 如果设置了外部链接，则跳转到指定链接
 		if (StringUtils.isNotBlank(category.getHref())) {
-			if (category.getHref().startsWith(request.getContextPath())) {
-				category.setHref(category.getHref().replaceFirst(request.getContextPath(), ""));
+			String ctxPath = Global.getCtxPath();
+			if (category.getHref().startsWith(ctxPath)) {
+				category.setHref(category.getHref().replaceFirst(ctxPath, StringUtils.EMPTY));
 			}
 			return REDIRECT + category.getHref();
 		}
@@ -266,8 +267,9 @@ public class FrontController extends BaseController {
 
 			// 如果设置了外部链接，则跳转到指定链接
 			if (StringUtils.isNotBlank(article.getHref())) {
-				if (article.getHref().startsWith(request.getContextPath())) {
-					article.setHref(article.getHref().replaceFirst(request.getContextPath(), ""));
+				String ctxPath = Global.getCtxPath();
+				if (article.getHref().startsWith(ctxPath)) {
+					article.setHref(article.getHref().replaceFirst(ctxPath, StringUtils.EMPTY));
 				}
 				return REDIRECT + article.getHref();
 			}
