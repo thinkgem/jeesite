@@ -85,206 +85,209 @@
   </BasicModal>
 </template>
 <script lang="ts" setup>
-  import { defineComponent, ref, CSSProperties, computed, shallowRef } from 'vue';
-  import { Row, Col, Tag } from 'ant-design-vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { BasicTree } from '/@/components/Tree';
-  import { Icon } from '/@/components/Icon';
-  import { BasicModal, useModal, useModalInner } from '/@/components/Modal';
-  import { BasicTable, useTable, BasicTableProps, TableRowSelection } from '/@/components/Table';
-  import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
-  import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
-  import { dynamicImport } from '/@/router/helper/routeHelper';
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+import { defineComponent, ref, CSSProperties, computed, shallowRef } from 'vue';
+import { Row, Col, Tag } from 'ant-design-vue';
+import { useI18n } from '/@/hooks/web/useI18n';
+import { BasicTree } from '/@/components/Tree';
+import { Icon } from '/@/components/Icon';
+import { BasicModal, useModal, useModalInner } from '/@/components/Modal';
+import { BasicTable, useTable, BasicTableProps, TableRowSelection } from '/@/components/Table';
+import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
+import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
+import { dynamicImport } from '/@/router/helper/routeHelper';
+import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  const ARow = Row;
-  const ACol = Col;
+const ARow = Row;
+const ACol = Col;
 
-  const { t } = useI18n();
+const { t } = useI18n();
 
-  const props = defineProps({
-    config: { type: Object as PropType<any> },
-    checkbox: { type: Boolean },
-  });
+const props = defineProps({
+  config: { type: Object as PropType<any> },
+  checkbox: { type: Boolean },
+});
 
-  const emit = defineEmits(['select', 'register']);
+const emit = defineEmits(['select', 'register']);
 
-  const treeHeight = ref(400);
-  const tableHeight = ref(400);
-  const getTreeStyle = computed((): CSSProperties => {
-    return {
-      height: `${treeHeight.value}px`,
-      minHeight: `${treeHeight.value}px`,
-    };
-  });
-  function calcTreeHeight() {
-    let height = document.documentElement.clientHeight;
-    treeHeight.value = height - 280;
-    tableHeight.value = height - 380;
+const treeHeight = ref(400);
+const tableHeight = ref(400);
+const getTreeStyle = computed((): CSSProperties => {
+  return {
+    height: `${treeHeight.value}px`,
+    minHeight: `${treeHeight.value}px`,
+  };
+});
+function calcTreeHeight() {
+  let height = document.documentElement.clientHeight;
+  treeHeight.value = height - 280;
+  tableHeight.value = height - 380;
+}
+useWindowSizeFn(calcTreeHeight, 280);
+onMountedOrActivated(calcTreeHeight);
+
+const selectList = ref<Recordable[]>([]);
+
+type Key = string | number;
+const selectedRowKeys = ref<Key[]>([]);
+const initialize = ref<boolean>(false);
+
+const rowSelection: TableRowSelection = {
+  type: props.checkbox ? 'checkbox' : 'radio',
+  columnWidth: props.checkbox ? undefined : 0,
+  selectedRowKeys: selectedRowKeys as unknown as Key[],
+  onChange: (_selectedRowKeys: Key[], selectedRows: Recordable[]) => {
+    if (!initialize.value) return; // 首次加载不更新状态，会将初始值清空
+    selectedRowKeys.value = _selectedRowKeys;
+    selectList.value = selectedRows;
+  },
+};
+
+const tableProps: BasicTableProps = {
+  showTableSetting: false,
+  useSearchForm: true,
+  canResize: true,
+  resizeHeightOffset: 100,
+  rowSelection,
+  clearSelectedOnReload: false,
+  ...props.config?.tableProps,
+  afterFetch: (data: any[]) => {
+    initialize.value = true;
+    if (props.config?.tableProps?.afterFetch) {
+      return props.config?.tableProps?.afterFetch(data);
+    }
+  },
+};
+
+const [registerTable, tableAction] = useTable(tableProps);
+const headerButtons = ref<any[]>([]);
+
+const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data) => {
+  //setModalProps({ loading: true });
+  //console.log(data);
+  selectList.value = data.selectList;
+  selectedRowKeys.value = selectList.value.map((e) => e[props.config.itemCode]);
+  if (data.queryParams) {
+    const params = Object.assign(tableAction.getForm().getFieldsValue(), data.queryParams);
+    await tableAction.getForm().setFieldsValue(params);
   }
-  useWindowSizeFn(calcTreeHeight, 280);
-  onMountedOrActivated(calcTreeHeight);
-
-  const selectList = ref<Recordable[]>([]);
-
-  type Key = string | number;
-  const selectedRowKeys = ref<Key[]>([]);
-  const initialize = ref<boolean>(false);
-
-  const rowSelection: TableRowSelection = {
-    type: props.checkbox ? 'checkbox' : 'radio',
-    columnWidth: props.checkbox ? undefined : 0,
-    selectedRowKeys: selectedRowKeys as unknown as Key[],
-    onChange: (_selectedRowKeys: Key[], selectedRows: Recordable[]) => {
-      if (!initialize.value) return; // 首次加载不更新状态，会将初始值清空
-      selectedRowKeys.value = _selectedRowKeys;
-      selectList.value = selectedRows;
-    },
-  };
-
-  const tableProps: BasicTableProps = {
-    showTableSetting: false,
-    useSearchForm: true,
-    canResize: true,
-    resizeHeightOffset: 100,
-    rowSelection,
-    clearSelectedOnReload: false,
-    ...props.config?.tableProps,
-    afterFetch: () => {
-      initialize.value = true;
-    },
-  };
-
-  const [registerTable, tableAction] = useTable(tableProps);
-  const headerButtons = ref<any[]>([]);
-
-  const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data) => {
-    //setModalProps({ loading: true });
-    //console.log(data);
-    selectList.value = data.selectList;
-    selectedRowKeys.value = selectList.value.map((e) => e[props.config.itemCode]);
-    if (data.queryParams) {
-      const params = Object.assign(tableAction.getForm().getFieldsValue(), data.queryParams);
-      await tableAction.getForm().setFieldsValue(params);
+  if (props.config.headerButtons) {
+    headerButtons.value = [];
+    for (const item of props.config.headerButtons) {
+      const [registerModal, inputAction] = useModal();
+      const modalComponent = shallowRef<Nullable<any>>(null);
+      const modalComponentOpen = ref<Boolean>(false);
+      headerButtons.value.push({
+        props: item,
+        registerModal,
+        modalComponent,
+        modalComponentOpen,
+        handleOpenModal: (buttonComp) => {
+          let component: ReturnType<typeof defineComponent>;
+          const imp = dynamicImport(buttonComp);
+          if (imp) component = createAsyncComponent(imp);
+          if (component) {
+            modalComponent.value = component;
+            inputAction.setModalData({});
+            modalComponentOpen.value = true;
+          }
+        },
+        handleSuccess: (tableAction: any) => {
+          tableAction.reload();
+        },
+      });
     }
-    if (props.config.headerButtons) {
-      headerButtons.value = [];
-      for (const item of props.config.headerButtons) {
-        const [registerModal, inputAction] = useModal();
-        const modalComponent = shallowRef<Nullable<any>>(null);
-        const modalComponentOpen = ref<Boolean>(false);
-        headerButtons.value.push({
-          props: item,
-          registerModal,
-          modalComponent,
-          modalComponentOpen,
-          handleOpenModal: (buttonComp) => {
-            let component: ReturnType<typeof defineComponent>;
-            const imp = dynamicImport(buttonComp);
-            if (imp) component = createAsyncComponent(imp);
-            if (component) {
-              modalComponent.value = component;
-              inputAction.setModalData({});
-              modalComponentOpen.value = true;
-            }
-          },
-          handleSuccess: (tableAction: any) => {
-            tableAction.reload();
-          },
-        });
-      }
-    }
-    setModalProps({ loading: false });
-  });
+  }
+  setModalProps({ loading: false });
+});
 
-  // const rowClick = (record: Recordable) => {
-  //   if (!props.checkbox) {
-  //     selectList.value = [record];
-  //   }
-  // };
+// const rowClick = (record: Recordable) => {
+//   if (!props.checkbox) {
+//     selectList.value = [record];
+//   }
+// };
 
-  const rowDbClick = (record: Recordable) => {
-    // rowClick(record);
-    if (!props.checkbox) {
-      emit('select', [record]);
-      closeModal();
-    }
-  };
-
-  const closeTag = (index: number) => {
-    selectList.value.splice(index, 1);
-  };
-
-  const handleSubmit = () => {
-    emit('select', selectList.value);
+const rowDbClick = (record: Recordable) => {
+  // rowClick(record);
+  if (!props.checkbox) {
+    emit('select', [record]);
     closeModal();
-  };
-
-  async function handleTreeSelect(keys: string[]) {
-    const values = {};
-    values[props.config.treeTableFieldName] = keys[0];
-    await tableAction.getForm().setFieldsValue(values);
-    await tableAction.reload();
   }
+};
+
+const closeTag = (index: number) => {
+  selectList.value.splice(index, 1);
+};
+
+const handleSubmit = () => {
+  emit('select', selectList.value);
+  closeModal();
+};
+
+async function handleTreeSelect(keys: string[]) {
+  const values = {};
+  values[props.config.treeTableFieldName] = keys[0];
+  await tableAction.getForm().setFieldsValue(values);
+  await tableAction.reload();
+}
 </script>
 <style lang="less">
-  .jeesite-listselect-table {
-    .ant-table-wrapper {
-      .ant-table {
-        td {
-          cursor: pointer;
-        }
-      }
-    }
-
-    &.jeesite-basic-table-form-container {
-      .ant-form.jeesite-basic-form {
-        border-top: 0 !important;
+.jeesite-listselect-table {
+  .ant-table-wrapper {
+    .ant-table {
+      td {
+        cursor: pointer;
       }
     }
   }
 
-  .jeesite-listselect {
-    .ant-modal.jeesite-basic-modal {
-      .ant-modal {
-        &-body {
-          > .scrollbar {
-            .scrollbar__wrap {
-              margin-top: 0;
-              margin-bottom: 0;
-            }
+  &.jeesite-basic-table-form-container {
+    .ant-form.jeesite-basic-form {
+      border-top: 0 !important;
+    }
+  }
+}
+
+.jeesite-listselect {
+  .ant-modal.jeesite-basic-modal {
+    .ant-modal {
+      &-body {
+        > .scrollbar {
+          .scrollbar__wrap {
+            margin-top: 0;
+            margin-bottom: 0;
           }
         }
       }
     }
+  }
 
-    .jeesite-basic-tree-header {
-      padding: 15px 0 4px;
-      border: 0;
-    }
+  .jeesite-basic-tree-header {
+    padding: 15px 0 4px;
+    border: 0;
+  }
 
-    &-tags {
-      overflow: auto;
+  &-tags {
+    overflow: auto;
 
-      .ant-tag {
-        margin: 4px 0 0;
-        padding: 0 4px;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
+    .ant-tag {
+      margin: 4px 0 0;
+      padding: 0 4px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
 
-        span {
-          overflow: hidden;
-          white-space: nowrap;
-          cursor: default;
-        }
+      span {
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: default;
+      }
 
-        .anticon {
-          margin-left: 4px !important;
-          height: 20px;
-          cursor: pointer;
-        }
+      .anticon {
+        margin-left: 4px !important;
+        height: 20px;
+        cursor: pointer;
       }
     }
   }
+}
 </style>
