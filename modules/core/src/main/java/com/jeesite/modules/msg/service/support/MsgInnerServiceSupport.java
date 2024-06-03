@@ -74,6 +74,9 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	 * 查询消息记录数据
 	 */
 	public List<MsgInnerRecord> findRecordList(MsgInnerRecord msgInnerRecord){
+		if (StringUtils.isBlank(msgInnerRecord.getMsgInnerId())) {
+			return ListUtils.newArrayList();
+		}
 		return msgInnerRecordDao.findList(msgInnerRecord);
 	}
 	
@@ -206,6 +209,9 @@ public class MsgInnerServiceSupport extends CrudService<MsgInnerDao, MsgInner>
 	 */
 	@Transactional
 	public void readMsgInnerRecord(MsgInner msgInner){
+		if (StringUtils.isBlank(msgInner.getId())) {
+			return;
+		}
 		MsgInnerRecord msgInnerRecord = new MsgInnerRecord();
 		msgInnerRecord.setMsgInnerId(msgInner.getId());
 		msgInnerRecord.setReceiveUserCode(msgInner.currentUser().getUserCode());
