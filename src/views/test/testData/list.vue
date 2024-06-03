@@ -77,6 +77,7 @@
   import InputForm from './form.vue';
   import InputFormTabs from './formTabs.vue';
   import InputFormModal from './formModal.vue';
+  // import { dateUtil, formatToDateTime } from '/@/utils/dateUtil';
 
   const emitter = useEmitter();
 
@@ -146,6 +147,9 @@
           format: 'YYYY-MM-DD',
           showTime: false,
         },
+        // defaultValue: dateUtil(new Date()),
+        // defaultValue: formatToDateTime(new Date()),
+        // defaultValue: '2024-05-31',
       },
       {
         label: t('日期选择止'),
@@ -426,9 +430,11 @@
   const [registerDrawerTabs, { openDrawer: openDrawerTabs }] = useDrawer();
   const [registerModal, { openModal }] = useModal();
 
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload /*, getForm*/ }] = useTable({
     api: testDataListData,
     beforeFetch: (params) => {
+      // params.testDate_gte = '2022-05-31';
+      // getForm().setFieldsValue(params);
       return params;
     },
     columns: tableColumns,

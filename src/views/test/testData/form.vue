@@ -59,6 +59,7 @@
   import { areaTreeData } from '/@/api/sys/area';
   import { BasicUpload } from '/@/components/Upload';
   import { WangEditor } from '/@/components/WangEditor';
+  // import { dateUtil, formatToDateTime } from '/@/utils/dateUtil';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -145,6 +146,9 @@
         format: 'YYYY-MM-DD',
         showTime: false,
       },
+      // defaultValue: dateUtil(new Date()),
+      // defaultValue: formatToDateTime(new Date()),
+      // defaultValue: '2024-05-31',
     },
     {
       label: t('日期时间'),
