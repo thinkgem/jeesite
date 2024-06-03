@@ -240,7 +240,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	public Page<Map<String, Object>> searchPage(Page<Map<String, Object>> page, String qStr,
 			String qand, String qnot, String bd, String ed, Map<String, String> params) {
 		if (articleIndexService == null) {
-			page.addOtherData("message", text("您好，系统未安装全文检索模块。"));
+			page.addOtherData("message", text("您好，请安装全文检索模块后再试。" +
+					"<a href=\"https://jeesite.com/docs/cms/\" target=\"_blank\">安装文档</a>"));
 			return page;
 		}
 		return articleIndexService.searchPage(page, qStr, qand, qnot, bd, ed, params);

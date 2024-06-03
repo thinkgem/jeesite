@@ -1,4 +1,4 @@
-body{padding-top:50px;font-size:15px;background:#f7f8f9;}
+body{padding-top:50px;font-size:15px;background:#f7f8f9;font-family:Arial, sans-serif;}
 body>.navbar{-webkit-transition:background-color .3s ease-in;transition:background-color .3s ease-in}
 @media (min-width:768px){
 	body>.navbar-transparent{background-color:transparent}
@@ -51,6 +51,7 @@ footer p{clear:left;margin-bottom:0}
 	#banner{margin-bottom:2em;text-align:center}
 }
 
+.navbar-inverse {border-bottom:0;}
 .breadcrumb {border-radius:8px;background:transparent;padding:0;margin:2px 15px 21px 15px;}
 
 .jumbotron {background:#fff;margin:48px auto;border:1px solid #ededed;box-shadow:0 1px 4px 0 rgb(0 0 0 / 5%);border-radius:8px!important;}
@@ -64,8 +65,9 @@ footer p{clear:left;margin-bottom:0}
 .panel-title small .more {padding-top:4px;font-size:14px}
 
 .nav-search {margin-top:9px;}
-.nav-search .form-control {height:30px;padding:5px;}
-.nav-search .btn {height:31px;padding:5px 10px;}
+.nav-search .form-control {height:30px;line-height:30px;padding:5px;border-radius:4px;}
+.nav-search .btn {height:31px;padding:5px 10px;border-radius:15px;outline:none;}
+.nav-search .btn:focus {outline:none;}
 
 .main {background:#fff;box-shadow:0 1px 4px 0 rgb(0 0 0 / 8%);border-radius:0 0 8px 8px;padding:20px 10px;margin:0 -1px}
 .main-list {border-radius:8px;}
