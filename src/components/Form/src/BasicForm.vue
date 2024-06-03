@@ -66,6 +66,7 @@
 
   import { basicProps } from './props';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { isString, isArray } from '/@/utils/is';
 
   export default defineComponent({
     name: 'BasicForm',
@@ -122,14 +123,16 @@
         const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
         for (const schema of schemas) {
           const { defaultValue, component } = schema;
-          // handle date type
+          // 日期类型处理，如果 默认值 是字符串的时候再进行转换，否则会出现日期类型转换错误
           if (defaultValue && dateItemType.includes(component)) {
-            if (!Array.isArray(defaultValue)) {
+            if (isString(defaultValue)) {
               schema.defaultValue = dateUtil(defaultValue);
-            } else {
+            } else if (isArray(defaultValue)) {
               const def: any[] = [];
               defaultValue.forEach((item) => {
-                def.push(dateUtil(item));
+                if (isString(item)) {
+                  def.push(dateUtil(item));
+                }
               });
               schema.defaultValue = def;
             }
