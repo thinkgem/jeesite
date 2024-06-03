@@ -87,7 +87,7 @@
       return;
     }
     if (props.fullHeight) {
-      const clientHeight = document.documentElement.clientHeight;
+      const clientHeight = document.documentElement.clientHeight - 6;
       iframe.style.height = `${clientHeight}px`;
       return;
     }
