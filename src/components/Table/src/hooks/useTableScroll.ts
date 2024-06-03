@@ -117,12 +117,15 @@ export function useTableScroll(
     if (!headEl) return;
 
     // Table height from bottom height-custom offset
-    let paddingHeight = 30;
-    // Pager height
+    let paddingHeight = 17;
+    if (tableEl.closest('.jeesite-layout-content')) {
+      paddingHeight += 13;
+    }
+
+    // Pagination height
     let paginationHeight = 2;
     if (paginationEl) {
-      const offsetHeight = paginationEl.offsetHeight;
-      paginationHeight += offsetHeight || 0;
+      paginationHeight += paginationEl.offsetHeight || 0;
     } else {
       paginationHeight = -8;
     }
@@ -134,15 +137,13 @@ export function useTableScroll(
         footerEl = tableEl.querySelector('.ant-table-footer') as HTMLElement;
       }
       if (footerEl) {
-        const offsetHeight = footerEl.offsetHeight;
-        footerHeight += offsetHeight || 0;
+        footerHeight += footerEl.offsetHeight || 0;
       }
     }
 
     const summaryEl = tableEl.querySelector('.ant-table-summary') as HTMLElement;
     if (summaryEl) {
-      const offsetHeight = summaryEl.offsetHeight;
-      footerHeight += offsetHeight || 0;
+      footerHeight += summaryEl.offsetHeight || 0;
     }
 
     // Header height
