@@ -60,30 +60,30 @@
 
       const getCaretIcon = computed(() => {
         if (!isCollapsed.value && props.position == 'top') {
-          return 'ant-design:caret-up-outlined';
+          return 'i-ant-design:caret-up-outlined';
         }
         if (!isCollapsed.value && props.position == 'bottom') {
-          return 'ant-design:caret-down-outlined';
+          return 'i-ant-design:caret-down-outlined';
         }
         if (!isCollapsed.value && props.position == 'left') {
-          return 'ant-design:caret-left-outlined';
+          return 'i-ant-design:caret-left-outlined';
         }
         if (!isCollapsed.value && props.position == 'right') {
-          return 'ant-design:caret-right-outlined';
+          return 'i-ant-design:caret-right-outlined';
         }
         if (isCollapsed.value && props.position == 'top') {
-          return 'ant-design:caret-down-outlined';
+          return 'i-ant-design:caret-down-outlined';
         }
         if (isCollapsed.value && props.position == 'bottom') {
-          return 'ant-design:caret-up-outlined';
+          return 'i-ant-design:caret-up-outlined';
         }
         if (isCollapsed.value && props.position == 'left') {
-          return 'ant-design:caret-right-outlined';
+          return 'i-ant-design:caret-right-outlined';
         }
         if (isCollapsed.value && props.position == 'right') {
-          return 'ant-design:caret-left-outlined';
+          return 'i-ant-design:caret-left-outlined';
         }
-        return 'ant-design:caret-right-outlined';
+        return 'i-ant-design:caret-right-outlined';
       });
 
       useEventListener({
@@ -154,6 +154,10 @@
       :hover {
         background-color: @border-color-base;
         border-radius: @border-radius-base;
+      }
+
+      .anticon span:hover {
+        background-color: @text-color-base;
       }
     }
   }
