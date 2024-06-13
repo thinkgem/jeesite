@@ -137,18 +137,26 @@ export function filter<T = any>(
   tree: T[],
   func: (n: T) => boolean,
   config: Partial<TreeHelperConfig> = {},
+  onlySearchLevel?: number,
 ): T[] {
   config = getConfig(config);
   const children = config.children as string;
-  function listFilter(list: T[]) {
+  function listFilter(list: T[], level?: number) {
     return list
       .map((node: any) => ({ ...node }))
       .filter((node) => {
+        if (level === 1) {
+          return func(node);
+        }
+        if (onlySearchLevel && level) {
+          node[children] = node[children] && listFilter(node[children], level - 1);
+          return node[children] && node[children].length;
+        }
         node[children] = node[children] && listFilter(node[children]);
         return func(node) || (node[children] && node[children].length);
       });
   }
-  return listFilter(tree);
+  return listFilter(tree, onlySearchLevel);
 }
 
 export function forEach<T = any>(

@@ -101,6 +101,8 @@ export const basicProps: any = {
   checkOnSearch: propTypes.bool.def(false),
   // 搜索完成自动select所有结果
   selectedOnSearch: propTypes.bool.def(false),
+  // 只搜索树表指定的层级，获得该层级下所有结果
+  onlySearchLevel: propTypes.number,
 };
 
 export const treeNodeProps = {

@@ -363,6 +363,7 @@
             return result;
           },
           unref(getFieldNames),
+          props.onlySearchLevel,
         );
 
         if (expandOnSearch) {
@@ -621,151 +622,151 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'jeesite-basic-tree';
+@prefix-cls: ~'jeesite-basic-tree';
 
-  .@{prefix-cls} {
-    background-color: @component-background;
-    border-radius: 5px;
+.@{prefix-cls} {
+  background-color: @component-background;
+  border-radius: 5px;
 
-    .ant-tree {
-      margin: 10px 6px 10px 10px;
-      background-color: transparent;
+  .ant-tree {
+    margin: 10px 6px 10px 10px;
+    background-color: transparent;
 
-      .ant-tree-checkbox {
-        margin-top: 1px;
+    .ant-tree-checkbox {
+      margin-top: 1px;
+    }
+
+    .ant-tree-switcher-icon svg {
+      margin-top: -1px;
+    }
+
+    .ant-tree-node-content-wrapper {
+      position: relative;
+      margin-top: 3px !important;
+
+      .ant-tree-title {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    &.ant-tree-directory {
+      .ant-tree-treenode:hover::before {
+        background-color: transparent;
       }
 
-      .ant-tree-switcher-icon svg {
-        margin-top: -1px;
-      }
-
-      .ant-tree-node-content-wrapper {
-        position: relative;
-        margin-top: 3px !important;
-
-        .ant-tree-title {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+      .ant-tree-treenode {
+        .ant-tree-switcher {
+          color: fade(@text-color-base, 70);
+          width: 20px;
         }
-      }
 
-      &.ant-tree-directory {
-        .ant-tree-treenode:hover::before {
-          background-color: transparent;
+        .ant-tree-switcher-icon svg {
+          margin-top: 1px;
         }
 
-        .ant-tree-treenode {
-          .ant-tree-switcher {
+        .ant-tree-node-content-wrapper {
+          transition: none;
+
+          .ant-tree-title {
+            left: auto;
+          }
+          .@{prefix-cls}-title {
+            padding-left: 3px;
+          }
+
+          .ant-tree-iconEle {
             color: fade(@text-color-base, 70);
             width: 20px;
           }
 
-          .ant-tree-switcher-icon svg {
-            margin-top: 1px;
+          &:hover {
+            background-color: fade(@primary-color, 5);
+            border-radius: 3px;
           }
 
-          .ant-tree-node-content-wrapper {
-            transition: none;
-
-            .ant-tree-title {
-              left: auto;
-            }
-            .@{prefix-cls}-title {
-              padding-left: 3px;
-            }
-
-            .ant-tree-iconEle {
-              color: fade(@text-color-base, 70);
-              width: 20px;
-            }
-
-            &:hover {
-              background-color: fade(@primary-color, 5);
-              border-radius: 3px;
-            }
-
-            &.ant-tree-node-selected {
-              color: @text-color-base;
-              background-color: fade(@primary-color, 15);
-              border-radius: 3px;
-            }
-          }
-        }
-
-        .ant-tree-treenode-selected {
-          color: @text-color-base;
-
-          .ant-tree-switcher,
-          .ant-tree-iconEle {
-            color: fade(@text-color-base, 70);
-          }
-
-          &:hover::before,
-          &::before {
-            background-color: transparent !important;
+          &.ant-tree-node-selected {
+            color: @text-color-base;
+            background-color: fade(@primary-color, 15);
+            border-radius: 3px;
           }
         }
       }
-    }
 
-    &-title {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 0 5px;
+      .ant-tree-treenode-selected {
+        color: @text-color-base;
 
-      &:hover {
-        .@{prefix-cls}__action {
-          visibility: visible;
+        .ant-tree-switcher,
+        .ant-tree-iconEle {
+          color: fade(@text-color-base, 70);
+        }
+
+        &:hover::before,
+        &::before {
+          background-color: transparent !important;
         }
       }
     }
+  }
 
-    &__content {
-      overflow: hidden;
-    }
+  &-title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
 
-    &__actions {
-      position: absolute;
-      top: 2px;
-      right: 3px;
-      display: flex;
-    }
-
-    &__action {
-      margin-left: 4px;
-      visibility: hidden;
+    &:hover {
+      .@{prefix-cls}__action {
+        visibility: visible;
+      }
     }
   }
 
-  html[data-theme='light'] {
-    .@{prefix-cls}.bg-gray {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-    }
+  &__content {
+    overflow: hidden;
   }
 
-  html[data-theme='dark'] {
-    .@{prefix-cls}.bg-gray {
-      background-color: #1d1d1d;
-      border: 1px solid #383838;
-    }
-    .@{prefix-cls} {
-      .ant-tree {
-        &.ant-tree-directory {
-          > li.ant-tree-treenode-selected > span,
-          .ant-tree-child-tree > li.ant-tree-treenode-selected > span {
-            &.ant-tree-node-content-wrapper {
-              background-color: fade(@primary-color, 50) !important;
-            }
+  &__actions {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    display: flex;
+  }
+
+  &__action {
+    margin-left: 4px;
+    visibility: hidden;
+  }
+}
+
+html[data-theme='light'] {
+  .@{prefix-cls}.bg-gray {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+  }
+}
+
+html[data-theme='dark'] {
+  .@{prefix-cls}.bg-gray {
+    background-color: #1d1d1d;
+    border: 1px solid #383838;
+  }
+  .@{prefix-cls} {
+    .ant-tree {
+      &.ant-tree-directory {
+        > li.ant-tree-treenode-selected > span,
+        .ant-tree-child-tree > li.ant-tree-treenode-selected > span {
+          &.ant-tree-node-content-wrapper {
+            background-color: fade(@primary-color, 50) !important;
           }
         }
       }
     }
   }
+}
 </style>
