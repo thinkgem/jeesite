@@ -69,6 +69,11 @@ jQuery.validator.addMethod("realName", function(value, element) {
 
 // 数字字母验证
 jQuery.validator.addMethod("abc",function(value, element) {
+	return this.optional(element) || /^[a-zA-Z0-9_]*$/.test(value);
+}, $.validator.messages.abc);
+
+// 数字字母验证（以字母开头）
+jQuery.validator.addMethod("abc123",function(value, element) {
 	return this.optional(element) || /^[a-zA-Z][a-zA-Z0-9_]*$/.test(value);
 }, $.validator.messages.abc);
 
