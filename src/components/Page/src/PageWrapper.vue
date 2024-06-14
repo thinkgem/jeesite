@@ -115,7 +115,6 @@
   import {
     computed,
     CSSProperties,
-    defineProps,
     PropType,
     provide,
     onBeforeMount,
