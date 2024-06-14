@@ -363,6 +363,7 @@
             return result;
           },
           unref(getFieldNames),
+          props.onlySearchLevel,
         );
 
         if (expandOnSearch) {
