@@ -6,6 +6,7 @@
     :class="getLevelClass"
     :style="`color: ${getColor}`"
     :title="getI18nName"
+    :item="getMenuItem"
   >
     <Icon v-if="getIcon" :icon="getIcon" :size="16" />
     <div v-if="collapsedShowTitle && getIsCollapseParent" class="collapse-title mt-1">
@@ -56,6 +57,7 @@
   import { propTypes } from '/@/utils/propTypes';
   import { useI18n } from '/@/hooks/web/useI18n';
   import SimpleMenuTag from './SimpleMenuTag.vue';
+  import { omit } from 'lodash-es';
 
   const props: any = {
     item: {
@@ -95,6 +97,9 @@
           },
         ];
       });
+      const getMenuItem = computed(() => {
+        return omit(props.item, 'children', 'icon', 'title', 'color', 'extend');
+      });
 
       function menuHasChildren(menuTreeItem: Menu): boolean {
         return (
@@ -115,6 +120,7 @@
         getShowSubTitle,
         getLevelClass,
         getIsCollapseParent,
+        getMenuItem,
       };
     },
   });

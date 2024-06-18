@@ -97,6 +97,7 @@
   import { getChildrenMenus, getCurrentParentPath, getShallowMenus } from '/@/router/menus';
   import { listenerRouteChange } from '/@/logics/mitt/routeChange';
   import LayoutTrigger from '../trigger/index.vue';
+  import { omit } from 'lodash-es';
 
   export default defineComponent({
     name: 'LayoutMixSider',
@@ -209,7 +210,7 @@
       }
 
       // Process module menu click
-      async function handleModuleClick(path: string, hover = false) {
+      async function handleModuleClick(path: string, item: any, hover = false) {
         const children = await getChildrenMenus(path);
         if (unref(activePath) === path) {
           if (!hover) {
@@ -232,7 +233,7 @@
         }
 
         if (!children || children.length === 0) {
-          if (!hover) go(path);
+          if (!hover) handleMenuClick(path, item);
           childrenMenus.value = [];
           closeMenu();
           return;
@@ -267,8 +268,12 @@
         }
       }
 
-      function handleMenuClick(path: string) {
-        go(path);
+      function handleMenuClick(path: string, item: any) {
+        if (item.target === '_blank') {
+          window.open(path);
+        } else {
+          go(path);
+        }
       }
 
       function handleClickOutside() {
@@ -277,17 +282,19 @@
       }
 
       function getItemEvents(item: Menu) {
+        const getItem = omit(item, 'children', 'icon', 'title', 'color', 'extend');
         if (unref(getMixSideTrigger) === 'hover') {
           return {
-            onMouseenter: () => handleModuleClick(item.path, true),
+            onMouseenter: () => handleModuleClick(item.path, getItem, true),
             onClick: async () => {
               const children = await getChildrenMenus(item.path);
-              if (item.path && (!children || children.length === 0)) go(item.path);
+              if (item.path && (!children || children.length === 0))
+                handleMenuClick(item.path, getItem);
             },
           };
         }
         return {
-          onClick: () => handleModuleClick(item.path),
+          onClick: () => handleModuleClick(item.path, getItem),
         };
       }
 

@@ -107,13 +107,17 @@
           onMenuClick: handleMenuClick,
         };
       });
+
       /**
        * click menu
        * @param menu
        */
-
-      function handleMenuClick(path: string) {
-        go(path);
+      function handleMenuClick(path: string, item: any) {
+        if (item.target === '_blank') {
+          window.open(path);
+        } else {
+          go(path);
+        }
       }
 
       /**

@@ -136,7 +136,7 @@
         setOpenKeys(path);
       }
 
-      async function handleSelect(key: string) {
+      async function handleSelect(key: string, item: any) {
         if (isUrl(key)) {
           openWindow(key);
           return;
@@ -146,8 +146,7 @@
           const flag = await beforeClickFn(key);
           if (!flag) return;
         }
-
-        emit('menuClick', key);
+        emit('menuClick', key, item);
 
         isClickGo.value = true;
         setOpenKeys(key);

@@ -51,6 +51,7 @@ export function transformRouteToMenu(
       meta: node.meta,
       name: node.meta.title,
       path: node.path,
+      target: node.target,
       ...(node.redirect ? { redirect: node.redirect } : {}),
       children: node.children || [],
     };

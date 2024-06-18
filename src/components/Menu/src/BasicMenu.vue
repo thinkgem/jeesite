@@ -119,13 +119,13 @@
           },
         );
 
-      async function handleMenuClick({ key }: { key: string; keyPath: string[] }) {
+      async function handleMenuClick({ item, key }: { item: any; key: string; keyPath: string[] }) {
         const { beforeClickFn } = props;
         if (beforeClickFn && isFunction(beforeClickFn)) {
           const flag = await beforeClickFn(key);
           if (!flag) return;
         }
-        emit('menuClick', key);
+        emit('menuClick', key, item);
 
         isClickGo.value = true;
         menuState.selectedKeys = [key];

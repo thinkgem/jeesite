@@ -30,6 +30,10 @@
       type: [String, Number] as PropType<string | number>,
       required: true,
     },
+    item: {
+      type: Object,
+      default: {},
+    },
     disabled: propTypes.bool,
   };
 
@@ -72,7 +76,7 @@
           return;
         }
 
-        rootMenuEmitter.emit('on-menu-item-select', props.name);
+        rootMenuEmitter.emit('on-menu-item-select', { name: props.name, item: props.item });
         if (unref(getCollapse)) {
           return;
         }
