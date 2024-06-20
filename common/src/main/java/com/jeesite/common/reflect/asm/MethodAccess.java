@@ -47,6 +47,9 @@ public abstract class MethodAccess {
 
 	/** Returns the index of the first method with the specified name. */
 	public int getIndex (String methodName) {
+		// 先查找无参数的方法，再查找有参数的方法，当未传递参数类型的时候，这是一个降级策略
+		for (int i = 0, n = methodNames.length; i < n; i++)
+			if (methodNames[i].equals(methodName) && parameterTypes[i].length == 0) return i;
 		for (int i = 0, n = methodNames.length; i < n; i++)
 			if (methodNames[i].equals(methodName)) return i;
 		throw new IllegalArgumentException("Unable to find non-private method: " + methodName);
