@@ -31,7 +31,7 @@ export interface User extends BasicModel<User> {
   lastLoginDate?: string; // 最后登陆时间
   freezeDate?: string; // 冻结时间
   freezeCause?: string; // 冻结原因
-  userWeight?: string; // 用户权重（降序）
+  userWeight?: number; // 用户权重（降序）
 
   avatarBase64?: string; // 头像Base64数据，修改头像时用
 
