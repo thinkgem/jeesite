@@ -52,6 +52,10 @@
       formActionType: {
         type: Object as PropType<FormActionType>,
       },
+      colLayout: {
+        type: Boolean,
+        default: true,
+      },
     },
     setup(props, { slots }) {
       const { t } = useI18n();
@@ -404,7 +408,7 @@
         }
 
         const { baseColProps = {} } = props.formProps;
-        const realColProps = { ...baseColProps, ...colProps };
+        const realColProps = props.colLayout ? { ...baseColProps, ...colProps } : {};
         const { isIfShow, isShow } = getShow();
         const values = unref(getValues);
 
