@@ -294,11 +294,11 @@
         }
 
         const bindValue: Recordable = {
-          [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field] || defaultValue,
+          [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field] ?? defaultValue,
         };
 
         if (fieldLabel) {
-          bindValue[labelField || 'labelValue'] = props.formModel[fieldLabel] || defaultLabel;
+          bindValue[labelField || 'labelValue'] = props.formModel[fieldLabel] ?? defaultLabel;
           // console.log('bindValue', bindValue, props.formModel);
           bindValue.labelInValue = true;
           // bindValue.treeCheckable = true;
