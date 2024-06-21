@@ -193,7 +193,7 @@
     const res = await userInfoApi('none');
     if (res.result == 'true') {
       // 如果已经登录，根据业务需要，是否自动跳转到系统首页
-      window.location.href = publicPath + PageEnum.BASE_HOME;
+      await userStore.afterLoginAction(res, true);
       return;
     }
     userStore.initPageCache(res);

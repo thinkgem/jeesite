@@ -133,51 +133,44 @@ export const useUserStore = defineStore({
         this.initPageCache(res);
         return res;
       }
-      this.setUserInfo(res);
-      this.initPageCache(res);
-      this.setSessionTimeout(false);
       await this.afterLoginAction(res, goHome);
       return res;
     },
     // async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
     async afterLoginAction(res: LoginResult, goHome?: boolean) {
-      if (!this.getToken) return null;
-      // const userInfo = await this.getUserInfoAction();
-      const sessionTimeout = this.sessionTimeout;
-      if (sessionTimeout) {
-        // this.setSessionTimeout(false);
-      } else {
-        const permissionStore = usePermissionStore();
-        if (!permissionStore.isDynamicAddedRoute) {
-          const routes = await permissionStore.buildRoutesAction();
-          routes.forEach((route) => {
-            router.addRoute(route as unknown as RouteRecordRaw);
-          });
-          router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
-          permissionStore.setDynamicAddedRoute(true);
+      this.setUserInfo(res);
+      this.initPageCache(res);
+      this.setSessionTimeout(false);
+      const permissionStore = usePermissionStore();
+      if (!permissionStore.isDynamicAddedRoute) {
+        const routes = await permissionStore.buildRoutesAction();
+        routes.forEach((route) => {
+          router.addRoute(route as unknown as RouteRecordRaw);
+        });
+        router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
+        permissionStore.setDynamicAddedRoute(true);
+      }
+      if (goHome) {
+        const currentRoute = router.currentRoute.value;
+        let path = currentRoute.query.redirect;
+        if (path !== '/') {
+          path = path || res.user?.homePath || PageEnum.BASE_HOME;
+        } else {
+          path = res.user?.homePath || PageEnum.BASE_HOME;
         }
-        if (goHome) {
-          const currentRoute = router.currentRoute.value;
-          let path = currentRoute.query.redirect;
-          if (path !== '/') {
-            path = path || res.user?.homePath || PageEnum.BASE_HOME;
-          } else {
-            path = res.user?.homePath || PageEnum.BASE_HOME;
-          }
-          await router.replace(decodeURIComponent(path as string));
-        }
-        if (res['modifyPasswordTip']) {
-          createConfirm({
-            content: res['modifyPasswordTip'],
-            maskClosable: false,
-            iconType: 'info',
-            cancelText: '取消',
-            okText: '确定',
-            onOk: () => {
-              router.replace('/account/modPwd');
-            },
-          });
-        }
+        await router.replace(decodeURIComponent(path as string));
+      }
+      if (res['modifyPasswordTip']) {
+        createConfirm({
+          content: res['modifyPasswordTip'],
+          maskClosable: false,
+          iconType: 'info',
+          cancelText: '取消',
+          okText: '确定',
+          onOk: () => {
+            router.replace('/account/modPwd');
+          },
+        });
       }
       return res.user || null;
     },
