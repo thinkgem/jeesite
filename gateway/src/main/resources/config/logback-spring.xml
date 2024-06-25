@@ -12,6 +12,7 @@
 	<logger name="org.springframework.cloud" level="INFO" />
 	<logger name="com.jeesite" level="DEBUG" />
 	<logger name="reactor.netty.http.client.HttpClientConnect" level="DEBUG" />
+	<logger name="org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker" level="ERROR" />
 
 	<!-- Console log output -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
