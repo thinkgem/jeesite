@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-cloud-parent</artifactId>
-		<version>5.7.2.springboot3-SNAPSHOT</version>
+		<version>5.8.0.springboot3-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
