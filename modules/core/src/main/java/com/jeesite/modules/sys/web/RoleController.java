@@ -220,34 +220,17 @@ public class RoleController extends BaseController {
 	/**
 	 * 查询菜单的树结构数据
 	 * @param role
-	 * @param request
 	 */
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = "menuTreeData")
 	@ResponseBody
-	public Map<String, Object> menuTreeData(Role role, HttpServletRequest request) {
+	public Map<String, Object> menuTreeData(Role role) {
 		Map<String, Object> model = MapUtils.newHashMap();
-		List<Menu> menuList = null;
-		// 获取菜单列表，根据归属系统转换为zTree能够接受的数据
-		Menu menuWhere = new Menu();
-		// 根据权限设置可查看的菜单权重级别
-		User user = role.currentUser();
-		if (user.isSuperAdmin()){
-			menuWhere.setWeight_lt(Menu.WEIGHT_SUPER_ADMIN);
-			menuList = menuService.findList(menuWhere);
-		}else if (User.MGR_TYPE_CORP_ADMIN.equals(user.getMgrType())
-				&& Global.getPropertyToBoolean("role.corpAdminAllMenu", "false")){
-			menuWhere.setWeight_lt(Menu.WEIGHT_CORP_ADMIN);
-			menuList = menuService.findList(menuWhere);
-		}else{
-			// 二级管理员、普通 用户，只可分配自己的拥有的菜单
-			menuWhere.setUserCode(user.getUserCode());
-			menuList = menuService.findByUserCode(menuWhere);
-		}
 		List<String> sysCodes = ListUtils.newArrayList();
 		for (DictData sysCode : DictUtils.getDictList("sys_menu_sys_code")) {
 			sysCodes.add(sysCode.getDictValue());
 		}
+		List<Menu> menuList = roleService.findManageMenuList(role);
 		Map<String, List<Map<String, String>>> map = MapUtils.newLinkedHashMap();
 		for (Menu menu : menuList){
 			// 过滤已经禁用的子系统
@@ -272,7 +255,7 @@ public class RoleController extends BaseController {
 		}
 		model.put("menuMap", map);
 		if (StringUtils.isNotBlank(role.getRoleCode())) {
-			menuWhere = new Menu();
+			Menu menuWhere = new Menu();
 			menuWhere.setRoleCode(role.getRoleCode());
 			List<Menu> roleMenuList = menuService.findByRoleCode(menuWhere);
 			model.put("roleMenuList", roleMenuList);
