@@ -13,7 +13,7 @@
   import { Form, Col } from 'ant-design-vue';
   import { componentMap } from '../componentMap';
   import { BasicHelp } from '/@/components/Basic';
-  import { isBoolean, isFunction, isNull, isEmpty } from '/@/utils/is';
+  import { isBoolean, isFunction, isNull, isEmpty, isString } from '/@/utils/is';
   import { getSlot } from '/@/utils/helper/tsxHelper';
   import { createPlaceholderMessage, setComponentRuleType } from '../helper';
   import { upperFirst, cloneDeep } from 'lodash-es';
@@ -297,8 +297,15 @@
           }
         }
 
+        let value = props.formModel[field];
+        if (component === 'RangePicker' && isString(value)) {
+          const vs = value.split(',');
+          if (vs.length > 1) value = [vs[0], vs[1]];
+          else value = [vs[0], ''];
+        }
+
         const bindValue: Recordable = {
-          [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field] ?? defaultValue,
+          [valueField || (isCheck ? 'checked' : 'value')]: value ?? defaultValue,
         };
 
         if (fieldLabel) {
