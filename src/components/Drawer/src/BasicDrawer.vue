@@ -192,8 +192,8 @@
           props.confirmLoading = props.loading;
         }
         // Keep the last setDrawerProps
-        propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
-
+        // propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
+        propsRef.value = { ...(unref(propsRef) as Recordable), ...props } as Recordable;
         if (Reflect.has(props, 'open')) {
           openRef.value = !!props.open;
         }

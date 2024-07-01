@@ -89,7 +89,7 @@
        * @description:设置desc
        */
       function setDescProps(descProps: Partial<DescriptionProps>): void {
-        // Keep the last setDrawerProps
+        // Keep the last setDescProps
         propsRef.value = { ...(unref(propsRef) as Recordable), ...descProps } as Recordable;
       }
 
