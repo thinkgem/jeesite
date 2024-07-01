@@ -55,9 +55,9 @@ public class ShiroAutoConfiguration {
 	@ConditionalOnMissingBean(name="shiroFilterProxy")
 	public FilterRegistrationBean<Filter> shiroFilterProxy(ShiroFilterFactoryBean shiroFilter) throws Exception {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
+		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 5000);
 		bean.setFilter(shiroFilter.getObject());
 		bean.addUrlPatterns("/*");
-		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 5000);
 		return bean;
 	}
 
