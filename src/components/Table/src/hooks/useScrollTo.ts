@@ -1,10 +1,10 @@
-import type { ComputedRef, Ref } from 'vue';
+import type { Ref } from 'vue';
 import { nextTick, unref } from 'vue';
 import { warn } from '/@/utils/log';
 
 export function useTableScrollTo(
   tableElRef: Ref<ComponentRef>,
-  getDataSourceRef: ComputedRef<Recordable[]>,
+  getDataSourceRef: Ref<Recordable[]>,
 ) {
   let bodyEl: HTMLElement | null;
 

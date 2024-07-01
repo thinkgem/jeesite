@@ -6,13 +6,9 @@ import { useEventListener } from '/@/hooks/event/useEventListener';
 
 export function useTableFooter(
   propsRef: ComputedRef<BasicTableProps>,
-  scrollRef: ComputedRef<{
-    x: string | number | true;
-    y: string | number | null;
-    scrollToFirstRowOnChange: boolean;
-  }>,
+  scrollRef: ComputedRef<any>,
   tableElRef: Ref<ComponentRef>,
-  getDataSourceRef: ComputedRef<Recordable>,
+  getDataSourceRef: Ref<Recordable>,
 ) {
   const getIsEmptyData = computed(() => {
     return (unref(getDataSourceRef) || []).length === 0;
