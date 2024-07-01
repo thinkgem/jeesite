@@ -330,7 +330,6 @@
         useTableForm(getProps, slots, reload, getLoading);
 
       const getBindValues = computed(() => {
-        const dataSource = unref(getDataSourceRef);
         const { isTreeTable } = unref(getProps);
         let propsData: Recordable = {
           size: 'middle',
@@ -351,7 +350,7 @@
           rowKey: unref(getRowKey),
           columns: toRaw(unref(getViewColumns)),
           pagination: toRaw(unref(getPaginationInfo)),
-          dataSource,
+          dataSource: unref(getDataSourceRef),
           footer: unref(getFooterProps),
           ...unref(getExpandOption),
           onExpand: handleTableExpand,
