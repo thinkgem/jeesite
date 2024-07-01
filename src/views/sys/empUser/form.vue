@@ -266,7 +266,7 @@
 
   const [registerEmployeeOfficeTable, employeeOfficeTable] = useTable({
     actionColumn: {
-      width: 60,
+      width: 120,
       actions: (record: Recordable) => [
         {
           icon: 'i-ant-design:delete-outlined',
@@ -295,7 +295,6 @@
         title: t('附属机构'),
         dataIndex: 'officeCode',
         dataLabel: 'officeName',
-        width: 100,
         align: 'left',
         editRow: true,
         editComponent: 'TreeSelect',
@@ -310,7 +309,6 @@
         title: t('附属岗位'),
         dataIndex: 'postCode',
         dataLabel: 'postName',
-        width: 100,
         align: 'left',
         editRow: true,
         editComponent: 'Select',
