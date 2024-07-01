@@ -1,6 +1,6 @@
 import type { BasicTableProps, TableRowSelection, BasicColumn } from '../types/table';
 import { Ref, ComputedRef, ref } from 'vue';
-import { computed, unref, nextTick, watch } from 'vue';
+import { computed, unref, nextTick, watch, watchEffect } from 'vue';
 import { getViewportOffset } from '/@/utils/domUtils';
 import { isBoolean } from '/@/utils/is';
 import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
@@ -13,11 +13,11 @@ export function useTableScroll(
   tableElRef: Ref<ComponentRef>,
   columnsRef: ComputedRef<BasicColumn[]>,
   rowSelectionRef: ComputedRef<TableRowSelection | null>,
-  getDataSourceRef: ComputedRef<Recordable[]>,
+  getDataSourceRef: Ref<Recordable[]>,
   wrapRef: Ref<HTMLElement | null>,
   formRef: Ref<ComponentRef>,
 ) {
-  const tableHeightRef: Ref<Nullable<number | string>> = ref(167);
+  const tableHeightRef = ref<number | string | undefined>(167);
   const modalFn = useModalContext();
 
   // Greater than animation time 280
@@ -208,37 +208,35 @@ export function useTableScroll(
     });
   });
 
-  const getScrollX = computed(() => {
-    let width = 0;
-    if (unref(rowSelectionRef)) {
-      width += 60;
-    }
+  const scrollX = ref<string | number | undefined>();
 
-    // props ?? 0;
-    const NORMAL_WIDTH = 150;
+  watchEffect(() => {
+    let width = 0;
+    // if (unref(rowSelectionRef)) {
+    //   width += 60;
+    // }
 
     const columns = unref(columnsRef).filter((item) => !item.defaultHidden);
+    // let unsetWidthColumnSize = 0;
     columns.forEach((item) => {
-      width += Number.parseFloat(item.width as string) || 0;
+      if (item.width) width += Number.parseFloat(item.width as string);
+      // else unsetWidthColumnSize += 1;
     });
-    const unsetWidthColumns = columns.filter((item) => !Reflect.has(item, 'width'));
 
-    const len = unsetWidthColumns.length;
-    if (len !== 0) {
-      width += len * NORMAL_WIDTH;
-    }
+    // if (unsetWidthColumnSize !== 0) {
+    //   width += unsetWidthColumnSize * 50;
+    // }
 
     const table = unref(tableElRef);
     const tableWidth = table?.$el?.offsetWidth ?? 0;
-    return tableWidth > width ? '100%' : width;
+    scrollX.value = tableWidth == 0 || width == 0 || tableWidth > width ? undefined : width;
   });
 
-  const getScrollRef = computed(() => {
-    const tableHeight = unref(tableHeightRef);
+  const getScrollRef: ComputedRef<any> = computed(() => {
     const { canResize, scroll } = unref(propsRef);
     return {
-      x: unref(getScrollX),
-      y: canResize ? tableHeight : null,
+      x: unref(scrollX),
+      y: canResize ? unref(tableHeightRef) : undefined,
       scrollToFirstRowOnChange: true,
       ...scroll,
     };
