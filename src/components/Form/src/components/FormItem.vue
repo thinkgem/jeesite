@@ -298,10 +298,12 @@
         }
 
         let value = props.formModel[field];
-        if (component === 'RangePicker' && isString(value)) {
+        if (isString(value) && component === 'RangePicker') {
           const vs = value.split(',');
           if (vs.length > 1) value = [vs[0], vs[1]];
           else value = [vs[0], ''];
+        } else if (isString(value) && value === '') {
+          value = undefined;
         }
 
         const bindValue: Recordable = {
