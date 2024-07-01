@@ -16,7 +16,10 @@ import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, PAGE_SIZE } from 
 function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
   const { key, dataIndex, children } = item;
   item.align = item.align || DEFAULT_ALIGN;
-  item.resizable = item.resizable || true;
+  // 未设置宽度的列，不进行拖拽调整列宽
+  if (item.width) {
+    item.resizable = item.resizable || true;
+  }
   if (ellipsis) {
     if (!key) {
       item.key = dataIndex as any;
@@ -35,7 +38,6 @@ function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>
   } else {
     item.dataIndex_ = dataIndex?.toString() || '';
   }
-
   if (children && children.length) {
     handleChildren(children, !!ellipsis, dictTypes);
   }
@@ -83,10 +85,12 @@ function handleIndexColumn(
 
   const { showIndexColumn, indexColumnProps, isTreeTable } = unref(propsRef);
 
-  let pushIndexColumns = false;
   if (unref(isTreeTable)) {
     return;
   }
+
+  let pushIndexColumns = false;
+
   columns.forEach(() => {
     const indIndex = columns.findIndex((column) => column.flag === INDEX_COLUMN_FLAG);
     if (showIndexColumn) {
@@ -102,9 +106,10 @@ function handleIndexColumn(
 
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,
-    width: 50,
     title: t('component.table.index'),
+    width: 50,
     align: 'center',
+    fixed: 'left',
     customRender: ({ index }) => {
       const getPagination = unref(getPaginationRef);
       if (isBoolean(getPagination)) {
@@ -113,12 +118,6 @@ function handleIndexColumn(
       const { current = 1, pageSize = PAGE_SIZE } = getPagination;
       return ((current < 1 ? 1 : current) - 1) * pageSize + index + 1;
     },
-    // ...(isFixedLeft
-    //   ? {
-    //       fixed: 'left',
-    //     }
-    //   : {}),
-    ...{ fixed: 'left' },
     ...indexColumnProps,
   });
 }
