@@ -71,7 +71,7 @@
   import ModalFooter from './components/ModalFooter.vue';
   import ModalHeader from './components/ModalHeader.vue';
   import { isFunction } from '/@/utils/is';
-  import { deepMerge } from '/@/utils';
+  // import { deepMerge } from '/@/utils';
   import { basicProps } from './props';
   import { useFullScreen } from './hooks/useModalFullScreen';
   import { omit } from 'lodash-es';
@@ -203,7 +203,8 @@
           props.confirmLoading = props.loading;
         }
         // Keep the last setModalProps
-        propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
+        // propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
+        propsRef.value = { ...(unref(propsRef) as Recordable), ...props } as Recordable;
         if (Reflect.has(props, 'open')) {
           openRef.value = !!props.open;
         }
