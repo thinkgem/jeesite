@@ -30,7 +30,8 @@ public class IpAddrFilterConfig {
 	@Bean
 	public FilterRegistrationBean<Filter> ipAddrFilter() {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		bean.setName("ipAddrFilter");
+		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 10);
 		bean.setFilter((setvletRequest, setvletResponse, chain) -> {
 			if (isAccessAllowed(setvletRequest, setvletResponse)) {
 				chain.doFilter(setvletRequest, setvletResponse);

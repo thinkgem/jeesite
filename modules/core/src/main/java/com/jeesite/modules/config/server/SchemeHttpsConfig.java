@@ -23,9 +23,9 @@ import org.springframework.core.Ordered;
 public class SchemeHttpsConfig {
 
 	@Bean
-	public FilterRegistrationBean<Filter> schemeFilterRegistrationBean() {
+	public FilterRegistrationBean<Filter> schemeHttpsFilter() {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
-		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		bean.setName("schemeHttpsFilter");
 		bean.setFilter((request, response, chain) -> {
 			chain.doFilter(new HttpServletRequestWrapper((HttpServletRequest) request) {
 				@Override
