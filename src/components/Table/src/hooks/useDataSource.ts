@@ -131,12 +131,12 @@ export function useDataSource(
     () => {
       const dataSource = unref(dataSourceRef);
       if (!dataSource || dataSource.length === 0) {
-        return unref(dataSourceRef);
+        getDataSourceRef.value = unref(dataSourceRef);
+        return;
       }
       if (unref(getAutoCreateKey)) {
         const firstItem = dataSource[0];
         const lastItem = dataSource[dataSource.length - 1];
-
         if (firstItem && lastItem) {
           if (!firstItem[ROW_KEY] || !lastItem[ROW_KEY]) {
             const data = cloneDeep(unref(dataSourceRef));
