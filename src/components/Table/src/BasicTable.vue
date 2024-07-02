@@ -164,11 +164,11 @@
     ],
     setup(props, { attrs, emit, slots, expose }) {
       const { t } = useI18n();
-      const tableElRef = ref(null);
+      const tableElRef = ref<ComponentRef>(null);
       const tableData = ref<Recordable[]>([]);
 
-      const wrapRef = ref(null);
-      const formRef = ref(null);
+      const wrapRef = ref<HTMLElement | null>(null);
+      const formRef = ref<ComponentRef>(null);
       const innerPropsRef = ref<Partial<BasicTableProps>>();
 
       const { prefixCls } = useDesign('basic-table');

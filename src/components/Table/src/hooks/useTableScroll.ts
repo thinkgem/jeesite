@@ -1,6 +1,6 @@
 import type { BasicTableProps, TableRowSelection, BasicColumn } from '../types/table';
 import { Ref, ComputedRef, ref } from 'vue';
-import { computed, unref, nextTick, watch, watchEffect } from 'vue';
+import { computed, unref, nextTick, watch } from 'vue';
 import { getViewportOffset } from '/@/utils/domUtils';
 import { isBoolean } from '/@/utils/is';
 import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
@@ -50,12 +50,6 @@ export function useTableScroll(
     modalFn?.redoModalHeight?.();
   }
 
-  // No need to repeat queries
-  let paginationEl: HTMLElement | null;
-  let footerEl: HTMLElement | null;
-  let bodyEl: HTMLElement | null;
-  let emptyDataEl: HTMLElement | null;
-
   async function calcTableHeight() {
     const {
       resizeHeightOffset,
@@ -70,18 +64,16 @@ export function useTableScroll(
     const table = unref(tableElRef);
     if (!table) return;
 
-    const tableEl: Element = table.$el;
+    const tableEl: HTMLElement = table.$el;
     if (!tableEl) return;
 
-    paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
+    const paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
     if (paginationEl) {
       paginationEl.style.display = 'flex';
     }
 
-    if (!bodyEl) {
-      bodyEl = tableEl.querySelector('.ant-table-body');
-      if (!bodyEl) return;
-    }
+    const bodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement;
+    if (!bodyEl) return;
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight;
@@ -105,14 +97,11 @@ export function useTableScroll(
 
     // if (!unref(getCanResize) || !unref(tableData) || tableData.length === 0) return;
     if (!unref(getCanResize) || !unref(tableData)) return;
-    if (tableData.length === 0) {
-      emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed');
-    }
 
     await nextTick();
     // Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
 
-    const headEl = tableEl.querySelector('.ant-table-thead');
+    const headEl = tableEl.querySelector('.ant-table-thead') as HTMLElement;
 
     if (!headEl) return;
 
@@ -133,9 +122,7 @@ export function useTableScroll(
     // Footer height
     let footerHeight = 0;
     if (!isBoolean(pagination)) {
-      if (!footerEl) {
-        footerEl = tableEl.querySelector('.ant-table-footer') as HTMLElement;
-      }
+      const footerEl = tableEl.querySelector('.ant-table-footer') as HTMLElement;
       if (footerEl) {
         footerHeight += footerEl.offsetHeight || 0;
       }
@@ -196,8 +183,12 @@ export function useTableScroll(
     setHeight(height);
 
     bodyEl!.style.height = `${height}px`;
-    if (emptyDataEl && emptyDataEl.style) {
-      emptyDataEl.style.height = `${height - 1}px`;
+
+    if (tableData.length === 0) {
+      const emptyDataEl = tableEl.querySelector('.ant-table-expanded-row-fixed') as HTMLElement;
+      if (emptyDataEl && emptyDataEl.style) {
+        emptyDataEl.style.height = `${height - 9}px`;
+      }
     }
   }
   useWindowSizeFn(calcTableHeight, 280);
@@ -208,9 +199,7 @@ export function useTableScroll(
     });
   });
 
-  const scrollX = ref<string | number | undefined>();
-
-  watchEffect(() => {
+  const getScrollRef: ComputedRef<any> = computed(() => {
     let width = 0;
     // if (unref(rowSelectionRef)) {
     //   width += 60;
@@ -229,13 +218,10 @@ export function useTableScroll(
 
     const table = unref(tableElRef);
     const tableWidth = table?.$el?.offsetWidth ?? 0;
-    scrollX.value = tableWidth == 0 || width == 0 || tableWidth > width ? undefined : width;
-  });
-
-  const getScrollRef: ComputedRef<any> = computed(() => {
     const { canResize, scroll } = unref(propsRef);
+    const canScrollX = tableWidth == 0 || width == 0 || tableWidth > width;
     return {
-      x: unref(scrollX),
+      x: canScrollX ? (canResize ? true : undefined) : width,
       y: canResize ? unref(tableHeightRef) : undefined,
       scrollToFirstRowOnChange: true,
       ...scroll,
