@@ -234,6 +234,7 @@
       width: 130,
       align: 'center',
       slot: 'firstColumn',
+      // 方式一：简单配置过滤窗口
       // filters: [
       //   { text: 'Male', value: '1' },
       //   { text: 'Female', value: '2' },
@@ -243,6 +244,7 @@
       //   console.log('onFilter', value, record);
       //   return record.userName === value;
       // },
+      // 方式一：简单配置过滤窗口
       customFilterDropdown: true,
     },
     {
@@ -433,6 +435,7 @@
   const [registerTable, { reload /*, getForm*/ }] = useTable({
     api: testDataListData,
     beforeFetch: (params) => {
+      // 查询前增加默认条件（例子）
       // params.testDate_gte = '2022-05-31';
       // getForm().setFieldsValue(params);
       return params;
@@ -445,7 +448,7 @@
     canResize: true,
     // 设置为true可以通过点击行来展开 expandedRowRender 插槽（例子）
     expandRowByClick: false,
-    // 给单行文本列标题上添加一个过滤按钮（例子）
+    // 给单行文本列标题上添加一个过滤按钮，提交到后台过滤（例子）
     filterFn: (data: Partial<Recordable<string[]>>) => {
       const testInput = 'a.test_input';
       if (data[testInput]) {
