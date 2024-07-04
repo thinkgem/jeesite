@@ -4,22 +4,6 @@
  */
 package com.jeesite.modules.sys.web;
 
-import java.util.Date;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -35,12 +19,25 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authc.AuthenticationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 账号自助服务Controller
@@ -82,10 +79,9 @@ public class AccountController extends BaseController{
 	@ResponseBody
 	@ApiOperation(value = "根据短信或邮件验证码登录系统")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "username", value = "登录账号", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "loginValidCode", value = "手机或邮箱接受的验证码", required = true),
 	})
-	public String loginByValidCode(String username, String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
+	public String loginByValidCode(String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
 		if (!Global.getConfigToBoolean("user.loginByValidCode", "true")) {
 			return renderResult(Global.FALSE, "验证码登录未开启，请设置：user.loginByValidCode=true");
 		}
