@@ -6,12 +6,17 @@ package com.jeesite.modules.sys.utils;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.SetUtils;
+import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.SpringUtils;
+import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.*;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.EmployeeService;
 import com.jeesite.modules.sys.service.OfficeService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.shiro.session.Session;
+import org.springframework.core.NamedThreadLocal;
 
 import java.util.List;
 import java.util.Set;
@@ -27,6 +32,10 @@ public class EmpUtils {
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 	public static final String CACHE_COMPANY_ALL_LIST = "companyAllList";
 	public static final String CACHE_COMPANY_OFFICE_LIST = "employeeOfficeList";
+
+	// 当前线程部门，没有session环境下使用，优先级低于session
+	private static final ThreadLocal<String> currentOfficeCode = new NamedThreadLocal<>("CurrentOfficeCode");
+	private static final ThreadLocal<String> currentOfficeName = new NamedThreadLocal<>("CurrentOfficeName");
 	
 	/**
 	 * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
@@ -324,6 +333,116 @@ public class EmpUtils {
 	public static void removeCache(String key){
 		if (StringUtils.inString(key, CACHE_OFFICE_ALL_LIST, CACHE_COMPANY_ALL_LIST)){
 			CorpUtils.removeCache(key);
+		}
+	}
+
+	/**
+	 * 获取当前登录用户的部门代码
+	 * @return
+	 */
+	public static String getCurrentOfficeCode() {
+		String officeCode = StringUtils.EMPTY;
+		HttpServletRequest request = ServletUtils.getRequest();
+		if (request != null){
+			officeCode = (String)request.getAttribute("officeCode__");
+		}
+		if (StringUtils.isBlank(officeCode)){
+			Session session = UserUtils.getSubject().getSession(false);
+			if (session != null){
+				officeCode = ObjectUtils.toString(session.getAttribute("officeCode"));
+			}else{
+				officeCode = currentOfficeCode.get();
+			}
+		}
+		if (StringUtils.isBlank(officeCode)){
+			officeCode = getOffice().getOfficeCode();
+		}
+		if (request != null){
+			request.setAttribute("officeCode__", officeCode);
+		}
+		return ObjectUtils.toStringIgnoreNull(officeCode);
+	}
+
+	/**
+	 * 获取当前登录用户的部门名称
+	 * @return
+	 */
+	public static String getCurrentOfficeName() {
+		String officeName = StringUtils.EMPTY;
+		HttpServletRequest request = ServletUtils.getRequest();
+		if (request != null){
+			officeName = (String)request.getAttribute("officeName__");
+		}
+		if (StringUtils.isBlank(officeName)){
+			Session session = UserUtils.getSubject().getSession(false);
+			if (session != null){
+				officeName = ObjectUtils.toString(session.getAttribute("officeName"));
+			}else{
+				officeName = currentOfficeName.get();
+			}
+		}
+		if (StringUtils.isBlank(officeName)){
+			officeName = getOffice().getOfficeName();
+		}
+		if (request != null){
+			request.setAttribute("officeName__", officeName);
+		}
+		return ObjectUtils.toStringIgnoreNull(officeName);
+	}
+
+	/**
+	 * 设置当前线程部门，没有session环境下使用，优先级低于session
+	 * @author ThinkGem
+	 */
+	public static void setCurrentOffice(String officeCode, String officeName) {
+		Session session = UserUtils.getSubject().getSession(false);
+		setCurrentOffice(session, officeCode, officeName);
+	}
+
+	/**
+	 * 设置当前线程部门，没有session环境下使用，优先级低于session
+	 * @author ThinkGem
+	 */
+	public static void setCurrentOffice(Session session, String officeCode, String officeName) {
+		if (session != null){
+			session.setAttribute("officeCode", officeCode);
+			session.setAttribute("officeName", officeName);
+		}else{
+			currentOfficeCode.set(officeCode);
+			currentOfficeName.set(officeName);
+		}
+		HttpServletRequest request = ServletUtils.getRequest();
+		if (request != null){
+			request.setAttribute("officeCode__", officeCode);
+			request.setAttribute("officeName__", officeName);
+		}
+	}
+
+	/**
+	 * 移除当前线程部门，没有session环境下使用，优先级低于session
+	 * @author ThinkGem
+	 */
+	public static void removeCurrentOffice() {
+		Session session = UserUtils.getSubject().getSession(false);
+		removeCurrentOffice(session);
+	}
+
+	/**
+	 * 移除当前线程部门，没有session环境下使用，优先级低于session
+	 * @author ThinkGem
+	 */
+	public static void removeCurrentOffice(Session session) {
+		if (session != null){
+			session.removeAttribute("officeCode");
+			session.removeAttribute("officeName");
+		}else {
+			currentOfficeCode.remove();
+			currentOfficeName.remove();
+		}
+		HttpServletRequest request = ServletUtils.getRequest();
+		if (request != null){
+			request.removeAttribute("officeCode__");
+			request.removeAttribute("officeName__");
 		}
 	}
 }
