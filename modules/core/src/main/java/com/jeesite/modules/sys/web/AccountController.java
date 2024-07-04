@@ -79,10 +79,9 @@ public class AccountController extends BaseController{
 	@ResponseBody
 	@Operation(summary = "根据短信或邮件验证码登录系统")
 	@Parameters({
-		@Parameter(name = "username", description = "登录账号", required = true),
 		@Parameter(name = "loginValidCode", description = "手机或邮箱接受的验证码", required = true),
 	})
-	public String loginByValidCode(String username, String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
+	public String loginByValidCode(String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
 		if (!Global.getConfigToBoolean("user.loginByValidCode", "true")) {
 			return renderResult(Global.FALSE, "验证码登录未开启，请设置：user.loginByValidCode=true");
 		}
