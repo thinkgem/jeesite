@@ -175,15 +175,27 @@
 
   onMounted(async () => {
     setTimeout(() => message.destroy());
-    const res = await userInfoApi('none');
-    if (res.result == 'true') {
-      // 如果已经登录，根据业务需要，是否自动跳转到系统首页
-      await userStore.afterLoginAction(res, true);
-      return;
+    try {
+      const res = await userInfoApi('none');
+      if (res.result == 'true') {
+        // 如果已经登录，根据业务需要，是否自动跳转到系统首页
+        await userStore.afterLoginAction(res, true);
+        return;
+      }
+      userStore.initPageCache(res);
+      refreshValidCodeStatus(res);
+      gp.value = res.demoMode || false;
+    } catch (error: any) {
+      const err: string = error?.toString?.() ?? '';
+      if (error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) {
+        showMessage(t('sys.api.apiTimeoutMessage'));
+      } else if (err.indexOf('Network Error') !== -1) {
+        showMessage(t('sys.api.networkExceptionMsg'));
+      } else if (error?.code === 'ERR_BAD_RESPONSE') {
+        showMessage(t('sys.api.apiRequestFailed'));
+      }
+      console.log(error);
     }
-    userStore.initPageCache(res);
-    refreshValidCodeStatus(res);
-    gp.value = res.demoMode || false;
   });
 
   async function handleLogin() {
