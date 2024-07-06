@@ -18,6 +18,7 @@
 		<module>cas</module>
         <module>cms</module>
 		<module>static</module>
+		<module>test</module>
     </modules>
 	
 	<developers>  
