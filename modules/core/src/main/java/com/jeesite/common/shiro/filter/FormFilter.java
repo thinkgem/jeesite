@@ -261,21 +261,19 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
 		// 是否在登录后生成新的Session（默认false）
 		if (Global.getPropertyToBoolean("shiro.isGenerateNewSessionAfterLogin", "false")){
-			String[] keys = new String[] {ValidCodeUtils.VALID_CODE};
-			Map<String, Object> map = MapUtils.newHashMap();
+			String[] keys = new String[] { ValidCodeUtils.VALID_CODE };
+			Map<String, Object> attrMap = MapUtils.newHashMap();
 			final Session sessionOld = UserUtils.getSession();
 			for (String key : keys) {
 				Object value = sessionOld.getAttribute(key);
 				if (value != null) {
-					map.put(key, value);
+					attrMap.put(key, value);
 				}
 			}
 			UserUtils.getSubject().logout();
 			// 恢复生成新的Session之前的Session数据
 			final Session sessionNew = UserUtils.getSession();
-			map.forEach((key, value) -> {
-				sessionNew.setAttribute(key, value);
-			});
+			attrMap.forEach(sessionNew::setAttribute);
 		}
 		return super.executeLogin(request, response);
 	}
@@ -300,15 +298,10 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		// 登录成功后初始化授权信息并处理登录后的操作
 		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), request);
-		// 跳转到登录成功页面
-		String successUrl = getSuccessUrl(); // shiro.successUrl in application.yml
-		if (StringUtils.contains((request).getRequestURI(), "/oauth2/callback/")) {
-			successUrl = Global.getConfig("oauth2.successUrl", successUrl);
-		} else if (StringUtils.contains((request).getRequestURI(), "/sso")) {
-			String ssoSuccessUrl = (String)request.getAttribute("__url");
-			if (StringUtils.isNotBlank(ssoSuccessUrl)) {
-				successUrl = ssoSuccessUrl;
-			}
+		// 跳转到登录成功页面，若未指定则获取默认 shiro.successUrl in application.yml
+		String successUrl = (String)request.getAttribute("__url");
+		if (StringUtils.isBlank(successUrl)) {
+			successUrl = getSuccessUrl();
 		}
 		ServletUtils.redirectUrl(request, (HttpServletResponse)response, successUrl);
 		return false;
