@@ -298,15 +298,10 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		// 登录成功后初始化授权信息并处理登录后的操作
 		authorizingRealm.onLoginSuccess(UserUtils.getLoginInfo(), request);
-		// 跳转到登录成功页面
-		String successUrl = getSuccessUrl(); // shiro.successUrl in application.yml
-		if (StringUtils.contains((request).getRequestURI(), "/oauth2/callback/")) {
-			successUrl = Global.getConfig("oauth2.successUrl", successUrl);
-		} else if (StringUtils.contains((request).getRequestURI(), "/sso")) {
-			String ssoSuccessUrl = (String)request.getAttribute("__url");
-			if (StringUtils.isNotBlank(ssoSuccessUrl)) {
-				successUrl = ssoSuccessUrl;
-			}
+		// 跳转到登录成功页面，若未指定则获取默认 shiro.successUrl in application.yml
+		String successUrl = (String)request.getAttribute("__url");
+		if (StringUtils.isBlank(successUrl)) {
+			successUrl = getSuccessUrl();
 		}
 		ServletUtils.redirectUrl(request, (HttpServletResponse)response, successUrl);
 		return false;
