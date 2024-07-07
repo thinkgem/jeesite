@@ -19,20 +19,20 @@
 		<module>../parent/javax</module>
 		<module>../eureka</module>
 		<module>../config</module>
-        <module>../nacos</module>
+		<module>../nacos</module>
 		<module>../gateway</module>
 		<module>../modules</module>
-        <module>../sentinel</module>
+		<module>../sentinel</module>
 		<module>../zipkin</module>
-    </modules>
+	</modules>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

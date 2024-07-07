@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
@@ -10,16 +10,16 @@
 		<!--<relativePath>../../jeesite/parent/pom.xml</relativePath>-->
 		<relativePath />
 	</parent>
-	
+
 	<artifactId>jeesite-cloud-parent</artifactId>
 	<packaging>pom</packaging>
-	
+
 	<name>JeeSite Cloud Parent</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
-	
+
 	<properties>
-		
+
 		<!-- Spring Cloud -->
 		<spring-cloud.version>2023.0.2</spring-cloud.version>
 		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
@@ -28,7 +28,7 @@
 		<xstream.version>1.4.20</xstream.version>
 
 	</properties>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -38,7 +38,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-            <dependency>
+			<dependency>
 				<groupId>com.alibaba.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
 				<version>${spring-cloud-alibaba.version}</version>
@@ -87,15 +87,15 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<dependencies>
-	
+
 		<!-- bootstrap.yml -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
-		
+
 		<!-- JeeSite Common -->
 		<dependency>
 			<groupId>com.jeesite</groupId>
@@ -109,24 +109,24 @@
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>${logstash-logback.version}</version>
 		</dependency>
-		
+
 	</dependencies>
-	
-	<developers>  
+
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
-	
+
 	<organization>
 		<name>JeeSite</name>
 		<url>http://jeesite.com</url>
 	</organization>
-	
+
 	<repositories>
 		<repository>
 			<id>aliyun-repos</id>
@@ -145,5 +145,5 @@
 			<url>https://maven.aliyun.com/repository/public</url>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 </project>

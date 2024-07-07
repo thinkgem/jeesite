@@ -7,7 +7,7 @@
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-cloud-parent</artifactId>
 		<version>5.8.0.springboot3-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>jeesite-cloud-parent-web</artifactId>
@@ -95,13 +95,13 @@
 		
 	</dependencies>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	
