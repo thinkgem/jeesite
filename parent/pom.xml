@@ -42,7 +42,7 @@
 		<jmimemagic.version>0.1.5</jmimemagic.version>
 		<zxing.version>3.5.3</zxing.version>
 
-		<poi.version>5.2.5</poi.version>
+		<poi.version>5.2.3</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 
 		<joda-time.version>2.12.7</joda-time.version>
