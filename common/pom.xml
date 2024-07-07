@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-text</artifactId>
-		    <version>${commons-text.version}</version>
+			<version>${commons-text.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -118,7 +118,7 @@
 			<artifactId>metadata-extractor</artifactId>
 			<version>${metadata-extractor.version}</version>
 		</dependency> -->
-		<!-- 缩略图工具  -->
+		<!-- 缩略图工具 -->
 		<dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
@@ -130,7 +130,7 @@
 			<artifactId>imageio-jpeg</artifactId>
 			<version>${twelvemonkeys.version}</version>
 		</dependency>
-		<!-- 图片验证码生成  -->
+		<!-- 图片验证码生成 -->
 		<dependency>
 			<groupId>com.bladejava</groupId>
 			<artifactId>blade-patchca</artifactId>
@@ -161,7 +161,7 @@
 			</exclusions>
 		</dependency>
 		
-		<!-- 条形码、二维码生成  -->
+		<!-- 条形码、二维码生成 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
@@ -256,13 +256,13 @@
 
 	</dependencies>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

@@ -73,16 +73,16 @@
 
 		<!-- 达梦数据库
 		<dependency>
-		  <groupId>com.dameng</groupId>
-		  <artifactId>Dm8JdbcDriver18</artifactId>
-		  <version>8.1.1.49</version>
+			<groupId>com.dameng</groupId>
+			<artifactId>Dm8JdbcDriver18</artifactId>
+			<version>8.1.1.49</version>
 		</dependency> -->
 
 		<!-- 人大金仓数据库
 		<dependency>
-		  <groupId>com.kingbase</groupId>
-		  <artifactId>kingbasejdbc8</artifactId>
-		  <version>8.6.0</version>
+			<groupId>com.kingbase</groupId>
+			<artifactId>kingbasejdbc8</artifactId>
+			<version>8.6.0</version>
 		</dependency> -->
 
 		<!-- Web Server -->
@@ -122,13 +122,13 @@
 		
 	</dependencies>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	
