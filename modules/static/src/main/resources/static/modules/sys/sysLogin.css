@@ -11,12 +11,12 @@
 .login-page .login-box-body {width:360px;margin:auto;padding:28px;background:#fff;box-shadow:0 0 8px #999;border-radius:10px;}
 .login-page .login-box-body .nav-tabs {margin-bottom:25px;}
 .login-page .login-box-body .form-control-feedback {cursor:pointer;pointer-events:auto;}
-.login-page .form-group {margin-top:5px;margin-bottom:23px;}
+.login-page .form-group {margin-top:5px;margin-bottom:20px;}
 .login-page .has-feedback .form-control {height:34px;padding:4px 10px;padding-right:20px;}
 .login-page .input-group-btn .btn {height:34px;background:#efefef;}
 .login-page .strength .strength_meter {height:34px}
 .login-page .strength .strength_meter div {height:32px}
-.login-page .btn {padding:5px 10px 4px 10px;font-size:15px;}
+.login-page .btn {padding:6px 10px 5px 10px;font-size:15px;letter-spacing:1px;}
 .login-page .select2-container .select2-selection--single {padding:6px 12px;height:34px;}
 .login-page .select2-container--default.select2-container--focus .select2-selection--single {border-color:#3c8dbc;}
 .login-page .select2-container .select2-selection--single .select2-selection__rendered {margin-top:-4px;}
