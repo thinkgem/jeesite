@@ -13,22 +13,22 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-        <module>../parent</module>
-        <module>../common</module>
-        <module>../modules</module>
-        <module>../web</module>
-        <module>../web-api</module>
-        <module>../web-fast</module>
-        <module>../web-mini</module>
-    </modules>
+		<module>../parent</module>
+		<module>../common</module>
+		<module>../modules</module>
+		<module>../web</module>
+		<module>../web-api</module>
+		<module>../web-fast</module>
+		<module>../web-mini</module>
+	</modules>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

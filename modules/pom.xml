@@ -16,18 +16,18 @@
 		<module>core</module>
 		<module>app</module>
 		<module>cas</module>
-        <module>cms</module>
+		<module>cms</module>
 		<module>static</module>
 		<module>test</module>
-    </modules>
+	</modules>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	
