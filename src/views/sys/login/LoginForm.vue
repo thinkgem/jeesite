@@ -44,12 +44,17 @@
       </Input>
     </FormItem>
 
-    <div class="gp" v-if="gp">
-      Tip：发送 <a href="https://gitee.com/thinkgem/jeesite5" target="_blank">JeeSite</a> 和
-      <a href="https://gitee.com/thinkgem/jeesite-vue" target="_blank">JeeSite Vue</a> 仓库 Star
-      截图到邮箱：<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <span @click="selectText('st')" id="st">jeesite_demo@163.com</span>
-      免费 获取账号密码。
+    <div class="gp" v-if="demoMode">
+      💡提示：当前您连接的后端服务，可能是
+      <a href="https://vue.jeesite.com" target="_blank">vue.jeesite.com</a><br />
+      &nbsp; &nbsp; 的演示服务器，请进入文档：《
+      <a
+        href="https://jeesite.com/docs/vue-install-deploy/#%E9%85%8D%E7%BD%AE%E5%90%8E%E7%AB%AF%E6%8E%A5%E5%8F%A3"
+        target="_blank"
+      >
+        配置服务端接口
+      </a>
+      》
     </div>
 
     <ARow class="enter-x">
@@ -100,9 +105,10 @@
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="enter-x flex justify-evenly" :class="`${prefixCls}-sign-in-way`">
-      <Icon icon="i-ant-design:qq-circle-filled" size="32" @click="handleOauth2" />
-      <Icon icon="i-ant-design:wechat-filled" size="32" @click="handleOauth2" />
-      <Icon icon="i-ant-design:github-filled" size="32" @click="handleOauth2" />
+      <Icon icon="i-simple-icons:gitee" color="#d81e06" size="28" @click="handleOauth2" />
+      <Icon icon="i-ant-design:qq-circle-filled" color="#2178e3" size="32" @click="handleOauth2" />
+      <Icon icon="i-ant-design:wechat-filled" color="#2eb60d" size="32" @click="handleOauth2" />
+      <Icon icon="i-ant-design:github-filled" color="#2c2c2c" size="32" @click="handleOauth2" />
       <a href="https://gitee.com/thinkgem/jeesite-client" target="_blank">
         <Icon icon="i-ant-design:windows-filled" size="32" style="vertical-align: middle" />
         <span class="pl-1" style="vertical-align: middle"> {{ t('客户端下载') }}</span>
@@ -144,7 +150,7 @@
   const loading = ref(false);
   const rememberMe = ref(false);
   const isValidCodeLogin = ref(false);
-  const gp = ref(false);
+  const demoMode = ref(false);
 
   const formData = reactive({
     account: 'system',
@@ -184,7 +190,7 @@
       }
       userStore.initPageCache(res);
       refreshValidCodeStatus(res);
-      gp.value = res.demoMode || false;
+      demoMode.value = res.demoMode || false;
     } catch (error: any) {
       const err: string = error?.toString?.() ?? '';
       if (error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) {
@@ -234,19 +240,8 @@
     }
   }
 
-  function selectText(id: string) {
-    const text = document.getElementById(id);
-    const selection = window.getSelection();
-    const range = document.createRange();
-    if (text && selection) {
-      range.selectNodeContents(text);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  }
-
   function handleOauth2(event: Event) {
-    showMessage('未开放第三方登录，看 OAuth2 演示，请访问 demo.jeesite.com ');
+    window.location.href = 'https://vue.jeesite.com/js/oauth2/login/gitee?state=vue';
     event.preventDefault();
   }
 </script>
