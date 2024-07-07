@@ -23,8 +23,8 @@
 		<start-class>com.jeesite.modules.Test3Application</start-class>
 		
 		<!-- docker setting -->
-        <docker.run.port>8985:8985</docker.run.port>
-        
+		<docker.run.port>8985:8985</docker.run.port>
+
 	</properties>
 
 	<dependencies>
@@ -101,13 +101,13 @@
 		</plugins>
 	</build>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

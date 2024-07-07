@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.CoreApplication</start-class>
 		
 		<!-- docker setting -->
-        <docker.run.port>8980:8980</docker.run.port>
+		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 
@@ -100,13 +100,13 @@
 		</plugins>
 	</build>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	
