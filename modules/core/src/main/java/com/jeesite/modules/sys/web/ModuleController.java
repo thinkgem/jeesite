@@ -28,7 +28,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -83,6 +86,21 @@ public class ModuleController extends BaseController {
 		module.setPage(new Page<>(request, response));
 		Page<Module> page = moduleService.findPage(module); 
 		return page;
+	}
+
+	/**
+	 * 仅用来测试使用
+	 */
+	@RequiresPermissions("sys:module:view")
+	@RequestMapping(value = "selectData")
+	@ResponseBody
+	public List<Map<String, Object>> selectData(Module module) {
+		return moduleService.findList(module).stream().map(m -> {
+			Map<String, Object> map = new HashMap<>();
+			map.put("label", m.getModuleName());
+			map.put("value", m.getModuleCode());
+			return map;
+		}).collect(Collectors.toList());
 	}
 
 	/**
