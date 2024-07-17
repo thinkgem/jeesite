@@ -11,286 +11,284 @@
     var isIE = !!window.ActiveXObject;
     //定义utils工具
     var utils = {
-            removeLastbs : function(url){
-                return url.replace(/\/$/,'')
-            },
-            extend : function(t,s){
-                var a = arguments,
-                    notCover = this.isBoolean(a[a.length - 1]) ? a[a.length - 1] : false,
-                    len = this.isBoolean(a[a.length - 1]) ? a.length - 1 : a.length;
-                for (var i = 1; i < len; i++) {
-                    var x = a[i];
-                    for (var k in x) {
-                        if (!notCover || !t.hasOwnProperty(k)) {
-                            t[k] = x[k];
+        removeLastbs : function(url){
+            return url.replace(/\/$/,'');
+        },
+        extend : function(t,s){
+            var a = arguments,
+                notCover = this.isBoolean(a[a.length - 1]) ? a[a.length - 1] : false,
+                len = this.isBoolean(a[a.length - 1]) ? a.length - 1 : a.length;
+            for (var i = 1; i < len; i++) {
+                var x = a[i];
+                for (var k in x) {
+                    if (!notCover || !t.hasOwnProperty(k)) {
+                        t[k] = x[k];
+                    }
+                }
+            }
+            return t;
+        },
+        isIE : isIE,
+        cssRule : isIE ? function(key,style,doc){
+            var indexList,index;
+            doc = doc || document;
+            if(doc.indexList){
+                indexList = doc.indexList;
+            }else{
+                indexList = doc.indexList =  {};
+            }
+            var sheetStyle;
+            if(!indexList[key]){
+                if(style === undefined){
+                    return '';
+                }
+                sheetStyle = doc.createStyleSheet('',index = doc.styleSheets.length);
+                indexList[key] = index;
+            }else{
+                sheetStyle = doc.styleSheets[indexList[key]];
+            }
+            if(style === undefined){
+                return sheetStyle.cssText;
+            }
+            sheetStyle.cssText = sheetStyle.cssText + '\n' + (style || '');
+        } : function(key,style,doc){
+            doc = doc || document;
+            var head = doc.getElementsByTagName('head')[0],node;
+            if(!(node = doc.getElementById(key))){
+                if(style === undefined){
+                    return ''
+                }
+                node = doc.createElement('style');
+                node.id = key;
+                head.appendChild(node)
+            }
+            if(style === undefined){
+                return node.innerHTML
+            }
+            if(style !== ''){
+                node.innerHTML = node.innerHTML + '\n' + style;
+            }else{
+                head.removeChild(node)
+            }
+        },
+        domReady : function (onready) {
+            var doc = window.document;
+            if (doc.readyState === "complete") {
+                onready();
+            }else{
+                if (isIE) {
+                    (function () {
+                        if (doc.isReady) return;
+                        try {
+                            doc.documentElement.doScroll("left");
+                        } catch (error) {
+                            setTimeout(arguments.callee, 0);
+                            return;
                         }
-                    }
+                        onready();
+                    })();
+                    window.attachEvent('onload', function(){
+                        onready()
+                    });
+                } else {
+                    doc.addEventListener("DOMContentLoaded", function () {
+                        doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
+                        onready();
+                    }, false);
+                    window.addEventListener('load', function(){onready()}, false);
                 }
-                return t;
-            },
-            isIE : isIE,
-            cssRule : isIE ? function(key,style,doc){
-                var indexList,index;
-                doc = doc || document;
-                if(doc.indexList){
-                    indexList = doc.indexList;
-                }else{
-                    indexList = doc.indexList =  {};
-                }
-                var sheetStyle;
-                if(!indexList[key]){
-                    if(style === undefined){
-                        return ''
-                    }
-                    sheetStyle = doc.createStyleSheet('',index = doc.styleSheets.length);
-                    indexList[key] = index;
-                }else{
-                    sheetStyle = doc.styleSheets[indexList[key]];
-                }
-                if(style === undefined){
-                    return sheetStyle.cssText
-                }
-                sheetStyle.cssText = sheetStyle.cssText + '\n' + (style || '')
-            } : function(key,style,doc){
-                doc = doc || document;
-                var head = doc.getElementsByTagName('head')[0],node;
-                if(!(node = doc.getElementById(key))){
-                    if(style === undefined){
-                        return ''
-                    }
-                    node = doc.createElement('style');
-                    node.id = key;
-                    head.appendChild(node)
-                }
-                if(style === undefined){
-                    return node.innerHTML
-                }
-                if(style !== ''){
-                    node.innerHTML = node.innerHTML + '\n' + style;
-                }else{
-                    head.removeChild(node)
-                }
-            },
-            domReady : function (onready) {
-                var doc = window.document;
-                if (doc.readyState === "complete") {
-                    onready();
-                }else{
-                    if (isIE) {
-                        (function () {
-                            if (doc.isReady) return;
-                            try {
-                                doc.documentElement.doScroll("left");
-                            } catch (error) {
-                                setTimeout(arguments.callee, 0);
-                                return;
-                            }
-                            onready();
-                        })();
-                        window.attachEvent('onload', function(){
-                            onready()
-                        });
-                    } else {
-                        doc.addEventListener("DOMContentLoaded", function () {
-                            doc.removeEventListener("DOMContentLoaded", arguments.callee, false);
-                            onready();
-                        }, false);
-                        window.addEventListener('load', function(){onready()}, false);
-                    }
-                }
+            }
 
-            },
-            each : function(obj, iterator, context) {
-                if (obj == null) return;
-                if (obj.length === +obj.length) {
-                    for (var i = 0, l = obj.length; i < l; i++) {
-                        if(iterator.call(context, obj[i], i, obj) === false)
+        },
+        each : function(obj, iterator, context) {
+            if (obj == null) return;
+            if (obj.length === +obj.length) {
+                for (var i = 0, l = obj.length; i < l; i++) {
+                    if(iterator.call(context, obj[i], i, obj) === false)
+                        return false;
+                }
+            } else {
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        if(iterator.call(context, obj[key], key, obj) === false)
                             return false;
                     }
+                }
+            }
+        },
+        inArray : function(arr,item){
+            var index = -1;
+            this.each(arr,function(v,i){
+                if(v === item){
+                    index = i;
+                    return false;
+                }
+            });
+            return index;
+        },
+        pushItem : function(arr,item){
+            if(this.inArray(arr,item)==-1){
+                arr.push(item)
+            }
+        },
+        trim: function (str) {
+            return str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, '');
+        },
+        indexOf: function (array, item, start) {
+            var index = -1;
+            start = this.isNumber(start) ? start : 0;
+            this.each(array, function (v, i) {
+                if (i >= start && v === item) {
+                    index = i;
+                    return false;
+                }
+            });
+            return index;
+        },
+        hasClass: function (element, className) {
+            className = className.replace(/(^[ ]+)|([ ]+$)/g, '').replace(/[ ]{2,}/g, ' ').split(' ');
+            for (var i = 0, ci, cls = element.className; ci = className[i++];) {
+                if (!new RegExp('\\b' + ci + '\\b', 'i').test(cls)) {
+                    return false;
+                }
+            }
+            return i - 1 == className.length;
+        },
+        addClass:function (elm, classNames) {
+            if(!elm)return;
+            classNames = this.trim(classNames).replace(/[ ]{2,}/g,' ').split(' ');
+            for(var i = 0,ci,cls = elm.className;ci=classNames[i++];){
+                if(!new RegExp('\\b' + ci + '\\b').test(cls)){
+                    cls += ' ' + ci;
+                }
+            }
+            elm.className = utils.trim(cls);
+        },
+        removeClass:function (elm, classNames) {
+            classNames = this.isArray(classNames) ? classNames :
+                this.trim(classNames).replace(/[ ]{2,}/g,' ').split(' ');
+            for(var i = 0,ci,cls = elm.className;ci=classNames[i++];){
+                cls = cls.replace(new RegExp('\\b' + ci + '\\b'),'');
+            }
+            cls = this.trim(cls).replace(/[ ]{2,}/g,' ');
+            elm.className = cls;
+            !cls && elm.removeAttribute('className');
+        },
+        on: function (element, type, handler) {
+            var types = this.isArray(type) ? type : type.split(/\s+/),
+                k = types.length;
+            if (k) while (k--) {
+                type = types[k];
+                if (element.addEventListener) {
+                    element.addEventListener(type, handler, false);
                 } else {
-                    for (var key in obj) {
-                        if (obj.hasOwnProperty(key)) {
-                            if(iterator.call(context, obj[key], key, obj) === false)
-                                return false;
+                    if (!handler._d) {
+                        handler._d = {
+                            els : []
+                        };
+                    }
+                    var key = type + handler.toString(),index = utils.indexOf(handler._d.els,element);
+                    if (!handler._d[key] || index == -1) {
+                        if(index == -1){
+                            handler._d.els.push(element);
                         }
-                    }
-                }
-            },
-            inArray : function(arr,item){
-                var index = -1;
-                this.each(arr,function(v,i){
-                    if(v === item){
-                        index = i;
-                        return false;
-                    }
-                });
-                return index;
-            },
-            pushItem : function(arr,item){
-                if(this.inArray(arr,item)==-1){
-                    arr.push(item)
-                }
-            },
-            trim: function (str) {
-                return str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, '');
-            },
-            indexOf: function (array, item, start) {
-                var index = -1;
-                start = this.isNumber(start) ? start : 0;
-                this.each(array, function (v, i) {
-                    if (i >= start && v === item) {
-                        index = i;
-                        return false;
-                    }
-                });
-                return index;
-            },
-            hasClass: function (element, className) {
-                className = className.replace(/(^[ ]+)|([ ]+$)/g, '').replace(/[ ]{2,}/g, ' ').split(' ');
-                for (var i = 0, ci, cls = element.className; ci = className[i++];) {
-                    if (!new RegExp('\\b' + ci + '\\b', 'i').test(cls)) {
-                        return false;
-                    }
-                }
-                return i - 1 == className.length;
-            },
-            addClass:function (elm, classNames) {
-                if(!elm)return;
-                classNames = this.trim(classNames).replace(/[ ]{2,}/g,' ').split(' ');
-                for(var i = 0,ci,cls = elm.className;ci=classNames[i++];){
-                    if(!new RegExp('\\b' + ci + '\\b').test(cls)){
-                        cls += ' ' + ci;
-                    }
-                }
-                elm.className = utils.trim(cls);
-            },
-            removeClass:function (elm, classNames) {
-                classNames = this.isArray(classNames) ? classNames :
-                    this.trim(classNames).replace(/[ ]{2,}/g,' ').split(' ');
-                for(var i = 0,ci,cls = elm.className;ci=classNames[i++];){
-                    cls = cls.replace(new RegExp('\\b' + ci + '\\b'),'')
-                }
-                cls = this.trim(cls).replace(/[ ]{2,}/g,' ');
-                elm.className = cls;
-                !cls && elm.removeAttribute('className');
-            },
-            on: function (element, type, handler) {
-                var types = this.isArray(type) ? type : type.split(/\s+/),
-                    k = types.length;
-                if (k) while (k--) {
-                    type = types[k];
-                    if (element.addEventListener) {
-                        element.addEventListener(type, handler, false);
-                    } else {
-                        if (!handler._d) {
-                            handler._d = {
-                                els : []
+                        if(!handler._d[key]){
+                            handler._d[key] = function (evt) {
+                                return handler.call(evt.srcElement, evt || window.event);
                             };
                         }
-                        var key = type + handler.toString(),index = utils.indexOf(handler._d.els,element);
-                        if (!handler._d[key] || index == -1) {
-                            if(index == -1){
-                                handler._d.els.push(element);
-                            }
-                            if(!handler._d[key]){
-                                handler._d[key] = function (evt) {
-                                    return handler.call(evt.srcElement, evt || window.event);
-                                };
-                            }
-
-
-                            element.attachEvent('on' + type, handler._d[key]);
-                        }
+                        element.attachEvent('on' + type, handler._d[key]);
                     }
                 }
-                element = null;
-            },
-            off: function (element, type, handler) {
-                var types = this.isArray(type) ? type : type.split(/\s+/),
-                    k = types.length;
-                if (k) while (k--) {
-                    type = types[k];
-                    if (element.removeEventListener) {
-                        element.removeEventListener(type, handler, false);
-                    } else {
-                        var key = type + handler.toString();
-                        try{
-                            element.detachEvent('on' + type, handler._d ? handler._d[key] : handler);
-                        }catch(e){}
-                        if (handler._d && handler._d[key]) {
-                            var index = utils.indexOf(handler._d.els,element);
-                            if(index!=-1){
-                                handler._d.els.splice(index,1);
-                            }
-                            handler._d.els.length == 0 && delete handler._d[key];
-                        }
-                    }
-                }
-            },
-            loadFile : function () {
-                var tmpList = [];
-                function getItem(doc,obj){
+            }
+            element = null;
+        },
+        off: function (element, type, handler) {
+            var types = this.isArray(type) ? type : type.split(/\s+/),
+                k = types.length;
+            if (k) while (k--) {
+                type = types[k];
+                if (element.removeEventListener) {
+                    element.removeEventListener(type, handler, false);
+                } else {
+                    var key = type + handler.toString();
                     try{
-                        for(var i= 0,ci;ci=tmpList[i++];){
-                            if(ci.doc === doc && ci.url == (obj.src || obj.href)){
-                                return ci;
-                            }
+                        element.detachEvent('on' + type, handler._d ? handler._d[key] : handler);
+                    }catch(e){}
+                    if (handler._d && handler._d[key]) {
+                        var index = utils.indexOf(handler._d.els,element);
+                        if(index!=-1){
+                            handler._d.els.splice(index,1);
                         }
-                    }catch(e){
-                        return null;
+                        handler._d.els.length == 0 && delete handler._d[key];
                     }
+                }
+            }
+        },
+        loadFile : function () {
+            var tmpList = [];
+            function getItem(doc,obj){
+                try{
+                    for(var i= 0,ci;ci=tmpList[i++];){
+                        if(ci.doc === doc && ci.url == (obj.src || obj.href)){
+                            return ci;
+                        }
+                    }
+                }catch(e){
+                    return null;
+                }
 
+            }
+            return function (doc, obj, fn) {
+                var item = getItem(doc,obj);
+                if (item) {
+                    if(item.ready){
+                        fn && fn();
+                    }else{
+                        item.funs.push(fn);
+                    }
+                    return;
                 }
-                return function (doc, obj, fn) {
-                    var item = getItem(doc,obj);
-                    if (item) {
-                        if(item.ready){
-                            fn && fn();
-                        }else{
-                            item.funs.push(fn)
-                        }
-                        return;
+                tmpList.push({
+                    doc:doc,
+                    url:obj.src||obj.href,
+                    funs:[fn]
+                });
+                if (!doc.body) {
+                    var html = [];
+                    for(var p in obj){
+                        if(p == 'tag')continue;
+                        html.push(p + '="' + obj[p] + '"');
                     }
-                    tmpList.push({
-                        doc:doc,
-                        url:obj.src||obj.href,
-                        funs:[fn]
-                    });
-                    if (!doc.body) {
-                        var html = [];
-                        for(var p in obj){
-                            if(p == 'tag')continue;
-                            html.push(p + '="' + obj[p] + '"')
-                        }
-                        doc.write('<' + obj.tag + ' ' + html.join(' ') + ' ></'+obj.tag+'>');
-                        return;
-                    }
-                    if (obj.id && doc.getElementById(obj.id)) {
-                        return;
-                    }
-                    var element = doc.createElement(obj.tag);
-                    delete obj.tag;
-                    for (var p in obj) {
-                        element.setAttribute(p, obj[p]);
-                    }
-                    element.onload = element.onreadystatechange = function () {
-                        if (!this.readyState || /loaded|complete/.test(this.readyState)) {
-                            item = getItem(doc,obj);
-                            if (item.funs.length > 0) {
-                                item.ready = 1;
-                                for (var fi; fi = item.funs.pop();) {
-                                    fi();
-                                }
+                    doc.write('<' + obj.tag + ' ' + html.join(' ') + ' ></'+obj.tag+'>');
+                    return;
+                }
+                if (obj.id && doc.getElementById(obj.id)) {
+                    return;
+                }
+                var element = doc.createElement(obj.tag);
+                delete obj.tag;
+                for (var p in obj) {
+                    element.setAttribute(p, obj[p]);
+                }
+                element.onload = element.onreadystatechange = function () {
+                    if (!this.readyState || /loaded|complete/.test(this.readyState)) {
+                        item = getItem(doc,obj);
+                        if (item.funs.length > 0) {
+                            item.ready = 1;
+                            for (var fi; fi = item.funs.pop();) {
+                                fi();
                             }
-                            element.onload = element.onreadystatechange = null;
                         }
-                    };
-                    element.onerror = function(){
-                        throw Error('The load '+(obj.href||obj.src)+' fails,check the url')
-                    };
-                    doc.getElementsByTagName("head")[0].appendChild(element);
-                }
-            }()
+                        element.onload = element.onreadystatechange = null;
+                    }
+                };
+                element.onerror = function(){
+                    throw Error('The load '+(obj.href||obj.src)+' fails,check the url');
+                };
+                doc.getElementsByTagName("head")[0].appendChild(element);
+            }
+        }()
     };
     utils.each(['String', 'Function', 'Array', 'Number', 'RegExp', 'Object','Boolean'], function (v) {
         utils['is' + v] = function (obj) {
@@ -312,10 +310,10 @@
         utils.domReady(function(){
             var contents;
             if(document.querySelectorAll){
-                contents = document.querySelectorAll(selector)
+                contents = document.querySelectorAll(selector);
             }else{
                 if(/^#/.test(selector)){
-                    contents = [document.getElementById(selector.replace(/^#/,''))]
+                    contents = [document.getElementById(selector.replace(/^#/,''))];
                 }else if(/^\./.test(selector)){
                     var contents = [];
                     utils.each(document.getElementsByTagName('*'),function(node){
@@ -400,7 +398,6 @@ UE.parse.register('table', function (utils) {
                 selector + ' td p{margin:0;padding:0;}',
             document);
         //填充空的单元格
-
         utils.each('td th caption'.split(' '), function (tag) {
             var cells = root.getElementsByTagName(tag);
             cells.length && utils.each(cells, function (node) {
@@ -550,18 +547,13 @@ UE.parse.register('charts',function( utils ){
     }
 
     if ( sources = parseSources() ) {
-
         loadResources();
-
     }
 
-
     function parseSources () {
-
         if ( !containers ) {
             return null;
         }
-
         return extractChartData( containers );
 
     }
@@ -570,22 +562,14 @@ UE.parse.register('charts',function( utils ){
      * 提取数据
      */
     function extractChartData ( rootNode ) {
-
         var data = [],
             tables = rootNode.getElementsByTagName( "table" );
-
         for ( var i = 0, tableNode; tableNode = tables[ i ]; i++ ) {
-
             if ( tableNode.getAttribute( "data-chart" ) !== null ) {
-
                 data.push( formatData( tableNode ) );
-
             }
-
         }
-
         return data.length ? data : null;
-
     }
 
     function formatData ( tableNode ) {
@@ -596,130 +580,90 @@ UE.parse.register('charts',function( utils ){
 
         //提取table数据
         for ( var i = 0, row; row = tableNode.rows[ i ]; i++ ) {
-
             var rowData = [];
-
             for ( var j = 0, cell; cell = row.cells[ j ]; j++ ) {
-
                 var value = ( cell.innerText || cell.textContent || '' );
                 rowData.push( cell.tagName == 'TH' ? value:(value | 0) );
-
             }
-
             data.push( rowData );
-
         }
 
         //解析元信息
         meta = meta.split( ";" );
         for ( var i = 0, metaData; metaData = meta[ i ]; i++ ) {
-
             metaData = metaData.split( ":" );
             metaConfig[ metaData[ 0 ] ] = metaData[ 1 ];
-
         }
-
 
         return {
             table: tableNode,
             meta: metaConfig,
             data: data
         };
-
     }
 
     //加载资源
     function loadResources () {
-
 //        loadJQuery();
         loadHighcharts();
-
     }
 
 //    function loadJQuery () {
 //
 //        //不存在jquery， 则加载jquery
 //        if ( !window.jQuery ) {
-//
 //            utils.loadFile(document,{
 //                src : resourceRoot + "/third-party/jquery.min.js",
 //                tag : "script",
 //                type : "text/javascript",
 //                defer : "defer"
 //            },function(){
-//
 //                loadHighcharts();
-//
 //            });
-//
 //        } else {
-//
 //            loadHighcharts();
-//
 //        }
-//
 //    }
 
     function loadHighcharts () {
-
         //不存在Highcharts， 则加载Highcharts
         if ( !window.Highcharts ) {
-
             utils.loadFile(document,{
                 src : resourceRoot + "/third-party/highcharts/highcharts.js",
                 tag : "script",
                 type : "text/javascript",
                 defer : "defer"
             },function(){
-
                 loadTypeConfig();
-
             });
-
         } else {
-
             loadTypeConfig();
-
         }
-
     }
 
     //加载图表差异化配置文件
     function loadTypeConfig () {
-
         utils.loadFile(document,{
             src : resourceRoot + "/dialogs/charts/chart.config.js",
             tag : "script",
             type : "text/javascript",
             defer : "defer"
         },function(){
-
             render();
-
         });
-
     }
 
     //渲染图表
     function render () {
-
         var config = null,
             chartConfig = null,
             container = null;
-
         for ( var i = 0, len = sources.length; i < len; i++ ) {
-
             config = sources[ i ];
-
             chartConfig = analysisConfig( config );
-
             container = createContainer( config.table );
-
             renderChart( container, typeConfig[ config.meta.chartType ], chartConfig );
-
         }
-
-
     }
 
     /**
@@ -729,10 +673,7 @@ UE.parse.register('charts',function( utils ){
      * @param config 图表通用配置
      * */
     function renderChart ( container, typeConfig, config ) {
-
-
         $( container ).highcharts( $.extend( {}, typeConfig, {
-
             credits: {
                 enabled: false
             },
@@ -774,9 +715,7 @@ UE.parse.register('charts',function( utils ){
                 borderWidth: 1
             },
             series: config.series
-
         } ));
-
     }
 
     /**
@@ -808,21 +747,14 @@ UE.parse.register('charts',function( utils ){
         if ( meta.dataFormat != "1" ) {
 
             for ( var i = 0, len = data.length; i < len ; i++ ) {
-
                 for ( var j = 0, jlen = data[ i ].length; j < jlen; j++ ) {
-
                     if ( !result[ j ] ) {
                         result[ j ] = [];
                     }
-
                     result[ j ][ i ] = data[ i ][ j ];
-
                 }
-
             }
-
             data = result;
-
         }
 
         result = {};
@@ -850,11 +782,8 @@ UE.parse.register('charts',function( utils ){
         } else {
 
             var curData = [];
-
             for ( var i = 1, len = data[ 0 ].length; i < len; i++ ) {
-
                 curData.push( [ data[ 0 ][ i ], data[ 1 ][ i ] | 0 ] );
-
             }
 
             //饼图
@@ -867,11 +796,8 @@ UE.parse.register('charts',function( utils ){
             result.series = series;
             result.title = meta.title;
             result.suffix = meta.suffix;
-
         }
-
         return result;
-
     }
 
 });
@@ -985,45 +911,34 @@ UE.parse.register('list',function(utils){
 
 
 });
-UE.parse.register('vedio',function(utils){
+UE.parse.register('video',function(utils){
     var video = this.root.getElementsByTagName('video'),
         audio = this.root.getElementsByTagName('audio');
-
-    document.createElement('video');document.createElement('audio');
-    if(video.length || audio.length){
-//        var sourcePath = utils.removeLastbs(this.rootPath),
-//            jsurl = sourcePath + '/third-party/video-js/video.js',
-//            cssurl = sourcePath + '/third-party/video-js/video-js.min.css',
-//            swfUrl = sourcePath + '/third-party/video-js/video-js.swf';
-//
-//        if(window.videojs) {
-//            videojs.autoSetup();
-//        } else {
-//            utils.loadFile(document,{
-//                id : "video_css",
-//                tag : "link",
-//                rel : "stylesheet",
-//                type : "text/css",
-//                href : cssurl
-//            });
-//            utils.loadFile(document,{
-//                id : "video_js",
-//                src : jsurl,
-//                tag : "script",
-//                type : "text/javascript"
-//            },function(){
-//                videojs.options.flash.swf = swfUrl;
-//                videojs.autoSetup();
-//            });
-//        }
-    	var ctxStatic = utils.removeLastbs(this.ctxStatic);
+    if(video && video.length || audio && audio.length){
+    	var ctxStatic = utils.removeLastbs(this.rootPath) + '/../..';
         utils.loadFile(document,{
-            id : "ckplayer_js",
-            src : ctxStatic + "/ckplayer/6.7/ckplayer.js",
-            tag : "script",
-            type : "text/javascript"
+            id : "ckplayer_css", tag : "link", rel : "stylesheet", type : "text/css",
+            href : ctxStatic + "/ckplayer/css/ckplayer.css",
+        });
+        utils.loadFile(document,{
+            id : "ckplayer_js", tag : "script", type : "text/javascript",
+            src : ctxStatic + "/ckplayer/js/ckplayer.min.js"
         },function(){
-        	CKobject.init(ctxStatic + "/ckplayer/6.7/");
+            var ckplayerInit = function(idx) {
+                var $this = $(this), src = $this.attr('src');
+                $this.attr('id', 'video_element'+idx);
+                if ($('#video_container'+idx).length <= 0){
+                    $('#video_element'+idx).before('<div id="video_container'+idx+'" style="width:'
+                        +$this.attr('width')+'px;height:'+$this.attr('height')
+                        +'px;display:inline-block"></div>').remove();
+                }
+                new ckplayer({
+                    container: '#video_container'+idx, video: src,
+                    menu: [{ title:'JeeSite', link:'https://jeesite.com' }]
+                })
+            }
+            $.each(video, ckplayerInit);
+            $.each(audio, ckplayerInit);
         });
     }
 });
