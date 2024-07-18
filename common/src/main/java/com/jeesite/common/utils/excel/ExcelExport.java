@@ -59,7 +59,7 @@ public class ExcelExport implements Closeable{
 	/**
 	 * 当前行号
 	 */
-	private int rownum;
+	private int rowNum;
 	
 	/**
 	 * 注解列表（Object[]{ ExcelField, Field/Method }）
@@ -157,6 +157,16 @@ public class ExcelExport implements Closeable{
 			this.wb = createWorkbook();
 		}
 		this.createSheet(sheetName, title, headerList, headerWidthList);
+	}
+
+	/**
+	 * 构造函数
+	 */
+	public ExcelExport(ExcelImport excelImport) {
+		this.wb = excelImport.getWorkbook();
+		this.styles = createStyles(wb);
+		this.sheet = excelImport.getSheet();
+		this.rowNum = excelImport.getHeaderNum();
 	}
 	
 	/**
@@ -286,12 +296,12 @@ public class ExcelExport implements Closeable{
 	 * @param headerWidthList 表头字段宽度设置
 	 */
 	public void createSheet(String sheetName, String title, List<String> headerList, List<Integer> headerWidthList) {
-		this.sheet = wb.createSheet(StringUtils.defaultString(sheetName, StringUtils.defaultString(title, "Sheet1")));
+		this.sheet = wb.createSheet(StringUtils.defaultIfBlank(sheetName, StringUtils.defaultIfBlank(title, "Sheet1")));
 		this.styles = createStyles(wb);
-		this.rownum = 0;
+		this.rowNum = 0;
 		// Create title
 		if (StringUtils.isNotBlank(title)){
-			Row titleRow = sheet.createRow(rownum++);
+			Row titleRow = sheet.createRow(rowNum++);
 			titleRow.setHeightInPoints(30);
 			Cell titleCell = titleRow.createCell(0);
 			titleCell.setCellStyle(styles.get("title"));
@@ -303,7 +313,7 @@ public class ExcelExport implements Closeable{
 		if (headerList == null){
 			throw new ExcelException("headerList not null!");
 		}
-		Row headerRow = sheet.createRow(rownum++);
+		Row headerRow = sheet.createRow(rowNum++);
 		headerRow.setHeightInPoints(16);
 		for (int i = 0; i < headerList.size(); i++) {
 			Cell cell = headerRow.createCell(i);
@@ -412,7 +422,7 @@ public class ExcelExport implements Closeable{
 	 * @return 行对象
 	 */
 	public Row addRow(){
-		return sheet.createRow(rownum++);
+		return sheet.createRow(rowNum++);
 	}
 
 	/**
@@ -633,54 +643,5 @@ public class ExcelExport implements Closeable{
 			e.printStackTrace();
 		}
 	}
-	
-//	/**
-//	 * 导出测试
-//	 */
-//	public static void main(String[] args) throws Throwable {
-//		
-//		// 初始化表头
-//		List<String> headerList = ListUtils.newArrayList();
-//		for (int i = 1; i <= 10; i++) {
-//			headerList.add("表头"+i);
-//		}
-//
-//		// 初始化数据集
-//		List<String> rowList = ListUtils.newArrayList();
-//		for (int i = 1; i <= headerList.size(); i++) {
-//			rowList.add("数据"+i);
-//		}
-//		List<List<String>> dataList = ListUtils.newArrayList();
-//		for (int i = 1; i <=100; i++) {
-//			dataList.add(rowList);
-//		}
-//		
-//		// 创建一个Sheet表，并导入数据
-//		try(ExcelExport ee = new ExcelExport("表格1", "表格标题1", headerList, null)){
-//			
-//			for (int i = 0; i < dataList.size(); i++) {
-//				Row row = ee.addRow();
-//				for (int j = 0; j < dataList.get(i).size(); j++) {
-//					ee.addCell(row, j, dataList.get(i).get(j));
-//				}
-//			}
-//			
-//			// 再创建一个Sheet表，并导入数据
-//			ee.createSheet("表格2", "表格标题2", headerList, null);
-//			for (int i = 0; i < dataList.size(); i++) {
-//				Row row = ee.addRow();
-//				for (int j = 0; j < dataList.get(i).size(); j++) {
-//					ee.addCell(row, j, dataList.get(i).get(j)+"2");
-//				}
-//			}
-//			
-//			// 输出到文件
-//			ee.writeFile("target/export.xlsx");
-//
-//		}
-//		
-//		log.debug("Export success.");
-//		
-//	}
 
 }
