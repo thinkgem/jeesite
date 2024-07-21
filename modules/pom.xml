@@ -15,7 +15,6 @@
 	<modules>
 		<module>core</module>
 		<module>app</module>
-		<module>cas</module>
 		<module>cms</module>
 		<module>static</module>
 		<module>test</module>
