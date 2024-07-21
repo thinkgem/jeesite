@@ -1,0 +1,22 @@
+/*!
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ * @version 2019-1-6
+ */
+.error-page {width:700px;margin-top:80px;}
+.error-page > .error-content {margin-left:230px;}
+.error-page > .error-content h3 {margin-bottom:20px;}
+.error-page > .error-content button {margin-top:20px;}
+.error-page > .headline {margin-left:20px;padding:20px;letter-spacing:-10px;line-height:78px;}
+.error-page > .copyright {clear:both;text-align:center;margin-top:50px;margin-right:50px;}
+@media (max-width: 991px){
+	.error-page > .headline{float:left;text-align:left;}
+	.error-page > .error-content>h3{text-align:left;}
+}
+@media (max-width: 791px){
+	.error-page {width: 100%;}
+	.error-page > .headline {float:none;text-align:center;margin-left:-30px;}
+	.error-page > .error-content {margin:0 auto;text-align:left;width:300px;}
+	.error-page > .error-content h3 {text-align:left;}
+}
