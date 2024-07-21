@@ -42,9 +42,7 @@
 			function get_total(total, thisid) {
 				var thismeter = $('div[data-meter="' + thisid + '"]').removeClass();
 				thismeter.parent().removeClass().addClass(options.strengthMeterClass);
-				if (total == 0) {
-					thismeter.html('');
-				} else if (total == 1) {
+				if (total == 1) {
 					thismeter.parent().addClass('veryweak');
 					thismeter.addClass('veryweak').html('<p>'+options.veryweakText+'</p>');
 				} else if (total == 2) {
@@ -53,9 +51,11 @@
 				} else if (total == 3 || total == 4) {
 					thismeter.parent().addClass('medium');
 					thismeter.addClass('medium').html('<p>'+options.mediumText+'</p>');
-				} else {
+				} else if (total > 4) {
 					thismeter.parent().addClass('strong');
 					thismeter.addClass('strong').html('<p>'+options.strongText+'</p>');
+				} else {
+					thismeter.html('');
 				}
 			}
 			
