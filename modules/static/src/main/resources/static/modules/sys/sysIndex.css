@@ -1,0 +1,78 @@
+/*!
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ * @version 2019-2-16
+ */
+/* 让头部支持自动高度 */
+.fixed .main-header {position:relative;max-height:none;}
+.fixed .content-wrapper, .fixed .right-side {padding-top:0;}
+.fixed .main-header .navbar, .fixed .right-side{margin-left:0}
+.fixed .main-sidebar {top:auto;padding-top:0;/*position:absolute;url带#会隐藏工具栏*/position:relative;height:0;
+	transition: transform .1s ease-in-out,width .1s ease-in-out;}
+
+/* 头部下拉框样式 */
+.main-header .logo small {font-size:17px;}
+.main-header .navbar .dropdow-menu{border-top:0;}
+.main-header .navbar .dropdown-menu li a {color:#555;padding: 5px 15px 5px 25px;}
+.main-header .navbar .dropdown-menu li a:hover {background:#e1e3e9;color:#555;}
+.main-header .navbar .dropdown-menu li.divider {border-top:1px solid #ddd;background:none;height:0;}
+.navbar-nav > .user-menu > .dropdown-menu {width:auto;}
+
+/* 下拉菜单样式 */
+.navbar-nav .treeview-menu{position:absolute;z-index:100;background:#fff;width:190px;
+    padding-left:0;border:1px solid #ccc;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+.navbar-nav .treeview-menu a{color:#666;padding:10px 15px!important;}
+.navbar-nav .treeview-menu a:hover{color:#000;background:#fafafa;}
+.navbar-nav > .treeview > a > .pull-right-container > .fa-angle-left{display:none;}
+.navbar-nav li > a > .pull-right-container > .fa-angle-left {margin-top:3px;transition:transform 0.5s ease;}
+.navbar-nav .menu-open > a > .pull-right-container > .fa-angle-left {transform: rotate(-90deg);}
+.navbar-nav .treeview.active>a {color:#1890ff;background-color:#e1e3e9;}
+.navbar-nav .treeview small.label {float:right;}
+
+/* 头部消息列表 */
+.navbar-nav>.messages-menu i.img-circle{margin:auto 10px auto auto;display:block;width:33px;height:33px;padding:9px;font-weight: bold;}
+.navbar-nav>.messages-menu>.dropdown-menu>li.header{border-radius:0;background-color:#f9f9f9;}
+.navbar-nav>.messages-menu>.dropdown-menu>li a {white-space:normal!important;}
+
+/* 侧边栏用户头像 */
+.user-panel {padding:10px 12px}
+.user-panel>.image>img{width:45px;height:45px;background:#fff;}
+.user-panel>.info>p{width:125px;overflow:hidden;text-overflow:ellipsis;}
+.sidebar-collapse .user-panel>.image>img{width:27px;height:27px;}
+.user-panel>.info{padding-left:11px}
+
+/* 侧边栏菜单样式 */
+/* .sidebar-menu, .sidebar-menu>li.header {white-space:normal;} */
+.sidebar-menu > li a {overflow:hidden;text-overflow:ellipsis;}
+.sidebar-mini.sidebar-collapse .sidebar-menu > li a {text-overflow: clip;}
+.sidebar-mini.sidebar-collapse .sidebar-menu > li > a {padding-left:5px;}
+.sidebar-menu > li > a {padding:13px 15px 13px 12px;font-size:15px;}
+.sidebar-menu > .treeview > .treeview-menu {padding-left:0;}
+.sidebar-menu .treeview-menu .treeview-menu {padding-left:0;}
+.sidebar-menu .treeview-menu > li > a {padding:11px 5px 12px 28px;}
+.full-screen-menu{position:absolute;top:2px;left:2px;z-index:10000000;opacity:0.9;}
+
+/* 侧边栏宽度修改为200px */
+.main-sidebar, .left-side {width:200px;}
+.main-header .navbar, .content-wrapper, .right-side, .main-footer {margin-left:200px;}
+@media (max-width: 767px) {
+  .main-header .logo {width:100%;}
+  .main-header .navbar, .content-wrapper, .right-side, .main-footer {margin-left:0;}
+  .sidebar-open .content-wrapper, .sidebar-open .main-footer {
+    -webkit-transform: translate(200px, 0); -ms-transform: translate(200px, 0);
+    -o-transform: translate(200px, 0); transform: translate(200px, 0);}
+  .main-sidebar {
+    -webkit-transform: translate(-200px, 0);-ms-transform: translate(-200px, 0);
+    -o-transform: translate(-200px, 0);transform: translate(-200px, 0);}
+}
+
+/* logo支持自动宽度 */
+.main-header .logo {width:auto;min-width:200px;}
+@media (min-width: 768px) {
+	.sidebar-mini.sidebar-collapse .main-header .logo {width:auto;}
+	.sidebar-mini.sidebar-collapse .main-header .navbar {margin-left:0;}
+}
+
+/* 关闭内容显示隐藏的动画 */
+.content-wrapper,.main-footer {-webkit-transition:none;-moz-transition:none;-o-transition:none;transition:none;}
