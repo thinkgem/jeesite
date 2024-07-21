@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <title>wdScrollTab docs</title>
+    <style>
+        #wrapper {
+            width: 1000px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        #sidebar {
+            float: left;
+            width: 300px;
+        }
+        #left-col {
+            width: 680px;
+            float: right;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="page" class="fix">	
+      <div id="wrapper" class="fix">
+       <!-- /nav -->
+       <div id="container" class="fix">    
+          <div id="left-col">      
+            <div id="content">
+<div class="content">
+  <a name="config"></a><h2>Config</h2>
+<table class="items-list"><tr><td><a href="index.html#config_active">active</a></td><td><a href="index.html#config_autoresizable">autoResizable</a></td><td><a href="index.html#config_border">border</a></td><td><a href="index.html#config_height">height</a></td><tr><td><a href="index.html#config_heightresizable">heightResizable</a></td><td><a href="index.html#config_items">items</a></td><td><a href="index.html#config_renderto">renderTo</a></td><td><a href="index.html#config_width">width</a></td><tr><td><a href="index.html#config_widthresizable">widthResizable</a></td></table>  <div class="list">
+    <a name="config_active"></a> 
+    <h3>active</h3>
+    <p class="padded"><span class="datatype">Number</span> &nbsp; Active tab index. Base on 0.</p>
+    <a name="config_autoresizable"></a> 
+    <h3>autoResizable</h3>
+    <p class="padded"><span class="datatype">Boolean</span> &nbsp; Whether panel resizes itself according to content.</p>
+    <a name="config_border"></a> 
+    <h3>border</h3>
+    <p class="padded"><span class="datatype">Boolean</span> &nbsp; To show border or not.</p>
+    <a name="config_height"></a> 
+    <h3>height</h3>
+    <p class="padded"><span class="datatype">String</span> &nbsp; Initialization height.</p>
+    <pre class="brush:js;">//heigh config
+ height : '200px'// or '100%'.</pre>
+    <a name="config_heightresizable"></a> 
+    <h3>heightResizable</h3>
+    <p class="padded"><span class="datatype">Booean</span> &nbsp; Whether end user can change panel height by mouse dragging.</p>
+    <a name="config_items"></a> 
+    <h3>items</h3>
+    <p class="padded"><span class="datatype">Array</span> &nbsp; Tab items array.</p>
+    <a name="config_renderto"></a> 
+    <h3>renderTo</h3>
+    <p class="padded"><span class="datatype">String or JQuery object</span> &nbsp; To specify where tab panel will be placed. It could be a DOM id or jquery object.</p>
+    <a name="config_width"></a> 
+    <h3>width</h3>
+    <p class="padded"><span class="datatype">String</span> &nbsp; Initialization width.</p>
+    <pre class="brush:js;">// width config, in px or percentage.
+ width : '200px'// or '100%'.</pre>
+    <a name="config_widthresizable"></a> 
+    <h3>widthResizable</h3>
+    <p class="padded"><span class="datatype">Boolean</span> &nbsp; Whether end user can change panel width by mouse dragging.</p>
+  </div>
+  <a name="method"></a><h2>Method</h2>
+<table class="items-list"><tr><td><a href="index.html#addtab">addTab</a></td><td><a href="index.html#getactiveindex">getActiveIndex</a></td><td><a href="index.html#getactivetab">getActiveTab</a></td><td><a href="index.html#getclosable">getClosable</a></td><tr><td><a href="index.html#getcontent">getContent</a></td><td><a href="index.html#getdisable">getDisable</a></td><td><a href="index.html#gettabposision">getTabPosision</a></td><td><a href="index.html#gettabscount">getTabsCount</a></td><tr><td><a href="index.html#gettitle">getTitle</a></td><td><a href="index.html#kill">kill</a></td><td><a href="index.html#refresh">refresh</a></td><td><a href="index.html#setclosable">setClosable</a></td><tr><td><a href="index.html#setcontent">setContent</a></td><td><a href="index.html#setdisable">setDisable</a></td><td><a href="index.html#setrenderwh">setRenderWH</a></td><td><a href="index.html#settitle">setTitle</a></td></table>  <div class="list">
+    <a name="addtab"></a> 
+      <h3>addTab(item)</h3>
+      <p class="padded"> To add a new tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>Object</i></td><td width="10%"><b>item</b></td><td width="80%"> Object for item profile.</td></tr></table></p>
+     <pre class="brush:js;">//to add a new tab
+ addTab({id:"newtabid",
+    title:"I am new" ,
+    html:"some new message goes here",
+    closable: true,
+    disabled:false,
+    icon:"image/new.gif"
+ });</pre>
+    <a name="getactiveindex"></a> 
+      <h3>getActiveIndex()</h3>
+      <p class="padded"> To get index of active tab.</p>
+      <p class="padded">Return <span class="datatype">Number</span> - index of active tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"></table></p>
+    <a name="getactivetab"></a> 
+      <h3>getActiveTab()</h3>
+      <p class="padded"> To get active tab.</p>
+      <p class="padded">Return <span class="datatype">Object</span> - Profile of active tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"></table></p>
+    <a name="getclosable"></a> 
+      <h3>getClosable(id)</h3>
+      <p class="padded"> To determine whether tab is closable or not.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="getcontent"></a> 
+      <h3>getContent(id)</h3>
+      <p class="padded"> To get tab inner html.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="getdisable"></a> 
+      <h3>getDisable(id)</h3>
+      <p class="padded"> To determine whether tab is disabled or not.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="gettabposision"></a> 
+      <h3>getTabPosision(id)</h3>
+      <p class="padded"> To get tab index.</p>
+      <p class="padded">Return <span class="datatype">Number</span> - index of tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="gettabscount"></a> 
+      <h3>getTabsCount()</h3>
+      <p class="padded"> To get how many tabs are in the panel.</p>
+      <p class="padded">Return <span class="datatype">Number</span> - Number of tabs .</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"></table></p>
+    <a name="gettitle"></a> 
+      <h3>getTitle(id)</h3>
+      <p class="padded"> To get tab title.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="kill"></a> 
+      <h3>kill(id)</h3>
+      <p class="padded"> To close tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="refresh"></a> 
+      <h3>refresh(id)</h3>
+      <p class="padded"> To refresh tab content.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> item id.</td></tr></table></p>
+    <a name="setclosable"></a> 
+      <h3>setClosable(id,&nbsp True)</h3>
+      <p class="padded"> To enable or disable end user to close tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> Item id.</td></tr><tr><td width="10%"><i>Booleaan</i></td><td width="10%"><b>True</b></td><td width="80%"> for closable, false for not.</td></tr></table></p>
+    <a name="setcontent"></a> 
+      <h3>setContent(id,&nbsp title)</h3>
+      <p class="padded"> To set tab title.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> Item id.</td></tr><tr><td width="10%"><i>String</i></td><td width="10%"><b>title</b></td><td width="80%"> Tab inner html.</td></tr></table></p>
+    <a name="setdisable"></a> 
+      <h3>setDisable(id,&nbsp True)</h3>
+      <p class="padded"> To enable or disable tab.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> Item id.</td></tr><tr><td width="10%"><i>Booleaan</i></td><td width="10%"><b>True</b></td><td width="80%"> for disabled, false for enabled.</td></tr></table></p>
+    <a name="setrenderwh"></a> 
+      <h3>setRenderWH(wh)</h3>
+      <p class="padded"> To set width and height of the panel.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>Object</i></td><td width="10%"><b>wh</b></td><td width="80%"> width and height.</td></tr></table></p>
+     <pre class="brush:js;">//To set tab height and width
+ setRenderWH({width:'200px', height:'400px'});</pre>
+    <a name="settitle"></a> 
+      <h3>setTitle(id,&nbsp title)</h3>
+      <p class="padded"> To set tab title.</p>
+      <p class="padded"><table cellspacing="3" width="90%" class="parameter-table"><tr><td width="10%"><i>String</i></td><td width="10%"><b>id</b></td><td width="80%"> Item id.</td></tr><tr><td width="10%"><i>String</i></td><td width="10%"><b>title</b></td><td width="80%"> Tab title.</td></tr></table></p>
+  </div>
+</div>
+
+              <div class="page-nav fix"> 
+                <span class="previous-entries">
+                </span> 
+                <span class="next-entries">
+                </span>
+              </div>
+              <!-- page nav -->		
+            </div>				 		
+          </div> 
+          <!-- end leftcol -->		
+          <div style="position: relative; display: block;" class="dbx-group"  id="sidebar">
+               
+            <div style="clear: both;">
+            </div>
+            
+            <div style="position: relative; display: block;" id="links"  class="dbx-box dbx-box-open dbxid3">        
+              <h3 title="click-down and drag to move this box"  style="position: relative; display: block;" class="dbx-handle  dbx-handle-cursor">API</h3>
+                <div class="dbx-content">
+
+<div class="index">
+<ul>
+<li class="class"><a href="index.html">TabPanel</a>
+  <ul>
+    <li class="group"><a href="index.html#config">Config</a>
+      <ul>
+        <li class="config"><a href="index.html#config_active">active</a></li>
+        <li class="config"><a href="index.html#config_autoresizable">autoResizable</a></li>
+        <li class="config"><a href="index.html#config_border">border</a></li>
+        <li class="config"><a href="index.html#config_height">height</a></li>
+        <li class="config"><a href="index.html#config_heightresizable">heightResizable</a></li>
+        <li class="config"><a href="index.html#config_items">items</a></li>
+        <li class="config"><a href="index.html#config_renderto">renderTo</a></li>
+        <li class="config"><a href="index.html#config_width">width</a></li>
+        <li class="config"><a href="index.html#config_widthresizable">widthResizable</a></li>
+      </ul>
+    </li>
+    <li class="group"><a href="index.html#method">Method</a>
+      <ul>
+        <li class="config"><a href="index.html#addtab">addTab</a></li>
+        <li class="config"><a href="index.html#getactiveindex">getActiveIndex</a></li>
+        <li class="config"><a href="index.html#getactivetab">getActiveTab</a></li>
+        <li class="config"><a href="index.html#getclosable">getClosable</a></li>
+        <li class="config"><a href="index.html#getcontent">getContent</a></li>
+        <li class="config"><a href="index.html#getdisable">getDisable</a></li>
+        <li class="config"><a href="index.html#gettabposision">getTabPosision</a></li>
+        <li class="config"><a href="index.html#gettabscount">getTabsCount</a></li>
+        <li class="config"><a href="index.html#gettitle">getTitle</a></li>
+        <li class="config"><a href="index.html#kill">kill</a></li>
+        <li class="config"><a href="index.html#refresh">refresh</a></li>
+        <li class="config"><a href="index.html#setclosable">setClosable</a></li>
+        <li class="config"><a href="index.html#setcontent">setContent</a></li>
+        <li class="config"><a href="index.html#setdisable">setDisable</a></li>
+        <li class="config"><a href="index.html#setrenderwh">setRenderWH</a></li>
+        <li class="config"><a href="index.html#settitle">setTitle</a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
+</ul>
+</div>
+              </div>
+            </div>
+            <span style="display: block; width: 0pt; height: 0pt;  overflow: hidden;" class="dbx-box dbx-dummy dbx-offdummy">
+            </span>
+          </div>
+          <!--/sidebar -->				 		
+        </div> 
+        <!-- /container -->	
+      </div> 
+      <!-- /wrapper -->
+    </div>
+  </body>
+</html>
