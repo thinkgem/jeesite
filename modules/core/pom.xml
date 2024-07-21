@@ -113,6 +113,20 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- Core Static -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-static</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- CAS 单点登录模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cas</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- ELK 日志收集 -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>
