@@ -1,0 +1,205 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：文件上传
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID
+	
+	bizKey: bizKey!,			// 业务表的主键值（与附件关联的业务数据）
+	bizType: bizType!,			// 业务表的上传类型（全网唯一，推荐格式：实体名_上传类型，例如，文章图片：article_photo）
+	
+	dataMap: toBoolean(dataMap!false),			// 后台接受的 fileUploadIds 是否从 dataMap 中获取（Cloud环境下使用）
+	
+	returnPath: toBoolean(returnPath!false),	// 是否是返回文件路径到输入框（默认false），可将路径直接保存到某个字段里
+	filePathInputId: filePathInputId!,			// 设置文件URL存放的输入框的ID，当returnPath为true的时候，返回文件URL到这个输入框
+	fileNameInputId: fileNameInputId!,			// 设置文件名称存放的输入框的ID，当returnPath为true的时候，返回文件名称到这个输入框
+	
+	uploadType: uploadType!'',			// 上传文件类型：all、file、image、media，若不设置，则自动根据上传文件后缀获取
+	
+	class: class!'',					// 标签框的CSS类名，设置 required 加入必填验证
+	readonly: readonly!'false',			// 是否只读模式，只读模式下为查看模式，只允许下载
+	dataMsgRequired: thisTag.attrs['data-msg-required'],	// 必填错误提示信息 v4.2.1
+	
+	allowSuffixes: allowSuffixes!'', 	// 允许上传的后缀，前台的限制，不能超越file.*AllowSuffixes的设置，例如：.jpg,.png,
+	maxFileSize: maxFileSize!'',		// 当前控件的文件上传大小设置（500*1024*1024）单位字节，不可超过配置文件设置的文件大小
+	maxUploadNum: @ObjectUtils.toInteger(maxUploadNum!300),		// 多文件下允许最多上传几个，默认300个，设置-1代表不限制
+	
+	cueWords: cueWords!'',				// 提示语，默认：或将照片(文件)拖到这里，最多可选 maxUploadNum 张(个) v4.1.5
+	
+	imageMaxWidth: imageMaxWidth!'',	// 图片压缩，最大宽度（uploadType为image生效），设置-1代表不做任何处理
+	imageMaxHeight: imageMaxHeight!'',	// 图片压缩，最大宽度（uploadType为image生效），设置-1代表不做任何处理
+	imageThumbName: imageThumbName!'', 	// 如果开启了图片缩略图，这里可以指定缩略图名称，例如：150x150.jpg  v5.4.2
+	
+	serviceUpload: serviceUpload!(ctxAdmin+'/file/upload'),			// 上传文件后台服务  v4.1.5
+	serviceDownload: serviceDownload!(ctxAdmin+'/file/download'),	// 下载文件后台服务  v4.1.5
+	serviceFileList: serviceFileList!(ctxAdmin+'/file/fileList'),	// 查询文件后台服务  v4.1.5
+	
+	extendParams: extendParams!'',		// 提交的上传扩展参数，例如：n1:'v1',n2:'v2'，后台接受：fileEntity.getFileUploadParams().getExtend() v4.1.3
+	
+	isLazy: toBoolean(isLazy!false),	// 设置为ture需要点击上传按钮才上传文件，否则选择后就直接上传
+	
+	isMini: toBoolean(isMini!false),	// 是否是精简上传窗口，无边距，无边框
+	
+	preview: preview!'',				// 是否显示预览按钮，接受参数：v4.2.0 之前版本为 weboffice，之后版本为 true，可根据需要扩展预览引擎
+	
+	callbackFuncName: callbackFuncName!'fileuploadCallback',	// 可自定义回调方法的函数名   v4.2.0
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 标题自动生成
+if (isBlank(p.dataMsgRequired)){
+	var title = text('文件');
+	if(p.uploadType=='file'){
+		title = text('文档');
+	}else if(p.uploadType=='image'){
+		title = text('图片');
+	}else if(p.uploadType=='media'){
+		title = text('音频或视频');
+	}
+	p.dataMsgRequired = text('请上传') + title;
+}
+
+// 生成参数名
+p.name = p.bizType;
+p.nameDel = p.bizType + '__del';
+if (p.dataMap){
+	p.name = 'dataMap['+p.name+']';
+	p.nameDel = 'dataMap['+p.nameDel+']';
+}
+
+%>
+<div id="${p.id}_wup" class="wup_container ${p.isMini?'mini':''}">
+	<% if(isNotBlank(p.bizType)){ %>
+	<input id="${p.id}" name="${p.name}" value="" class="wup_input ${p.uploadType} ${p.class}" data-msg-required="${p.dataMsgRequired}"/>
+	<input id="${p.id}__del" name="${p.nameDel}" value="" type="hidden"/>
+	<% } %>
+	<div class="area">
+		<% if(p.uploadType == 'image'){ %>
+			<div id="${p.id}Uploader" class="wup_img">
+			    <div class="statusBar" style="display:none;">
+			    	<% if(!p.isMini){ %>
+				        <div class="progress">
+				            <span class="text">0%</span>
+				            <span class="percentage"></span>
+				        </div>
+				    	<div class="info"></div>
+				    <% }
+				       // 如果是mini界面并上传个数大于1，则显示出来上传信息和继续上传按钮
+				       else if(p.maxUploadNum > 1){ %>
+				    	<div class="info"></div>
+				    <% } %>
+			        <div class="btns">
+			            <div id="${p.id}filePicker2" class="webuploader-container"></div>
+		            	<div class="uploadBtn state-pedding">${text('开始上传')}</div>
+			        </div>
+		    	</div>
+			    <div class="queueList">
+			    	<ul id="${p.id}fileLists" class="filelist"></ul>
+		        	<div id="${p.id}dndArea" class="placeholder">
+			            <div id="${p.id}filePicker" class="webuploader-container"></div>
+			            <% if(isNotBlank(p.cueWords)){ %>
+			            	<p>${p.cueWords}</p>
+			            <% }else if(!p.isMini){ %>
+			            	<p>${text('或将照片拖到这里，最多可选 {0\} 张', p.maxUploadNum)}</p>
+			            <% } %>
+			        </div>
+			    </div>
+			</div> 
+		<% }else{ %>
+			<div id="${p.id}Uploader" class="wup_file">
+				<div class="statusBar" style="display:none;">
+					<div class="progress">
+						<span class="text">0%</span>
+						<span class="percentage"></span>
+					</div>
+					<div class="info"></div>
+					<div class="btns">
+						<div id="${p.id}filePicker2" class="webuploader-container"></div>
+						<div class="uploadBtn">${text('开始上传')}</div>
+					</div>
+				</div>
+				<div class="queueList">
+					<div class="table-responsive">
+						<table class="table table-striped filetable table-hover">
+							<tbody id="${p.id}fileLists"></tbody>
+						</table>
+					</div>
+					<div id="${p.id}dndArea" class="placeholder">
+						<div id="${p.id}filePicker" class="webuploader-container"></div>
+						<% if(isNotBlank(p.cueWords)){ %>
+			            	<p>${p.cueWords}</p>
+			            <% }else{ %>
+							<p>${text('或将文件拖到这里，最多可选 {0\} 个', p.maxUploadNum)}</p>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		<% } %>
+	</div>
+</div>
+<script type="text/javascript">
+$(function() {
+	if ('${p.readonly}' == 'true'){
+		$("#${p.id}").addClass("disabled");
+	}
+	$('#${p.id}Uploader').webuploader({
+		id: '${p.id}',
+		bizKey: '${p.bizKey}',
+		bizType: '${p.bizType}',
+		readonly: $("#${p.id}").hasClass("disabled"),
+		returnPath: "#{p.returnPath}",
+		filePathInputId: '${p.filePathInputId}',
+		fileNameInputId: '${p.fileNameInputId}',
+		uploadType: '${p.uploadType}',
+		maxFileSize: "#{isNotBlank(p.maxFileSize)?p.maxFileSize:@Global.getConfig('file.maxFileSize', '500*1024*1024')}",
+		imageAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.imageAllowSuffixes", ".gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,")}',
+		mediaAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.mediaAllowSuffixes", ".flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,")}',
+		fileAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.fileAllowSuffixes", ".doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,.7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,")}',
+		chunked: "#{__info_type=='0'?false:@Global.getConfig('file.chunked', 'true')}",
+		chunkSize: "#{@Global.getConfigToInteger('file.chunkSize', '10*1024*1024')}",
+		threads: "#{@Global.getConfigToInteger('file.threads', '3')}",
+		maxUploadNum: "#{p.maxUploadNum}",
+		imageMaxWidth: '${p.imageMaxWidth}',
+		imageMaxHeight: '${p.imageMaxHeight}',
+		imageThumbName: '${p.imageThumbName}',
+		service: {
+			upload: '${p.serviceUpload}',
+			download: '${p.serviceDownload}',
+			fileList: '${p.serviceFileList}'
+		},
+		extendParams: {"#{p.extendParams}"},
+		isLazy: "#{p.isLazy}",
+		preview: "${__info_type=='0'?'':p.preview!=''?p.preview:@Global.getConfig('file.preview','true')}",
+		callback: function(id, act, $this, fileUploadId, fileUrl, fileName, fileUpload){
+			if(typeof "#{p.callbackFuncName}" == 'function'){
+				"#{p.callbackFuncName}"(id, act, $this, fileUploadId, fileUrl, fileName, fileUpload);
+			}
+		}
+	});
+});
+//# /*
+/**
+ * 上传组件回调 v4.2.0
+ * @param id  标签的id
+ * @param act 动作事件：create、ready、addFile、delFile
+ * @param $this webuploader 组件对象
+ * @param fileUpload 添加文件时的数据 v4.2.2
+ */
+function fileuploadCallback(id, act, $this, fileUploadId, fileUrl, fileName, fileUpload){
+	log(id + ' ' + act + ' ' + fileUploadId + ' ' + fileUrl + ' ' + fileName)
+	if (act == 'addFile') { log(fileUpload); }
+	log($this)
+}
+//# */
+</script>

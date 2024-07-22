@@ -1,0 +1,124 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：下拉选择框
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	dictType: dictType!,		// 字典类型，从字典里获取，自动设置items、itemLabel、itemValue
+								// 字典类型加 __all（双下划线+all） 后缀，则显示停用的字典 v4.2.0
+	dictIcon: toBoolean(dictIcon!true),		// 是否加载字典里设置的样式，默认true v4.3.3
+	dictStyle: toBoolean(dictStyle!false),	// 是否加载字典里设置的样式，默认false v4.3.3
+	
+	items: items![],			// 列表数据，可接受对象集合，如：List<DictData>
+	itemLabel: itemLabel!'',	// 指定列表数据中的什么属性名作为option的标签名
+	itemValue: itemValue!'',	// 指定列表数据中的什么属性名作为option的value值
+	itemStatus: itemStatus!'',	// option 的 disabled，如果是字符串类型（0正常,!0禁用）v4.2.0
+	
+	multiple: multiple!'false', // 是否为多选框
+	
+	readonly: toBoolean(readonly!false),		// 是否只读模式 v4.1.7
+	
+	blankOption: toBoolean(blankOption!false), // 是否默认有个空白选择项目
+	blankOptionValue: blankOptionValue!'', // 给空白选择项目设置一个值，默认：空字符串 v4.2.0
+	blankOptionLabel: blankOptionLabel!'&nbsp;', // 给空白选择项目设置一个标签，如：请选择、全部
+	// data-placeholder: '请选择人员信息', // 下拉选择框的提示信息
+	
+	// 内置参数
+	thisTag: thisTag,
+	exclAttrs: ['id', 'path', 'name', 'value', 'defaultValue', 'dictType',
+		'items', 'itemLabel', 'itemValue', 'multiple', 'blankOption']
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 编译属性参数
+form.attrs(p);
+
+// 编译集合参数
+form.items(p);
+
+// 是否是多选下拉框
+if (toBoolean(p.multiple)){
+	p.attrs = p.attrs + ' multiple="true" data-close-on-select="false"';
+}
+
+// 转换为字符串数组
+if (p.multiple == 'true' && type.name(p.value) == 'String'){
+	// p.value = @ObjectUtils.toString(p.value); 一定是字符串，无需转换
+	p.value = @StringUtils.split(p.value, ',');
+}
+
+// 加一个 type="hidden" 当不选择任何东西的时候，使用该默认值，否则发送null则不会被执行update
+if (p.multiple == 'true' || p.readonly){
+	// 如果只读模式，则禁用，并加默认值为value
+	if (p.readonly){
+		p.attrs = p.attrs + ' disabled="true"';
+		if (p.multiple == 'true'){
+			for (var val in p.value!){
+				%><input type="hidden" name="!${p.name}" value="${val}"/><%
+			}elsefor{
+				%><input type="hidden" name="!${p.name}" value=""/><%
+			}
+		}else{
+			%><input type="hidden" name="!${p.name}" value="${p.value}"/><%
+		}
+	}else{
+		%><input type="hidden" name="!${p.name}" value=""/><%
+	}
+}
+
+// 输出下拉选项
+var body = {
+	if (p.blankOption && p.multiple != 'true'){
+		%><option value="${p.blankOptionValue}">${p.blankOptionLabel}</option><%
+	}
+	for (var item in p.items){
+		var iv = @ObjectUtils.toString(@ReflectUtils.invokeGetter(item, p.itemValue));
+		var il = @ObjectUtils.toString(@ReflectUtils.invokeGetter(item, p.itemLabel));
+		var attr = '';
+		if (p.multiple == 'true'){
+			attr = attr + (@StringUtils.inString(iv, p.value) ? ' selected' : '');
+		}else{
+			attr = attr + (@ObjectUtils.toString(p.value) == iv ? ' selected' : '');
+		}
+		if (type.name(item) == 'DictData'){
+			if (!item['isRoot']) {
+				continue;
+			}
+			if (isNotBlank(item['description'])){
+				attr = attr + ' title="' + item['description'] + '"';
+			}
+			if (p.dictIcon && isNotBlank(item['dictIcon'])){
+				attr = attr + ' data-icon="' + item.dictIcon + '"';
+			}
+			if (p.dictStyle && isNotBlank(item['cssStyle'])){
+				attr = attr + ' style="' + item.cssStyle + '"';
+			}
+			if (p.dictStyle && isNotBlank(item['cssClass'])){
+				attr = attr + ' class="' + item.cssClass + '"';
+			}
+			if (isBlank(p.itemStatus)){
+				p.itemStatus = 'status';
+			}
+		}
+		if (isNotBlank(p.itemStatus) && isNotBlank(item[p.itemStatus])){
+			attr = attr + (@ObjectUtils.toString(item[p.itemStatus]) != '0' ? ' disabled' : '');
+		}
+		%><option value="${iv}"${attr}>${il}</option><%
+	}
+};
+%>
+<select id="${p.id}" name="${p.name}"${p.attrs}>
+${body}</select>

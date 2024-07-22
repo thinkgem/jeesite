@@ -1,0 +1,66 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：验证码输入框
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	id: id!name,				// 验证码输入框ID
+	name: name!,				// 验证码输入框名称（必填）
+	
+	isRequired: toBoolean(isRequired!true),					// 是否必填，默认必填
+	dataMsgRequired: thisTag.attrs['data-msg-required'],	// 必填错误提示信息
+	
+	isRemote: toBoolean(isRemote!true),						// 是否支持实时远程验证
+	dataMsgRemote: thisTag.attrs['data-msg-remote'],		// 必填错误提示信息
+	
+	isLazy: toBoolean(isLazy!false),			// 是否懒加载验证码图片，原noRefresh参数
+	
+	label: label!text('验证码'),					// 控件的标签（V4.2.2）
+	isShowLabel: toBoolean(isShowLabel!true),	// 是否显示“验证码”标签，默认true（V4.0.5）
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 必填属性HTML
+var require = {
+	if (p.isRequired){
+		%> required="true" data-msg-required="${p.dataMsgRequired!text('请填写验证码')}"<%
+	}
+};
+
+// 远程验证HTML
+var remote = {
+	if (p.isRemote){
+		%> remote="${ctxPath}/validCode" data-msg-remote="${p.dataMsgRemote!text('验证码不正确.')}"<%
+	}
+};
+
+%>
+<div class="input-group">
+	<% if (p.isShowLabel){ %><span class="input-group-addon">${p.label}：</span><% } %>
+	<input type="text" id="${p.id}" name="${p.name}" class="form-control"${require}${remote} autocomplete="off"/>
+	<span class="input-group-addon p0">
+		<img id="${p.id}Img" class="${p.id}Img" title="${text('看不清，点击图片刷新')}" src="" alt="${text('验证码')}" style="width:100px;"/>
+		<button id="${p.id}Refresh" class="hide" type="button"></button>
+	</span>
+</div>
+<script>
+$('#${p.id}Refresh').click(function(){
+	var src = '${ctxPath}/validCode?'+new Date().getTime();
+	$('#${p.id}Img').attr('src', src).removeClass('hide');
+})<% if (!p.isLazy){ %>.click()<% } %>;
+$('#${p.id}Img').click(function(){
+	$('#${p.id}Refresh').click();
+	$('#${p.id}').focus().val('');
+});
+$('#${p.id}').focus(function(){
+	if($('#${p.id}Img').attr('src') == ''){
+		$('#${p.id}Refresh').click();
+	}
+});
+</script>

@@ -1,0 +1,29 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：隐藏域
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	// 内置参数
+	thisTag: thisTag,
+	exclAttrs: ['id', 'path', 'name', 'value', 'defaultValue', 'type']
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 编译属性参数
+form.attrs(p);
+	
+%><input type="hidden" id="${p.id}" name="${p.name}" value="${p.value}"${p.attrs}/>

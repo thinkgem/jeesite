@@ -1,0 +1,254 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：扩展控件组
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	collapsed: toBoolean(collapsed!true),	// 初始状态是否折叠
+	
+	title: text('扩展字段'),		// 显示标题、折叠标题，v4.2.3 版本以后版本生效
+	
+	extendS1: extendS1!text('String 1'),	// extendS1 及以下属性的标签名 v4.2.3 版本以后版本生效
+	extendS2: extendS2!text('String 2'),
+	extendS3: extendS3!text('String 3'),
+	extendS4: extendS4!text('String 4'),
+	extendS5: extendS5!text('String 5'),
+	extendS6: extendS6!text('String 6'),
+	extendS7: extendS7!text('String 7'),
+	extendS8: extendS8!text('String 8'),
+	extendI1: extendI1!text('Integer 1'),
+	extendI2: extendI2!text('Integer 2'),
+	extendI3: extendI3!text('Integer 3'),
+	extendI4: extendI4!text('Integer 4'),
+	extendF1: extendF1!text('Float 1'),
+	extendF2: extendF2!text('Float 2'),
+	extendF3: extendF3!text('Float 3'),
+	extendF4: extendF4!text('Float 4'),
+	extendD1: extendD1!text('Date 1'),
+	extendD2: extendD2!text('Date 2'),
+	extendD3: extendD3!text('Date 3'),
+	extendD4: extendD4!text('Date 4'),
+
+	pathPrefix: (isBlank(pathPrefix!) ? '' : pathPrefix + '.') + 'extend',
+	
+	// 内置参数
+	thisTag: thisTag
+};
+	
+%>
+<div class="box-child ${p.collapsed ? 'collapsed-box' : ''}">
+	<div class="form-unit" data-widget="collapse-child">${p.title}
+		<span class="box-tools btn-box-tool"><i class="fa fa-plus"></i></span>
+	</div>
+	<div class="box-body">
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS1}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS1" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS2}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS2" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS3}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS3" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS4}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS4" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS5}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS5" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS6}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS6" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS7}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS7" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendS8}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendS8" maxlength="500" class="form-control "/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendI1}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendI1" maxlength="19" class="form-control digits"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendI2}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendI2" maxlength="19" class="form-control digits"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendI3}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendI3" maxlength="19" class="form-control digits"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendI4}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendI4" maxlength="19" class="form-control digits"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendF1}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendF1" class="form-control number"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendF2}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendF2" class="form-control number"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendF3}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendF3" class="form-control number"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendF4}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendF4" class="form-control number"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendD1}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendD1" readonly="readonly" maxlength="20" class="form-control laydate "
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendD2}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendD2" readonly="readonly" maxlength="20" class="form-control laydate "
+							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendD3}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendD3" readonly="readonly" maxlength="20" class="form-control laydate "
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="form-group">
+					<label class="control-label col-sm-4" title="">
+						<span class="required hide">*</span> ${p.extendD4}：<i class="fa icon-question hide"></i></label>
+					<div class="col-sm-8">
+						<#form:input path="${p.pathPrefix}.extendD4" readonly="readonly" maxlength="20" class="form-control laydate "
+							dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

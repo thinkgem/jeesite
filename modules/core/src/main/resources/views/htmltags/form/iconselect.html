@@ -1,0 +1,63 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：图标选择控件
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID，如果不填写，则与name相同
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 元素名称，不填写
+	value: value!,				// 元素值
+	defaultValue: defaultValue!,// 默认值 v4.1.5
+	
+	class: class!'',			// 隐藏域和标签框的CSS类名
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 编译绑定参数
+form.path(p);
+
+%>
+<div class="input-group">
+	<span class="input-group-addon"><i id="${p.id}Icon" class="${isNotBlank(p.value)?p.value:'fa fa-fw'}"></i></span>
+	<input id="${p.id}" name="${p.name}" type="text" value="${p.value}" class="form-control ${p.class}">
+	<span class="input-group-btn"><a id="${p.id}Button" href="javascript:" class="btn btn-default"
+		><i class="fa fa-search"></i></a></span>
+</div>
+<script>
+$("#${p.id}Button").click(function(){
+	js.layer.open({
+		type: 2,
+		maxmin: true,
+		shadeClose: true,
+		title: '${text("图标选择")}',
+		area: [(js.layer.$(js.layer.window).width() - 100) + 'px',
+		       (js.layer.$(js.layer.window).height() - 100) + 'px'],
+		content: '${ctxPath}/tags/iconselect?value='+$("#${p.id}").val(),
+		success: function(layero, index){
+			var info = '<font color="red" class="pull-left mt10">${text("提示：双击选择图标。")}</font>';
+			layero.find('.layui-layer-btn').append(info);
+		},
+		btn: ['<i class="fa fa-close"></i> ${text("关闭")}',
+			'<i class="fa fa-eraser"></i> ${text("清除")}'],
+		btn1: function(index, layero){
+			var win = layero.iframeWindow();
+			var icon = win.$("#icon").val();
+			$("#${p.id}Icon").attr("class", 'fa fa-fw ' + icon);
+			$("#${p.id}").val(icon).change();
+			try { $('#${p.id}').resetValid(); }catch(e){}
+		},
+		btn2: function(index, layero){
+			$("#${p.id}Icon").attr("class", "fa fa-fw");
+            $("#${p.id}").val("").change();
+		}
+	});
+});
+</script>
