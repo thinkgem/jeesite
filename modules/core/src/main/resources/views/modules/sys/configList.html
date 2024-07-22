@@ -1,0 +1,102 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '参数设置', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title" title="读取顺序：Environment --> JVM中启动的参数 --> application.yml --> 本参数设置中的参数，读取参数方法：Global.getConfig('参数键名')">
+				<i class="fa icon-wrench"></i> ${text('参数设置')} <i class="fa icon-question f14"></i>
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-search"></i> ${text('查询')}</a>
+				<% if(hasPermi('sys:config:edit')){ %>
+					<a href="${ctx}/sys/config/form" class="btn btn-default btnTool" title="${text('新增参数')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="#" class="btn btn-default" id="btnUpdateCache" title="${text('清理全部缓存，包括属性文件的配置')}"><i class="fa fa-refresh"></i> ${text('清理全部缓存')}</a>
+				<% } %>
+<!-- 				<div class="btn-group"> -->
+<!-- 					<a href="javascript:" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> -->
+<!-- 						<i class="fa fa-cogs"></i> 更多 <span class="caret"></span> -->
+<!-- 					</a> -->
+<!-- 					<ul class="dropdown-menu"> -->
+<!-- 						<li><a href="#"><i class="fa fa-pencil"></i> 导出</a></li> -->
+<!-- 						<li><a href="#"><i class="fa fa-trash-o"></i> 导入</a></li> -->
+<!-- 						<li role="separator" class="divider"></li> -->
+<!-- 					</ul> -->
+<!-- 				</div> -->
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${config}" action="${ctx}/sys/config/listData" method="post" class="form-inline "
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('参数名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="configName" maxlength="100" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('参数键名')}：</label>
+					<div class="control-inline">
+						<#form:input path="configKey_like" maxlength="100" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('系统参数')}：</label>
+					<div class="control-inline width-60">
+						<#form:select path="isSys" dictType="sys_yes_no" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i> ${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick"><i class="glyphicon glyphicon-repeat"></i> ${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+//# // 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [ 
+		{header:'${text("参数名称")}', name:'configName', index:'a.config_name', width:200, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/sys/config/form?id='+row.id+'" class="btnList" data-title="${text("编辑参数")}">'+val+'</a>';
+		}},
+		{header:'${text("参数键名")}', name:'configKey', index:'a.config_key', width:200},
+		{header:'${text("参数键值")}', name:'configValue', sortable:false, width:200, classes:"nowrap"},
+		{header:'${text("系统参数")}', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_yes_no')}", val, '未知', true);
+		}},
+		{header:'${text("操作")}', name:'actions', width:120, formatter: function(val, obj, row, act){
+			var actions = [];
+			//# if(hasPermi('sys:config:edit')){
+				actions.push('<a href="${ctx}/sys/config/form?id='+row.id+'" class="btnList" title="${text("编辑参数")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/config/delete?id='+row.id+'" class="btnList" title="${text("删除参数")}" data-confirm="${text("确认要删除该参数吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+// 				actions.push('<a href="javascript:" class="btnMore" title="更多操作"><i class="fa fa-chevron-circle-right"></i></a>&nbsp;');
+// 				actions.push('<div class="moreItems">');
+// 				actions.push('<a href="${ctx}/sys/config/form?id='+row.id+'" class="btn btn-default btn-xs btnList" title="编辑参数"><i class="fa fa-pencil"></i> 编辑参数</a>&nbsp;');
+// 				actions.push('<a href="${ctx}/sys/config/form?id='+row.id+'" class="btn btn-default btn-xs btnList" title="编辑参数"><i class="fa fa-pencil"></i> 编辑参数</a>&nbsp;');
+// 				actions.push('<a href="${ctx}/sys/config/form?id='+row.id+'" class="btn btn-default btn-xs btnList" title="编辑参数"><i class="fa fa-pencil"></i> 编辑参数</a>&nbsp;');
+// 				actions.push('</div>');
+			//# }
+			return actions.join('');
+		}}
+	],
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+
+// 更新平台中的全部缓存，包含属性配置文件。
+$("#btnUpdateCache").click(function(){ 
+	js.ajaxSubmit("${ctx}/sys/cache/clearAll", function(data){
+		js.showMessage(data.message);
+	});
+	return false;
+});
+</script>

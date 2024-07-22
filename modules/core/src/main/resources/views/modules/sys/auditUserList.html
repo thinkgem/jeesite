@@ -1,0 +1,166 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '安全审计', libs: ['layout', 'zTree', 'dataGrid']}){ %>
+<div class="main-content">
+	<div class="nav-tabs-custom nav-main">
+		<ul class="nav nav-tabs">
+			<li><a href="${ctx}/sys/audit/list"><i class="fa icon-energy"></i> ${text('账号密码审计')}</a></li>
+			<li class="active"><a  href="${ctx}/sys/audit/userList"><i class="fa icon-book-open"></i> ${text('菜单权限审计')}</a></li>
+			<li><a href="${ctx}/sys/audit/menuList"><i class="fa icon-user"></i> ${text('用户权限审计')}</a></li>
+		</ul>
+		<div id="layout">
+			<div class="ui-layout-west">
+				<div class="main-content">
+					<div class="box box-main">
+						<div class="box-header">
+							<div class="box-title dropdown">
+								<div class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+									<span id="sysName">${@DictUtils.getDictLabel('sys_menu_sys_code', 'default', text('全部菜单'))}</span><b class="caret"></b>
+								</div>
+								<ul class="dropdown-menu">
+									<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
+									<li><a href="javascript:" onclick="$('#sysName').text('${dict.dictLabel}');sysCode='${dict.dictValue}';loadTree();"> <i
+											class="fa fa-angle-right"></i> ${dict.dictLabel}
+									</a></li>
+									<% } %>
+								</ul>
+							</div>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" id="btnExpand" title="${text('展开')}" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+								<button type="button" class="btn btn-box-tool" id="btnCollapse" title="${text('折叠')}"><i class="fa fa-chevron-down"></i></button>
+								<button type="button" class="btn btn-box-tool" id="btnRefresh" title="${text('刷新')}"><i class="fa fa-refresh"></i></button>
+							</div>
+						</div>
+						<div class="ui-layout-content">
+							<div id="tree" class="ztree"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui-layout-center">
+				<div class="ui-layout-content box-body">
+					<#form:form id="searchForm" model="${audit}" action="${ctx}/sys/audit/userListData" method="post" class="form-inline"
+							data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+						<#form:hidden path="menuCode"/>
+						<div class="form-group">
+							<label class="control-label">${text('账号')}：</label>
+							<div class="control-inline">
+								<#form:input path="loginCode" maxlength="100" class="form-control width-90"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">${text('昵称')}：</label>
+							<div class="control-inline">
+								<#form:input path="userName" maxlength="100" class="form-control width-90"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">${text('机构')}：</label>
+							<div class="control-inline width-90">
+								<#form:treeselect id="office" title="${text('机构选择')}"
+										path="officeCode" labelPath="officeName"
+										url="${ctx}/sys/office/treeData" btnClass="btn-sm" allowClear="true" canSelectParent="true"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i> ${text('查询')}</button>
+							<button type="reset" class="btn btn-default btn-sm isQuick"><i class="glyphicon glyphicon-repeat"></i> ${text('重置')}</button>
+						</div>
+					</#form:form>
+					<table id="dataGrid"></table>
+					<div id="dataGridPage"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+//# // 初始化大小
+$(window).resize(function(){
+	$('#layout').height($(window).height() - $('.nav-tabs').height() - 6);
+}).resize();
+//# // 初始化布局
+$('#layout').layout({
+	west__size: 250,
+	onresize_end: function(){
+		$('#dataGrid').dataGrid('resize');
+	}
+});
+//# // 树结构初始化加载
+var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
+	callback:{onClick:function(event, treeId, treeNode){
+		tree.expandNode(treeNode);
+		$('#menuCode').val(treeNode.id);
+		page();
+	}}
+},
+sysCode = 'default',
+tree, loadTree = function(){
+	js.ajaxSubmit("${ctx}/sys/menu/treeData?___t=" + new Date().getTime(),
+			{sysCode:sysCode}, function(data){
+		tree = $.fn.zTree.init($("#tree"), setting, data);
+		// 展开第一级节点
+		var nodes = tree.getNodesByParam("level", 0);
+		for(var i=0; i<nodes.length; i++) {
+			tree.expandNode(nodes[i], true, false, false);
+		}
+		// 展开第二级节点
+//		nodes = tree.getNodesByParam("level", 1);
+//		for(var i=0; i<nodes.length; i++) {
+//			tree.expandNode(nodes[i], true, false, false);
+//		}
+	}, null, null, js.text('loading.message'));
+};loadTree();
+//# // 工具栏按钮绑定
+$('#btnExpand').click(function(){
+	tree.expandAll(true);
+	$(this).hide();
+	$('#btnCollapse').show();
+});
+$('#btnCollapse').click(function(){
+	tree.expandAll(false);
+	$(this).hide();
+	$('#btnExpand').show();
+});
+$('#btnRefresh').click(function(){
+	loadTree();
+});
+//# // 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	autoGridHeight: function(){
+		return $('.ui-layout-content').height()
+			- $('#searchForm').height() - $('#dataGridPage').height() - 16;
+	},
+	columnModel: [ 
+		{header:'${text("登录账号")}', name:'loginCode', index:'u.login_code', width:80, align:"center"},
+		{header:'${text("用户昵称")}', name:'userName', index:'u.user_name', width:80, align:"center"},
+		{header:'${text("归属机构")}', name:'officeName', index:'o.office_name', width:90, align:"center"},
+		{header:'${text("创建时间")}', name:'createDate', index:'u.create_date', width:100, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'u.update_date', width:100, align:"center"},
+	    {header:'${text("状态")}', name:'status', index:'u.status', width:50, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
+		}},
+		{header:'${text("类型")}', name:'userType', index:'u.user_type', width:50, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_user_type')}", val, '无', true);
+		}},
+	],
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+$('#btnAuditType button').click(function(){
+	$('#btnAuditType button').removeClass('active');
+	$('#auditType').val($(this).addClass('active').data('type'));
+	$('#searchForm').submit();
+});
+$('#btnExport').click(function(){
+	js.ajaxSubmitForm($('#searchForm'), {
+		url: '${ctx}/sys/audit/exportData',
+		clearParams: 'pageNo,pageSize',
+		downloadFile: true
+	});
+});
+</script>
