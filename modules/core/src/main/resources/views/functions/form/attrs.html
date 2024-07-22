@@ -1,0 +1,25 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 编译控件属性 
+ * @author ThinkGem
+ * @version 2019-3-5
+ */
+var p = para0;
+
+// 编译除内置属性以外的属性到元素。
+p.attrs = p.attrs!'';
+for (var attr in p.thisTag.attrs){
+	if (attr.key != '$cols' && !@ListUtils.inString(attr.key, p.exclAttrs)){
+		if(attr.key == 'readonly' && !toBoolean(attr.value)){
+			continue;
+		}
+		var s = {
+			%> ${attr.key}="${attr.value}"<%
+		};
+		p.attrs = p.attrs + s;
+	}
+}
+
+%>
