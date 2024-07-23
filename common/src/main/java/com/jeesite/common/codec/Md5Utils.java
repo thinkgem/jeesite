@@ -4,22 +4,25 @@
  */
 package com.jeesite.common.codec;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
-
 import com.jeesite.common.lang.StringUtils;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * MD5不可逆加密工具类
  * @author ThinkGem
  */
 public class Md5Utils {
-
-	private static final String MD5 = "MD5";
 	
+	/**
+	 * 对输入字符串进行md5散列.
+	 * @param input 加密字符串
+	 */
+	public static byte[] md5(byte[] input) {
+		return md5(input, 1);
+	}
+
 	/**
 	 * 对输入字符串进行md5散列.
 	 * @param input 加密字符串
@@ -33,36 +36,24 @@ public class Md5Utils {
 	 * @param input 加密字符串
 	 * @param iterations 迭代次数
 	 */
-	public static String md5(String input, int iterations) {
-		try {
-			return EncodeUtils.encodeHex(DigestUtils.digest(input.getBytes(EncodeUtils.UTF_8), MD5, null, iterations));
-		} catch (UnsupportedEncodingException e) {
-			return StringUtils.EMPTY;
-		}
+	public static byte[] md5(byte[] input, int iterations) {
+		return DigestUtils.digest(input, DigestUtils.MD5, null, iterations);
 	}
-	
-	/**
-	 * 对输入字符串进行md5散列.
-	 * @param input 加密字符串
-	 */
-	public static byte[] md5(byte[] input) {
-		return md5(input, 1);
-	}
-	
+
 	/**
 	 * 对输入字符串进行md5散列.
 	 * @param input 加密字符串
 	 * @param iterations 迭代次数
 	 */
-	public static byte[] md5(byte[] input, int iterations) {
-		return DigestUtils.digest(input, MD5, null, iterations);
+	public static String md5(String input, int iterations) {
+		return EncodeUtils.encodeHex(DigestUtils.digest(input.getBytes(StandardCharsets.UTF_8), DigestUtils.MD5, null, iterations));
 	}
 	
 	/**
 	 * 对文件进行md5散列.
 	 */
 	public static byte[] md5(InputStream input) throws IOException {
-		return DigestUtils.digest(input, MD5);
+		return DigestUtils.digest(input, DigestUtils.MD5);
 	}
 
 	/**
