@@ -23,7 +23,7 @@ public interface EmpUserDao extends CrudDao<EmpUser> {
 //	@Override
 //	@Results({
 //		@Result(column = "mobile", property = "mobile",
-//				javaType = String.class, typeHandler = AesTypeHandler.class)
+//				javaType = String.class, typeHandler = EncryptTypeHandler.class)
 //	})
 //	@SelectProvider(type = SelectSqlProvider.class, method = "get")
 //	EmpUser get(EmpUser entity);
