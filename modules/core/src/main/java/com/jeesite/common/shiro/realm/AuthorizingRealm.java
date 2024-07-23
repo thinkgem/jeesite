@@ -5,7 +5,9 @@
 package com.jeesite.common.shiro.realm;
 
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.codec.SM3Utils;
 import com.jeesite.common.codec.Sha1Utils;
+import com.jeesite.common.config.Global;
 import com.jeesite.common.shiro.authc.FormToken;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.modules.sys.entity.Log;
@@ -13,11 +15,10 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.LogUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-
-import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -28,19 +29,15 @@ import org.apache.shiro.subject.Subject;
  * @version 2018-7-11
  */
 public class AuthorizingRealm extends BaseAuthorizingRealm  {
-	
+
 	public static final String HASH_ALGORITHM = "SHA-1";
-	public static final int HASH_INTERATIONS = 1024;
+	public static final int HASH_ITERATIONS = 1024;
 	public static final int SALT_SIZE = 8;
-	
+
 	private UserService userService;
 	
 	public AuthorizingRealm() {
 		super();
-//		// 设定密码校验的Hash算法与迭代次数（V4.1.4及以上版本不需要了，统一使用validatePassword验证密码）
-//		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(HASH_ALGORITHM);
-//		matcher.setHashIterations(HASH_INTERATIONS);
-//		this.setCredentialsMatcher(matcher);
 	}
 	
 	/**
@@ -86,9 +83,13 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	@Override
 	public String encryptPassword(String plainPassword) {
 		String plain = EncodeUtils.decodeHtml(plainPassword);
-		byte[] salt = Sha1Utils.genSalt(SALT_SIZE);
-		byte[] hashPassword = Sha1Utils.sha1(plain.getBytes(), salt, HASH_INTERATIONS);
-		return EncodeUtils.encodeHex(salt) + EncodeUtils.encodeHex(hashPassword);
+		String salt = SM3Utils.genSaltString(SALT_SIZE);
+		if (Global.isSmAlgorithm()) {
+			String data = SM3Utils.sm3(plain, salt, HASH_ITERATIONS);
+			return salt + data;
+		}
+		String data = Sha1Utils.sha1(plain, salt, HASH_ITERATIONS);
+		return salt + data;
 	}
 
 	/**
@@ -101,9 +102,13 @@ public class AuthorizingRealm extends BaseAuthorizingRealm  {
 	public boolean validatePassword(String plainPassword, String password) {
 		try{
 			String plain = EncodeUtils.decodeHtml(plainPassword);
-			byte[] salt = EncodeUtils.decodeHex(password.substring(0, 16));
-			byte[] hashPassword = Sha1Utils.sha1(plain.getBytes(), salt, HASH_INTERATIONS);
-			return password.equals(EncodeUtils.encodeHex(salt) + EncodeUtils.encodeHex(hashPassword));
+			String salt = password.substring(0, SALT_SIZE * 2);
+			if (Global.isSmAlgorithm()) {
+				String data = SM3Utils.sm3(plain, salt, HASH_ITERATIONS);
+				return password.equals(salt + data);
+			}
+			String data = Sha1Utils.sha1(plain, salt, HASH_ITERATIONS);
+			return password.equals(salt + data);
 		}catch(Exception e){
 			return false;
 		}
