@@ -311,6 +311,15 @@ logging:
 # 前端基础路径
 #frontPath: /f
 
+# 加密设置
+#encrypt:
+#  # 默认秘钥，可通过 AesUtils.genKeyString() 生成新秘钥 Hex 编码
+#  defaultKey: 9f58a20946b47e190003ec716c1c457d
+#  # 是否使用国密 SM 算法（SHA-1 替换为 SM3、AES 替换为 SM4）
+#  smAlgorithm: false
+#  # 对称或非对称加密是否使用 Base64 存储，默认 Hex 存储
+#  storeBase64: false
+
 # 分页相关
 #page:
 #
