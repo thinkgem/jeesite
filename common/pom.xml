@@ -91,6 +91,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
 		</dependency>
 		
 		<!-- Email -->
@@ -196,11 +197,18 @@
 			<version>${poi.version}</version>
 		</dependency>
 		
-		<!-- pinyin4j -->
+		<!-- Pinyin4j -->
 		<dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
+		</dependency>
+
+		<!-- BC Provider -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk18on</artifactId>
+			<version>${bcprov.version}</version>
 		</dependency>
 		
 		<!-- Logging begin -->
