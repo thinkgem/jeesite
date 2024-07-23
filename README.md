@@ -6,7 +6,7 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
- <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.1" src="https://img.shields.io/badge/Ant Design Vue-4.1-blue.svg"></a>
+ <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.2" src="https://img.shields.io/badge/Ant Design Vue-4.2-blue.svg"></a>
  <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.8-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite-vue/badge/fork.svg?theme=dark"></a>
@@ -35,8 +35,10 @@
 
 * 前端源码仓库地址1：<https://gitee.com/thinkgem/jeesite-vue>
 * 前端源码仓库地址2：<https://github.com/thinkgem/jeesite-vue>
+* 前端源码仓库地址3：<https://gitcode.com/thinkgem/jeesite-vue>
 * 后端源码仓库地址1：<https://gitee.com/thinkgem/jeesite5>
 * 后端源码仓库地址2：<https://github.com/thinkgem/jeesite5>
+* 后端源码仓库地址2：<https://gitcode.com/thinkgem/jeesite5>
 
 ## 框架介绍
 
