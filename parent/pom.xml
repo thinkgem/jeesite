@@ -44,6 +44,7 @@
 
 		<poi.version>5.2.3</poi.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<bcprov.version>1.78.1</bcprov.version>
 
 		<joda-time.version>2.12.7</joda-time.version>
 		<logstash-logback.version>7.4</logstash-logback.version>
