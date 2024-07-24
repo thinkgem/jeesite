@@ -258,6 +258,7 @@ public class ServletUtils {
 		if (object == null) {
 			object = resultMap;
 		}
+		object = ResultUtils.result(object, request, response);
 		if (jsonView != null) {
 			return JsonMapper.toJson(object, jsonView);
 		}else {
@@ -331,6 +332,7 @@ public class ServletUtils {
 				object = new JSONPObject(functionName, object);
 			}
 		}
+		object = ResultUtils.result(object, request, response);
 		if (jsonView != null) {
 			return renderString(response, JsonMapper.toJson(object, jsonView));
 		}else {
@@ -358,18 +360,7 @@ public class ServletUtils {
 		try {
 //			response.reset(); // 注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我的Cookie信息
 			if (type == null && StringUtils.isBlank(response.getContentType())){
-				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
-						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
-					type = MediaType.APPLICATION_JSON_VALUE;
-				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
-					if (StringUtils.startsWith(string, "<!DOCTYPE")){
-						type = MediaType.TEXT_HTML_VALUE;
-					}else{
-						type = MediaType.APPLICATION_XML_VALUE;
-					}
-				}else{
-					type = MediaType.TEXT_PLAIN_VALUE;
-				}
+				type = getContentType(string);
 			}
 			if (type != null) {
 				response.setContentType(type);
@@ -380,6 +371,27 @@ public class ServletUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 根据内容判断相应类型 MediaType
+	 * @return application/json、text/html、application/xml、text/plain
+	 */
+	public static String getContentType(String string) {
+		String type;
+		if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
+				|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
+			type = MediaType.APPLICATION_JSON_VALUE;
+		}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
+			if (StringUtils.startsWith(string, "<!DOCTYPE")){
+				type = MediaType.TEXT_HTML_VALUE;
+			}else{
+				type = MediaType.APPLICATION_XML_VALUE;
+			}
+		}else{
+			type = MediaType.TEXT_PLAIN_VALUE;
+		}
+		return type;
 	}
 
 	/**
