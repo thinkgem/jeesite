@@ -24,6 +24,9 @@ export const moduleList = (params?: Module | any) =>
 export const moduleListData = (params?: Module | any) =>
   defHttp.post<Page<Module>>({ url: adminPath + '/sys/module/listData', params });
 
+export const moduleSelectData = (params?: Module | any) =>
+  defHttp.post<Recordable[]>({ url: adminPath + '/sys/module/selectData', params });
+
 export const moduleForm = (params?: Module | any) =>
   defHttp.get<Module>({ url: adminPath + '/sys/module/form', params });
 

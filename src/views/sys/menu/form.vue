@@ -28,6 +28,7 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { Menu, menuSave, menuForm, menuTreeData } from '/@/api/sys/menu';
+  // import { moduleSelectData } from '/@/api/sys/module';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -74,6 +75,8 @@
       field: 'moduleCodes',
       component: 'Select',
       componentProps: {
+        // api: moduleSelectData,
+        // allowClear: true,
         mode: 'multiple',
       },
       defaultValue: 'core',
