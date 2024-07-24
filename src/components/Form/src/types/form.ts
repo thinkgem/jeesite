@@ -30,22 +30,22 @@ export interface ButtonProps extends AntdButtonProps {
 }
 
 export interface FormActionType {
-  submit: () => Promise<void>;
-  setFieldsValue: (values: Recordable) => Promise<void>;
-  resetFields: () => Promise<void>;
-  getFieldsValue: () => Recordable;
-  clearValidate: (name?: string | string[]) => Promise<void>;
+  setProps: (formProps: Partial<FormProps>) => Promise<void>;
   updateSchema: (data: Partial<FormSchema> | Partial<FormSchema>[]) => Promise<void>;
   resetSchema: (data: Partial<FormSchema> | Partial<FormSchema>[]) => Promise<void>;
-  setProps: (formProps: Partial<FormProps>) => Promise<void>;
-  removeSchemaByFiled: (field: string | string[]) => Promise<void>;
+  getFieldsValue: () => Recordable;
+  setFieldsValue: (values: Recordable) => Promise<void>;
   appendSchemaByField: (
     schema: FormSchema,
     prefixField: string | undefined,
     first?: boolean | undefined,
   ) => Promise<void>;
-  validateFields: (nameList?: NamePath[]) => Promise<any>;
+  removeSchemaByFiled: (field: string | string[]) => Promise<void>;
+  resetFields: () => Promise<void>;
+  submit: () => Promise<void>;
   validate: (nameList?: NamePath[]) => Promise<any>;
+  validateFields: (nameList?: NamePath[]) => Promise<any>;
+  clearValidate: (name?: string | string[]) => Promise<void>;
   scrollToField: (name: NamePath, options?: ScrollOptions) => Promise<void>;
 }
 
