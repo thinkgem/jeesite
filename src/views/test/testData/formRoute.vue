@@ -22,6 +22,41 @@
             :height="300"
           />
         </template>
+        <template #testCheckbox="{ model, field }">
+          <Form.Item class="inline-block" :name="field">
+            <CheckboxGroup
+              :value="model[field]"
+              @change="
+                model[field] = $event || ''; // 给表单赋值（写到这里是为了方便演示，可写到一个函数里）
+                $event && (model[field + 'Other'] = ''); // 不选“无”的时候，清空后面的复选框和输入框
+              "
+              :options="[{ label: '无', value: '0' }]"
+            />
+            <div class="ml-3 inline-block"></div>
+            <CheckboxGroup
+              :value="model[field]"
+              @change="model[field] = $event || ''"
+              :dictType="'sys_menu_type'"
+              :disabled="model[field] == '0' /* 选择“无”的时候禁用 */"
+            />
+          </Form.Item>
+          <div class="ml-2 inline-block"></div>
+          <Form.Item
+            class="inline-block"
+            :name="field + 'Other'"
+            :rules="[
+              // 如果选择了最后一个复选框，则出现输入框，并启用表单验证
+              //{ required: (',' + model[field] + ',').indexOf(',2,') != -1, message: '请填写' },
+            ]"
+            v-show="(',' + model[field] + ',').indexOf(',2,') != -1 /* 是否显示输入框 */"
+          >
+            <Input
+              :value="model[field + 'Other']"
+              @change="model[field + 'Other'] = $event.target.value"
+              style="width: 200px"
+            />
+          </Form.Item>
+        </template>
       </BasicForm>
     </template>
     <template #form2>
@@ -67,6 +102,8 @@
   import { WangEditor } from '/@/components/WangEditor';
   import { useQuery } from '/@/hooks/web/usePage';
   import { useTabs } from '/@/hooks/web/useTabs';
+  import { CheckboxGroup } from '/@/components/Form';
+  import { Input, Form } from 'ant-design-vue';
 
   const formConfig = ref<any[]>([
     {
@@ -155,10 +192,12 @@
     {
       label: t('复选框'),
       field: 'testCheckbox',
-      component: 'CheckboxGroup',
-      componentProps: {
-        dictType: 'sys_menu_type',
-      },
+      // component: 'CheckboxGroup',
+      // componentProps: {
+      //   dictType: 'sys_menu_type',
+      // },
+      component: 'Input',
+      slot: 'testCheckbox',
     },
     {
       label: t('日期选择'),
