@@ -119,7 +119,7 @@ adminPath: /a
 # 前端基础路径
 frontPath: /f
 
-# 加密设置
+# 加密设置（v5.8.1）
 encrypt:
   # 默认秘钥，可通过 AesUtils.genKeyString() 生成新秘钥 Hex 编码
   defaultKey: 9f58a20946b47e190003ec716c1c457d
@@ -602,6 +602,14 @@ web:
   # AJAX 接受参数名和请求头名（v4.3.0）
   ajaxParamName: __ajax
   ajaxHeaderName: x-ajax
+
+  # 是否默认对结果进行统一包装为：{ code: 200, msg: "", data: {} | [] }（v5.8.1）
+  # 注意：如果设置为 true 会对前端页面访问产生影响，暂时只为系统纯接口提供开启使用。
+  isDefaultResult: false
+
+  # 开启对接口结果数据进行包装的请求参数名和请求头名（v5.8.1）
+  resultParamName: __data
+  resultHeaderName: x-header
 
   # MVC 视图相关
   view:

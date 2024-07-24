@@ -744,6 +744,14 @@ web:
 #  ajaxParamName: __ajax
 #  ajaxHeaderName: x-ajax
 #
+#  # 是否默认对结果进行统一包装为：{ code: 200, msg: "", data: {} | [] }（v5.8.1）
+#  # 注意：如果设置为 true 会对前端页面访问产生影响，暂时只为系统纯接口提供开启使用。
+#  isDefaultResult: false
+#
+#  # 开启对接口结果数据进行包装的请求参数名和请求头名（v5.8.1）
+#  resultParamName: __data
+#  resultHeaderName: x-header
+#
 #  # MVC 视图相关
 #  view:
 #
