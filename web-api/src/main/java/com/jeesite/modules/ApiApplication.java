@@ -20,7 +20,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class ApiApplication extends SpringBootServletInitializer {
 
-	private static Logger logger = LoggerFactory.getLogger(ApiApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(ApiApplication.class);
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);

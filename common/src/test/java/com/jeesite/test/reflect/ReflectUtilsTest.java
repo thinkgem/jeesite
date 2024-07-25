@@ -230,7 +230,7 @@ public class ReflectUtilsTest {
  */
 class ReflectUtils2 {
 
-	private static Logger logger = LoggerFactory.getLogger(ReflectUtils2.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReflectUtils2.class);
 	private static final String SETTER_PREFIX = "set";
 	private static final String GETTER_PREFIX = "get";
 	private static Class baseEntityClass = null;

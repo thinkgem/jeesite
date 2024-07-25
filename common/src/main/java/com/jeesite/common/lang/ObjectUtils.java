@@ -24,7 +24,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
-	private static Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
 	private static final boolean isJavaSerialize; 
 	
 	static {

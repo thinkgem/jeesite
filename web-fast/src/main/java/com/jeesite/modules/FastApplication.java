@@ -27,7 +27,7 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 public class FastApplication extends SpringBootServletInitializer {
 
-	private static Logger logger = LoggerFactory.getLogger(FastApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(FastApplication.class);
 
 	public static void setJeeSiteInitDataProperty() {
 		// 删除这个设置，启动系统时，将不会进行检测初始化数据库
