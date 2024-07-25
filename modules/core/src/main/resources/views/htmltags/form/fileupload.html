@@ -163,7 +163,7 @@ $(function() {
 		fileNameInputId: '${p.fileNameInputId}',
 		uploadType: '${p.uploadType}',
 		maxFileSize: "#{isNotBlank(p.maxFileSize)?p.maxFileSize:@Global.getConfig('file.maxFileSize', '500*1024*1024')}",
-		imageAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.imageAllowSuffixes", ".gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,")}',
+		imageAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.imageAllowSuffixes", ".gif,.bmp,.jpeg,.jpg,.ico,.png,.tif,.tiff,webp,")}',
 		mediaAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.mediaAllowSuffixes", ".flv,.swf,.mkv,webm,.mid,.mov,.mp3,.mp4,.m4v,.mpc,.mpeg,.mpg,.swf,.wav,.wma,.wmv,.avi,.rm,.rmi,.rmvb,.aiff,.asf,.ogg,.ogv,")}',
 		fileAllowSuffixes: '${isNotBlank(p.allowSuffixes)?p.allowSuffixes:@Global.getConfig("file.fileAllowSuffixes", ".doc,.docx,.rtf,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.vsd,.txt,.md,.xml,.rar,.zip,.7z,.tar,.tgz,.jar,.gz,.gzip,.bz2,.cab,.iso,")}',
 		chunked: "#{__info_type=='0'?false:@Global.getConfig('file.chunked', 'true')}",
