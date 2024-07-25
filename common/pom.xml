@@ -46,13 +46,6 @@
 			<version>${commons-io.version}</version>
 		</dependency>
 		
-		<!-- Java serialization -->
-		<dependency>
-			<groupId>de.ruedigermoeller</groupId>
-			<artifactId>fst</artifactId>
-			<version>${fst.version}</version>
-		</dependency>
-		
 		<!-- Jackson json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

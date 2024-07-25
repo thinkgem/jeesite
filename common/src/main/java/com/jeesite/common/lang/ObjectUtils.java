@@ -5,11 +5,9 @@
 package com.jeesite.common.lang;
 
 import org.apache.commons.lang3.BooleanUtils;
-import org.nustaq.serialization.FSTConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.core.NamedThreadLocal;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -24,14 +22,14 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
-	private static Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
-	private static final boolean isJavaSerialize; 
-	
+	private static final Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
+	private static final boolean isJavaSerialize;
+
 	static {
 		String[] ver = StringUtils.split(System.getProperty("java.version"), StringUtils.DOT);
 		isJavaSerialize = ver.length > 0 && Integer.parseInt(ver[0]) > 1;
 	}
-	
+
 	/**
 	 * 转换为 Double 类型
 	 */
@@ -164,11 +162,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 */
 	public static byte[] serialize(Object object) {
 		try {
-			if (isJavaSerialize) {
-				return ObjectUtils.serializeJava(object);
-			}else {
-				return ObjectUtils.serializeFst(object);
-			}
+			return ObjectUtils.serializeJava(object);
 		} catch (Exception e) {
 			logger.error("serialize: {}", e.getMessage());
 		}
@@ -182,11 +176,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 */
 	public static Object unserialize(byte[] bytes) {
 		try {
-			if (isJavaSerialize) {
-				return ObjectUtils.unserializeJava(bytes);
-			}else {
-				return ObjectUtils.unserializeFst(bytes);
-			}
+			return ObjectUtils.unserializeJava(bytes);
 		} catch (Exception e) {
 			logger.error("unserialize: {}", e.getMessage());
 		}
@@ -243,50 +233,50 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 		}
 		return object;
 	}
-	
-	private static ThreadLocal<FSTConfiguration> fstConfiguration = 
-				new NamedThreadLocal<FSTConfiguration>("FSTConfiguration") {
-		@Override
-		public FSTConfiguration initialValue() {
-			return FSTConfiguration.createDefaultConfiguration();
-		}
-	};
 
-	/**
-	 * FST 序列化对象
-	 * @param object
-	 * @return
-	 */
-	public static byte[] serializeFst(Object object) {
-		if (object == null){
-			return null;
-		}
-		long beginTime = System.currentTimeMillis();
-		byte[] bytes = fstConfiguration.get().asByteArray(object);
-		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 30000){
-			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatTime(totalTime));
-		}
-		return bytes;
-	}
-
-	/**
-	 * FST 反序列化对象
-	 * @param bytes
-	 * @return
-	 */
-	public static Object unserializeFst(byte[] bytes) {
-		if (bytes == null){
-			return null;
-		}
-		long beginTime = System.currentTimeMillis();
-		Object object = fstConfiguration.get().asObject(bytes);
-		long totalTime = System.currentTimeMillis() - beginTime;
-		if (totalTime > 30000 && object != null){
-			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatTime(totalTime));
-		}
-		return object;
-	}
+//	private static ThreadLocal<FSTConfiguration> fstConfiguration =
+//				new NamedThreadLocal<FSTConfiguration>("FSTConfiguration") {
+//		@Override
+//		public FSTConfiguration initialValue() {
+//			return FSTConfiguration.createDefaultConfiguration();
+//		}
+//	};
+//
+//	/**
+//	 * FST 序列化对象
+//	 * @param object
+//	 * @return
+//	 */
+//	public static byte[] serializeFst(Object object) {
+//		if (object == null){
+//			return null;
+//		}
+//		long beginTime = System.currentTimeMillis();
+//		byte[] bytes = fstConfiguration.get().asByteArray(object);
+//		long totalTime = System.currentTimeMillis() - beginTime;
+//		if (totalTime > 30000){
+//			logger.warn(object.getClass() + " fst serialize time: " + TimeUtils.formatTime(totalTime));
+//		}
+//		return bytes;
+//	}
+//
+//	/**
+//	 * FST 反序列化对象
+//	 * @param bytes
+//	 * @return
+//	 */
+//	public static Object unserializeFst(byte[] bytes) {
+//		if (bytes == null){
+//			return null;
+//		}
+//		long beginTime = System.currentTimeMillis();
+//		Object object = fstConfiguration.get().asObject(bytes);
+//		long totalTime = System.currentTimeMillis() - beginTime;
+//		if (totalTime > 30000 && object != null){
+//			logger.warn(object.getClass() + " fst unserialize time: " + TimeUtils.formatTime(totalTime));
+//		}
+//		return object;
+//	}
 
 //	private static Pool<Kryo> kryoPool = new Pool<Kryo>(true, false, 8) {
 //		protected Kryo create() {

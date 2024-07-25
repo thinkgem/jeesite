@@ -28,7 +28,6 @@
 
 		<jackson-bom2.version>2.17.1</jackson-bom2.version>
 		<fastjson.version>2.0.51</fastjson.version>
-		<fst.version>3.0.4-jdk17</fst.version>
 
 		<snakeyaml.version>2.2</snakeyaml.version>
 		<glassfish-jaxb.version>2.3.9</glassfish-jaxb.version>
