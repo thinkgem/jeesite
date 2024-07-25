@@ -75,7 +75,7 @@ public class MetricFetcher {
     private static final long FETCH_INTERVAL_SECOND = 6;
     private static final Charset DEFAULT_CHARSET = Charset.forName(SentinelConfig.charset());
     private final static String METRIC_URL_PATH = "metric";
-    private static Logger logger = LoggerFactory.getLogger(MetricFetcher.class);
+    private static final Logger logger = LoggerFactory.getLogger(MetricFetcher.class);
     private final long intervalSecond = 1;
 
     private Map<String, AtomicLong> appLastFetchTime = new ConcurrentHashMap<>();

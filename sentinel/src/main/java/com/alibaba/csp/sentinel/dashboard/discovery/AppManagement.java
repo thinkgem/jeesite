@@ -15,14 +15,13 @@
  */
 package com.alibaba.csp.sentinel.dashboard.discovery;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class AppManagement implements MachineDiscovery {

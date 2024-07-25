@@ -46,7 +46,7 @@ import com.alibaba.csp.sentinel.dashboard.domain.vo.MetricVo;
 @RequestMapping(value = "/metric", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MetricController {
 
-    private static Logger logger = LoggerFactory.getLogger(MetricController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MetricController.class);
 
     private static final long maxQueryIntervalMs = 1000 * 60 * 60;
 
