@@ -91,7 +91,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SentinelApiClient {
-    private static Logger logger = LoggerFactory.getLogger(SentinelApiClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(SentinelApiClient.class);
 
     private static final Charset DEFAULT_CHARSET = Charset.forName(SentinelConfig.charset());
     private static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";

@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/resource")
 public class ResourceController {
 
-    private static Logger logger = LoggerFactory.getLogger(ResourceController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResourceController.class);
 
     @Autowired
     private SentinelApiClient httpFetcher;
