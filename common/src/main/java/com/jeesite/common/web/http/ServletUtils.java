@@ -64,13 +64,8 @@ public class ServletUtils {
 	 * 	</listener-class></listener>
 	 */
 	public static HttpServletRequest getRequest(){
-		HttpServletRequest request = null;
 		try{
-			request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-			if (request == null){
-				return null;
-			}
-			return request;
+			return ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		}catch(Exception e){
 			return null;
 		}
@@ -83,16 +78,11 @@ public class ServletUtils {
 	 * 	<filter-name>requestContextFilter</filter-name><url-pattern>/*</url-pattern></filter-mapping>
 	 */
 	public static HttpServletResponse getResponse(){
-		HttpServletResponse response = null;
 		try{
-			response = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
-			if (response == null){
-				return null;
-			}
+			return ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
 		}catch(Exception e){
 			return null;
 		}
-		return response;
 	}
 	
 	/**
@@ -122,9 +112,8 @@ public class ServletUtils {
 	public static boolean isStaticFile(String uri){
 		if (STATIC_FILE == null){
 			try {
-				throw new Exception("检测到“application.yml”中没有配置“web.staticFile”属性。"
-						+ "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
-						+ ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
+				throw new Exception("检测到“application.yml”中没有配置“web.staticFile”属性。配置示例：\n#静态文件后缀\nweb.staticFile=" +
+						".css,.js,.map,.png,.jpg,.gif,.jpeg,.webp,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
