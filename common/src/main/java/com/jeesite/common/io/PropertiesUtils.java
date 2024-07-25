@@ -41,7 +41,7 @@ public class PropertiesUtils {
 		"file:bootstrap.yml", "file:config/bootstrap.yml",
 	};
 
-	private static Logger logger = PropertiesUtils.initLogger();
+	private static final Logger logger = PropertiesUtils.initLogger();
 	private final Set<String> configSet = SetUtils.newLinkedHashSet();
 	private final Properties properties = new Properties();
 	private static Environment environment;
