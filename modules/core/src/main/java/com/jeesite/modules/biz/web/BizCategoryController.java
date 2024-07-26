@@ -12,7 +12,6 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.biz.entity.BizCategory;
 import com.jeesite.modules.biz.service.BizCategoryService;
-import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,7 +235,7 @@ public class BizCategoryController extends BaseController {
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
 	public String fixTreeData(BizCategory bizCategory){
-		if (!UserUtils.getUser().isAdmin()){
+		if (!bizCategory.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
 		}
 		bizCategoryService.fixTreeData();

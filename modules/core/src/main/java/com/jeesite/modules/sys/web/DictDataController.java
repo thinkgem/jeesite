@@ -15,7 +15,6 @@ import com.jeesite.modules.sys.entity.DictType;
 import com.jeesite.modules.sys.service.DictDataService;
 import com.jeesite.modules.sys.service.DictTypeService;
 import com.jeesite.modules.sys.utils.DictUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -286,8 +285,8 @@ public class DictDataController extends BaseController {
 	@RequiresPermissions("sys:dictData:edit")
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
-	public String fixTreeData(){
-		if (!UserUtils.getUser().isAdmin()){
+	public String fixTreeData(DictData dictData){
+		if (!dictData.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, text("操作失败，只有管理员才能进行修复！"));
 		}
 		dictDataService.fixTreeData();

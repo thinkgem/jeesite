@@ -132,7 +132,7 @@ public class CorpAdminController extends BaseController {
 			User where = new User();
 			where.setCorpCode_(user.getCorpCode_());
 			List<User> list = userService.findCorpList(where);
-			if (list.size() > 0){
+			if (!list.isEmpty()){
 				// 新增租户，如果已存在，则不能保存
 				if ("addCorp".equals(op)){
 					return renderResult(Global.FALSE, text("保存租户失败，租户代码已存在"));
@@ -151,7 +151,7 @@ public class CorpAdminController extends BaseController {
 		userService.save(user);
 		userService.saveAuth(user);
 		// 如果修改的是当前用户，则清除当前用户缓存
-		if (user.getUserCode().equals(UserUtils.getUser().getUserCode())) {
+		if (user.getUserCode().equals(user.currentUser().getUserCode())) {
 			UserUtils.clearCache();
 		}
 		return renderResult(Global.TRUE, text("保存管理员''{0}''成功", user.getLoginCode()));
@@ -275,7 +275,7 @@ public class CorpAdminController extends BaseController {
 			where.setCorpCode_(corpCode);
 			where.setPage(new Page<>(1, 1, -1));
 			List<User> list = userService.findCorpList(where);
-			if (list.size() > 0){
+			if (!list.isEmpty()){
 				User user = list.get(0);
 				Session session = UserUtils.getSession();
 				session.setAttribute("corpCode", user.getCorpCode_());

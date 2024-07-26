@@ -271,8 +271,8 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:edit")
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
-	public String fixTreeData(){
-		if (!UserUtils.getUser().isAdmin()){
+	public String fixTreeData(Menu menu){
+		if (!menu.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, text("操作失败，只有管理员才能进行修复！"));
 		}
 		menuService.fixTreeData();

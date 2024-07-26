@@ -14,7 +14,6 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Area;
 import com.jeesite.modules.sys.service.AreaService;
 import com.jeesite.modules.sys.utils.AreaUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -257,8 +256,8 @@ public class AreaController extends BaseController {
 	@RequiresPermissions("sys:area:edit")
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
-	public String fixTreeData(){
-		if (!UserUtils.getUser().isAdmin()){
+	public String fixTreeData(Area area){
+		if (!area.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, text("操作失败，只有管理员才能进行修复！"));
 		}
 		areaService.fixTreeData();
