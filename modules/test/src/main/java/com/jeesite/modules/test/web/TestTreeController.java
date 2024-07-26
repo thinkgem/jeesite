@@ -4,9 +4,14 @@
  */
 package com.jeesite.modules.test.web;
 
-import java.util.List;
-import java.util.Map;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.idgen.IdGen;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.test.entity.TestTree;
+import com.jeesite.modules.test.service.TestTreeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,15 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.idgen.IdGen;
-import com.jeesite.modules.sys.utils.UserUtils;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.test.entity.TestTree;
-import com.jeesite.modules.test.service.TestTreeService;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 测试树表Controller
@@ -214,7 +212,7 @@ public class TestTreeController extends BaseController {
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
 	public String fixTreeData(TestTree testTree){
-		if (!UserUtils.getUser().isAdmin()){
+		if (!testTree.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
 		}
 		testTreeService.fixTreeData();

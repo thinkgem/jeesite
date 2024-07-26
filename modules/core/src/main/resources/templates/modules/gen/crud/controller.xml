@@ -35,7 +35,6 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.idgen.IdGen;
-import com.jeesite.modules.sys.utils.UserUtils;
 <% }else{ %>
 import com.jeesite.common.entity.Page;
 <% } %>
@@ -368,7 +367,7 @@ public class ${ClassName}Controller extends BaseController {
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
 	public String fixTreeData(${ClassName} ${className}){
-		if (!UserUtils.getUser().isAdmin()){
+		if (!${className}.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
 		}
 		${className}Service.fixTreeData();
