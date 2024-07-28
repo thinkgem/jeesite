@@ -47,7 +47,7 @@ set "RUN_JAVA=%JAVA_HOME%\bin\java"
 goto runJava
 
 :runJava
-call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.WarLauncher
+call "%RUN_JAVA%" -cp %CLASS_PATH% %JAVA_OPTS% org.springframework.boot.loader.launch.WarLauncher
 goto end
 
 :end

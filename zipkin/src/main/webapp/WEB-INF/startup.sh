@@ -32,4 +32,4 @@ else
   RUN_JAVA="$JAVA_HOME"/bin/java
 fi
 
-exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.WarLauncher
+exec "$RUN_JAVA" -cp $CLASS_PATH $JAVA_OPTS org.springframework.boot.loader.launch.WarLauncher

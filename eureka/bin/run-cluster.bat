@@ -52,7 +52,7 @@ set "JAVA_OPTS1=-Dserver.port=8970 -Deureka.instance.hostname=eureka1"
 set "JAVA_OPTS2=-Dserver.port=8969 -Deureka.instance.hostname=eureka2"
 set "JAVA_OPTS3=-Dserver.port=8968 -Deureka.instance.hostname=eureka3"
 
-set "CLASS_NAME=org.springframework.boot.loader.WarLauncher"
+set "CLASS_NAME=org.springframework.boot.loader.launch.WarLauncher"
 
 start cmd /c "title %JAVA_OPTS1% && java %JAVA_OPTS% %JAVA_OPTS1% %CLASS_NAME%"
 start cmd /c "title %JAVA_OPTS2% && java %JAVA_OPTS% %JAVA_OPTS2% %CLASS_NAME%"
