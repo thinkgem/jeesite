@@ -246,7 +246,7 @@
             return false;
           }
           if (isFunction(editRule)) {
-            editRule(currentValue, record as Recordable)
+            return await editRule(currentValue, record as Recordable)
               .then(() => {
                 ruleMessage.value = '';
                 return true;
