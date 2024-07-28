@@ -41,12 +41,12 @@ import java.util.*;
  */
 public class ExcelImport implements Closeable {
 	
-	private static Logger log = LoggerFactory.getLogger(ExcelImport.class);
+	private static final Logger log = LoggerFactory.getLogger(ExcelImport.class);
 			
 	/**
 	 * 工作薄对象
 	 */
-	private Workbook wb;
+	private final Workbook wb;
 	
 	/**
 	 * 工作表对象
@@ -61,7 +61,7 @@ public class ExcelImport implements Closeable {
 	/**
 	 * 存储字段类型临时数据
 	 */
-	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
+	private final Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
 
 	@SuppressWarnings("rawtypes")
 	private static Class dictUtilsClass = null;
@@ -385,6 +385,13 @@ public class ExcelImport implements Closeable {
 	@SuppressWarnings("unchecked")
 	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws Exception{
 		List<Object[]> annotationList = ListUtils.newArrayList();
+		// Get class annotation
+		ExcelFields cfs = cls.getAnnotation(ExcelFields.class);
+		if (cfs != null && cfs.value() != null){
+			for (ExcelField ef : cfs.value()){
+				addAnnotation(annotationList, ef, cls, Type.IMPORT, groups);
+			}
+		}
 		// Get constructor annotation
 		Constructor<?>[] cs = cls.getConstructors();
 		for (Constructor<?> c : cs) {
