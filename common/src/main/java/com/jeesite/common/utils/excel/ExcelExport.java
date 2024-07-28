@@ -39,12 +39,12 @@ import java.util.*;
  */
 public class ExcelExport implements Closeable{
 	
-	private static Logger log = LoggerFactory.getLogger(ExcelExport.class);
+	private static final Logger log = LoggerFactory.getLogger(ExcelExport.class);
 			
 	/**
 	 * 工作薄对象
 	 */
-	private Workbook wb;
+	private final Workbook wb;
 	
 	/**
 	 * 工作表对象
@@ -69,7 +69,7 @@ public class ExcelExport implements Closeable{
 	/**
 	 * 存储字段类型临时数据
 	 */
-	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
+	private final Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
 
 	@SuppressWarnings("rawtypes")
 	private static Class dictUtilsClass = null;
@@ -194,6 +194,13 @@ public class ExcelExport implements Closeable{
 	 */
 	public void createSheet(String sheetName, String title, Class<?> cls, Type type, String... groups){
 		this.annotationList = ListUtils.newArrayList();
+		// Get class annotation
+		ExcelFields cfs = cls.getAnnotation(ExcelFields.class);
+		if (cfs != null && cfs.value() != null){
+			for (ExcelField ef : cfs.value()){
+				addAnnotation(annotationList, ef, cfs, type, groups);
+			}
+		}
 		// Get constructor annotation
 		Constructor<?>[] cs = cls.getConstructors();
 		for (Constructor<?> c : cs) {
