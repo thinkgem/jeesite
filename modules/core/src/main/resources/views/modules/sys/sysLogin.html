@@ -34,11 +34,16 @@
 			<% }else if(isNotBlank(message!)){ %>
 				<h4 class="login-box-msg text-red">${message}</h4>
 			<% } %>
-			<div class="form-group has-feedback">
+			<div class="form-group has-feedback tab-pane tab-1 tab-3 active">
 				<span class="icon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
 					data-msg-required="${text('请填写登录账号.')}" placeholder="${text('登录账号')}"
 					value="${cookie('rememberUserCode')}"/>
+			</div>
+			<div class="form-group has-feedback tab-pane tab-2">
+				<span class="icon-user form-control-feedback" title="${text('手机号码')}"></span>
+				<#form:input type="text" name="mobile" class="form-control required"
+					data-msg-required="${text('请填写手机号码.')}" placeholder="${text('手机号码')}"/>
 			</div>
 			<div class="form-group has-feedback tab-pane tab-1 tab-3 active">
 				<span class="icon-lock form-control-feedback" title="${text('登录密码，鼠标按下显示密码')}"
@@ -62,8 +67,14 @@
 					<input type="text" id="loginValidCode" name="loginValidCode" class="form-control required"
 						data-msg-required="${text('请填写手机验证码.')}" placeholder="${text('手机验证码')}" />
 					<span class="input-group-btn">
-						<input type="button" id="sendLoginValidCode" value="${text('获取手机验证码')}" class="btn btn-flat"/>
+						<input type="button" id="sendLoginValidCode" value="${text('获取手机验证码')}" class="btn btn-flat" autocomplete="off"/>
 					</span>
+				</div>
+			</div>
+			<div id="selectLoginCodeDiv" class="form-group has-feedback hide">
+				<div class="input-group">
+					<span class="input-group-addon"> &nbsp;${text('选择账号')}：</span>
+					<select id="selectLoginCode" name="selectLoginCode" class="form-control required"></select>
 				</div>
 			</div>
 			<div class="form-group">

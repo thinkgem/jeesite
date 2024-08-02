@@ -65,14 +65,26 @@ $(function(){
 		}else{
 			var $this = this;
 			js.ajaxSubmit(ctxPath + '/account/getLoginValidCode', {
-				validType: 'mobile',
-				username : $('#username').val(),
+				mobile : $('#mobile').val(),
 				validCode : $('#validCode').val()
 			}, function(data){
 				js.showMessage(data.message);
 				if (data.result == 'true'){
 					sendTime($this);
 					$('#loginValidCode').focus();
+					if (data.extMessage && data.userList) {
+						js.showMessage(data.extMessage, undefined, 'warning');
+						var options = [];
+						for (var i=0, l=data.userList.length; i<l; i++) {
+							var user = data.userList[i];
+							options.push('<option value="' + user.loginCode + '">'
+								+ user.userName + ' (' + user.loginCode + ') </option>');
+						}
+						$('#selectLoginCode').html(options.join(''));
+						$('#selectLoginCodeDiv').removeClass('hide');
+					} else {
+						$('#selectLoginCodeDiv').addClass('hide');
+					}
 				}else{
 					$('#validCodeImg').click();
 				}
