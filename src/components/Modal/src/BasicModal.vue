@@ -1,14 +1,15 @@
 <template>
-  <Modal v-bind="getBindValue" @cancel="handleCancel" :closable="false">
-    <template #closeIcon v-if="!$slots.closeIcon"> </template>
-
-    <template #title v-if="!$slots.title">
+  <Modal v-bind="getBindValue" @cancel="handleCancel">
+    <template #closeIcon v-if="!$slots.closeIcon">
       <ModalClose
         :canFullscreen="getProps.canFullscreen"
         :fullScreen="fullScreenRef"
         @cancel="handleCancel"
         @fullscreen="handleFullScreen"
       />
+    </template>
+
+    <template #title v-if="!$slots.title">
       <ModalHeader
         :helpMessage="getProps.helpMessage"
         :title="getMergeProps.title"
@@ -341,8 +342,8 @@
       &-close-x {
         display: inline-block;
         width: 96px;
-        height: 56px;
-        line-height: 56px;
+        height: 55px;
+        line-height: 55px;
       }
 
       &-confirm-body {
@@ -409,7 +410,7 @@
     .ant-modal {
       inset: 0 !important;
       width: 100% !important;
-      // height: 100%;
+      max-width: calc(100vw - 15px) !important;
 
       &-content {
         height: 100%;
