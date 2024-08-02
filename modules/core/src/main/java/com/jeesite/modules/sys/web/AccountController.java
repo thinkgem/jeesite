@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.web;
 
 import com.jeesite.common.codec.DesUtils;
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
@@ -37,7 +38,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 账号自助服务Controller
@@ -55,20 +59,19 @@ public class AccountController extends BaseController{
 
 	/**
 	 * 获取登录短信或邮件验证码
+	 * @param mobile 手机号码
 	 * @param validCode 图片验证码，防止重复机器人。
-	 * @param validType 验证方式：mobile、email
 	 * @author ThinkGem
 	 */
 	@PostMapping(value = "getLoginValidCode")
 	@ResponseBody
 	@Operation(summary = "获取登录的短信或邮件验证码")
 	@Parameters({
-		@Parameter(name = "username", description = "登录账号", required = true),
+		@Parameter(name = "mobile", description = "手机号码", required = true),
 		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
-		@Parameter(name = "validType", description = "验证方式（mobile、email）", required = true),
 	})
-	public String getLoginValidCode(String username, String validCode, String validType, HttpServletRequest request) {
-		return getValidCode("login", username, validCode, validType, request, "登录验证码");
+	public String getLoginValidCode(String mobile, String validCode, HttpServletRequest request) {
+		return getValidCode("login", mobile, validCode, "mobile", request, "登录验证码");
 	}
 	
 	/**
@@ -79,20 +82,34 @@ public class AccountController extends BaseController{
 	@ResponseBody
 	@Operation(summary = "根据短信或邮件验证码登录系统")
 	@Parameters({
-		@Parameter(name = "loginValidCode", description = "手机或邮箱接受的验证码", required = true),
+		@Parameter(name = "loginValidCode", description = "手机接受的验证码", required = true),
+		@Parameter(name = "selectLoginCode", description = "手机号绑定多个账号时的登录账号", required = true),
 	})
-	public String loginByValidCode(String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
+	public String loginByValidCode(String selectLoginCode, String loginValidCode, HttpServletRequest request, HttpServletResponse response) {
 		if (!Global.getConfigToBoolean("user.loginByValidCode", "true")) {
 			return renderResult(Global.FALSE, "验证码登录未开启，请设置：user.loginByValidCode=true");
 		}
-		FormToken formToken = FormFilter.newToken(request, response);
-		String s = validValidCode("login", formToken.getUsername(), loginValidCode, request);
+		String type = "login";
+		String userCode = UserUtils.getCache(type + "UserCode");
+		String loginCode = UserUtils.getCache(type + "LoginCode");
+		List<User> userList = UserUtils.getCache(type + "UserList");
+		String s = validValidCode(type, userCode, loginCode, loginValidCode, request);
 		if (s != null) {
 			return s;
 		}
 		// 登录系统
 		try {
-			formToken.setInnerLogin(true); // 因为手机验证码已验证，所以无需再进行验证密码
+			if (StringUtils.isNotBlank(selectLoginCode) && ListUtils.isNotEmpty(userList)) {
+				Optional<User> userOptional = userList.stream().filter(user -> selectLoginCode
+						.equals(user.getLoginCode())).findFirst();
+				if (userOptional.isPresent()) {
+					User user = userOptional.get();
+					loginCode = user.getLoginCode();
+				}
+			}
+			FormToken formToken = FormFilter.newToken(request, response);
+			formToken.setUsername(loginCode);
+			formToken.setInnerLogin(true);
 			UserUtils.getSubject().login(formToken);
 			FormFilter.onLoginSuccess(request, response);
         } catch (AuthenticationException e) {
@@ -138,23 +155,25 @@ public class AccountController extends BaseController{
 		@Parameter(name = "fpValidCode", description = "手机或邮箱接受的验证码", required = true),
 		@Parameter(name = "password", description = "新密码", required = true),
 	})
-	public String savePwdByValidCode(User user, String fpValidCode, HttpServletRequest request) {
-		String userCode = UserUtils.getCache("fp" + "UserCode");
-		String s = validValidCode("fp", user.getLoginCode(), fpValidCode, request);
+	public String savePwdByValidCode(String password, String fpValidCode, HttpServletRequest request) {
+		String type = "fp";
+		String userCode = UserUtils.getCache(type + "UserCode");
+		String loginCode = UserUtils.getCache(type + "LoginCode");
+		String s = validValidCode(type, userCode, loginCode, fpValidCode, request);
 		if (s != null) {
 			return s;
 		}
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
 		if (StringUtils.isNotBlank(secretKey)){
-			user.setPassword(DesUtils.decode(user.getPassword(), secretKey));
+			password = DesUtils.decode(password, secretKey);
 		}
 		// 更新为新密码
 		try{
-			userService.updatePassword(userCode, user.getPassword());
+			userService.updatePassword(userCode, password);
 		}catch(ServiceException se){
 			return renderResult(Global.FALSE, se.getMessage());
 		}
-		return renderResult(Global.TRUE, text("恭喜你，您的账号 {0} 密码找回成功！", user.getLoginCode()));
+		return renderResult(Global.TRUE, text("恭喜你，您的账号 {0} 密码找回成功！", loginCode));
 	}
 
 	/**
@@ -169,9 +188,34 @@ public class AccountController extends BaseController{
 		if (!"mobile".equals(validType) && !"email".equals(validType)){
 			return renderResult(Global.FALSE, text("非法操作。"));
 		}
-		User u = UserUtils.getByLoginCode(loginCode);
-		if(u == null){
-			return renderResult(Global.FALSE, text("登录账号不正确！"));
+		Map<String, Object> data = MapUtils.newHashMap();
+		User u = null;
+		if ("login".equals(type)){
+			User where = new User();
+			where.setMobile(loginCode);
+			where.setStatus(User.STATUS_NORMAL);
+			List<User> userList = userService.findListByMobile(where);
+			if (!userList.isEmpty()){
+				u = userList.get(0);
+				if (userList.size() > 1) {
+					data.put("extMessage", text("该手机号绑定了多个账号，请选择一个账号登录"));
+					data.put("userList", userList.stream().map(user -> {
+						Map<String, Object> map = MapUtils.newHashMap();
+						map.put("loginCode", user.getLoginCode());
+						map.put("userName", user.getUserName());
+						return map;
+					}).collect(Collectors.toList()));
+				}
+				UserUtils.putCache(type + "UserList", userList);
+			}
+			if(u == null){
+				return renderResult(Global.FALSE, text("手机号不正确！"));
+			}
+		} else {
+			u = UserUtils.getByLoginCode(loginCode);
+			if(u == null){
+				return renderResult(Global.FALSE, text("登录账号不正确！"));
+			}
 		}
 		if("mobile".equals(validType) && StringUtils.isBlank(u.getMobile())){
 			return renderResult(Global.FALSE, text("该账号未设置手机号码！"));
@@ -179,7 +223,7 @@ public class AccountController extends BaseController{
 			return renderResult(Global.FALSE, text("该账号未设置邮件地址！"));
 		}
 		// 操作是否频繁验证， 如果离上次获取验证码小于20秒，则提示操作频繁。
-		Date date = (Date)UserUtils.getCache(type + "LastDate");
+		Date date = UserUtils.getCache(type + "LastDate");
 		if (date != null && (System.currentTimeMillis()-date.getTime())/(1000L) < 20L){
 			return renderResult(Global.FALSE, text("您当前操作太频繁，请稍等一会再操作！"));
 		}else{
@@ -192,9 +236,9 @@ public class AccountController extends BaseController{
 		UserUtils.putCache(type + "ValidCode", loginValidCode);
 		// 发送邮箱或短信验证码
 		if("mobile".equals(validType)){
-			return sendSmsValidCode(u, loginValidCode, text(msgTitle));
+			return sendSmsValidCode(u, loginValidCode, text(msgTitle), data);
 		}else if("email".equals(validType)){
-			return sendEmailValidCode(u, loginValidCode, text(msgTitle));
+			return sendEmailValidCode(u, loginValidCode, text(msgTitle), data);
 		}
 		return null;
 	}
@@ -203,16 +247,15 @@ public class AccountController extends BaseController{
 	 * 验证验证码
 	 * @author ThinkGem
 	 */
-	private String validValidCode(String type, String loginCode, String loginValidCode, HttpServletRequest request) {
-		String userCode = UserUtils.getCache(type + "UserCode");
-		String loginCode2 = UserUtils.getCache(type + "LoginCode");
-		String validCode = UserUtils.getCache(type + "ValidCode");
-		Date date = (Date)UserUtils.getCache(type + "LastDate");
-		
-		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
-		if (!(userCode != null && loginCode != null && loginCode.equals(loginCode2))){
+	private String validValidCode(String type, String userCode, String loginCode, String loginValidCode, HttpServletRequest request) {
+		// 验证类型、用户名和登录账号，如果为空，则要求重新获取验证码
+		if (StringUtils.isAnyBlank(type, userCode, loginCode)){
 			return renderResult(Global.FALSE, text("请重新获取验证码！"));
 		}
+
+		// 获取验证码和验证时间
+		String validCode = UserUtils.getCache(type + "ValidCode");
+		Date date = UserUtils.getCache(type + "LastDate");
 		
 		// 验证码是否超时
 		boolean isTimeout = true;
@@ -229,6 +272,7 @@ public class AccountController extends BaseController{
 		UserUtils.removeCache(type + "LoginCode");
 		UserUtils.removeCache(type + "ValidCode");
 		UserUtils.removeCache(type + "LastDate");
+		UserUtils.removeCache(type + "UserList");
 		
 		return null;
 	}
@@ -244,18 +288,18 @@ public class AccountController extends BaseController{
 		@Parameter(name = "loginCode", description = "登录账号", required = true),
 		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
 	})
-	public String getPwdQuestion(User user, String validCode, HttpServletRequest request) {
+	public String getPwdQuestion(String loginCode, String validCode, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
 		if (!ValidCodeUtils.validate(request, validCode)){
 			return renderResult(Global.FALSE, text("图片验证码不正确或已失效，请点击图片刷新！"));
 		}
 		// 账号是否存在验证
-		User u = UserUtils.getByLoginCode(user.getLoginCode());
+		User u = UserUtils.getByLoginCode(loginCode);
 		if (u == null){
 			return renderResult(Global.FALSE, text("登录账号不正确！"));
 		}
 		// 操作是否频繁验证， 如果离上次获取验证码小于20秒，则提示操作频繁。
-		Date date = (Date)UserUtils.getCache("fpLastDate");
+		Date date = UserUtils.getCache("fpLastDate");
 		if (date != null && (System.currentTimeMillis()-date.getTime())/(1000L) < 20L){
 			return renderResult(Global.FALSE, text("您当前操作太频繁，请稍等一会再操作！"));
 		}else{
@@ -385,7 +429,7 @@ public class AccountController extends BaseController{
 			return renderResult(Global.FALSE, text("手机号码不能为空！"));
 		}
 		// 操作是否频繁验证，如果离上次获取验证码小于20秒，则提示操作频繁。
-		Date date = (Date)UserUtils.getCache("regLastDate");
+		Date date = UserUtils.getCache("regLastDate");
 		if (date != null && (System.currentTimeMillis()-date.getTime())/(1000L) < 20L){
 			return renderResult(Global.FALSE, text("您当前操作太频繁，请稍等一会再操作！"));
 		}else{
@@ -413,9 +457,9 @@ public class AccountController extends BaseController{
 		UserUtils.putCache("regValidCode", regValidCode);
 		// 发送邮箱或短信验证码
 		if("email".equals(validType)){
-			return sendEmailValidCode(user, regValidCode, text("注册账号"));
+			return sendEmailValidCode(user, regValidCode, text("注册账号"), null);
 		}else if("mobile".equals(validType)){
-			return sendSmsValidCode(user, regValidCode, text("注册账号"));
+			return sendSmsValidCode(user, regValidCode, text("注册账号"), null);
 		}
 		return null;
 	}
@@ -445,7 +489,7 @@ public class AccountController extends BaseController{
 		String email = UserUtils.getCache("regEmail");
 		String mobile = UserUtils.getCache("regMobile");
 		String validCode = UserUtils.getCache("regValidCode");
-		Date date = (Date)UserUtils.getCache("regLastDate");
+		Date date = UserUtils.getCache("regLastDate");
 
 		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
 		if (!(loginCode != null && loginCode.equals(user.getLoginCode()))){
@@ -503,7 +547,7 @@ public class AccountController extends BaseController{
 	/**
 	 * 发送邮件验证码
 	 */
-	private String sendEmailValidCode(User user, String code, String title){
+	private String sendEmailValidCode(User user, String code, String title, Map<String, Object> data){
 		String account = user.getEmail();
 		try {
 			title = text("{0}（{1}）{2}验证码", user.getUserName(), user.getLoginCode(), title);
@@ -517,13 +561,13 @@ public class AccountController extends BaseController{
 			return renderResult(Global.FALSE, text("系统出现了点问题，错误信息：{0}", e.getMessage()));
 		}
 		account = account.replaceAll("([\\w\\W]?)([\\w\\W]+)([\\w\\W])(@[\\w\\W]+)", "$1****$3$4");
-		return renderResult(Global.TRUE, text("验证码已发送到“{0}”邮箱账号，请尽快查收！", account));
+		return renderResult(Global.TRUE, text("验证码已发送到“{0}”邮箱账号，请尽快查收！", account), data);
 	}
 	
 	/**
 	 * 发送短信验证码
 	 */
-	private String sendSmsValidCode(User user, String code, String title){
+	private String sendSmsValidCode(User user, String code, String title, Map<String, Object> data){
 		String account = user.getMobile();
 		try {
 			title = text("{0}（{1}）{2}验证码", user.getUserName(), user.getLoginCode(), title);
@@ -536,7 +580,7 @@ public class AccountController extends BaseController{
 			return renderResult(Global.FALSE, text("系统出现了点问题，错误信息：{0}", e.getMessage()));
 		}
 		account = account.replaceAll("(\\d{3})(\\d+)(\\d{3})","$1****$3");
-		return renderResult(Global.TRUE, text("验证码已发送到“{0}”的手机号码，请尽快查收！", account));
+		return renderResult(Global.TRUE, text("验证码已发送到“{0}”的手机号码，请尽快查收！", account), data);
 	}
 	
 }
