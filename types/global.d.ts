@@ -17,46 +17,63 @@ declare global {
     };
     lastBuildTime: string;
   };
-  // declare interface Window {
-  //   // Global vue app instance
-  //   __APP__: App<Element>;
-  // }
 
-  // vue
-  declare type PropType<T> = VuePropType<T>;
-  declare type VueNode = VNodeChild | JSX.Element;
+  type PropType<T> = VuePropType<T>;
+  type VueNode = VNodeChild | JSX.Element;
 
-  export type Writable<T> = {
-    -readonly [P in keyof T]: T[P];
-  };
-
-  declare type Nullable<T> = T | null;
-  declare type NonNullable<T> = T extends null | undefined ? never : T;
-  declare type Recordable<T = any> = Record<string, T>;
-  declare type ReadonlyRecordable<T = any> = {
-    readonly [key: string]: T;
-  };
-  declare type Indexable<T = any> = {
-    [key: string]: T;
-  };
-  declare type DeepPartial<T> = {
+  type Nullable<T> = T | null;
+  type Recordable<T = any> = Record<string, T>;
+  type TimeoutHandle = ReturnType<typeof setTimeout>;
+  type IntervalHandle = ReturnType<typeof setInterval>;
+  type DeepPartial<T> = {
     [P in keyof T]?: DeepPartial<T[P]>;
   };
-  declare type TimeoutHandle = ReturnType<typeof setTimeout>;
-  declare type IntervalHandle = ReturnType<typeof setInterval>;
 
-  declare interface ChangeEvent extends Event {
+  interface ChangeEvent extends Event {
     target: HTMLInputElement;
   }
 
-  declare interface WheelEvent {
+  interface WheelEvent {
     path?: EventTarget[];
   }
+
+  interface Fn<T = any, R = T> {
+    (...arg: T[]): R;
+  }
+  
+  declare interface PromiseFn<T = any, R = T> {
+    (...arg: T[]): Promise<R>;
+  }
+  
+  type RefType<T> = T | null;
+  
+  type LabelValueOptions = {
+    label: string;
+    value: any;
+    [key: string]: string | number | boolean;
+  }[];
+  
+  type EmitType = ReturnType<typeof defineEmits> | Fn;
+  
+  type TargetContext = '_self' | '_blank';
+  
+  declare interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
+    $el: T;
+  }
+  
+  type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
+  
+  type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
+
   interface ImportMetaEnv extends ViteEnv {
-    __: unknown;
+    __: never;
   }
 
-  declare interface ViteEnv {
+  // interface Window {
+  //   __APP__: App<Element>;
+  // }
+
+  interface ViteEnv {
     VITE_PORT: number;
     VITE_USE_PWA: boolean;
     VITE_PUBLIC_PATH: string;
@@ -71,9 +88,9 @@ declare global {
     VITE_GENERATE_UI: string;
   }
 
-  declare function parseInt(s: string | number, radix?: number): number;
+  function parseInt(s: string | number, radix?: number): number;
 
-  declare function parseFloat(string: string | number): number;
+  function parseFloat(string: string | number): number;
 
   namespace JSX {
     // tslint:disable no-empty-interface
