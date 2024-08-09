@@ -368,7 +368,7 @@ public class LoginController extends BaseController{
 	public String switchSys(@PathVariable String sysCode, HttpServletRequest request) {
 		Session session = UserUtils.getSession();
 		if (StringUtils.isNotBlank(sysCode)){
-			session.setAttribute("sysCode", sysCode);
+			session.setAttribute("sysCode", sysCode); // 5.4.0+ 支持多个，逗号隔开
 		}else{
 			session.removeAttribute("sysCode");
 		}
@@ -387,7 +387,7 @@ public class LoginController extends BaseController{
 	public String switchRole(@PathVariable(required=false) String roleCode, HttpServletRequest request) {
 		Session session = UserUtils.getSession();
 		if (StringUtils.isNotBlank(roleCode)){
-			session.setAttribute("roleCode", roleCode);
+			session.setAttribute("roleCode", roleCode); // 5.4.0+ 支持多个，逗号隔开
 		}else{
 			session.removeAttribute("roleCode");
 		}
