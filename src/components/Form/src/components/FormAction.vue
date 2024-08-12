@@ -33,8 +33,8 @@
           @click="toggleAdvanced"
           v-if="showAdvancedButton && !hideAdvanceBtn"
         >
-          {{ isAdvanced ? t('component.form.putAway') : t('component.form.unfold') }}
-          <BasicArrow class="ml-1" :expand="!isAdvanced" up />
+          <!--{{ isAdvanced ? t('component.form.putAway') : t('component.form.unfold') }}-->
+          <BasicArrow :expand="!isAdvanced" up double />
         </Button>
         <slot name="advanceAfter"></slot>
       </FormItem>
@@ -75,9 +75,8 @@
     actionSpan: propTypes.number.def(6),
     isAdvanced: propTypes.bool,
     hideAdvanceBtn: propTypes.bool,
-    baseColProps: {
-      type: Object as PropType<Partial<ColEx>>,
-    },
+    baseColProps: Object as PropType<Partial<ColEx>>,
+    size: propTypes.string,
   };
 
   export default defineComponent({
@@ -103,8 +102,7 @@
         //   : {};
         const actionColOpt: Partial<ColEx> = {
           style: {
-            paddingLeft: '20px',
-            paddingRight: '22px',
+            paddingLeft: '10px',
             // showAdvancedButton && !hideAdvanceBtn ? 'right' : 'left',
             marginLeft: showAdvancedButton && !hideAdvanceBtn ? 'auto' : 'inherit',
           },
@@ -120,6 +118,7 @@
         return Object.assign(
           {
             text: t('common.resetText'),
+            size: props.size,
           },
           props.resetButtonOptions,
         );
@@ -129,6 +128,7 @@
         return Object.assign(
           {
             text: t('common.queryText'),
+            size: props.size,
           },
           props.submitButtonOptions,
         );
