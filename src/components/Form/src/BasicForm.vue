@@ -379,7 +379,7 @@
         white-space: nowrap;
 
         .ant-btn {
-          padding-left: 10px;
+          padding-left: 12px;
           padding-right: 12px;
           //margin-top: 1px;
           //font-size: 13px;
