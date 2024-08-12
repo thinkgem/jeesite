@@ -9,7 +9,6 @@ import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
-import com.jeesite.common.lang.TimeUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.cms.entity.Article;
 import com.jeesite.modules.cms.entity.Category;
@@ -19,7 +18,6 @@ import com.jeesite.modules.cms.service.FileTempleteService;
 import com.jeesite.modules.cms.utils.CmsUtils;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.utils.DictUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -325,7 +323,7 @@ public class CategoryController extends BaseController {
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
 	public String fixTreeData(Category category) {
-		if (!UserUtils.getUser().isAdmin()) {
+		if (!category.currentUser().isAdmin()) {
 			return renderResult(Global.FALSE, "操作失败，只有管理员才能进行修复！");
 		}
 		categoryService.fixTreeData();

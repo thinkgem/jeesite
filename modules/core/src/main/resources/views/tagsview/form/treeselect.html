@@ -1,0 +1,177 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '选项选择', bodyClass: 'box b0', libs: ['zTree']}){ %>
+<div class="treeShowHideButton" onclick="search();">
+	<label id="btnShow" title="${text('显示搜索')}" style="display:none;">︾</label>
+	<label id="btnHide" title="${text('隐藏搜索')}">︽</label>
+</div>
+<div class="treeSearchInput" id="search">
+	<label for="keyword">${text('关键字')}：</label><input type="text" class="empty" 
+		id="keyword" maxlength="50" autocomplete="off"/>
+	<button class="btn" id="btn" onclick="searchNode(true)"> ${text('搜索')} </button>
+</div>
+<div class="treeExpandCollapse" style="display:none;">
+	<a href="javascript:" onclick="tree.expandAll(true);">${text('展开')}</a> /
+	<a href="javascript:" onclick="tree.expandAll(false);">${text('折叠')}</a>
+</div>
+<div id="tree" class="ztree treeselect"></div>
+<% } %>
+<script>
+var selectCodes = "${selectCodes!}".split(","), setting = {
+	view:{selectedMulti:false,dblClickExpand:false},
+	check:{enable:"${checkbox!}"=="true",nocheckInherit:true/*<% if(isNotBlank(chkboxType!)){
+		chkboxType = toJson(fromJson(chkboxType!, 'map')); // 转换一遍防止XSS注入
+		if(isNotBlank(chkboxType!)){ %>*/,chkboxType:"#{chkboxType!}"/*<% } } %>*/},
+	async:{enable:true,autoParam:["id=parentCode"],
+		url:js.removeParam('parentCode', "${url!}")},
+	data:{simpleData:{enable:true}},callback:{
+		onClick:function(event, treeId, treeNode){
+			tree.expandNode(treeNode);
+		},
+		onDblClick: function(event, treeId, treeNode){
+			if (treeNode){
+				js.layer.$('#' + window.name).closest('.layui-layer')
+					.find(".layui-layer-btn0").trigger("click");
+			}
+		},
+		onAsyncSuccess: function(event, treeId, treeNode, msg){
+			selectCheckNode(selectCodes, treeNode);
+		}
+	},
+}, tree, loadTree = function(){
+	js.ajaxSubmit("${url!}${@StringUtils.contains(url!,'?')?'&':'?'}t=" + new Date().getTime(), function(treeNodes){
+		//# // 初始化树结构
+		tree = $.fn.zTree.init($("#tree"), setting, treeNodes);
+		//# // 如果所有一级都没有子节点，则隐藏（展开、折叠）按钮
+		var nodes = tree.getNodesByParam("level", 0);
+		for(var i=0, l=nodes.length; i<l; i++) {
+			if (nodes[i].children && nodes[i].children.length > 0){
+				$('.treeExpandCollapse').show();
+				break;
+			}
+		}
+		//# // 默认展开节点，（如果级别设置为-1，则：如果有1个根节点，则展开一级节点，否则不展开）
+		$.fn.zTree.expandNodeByLevel(tree, "#{@ObjectUtils.toInteger(expandLevel!(-1))}");
+		//# // 默认选中节点，选中回显
+		if (treeNodes && treeNodes.length > 0){
+			selectCheckNode(selectCodes);
+		}
+	}, 'json', true, js.text('loading.message'));
+};loadTree();
+//# // 默认选择节点
+function selectCheckNode(selectCodes, parentNode){
+	for(var i=0; i<selectCodes.length; i++) {
+		var isLoadUser = "#{@StringUtils.contains(url!,'isLoadUser=true')}";
+		var node = tree.getNodeByParam('${isReturnValue!}'=='true'?'value':'id',
+				(isLoadUser?"u_":"") + selectCodes[i], parentNode);
+		if("${checkbox!}"=="true"){
+			try{tree.checkNode(node, true, false);}catch(e){}
+			tree.selectNode(node, false);
+		}else{
+			tree.selectNode(node, true);
+		}
+	}
+}
+//# // 搜索输入框绑定
+var key = $("#keyword"), lastValue = "", nodeList = [], searchTime;
+key.bind("focus", function(){
+	if (key.hasClass("empty")) {
+		key.removeClass("empty");
+	}
+}).bind("blur", function(){
+	if (key.get(0).value === "") {
+		key.addClass("empty");
+	}
+	searchNode();
+//# if(@Global.getConfigToBoolean('sys.treeselect.fastSearch', 'true')){
+}).bind("change cut input propertychange", function(){
+	//# // window.clearTimeout(searchTime);searchTime=setTimeout(searchNode, 500); 复选的时候，搜索后不能得到搜索前选择的数据
+	if ('${fastSearch!}' == 'true') {
+		searchNode();
+	}
+//# }
+}).bind("keydown", function (e){
+	if(e.which == 13){
+		searchNode();
+	}
+});
+//# // 搜索节点
+function searchNode(force) {
+	//# // 取得输入的关键字的值
+	var value = $.trim(key.get(0).value);
+	//# // 按名字查询
+	var keyType = "name";
+	//# // 如果和上次一次，就退出不查了。
+	if (lastValue === value && force != true) {
+		return;
+	}
+	//# // 保存最后一次
+	lastValue = value;
+	var nodes = tree.getNodes();
+	//# // 如果要查空字串，就退出不查了。
+	if (value == "") {
+		showAllNode(nodes);
+		return;
+	}
+	hideAllNode(nodes);
+	nodeList = tree.getNodesByParamFuzzy(keyType, value);
+	updateNodes(nodeList);
+}
+//# // 隐藏所有节点
+function hideAllNode(nodes){
+	nodes = tree.transformToArray(nodes);
+	for(var i=nodes.length-1; i>=0; i--) {
+		tree.hideNode(nodes[i]);
+	}
+}
+//# // 显示所有节点
+function showAllNode(nodes){
+	nodes = tree.transformToArray(nodes);
+	for(var i=nodes.length-1; i>=0; i--) {
+		if(nodes[i].getParentNode()!=null){
+			tree.expandNode(nodes[i],false,false,false,false);
+		}else{
+			tree.expandNode(nodes[i],true,true,false,false);
+		}
+		tree.showNode(nodes[i]);
+		showAllNode(nodes[i].children);
+	}
+}
+//# // 更新节点状态
+function updateNodes(nodeList) {
+	tree.showNodes(nodeList);
+	for(var i=0, l=nodeList.length; i<l; i++) {
+		var treeNode = nodeList[i];
+		//# // 显示当前节点的子节点
+		showChildren(treeNode);
+		//# // 显示当前节点所有的父节点
+		showParent(treeNode)
+	}
+}
+//# // 显示所有子节点
+function showChildren(treeNode){
+	if (treeNode.isParent){
+		for(var idx in treeNode.children){
+			var node = treeNode.children[idx];
+			tree.showNode(node);
+			showChildren(node);
+		}
+	}
+}
+//# // 显示所有子节点
+function showParent(treeNode){
+	var parentNode;
+	while((parentNode = treeNode.getParentNode()) != null){
+		tree.showNode(parentNode);
+		tree.expandNode(parentNode, true, false, false);
+		treeNode = parentNode;
+	}
+}
+//# // 开始搜索
+function search($this) {
+	$('#search').slideToggle(200);
+	$('#btnShow').toggle();
+	$('#btnHide').toggle();
+	$('#keyword').focus();
+}
+</script>

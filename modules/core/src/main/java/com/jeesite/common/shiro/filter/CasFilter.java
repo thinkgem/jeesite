@@ -7,6 +7,7 @@ package com.jeesite.common.shiro.filter;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.shiro.cas.CasBaseFilter;
 import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 2020-9-19
  */
 @SuppressWarnings("deprecation")
-public class CasFilter extends org.apache.shiro.cas.CasFilter {
+public class CasFilter extends CasBaseFilter {
 
 	private BaseAuthorizingRealm authorizingRealm;
 

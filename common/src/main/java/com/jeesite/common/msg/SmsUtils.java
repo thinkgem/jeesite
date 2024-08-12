@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SmsUtils {
 
-	private final static Logger logger = LoggerFactory.getLogger(SmsUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(SmsUtils.class);
 	
 	/**
 	 * 模拟发送短信

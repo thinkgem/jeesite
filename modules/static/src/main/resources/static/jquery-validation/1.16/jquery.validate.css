@@ -1,0 +1,7 @@
+label.error {background:url("images/unchecked.gif") no-repeat 0px 0px;padding-left: 18px;
+	padding-bottom: 2px;font-weight: bold;color: #EA5200;margin-left: 10px;}
+label.has-error {top:auto;left:15px;padding:0px 5px 1px;font-size:11px;
+	position:absolute;color:#fff;background:#FF6969;z-index:1000;border-radius:5px;
+	-webkit-box-shadow:0 5px 10px #dedede;box-shadow:0 5px 10px #dedede;opacity:0.8;}
+label.has-error:after{border-color:rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FF6969;border-style:solid;
+    border-width:6px;content:"";height:0;left:15px;position:absolute;top:-11px;}

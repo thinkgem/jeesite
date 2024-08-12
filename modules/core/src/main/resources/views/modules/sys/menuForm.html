@@ -1,0 +1,321 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '菜单管理', libs: ['validate']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/colorpicker/bootstrap-colorpicker.css"/>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-book-open"></i> ${text(menu.isNewRecord ? '新增菜单' : '编辑菜单')}（
+			</div>
+			<div class="box-title dropdown input-inline">
+				<div class="dropdown-toggle" data-toggle="dropdown">
+					<span id="sysCodeName">${@DictUtils.getDictLabel('sys_menu_sys_code', menu.sysCode, text('全部菜单'))}</span><b class="caret"></b>
+				</div>
+				<ul class="dropdown-menu">
+					<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
+					<li><a href="javascript:" onclick="
+							$('#sysCode').val('${dict.dictValue}');
+							$('#sysCodeName').text('${dict.dictLabel}');
+							$('#parentDiv').attr('data-url','${ctx}/sys/menu/treeData?excludeCode=${menu.menuCode,xss}&sysCode=${dict.dictValue}');
+							$('#parentCode,#parentName').val('');
+						"><i class="fa fa-angle-right"></i> ${dict.dictLabel}</a></li>
+					<% } %>
+				</ul>
+			</div>
+			<div class="box-title">）</div>
+			<div class="box-tools pull-right hide">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${menu}" action="${ctx}/sys/menu/save" method="post" class="form-horizontal">
+			<#form:hidden path="sysCode" />
+			<#form:hidden path="menuCode" />
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4">${text('上级菜单')}：</label>
+							<div class="col-sm-8">
+								<#form:treeselect id="parent" title="${text('上级菜单')}"
+									path="parent.id" labelPath="parent.menuNameRaw" 
+									url="${ctx}/sys/menu/treeData?excludeCode=${menu.menuCode}&sysCode=${menu.sysCode}&isShowRawName=true"
+									class="" allowClear="true" canSelectRoot="true" canSelectParent="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="标识当前是否是个菜单，还是只是设置权限">
+								<span class="required">*</span> ${text('菜单类型')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:radio path="menuType" dictType="sys_menu_type" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4">${text('菜单名称')}：</label>
+							<div class="col-sm-8">
+								<#form:input path="menuNameRaw" maxlength="50" class="form-control required" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="指定菜单所属的模块，在开启和禁用模块的时候停用所属菜单">
+								<span class="required">*</span> ${text('归属模块')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:select multiple="true" path="moduleCodes" items="${moduleList}" itemLabel="moduleName" itemValue="moduleCode" class="form-control required" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="一、链接前缀：
+   1、使用 / 开头（默认）则为管理根路径，例如：http://host/{ctxPath}/{adminPath}/{href}
+   2、使用 // 开头，则代表是工程根路径，例如：http://host/{ctxPath}/{href}
+   3、使用 /// 开头，则代表是站点根路径，例如：http://host/{href}
+   4、使用 http:// 或 https:// 开头，则为链接外部页面
+二、可带变量，格式为 {变量名}
+   1、{ssoToken} : 单点登录的token编码，url参数中的参数分隔符请使用“%26”进行转义，
+	例如：{projectUrl}/sso/{ssoToken}?url=/sys/user/list?p1=v1%26p2=v2&relogin=true
+   2、{sessionId} : 当前会话编号 v5.3.0
+   3、{userCode} : 当前用户编码
+   4、{userName} : 当前用户名称
+   5、{userType} : 当前用户类型
+   6、{corpCode} : 当前用户编码
+   7、{corpName} : 当前用户名称
+   8、{menuCode} : 当前菜单编码
+   9、{menuParentCode} : 当前菜单上级编码
+   10、{menuParentCodes} : 当前菜单所有上级编码
+   11、userCache 中的 Key 可作为变量名
+   12、yml 或 sys_config 中的 Key 可作为变量名
+三、路由规则（Vue下使用）：
+　1、设置菜单的路由地址，对应组件目录为 /views/ 下的 .vue 文件
+　2、路由名称生成规则为：Views + 去除地址的 “/”，并后一个字母大写，
+　　　例如：路由地址为：/sys/menu/list，则生成路由名称为：ViewsSysMenuList
+　3、Vue 组件路径存放规则为：/views/ + 路由地址（上面举例的路由地址）
+　　　例如：组件路径应	为：/views/sys/menu/list，组件名称应与路由名称相同
+　4、组件名称定义在 script 标签的 name 属性，如 name=“ViewsSysMenuList”
+　5、注意：如果组件名称与路由名称不同，则会造成页面缓存失效。">
+								${text('链接(Href)')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="menuHref" maxlength="2000" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="链接打开的目标，默认addTabPage方式（新窗口中打开如：_blank）">
+								${text('目标(Target)')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="menuTarget" maxlength="10" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="一、组件路径说明（Vue下使用）：
+　1、自定义 Vue 组件路径，一般不需要填写，默认是根据 “链接地址” 进行自动生成
+　2、当 “链接地址” 或 “路由地址” 与 Vue 组件路径匹配规则不一致的时候配置
+二、也可以设置内置组件名称（Vue下使用）：
+　1、填写 IFRAME 则强制使用 iframe 打开链接
+　2、填写 LAYOUT 将不在 Beetl 视图中显示菜单项
+　3、填写 BEETL 则只在 Beetl 视图中显示菜单项
+　4、填写 BLANK 则不显示主框架（仅顶部菜单设置即可）">${text('组件路径')}：<i class="fa icon-question "></i></label>
+							<div class="col-sm-8">
+								<#form:input path="component" maxlength="200" class="form-control "/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="可选，给组件传参，请填写 JSON 格式，前端通过定义 props 获取
+举例：链接地址填写：/test/params   组件参数填写：{aa:'aa1',bb:'bb2'}">
+								${text('组件参数')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="params" maxlength="100" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="升序，当前级别的排序号">
+								${text('排序号')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="treeSort" maxlength="9" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6 isPerm2">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="控制器中定义的权限标识，如：@RequiresPermissions('权限标识')">
+								${text('权限标识')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="permission" maxlength="100" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 isMenu">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="支持选择字体图标，也支持设置一个 img 地址，如：http://host/js/img/icon.jpg 或  /img/icon.jpg">
+								${text('菜单图标')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:iconselect path="menuIcon" class=""/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6 isMenu">
+						<div class="form-group">
+							<label class="control-label col-sm-4">${text('字体颜色')}：</label>
+							<div class="col-sm-8">
+								<div class="input-group input-color" data-color-format="hex">
+									<#form:input path="menuColor" maxlength="50" class="form-control"/>
+									<span class="input-group-addon">
+										<i style="background-color:${isNotBlank(menu.menuColor)?menu.menuColor:'#ddd'};"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row isMenu">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="主页面的页签选项卡显示的标题文字，若不指定，默认显示菜单名称">
+								${text('页签标题')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="menuTitle" maxlength="50" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4">${text('可见')}：</label>
+							<div class="col-sm-8">
+								<#form:radio path="isShow" dictType="sys_show_hide" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="菜单权重：默认20；>=40一般管理员；>=60系统管理员；>=80超级管理员">
+								${text('菜单权重')}：<i class="fa icon-question"></i></label>
+							<div class="col-sm-8">
+								<#form:select path="weight" dictType="sys_menu_weight" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-unit">${text('其它信息')}</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2">${text('备注信息')}：</label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="3" maxlength="200" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% if (menu.isNewRecord){ /*%>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="快速建立下级权限菜单，不填写，则忽略">
+								快速建立权限：<i class="fa icon-question"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea name="quickCreatePermi" rows="2" maxlength="200" class="form-control"/>
+								<span class="help-block">
+									格式举例：[查看] sys:user:view; [编辑] sys:user:edit; [授权] sys:user:auth
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% */} %>
+				<#form:extend collapsed="true" />
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('sys:menu:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/colorpicker/bootstrap-colorpicker.js"></script>
+<script>
+$('#inputForm').validate({
+	submitHandler: function(form){
+		if ($('#moduleCodes').val() == null){
+			js.showMessage('请选择归属模块！');
+			return;
+		}
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					(contentWindow.win||contentWindow).$('#dataGrid').dataGrid('refreshTreeChildren',
+							$('#parentCode').val(), '${menu.id}');
+				});
+			}
+		}, "json");
+    }
+});
+
+// 颜色控件初始化
+$('#inputForm .input-color').colorpicker();
+
+// 根据类型显示不同的元素
+$('#menuType input').on('ifCreated ifChecked', function(){
+	if ($(this).is(':checked')){
+		// 1：菜单；2：权限
+		if ($(this).val() == '1'){
+			$('.isPerm').hide();
+			$('.isMenu').show();
+		}else{
+			$('.isMenu').hide();
+			$('.isPerm').show();
+		}
+	}
+});
+
+// 选择上级节点回调方法
+function treeselectCallback(id, act, index, layero){
+	if (id == 'parent' && (act == 'ok' || act == 'clear')){
+		// 创建并初始化下一个节点信息，如：排序号、默认值
+		$.get('${ctx}/sys/menu/createNextNode?parentCode='
+				+$('#parentCode').val(), function(data){
+			$('#treeSort').val(data.treeSort);
+			$('#menuType input[value="'+data.menuType+'"]').iCheck('check');
+			if (data.moduleCodes){
+				$('#moduleCodes input').iCheck('uncheck');
+				$.each(data.moduleCodes.split(','), function(i, v){
+					$('#moduleCodes input[value="'+v+'"]').iCheck('check');
+				});
+			}
+		});
+	}
+}
+</script>

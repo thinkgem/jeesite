@@ -1,0 +1,164 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '菜单管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-book-open"></i> ${text('菜单管理')}（
+			</div>
+			<div class="box-title dropdown input-inline">
+				<div class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
+					<span id="sysCodeLabel">${@DictUtils.getDictLabel('sys_menu_sys_code',
+						menu.sysCode, text('全部菜单'))}</span><b class="caret"></b>
+				</div>
+				<ul class="dropdown-menu">
+					<% for(var dict in @DictUtils.getDictList('sys_menu_sys_code')){ %>
+					<li><a href="${ctx}/sys/menu/list?sysCode=${dict.dictValue}"> <i
+							class="fa fa-angle-right"></i> ${dict.dictLabel}
+					</a></li>
+					<% } %>
+				</ul>
+			</div>
+			<div class="box-title">）</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="#" class="btn btn-default" id="btnRefreshTree" title="${text('刷新')}"><i class="fa fa-refresh"></i> ${text('刷新')}</a>
+				<a href="#" class="btn btn-default" id="btnExpandTreeNode" title="${text('展开一级')}"><i class="fa fa-angle-double-down"></i> ${text('展开')}</a>
+				<a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="${text('折叠全部')}"><i class="fa fa-angle-double-up"></i> ${text('折叠')}</a>
+				<% if(hasPermi('sys:menu:edit')){ %>
+					<a href="#" class="btn btn-default" id="btnUpdateSort" title="${text('保存排序')}"><i class="fa fa-sort-amount-asc"></i> ${text('保存排序')}</a>
+					<a href="${ctx}/sys/menu/form?sysCode=${menu.sysCode}" class="btn btn-default btnTool" title="${text('新增菜单')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+					<a href="${ctx}/sys/menu/fixTreeData" class="btn btn-default hide" title="${text('树结构关联数据修复')}" onclick="js.confirm('确认要执行树结构关联数据修复程序吗？', this.href, function(data){js.showMessage(data.message)});return false;"><i class="fa fa-wrench"></i> ${text('数据修复')}</a>
+				<% } %>
+				<a href="#" class="btn btn-default" id="btnSetting" title="${text('设置')}"><i class="fa fa-navicon"></i></a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${menu}" action="${ctx}/sys/menu/listData" method="post" class="form-inline ">
+				<#form:hidden path="moduleCodes" class="isReset" />
+				<#form:hidden path="menuCode" class="isReset"/>
+				<#form:hidden path="sysCode" />
+				<div class="form-group">
+					<label class="control-label">${text('菜单名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="menuNameRaw" maxlength="50" class="form-control width-90" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('链接(Href)')}：</label>
+					<div class="control-inline">
+						<#form:input path="menuHref" maxlength="50" class="form-control width-90" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('权限标识')}：</label>
+					<div class="control-inline">
+						<#form:input path="permission" maxlength="50" class="form-control width-90" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-60">
+						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i> ${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick"><i class="glyphicon glyphicon-repeat"></i> ${text('重置')}</button>
+				</div>
+			</#form:form>
+			<#form:form id="dataGridForm" action="${ctx}/sys/menu/updateTreeSort" method="post">
+				<table id="dataGrid"></table>
+			</#form:form>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+//# // 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $('#searchForm'),
+	columnModel: [ 
+		{header:'${text("菜单名称")}', name:'menuNameRaw', width:200, formatter: function(val, obj, row, act){
+			var icon = row.menuIcon || 'fa-circle-o opa08', iconHtml = '';
+			if (icon.indexOf('://') != -1){
+				iconHtml = '<img src="' + icon + '" width="20" height="20">';
+			}else if (icon.indexOf('/') == 0){
+				iconHtml = '<img src="' + ctxPath + icon + '" width="20" height="20">';
+			}else{
+				iconHtml = '<i class="fa fa-fw ' + icon + '"></i>&nbsp;';
+			}
+			return '&nbsp;'+iconHtml+'&nbsp; <a href="${ctx}/sys/menu/form?menuCode='
+					+row.id+'" class="btnList" style="color:'+row.color+'" data-title="${text("编辑菜单")}">'+val+'</a>';
+		}},
+		{header:'${text("归属模块")}', name:'moduleCodes', width:100, align:"center", formatter: function(val, obj, row, act){
+			return '<a href="javascript:" title="按模块查询" onclick="$(\'#moduleCodes\').val($(this).text());$(\'#dataGrid\').dataGrid(\'refreshTree\',1);">'+val+'</a>';
+		}},
+		{header:'${text("链接")}', name:'menuHref', width:150},
+		{header:'${text("排序")}', name:'treeSort', width:63, align:"center", classes:"clip p0", formatter: function(val, obj, row, act){
+			var html = [];
+			//# if(hasPermi('sys:menu:edit')){
+			html.push('<input type="hidden" name="ids" value="'+row.id+'"/>');
+			html.push('<input name="sorts" type="text" value="'+row.treeSort+'" style="width:50px;height:19px;margin:0;padding:0;text-align:center;border:1px solid #ddd">');
+			//# }else{
+			html.push(row.treeSort);
+			//# }
+			return html.join('');
+		}},
+		{header:'${text("类型")}', name:'menuType', width:50, fixed:true, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_type')}", val, '未知', true);
+		}},
+		{header:'${text("可见")}', name:'isShow', width:50, fixed:true, align:"center", formatter: function(val, obj, row, act){
+			if (row.component && row.component != 'BEETL' && row.component != 'IFRAME') {
+				return '<font color="#aaa" title="为什么设置 “显示隐藏” 不能改变可见性，通常是 Vue 版本中设置了\n'
+						+'组件名称（component字段），不是 BEELT 或 IFRAME 值，\n'
+						+'所以在 Beetl 视图中不会显示该菜单项">${text("隐藏")}</font>';
+			}
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_show_hide')}", val, '未知', true);
+		}},
+		{header:'${text("权限标识")}', name:'permission', width:150},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '${text("未知")}', true);
+		}},
+		{header:'${text("菜单权重")}', name:'weight', width:100, fixed:true, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_menu_weight')}", val, '未知', true);
+		}},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			//# if(hasPermi('sys:menu:edit')){
+				actions.push('<a href="${ctx}/sys/menu/form?menuCode='+row.id+'" class="btnList" title="${text("编辑菜单")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/sys/menu/disable?menuCode='+row.id+'" class="btnList" title="${text("停用菜单")}" data-confirm="${text("确认要停用该菜单吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				} else if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/sys/menu/enable?menuCode='+row.id+'" class="btnList" title="${text("启用菜单")}" data-confirm="${text("确认要启用该菜单吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/sys/menu/delete?menuCode='+row.id+'" class="btnList" title="${text("删除菜单")}" data-confirm="${text("确认要删除该菜单及所有子菜单吗？")}" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/sys/menu/form?parentCode='+row.id+'&sysCode='+row.sysCode+'" class="btnList" title="${text("新增下级菜单")}"><i class="fa fa-plus-square"></i></a>&nbsp;');
+				//actions.push('<a href="#" title="只看本节点" onclick="$(\'#dataGrid\').dataGrid(\'refreshTree\', 1, \''+row.id+'\')"><i class="fa fa-arrow-circle-down"></i></a>&nbsp;');
+			//# }
+			return actions.join('');
+		}}
+	],
+	treeGrid: true,			// 启用树结构表格
+	defaultExpandLevel: 0,	// 默认展开的层次
+	expandNodeClearPostData: 'menuNameRaw,menuHref,permission', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		if ($('#menuCode').val() != ''){
+			$('#menuCode').val('');
+			$('#btnExpandTreeNode').click();
+		}
+	}
+});
+
+// 绑定更新排序按钮
+$('#btnUpdateSort').click(function(){
+	 js.ajaxSubmitForm($("#dataGridForm"), function(data){
+		if(data.result == Global.TRUE){
+			$('#btnRefreshTree').click();
+		}
+		js.showMessage(data.message);
+	}, "json");
+});
+</script>

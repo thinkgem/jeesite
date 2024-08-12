@@ -1,0 +1,159 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '图标裁剪', bodyClass: 'nobg', libs: ['']}){ %>
+<link rel="stylesheet" href="${ctxStatic}/cropper/3.1/cropper.css?${_version}">
+<div class="row cropper-wrapper ${toBoolean(circle!)?'cropper-circle':''}">
+	<div class="col-xs-8">
+		<div class="img-container">
+			<img id="image" src="${isNotBlank(imageSrc!)?imageSrc!:imageDefaultSrc!}">
+		</div>
+	</div>
+	<div class="col-xs-4 pl0">
+		<div class="clearfix">
+			<div class="img-preview preview-lg"></div>
+			<div class="img-preview preview-md"></div>
+			<div class="img-preview preview-sm"></div>
+			<div class="img-preview preview-xs"></div>
+		</div>
+        <div class="clearfix mt20"></div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" data-method="zoom" data-option="0.1" title="${text('放大')}">
+				<span class="fa fa-fw fa-search-plus"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-method="zoom" data-option="-0.1" title="${text('缩小')}">
+				<span class="fa fa-fw fa-search-minus"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" data-method="move" data-option="-10" data-second-option="0" title="${text('向左移动')}">
+				<span class="fa fa-fw fa-arrow-left"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-method="move" data-option="10" data-second-option="0" title="${text('向右移动')}">
+				<span class="fa fa-fw fa-arrow-right"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-method="move" data-option="0" data-second-option="-10" title="${text('向上移动')}">
+				<span class="fa fa-fw fa-arrow-up"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-method="move" data-option="0" data-second-option="10" title="${text('向下移动')}">
+				<span class="fa fa-fw fa-arrow-down"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" data-method="rotate" data-option="-45" title="${text('逆时针旋转')}">
+				<span class="fa fa-fw fa-rotate-left"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-method="rotate" data-option="45" title="${text('顺时针旋转')}">
+				<span class="fa fa-fw fa-rotate-right"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" data-method="scaleX" data-option="-1" title="${text('水平反转')}">
+				<span class="fa fa-fw fa-arrows-h"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-method="scaleY" data-option="-1" title="${text('左右反转')}">
+				<span class="fa fa-fw fa-arrows-v"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<label class="btn btn-info btn-upload" for="inputImage" title="${text('选择图片')}">
+				<input type="file" class="sr-only" id="inputImage" name="file" accept=".jpg,.jpeg,.png,.gif,.bmp">
+				<span class="fa fa-fw fa-upload"></span> &nbsp;<b>${text('选择图片')}</b>
+			</label>
+        </div>
+		<div class="btn-group hide">
+			<button id="btnGetImageBase64" type="button" class="btn btn-default" data-method="getCroppedCanvas" title="Get image Base64">
+				<span class="fa fa-fw fa-download"></span>
+			</button>
+        </div>
+	</div>
+</div>
+<% } %>
+<script src="${ctxStatic}/cropper/3.1/cropper.js?${_version}"></script>
+<script>
+var URL = window.URL || window.webkitURL,
+uploadedImageType = 'image/png', uploadedImageURL,
+aspectRatio = ${isNotBlank(ratio!)?(@StringUtils.split(ratio!,'/')[0]+'/'+@StringUtils.split(ratio!,'/')[1]):'1/1'},
+maxWidth = ${isNotBlank(maxWidth!)?toInteger(maxWidth!):'800'},
+maxHeight = ${isNotBlank(maxHeight!)?toInteger(maxHeight!):'800'},
+options = {
+	dragMode: 'move',
+	aspectRatio: aspectRatio,
+	maxWidth: maxWidth,
+	maxHeight: maxHeight,
+	autoCropArea: 1,
+	checkCrossOrigin: false,
+	preview: ".img-preview",
+	ready: function(){
+		$(window).resize();
+	}
+},
+$image = $("#image").cropper(options), imageBase64;
+$('.btn-group').on('click', '[data-method]', function () {
+	var $this = $(this), data = $this.data(),
+		cropper = $image.data('cropper'), cropped, result;
+	if ($this.prop('disabled') || $this.hasClass('disabled')) {
+		return;
+	}
+	if (cropper && data.method) {
+		data = $.extend({}, data); // Clone a new one
+		cropped = cropper.cropped;
+		switch (data.method) {
+		case 'rotate':
+			if (cropped && options.viewMode > 0) {
+				$image.cropper('clear');
+			}
+			break;
+		case 'getCroppedCanvas':
+			if (uploadedImageType === 'image/jpeg') {
+				if (!data.option) {
+					data.option = {width:800, height:800};
+				}
+				data.option.fillColor = '#fff';
+			}
+			break;
+		}
+		result = $image.cropper(data.method, data.option, data.secondOption);
+		switch (data.method) {
+		case 'rotate':
+			if (cropped && options.viewMode > 0) {
+				$image.cropper('crop');
+			}
+			break;
+		case 'scaleX':
+		case 'scaleY':
+			$(this).data('option', -data.option);
+			break;
+		case 'getCroppedCanvas':
+			if (result) {
+				imageBase64 = result.toDataURL(uploadedImageType);
+			}
+			break;
+		}
+	}
+});
+$("#inputImage").change(function(){
+	var files = this.files, file;
+	if (!$image.data('cropper')) {
+		return;
+	}
+	if (files && files.length) {
+		file = files[0];
+		if (/^image\/\w+$/.test(file.type)) {
+			uploadedImageType = file.type;
+			uploadedImageURL = URL.createObjectURL(file);
+			$image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
+			$(this).val('');// 清理下，方便下次选择
+		} else {
+			js.showMessage('请选择一个图片文件。');
+		}
+	}
+	$(this).blur();
+}).focus(function(){
+	js.loading();
+}).blur(function(){
+	js.closeLoading();
+});
+$(window).resize(function(){
+	$('.img-container').height($(window).height()-50);
+}).resize();
+</script>

@@ -1,0 +1,72 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 编译path属性，当设置path属性时，自动根据model获取value
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = para0, tag = p.thisTag;
+
+if (tag != null) {
+	var parent = @tag.getParentByTagName('form');
+	var readonly = parent.attrs.readonly!;
+	if (isNotEmpty(readonly) && toBoolean(readonly)) {
+		p.readonly = toBoolean(readonly!false);
+		p.attrs = p.attrs!'' + 'readonly="'+p.readonly+'"';
+	}
+	// path 优先级高于 name
+	if (isNotEmpty(p.path) || isNotEmpty(p.labelPath)) {
+		var model = parent.attrs.model!;
+		if (isNotEmpty(p.path)){
+			p.name = p.path;
+			if (isNotEmpty(model)){
+				p.value = @ReflectUtils.invokeGetter(model, p.name);
+				if (toBoolean(xss!false) && type.name(p.value) == 'String'){
+					p.value = @EncodeUtils.xssFilter(p.value);
+				}else if (toBoolean(encodeHtml!false) && type.name(p.value) == 'String'){
+					p.value = @EncodeUtils.encodeHtml(p.value);
+				}
+			}
+		}
+		if (isNotEmpty(p.labelPath)){
+			p.labelName = p.labelPath;
+			if (isNotEmpty(model)){
+				p.labelValue = @ReflectUtils.invokeGetter(model, p.labelName);
+				if (toBoolean(xss!false) && type.name(p.value) == 'String'){
+					p.labelValue = @EncodeUtils.xssFilter(p.labelValue);
+				}if (toBoolean(encodeHtml!false) && type.name(p.value) == 'String'){
+					p.labelValue = @EncodeUtils.encodeHtml(p.labelValue);
+				}
+			}
+		}
+	}
+}
+
+// defaultValue 默认值
+if (isNotBlank(p.name)){
+	if (p.defaultValue != null && isBlank(p.value)){
+		p.value = p.defaultValue;
+	}
+}
+if (isNotBlank(p.labelName)) {
+	if (p.defaultLabel != null && isBlank(p.labelValue)){
+		p.labelValue = p.defaultLabel;
+	}
+	if (isBlank(p.labelValue)) {
+		p.labelValue = p.value;
+	}
+}
+
+// 如果没有设置id，则与name相同
+if (isBlank(p.id)){
+	p.id = p.name;
+	// 替换id中的非法字符
+	p.id = @StringUtils.replace(p.id, '.', '_');
+	p.id = @StringUtils.replace(p.id, '\'', '_');
+	p.id = @StringUtils.replace(p.id, '\"', '_');
+	p.id = @StringUtils.replace(p.id, '[', '_');
+	p.id = @StringUtils.replace(p.id, ']', '_');
+}
+
+%>

@@ -1,0 +1,258 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：列表选择组件
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 隐藏域名称
+	value: value!,				// 隐藏域值
+	defaultValue: defaultValue!,// 隐藏域默认值 v4.1.5
+	
+	labelPath: labelPath!,		// 绑定form上model中属性的值
+	labelName: labelName!,		// 标签框名称
+	labelValue: labelValue!,	// 标签框值
+	defaultLabel: defaultLabel!,// 标签框默认值 v4.1.5
+	
+	class: class!'',			// 标签框的CSS类名
+	placeholder: placeholder!,	// 标签框的预期值的提示信息
+	dataMsgRequired: thisTag.attrs['data-msg-required'],	// 必填错误提示信息
+	
+	btnClass: btnClass!,									// 标签框后面的按钮CSS类名
+	
+	title: title!text('选项选择'),							// 对话框标题
+	boxWidth: boxWidth!'$(js.window).width() - 100', 		// 对话框宽度
+	boxHeight: boxHeight!'$(js.window).height() - 100',		// 对话框高度
+	
+	url: url!,						// 列表地址，参考EmpUserController的empUserSelect方法
+	
+	readonly: readonly!'false',		// 是否只读模式
+	
+	allowInput: toBoolean(allowInput!false),	// 是否允许label框输入
+	allowClear: toBoolean(allowClear!true),		// 是否允许清空选择内容
+	
+	checkbox: toBoolean(checkbox!false),		// 是否显示复选框，是否支持多选，如果设置canSelectParent=true则返回父节点数据
+	
+	itemCode: itemCode!,		// 选择后结果集中的Code属性名，返回到隐藏域的值
+	itemName: itemName!,		// 选择后结果集中的Name属性名，返回到输入框的值
+	
+	getSelectDataFuncName: getSelectDataFuncName!'listselectGetSelectData',	// 选择页面，获取已经选择的数据，回显到选择页面  v4.1.5
+	setSelectDataFuncName: setSelectDataFuncName!'listselectSetSelectData',	// 选择之后，点击确定，将选择数据设置到业务表单  v4.2.0
+	
+	openFuncName: openFuncName!'listselectOpen',				// 可自定义弹窗前调用的函数名   v4.2.0
+	checkFuncName: checkFuncName!'listselectCheck',				// 可自定义验证方法的函数名  v4.2.0
+	callbackFuncName: callbackFuncName!'listselectCallback',	// 可自定义回调方法的函数名  v4.1.5
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 标签属性编译
+p.labelAttrs = '';
+if (!p.allowInput){
+	p.labelAttrs = p.labelAttrs + ' readonly="readonly"';
+}
+if (isNotBlank(p.dataMsgRequired)){
+	p.labelAttrs = p.labelAttrs + ' data-msg-required="' + p.dataMsgRequired + '"';
+}
+if (isNotBlank(p.placeholder)){
+	p.labelAttrs = p.labelAttrs + ' placeholder="' + p.placeholder + '"';
+}
+
+// 如果没有设置是否显示“清除”按钮开关，则根据class判断是否为必须字段。
+if (allowClear == null && @StringUtils.contains(p.class, 'required')){
+	allowClear = false;
+}
+	
+%><div class="input-group treeselect" id="${p.id}Div" data-url="${p.url}">
+	<input id="${p.id}Name" type="text" name="${p.labelName}" value="${p.labelValue}"
+		class="form-control ${p.class} ${p.labelClass} isReset"${p.labelAttrs}
+	/><input id="${p.id}Code" type="hidden" name="${p.name}" value="${p.value}" class="isReset"
+	/><span class="input-group-btn"><a id="${p.id}Button" href="javascript:"
+		class="btn btn-default ${p.btnClass}"><i class="fa fa-search"></i></a>
+	</span>
+</div>
+<script>
+if ('${p.readonly}' == 'true' || $("#${p.id}Name").hasClass("disabled")){
+	$("#${p.id}Button,#${p.id}Name").addClass("disabled");
+}
+$("#${p.id}Button${p.allowInput?'':',#'+p.id+'Name'}").click(function(){
+	if ($("#${p.id}Button").hasClass("disabled") || $("#${p.id}Name").hasClass("disabled")){
+		return true;
+	}
+	var selectData = {},
+	boxWidth = "#{p.boxWidth}",
+	boxHeight = "#{p.boxHeight}";
+	boxWidth = boxWidth < 350 ? 350 : boxWidth;
+	boxHeight = boxHeight < 250 ? 250 : boxHeight;
+	//# // 初始化页面，回显选择的数据
+	if(typeof "#{p.getSelectDataFuncName}" == 'function'){
+		selectData = "#{p.getSelectDataFuncName}"('${p.id}');
+	//# if (isNotBlank(p.itemCode) && isNotBlank(p.itemName)){
+	}else{
+		var codes = $('#${p.id}Code').val(), names = $('#${p.id}Name').val(), 
+		keysToJsonPart = function(key, value){ var num = key.split('.').length - 1,
+			part = key.replace(/\./g, '":{"'); if (num >= 0){ part = '"' + part + '":"' + value + '"'; }
+			for (var i = 0; i < num; i++){ part = part + '}'; } return part; };
+		if(codes != null && codes != "" && names != null && names != ""){
+			var codesArr = codes.split(","), namesArr = names.split(",");
+			if (codesArr && namesArr && codesArr.length == namesArr.length){
+				for(var i=0; i<codesArr.length; i++) {
+					selectData[codesArr[i]] = JSON.parse('{' + keysToJsonPart('${p.itemCode}', codesArr[i])
+							 + ',' + keysToJsonPart('${p.itemName}', namesArr[i]) + '}');
+				}
+			}
+		}
+	//# }
+	}
+	var options = {
+		type: 2,
+		maxmin: true,
+		shadeClose: true,
+		title: '${p.title}',
+		area: [boxWidth+'px', boxHeight+'px'],
+		content: $('#${p.id}Div').attr('data-url'),
+		contentFormData: {
+			__layer: true,
+			checkbox: '${p.checkbox}',
+			selectData: js.encodeUrl(JSON.stringify(selectData))
+		},
+		success: function(layero, index){
+			if ($(js.layer.window).width() < boxWidth
+				|| $(js.layer.window).height() < boxHeight){
+				js.layer.full(index);
+			}
+		},
+		btn: ['<i class="fa fa-check"></i> ${text("确定")}'],
+		btn1: function(index, layero){
+			var win = layero.iframeWindow();
+			selectData = win.getSelectData();
+			//# // 自定义选择节点验证，返回false代表验证失败
+			if(typeof "#{p.checkFuncName}" == 'function'){
+				if (!"#{p.checkFuncName}"('${p.id}', selectData)){
+					return false;
+				}
+			}
+			//# // 点击确定，获取用户选择数据
+			if(typeof "#{p.setSelectDataFuncName}" == 'function'){
+				"#{p.setSelectDataFuncName}"('${p.id}', selectData);
+			//# if (isNotBlank(p.itemCode) && isNotBlank(p.itemName)){
+			}else{
+				var codes = [], names = [];
+				$.each(selectData, function(key, value){
+					codes.push(js.val(value,'${p.itemCode}'));
+					names.push(js.val(value,'${p.itemName}'));
+				});
+		   		$('#${p.id}Code').val(codes.join(',')).change();
+		   		$('#${p.id}Name').val(names.join(',')).change();
+			//# }
+			}
+			try{$('#${p.id}Code,#${p.id}Name').resetValid();}catch(e){}
+			//# // 选择回调方法，选择成功后调用
+			if(typeof "#{p.callbackFuncName}" == 'function'){
+				"#{p.callbackFuncName}"('${p.id}', 'ok', index, layero, selectData);
+			}
+		}
+	};
+	//# if (p.allowClear){
+	options.btn.push('<i class="fa fa-eraser"></i> ${text("清除")}');
+	options['btn'+options.btn.length] = function(index, layero){
+		$("#${p.id}Code").val('').change();
+		$("#${p.id}Name").val('').change();
+		try{$('#${p.id}Code,#${p.id}Name').resetValid();}catch(e){}
+		//# // 选择回调方法，点击清空后调用
+		if(typeof "#{p.callbackFuncName}" == 'function'){
+			"#{p.callbackFuncName}"('${p.id}', 'clear', index, layero);
+		}
+	};
+	//# }
+	options.btn.push('<i class="fa fa-close"></i> ${text("关闭")}');
+	options['btn'+options.btn.length] = function(index, layero){
+		//# // 选择回调方法，点击取消调用
+		if(typeof "#{p.callbackFuncName}" == 'function'){
+			"#{p.callbackFuncName}"('${p.id}', 'cancel', index, layero);
+		}
+	};
+	//# // 弹出对话框前调用，返回 false 则不弹框，直接返回
+	if(typeof "#{p.openFuncName}" == 'function'){
+		if("#{p.openFuncName}"('${p.id}', options) === false){
+			return true;
+		}
+	}
+	js.layer.open(options);
+});
+//# /*
+/**
+ * 选择前调用，数据验证函数，返回false代表验证失败
+ * @param id  标签的id
+ * @param selectData  当前选择列表的数据MAP
+ * @return true 验证成功，false 验证失败
+ */
+function listselectCheck(id, selectData){
+	if (id == 'parent'){
+        log(selectData); // 选择的节点数据
+	}
+	return true;
+}
+/**
+ * 选择框回调方法
+ * @param id  标签的id
+ * @param act 动作事件：ok、cloear、cancel
+ * @param index layer的索引号
+ * @param layero layer内容的jQuery对象
+ * @param selectData 当前选择列表的数据MAP
+ */
+function listselectCallback(id, act, index, layero, selectData){
+	if (id == 'parent' && (act == 'ok' || act == 'clear')){
+		var win = layero.iframeWindow();
+		log(win);    // 选择框内容的window对象
+		log(act);    // 回调活动事件（ok、clear、cancel）
+		log(index);  // layer的index
+		log(layero); // layer实例对象
+		log(selectData);  // 选择的节点数据
+	}
+}
+/**
+ * 弹出对话框，列表数据回显调用方法
+ * @param id  标签的id
+ * @return selectData 当前选择列表的数据MAP
+ */
+function listselectGetSelectData(id){
+	var selectData = {};
+	if (id == 'parent'){
+		selectData['主键字段值'] = {行数据};
+	}
+	return selectData;
+}
+/**
+ * 选择后，设置到业务表单调用方法 v4.2.0
+ * @param id  标签的id
+ * @param selectData 当前选择列表的数据MAP
+ */
+function listselectSetSelectData(id, selectData){
+	if (id == 'parent'){
+		log(selectData);
+	}
+}
+/**
+ * 弹出对话框前调用 v4.2.0
+ * @param id  标签的id
+ * @param options  弹窗选项
+ * @return 返回 false 则不弹框，直接返回
+ */
+function listselectOpen(id, options){
+	if (id == 'parent'){
+		log(options);
+	}
+}
+//# */
+</script>

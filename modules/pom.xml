@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-modules</artifactId>
-	<version>5.8.0-SNAPSHOT</version>
+	<version>5.8.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Modules</name>
@@ -13,18 +13,20 @@
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<modules>
-        <module>core</module>
-        <module>cms</module>
+		<module>core</module>
 		<module>app</module>
-    </modules>
+		<module>cms</module>
+		<module>static</module>
+		<module>test</module>
+	</modules>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

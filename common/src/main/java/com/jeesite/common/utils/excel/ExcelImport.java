@@ -41,12 +41,12 @@ import java.util.*;
  */
 public class ExcelImport implements Closeable {
 	
-	private static Logger log = LoggerFactory.getLogger(ExcelImport.class);
+	private static final Logger log = LoggerFactory.getLogger(ExcelImport.class);
 			
 	/**
 	 * 工作薄对象
 	 */
-	private Workbook wb;
+	private final Workbook wb;
 	
 	/**
 	 * 工作表对象
@@ -61,19 +61,38 @@ public class ExcelImport implements Closeable {
 	/**
 	 * 存储字段类型临时数据
 	 */
-	private Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
+	private final Map<Class<? extends FieldType>, FieldType> fieldTypes = MapUtils.newHashMap();
 
 	@SuppressWarnings("rawtypes")
 	private static Class dictUtilsClass = null;
 
 	/**
 	 * 构造函数
-	 * @param path 导入文件对象，读取第一个工作表
+	 * @param fileName 导入文件对象，读取第一个工作表
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+	public ExcelImport(String fileName) throws InvalidFormatException, IOException {
+		this(new File(fileName));
+	}
+
+	/**
+	 * 构造函数
+	 * @param file 导入文件对象，读取第一个工作表
 	 * @throws InvalidFormatException 
 	 * @throws IOException 
 	 */
 	public ExcelImport(File file) throws InvalidFormatException, IOException {
 		this(file, 0, 0);
+	}
+	/**
+	 * 构造函数
+	 * @param fileName 导入文件对象，读取第一个工作表
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+	public ExcelImport(String fileName, int headerNum) throws InvalidFormatException, IOException {
+		this(new File(fileName), headerNum);
 	}
 	
 	/**
@@ -86,6 +105,19 @@ public class ExcelImport implements Closeable {
 	public ExcelImport(File file, int headerNum) 
 			throws InvalidFormatException, IOException {
 		this(file, headerNum, 0);
+	}
+
+	/**
+	 * 构造函数
+	 * @param fileName 导入文件对象
+	 * @param headerNum 标题行数，数据行号=标题行数+1
+	 * @param sheetIndexOrName 工作表编号或名称，从0开始
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
+	public ExcelImport(String fileName, int headerNum, Object sheetIndexOrName)
+			throws InvalidFormatException, IOException {
+		this(new File(fileName), headerNum, sheetIndexOrName);
 	}
 
 	/**
@@ -170,7 +202,21 @@ public class ExcelImport implements Closeable {
 	public Workbook getWorkbook() {
 		return wb;
 	}
-	
+
+	/**
+	 * 获取当前工作表
+	 */
+	public Sheet getSheet() {
+		return sheet;
+	}
+
+	/**
+	 * 获取当前标题行数
+	 */
+	public int getHeaderNum() {
+		return headerNum;
+	}
+
 	/**
 	 * 设置当前工作表和标题行数
 	 * @author ThinkGem
@@ -339,6 +385,13 @@ public class ExcelImport implements Closeable {
 	@SuppressWarnings("unchecked")
 	public <E> List<E> getDataList(Class<E> cls, MethodCallback exceptionCallback, String... groups) throws Exception{
 		List<Object[]> annotationList = ListUtils.newArrayList();
+		// Get class annotation
+		ExcelFields cfs = cls.getAnnotation(ExcelFields.class);
+		if (cfs != null && cfs.value() != null){
+			for (ExcelField ef : cfs.value()){
+				addAnnotation(annotationList, ef, cls, Type.IMPORT, groups);
+			}
+		}
 		// Get constructor annotation
 		Constructor<?>[] cs = cls.getConstructors();
 		for (Constructor<?> c : cs) {
@@ -527,26 +580,5 @@ public class ExcelImport implements Closeable {
 			e.printStackTrace();
 		}
 	}
-
-//	/**
-//	 * 导入测试
-//	 */
-//	public static void main(String[] args) throws Throwable {
-//		
-//		ImportExcel ei = new ImportExcel("target/export.xlsx", 1);
-//		
-//		for (int i = ei.getDataRowNum(); i < ei.getLastDataRowNum(); i++) {
-//			Row row = ei.getRow(i);
-//			if (row == null){
-//				continue;
-//			}
-//			for (int j = 0; j < ei.getLastCellNum(); j++) {
-//				Object val = ei.getCellValue(row, j);
-//				System.out.print(val+", ");
-//			}
-//			System.out.println();
-//		}
-//		
-//	}
 
 }

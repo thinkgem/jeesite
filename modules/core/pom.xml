@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.8.0-SNAPSHOT</version>
+		<version>5.8.1-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -73,16 +73,16 @@
 
 		<!-- 达梦数据库
 		<dependency>
-		  <groupId>com.dameng</groupId>
-		  <artifactId>Dm8JdbcDriver18</artifactId>
-		  <version>8.1.1.49</version>
+			<groupId>com.dameng</groupId>
+			<artifactId>Dm8JdbcDriver18</artifactId>
+			<version>8.1.1.49</version>
 		</dependency> -->
 
 		<!-- 人大金仓数据库
 		<dependency>
-		  <groupId>com.kingbase</groupId>
-		  <artifactId>kingbasejdbc8</artifactId>
-		  <version>8.6.0</version>
+			<groupId>com.kingbase</groupId>
+			<artifactId>kingbasejdbc8</artifactId>
+			<version>8.6.0</version>
 		</dependency> -->
 
 		<!-- Web Server -->
@@ -113,6 +113,20 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<!-- Core Static -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-static</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- CAS 单点登录模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-cas</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
 		<!-- ELK 日志收集 -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>
@@ -122,13 +136,13 @@
 		
 	</dependencies>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

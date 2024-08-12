@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.8.0-SNAPSHOT</version>
+		<version>5.8.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-text</artifactId>
-		    <version>${commons-text.version}</version>
+			<version>${commons-text.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -91,6 +91,7 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
 		</dependency>
 		
 		<!-- Email -->
@@ -118,7 +119,7 @@
 			<artifactId>metadata-extractor</artifactId>
 			<version>${metadata-extractor.version}</version>
 		</dependency> -->
-		<!-- 缩略图工具  -->
+		<!-- 缩略图工具 -->
 		<dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
@@ -130,7 +131,7 @@
 			<artifactId>imageio-jpeg</artifactId>
 			<version>${twelvemonkeys.version}</version>
 		</dependency>
-		<!-- 图片验证码生成  -->
+		<!-- 图片验证码生成 -->
 		<dependency>
 			<groupId>com.bladejava</groupId>
 			<artifactId>blade-patchca</artifactId>
@@ -161,7 +162,7 @@
 			</exclusions>
 		</dependency>
 		
-		<!-- 条形码、二维码生成  -->
+		<!-- 条形码、二维码生成 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
@@ -196,11 +197,18 @@
 			<version>${poi.version}</version>
 		</dependency>
 		
-		<!-- pinyin4j -->
+		<!-- Pinyin4j -->
 		<dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
+		</dependency>
+
+		<!-- BC Provider -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk18on</artifactId>
+			<version>${bcprov.version}</version>
 		</dependency>
 		
 		<!-- Logging begin -->
@@ -256,13 +264,13 @@
 
 	</dependencies>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

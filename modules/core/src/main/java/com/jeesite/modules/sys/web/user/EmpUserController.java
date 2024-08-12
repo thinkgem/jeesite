@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 员工用户Controller
@@ -443,6 +444,44 @@ public class EmpUserController extends BaseController {
 //		model.addAttribute("roleList", roleService.findList(role));
 		model.addAttribute("empUser", empUser);
 		return "modules/sys/user/empUserSelect";
+	}
+
+	/**
+	 * 获取当前用户附属部门
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "officeListData")
+	@ResponseBody
+	public List<EmployeeOffice> officeListData () {
+		Employee employee = EmpUtils.getEmployee();
+		return employeeService.findEmployeeOfficeList(employee);
+	}
+
+
+	/**
+	 * 切换当前用户到附属部门
+	 * @param officeCode
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "switchOffice/{officeCode}")
+	@ResponseBody
+	public String switchOffice(@PathVariable String officeCode) {
+		if (StringUtils.equals(officeCode, "default")) {
+			Office office = EmpUtils.getOffice();
+			EmpUtils.setCurrentOffice(office.getOfficeCode(), office.getOfficeName());
+			return renderResult(Global.TRUE, text("部门切换成功！"));
+		}
+		List<EmployeeOffice> employeeOfficeList = EmpUtils.getEmployeeOfficeList().stream()
+				.filter(e -> StringUtils.equals(e.getOfficeCode(), officeCode)).collect(Collectors.toList());
+		if (!employeeOfficeList.isEmpty()) {
+			EmployeeOffice office = employeeOfficeList.get(0);
+			EmpUtils.setCurrentOffice(office.getOfficeCode(), office.getOfficeName());
+			return renderResult(Global.TRUE, text("部门切换成功！"));
+		} else {
+			return renderResult(Global.FALSE, text("部门切换失败，所切换部门不是您的附属部门！"));
+		}
 	}
 	
 }

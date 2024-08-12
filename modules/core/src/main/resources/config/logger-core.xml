@@ -41,6 +41,7 @@
 	<logger name="com.jeesite.common.j2cache" level="INFO" />
 	<logger name="com.jeesite.common.j2cache.cache.support.caffeine" level="ERROR" />
 	<logger name="com.jeesite.common.mybatis" level="INFO" />
+	<logger name="com.jeesite.common.mybatis.type" level="DEBUG" />
 	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
 	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />

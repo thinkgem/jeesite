@@ -1,0 +1,27 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 编译items属性 
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = para0;
+
+// 如果设置了字典，则使用字典数据
+if (isNotEmpty(p.dictType) && type.name(dictType) == 'String'){
+	p.items = @DictUtils.getDictList(p.dictType);
+	if (isBlank(p.itemLabel)){
+		p.itemLabel = 'dictLabel';
+	}
+	if (isBlank(p.itemValue)){
+		p.itemValue = 'dictValue';
+	}
+}
+
+// 如果为空，则赋一个空数组
+if (isEmpty(p.items!)){
+	p.items = [];
+}
+
+%>

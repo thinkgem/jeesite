@@ -14,7 +14,6 @@ import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.OfficeService;
-import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,8 +270,8 @@ public class CompanyController extends BaseController {
 	@RequiresPermissions("sys:company:edit")
 	@RequestMapping(value = "fixTreeData")
 	@ResponseBody
-	public String fixTreeData() {
-		if (!UserUtils.getUser().isAdmin()){
+	public String fixTreeData(Company company) {
+		if (!company.currentUser().isAdmin()){
 			return renderResult(Global.FALSE, text("操作失败，只有管理员才能进行修复！"));
 		}
 		companyService.fixTreeData();

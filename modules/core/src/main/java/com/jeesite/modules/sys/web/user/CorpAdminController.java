@@ -4,26 +4,6 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import io.swagger.annotations.Api;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.session.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -37,6 +17,20 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.RoleService;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.UserUtils;
+import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 租户和系统管理员Controller
@@ -138,7 +132,7 @@ public class CorpAdminController extends BaseController {
 			User where = new User();
 			where.setCorpCode_(user.getCorpCode_());
 			List<User> list = userService.findCorpList(where);
-			if (list.size() > 0){
+			if (!list.isEmpty()){
 				// 新增租户，如果已存在，则不能保存
 				if ("addCorp".equals(op)){
 					return renderResult(Global.FALSE, text("保存租户失败，租户代码已存在"));
@@ -157,7 +151,7 @@ public class CorpAdminController extends BaseController {
 		userService.save(user);
 		userService.saveAuth(user);
 		// 如果修改的是当前用户，则清除当前用户缓存
-		if (user.getUserCode().equals(UserUtils.getUser().getUserCode())) {
+		if (user.getUserCode().equals(user.currentUser().getUserCode())) {
 			UserUtils.clearCache();
 		}
 		return renderResult(Global.TRUE, text("保存管理员''{0}''成功", user.getLoginCode()));
@@ -281,7 +275,7 @@ public class CorpAdminController extends BaseController {
 			where.setCorpCode_(corpCode);
 			where.setPage(new Page<>(1, 1, -1));
 			List<User> list = userService.findCorpList(where);
-			if (list.size() > 0){
+			if (!list.isEmpty()){
 				User user = list.get(0);
 				Session session = UserUtils.getSession();
 				session.setAttribute("corpCode", user.getCorpCode_());

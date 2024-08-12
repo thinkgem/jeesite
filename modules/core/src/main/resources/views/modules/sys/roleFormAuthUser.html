@@ -1,0 +1,138 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% layout('/layouts/default.html', {title: '角色管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header" style="display:block;">
+			<div class="box-title">
+				<i class="fa icon-people"></i> ${text('角色分配用户')}（${role.roleName}-${role.viewCode}-${@DictUtils.getDictLabel('sys_user_type',role.userType,'未设置')}）
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnAddUser" title="${text('添加用户')}"><i class="fa fa-plus"></i> ${text('添加用户')}</a>
+				<a href="#" class="btn btn-default" id="btnDelUser" title="${text('删除用户')}"><i class="fa fa-remove"></i> ${text('批量取消')}</a>
+				<a href="javascript:" class="btn btn-default" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</a>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" action="${ctx}/sys/user/listData" method="post" class="form-inline "
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<#form:hidden name="roleCode" value="${role.roleCode}"/>
+				<#form:hidden name="userType" value="${role.userType}"/>
+				<div class="form-group">
+					<label class="control-label">${text('账号')}：</label>
+					<div class="control-inline">
+						<#form:input name="loginCode" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('昵称')}：</label>
+					<div class="control-inline">
+						<#form:input name="userName" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('邮箱')}：</label>
+					<div class="control-inline">
+						<#form:input name="email" maxlength="300" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('手机')}：</label>
+					<div class="control-inline">
+						<#form:input name="mobile" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('电话')}：</label>
+					<div class="control-inline">
+						<#form:input name="phone" maxlength="100" class="form-control width-90"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline width-90">
+						<#form:select path="status" dictType="sys_user_status" blankOption="true" class="form-control isQuick"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i> ${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm isQuick"><i class="glyphicon glyphicon-repeat"></i> ${text('重置')}</button>
+				</div>
+			</#form:form>			
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<div class="hide"><#form:listselect id="userSelect" title="${text('用户选择')}"
+	url="${ctx}/sys/user/userSelect?userType=${role.userType}" allowClear="false" 
+	checkbox="true" itemCode="userCode" itemName="userName"/></div>
+<% } %>
+<script>
+//初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("登录账号")}', name:'loginCode', index:'a.login_code', width:200, align:"center"},
+		{header:'${text("用户昵称")}', name:'userName', index:'a.user_name', width:200, align:"center"},
+		{header:'${text("电子邮箱")}', name:'email', index:'a.email', width:200, align:"center"},
+		{header:'${text("手机号码")}', name:'mobile', index:'a.mobile', width:200, align:"center"},
+		{header:'${text("办公电话")}', name:'phone', index:'a.phone', width:200, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:200, align:"center"},
+		{header:'${text("状态")}', name:'status', index:'a.status', width:100, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_status')}", val, '未知', true);
+		}},
+		{header:'${text("操作")}', name:'actions', width:100, formatter: function(val, obj, row, act){
+			var actions = [];
+			actions.push('<a href="${ctx}/sys/role/deleteAuthUser?roleCode=${role.roleCode}&userRoleString='+row.userCode+'" class="btnList" title="${text("取消授权")}" data-confirm="${text("确认要取消该用户角色吗？")}"><i class="fa fa-remove"></i></a>&nbsp;');
+			return actions.join('');
+		}}
+	],
+	showCheckbox: true,
+	//# // 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+$('#btnDelUser').click(function(){
+	var userCodes = $('#dataGrid').dataGrid('getSelectRows');
+	if (userCodes != null && userCodes.length > 0){
+		js.confirm('${text("确认要取消选中的用户角色权限吗？")}', function(){
+			js.ajaxSubmit('${ctx}/sys/role/deleteAuthUser', {
+				roleCode: '${role.roleCode}',
+				userRoleString: userCodes.join(',')
+			}, function(data){
+				js.showMessage(data.message);
+				page();
+			});
+		});
+	}else{
+		js.showMessage('${text("请在列表选中要取消角色的用户")}');
+	}
+	return false;
+});
+$('#btnAddUser').click(function(){
+	if ('${role.userType}' == 'employee'){
+		$('#userSelectDiv').attr('data-url', '${ctx}/sys/empUser/empUserSelect');
+	}else{
+		$('#userSelectDiv').attr('data-url', '${ctx}/sys/user/userSelect?userType=${role.userType}');
+	}
+	$('#userSelectCode').val('');
+	$('#userSelectName').val('').click();
+});
+function listselectCallback(id, action, index, layero){
+	if (id == 'userSelect' && action == 'ok'){
+		if ($('#userSelectCode').val() != ''){
+			js.ajaxSubmit('${ctx}/sys/role/saveAuthUser', {
+				roleCode: '${role.roleCode}',
+				userRoleString: $('#userSelectCode').val()
+			}, function(data){
+				js.showMessage(data.message);
+				page();
+			});
+		}else{
+			js.showMessage('${text("没有选择要授权的用户")}');
+		}
+	}
+}
+</script>

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.8.0-SNAPSHOT</version>
+		<version>5.8.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -23,9 +23,9 @@
 		
 		<finalName>web</finalName><!-- war or jar 包的名称 -->
 		<start-class>com.jeesite.modules.ApiApplication</start-class>
-		
+
 		<!-- docker setting -->
-        <docker.run.port>8980:8980</docker.run.port>
+		<docker.run.port>8980:8980</docker.run.port>
 		
 	</properties>
 
@@ -35,6 +35,13 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-module-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 测试模块 -->
+		<dependency>
+			<groupId>com.jeesite</groupId>
+			<artifactId>jeesite-module-test</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
@@ -110,13 +117,13 @@
 		</plugins>
 	</build>
 	
-	<developers>  
+	<developers>
 		<developer>
 			<id>thinkgem</id>
 			<name>WangZhen</name>
 			<email>thinkgem at 163.com</email>
 			<roles><role>Project lead</role></roles>
-			<timezone>+8</timezone>  
+			<timezone>+8</timezone>
 		</developer>
 	</developers>
 	

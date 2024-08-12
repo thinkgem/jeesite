@@ -12,14 +12,14 @@ import com.jeesite.common.lang.ExceptionUtils;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.Validate;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
@@ -64,13 +64,8 @@ public class ServletUtils {
 	 * 	</listener-class></listener>
 	 */
 	public static HttpServletRequest getRequest(){
-		HttpServletRequest request = null;
 		try{
-			request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-			if (request == null){
-				return null;
-			}
-			return request;
+			return ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		}catch(Exception e){
 			return null;
 		}
@@ -83,16 +78,11 @@ public class ServletUtils {
 	 * 	<filter-name>requestContextFilter</filter-name><url-pattern>/*</url-pattern></filter-mapping>
 	 */
 	public static HttpServletResponse getResponse(){
-		HttpServletResponse response = null;
 		try{
-			response = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
-			if (response == null){
-				return null;
-			}
+			return ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getResponse();
 		}catch(Exception e){
 			return null;
 		}
-		return response;
 	}
 	
 	/**
@@ -122,9 +112,8 @@ public class ServletUtils {
 	public static boolean isStaticFile(String uri){
 		if (STATIC_FILE == null){
 			try {
-				throw new Exception("检测到“application.yml”中没有配置“web.staticFile”属性。"
-						+ "配置示例：\n#静态文件后缀\nweb.staticFile=.css,.js,.png,.jpg,.gif,"
-						+ ".jpeg,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk");
+				throw new Exception("检测到“application.yml”中没有配置“web.staticFile”属性。配置示例：\n#静态文件后缀\nweb.staticFile=" +
+						".css,.js,.map,.png,.jpg,.gif,.jpeg,.webp,.bmp,.ico,.swf,.psd,.htc,.crx,.xpi,.exe,.ipa,.apk,.otf,.eot,.svg,.ttf,.woff,.woff2");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -258,6 +247,7 @@ public class ServletUtils {
 		if (object == null) {
 			object = resultMap;
 		}
+		object = ResultUtils.result(object, request, response);
 		if (jsonView != null) {
 			return JsonMapper.toJson(object, jsonView);
 		}else {
@@ -331,6 +321,7 @@ public class ServletUtils {
 				object = new JSONPObject(functionName, object);
 			}
 		}
+		object = ResultUtils.result(object, request, response);
 		if (jsonView != null) {
 			return renderString(response, JsonMapper.toJson(object, jsonView));
 		}else {
@@ -358,18 +349,7 @@ public class ServletUtils {
 		try {
 //			response.reset(); // 注释掉，否则以前设置的Header会被清理掉，如ajax登录设置记住我的Cookie信息
 			if (type == null && StringUtils.isBlank(response.getContentType())){
-				if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
-						|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
-					type = MediaType.APPLICATION_JSON_VALUE;
-				}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
-					if (StringUtils.startsWith(string, "<!DOCTYPE")){
-						type = MediaType.TEXT_HTML_VALUE;
-					}else{
-						type = MediaType.APPLICATION_XML_VALUE;
-					}
-				}else{
-					type = MediaType.TEXT_PLAIN_VALUE;
-				}
+				type = getContentType(string);
 			}
 			if (type != null) {
 				response.setContentType(type);
@@ -380,6 +360,27 @@ public class ServletUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 根据内容判断相应类型 MediaType
+	 * @return application/json、text/html、application/xml、text/plain
+	 */
+	public static String getContentType(String string) {
+		String type;
+		if ((StringUtils.startsWith(string, "{") && StringUtils.endsWith(string, "}"))
+				|| (StringUtils.startsWith(string, "[") && StringUtils.endsWith(string, "]"))){
+			type = MediaType.APPLICATION_JSON_VALUE;
+		}else if (StringUtils.startsWith(string, "<") && StringUtils.endsWith(string, ">")){
+			if (StringUtils.startsWith(string, "<!DOCTYPE")){
+				type = MediaType.TEXT_HTML_VALUE;
+			}else{
+				type = MediaType.APPLICATION_XML_VALUE;
+			}
+		}else{
+			type = MediaType.TEXT_PLAIN_VALUE;
+		}
+		return type;
 	}
 
 	/**

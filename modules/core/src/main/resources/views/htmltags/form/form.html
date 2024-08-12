@@ -1,0 +1,27 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：表单标签
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 表单ID
+	model: model!,				// 绑定Model对象，例如：${user!}
+	action: action!,			// 表单请求地址
+	method: method!,			// 请求方法，默认 post
+	enctype: enctype!,			// 发送之前进行数据编码，上传文件时指定：multipart/form-data
+	
+	// 内置参数
+	thisTag: thisTag,
+	exclAttrs: ['id', 'model', 'action', 'method']
+};
+
+// 编译属性参数
+form.attrs(p);
+	
+%><form id="${p.id}" action="${p.action}" method="${p.method}"${p.attrs}>
+${tagBody}</form>

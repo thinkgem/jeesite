@@ -55,8 +55,8 @@ public class Employee extends DataEntity<Employee> {
 	private String empNo;		// 员工工号
 	private String empName;		// 员工姓名
 	private String empNameEn;	// 员工英文名
-	private Office office;		// 机构编码
-	private Company company;	// 公司编码
+	private Office office;		// 机构对象
+	private Company company;	// 公司对象
 	
 	private String postCode;	// 根据职位查询
 

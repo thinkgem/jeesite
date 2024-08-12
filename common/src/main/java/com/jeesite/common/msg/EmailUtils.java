@@ -16,7 +16,7 @@ import com.jeesite.common.io.PropertiesUtils;
  */
 public class EmailUtils {
 
-	private final static Logger logger = LoggerFactory.getLogger(EmailUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(EmailUtils.class);
 
 	/**
 	 * 发送邮件

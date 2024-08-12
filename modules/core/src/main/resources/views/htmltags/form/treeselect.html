@@ -1,0 +1,250 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */
+
+/**
+ * 表单控件：树结构选择框
+ * @author ThinkGem
+ * @version 2017-3-5
+ */
+var p = {
+
+	// 标签参数
+	id: id!,					// 元素ID
+	path: path!,				// 绑定form上model中属性的值
+	name: name!,				// 隐藏域名称
+	value: value!,				// 隐藏域值
+	defaultValue: defaultValue!,// 隐藏域默认值 v4.1.5
+	
+	labelPath: labelPath!,		// 绑定form上model中属性的值
+	labelName: labelName!,		// 标签框名称
+	labelValue: labelValue!,	// 标签框值
+	defaultLabel: defaultLabel!,// 标签框默认值 v4.1.5
+	
+	class: class!'',			// 标签框的CSS类名
+	placeholder: placeholder!,	// 标签框的预期值的提示信息
+	dataMsgRequired: thisTag.attrs['data-msg-required'],	// 必填错误提示信息
+	
+	btnClass: btnClass!,		// 标签框后面的按钮CSS类名
+	
+	title: title!text('选项选择'),			// 对话框标题
+	boxWidth: boxWidth!300, 	// 对话框宽度，默认300像素
+	boxHeight: boxHeight!400,	// 对话框高度，默认400像素
+	
+	url: url!,					// 树结构，数据源地址 [{id, pid, name}]
+	
+	readonly: readonly!'false',		// 是否只读模式
+	
+	allowInput: toBoolean(allowInput!false),	// 是否允许label框输入
+	allowClear: toBoolean(allowClear!true),		// 是否允许清空选择内容
+	
+	checkbox: toBoolean(checkbox!false),		// 是否显示复选框，是否支持多选，如果设置canSelectParent=true则返回父节点数据
+	chkboxType: chkboxType!'',					// 复选框级联选择规则 v4.0.6，默认：{'Y':'ps','N':'ps'}
+	expandLevel: @ObjectUtils.toInteger(expandLevel!(-1)),		// 默认展开层次级别（默认:如果有1个根节点，则展开一级节点，否则不展开）
+	
+	canSelectRoot: toBoolean(canSelectRoot!false),		// 可以选择跟节点
+	canSelectParent: toBoolean(canSelectParent!false),	// 可以选择父级节点
+	
+	isReturnValue: isReturnValue!'false',		// 是否返回树结构的value值，而不是返回id（默认id）
+	
+	returnFullName: toBoolean(returnFullName!false),	// 是否返回全路径，包含所有上级信息，以 returnFullNameSplit 参数分隔
+	returnFullNameSplit: returnFullNameSplit!'/',		// 是否返回全路径，的分隔符，默认“/”
+
+	fastSearch: toBoolean(allowClear!true),		// 快速查询，查询框输入后接着进行查询，关闭后，点击查询按钮或回车再查询 v4.5.0 v5.0.2
+	
+	openFuncName: openFuncName!'treeselectOpen',				// 可自定义弹窗前调用的函数名   v4.2.0
+	checkFuncName: checkFuncName!'treeselectCheck',				// 可自定义验证方法的函数名  v4.1.5
+	callbackFuncName: callbackFuncName!'treeselectCallback',	// 可自定义回调方法的函数名   v4.1.0
+	
+	// 内置参数
+	thisTag: thisTag
+};
+
+// 编译绑定参数
+form.path(p);
+
+// 标签属性编译
+p.labelAttrs = '';
+if (!p.allowInput){
+	p.labelAttrs = p.labelAttrs + ' readonly="readonly"';
+}
+if (isNotBlank(p.dataMsgRequired)){
+	p.labelAttrs = p.labelAttrs + ' data-msg-required="' + p.dataMsgRequired + '"';
+}
+if (isNotBlank(p.placeholder)){
+	p.labelAttrs = p.labelAttrs + ' placeholder="' + p.placeholder + '"';
+}
+
+// 如果没有设置是否显示“清除”按钮开关，则根据class判断是否为必须字段。
+if (allowClear! == null && @StringUtils.contains(p.class, 'required')){
+	p.allowClear = false;
+}
+
+%><div class="input-group treeselect" id="${p.id}Div" data-url="${p.url}">
+	<input id="${p.id}Name" type="text" name="${p.labelName}" value="${p.labelValue}"
+		class="form-control ${p.class} ${p.labelClass} isReset"${p.labelAttrs}
+	/><input id="${p.id}Code" type="hidden" name="${p.name}" value="${p.value}" class="isReset"
+	/><span class="input-group-btn"><a id="${p.id}Button" href="javascript:"
+		class="btn btn-default ${p.btnClass}"><i class="fa fa-search"></i></a>
+	</span>
+</div>
+<script>
+if ('${p.readonly}' == 'true' || $("#${p.id}Name").hasClass("disabled")){
+	$("#${p.id}Button,#${p.id}Name").addClass("disabled");
+}
+$("#${p.id}Button${p.allowInput?'':',#'+p.id+'Name'}").click(function(){
+	if ($("#${p.id}Button").hasClass("disabled") || $("#${p.id}Name").hasClass("disabled")){
+		return true;
+	}
+	var options = {
+		type: 2,
+		maxmin: true,
+		shadeClose: true,
+		title: '${p.title}',
+		area: ['${p.boxWidth}px', '${p.boxHeight}px'],
+		content: '${ctxPath}/tags/treeselect',
+		contentFormData: {
+			url: $('#${p.id}Div').attr('data-url'),
+			checkbox: '${p.checkbox}',
+			chkboxType: "${p.chkboxType}",
+			expandLevel: '${p.expandLevel}',
+			selectCodes: $("#${p.id}Code").val(),
+			isReturnValue: '${p.isReturnValue}',
+			fastSearch: '${p.fastSearch}',
+		},
+		success: function(layero, index){
+			if ($(js.layer.window).width() < "#{p.boxWidth}"
+				|| $(js.layer.window).height() < "#{p.boxHeight}"){
+				js.layer.full(index);
+			}
+		},
+		btn: ['<i class="fa fa-check"></i> ${text("确定")}'],
+		btn1: function(index, layero){
+			var win = layero.iframeWindow();
+			win.$('#keyword').val('').change();
+			var codes = [], names = [], nodes;
+			if ("${p.checkbox}" == "true"){
+				nodes = win.tree.getCheckedNodes(true);
+			}else{
+				nodes = win.tree.getSelectedNodes();
+			}
+			for(var i=0; i<nodes.length; i++) {
+				//# // 如果为复选框选择，则过滤掉父节点
+				//# if (p.checkbox && !p.canSelectParent){
+				if (nodes[i].isParent){
+					continue;
+				}
+				//# } // 不允许选择跟节点
+				//# if (!p.canSelectRoot){
+				if (nodes[i].level == 0 && nodes[i].isParent){
+					js.showMessage("${text('不能选择根节点')}（"+nodes[i].name+"）${text('请重新选择')}。");
+					return false;
+				}
+				//# } // 不允许选择父节点
+				//# if (!p.canSelectParent){
+				if (nodes[i].isParent){
+					js.showMessage("${text('不能选择父节点')}（"+nodes[i].name+"）${text('请重新选择')}。");
+					return false;
+				}
+				//# }
+				var code = nodes[i]['${p.isReturnValue!}'=='true'?'value':'id'], name = nodes[i]['name'];
+				//# // 如果是返回全部路径的名称，则读取名称路径
+				//# if (p.returnFullName){
+				var pNode = nodes[i].getParentNode();
+				while(!!pNode) {
+					name =  pNode.name + '${p.returnFullNameSplit}' + name;
+				    pNode = pNode.getParentNode();
+				}
+				//# }
+				codes.push(String(code).replace(/^u_/g,''));
+				names.push(String(name)/* .replace(/\([0-9]*\)/g,'') */);
+				//# // 如果不是复选框选择，则返回只第一个选择节点就可以了
+				//# if (!p.checkbox){
+				break;
+				//# }
+			}
+			//# // 自定义选择节点验证，返回false代表验证失败
+			if(typeof "#{p.checkFuncName}" == 'function'){
+				if (!"#{p.checkFuncName}"('${p.id}', nodes)){
+					return false;
+				}
+			}
+			$("#${p.id}Code").val(codes.join(',')).change();
+			$("#${p.id}Name").val(names.join(',')).change();
+			//# // 选择回调方法，选择成功后调用
+			if(typeof "#{p.callbackFuncName}" == 'function'){
+				"#{p.callbackFuncName}"('${p.id}', 'ok', index, layero, nodes);
+			}
+			try{$('#${p.id}Code,#${p.id}Name').resetValid();}catch(e){}
+		}
+	};
+	//# if (p.allowClear){
+	options.btn.push('<i class="fa fa-eraser"></i> ${text("清除")}');
+	options['btn'+options.btn.length] = function(index, layero){
+		$("#${p.id}Code").val('').change();
+		$("#${p.id}Name").val('').change();
+		try{$('#${p.id}Code,#${p.id}Name').resetValid();}catch(e){}
+		//# // 选择回调方法，点击清空后调用
+		if(typeof "#{p.callbackFuncName}" == 'function'){
+			"#{p.callbackFuncName}"('${p.id}', 'clear', index, layero);
+		}
+	};
+	//# }
+	options.btn.push('<i class="fa fa-close"></i> ${text("关闭")}');
+	options['btn'+options.btn.length] = function(index, layero){
+		//# // 选择回调方法，点击取消调用
+		if(typeof "#{p.callbackFuncName}" == 'function'){
+			"#{p.callbackFuncName}"('${p.id}', 'cancel', index, layero);
+		}
+	};
+	//# // 弹出对话框前调用，返回 false 则不弹框，直接返回
+	if(typeof "#{p.openFuncName}" == 'function'){
+		if("#{p.openFuncName}"('${p.id}', options) === false){
+			return true;
+		}
+	}
+	js.layer.open(options);
+});
+//# /*
+/**
+ * 选择前调用，数据验证函数，返回false代表验证失败
+ * @param id  标签的id
+ * @param node  验证的数据
+ * @return true 验证成功，false 验证失败
+ */
+function treeselectCheck(id, nodes){
+	if (id == 'parent'){
+        log(nodes); // 选择的节点数据
+	}
+	return true;
+}
+/**
+ * 选择回调方法
+ * @param id  标签的id
+ * @param act 动作事件：ok、clear、cancel
+ * @param index layer的索引号
+ * @param layero layer内容的jQuery对象
+ * @param nodes 当前选择的树节点数组
+ */
+function treeselectCallback(id, act, index, layero, nodes){
+	if (id == 'parent' && (act == 'ok' || act == 'clear')){
+		var win = layero.iframeWindow();
+		log(win);    // 选择框内容的window对象
+		log(act);    // 回调活动事件（ok、clear、cancel）
+		log(index);  // layer的index
+		log(layero); // layer实例对象
+        log(nodes);  // 选择的节点数据
+	}
+}
+/**
+ * 弹出对话框前调用 v4.2.0
+ * @param id  标签的id
+ * @param options  弹窗选项
+ * @return 返回 false 则不弹框，直接返回
+ */
+function treeselectOpen(id, options){
+	if (id == 'parent'){
+		log(options);
+	}
+}
+//# */
+</script>
