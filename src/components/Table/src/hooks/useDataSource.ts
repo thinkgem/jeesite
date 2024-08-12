@@ -172,10 +172,9 @@ export function useDataSource(
     record: Recordable,
   ): Recordable | undefined {
     const row = findTableDataRecord(rowKey);
-
     if (row) {
-      for (const field in row) {
-        if (Reflect.has(record, field)) row[field] = record[field];
+      for (const field in record) {
+        row[field] = record[field];
       }
       return row;
     }
