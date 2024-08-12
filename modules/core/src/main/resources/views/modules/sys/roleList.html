@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${role}" action="${ctx}/sys/role/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${role}" action="${ctx}/sys/role/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<#form:hidden name="ctrlPermi" value="${ctrlPermi}"/>
 				<div class="form-group">

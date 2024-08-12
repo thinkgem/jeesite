@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${menu}" action="${ctx}/sys/menu/listData" method="post" class="form-inline hide">
+			<#form:form id="searchForm" model="${menu}" action="${ctx}/sys/menu/listData" method="post" class="form-inline ">
 				<#form:hidden path="moduleCodes" class="isReset" />
 				<#form:hidden path="menuCode" class="isReset"/>
 				<#form:hidden path="sysCode" />
@@ -79,7 +79,7 @@
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
-	columnModel: [
+	columnModel: [ 
 		{header:'${text("菜单名称")}', name:'menuNameRaw', width:200, formatter: function(val, obj, row, act){
 			var icon = row.menuIcon || 'fa-circle-o opa08', iconHtml = '';
 			if (icon.indexOf('://') != -1){
