@@ -8,7 +8,7 @@ export interface Cache<V = any> {
 const NOT_ALIVE = 0;
 
 export class Memory<T = any, V = any> {
-  private cache: { [key in keyof T]?: Cache<V> } = {};
+  private cache: { [_key in keyof T]?: Cache<V> } = {};
   private alive: number;
 
   constructor(alive = NOT_ALIVE) {
@@ -78,7 +78,7 @@ export class Memory<T = any, V = any> {
     }
   }
 
-  resetCache(cache: { [K in keyof T]: Cache }) {
+  resetCache(cache: { [_K in keyof T]: Cache }) {
     Object.keys(cache).forEach((key) => {
       const k = key as any as keyof T;
       const item = cache[k];

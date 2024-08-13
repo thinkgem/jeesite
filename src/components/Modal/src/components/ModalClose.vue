@@ -71,7 +71,7 @@
   .@{prefix-cls} {
     float: right;
     text-align: right;
-    margin-right: -8px;
+    margin-right: 10px;
 
     .jeesite-icon {
       margin: 3px 9px;

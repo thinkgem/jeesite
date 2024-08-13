@@ -63,6 +63,15 @@
       ],
     },
     {
+      label: t('节点名称'),
+      field: 'treeName',
+      component: 'Input',
+      componentProps: {
+        maxlength: 200,
+      },
+      required: true,
+    },
+    {
       label: t('排序号'),
       field: 'treeSort',
       helpMessage: '升序',
@@ -71,15 +80,6 @@
         maxlength: 10,
       },
       defaultValue: '30',
-      required: true,
-    },
-    {
-      label: t('节点名称'),
-      field: 'treeName',
-      component: 'Input',
-      componentProps: {
-        maxlength: 200,
-      },
       required: true,
     },
     {

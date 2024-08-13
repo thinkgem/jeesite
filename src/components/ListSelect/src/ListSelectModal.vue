@@ -7,8 +7,9 @@
 <template>
   <BasicModal
     v-bind="$attrs"
-    :title="props.config.modalProps?.title || t('数据选择')"
     wrapClassName="jeesite-listselect"
+    :title="props.config.modalProps?.title || t('数据选择')"
+    :canFullscreen="false"
     @register="registerModal"
     @ok="handleSubmit"
     width="80%"
@@ -119,8 +120,9 @@
   });
   function calcTreeHeight() {
     let height = document.documentElement.clientHeight;
-    treeHeight.value = height - 280;
-    tableHeight.value = height - 380;
+    let padding = 280;
+    treeHeight.value = height - padding;
+    tableHeight.value = height - padding - 100;
   }
   useWindowSizeFn(calcTreeHeight, 280);
   onMountedOrActivated(calcTreeHeight);

@@ -1,6 +1,6 @@
 {
   "name": "jeesite",
-  "version": "5.8.0",
+  "version": "5.8.1",
   "type": "module",
   "scripts": {
     "bootstrap": "yarn install",
@@ -9,7 +9,7 @@
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",
-    "build:no-cache": "yarn clean:cache && npm run build",
+    "build:no-cache": "npm run clean:cache && npm run build",
     "preview": "npm run build && npm run preview:dist",
     "preview:dist": "vite preview --mode development --port 3100",
     "clean:cache": "rimraf node_modules/.cache/; rimraf node_modules/.vite",
@@ -18,9 +18,9 @@
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "lint:prettier": "prettier --write \"src/**/*.{json,tsx,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint \"**/*.{vue,css,less,scss}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
-    "lint:all": "yarn type:check && yarn lint:eslint && yarn lint:prettier && yarn lint:stylelint",
-    "reinstall": "rimraf yarn.lock pnpm-lock.yaml package-lock.json node_modules; yarn bootstrap",
-    "update": "yarn global add npm-check-updates; ncu -u -x codemirror",
+    "lint:all": "npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
+    "reinstall": "rimraf yarn.lock pnpm-lock.yaml package-lock.json node_modules; npm run bootstrap",
+    "update": "npm i npm-check-updates -g --force; ncu -u -x codemirror",
     "gen:icon": "esno ./build/generate/icon/index.ts"
   },
   "dependencies": {

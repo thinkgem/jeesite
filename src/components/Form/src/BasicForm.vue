@@ -379,12 +379,12 @@
         white-space: nowrap;
 
         .ant-btn {
-          margin-top: 1px;
-          padding: 1px 10px;
-          // line-height: 1.5;
-          font-size: 13px;
-          height: 30px;
-          border-radius: 4px;
+          padding-left: 12px;
+          padding-right: 12px;
+          //margin-top: 1px;
+          //font-size: 13px;
+          //height: 30px;
+          //border-radius: 4px;
 
           &.ant-btn-link {
             z-index: 1;

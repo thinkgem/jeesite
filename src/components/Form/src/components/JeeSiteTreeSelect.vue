@@ -89,7 +89,7 @@
 
       const getAttrs = computed(() => {
         let propsData = {
-          height: 400, // 虚拟滚动
+          virtual: false,
           showSearch: true,
           treeNodeFilterProp: 'name',
           fieldNames: {
