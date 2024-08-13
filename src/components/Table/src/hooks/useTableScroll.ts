@@ -221,7 +221,7 @@ export function useTableScroll(
     const { canResize, scroll } = unref(propsRef);
     const canScrollX = tableWidth == 0 || width == 0 || tableWidth > width;
     return {
-      x: canScrollX ? (canResize ? true : undefined) : width,
+      x: canScrollX ? (canResize ? width : undefined) : width,
       y: canResize ? unref(tableHeightRef) : undefined,
       scrollToFirstRowOnChange: true,
       ...scroll,
