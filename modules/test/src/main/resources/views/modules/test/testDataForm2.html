@@ -245,6 +245,7 @@ $('#testDataChildDataGrid').dataGrid({
 			},
 			editable:true, edittype:'select', editoptions:{'class':'form-control',
 				items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{@DictUtils.getDictListJson('sys_menu_type')}"),
+				// items: $.merge([{dictLabel:'&nbsp;',dictValue:''}], "#{toJson(testSelectItems![])}"),
 				itemLabel: 'dictLabel', itemValue: 'dictValue', dataInit: function(element){
 					js.select2(element).on("change",function(){$(this).resetValid()});
 				}
