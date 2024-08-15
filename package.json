@@ -1,6 +1,6 @@
 {
   "name": "jeesite",
-  "version": "5.8.1",
+  "version": "5.9.0.dev",
   "type": "module",
   "scripts": {
     "bootstrap": "yarn install",
@@ -20,8 +20,7 @@
     "lint:stylelint": "stylelint \"**/*.{vue,css,less,scss}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "reinstall": "rimraf yarn.lock pnpm-lock.yaml package-lock.json node_modules; npm run bootstrap",
-    "update": "npm i npm-check-updates -g --force; ncu -u -x codemirror",
-    "gen:icon": "esno ./build/generate/icon/index.ts"
+    "update": "npm i npm-check-updates -g --force; ncu -u -x codemirror"
   },
   "dependencies": {
     "@ant-design/colors": "7.0.2",
@@ -134,6 +133,7 @@
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china"
   },
+  "homepage": "https://jeesite.com",
   "repository": {
     "type": "git",
     "url": "git+https://gitee.com/thinkgem/jeesite-vue.git"
@@ -141,42 +141,12 @@
   "bugs": {
     "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
   },
-  "homepage": "https://jeesite.com",
-  "engines": {
-    "node": "18 || >=20"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "{!(package)*.json,*.code-snippets,.!(browserslist)*rc}": [
-      "prettier --write--parser json"
-    ],
-    "package.json": [
-      "prettier --write"
-    ],
-    "*.vue": [
-      "eslint --fix",
-      "prettier --write",
-      "stylelint --fix"
-    ],
-    "*.{scss,less,styl,html}": [
-      "stylelint --fix",
-      "prettier --write"
-    ],
-    "*.md": [
-      "prettier --write"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-git"
-    }
-  },
   "author": {
     "name": "ThinkGem",
     "email": "thinkgem@163.com",
-    "url": "https://gitee.com/thinkgem/jeesite-vue"
+    "url": "https://gitee.com/thinkgem"
+  },
+  "engines": {
+    "node": "18 || >=20"
   }
 }

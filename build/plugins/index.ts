@@ -6,16 +6,16 @@
 import { PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import legacy from '@vitejs/plugin-legacy';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import vitePluginCertificate from 'vite-plugin-mkcert';
-import { appConfigPlugin } from './appConfig';
+import { appConfigPlugin } from '../config/appConfig';
 import { configUnoCSSPlugin } from './unocss';
 import { configHtmlPlugin } from './html';
 import { configCompressPlugin } from './compress';
 import { configVisualizerPlugin } from './visualizer';
-import { configThemePlugin } from './theme';
+import { configThemePlugin } from '../theme';
 import { PackageJson } from 'pkg-types';
+import { configLegacyPlugin } from './legacy';
 
 export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: PackageJson) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [
@@ -43,23 +43,10 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
   vitePlugins.push(configThemePlugin(isBuild));
 
   // rollup-plugin-gzip
-  isBuild &&
-    vitePlugins.push(
-      configCompressPlugin(
-        viteEnv.VITE_BUILD_COMPRESS,
-        viteEnv.VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
-      ),
-    );
+  vitePlugins.push(configCompressPlugin(isBuild, viteEnv));
 
   // @vitejs/plugin-legacy
-  viteEnv.VITE_LEGACY &&
-    isBuild &&
-    vitePlugins.push(
-      legacy({
-        targets: ['Chrome 80'],
-        modernPolyfills: true,
-      }),
-    );
+  vitePlugins.push(configLegacyPlugin(isBuild, viteEnv));
 
   return vitePlugins;
 }

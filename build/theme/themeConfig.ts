@@ -1,7 +1,12 @@
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
 import { generate } from '@ant-design/colors';
-import { APP_PRESET_COLOR_LIST } from '../../src/settings/designSetting';
+// import { APP_PRESET_COLOR_LIST } from '../../../src/settings/designSetting';
 
-export const primaryColor = APP_PRESET_COLOR_LIST[0];
+export const primaryColor = '#2a50ec'; // APP_PRESET_COLOR_LIST[0];
 export const darkPrimaryColor = '#2a50ec';
 
 export const darkMode = 'light';

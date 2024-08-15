@@ -1,4 +1,4 @@
-import { getThemeColors, generateColors } from '../../../build/config/themeConfig';
+import { getThemeColors, generateColors } from '../../../build/theme/themeConfig';
 
 import { replaceStyleVariables } from 'vite-plugin-theme-vite3/es/client';
 import { mixLighten, mixDarken, tinycolor } from 'vite-plugin-theme-vite3/es/colorUtils';

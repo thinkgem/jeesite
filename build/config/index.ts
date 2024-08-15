@@ -1,22 +1,11 @@
-import path from 'path';
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
+ */
 import fs from 'fs-extra';
 import dotenv from 'dotenv';
 import { join } from 'node:path';
-
-export function isDevFn(mode: string): boolean {
-  return mode === 'development';
-}
-
-export function isProdFn(mode: string): boolean {
-  return mode === 'production';
-}
-
-/**
- * Whether to generate package preview
- */
-export function isReportMode(): boolean {
-  return process.env.REPORT === 'true';
-}
 
 // Read all environment variable configuration files to process.env
 export function wrapperEnv(envConf: Recordable): ViteEnv {
@@ -49,7 +38,7 @@ export function wrapperEnv(envConf: Recordable): ViteEnv {
 /**
  * 获取当前环境下生效的配置文件名
  */
-function getConfFiles() {
+function getEnvConfigFiles() {
   const script = process.env.npm_lifecycle_script;
   const reg = new RegExp('--mode ([a-z_\\d]+)');
   const result = reg.exec(script as string) as any;
@@ -65,7 +54,7 @@ function getConfFiles() {
  * @param match prefix
  * @param confFiles ext
  */
-export async function getEnvConfig(match = 'VITE_GLOB_', confFiles = getConfFiles()) {
+export async function getEnvConfig(match = 'VITE_GLOB_', confFiles = getEnvConfigFiles()) {
   let envConfig = {};
   for (const item of confFiles) {
     try {
@@ -83,12 +72,4 @@ export async function getEnvConfig(match = 'VITE_GLOB_', confFiles = getConfFile
     }
   });
   return envConfig;
-}
-
-/**
- * Get user root directory
- * @param dir file path
- */
-export function getRootPath(...dir: string[]) {
-  return path.resolve(process.cwd(), ...dir);
 }

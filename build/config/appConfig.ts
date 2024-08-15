@@ -5,8 +5,8 @@
  */
 import { type PluginOption } from 'vite';
 import { PackageJson } from 'pkg-types';
-import { getEnvConfig } from '../../utils';
-import { getConfigFileName } from '../../getConfigFileName';
+import { getEnvConfig } from './index';
+import { getEnvConfigName } from './getEnvConfigName';
 import colors from 'picocolors';
 
 const PLUGIN_NAME = 'app-config';
@@ -61,13 +61,13 @@ export function appConfigPlugin(
 
 async function getConfigContent(env: ViteEnv) {
   const config = await getEnvConfig();
-  const variableName = getConfigFileName(env);
-  const windowVariable = `window.${variableName}`;
+  const envConfigName = getEnvConfigName(env);
+  const windowVariable = `window.${envConfigName}`;
   // Ensure that the variable will not be modified
   let source = `${windowVariable}=${JSON.stringify(config)};`;
   source += `
     Object.freeze(${windowVariable});
-    Object.defineProperty(window, "${variableName}", {
+    Object.defineProperty(window, "${envConfigName}", {
       configurable: false,
       writable: false,
     });

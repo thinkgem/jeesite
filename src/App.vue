@@ -20,12 +20,12 @@
   import { ThemeEnum } from '/@/enums/appEnum';
   import { useLocale } from '/@/locales/useLocale';
   import { useTitle } from '/@/hooks/web/useTitle';
-  import { darkPrimaryColor } from '../build/config/themeConfig';
+  import { darkPrimaryColor } from '../build/theme/themeConfig';
   import 'dayjs/locale/zh-cn';
 
   // support Multi-language
   const { getAntdLocale } = useLocale();
-  const { getDarkMode, getThemeColor } = useRootSetting();
+  const { getDarkMode, getThemeColor, getFontSize } = useRootSetting();
 
   const getTheme = computed(() => {
     const isDark = unref(getDarkMode) === ThemeEnum.DARK;
@@ -35,6 +35,7 @@
         colorPrimary: isDark ? darkPrimaryColor : unref(getThemeColor),
         colorLink: isDark ? darkPrimaryColor : unref(getThemeColor),
         colorInfo: isDark ? darkPrimaryColor : unref(getThemeColor),
+        fontSize: unref(getFontSize),
       },
     };
   });

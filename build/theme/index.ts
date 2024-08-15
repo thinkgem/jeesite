@@ -1,6 +1,7 @@
 /**
- * Vite plugin for website theme color switching
- * https://gitee.com/thinkgem/vite-plugin-theme-vite3
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ThinkGem
  */
 import type { PluginOption } from 'vite';
 // import path from 'path';
@@ -11,9 +12,13 @@ import {
   mixDarken,
   tinycolor,
 } from 'vite-plugin-theme-vite3';
-import { getThemeColors, generateColors } from '../../config/themeConfig';
-import { generateModifyVars } from '../../generate/modifyVars';
+import { getThemeColors, generateColors } from './themeConfig';
+import { generateModifyVars } from './modifyVars';
 
+/**
+ * Vite plugin for website theme color switching
+ * https://gitee.com/thinkgem/vite-plugin-theme-vite3
+ */
 export function configThemePlugin(isBuild: boolean): PluginOption[] {
   const colors = generateColors({
     mixDarken,

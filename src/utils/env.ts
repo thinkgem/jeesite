@@ -2,23 +2,23 @@ import type { GlobEnvConfig } from '/#/config';
 
 import { warn, env } from '/@/utils/log';
 import { version } from '../../package.json';
-import { getConfigFileName } from '../../build/getConfigFileName';
+import { getEnvConfigName } from '../../build/config/getEnvConfigName';
 
 export function getCommonStoragePrefix() {
   const { VITE_GLOB_APP_SHORT_NAME } = getAppEnvConfig();
-  return `${VITE_GLOB_APP_SHORT_NAME.replace(/\s/g, '_')}__${getEnv()}`.toUpperCase();
+  return `${VITE_GLOB_APP_SHORT_NAME}__${getEnv()}`.toUpperCase();
 }
 
 // Generate cache key according to version
 export function getStorageShortName() {
-  return `${getCommonStoragePrefix()}${`__${version}`}__`.toUpperCase();
+  return `${getCommonStoragePrefix().replace(/\s/g, '_')}${`__${version}`}__`.toUpperCase();
 }
 
 export function getAppEnvConfig() {
-  const ENV_NAME = getConfigFileName(env);
+  const ENV_CONFIG_NAME = getEnvConfigName(env);
   const ENV = (env.DEV
     ? (env as unknown as GlobEnvConfig)
-    : window[ENV_NAME as any]) as unknown as GlobEnvConfig;
+    : window[ENV_CONFIG_NAME as any]) as unknown as GlobEnvConfig;
 
   if (!/^[a-zA-Z_]*$/.test(ENV.VITE_GLOB_APP_SHORT_NAME)) {
     warn(
