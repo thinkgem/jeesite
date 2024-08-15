@@ -85,6 +85,7 @@ public class TestDataController extends BaseController {
 	public String form(TestData testData, String flag, Model model) {
 		testDataService.loadChildData(testData);
 		model.addAttribute("testData", testData);
+//		model.addAttribute("testSelectItems", DictUtils.getDictList("sys_menu_type"));
 		return "modules/test/testDataForm"+ StringUtils.defaultString(flag, "");
 	}
 
