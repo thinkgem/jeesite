@@ -41,8 +41,7 @@
 				<% include('/templates/modules/gen/include/formControl.html'){} %>
 				<% include('/templates/modules/gen/include/formChildTable.html'){} %>
 			<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
-				\<% if(isNotBlank(${className}.bpm.taskId)){ %>
-				<div class="row">
+				<div class="row taskComment hide">
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label class="control-label col-xs-2">${text('审批意见')}：</label>
@@ -52,7 +51,6 @@
 						</div>
 					</div>
 				</div>
-				\<% } %>
 				<${'#'}bpm:nextTaskInfo bpmEntity="\${${className}}" />
 			<% } %>
 			</div>
@@ -89,13 +87,17 @@ $('#btnDraft').click(function(){
 });
 // 流程按钮操作事件
 BpmButton = window.BpmButton || {};
-BpmButton.init = function(task){}
+BpmButton.init = function(task){
+	if (task.status != '2') {
+		$('.taskComment').removeClass('hide');
+	}
+}
 BpmButton.complete = function($this, task){
 	$('#status').val(Global.STATUS_AUDIT);
 };
 // 表单验证提交事件
 <% } %>
-$("#inputForm").validate({
+$('#inputForm').validate({
 	submitHandler: function(form){
 		js.ajaxSubmitForm($(form), function(data){
 			js.showMessage(data.message);
