@@ -97,7 +97,7 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-vue-dist</artifactId>
-			<version>5.8.1-SNAPSHOT</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 
 	</dependencies>
