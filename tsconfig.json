@@ -25,10 +25,7 @@
     "resolveJsonModule": true,
     "declaration": false,
     "jsx": "preserve",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
     "types": [
       "vite/client"
     ],

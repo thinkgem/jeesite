@@ -15,9 +15,9 @@
     "clean:cache": "rimraf node_modules/.cache/; rimraf node_modules/.vite",
     "report": "cross-env REPORT=true npm run build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
-    "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
-    "lint:prettier": "prettier --write \"src/**/*.{json,tsx,less,scss,vue,html,md}\"",
-    "lint:stylelint": "stylelint \"**/*.{vue,css,less,scss}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
+    "lint:eslint": "eslint --cache --max-warnings 0  \"./**/*.{ts,tsx,vue}\" --fix",
+    "lint:prettier": "prettier --write \"./**/*.{vue,tsx,less,scss}\"",
+    "lint:stylelint": "stylelint \"./**/*.{vue,less,scss,css}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "reinstall": "rimraf yarn.lock pnpm-lock.yaml package-lock.json node_modules; npm run bootstrap",
     "update": "npm i npm-check-updates -g --force; ncu -u -x codemirror"

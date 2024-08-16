@@ -1,12 +1,17 @@
 dist
-.local
-.output.js
+public
 node_modules
 
-**/*.svg
-**/*.sh
-
-public
+.local
 .npmrc
+.output.js
 
+*.sh
+*.md
+*.svg
+*.html
+*.json
 *-lock.yaml
+
+/bin
+/packages/dfm
