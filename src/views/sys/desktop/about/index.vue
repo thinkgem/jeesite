@@ -79,32 +79,36 @@
     linkers: 'http://s.jeesite.com',
   };
 
-  Object.keys(dependencies).forEach((key) => {
-    schema.push({ field: key, label: key });
-  });
-
-  Object.keys(devDependencies).forEach((key) => {
-    devSchema.push({ field: key, label: key });
-  });
-
-  const [register] = useDescription({
-    title: '生产环境依赖',
-    data: dependencies,
-    schema: schema,
-    column: 3,
-  });
-
-  const [registerDev] = useDescription({
-    title: '开发环境依赖',
-    data: devDependencies,
-    schema: devSchema,
-    column: 3,
-  });
-
   const [infoRegister] = useDescription({
     title: '项目信息',
     data: infoData,
     schema: infoSchema,
     column: 2,
   });
+
+  let register: any;
+  if (dependencies) {
+    Object.keys(dependencies).forEach((key) => {
+      schema.push({ field: key, label: key });
+    });
+    register = useDescription({
+      title: '生产环境依赖',
+      data: dependencies,
+      schema: schema,
+      column: 3,
+    });
+  }
+
+  let registerDev: any;
+  if (devDependencies) {
+    Object.keys(devDependencies).forEach((key) => {
+      devSchema.push({ field: key, label: key });
+    });
+    registerDev = useDescription({
+      title: '开发环境依赖',
+      data: devDependencies,
+      schema: devSchema,
+      column: 3,
+    });
+  }
 </script>
