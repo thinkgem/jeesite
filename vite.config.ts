@@ -7,13 +7,15 @@ import type { UserConfig, ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import { readPackageJSON } from 'pkg-types';
 import { resolve } from 'node:path';
-import { createDefineOptions } from './build/options/define';
-import { createEsBuildOptions } from './build/options/esBuild';
-import { createBuildOptions } from './build/options/build';
-import { createVitePlugins } from './build/plugins';
-import { createServerOptions } from './build/options/server';
-import { createCSSOptions } from './build/options/css';
-import { wrapperEnv } from './build/config';
+import {
+  createBuildOptions,
+  createCSSOptions,
+  createDefineOptions,
+  createEsBuildOptions,
+  createServerOptions,
+  createVitePlugins,
+  wrapperEnv,
+} from './build';
 
 export default defineConfig(async ({ command, mode }: ConfigEnv) => {
   const root = process.cwd();
@@ -35,18 +37,6 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
         '/@/': pathResolve('src') + '/',
         '/#/': pathResolve('types') + '/',
       },
-    },
-    optimizeDeps: {
-      include: [
-        'qrcode',
-        'echarts/core',
-        'echarts/charts',
-        'echarts/components',
-        'echarts/renderers',
-        '@iconify/iconify',
-        'ant-design-vue/es/locale/zh_CN',
-        'ant-design-vue/es/locale/en_US',
-      ],
     },
   };
   return config;
