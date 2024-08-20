@@ -25,7 +25,7 @@
 
   // support Multi-language
   const { getAntdLocale } = useLocale();
-  const { getDarkMode, getThemeColor, getFontSize } = useRootSetting();
+  const { getDarkMode, getThemeColor } = useRootSetting();
 
   const getTheme = computed(() => {
     const isDark = unref(getDarkMode) === ThemeEnum.DARK;
@@ -35,7 +35,6 @@
         colorPrimary: isDark ? darkPrimaryColor : unref(getThemeColor),
         colorLink: isDark ? darkPrimaryColor : unref(getThemeColor),
         colorInfo: isDark ? darkPrimaryColor : unref(getThemeColor),
-        fontSize: unref(getFontSize),
       },
     };
   });
