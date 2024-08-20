@@ -9,10 +9,8 @@
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",
-    "build:no-cache": "npm run clean:cache && npm run build",
     "preview": "npm run build && npm run preview:dist",
     "preview:dist": "vite preview --mode development --port 3100",
-    "clean:cache": "rimraf node_modules/.cache/; rimraf node_modules/.vite",
     "report": "cross-env REPORT=true npm run build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "lint:eslint": "eslint --cache --max-warnings 0  \"./**/*.{ts,tsx,vue}\" --fix",
@@ -20,7 +18,7 @@
     "lint:stylelint": "stylelint \"./**/*.{vue,less,scss,css}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "reinstall": "rimraf yarn.lock pnpm-lock.yaml package-lock.json node_modules; npm run bootstrap",
-    "update": "npm i npm-check-updates -g --force; ncu -u -x codemirror"
+    "update": "npm i npm-check-updates -g --force; ncu -u -x eslint codemirror"
   },
   "dependencies": {
     "@ant-design/colors": "7.0.2",
