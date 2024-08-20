@@ -16,7 +16,7 @@
         <div class="mr-4 hidden min-h-full pl-4 lg:w-13/24 lg:flex lg:flex-col">
           <div class="my-auto">
             <AppLogo class="-enter-x logo" />
-            <img :alt="title" src="../../../assets/svg/login-box-bg.svg" class="-enter-x w-1/2" />
+            <img :alt="title" src="/@/assets/svg/login-box-bg.svg" class="-enter-x w-1/2" />
             <div class="-enter-x mt-10 text-white font-medium">
               <span class="mt-4 inline-block text-3xl"></span>
             </div>
