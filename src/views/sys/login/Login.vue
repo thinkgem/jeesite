@@ -192,6 +192,8 @@
     }
 
     .container {
+      max-width: 1280px;
+
       .@{logo-prefix-cls} {
         display: flex;
         width: 60%;
