@@ -26,11 +26,12 @@
 * 使用文档：<https://jeesite.com/docs>
 * 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 需求收集：<https://gitee.com/thinkgem/jeesite5/issues/new>
+* 微信群：添加客服微信 <http://s.jeesite.com> 邀请您进群
 * QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 * 关注微信公众号，了解最新动态：
 
 <p style="padding-left:40px">
- <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="220" height="220">
+ <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
 </p>
 
 * 前端源码仓库地址1：<https://gitee.com/thinkgem/jeesite-vue>
