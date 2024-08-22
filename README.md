@@ -8,8 +8,12 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
-* 源码仓库地址：<https://gitee.com/thinkgem/jeesite-cloud>
-* 分离版前端源码仓库：<https://gitee.com/thinkgem/jeesite-vue>
+* 源码仓库地址1：<https://gitee.com/thinkgem/jeesite-cloud>
+* 源码仓库地址2：<https://github.com/thinkgem/jeesite-cloud>
+* 源码仓库地址3：<https://gitcode.com/thinkgem/jeesite-cloud>
+* 分离版前端源码仓库1：<https://gitee.com/thinkgem/jeesite-vue>
+* 分离版前端源码仓库2：<https://github.com/thinkgem/jeesite-vue>
+* 分离版前端源码仓库3：<https://gitcode.com/thinkgem/jeesite-vue>
 
 ## 优势（只写别人没有的）
 
@@ -313,28 +317,29 @@ spring:
 
 # 技术交流方式
 
-* QQ 群号：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 问题反馈：<https://gitee.com/thinkgem/jeesite-cloud/issues> 　[【新手必读】](http://www.dianbo.org/9238/stone/tiwendezhihui.htm)
-* 码云Gitee：<https://gitee.com/thinkgem/jeesite-cloud>
-* GitHub：<https://github.com/thinkgem/jeesite-cloud>
-* 作者博客：<https://my.oschina.net/thinkgem>
-* 官方网站：<http://jeesite.com>
-* 官方论坛：<http://jeesite.net>
-* 微信公众号：
+* 官方网站：<https://jeesite.com>
+* 使用文档：<https://jeesite.com/docs>
+* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
+* 需求收集：<https://gitee.com/thinkgem/jeesite-cloud/issues/new>
+* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* 微信群：添加客服微信 <http://s.jeesite.com> 邀请您进群
+* 关注微信公众号，了解最新动态：
 
-![JeeSite4微信公众号](https://images.gitee.com/uploads/images/2020/0120/235836_3018847b_6732.jpeg "JeeSite4微信公众号")
+<p style="padding-left:40px">　　
+ <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
+</p>
 
 ## 生态系统
 
 * 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
 * Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
-* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
 * 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
 * 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
 * PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
 * Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
 * JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
-* MybatisPlus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
+* Mybatis-Plus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
 * Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
 * 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
 
