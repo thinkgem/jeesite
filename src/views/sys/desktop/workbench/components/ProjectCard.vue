@@ -30,5 +30,5 @@
     setup() {
       return { items: groupItems };
     },
-  });
+  } as any);
 </script>
