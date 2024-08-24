@@ -25,7 +25,7 @@ export interface RenderCallbackParams {
   field: string;
 }
 
-export interface ButtonProps extends AntdButtonProps {
+export interface FormButtonProps extends AntdButtonProps {
   text?: string;
 }
 
@@ -49,9 +49,9 @@ export interface FormActionType {
   scrollToField: (name: NamePath, options?: ScrollOptions) => Promise<void>;
 }
 
-export type RegisterFn = (formInstance: FormActionType, uuid: string) => void;
+export type FormRegisterFn = (formInstance: FormActionType, uuid: string) => void;
 
-export type UseFormReturnType = [RegisterFn, FormActionType];
+export type UseFormReturnType = [FormRegisterFn, FormActionType];
 
 export interface FormProps {
   layout?: 'vertical' | 'inline' | 'horizontal';
@@ -110,10 +110,10 @@ export interface FormProps {
   showActionButtonGroup?: boolean;
 
   // Reset button configuration
-  resetButtonOptions?: Partial<ButtonProps>;
+  resetButtonOptions?: Partial<FormButtonProps>;
 
   // Confirm button configuration
-  submitButtonOptions?: Partial<ButtonProps>;
+  submitButtonOptions?: Partial<FormButtonProps>;
 
   // Operation column configuration
   actionColOptions?: Partial<ColEx>;
