@@ -1,7 +1,7 @@
 import type { PropType } from 'vue';
 import type {
   FieldNames,
-  ActionItem,
+  TreeActionItem,
   Keys,
   CheckKeys,
   ContextMenuOptions,
@@ -56,7 +56,7 @@ export const basicProps: any = {
   dictType: propTypes.string,
 
   actionList: {
-    type: Array as PropType<ActionItem[]>,
+    type: Array as PropType<TreeActionItem[]>,
     default: () => [],
   },
 
@@ -107,7 +107,7 @@ export const basicProps: any = {
 
 export const treeNodeProps = {
   actionList: {
-    type: Array as PropType<ActionItem[]>,
+    type: Array as PropType<TreeActionItem[]>,
     default: () => [],
   },
   fieldNames: {

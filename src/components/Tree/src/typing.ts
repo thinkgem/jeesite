@@ -1,7 +1,7 @@
 import type { TreeDataItem } from 'ant-design-vue/es/tree';
 import { ContextMenuItem } from '/@/hooks/web/useContextMenu';
 
-export interface ActionItem {
+export interface TreeActionItem {
   render: (record: Recordable) => any;
   show?: boolean | ((record: Recordable) => boolean);
 }
