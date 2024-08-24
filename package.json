@@ -134,7 +134,7 @@
   "homepage": "https://jeesite.com",
   "repository": {
     "type": "git",
-    "url": "git+https://gitee.com/thinkgem/jeesite-vue.git"
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
   },
   "bugs": {
     "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
