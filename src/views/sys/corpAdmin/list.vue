@@ -40,7 +40,7 @@
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { corpAdminDelete, corpAdminListData, corpAdminList } from '/@/api/sys/corpAdmin';
-  import { resetpwd, corpAdminDisable, corpAdminEnable } from '/@/api/sys/corpAdmin';
+  import { corpAdminResetpwd, corpAdminDisable, corpAdminEnable } from '/@/api/sys/corpAdmin';
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
@@ -255,7 +255,7 @@
   }
 
   async function handleResetpwd(record: Recordable) {
-    const res = await resetpwd(record);
+    const res = await corpAdminResetpwd(record);
     showMessage(res.message);
   }
 

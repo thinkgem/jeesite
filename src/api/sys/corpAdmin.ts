@@ -28,7 +28,7 @@ export const corpAdminDisable = (params?: User | any) =>
 export const corpAdminEnable = (params?: User | any) =>
   defHttp.get<User>({ url: adminPath + '/sys/corpAdmin/enable', params });
 
-export const resetpwd = (params?: User | any) =>
+export const corpAdminResetpwd = (params?: User | any) =>
   defHttp.get<User>({ url: adminPath + '/sys/corpAdmin/resetpwd', params });
 
 export const corpAdminDelete = (params?: User | any) =>
