@@ -9,13 +9,13 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import vitePluginCertificate from 'vite-plugin-mkcert';
 import { appConfigPlugin } from '../config/appConfig';
-import { configUnoCSSPlugin } from './unocss';
-import { configHtmlPlugin } from './html';
 import { configCompressPlugin } from './compress';
-import { configVisualizerPlugin } from './visualizer';
-import { configThemePlugin } from '../theme';
-import { PackageJson } from 'pkg-types';
+import { configHtmlPlugin } from './html';
 import { configLegacyPlugin } from './legacy';
+import { configThemePlugin } from '../theme';
+import { configUnoCSSPlugin } from './unocss';
+import { configVisualizerPlugin } from './visualizer';
+import { PackageJson } from 'pkg-types';
 
 export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: PackageJson) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [
@@ -50,3 +50,13 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
 
   return vitePlugins;
 }
+
+export {
+  appConfigPlugin,
+  configCompressPlugin,
+  configHtmlPlugin,
+  configLegacyPlugin,
+  configThemePlugin,
+  configUnoCSSPlugin,
+  configVisualizerPlugin,
+};
