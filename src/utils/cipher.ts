@@ -29,7 +29,7 @@ export class AesEncryption {
       mode: ECB,
       padding: Pkcs7,
       iv: this.iv,
-    };
+    } as any;
   }
 
   encryptByAES(cipherText: string) {

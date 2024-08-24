@@ -147,7 +147,7 @@
 
       return { routes, t, prefixCls, getIcon, getShowBreadCrumbIcon, handleClick, hasRedirect };
     },
-  });
+  } as any);
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-layout-breadcrumb';

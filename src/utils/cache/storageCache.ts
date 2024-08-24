@@ -110,5 +110,5 @@ export const createStorage = ({
       this.storage.clear();
     }
   };
-  return new WebStorage();
+  return new WebStorage() as any;
 };
