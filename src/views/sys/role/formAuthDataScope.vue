@@ -31,7 +31,7 @@
                 :toolbar="true"
                 :checkable="true"
                 :checkStrictly="false"
-                :api="ctrlDataTreeData"
+                :api="roleCtrlDataTreeData"
                 :params="{ url: item.ctrlDataUrl, ctrlPermi: '2' }"
                 :immediate="immediate"
                 :defaultExpandLevel="2"
@@ -55,7 +55,11 @@
   import { BasicTree, TreeActionType } from '/@/components/Tree';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { formAuthDataScope, ctrlDataTreeData, saveAuthDataScope } from '/@/api/sys/role';
+  import {
+    roleFormAuthDataScope,
+    roleCtrlDataTreeData,
+    roleSaveAuthDataScope,
+  } from '/@/api/sys/role';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -141,7 +145,7 @@
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });
     await resetFields();
-    const res = await formAuthDataScope(data);
+    const res = await roleFormAuthDataScope(data);
     record.value = (res.role || {}) as Recordable;
     moduleCodes.value = res.moduleCodes || [];
     dataScopes.value = res.dataScopes || [];
@@ -208,7 +212,7 @@
         roleDataScopeListJson: getRoleDataScopeListJson(),
       };
       // console.log('submit', params, data, record);
-      const res = await saveAuthDataScope(params);
+      const res = await roleSaveAuthDataScope(params);
       showMessage(res.message);
       setTimeout(closeDrawer);
       emit('success', data);

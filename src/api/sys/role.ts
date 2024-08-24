@@ -34,7 +34,7 @@ export const roleListData = (params?: Role | any) =>
 export const roleForm = (params?: Role | any) =>
   defHttp.get<Role>({ url: adminPath + '/sys/role/form', params });
 
-export const menuTreeData = (params?: any) =>
+export const roleMenuTreeData = (params?: any) =>
   defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeData', params });
 
 export const roleSave = (params?: any, data?: Role | any) =>
@@ -55,15 +55,15 @@ export const roleEnable = (params?: Role | any) =>
 export const roleDelete = (params?: Role | any) =>
   defHttp.get<Role>({ url: adminPath + '/sys/role/delete', params });
 
-export const formAuthDataScope = (params?: Role | any) =>
+export const roleFormAuthDataScope = (params?: Role | any) =>
   defHttp.get<Role>({ url: adminPath + '/sys/role/formAuthDataScope', params });
 
-export const ctrlDataTreeData = (params?: any) => {
+export const roleCtrlDataTreeData = (params?: any) => {
   const { url, ...params2 } = params;
   return defHttp.get<Role>({ url: adminPath + url, params: params2 });
 };
 
-export const saveAuthDataScope = (params?: Role | any) =>
+export const roleSaveAuthDataScope = (params?: Role | any) =>
   defHttp.post<Role>({ url: adminPath + '/sys/role/saveAuthDataScope', params });
 
 export const formAuthUser = (params?: Role | any) =>

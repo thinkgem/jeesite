@@ -48,7 +48,7 @@
   import { BasicTree, TreeActionType } from '/@/components/Tree';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { Role, roleSave, checkRoleName, roleForm, menuTreeData } from '/@/api/sys/role';
+  import { Role, roleSave, checkRoleName, roleForm, roleMenuTreeData } from '/@/api/sys/role';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -259,7 +259,7 @@
   }
 
   async function loadTreeDatas() {
-    const res = await menuTreeData({ roleCode: record.value.roleCode });
+    const res = await roleMenuTreeData({ roleCode: record.value.roleCode });
     const checkedKeys = {};
     (res.roleMenuList || []).forEach((item) => {
       if (!checkedKeys[item.sysCode]) {
