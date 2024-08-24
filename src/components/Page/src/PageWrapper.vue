@@ -32,8 +32,8 @@
     </PageHeader>
 
     <div :class="getContentClass" :style="getContentStyle" ref="contentRef">
-      <a-layout v-if="sidebar || sidebarRight">
-        <a-layout-sider
+      <Layout v-if="sidebar || sidebarRight">
+        <Layout.Sider
           v-if="sidebar"
           class="sidebar"
           v-model:collapsed="collapsed"
@@ -54,23 +54,23 @@
               <Icon icon="i-fa:angle-left" style="transform: rotate(180deg)" />
             </div>
           </template>
-        </a-layout-sider>
+        </Layout.Sider>
         <template v-if="sidebar && sidebarResizer">
           <Resizer position="left" v-model:collapsed="collapsed" @move="onSidebarMove" />
         </template>
         <template v-if="sidebar && !sidebarResizer">
           <div v-if="!collapsed" style="margin-right: 15px"></div>
         </template>
-        <a-layout-content>
+        <Layout.Content>
           <slot></slot>
-        </a-layout-content>
+        </Layout.Content>
         <template v-if="sidebarRight && sidebarResizerRight">
           <Resizer position="right" v-model:collapsed="collapsedRight" @move="onSidebarMoveRight" />
         </template>
         <template v-if="sidebarRight && !sidebarResizerRight">
           <div v-if="!collapsedRight" style="margin-left: 15px"></div>
         </template>
-        <a-layout-sider
+        <Layout.Sider
           v-if="sidebarRight"
           :reverseArrow="true"
           class="sidebar right"
@@ -96,8 +96,8 @@
           <div class="sidebar-content" :style="getSidebarContentStyle">
             <slot name="sidebarRight"></slot>
           </div>
-        </a-layout-sider>
-      </a-layout>
+        </Layout.Sider>
+      </Layout>
       <slot v-else></slot>
     </div>
 
@@ -132,7 +132,7 @@
   import { useEmitter } from '/@/store/modules/user';
   import { propTypes } from '/@/utils/propTypes';
   import { omit } from 'lodash-es';
-  import { PageHeader } from 'ant-design-vue';
+  import { Layout, PageHeader } from 'ant-design-vue';
   import { useContentHeight } from '/@/hooks/web/useContentHeight';
   import { PageWrapperFixedHeightKey } from '..';
   import { Icon } from '/@/components/Icon';
