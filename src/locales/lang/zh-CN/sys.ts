@@ -28,7 +28,7 @@ export default {
   },
   app: {
     logoutTip: '温馨提醒',
-    logoutMessage: '是否确认退出系统?',
+    logoutMessage: '是否确认退出系统？',
     menuLoading: '请稍后，即将进入系统...',
   },
   errorLog: {
@@ -43,9 +43,9 @@ export default {
 
     modalTitle: '错误详情',
 
-    fireVueError: '点击触发vue错误',
-    fireResourceError: '点击触发资源加载错误',
-    fireAjaxError: '点击触发ajax错误',
+    fireVueError: '模拟vue错误',
+    fireResourceError: '模拟资源加载错误',
+    fireAjaxError: '模拟ajax错误',
 
     enableMessage: '只在 `projectSetting.ts` 内的useErrorHandle为true时生效.',
   },
