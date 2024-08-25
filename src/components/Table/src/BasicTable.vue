@@ -363,7 +363,7 @@
         //   propsData = omit(propsData, 'scroll');
         // }
 
-        propsData = omit(propsData, ['class', 'onChange']);
+        propsData = omit(propsData, ['class', 'onChange', 'title']);
         return propsData;
       });
 
