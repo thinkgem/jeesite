@@ -69,7 +69,8 @@
 							<label class="control-label col-sm-4" title="指定菜单所属的模块，在开启和禁用模块的时候停用所属菜单">
 								<span class="required">*</span> ${text('归属模块')}：<i class="fa icon-question"></i></label>
 							<div class="col-sm-8">
-								<#form:select multiple="true" path="moduleCodes" items="${moduleList}" itemLabel="moduleName" itemValue="moduleCode" class="form-control required" />
+								<#form:select multiple="true" path="moduleCodes" items="${moduleList}" itemLabel="moduleName"
+									itemValue="moduleCode" class="form-control required" data-allow-clear="true" />
 							</div>
 						</div>
 					</div>
