@@ -32,11 +32,11 @@ public class IpAddrFilterConfig {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>();
 		bean.setName("ipAddrFilter");
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 10);
-		bean.setFilter((setvletRequest, setvletResponse, chain) -> {
-			if (isAccessAllowed(setvletRequest, setvletResponse)) {
-				chain.doFilter(setvletRequest, setvletResponse);
+		bean.setFilter((servletRequest, servletResponse, chain) -> {
+			if (isAccessAllowed(servletRequest, servletResponse)) {
+				chain.doFilter(servletRequest, servletResponse);
 			} else {
-				HttpServletResponse response = (HttpServletResponse) setvletResponse;
+				HttpServletResponse response = (HttpServletResponse) servletResponse;
 				response.setStatus(403);
 				ServletUtils.renderString(response, Global.getText("访问拒绝"));
 			}
