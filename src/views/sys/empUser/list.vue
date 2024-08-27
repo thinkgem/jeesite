@@ -24,7 +24,7 @@
         </Popconfirm>
       </template>
       <template #toolbar>
-        <a-button type="default" @click="handleExport()">
+        <a-button type="default" :loading="loading" @click="handleExport()">
           <Icon icon="i-ant-design:download-outlined" /> {{ t('导出') }}
         </a-button>
         <a-button type="default" @click="handleImport()">
@@ -84,6 +84,7 @@
   const postList = ref<Recordable>([]);
   const roleList = ref<Recordable>([]);
   const localeStore = useLocaleStore();
+  const loading = ref(false);
 
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
@@ -372,11 +373,13 @@
   }
 
   async function handleExport() {
+    loading.value = true;
     const { ctxAdminPath } = useGlobSetting();
-    downloadByUrl({
+    await downloadByUrl({
       url: ctxAdminPath + '/sys/empUser/exportData',
       params: getForm().getFieldsValue(),
     });
+    loading.value = false;
   }
 
   const [registerImportModal, { openModal: importModal }] = useModal();

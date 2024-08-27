@@ -17,7 +17,7 @@
         <a-button @click="collapseAll" :title="t('折叠全部')">
           <Icon icon="i-bi:chevron-double-up" /> {{ t('折叠') }}
         </a-button>
-        <a-button type="default" @click="handleExport()">
+        <a-button type="default" :loading="loading" @click="handleExport()">
           <Icon icon="i-ant-design:download-outlined" /> {{ t('导出') }}
         </a-button>
         <a-button type="default" @click="handleImport()">
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script lang="ts" setup name="ViewsSysOfficeList">
-  import { watch, nextTick, unref } from 'vue';
+  import { watch, nextTick, unref, ref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGlobSetting } from '/@/hooks/setting';
@@ -68,6 +68,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: meta.title || t('机构管理'),
   };
+  const loading = ref(false);
 
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
@@ -286,11 +287,13 @@
   }
 
   async function handleExport() {
+    loading.value = true;
     const { ctxAdminPath } = useGlobSetting();
-    downloadByUrl({
+    await downloadByUrl({
       url: ctxAdminPath + '/sys/office/exportData',
       params: getForm().getFieldsValue(),
     });
+    loading.value = false;
   }
 
   const [registerImportModal, { openModal: importModal }] = useModal();
