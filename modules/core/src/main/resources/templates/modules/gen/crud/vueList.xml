@@ -29,7 +29,7 @@
         </a-button>
         <% } %>
         <% if(toBoolean(table.optionMap['isImportExport'])){ %>
-        <a-button type="default" @click="handleExport()">
+        <a-button type="default" :loading="loading" @click="handleExport()">
           <Icon icon="i-ant-design:download-outlined" /> {{ t('导出') }}
         </a-button>
         <a-button type="default" @click="handleImport()">
@@ -94,7 +94,7 @@ if(table.isTreeEntity){
   </div>
 </template>
 <script lang="ts" setup name="${compNamePrefix}List">
-  import { unref<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
+  import { unref<% if(toBoolean(table.optionMap['isImportExport'])){ %>, ref<% } %><% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>, watch<% }
   	%><% if(table.isTreeEntity){ %>, nextTick<% } %> } from 'vue';
   <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
   import { useEmitter } from '/@/store/modules/user';
@@ -176,6 +176,9 @@ for(c in table.columnList){
     icon: meta.icon || 'i-ant-design:book-outlined',
     value: meta.title || t('${functionNameSimple}管理'),
   };
+<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+  const loading = ref(false);
+<% } %>
 
   const searchForm: FormProps = {
     baseColProps: { lg: 6, md: 8 },
@@ -467,11 +470,13 @@ for(c in table.columnList){
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
 
   async function handleExport() {
+    loading.value = true;
     const { ctxAdminPath } = useGlobSetting();
-    downloadByUrl({
+    await downloadByUrl({
       url: ctxAdminPath + '/${urlPrefix}/exportData',
       params: getForm().getFieldsValue(),
     });
+    loading.value = false;
   }
 
   const [registerImportModal, { openModal: importModal }] = useModal();
