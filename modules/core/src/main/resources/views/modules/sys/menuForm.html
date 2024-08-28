@@ -97,6 +97,7 @@
    10、{menuParentCodes} : 当前菜单所有上级编码
    11、userCache 中的 Key 可作为变量名
    12、yml 或 sys_config 中的 Key 可作为变量名
+   13、上述没有的变量，交由 Vue 路由，详见 params.vue
 三、路由规则（Vue下使用）：
 　1、设置菜单的路由地址，对应组件目录为 /views/ 下的 .vue 文件
 　2、路由名称生成规则为：Views + 去除地址的 “/”，并后一个字母大写，
@@ -140,7 +141,8 @@
 					<div class="col-xs-6">
 						<div class="form-group">
 							<label class="control-label col-sm-4" title="可选，给组件传参，请填写 JSON 格式，前端通过定义 props 获取
-举例：链接地址填写：/test/params   组件参数填写：{aa:'aa1',bb:'bb2'}">
+举例：链接地址填写：/test/params   组件参数填写：{aa:'aa1',bb:'bb2'}
+Vue：const props = defineProps({ aa: String, bb: String })">
 								${text('组件参数')}：<i class="fa icon-question"></i></label>
 							<div class="col-sm-8">
 								<#form:input path="params" maxlength="100" class="form-control"/>
