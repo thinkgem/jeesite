@@ -114,6 +114,7 @@
         '　10、{menuParentCodes} : 当前菜单所有上级编码',
         '　11、userCache 中的 Key 可作为变量名',
         '　12、yml 或 sys_config 中的 Key 可作为变量名',
+        '　13、上述没有的变量，交由 Vue 路由，详见 params.vue ',
       ],
       component: 'Input',
       componentProps: {
@@ -155,6 +156,7 @@
       helpMessage: [
         '可选，给组件传参，请填写 JSON 格式，前端通过定义 props 获取',
         "举例：链接地址填写：/test/params   组件参数填写：{aa:'aa1',bb:'bb2'}",
+        'Vue：const props = defineProps({ aa: String, bb: String })',
       ],
       component: 'Input',
       componentProps: {

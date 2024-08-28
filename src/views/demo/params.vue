@@ -18,11 +18,16 @@
       <a-button type="primary" @click="handleClickGo">切换路由</a-button>
       (输入参数后，点击切换路由按钮)
     </p>
-    <p class="mb-3"> 路由接受参数是：{{ query }} </p>
-    <p class="mb-3 hidden">
-      组件接受参数是：{{ params }} <br />
-      注意：在 Vue Router 4.1.4 中 params 被移除，请使用 query 代替 <br />
+    <p class="mb-3"> 接受请求参数是：{{ query }} </p>
+    <p class="mb-3">
+      接受路径参数是：{{ params }} <br />
+      注意：在 Vue Router 4.1.4 中 push params 被移除，请使用 query 代替 <br />
       原文：https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+      <br />
+      那么如何使用 params 组件参数呢？一般这样的地址会作为隐形路由使用（隐藏的菜单或权限菜单）<br />
+      菜单管理：链接地址：/demo/params/{test1}，组件路径：/demo/params，是否可见：隐藏 <br />
+      尝试地址栏填写：http://127.0.0.1:3100/demo/params/test123 <br />
+      这样 unref(currentRoute).params.test1 将得到 test123 的值
     </p>
   </PageWrapper>
 </template>
