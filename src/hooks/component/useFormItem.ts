@@ -28,6 +28,11 @@ export function useRuleFormItem<T extends Recordable>(
   const instance = getCurrentInstance();
   const emit = instance?.emit;
   const compName = instance?.type?.name || 'unknown';
+  const emitsOptions = instance?.['emitsOptions'] || {};
+  const hasOwnProperty = Object.prototype.hasOwnProperty;
+  const hasChangeEmit = hasOwnProperty.call(emitsOptions, changeEvent);
+  const hasUpdateValueEmit = hasOwnProperty.call(emitsOptions, 'update:value');
+  const hasUpdateLabelValueEmit = hasOwnProperty.call(emitsOptions, 'update:labelValue');
 
   const isMultiple = computed(() => {
     if (['JeeSiteCheckboxGroup'].includes(compName)) {
@@ -97,7 +102,9 @@ export function useRuleFormItem<T extends Recordable>(
       nextTick(() => {
         const extData = toRaw(unref(emitData)) || [];
         if (!value) {
-          emit?.(changeEvent, undefined, undefined, ...extData);
+          hasChangeEmit && emit?.(changeEvent, undefined, undefined, ...extData);
+          hasUpdateValueEmit && emit?.('update:value', undefined);
+          hasUpdateLabelValueEmit && emit?.('update:labelValue', undefined);
           return;
         }
         // console.log('values', value);
@@ -109,19 +116,16 @@ export function useRuleFormItem<T extends Recordable>(
             vals.push(item.value);
             labs.push(item.label);
           }
-          emit?.(
-            changeEvent,
-            vals.length > 0 ? vals.join(',') : undefined,
-            labs.length > 0 ? labs.join(',') : undefined,
-            ...extData,
-          );
+          const value = vals.length > 0 ? vals.join(',') : undefined;
+          const labelValue = labs.length > 0 ? labs.join(',') : undefined;
+          hasChangeEmit && emit?.(changeEvent, value, labelValue, ...extData);
+          hasUpdateValueEmit && emit?.('update:value', value);
+          hasUpdateLabelValueEmit && emit?.('update:labelValue', labelValue);
         } else {
-          emit?.(
-            changeEvent,
-            values.length > 0 ? values.join(',') : undefined,
-            undefined,
-            ...extData,
-          );
+          const value = values.length > 0 ? values.join(',') : undefined;
+          hasChangeEmit && emit?.(changeEvent, value, undefined, ...extData);
+          hasUpdateValueEmit && emit?.('update:value', value);
+          hasUpdateLabelValueEmit && emit?.('update:labelValue', undefined);
         }
       });
     },
