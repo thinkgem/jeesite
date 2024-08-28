@@ -69,7 +69,7 @@
     components: { Select, LoadingOutlined },
     // inheritAttrs: false,
     props,
-    emits: ['options-change', 'change', 'click'],
+    emits: ['change', 'update:value', 'update:labelValue', 'options-change', 'click'],
     setup(props: any, { emit }) {
       const { t } = useI18n();
       const attrs = useAttrs();

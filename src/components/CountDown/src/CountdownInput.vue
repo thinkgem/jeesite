@@ -35,6 +35,7 @@
     components: { CountButton },
     inheritAttrs: false,
     props,
+    emits: ['change', 'update:value'],
     setup(props) {
       const { prefixCls } = useDesign('countdown-input');
       const [state] = useRuleFormItem(props);

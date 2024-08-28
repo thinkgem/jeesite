@@ -41,7 +41,7 @@
     components: { RadioGroup: Radio.Group, Radio },
     inheritAttrs: false,
     props,
-    emits: ['change'],
+    emits: ['change', 'update:value'],
     setup(props) {
       const attrs = useAttrs();
       const [state] = useRuleFormItem(props);

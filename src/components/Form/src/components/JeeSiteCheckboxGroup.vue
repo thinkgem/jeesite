@@ -41,6 +41,7 @@
     components: { CheckboxGroup: Checkbox.Group, Checkbox },
     inheritAttrs: false,
     props,
+    emits: ['change', 'update:value'],
     setup(props) {
       const attrs = useAttrs();
       const [state] = useRuleFormItem(props);
