@@ -36,6 +36,9 @@ export interface LoginResult {
   sysCode: string;
   roleCode: string;
   title: string;
+  company: string;
+  version: string;
+  year: string;
   lang: string;
 }
 

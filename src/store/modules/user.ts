@@ -191,6 +191,9 @@ export const useUserStore = defineStore({
       this.setPageCache('sysCode', res.sysCode);
       this.setPageCache('roleCode', res.roleCode);
       this.setPageCache('title', res.title);
+      this.setPageCache('company', res.company);
+      this.setPageCache('version', res.version);
+      this.setPageCache('year', res.year);
     },
     /**
      * @description: logout
