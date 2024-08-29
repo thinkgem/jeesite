@@ -51,7 +51,10 @@ export function dynamicImport(component: string) {
   }
   const keys = Object.keys(dynamicViewsModules);
   const matchKeys = keys.filter((key) => {
-    let k = key.replace('../../views', '');
+    const viewsPath = '/views',
+      l = viewsPath.length,
+      index = key.indexOf(viewsPath);
+    let k = key.substring(index + l);
     const lastIndex = k.lastIndexOf('.');
     k = k.substring(0, lastIndex);
     return k === component;

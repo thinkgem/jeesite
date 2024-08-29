@@ -6,7 +6,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 import { TreeDataModel, TreeModel } from '../model/baseModel';
-import { UploadApiResult } from './upload';
+import { UploadApiResult } from '/@/api/sys/upload';
 import { UploadFileParams } from '/#/axios';
 import { AxiosProgressEvent } from 'axios';
 
