@@ -14,14 +14,14 @@
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
 <% if(table.isTreeEntity){ %>
-import { TreeDataModel, TreeModel } from '../model/baseModel';
+import { TreeDataModel, TreeModel } from '/@/api/model/baseModel';
 <% }else if(isNotBlank(table.optionMap['leftTreeRightTableUrl'])){ %>
-import { BasicModel, Page, TreeDataModel } from '../model/baseModel';
+import { BasicModel, Page, TreeDataModel } from '/@/api/model/baseModel';
 <% }else{ %>
-import { BasicModel, Page } from '../model/baseModel';
+import { BasicModel, Page } from '/@/api/model/baseModel';
 <% } %>
 <% if(toBoolean(table.optionMap['isImportExport'])){ %>
-import { UploadApiResult } from '../sys/upload';
+import { UploadApiResult } from '/@/api/sys/upload';
 import { UploadFileParams } from '/#/axios';
 
 const { ctxPath, adminPath } = useGlobSetting();
