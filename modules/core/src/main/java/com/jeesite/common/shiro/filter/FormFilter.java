@@ -427,6 +427,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("useCorpModel", Global.isUseCorpModel()
 				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
 		data.put("title", Global.getProperty("productName"));
+		data.put("company", Global.getProperty("companyName"));
+		data.put("version", Global.getProperty("productVersion"));
+		data.put("year", Global.getProperty("copyrightYear"));
 	}
 
 	/**
@@ -450,6 +453,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("sysCode", session.getAttribute("sysCode"));
 		data.put("roleCode", session.getAttribute("roleCode"));
 		data.put("title", Global.getProperty("productName"));
+		data.put("company", Global.getProperty("companyName"));
+		data.put("version", Global.getProperty("productVersion"));
+		data.put("year", Global.getProperty("copyrightYear"));
 		data.put("lang", Global.getLang());
 		List<Map<String, Object>> roleList = ListUtils.newArrayList();
 		String desktopUrl = null;
