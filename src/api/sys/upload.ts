@@ -1,7 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { UploadFileParams } from '/#/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { BasicModel } from '../model/baseModel';
+import { BasicModel } from '/@/api/model/baseModel';
 import { AxiosProgressEvent } from 'axios';
 
 const { ctxPath, adminPath } = useGlobSetting();

@@ -5,7 +5,7 @@
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting';
-import { Page } from '../model/baseModel';
+import { Page } from '/@/api/model/baseModel';
 import { User } from '/@/api/sys/user';
 
 const { adminPath } = useGlobSetting();

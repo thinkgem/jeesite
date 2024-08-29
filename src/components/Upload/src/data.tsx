@@ -6,7 +6,7 @@ import { Icon } from '/@/components/Icon';
 import TableAction from '/@/components/Table/src/components/TableAction.vue';
 import ThumbUrl from './ThumbUrl.vue';
 import { useI18n } from '/@/hooks/web/useI18n';
-import { FileUpload } from '../../../api/sys/upload';
+import { FileUpload } from '/@/api/sys/upload';
 import { useGlobSetting } from '/@/hooks/setting';
 
 const { t } = useI18n();
