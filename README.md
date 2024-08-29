@@ -124,7 +124,7 @@
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.7.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.8.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
@@ -135,11 +135,11 @@
 ### 快速运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB、Vue资源包）
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.7.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.8.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
-4. 全栈版本地址：<http://127.0.0.1:8980/a/login>
-5. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
-6. 默认超级管理员账号：system 密码 admin
+4. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
+5. 全栈版本地址：<http://127.0.0.1:8980/a/login>
+6. 初始登录账号：超级管理员：system  密码：admin
 7. 部署常见问题：<https://jeesite.com/docs/faq/>
 
 ### 容器运行
