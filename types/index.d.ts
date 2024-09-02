@@ -1,5 +1,3 @@
-import './module';
-
 export * from './axios';
 export * from './config';
 export * from './global';
