@@ -15,10 +15,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: [
-    'vue',
-    '@typescript-eslint',
-  ],
+  plugins: ['vue', '@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
@@ -37,13 +34,15 @@ module.exports = {
     // 'import/newline-after-import': 'error',
     // 'import/no-duplicates': 'error',
 
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-      },
-    ],
+    // '@typescript-eslint/no-unused-vars': [
+    //   'error',
+    //   {
+    //     argsIgnorePattern: '^_',
+    //     varsIgnorePattern: '^_',
+    //   },
+    // ],
+    '@typescript-eslint/no-unused-vars': 'off',
+
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/ban-types': 'off',
@@ -52,6 +51,8 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    '@typescript-eslint/no-unsafe-function-type': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/script-setup-uses-vars': 'error',
