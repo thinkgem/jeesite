@@ -94,6 +94,7 @@
     labelWidth: 150,
     showActionButtonGroup: false,
     schemas: formSchema,
+    baseColProps: { span: 24 },
   });
 
   async function handleSubmit() {
