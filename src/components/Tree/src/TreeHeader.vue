@@ -46,6 +46,7 @@
 
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDebounceFn } from '@vueuse/core';
+  import { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 
   enum ToolbarEnum {
     RELOAD,
@@ -57,11 +58,11 @@
     CHECK_UN_STRICTLY,
   }
 
-  interface MenuInfo {
+  interface ToolbarMenuInfo {
     key: ToolbarEnum;
   }
 
-  const props: any = {
+  const props = {
     helpMessage: {
       type: [String, Array] as PropType<string | string[]>,
       default: '',
@@ -135,7 +136,7 @@
           : [...reload, ...defaultToolbarList];
       });
 
-      function handleMenuClick(e: MenuInfo) {
+      function handleMenuClick(e: ToolbarMenuInfo | MenuInfo) {
         const { key } = e;
         switch (key) {
           case ToolbarEnum.RELOAD:
