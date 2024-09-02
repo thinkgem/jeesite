@@ -1,5 +1,5 @@
 import { defineComponent, computed, unref } from 'vue';
-import { BasicDrawer } from '/@/components/Drawer/index';
+import { BasicDrawer } from '/@/components/Drawer';
 import { Divider } from 'ant-design-vue';
 import {
   TypePicker,
