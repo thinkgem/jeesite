@@ -18,13 +18,17 @@
     "removeComments": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
     "strictNullChecks": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": false,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "declaration": false,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "useDefineForClassFields": true,
     "lib": ["ESNext", "DOM"],
     "types": [
       "vite/client"
@@ -35,15 +39,13 @@
     }
   },
   "include": [
-    "tests/**/*.ts",
-    "src/**/*.d.ts",
+    "build/**/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "types/**/*.d.ts",
-    "types/**/*.ts",
-    "build/**/*.d.ts",
-    "build/**/*.ts",
+    "tests/**/*.ts",
+    "types/*.ts",
+    "uno.config.ts",
     "vite.config.ts"
   ],
   "exclude": [
