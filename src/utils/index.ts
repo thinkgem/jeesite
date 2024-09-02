@@ -114,5 +114,5 @@ export const withInstall = <T extends Component>(component: T, alias?: string) =
       app.config.globalProperties[alias] = component;
     }
   };
-  return component as T & Plugin;
+  return component as T & Plugin & any;
 };

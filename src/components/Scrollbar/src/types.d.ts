@@ -36,7 +36,7 @@ export type Merge<O extends object, T extends object> = {
  *  age: string
  * }
  */
-export type MergeAll<T extends object[], R extends object = {}> = T extends [
+export type MergeAll<T extends object[], R extends object = any> = T extends [
   infer F extends object,
   ...infer Rest extends object[],
 ]

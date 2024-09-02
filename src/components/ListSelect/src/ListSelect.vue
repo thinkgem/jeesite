@@ -31,7 +31,7 @@
   import { useModal } from '/@/components/Modal';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  const props: any = {
+  const props = {
     value: propTypes.string,
     labelValue: propTypes.string,
     selectList: propTypes.array,

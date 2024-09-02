@@ -26,7 +26,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
 
-  const props: any = {
+  const props = {
     value: propTypes.string,
     showInput: propTypes.bool.def(true),
     disabled: propTypes.bool,
@@ -51,7 +51,7 @@
       });
 
       function handleChange(e: ChangeEvent) {
-        innerValueRef.value = e.target.value;
+        innerValueRef.value = e.target.value || '';
       }
 
       watchEffect(() => {

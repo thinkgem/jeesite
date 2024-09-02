@@ -14,7 +14,7 @@ export function entries<T>(obj: Recordable<T>): [string, T][] {
   return Object.keys(obj).map((key: string) => [key, obj[key]]);
 }
 
-export function useAttrs(params: Params = {}): Ref<Recordable> | {} {
+export function useAttrs(params: Params = {}): Ref<Recordable> | any {
   const instance = getCurrentInstance();
   if (!instance) return {};
 

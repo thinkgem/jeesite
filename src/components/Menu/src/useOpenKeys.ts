@@ -56,7 +56,10 @@ export function useOpenKeys(
     menuState.openKeys = [];
   }
 
-  function handleOpenChange(openKeys: string[]) {
+  type Key = string | number;
+
+  function handleOpenChange(openKey: Key[]) {
+    const openKeys = openKey as unknown as string[];
     if (unref(mode) === MenuModeEnum.HORIZONTAL || !unref(accordion) || unref(getIsMixSidebar)) {
       menuState.openKeys = openKeys;
     } else {

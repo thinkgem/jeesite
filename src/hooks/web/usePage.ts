@@ -9,7 +9,7 @@ import { REDIRECT_NAME } from '/@/router/constant';
 
 export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & {
   path: PageEnum | string;
-  query?: Object;
+  query?: object;
 };
 
 function handleError(e: Error) {

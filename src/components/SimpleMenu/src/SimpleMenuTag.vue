@@ -9,7 +9,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { propTypes } from '/@/utils/propTypes';
 
-  const props: any = {
+  const props = {
     item: {
       type: Object as PropType<Menu>,
       default: () => ({}),

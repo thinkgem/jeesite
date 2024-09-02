@@ -243,7 +243,7 @@ export default class MenuService {
       return Result.error('Invalid user token!');
     }
     const id = checkUser.userCode;
-    let menu: Object[];
+    let menu: object[];
     switch (id) {
       case '1':
         dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[0].path;

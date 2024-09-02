@@ -111,7 +111,7 @@ export const basicProps = {
 export const uploadContainerProps = {
   ...basicProps,
   value: {
-    type: Object as PropType<{}>,
+    type: Object as PropType<any>,
     default: {},
   },
   showPreview: {
@@ -128,7 +128,7 @@ export const uploadContainerProps = {
   },
   // 加载时间戳，此为监听属性，方便刷新文件列表数据
   loadTime: {
-    type: Number as PropType<Number>,
+    type: Number as PropType<number>,
     default: 0,
   },
 };

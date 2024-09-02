@@ -25,7 +25,7 @@
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
   type CheckboxItem = string | OptionsItem;
 
-  const props: any = {
+  const props = {
     value: {
       type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
     },

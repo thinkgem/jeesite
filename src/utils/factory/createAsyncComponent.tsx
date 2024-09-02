@@ -4,6 +4,7 @@ import {
 } from 'vue';
 import { noop } from '/@/utils';
 import { Icon } from '/@/components/Icon';
+import { ComponentPublicInstance } from 'vue';
 
 // const Loading: FunctionalComponent<{ size: 'small' | 'default' | 'large' }> = (props) => {
 //   const style: CSSProperties = {
@@ -27,7 +28,10 @@ interface Options {
   retry?: boolean;
 }
 
-export function createAsyncComponent(loader: Fn, options: Options = {}) {
+export function createAsyncComponent(
+  loader: Fn,
+  options: Options = {},
+): ComponentPublicInstance | any {
   const { size = 'small', delay = 100, timeout = 30000, loading = false, retry = true } = options;
   return defineAsyncComponent({
     loader,

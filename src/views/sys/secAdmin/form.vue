@@ -65,8 +65,8 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: t('二级管理员'),
   };
-  const ctrlPermi = ref<String>('');
-  const moduleCodes = ref<Array<String>>([]);
+  const ctrlPermi = ref<string>('');
+  const moduleCodes = ref<Array<string>>([]);
   const dataScopes = ref<Array<Recordable>>([]);
   const userDataScopeList = ref<Array<Recordable>>([]);
   const immediate = ref(false);

@@ -19,7 +19,7 @@
   import { propTypes } from '/@/utils/propTypes';
   import { DictLabel } from '/@/components/Dict';
 
-  const props: any = {
+  const props = {
     value: {
       type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
     },

@@ -31,7 +31,7 @@ type waterMarkOptionsType = {
   rotate?: number;
 };
 
-const sourceMap = new Map<Symbol, Omit<UseWatermarkRes, 'clearAll'>>();
+const sourceMap = new Map<symbol, Omit<UseWatermarkRes, 'clearAll'>>();
 
 function findTargetNode(el) {
   return Array.from(sourceMap.values()).find((item) => item.targetElement === el);

@@ -1,11 +1,11 @@
-import type { defineComponent } from 'vue';
+import type { CSSProperties, defineComponent } from 'vue';
 import type { ComponentType } from '../../types/componentType';
 import { componentMap } from '/@/components/Table/src/componentMap';
 
 import { Popover } from 'ant-design-vue';
 import { h } from 'vue';
 
-export interface ComponentProps {
+export interface CellComponentProps {
   component: ComponentType;
   rule: boolean;
   popoverOpen: boolean;
@@ -14,7 +14,7 @@ export interface ComponentProps {
 }
 
 export const CellComponent = (
-  { component = 'Input', rule = true, ruleMessage, popoverOpen }: ComponentProps,
+  { component = 'Input', rule = true, ruleMessage, popoverOpen }: CellComponentProps | any,
   { attrs },
 ) => {
   const Comp = componentMap.get(component) as typeof defineComponent;

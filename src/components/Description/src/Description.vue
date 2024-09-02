@@ -122,7 +122,7 @@
                 return null;
               }
               const getField = get(_data, field);
-              return isFunction(render) ? render(getField, _data) : getField ?? '';
+              return isFunction(render) ? render(getField, _data) : (getField ?? '');
             };
 
             const width = contentMinWidth;

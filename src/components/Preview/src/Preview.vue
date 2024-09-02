@@ -41,7 +41,7 @@
 
   type ImageItem = string | ImageProps;
 
-  const props: any = {
+  const props = {
     functional: propTypes.bool,
     imageList: {
       type: Array as PropType<ImageItem[]>,

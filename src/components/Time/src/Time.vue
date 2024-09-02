@@ -14,7 +14,7 @@
   const ONE_HOUR = ONE_MINUTES * 60;
   const ONE_DAY = ONE_HOUR * 24;
 
-  const props: any = {
+  const props = {
     value: propTypes.oneOfType([propTypes.number, propTypes.instanceOf(Date), propTypes.string])
       .isRequired,
     step: propTypes.number.def(60),

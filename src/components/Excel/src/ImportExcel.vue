@@ -22,7 +22,7 @@
     emits: ['success', 'error'],
     setup(_, { emit }) {
       const inputRef = ref<HTMLInputElement | null>(null);
-      const loadingRef = ref<Boolean>(false);
+      const loadingRef = ref<boolean>(false);
 
       /**
        * @description: 第一行作为头部

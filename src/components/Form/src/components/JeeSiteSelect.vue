@@ -36,7 +36,7 @@
 
   type OptionsItem = { label: string; value: string; disabled?: boolean };
 
-  const props: any = {
+  const props = {
     value: {
       type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
     },
@@ -74,8 +74,8 @@
       const { t } = useI18n();
       const attrs = useAttrs();
       const optionsRef = ref<Recordable[]>(props.options);
-      const isFirstLoad = ref<Boolean>(false);
-      const loading = ref<Boolean>(false);
+      const isFirstLoad = ref<boolean>(false);
+      const loading = ref<boolean>(false);
 
       const getAttrs = computed(() => {
         return {

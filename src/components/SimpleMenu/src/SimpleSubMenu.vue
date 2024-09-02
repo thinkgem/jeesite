@@ -59,7 +59,7 @@
   import SimpleMenuTag from './SimpleMenuTag.vue';
   import { omit } from 'lodash-es';
 
-  const props: any = {
+  const props = {
     item: {
       type: Object as PropType<Menu>,
       default: () => ({}),

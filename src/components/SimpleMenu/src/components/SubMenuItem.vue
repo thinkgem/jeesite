@@ -81,7 +81,7 @@
 
   const DELAY = 200;
 
-  const props: any = {
+  const props = {
     name: {
       type: [String, Number] as PropType<string | number>,
       required: true,
@@ -159,13 +159,13 @@
       const getIsOpend = computed(() => {
         const name = props.name;
         if (unref(getCollapse)) {
-          return parentGetOpenNames().includes(name);
+          return parentGetOpenNames().includes(name as string);
         }
         return state.opened;
       });
 
       const getSubClass = computed(() => {
-        const isActive = rootProps.activeSubMenuNames.includes(props.name);
+        const isActive = rootProps.activeSubMenuNames.includes(props.name as string);
         return [
           `${prefixCls}-submenu-title`,
           {
@@ -221,10 +221,10 @@
         if (isRoot) {
           parentRemoveAll();
         }
-        data.isChild = parentGetOpenNames().includes(props.name);
+        data.isChild = parentGetOpenNames().includes(props.name as string);
         clearTimeout(data.timeout!);
         data.timeout = setTimeout(() => {
-          parentAddSubmenu(props.name);
+          parentAddSubmenu(props.name as string);
         }, DELAY);
       }
 
@@ -245,7 +245,7 @@
             if (isRemoveAllPopup.value) {
               parentRemoveAll();
             } else if (!data.mouseInChild) {
-              parentRemoveSubmenu(props.name);
+              parentRemoveSubmenu(props.name as string);
             }
           }, DELAY);
         }

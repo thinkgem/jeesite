@@ -39,7 +39,7 @@
 
   const { t } = useI18n();
   const { showMessage } = useMessage();
-  const avatarBase64 = ref<String>('');
+  const avatarBase64 = ref<string>('');
   const userStore = useUserStore();
   const ARow = Row;
   const ACol = Col;

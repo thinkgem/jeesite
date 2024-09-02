@@ -60,7 +60,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增角色') : t('编辑角色'),
   }));
-  const op = ref<String>('');
+  const op = ref<string>('');
   const sysCodeRef = ref<Array<Recordable>>([]);
   const sysCodesRef = ref<Array<string>>([]);
 

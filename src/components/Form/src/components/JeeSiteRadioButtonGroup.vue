@@ -25,9 +25,9 @@
   type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean };
   type RadioItem = string | OptionsItem;
 
-  const props: any = {
+  const props = {
     value: {
-      type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Object>,
+      type: [String, Number, Boolean, Object] as PropType<string | number | boolean | object>,
     },
     options: {
       type: Array as PropType<RadioItem[]>,

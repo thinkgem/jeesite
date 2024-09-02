@@ -142,7 +142,7 @@
     inheritAttrs: false,
   });
 
-  const props: any = defineProps({
+  const props = defineProps({
     title: propTypes.string,
     dense: propTypes.bool,
     ghost: propTypes.bool,

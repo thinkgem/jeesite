@@ -74,7 +74,7 @@
         emit('click');
       }
 
-      const dataMap = ref<Object>({});
+      const dataMap = ref<object>({});
       const fileList = ref<FileUpload[]>([]);
       const fileListDel = ref<FileUpload[]>([]);
 

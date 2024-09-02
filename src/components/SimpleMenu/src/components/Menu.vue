@@ -24,7 +24,7 @@
   import { createSimpleRootMenuContext } from './useSimpleMenuContext';
   import { mitt } from '/@/utils/mitt';
 
-  const props: any = {
+  const props = {
     theme: propTypes.oneOf(['light', 'dark']).def('light'),
     activeName: propTypes.oneOfType([propTypes.string, propTypes.number]),
     openNames: {

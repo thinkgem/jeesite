@@ -14,7 +14,7 @@ import type { FormProps } from '/@/components/Form';
 import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING, DEFAULT_SIZE } from './const';
 import { propTypes } from '/@/utils/propTypes';
 
-export const basicProps: any = {
+export const basicProps = {
   isTreeTable: propTypes.bool.def(false),
   clickToRowSelect: propTypes.bool.def(true),
   childrenColumnName: propTypes.string.def('childList'),

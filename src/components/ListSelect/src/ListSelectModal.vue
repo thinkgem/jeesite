@@ -177,7 +177,7 @@
       for (const item of props.config.headerButtons) {
         const [registerModal, inputAction] = useModal();
         const modalComponent = shallowRef<Nullable<any>>(null);
-        const modalComponentOpen = ref<Boolean>(false);
+        const modalComponentOpen = ref<boolean>(false);
         headerButtons.value.push({
           props: item,
           registerModal,

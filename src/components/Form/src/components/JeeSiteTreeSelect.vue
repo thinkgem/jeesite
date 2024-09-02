@@ -38,7 +38,7 @@
   import { useDict } from '/@/components/Dict';
   import { TreeItem } from '/@/components/Tree';
 
-  const props: any = {
+  const props = {
     value: {
       type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
     },
@@ -84,8 +84,8 @@
       const { t } = useI18n();
       const attrs = useAttrs();
       const treeDataRef = ref<Recordable[]>(props.treeData);
-      const isFirstLoad = ref<Boolean>(false);
-      const loading = ref<Boolean>(false);
+      const isFirstLoad = ref<boolean>(false);
+      const loading = ref<boolean>(false);
 
       const getAttrs = computed(() => {
         let propsData = {

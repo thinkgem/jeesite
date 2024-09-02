@@ -113,7 +113,7 @@
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock' | 'roleCode-';
 
-  const props: any = {
+  const props = {
     theme: propTypes.oneOf(['dark', 'light']),
     sidebar: propTypes.bool.def(false),
   };

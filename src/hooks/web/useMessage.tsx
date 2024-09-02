@@ -17,7 +17,7 @@ export interface NotifyApi {
   warn(config: NotificationArgsProps): void;
   warning(config: NotificationArgsProps): void;
   open(args: NotificationArgsProps): void;
-  close(key: String): void;
+  close(key: string): void;
   config(options: ConfigProps): void;
   destroy(): void;
 }

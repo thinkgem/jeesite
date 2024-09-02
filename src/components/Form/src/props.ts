@@ -6,7 +6,7 @@ import type { FormButtonProps as ButtonProps } from './types/form';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 import { propTypes } from '/@/utils/propTypes';
 
-export const basicProps: any = {
+export const basicProps = {
   model: {
     type: Object as PropType<Recordable>,
     default: {},

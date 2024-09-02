@@ -57,8 +57,8 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
   }));
-  const ctrlPermi = ref<String>('');
-  const op = ref<String>('');
+  const ctrlPermi = ref<string>('');
+  const op = ref<string>('');
 
   const inputFormSchemas: FormSchema[] = [
     {

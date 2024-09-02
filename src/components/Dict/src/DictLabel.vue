@@ -55,7 +55,7 @@
   const { t } = useI18n();
   const { getDictList } = useDict();
 
-  const props: any = {
+  const props = {
     dictType: propTypes.string,
     dictValue: propTypes.any,
     defaultValue: propTypes.string.def(t('未知')),

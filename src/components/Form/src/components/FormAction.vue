@@ -55,7 +55,7 @@
 
   type ButtonOptions = Partial<ButtonProps> & { text: string };
 
-  const props: any = {
+  const props = {
     showActionButtonGroup: propTypes.bool.def(true),
     showResetButton: propTypes.bool.def(true),
     showSubmitButton: propTypes.bool.def(true),

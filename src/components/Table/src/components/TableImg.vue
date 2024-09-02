@@ -38,7 +38,7 @@
   import { Image, Badge } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
 
-  const props: any = {
+  const props = {
     imgList: propTypes.arrayOf(propTypes.string),
     size: propTypes.number.def(40),
     // 是否简单显示（只显示第一张图片）

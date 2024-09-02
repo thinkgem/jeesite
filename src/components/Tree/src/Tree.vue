@@ -44,7 +44,7 @@
     selectedKeys: Keys;
     checkedKeys: CheckKeys;
     halfCheckedKeys: Keys;
-    checkStrictly: boolean;
+    checkStrictly?: boolean;
   }
 
   export default defineComponent({
@@ -249,7 +249,7 @@
         },
       );
 
-      const isFirstLoaded = ref<Boolean>(false);
+      const isFirstLoaded = ref<boolean>(false);
       const loading = ref(false);
 
       watch(
@@ -356,7 +356,7 @@
           (node) => {
             const result = filterFn
               ? filterFn(searchValue, node, unref(getFieldNames))
-              : node[titleField]?.includes(searchValue) ?? false;
+              : (node[titleField]?.includes(searchValue) ?? false);
             if (result) {
               matchedKeys.push(node[keyField]);
             }
@@ -595,7 +595,7 @@
                 search={search}
                 toolbar={toolbar}
                 helpMessage={helpMessage}
-                onStrictlyChange={onStrictlyChange}
+                onStrictly-change={onStrictlyChange}
                 onSearch={handleSearch}
                 searchText={searchState.searchText}
                 v-slots={extendSlots(slots)}

@@ -25,7 +25,7 @@
   const SUMMARY_ROW_KEY = '_row';
   const SUMMARY_INDEX_KEY = '_index';
 
-  const props: any = {
+  const props = {
     summaryFunc: {
       type: Function as PropType<Fn>,
     },
@@ -89,7 +89,7 @@
             customRender: ({ record }) => record[SUMMARY_ROW_KEY],
           });
         }
-        return columns;
+        return columns as any;
       });
       return { getColumns, getDataSource };
     },

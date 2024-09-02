@@ -26,7 +26,7 @@
   import { DictLabel } from '/@/components/Dict';
   import { dateUtil } from '/@/utils/dateUtil';
 
-  const props: any = {
+  const props = {
     value: {
       type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
       default: '',
@@ -193,7 +193,7 @@
         });
       }
 
-      async function handleChange(e: any, labelValue: any) {
+      async function handleChange(e: any, labelValue?: any) {
         const component = unref(getComponent);
         let value;
         if (!e) {
@@ -435,7 +435,7 @@
                 defaultValue={this.column.defaultValue}
               />
             ) : (
-              <div class="cell-content" title={this.column.ellipsis ? this.getValues ?? '' : ''}>
+              <div class="cell-content" title={this.column.ellipsis ? (this.getValues ?? '') : ''}>
                 {this.column.editRender
                   ? this.column.editRender({
                       text: this.value,
@@ -443,7 +443,7 @@
                       column: this.column,
                       index: this.index,
                     })
-                  : this.getValues ?? '\u00A0'}
+                  : (this.getValues ?? '\u00A0')}
               </div>
             )}
             {!this.column.editRow && <FormOutlined class={`${this.prefixCls}__normal-icon`} />}

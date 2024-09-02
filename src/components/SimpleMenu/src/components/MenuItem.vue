@@ -25,7 +25,7 @@
   import { Tooltip } from 'ant-design-vue';
   import { useSimpleRootMenuContext } from './useSimpleMenuContext';
 
-  const props: any = {
+  const props = {
     name: {
       type: [String, Number] as PropType<string | number>,
       required: true,

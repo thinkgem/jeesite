@@ -72,7 +72,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: t('数据权限'),
   };
-  const moduleCodes = ref<Array<String>>([]);
+  const moduleCodes = ref<Array<string>>([]);
   const dataScopes = ref<Array<Recordable>>([]);
   const roleDataScopeList = ref<Array<Recordable>>([]);
   const immediate = ref(false);

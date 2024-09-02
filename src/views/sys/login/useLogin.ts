@@ -26,7 +26,7 @@ export function useLoginState() {
   return { setLoginState, getLoginState, handleBackLogin };
 }
 
-export function useFormValid<T extends Object = any>(formRef: Ref<any>) {
+export function useFormValid<T extends object = any>(formRef: Ref<any>) {
   async function validForm() {
     const form = unref(formRef);
     if (!form) return;

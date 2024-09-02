@@ -36,7 +36,7 @@
     emits: ['move', 'update:collapsed'],
     setup(props, { emit }) {
       const { t } = useI18n();
-      const isCollapsed = ref<Boolean>(false);
+      const isCollapsed = ref<boolean>(false);
       const drift = reactive({
         lastX: 0,
         lastY: 0,

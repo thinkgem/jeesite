@@ -64,7 +64,7 @@
   import { propTypes } from '/@/utils/propTypes';
   import { ACTION_COLUMN_FLAG } from '../const';
 
-  const props: any = {
+  const props = {
     actions: {
       type: Array as PropType<ActionItem[]>,
       default: null,

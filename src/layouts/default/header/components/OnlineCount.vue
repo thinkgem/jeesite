@@ -35,7 +35,7 @@
       const { push } = useRouter();
       const { hasPermission } = usePermission();
 
-      const count = ref<Number>(0);
+      const count = ref<number>(0);
 
       async function refreshOnlineCount() {
         let num = Number(await onlineCount());
