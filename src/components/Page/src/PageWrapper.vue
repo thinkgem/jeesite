@@ -6,13 +6,11 @@
 <template>
   <div :class="getClass" ref="wrapperRef">
     <PageHeader
+      ref="headerRef"
+      v-if="getShowHeader"
+      v-bind="omit($attrs, 'class')"
       :ghost="ghost"
       :title="title"
-      v-bind="omit($attrs, 'class')"
-      ref="headerRef"
-      v-if="
-        title !== 'false' && (content || $slots.headerContent || title || getHeaderSlots.length)
-      "
     >
       <template #title v-if="$slots.headerTitle">
         <slot name="headerTitle"></slot>
@@ -30,7 +28,6 @@
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
     </PageHeader>
-
     <div :class="getContentClass" :style="getContentStyle" ref="contentRef">
       <Layout v-if="sidebar || sidebarRight">
         <Layout.Sider
@@ -100,7 +97,6 @@
       </Layout>
       <slot v-else></slot>
     </div>
-
     <PageFooter v-if="getShowFooter" ref="footerRef">
       <template #left>
         <slot name="leftFooter"></slot>
@@ -153,7 +149,7 @@
     contentBackground: propTypes.bool.def(true),
     contentFullHeight: propTypes.bool,
     contentClass: propTypes.string,
-    fixedHeight: propTypes.bool,
+    fixedHeight: propTypes.bool.def(true),
     upwardSpace: propTypes.oneOfType([propTypes.number, propTypes.string]).def(0),
 
     sidebarWidth: propTypes.number.def(230),
@@ -211,15 +207,22 @@
     ];
   });
 
-  const getShowFooter = computed(() => slots?.leftFooter || slots?.rightFooter);
-
   const getHeaderSlots = computed(() => {
     return Object.keys(omit(slots, 'default', 'leftFooter', 'rightFooter', 'headerContent'));
   });
 
+  const getShowHeader = computed(
+    () =>
+      props.title !== 'false' &&
+      (props.content || slots.headerContent || props.title || getHeaderSlots.value.length),
+  );
+
+  const getShowFooter = computed(() => slots?.leftFooter || slots?.rightFooter);
+
   const getContentStyle = computed((): CSSProperties => {
     const { contentFullHeight, contentStyle, fixedHeight } = props;
-    const height = `${(unref(contentHeight) || 800) - 15}px`;
+    let offsetHeight = !getShowHeader.value && !getShowFooter.value ? -15 : 0;
+    const height = `${(unref(contentHeight) || 800) - offsetHeight}px`;
 
     if (sidebar) {
       return {
@@ -339,6 +342,7 @@
       padding: 15px;
       border-radius: 5px;
       color: @text-color-base;
+      overflow-y: auto;
     }
 
     .ant-page-header {
