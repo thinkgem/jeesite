@@ -14,7 +14,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, unref } from 'vue';
-  import XLSX from 'xlsx';
+  import { WorkBook, WorkSheet, utils, read } from 'xlsx';
 
   import type { ExcelData } from './typing';
   export default defineComponent({
@@ -27,20 +27,20 @@
       /**
        * @description: 第一行作为头部
        */
-      function getHeaderRow(sheet: XLSX.WorkSheet) {
+      function getHeaderRow(sheet: WorkSheet) {
         if (!sheet || !sheet['!ref']) return [];
         const headers: string[] = [];
         // A3:B7=>{s:{c:0, r:2}, e:{c:1, r:6}}
-        const range = XLSX.utils.decode_range(sheet['!ref']);
+        const range = utils.decode_range(sheet['!ref']);
 
         const R = range.s.r;
         /* start in the first row */
         for (let C = range.s.c; C <= range.e.c; ++C) {
           /* walk every column in the range */
-          const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
+          const cell = sheet[utils.encode_cell({ c: C, r: R })];
           /* find the cell in the first row */
           let hdr = 'UNKNOWN ' + C; // <-- replace with your desired default
-          if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+          if (cell && cell.t) hdr = utils.format_cell(cell);
           headers.push(hdr);
         }
         return headers;
@@ -49,12 +49,12 @@
       /**
        * @description: 获得excel数据
        */
-      function getExcelData(workbook: XLSX.WorkBook) {
+      function getExcelData(workbook: WorkBook) {
         const excelData: ExcelData[] = [];
         for (const sheetName of workbook.SheetNames) {
           const worksheet = workbook.Sheets[sheetName];
           const header: string[] = getHeaderRow(worksheet);
-          const results = XLSX.utils.sheet_to_json(worksheet);
+          const results = utils.sheet_to_json(worksheet);
           excelData.push({
             header,
             results,
@@ -76,7 +76,7 @@
           reader.onload = async (e) => {
             try {
               const data = e.target && e.target.result;
-              const workbook = XLSX.read(data, { type: 'array' });
+              const workbook = read(data, { type: 'array' });
               // console.log(workbook);
               /* DO SOMETHING WITH workbook HERE */
               const excelData = getExcelData(workbook);
