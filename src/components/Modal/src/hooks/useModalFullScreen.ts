@@ -38,6 +38,7 @@ export function useFullScreen(context: UseFullScreenContext) {
     // } else {
     //   modalWrapSpinEl.style.height = `${unref(formerHeightRef)}px`;
     // }
+    window.dispatchEvent(new Event('resize'));
   }
   return { getWrapClassName, handleFullScreen, fullScreenRef };
 }
