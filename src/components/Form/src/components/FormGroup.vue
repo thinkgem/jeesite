@@ -4,7 +4,7 @@
  * @author Vben、ThinkGem
 -->
 <template>
-  <div class="jeesite-form-group">
+  <div v-bind="$attrs" class="jeesite-form-group">
     <div class="title">
       <slot></slot>
     </div>
@@ -22,11 +22,11 @@
 
   .@{prefix-cls} {
     .title {
-      width: 100%;
+      //width: 100%;
       font-size: 15px;
       //font-style: oblique;
       padding: 0 0 3px 3px;
-      margin: 0 10px 20px;
+      margin: 0 0 20px 20px;
       border-bottom: 1px solid @header-light-bottom-border-color;
       color: @primary-color;
     }
