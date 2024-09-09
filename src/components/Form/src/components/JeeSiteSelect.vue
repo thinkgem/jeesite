@@ -171,4 +171,8 @@
       width: 100%;
     }
   }
+  // 嵌入在 input 内部 addonAfter 插槽时的样式设置
+  .ant-input-group .ant-input-group-addon .@{prefix-cls} {
+    margin: -5px -11px;
+  }
 </style>
