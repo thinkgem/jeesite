@@ -418,6 +418,9 @@
 
         const { baseColProps = {} } = props.formProps;
         const realColProps = props.colLayout ? { ...baseColProps, ...colProps } : {};
+        if (!realColProps.xs && (realColProps.sm || realColProps.md)) {
+          realColProps.xs = realColProps.sm || realColProps.md;
+        }
         const { isIfShow, isShow } = getShow();
         const values = unref(getValues);
 
