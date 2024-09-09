@@ -263,7 +263,7 @@
 
         > .scrollbar {
           > .scrollbar__wrap {
-            margin: 15px;
+            margin: 15px 15px 0;
             padding: 1px;
 
             > .scrollbar__view > div {

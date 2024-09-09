@@ -269,7 +269,7 @@
 
         > .scrollbar {
           > .scrollbar__wrap {
-            margin: 16px;
+            margin: 16px 16px 5px;
             padding-bottom: 30px;
 
             > .scrollbar__view {
