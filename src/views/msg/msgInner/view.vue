@@ -73,7 +73,7 @@
       componentProps: {
         isHtml: true,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('附件'),
@@ -86,7 +86,7 @@
         uploadType: 'all',
         readonly: true,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('发送者'),
@@ -102,20 +102,20 @@
       label: t('阅读状态'),
       field: 'receiveInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('已读用户'),
       field: 'readList',
       component: 'Text',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'readList',
     },
     {
       label: t('未读用户'),
       field: 'unReadList',
       component: 'Text',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'unReadList',
     },
   ];
@@ -123,7 +123,7 @@
   const [registerForm, { resetFields, setFieldsValue }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   onMounted(async () => {

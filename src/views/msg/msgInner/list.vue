@@ -48,7 +48,7 @@
   const go = useGo();
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 3, md: 8 },
+    baseColProps: { md: 8, lg: 3 },
     labelWidth: 50,
     schemas: [
       {

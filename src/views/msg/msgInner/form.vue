@@ -125,7 +125,7 @@
         maxlength: 200,
       },
       required: true,
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('等级'),
@@ -149,7 +149,7 @@
       field: 'msgContent',
       component: 'InputTextArea',
       required: true,
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'msgContent',
     },
     {
@@ -174,13 +174,13 @@
       //     },
       //   },
       // ],
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('接受者信息'),
       field: 'receiveInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('接受者'),
@@ -190,14 +190,14 @@
         dictType: 'msg_inner_receiver_type',
       },
       required: true,
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: '　',
       field: 'receiveCodes',
       fieldLabel: 'receiveNames',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'receiveCodes',
       show: ({ values }) => values.receiveType != '0',
     },
@@ -208,13 +208,13 @@
       componentProps: {
         dictType: 'sys_msg_type',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('发送者信息'),
       field: 'receiveInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('发送者'),
@@ -240,7 +240,7 @@
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
