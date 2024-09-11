@@ -108,7 +108,7 @@
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('模块描述'),
@@ -118,7 +118,7 @@
         maxlength: 500,
         rows: 3,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('当前版本'),
@@ -143,7 +143,7 @@
       label: t('生成工程代码'),
       field: 'genModule',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => isCustomModule.value,
     },
     {
@@ -151,7 +151,7 @@
       field: 'genBaseDir',
       component: 'Input',
       slot: 'genBaseDir',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => isCustomModule.value,
     },
     {
@@ -175,7 +175,7 @@
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
