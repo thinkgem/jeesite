@@ -185,7 +185,7 @@
           sysCodesRef.value = val.split(',');
         },
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'auth',
     },
     {
@@ -195,20 +195,20 @@
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
     {
       label: t('授权功能菜单'),
       field: 'authMenuInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'auth',
     },
     {
       field: 'roleMenuListJson',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'menuTrees',
       ifShow: () => op.value === 'add' || op.value === 'auth',
     },
@@ -222,7 +222,7 @@
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {

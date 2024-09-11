@@ -102,7 +102,7 @@
         dictType: 'sys_role_data_scope',
         allowClear: true,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('业务范围'),
@@ -113,19 +113,19 @@
         allowClear: true,
         mode: 'multiple',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('授权数据权限'),
       field: 'authDataScopeInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       show: ({ values }) => values.dataScope === '2',
     },
     {
       field: 'roleDataScopeListJson',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'dataScopeTrees',
       show: ({ values }) => values.dataScope === '2',
     },
@@ -139,7 +139,7 @@
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
