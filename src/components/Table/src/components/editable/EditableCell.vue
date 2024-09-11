@@ -146,6 +146,9 @@
         if (props.column?.format && isDef(value)) {
           return formatCell(value, props.column.format, props.record as Recordable, props.index);
         }
+        if (typeof value == 'object') {
+          return '\u00A0';
+        }
         return value;
       });
 
@@ -167,6 +170,11 @@
       const getRowEditable = computed(() => {
         const { editable } = props.record || {};
         return !!editable;
+      });
+
+      const getForceEditable = computed(() => {
+        const { editComponent } = props.column || {};
+        return editComponent === 'Upload';
       });
 
       watchEffect(() => {
@@ -410,6 +418,7 @@
         getWrapperStyle,
         getWrapperClass,
         getRowEditable,
+        getForceEditable,
         getValues,
         handleEnter,
         handleSubmitClick,
@@ -424,7 +433,7 @@
       return (
         <div class={this.prefixCls}>
           <div
-            v-show={!this.isEdit}
+            v-show={!this.isEdit && !this.getForceEditable}
             class={{ [`${this.prefixCls}__normal`]: true, 'ellipsis-cell': this.column.ellipsis }}
             onClick={this.handleEdit}
           >
@@ -448,7 +457,7 @@
             )}
             {!this.column.editRow && <FormOutlined class={`${this.prefixCls}__normal-icon`} />}
           </div>
-          {this.isEdit && (
+          {(this.isEdit || this.getForceEditable) && (
             <Spin spinning={this.spinning}>
               <div class={`${this.prefixCls}__wrapper`} v-click-outside={this.onClickOutside}>
                 <CellComponent
@@ -463,7 +472,7 @@
                   onChange={this.handleChange}
                   onPressEnter={this.handleEnter}
                 />
-                {!this.getRowEditable && (
+                {!this.getRowEditable && !this.getForceEditable && (
                   <div class={`${this.prefixCls}__action`}>
                     <CheckOutlined
                       class={[`${this.prefixCls}__icon`, 'mx-2']}
