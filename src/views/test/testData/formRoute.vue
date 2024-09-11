@@ -160,7 +160,7 @@
         maxlength: 200,
       },
       rules: [{ required: true }],
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('下拉框'),
@@ -266,7 +266,7 @@
         maxlength: 500,
       },
       slot: 'remarks',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('图片上传'),
@@ -281,7 +281,7 @@
         // imageMaxHeight: 768,
         // imageThumbName: '150x150.jpg',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       // 文件上传的必填验证实例
       // rules: [
       //   { required: true },
@@ -306,21 +306,21 @@
         bizType: 'testData_file',
         uploadType: 'all',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   ];
 
   const [registerForm1, formAction1] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas1,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const inputFormSchemas2: FormSchema[] = [
     {
       field: 'testDataChildList',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'testDataChildList',
     },
   ];
@@ -328,7 +328,7 @@
   const [registerForm2, formAction2] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas2,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerTestDataChildTable, testDataChildTable] = useTable({
