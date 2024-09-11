@@ -165,7 +165,7 @@
       label: t('详细信息'),
       field: 'employeeInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
 
@@ -226,7 +226,7 @@
       label: t('附属机构'),
       field: 'employee.employeeOfficeList',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'employeeOfficeList',
       show: () => op.value === 'add' || op.value === 'edit',
     },
@@ -237,7 +237,7 @@
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'edit',
     },
 
@@ -245,14 +245,14 @@
       label: t('用户分配角色'),
       field: 'roleInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => op.value === 'add' || op.value === 'auth',
     },
     {
       label: t('分配角色'),
       field: 'userRoleString',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'userRoleString',
       show: () => op.value === 'add' || op.value === 'auth',
     },
@@ -260,7 +260,7 @@
 
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
     labelWidth: 120,
   });
 

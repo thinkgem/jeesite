@@ -94,12 +94,12 @@
       label: t('用户分配数据权限'),
       field: 'dataScopeInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       field: 'userDataScopeListJson',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'dataScopeTrees',
     },
   ];
@@ -111,7 +111,7 @@
 
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
     labelWidth: 120,
   });
 

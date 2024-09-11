@@ -87,7 +87,7 @@
   const loading = ref(false);
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 6, md: 8 },
+    baseColProps: { md: 8, lg: 6 },
     labelWidth: localeStore.getLocale == LOCALE.ZH_CN ? 60 : 100,
     showAdvancedButton: true,
     schemas: [
