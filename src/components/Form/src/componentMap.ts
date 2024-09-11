@@ -1,13 +1,7 @@
 import type { Component } from 'vue';
 import type { ComponentType } from './types/index';
-
-/**
- * Component list, register here to setting it in the form
- */
 import {
   Input,
-  // Select,
-  // Radio,
   Checkbox,
   AutoComplete,
   Cascader,
@@ -15,7 +9,6 @@ import {
   InputNumber,
   Switch,
   TimePicker,
-  // TreeSelect,
   Slider,
   Rate,
   Divider,

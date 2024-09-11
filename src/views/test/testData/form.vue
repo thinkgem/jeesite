@@ -26,18 +26,10 @@
         />
       </template>
       <template #testDataChildList>
-        <BasicTable @register="registerTestDataChildTable" @row-click="handleTestDataChildRowClick">
-          <template #testDataChildUpload="{ record: childRecord }">
-            <BasicUpload
-              v-model:value="childRecord.dataMap"
-              :bizKey="childRecord.id"
-              :bizType="'testDataChild_file'"
-              :uploadType="'all'"
-              :loadTime="record.__t"
-              :size="'small'"
-            />
-          </template>
-        </BasicTable>
+        <BasicTable
+          @register="registerTestDataChildTable"
+          @row-click="handleTestDataChildRowClick"
+        />
         <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
           <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
         </a-button>
@@ -57,7 +49,6 @@
   import { TestData, testDataSave, testDataForm } from '/@/api/test/testData';
   import { officeTreeData } from '/@/api/sys/office';
   import { areaTreeData } from '/@/api/sys/area';
-  import { BasicUpload } from '/@/components/Upload';
   import { WangEditor } from '/@/components/WangEditor';
   // import { dateUtil, formatToDateTime } from '/@/utils/dateUtil';
 
@@ -101,7 +92,7 @@
         maxlength: 200,
       },
       rules: [{ required: true }],
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('下拉框'),
@@ -209,7 +200,7 @@
         maxlength: 500,
       },
       slot: 'remarks',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('图片上传'),
@@ -224,7 +215,7 @@
         // imageMaxHeight: 768,
         // imageThumbName: '150x150.jpg',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       // 文件上传的必填验证实例
       // rules: [
       //   { required: true },
@@ -249,13 +240,13 @@
         bizType: 'testData_file',
         uploadType: 'all',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('子表数据'),
       field: 'testDataChildList',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'testDataChildList',
     },
   ];
@@ -263,7 +254,7 @@
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerTestDataChildTable, testDataChildTable] = useTable({
@@ -418,10 +409,31 @@
       },
       {
         title: t('文件上传'),
-        dataIndex: 'upload',
+        dataIndex: 'dataMap',
         width: 160,
         align: 'left',
-        slot: 'testDataChildUpload',
+        editRow: true,
+        editComponent: 'Upload',
+        editComponentProps: ({ record: childRecord }) => {
+          return {
+            loadTime: record.value.__t,
+            bizKey: childRecord.id,
+            bizType: 'testDataChild_file',
+            uploadType: 'all',
+            // imageMaxWidth: 1024,
+            // imageMaxHeight: 768,
+            // imageThumbName: '150x150.jpg',
+            size: 'small',
+          };
+        },
+        // 文件上传的必填验证实例
+        // editRule: (value: any, record: Recordable) => {
+        //   return new Promise((resolve, reject) => {
+        //     const len = !value || value['testDataChild_file__len'] || 0;
+        //     if (len == 0) reject(t('请上传图片'));
+        //     else resolve();
+        //   });
+        // },
       },
     ]);
     testDataChildTable.setTableData(record.value.testDataChildList || []);
@@ -463,7 +475,10 @@
       });
     }
     if (!testDataChildListValid) {
-      throw { errorFields: [{ name: ['testDataChildList'] }] };
+      throw {
+        errorFields: [{ name: ['testDataChildList'] }],
+        message: t('子表数据填写有误，请根据提示修正'),
+      };
     }
     return testDataChildList;
   }
@@ -495,7 +510,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('common.validateError'));
+        showMessage(error.message || t('common.validateError'));
       }
       console.log('error', error);
     } finally {

@@ -1,4 +1,5 @@
 import type { Component } from 'vue';
+import type { ComponentType } from './types/componentType';
 import {
   Input,
   Checkbox,
@@ -8,7 +9,6 @@ import {
   TimePicker,
   AutoComplete,
 } from 'ant-design-vue';
-import type { ComponentType } from './types/componentType';
 
 import {
   Select,
