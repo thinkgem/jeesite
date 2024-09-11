@@ -233,7 +233,6 @@ VITE_GLOB_API_URL_PREFIX = /js
   // 导入当前用到的对象，部分省略
   import { ref, unref, computed } from 'vue';
   import { officeTreeData } from '/@/api/sys/office';
-  import { areaTreeData } from '/@/api/sys/area';
 
   // 页面事件定义
   const emit = defineEmits(['success', 'register']);
@@ -517,7 +516,6 @@ VITE_GLOB_API_URL_PREFIX = /js
 <script lang="ts" setup name="ViewsTestTestDataList">
 
   // 导入当前用到的对象，部分省略
-  import { defineComponent } from 'vue';
   import InputForm from './form.vue';
 
   // 国际化方法调用，参数是国际化编码的根路径
