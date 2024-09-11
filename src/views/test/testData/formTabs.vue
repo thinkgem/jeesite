@@ -110,7 +110,7 @@
       },
       suffix: h('div', { class: 'ml-4 text-gray-500' }, 'Suffix帮助信息，优点是自由嵌入组件后。'),
       rules: [{ required: true }],
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('下拉框'),
@@ -213,7 +213,7 @@
         maxlength: 500,
       },
       slot: 'remarks',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   ];
   const inputFormSchemas2: FormSchema[] = [
@@ -231,7 +231,7 @@
         h('div', { class: 'ml-4 text-gray-500' }, '请上传图片格式，文件小于 5 M。'),
         h('a', { href: 'https://jeesite.com', target: '_blank', class: 'mr-8' }, '查看模板'),
       ],
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('文件上传'),
@@ -247,13 +247,13 @@
         h('div', { class: 'ml-4 text-gray-500' }, '请上传文档格式，文件小于 5 M。'),
         h('a', { href: 'https://jeesite.com', target: '_blank', class: 'mr-8' }, '查看模板'),
       ],
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('子表数据'),
       field: 'testDataChildList',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: 'testDataChildList',
     },
   ];
@@ -261,13 +261,13 @@
   const [registerForm1, formAction1] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas1,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerForm2, formAction2] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas2,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   async function resetFields() {
@@ -305,6 +305,7 @@
     bordered: true,
     size: 'small',
     inset: true,
+    scroll: { x: 1000 },
   });
 
   async function setTestDataChildTableData(_res: Recordable) {
