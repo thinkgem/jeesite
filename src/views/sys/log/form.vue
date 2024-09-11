@@ -66,13 +66,13 @@
         maxlength: 500,
       },
       required: true,
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('请求数据'),
       field: 'requestParams',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('操作用户'),
@@ -131,7 +131,7 @@
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('设备名称'),
@@ -157,19 +157,19 @@
         maxlength: 19,
         // style: 'width: calc(50% - 60px)',
       },
-      // colProps: { lg: 24, md: 24 },
+      // colProps: { md: 24, lg: 24 },
     },
     {
       label: t('差异修改数据'),
       field: 'diffModifyDataTitle',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => !isEmpty(record.value.diffModifyData),
     },
     {
       field: 'diffModifyData',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       render: () => {
         return h('div', { innerHTML: record.value.diffModifyData });
       },
@@ -179,7 +179,7 @@
       label: t('异常信息'),
       field: 'exceptionInfoTitle',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => record.value.isException == '1',
     },
     {
@@ -188,7 +188,7 @@
       componentProps: {
         rows: 10,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       ifShow: () => record.value.isException == '1',
     },
   ];
@@ -196,7 +196,7 @@
   const [registerForm, { resetFields, setFieldsValue }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerDrawer, { setDrawerProps }] = useDrawerInner(async (data) => {

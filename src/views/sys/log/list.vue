@@ -41,7 +41,7 @@
   };
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 6, md: 8 },
+    baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
       {
@@ -202,9 +202,12 @@
   ];
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload }] = useTable({
+  const [registerTable, { reload /*, getForm*/ }] = useTable({
     api: logListData,
     beforeFetch: (params) => {
+      // 查询前增加默认条件（例子）
+      // params.dateRange = ['2022-05-30', '2022-05-31'];
+      // getForm().setFieldsValue(params);
       return params;
     },
     columns: tableColumns,
