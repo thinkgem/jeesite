@@ -50,7 +50,7 @@
         allowClear: true,
         // style: 'width: calc(50% - 60px)',
       },
-      // colProps: { lg: 24, md: 24 },
+      // colProps: { md: 24, lg: 24 },
     },
     {
       field: 'none',
@@ -138,7 +138,7 @@
     //   label: t('其它信息'),
     //   field: 'otherInfo',
     //   component: 'Divider',
-    //   colProps: { lg: 24, md: 24 },
+    //   colProps: { md: 24, lg: 24 },
     // },
     {
       label: t('备注信息'),
@@ -147,14 +147,14 @@
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   ];
 
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 12, md: 24 },
+    baseColProps: { md: 24, lg: 12 },
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
