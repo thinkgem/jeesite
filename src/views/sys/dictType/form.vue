@@ -93,7 +93,7 @@
 
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     schemas: inputFormSchemas,
-    baseColProps: { lg: 24, md: 24 },
+    baseColProps: { md: 24, lg: 24 },
     labelWidth: 120,
   });
 

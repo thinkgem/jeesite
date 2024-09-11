@@ -50,7 +50,7 @@
   };
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 4, md: 8 },
+    baseColProps: { md: 8, lg: 4 },
     labelWidth: 90,
     schemas: [
       {
