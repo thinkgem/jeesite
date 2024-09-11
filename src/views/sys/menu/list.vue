@@ -50,6 +50,7 @@
   const props = defineProps({
     treeCode: String,
     sysCode: String,
+    isLeaf: Boolean,
   });
 
   const { t } = useI18n('sys.menu');
@@ -61,7 +62,7 @@
   };
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 6, md: 8 },
+    baseColProps: { md: 8, lg: 6 },
     labelWidth: 90,
     schemas: [
       {
@@ -217,6 +218,9 @@
 
   watch([() => props.treeCode, () => props.sysCode], () => {
     reload();
+    // if (props.isLeaf) {
+    //   handleForm({ menuCode: props.treeCode });
+    // }
   });
 
   function fetchSuccess() {
