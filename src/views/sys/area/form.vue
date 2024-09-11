@@ -101,14 +101,14 @@
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   ];
 
   const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
-    baseColProps: { lg: 18, md: 24 },
+    baseColProps: { md: 12, lg: 18 },
   });
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
