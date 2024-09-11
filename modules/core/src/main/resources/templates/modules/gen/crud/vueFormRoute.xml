@@ -147,7 +147,7 @@ for(c in table.columnList){
         allowClear: true,
         style: 'width: calc(50% - 60px)',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   <% }
 for (c in table.columnList){
@@ -323,7 +323,7 @@ for (c in table.columnList){
   <%
     }
     if (isNewLine){ %>
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
   <%
     }
   %>
@@ -343,7 +343,7 @@ for (c in table.columnList){
         bizType: '${className}_image',
         uploadType: 'image',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   <%
   }
@@ -359,7 +359,7 @@ for (c in table.columnList){
         bizType: '${className}_file',
         uploadType: 'all',
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
   <%
   }
@@ -372,7 +372,7 @@ for (c in table.columnList){
     {
       field: '${@StringUtils.uncap(child.className)}List',
       component: 'Input',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       slot: '${@StringUtils.uncap(child.className)}List',
     },
   ];
@@ -389,14 +389,14 @@ for (c in table.columnList){
       componentProps: {
         maxlength: 500,
       },
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
       show: () => record.value.bpm.status != '2',
     },
     {
       label: t('下一步流程信息'),
       field: 'nextTaskInfo',
       component: 'FormGroup',
-      colProps: { lg: 24, md: 24 },
+      colProps: { md: 24, lg: 24 },
     },
     {
       label: t('要求完成时间'),
@@ -463,14 +463,14 @@ for (c in table.columnList){
     labelWidth: 120,
     schemas: inputFormSchemas,
     <% var formColNum = table.optionMap['formColNum']; %>
-    baseColProps: { lg: ${formColNum=="1"?24:formColNum=="3"?8:12}, md: 24 },
+    baseColProps: { md: 24, lg: ${formColNum=="1"?24:formColNum=="3"?8:12} },
   });
 <% for (child in table.childList){ %>
 
   const [register${child.className}Form, ${@StringUtils.uncap(child.className)}Form] = useForm({
     labelWidth: 120,
     schemas: input${child.className}FormSchemas,
-    baseColProps: { lg: 24, md: 24 },
+    baseColProps: { md: 24, lg: 24 },
   });
 
   const [register${child.className}Table, ${@StringUtils.uncap(child.className)}Table] = useTable({
@@ -643,7 +643,10 @@ for (c in table.columnList){
       });
     }
     if (!${@StringUtils.uncap(child.className)}ListValid) {
-      throw { errorFields: [{ name: ['${@StringUtils.uncap(child.className)}List'] }] };
+      throw {
+        errorFields: [{ name: ['${@StringUtils.uncap(child.className)}List'] }],
+        message: t('${child.comments}填写有误，请根据提示修正'),
+      };
     }
     return ${@StringUtils.uncap(child.className)}List;
   }
@@ -751,7 +754,7 @@ for (c in table.columnList){
       handleClose();
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('common.validateError'));
+        showMessage(error.message || t('common.validateError'));
       }
       console.log('error', error);
     } finally {
