@@ -7,6 +7,7 @@ import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
 import { useModalContext } from '/@/components/Modal';
 import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
 import { useDebounceFn } from '@vueuse/core';
+import { useScroll } from '/@/hooks/event/useScroll';
 
 export function useTableScroll(
   propsRef: ComputedRef<BasicTableProps>,
@@ -50,6 +51,9 @@ export function useTableScroll(
     modalFn?.redoModalHeight?.();
   }
 
+  const tableScrollRef = ref();
+  const { refY: tableScrollRefY } = useScroll(tableScrollRef);
+
   async function calcTableHeight() {
     const {
       resizeHeightOffset,
@@ -74,6 +78,9 @@ export function useTableScroll(
 
     const bodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement;
     if (!bodyEl) return;
+
+    tableScrollRef.value = bodyEl;
+    bodyEl.scrollTop = tableScrollRefY.value;
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight;
