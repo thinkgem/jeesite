@@ -57,7 +57,7 @@
   const currentCorpName = ref<string>('');
 
   const searchForm: FormProps = {
-    baseColProps: { lg: 6, md: 8 },
+    baseColProps: { md: 8, lg: 6 },
     labelWidth: 100,
     schemas: [
       {
