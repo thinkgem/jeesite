@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.8.1-SNAPSHOT</version>
+		<version>5.9.0-SNAPSHOT</version>
 		<!--<relativePath>../../jeesite/parent/pom.xml</relativePath>-->
 		<relativePath />
 	</parent>
@@ -21,9 +21,9 @@
 	<properties>
 		
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2021.0.8</spring-cloud.version>
-		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-		<nacos.version>2.3.0.1</nacos.version>
+		<spring-cloud.version>2021.0.9</spring-cloud.version>
+		<spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
+		<nacos.version>2.4.2.1</nacos.version>
 		<seata.version>1.8.0</seata.version>
 		<eureka.version>1.10.18</eureka.version>
 		<xstream.version>1.4.20</xstream.version>
