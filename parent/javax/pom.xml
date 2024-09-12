@@ -12,7 +12,7 @@
 
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-cloud-parent-javax</artifactId>
-	<version>5.8.1.springboot3-SNAPSHOT</version>
+	<version>5.9.0.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Cloud Parent Javax</name>
@@ -22,10 +22,10 @@
 	<properties>
 
 		<!-- version setting -->
-		<spring-cloud.version>2021.0.8</spring-cloud.version>
-		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-		<nacos.version>2.3.0.1</nacos.version>
-		<druid.version>1.2.21</druid.version>
+		<spring-cloud.version>2021.0.9</spring-cloud.version>
+		<spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
+		<nacos.version>2.4.2.1</nacos.version>
+		<druid.version>1.2.23</druid.version>
 
 		<!-- environment setting -->
 		<java.version>17</java.version>
