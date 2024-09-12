@@ -4,11 +4,16 @@
  */
 package com.jeesite.modules;
 
+import com.alibaba.nacos.sys.filter.NacosTypeExcludeFilter;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.servlet.ServletContext;
@@ -17,9 +22,13 @@ import javax.servlet.ServletException;
 /**
  * Nacos Application
  * @author ThinkGem
- * @version 2021-8-28
+ * @version 2024-09-11
  */
-@SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
+@SpringBootApplication
+@ComponentScan(basePackages = "com.alibaba.nacos", excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.CUSTOM, classes = {NacosTypeExcludeFilter.class}),
+        @ComponentScan.Filter(type = FilterType.CUSTOM, classes = {TypeExcludeFilter.class}),
+        @ComponentScan.Filter(type = FilterType.CUSTOM, classes = {AutoConfigurationExcludeFilter.class})})
 @ServletComponentScan
 @EnableScheduling
 public class NacosApplication extends SpringBootServletInitializer {
