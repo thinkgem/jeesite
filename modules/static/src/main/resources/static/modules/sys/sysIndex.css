@@ -51,13 +51,14 @@
 .sidebar-menu > .treeview > .treeview-menu {padding-left:0;}
 .sidebar-menu .treeview-menu .treeview-menu {padding-left:0;}
 .sidebar-menu .treeview-menu > li > a {padding:11px 5px 12px 28px;}
-.full-screen-menu{position:absolute;top:2px;left:2px;z-index:10000000;opacity:0.9;}
+.full-screen-menu{position:absolute;top:7px;left:6px;z-index:10000000;opacity:0.8;}
 
 /* 侧边栏宽度修改为200px */
 .main-sidebar, .left-side {width:200px;}
 .main-header .navbar, .content-wrapper, .right-side, .main-footer {margin-left:200px;}
 @media (max-width: 767px) {
-  .main-header .logo {width:100%;}
+  .main-header .logo {width:100%;display:none;}
+  .main-header #topMenu > .nav {display:inline-block;margin-left:50px}
   .main-header .navbar, .content-wrapper, .right-side, .main-footer {margin-left:0;}
   .sidebar-open .content-wrapper, .sidebar-open .main-footer {
     -webkit-transform: translate(200px, 0); -ms-transform: translate(200px, 0);
