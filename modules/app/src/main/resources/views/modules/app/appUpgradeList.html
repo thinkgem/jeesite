@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${appUpgrade}" action="${ctx}/app/appUpgrade/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${appUpgrade}" action="${ctx}/app/appUpgrade/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('应用代号')}：</label>
@@ -37,7 +37,7 @@
 				<div class="form-group">
 					<label class="control-label">${text('发布时间')}：</label>
 					<div class="control-inline">
-						<#form:input path="upDate" readonly="true" maxlength="20" class="form-control laydate width-datetime"
+						<#form:input path="upDate" readonly="true" maxlength="20" class="form-control laydate width-date"
 							dataFormat="date" data-type="date" data-format="yyyy-MM-dd"/>
 					</div>
 				</div>
