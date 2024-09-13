@@ -13,7 +13,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${report}" action="${ctx}/cms/report/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${report}" action="${ctx}/cms/report/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('举报来源')}：</label>
@@ -59,7 +59,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text('举报来源')}', name:'reportSource', index:'a.report_source', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '<a href="${ctx}/cms/report/form?id='+row.id+'" class="btnList" data-title="${text('编辑内容举报表')}">'+(val||row.id)+'</a>';

@@ -29,7 +29,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${category}" action="${ctx}/cms/category/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${category}" action="${ctx}/cms/category/listData" method="post" class="form-inline "
 				data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<#form:hidden path="site.siteCode" maxlength="64" class="form-control width-120" />
 				<div class="form-group">
@@ -69,7 +69,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("名称")}', name:'categoryName', index:'a.category_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.categoryCode+' ) '+'<a href="${ctx}/cms/category/form?categoryCode='+row.categoryCode+'" class="btnList" data-title="${text("编辑栏目表")}">'+(val||row.id)+'</a>';
