@@ -29,7 +29,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${category}" action="${ctx}/cms/category/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${category}" action="${ctx}/cms/category/listData" method="post" class="form-inline "
 				data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<#form:hidden path="site.siteCode" maxlength="64" class="form-control width-120" />
 				<div class="form-group">

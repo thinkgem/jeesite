@@ -13,7 +13,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${visitLog}" action="${ctx}/cms/visitLog/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${visitLog}" action="${ctx}/cms/visitLog/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('请求的URL地址')}：</label>
