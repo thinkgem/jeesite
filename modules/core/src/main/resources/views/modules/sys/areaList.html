@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${area}" action="${ctx}/sys/area/listPageData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${area}" action="${ctx}/sys/area/listPageData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
 					<label class="control-label">${text('区域代码')}：</label>
@@ -51,7 +51,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("区域名称")}', name:'areaName', index:'a.area_name', width:230, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			return '( '+row.areaCode+' ) '+'<a href="${ctx}/sys/area/form?areaCode='+row.areaCode+'" class="btnList" data-title="${text("编辑区域")}">'+(val||row.id)+'</a>';

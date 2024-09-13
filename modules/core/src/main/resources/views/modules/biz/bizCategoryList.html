@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<#form:form id="searchForm" model="${bizCategory}" action="${ctx}/biz/bizCategory/listData" method="post" class="form-inline hide"
+			<#form:form id="searchForm" model="${bizCategory}" action="${ctx}/biz/bizCategory/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 			<#form:hidden path="categoryCode"/>
 			<div class="form-group">
