@@ -4,10 +4,10 @@
 </p>
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">快速开发平台 - Spring Boot 3</h3>
 <p align="center">
- <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.8" src="https://img.shields.io/badge/JeeSite-V5.8-success.svg"></a>
- <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-3.2" src="https://img.shields.io/badge/SpringBoot-3.2-blue.svg"></a>
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-5.9" src="https://img.shields.io/badge/JeeSite-V5.9-success.svg"></a>
+ <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.7/3.2" src="https://img.shields.io/badge/SpringBoot-2.7/3.2-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
- <a href="https://gitee.com/thinkgem/jeesite5/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite5/badge/fork.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
 </p>
 
 ------
