@@ -4,10 +4,10 @@
 </p>
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">快速开发平台 - Spring Boot</h3>
 <p align="center">
- <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-V5.8" src="https://img.shields.io/badge/JeeSite-V5.8-success.svg"></a>
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-5.9" src="https://img.shields.io/badge/JeeSite-V5.9-success.svg"></a>
  <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.7/3.2" src="https://img.shields.io/badge/SpringBoot-2.7/3.2-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
- <a href="https://gitee.com/thinkgem/jeesite5/members" target="__blank"><img alt="fork" src="https://gitee.com/thinkgem/jeesite5/badge/fork.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
 </p>
 
 ------
@@ -124,7 +124,7 @@
 ### 本地运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、使用 `MySQL 5.7 or 8.0` 数据库、[其它数据库](https://jeesite.com/docs/technology/#_8、已支持数据库)
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.8.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.9.zip> 并解压
 3. 打开文件：`/web/src/main/resources/config/application.yml` 配置JDBC连接
 4. 执行脚本：`/web/bin/init-data.bat` 初始化数据库
 5. 执行脚本：`/web/bin/run-tomcat.bat` 启动服务即可
@@ -135,7 +135,7 @@
 ### 快速运行
 
 1. 环境准备：`JDK 1.8 or 11、17`、`Maven 3.6+`、无需准备数据库（使用内嵌 H2 DB、Vue资源包）
-2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.8.zip> 并解压
+2. 下载源码：<https://gitee.com/thinkgem/jeesite5/repository/archive/v5.9.zip> 并解压
 3. 执行脚本：`/web-fast/bin/run-tomcat.bat` 启动服务即可（自动初始化库）
 4. Vue分离版本地址：<http://127.0.0.1:8980/vue/login>
 5. 全栈版本地址：<http://127.0.0.1:8980/a/login>
