@@ -50,11 +50,13 @@ export function useDict() {
     if (isEmpty(dictType)) return;
     await initDict([dictType]);
     const jeesiteDictList = getDictList(dictType);
-    optionsRef.value = jeesiteDictList.map((item) => ({
-      label: item.name,
-      value: item.value,
-      key: item.id,
-    }));
+    optionsRef.value = jeesiteDictList
+      .filter((item) => item.pId == '0')
+      .map((item) => ({
+        label: item.name,
+        value: item.value,
+        key: item.id,
+      }));
   }
 
   async function initSelectTreeData(treeData: Ref, dictType: string, isListToTree: boolean) {
