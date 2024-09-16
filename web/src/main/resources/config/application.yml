@@ -128,6 +128,9 @@ jdbc:
 #    # 获取连接等待超时时间，单位毫秒（1分钟）（4.0.6+）
 #    maxWait: 60000
 #
+#    # 连接失败后中断，默认为 false 时，会一直尝试连接，为 true 时，自动中断尝试（v5.9.0+）
+#    breakAfterAcquireFailure: false
+#
 #    # 从池中取出和归还连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个（4.0.6+）
 #    testOnBorrow: false
 #    testOnReturn: false
