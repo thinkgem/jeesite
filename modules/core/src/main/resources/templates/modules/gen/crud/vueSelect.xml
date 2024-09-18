@@ -38,7 +38,7 @@ import { companyTreeData } from '/@/api/sys/company';
 import { areaTreeData } from '/@/api/sys/area';
 <% } %>
 
-const { t } = useI18n('sys.${className}');
+const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
 
 const modalProps = {
   title: t('${functionNameSimple}选择'),
