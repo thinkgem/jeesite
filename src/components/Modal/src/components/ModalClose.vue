@@ -74,7 +74,7 @@
     margin-right: 10px;
 
     .jeesite-icon {
-      margin: 3px 9px;
+      padding: 16px 9px;
       font-size: 18px;
       color: @text-color-base !important;
       cursor: pointer;

@@ -339,12 +339,13 @@
         }
       }
 
-      &-close-x {
-        display: inline-block;
-        width: 96px;
-        height: 55px;
-        line-height: 55px;
-      }
+      // 注释掉，防止点击全屏误触关闭
+      //&-close-x {
+      //  display: inline-block;
+      //  width: 96px;
+      //  height: 55px;
+      //  line-height: 55px;
+      //}
 
       &-confirm-body {
         .ant-modal-confirm-content {
