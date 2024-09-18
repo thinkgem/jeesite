@@ -1,6 +1,6 @@
 {
   "name": "jeesite",
-  "version": "5.9.0.dev",
+  "version": "5.9.0",
   "type": "module",
   "scripts": {
     "bootstrap": "yarn install",
