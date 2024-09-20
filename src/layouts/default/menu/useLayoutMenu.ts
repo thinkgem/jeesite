@@ -19,8 +19,8 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   const throttleHandleSplitLeftMenu = useThrottleFn(handleSplitLeftMenu, 50);
 
-  const splitNotLeft = computed(
-    () => unref(splitType) !== MenuSplitTyeEnum.LEFT && !unref(getIsHorizontal),
+  const getSplitNotLeft = computed(
+    () => unref(splitType) !== MenuSplitTyeEnum.LEFT && unref(getSplit),
   );
 
   const getSplitLeft = computed(
@@ -29,14 +29,14 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
 
   const getSpiltTop = computed(() => unref(splitType) === MenuSplitTyeEnum.TOP);
 
-  const normalType = computed(() => {
+  const getNormalType = computed(() => {
     return unref(splitType) === MenuSplitTyeEnum.NONE || !unref(getSplit);
   });
 
   watch(
     [() => unref(currentRoute).path, () => unref(splitType)],
     async ([path]: [string, MenuSplitTyeEnum]) => {
-      if (unref(splitNotLeft) || unref(getIsMobile)) return;
+      if (unref(getSplitNotLeft) || unref(getIsMobile)) return;
 
       const { meta } = unref(currentRoute);
       const currentActiveMenu = meta.currentActiveMenu as string;
@@ -71,7 +71,7 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
   watch(
     () => getSplit.value,
     () => {
-      if (unref(splitNotLeft)) return;
+      if (unref(getSplitNotLeft)) return;
       genMenus();
     },
   );
@@ -96,7 +96,7 @@ export function useSplitMenu(splitType: Ref<MenuSplitTyeEnum>) {
   // get menus
   async function genMenus() {
     // normal mode
-    if (unref(normalType) || unref(getIsMobile)) {
+    if (unref(getNormalType) || unref(getIsMobile)) {
       menusRef.value = await getMenus();
       return;
     }
