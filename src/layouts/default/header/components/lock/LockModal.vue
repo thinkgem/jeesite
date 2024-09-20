@@ -28,7 +28,7 @@
   import { defineComponent, computed } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { BasicModal, useModalInner } from '/@/components/Modal/index';
+  import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
 
   import { useUserStore } from '/@/store/modules/user';
@@ -58,6 +58,7 @@
             required: true,
           },
         ],
+        baseColProps: { md: 23, lg: 23 },
       });
 
       async function handleLock() {

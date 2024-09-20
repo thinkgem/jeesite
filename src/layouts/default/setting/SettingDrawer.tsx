@@ -216,6 +216,7 @@ export default defineComponent({
           <InputNumberItem
             title={t('layout.setting.autoScreenLock')}
             min={0}
+            max={99999}
             event={HandlerEnum.LOCK_TIME}
             defaultValue={unref(getLockTime)}
             formatter={(value: string) => {
