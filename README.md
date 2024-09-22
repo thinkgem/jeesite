@@ -90,7 +90,7 @@
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 * JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
-* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.7>
+* Spring Boot 2.x 版本：<https://gitee.com/thinkgem/jeesite5/tree/v5.9>
 
 ## 更多介绍
 
