@@ -25,7 +25,7 @@ import java.io.IOException;
  * @version 2017年11月30日
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(name="state.enabled", havingValue="true", matchIfMissing=true)
+@ConditionalOnProperty(name={"state.enabled","state.druid"}, havingValue="true", matchIfMissing=true)
 public class DruidStatConfig {
 
 	/**
@@ -43,7 +43,7 @@ public class DruidStatConfig {
 		bean.addUrlPatterns("/*");
 		return bean;
 	}
-	
+
 	/**
 	 * 注册DruidServlet
 	 */
