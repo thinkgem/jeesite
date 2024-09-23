@@ -58,7 +58,9 @@ public class UserfilesController extends BaseController {
 			request.setAttribute("fileUrl", fileUrl);	// 文件访问地址
 			request.setAttribute("fileUri", fileUri);	// 文件下载地址（fileDown）
 			request.setAttribute("filePath", filePath);	// 文件相对路径或文件名
-			request.setAttribute("fileUrls", request.getParameter("urls"));	// 前后照片列表
+			request.setAttribute("fileUrls", request.getParameter("urls"));		// 文件地址列表
+			request.setAttribute("fileNames", request.getParameter("names"));	// 文件名称列表
+			request.setAttribute("imageFlag", request.getParameter("image"));	// 是否图片控件
 			request.setAttribute(RequestDispatcher.FORWARD_REQUEST_URI, previewUrl);
 			request.getRequestDispatcher(previewUrl).forward(request, response);
 			return null;
