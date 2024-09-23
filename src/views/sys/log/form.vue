@@ -171,7 +171,7 @@
       component: 'Input',
       colProps: { md: 24, lg: 24 },
       render: () => {
-        return h('div', { innerHTML: record.value.diffModifyData });
+        return h('div', { class: 'modify-data', innerHTML: record.value.diffModifyData });
       },
       ifShow: () => !isEmpty(record.value.diffModifyData),
     },
@@ -212,15 +212,24 @@
   });
 </script>
 <style lang="less">
-  table.table {
-    td {
-      width: 30%;
-    }
-
-    th:first-child,
-    table.table {
+  .modify-data {
+    .table {
+      td {
+        width: 30%;
+        word-break: break-all;
+      }
+      th:first-child,
       td:first-child {
-        width: 10%;
+        width: 20%;
+        text-align: center;
+      }
+    }
+    > .table {
+      > tbody > tr {
+        > th:first-child,
+        > td:first-child {
+          width: 7%;
+        }
       }
     }
   }
