@@ -340,6 +340,12 @@ gen:
 # 系统监控
 state:
   enabled: true
+  # 服务器监控
+  server: true
+  # 缓存监控
+  cache: true
+  # 数据监控
+  druid: true
 
 #======================================#
 #========= Framework settings =========#
