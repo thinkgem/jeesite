@@ -29,7 +29,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicForm, useForm } from '/@/components/Form';
 
   import { useUserStore } from '/@/store/modules/user';
   import { useLockStore } from '/@/store/modules/lock';
