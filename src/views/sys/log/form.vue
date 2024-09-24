@@ -218,12 +218,14 @@
         width: 30%;
         word-break: break-all;
       }
+
       th:first-child,
       td:first-child {
         width: 20%;
         text-align: center;
       }
     }
+
     > .table {
       > tbody > tr {
         > th:first-child,

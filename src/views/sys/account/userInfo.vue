@@ -29,7 +29,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { Icon } from '/@/components/Icon';
-  import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
+  import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { CollapseContainer } from '/@/components/Container';
   import { CropperAvatar } from '/@/components/Cropper';
   import headerImg from '/@/assets/images/header.jpg';

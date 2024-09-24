@@ -31,7 +31,7 @@
   import type { ErrorLogInfo } from '/#/store';
   import { watch, ref, unref, nextTick } from 'vue';
   import { cloneDeep } from 'lodash-es';
-  import { BasicTable, useTable, TableAction } from '/@/components/Table/index';
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useI18n } from '/@/hooks/web/useI18n';

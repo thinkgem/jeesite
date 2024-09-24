@@ -26,7 +26,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { Icon } from '/@/components/Icon';
   import { PageWrapper } from '/@/components/Page';
-  import { ScrollContainer } from '/@/components/Container/index';
+  import { ScrollContainer } from '/@/components/Container';
 
   import UserInfo from './userInfo.vue';
   import SecureSettings from './secureSettings.vue';
