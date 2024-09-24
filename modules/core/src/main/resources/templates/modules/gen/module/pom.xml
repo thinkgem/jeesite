@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>${jeesiteVersion}-SNAPSHOT</version>
+		<version>${jeesiteVersion}.springboot3-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	

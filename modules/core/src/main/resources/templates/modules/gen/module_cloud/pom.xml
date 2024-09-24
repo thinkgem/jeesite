@@ -13,7 +13,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-cloud-module-${moduleCode}</artifactId>
-	<version>${jeesiteVersion}-SNAPSHOT</version>
+	<version>${jeesiteVersion}.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Cloud Module ${moduleName}</name>
