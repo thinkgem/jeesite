@@ -22,6 +22,7 @@ export const footerProps = {
     default: 60,
   },
 };
+
 export const basicProps = {
   isDetail: { type: Boolean },
   title: { type: String, default: '' },
