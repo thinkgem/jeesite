@@ -16,7 +16,8 @@ export const modalProps = {
   closeFunc: Function as PropType<() => Promise<boolean>>,
 };
 
-export const basicProps: any = Object.assign({}, modalProps, {
+export const basicProps = {
+  ...modalProps,
   defaultFullscreen: { type: Boolean },
   // Can it be full screen
   canFullscreen: { type: Boolean, default: true },
@@ -78,4 +79,4 @@ export const basicProps: any = Object.assign({}, modalProps, {
   wrapClassName: { type: String },
 
   zIndex: { type: Number },
-});
+};
