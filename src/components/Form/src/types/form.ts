@@ -168,7 +168,13 @@ export interface FormSchema {
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
 
-  suffix?: string | number | ((values: RenderCallbackParams) => string | number) | VNode | VNode[];
+  // 组件后缀
+  suffix?:
+    | string
+    | number
+    | VNode
+    | VNode[]
+    | ((values: RenderCallbackParams) => string | number | VNode | VNode[]);
 
   // Validation rules
   rules?: Rule[];

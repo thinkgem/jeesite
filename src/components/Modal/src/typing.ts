@@ -175,7 +175,7 @@ export interface ModalProps {
    * The modal dialog's title
    * @type any (string | slot)
    */
-  title?: VNodeChild | JSX.Element;
+  title?: VNodeChild | JSX.Element | any;
 
   /**
    * Width of the modal dialog
