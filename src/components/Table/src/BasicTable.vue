@@ -6,10 +6,10 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
     <TableHeader v-bind="getHeaderProps" :showSelectionBar="false">
-      <template v-if="$slots.tableTitle" #tableTitle>
+      <template #tableTitle v-if="$slots.tableTitle">
         <slot name="tableTitle"></slot>
       </template>
-      <template v-if="$slots.tableTitle || $slots.toolbar" #toolbar>
+      <template #toolbar v-if="$slots.tableTitle || $slots.toolbar">
         <a-button v-if="getBindValues.useSearchForm && !formShow" @click="handleFormShowToggle()">
           <Icon icon="i-ant-design:filter-twotone" /> {{ t('common.queryText') }}
         </a-button>
@@ -18,10 +18,10 @@
         </a-button>
         <slot v-if="$slots.toolbar" name="toolbar"></slot>
       </template>
-      <template v-if="$slots.headerTop" #headerTop>
+      <template #headerTop v-if="$slots.headerTop">
         <slot name="headerTop"></slot>
       </template>
-      <template v-if="$slots.tableTop" #tableTop>
+      <template #tableTop v-if="$slots.tableTop">
         <slot name="tableTop"></slot>
       </template>
     </TableHeader>
@@ -302,9 +302,15 @@
       const getHeaderProps = computed(() => {
         const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } =
           unref(getProps);
-        const hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting;
+        const hideTitle =
+          !title &&
+          !slots.tableTitle &&
+          !slots.toolbar &&
+          !slots.headerTop &&
+          !slots.tableTop &&
+          !showTableSetting;
         if (hideTitle && !isString(title)) {
-          return {};
+          return { class: 'hidden' };
         }
         return {
           title,
@@ -381,6 +387,7 @@
           prefixCls,
           attrs.class,
           {
+            [`${prefixCls}-header-hidden`]: getHeaderProps.value.class === 'hidden',
             [`${prefixCls}-form-container`]: values.useSearchForm,
             [`${prefixCls}--inset`]: values.inset,
           },
@@ -673,6 +680,13 @@
         // border-radius: 5px;
         border-top: 1px solid @table-border-color !important;
         margin-bottom: 0;
+      }
+    }
+
+    &-header-hidden {
+      .ant-form {
+        padding-top: 0;
+        border-top: 0 !important;
       }
     }
 
