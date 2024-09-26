@@ -7,6 +7,7 @@
 			</div>
 			<div class="box-tools pull-right">
 				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<a href="#" class="btn btn-default" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a>
 				<% if(hasPermi('test:testData:edit')){ %>
 					<a href="${ctx}/test1/testData/form" class="btn btn-default btnTool" title="${text('新增数据')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
 				<% } %>
@@ -240,5 +241,12 @@ $("#btnTrunsTest").click(function(){
 		page();
 	});
 	return false;
+});
+$('#btnExport').click(function(){
+	js.ajaxSubmitForm($('#searchForm'), {
+		url: '${ctx}/test1/testData/exportData',
+		clearParams: 'pageNo,pageSize',
+		downloadFile: true
+	});
 });
 </script>

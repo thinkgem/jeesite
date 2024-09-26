@@ -12,6 +12,7 @@ import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import com.jeesite.common.utils.excel.annotation.ExcelField;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.entity.User;
 import jakarta.validation.constraints.Size;
@@ -82,7 +83,8 @@ public class TestData extends DataEntity<TestData> {
 	public TestData(String id){
 		super(id);
 	}
-	
+
+	@ExcelField(title="单行文本", words=30, align=ExcelField.Align.LEFT, sort=10)
 	@Size(min=0, max=200, message="单行文本长度不能超过 200 个字符")
 	public String getTestInput() {
 		return testInput;
@@ -92,6 +94,7 @@ public class TestData extends DataEntity<TestData> {
 		this.testInput = testInput;
 	}
 	
+	@ExcelField(title="多行文本", words=100, align=ExcelField.Align.LEFT, sort=10)
 	@Size(min=0, max=200, message="多行文本长度不能超过 200 个字符")
 	public String getTestTextarea() {
 		return testTextarea;

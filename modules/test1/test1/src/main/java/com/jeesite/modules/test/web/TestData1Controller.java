@@ -4,9 +4,18 @@
  */
 package com.jeesite.modules.test.web;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.DateUtils;
+import com.jeesite.common.utils.excel.ExcelExport;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.service.EmpUserService;
+import com.jeesite.modules.test.entity.TestData;
+import com.jeesite.modules.test.service.TestDataService;
+import io.seata.spring.annotation.GlobalTransactional;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,14 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.test.entity.TestData;
-import com.jeesite.modules.test.service.TestDataService;
-
-import io.seata.spring.annotation.GlobalTransactional;
+import java.util.List;
 
 /**
  * 测试数据Controller
@@ -37,6 +39,8 @@ public class TestData1Controller extends BaseController {
 
 	@Autowired
 	private TestDataService testDataService;
+	@Autowired
+	private EmpUserService empUserService;
 	
 	/**
 	 * 获取数据
@@ -89,6 +93,15 @@ public class TestData1Controller extends BaseController {
 	public String save(@Validated TestData testData) {
 		testDataService.save(testData);
 		return renderResult(Global.TRUE, text("保存数据成功！"));
+	}
+
+	@RequestMapping(value = "exportData")
+	public void exportData(TestData testData, HttpServletResponse response) {
+		List<TestData> list = testDataService.findList(testData);
+		String fileName = "测试数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
+		try(ExcelExport ee = new ExcelExport("测试数据", TestData.class)){
+			ee.setDataList(list).write(response, fileName);
+		}
 	}
 	
 	/**
