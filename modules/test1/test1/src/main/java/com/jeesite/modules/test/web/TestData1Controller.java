@@ -10,7 +10,6 @@ import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.test.entity.TestData;
 import com.jeesite.modules.test.service.TestDataService;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -39,9 +38,7 @@ public class TestData1Controller extends BaseController {
 
 	@Autowired
 	private TestDataService testDataService;
-	@Autowired
-	private EmpUserService empUserService;
-	
+
 	/**
 	 * 获取数据
 	 */
