@@ -403,6 +403,7 @@
     }
 
     .ant-form-item-label > label {
+      padding-right: 3px;
       white-space: normal;
       min-height: 32px;
       height: auto;

@@ -122,7 +122,7 @@
     let height = document.documentElement.clientHeight;
     let padding = 280;
     treeHeight.value = height - padding;
-    tableHeight.value = height - padding - 100;
+    tableHeight.value = height - padding - 90;
   }
   useWindowSizeFn(calcTreeHeight, 280);
   onMountedOrActivated(calcTreeHeight);
@@ -148,7 +148,7 @@
     showTableSetting: false,
     useSearchForm: true,
     canResize: true,
-    resizeHeightOffset: 100,
+    resizeHeightOffset: 60,
     rowSelection,
     clearSelectedOnReload: false,
     ...props.config?.tableProps,
@@ -233,39 +233,20 @@
   }
 </script>
 <style lang="less">
-  .jeesite-listselect-table {
-    .ant-table-wrapper {
-      .ant-table {
-        td {
-          cursor: pointer;
-        }
-      }
-    }
-
-    &.jeesite-basic-table-form-container {
-      .ant-form.jeesite-basic-form {
-        border-top: 0 !important;
-      }
-    }
-  }
-
   .jeesite-listselect {
-    .ant-modal.jeesite-basic-modal {
-      .ant-modal {
-        &-body {
-          > .scrollbar {
-            .scrollbar__wrap {
-              margin-top: 0;
-              margin-bottom: 0;
-            }
+    .jeesite-basic-tree-header {
+      padding: 2px 0 4px;
+      border: 0;
+    }
+
+    &-table {
+      .ant-table-wrapper {
+        .ant-table {
+          td {
+            cursor: pointer;
           }
         }
       }
-    }
-
-    .jeesite-basic-tree-header {
-      padding: 15px 0 4px;
-      border: 0;
     }
 
     &-tags {
