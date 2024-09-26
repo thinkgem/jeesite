@@ -32,7 +32,7 @@ export function useTableScroll(
   watch(
     () => [unref(getCanResize), unref(getDataSourceRef)?.length],
     () => {
-      debounceRedoHeight();
+      calcTableHeight();
     },
     {
       flush: 'post',
@@ -200,10 +200,7 @@ export function useTableScroll(
   }
   useWindowSizeFn(calcTableHeight, 280);
   onMountedOrActivated(() => {
-    calcTableHeight();
-    nextTick(() => {
-      debounceRedoHeight();
-    });
+    debounceRedoHeight();
   });
 
   const getScrollRef: ComputedRef<any> = computed(() => {
