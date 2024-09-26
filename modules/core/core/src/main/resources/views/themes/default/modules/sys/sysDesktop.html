@@ -391,8 +391,6 @@ $(function(){
 		var windowHeight = $(window).height();
 		$('.content').css('min-height', windowHeight - footerHeight);
 		if(myChart1) myChart1.resize();
-		if(myChart2) myChart2.resize();
-		if(myChart3) myChart3.resize();
 	}).resize();
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		$(window).resize();
