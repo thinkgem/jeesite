@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>viewList</name>
-	<filePath>${frontDir}/${moduleName}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<filePath>${baseDir}/${moduleName}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}List.html</fileName>
 	<content><![CDATA[
 <% include('/templates/modules/gen/include/viewList.html'){} %>]]>

@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>viewForm</name>
-	<filePath>${frontDir}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
+	<filePath>${baseDir}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}Form.html</fileName>
 	<content><![CDATA[
 <%
