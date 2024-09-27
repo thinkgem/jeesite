@@ -567,6 +567,10 @@
           }
         }
 
+        .ant-table-column-sorter {
+          margin-left: -5px;
+        }
+
         .ant-table-title {
           min-height: 40px;
           padding: 6px 0 8px !important;
