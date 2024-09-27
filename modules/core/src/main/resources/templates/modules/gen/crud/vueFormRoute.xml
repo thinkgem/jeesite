@@ -26,7 +26,7 @@
     <% for (child in table.childList){ %>
     <template #${@StringUtils.uncap(child.className)}>
       <BasicForm @register="register${child.className}Form">
-        <template #${@StringUtils.uncap(child.className)}List>
+        <template #${@StringUtils.uncap(child.classNameSimple)}List>
           <BasicTable
             @register="register${child.className}Table"
             @row-click="handle${child.className}RowClick"
@@ -370,10 +370,10 @@ for (c in table.columnList){
 
   const input${child.className}FormSchemas: FormSchema[] = [
     {
-      field: '${@StringUtils.uncap(child.className)}List',
+      field: '${@StringUtils.uncap(child.classNameSimple)}List',
       component: 'Input',
       colProps: { md: 24, lg: 24 },
-      slot: '${@StringUtils.uncap(child.className)}List',
+      slot: '${@StringUtils.uncap(child.classNameSimple)}List',
     },
   ];
 <%
@@ -473,7 +473,7 @@ for (c in table.columnList){
     baseColProps: { md: 24, lg: 24 },
   });
 
-  const [register${child.className}Table, ${@StringUtils.uncap(child.className)}Table] = useTable({
+  const [register${child.className}Table, ${@StringUtils.uncap(child.classNameSimple)}Table] = useTable({
     actionColumn: {
       width: 60,
       actions: (record: Recordable) => [
@@ -496,7 +496,7 @@ for (c in table.columnList){
   });
 
   async function set${child.className}TableData(_res: Recordable) {
-    ${@StringUtils.uncap(child.className)}Table.setColumns([
+    ${@StringUtils.uncap(child.classNameSimple)}Table.setColumns([
   <%
   for (c in child.columnList){
     if (c.isEdit != '1' || c.isPk == '1'){
@@ -604,7 +604,7 @@ for (c in table.columnList){
   }
   %>
     ]);
-    ${@StringUtils.uncap(child.className)}Table.setTableData(record.value.${@StringUtils.uncap(child.className)}List || []);
+    ${@StringUtils.uncap(child.classNameSimple)}Table.setTableData(record.value.${@StringUtils.uncap(child.classNameSimple)}List || []);
   }
 
   function handle${child.className}RowClick(record: Recordable) {
@@ -612,7 +612,7 @@ for (c in table.columnList){
   }
 
   function handle${child.className}Add() {
-    ${@StringUtils.uncap(child.className)}Table.insertTableDataRecord({
+    ${@StringUtils.uncap(child.classNameSimple)}Table.insertTableDataRecord({
       id: new Date().getTime(),
       isNewRecord: true,
       editable: true,
@@ -620,35 +620,35 @@ for (c in table.columnList){
   }
 
   function handle${child.className}Delete(record: Recordable) {
-    ${@StringUtils.uncap(child.className)}Table.deleteTableDataRecord(record);
+    ${@StringUtils.uncap(child.classNameSimple)}Table.deleteTableDataRecord(record);
   }
 
   async function get${child.className}List() {
-    let ${@StringUtils.uncap(child.className)}ListValid = true;
-    let ${@StringUtils.uncap(child.className)}List: Recordable[] = [];
-    for (const record of ${@StringUtils.uncap(child.className)}Table.getDataSource()) {
+    let ${@StringUtils.uncap(child.classNameSimple)}ListValid = true;
+    let ${@StringUtils.uncap(child.classNameSimple)}List: Recordable[] = [];
+    for (const record of ${@StringUtils.uncap(child.classNameSimple)}Table.getDataSource()) {
       if (!(await record.onEdit?.(false, true))) {
-        ${@StringUtils.uncap(child.className)}ListValid = false;
+        ${@StringUtils.uncap(child.classNameSimple)}ListValid = false;
       }
-      ${@StringUtils.uncap(child.className)}List.push({
+      ${@StringUtils.uncap(child.classNameSimple)}List.push({
         ...record,
         id: !!record.isNewRecord ? '' : record.id,
       });
     }
-    for (const record of ${@StringUtils.uncap(child.className)}Table.getDelDataSource()) {
+    for (const record of ${@StringUtils.uncap(child.classNameSimple)}Table.getDelDataSource()) {
       if (!!record.isNewRecord) continue;
-      ${@StringUtils.uncap(child.className)}List.push({
+      ${@StringUtils.uncap(child.classNameSimple)}List.push({
         ...record,
         status: '1',
       });
     }
-    if (!${@StringUtils.uncap(child.className)}ListValid) {
+    if (!${@StringUtils.uncap(child.classNameSimple)}ListValid) {
       throw {
-        errorFields: [{ name: ['${@StringUtils.uncap(child.className)}List'] }],
+        errorFields: [{ name: ['${@StringUtils.uncap(child.classNameSimple)}List'] }],
         message: t('${child.comments}填写有误，请根据提示修正'),
       };
     }
-    return ${@StringUtils.uncap(child.className)}List;
+    return ${@StringUtils.uncap(child.classNameSimple)}List;
   }
 <% } %>
 
@@ -742,7 +742,7 @@ for (c in table.columnList){
   %>
       };
     <% for (child in table.childList){ %>
-      data.${@StringUtils.uncap(child.className)}List = await get${child.className}List();
+      data.${@StringUtils.uncap(child.classNameSimple)}List = await get${child.className}List();
     <% } %>
     <% if(table.isTreeEntity){ %>
       data.oldParentCode = record.value.parentCode;

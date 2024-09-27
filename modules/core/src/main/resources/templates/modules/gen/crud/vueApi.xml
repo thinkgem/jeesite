@@ -72,7 +72,7 @@ for(c in table.columnList){
 %>
 <% // 生成子表列表字段
 for(child in table.childList){ %>
-  ${@StringUtils.uncap(child.className)}List?: any[]; // 子表列表
+  ${@StringUtils.uncap(child.classNameSimple)}List?: any[]; // 子表列表
 <% } %>
 }
 

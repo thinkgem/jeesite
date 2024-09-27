@@ -76,7 +76,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 			<% for (child in table.childList){ %>
 			${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} = new ${@StringUtils.cap(child.className)}(entity);
 			${@StringUtils.uncap(child.className)}.setStatus(${@StringUtils.cap(child.className)}.STATUS_NORMAL);
-			entity.set${@StringUtils.cap(child.className)}List(${@StringUtils.uncap(child.className)}Dao.findList(${@StringUtils.uncap(child.className)}));
+			entity.set${@StringUtils.cap(child.classNameSimple)}List(${@StringUtils.uncap(child.className)}Dao.findList(${@StringUtils.uncap(child.className)}));
 			<% } %>
 		}
 		return entity;
@@ -175,7 +175,7 @@ public class ${ClassName}Service extends ${table.isTreeEntity?'Tree':'Crud'}Serv
 	<% } %>
 	<% for (child in table.childList) { %>
 		// 保存 ${ClassName}子表
-		for (${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} : ${className}.get${@StringUtils.cap(child.className)}List()){
+		for (${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)} : ${className}.get${@StringUtils.cap(child.classNameSimple)}List()){
 			if (!${@StringUtils.cap(child.className)}.STATUS_DELETE.equals(${@StringUtils.uncap(child.className)}.getStatus())){
 				<%
 				for(c in child.columnList){

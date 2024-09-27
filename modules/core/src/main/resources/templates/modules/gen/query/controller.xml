@@ -132,7 +132,7 @@ public class ${ClassName}Controller extends BaseController {
 	 * 查询子表数据
 	 */
 	@RequiresPermissions("${permissionPrefix}:view")
-	@RequestMapping(value = "${@StringUtils.uncap(child.className)}ListData")
+	@RequestMapping(value = "${@StringUtils.uncap(child.classNameSimple)}ListData")
 	@ResponseBody
 	public Page<${@StringUtils.cap(child.className)}> subListData(${@StringUtils.cap(child.className)} ${@StringUtils.uncap(child.className)}, HttpServletRequest request, HttpServletResponse response) {
 		${@StringUtils.uncap(child.className)}.setPage(new Page<>(request, response));
