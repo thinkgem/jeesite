@@ -6,9 +6,9 @@ var treeselectExists = false;
 for(child in table.childList){
 %>
 \//# // 初始化${child.comments}DataGrid对象
-$('#${@StringUtils.uncap(child.className)}DataGrid').dataGrid({
+$('#${@StringUtils.uncap(child.classNameSimple)}DataGrid').dataGrid({
 
-	data: \"#{toJson(${className}.${@StringUtils.uncap(child.className)}List)}",
+	data: \"#{toJson(${className}.${@StringUtils.uncap(child.classNameSimple)}List)}",
 	datatype: 'local', // 设置本地数据
 	autoGridHeight: function(){return 'auto'}, // 设置自动高度
 	
@@ -164,9 +164,9 @@ if (table.tplCategory != 'query'){
 		{header:'\${text("操作")}', name:'actions', width:80, align:'center', formatter: function(val, obj, row, act){
 			var actions = [];
 			if (val == 'new'){
-				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.classNameSimple)}DataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}else{
-				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.className)}DataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				actions.push('<a href="#" onclick="js.confirm(\'\${text("你确认要删除这条数据吗？")}\', function(){$(\'#${@StringUtils.uncap(child.classNameSimple)}DataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
 			}
 			return actions.join('');
 		}, editoptions: {defaultValue: 'new'}}
@@ -178,12 +178,12 @@ if (table.tplCategory != 'query'){
 	\//# // 编辑表格参数
 	editGrid: true,				// 是否是编辑表格
 	editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
-	editGridAddRowBtn: $('#${@StringUtils.uncap(child.className)}DataGridAddRowBtn'),	// 子表增行按钮
+	editGridAddRowBtn: $('#${@StringUtils.uncap(child.classNameSimple)}DataGridAddRowBtn'),	// 子表增行按钮
 	editGridAddRowBtnToHeader: true,	// 子表增行按钮是否显示到表头上
 	editGridAddRowInitData: {<% for(pk in child.pkList){ %>${pk.attrName}<% break; }%>: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
 
 	\//# // 编辑表格的提交数据参数
-	editGridInputFormListName: '${@StringUtils.uncap(child.className)}List', // 提交的数据列表名
+	editGridInputFormListName: '${@StringUtils.uncap(child.classNameSimple)}List', // 提交的数据列表名
 	editGridInputFormListAttrs: 'status,<% for(c in child.columnList){if(c.attrName!="status"){%>${c.attrName},<% }} %>', // 提交数据列表的属性字段
 	
 	\//# // 加载成功后执行事件

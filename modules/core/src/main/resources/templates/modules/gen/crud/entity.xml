@@ -213,7 +213,7 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	// 生成子表列表字段
 	for(child in table.childList){
 	%>
-	private List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.className)}List = ListUtils.newArrayList();		// 子表列表
+	private List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.classNameSimple)}List = ListUtils.newArrayList();		// 子表列表
 	<%
 	}
 	
@@ -366,12 +366,12 @@ public class ${ClassName} extends ${toBoolean(table.optionMap['isBpmForm'])?(tab
 	%>
 	
 	@Valid
-	public List<${@StringUtils.cap(child.className)}> get${@StringUtils.cap(child.className)}List() {
-		return ${@StringUtils.uncap(child.className)}List;
+	public List<${@StringUtils.cap(child.className)}> get${@StringUtils.cap(child.classNameSimple)}List() {
+		return ${@StringUtils.uncap(child.classNameSimple)}List;
 	}
 
-	public void set${@StringUtils.cap(child.className)}List(List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.className)}List) {
-		this.${@StringUtils.uncap(child.className)}List = ${@StringUtils.uncap(child.className)}List;
+	public void set${@StringUtils.cap(child.classNameSimple)}List(List<${@StringUtils.cap(child.className)}> ${@StringUtils.uncap(child.classNameSimple)}List) {
+		this.${@StringUtils.uncap(child.classNameSimple)}List = ${@StringUtils.uncap(child.classNameSimple)}List;
 	}
 	<% } %>
 	
