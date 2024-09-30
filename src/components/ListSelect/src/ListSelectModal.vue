@@ -12,7 +12,7 @@
     :canFullscreen="false"
     @register="registerModal"
     @ok="handleSubmit"
-    width="80%"
+    width="90%"
   >
     <template #appendHeader>
       <template v-for="(item, _index) in headerButtons" :key="_index">
