@@ -131,7 +131,7 @@
       emit('success', data);
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('common.validateError'));
+        showMessage(error.message || t('common.validateError'));
       }
       console.log('error', error);
     } finally {
