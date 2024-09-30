@@ -18,16 +18,10 @@
     </template>
     <BasicForm @register="registerForm">
       <template #employeeOfficeList>
-        <BasicTable
-          @register="registerEmployeeOfficeTable"
-          @row-click="handleEmployeeOfficeRowClick"
-        />
-        <a-button class="mt-2" @click="handleEmployeeOfficeAdd">
-          <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
-        </a-button>
+        <FormEmployeeOfficeList ref="formEmployeeOfficeListRef" />
       </template>
       <template #userRoleString>
-        <BasicTable @register="registerUserRoleTable" />
+        <FormUserRoleList ref="formUserRoleListRef" />
       </template>
     </BasicForm>
   </BasicDrawer>
@@ -44,8 +38,8 @@
   import { checkLoginCode } from '/@/api/sys/user';
   import { officeTreeData } from '/@/api/sys/office';
   import { companyTreeData } from '/@/api/sys/company';
-  import { roleTreeData } from '/@/api/sys/role';
-  import { BasicTable, useTable } from '/@/components/Table';
+  import FormEmployeeOfficeList from './formEmployeeOfficeList.vue';
+  import FormUserRoleList from './formUserRoleList.vue';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -53,6 +47,9 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<EmpUser>({} as EmpUser);
+  const formEmployeeOfficeListRef = ref<InstanceType<typeof FormEmployeeOfficeList>>();
+  const formUserRoleListRef = ref<InstanceType<typeof FormUserRoleList>>();
+
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
     value: record.value.isNewRecord ? t('新增用户') : t('编辑用户'),
@@ -264,132 +261,10 @@
     labelWidth: 120,
   });
 
-  const [registerEmployeeOfficeTable, employeeOfficeTable] = useTable({
-    actionColumn: {
-      width: 120,
-      actions: (record: Recordable) => [
-        {
-          icon: 'i-ant-design:delete-outlined',
-          color: 'error',
-          popConfirm: {
-            title: '是否确认删除',
-            confirm: handleEmployeeOfficeDelete.bind(this, record),
-          },
-          auth: 'sys:empUser:edit',
-        },
-      ],
-    },
-    rowKey: 'id',
-    pagination: false,
-    bordered: true,
-    size: 'small',
-    inset: true,
-    // canResize: true,
-    // minHeight: 100,
-    // maxHeight: 100,
-  });
-
-  async function setEmployeeOfficeTableData(res: Recordable) {
-    employeeOfficeTable.setColumns([
-      {
-        title: t('附属机构'),
-        dataIndex: 'officeCode',
-        dataLabel: 'officeName',
-        align: 'left',
-        editRow: true,
-        editComponent: 'TreeSelect',
-        editComponentProps: {
-          api: officeTreeData,
-          params: { ctrlPermi },
-          canSelectParent: false,
-        },
-        editRule: true,
-      },
-      {
-        title: t('附属岗位'),
-        dataIndex: 'postCode',
-        dataLabel: 'postName',
-        align: 'left',
-        editRow: true,
-        editComponent: 'Select',
-        editComponentProps: {
-          options: res.postList?.map((item) => ({
-            label: item.postName,
-            value: item.postCode,
-          })),
-        },
-        editRule: true,
-      },
-    ]);
-    employeeOfficeTable.setTableData(record.value.employee?.employeeOfficeList || []);
-  }
-
-  function handleEmployeeOfficeRowClick(record: Recordable) {
-    record.onEdit?.(true, false);
-  }
-
-  async function handleEmployeeOfficeAdd() {
-    await employeeOfficeTable.insertTableDataRecord({
-      id: 'rid_' + new Date().getTime(),
-      editable: true,
-    });
-    // await employeeOfficeTable.scrollTo('bottom');
-  }
-
-  function handleEmployeeOfficeDelete(record: Recordable) {
-    employeeOfficeTable.deleteTableDataRecord(record);
-  }
-
-  async function getEmployeeOfficeList() {
-    let employeeOfficeListValid = true;
-    let employeeOfficeList = employeeOfficeTable.getDataSource();
-    for (const record of employeeOfficeList) {
-      if (!(await record.onEdit?.(false, true))) {
-        employeeOfficeListValid = false;
-      }
-    }
-    if (!employeeOfficeListValid) {
-      throw { errorFields: [{ name: ['employeeOfficeList'] }] };
-    }
-    return employeeOfficeList;
-  }
-
-  const [registerUserRoleTable, userRoleTable] = useTable({
-    columns: [
-      {
-        title: t('角色名称'),
-        dataIndex: 'name',
-        width: 260,
-        align: 'center',
-      },
-      {
-        title: t('角色编码'),
-        dataIndex: 'id',
-        width: 260,
-        align: 'center',
-      },
-    ],
-    rowSelection: { type: 'checkbox' },
-    pagination: false,
-    bordered: true,
-    size: 'small',
-    inset: true,
-  });
-
-  async function setUserRoleTableData(res: Recordable) {
-    const dataSource = await roleTreeData({
-      userType: 'employee',
-      ctrlPermi: ctrlPermi.value,
-    });
-    userRoleTable.setTableData(dataSource || []);
-    userRoleTable.setSelectedRowKeys(res.roleList?.map((item) => item.id) || []);
-  }
-
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     await resetFields();
-    employeeOfficeTable.setTableData([]);
-    userRoleTable.setTableData([]);
-    userRoleTable.setSelectedRowKeys([]);
+    formEmployeeOfficeListRef.value?.clearTableData();
+    formUserRoleListRef.value?.clearTableData();
     setDrawerProps({ loading: true });
     op.value = data.op || 'add';
     const res = await empUserForm(data);
@@ -411,6 +286,10 @@
       },
     ]);
     if (op.value === 'add' || op.value === 'edit') {
+      const postListOptions = res.postList.map((item) => ({
+        label: item.postName,
+        value: item.postCode,
+      }));
       updateSchema([
         {
           field: 'employee.office.officeCode',
@@ -431,18 +310,15 @@
         {
           field: 'employee.employeePosts',
           componentProps: {
-            options: res.postList.map((item) => ({
-              label: item.postName,
-              value: item.postCode,
-            })),
+            options: postListOptions,
             mode: 'multiple',
           },
         },
       ]);
-      setEmployeeOfficeTableData(res);
+      formEmployeeOfficeListRef.value?.setTableData(record.value, ctrlPermi, postListOptions);
     }
     if (op.value === 'add' || op.value === 'auth') {
-      setUserRoleTableData(res);
+      formUserRoleListRef.value?.setTableData(record.value, ctrlPermi);
     }
     setDrawerProps({ loading: false });
   });
@@ -461,10 +337,10 @@
         if (!data.employee.empNo) {
           data.employee.empNo = record.value.loginCode;
         }
-        data.employee.employeeOfficeList = await getEmployeeOfficeList();
+        await formEmployeeOfficeListRef.value?.getTableData(data);
       }
       if (op.value === 'add' || op.value === 'auth') {
-        data.userRoleString = userRoleTable.getSelectRowKeys().join(',');
+        await formUserRoleListRef.value?.getSelectRowKeyString(data);
       }
       // console.log('submit', params, data, record);
       const res = await empUserSave(params, data);
