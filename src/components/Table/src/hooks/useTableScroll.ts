@@ -221,7 +221,7 @@ export function useTableScroll(
     // }
 
     const table = unref(tableElRef);
-    const tableWidth = table?.$el?.offsetWidth ?? 0;
+    const tableWidth = table?.$el?.offsetWidth ?? 600; // 默认宽度不小于，列中指定的宽度总合
     const { canResize, scroll } = unref(propsRef);
     const canScrollX = tableWidth == 0 || width == 0 || tableWidth > width;
     return {
