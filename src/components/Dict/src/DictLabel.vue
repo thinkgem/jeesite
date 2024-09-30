@@ -40,54 +40,45 @@
   </template>
   <template v-if="dictList.length == 0">
     <span class="jeesite-dict-label">
-      {{ props.defaultValue }}
+      {{ props.defaultValue || t('未知') }}
     </span>
   </template>
 </template>
-<script lang="ts">
-  import { defineComponent, ref, watch } from 'vue';
+<script lang="ts" setup>
+  import { ref, watch } from 'vue';
   import { Tag, Badge } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
   import { propTypes } from '/@/utils/propTypes';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDict } from './useDict';
 
+  const props = defineProps({
+    dictType: propTypes.string,
+    dictValue: propTypes.any,
+    defaultValue: propTypes.string,
+    icon: propTypes.bool.def(true),
+  });
+
+  defineOptions({
+    inheritAttrs: false,
+  });
+
   const { t } = useI18n();
   const { getDictList } = useDict();
 
-  const props = {
-    dictType: propTypes.string,
-    dictValue: propTypes.any,
-    defaultValue: propTypes.string.def(t('未知')),
-    icon: propTypes.bool.def(true),
-  };
+  const dictList = ref<any[]>([]);
+  const { initDict } = useDict();
+  initDict([props.dictType]);
 
-  export default defineComponent({
-    components: { Tag, Badge, Icon },
-    inheritAttrs: false,
-    props,
-    setup(props) {
-      const dictList = ref<any[]>([]);
-      const { initDict } = useDict();
-      initDict([props.dictType]);
-
-      watch(
-        () => props.dictValue,
-        () => {
-          dictList.value = getDictList(props.dictType).filter((item) =>
-            (',' + props.dictValue + ',').includes(',' + item.value + ','),
-          );
-        },
-        { immediate: true },
+  watch(
+    () => props.dictValue,
+    () => {
+      dictList.value = getDictList(props.dictType).filter((item) =>
+        (',' + props.dictValue + ',').includes(',' + item.value + ','),
       );
-
-      return {
-        dictList,
-        props,
-        t,
-      };
     },
-  });
+    { immediate: true },
+  );
 </script>
 <style lang="less">
   .jeesite-dict-label {

@@ -22,8 +22,8 @@
     </Select>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent, ref, unref, computed, watch, onMounted } from 'vue';
+<script lang="ts" setup name="JeeSiteSelect">
+  import { ref, unref, computed, watch, onMounted } from 'vue';
   import { Select } from 'ant-design-vue';
   import { isEmpty, isFunction } from '/@/utils/is';
   import { propTypes } from '/@/utils/propTypes';
@@ -36,7 +36,7 @@
 
   type OptionsItem = { label: string; value: string; disabled?: boolean };
 
-  const props = {
+  const props = defineProps({
     value: {
       type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
     },
@@ -61,105 +61,101 @@
     each: propTypes.bool.def(false),
     dictType: propTypes.string,
     mode: propTypes.string,
-  };
-
-  export default defineComponent({
-    name: 'JeeSiteSelect',
-    // eslint-disable-next-line vue/no-reserved-component-names
-    components: { Select, LoadingOutlined },
-    // inheritAttrs: false,
-    props,
-    emits: ['change', 'update:value', 'update:labelValue', 'options-change', 'click'],
-    setup(props: any, { emit }) {
-      const { t } = useI18n();
-      const attrs = useAttrs();
-      const optionsRef = ref<Recordable[]>(props.options);
-      const isFirstLoad = ref<boolean>(false);
-      const loading = ref<boolean>(false);
-
-      const getAttrs = computed(() => {
-        return {
-          showSearch: true,
-          optionFilterProp: 'label',
-          ...unref(attrs),
-          ...(props as Recordable),
-        };
-      });
-
-      const [state] = useRuleFormItem(props);
-
-      if (!isEmpty(props.dictType)) {
-        const { initSelectOptions } = useDict();
-        initSelectOptions(optionsRef, props.dictType);
-      }
-
-      watch(
-        () => props.options,
-        () => {
-          optionsRef.value = props.options;
-          emit('options-change', unref(optionsRef));
-        },
-      );
-
-      watch(
-        () => props.params,
-        () => {
-          isFirstLoad.value && fetch();
-        },
-        { deep: true },
-      );
-
-      watch(
-        () => props.immediate,
-        (v) => {
-          v && !isFirstLoad.value && fetch();
-        },
-      );
-
-      onMounted(async () => {
-        if (props.options && props.options.length > 0) {
-          optionsRef.value = props.options;
-        }
-        if (props.immediate) {
-          await fetch();
-          isFirstLoad.value = true;
-        }
-      });
-
-      async function fetch() {
-        const { api } = props;
-        if (!api || !isFunction(api)) return;
-        optionsRef.value = [];
-        try {
-          loading.value = true;
-          let res = await api(props.params);
-          if (props.resultField) {
-            res = get(res, props.resultField) || [];
-          }
-          if (Array.isArray(res)) {
-            optionsRef.value = res;
-          }
-          emit('options-change', unref(optionsRef));
-        } catch (error) {
-          console.warn(error);
-        } finally {
-          loading.value = false;
-        }
-      }
-
-      async function handleFetch() {
-        if (!props.immediate && !unref(isFirstLoad)) {
-          await fetch();
-          isFirstLoad.value = true;
-        } else if (props.each) {
-          await fetch();
-        }
-        emit('click');
-      }
-
-      return { t, getAttrs, state, optionsRef, loading, handleFetch };
-    },
   });
+
+  const emit = defineEmits([
+    'change',
+    'update:value',
+    'update:labelValue',
+    'options-change',
+    'click',
+  ]);
+
+  const { t } = useI18n();
+  const attrs = useAttrs();
+  const optionsRef = ref<Recordable[]>(props.options);
+  const isFirstLoad = ref<boolean>(false);
+  const loading = ref<boolean>(false);
+
+  const getAttrs = computed(() => {
+    return {
+      showSearch: true,
+      optionFilterProp: 'label',
+      ...unref(attrs),
+      ...(props as Recordable),
+    };
+  });
+
+  const [state] = useRuleFormItem(props);
+
+  if (!isEmpty(props.dictType)) {
+    const { initSelectOptions } = useDict();
+    initSelectOptions(optionsRef, props.dictType);
+  }
+
+  watch(
+    () => props.options,
+    () => {
+      optionsRef.value = props.options;
+      emit('options-change', unref(optionsRef));
+    },
+  );
+
+  watch(
+    () => props.params,
+    () => {
+      isFirstLoad.value && fetch();
+    },
+    { deep: true },
+  );
+
+  watch(
+    () => props.immediate,
+    (v) => {
+      v && !isFirstLoad.value && fetch();
+    },
+  );
+
+  onMounted(async () => {
+    if (props.options && props.options.length > 0) {
+      optionsRef.value = props.options;
+    }
+    if (props.immediate) {
+      await fetch();
+      isFirstLoad.value = true;
+    }
+  });
+
+  async function fetch() {
+    const { api } = props;
+    if (!api || !isFunction(api)) return;
+    optionsRef.value = [];
+    try {
+      loading.value = true;
+      let res = await api(props.params);
+      if (props.resultField) {
+        res = get(res, props.resultField) || [];
+      }
+      if (Array.isArray(res)) {
+        optionsRef.value = res;
+      }
+      emit('options-change', unref(optionsRef));
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function handleFetch() {
+    if (!props.immediate && !unref(isFirstLoad)) {
+      await fetch();
+      isFirstLoad.value = true;
+    } else if (props.each) {
+      await fetch();
+    }
+    emit('click');
+  }
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-select';

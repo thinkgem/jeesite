@@ -39,7 +39,7 @@
     </DrawerFooter>
   </Drawer>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="BasicDrawer">
   import type { DrawerInstance, DrawerProps } from './typing';
   import {
     ref,
@@ -65,7 +65,6 @@
   import { useAttrs } from '/@/hooks/core/useAttrs';
 
   defineOptions({
-    name: 'BasicDrawer',
     inheritAttrs: false,
   });
 

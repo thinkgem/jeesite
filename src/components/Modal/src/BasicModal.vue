@@ -52,7 +52,7 @@
     </template>
   </Modal>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="BasicModal">
   import type { ModalProps, ModalMethods } from './typing';
   import {
     computed,
@@ -77,7 +77,6 @@
   import { omit } from 'lodash-es';
 
   defineOptions({
-    name: 'BasicModal',
     inheritAttrs: false,
   });
 

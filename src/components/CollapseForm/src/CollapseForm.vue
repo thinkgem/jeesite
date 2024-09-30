@@ -34,7 +34,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup name="FormPage">
+<script lang="ts" setup name="CollapseForm">
   import { nextTick, ref } from 'vue';
   import { Collapse } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';

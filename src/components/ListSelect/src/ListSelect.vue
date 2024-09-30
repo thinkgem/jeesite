@@ -21,7 +21,7 @@
     />
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup name="JeeSiteListSelect">
   import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef } from 'vue';
   import { Input } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
@@ -31,7 +31,9 @@
   import { useModal } from '/@/components/Modal';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  const props = {
+  const InputSearch = Input.Search;
+
+  const props = defineProps({
     value: propTypes.string,
     labelValue: propTypes.string,
     selectList: propTypes.array,
@@ -52,168 +54,147 @@
     checkbox: propTypes.bool, // 是否多选
     allowInput: propTypes.bool, // 允许输入
     readonly: propTypes.bool, // 是否只读
-  };
-
-  export default defineComponent({
-    name: 'JeeSiteListSelect',
-    components: { InputSearch: Input.Search },
-    // inheritAttrs: false,
-    props,
-    emits: ['change', 'select', 'click'],
-    setup(props, { emit }) {
-      const { t } = useI18n();
-      const attrs = useAttrs();
-      const valueRef = ref<string>(props.value);
-      const labelValueRef = ref<string>(props.labelValue);
-      const selectListRef = ref<any[]>(props.selectList);
-      const itemCode = ref<string>(props.itemCode);
-      const itemName = ref<string>(props.itemName);
-      const configRef = ref<any>();
-      const modalComponent = shallowRef<Nullable<any>>(null);
-
-      const [registerModal, { openModal }] = useModal();
-
-      const getAttrs = computed(() => {
-        return {
-          ...unref(attrs),
-          ...(props as Recordable),
-          readonly: !props.allowInput || props.readonly,
-        };
-      });
-
-      watch(
-        () => props.value,
-        () => {
-          valueRef.value = props.value;
-        },
-      );
-
-      watch(
-        () => props.labelValue,
-        () => {
-          labelValueRef.value = props.labelValue;
-        },
-      );
-
-      watch(
-        () => props.selectList,
-        () => {
-          setSelectList(props.selectList);
-        },
-        { deep: true },
-      );
-
-      function setSelectList(selectList: any[]) {
-        selectListRef.value = selectList;
-        const codes: string[] = [];
-        const names: string[] = [];
-        selectList &&
-          selectList.forEach((e: Recordable) => {
-            codes.push(e[itemCode.value]);
-            names.push(e[itemName.value]);
-          });
-        valueRef.value = codes.join(',');
-        labelValueRef.value = names.join(',');
-      }
-
-      onMounted(async () => {
-        if (props.configFile) {
-          configRef.value = (await props.configFile).default as any;
-        } else {
-          configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
-        }
-        modalComponent.value = createAsyncComponent(() => import('./ListSelectModal.vue'));
-        if (!itemCode.value) {
-          itemCode.value = configRef.value.itemCode;
-        }
-        if (!itemName.value) {
-          itemName.value = configRef.value.itemName;
-        }
-      });
-
-      function openSelectModal() {
-        let selectList: Recordable[];
-        if (selectListRef.value) {
-          selectList = selectListRef.value;
-        } else {
-          selectList = getSelectList();
-        }
-        openModal(true, { selectList, queryParams: props.queryParams });
-      }
-
-      function handleInputClick() {
-        if (!props.readonly && !props.allowInput) {
-          openSelectModal();
-        }
-      }
-
-      async function handleInputSelect() {
-        if (!props.readonly) {
-          openSelectModal();
-        }
-        emit('click');
-      }
-
-      function keysToJsonPart(key: string, value: string) {
-        const num = key.split('.').length - 1;
-        let part = key.replace(/\./g, '":{"');
-        if (num >= 0) {
-          part = '"' + part + '":"' + value + '"';
-        }
-        for (var i = 0; i < num; i++) {
-          part = part + '}';
-        }
-        return part as string;
-      }
-
-      function getSelectList() {
-        var selectList: Recordable[] = [];
-        const codes = valueRef.value;
-        const names = labelValueRef.value;
-        if (codes != null && codes != '' && names != null && names != '') {
-          const codesArr = codes.split(',') as string[];
-          const namesArr = names.split(',') as string[];
-          if (codesArr && namesArr && codesArr.length == namesArr.length) {
-            for (var i = 0; i < codesArr.length; i++) {
-              const json =
-                '{' +
-                keysToJsonPart(itemCode.value, codesArr[i]) +
-                ',' +
-                keysToJsonPart(itemName.value, namesArr[i]) +
-                '}';
-              selectList.push(JSON.parse(json));
-            }
-          }
-        }
-        return selectList;
-      }
-
-      function handleSelect(values: Recordable[]) {
-        valueRef.value = Array.from(values)
-          .map((item) => item[configRef.value.itemCode])
-          .join(',');
-        labelValueRef.value = Array.from(values)
-          .map((item) => item[configRef.value.itemName])
-          .join(',');
-        emit('change', valueRef.value, labelValueRef.value);
-        emit('select', values);
-      }
-
-      return {
-        t,
-        getAttrs,
-        labelValueRef,
-        modalComponent,
-        configRef,
-        registerModal,
-        handleInputClick,
-        handleInputSelect,
-        handleSelect,
-        openSelectModal,
-        setSelectList,
-      };
-    },
   });
+
+  const emit = defineEmits(['change', 'select', 'click']);
+
+  const { t } = useI18n();
+  const attrs = useAttrs();
+  const valueRef = ref<string>(props.value);
+  const labelValueRef = ref<string>(props.labelValue);
+  const selectListRef = ref<any[]>(props.selectList);
+  const itemCode = ref<string>(props.itemCode);
+  const itemName = ref<string>(props.itemName);
+  const configRef = ref<any>();
+  const modalComponent = shallowRef<Nullable<any>>(null);
+
+  const [registerModal, { openModal }] = useModal();
+
+  const getAttrs = computed(() => {
+    return {
+      ...unref(attrs),
+      ...(props as Recordable),
+      readonly: !props.allowInput || props.readonly,
+    };
+  });
+
+  watch(
+    () => props.value,
+    () => {
+      valueRef.value = props.value;
+    },
+  );
+
+  watch(
+    () => props.labelValue,
+    () => {
+      labelValueRef.value = props.labelValue;
+    },
+  );
+
+  watch(
+    () => props.selectList,
+    () => {
+      setSelectList(props.selectList);
+    },
+    { deep: true },
+  );
+
+  function setSelectList(selectList: any[]) {
+    selectListRef.value = selectList;
+    const codes: string[] = [];
+    const names: string[] = [];
+    selectList &&
+      selectList.forEach((e: Recordable) => {
+        codes.push(e[itemCode.value]);
+        names.push(e[itemName.value]);
+      });
+    valueRef.value = codes.join(',');
+    labelValueRef.value = names.join(',');
+  }
+
+  onMounted(async () => {
+    if (props.configFile) {
+      configRef.value = (await props.configFile).default as any;
+    } else {
+      configRef.value = (await import(`./selectType/${props.selectType}.ts`)).default as any;
+    }
+    modalComponent.value = createAsyncComponent(() => import('./ListSelectModal.vue'));
+    if (!itemCode.value) {
+      itemCode.value = configRef.value.itemCode;
+    }
+    if (!itemName.value) {
+      itemName.value = configRef.value.itemName;
+    }
+  });
+
+  function openSelectModal() {
+    let selectList: Recordable[];
+    if (selectListRef.value) {
+      selectList = selectListRef.value;
+    } else {
+      selectList = getSelectList();
+    }
+    openModal(true, { selectList, queryParams: props.queryParams });
+  }
+
+  function handleInputClick() {
+    if (!props.readonly && !props.allowInput) {
+      openSelectModal();
+    }
+  }
+
+  async function handleInputSelect() {
+    if (!props.readonly) {
+      openSelectModal();
+    }
+    emit('click');
+  }
+
+  function keysToJsonPart(key: string, value: string) {
+    const num = key.split('.').length - 1;
+    let part = key.replace(/\./g, '":{"');
+    if (num >= 0) {
+      part = '"' + part + '":"' + value + '"';
+    }
+    for (var i = 0; i < num; i++) {
+      part = part + '}';
+    }
+    return part as string;
+  }
+
+  function getSelectList() {
+    var selectList: Recordable[] = [];
+    const codes = valueRef.value;
+    const names = labelValueRef.value;
+    if (codes != null && codes != '' && names != null && names != '') {
+      const codesArr = codes.split(',') as string[];
+      const namesArr = names.split(',') as string[];
+      if (codesArr && namesArr && codesArr.length == namesArr.length) {
+        for (var i = 0; i < codesArr.length; i++) {
+          const json =
+            '{' +
+            keysToJsonPart(itemCode.value, codesArr[i]) +
+            ',' +
+            keysToJsonPart(itemName.value, namesArr[i]) +
+            '}';
+          selectList.push(JSON.parse(json));
+        }
+      }
+    }
+    return selectList;
+  }
+
+  function handleSelect(values: Recordable[]) {
+    valueRef.value = Array.from(values)
+      .map((item) => item[configRef.value.itemCode])
+      .join(',');
+    labelValueRef.value = Array.from(values)
+      .map((item) => item[configRef.value.itemName])
+      .join(',');
+    emit('change', valueRef.value, labelValueRef.value);
+    emit('select', values);
+  }
 </script>
 <style lang="less">
   .jeesite-listselect {

@@ -47,10 +47,10 @@
         default: null,
       },
       tableAction: {
-        type: Object as PropType<TableActionType>,
+        type: Object as PropType<Partial<TableActionType>>,
       },
       formActionType: {
-        type: Object as PropType<FormActionType>,
+        type: Object as PropType<Partial<FormActionType>>,
       },
       colLayout: {
         type: Boolean,

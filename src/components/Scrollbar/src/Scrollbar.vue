@@ -16,7 +16,7 @@
     </template>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="Scrollbar">
   import {
     ref,
     onMounted,
@@ -31,8 +31,6 @@
   import { addResizeListener, removeResizeListener } from '/@/utils/event';
   import componentSetting from '/@/settings/componentSetting';
   import Bar from './bar';
-
-  defineOptions({ name: 'Scrollbar' });
 
   const props = defineProps({
     native: {

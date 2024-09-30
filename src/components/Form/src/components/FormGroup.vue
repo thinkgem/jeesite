@@ -10,13 +10,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  export default defineComponent({
-    name: 'JeeSiteFormGroup',
-    inheritAttrs: false,
-  });
-</script>
+<script lang="ts" setup name="JeeSiteFormGroup"></script>
 <style lang="less">
   @prefix-cls: ~'jeesite-form-group';
 

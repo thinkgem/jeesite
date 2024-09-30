@@ -10,18 +10,14 @@
     />
   </span>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
+<script lang="ts" setup>
   import { propTypes } from '/@/utils/propTypes';
   import { Image } from 'ant-design-vue';
 
-  export default defineComponent({
-    components: { Image },
-    props: {
-      fileUrl: propTypes.string.def(''),
-      fileName: propTypes.string.def(''),
-      previewUrl: propTypes.string.def(''),
-    },
+  defineProps({
+    fileUrl: propTypes.string.def(''),
+    fileName: propTypes.string.def(''),
+    previewUrl: propTypes.string.def(''),
   });
 </script>
 <style lang="less">

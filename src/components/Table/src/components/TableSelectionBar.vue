@@ -14,7 +14,7 @@
   </a-alert>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="TableSelectBar">
   import type { TableActionType } from '../types/table';
   import { Alert as AAlert } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -22,10 +22,6 @@
 
   const { t } = useI18n();
   const { prefixCls } = useDesign('table-select-bar');
-
-  defineOptions({
-    name: 'TableSelectBar',
-  });
 
   const props = withDefaults(
     defineProps<{

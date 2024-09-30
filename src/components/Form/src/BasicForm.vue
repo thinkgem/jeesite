@@ -15,7 +15,7 @@
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
         <FormItem
-          :tableAction="tableAction"
+          :tableAction="props.tableAction"
           :formActionType="formActionType"
           :schema="schema"
           :formProps="getProps"
@@ -41,12 +41,12 @@
     </Row>
   </Form>
 </template>
-<script lang="ts">
+<script lang="ts" setup name="BasicForm">
   import type { FormActionType, FormProps, FormSchema } from './types/form';
   import type { AdvanceState } from './types/hooks';
   import type { Ref } from 'vue';
 
-  import { defineComponent, reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
+  import { reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
   import { Form, Row } from 'ant-design-vue';
   import FormItem from './components/FormItem.vue';
   import FormAction from './components/FormAction.vue';
@@ -67,242 +67,223 @@
   import { basicProps } from './props';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { isString, isArray } from '/@/utils/is';
+  import { useAttrs } from '/@/hooks/core/useAttrs';
 
-  export default defineComponent({
-    name: 'BasicForm',
-    components: { FormItem, Form, Row, FormAction },
-    props: basicProps,
-    emits: ['advanced-change', 'reset', 'submit', 'register'],
-    setup(props, { emit, attrs }) {
-      const formModel = reactive<Recordable>({});
-      const modalFn = useModalContext();
+  const props = defineProps(basicProps);
+  const emit = defineEmits(['advanced-change', 'reset', 'submit', 'register']);
+  const attrs = useAttrs();
 
-      const advanceState = reactive<AdvanceState>({
-        isAdvanced: true,
-        hideAdvanceBtn: false,
-        isLoad: false,
-        actionSpan: 6,
-      });
+  const formModel = reactive<Recordable>({});
+  const modalFn = useModalContext();
 
-      const defaultValueRef = ref<Recordable>({});
-      const isInitedDefaultRef = ref(false);
-      const propsRef = ref<Partial<FormProps>>({});
-      const schemaRef = ref<Nullable<FormSchema[]>>(null);
-      const formElRef = ref<Nullable<FormActionType>>(null);
-
-      const { prefixCls } = useDesign('basic-form');
-
-      // Get the basic configuration of the form
-      const getProps = computed((): FormProps => {
-        return { ...props, ...(unref(propsRef) as unknown as FormProps) } as FormProps;
-      });
-
-      const getFormClass = computed(() => {
-        return [
-          prefixCls,
-          {
-            [`${prefixCls}--compact`]: unref(getProps).compact,
-          },
-        ];
-      });
-
-      // Get uniform row style and Row configuration for the entire form
-      const getRow = computed((): Recordable => {
-        const { baseRowStyle = {}, rowProps } = unref(getProps);
-        return {
-          style: baseRowStyle,
-          ...rowProps,
-        };
-      });
-
-      const getBindValue = computed(
-        () => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable,
-      );
-
-      const getSchema = computed((): FormSchema[] => {
-        const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
-        for (const schema of schemas) {
-          const { defaultValue, component } = schema;
-          // 日期类型处理，如果 默认值 是字符串的时候再进行转换，否则会出现日期类型转换错误
-          if (defaultValue && dateItemType.includes(component)) {
-            if (isString(defaultValue)) {
-              schema.defaultValue = dateUtil(defaultValue);
-            } else if (isArray(defaultValue)) {
-              const def: any[] = [];
-              defaultValue.forEach((item) => {
-                if (isString(item)) {
-                  def.push(dateUtil(item));
-                }
-              });
-              schema.defaultValue = def;
-            }
-          }
-        }
-        if (unref(getProps).showAdvancedButton) {
-          return schemas.filter((schema) => schema.component !== 'Divider') as FormSchema[];
-        } else {
-          return schemas as FormSchema[];
-        }
-      });
-
-      const { handleToggleAdvanced } = useAdvanced({
-        advanceState,
-        emit,
-        getProps,
-        getSchema,
-        formModel,
-        defaultValueRef,
-      });
-
-      const { handleFormValues, initDefault } = useFormValues({
-        getProps,
-        defaultValueRef,
-        getSchema,
-        formModel,
-      });
-
-      useAutoFocus({
-        getSchema,
-        getProps,
-        isInitedDefault: isInitedDefaultRef,
-        formElRef: formElRef as Ref<FormActionType>,
-      });
-
-      const {
-        handleSubmit,
-        setFieldsValue,
-        clearValidate,
-        validate,
-        validateFields,
-        getFieldsValue,
-        updateSchema,
-        resetSchema,
-        appendSchemaByField,
-        removeSchemaByFiled,
-        resetFields,
-        scrollToField,
-      } = useFormEvents({
-        emit,
-        getProps,
-        formModel,
-        getSchema,
-        defaultValueRef,
-        formElRef: formElRef as Ref<FormActionType>,
-        schemaRef: schemaRef as Ref<FormSchema[]>,
-        handleFormValues,
-      });
-
-      createFormContext({
-        resetAction: resetFields,
-        submitAction: handleSubmit,
-      });
-
-      watch(
-        () => unref(getProps).model,
-        () => {
-          const { model } = unref(getProps);
-          if (!model) return;
-          setFieldsValue(model);
-        },
-        {
-          immediate: true,
-        },
-      );
-
-      watch(
-        () => unref(getProps).schemas,
-        (schemas) => {
-          resetSchema(schemas ?? []);
-        },
-      );
-
-      watch(
-        () => getSchema.value,
-        (schema) => {
-          nextTick(() => {
-            //  Solve the problem of modal adaptive height calculation when the form is placed in the modal
-            modalFn?.redoModalHeight?.();
-          });
-          if (unref(isInitedDefaultRef)) {
-            return;
-          }
-          if (schema?.length) {
-            initDefault();
-            isInitedDefaultRef.value = true;
-          }
-        },
-      );
-
-      async function setProps(formProps: Partial<FormProps>): Promise<void> {
-        propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
-      }
-
-      function setFormModel(key: string, value: any, labelKey?: string, labelValue?: any) {
-        formModel[key] = value;
-        if (labelKey) {
-          formModel[labelKey] = labelValue;
-        }
-        // const { validateTrigger } = unref(getBindValue);
-        // if (!validateTrigger || validateTrigger === 'change') {
-        //   setTimeout(() => {
-        //     validateFields([key]).catch((_) => {});
-        //   });
-        // }
-      }
-
-      function handleEnterPress(e: KeyboardEvent) {
-        const { autoSubmitOnEnter } = unref(getProps);
-        if (!autoSubmitOnEnter) return;
-        if (e.key === 'Enter' && e.target && e.target instanceof HTMLElement) {
-          const target: HTMLElement = e.target as HTMLElement;
-          if (target && target.tagName && target.tagName.toUpperCase() == 'INPUT') {
-            handleSubmit();
-          }
-        }
-      }
-
-      const formActionType: Partial<FormActionType> = {
-        getFieldsValue,
-        setFieldsValue,
-        resetFields,
-        updateSchema,
-        resetSchema,
-        setProps,
-        removeSchemaByFiled,
-        appendSchemaByField,
-        clearValidate,
-        validateFields,
-        validate,
-        submit: handleSubmit,
-        scrollToField: scrollToField,
-      };
-
-      onMounted(() => {
-        initDefault();
-        emit('register', formActionType);
-      });
-
-      return {
-        getBindValue,
-        handleToggleAdvanced,
-        handleEnterPress,
-        formModel,
-        defaultValueRef,
-        advanceState,
-        getRow,
-        getProps,
-        formElRef,
-        getSchema,
-        formActionType: formActionType as any,
-        setFormModel,
-        getFormClass,
-        getFormActionBindProps: computed(
-          (): Recordable => ({ ...getProps.value, ...advanceState }),
-        ),
-        ...formActionType,
-      };
-    },
+  const advanceState = reactive<AdvanceState>({
+    isAdvanced: true,
+    hideAdvanceBtn: false,
+    isLoad: false,
+    actionSpan: 6,
   });
+
+  const defaultValueRef = ref<Recordable>({});
+  const isInitedDefaultRef = ref(false);
+  const propsRef = ref<Partial<FormProps>>({});
+  const schemaRef = ref<Nullable<FormSchema[]>>(null);
+  const formElRef = ref<Nullable<FormActionType>>(null);
+
+  const { prefixCls } = useDesign('basic-form');
+
+  // Get the basic configuration of the form
+  const getProps = computed((): FormProps => {
+    return { ...props, ...(unref(propsRef) as unknown as FormProps) } as FormProps;
+  });
+
+  const getFormClass = computed(() => {
+    return [
+      prefixCls,
+      {
+        [`${prefixCls}--compact`]: unref(getProps).compact,
+      },
+    ];
+  });
+
+  // Get uniform row style and Row configuration for the entire form
+  const getRow = computed((): Recordable => {
+    const { baseRowStyle = {}, rowProps } = unref(getProps);
+    return {
+      style: baseRowStyle,
+      ...rowProps,
+    };
+  });
+
+  const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) }) as Recordable);
+
+  const getSchema = computed((): FormSchema[] => {
+    const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
+    for (const schema of schemas) {
+      const { defaultValue, component } = schema;
+      // 日期类型处理，如果 默认值 是字符串的时候再进行转换，否则会出现日期类型转换错误
+      if (defaultValue && dateItemType.includes(component)) {
+        if (isString(defaultValue)) {
+          schema.defaultValue = dateUtil(defaultValue);
+        } else if (isArray(defaultValue)) {
+          const def: any[] = [];
+          defaultValue.forEach((item) => {
+            if (isString(item)) {
+              def.push(dateUtil(item));
+            }
+          });
+          schema.defaultValue = def;
+        }
+      }
+    }
+    if (unref(getProps).showAdvancedButton) {
+      return schemas.filter((schema) => schema.component !== 'Divider') as FormSchema[];
+    } else {
+      return schemas as FormSchema[];
+    }
+  });
+
+  const { handleToggleAdvanced } = useAdvanced({
+    advanceState,
+    emit,
+    getProps,
+    getSchema,
+    formModel,
+    defaultValueRef,
+  });
+
+  const { handleFormValues, initDefault } = useFormValues({
+    getProps,
+    defaultValueRef,
+    getSchema,
+    formModel,
+  });
+
+  useAutoFocus({
+    getSchema,
+    getProps,
+    isInitedDefault: isInitedDefaultRef,
+    formElRef: formElRef as Ref<FormActionType>,
+  });
+
+  const {
+    handleSubmit,
+    setFieldsValue,
+    clearValidate,
+    validate,
+    validateFields,
+    getFieldsValue,
+    updateSchema,
+    resetSchema,
+    appendSchemaByField,
+    removeSchemaByFiled,
+    resetFields,
+    scrollToField,
+  } = useFormEvents({
+    emit,
+    getProps,
+    formModel,
+    getSchema,
+    defaultValueRef,
+    formElRef: formElRef as Ref<FormActionType>,
+    schemaRef: schemaRef as Ref<FormSchema[]>,
+    handleFormValues,
+  });
+
+  createFormContext({
+    resetAction: resetFields,
+    submitAction: handleSubmit,
+  });
+
+  watch(
+    () => unref(getProps).model,
+    () => {
+      const { model } = unref(getProps);
+      if (!model) return;
+      setFieldsValue(model);
+    },
+    {
+      immediate: true,
+    },
+  );
+
+  watch(
+    () => unref(getProps).schemas,
+    (schemas) => {
+      resetSchema(schemas ?? []);
+    },
+  );
+
+  watch(
+    () => getSchema.value,
+    (schema) => {
+      nextTick(() => {
+        //  Solve the problem of modal adaptive height calculation when the form is placed in the modal
+        modalFn?.redoModalHeight?.();
+      });
+      if (unref(isInitedDefaultRef)) {
+        return;
+      }
+      if (schema?.length) {
+        initDefault();
+        isInitedDefaultRef.value = true;
+      }
+    },
+  );
+
+  async function setProps(formProps: Partial<FormProps>): Promise<void> {
+    propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
+  }
+
+  function setFormModel(key: string, value: any, labelKey?: string, labelValue?: any) {
+    formModel[key] = value;
+    if (labelKey) {
+      formModel[labelKey] = labelValue;
+    }
+    // const { validateTrigger } = unref(getBindValue);
+    // if (!validateTrigger || validateTrigger === 'change') {
+    //   setTimeout(() => {
+    //     validateFields([key]).catch((_) => {});
+    //   });
+    // }
+  }
+
+  function handleEnterPress(e: KeyboardEvent) {
+    const { autoSubmitOnEnter } = unref(getProps);
+    if (!autoSubmitOnEnter) return;
+    if (e.key === 'Enter' && e.target && e.target instanceof HTMLElement) {
+      const target: HTMLElement = e.target as HTMLElement;
+      if (target && target.tagName && target.tagName.toUpperCase() == 'INPUT') {
+        handleSubmit();
+      }
+    }
+  }
+
+  const getFormActionBindProps = computed(
+    (): Recordable => ({ ...getProps.value, ...advanceState }),
+  );
+
+  const formActionType: Partial<FormActionType> = {
+    getFieldsValue,
+    setFieldsValue,
+    resetFields,
+    updateSchema,
+    resetSchema,
+    setProps,
+    removeSchemaByFiled,
+    appendSchemaByField,
+    clearValidate,
+    validateFields,
+    validate,
+    submit: handleSubmit,
+    scrollToField: scrollToField,
+  };
+
+  onMounted(() => {
+    initDefault();
+    emit('register', formActionType);
+  });
+
+  defineExpose(formActionType);
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-basic-form';

@@ -10,7 +10,7 @@ export function useTableForm(
   reload: (opt?: FetchParams | undefined) => Promise<void>,
   getLoading: ComputedRef<boolean | undefined>,
 ) {
-  const getFormProps = computed((): Partial<FormProps> => {
+  const getFormProps = computed((): Partial<FormProps | any> => {
     const { formConfig } = unref(propsRef);
     const { submitButtonOptions } = formConfig || {};
     return {
