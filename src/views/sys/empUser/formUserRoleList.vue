@@ -9,12 +9,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { Icon } from '/@/components/Icon';
-  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
-  import { officeTreeData } from '/@/api/sys/office';
-  import { areaTreeData } from '/@/api/sys/area';
   import { Ref } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { BasicTable, useTable } from '/@/components/Table';
   import { roleTreeData } from '/@/api/sys';
 
   const { t } = useI18n('sys.empUser');
