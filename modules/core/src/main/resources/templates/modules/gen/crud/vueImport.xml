@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>formImport</name>
+	<name>vueFormImport</name>
 	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
 	<fileName>formImport.vue</fileName>
 	<content><![CDATA[
@@ -107,7 +107,7 @@
       emit('success');
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('common.validateError'));
+        showMessage(error.message || t('common.validateError'));
       }
       console.log('error', error);
     } finally {

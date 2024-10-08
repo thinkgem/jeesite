@@ -109,64 +109,64 @@ if(table.isTreeEntity){
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { ${className}Delete, ${className}ListData } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
-<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+  <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
   import { ${className}Disable, ${className}Enable } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${className}';
-<% } %>
-<%
-var userselectExists = false;
-var officeselectExists = false;
-var companyselectExists = false;
-var areaselectExists = false;
-for(c in table.columnList){
-  if(c.isQuery == "1" && !c.isTreeEntityColumn){
-    if(c.showType == 'userselect'){
-      userselectExists = true;
-    }else if(c.showType == 'officeselect'){
-      officeselectExists = true;
-    }else if(c.showType == 'companyselect'){
-      companyselectExists = true;
-    }else if(c.showType == 'areaselect'){
-      areaselectExists = true;
+  <% } %>
+  <%
+  var userselectExists = false;
+  var officeselectExists = false;
+  var companyselectExists = false;
+  var areaselectExists = false;
+  for(c in table.columnList){
+    if(c.isQuery == "1" && !c.isTreeEntityColumn){
+      if(c.showType == 'userselect'){
+        userselectExists = true;
+      }else if(c.showType == 'officeselect'){
+        officeselectExists = true;
+      }else if(c.showType == 'companyselect'){
+        companyselectExists = true;
+      }else if(c.showType == 'areaselect'){
+        areaselectExists = true;
+      }
     }
   }
-}
-%>
-<% if(userselectExists || officeselectExists) { %>
+  %>
+  <% if(userselectExists || officeselectExists) { %>
   import { officeTreeData } from '/@/api/sys/office';
-<% } %>
-<% if(companyselectExists) { %>
+  <% } %>
+  <% if(companyselectExists) { %>
   import { companyTreeData } from '/@/api/sys/company';
-<% } %>
-<% if(areaselectExists) { %>
+  <% } %>
+  <% if(areaselectExists) { %>
   import { areaTreeData } from '/@/api/sys/area';
-<% } %>
-<% if(modalOrDrawer == 'Drawer' && !@StringUtils.contains(table.tplCategory, '_route')){ %>
+  <% } %>
+  <% if(modalOrDrawer == 'Drawer' && !@StringUtils.contains(table.tplCategory, '_route')){ %>
   import { useDrawer } from '/@/components/Drawer';
-<% } %>
-<% if(modalOrDrawer == 'Modal' || (toBoolean(table.optionMap['isBpmForm'])
+  <% } %>
+  <% if(modalOrDrawer == 'Modal' || (toBoolean(table.optionMap['isBpmForm'])
        || toBoolean(table.optionMap['isImportExport']))){ %>
   import { useModal } from '/@/components/Modal';
-<% } %>
-<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+  <% } %>
+  <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
   import { BpmRuntimeTrace } from '/@/components/Bpm';
-<% } %>
+  <% } %>
   import { FormProps } from '/@/components/Form';
-<% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
+  <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
   import InputForm from './form.vue';
-<% } %>
-<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+  <% } %>
+  <% if(toBoolean(table.optionMap['isImportExport'])){ %>
   import FormImport from './formImport.vue';
-<% } %>
-<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
+  <% } %>
+  <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
 
   const props = defineProps({
     treeCode: String,
   });
-<% } %>
-<% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
+  <% } %>
+  <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
 
   const emitter = useEmitter();
-<% } %>
+  <% } %>
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
   const { showMessage } = useMessage();
@@ -176,9 +176,9 @@ for(c in table.columnList){
     icon: meta.icon || 'i-ant-design:book-outlined',
     value: meta.title || t('${functionNameSimple}管理'),
   };
-<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+  <% if(toBoolean(table.optionMap['isImportExport'])){ %>
   const loading = ref(false);
-<% } %>
+  <% } %>
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 6 },
@@ -409,9 +409,6 @@ for(c in table.columnList){
     ],
   };
 
-  <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
-  const [register${modalOrDrawer}, { open${modalOrDrawer} }] = use${modalOrDrawer}();
-  <% } %>
   const [registerTable, { reload<% if(table.isTreeEntity){ %>, expandAll, collapseAll, expandCollapse<% } %><%
   		if (table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])
   		    || toBoolean(table.optionMap['isImportExport'])){ %>, getForm<% } %> }] = useTable({
@@ -430,7 +427,11 @@ for(c in table.columnList){
     <% } %>
     canResize: true,
   });
-<% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
+
+  <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
+  const [register${modalOrDrawer}, { open${modalOrDrawer} }] = use${modalOrDrawer}();
+  <% } %>
+  <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
 
   watch(
     () => props.treeCode,
@@ -447,15 +448,15 @@ for(c in table.columnList){
       reload();
     },
   );
-<% } %>
-<% if(table.isTreeEntity){ %>
+  <% } %>
+  <% if(table.isTreeEntity){ %>
 
   function fetchSuccess() {
     if (props.treeCode) {
       nextTick(expandAll);
     }
   }
-<% } %>
+  <% } %>
 
   function handleForm(record: Recordable) {
     <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
@@ -467,7 +468,7 @@ for(c in table.columnList){
     });
     <% } %>
   }
-<% if(toBoolean(table.optionMap['isImportExport'])){ %>
+  <% if(toBoolean(table.optionMap['isImportExport'])){ %>
 
   async function handleExport() {
     loading.value = true;
@@ -484,8 +485,8 @@ for(c in table.columnList){
   function handleImport() {
     importModal(true, {});
   }
-<% } %>
-<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+  <% } %>
+  <% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
 
   async function handleDisable(record: Recordable) {
     const params = { ${idParam} };
@@ -500,7 +501,7 @@ for(c in table.columnList){
     showMessage(res.message);
     handleSuccess(record);
   }
-<% } %>
+  <% } %>
 
   async function handleDelete(record: Recordable) {
     const params = { ${idParam} };
