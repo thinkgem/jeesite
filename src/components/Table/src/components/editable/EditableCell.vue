@@ -536,7 +536,7 @@
     &__wrapper {
       display: flex;
       align-items: center;
-      justify-content: center;
+      //justify-content: center;
 
       > .ant-select {
         min-width: calc(100% - 50px);
@@ -582,6 +582,10 @@
         .ant-select-selection-search {
           left: -10px !important;
         }
+      }
+
+      .jeesite-basic-upload {
+        padding-left: 3px;
       }
     }
 

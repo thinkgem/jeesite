@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="jeesite-basic-upload">
     <Space>
       <a-button
         v-if="!(readonly || disabled)"
