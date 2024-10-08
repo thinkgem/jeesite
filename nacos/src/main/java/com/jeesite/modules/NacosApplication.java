@@ -4,8 +4,11 @@
  */
 package com.jeesite.modules;
 
+import com.alibaba.nacos.core.listener.StartingApplicationListener;
 import com.alibaba.nacos.sys.filter.NacosTypeExcludeFilter;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -22,7 +25,6 @@ import javax.servlet.ServletException;
 /**
  * Nacos Application
  * @author ThinkGem
- * @version 2024-09-11
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.alibaba.nacos", excludeFilters = {
@@ -32,18 +34,25 @@ import javax.servlet.ServletException;
 @ServletComponentScan
 @EnableScheduling
 public class NacosApplication extends SpringBootServletInitializer {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(StartingApplicationListener.class);
+
 	private static void initialize() {
 		System.setProperty("nacos.standalone", "true");
 		if (StringUtils.isBlank(System.getProperty("nacos.home"))) {
-			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5");
+			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5boot3");
 		}
+		System.setProperty("nacos.logs.path", System.getProperty("nacos.home") + "/logs");
 		System.setProperty("derby.stream.error.file", System.getProperty("nacos.home") + "/.derby.log");
 	}
-	
+
 	public static void main(String[] args) {
 		NacosApplication.initialize();
 	    new SpringApplicationBuilder(NacosApplication.class).run(args);
+		logger.info(
+				"\r\n\r\n==============================================================\r\n"
+				+ "\r\n   " + NacosApplication.class.getName() + " 启动完成。"
+				+ "\r\n\r\n==============================================================\r\n");
 	}
 	
 	@Override

@@ -13,6 +13,8 @@
  */
 package com.jeesite.modules;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -40,7 +42,9 @@ import zipkin2.server.internal.banner.ZipkinBanner;
 @EnableAutoConfiguration
 @EnableZipkinServer
 public class ZipkinApplication {
-	
+
+  private static final Logger logger = LoggerFactory.getLogger(ZipkinApplication.class);
+
   static {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
@@ -54,6 +58,10 @@ public class ZipkinApplication {
       .logStartupInfo(false)
       .properties(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY + "=false",
     	        "spring.config.name=zipkin-server").run(args);
+      logger.info(
+              "\r\n\r\n==============================================================\r\n"
+              + "\r\n   " + ZipkinApplication.class.getName() + " 启动完成。"
+              + "\r\n\r\n==============================================================\r\n");
   }
   
 }
