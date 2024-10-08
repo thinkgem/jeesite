@@ -3,7 +3,7 @@
      No deletion without permission, or be held responsible to law. -->
 <template>
 	<name>package</name>
-	<filePath>${baseDir}/${moduleCode}/${moduleCode}-client/src/main/java/com/jeesite/modules/${moduleCode}</filePath>
+	<filePath>${baseDir}/${moduleCode}/${moduleCode}-client/src/main/java/com/jeesite/modules/${@StringUtils.replace(moduleCode, '-', '/')}</filePath>
 	<fileName></fileName>
 	<content><![CDATA[
 

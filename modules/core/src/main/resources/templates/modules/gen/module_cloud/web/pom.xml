@@ -21,15 +21,15 @@
 	<artifactId>jeesite-cloud-module-${moduleCode}-web</artifactId>
 	<packaging>war</packaging>
 	
-	<name>JeeSite Cloud Module ${moduleName} Web</name>
+	<name>JeeSite Cloud Module ${@StringUtils.capCamelCase(moduleCode)} Web</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 	
 	<properties>
 		
 		<finalName>web</finalName><!-- war包的名称 -->
-		<start-class>com.jeesite.modules.${@StringUtils.cap(module.moduleCode)}Application</start-class>
-		
+		<start-class>com.jeesite.modules.${@StringUtils.capCamelCase(moduleCode)}Application</start-class>
+
 		<!-- docker setting -->
 		<docker.run.port>8989:8989</docker.run.port>
 
