@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>vueFormChildList</name>
+	<filePath>${frontDir}/src/views/${urlPrefix}</filePath>
+	<fileName>form${@StringUtils.cap(table.classNameSimple)}List.vue</fileName>
+	<content><![CDATA[
+<!--
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ * No deletion without permission, or be held responsible to law.
+ * @author ${functionAuthor}
+-->
+<template>
+  <div>
+    <BasicTable @register="registerTable" @row-click="handleRowClick" />
+    <% if(table.tplCategory != 'query'){ %>
+    <a-button class="mt-2" @click="handleRowAdd" v-auth="'${permissionPrefix}:edit'">
+      <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
+    </a-button>
+    <% } %>
+  </div>
+</template>
+<script lang="ts" setup>
+  import { ref } from 'vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { Icon } from '/@/components/Icon';
+  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
+  import { ${ParentClassName} } from '/@/api/${moduleName}${isNotEmpty(subModuleName)?'/'+subModuleName:''}/${parentClassName}';
+  <%
+  var userselectExists = false;
+  var officeselectExists = false;
+  var companyselectExists = false;
+  var areaselectExists = false;
+  for(c in table.columnList){
+    if(c.isQuery == "1" && !c.isTreeEntityColumn){
+      if(c.showType == 'userselect'){
+        userselectExists = true;
+      }else if(c.showType == 'officeselect'){
+        officeselectExists = true;
+      }else if(c.showType == 'companyselect'){
+        companyselectExists = true;
+      }else if(c.showType == 'areaselect'){
+        areaselectExists = true;
+      }
+    }
+  }
+  %>
+  <% if(userselectExists || officeselectExists) { %>
+  import { officeTreeData } from '/@/api/sys/office';
+  <% } %>
+  <% if(companyselectExists) { %>
+  import { companyTreeData } from '/@/api/sys/company';
+  <% } %>
+  <% if(areaselectExists) { %>
+  import { areaTreeData } from '/@/api/sys/area';
+  <% } %>
+
+  const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
+  const record = ref<TestData>({} as ${ParentClassName});
+
+  const tableColumns: BasicColumn[] = [
+<%
+for (c in table.columnList){
+  if (c.isEdit != '1' || c.isPk == '1'){
+    continue;
+  }
+  if(table.parentExists && table.parentTableFkName == c.columnName){
+    continue;
+  }
+%>
+    {
+      title: t('${c.columnLabel}'),
+      dataIndex: '${c.attrName}',
+    <% if(c.showType == 'datetime'){ %>
+      width: 215,
+    <% }else{ %>
+      width: 130,
+    <% } %>
+    <% if ((isNotBlank(c.optionMap['dictType']) || @StringUtils.inString(c.attrType, 'java.util.Date', 'Integer', 'Long'))){ %>
+      align: 'center',
+    <% }else if (@StringUtils.inString(c.attrType, 'Float', 'Double')){ %>
+      align: 'right',
+    <% }else{ %>
+      align: 'left',
+    <% } %>
+    <% if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'checkbox' || c.showType == 'radio'){ %>
+      dictType: '${c.optionMap['dictType']}',
+    <% } %>
+      editRow: true,
+  <% if(c.showType == 'input' || c.showType == 'textarea'){ %>
+    <% if (c.simpleAttrType == 'Integer' && c.attrName == 'treeSort'){ %>
+      editComponent: 'InputNumber',
+      editDefaultValue: '30',
+      <% }else{ %>
+      editComponent: '${c.showType == 'input' ? 'Input' : 'InputTextArea'}',
+      <% } %>
+      <% if (c.dataLength != '0'){ %>
+      editComponentProps: {
+        maxlength: ${c.dataLength},
+      },
+    <% } %>
+  <% }else if(c.showType == 'select' || c.showType == 'select_multiple' || c.showType == 'radio' || c.showType == 'checkbox'){
+    var isMultiple = (c.showType == 'select_multiple'); %>
+      editComponent: 'Select',
+      editComponentProps: {
+        dictType: '${c.optionMap['dictType']}',
+        allowClear: true,
+        <% if(isMultiple){ %>
+        mode: 'multiple',
+        <% } %>
+      },
+  <% }else if(c.showType == 'date' || c.showType == 'datetime'){
+    var isTime = (c.showType == 'datetime'); %>
+      editComponent: 'DatePicker',
+      editComponentProps: {
+        format: 'YYYY-MM-DD${isTime?' HH:mm':''}',
+        showTime: ${isTime?'{ format: \'HH:mm\' \}':'false'},
+      },
+  <% }else if(c.showType == 'userselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      dataLabel: '${c.attrName2}',
+      <% } %>
+      editComponent: 'TreeSelect',
+      editComponentProps: {
+        api: officeTreeData,
+        params: { isLoadUser: true, userIdPrefix: '' },
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'officeselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      dataLabel: '${c.attrName2}',
+      <% } %>
+      editComponent: 'TreeSelect',
+      editComponentProps: {
+        api: officeTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'companyselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      dataLabel: '${c.attrName2}',
+      <% } %>
+      editComponent: 'TreeSelect',
+      editComponentProps: {
+        api: companyTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else if(c.showType == 'areaselect'){
+      if (isNotBlank(c.attrName2)){ %>
+      dataLabel: '${c.attrName2}',
+      <% } %>
+      editComponent: 'TreeSelect',
+      editComponentProps: {
+        api: areaTreeData,
+        canSelectParent: false,
+        allowClear: true,
+      },
+  <% }else{ %>
+      editComponent: 'Input',
+  <% } %>
+      editRule: ${c.isRequired == '1'},
+    },
+<% } %>
+  ];
+
+  const [registerTable, tableAction] = useTable({
+    columns: tableColumns,
+    actionColumn: {
+      width: 60,
+      actions: (record: Recordable) => [
+        {
+          icon: 'i-ant-design:delete-outlined',
+          color: 'error',
+          popConfirm: {
+            title: '是否确认删除',
+            confirm: handleRowDelete.bind(this, record),
+          },
+          auth: '${permissionPrefix}:edit',
+        },
+      ],
+    },
+    rowKey: 'id',
+    pagination: false,
+    bordered: true,
+    size: 'small',
+    inset: true,
+  });
+
+  function handleRowClick(data: Recordable) {
+    data.onEdit?.(true, false);
+  }
+
+  function handleRowAdd() {
+    tableAction.insertTableDataRecord({
+      id: 'rid_' + new Date().getTime(),
+      isNewRecord: true,
+      editable: true,
+    });
+  }
+
+  function handleRowDelete(data: Recordable) {
+    tableAction.deleteTableDataRecord(data);
+  }
+
+  async function getTableData(data: Recordable): Promise<Recordable> {
+    let valid = true;
+    let tableList: Recordable[] = [];
+    for (const record of tableAction.getDataSource()) {
+      if (!(await record.onEdit?.(false, true))) {
+        valid = false;
+      }
+      tableList.push({
+        ...record,
+        id: !!record.isNewRecord ? '' : record.id,
+      });
+    }
+    for (const record of tableAction.getDelDataSource()) {
+      if (!!record.isNewRecord) continue;
+      tableList.push({
+        ...record,
+        status: '1',
+      });
+    }
+    if (!valid) {
+      throw {
+        errorFields: [{ name: ['${@StringUtils.uncap(table.classNameSimple)}List'] }],
+        message: t('${table.comments}填写有误，请根据提示修正'),
+      };
+    }
+    data.${@StringUtils.uncap(table.classNameSimple)}List = tableList;
+    return tableList;
+  }
+
+  async function setTableData(data: Recordable) {
+    record.value = data as ${ParentClassName};
+    tableAction.setTableData(data.${@StringUtils.uncap(table.classNameSimple)}List || []);
+  }
+
+  defineExpose({
+    getTableData,
+    setTableData,
+  });
+</script>
+<% %>
+]]>
+	</content>
+</template>

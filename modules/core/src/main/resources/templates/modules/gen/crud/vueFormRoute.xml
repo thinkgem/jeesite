@@ -713,7 +713,7 @@ for (c in table.columnList){
       formData(true, data); // 将表单数据传递给 BpmButton
     } catch (error: any) {
       if (error && error.errorFields) {
-        showMessage(t('common.validateError'));
+        showMessage(error.message || t('common.validateError'));
       }
       console.log('error', error);
     }
