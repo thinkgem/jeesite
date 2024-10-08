@@ -4,6 +4,8 @@
  */
 package com.jeesite.modules;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,11 +21,17 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages={"com.jeesite.modules"})
 public class Test2Application extends SpringBootServletInitializer {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(Test2Application.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(Test2Application.class, args);
+		logger.info(
+				"\r\n\r\n==============================================================\r\n"
+				+ "\r\n   " + Test2Application.class.getName() + " 启动完成。"
+				+ "\r\n\r\n==============================================================\r\n");
 	}
-	
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		this.setRegisterErrorPageFilter(false); // 错误页面有容器来处理，而不是SpringBoot

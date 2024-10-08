@@ -4,6 +4,8 @@
  */
 package com.jeesite.modules;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,9 +21,15 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages={"com.jeesite.modules"})
 public class CoreApplication extends SpringBootServletInitializer {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(CoreApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(CoreApplication.class, args);
+		logger.info(
+				"\r\n\r\n==============================================================\r\n"
+				+ "\r\n   " + CoreApplication.class.getName() + " 启动完成。"
+				+ "\r\n\r\n==============================================================\r\n");
 	}
 	
 	@Override
