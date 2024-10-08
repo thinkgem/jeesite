@@ -26,6 +26,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	public static final String COLON = ":";
 	public static final String TILDE = "~";
 	public static final String UNDERLINE = "_";
+	public static final String MINUS = "-";
 
 	/**
 	 * 分隔字符串（逗号分隔）
@@ -284,7 +285,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         boolean upperCase = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == UNDERLINE.charAt(0)) {
+            if (c == UNDERLINE.charAt(0) || c == MINUS.charAt(0)) {
                 upperCase = i != 1; // 不允许第二个字符是大写
             } else if (upperCase) {
                 sb.append(Character.toUpperCase(c));
