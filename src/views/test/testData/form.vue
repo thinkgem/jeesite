@@ -26,13 +26,7 @@
         />
       </template>
       <template #testDataChildList>
-        <BasicTable
-          @register="registerTestDataChildTable"
-          @row-click="handleTestDataChildRowClick"
-        />
-        <a-button class="mt-2" @click="handleTestDataChildAdd" v-auth="'test:testData:edit'">
-          <Icon icon="i-ant-design:plus-circle-outlined" /> {{ t('新增') }}
-        </a-button>
+        <FormDataChildList ref="formDataChildListRef" />
       </template>
     </BasicForm>
   </BasicDrawer>
@@ -51,6 +45,7 @@
   import { areaTreeData } from '/@/api/sys/area';
   import { WangEditor } from '/@/components/WangEditor';
   // import { dateUtil, formatToDateTime } from '/@/utils/dateUtil';
+  import FormDataChildList from './formDataChildList.vue';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -58,6 +53,7 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<TestData>({} as TestData);
+  const formDataChildListRef = ref<InstanceType<typeof FormDataChildList>>();
 
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
@@ -257,232 +253,6 @@
     baseColProps: { md: 24, lg: 12 },
   });
 
-  const [registerTestDataChildTable, testDataChildTable] = useTable({
-    actionColumn: {
-      width: 60,
-      actions: (record: Recordable) => [
-        {
-          icon: 'i-ant-design:delete-outlined',
-          color: 'error',
-          popConfirm: {
-            title: '是否确认删除',
-            confirm: handleTestDataChildDelete.bind(this, record),
-          },
-          auth: 'test:testData:edit',
-        },
-      ],
-    },
-    rowKey: 'id',
-    pagination: false,
-    bordered: true,
-    size: 'small',
-    inset: true,
-  });
-
-  async function setTestDataChildTableData(_res: Recordable) {
-    testDataChildTable.setColumns([
-      {
-        title: t('单行文本'),
-        dataIndex: 'testInput',
-        width: 130,
-        align: 'left',
-        editRow: true,
-        editComponent: 'Input',
-        editRule: true,
-      },
-      {
-        title: t('多行文本'),
-        dataIndex: 'testTextarea',
-        width: 130,
-        align: 'left',
-        editRow: true,
-        editComponent: 'InputTextArea',
-        // 子表自定义验证实例
-        editRule: (value, _record) => {
-          return new Promise((resolve, reject) => {
-            if (!value || value === '') return resolve();
-            if (value.length < 3) return reject('至少3个字符');
-            return resolve(); // 验证成功
-          });
-        },
-      },
-      {
-        title: t('下拉框'),
-        dataIndex: 'testSelect',
-        width: 130,
-        align: 'left',
-        dictType: 'sys_menu_type',
-        editRow: true,
-        editComponent: 'Select',
-        editComponentProps: {
-          dictType: 'sys_menu_type',
-          allowClear: true,
-        },
-        editRule: false,
-      },
-      {
-        title: t('下拉多选'),
-        dataIndex: 'testSelectMultiple',
-        width: 130,
-        align: 'left',
-        dictType: 'sys_menu_type',
-        editRow: true,
-        editComponent: 'Select',
-        editComponentProps: {
-          dictType: 'sys_menu_type',
-          mode: 'multiple',
-          allowClear: true,
-        },
-        editRule: false,
-      },
-      {
-        title: t('日期选择'),
-        dataIndex: 'testDate',
-        width: 130,
-        align: 'center',
-        editRow: true,
-        editComponent: 'DatePicker',
-        editComponentProps: {
-          format: 'YYYY-MM-DD',
-          showTime: false,
-        },
-        editRule: false,
-      },
-      {
-        title: t('日期时间'),
-        dataIndex: 'testDatetime',
-        width: 215,
-        align: 'center',
-        editRow: true,
-        editComponent: 'DatePicker',
-        editComponentProps: {
-          format: 'YYYY-MM-DD HH:mm',
-          showTime: { format: 'HH:mm' },
-        },
-        editRule: false,
-      },
-      {
-        title: t('用户选择'),
-        dataIndex: 'testUser.userCode',
-        dataLabel: 'testUser.userName',
-        width: 130,
-        align: 'left',
-        editRow: true,
-        editComponent: 'TreeSelect',
-        editComponentProps: {
-          api: officeTreeData,
-          params: { isLoadUser: true, userIdPrefix: '' },
-          canSelectParent: false,
-          allowClear: true,
-        },
-        editRule: false,
-      },
-      {
-        title: t('机构选择'),
-        dataIndex: 'testOffice.officeCode',
-        dataLabel: 'testOffice.officeName',
-        width: 130,
-        align: 'left',
-        editRow: true,
-        editComponent: 'TreeSelect',
-        editComponentProps: {
-          api: officeTreeData,
-          canSelectParent: false,
-          allowClear: true,
-        },
-        editRule: false,
-      },
-      {
-        title: t('区域选择'),
-        dataIndex: 'testAreaCode',
-        dataLabel: 'testAreaName',
-        width: 130,
-        align: 'left',
-        editRow: true,
-        editComponent: 'TreeSelect',
-        editComponentProps: {
-          api: areaTreeData,
-          canSelectParent: false,
-          allowClear: true,
-        },
-        editRule: false,
-      },
-      {
-        title: t('文件上传'),
-        dataIndex: 'dataMap',
-        width: 160,
-        align: 'left',
-        editRow: true,
-        editComponent: 'Upload',
-        editComponentProps: ({ record: childRecord }) => {
-          return {
-            loadTime: record.value.__t,
-            bizKey: childRecord.id,
-            bizType: 'testDataChild_file',
-            uploadType: 'all',
-            // imageMaxWidth: 1024,
-            // imageMaxHeight: 768,
-            // imageThumbName: '150x150.jpg',
-            size: 'small',
-          };
-        },
-        // 文件上传的必填验证实例
-        // editRule: (value: any, record: Recordable) => {
-        //   return new Promise((resolve, reject) => {
-        //     const len = !value || value['testDataChild_file__len'] || 0;
-        //     if (len == 0) reject(t('请上传图片'));
-        //     else resolve();
-        //   });
-        // },
-      },
-    ]);
-    testDataChildTable.setTableData(record.value.testDataChildList || []);
-  }
-
-  function handleTestDataChildRowClick(record: Recordable) {
-    record.onEdit?.(true, false);
-  }
-
-  function handleTestDataChildAdd() {
-    testDataChildTable.insertTableDataRecord({
-      id: new Date().getTime(),
-      isNewRecord: true,
-      editable: true,
-    });
-  }
-
-  function handleTestDataChildDelete(record: Recordable) {
-    testDataChildTable.deleteTableDataRecord(record);
-  }
-
-  async function getTestDataChildList() {
-    let testDataChildListValid = true;
-    let testDataChildList: Recordable[] = [];
-    for (const record of testDataChildTable.getDataSource()) {
-      if (!(await record.onEdit?.(false, true))) {
-        testDataChildListValid = false;
-      }
-      testDataChildList.push({
-        ...record,
-        id: !!record.isNewRecord ? '' : record.id,
-      });
-    }
-    for (const record of testDataChildTable.getDelDataSource()) {
-      if (!!record.isNewRecord) continue;
-      testDataChildList.push({
-        ...record,
-        status: '1',
-      });
-    }
-    if (!testDataChildListValid) {
-      throw {
-        errorFields: [{ name: ['testDataChildList'] }],
-        message: t('子表数据填写有误，请根据提示修正'),
-      };
-    }
-    return testDataChildList;
-  }
-
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });
     await resetFields();
@@ -490,7 +260,7 @@
     record.value = (res.testData || {}) as TestData;
     record.value.__t = new Date().getTime();
     setFieldsValue(record.value);
-    setTestDataChildTableData(res);
+    formDataChildListRef.value?.setTableData(record.value);
     setDrawerProps({ loading: false });
   });
 
@@ -502,7 +272,7 @@
         isNewRecord: record.value.isNewRecord,
         id: record.value.id,
       };
-      data.testDataChildList = await getTestDataChildList();
+      await formDataChildListRef.value?.getTableData(data);
       // console.log('submit', params, data, record);
       const res = await testDataSave(params, data);
       showMessage(res.message);
