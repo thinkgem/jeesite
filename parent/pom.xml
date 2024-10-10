@@ -59,6 +59,7 @@
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<swagger.version>1.6.6</swagger.version>
 		<liquibase.version>4.20.0</liquibase.version>
+		<spring-framework.version>5.3.39</spring-framework.version>
 
 		<!-- jdbc setting -->
 		<mysql.version>8.0.33</mysql.version>
