@@ -4,7 +4,7 @@
 			.append("<div class=\"form-error\">"+$.validator.messages.errorMessage+"</div>");
 	}
 	$.extend($.validator.defaults, {
-		ignore: ":hidden:not(.required),input.select2-focusser", // 忽略验证的class名称
+		ignore: ":hidden:not(.required),input.select2-focusser,.jqgrow:hidden input,.jqgrow:hidden textarea", // 忽略验证的class名称
 		errorClass: 'has-error',
 		errorContainer: ".form-error",
 		errorPlacement: function(error, element) {
