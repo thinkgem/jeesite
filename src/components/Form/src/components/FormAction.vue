@@ -1,5 +1,5 @@
 <template>
-  <a-col v-bind="actionColOpt" v-if="showActionButtonGroup">
+  <Col v-bind="actionColOpt" v-if="showActionButtonGroup">
     <div class="ant-form-action" :style="{ textAlign: actionColOpt.style.textAlign }">
       <FormItem>
         <slot name="submitBefore"></slot>
@@ -39,7 +39,7 @@
         <slot name="advanceAfter"></slot>
       </FormItem>
     </div>
-  </a-col>
+  </Col>
 </template>
 <script lang="ts" setup name="JeeSiteFormAction">
   import type { ColEx } from '../types/index';

@@ -3,7 +3,7 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
-import 'uno.css';
+import 'virtual:uno.css';
 import 'ant-design-vue/dist/reset.css';
 import '/@/design/index.less';
 

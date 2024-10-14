@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.sidebar" :class="`${prefixCls}-sidebar hidden lg:block think gem`">
+  <div v-if="props.sidebar" :class="`${prefixCls}-sidebar md:hidden lg:block think gem`">
     <span :class="[prefixCls, `${prefixCls}--${props.theme}`]" class="flex">
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatarUrl" />
       <span :class="`${prefixCls}__info`">

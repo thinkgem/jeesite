@@ -13,7 +13,7 @@
 
     <div class="relative mx-auto h-full py-2 container">
       <div class="h-full flex">
-        <div class="mr-4 hidden min-h-full pl-4 lg:w-13/24 lg:flex lg:flex-col">
+        <div class="mr-4 min-h-full pl-4 md:hidden lg:w-13/24 lg:flex lg:flex-col">
           <div class="my-auto">
             <AppLogo class="-enter-x logo" />
             <img :alt="title" src="/@/assets/svg/login-box-bg.svg" class="-enter-x w-1/2" />
