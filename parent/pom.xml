@@ -60,6 +60,7 @@
 		<swagger.version>1.6.6</swagger.version>
 		<liquibase.version>4.20.0</liquibase.version>
 		<spring-framework.version>5.3.39</spring-framework.version>
+		<logback.version>1.2.13</logback.version>
 
 		<!-- jdbc setting -->
 		<mysql.version>8.0.33</mysql.version>
