@@ -3,7 +3,7 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
-import type { PluginOption } from 'vite';
+import { type PluginOption } from 'vite';
 // import path from 'path';
 import {
   viteThemePlugin,

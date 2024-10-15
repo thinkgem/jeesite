@@ -3,8 +3,8 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
+import { type PluginOption } from 'vite';
 import visualizer from 'rollup-plugin-visualizer';
-import { PluginOption } from 'vite';
 
 export function isReportMode(): boolean {
   return process.env.REPORT === 'true';
