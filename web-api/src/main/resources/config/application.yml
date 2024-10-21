@@ -257,7 +257,7 @@ spring:
   
   # 应用程序名称
   application:
-    name: jeesite-web
+    name: jeesite-web-api
     
   # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
