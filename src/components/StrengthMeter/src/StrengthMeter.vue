@@ -7,7 +7,7 @@
       :value="innerValueRef"
       @change="handleChange"
       :disabled="disabled"
-      autocomplete="false"
+      autocomplete="new-password"
     >
       <template #[item]="data" v-for="item in Object.keys($slots)">
         <slot :name="item" v-bind="data || {}"></slot>

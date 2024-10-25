@@ -40,7 +40,7 @@
           visibilityToggle
           v-model:value="formData.confirmPassword"
           :placeholder="t('sys.login.confirmPassword')"
-          autocomplete="false"
+          autocomplete="off"
         />
       </FormItem>
 
