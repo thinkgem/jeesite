@@ -110,14 +110,14 @@ function basicFilter(routes: RouteRecordNormalized[]) {
       if (isUrl(menu.path)) return true;
 
       if (route.meta?.carryParam) {
-        return pathToRegexp(route.path).test(menu.path);
+        return pathToRegexp(route.path).regexp.test(menu.path);
       }
       const isSame = route.path === menu.path;
       if (!isSame) return false;
 
       if (route.meta?.ignoreAuth) return true;
 
-      return isSame || pathToRegexp(route.path).test(menu.path);
+      return isSame || pathToRegexp(route.path).regexp.test(menu.path);
     });
 
     if (!matchRoute) return false;
