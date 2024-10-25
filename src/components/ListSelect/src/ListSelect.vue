@@ -22,11 +22,10 @@
   </div>
 </template>
 <script lang="ts" setup name="JeeSiteListSelect">
-  import { defineComponent, ref, unref, computed, watch, onMounted, shallowRef } from 'vue';
+  import { ref, unref, computed, watch, onMounted, shallowRef } from 'vue';
   import { Input } from 'ant-design-vue';
   import { propTypes } from '/@/utils/propTypes';
   import { useAttrs } from '/@/hooks/core/useAttrs';
-  import { useI18n } from '/@/hooks/web/useI18n';
 
   import { useModal } from '/@/components/Modal';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
@@ -58,7 +57,6 @@
 
   const emit = defineEmits(['change', 'select', 'click']);
 
-  const { t } = useI18n();
   const attrs = useAttrs();
   const valueRef = ref<string>(props.value);
   const labelValueRef = ref<string>(props.labelValue);
@@ -195,6 +193,11 @@
     emit('change', valueRef.value, labelValueRef.value);
     emit('select', values);
   }
+
+  defineExpose({
+    openSelectModal,
+    setSelectList,
+  });
 </script>
 <style lang="less">
   .jeesite-listselect {
