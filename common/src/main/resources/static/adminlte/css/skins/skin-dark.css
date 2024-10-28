@@ -296,6 +296,9 @@ a, a:hover, a:active, a:focus, .form-unit, th[aria-selected=true] .ui-jqgrid-sor
 .ui-jqgrid .ui-jqgrid-frozen .ui-jqgrid-htable th div {height:46px!important;}
 .ui-jqgrid .ui-jqgrid-htable th div {padding:15px 0 15px 2px;}
 .ui-jqgrid tr.jqgrow td {height: 49px;}
+.table-form .ui-jqgrid .ui-jqgrid-frozen .ui-jqgrid-htable th div {height:36px!important;}
+.table-form .ui-jqgrid .ui-jqgrid-htable th div {padding:9px 0 8px 2px;}
+.table-form .ui-jqgrid tr.jqgrow td {height: 39px;}
 
 .ui-jqgrid tr.jqgroup td, .ui-jqgrid tr.footrow td, .ui-jqgrid tr.jqfoot td {background:#323232;}
 .ui-jqgrid .actions .moreItems {background:#1a1a1a;border-color:#3c3c3c;box-shadow:none;}
