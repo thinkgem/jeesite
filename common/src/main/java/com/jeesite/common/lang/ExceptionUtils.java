@@ -28,6 +28,8 @@ public class ExceptionUtils {
 			ex = (Throwable) request.getAttribute("exception");
 		} else if (request.getAttribute(RequestDispatcher.ERROR_EXCEPTION) != null) {
 			ex = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+		} else if (request.getAttribute("org.springframework.web.servlet.DispatcherServlet.EXCEPTION") != null) {
+			ex = (Throwable) request.getAttribute("org.springframework.web.servlet.DispatcherServlet.EXCEPTION");
 		}
 		return ex;
 	}
