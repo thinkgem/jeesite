@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<% include('/templates/modules/gen/include/searchForm.html'){} %>
+			<% include('/templates/modules/gen/view/searchForm.html'){} %>
 			<table id="dataGrid"></table>
 			<% if(!table.isTreeEntity){ %>
 			<div id="dataGridPage"></div>
@@ -33,6 +33,6 @@
 	</div>
 </div>
 \<% } %>
-<% include('/templates/modules/gen/include/dataGridScript.html'){} %>]]>
+<% include('/templates/modules/gen/view/dataGridScript.html'){} %>]]>
 	</content>
 </template>

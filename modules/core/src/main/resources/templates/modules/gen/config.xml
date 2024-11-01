@@ -16,40 +16,40 @@
 		</category>
 		<category value="crud_vue" label="单表/主子表 （增删改查） vue">
 			<template>category-ref:crud_java</template>
-			<template>crud/vueApi.xml</template>
-			<template>crud/vueList.xml</template>
-			<template>crud/vueForm.xml</template>
-			<template>crud/vueIndex.xml</template>
-			<template>crud/vueImport.xml</template>
+			<template>vue/vueApi.xml</template>
+			<template>vue/vueList.xml</template>
+			<template>vue/vueForm.xml</template>
+			<template>vue/vueIndex.xml</template>
+			<template>vue/vueImport.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_only_vue" label="单表/主子表 （增删改查） 仅vue">
-			<template>crud/vueApi.xml</template>
-			<template>crud/vueList.xml</template>
-			<template>crud/vueForm.xml</template>
-			<template>crud/vueIndex.xml</template>
-			<template>crud/vueImport.xml</template>
+			<template>vue/vueApi.xml</template>
+			<template>vue/vueList.xml</template>
+			<template>vue/vueForm.xml</template>
+			<template>vue/vueIndex.xml</template>
+			<template>vue/vueImport.xml</template>
 			<childTable>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_only_vue_modal" label="单表/主子表 （增删改查，弹窗表单） 仅vue ">
 			<template>category-ref:crud_only_vue</template>
 			<childTable>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_only_vue_modal_route" label="单表/主子表 （增删改查，路由表单） 仅vue ">
-			<template>crud/vueApi.xml</template>
-			<template>crud/vueList.xml</template>
-			<template>crud/vueFormRoute.xml</template>
-			<template>crud/vueIndex.xml</template>
-			<template>crud/vueImport.xml</template>
+			<template>vue/vueApi.xml</template>
+			<template>vue/vueList.xml</template>
+			<template>vue/vueFormRoute.xml</template>
+			<template>vue/vueIndex.xml</template>
+			<template>vue/vueImport.xml</template>
 			<childTable>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_select" label="单表/主子表 （增删改查，含 listselect 选择页面） beetl">
@@ -61,10 +61,10 @@
 		</category>
 		<category value="crud_select_vue" label="单表/主子表 （增删改查，含 listselect 选择页面） vue">
 			<template>category-ref:crud_vue</template>
-			<template>crud/vueSelect.xml</template>
+			<template>vue/vueSelect.xml</template>
 			<childTable>
 				<template>category-ref:dao</template>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_java" label="单表/主子表 （增删改查，只生成 java/mapper） 仅后端 ">
@@ -86,14 +86,14 @@
 		</category>
 		<category value="crud_cloud_vue" label="单表/主子表 （增删改查 Cloud，生成 api/client） Vue">
 			<template>category-ref:crud_cloud_java</template>
-			<template>crud/vueApi.xml</template>
-			<template>crud/vueList.xml</template>
-			<template>crud/vueIndex.xml</template>
-			<template>crud/vueForm.xml</template>
-			<template>crud/vueImport.xml</template>
+			<template>vue/vueApi.xml</template>
+			<template>vue/vueList.xml</template>
+			<template>vue/vueIndex.xml</template>
+			<template>vue/vueForm.xml</template>
+			<template>vue/vueImport.xml</template>
 			<childTable>
 				<template>category-ref:dao_cloud</template>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_cloud_select" label="单表/主子表 （增删改查 Cloud，含 listselect 选择页面） beetl">
@@ -105,10 +105,10 @@
 		</category>
 		<category value="crud_cloud_select_vue" label="单表/主子表 （增删改查 Cloud，含 listselect 选择页面） vue">
 			<template>category-ref:crud_cloud_vue</template>
-			<template>crud/vueSelect.xml</template>
+			<template>vue/vueSelect.xml</template>
 			<childTable>
 				<template>category-ref:dao_cloud</template>
-				<template>crud/vueFormChildList.xml</template>
+				<template>vue/vueFormChildList.xml</template>
 			</childTable>
 		</category>
 		<category value="crud_cloud_java" label="单表/主子表 （增删改查 Cloud，只生成 java/mapper） 仅后端">

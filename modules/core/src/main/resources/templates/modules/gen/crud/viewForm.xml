@@ -6,6 +6,6 @@
 	<filePath>${baseDir}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}Form.html</fileName>
 	<content><![CDATA[
-<% include('/templates/modules/gen/include/viewForm.html'){} %>]]>
+<% include('/templates/modules/gen/view/viewForm.html'){} %>]]>
 	</content>
 </template>

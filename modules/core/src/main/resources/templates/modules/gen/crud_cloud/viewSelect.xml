@@ -6,6 +6,6 @@
 	<filePath>${baseDir}/${moduleName}/src/main/resources/views/${lastPackageName}/${moduleName}/${subModuleName}</filePath>
 	<fileName>${className}Select.html</fileName>
 	<content><![CDATA[
-<% include('/templates/modules/gen/include/viewSelect.html'){} %>]]>
+<% include('/templates/modules/gen/view/viewSelect.html'){} %>]]>
 	</content>
 </template>

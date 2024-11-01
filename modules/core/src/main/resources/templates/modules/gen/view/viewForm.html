@@ -38,8 +38,8 @@
 					</div>
 				</div>
 			<% } %>
-				<% include('/templates/modules/gen/include/formControl.html'){} %>
-				<% include('/templates/modules/gen/include/formChildTable.html'){} %>
+				<% include('/templates/modules/gen/view/formControl.html'){} %>
+				<% include('/templates/modules/gen/view/formChildTable.html'){} %>
 			<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 				<div class="row taskComment hide">
 					<div class="col-xs-12">
@@ -78,7 +78,7 @@
 	</div>
 </div>
 \<% } %>
-<% include('/templates/modules/gen/include/formChildTableScript.html'){} %>
+<% include('/templates/modules/gen/view/formChildTableScript.html'){} %>
 <script>
 <% if(toBoolean(table.optionMap['isBpmForm'])){ %>
 // 业务实现草稿按钮

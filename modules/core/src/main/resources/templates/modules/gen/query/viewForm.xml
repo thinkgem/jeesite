@@ -44,8 +44,8 @@
 					</div>
 				</div>
 			<% } %>
-				<% include('/templates/modules/gen/include/formControl.html'){} %>
-				<% include('/templates/modules/gen/include/formChildTable.html'){} %>
+				<% include('/templates/modules/gen/view/formControl.html'){} %>
+				<% include('/templates/modules/gen/view/formChildTable.html'){} %>
 			</div>
 			<div class="box-footer">
 				<div class="row">
@@ -58,6 +58,6 @@
 	</div>
 </div>
 \<% } %>
-<% include('/templates/modules/gen/include/formChildTableScript.html'){} %>]]>
+<% include('/templates/modules/gen/view/formChildTableScript.html'){} %>]]>
 	</content>
 </template>
