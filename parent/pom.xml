@@ -26,7 +26,7 @@
 		<commons-text.version>1.10.0</commons-text.version>
 		<commons-email.version>1.5</commons-email.version>
 
-		<jackson-bom2.version>2.17.1</jackson-bom2.version>
+		<jackson-bom2.version>2.18.1</jackson-bom2.version>
 		<fastjson.version>2.0.51</fastjson.version>
 		<fst.version>2.57</fst.version>
 		<snakeyaml.version>1.33</snakeyaml.version>
