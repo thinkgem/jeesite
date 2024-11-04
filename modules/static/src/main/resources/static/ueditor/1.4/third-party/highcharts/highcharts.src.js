@@ -1,8 +1,8 @@
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
 
-/**
- * @license Highcharts JS v3.0.6 (2013-10-04)
+/*
+ * @license Highcharts JS v 3 - 0 - 6 (2013-10-04)
  *
  * (c) 2009-2013 Torstein Hønsi
  *
@@ -55,7 +55,8 @@ var UNDEFINED,
 	noop = function () {},
 	charts = [],
 	PRODUCT = 'Highcharts',
-	VERSION = '3.0.6',
+	// VERSION = '3.0.6',
+	VERSION = '',
 
 	// some constants for frequently used strings
 	DIV = 'div',
