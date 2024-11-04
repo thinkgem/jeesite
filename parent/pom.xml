@@ -56,6 +56,7 @@
 		<jsqlparser.version>4.7</jsqlparser.version>
 		<druid.version>1.2.23</druid.version>
 		<shiro.version>1.13.0</shiro.version>
+		<quartz.version>2.4.0-rc3</quartz.version>
 		<j2cache.version>2.8.0-release</j2cache.version>
 		<swagger.version>1.6.6</swagger.version>
 		<liquibase.version>4.20.0</liquibase.version>
