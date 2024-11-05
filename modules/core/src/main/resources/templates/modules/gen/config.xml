@@ -170,6 +170,12 @@
 				<template>query/dao.xml</template>
 			</childTable>
 		</category>
+		<category value="crud_only_app" label="手机端列表和表单（单表）App">
+			<template>app/appApi.xml</template>
+			<template>app/appList.xml</template>
+			<template>app/appForm.xml</template>
+			<template>app/appPages.xml</template>
+		</category>
 	</tplCategory>
 	<!-- 属性类型 -->
 	<attrType>

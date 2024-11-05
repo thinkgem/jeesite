@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>http.api.js</name>
+	<filePath>${frontDir}/common</filePath>
+	<fileName>http.api.${className}.js</fileName>
+	<content><![CDATA[
+const install = (Vue, vm) => {
+	vm.$u.api = {
+
+		// 请将以下 ${functionName} 代码，复制到 http.api.js 文件中
+
+		// ${functionName} 开始
+		${className}: {
+			form: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/form', params),
+			list: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/listData', params),
+			save: (params = {}) => vm.$u.postJson(config.adminPath+'/${urlPrefix}/save', params),
+		<% if(toBoolean(table.optionMap['isHaveDisableEnable'])){ %>
+			disable: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/disable', params),
+			enable: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/enable', params),
+		<% } %>
+			delete: (params = {}) => vm.$u.post(config.adminPath+'/${urlPrefix}/delete', params),
+		},
+		// ${functionName} 结束
+
+	};
+}
+export default {
+	install
+}
+]]>
+	</content>
+</template>
