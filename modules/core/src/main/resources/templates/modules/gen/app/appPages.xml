@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>pages.json</name>
+	<filePath>${frontDir}</filePath>
+	<fileName>pages.${className}.json</fileName>
+	<content><![CDATA[
+{
+	"pages": [
+
+		/* 请将以下 ${functionName} 代码，复制到 pages.json 文件中 */
+
+		/* ${functionName} 开始 */
+		{
+			"path": "pages/${className}/form",
+			"style": {
+				"navigationBarTitleText": "新增编辑"
+			}
+		},
+		{
+			"path": "pages/${className}/list",
+			"style": {
+				"navigationBarTitleText": "${functionName}"
+			}
+		},
+		/* ${functionName} 结束 */
+
+	],
+}
+]]>
+	</content>
+</template>

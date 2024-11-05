@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+     No deletion without permission, or be held responsible to law. -->
+<template>
+	<name>form.vue</name>
+	<filePath>${frontDir}/pages/${urlPrefix}</filePath>
+	<fileName>form.vue</fileName>
+	<content><![CDATA[
+<template>
+	<view class="wrap">
+		<u-form class="form" :model="model" :rules="rules" ref="uForm" label-position="left">
+		<%
+		  var userselectExists = false;
+		  var officeselectExists = false;
+		  var companyselectExists = false;
+		  var areaselectExists = false;
+		  for(c in table.columnList){
+			if(c.isQuery == "1" && !c.isTreeEntityColumn){
+			  if(c.showType == 'userselect'){
+			  userselectExists = true;
+			  }else if(c.showType == 'officeselect'){
+			  officeselectExists = true;
+			  }else if(c.showType == 'companyselect'){
+			  companyselectExists = true;
+			  }else if(c.showType == 'areaselect'){
+			  areaselectExists = true;
+			  }
+			}
+		  }
+		%>
+		<%
+		for (c in table.columnList){
+		  if (c.isEdit == '1' && c.showType != 'hidden'){
+			// 如果是树结构的字段，则自动忽略
+			if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+			  'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+				&& c.attrName != table.treeViewCodeAttrName
+				&& c.attrName != table.treeViewNameAttrName){
+			  continue;
+			}
+		%>
+		<% if(c.showType == 'input'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text" maxlength="${c.dataLength}"></u-input>
+			</u-form-item>
+		<% }else if(c.showType == 'textarea'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180" label-position="top">
+				<u-input type="textarea" placeholder="请输入${c.columnLabel}" v-model="model.testTextarea" height="100" maxlength="${c.dataLength}" />
+			</u-form-item>
+		<% }else if(c.showType == 'select' || c.showType == 'select_multiple'){
+			var isMultiple = (c.showType == 'select_multiple'); %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"<% if(isMultiple){ %> multiple="true"<% } %> placeholder="请选择${c.columnLabel}"></js-select>
+			</u-form-item>
+		<% }else if(c.showType == 'radio'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-radio v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"></js-radio>
+			</u-form-item>
+		<% }else if(c.showType == 'checkbox'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-checkbox v-model="model.${c.attrName}" dict-type="${c.optionMap['dictType']}"></js-checkbox>
+			</u-form-item>
+		<% }else if(c.showType == 'date' || c.showType == 'datetime'){
+		var isTime = (c.showType == 'datetime'); %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" format="yyyy-MM-dd${isTime?' HH:mm':''}" type="text" maxlength="${c.dataLength}"></u-input>
+			</u-form-item>
+		<% }else if(c.showType == 'userselect'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
+			</u-form-item>
+		<% }else if(c.showType == 'officeselect'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
+			</u-form-item>
+		<% }else if(c.showType == 'companyselect'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
+			</u-form-item>
+		<% }else if(c.showType == 'areaselect'){ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<js-select v-model="model.${c.attrName}" :items="${c.attrName}List" placeholder="请选择${c.columnLabel}" :tree="true"<% if (isNotBlank(c.attrName2)){ %>
+					:label-value="model.${c.attrName2}" @label-input="model.${c.attrName2} = $event"<% } %>></js-select>
+			</u-form-item>
+		<% }else{ %>
+			<u-form-item label="${c.columnLabel}" prop="${c.attrName}" label-width="180">
+				<u-input placeholder="请输入${c.columnLabel}" v-model="model.${c.attrName}" type="text" maxlength="${c.dataLength}"></u-input>
+			</u-form-item>
+		<% } %>
+		<%
+		  }
+		}
+		%>
+		<% if(toBoolean(table.optionMap['isImageUpload'])){ %>
+			<u-form-item label="上传图片" prop="images" label-position="top">
+				<js-uploadfile v-model="model.dataMap" :biz-key="model.id" biz-type="${className}_image"></js-uploadfile>
+			</u-form-item>
+		</u-form>
+		<% } %>
+		<view class="form-footer">
+			<u-button class="btn" type="primary" @click="submit">提交</u-button>
+			<!-- <u-button class="btn" type="default" @click="cancel">关闭</u-button> -->
+		</view>
+	</view>
+</template>
+<script>
+/**
+ * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+ */
+export default {
+	data() {
+		return {
+			model: {
+				id: '',
+			<%
+			for (c in table.columnList){
+			  if (c.isEdit == '1' && c.showType != 'hidden'){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+				  'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+					&& c.attrName != table.treeViewCodeAttrName
+					&& c.attrName != table.treeViewNameAttrName){
+				  continue;
+				}
+			%>
+			<% if(c.showType == 'userselect'){ %>
+				${c.simpleAttrName}: {
+					userCode: '',
+					userName: ''
+				},
+			<% }else if(c.showType == 'officeselect'){ %>
+				${c.simpleAttrName}: {
+					officeCode: '',
+					officeName: ''
+				},
+			<% }else if(c.showType == 'companyselect'){ %>
+				${c.simpleAttrName}: {
+					companyCode: '',
+					companyName: ''
+				},
+			<% }else if(c.showType == 'areaselect'){ %>
+				${c.simpleAttrName}: {
+					areaCode: '',
+					areaName: ''
+				},
+			<% }else{ %>
+				${c.attrName}: '',
+			<% } %>
+			<%
+			  }
+			}
+			%>
+			},
+			rules: {
+			<%
+			for (c in table.columnList){
+			  if (c.isEdit == '1' && c.showType != 'hidden'){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+				  'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+					&& c.attrName != table.treeViewCodeAttrName
+					&& c.attrName != table.treeViewNameAttrName){
+				  continue;
+				}
+			%>
+				<% if(c.isRequired == '1'){ %>
+				'${c.attrName}': [
+					{
+						required: true,
+						message: '请输入${c.columnLabel}',
+						trigger: ['change','blur'],
+					}
+				],
+				<% } %>
+			<%
+			  }
+			}
+			%>
+			},
+			<%
+			for (c in table.columnList){
+			  if (c.isEdit == '1' && c.showType != 'hidden'){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+				  'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+					&& c.attrName != table.treeViewCodeAttrName
+					&& c.attrName != table.treeViewNameAttrName){
+				  continue;
+				}
+			%>
+			<% if(c.showType == 'userselect'){ %>
+			${c.simpleAttrName}List: [],
+			<% }else if(c.showType == 'officeselect'){ %>
+			${c.simpleAttrName}List: [],
+			<% }else if(c.showType == 'companyselect'){ %>
+			${c.simpleAttrName}List: [],
+			<% }else if(c.showType == 'areaselect'){ %>
+			${c.simpleAttrName}List: [],
+			<% } %>
+			<%
+			  }
+			}
+			%>
+		};
+	},
+	onLoad(params){
+		this.$u.api.${className}.form(params).then(res => {
+			Object.assign(this.model, res.${className});
+			this.$refs.uForm.setRules(this.rules);
+			<%
+			for (c in table.columnList){
+			  if (c.isEdit == '1' && c.showType != 'hidden'){
+				// 如果是树结构的字段，则自动忽略
+				if(table.isTreeEntity && @StringUtils.inString(c.columnName, 'parent_code',
+				  'parent_codes', 'tree_sorts', 'tree_leaf', 'tree_level', 'tree_names')
+					&& c.attrName != table.treeViewCodeAttrName
+					&& c.attrName != table.treeViewNameAttrName){
+				  continue;
+				}
+			%>
+			<% if(c.showType == 'userselect'){ %>
+			this.$u.api.office.treeData({isLoadUser: true}).then(res => {
+				this.${c.simpleAttrName}List = res;
+			});
+			<% }else if(c.showType == 'officeselect'){ %>
+			this.$u.api.office.treeData().then(res => {
+				this.${c.simpleAttrName}List = res;
+			});
+			<% }else if(c.showType == 'companyselect'){ %>
+			this.$u.api.company.treeData().then(res => {
+				this.${c.simpleAttrName}List = res;
+			});
+			<% }else if(c.showType == 'areaselect'){ %>
+			this.$u.api.area.treeData().then(res => {
+				this.${c.simpleAttrName}List = res;
+			});
+			<% } %>
+			<%
+			  }
+			}
+			%>
+		});
+	},
+	methods: {
+		submit() {
+			this.$refs.uForm.validate(valid => {
+				if (valid) {
+					// console.log('${className}-save: ' + JSON.stringify(this.model));
+					this.$u.api.${className}.save(this.model).then(res => {
+						uni.showModal({
+							title: '提示',
+							content: res.message,
+							showCancel: false,
+							success: function () {
+								if (res.result == 'true') {
+									uni.setStorageSync('refreshList', true);
+									uni.navigateBack();
+								}
+							}
+						});
+					});
+				} else {
+					this.$u.toast('您填写的信息有误，请根据提示修正。');
+				}
+			});
+		},
+		cancel() {
+			uni.navigateBack();
+		}
+	}
+};
+</script>
+<style lang="scss">
+
+</style>
+<% %>
+]]>
+	</content>
+</template>
