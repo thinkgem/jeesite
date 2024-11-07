@@ -13,7 +13,7 @@
 	<artifactId>jeesite-web-mini</artifactId>
 	<packaging>war</packaging>
 	
-	<description>Web 服务，最小化加载，可以甚至关闭数据源</description>
+	<description>Web 服务，最小化加载，是一个小的微服务</description>
 	
 	<name>JeeSite Web</name>
 	<url>http://jeesite.com</url>
