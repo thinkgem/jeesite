@@ -6,6 +6,7 @@ package com.jeesite.modules.sys.service.support;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.entity.Page;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
 import com.jeesite.modules.sys.dao.EmployeeDao;
 import com.jeesite.modules.sys.dao.EmployeeOfficeDao;
@@ -107,6 +108,12 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	public List<EmployeePost> findEmployeePostList(Employee employee){
 		EmployeePost employeePost = new EmployeePost();
 		employeePost.setEmpCode(employee.getEmpCode());
+		if (employee.getDataMap() != null) {
+			String a = (String)employee.getDataMap().get("loadJoinTableAlias");
+			if (StringUtils.isNotBlank(a)) {
+				employeePost.sqlMap().loadJoinTableAlias(a);
+			}
+		}
 		return employeePostDao.findList(employeePost);
 	}
 	

@@ -18,7 +18,7 @@
 			<i class="fa fa-sign-out"></i> ${text('退出登录')}</a>
 		</li>
 		<% var sysCodes = [];
-		for(var role in user.roleList) {
+		for(var role in roleList) {
 			var codes = @StringUtils.splitComma(role.sysCodes);
 			if (!isEmpty(codes)) {
 				for (var code in codes) {
@@ -47,12 +47,25 @@
 		<% }else{ %>
 		<li class="mt10"></li>
 		<% } %>
-		<% if(user.roleList.~size > 0){ %>
+		<% if(postList.~size > 0){ %>
+			<li class="divider"></li>
+			<% var postCode = @ObjectUtils.toStringIgnoreNull(session.postCode, ''); %>
+			<li class="dropdown-header mb5">${text('选择岗位')}：<% if(isNotBlank(postCode)){ %>
+			<i class="fa fa-close pointer" title="${text('清除设置')}" onclick="location='${ctx}/switchPost'"></i><% } %></li>
+			<% for(var post in postList){ %>
+				<li>
+					<a href="${ctx}/switchPost/${post.postCode}">
+						<i class="fa fa-${postCode == post.postCode
+							? 'check-' : ''}circle-o"></i> ${post.postName}
+					</a>
+				</li>
+			<% } %>
+		<% } else if(roleList.~size > 0){ %>
 			<li class="divider"></li>
 			<% var roleCode = @ObjectUtils.toStringIgnoreNull(session.roleCode, ''); %>
 			<li class="dropdown-header mb5">${text('选择身份')}：<% if(isNotBlank(roleCode)){ %>
 			<i class="fa fa-close pointer" title="${text('清除设置')}" onclick="location='${ctx}/switchRole'"></i><% } %></li>
-			<% for(var role in user.roleList){ if(role.isShow == '1'){ %>
+			<% for(var role in roleList){ if(role.isShow == '1'){ %>
 				<li>
 					<a href="${ctx}/switchRole/${role.roleCode}">
 						<i class="fa fa-${roleCode == role.roleCode 

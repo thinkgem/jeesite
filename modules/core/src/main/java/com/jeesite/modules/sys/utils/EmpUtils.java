@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.utils;
 
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -324,6 +325,19 @@ public class EmpUtils {
 			}
 		});
 		return list.toArray(new String[list.size()]);
+	}
+
+	/**
+	 * 根据员工编号，获取员工岗位（返回岗位编码和名称）
+	 * @param empCode
+	 * @return
+	 */
+	public static List<EmployeePost> getEmployeePostList(String empCode){
+		Employee employee = new Employee();
+		employee.setEmpCode(empCode);
+		employee.setDataMap(MapUtils.newHashMap());
+		employee.getDataMap().put("loadJoinTableAlias", "p");
+		return Static.employeeService.findEmployeePostList(employee);
 	}
 	
 	/**
