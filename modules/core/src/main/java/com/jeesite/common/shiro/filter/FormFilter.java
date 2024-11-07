@@ -17,13 +17,8 @@ import com.jeesite.common.shiro.realm.BaseAuthorizingRealm;
 import com.jeesite.common.utils.SpringUtils;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
-import com.jeesite.modules.sys.entity.Log;
-import com.jeesite.modules.sys.entity.Role;
-import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.utils.CorpUtils;
-import com.jeesite.modules.sys.utils.LogUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
-import com.jeesite.modules.sys.utils.ValidCodeUtils;
+import com.jeesite.modules.sys.entity.*;
+import com.jeesite.modules.sys.utils.*;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -452,6 +447,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("msgEnabled", Global.getPropertyToBoolean("msg.enabled", "false"));
 		data.put("sysCode", session.getAttribute("sysCode"));
 		data.put("roleCode", session.getAttribute("roleCode"));
+		data.put("postCode", session.getAttribute("postCode"));
 		data.put("title", Global.getProperty("productName"));
 		data.put("company", Global.getProperty("companyName"));
 		data.put("version", Global.getProperty("productVersion"));
@@ -471,6 +467,21 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			}
 		}
 		data.put("roleList", roleList);
+		List<Map<String, Object>> postList = ListUtils.newArrayList();
+		if (Global.getConfigToBoolean("user.postRolePermi", "false")
+				&& User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+			Employee employee = user.getRefObj();
+			for (EmployeePost ep : EmpUtils.getEmployeePostList(employee.getEmpCode())){
+				Post post = ep.getPost();
+				if (post != null) {
+					Map<String, Object> postMap = MapUtils.newHashMap();
+					postMap.put("postCode", post.getPostCode());
+					postMap.put("postName", post.getPostName());
+					postList.add(postMap);
+				}
+			}
+		}
+		data.put("postList", postList);
 		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
 		return data;
 	}

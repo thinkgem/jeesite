@@ -79,7 +79,7 @@ public class PostController extends BaseController {
 			List<String> roleCodes = ListUtils.newArrayList();
 			List<String> roleNames = ListUtils.newArrayList();
 			postService.findPostRoleList(where).forEach(e -> {
-				if (e.getRole() != null) {
+				if (e.getRole() != null && PostRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
 					roleCodes.add(e.getRoleCode());
 					roleNames.add(e.getRole().getRoleName());
 				}
