@@ -91,9 +91,6 @@ public class SecAdminController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated User user) {
-		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
-		}
 		if (!User.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}
