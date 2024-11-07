@@ -238,15 +238,8 @@ public class LoginController extends BaseController{
 		if (StringUtils.isBlank(successUrl)){
 			successUrl = (String)request.getAttribute("__url");
 		}
-		if (StringUtils.contains(successUrl, "://")){
-			String ctxPath = Global.getCtxPath();
-			String domain = ServletUtils.getRequestDomain(successUrl);
-			successUrl = StringUtils.substring(successUrl, domain.length());
-			if (StringUtils.startsWith(successUrl, ctxPath)) {
-				successUrl = StringUtils.substringAfter(successUrl, ctxPath);
-			}
-		}
-		if (StringUtils.isBlank(successUrl)){
+		// 登录后重定向地址验证，如果是非法地址，则指定默认的登录成功地址
+		if (!ServletUtils.isAllowRedirects(request, successUrl) || StringUtils.isBlank(successUrl)){
 			successUrl = Global.getProperty("shiro.successUrl");
 		}
 		
