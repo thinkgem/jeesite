@@ -19,6 +19,7 @@
 		<module>../web</module>
 		<module>../web-api</module>
 		<module>../web-fast</module>
+		<module>../web-mini</module>
 	</modules>
 	
 	<developers>

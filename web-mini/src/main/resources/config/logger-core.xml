@@ -1,0 +1,59 @@
+<included>
+	
+	<!-- https://github.com/spring-projects/spring-boot/blob/v2.0.5.RELEASE/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	
+	<logger name="org.springframework.boot.web.embedded" level="INFO" />
+	<logger name="net.oschina.j2cache.caffeine.CaffeineProvider" level="ERROR" />
+	
+<!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
+<!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
+<!-- 	<logger name="org.springframework.jdbc" level="DEBUG" /> -->
+	<logger name="org.mybatis.spring.transaction" level="DEBUG" />
+	<logger name="com.atomikos.icatch.config.UserTransactionServiceImp" level="ERROR" />
+	<logger name="com.atomikos.icatch.provider.imp.AssemblerImp" level="ERROR" />
+	<logger name="com.atomikos.jdbc.AbstractDataSourceBean" level="ERROR" />
+	<logger name="com.atomikos.jdbc.AtomikosConnectionProxy" level="ERROR" />
+	<logger name="com.atomikos.recovery.xa.XaResourceRecoveryManager" level="ERROR" />
+	<logger name="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator" level="DEBUG" />
+<!-- 	<logger name="org.springframework.transaction.support.TransactionSynchronizationManager" level="TRACE" /> -->
+	
+	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
+	<logger name="springfox.documentation.schema.property.CachingModelPropertiesProvider" level="ERROR" />
+<!-- 	<logger name="io.swagger" level="DEBUG" /> -->
+<!-- 	<logger name="springfox" level="DEBUG" /> -->
+	
+	<logger name="org.flowable.ui.modeler.domain" level="DEBUG" />
+	<logger name="org.flowable.idm.engine.impl.persistence" level="DEBUG" />
+	<logger name="org.flowable.task.service.impl.persistence" level="DEBUG" />
+	<logger name="org.flowable.identitylink.service.impl.persistence" level="DEBUG" />
+	<logger name="org.flowable.variable.service.impl.persistence" level="DEBUG" />
+	<logger name="org.flowable.engine.impl.persistence" level="DEBUG" />
+	
+	<logger name="com.jeesite" level="DEBUG" />
+	<logger name="com.jeesite.common.i18n" level="INFO" />
+	<logger name="com.jeesite.common.shiro" level="INFO" />
+	<logger name="com.jeesite.common.beetl" level="INFO" />
+	<logger name="com.jeesite.common.cache" level="INFO" />
+	<logger name="com.jeesite.common.j2cache" level="INFO" />
+	<logger name="com.jeesite.common.j2cache.cache.support.caffeine" level="ERROR" />
+	<logger name="com.jeesite.common.mybatis" level="INFO" />
+	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
+	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
+	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
+	<logger name="com.jeesite.modules.sys.dao.LogDao" level="INFO" />
+	
+	<!-- Production profile
+	<springProfile name="prod">
+		<logger name="org.mybatis.spring.transaction" level="INFO" />
+		<logger name="org.flowable.ui.modeler.domain" level="INFO" />
+		<logger name="org.flowable.idm.engine.impl.persistence" level="INFO" />
+		<logger name="org.flowable.task.service.impl.persistence" level="INFO" />
+		<logger name="org.flowable.identitylink.service.impl.persistence" level="INFO" />
+		<logger name="org.flowable.variable.service.impl.persistence" level="INFO" />
+		<logger name="org.flowable.engine.impl.persistence" level="INFO" />
+		<logger name="com.jeesite" level="INFO" />
+		<logger name="com.jeesite.common.mybatis.mapper" level="INFO" />
+	</springProfile> -->
+	
+</included>

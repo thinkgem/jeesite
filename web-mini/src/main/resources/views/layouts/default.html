@@ -1,0 +1,12 @@
+<%/* Copyright (c) 2013-Now http://jeesite.com All rights reserved.
+   * No deletion without permission, or be held responsible to law. */ %>
+<% print('<'+'!DOC'+'TYPE html'+'>'); %>
+<% print('<'+'html'+'><'+'head'+'>'); %>
+<% include('/include/head.html', {title: text(title!)}){} %>
+<% include('/include/csslibs.html', {libs: libs!}){} %>
+</head><body class="hold-transition ${bodyClass!}">
+<% if (!@ListUtils.inString('layout', libs!)){ %>
+<div class="wrapper">${layoutContent}</div>
+<% }else{ %>${layoutContent}<% } %>
+<a id="scroll-up" href="#" class="btn btn-sm hide"><i class="fa fa-angle-double-up"></i></a>
+<% include('/include/jslibs.html', {libs: libs!}){} %>

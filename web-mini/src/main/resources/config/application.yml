@@ -1,0 +1,174 @@
+
+#======================================#
+#========== Project settings ==========#
+#======================================#
+
+# 产品或项目名称、软件开发公司名称
+productName: JeeSite Demo
+companyName: ThinkGem
+
+# 产品版本、版权年份
+productVersion: V5.9
+copyrightYear: 2024
+
+# 是否演示模式
+demoMode: false
+
+# 专为分离端提供接口服务
+apiMode: false
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8980
+  servlet:
+    context-path: /js
+    register-default-servlet: false
+#    encoding.enabled: true
+  tomcat:
+    uri-encoding: UTF-8
+    # 表单请求数据的最大大小
+    max-http-form-post-size: 20MB
+#    # 进程的最大连接数
+#    max-connections: 8192
+#    # 连接数满后的排队个数
+#    accept-count: 100
+#    # 线程数最大和最小个数
+#    threads:
+#      max: 200
+#      min-spare: 10 
+  
+  # 当 Nginx 为 https，tomcat 为 http 时，设置该选项为 true
+  schemeHttps: false
+  
+#======================================#
+#========== Database sttings ==========#
+#======================================#
+
+# 数据库连接（默认关闭，如果和 web.core.enabled 同时开启可使用如下功能：
+#   配置参数：http://127.0.0.1:8980/js/a/sys/config/list
+#   模块管理：http://127.0.0.1:8980/js/a/sys/module/list
+#   字典管理：http://127.0.0.1:8980/js/a/sys/dictType/list
+jdbc:
+
+#  # Mysql 数据库配置
+#  type: mysql
+#  driver: com.mysql.cj.jdbc.Driver
+#  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai
+#  username: root
+#  password: 123456
+#  testSql: SELECT 1
+
+  # 数据库连接池配置
+  pool:
+
+    # 初始化连接数
+    init: 1
+    # 最小连接数
+    minIdle: 3
+    # 最大连接数
+    maxActive: 20
+
+#======================================#
+#========== Framework settings ========#
+#======================================#
+
+spring:
+  
+  # 应用程序名称
+  application:
+    name: jeesite-web-mini
+    
+  # 环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+    
+  # 打印横幅
+  main:
+    bannerMode: "off"
+
+  # MVC 映射匹配策略
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    
+  # JTA事务
+  jta:
+    enabled: false
+
+  # 缓存配置
+  cache:
+    # 缓存及会话共享（专业版）
+    isClusterMode: false
+
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
+  
+# 管理基础路径
+adminPath: /a
+
+# 前端基础路径
+frontPath: /f
+
+# 用户权限相关
+user:
+  enabled: false
+
+# 国际化管理
+lang:
+  enabled: false
+  
+# 任务调度
+job:
+  enabled: false
+  
+# 代码生成
+gen:
+  enabled: false
+
+# 系统监控（默认开启，可关闭）访问地址如下：
+#   服务监控：http://127.0.0.1:8980/js/a/state/server/index
+#   缓存监控：http://127.0.0.1:8980/js/a/state/cache/index
+state:
+  enabled: true
+
+# Web 相关
+web:
+
+  # MVC拦截器（访问日志和手机视图）
+  interceptor:
+    log:
+      enabled: false
+    mobile:
+      enabled: false
+
+  # 是否启用核心内置功能的Controller加载
+  core:
+    enabled: false
+  
+  # 在线API文档工具
+  swagger: 
+    enabled: false
+
+# Mapper文件刷新线程
+mybatis:
+  mapper:
+    refresh:
+      enabled: false
+
+# 文件上传
+file:
+  enabled: false
+  isFileStreamDown: false
+
+# 消息提醒中心
+msg:
+  enabled: false
+  
+#======================================#
+#========== Project settings ==========#
+#======================================#
