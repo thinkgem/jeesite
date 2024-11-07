@@ -6,6 +6,7 @@ package com.jeesite.modules.sys.web;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.filter.FormFilter;
@@ -15,8 +16,10 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
+import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
+import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +29,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +52,10 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}")
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class LoginController extends BaseController{
-	
+
+	@Autowired
+	private PostService postService;
+
 	/**
 	 * 登录页面
 	 */
@@ -187,11 +194,8 @@ public class LoginController extends BaseController{
 			return null;
 		}
 
-		// 获取当前会话对象，并返回一些数据
+		// 如果是登录操作，则初始化一些登录参数
 		Session session = UserUtils.getSession();
-		model.addAllAttributes(FormFilter.getLoginSuccessData(request, response, user, session));
-
-		// 是否是登录操作
 		boolean isLogin = Global.TRUE.equals(session.getAttribute(BaseAuthorizingRealm.IS_LOGIN_OPER));
 		if (isLogin){
 			// 获取后接着清除，防止下次获取仍然认为是登录状态
@@ -222,6 +226,11 @@ public class LoginController extends BaseController{
 					}
 				}
 			}
+		}
+
+		// 获取当前会话对象，并返回一些数据
+		if (!StringUtils.equals(request.getParameter("__be"), Global.YES)) {
+			model.addAllAttributes(FormFilter.getLoginSuccessData(request, response, user, session));
 		}
 
 		// 获取登录成功后跳转的页面
@@ -361,7 +370,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * 切换系统菜单（仅超级管理员有权限）
+	 * 切换系统菜单（菜单归属子系统）
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "switch/{sysCode}")
@@ -380,7 +389,7 @@ public class LoginController extends BaseController{
 	}
 
 	/**
-	 * 切换角色菜单（仅超级管理员有权限）
+	 * 切换角色菜单（用户->角色）
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = {"switchRole","switchRole/{roleCode}"})
@@ -394,6 +403,39 @@ public class LoginController extends BaseController{
 		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		if (ServletUtils.isAjaxRequest(request)) {
 			return renderResult(Global.TRUE, text("角色切换成功"));
+		}
+		return REDIRECT + adminPath + "/index";
+	}
+
+	/**
+	 * 切换岗位菜单（用户->岗位->角色）v4.9.2
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = {"switchPost","switchPost/{postCode}"})
+	public String switchPost(@PathVariable(required=false) String postCode, HttpServletRequest request) {
+		Session session = UserUtils.getSession();
+		if (StringUtils.isNotBlank(postCode)){
+			PostRole where = new PostRole();
+			where.setPostCode(postCode);
+			where.sqlMap().loadJoinTableAlias("r");
+			List<String> roleCodes = ListUtils.newArrayList();
+			postService.findPostRoleList(where).forEach(e -> {
+				if (e.getRole() != null && PostRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
+					roleCodes.add(e.getRoleCode());
+				}
+			});
+			if (roleCodes.isEmpty()){
+				roleCodes.add("__none__");
+			}
+			session.setAttribute("postCode", postCode);
+			session.setAttribute("roleCode", StringUtils.joinComma(roleCodes)); // 5.4.0+ 支持多个，逗号隔开
+		}else{
+			session.removeAttribute("postCode");
+			session.removeAttribute("roleCode");
+		}
+		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		if (ServletUtils.isAjaxRequest(request)) {
+			return renderResult(Global.TRUE, text("岗位切换成功"));
 		}
 		return REDIRECT + adminPath + "/index";
 	}
