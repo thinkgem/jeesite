@@ -9,13 +9,14 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.CrudService;
+import com.jeesite.common.utils.PageUtils;
 import com.jeesite.modules.sys.dao.PostDao;
 import com.jeesite.modules.sys.dao.PostRoleDao;
-import com.jeesite.modules.sys.entity.Post;
-import com.jeesite.modules.sys.entity.PostRole;
-import com.jeesite.modules.sys.entity.Role;
+import com.jeesite.modules.sys.entity.*;
+import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.utils.CorpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,8 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 
 	@Autowired
 	private PostRoleDao postRoleDao;
+	@Autowired
+	private EmpUserService empUserService;
 
 	/**
 	 * 查询岗位
@@ -101,12 +104,13 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 				postRoleDao.insertBatch(list, null);
 			}
 		}
+		clearCache(post);
 	}
 
 	/**
 	 * 岗位编码生成规则
 	 */
-	public void genId(Role entity, String viewCode){
+	public void genId(Post entity, String viewCode){
 		if (StringUtils.isNotBlank(viewCode)){
 			// 如果是租户模式，并且当前租户不是默认租户的时候，增加租户前缀防止编码重复
 			if (Global.isUseCorpModel() && !CorpUtils.DEFAULT_CORP_CODE.equals(CorpUtils.getCurrentCorpCode())){
@@ -134,6 +138,21 @@ public class PostServiceSupport extends CrudService<PostDao, Post>
 	public void delete(Post post) {
 		post.sqlMap().markIdDelete();
 		super.delete(post);
+		clearCache(post);
+	}
+
+	/**
+	 * 根据岗位清理缓存
+	 */
+	protected void clearCache(Post post){
+		// 清除该岗位下所有的用户缓存
+		EmpUser where = new EmpUser();
+		where.setCodes(new String[]{ post.getPostCode() });
+		PageUtils.findList(where, null, e -> {
+			List<EmpUser> userList = empUserService.findUserListByPostCodes((EmpUser)e);
+			userList.forEach(UserUtils::clearCache);
+			return !userList.isEmpty();
+		});
 	}
 
 }
