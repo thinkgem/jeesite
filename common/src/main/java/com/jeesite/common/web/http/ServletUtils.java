@@ -14,6 +14,7 @@ import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.mapper.XmlMapper;
 import org.apache.commons.lang3.Validate;
 import org.springframework.http.MediaType;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -56,6 +57,11 @@ public class ServletUtils {
 	
 	// 是否打印错误信息参数到视图页面（生产环境关闭）
 	private static final Boolean PRINT_ERROR_INFO = PROPS.getPropertyToBoolean("error.page.printErrorInfo", "true");
+
+	// 允许重定向的地址，不设置为全部允许，设置this只允许本项目内部跳转，多个用逗号隔开，例如：this,http://*.jeesite.com
+	private static final String[] ALLOW_REDIRECTS = PROPS.getPropertyToArray("shiro.allowRedirects", "");
+	private static final Boolean SCHEME_HTTPS = PROPS.getPropertyToBoolean("server.schemeHttps", "false");
+	private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
 	/**
 	 * 获取当前请求对象
@@ -384,15 +390,42 @@ public class ServletUtils {
 	}
 
 	/**
-	 * 获取请求的域名（含端口）
+	 * 获取当前请求的域名（含端口）
+	 * @author ThinkGem
 	 */
-	public static String getRequestDomain(String url) {
+	public static String getThisDomain(HttpServletRequest request) {
+        String url = request.getRequestURL().toString();
 		String scheme = StringUtils.substringBefore(url, "://");
+		if (SCHEME_HTTPS && StringUtils.equals(scheme, "http")) {
+            scheme = "https";
+        }
 		String domain = StringUtils.substringAfter(url, "://");
 		if (StringUtils.contains(domain, "/")) {
 			domain = StringUtils.substringBefore(domain, "/");
 		}
 		return scheme + "://" + domain;
+	}
+
+	/**
+	 * 验证地址是否允许重定向
+	 * @author ThinkGem
+	 */
+	public static boolean isAllowRedirects(HttpServletRequest request, String url) {
+		if (ALLOW_REDIRECTS == null || ALLOW_REDIRECTS.length == 0) {
+			return true;
+		}
+		boolean allow = false;
+		for (String pattern : ALLOW_REDIRECTS) {
+			String p = StringUtils.trim(pattern);
+			if ("this".equals(p)) {
+				p = getThisDomain(request);
+			}
+			if (PATH_MATCHER.match(p + "/**", url)){
+				allow = true;
+				break;
+			}
+		}
+		return allow;
 	}
 
 	/**
