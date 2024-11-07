@@ -10,8 +10,8 @@
 			JOIN ${_prefix}sys_employee_post b ON b.post_code = a.post_code
 		</if>
 		<if test="userCode != null and userCode != ''">
-			JOIN ${_prefix}sys_employee_post b2 on b2.post_code = a.post_code
-			JOIN ${_prefix}sys_user u on u.ref_code = b2.emp_code AND u.user_type = 'employee'
+			JOIN ${_prefix}sys_employee_post b2 ON b2.post_code = a.post_code
+			JOIN ${_prefix}sys_user u ON u.ref_code = b2.emp_code AND u.user_type = 'employee'
 		</if>
 		<where>
 			${sqlMap.where.toSql()}
