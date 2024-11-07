@@ -419,8 +419,8 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			Global.setLang((String)paramMap.get("lang"), request, response);
 		}
 		data.put("demoMode", Global.isDemoMode());
-		data.put("useCorpModel", Global.isUseCorpModel()
-				&& Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
+		data.put("useCorpModel", Global.isUseCorpModel());
+		data.put("loginCodeCorpUnique", Global.getConfigToBoolean("user.loginCodeCorpUnique", "false"));
 		data.put("title", Global.getProperty("productName"));
 		data.put("company", Global.getProperty("companyName"));
 		data.put("version", Global.getProperty("productVersion"));
