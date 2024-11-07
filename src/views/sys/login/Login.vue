@@ -151,6 +151,10 @@
       margin: auto;
       background-color: #fff;
       box-shadow: 0 0 8px #ddd;
+
+      .ant-form-item {
+        margin-bottom: 15px;
+      }
     }
 
     &::before {
