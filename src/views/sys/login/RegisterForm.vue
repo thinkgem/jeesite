@@ -74,11 +74,13 @@
   import { StrengthMeter } from '/@/components/StrengthMeter';
   import { CountdownInput } from '/@/components/CountDown';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useMessage } from '/@/hooks/web/useMessage';
   import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
-
   const FormItem = Form.Item;
+
   const InputPassword = Input.Password;
   const { t } = useI18n();
+  const { showMessage } = useMessage();
   const { handleBackLogin, getLoginState } = useLoginState();
 
   const formRef = ref();
@@ -99,8 +101,15 @@
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER);
 
   async function handleRegister() {
-    const data = await validForm();
-    if (!data) return;
-    console.log(data);
+    try {
+      const data = await validForm();
+      if (!data) return;
+      showMessage('提交数据：' + JSON.stringify(data));
+    } catch (error: any) {
+      if (error && error.errorFields) {
+        showMessage(error.message || t('common.validateError'));
+      }
+      console.log('error', error);
+    }
   }
 </script>
