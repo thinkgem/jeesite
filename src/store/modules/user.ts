@@ -96,6 +96,7 @@ export const useUserStore = defineStore({
         info.avatarUrl = url || logoImg;
         info.homePath = res.desktopUrl;
         info.roleList = res.roleList;
+        info.postList = res.postList;
       }
       this.userInfo = info;
       this.lastUpdateTime = new Date().getTime();
@@ -190,6 +191,7 @@ export const useUserStore = defineStore({
       this.setPageCache('modifyPasswordMsg', res.modifyPasswordMsg);
       this.setPageCache('sysCode', res.sysCode);
       this.setPageCache('roleCode', res.roleCode);
+      this.setPageCache('postCode', res.postCode);
       this.setPageCache('title', res.title);
       this.setPageCache('company', res.company);
       this.setPageCache('version', res.version);

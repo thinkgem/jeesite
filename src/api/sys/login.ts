@@ -35,6 +35,7 @@ export interface LoginResult {
   msgEnabled: boolean;
   sysCode: string;
   roleCode: string;
+  postCode: string;
   title: string;
   company: string;
   version: string;
@@ -60,11 +61,18 @@ export const loginApi = (params: LoginParams, mode: ErrorMessageMode = 'none') =
 };
 
 export const switchSys = (sysCode: string) => {
-  return defHttp.get({ url: adminPath + '/switch/' + sysCode });
+  const params = sysCode ? '/' + sysCode : sysCode;
+  return defHttp.get({ url: adminPath + '/switch' + params });
 };
 
 export const switchRole = (roleCode: string) => {
-  return defHttp.get({ url: adminPath + '/switchRole/' + roleCode });
+  const params = roleCode ? '/' + roleCode : roleCode;
+  return defHttp.get({ url: adminPath + '/switchRole' + params });
+};
+
+export const switchPost = (postCode: string) => {
+  const params = postCode ? '/' + postCode : postCode;
+  return defHttp.get({ url: adminPath + '/switchPost' + params });
 };
 
 export const switchSkin = (name = '') => {
