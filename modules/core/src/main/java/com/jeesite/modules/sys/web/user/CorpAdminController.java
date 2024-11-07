@@ -110,9 +110,6 @@ public class CorpAdminController extends BaseController {
 		if (!user.currentUser().isSuperAdmin()){
 			return renderResult(Global.FALSE, text("越权操作，只有超级管理员才能修改此数据！"));
 		}
-		if (User.isSuperAdmin(user.getUserCode())) {
-			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
-		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(user.getUserType())){
 			return renderResult(Global.FALSE, text("非法操作，不能够操作此用户！"));
 		}

@@ -157,9 +157,6 @@ public class EmpUserController extends BaseController {
 	@PostMapping(value = "save")
 	@ResponseBody
 	public String save(@Validated EmpUser empUser, String op, HttpServletRequest request) {
-		if (User.isSuperAdmin(empUser.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
-		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
@@ -370,9 +367,6 @@ public class EmpUserController extends BaseController {
 	@RequestMapping(value = "saveAuthDataScope")
 	@ResponseBody
 	public String saveAuthDataScope(EmpUser empUser, HttpServletRequest request) {
-		if (User.isSuperAdmin(empUser.getUserCode())) {
-			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
-		}
 		if (!EmpUser.USER_TYPE_EMPLOYEE.equals(empUser.getUserType())){
 			return renderResult(Global.FALSE, "非法操作，不能够操作此用户！");
 		}
