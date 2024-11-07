@@ -110,6 +110,7 @@ $(function(){
 					}
 				}
 			}
+			data.push({ name: '__be', value: '1'}); // back-end 标识后端，可减少一些逻辑
 			js.ajaxSubmit(action, data, function(data, status, xhr){
 				if (data.isValidCodeLogin == true){
 					$('#isValidCodeLogin').show();
