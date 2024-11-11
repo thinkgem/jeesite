@@ -17,7 +17,7 @@ CREATE TABLE js_app_comment
 	update_date datetime NOT NULL COMMENT '更新时间',
 	remarks varchar(500) COMMENT '备注信息',
 	create_by_name varchar(200) COMMENT '提问人员姓名',
-	device_info varchar(1000) COMMENT '设备信息',
+	device_info varchar(4000) COMMENT '设备信息',
 	reply_date date COMMENT '回复时间',
 	reply_content varchar(500) COMMENT '回复意见',
 	reply_user_code varchar(64) COMMENT '回复人员',

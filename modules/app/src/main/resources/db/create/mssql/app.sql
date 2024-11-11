@@ -16,7 +16,7 @@ CREATE TABLE [${_prefix}app_comment]
 	[update_date] datetime NOT NULL,
 	[remarks] nvarchar(500),
 	[create_by_name] varchar(200),
-	[device_info] varchar(1000),
+	[device_info] varchar(4000),
 	[reply_date] date,
 	[reply_content] nvarchar(500),
 	[reply_user_code] varchar(64),
