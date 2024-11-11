@@ -4,17 +4,15 @@
  */
 package com.jeesite.modules.app.entity;
 
-import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * APP意见反馈Entity
@@ -84,7 +82,7 @@ public class AppComment extends DataEntity<AppComment> {
 		this.contact = contact;
 	}
 
-	@Size(min=0, max=1000, message="设备信息长度不能超过 1000 个字符")
+	@Size(min=0, max=4000, message="设备信息长度不能超过 4000 个字符")
 	public String getDeviceInfo() {
 		return deviceInfo;
 	}

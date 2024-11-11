@@ -16,7 +16,7 @@ CREATE TABLE ${_prefix}app_comment
 	update_date timestamp NOT NULL,
 	remarks nvarchar2(500),
 	create_by_name varchar2(200),
-	device_info varchar2(1000),
+	device_info varchar2(4000),
 	reply_date date,
 	reply_content nvarchar2(500),
 	reply_user_code varchar2(64),
