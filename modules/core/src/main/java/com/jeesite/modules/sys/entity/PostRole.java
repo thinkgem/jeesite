@@ -20,10 +20,11 @@ import com.jeesite.common.mybatis.annotation.Table;
 	},
 	joinTable={
 		@JoinTable(type=JoinTable.Type.LEFT_JOIN, entity=Role.class, alias="r", lazy = true,
-			on="a.role_code = r.role_code AND r.status = ${STATUS_NORMAL}", attrName="role",
+			on="a.role_code = r.role_code", attrName="role",
 			columns={
 				@Column(name="role_code", attrName="roleCode", label="角色编码", isPK=true),
 				@Column(name="role_name", attrName="roleName", label="角色名称"),
+				@Column(name="status", attrName="status", label="角色状态"),
 			})
 	}, orderBy=""
 )

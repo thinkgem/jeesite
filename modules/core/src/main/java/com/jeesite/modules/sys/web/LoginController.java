@@ -374,6 +374,9 @@ public class LoginController extends BaseController{
 		}else{
 			session.removeAttribute("sysCode");
 		}
+		// 切换系统时，清除当前岗位和角色状态
+		session.removeAttribute("postCode");
+		session.removeAttribute("roleCode");
 		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
 		if (ServletUtils.isAjaxRequest(request)) {
 			return renderResult(Global.TRUE, text("子系统切换成功"));
