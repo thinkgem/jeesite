@@ -23,12 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
-	private static final boolean isJavaSerialize;
-
-	static {
-		String[] ver = StringUtils.split(System.getProperty("java.version"), StringUtils.DOT);
-		isJavaSerialize = ver.length > 0 && Integer.parseInt(ver[0]) > 1;
-	}
 
 	/**
 	 * 转换为 Double 类型
