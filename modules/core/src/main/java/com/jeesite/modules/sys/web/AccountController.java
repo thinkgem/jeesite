@@ -493,7 +493,7 @@ public class AccountController extends BaseController{
 
 		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
 		if (!(loginCode != null && loginCode.equals(user.getLoginCode()))){
-			return renderResult(Global.FALSE, text("非法操作。"));
+			return renderResult(Global.FALSE, text("请先获取验证码。"));
 		}
 		
 		// 验证码是否超时
