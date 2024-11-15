@@ -14,9 +14,8 @@
 <script lang="ts" setup>
   import { useI18n } from '/@/hooks/web/useI18n';
   import { Icon } from '/@/components/Icon';
-  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
+  import { BasicTable, useTable } from '/@/components/Table';
   import { officeTreeData } from '/@/api/sys/office';
-  import { areaTreeData } from '/@/api/sys/area';
   import { Ref } from 'vue';
 
   const { t } = useI18n('sys.empUser');
@@ -91,6 +90,7 @@
         title: t('附属机构'),
         dataIndex: 'officeCode',
         dataLabel: 'officeName',
+        width: 130,
         align: 'left',
         editRow: true,
         editComponent: 'TreeSelect',
@@ -105,6 +105,7 @@
         title: t('附属岗位'),
         dataIndex: 'postCode',
         dataLabel: 'postName',
+        width: 130,
         align: 'left',
         editRow: true,
         editComponent: 'Select',

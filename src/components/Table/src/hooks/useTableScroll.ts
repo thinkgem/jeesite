@@ -6,7 +6,7 @@ import { isBoolean } from '/@/utils/is';
 import { useWindowSizeFn } from '/@/hooks/event/useWindowSizeFn';
 import { useModalContext } from '/@/components/Modal';
 import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
-import { useDebounceFn } from '@vueuse/core';
+import { useDebounceFn, useResizeObserver } from '@vueuse/core';
 import { useScroll } from '/@/hooks/event/useScroll';
 
 export function useTableScroll(
@@ -203,6 +203,12 @@ export function useTableScroll(
     debounceRedoHeight();
   });
 
+  const tableWidthRef = ref();
+  useResizeObserver(wrapRef, () => {
+    const table = unref(tableElRef);
+    tableWidthRef.value = table?.$el?.offsetWidth || 600; // 默认宽度不小于，列中指定的宽度总合
+  });
+
   const getScrollRef: ComputedRef<any> = computed(() => {
     let width = 0;
     // if (unref(rowSelectionRef)) {
@@ -220,12 +226,11 @@ export function useTableScroll(
     //   width += unsetWidthColumnSize * 50;
     // }
 
-    const table = unref(tableElRef);
-    const tableWidth = table?.$el?.offsetWidth ?? 600; // 默认宽度不小于，列中指定的宽度总合
+    const tableWidth = tableWidthRef.value;
     const { canResize, scroll } = unref(propsRef);
     const canScrollX = tableWidth == 0 || width == 0 || tableWidth > width;
     return {
-      x: canScrollX ? (canResize ? width : undefined) : width,
+      x: canScrollX ? (canResize ? tableWidth : undefined) : tableWidth,
       y: canResize ? unref(tableHeightRef) : undefined,
       scrollToFirstRowOnChange: true,
       ...scroll,
