@@ -1,0 +1,40 @@
+{
+  "name": "server",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "bootstrap": "pnpm install",
+    "tests:serve": "npm run dev",
+    "tests:dev": "nodemon",
+    "tests:build": "rimraf ./dist && tsup ./src/index.ts --dts --format cjs,esm",
+    "tests:start": "npx pm2 start pm2.config.cjs --env production",
+    "tests:restart": "npx pm2 restart pm2.config.cjs --env production",
+    "tests:status": "npx pm2 status pm2.config.cjs --env production",
+    "tests:stop": "npx pm2 stop pm2.config.cjs --env production",
+    "tests:update": "npm add npm-check-updates -D; ncu -u"
+  },
+  "dependencies": {
+    "fs-extra": "11.2.0",
+    "koa": "2.15.2",
+    "koa-body": "6.0.1",
+    "koa-bodyparser": "4.4.1",
+    "koa-route": "4.0.1",
+    "koa-router": "12.0.1",
+    "koa-static": "5.0.0",
+    "koa-websocket": "7.0.0",
+    "koa2-cors": "2.0.6"
+  },
+  "devDependencies": {
+    "@types/koa": "2.15.0",
+    "@types/koa-bodyparser": "5.0.2",
+    "@types/koa-router": "7.4.8",
+    "@types/node": "20.11.30",
+    "nodemon": "3.1.0",
+    "pm2": "5.3.1",
+    "rimraf": "5.0.5",
+    "ts-node": "10.9.2",
+    "tsconfig-paths": "4.2.0",
+    "tsup": "8.0.2",
+    "typescript": "5.4.3"
+  }
+}

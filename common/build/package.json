@@ -1,0 +1,44 @@
+{
+  "name": "@jeesite/build",
+  "version": "5.9.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "lint:eslint": "eslint --cache --max-warnings 0  \"./**/*.{vue,ts,tsx}\" --fix",
+    "lint:all": "npm run type:check && npm run lint:eslint",
+    "uninstall": "rimraf node_modules",
+    "update": "ncu -u"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "11.0.4",
+    "@vitejs/plugin-legacy": "5.4.2",
+    "@vitejs/plugin-vue": "5.1.4",
+    "@vitejs/plugin-vue-jsx": "4.0.1",
+    "dotenv": "16.4.5",
+    "fs-extra": "11.2.0",
+    "picocolors": "1.1.0",
+    "pkg-types": "1.2.1",
+    "rollup-plugin-visualizer": "5.12.0",
+    "unocss": "0.63.4",
+    "vite-plugin-compression": "0.5.1",
+    "vite-plugin-html": "3.2.2",
+    "vite-plugin-mkcert": "1.17.6",
+    "vite-plugin-monaco-editor": "1.1.0",
+    "vite-plugin-theme-vite3": "1.0.5",
+    "vite-plugin-vue-setup-extend": "0.4.0"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
+  }
+}

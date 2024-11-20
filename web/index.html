@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh" id="htmlRoot">
+  <head>
+    <meta charset="utf-8"><meta content="webkit" name="renderer"/><meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="PoweredByJeeSiteV5.0"/><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta name="description" content="PoweredByJeeSiteV5.0"/><meta content="no-cache" http-equiv="Pragma"/><meta http-equiv="Expires" content="0"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <title><%= VITE_GLOB_APP_TITLE %></title>
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/resource/oauth2/oauth2.css">
+    <link rel="stylesheet" href="/resource/css/index.css">
+  </head>
+  <body>
+    <script>if(navigator.userAgent.indexOf("MSIE")>0||navigator.userAgent.indexOf("rv:11")>0){alert('不支持 IE 访问，请使用现代浏览器访问。')};(()=>{var htmlRoot=document.getElementById('htmlRoot'),theme=window.localStorage.getItem('__APP__DARK__MODE__');if(htmlRoot&&theme){htmlRoot.setAttribute('data-theme',theme);theme=htmlRoot=null}})()</script>
+    <div id="app">
+      <div class="app-loading">
+        <div class="app-loading-wrap">
+          <img src="/resource/img/logo.png" class="app-loading-logo" alt="Logo" />
+          <div class="app-loading-dots">
+            <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <div class="app-loading-title"><%= VITE_GLOB_APP_TITLE %></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/index/main.ts"></script>
+    <script src="/resource/layer/layer.js"></script>
+  </body>
+</html>

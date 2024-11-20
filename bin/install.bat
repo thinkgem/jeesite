@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-yarn install
+npm run install
 
 cd bin
 pause

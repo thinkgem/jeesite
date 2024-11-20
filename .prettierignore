@@ -12,6 +12,3 @@ node_modules
 *.html
 *.json
 *-lock.yaml
-
-/bin
-/packages/dfm

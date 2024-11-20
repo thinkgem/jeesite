@@ -1,5 +1,5 @@
 #!/bin/sh
 cd..
-yarn install
+npm run install
 
 cd bin

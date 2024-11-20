@@ -1,0 +1,40 @@
+{
+  "name": "@jeesite/web",
+  "version": "5.9.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bootstrap": "pnpm install",
+    "serve": "npm run dev",
+    "dev": "vite dev",
+    "build": "vite build --mode production",
+    "build:tomcat": "vite build --mode tomcat --emptyOutDir",
+    "build:preview": "npm run build && npm run preview:dist",
+    "preview": "npm run build && npm run preview:dist",
+    "preview:dist": "vite preview --mode development --port 3100",
+    "report": "cross-env REPORT=true npm run build",
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "uninstall": "rimraf node_modules",
+    "update": "ncu -u"
+  },
+  "devDependencies": {
+    "vite-plugin-compression": "0.5.1",
+    "vite-plugin-html": "3.2.2",
+    "vite-plugin-mkcert": "1.17.6",
+    "vite-plugin-theme-vite3": "1.0.5",
+    "vite-plugin-vue-setup-extend": "0.4.0"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
+  }
+}

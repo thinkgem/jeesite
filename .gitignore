@@ -1,13 +1,18 @@
 node_modules
 Thumbs.db
 .DS_Store
-.npmrc
+.turbo
+.vercel
 .cache
 dist
+
+common/tools
+upgrade.ts
 
 # Test files
 tests/server/static
 tests/server/static/upload
+coverage
 
 # Local files
 .local

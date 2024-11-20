@@ -1,0 +1,23 @@
+{
+  "name": "@jeesite/assets",
+  "version": "5.9.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "uninstall": "rimraf node_modules",
+    "update": "ncu -u"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
+  }
+}

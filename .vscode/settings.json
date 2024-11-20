@@ -73,7 +73,7 @@
   "telemetry.enableCrashReporter": false,
   "workbench.settings.enableNaturalLanguageSearch": false,
   "path-intellisense.mappings": {
-    "/@/": "${workspaceRoot}/src"
+    "@/": "${workspaceRoot}/src"
   },
   "prettier.requireConfig": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -109,6 +109,17 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": false
     }
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "$(capture).test.ts, $(capture).test.tsx, $(capture).spec.ts, $(capture).spec.tsx, $(capture).d.ts",
+    "*.tsx": "$(capture).test.ts, $(capture).test.tsx, $(capture).spec.ts, $(capture).spec.tsx,$(capture).d.ts",
+    ".eslintrc.cjs": ".eslintignore,.prettierignore,.stylelintignore,.commitlintrc.*,.prettierrc.*,.stylelintrc.*,.lintstagedrc.cjs",
+    "Dockerfile": "Dockerfile,.docker*,docker-entrypoint.sh,build-local-docker*,nginx.conf",
+    "pnpm-workspace.yaml": "pnpm-lock.yaml,pnpm-workspace.yaml",
+    "package.json": ".npmrc,.gitattributes,.gitignore,turbo.json",
+    "README.md": "README*,LICENSE*"
   },
   "i18n-ally.localesPaths": ["src/locales/lang"],
   "i18n-ally.keystyle": "nested",

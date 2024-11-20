@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-yarn build
+npm run build
 
 cd bin
 pause

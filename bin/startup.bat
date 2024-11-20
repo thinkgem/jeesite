@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-yarn serve
+npm run dev
 
 cd bin
 pause

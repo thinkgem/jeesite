@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ..
-yarn build
+npm run build
 
 cd bin

@@ -98,6 +98,7 @@ module.exports = {
       ],
       { severity: 'warning' },
     ],
+    "no-duplicate-selectors": null,
   },
   ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts'],
 };

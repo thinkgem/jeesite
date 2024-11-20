@@ -1,0 +1,4 @@
+packages:
+  - 'common/**'
+  - 'packages/**'
+  - 'web'

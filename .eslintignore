@@ -13,6 +13,3 @@ Dockerfile
 *.md
 *.woff
 *.ttf
-
-/bin
-/packages/dfm
