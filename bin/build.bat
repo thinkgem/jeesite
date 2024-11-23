@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-yarn build
+pnpm build
 
 cd bin
 pause

@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-yarn serve
+pnpm dev
 
 cd bin
 pause

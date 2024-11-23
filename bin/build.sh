@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ..
-yarn build
+pnpm build
 
 cd bin

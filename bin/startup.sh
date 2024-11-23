@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ..
-yarn serve
+pnpm dev
 
 cd bin

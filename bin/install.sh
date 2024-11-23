@@ -1,5 +1,5 @@
 #!/bin/sh
 cd..
-yarn install
+pnpm install
 
 cd bin

@@ -3,7 +3,7 @@
 cd %~dp0
 
 cd..
-yarn install
+pnpm install
 
 cd bin
 pause
