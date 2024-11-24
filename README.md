@@ -5,7 +5,7 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">快速开发平台 - Spring Boot 3</h3>
 <p align="center">
  <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-5.9" src="https://img.shields.io/badge/JeeSite-V5.9-success.svg"></a>
- <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.7/3.2" src="https://img.shields.io/badge/SpringBoot-2.7/3.2-blue.svg"></a>
+ <a href="https://spring.io/projects/spring-boot#learn" target="__blank"><img alt="SpringBoot-2.7/3.3" src="https://img.shields.io/badge/SpringBoot-2.7/3.3-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue/stargazers" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
 </p>
@@ -80,9 +80,9 @@
 
 ## 技术选型
 
-* 主框架：Spring Boot 3.1、Spring Framework 6.0、Apache Shiro 2.0、J2Cache
+* 主框架：Spring Boot 3.3、Spring Framework 6.1、Apache Shiro 2.0、J2Cache
 * 持久层：Apache MyBatis 3.5、Hibernate Validator 8.0、Alibaba Druid 1.2
-* 视图层：Spring MVC 6.0、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
+* 视图层：Spring MVC 6.1、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.7、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
 * 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 工作流引擎：Flowable 7.0、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
