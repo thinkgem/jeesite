@@ -21,9 +21,6 @@
       <template #headerTop v-if="$slots.headerTop">
         <slot name="headerTop"></slot>
       </template>
-      <template #tableTop v-if="$slots.tableTop">
-        <slot name="tableTop"></slot>
-      </template>
     </TableHeader>
     <BasicForm
       ref="formRef"
@@ -41,6 +38,7 @@
         <slot :name="item" v-bind="data || {}"></slot>
       </template>
     </BasicForm>
+    <slot v-if="$slots.tableTop" name="tableTop"></slot>
     <div v-if="showSelectionBar" class="m-3 mt-0">
       <TableSelectionBar
         :clearSelectedRowKeys="getHeaderProps.clearSelectedRowKeys!"
@@ -297,12 +295,7 @@
     const { title, showTableSetting, titleHelpMessage, tableSetting, showSelectionBar } =
       unref(getProps);
     const hideTitle =
-      !title &&
-      !slots.tableTitle &&
-      !slots.toolbar &&
-      !slots.headerTop &&
-      !slots.tableTop &&
-      !showTableSetting;
+      !title && !slots.tableTitle && !slots.toolbar && !slots.headerTop && !showTableSetting;
     if (hideTitle && !isString(title)) {
       return { class: 'hidden' };
     }
