@@ -124,6 +124,23 @@
       await fetch();
       isFirstLoad.value = true;
     }
+    // 如果没有给初始值，并不允许清空选择项的时候，默认选择第一个选项
+    if (!state.value && !getAttrs.value.allowClear && optionsRef.value.length > 0) {
+      const fieldNames = getAttrs.value.fieldNames || {
+        label: 'label',
+        value: 'value',
+        options: 'options',
+      };
+      const firstValue = optionsRef.value[0];
+      if (props.labelInValue) {
+        state.value = {
+          label: firstValue[fieldNames.label],
+          value: firstValue[fieldNames.value],
+        };
+      } else {
+        state.value = firstValue[fieldNames.value];
+      }
+    }
   });
 
   async function fetch() {
