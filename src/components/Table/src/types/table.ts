@@ -471,11 +471,11 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   editComponentProps?:
     | ((opt: {
         text: any;
-        record: EditRecordRow;
+        record: EditRecordRow | Recordable;
         column: BasicColumn;
         index: number;
       }) => Recordable)
-    | Recordable;
+    | any;
   editRule?: boolean | ((text: any, record: Recordable) => Promise<void>);
   // editValueMap?: (value: any) => string;
   onEditRow?: () => void;
@@ -511,6 +511,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
     record: Recordable;
     column: BasicColumn;
     index: number;
+    attrs?: object;
   }) => VNodeChild | JSX.Element;
 }
 
