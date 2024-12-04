@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-cloud-module-test3</artifactId>
-	<version>5.9.2.springboot3-SNAPSHOT</version>
+	<version>5.10.0.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JeeSite Cloud Module Test3</name>
