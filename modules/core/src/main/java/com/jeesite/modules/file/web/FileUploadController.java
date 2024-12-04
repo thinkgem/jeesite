@@ -35,7 +35,7 @@ public class FileUploadController extends BaseController {
 
 	@Autowired
 	private FileUploadService fileUploadService;
-
+	
 	/**
 	 * 上传文件参数
 	 */
@@ -53,7 +53,7 @@ public class FileUploadController extends BaseController {
 		model.put("imageMaxHeight", Global.getConfigToInteger("file.imageMaxHeight", "768"));
 		return model;
 	}
-
+	
 	/**
 	 * 上传文件
 	 */
@@ -62,14 +62,14 @@ public class FileUploadController extends BaseController {
 	public Map<String, Object> uploadFile(FileUploadParams params) {
 		return fileUploadService.uploadFile(new FileUpload(), params);
 	}
-
+	
 	/**
 	 * 下载文件
 	 */
 	@RequestMapping(value = "/download/{fileUploadId}")
 	public String downloadFile(@PathVariable("fileUploadId") String fileUploadId, String preview, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		FileUpload fileUpload = fileUploadService.getFile(new FileUpload(fileUploadId));
-		return fileUploadService.downloadFile(fileUpload, preview, request, response);
+		return fileUploadService.downloadFile(fileUpload, preview, "file", request, response);
 	}
 
 	/**
