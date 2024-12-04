@@ -81,6 +81,10 @@
     return {
       showSearch: true,
       optionFilterProp: 'label',
+      fieldNames: {
+        value: 'value',
+        label: 'label',
+      },
       ...unref(attrs),
       ...(props as Recordable),
     };
@@ -116,6 +120,30 @@
     },
   );
 
+  watch(
+    () => optionsRef.value,
+    () => {
+      // 如果没有给初始值，并不允许清空选择项和非多选的时候，默认选择第一个选项
+      if (
+        !state.value &&
+        !getAttrs.value.allowClear &&
+        getAttrs.value.mode != 'multiple' &&
+        optionsRef.value.length > 0
+      ) {
+        const fieldNames = getAttrs.value.fieldNames;
+        const firstValue = optionsRef.value[0];
+        if (props.labelInValue) {
+          state.value = {
+            label: firstValue[fieldNames.label],
+            value: firstValue[fieldNames.value],
+          };
+        } else {
+          state.value = firstValue[fieldNames.value];
+        }
+      }
+    },
+  );
+
   onMounted(async () => {
     if (props.options && props.options.length > 0) {
       optionsRef.value = props.options;
@@ -123,23 +151,6 @@
     if (props.immediate) {
       await fetch();
       isFirstLoad.value = true;
-    }
-    // 如果没有给初始值，并不允许清空选择项的时候，默认选择第一个选项
-    if (!state.value && !getAttrs.value.allowClear && optionsRef.value.length > 0) {
-      const fieldNames = getAttrs.value.fieldNames || {
-        label: 'label',
-        value: 'value',
-        options: 'options',
-      };
-      const firstValue = optionsRef.value[0];
-      if (props.labelInValue) {
-        state.value = {
-          label: firstValue[fieldNames.label],
-          value: firstValue[fieldNames.value],
-        };
-      } else {
-        state.value = firstValue[fieldNames.value];
-      }
     }
   });
 
