@@ -47,7 +47,7 @@
     </div>
     <FormItemRest>
       <ATable
-        ref="tableElRef"
+        ref="tableRef"
         v-bind="getBindValues"
         :rowClassName="getRowClassName"
         v-show="getEmptyDataIsShowTable"
@@ -139,10 +139,13 @@
     'selection-change',
     'register',
     'row-click',
-    'row-dbClick',
+    'row-db-click',
     'row-contextmenu',
     'row-mouseenter',
     'row-mouseleave',
+    'row-dragstart',
+    'row-dragover',
+    'row-drop',
     'edit-end',
     'edit-cancel',
     'edit-row-end',
@@ -156,10 +159,10 @@
   const slots = useSlots();
 
   const { t } = useI18n();
-  const tableElRef = ref<ComponentRef>(null);
+  const tableRef = ref<ComponentRef>(null);
   const tableData = ref<Recordable[]>([]);
 
-  const wrapRef = ref<HTMLElement | null>(null);
+  const wrapRef = ref<ComponentRef>(null);
   const formRef = ref<ComponentRef>(null);
   const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -262,7 +265,7 @@
 
   const { getScrollRef, redoHeight } = useTableScroll(
     getProps,
-    tableElRef,
+    tableRef,
     getColumnsRef,
     getRowSelectionRef,
     getDataSourceRef,
@@ -270,13 +273,15 @@
     formRef,
   );
 
-  const { scrollTo } = useTableScrollTo(tableElRef, getDataSourceRef);
+  const { scrollTo } = useTableScrollTo(tableRef, getDataSourceRef);
 
   const { customRow } = useCustomRow(getProps, {
     setSelectedRowKeys,
     getSelectRowKeys,
     clearSelectedRowKeys,
     getAutoCreateKey,
+    getDataSourceRef,
+    tableRef,
     emit,
   });
 
@@ -312,7 +317,7 @@
     } as Recordable;
   });
 
-  const { getFooterProps } = useTableFooter(getProps, getScrollRef, tableElRef, getDataSourceRef);
+  const { getFooterProps } = useTableFooter(getProps, getScrollRef, tableRef, getDataSourceRef);
 
   const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } =
     useTableForm(getProps, slots, reload, getLoading);
@@ -412,45 +417,58 @@
     redoHeight();
   }
 
+  function getSize() {
+    return unref(getBindValues).size as SizeType;
+  }
+
+  function getTableRef() {
+    return tableRef;
+  }
+
   const tableAction: Partial<TableActionType> = {
     reload,
-    getSelectRows,
-    clearSelectedRowKeys,
-    getSelectRowKeys,
-    deleteSelectRowByKey,
+    setProps,
+    setLoading,
+    getTableRef,
+    redoHeight,
+    scrollTo,
+    getSize,
+    emit,
+
+    getColumns,
+    getCacheColumns,
+    setColumns,
+    updateColumn,
+    // setCacheColumnsByField,
+
+    getPagination,
     setPagination,
+    getShowPagination,
+    setShowPagination,
+
+    getDataSource,
+    getDelDataSource,
+    getRawDataSource,
+
     setTableData,
+    updateTableData,
     updateTableDataRecord,
     deleteTableDataRecord,
     insertTableDataRecord,
     findTableDataRecord,
-    redoHeight,
-    setSelectedRowKeys,
-    setColumns,
-    updateColumn,
-    setLoading,
-    getDataSource,
-    getDelDataSource,
-    getRawDataSource,
-    setProps,
+
     getRowSelection,
     getDefaultRowSelection,
-    getPaginationRef: getPagination,
-    getColumns,
-    getCacheColumns,
-    emit,
-    updateTableData,
-    setShowPagination,
-    getShowPagination,
-    // setCacheColumnsByField,
+    getSelectRows,
+    getSelectRowKeys,
+    setSelectedRowKeys,
+    deleteSelectRowByKey,
+    clearSelectedRowKeys,
+
     expandAll,
     expandRows,
     collapseAll,
     expandCollapse,
-    scrollTo,
-    getSize: () => {
-      return unref(getBindValues).size as SizeType;
-    },
   };
 
   createTableContext({ ...(tableAction as TableActionType), wrapRef, getBindValues });
@@ -618,6 +636,20 @@
 
       .ant-table-row-expand-icon {
         margin-left: 7px;
+      }
+
+      tr.dragover {
+        &-top td {
+          border-top: 2px solid rgb(22 119 255 / 30%) !important;
+          border-top-left-radius: 0 !important;
+          border-top-right-radius: 0 !important;
+        }
+
+        &-bottom td {
+          border-bottom: 2px solid rgb(22 119 255 / 30%) !important;
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
       }
     }
 

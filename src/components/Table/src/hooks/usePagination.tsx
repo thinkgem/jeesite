@@ -77,7 +77,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
     return unref(show);
   }
 
-  async function setShowPagination(flag: boolean) {
+  function setShowPagination(flag: boolean) {
     show.value = flag;
   }
 

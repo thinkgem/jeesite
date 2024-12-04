@@ -11,11 +11,11 @@ import { useScroll } from '/@/hooks/event/useScroll';
 
 export function useTableScroll(
   propsRef: ComputedRef<BasicTableProps>,
-  tableElRef: Ref<ComponentRef>,
+  tableRef: Ref<ComponentRef>,
   columnsRef: ComputedRef<BasicColumn[]>,
   rowSelectionRef: ComputedRef<TableRowSelection | null>,
   getDataSourceRef: Ref<Recordable[]>,
-  wrapRef: Ref<HTMLElement | null>,
+  wrapRef: Ref<ComponentRef>,
   formRef: Ref<ComponentRef>,
 ) {
   const tableHeightRef = ref<number | string | undefined>(167);
@@ -65,7 +65,7 @@ export function useTableScroll(
     } = unref(propsRef);
     const tableData = unref(getDataSourceRef);
 
-    const table = unref(tableElRef);
+    const table = unref(tableRef);
     if (!table) return;
 
     const tableEl: HTMLElement = table.$el;
@@ -205,7 +205,7 @@ export function useTableScroll(
 
   const tableWidthRef = ref();
   useResizeObserver(wrapRef, () => {
-    const table = unref(tableElRef);
+    const table = unref(tableRef);
     tableWidthRef.value = table?.$el?.offsetWidth || 600; // 默认宽度不小于，列中指定的宽度总合
   });
 

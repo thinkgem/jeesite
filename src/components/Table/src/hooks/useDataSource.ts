@@ -61,6 +61,7 @@ export function useDataSource(
   const dataSourceRef = ref<Recordable[]>([]);
   const delDataSourceRef = ref<Recordable[]>([]);
   const rawDataSourceRef = ref<Recordable>({});
+  const getDataSourceRef: Ref<Recordable<any>[]> = ref([]);
 
   watchEffect(() => {
     tableData.value = unref(dataSourceRef);
@@ -123,8 +124,6 @@ export function useDataSource(
     const { rowKey } = unref(propsRef);
     return unref(getAutoCreateKey) ? ROW_KEY : rowKey;
   });
-
-  const getDataSourceRef: Ref<Recordable<any>[]> = ref([]);
 
   watch(
     () => dataSourceRef.value,

@@ -87,7 +87,11 @@ declare global {
     $el: T;
   }
 
-  type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
+  type ComponentRef<T extends HTMLElement = HTMLDivElement> =
+    | Ref<Nullable<HTMLElement>, Nullable<HTMLElement>>
+    | ComponentElRef<T>
+    | HTMLElement
+    | null;
 
   type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
 

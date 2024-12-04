@@ -35,4 +35,6 @@ export const DEFAULT_ALIGN = 'center';
 
 export const INDEX_COLUMN_FLAG = 'INDEX';
 
+export const DRAG_COLUMN_FLAG = 'DRAG';
+
 export const ACTION_COLUMN_FLAG = 'ACTION';

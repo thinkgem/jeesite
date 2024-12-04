@@ -1,6 +1,6 @@
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
-import type { ComputedRef } from 'vue';
+import { ComputedRef, h } from 'vue';
 import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue';
 import { renderEditCell } from '../components/editable';
 import { usePermission } from '/@/hooks/web/usePermission';
@@ -11,7 +11,14 @@ import { deepMerge } from '/@/utils';
 import { error } from '/@/utils/log';
 import { cloneDeep, isEqual, uniqBy } from 'lodash-es';
 import { formatToDate } from '/@/utils/dateUtil';
-import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, PAGE_SIZE } from '../const';
+import {
+  ACTION_COLUMN_FLAG,
+  DEFAULT_ALIGN,
+  INDEX_COLUMN_FLAG,
+  DRAG_COLUMN_FLAG,
+  PAGE_SIZE,
+} from '../const';
+import { Icon } from '/@/components/Icon';
 
 function handleItem(item: BasicColumn, ellipsis: boolean, dictTypes: Set<string>) {
   const { key, dataIndex, children } = item;
@@ -83,7 +90,7 @@ function handleIndexColumn(
 ) {
   const { t } = useI18n();
 
-  const { showIndexColumn, indexColumnProps, isTreeTable } = unref(propsRef);
+  const { showIndexColumn, indexColumnProps, isTreeTable, canRowDrag } = unref(propsRef);
 
   if (unref(isTreeTable)) {
     return;
@@ -103,6 +110,29 @@ function handleIndexColumn(
   if (!pushIndexColumns) return;
 
   // const isFixedLeft = columns.some((item) => item.fixed === 'left');
+
+  if (canRowDrag) {
+    columns.unshift({
+      flag: DRAG_COLUMN_FLAG,
+      title: '',
+      width: 40,
+      align: 'center',
+      fixed: 'left',
+      customRender: () => {
+        return h(Icon, {
+          icon: 'i-ant-design:drag-outlined',
+          class: 'cursor-move',
+          onMouseenter: (event: any) => {
+            event.target.closest('tr').draggable = true;
+          },
+          onMouseleave: (event: any) => {
+            event.target.closest('tr').draggable = false;
+          },
+        });
+      },
+      ...indexColumnProps,
+    });
+  }
 
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,

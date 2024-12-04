@@ -259,7 +259,7 @@
     const onChange = editComponentProps?.onChange;
     if (onChange && isFunction(onChange)) onChange(...arguments);
 
-    table.emit?.('edit-change', {
+    table.emit('edit-change', {
       column: props.column,
       value: unref(currentValueRef),
       labelValue: unref(currentLabelValueRef),
@@ -348,7 +348,7 @@
     }
 
     //const record = await table.updateTableData(index, dataKey, value);
-    needEmit && table.emit?.('edit-end', { record, index, key, value, labelValue });
+    needEmit && table.emit('edit-end', { record, index, key, value, labelValue });
     isEdit.value = false;
   }
 
@@ -369,7 +369,7 @@
     currentLabelValueRef.value = defaultLabelValueRef.value;
     const { column, index, record } = props;
     const { key, dataIndex } = column;
-    table.emit?.('edit-cancel', {
+    table.emit('edit-cancel', {
       record,
       index,
       key: dataIndex || key,
@@ -395,9 +395,7 @@
   function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
     if (props.record) {
       /* eslint-disable  */
-      isArray(props.record[cbs])
-        ? props.record[cbs]?.push(handle)
-        : (props.record[cbs] = [handle]);
+      isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle]);
     }
   }
 
@@ -421,7 +419,7 @@
           if (!props.record?.onValid?.()) return;
           const submitFns = props.record?.submitCbs || [];
           submitFns.forEach((fn) => fn(false, false));
-          table.emit?.('edit-row-end');
+          table.emit('edit-row-end');
           return true;
         }
       };
