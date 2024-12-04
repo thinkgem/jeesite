@@ -69,7 +69,7 @@ public class FileUploadController extends BaseController {
 	@RequestMapping(value = "/download/{fileUploadId}")
 	public String downloadFile(@PathVariable("fileUploadId") String fileUploadId, String preview, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		FileUpload fileUpload = fileUploadService.getFile(new FileUpload(fileUploadId));
-		return fileUploadService.downloadFile(fileUpload, preview, request, response);
+		return fileUploadService.downloadFile(fileUpload, preview, "file", request, response);
 	}
 
 	/**
