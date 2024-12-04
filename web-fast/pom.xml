@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.9.2.springboot3-SNAPSHOT</version>
+		<version>5.10.0.springboot3-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -97,7 +97,7 @@
 		<dependency>
 			<groupId>com.jeesite</groupId>
 			<artifactId>jeesite-vue-dist</artifactId>
-			<version>5.9.2-SNAPSHOT</version>
+			<version>5.10.0-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
