@@ -77,7 +77,6 @@ public class ReflectUtils {
 							//Method method = getAccessibleMethodByName(object, methodName, 0);
 							//if (method == null) { return; }
 							//Class<?> returnType = method.getReturnType();
-							System.out.println(object.getClass());
 							MethodAccess ma = MethodAccess.get(object.getClass());
 							Class<?> returnType = ma.getReturnTypes()[ma.getIndex(methodName)];
 							childObj = returnType.getDeclaredConstructor().newInstance();
