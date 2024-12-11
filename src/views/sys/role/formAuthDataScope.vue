@@ -97,6 +97,7 @@
     {
       label: t('数据范围'),
       field: 'dataScope',
+      helpMessage: t('指定数据权限范围类型，多个角色同时指定，之间为或者关系'),
       component: 'RadioGroup',
       componentProps: {
         dictType: 'sys_role_data_scope',
@@ -107,6 +108,9 @@
     {
       label: t('业务范围'),
       field: 'bizScope',
+      helpMessage: t(
+        '在 addFilter 权限过滤的时候指定适应的业务范围，不指定代表所有生效，如：有的功能看本部门，有的功能看本公司；新的业务范围从字典 sys_role_biz_scope 类型添加。',
+      ),
       component: 'Select',
       componentProps: {
         dictType: 'sys_role_biz_scope',
