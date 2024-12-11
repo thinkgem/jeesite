@@ -179,10 +179,10 @@ user:
   dataScopes: >
     [{
       moduleCode: "core",
-      ctrlPermi: "0",
       ctrlName: "机构权限",
       ctrlName_en: "Office",
       ctrlType: "Office",
+      ctrlPermi: "0",
       ctrlDataUrl: "/sys/office/treeData",
       chkboxType: {"Y":"ps","N":"ps"},
       expandLevel: -1,
@@ -195,6 +195,16 @@ user:
       ctrlPermi: "0",
       ctrlDataUrl: "/sys/company/treeData",
       chkboxType: {"Y":"ps","N":"ps"},
+      expandLevel: -1,
+      remarks: ""
+    },{
+      moduleCode: "core",
+      ctrlName: "用户权限",
+      ctrlName_en: "User",
+      ctrlType: "User",
+      ctrlPermi: "3",
+      ctrlDataUrl: "/sys/office/treeData?isLoadUser=true",
+      chkboxType: {"Y":"s","N":"s"},
       expandLevel: -1,
       remarks: ""
     },{
