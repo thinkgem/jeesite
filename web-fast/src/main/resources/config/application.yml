@@ -149,9 +149,6 @@ shiro:
   #  defaultPath: ${shiro.loginUrl}
   defaultPath: ${vuePath}/login
 
-  # Vue 资源文件路径，与 VITE_PUBLIC_PATH 一致
-  vuePath: /vue
-
   # 登录相关设置
   loginUrl: ${adminPath}/login
   logoutUrl: ${shiro.loginUrl}
