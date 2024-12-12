@@ -8,14 +8,36 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 **特点：用经典开发模式，开发分布式应用，两个字【简单】，一个字【快】。**
 
-* 源码仓库地址1：<https://gitee.com/thinkgem/jeesite-cloud>
-* 源码仓库地址2：<https://github.com/thinkgem/jeesite-cloud>
-* 源码仓库地址3：<https://gitcode.com/thinkgem/jeesite-cloud>
-* 分离版前端源码仓库1：<https://gitee.com/thinkgem/jeesite-vue>
-* 分离版前端源码仓库2：<https://github.com/thinkgem/jeesite-vue>
-* 分离版前端源码仓库3：<https://gitcode.com/thinkgem/jeesite-vue>
+## 技术交流
 
-## 优势（只写别人没有的）
+* 官方网站：<https://jeesite.com>
+* 使用文档：<https://jeesite.com/docs>
+* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
+* 需求收集：<https://gitee.com/thinkgem/jeesite5/issues/new>
+* 联系我们：<http://s.jeesite.com>
+* 关注微信公众号，了解最新动态：
+
+<p style="padding-left:40px">
+ <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
+</p>
+
+* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* 微信群：如果无法进入，可添加客服微信 jeesitex 邀请您进群
+
+<p style="padding-left:40px">
+ <img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/>
+</p>
+
+* 源码仓库地址：
+  [Gitee](https://gitee.com/thinkgem/jeesite-cloud)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite-cloud)、
+  [GitHub](https://github.com/thinkgem/jeesite-cloud)
+* 分离版源码仓库地址：
+  [Gitee](https://gitee.com/thinkgem/jeesite-vue)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
+  [GitHub](https://github.com/thinkgem/jeesite-vue)
+
+## 我们的优势
 
 1. 在 JeeSite 单应用基础之上，完成的 Cloud 功能，使用经典开发模式，就像开发单应用一样开发分布式应用
 2. 它提供了微服务模块的代码生成工具，快速生成开发微服务功能，包含微服务的发布和调用接口
@@ -31,14 +53,14 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud 2021.0.8 + Alibaba 2021.0.4
-* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.2
-* 分布式统一配置中心：Spring Cloud Config / Nacos 2.2
+* 分布式系统套件版本：Spring Cloud 2021.0.9 + Alibaba 2021.0.6
+* 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.4
+* 分布式统一配置中心：Spring Cloud Config / Nacos 2.4
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
 * 声明式服务调用：Spring Cloud OpenFeign
 * 客户端负载均衡：Spring Cloud LoadBalancer
 * 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
-* 分布式事务框架：Seata 1.6 (可选组件)
+* 分布式事务框架：Seata 1.8 (可选组件)
 * 分布式链路追踪：Zipkin / SkyWalking (可选组件)
 * 工作流引擎框架：Flowable 6.6 (可选组件)
 * 多租户 Saas 架构：表共享、独立模式、独立库方式
@@ -74,6 +96,28 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 链路追踪：jeesite-cloud-zipkin ： <http://127.0.0.1:9411>
 * 解释：主项目为服务提供者、客户端项目为服务消费者
 
+## 更多介绍
+
+* 内置功能：<https://jeesite.com/docs/function/>
+* 目录结构：<https://jeesite.com/docs/catalog/>
+* 架构特点：<https://jeesite.com/docs/feature/>
+* 开发规范：<https://jeesite.com/docs/standard/>
+* 代码生成：<https://jeesite.com/docs/code-gen/>
+
+## 生态系统
+
+* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
+* Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
+* 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
+* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
+* PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
+* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
+* JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
+* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
+* Mybatis-Plus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
+* Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
+* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+
 ## 快速运行
 
 ### 初始化数据库
@@ -107,8 +151,8 @@ JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src �
 
 **jar 方式：**
 
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.2.3/nacos-server-2.2.3.zip>
-2. 解压 `nacos-server-2.2.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.4.3/nacos-server-2.4.3.zip>
+2. 解压 `nacos-server-2.4.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **src 方式：**
 
@@ -311,37 +355,10 @@ spring:
 7. 本项目已申请软件著作权，请尊重开源，感谢阅读。
 8. 本版本无用户数限制，无在线人数限制。
 
-### 获得技术服务支持：<http://s.jeesite.com>
+## 技术支持与服务
 
-* 我们深知，没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以得到一些回报，有了这些我们会把开源事业做的更好，回报社区和社会，请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-
-# 技术交流方式
-
-* 官方网站：<https://jeesite.com>
-* 使用文档：<https://jeesite.com/docs>
-* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
-* 需求收集：<https://gitee.com/thinkgem/jeesite-cloud/issues/new>
-* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 微信群：添加客服微信 <http://s.jeesite.com> 邀请您进群
-* 请关注微信公众号，了解最新动态：
-
-<p style="padding-left:40px">　　
- <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
-</p>
-
-## 生态系统
-
-* 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
-* Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
-* 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
-* 手机端移动端：<https://gitee.com/thinkgem/jeesite-uniapp>
-* PC客户端程序：<https://gitee.com/thinkgem/jeesite-client>
-* Vue3分离版本：<https://gitee.com/thinkgem/jeesite-vue>
-* JeeSite统一认证：<https://jeesite.com/docs/oauth2-server>
-* JFlow工作流引擎：<https://gitee.com/thinkgem/jeesite-jflow>
-* Mybatis-Plus: <https://gitee.com/thinkgem/jeesite-mybatisplus>
-* Magic接口快速开发：<https://gitee.com/thinkgem/jeesite-magic-api>
-* 内外网中间件：<https://my.oschina.net/thinkgem/blog/4624519>
+* 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
+* **联系我们**：请访问技术支持与服务页面：<http://s.jeesite.com>
 
 # Git 全局设置技巧
 
