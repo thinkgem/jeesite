@@ -24,20 +24,28 @@
 * 使用文档：<https://jeesite.com/docs>
 * 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 需求收集：<https://gitee.com/thinkgem/jeesite5/issues/new>
-* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 微信群：添加客服微信 <http://s.jeesite.com> 邀请您进群
+* 联系我们：<http://s.jeesite.com>
 * 关注微信公众号，了解最新动态：
 
 <p style="padding-left:40px">　　
  <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
 </p>
 
-* 源码仓库地址1：<https://gitee.com/thinkgem/jeesite5>
-* 源码仓库地址2：<https://github.com/thinkgem/jeesite5>
-* 源码仓库地址3：<https://gitcode.com/thinkgem/jeesite5>
-* 分离版前端源码仓库地址1：<https://gitee.com/thinkgem/jeesite-vue>
-* 分离版前端源码仓库地址2：<https://github.com/thinkgem/jeesite-vue>
-* 分离版前端源码仓库地址3：<https://gitcode.com/thinkgem/jeesite-vue>
+* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* 微信群：如果无法进入，可添加客服微信 jeesitex 邀请您进群
+
+<p style="padding-left:40px">　　
+ <img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/>
+</p>
+
+* 源码仓库地址：
+  [Gitee](https://gitee.com/thinkgem/jeesite5)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite5)、
+  [GitHub](https://github.com/thinkgem/jeesite5)
+* 分离版源码仓库地址：
+  [Gitee](https://gitee.com/thinkgem/jeesite-vue)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
+  [GitHub](https://github.com/thinkgem/jeesite-vue)
 
 ## 平台介绍
 
@@ -86,7 +94,7 @@
 * 前端组件：jQuery 3.7、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
 * 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
 * 工作流引擎：Flowable 6.6、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
-* Bootstrap 版 支持 IE9 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
+* Bootstrap 版 支持 IE10 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
 * JeeSite Vue 版本：<https://gitee.com/thinkgem/jeesite-vue>
@@ -228,10 +236,10 @@ docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
 7. 本项目已申请软件著作权，请尊重开源，感谢阅读。
 8. 无用户数限制，无在线人数限制，放心使用。
 
-## 技术服务与支持
+## 技术支持与服务
 
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系我们**：请访问技术支持服务页面：<https://jeesite.com/docs/support/> 
+* **联系我们**：请访问技术支持与服务页面：<http://s.jeesite.com> 
 
 ## 今后如何升级？
 
