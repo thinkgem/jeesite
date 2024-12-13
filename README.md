@@ -36,6 +36,10 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
   [Gitee](https://gitee.com/thinkgem/jeesite-vue)、
   [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
   [GitHub](https://github.com/thinkgem/jeesite-vue)
+* 源码合集仓库地址：
+  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3.cloud)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=v5.springboot3.cloud)、
+  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3.cloud)
 
 ## 我们的优势
 
