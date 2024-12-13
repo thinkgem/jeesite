@@ -26,20 +26,32 @@
 * 使用文档：<https://jeesite.com/docs>
 * 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
 * 需求收集：<https://gitee.com/thinkgem/jeesite5/issues/new>
-* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 微信群：添加客服微信 <http://s.jeesite.com> 邀请您进群
+* 联系我们：<http://s.jeesite.com>
 * 关注微信公众号，了解最新动态：
 
 <p style="padding-left:40px">　　
  <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
 </p>
 
-* 前端源码仓库地址1：<https://gitee.com/thinkgem/jeesite-vue>
-* 前端源码仓库地址2：<https://github.com/thinkgem/jeesite-vue>
-* 前端源码仓库地址3：<https://gitcode.com/thinkgem/jeesite-vue>
-* 后端源码仓库地址1：<https://gitee.com/thinkgem/jeesite5>
-* 后端源码仓库地址2：<https://github.com/thinkgem/jeesite5>
-* 后端源码仓库地址2：<https://gitcode.com/thinkgem/jeesite5>
+* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
+* 微信群：如果无法进入，可添加客服微信 jeesitex 邀请您进群
+
+<p style="padding-left:40px">　　
+ <img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/>
+</p>
+
+* 后端源码仓库地址：
+  [Gitee](https://gitee.com/thinkgem/jeesite5)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite5)、
+  [GitHub](https://github.com/thinkgem/jeesite5)
+* 前端源码仓库地址：
+  [Gitee](https://gitee.com/thinkgem/jeesite-vue)、
+  [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
+  [GitHub](https://github.com/thinkgem/jeesite-vue)
+* 源码合集仓库地址：
+  [GVP](https://gitee.com/thinkgem/jeesite/tree/main)、
+  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=main)、
+  [GitHub](https://github.com/thinkgem/jeesite/tree/main)
 
 ## 框架介绍
 
@@ -673,11 +685,11 @@ VITE_GLOB_API_URL_PREFIX = /js
 7. 如果你对本软件有改进，希望可以贡献给我们，共同进步。
 8. 本项目已申请软件著作权，请尊重开源，感谢阅读。
 
-## 技术服务与支持
+## 技术支持与服务
 
 * 本软件免费，我们也提供了相应的收费服务，因为：
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
-* **联系我们**：请访问技术支持服务页面：<https://jeesite.com/docs/support/> 
+* **联系我们**：请访问技术支持与服务页面：<http://s.jeesite.com> 
 
 ## 专业版增加的功能
 
