@@ -84,6 +84,7 @@
 
   const { t } = useI18n();
   const attrs = useAttrs();
+  const [state] = useRuleFormItem(props);
   const treeDataRef = ref<Recordable[]>(props.treeData);
   const isFirstLoad = ref<boolean>(false);
   const loading = ref<boolean>(false);
@@ -109,8 +110,6 @@
     }
     return omit(propsData, 'treeData');
   });
-
-  const [state] = useRuleFormItem(props);
 
   if (!isEmpty(props.dictType)) {
     const { initSelectTreeData } = useDict();

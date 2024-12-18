@@ -73,6 +73,7 @@
 
   const { t } = useI18n();
   const attrs = useAttrs();
+  const [state] = useRuleFormItem(props);
   const optionsRef = ref<Recordable[]>(props.options);
   const isFirstLoad = ref<boolean>(false);
   const loading = ref<boolean>(false);
@@ -89,8 +90,6 @@
       ...(props as Recordable),
     };
   });
-
-  const [state] = useRuleFormItem(props);
 
   if (!isEmpty(props.dictType)) {
     const { initSelectOptions } = useDict();

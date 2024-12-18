@@ -269,7 +269,6 @@
             }
           },
         };
-        const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
 
         const { autoSetPlaceHolder, size } = props.formProps;
         const propsData: Recordable = {
@@ -317,6 +316,7 @@
           // bindValue.treeCheckable = true;
         }
 
+        const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
         const compAttr: Recordable = {
           ...propsData,
           ...on,
