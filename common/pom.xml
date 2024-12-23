@@ -79,6 +79,13 @@
 			<artifactId>snakeyaml</artifactId>
 			<version>${snakeyaml.version}</version>
 		</dependency>
+
+		<!-- Fury serialize -->
+		<dependency>
+			<groupId>org.apache.fury</groupId>
+			<artifactId>fury-core</artifactId>
+			<version>${fury.version}</version>
+		</dependency>
 		
 		<!-- Apache HTTP -->
 		<dependency>

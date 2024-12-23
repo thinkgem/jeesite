@@ -4,7 +4,11 @@
  */
 package com.jeesite.common.lang;
 
+import com.jeesite.common.io.PropertiesUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.fury.Fury;
+import org.apache.fury.ThreadSafeFury;
+import org.apache.fury.config.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +27,23 @@ import java.lang.reflect.InvocationTargetException;
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
+
+	/**
+	 * 当前类的实例持有者（静态内部类，延迟加载，懒汉式，线程安全的单例模式）
+	 */
+	private static final class Static {
+		private static final Boolean isJavaSerialize;
+		private static final ThreadSafeFury fury;
+		static {
+			isJavaSerialize = PropertiesUtils.getInstance()
+					.getPropertyToBoolean("isJavaSerialize", "false");
+			org.apache.fury.logging.LoggerFactory.useSlf4jLogging(true);
+			fury = Fury.builder().withLanguage(Language.JAVA)
+                .withRefTracking(true)
+                .requireClassRegistration(false)
+                .buildThreadSafeFury();
+		}
+	}
 
 	/**
 	 * 转换为 Double 类型
@@ -145,8 +166,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 			return null;
 		}
     	byte[] bytes = ObjectUtils.serialize(source);
-    	Object target = ObjectUtils.unserialize(bytes);
-	    return target;
+		return ObjectUtils.unserialize(bytes);
 	}
 	
 	/**
@@ -156,7 +176,11 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 */
 	public static byte[] serialize(Object object) {
 		try {
-			return ObjectUtils.serializeJava(object);
+			if (Static.isJavaSerialize) {
+				return ObjectUtils.serializeJava(object);
+			} else {
+				return ObjectUtils.serializeFury(object);
+			}
 		} catch (Exception e) {
 			logger.error("serialize: {}", e.getMessage());
 		}
@@ -170,7 +194,11 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 */
 	public static Object unserialize(byte[] bytes) {
 		try {
-			return ObjectUtils.unserializeJava(bytes);
+			if (Static.isJavaSerialize) {
+				return ObjectUtils.unserializeJava(bytes);
+			} else {
+				return ObjectUtils.unserializeFury(bytes);
+			}
 		} catch (Exception e) {
 			logger.error("unserialize: {}", e.getMessage());
 		}
@@ -221,6 +249,43 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 				throw new RuntimeException(e);
 			}
 		}
+		long totalTime = System.currentTimeMillis() - beginTime;
+		if (totalTime > 30000 && object != null){
+			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatTime(totalTime));
+		}
+		return object;
+	}
+
+
+	/**
+	 * 序列化对象
+	 * @param object
+	 * @return
+	 */
+	public static byte[] serializeFury(Object object) {
+		if (object == null){
+			return null;
+		}
+		long beginTime = System.currentTimeMillis();
+		byte[] bytes = Static.fury.serialize(object);
+		long totalTime = System.currentTimeMillis() - beginTime;
+		if (totalTime > 30000){
+			logger.warn(object.getClass() + " serialize time: " + TimeUtils.formatTime(totalTime));
+		}
+		return bytes;
+	}
+
+	/**
+	 * 反序列化对象
+	 * @param bytes
+	 * @return
+	 */
+	public static Object unserializeFury(byte[] bytes) {
+		if (bytes == null){
+			return null;
+		}
+		long beginTime = System.currentTimeMillis();
+		Object object = Static.fury.deserialize(bytes);
 		long totalTime = System.currentTimeMillis() - beginTime;
 		if (totalTime > 30000 && object != null){
 			logger.warn(object.getClass() + " unserialize time: " + TimeUtils.formatTime(totalTime));
