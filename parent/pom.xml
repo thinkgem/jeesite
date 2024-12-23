@@ -21,11 +21,10 @@
 	<properties>
 
 		<!-- Spring Cloud -->
-		<spring-cloud.version>2023.0.3</spring-cloud.version>
-		<spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
-		<nacos.version>2.4.2.1</nacos.version>
+		<spring-cloud.version>2024.0.0</spring-cloud.version>
+		<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
+		<nacos.version>2.4.3</nacos.version>
 		<seata.version>1.8.0</seata.version>
-		<xstream.version>1.4.20</xstream.version>
 
 	</properties>
 
@@ -50,7 +49,7 @@
 				<artifactId>nacos-client</artifactId>
 				<version>${nacos.version}</version>
 			</dependency>
-			<dependency>
+			<!--<dependency>
 				<groupId>com.alibaba.nacos</groupId>
 				<artifactId>nacos-common</artifactId>
 				<version>${nacos.version}</version>
@@ -59,7 +58,7 @@
 				<groupId>com.alibaba.nacos</groupId>
 				<artifactId>nacos-api</artifactId>
 				<version>${nacos.version}</version>
-			</dependency>
+			</dependency>-->
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
@@ -79,11 +78,6 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>${xstream.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
