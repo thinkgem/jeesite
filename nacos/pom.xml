@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.NacosApplication</start-class>
 
 		<!-- version setting -->
-		<nacos.version>2.4.2.1</nacos.version>
+		<nacos.version>2.4.3.1</nacos.version>
 
 		<!-- docker setting -->
 		<docker.run.port>8848:8848</docker.run.port>
