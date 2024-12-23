@@ -15,11 +15,16 @@
  */
 package com.alibaba.csp.sentinel.dashboard.config;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthorizationInterceptor;
 import com.alibaba.csp.sentinel.dashboard.auth.LoginAuthenticationFilter;
 import com.alibaba.csp.sentinel.util.StringUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +38,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.Filter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author leyou

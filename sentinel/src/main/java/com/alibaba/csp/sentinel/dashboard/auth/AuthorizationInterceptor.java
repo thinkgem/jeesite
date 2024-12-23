@@ -17,9 +17,6 @@ package com.alibaba.csp.sentinel.dashboard.auth;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * The web interceptor for privilege-based authorization.
  *
@@ -29,6 +26,4 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface AuthorizationInterceptor extends HandlerInterceptor {
 
-    boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception;
 }

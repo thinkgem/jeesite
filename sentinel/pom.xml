@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.SentinelApplication</start-class>
 
 		<!-- version setting -->
-		<sentinel.version>1.8.5</sentinel.version>
+		<sentinel.version>1.8.8</sentinel.version>
 		<curator.version>4.0.1</curator.version>
 
 		<!-- docker setting -->
@@ -63,14 +63,6 @@
 			<version>${sentinel.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -126,14 +118,21 @@
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-client</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-api</artifactId>
-		</dependency>
+		</dependency>-->
+
+        <!-- for Nacos rule publisher sample -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <scope>test</scope>
+        </dependency>
 		<!-- for Apollo rule publisher sample -->
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
@@ -151,11 +150,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
@@ -164,11 +158,6 @@
 			<groupId>com.github.stefanbirkner</groupId>
 			<artifactId>system-rules</artifactId>
 			<version>1.16.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
