@@ -40,7 +40,7 @@ public class NacosApplication extends SpringBootServletInitializer {
 	private static void initialize() {
 		System.setProperty("nacos.standalone", "true");
 		if (StringUtils.isBlank(System.getProperty("nacos.home"))) {
-			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5boot3");
+			System.setProperty("nacos.home", System.getProperty("user.home") + "/nacos5boot2");
 		}
 		System.setProperty("nacos.logs.path", System.getProperty("nacos.home") + "/logs");
 		System.setProperty("derby.stream.error.file", System.getProperty("nacos.home") + "/.derby.log");
