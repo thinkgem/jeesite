@@ -56,7 +56,6 @@ spring:
         server-addr: 192.168.56.1:8848
       config:
         server-addr: 192.168.56.1:8848
-        file-extension: yml
         group: jeesite-cloud-yml
 
     # 服务发现与注册优选IP前缀

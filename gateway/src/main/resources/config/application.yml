@@ -5,7 +5,11 @@
 
 server:
 
-  port: 8983
+  port: 8980
+  servlet:
+    context-path: /js
+  tomcat:
+    uri-encoding: UTF-8
     
 #======================================#
 #========== Cloud settings ============#
@@ -20,6 +24,9 @@ eureka:
     hostname: 127.0.0.1
     # 实例是否允许使用IP
     preferIpAddress: false
+    # 实例状态监控参数
+    statusPageUrlPath: ${server.servlet.context-path}
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
 
   # 客户端设置
   client:
@@ -35,11 +42,21 @@ spring:
   
   # 应用程序名称
   application:
-    name: jeesite-cloud-module-test2
+    name: jeesite-cloud-gateway
 
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
     active: default
+
+  # 加载的配置文件
+  config:
+#    import:
+#      - 'optional:configserver:'
+    import:
+      - 'nacos:application.yml'
+      - 'nacos:application-${spring.profiles.active}.yml'
+      - 'nacos:${spring.application.name}.yml'
+      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
     
   # 分布式配置中心
   cloud:
@@ -47,7 +64,7 @@ spring:
       discovery:
         enabled: true
         serviceId: jeesite-cloud-config
-    
+        
     # Consul 服务发现
     consul:
       host: 127.0.0.1
@@ -58,33 +75,24 @@ spring:
         
     # 服务注册和配置
     nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
       discovery:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
         group: jeesite-cloud
       config:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
-        file-extension: yml
         group: jeesite-cloud-yml
-        extension-configs:
-          - data-id: application.yml
-            group: jeesite-cloud-yml
 
     # 服务发现与注册优选IP前缀
     #inetutils:
     #  preferred-networks: 192.168.56.
-
+      
   # 打印横幅
   main:
     bannerMode: "off"
-    allow-bean-definition-overriding: true
     
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
-  

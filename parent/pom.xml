@@ -84,12 +84,6 @@
 
 	<dependencies>
 
-		<!-- bootstrap.yml -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bootstrap</artifactId>
-		</dependency>
-
 		<!-- JeeSite Common -->
 		<dependency>
 			<groupId>com.jeesite</groupId>

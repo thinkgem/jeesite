@@ -57,12 +57,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- bootstrap.yml -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bootstrap</artifactId>
-		</dependency>
-
 	</dependencies>
 
 	<dependencyManagement>

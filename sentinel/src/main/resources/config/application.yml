@@ -1,17 +1,105 @@
 
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
 server:
+
+  port: 9311
   servlet:
     encoding:
       force: true
       charset: UTF-8
       enabled: true
 
+#======================================#
+#========== Cloud settings ============#
+#======================================#
+
+# 服务注册
+eureka:
+
+  # 实例设置
+  instance:
+    # 实例主机名称
+    hostname: 127.0.0.1
+    # 实例是否允许使用IP
+    preferIpAddress: false
+    # 实例状态监控参数
+    statusPageUrlPath: ${server.servlet.context-path}
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+
+  # 客户端设置
+  client:
+    # 注册中心地址（集群时指定另外一个注册中心地址）
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8970/eureka/
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
 spring:
+
+  # 应用程序名称
+  application:
+    name: jeesite-cloud-sentinel
+
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+
+  # 加载的配置文件
+#  config:
+#    import:
+#      - 'optional:configserver:'
+
+  # 分布式配置中心
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: jeesite-cloud-config
+
+    # Consul 服务发现
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        hostname: 127.0.0.1
+        preferIpAddress: false
+
+    # 服务注册和配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+        namespace: ~
+        group: jeesite-cloud
+      config:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+        namespace: ~
+        group: jeesite-cloud-yml
+
+    # 服务发现与注册优选IP前缀
+    #inetutils:
+    #  preferred-networks: 192.168.56.
+
+  # 打印横幅
+  main:
+    bannerMode: "off"
+
+  # MVC 映射匹配策略
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
+# 日志配置
 logging:
+  config: classpath:config/logback-spring.xml
   level:
     org:
       springframework:
@@ -21,6 +109,7 @@ logging:
   pattern:
     file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
 
+# Sentinel 配置
 auth:
   username: sentinel
   password: sentinel
