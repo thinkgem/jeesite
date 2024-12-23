@@ -47,6 +47,16 @@ spring:
   # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
   profiles:
     active: default
+
+  # 加载的配置文件
+  config:
+#    import:
+#      - 'optional:configserver:'
+    import:
+      - 'nacos:application.yml'
+      - 'nacos:application-${spring.profiles.active}.yml'
+      - 'nacos:${spring.application.name}.yml'
+      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
     
   # 分布式配置中心
   cloud:
@@ -65,22 +75,15 @@ spring:
         
     # 服务注册和配置
     nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
       discovery:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
         group: jeesite-cloud
       config:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
-        file-extension: yml
         group: jeesite-cloud-yml
-        extension-configs:
-          - data-id: application.yml
-            group: jeesite-cloud-yml
 
     # 服务发现与注册优选IP前缀
     #inetutils:
