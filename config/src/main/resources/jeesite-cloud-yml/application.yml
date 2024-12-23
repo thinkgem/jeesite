@@ -328,11 +328,7 @@ spring:
           prefer-ip: true
           management:
             context-path: ${server.servlet.context-path}
-        
-  # Zipkin 服务链路追踪
-  zipkin:
-    base-url: http://127.0.0.1:9411
-    
+
   # Redis 连接参数 （RedisProperties）
   data:
     redis:
@@ -369,6 +365,15 @@ logging:
   level:
     root: warn
     com.codingapi.txlcn: debug
+
+# 链路追踪
+management:
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
 
 #======================================#
 #========== System settings ===========#

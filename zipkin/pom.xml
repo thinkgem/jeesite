@@ -5,9 +5,9 @@
 
 	<parent>
 		<groupId>com.jeesite</groupId>
-		<artifactId>jeesite-cloud-parent-javax</artifactId>
+		<artifactId>jeesite-cloud-parent-web</artifactId>
 		<version>5.9.2.springboot3-SNAPSHOT</version>
-		<relativePath>../parent/javax/pom.xml</relativePath>
+		<relativePath>../parent/web/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>jeesite-cloud-zipkin</artifactId>
@@ -23,7 +23,7 @@
 		<start-class>com.jeesite.modules.ZipkinApplication</start-class>
 
 		<!-- version setting -->
-		<zipkin.version>2.23.16</zipkin.version>
+		<zipkin.version>3.4.0</zipkin.version>
 
 		<!-- docker setting -->
 		<docker.run.port>9411:9411</docker.run.port>
