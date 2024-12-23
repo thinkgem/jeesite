@@ -22,7 +22,7 @@
 		<finalName>web</finalName><!-- jar or war 包的名称 -->
 		<start-class>com.jeesite.modules.GatewayApplication</start-class>
 
-		<grpc.version>1.30.2</grpc.version>
+		<!--<grpc.version>1.30.2</grpc.version>-->
 		
 		<!-- docker setting -->
 		<docker.run.port>8980:8980</docker.run.port>
@@ -36,7 +36,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>io.grpc</groupId>
 			<artifactId>grpc-core</artifactId>
 			<version>${grpc.version}</version>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-resolver-dns-native-macos</artifactId>
