@@ -110,6 +110,8 @@
 ```bash
 # 验证
 node -v
+# 配置国内源
+npm config set registry https://registry.npmmirror.com
 ```
 
 - 如果没有安装 Pnpm 执行安装
@@ -118,11 +120,7 @@ node -v
 npm i -g pnpm
 # 验证
 pnpm -v
-```
-
-- 配置国内源
-
-```bash
+# 配置国内源
 pnpm config set registry https://registry.npmmirror.com
 ```
 
