@@ -73,12 +73,52 @@ export function useTable(tableProps?: Props): [
     setProps: (props: Partial<BasicTableProps>) => {
       getTableInstance().setProps(props);
     },
-    redoHeight: () => {
-      getTableInstance().redoHeight();
-    },
     setLoading: (loading: boolean) => {
       getTableInstance().setLoading(loading);
     },
+    getTableRef: () => {
+      return toRaw(getTableInstance().getTableRef());
+    },
+    redoHeight: () => {
+      getTableInstance().redoHeight();
+    },
+    scrollTo: (pos: string) => {
+      getTableInstance().scrollTo(pos);
+    },
+    getSize: () => {
+      return getTableInstance().getSize();
+    },
+    emit: (type: string, ...args: any) => {
+      return getTableInstance().emit(type, ...args);
+    },
+
+    getColumns: ({ ignoreIndex = false }: { ignoreIndex?: boolean } = {}) => {
+      const columns = getTableInstance().getColumns({ ignoreIndex }) || [];
+      return toRaw(columns);
+    },
+    getCacheColumns: () => {
+      return toRaw(getTableInstance().getCacheColumns());
+    },
+    setColumns: (columns: BasicColumn[] | string[]) => {
+      getTableInstance().setColumns(columns);
+    },
+    updateColumn: (column: BasicColumn | BasicColumn[]) => {
+      getTableInstance().updateColumn(column);
+    },
+
+    getPagination: () => {
+      return getTableInstance().getPagination();
+    },
+    setPagination: (info: Partial<PaginationProps>) => {
+      return getTableInstance().setPagination(info);
+    },
+    getShowPagination: () => {
+      return getTableInstance().getShowPagination();
+    },
+    setShowPagination: (show: boolean) => {
+      getTableInstance().setShowPagination(show);
+    },
+
     getDataSource: () => {
       return getTableInstance().getDataSource();
     },
@@ -88,45 +128,15 @@ export function useTable(tableProps?: Props): [
     getRawDataSource: () => {
       return getTableInstance().getRawDataSource();
     },
-    getColumns: ({ ignoreIndex = false }: { ignoreIndex?: boolean } = {}) => {
-      const columns = getTableInstance().getColumns({ ignoreIndex }) || [];
-      return toRaw(columns);
-    },
-    setColumns: (columns: BasicColumn[] | string[]) => {
-      getTableInstance().setColumns(columns);
-    },
+
     setTableData: (values: any[]) => {
       return getTableInstance().setTableData(values);
     },
-    updateColumn: (column: BasicColumn | BasicColumn[]) => {
-      getTableInstance().updateColumn(column);
-    },
-    setPagination: (info: Partial<PaginationProps>) => {
-      return getTableInstance().setPagination(info);
-    },
-    deleteSelectRowByKey: (key: string) => {
-      getTableInstance().deleteSelectRowByKey(key);
-    },
-    getSelectRowKeys: () => {
-      return toRaw(getTableInstance().getSelectRowKeys());
-    },
-    getSelectRows: () => {
-      return toRaw(getTableInstance().getSelectRows());
-    },
-    clearSelectedRowKeys: () => {
-      getTableInstance().clearSelectedRowKeys();
-    },
-    setSelectedRowKeys: (keys: string[] | number[]) => {
-      getTableInstance().setSelectedRowKeys(keys);
-    },
-    getPaginationRef: () => {
-      return getTableInstance().getPaginationRef();
-    },
-    getSize: () => {
-      return toRaw(getTableInstance().getSize());
-    },
     updateTableData: (index: number, key: string, value: any) => {
       return getTableInstance().updateTableData(index, key, value);
+    },
+    updateTableDataRecord: (rowKey: string | number, record: Recordable) => {
+      return getTableInstance().updateTableDataRecord(rowKey, record);
     },
     deleteTableDataRecord: (record: Recordable | Recordable[]) => {
       return getTableInstance().deleteTableDataRecord(record);
@@ -134,27 +144,32 @@ export function useTable(tableProps?: Props): [
     insertTableDataRecord: (record: Recordable | Recordable[], index?: number) => {
       return getTableInstance().insertTableDataRecord(record, index);
     },
-    updateTableDataRecord: (rowKey: string | number, record: Recordable) => {
-      return getTableInstance().updateTableDataRecord(rowKey, record);
-    },
     findTableDataRecord: (rowKey: string | number) => {
       return getTableInstance().findTableDataRecord(rowKey);
     },
+
     getRowSelection: () => {
-      return toRaw(getTableInstance().getRowSelection());
+      return getTableInstance().getRowSelection();
     },
-    getCacheColumns: () => {
-      return toRaw(getTableInstance().getCacheColumns());
+    getDefaultRowSelection: () => {
+      return getTableInstance().getDefaultRowSelection();
     },
-    getForm: () => {
-      return unref(formRef) as unknown as FormActionType;
+    getSelectRows: () => {
+      return toRaw(getTableInstance().getSelectRows());
     },
-    setShowPagination: async (show: boolean) => {
-      getTableInstance().setShowPagination(show);
+    getSelectRowKeys: () => {
+      return toRaw(getTableInstance().getSelectRowKeys());
     },
-    getShowPagination: () => {
-      return toRaw(getTableInstance().getShowPagination());
+    setSelectedRowKeys: (keys: string[] | number[]) => {
+      getTableInstance().setSelectedRowKeys(keys);
     },
+    deleteSelectRowByKey: (key: string) => {
+      getTableInstance().deleteSelectRowByKey(key);
+    },
+    clearSelectedRowKeys: () => {
+      getTableInstance().clearSelectedRowKeys();
+    },
+
     expandAll: () => {
       getTableInstance().expandAll();
     },
@@ -167,8 +182,9 @@ export function useTable(tableProps?: Props): [
     expandCollapse: (record: Recordable) => {
       getTableInstance().expandCollapse(record);
     },
-    scrollTo: (pos: string) => {
-      getTableInstance().scrollTo(pos);
+
+    getForm: () => {
+      return unref(formRef) as unknown as FormActionType;
     },
   };
 

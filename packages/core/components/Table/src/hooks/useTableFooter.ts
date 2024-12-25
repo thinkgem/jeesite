@@ -7,7 +7,7 @@ import { useEventListener } from '@jeesite/core/hooks/event/useEventListener';
 export function useTableFooter(
   propsRef: ComputedRef<BasicTableProps>,
   scrollRef: ComputedRef<any>,
-  tableElRef: Ref<ComponentRef>,
+  tableRef: Ref<ComponentRef>,
   getDataSourceRef: Ref<Recordable>,
 ) {
   const getIsEmptyData = computed(() => {
@@ -30,7 +30,7 @@ export function useTableFooter(
     if (!showSummary || unref(getIsEmptyData)) return;
 
     nextTick(() => {
-      const tableEl = unref(tableElRef);
+      const tableEl = unref(tableRef);
       if (!tableEl) return;
       const bodyDom = tableEl.$el.querySelector('.ant-table-content');
       useEventListener({

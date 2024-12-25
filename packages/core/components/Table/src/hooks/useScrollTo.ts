@@ -2,10 +2,7 @@ import type { Ref } from 'vue';
 import { nextTick, unref } from 'vue';
 import { warn } from '@jeesite/core/utils/log';
 
-export function useTableScrollTo(
-  tableElRef: Ref<ComponentRef>,
-  getDataSourceRef: Ref<Recordable[]>,
-) {
+export function useTableScrollTo(tableRef: Ref<ComponentRef>, getDataSourceRef: Ref<Recordable[]>) {
   let bodyEl: HTMLElement | null;
 
   async function findTargetRowToScroll(targetRowData: Recordable) {
@@ -22,7 +19,7 @@ export function useTableScrollTo(
   }
 
   function scrollTo(pos: string): void {
-    const table = unref(tableElRef);
+    const table = unref(tableRef);
     if (!table) return;
 
     const tableEl: Element = table.$el;

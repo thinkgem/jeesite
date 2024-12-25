@@ -1,4 +1,4 @@
-import type { VNodeChild } from 'vue';
+import { Ref, VNodeChild } from 'vue';
 import type { PaginationProps } from './pagination';
 import type { FormProps } from '@jeesite/core/components/Form';
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
@@ -89,41 +89,48 @@ export type SizeType = 'default' | 'middle' | 'small' | 'large';
 
 export interface TableActionType {
   reload: (opt?: FetchParams) => Promise<void>;
-  getSelectRows: <T = Recordable>() => T[];
-  clearSelectedRowKeys: () => void;
-  expandAll: () => void;
-  expandRows: (keys: string[]) => void;
-  collapseAll: () => void;
-  expandCollapse: (record: Recordable) => void;
+  setProps: (props: Partial<BasicTableProps>) => void;
+  setLoading: (loading: boolean) => void;
+  getTableRef: () => Ref<ComponentRef>;
+  redoHeight: () => void;
   scrollTo: (pos: string) => void; // pos: id | "top" | "bottom"
-  getSelectRowKeys: () => string[] | number[];
-  deleteSelectRowByKey: (key: string) => void;
+  getSize: () => SizeType;
+  emit: EmitType;
+
+  getColumns: (opt?: GetColumnsParams) => BasicColumn[];
+  getCacheColumns: () => BasicColumn[];
+  // setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
+  setColumns: (columns: BasicColumn[] | string[]) => void;
+  updateColumn: (column: BasicColumn | BasicColumn[]) => void;
+
+  getPagination: () => PaginationProps | boolean;
   setPagination: (info: Partial<PaginationProps>) => void;
+  setShowPagination: (show: boolean) => void;
+  getShowPagination: () => boolean;
+
+  getDataSource: <T = Recordable>() => T[];
+  getDelDataSource: <T = Recordable>() => T[];
+  getRawDataSource: <T = Recordable>() => T;
+
   setTableData: <T = Recordable>(values: T[]) => void;
+  updateTableData: (index: number, key: string, value: any) => Recordable;
   updateTableDataRecord: (rowKey: string | number, record: Recordable) => Recordable | void;
   deleteTableDataRecord: (record: Recordable | Recordable[]) => Recordable | void;
   insertTableDataRecord: (record: Recordable, index?: number) => Recordable | void;
   findTableDataRecord: (rowKey: string | number) => Recordable | void;
-  getColumns: (opt?: GetColumnsParams) => BasicColumn[];
-  setColumns: (columns: BasicColumn[] | string[]) => void;
-  updateColumn: (column: BasicColumn | BasicColumn[]) => void;
-  getDataSource: <T = Recordable>() => T[];
-  getDelDataSource: <T = Recordable>() => T[];
-  getRawDataSource: <T = Recordable>() => T;
-  setLoading: (loading: boolean) => void;
-  setProps: (props: Partial<BasicTableProps>) => void;
-  redoHeight: () => void;
-  setSelectedRowKeys: (rowKeys: string[] | number[]) => void;
-  getPaginationRef: () => PaginationProps | boolean;
-  getSize: () => SizeType;
+
   getRowSelection: () => TableRowSelection<Recordable>;
-  getDefaultRowSelection?: () => TableRowSelection<Recordable>;
-  getCacheColumns: () => BasicColumn[];
-  emit?: EmitType;
-  updateTableData: (index: number, key: string, value: any) => Recordable;
-  setShowPagination: (show: boolean) => Promise<void>;
-  getShowPagination: () => boolean;
-  // setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
+  getDefaultRowSelection: () => TableRowSelection<Recordable>;
+  getSelectRows: <T = Recordable>() => T[];
+  getSelectRowKeys: () => string[] | number[];
+  setSelectedRowKeys: (rowKeys: string[] | number[]) => void;
+  deleteSelectRowByKey: (key: string) => void;
+  clearSelectedRowKeys: () => void;
+
+  expandAll: () => void;
+  expandRows: (keys: string[]) => void;
+  collapseAll: () => void;
+  expandCollapse: (record: Recordable) => void;
 }
 
 export interface FetchSetting {
@@ -170,8 +177,8 @@ export interface BasicTableProps<T = any> {
   summaryData?: Recordable[];
   // 是否显示合计行
   showSummary?: boolean;
-  // 是否可拖拽列
-  canColDrag?: boolean;
+  // 是否可拖拽行
+  canRowDrag?: boolean;
   // 接口请求对象
   api?: (...arg: any) => Promise<any>;
   // 请求之前处理参数
@@ -448,7 +455,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   }[];
 
   //
-  flag?: 'INDEX' | 'DEFAULT' | 'CHECKBOX' | 'RADIO' | 'ACTION';
+  flag?: 'INDEX' | 'DRAG' | 'DEFAULT' | 'CHECKBOX' | 'RADIO' | 'ACTION';
   customTitle?: VueNode;
 
   // Antdv 3.0 中，不推荐使用 slots 所以新增 slot 指定插槽名称
@@ -471,11 +478,11 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   editComponentProps?:
     | ((opt: {
         text: any;
-        record: EditRecordRow;
+        record: EditRecordRow | Recordable;
         column: BasicColumn;
         index: number;
       }) => Recordable)
-    | Recordable;
+    | any;
   editRule?: boolean | ((text: any, record: Recordable) => Promise<void>);
   // editValueMap?: (value: any) => string;
   onEditRow?: () => void;
@@ -511,6 +518,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
     record: Recordable;
     column: BasicColumn;
     index: number;
+    attrs?: object;
   }) => VNodeChild | JSX.Element;
 }
 

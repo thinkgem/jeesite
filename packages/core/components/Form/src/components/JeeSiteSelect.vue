@@ -73,6 +73,7 @@
 
   const { t } = useI18n();
   const attrs = useAttrs();
+  const [state] = useRuleFormItem(props);
   const optionsRef = ref<Recordable[]>(props.options);
   const isFirstLoad = ref<boolean>(false);
   const loading = ref<boolean>(false);
@@ -81,12 +82,14 @@
     return {
       showSearch: true,
       optionFilterProp: 'label',
+      fieldNames: {
+        value: 'value',
+        label: 'label',
+      },
       ...unref(attrs),
       ...(props as Recordable),
     };
   });
-
-  const [state] = useRuleFormItem(props);
 
   if (!isEmpty(props.dictType)) {
     const { initSelectOptions } = useDict();
@@ -113,6 +116,30 @@
     () => props.immediate,
     (v) => {
       v && !isFirstLoad.value && fetch();
+    },
+  );
+
+  watch(
+    () => optionsRef.value,
+    () => {
+      // 如果没有给初始值，并不允许清空选择项和非多选的时候，默认选择第一个选项
+      if (
+        !state.value &&
+        !getAttrs.value.allowClear &&
+        getAttrs.value.mode != 'multiple' &&
+        optionsRef.value.length > 0
+      ) {
+        const fieldNames = getAttrs.value.fieldNames;
+        const firstValue = optionsRef.value[0];
+        if (props.labelInValue) {
+          state.value = {
+            label: firstValue[fieldNames.label],
+            value: firstValue[fieldNames.value],
+          };
+        } else {
+          state.value = firstValue[fieldNames.value];
+        }
+      }
     },
   );
 

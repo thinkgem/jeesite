@@ -69,14 +69,14 @@ export function useRuleFormItem<T extends Recordable>(
       if (!value) return undefined;
       if (props.labelInValue) {
         const values: Recordable = [];
-        if (isMultiple.value && !(value instanceof Array)) {
+        if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
           const vals = (value as string)?.split(',');
-          const lbls = (props.labelValue as string)?.split(',');
+          const labs = (props.labelValue as string)?.split(',');
           for (const i in vals) {
-            values.push({ value: vals && vals[i], label: lbls && lbls[i] });
+            values.push({ value: vals && vals[i], label: labs && labs[i] });
           }
           value = values as T[keyof T];
-        } else if (!isObject(value) && !(value instanceof Array)) {
+        } else if (!isObject(value) && !(value instanceof Object) && !(value instanceof Array)) {
           value = { value: String(value), label: props.labelValue };
         } else if (value instanceof Array) {
           for (const i in value) {
@@ -87,7 +87,7 @@ export function useRuleFormItem<T extends Recordable>(
             value = values as T[keyof T];
           }
         }
-      } else if (isMultiple.value && !(value instanceof Array)) {
+      } else if (isMultiple.value && !(value instanceof Object) && !(value instanceof Array)) {
         value = (value as string).split(',');
       } else if (isDictType.value && isNumber(value)) {
         value = String(value);

@@ -30,7 +30,6 @@
     <div v-if="showSelectionBar" class="m-1 mt-2">
       <TableSelectionBar :clearSelectedRowKeys="props.clearSelectedRowKeys!" :count="props.count" />
     </div>
-    <slot name="tableTop"></slot>
   </div>
 </template>
 <script lang="ts">
