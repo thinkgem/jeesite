@@ -1,3 +1,25 @@
+
+<p align="center">
+ <img alt="JeeSite" src="https://jeesite.com/assets/images/logo.png" width="120" height="120" style="margin-bottom: 10px;">
+</p>
+<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">微服务开发平台 - Spring Cloud</h3>
+<p align="center">
+ <a href="https://jeesite.com/docs/upgrade/" target="__blank"><img alt="JeeSite-5.9" src="https://img.shields.io/badge/JeeSite-5.9-success.svg"></a>
+ <a href="https://spring.io/projects/spring-cloud" target="__blank"><img alt="SpringCloud-2021/2024" src="https://img.shields.io/badge/SpringCloud-2021/2024-blue.svg"></a>
+ <a href="https://gitee.com/thinkgem/jeesite5" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite-vue" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
+ <a href="https://gitee.com/thinkgem/jeesite" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite/badge/star.svg?theme=gvp"></a>
+ <a href="https://gitcode.com/thinkgem/jeesite" target="__blank"><img alt="star" src="https://gitcode.com/thinkgem/jeesite/star/badge.svg"></a> 
+</p>
+
+------
+
+<div align="center">
+ 如果你喜欢 JeeSite，请给她一个 ⭐️ Star，您的支持将是我们前行的动力。
+</div>
+
+------
+
 ## 引言
 
 JeeSite Cloud 具备 [JeeSite 4.x、5.x](https://gitee.com/thinkgem/jeesite5) 的所有功能，是在 JeeSite 4.x、5.x 基础之上，完成的 [Spring Cloud](https://spring.io/projects/spring-cloud) 分布式系统套件的整合。它利用 JeeSite 4.x、5.x 的开发便利性巧妙地简化了分布式系统开发。
