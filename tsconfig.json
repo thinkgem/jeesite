@@ -29,7 +29,7 @@
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "useDefineForClassFields": true,
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
     "lib": ["ESNext", "DOM"],
     "types": [
       "vue-types",
