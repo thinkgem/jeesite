@@ -21,7 +21,7 @@
     "uninstall": "turbo uninstall --concurrency 20 && rimraf pnpm-lock.yaml node_modules",
     "reinstall": "rimraf node_modules && pnpm store prune && pnpm install --force",
     "update": "turbo update --concurrency 20 && ncu -u -x eslint && npm run uninstall && npm run bootstrap",
-    "upgrade": "node --loader=ts-node/esm ./upgrade.ts && npm run lint:all"
+    "upgrade": "node --loader=ts-node/esm ./upgrade/index.ts && npm run lint:all"
   },
   "dependencies": {
     "@ant-design/colors": "7.1.0",

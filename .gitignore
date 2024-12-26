@@ -6,8 +6,7 @@ Thumbs.db
 .cache
 dist
 
-common/tools
-upgrade.ts
+upgrade
 
 # Test files
 tests/server/static
