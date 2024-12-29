@@ -79,7 +79,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 
 ## 技术选型
 
-* 分布式系统套件版本：Spring Cloud 2023.0.3 + Alibaba 2023.0.1
+* 分布式系统套件版本：Spring Cloud 2024.0.0 + Alibaba 2023.0.3
 * 服务治理注册与发现：Spring Cloud Eureka / Consul / Nacos 2.4
 * 分布式统一配置中心：Spring Cloud Config / Nacos 2.4
 * 网关路由代理调用：Spring Cloud Gateway (动态网关)
@@ -88,7 +88,7 @@ JeeSite Cloud 并没有重复制造轮子，它只是将目前比较成熟的、
 * 阿里流量防卫兵：Sentinel 1.8 (限流、熔断降级、负载保护)
 * 分布式事务框架：Seata 1.8 (可选组件)
 * 分布式链路追踪：Zipkin / SkyWalking (可选组件)
-* 工作流引擎框架：Flowable 7.0 (可选组件)
+* 工作流引擎框架：Flowable 7.1 (可选组件)
 * 多租户 Saas 架构：表共享、独立模式、独立库方式
 * ShardingSphere 分库分表、读写分离
 * Spring Boot Admin 监控系统
