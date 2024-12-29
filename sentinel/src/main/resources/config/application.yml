@@ -71,16 +71,13 @@ spring:
 
     # 服务注册和配置
     nacos:
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
       discovery:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
         group: jeesite-cloud
       config:
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
         namespace: ~
         group: jeesite-cloud-yml
 
