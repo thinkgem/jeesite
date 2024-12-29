@@ -100,7 +100,7 @@
 * 视图层：Spring MVC 6.1、Beetl 3.10（替换JSP）、Bootstrap 3.3、AdminLTE 2.4
 * 前端组件：jQuery 3.7、jqGrid 4.7、layer 3.5、zTree 3.5、jQuery Validation
 * 分离前端版：Node.js、TypeScript、Vue3、Vite、Ant Design Vue、Vue Vben Admin
-* 工作流引擎：Flowable 7.0、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
+* 工作流引擎：Flowable 7.1、符合 BPMN 规范、在线流程设计器、中国式流程、退回、撤回、自由流
 * Bootstrap 版 支持 IE10 及以上版本及其他所有现代浏览器，如：谷歌、火狐、国产浏览器 等
 * Vue3 版 支持现代浏览器，如：谷歌 Chrome 86+、火狐、国产浏览器 等
 * 技术选型（详细）：<http://jeesite.com/docs/technology/>
