@@ -58,14 +58,14 @@
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-client</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba.nacos</groupId>
 			<artifactId>nacos-api</artifactId>
-		</dependency>
+		</dependency>-->
 		
 		<!-- 启用负载均衡 -->
 		<dependency>
