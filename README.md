@@ -173,17 +173,17 @@ Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范
 
 如果使用 Nacos 就不用部署 `jeesite-cloud-eureka` 和 `jeesite-cloud-config` 了。
 
-JeeSite Cloud 提供了 2 种部署方式，你可以下载 jar 也可以 src 方式运行：
-
-**jar 方式：**
-
-1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.4.3/nacos-server-2.4.3.zip>
-2. 解压 `nacos-server-2.4.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
+JeeSite Cloud 提供了 2 种部署方式，你可以 src 直接在 IDE 里启动，也可以下载 jar 运行：
 
 **src 方式：**
 
 1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-nacos 项目。
 2. 运行 NacosApplication 类的 main 方法，即可启动服务。
+
+**jar 方式：**
+
+1. 下载地址：<https://github.com/alibaba/nacos/releases/download/2.4.3/nacos-server-2.4.3.zip>
+2. 解压 `nacos-server-2.4.3.zip` 压缩包，运行 `/bin/startup.cmd(sh)` 启动服务。
 
 **配置 mysql 存储：**
 
@@ -198,7 +198,7 @@ spring.datasource.platform=mysql
 db.num=1
 
 ### Connect URL of DB:
-db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&serverTimezone=UTC
 db.user=root
 db.password=123456
 
@@ -229,6 +229,7 @@ Sentinel 是面向分布式服务架构的流量控制组件，主要以流量�
 
 1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-sentinel 项目。
 2. 运行 SentinelApplication 类的 main 方法，即可启动服务。
+3. 此服务为可选服务，按需启动。
 
 浏览器访问：<http://127.0.0.1:9311>  用户名密码：sentinel
 
@@ -238,6 +239,7 @@ Zipkin 是一个开放源代码分布式的跟踪系统，每个服务向 Zipkin
 
 1. 在 Eclipse 或 IDEA 中 找到 jeesite-cloud-zipkin 项目。
 2. 运行 ZipkinApplication 类的 main 方法，即可启动服务。
+3. 此服务为可选服务，按需启动。
 
 浏览器访问：<http://127.0.0.1:9411>
 
