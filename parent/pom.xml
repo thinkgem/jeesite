@@ -21,15 +21,14 @@
 
 	<properties>
 
-		<!-- common tools version setting -->
+		<!-- common version setting -->
 		<commons-io.version>2.16.1</commons-io.version>
 		<commons-text.version>1.12.0</commons-text.version>
 		<commons-email.version>1.6.0</commons-email.version>
 
+		<fury.version>0.9.0</fury.version>
 		<jackson-bom2.version>2.18.1</jackson-bom2.version>
 		<fastjson.version>2.0.51</fastjson.version>
-
-		<fury.version>0.9.0</fury.version>
 		<snakeyaml.version>2.2</snakeyaml.version>
 		<glassfish-jaxb.version>2.3.9</glassfish-jaxb.version>
 		<httpclient.version>4.5.14</httpclient.version>
