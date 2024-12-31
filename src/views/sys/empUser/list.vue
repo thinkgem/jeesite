@@ -28,7 +28,7 @@
           <Icon icon="i-ant-design:download-outlined" /> {{ t('导出') }}
         </a-button>
         <a-button type="default" @click="handleImport()">
-          <Icon icon="i-ant-design:upload-outlined" /> {{ t('导入') }}
+          <Icon icon="i-ant-design:import-outlined" /> {{ t('导入') }}
         </a-button>
         <a-button type="primary" @click="handleForm({ op: 'add' })" v-auth="'sys:empUser:edit'">
           <Icon icon="i-fluent:add-12-filled" /> {{ t('新增') }}
