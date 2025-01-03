@@ -78,6 +78,6 @@ async function getConfigContent(env: ViteEnv) {
       var s = document.getElementsByTagName("script")[0]; 
       s.parentNode.insertBefore(hm, s);
     })();
-  `.replace(/\s/g, '');
+  `.replace(/(?!var|\b)\s/g, '');
   return source;
 }
