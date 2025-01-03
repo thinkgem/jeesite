@@ -165,7 +165,7 @@ pnpm build
 
 ### 后端服务
 
-- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite5/tree/v5.9/)
+- 安装后台服务 [JeeSite v5.x](https://gitee.com/thinkgem/jeesite5/tree/v5.springboot3/)
 - 打开 [.env.development](https://jeesite.com/docs/vue-settings/#env-development-详解) 文件，修改后台接口：
 
 ```bash
