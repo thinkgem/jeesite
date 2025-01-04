@@ -4,16 +4,14 @@
  */
 package com.jeesite.modules.config.interceptor;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.modules.sys.interceptor.MobileInterceptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 前台自动切换到手机视图拦截器
@@ -22,7 +20,6 @@ import com.jeesite.modules.sys.interceptor.MobileInterceptor;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name="web.interceptor.mobile.enabled", havingValue="true", matchIfMissing=false)
-@EnableWebMvc
 public class MobileViewInterceptorConfig implements WebMvcConfigurer {
 
 	@Override
