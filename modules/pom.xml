@@ -5,7 +5,7 @@
 	
 	<groupId>com.jeesite</groupId>
 	<artifactId>jeesite-modules</artifactId>
-	<version>5.10.0.springboot3-SNAPSHOT</version>
+	<version>5.10.1.springboot3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<name>JeeSite Modules</name>
