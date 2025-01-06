@@ -50,8 +50,8 @@
 		<!--<elasticsearch.version>8.11.1</elasticsearch.version>-->
 
 		<!-- framework version setting -->
-		<mybatis.version>3.5.15</mybatis.version>
-		<mybatis-spring.version>3.0.3</mybatis-spring.version>
+		<mybatis.version>3.5.16</mybatis.version>
+		<mybatis-spring.version>3.0.4</mybatis-spring.version>
 		<jsqlparser.version>4.7</jsqlparser.version>
 		<atomikos.version>6.0.0</atomikos.version>
 		<druid.version>1.2.23</druid.version>
