@@ -6,7 +6,7 @@
   "scripts": {
     "bootstrap": "pnpm install",
     "serve": "npm run dev",
-    "dev": "cd web && pnpm dev",
+    "dev": "cd web && npm run dev",
     "build": "turbo build --concurrency 20",
     "build:tomcat": "cd web && npm run build:tomcat",
     "build:preview": "cd web && npm run build:preview",
@@ -19,7 +19,7 @@
     "lint:stylelint": "stylelint \"./**/*.{vue,less,scss,css}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run bootstrap && npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "uninstall": "turbo uninstall --concurrency 20 && rimraf pnpm-lock.yaml node_modules",
-    "reinstall": "rimraf node_modules && pnpm store prune && pnpm install --force",
+    "reinstall": "pnpm store prune && pnpm install --force && cd web && pnpm run dev --force",
     "update": "turbo update --concurrency 20 && ncu -u -x eslint && npm run uninstall && npm run bootstrap",
     "upgrade": "node --loader=ts-node/esm ./upgrade/index.ts && npm run lint:all"
   },
