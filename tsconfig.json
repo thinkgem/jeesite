@@ -32,6 +32,7 @@
     "allowImportingTsExtensions": false,
     "lib": ["ESNext", "DOM"],
     "types": [
+      "node",
       "vue-types",
       "vite/client",
       "@jeesite/types"
