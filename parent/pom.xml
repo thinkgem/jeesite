@@ -65,7 +65,7 @@
 
 		<!-- jdbc setting -->
 		<mysql.version>8.0.33</mysql.version>
-		<h2.version>1.4.200</h2.version>
+		<h2.version>2.2.224</h2.version>
 
 		<!-- environment setting -->
 		<java.version>1.8</java.version>
