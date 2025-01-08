@@ -226,7 +226,6 @@ public class EncodeUtils {
 			// 如果开始不是HTML，XML，JOSN格式，则再进行HTML的 "、<、> 转码。
 			if (!StringUtils.startsWithIgnoreCase(value, "<!--HTML-->")    // HTML
 					&& !StringUtils.startsWithIgnoreCase(value, "<?xml ")  // XML
-					&& !StringUtils.contains(value, "id=\"FormHtml\"") // JFlow
 					&& !(StringUtils.startsWith(value, "{") && StringUtils.endsWith(value, "}")) // JSON Object
 					&& !(StringUtils.startsWith(value, "[") && StringUtils.endsWith(value, "]")) // JSON Array
 			){
