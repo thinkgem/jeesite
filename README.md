@@ -6,8 +6,8 @@
 <h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
- <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-4.2" src="https://img.shields.io/badge/Ant Design Vue-4.2-blue.svg"></a>
- <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-Vue" src="https://img.shields.io/badge/JeeSite-5.10-blue.svg"></a>
+ <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-V4.2" src="https://img.shields.io/badge/Ant Design Vue-V4.2-blue.svg"></a>
+ <a href="https://jeesite.com" target="__blank"><img alt="JeeSite-V5.x" src="https://img.shields.io/badge/JeeSite-V5.x-blue.svg"></a>
  <a href="https://gitee.com/thinkgem/jeesite5" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite5/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite-vue" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite-vue/badge/star.svg?theme=dark"></a>
  <a href="https://gitee.com/thinkgem/jeesite" target="__blank"><img alt="star" src="https://gitee.com/thinkgem/jeesite/badge/star.svg?theme=gvp"></a>
