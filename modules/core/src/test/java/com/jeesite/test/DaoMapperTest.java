@@ -29,7 +29,7 @@ import java.util.List;
  * @version 2018-08-11
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=ApplicationTest.class)
+@SpringBootTest(classes = ApplicationTest.class)
 public class DaoMapperTest extends BaseSpringContextTests {
 
 	@Autowired
