@@ -31,7 +31,7 @@ import com.jeesite.modules.test.service.TestDataService;
  * @version 2019-6-26
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=Application.class)
+@SpringBootTest(classes = Application.class)
 public class MultiDataSourceTest extends BaseSpringContextTests {
 	
 	@Autowired

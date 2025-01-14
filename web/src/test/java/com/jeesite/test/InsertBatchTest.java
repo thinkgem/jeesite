@@ -22,7 +22,7 @@ import java.util.List;
  * @version 2019年10月28日
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=Application.class)
+@SpringBootTest(classes = Application.class)
 public class InsertBatchTest extends BaseSpringContextTests {
 
 	@Autowired
