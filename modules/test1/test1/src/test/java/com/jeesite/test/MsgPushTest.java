@@ -38,7 +38,7 @@ import java.util.List;
  * @version 2018-5-11
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=Test1Application.class)
+@SpringBootTest(classes = Test1Application.class)
 @Rollback(false)
 public class MsgPushTest extends BaseSpringContextTests {
 

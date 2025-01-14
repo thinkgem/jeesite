@@ -16,7 +16,7 @@ import com.jeesite.modules.CoreApplication;
  * @author ThinkGem
  */
 @ActiveProfiles("test")
-@SpringBootTest(classes=CoreApplication.class)
+@SpringBootTest(classes = CoreApplication.class)
 public class InitData extends BaseInitDataTests {
 	
 	@Test
