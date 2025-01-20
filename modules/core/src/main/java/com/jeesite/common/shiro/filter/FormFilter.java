@@ -8,6 +8,7 @@ import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 表单验证（包含验证码）过滤类
@@ -53,7 +55,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	public static final String REMEMBER_USERCODE_PARAM = "rememberUserCode"; 	// 记住用户名
 	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; 			// 异常类属性名
     public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
 
 	private static FormFilter instance;
@@ -73,7 +75,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		rememberUserCodeCookie.setMaxAge(Cookie.ONE_YEAR);
         instance = this;
 	}
-	
+
 	/**
 	 * 创建登录授权令牌
 	 */
@@ -94,7 +96,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);	// 登录附加参数
 		return new FormToken(username, password.toCharArray(), rememberMe, host, captcha, paramMap);
 	}
-	
+
 	/**
 	 * 获取登录用户名
 	 */
@@ -123,7 +125,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return username;
 	}
-	
+
 	/**
 	 * 获取登录密码
 	 */
@@ -146,7 +148,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return password;
 	}
-	
+
 	/**
 	 * 获取记住我
 	 */
@@ -158,7 +160,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return ObjectUtils.toBoolean(isRememberMe);
 	}
-	
+
 	/**
 	 * 获取请求的客户端主机
 	 */
@@ -166,7 +168,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected String getHost(ServletRequest request) {
 		return IpUtils.getRemoteAddr((HttpServletRequest)request);
 	}
-	
+
 	/**
 	 * 获取登录验证码
 	 */
@@ -185,7 +187,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return captcha;
 	}
-	
+
 	/**
 	 * 多次调用登录接口，允许改变登录身份，无需退出再登录
 	 */
@@ -248,7 +250,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
 		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
-	
+
 	/**
 	 * 执行登录方法
 	 */
@@ -330,20 +332,20 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, loginFailureUrl);
 		return false;
 	}
-	
+
 	/**
 	 * 获取登录页面数据
 	 * @author ThinkGem
 	 */
 	public static Map<String, Object> getLoginData(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = MapUtils.newHashMap();
-		
+
 		// 获取登录参数
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);
 		for (Entry<String, Object> entry : paramMap.entrySet()){
 			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
-		
+
 		// 如果已登录，再次访问主页，则退出原账号。
 		if (!Global.TRUE.equals(Global.getConfig("shiro.isAllowRefreshIndex"))){
 			CookieUtils.setCookie(response, "LOGINED", "false");
@@ -364,7 +366,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	 */
 	public static Map<String, Object> getLoginFailureData(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = MapUtils.newHashMap();
-		
+
 		String username = WebUtils.getCleanParam(request, DEFAULT_USERNAME_PARAM);
 		boolean rememberMe = WebUtils.isTrue(request, DEFAULT_REMEMBER_ME_PARAM);
 		boolean rememberUserCode = WebUtils.isTrue(request, REMEMBER_USERCODE_PARAM);
@@ -375,7 +377,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		if (StringUtils.isNotBlank(secretKey)){
 			username = DesUtils.decode(username, secretKey);
 		}
-		
+
 		data.put(DEFAULT_USERNAME_PARAM, username);
 		data.put(DEFAULT_REMEMBER_ME_PARAM, rememberMe);
 		data.put(REMEMBER_USERCODE_PARAM, rememberUserCode);
@@ -384,7 +386,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
 		data.put(MESSAGE_PARAM, message);
-		
+
 		// 非授权异常，登录失败，验证码加 1。
 		if (!(exception instanceof UnauthorizedException)){
 			data.put("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username,
@@ -454,7 +456,8 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("year", Global.getProperty("copyrightYear"));
 		data.put("lang", Global.getLang());
 		List<Map<String, Object>> roleList = ListUtils.newArrayList();
-		String desktopUrl = null;
+		String desktopUrl = null; String roleCode = (String)session.getAttribute("roleCode");
+		Set<String> roleCodes = roleCode != null ? SetUtils.newHashSet(StringUtils.splitComma(roleCode)) : null;
 		for (Role role : user.getRoleList()){
 			Map<String, Object> roleMap = MapUtils.newHashMap();
 			roleMap.put("roleCode", role.getRoleCode());
@@ -462,8 +465,15 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			roleMap.put("isShow", role.getIsShow());
 			roleMap.put("sysCodes", role.getSysCodes());
 			roleList.add(roleMap);
-			if (desktopUrl == null && StringUtils.isNotBlank(role.getDesktopUrl())) {
-				desktopUrl = role.getDesktopUrl();
+			// 根据当前身份，选择桌面地址（先得到先受用）
+			if (desktopUrl == null) {
+				if (roleCodes != null){
+					if (roleCodes.contains(role.getRoleCode()) && StringUtils.isNotBlank(role.getDesktopUrl())) {
+						desktopUrl = role.getDesktopUrl();
+					}
+				}else if (StringUtils.isNotBlank(role.getDesktopUrl())) {
+					desktopUrl = role.getDesktopUrl();
+				}
 			}
 		}
 		data.put("roleList", roleList);
