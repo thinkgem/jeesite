@@ -133,6 +133,7 @@
   import { Icon } from '/@/components/Icon';
   import MenuItem from './DropMenuItem.vue';
   import LockAction from '../lock/LockModal.vue';
+  import { publicPath } from '/@/utils/env';
 
   type MenuEvent = 'accountCenter' | 'modifyPwd' | 'logout' | 'doc' | 'lock' | 'roleCode-';
 
@@ -244,24 +245,24 @@
           default:
             const sysCodePrefix = 'sysCode-';
             if (String(e.key).startsWith(sysCodePrefix)) {
-              go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
               const sysCode = String(e.key).substring(sysCodePrefix.length);
               await switchSys(sysCode);
-              location.reload();
+              await userStore.getUserInfoAction();
+              location.href = publicPath + PageEnum.BASE_HOME;
             }
             const roleCodePrefix = 'roleCode-';
             if (String(e.key).startsWith(roleCodePrefix)) {
-              go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
               const roleCode = String(e.key).substring(roleCodePrefix.length);
               await switchRole(roleCode);
-              location.reload();
+              await userStore.getUserInfoAction();
+              location.href = publicPath + PageEnum.BASE_HOME;
             }
             const postCodePrefix = 'postCode-';
             if (String(e.key).startsWith(postCodePrefix)) {
-              go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
               const postCode = String(e.key).substring(postCodePrefix.length);
               await switchPost(postCode);
-              location.reload();
+              await userStore.getUserInfoAction();
+              location.href = publicPath + PageEnum.BASE_HOME;
             }
             break;
         }
