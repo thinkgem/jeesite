@@ -8,6 +8,7 @@ import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.ObjectUtils;
 import com.jeesite.common.lang.StringUtils;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 表单验证（包含验证码）过滤类
@@ -454,7 +456,8 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		data.put("year", Global.getProperty("copyrightYear"));
 		data.put("lang", Global.getLang());
 		List<Map<String, Object>> roleList = ListUtils.newArrayList();
-		String desktopUrl = null;
+		String desktopUrl = null; String roleCode = (String)session.getAttribute("roleCode");
+		Set<String> roleCodes = roleCode != null ? SetUtils.newHashSet(StringUtils.splitComma(roleCode)) : null;
 		for (Role role : user.getRoleList()){
 			Map<String, Object> roleMap = MapUtils.newHashMap();
 			roleMap.put("roleCode", role.getRoleCode());
@@ -462,8 +465,15 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			roleMap.put("isShow", role.getIsShow());
 			roleMap.put("sysCodes", role.getSysCodes());
 			roleList.add(roleMap);
-			if (desktopUrl == null && StringUtils.isNotBlank(role.getDesktopUrl())) {
-				desktopUrl = role.getDesktopUrl();
+			// 根据当前身份，选择桌面地址（先得到先受用）
+			if (desktopUrl == null) {
+				if (roleCodes != null){
+					if (roleCodes.contains(role.getRoleCode()) && StringUtils.isNotBlank(role.getDesktopUrl())) {
+						desktopUrl = role.getDesktopUrl();
+					}
+				}else if (StringUtils.isNotBlank(role.getDesktopUrl())) {
+					desktopUrl = role.getDesktopUrl();
+				}
 			}
 		}
 		data.put("roleList", roleList);
