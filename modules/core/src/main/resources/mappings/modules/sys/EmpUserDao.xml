@@ -61,6 +61,7 @@
 			<if test="global.useCorpModel">
 		    	AND a.corp_code = #{corpCode}
 		    </if>
+		ORDER BY a.user_code
 	</select>
 	
 	<!-- 根据部门编码查询用户，仅返回基本信息  -->
@@ -81,6 +82,7 @@
 			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
 				#{code}
 			</foreach>
+		ORDER BY a.user_code
 	</select>
 	
 	<!-- 根据角色编码查询用户，仅返回基本信息  -->
@@ -100,6 +102,7 @@
 			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
 				#{code}
 			</foreach>
+		ORDER BY a.user_code
 	</select>
 	
 	<!-- 根据岗位编码查询用户，仅返回基本信息  -->
@@ -121,6 +124,7 @@
 			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
 				#{code}
 			</foreach>
+		ORDER BY a.user_code
 	</select>
 	
 </mapper>
