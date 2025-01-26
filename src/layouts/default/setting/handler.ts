@@ -69,6 +69,7 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
           // ...splitOpt,
           split,
         },
+        headerSetting: { show: true },
       };
 
     case HandlerEnum.CHANGE_THEME_COLOR:
