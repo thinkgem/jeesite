@@ -8,11 +8,42 @@ import { ProjectConfig } from '/#/config';
 import { changeTheme } from '/@/logics/theme';
 import { updateDarkTheme } from '/@/logics/theme/dark';
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+import { MenuTypeEnum } from '/@/enums/menuEnum';
+import {
+  APP_PRESET_COLOR_LIST,
+  HEADER_PRESET_BG_COLOR_LIST,
+  SIDE_BAR_BG_COLOR_LIST,
+} from '/@/settings/designSetting';
+import { ThemeEnum } from '/@/enums/appEnum';
+import { useMessage } from '/@/hooks/web/useMessage';
+import { useI18n } from '/@/hooks/web/useI18n';
 
 export function baseHandler(event: HandlerEnum, value: any) {
+  const { getDarkMode } = useRootSetting();
+  if (
+    getDarkMode.value === ThemeEnum.DARK &&
+    (event === HandlerEnum.MENU_THEME ||
+      event === HandlerEnum.HEADER_THEME ||
+      event === HandlerEnum.CHANGE_THEME_COLOR)
+  ) {
+    const { showMessage } = useMessage();
+    const { t } = useI18n();
+    showMessage(t('黑暗模式下不允许更改配色'));
+    return;
+  }
   const appStore = useAppStore();
   const config = handler(event, value);
   appStore.setProjectConfig(config);
+  if (event === HandlerEnum.CHANGE_LAYOUT) {
+    if (value.type === MenuTypeEnum.MIX || value.type === MenuTypeEnum.TOP_MENU) {
+      baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[0]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[0]);
+    } else if (value.type === MenuTypeEnum.SIDEBAR || value.type === MenuTypeEnum.MIX_SIDEBAR) {
+      baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[1]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[3]);
+    }
+    baseHandler(HandlerEnum.CHANGE_THEME_COLOR, APP_PRESET_COLOR_LIST[0]);
+  }
   if (event === HandlerEnum.CHANGE_THEME) {
     updateHeaderBgColor();
     updateSidebarBgColor();

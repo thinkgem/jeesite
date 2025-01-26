@@ -6,14 +6,14 @@ export const darkMode = ThemeEnum.LIGHT;
 export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
   '#1951be',
   '#1890ff',
-  '#151515',
+  '#001529',
   '#ffffff',
   '#009688',
   '#5172DC',
   '#e74c3c',
+  '#151515',
   '#24292e',
   '#394664',
-  '#001529',
   '#383f45',
 ];
 
@@ -34,8 +34,8 @@ export const APP_PRESET_COLOR_LIST: string[] = [
 export const SIDE_BAR_BG_COLOR_LIST: string[] = [
   '#ffffff',
   '#001529',
-  '#151515',
   '#273352',
+  '#151515',
   '#191b24',
   '#191a23',
   '#304156',
