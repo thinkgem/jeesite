@@ -185,8 +185,11 @@
         color: @breadcrumb-item-normal-color;
       }
 
-      .ant-breadcrumb-link span {
-        color: rgb(0 0 0 / 65%);
+      .ant-breadcrumb-link {
+        a,
+        span {
+          color: rgb(0 0 0 / 65%);
+        }
       }
     }
 
@@ -212,8 +215,11 @@
         color: rgb(255 255 255 / 80%);
       }
 
-      .ant-breadcrumb-link span {
-        color: rgb(255 255 255 / 80%);
+      .ant-breadcrumb-link {
+        a,
+        span {
+          color: rgb(255 255 255 / 80%);
+        }
       }
     }
   }
