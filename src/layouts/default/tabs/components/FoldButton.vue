@@ -1,5 +1,5 @@
 <template>
-  <span :class="`${prefixCls}__extra-fold`" @click="handleFoldToggle">
+  <span :class="`${prefixCls}__extra-fold`" @click="handleToggle">
     <Icon :icon="getIcon" />
   </span>
 </template>
@@ -30,8 +30,7 @@
           : 'i-ant-design:fullscreen-outlined',
       );
 
-      function handleFoldToggle() {
-        const isUnFold = unref(getIsUnFold);
+      function handleFold(isUnFold: boolean) {
         setMenuSetting({
           show: isUnFold,
           hidden: !isUnFold,
@@ -40,7 +39,15 @@
         triggerResize();
       }
 
-      return { prefixCls, getIcon, handleFoldToggle };
+      function handleToggle() {
+        handleFold(unref(getIsUnFold));
+      }
+
+      onMounted(() => {
+        handleFold(true);
+      });
+
+      return { prefixCls, getIcon, handleToggle };
     },
   });
 </script>
