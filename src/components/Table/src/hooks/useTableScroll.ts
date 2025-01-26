@@ -21,9 +21,6 @@ export function useTableScroll(
   const tableHeightRef = ref<number | string | undefined>(167);
   const modalFn = useModalContext();
 
-  // Greater than animation time 280
-  const debounceRedoHeight = useDebounceFn(redoHeight, 200);
-
   const getCanResize = computed(() => {
     const { canResize, scroll } = unref(propsRef);
     return canResize && !(scroll || {}).y;
@@ -199,15 +196,14 @@ export function useTableScroll(
     }
   }
   useWindowSizeFn(calcTableHeight, 280);
-  onMountedOrActivated(() => {
-    debounceRedoHeight();
-  });
+  onMountedOrActivated(useDebounceFn(redoHeight, 200));
 
   const tableWidthRef = ref();
-  useResizeObserver(wrapRef, () => {
+  function redoTableWidth() {
     const table = unref(tableRef);
     tableWidthRef.value = table?.$el?.offsetWidth || 600; // 默认宽度不小于，列中指定的宽度总合
-  });
+  }
+  useResizeObserver(wrapRef, useDebounceFn(redoTableWidth, 100));
 
   const getScrollRef: ComputedRef<any> = computed(() => {
     let width = 0;
