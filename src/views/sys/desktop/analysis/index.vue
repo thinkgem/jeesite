@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-4">
     <GrowCard class="enter-y" />
     <SiteAnalysis class="enter-y !my-4" />
     <div class="enter-y md:flex">

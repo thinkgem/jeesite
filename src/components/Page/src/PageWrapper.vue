@@ -340,6 +340,7 @@
     .@{prefix-cls}-content {
       // margin: 16px;
       padding: 15px;
+      margin-bottom: 13px;
       border-radius: 5px;
       color: @text-color-base;
       overflow-y: auto;

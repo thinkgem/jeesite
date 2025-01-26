@@ -33,6 +33,8 @@
               :options="[{ label: '无', value: '0' }]"
             />
             <div class="ml-3 inline-block"></div>
+          </Form.Item>
+          <Form.Item class="inline-block" :name="field">
             <CheckboxGroup
               :value="model[field]"
               @change="model[field] = $event || ''"
