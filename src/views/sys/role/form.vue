@@ -182,7 +182,7 @@
         allowClear: true,
         mode: 'multiple',
         onChange: (val) => {
-          sysCodesRef.value = val.split(',');
+          sysCodesRef.value = val ? val.split(',') : [];
         },
       },
       colProps: { md: 24, lg: 24 },
@@ -255,7 +255,7 @@
 
   async function loadSysCode() {
     sysCodeRef.value = await useDict().initGetDictList('sys_menu_sys_code');
-    sysCodesRef.value = record.value.sysCodes?.split(',') || [];
+    sysCodesRef.value = record.value.sysCodes ? record.value.sysCodes?.split(',') : [];
   }
 
   async function loadTreeDatas() {
