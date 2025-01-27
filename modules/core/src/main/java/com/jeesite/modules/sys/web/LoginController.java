@@ -5,8 +5,6 @@
 package com.jeesite.modules.sys.web;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.jeesite.common.codec.EncodeUtils;
-import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.shiro.filter.FormFilter;
@@ -16,10 +14,8 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.common.web.CookieUtils;
 import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.Menu;
-import com.jeesite.modules.sys.entity.PostRole;
 import com.jeesite.modules.sys.entity.Role;
 import com.jeesite.modules.sys.entity.User;
-import com.jeesite.modules.sys.service.PostService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
@@ -29,11 +25,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -52,9 +46,6 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}")
 @ConditionalOnProperty(name="user.enabled", havingValue="true", matchIfMissing=true)
 public class LoginController extends BaseController{
-
-	@Autowired
-	private PostService postService;
 
 	/**
 	 * 登录页面
@@ -360,96 +351,6 @@ public class LoginController extends BaseController{
 	@ResponseBody
 	public List<Map<String, Object>> menuRoute(String parentCode) {
 		return UserUtils.getMenuRouteByParentCode(parentCode);
-	}
-
-	/**
-	 * 切换系统菜单（菜单归属子系统）
-	 */
-	@RequiresPermissions("user")
-	@RequestMapping(value = "switch/{sysCode}")
-	public String switchSys(@PathVariable String sysCode, HttpServletRequest request) {
-		Session session = UserUtils.getSession();
-		if (StringUtils.isNotBlank(sysCode)){
-			session.setAttribute("sysCode", sysCode); // 5.4.0+ 支持多个，逗号隔开
-		}else{
-			session.removeAttribute("sysCode");
-		}
-		// 切换系统时，清除当前岗位和角色状态
-		session.removeAttribute("postCode");
-		session.removeAttribute("roleCode");
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
-		if (ServletUtils.isAjaxRequest(request)) {
-			return renderResult(Global.TRUE, text("子系统切换成功"));
-		}
-		return REDIRECT + adminPath + "/index";
-	}
-
-	/**
-	 * 切换角色菜单（用户->角色）
-	 */
-	@RequiresPermissions("user")
-	@RequestMapping(value = {"switchRole","switchRole/{roleCode}"})
-	public String switchRole(@PathVariable(required=false) String roleCode, HttpServletRequest request) {
-		Session session = UserUtils.getSession();
-		if (StringUtils.isNotBlank(roleCode)){
-			session.setAttribute("roleCode", roleCode); // 5.4.0+ 支持多个，逗号隔开
-		}else{
-			session.removeAttribute("roleCode");
-		}
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
-		if (ServletUtils.isAjaxRequest(request)) {
-			return renderResult(Global.TRUE, text("角色切换成功"));
-		}
-		return REDIRECT + adminPath + "/index";
-	}
-
-	/**
-	 * 切换岗位菜单（用户->岗位->角色）v4.9.2
-	 */
-	@RequiresPermissions("user")
-	@RequestMapping(value = {"switchPost","switchPost/{postCode}"})
-	public String switchPost(@PathVariable(required=false) String postCode, HttpServletRequest request) {
-		Session session = UserUtils.getSession();
-		if (StringUtils.isNotBlank(postCode)){
-			PostRole where = new PostRole();
-			where.setPostCode(postCode);
-			where.sqlMap().loadJoinTableAlias("r");
-			List<String> roleCodes = ListUtils.newArrayList();
-			postService.findPostRoleList(where).forEach(e -> {
-				if (e.getRole() != null && PostRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
-					roleCodes.add(e.getRoleCode());
-				}
-			});
-			if (roleCodes.isEmpty()){
-				roleCodes.add("__none__");
-			}
-			session.setAttribute("postCode", postCode);
-			session.setAttribute("roleCode", StringUtils.joinComma(roleCodes)); // 5.4.0+ 支持多个，逗号隔开
-		}else{
-			session.removeAttribute("postCode");
-			session.removeAttribute("roleCode");
-		}
-		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
-		if (ServletUtils.isAjaxRequest(request)) {
-			return renderResult(Global.TRUE, text("岗位切换成功"));
-		}
-		return REDIRECT + adminPath + "/index";
-	}
-	
-	/**
-	 * 切换主题风格
-	 */
-	//@RequiresPermissions("user")
-	@RequestMapping(value = "switchSkin/{skinName}")
-	public String switchSkin(@PathVariable String skinName, HttpServletRequest request, HttpServletResponse response) {
-		if (StringUtils.isNotBlank(skinName) && !"select".equals(skinName)){
-			CookieUtils.setCookie(response, "skinName", EncodeUtils.encodeUrl(EncodeUtils.xssFilter(skinName, request)));
-			if (ServletUtils.isAjaxRequest(request)) {
-				return renderResult(response, Global.TRUE, text("主题切换成功"));
-			}
-			return REDIRECT + adminPath + "/index";
-		}
-		return "modules/sys/switchSkin";
 	}
 	
 	/**
