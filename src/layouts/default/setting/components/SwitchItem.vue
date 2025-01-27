@@ -1,6 +1,9 @@
 <template>
   <div :class="prefixCls">
-    <span> {{ title }}</span>
+    <span>
+      {{ title }}
+      <BasicHelp v-if="helpMessage" placement="top" :text="helpMessage" />
+    </span>
     <Switch
       v-bind="getBindValue"
       @change="handleChange"
@@ -16,12 +19,13 @@
   import { Switch } from 'ant-design-vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { BasicHelp } from '/@/components/Basic';
   import { baseHandler } from '../handler';
   import { HandlerEnum } from '../enum';
 
   export default defineComponent({
     name: 'SwitchItem',
-    components: { Switch },
+    components: { Switch, BasicHelp },
     props: {
       event: {
         type: Number as PropType<HandlerEnum>,
@@ -30,6 +34,9 @@
         type: Boolean,
       },
       title: {
+        type: String,
+      },
+      helpMessage: {
         type: String,
       },
       def: {
