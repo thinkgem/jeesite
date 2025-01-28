@@ -8,6 +8,7 @@ import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
 import com.jeesite.common.mybatis.annotation.Table;
+import com.jeesite.common.mybatis.mapper.query.QueryType;
 
 /**
  * 岗位角色Entity
@@ -51,6 +52,14 @@ public class PostRole extends DataEntity<PostRole> {
 
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
+	}
+
+	public String[] getPostCode_in(){
+		return sqlMap.getWhere().getValue("post_code", QueryType.IN);
+	}
+
+	public void setPostCode_in(String[] postCodes){
+		sqlMap.getWhere().and("post_code", QueryType.IN, postCodes);
 	}
 
 	public String getRoleCode() {
