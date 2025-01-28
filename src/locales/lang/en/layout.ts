@@ -114,7 +114,7 @@ export default {
     fixedHeader: 'Fixed header',
     fixedSideBar: 'Fixed Sidebar',
 
-    mixSidebarTrigger: 'Mixed menu Trigger',
+    mixSidebarTrigger: 'Mixed menu trigger',
     triggerHover: 'Hover',
     triggerClick: 'Click',
 
