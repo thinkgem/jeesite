@@ -4,14 +4,13 @@
  */
 package com.jeesite.modules.sys.entity;
 
-import jakarta.validation.constraints.Size;
-
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.JoinTable;
-import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.annotation.JoinTable.Type;
+import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
+import jakarta.validation.constraints.Size;
 
 /**
  * 附属机构Entity
@@ -29,7 +28,10 @@ import com.jeesite.common.mybatis.mapper.query.QueryType;
 			columns={
 				@Column(name="office_code", label="机构编码", isPK=true),
 				@Column(name="parent_codes",label="所有父级编码", queryType=QueryType.LIKE),
+				@Column(name="view_code", label="机构代码", isQuery=false),
 				@Column(name="office_name", label="机构名称", isQuery=false),
+				@Column(name="full_name", label="机构全称", isQuery=false),
+				@Column(name="tree_names", label="全节点名", isQuery=false),
 			}),
 		@JoinTable(type=Type.LEFT_JOIN, entity=Post.class, alias="p", 
 			on="p.post_code=a.post_code", attrName="this",
@@ -47,7 +49,11 @@ public class EmployeeOffice extends DataEntity<EmployeeOffice> {
 	private String postCode;	// 岗位编码
 
 	private String parentCodes;	// 机构所有上级编码（数据权限用）
+	private String viewCode;	// 机构代码（联合查询项）
 	private String officeName;	// 机构名称（联合查询项）
+	private String fullName;	// 机构全称（联合查询项）
+	private String treeNames;	// 机构全称（联合查询项）
+
 	private String postName;	// 岗位名称（联合查询项）
 	
 	public EmployeeOffice() {
@@ -93,12 +99,36 @@ public class EmployeeOffice extends DataEntity<EmployeeOffice> {
 		this.parentCodes = parentCodes;
 	}
 
+	public String getViewCode() {
+		return viewCode;
+	}
+
+	public void setViewCode(String viewCode) {
+		this.viewCode = viewCode;
+	}
+
 	public String getOfficeName() {
 		return officeName;
 	}
 
 	public void setOfficeName(String officeName) {
 		this.officeName = officeName;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getTreeNames() {
+		return treeNames;
+	}
+
+	public void setTreeNames(String treeNames) {
+		this.treeNames = treeNames;
 	}
 
 	public String getPostName() {
