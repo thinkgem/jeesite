@@ -106,6 +106,9 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	 */
 	@Override
 	public List<EmployeePost> findEmployeePostList(Employee employee){
+		if (StringUtils.isBlank(employee.getEmpCode())){
+			return ListUtils.newArrayList();
+		}
 		EmployeePost employeePost = new EmployeePost();
 		employeePost.setEmpCode(employee.getEmpCode());
 		if (employee.getDataMap() != null) {
@@ -122,6 +125,9 @@ public class EmployeeServiceSupport extends CrudService<EmployeeDao, Employee>
 	 */
 	@Override
 	public List<EmployeeOffice> findEmployeeOfficeList(Employee employee){
+		if (StringUtils.isBlank(employee.getEmpCode())){
+			return ListUtils.newArrayList();
+		}
 		EmployeeOffice employeeOffice = new EmployeeOffice();
 		employeeOffice.setEmpCode(employee.getEmpCode());
 		return employeeOfficeDao.findList(employeeOffice);
