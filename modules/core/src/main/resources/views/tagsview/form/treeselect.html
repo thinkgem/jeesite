@@ -17,14 +17,16 @@
 <div id="tree" class="ztree treeselect"></div>
 <% } %>
 <script>
-var selectCodes = "${selectCodes!}".split(","), setting = {
-	view:{selectedMulti:false,dblClickExpand:false},
+var selectCodes = "${selectCodes!}".split(","), fieldNames = /*<% if(isNotBlank(fieldNames!)){
+		fieldNames = toJson(fromJson(fieldNames!, 'map')); // 转换一遍防止XSS注入
+		} if(isNotBlank(fieldNames!)){ %>*/"#{fieldNames!}"/*<% }else{ %>*/{}/*<% } %>*/, setting = {
 	check:{enable:"${checkbox!}"=="true",nocheckInherit:true/*<% if(isNotBlank(chkboxType!)){
 		chkboxType = toJson(fromJson(chkboxType!, 'map')); // 转换一遍防止XSS注入
-		if(isNotBlank(chkboxType!)){ %>*/,chkboxType:"#{chkboxType!}"/*<% } } %>*/},
-	async:{enable:true,autoParam:["id=parentCode"],
-		url:js.removeParam('parentCode', "${url!}")},
-	data:{simpleData:{enable:true}},callback:{
+		} if(isNotBlank(chkboxType!)){ %>*/,chkboxType:"#{chkboxType!}"/*<% } %>*/},
+	async:{enable:true,autoParam:["id=parentCode"], url:js.removeParam('parentCode', "${url!}")},
+	data:{simpleData:{enable:true,idKey:fieldNames.id||'id',pIdKey:fieldNames.pId||'pId'},
+        key:{name:fieldNames.name||'name',title:fieldNames.title||'title'}},
+	view:{selectedMulti:false,dblClickExpand:false}, callback:{
 		onClick:function(event, treeId, treeNode){
 			tree.expandNode(treeNode);
 		},
