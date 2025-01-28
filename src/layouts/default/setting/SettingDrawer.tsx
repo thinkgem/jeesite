@@ -72,7 +72,7 @@ export default defineComponent({
 
     const { getShowHeader, getHeaderBgColor, getShowSearch } = useHeaderSetting();
 
-    const { getShowMultipleTab, getShowQuick, getShowRedo } = useMultipleTabSetting();
+    const { getShowMultipleTab, getShowQuick, getShowRedo, getShowFold } = useMultipleTabSetting();
 
     const getShowMenuRef = computed(() => {
       return unref(getShowMenu) && !unref(getIsHorizontal);
@@ -225,6 +225,13 @@ export default defineComponent({
                 : `${value}${t('layout.setting.minute')}`;
             }}
           />
+        </>
+      );
+    }
+
+    function renderContent() {
+      return (
+        <>
           <InputNumberItem
             title={t('layout.setting.expandedMenuWidth')}
             max={600}
@@ -235,13 +242,7 @@ export default defineComponent({
             defaultValue={unref(getMenuWidth)}
             formatter={(value: string) => `${parseInt(value)}px`}
           />
-        </>
-      );
-    }
 
-    function renderContent() {
-      return (
-        <>
           <SwitchItem
             title={t('layout.setting.tabsRedoBtn')}
             event={HandlerEnum.TABS_SHOW_REDO}
@@ -253,6 +254,13 @@ export default defineComponent({
             title={t('layout.setting.tabsQuickBtn')}
             event={HandlerEnum.TABS_SHOW_QUICK}
             def={unref(getShowQuick)}
+            disabled={!unref(getShowMultipleTab)}
+          />
+
+          <SwitchItem
+            title={t('layout.setting.tabsFoldBtn')}
+            event={HandlerEnum.TABS_SHOW_FOLD}
+            def={unref(getShowFold)}
             disabled={!unref(getShowMultipleTab)}
           />
 
