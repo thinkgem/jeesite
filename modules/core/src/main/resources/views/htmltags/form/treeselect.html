@@ -39,6 +39,7 @@ var p = {
 	
 	checkbox: toBoolean(checkbox!false),		// 是否显示复选框，是否支持多选，如果设置canSelectParent=true则返回父节点数据
 	chkboxType: chkboxType!'',					// 复选框级联选择规则 v4.0.6，默认：{'Y':'ps','N':'ps'}
+	fieldNames: fieldNames!'',                  // 自定义字段名 v5.10.1，默认：{'id':'id','pId':'pId','name':'name','title':'title'}
 	expandLevel: @ObjectUtils.toInteger(expandLevel!(-1)),		// 默认展开层次级别（默认:如果有1个根节点，则展开一级节点，否则不展开）
 	
 	canSelectRoot: toBoolean(canSelectRoot!false),		// 可以选择跟节点
@@ -95,7 +96,7 @@ $("#${p.id}Button${p.allowInput?'':',#'+p.id+'Name'}").click(function(){
 	if ($("#${p.id}Button").hasClass("disabled") || $("#${p.id}Name").hasClass("disabled")){
 		return true;
 	}
-	var options = {
+	var fieldNames = /*<% if(isNotBlank(p.fieldNames!)){ %>*/"#{p.fieldNames!}"/*<% }else{ %>*/{}/*<% } %>*/, options = {
 		type: 2,
 		maxmin: true,
 		shadeClose: true,
@@ -106,6 +107,7 @@ $("#${p.id}Button${p.allowInput?'':',#'+p.id+'Name'}").click(function(){
 			url: $('#${p.id}Div').attr('data-url'),
 			checkbox: '${p.checkbox}',
 			chkboxType: "${p.chkboxType}",
+            fieldNames: "${p.fieldNames}",
 			expandLevel: '${p.expandLevel}',
 			selectCodes: $("#${p.id}Code").val(),
 			isReturnValue: '${p.isReturnValue}',
@@ -136,22 +138,23 @@ $("#${p.id}Button${p.allowInput?'':',#'+p.id+'Name'}").click(function(){
 				//# } // 不允许选择跟节点
 				//# if (!p.canSelectRoot){
 				if (nodes[i].level == 0 && nodes[i].isParent){
-					js.showMessage("${text('不能选择根节点')}（"+nodes[i].name+"）${text('请重新选择')}。");
+					js.showMessage("${text('不能选择根节点')}（"+nodes[i][fieldNames.name||'name']+"）${text('请重新选择')}。");
 					return false;
 				}
 				//# } // 不允许选择父节点
 				//# if (!p.canSelectParent){
 				if (nodes[i].isParent){
-					js.showMessage("${text('不能选择父节点')}（"+nodes[i].name+"）${text('请重新选择')}。");
+					js.showMessage("${text('不能选择父节点')}（"+nodes[i][fieldNames.name||'name']+"）${text('请重新选择')}。");
 					return false;
 				}
 				//# }
-				var code = nodes[i]['${p.isReturnValue!}'=='true'?'value':'id'], name = nodes[i]['name'];
+				var code = nodes[i][fieldNames.id||('${p.isReturnValue!}'=='true'?'value':'id')],
+                    name = nodes[i][fieldNames.name||'name'];
 				//# // 如果是返回全部路径的名称，则读取名称路径
 				//# if (p.returnFullName){
 				var pNode = nodes[i].getParentNode();
 				while(!!pNode) {
-					name =  pNode.name + '${p.returnFullNameSplit}' + name;
+					name = pNode[fieldNames.name||'name'] + '${p.returnFullNameSplit}' + name;
 				    pNode = pNode.getParentNode();
 				}
 				//# }
