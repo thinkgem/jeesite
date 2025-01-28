@@ -32,7 +32,8 @@ public class EmpUtils {
 	// 机构和公司缓存常量
 	public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 	public static final String CACHE_COMPANY_ALL_LIST = "companyAllList";
-	public static final String CACHE_COMPANY_OFFICE_LIST = "employeeOfficeList";
+	public static final String CACHE_EMPLOYEE_OFFICE_LIST = "employeeOfficeList";
+	public static final String CACHE_EMPLOYEE_POST_LIST = "employeePostList";
 
 	// 当前线程部门，没有session环境下使用，优先级低于session
 	private static final ThreadLocal<String> currentOfficeCode = new NamedThreadLocal<>("CurrentOfficeCode");
@@ -108,10 +109,10 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<EmployeeOffice> getEmployeeOfficeList(){
-		List<EmployeeOffice> list = UserUtils.getCache(CACHE_COMPANY_OFFICE_LIST);
+		List<EmployeeOffice> list = UserUtils.getCache(CACHE_EMPLOYEE_OFFICE_LIST);
 		if (list == null){
 			list = Static.employeeService.findEmployeeOfficeList(getEmployee());
-			UserUtils.putCache(CACHE_COMPANY_OFFICE_LIST, list);
+			UserUtils.putCache(CACHE_EMPLOYEE_OFFICE_LIST, list);
 		}
 		return list;
 	}
@@ -325,6 +326,19 @@ public class EmpUtils {
 			}
 		});
 		return list.toArray(new String[list.size()]);
+	}
+
+	/**
+	 * 获取当前员工岗位（返回岗位编码和名称）
+	 * @return
+	 */
+	public static List<EmployeePost> getEmployeePostList(){
+		List<EmployeePost> list = UserUtils.getCache(CACHE_EMPLOYEE_POST_LIST);
+		if (list == null){
+			list = getEmployeePostList(getEmployee().getEmpCode());
+			UserUtils.putCache(CACHE_EMPLOYEE_POST_LIST, list);
+		}
+		return list;
 	}
 
 	/**
