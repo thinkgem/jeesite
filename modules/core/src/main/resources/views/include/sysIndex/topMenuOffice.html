@@ -1,0 +1,27 @@
+<% if(toBoolean(switchOffice!)){ %>
+<li>
+	<a href="javascript:" id="switchOffice">
+		<i class="fa icon-grid" style="font-size:12px;"></i> ${officeName!}
+	</a>
+	<div class="hide"><#form:treeselect id="switchOfficeSelect" title="${text('部门切换')}" allowClear="false"
+		url="${ctx}/sys/empUser/officeListData?isShowCode=true" callbackFuncName="switchOfficeSelectCallback"
+		fieldNames="{'id':'officeCode','name':'fullName'}"/>
+	</div>
+	<script>
+		$('#switchOffice').click(function(){
+			$('#switchOfficeSelectButton').click();
+		});
+		function switchOfficeSelectCallback(id, act, index, layero, nodes){
+			if (act == 'ok'){
+				var officeCode = $('#switchOfficeSelectCode').val();
+				if (officeCode != ''){
+					js.ajaxSubmit("${ctx}/sys/empUser/switchOffice/"+officeCode, function(data){
+						js.showMessage(data.message);
+						js.window.location.reload();
+					});
+				}
+			}
+		}
+	</script>
+</li>
+<% } %>

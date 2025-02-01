@@ -54,8 +54,11 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	public static final String MESSAGE_PARAM = "message"; 						// 登录返回消息
 	public static final String REMEMBER_USERCODE_PARAM = "rememberUserCode"; 	// 记住用户名
 	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; 			// 异常类属性名
-    public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
-	
+	public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
+
+	public static final Boolean POST_ROLE_PERMI = Global.getConfigToBoolean("user.postRolePermi", "false");
+	public static final Boolean SWITCH_OFFICE = Global.getConfigToBoolean("user.switchOffice", "false");
+
 	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
 
 	private static FormFilter instance;
@@ -477,9 +480,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			}
 		}
 		data.put("roleList", roleList);
-		List<Map<String, Object>> postList = ListUtils.newArrayList();
-		if (Global.getConfigToBoolean("user.postRolePermi", "false")
-				&& User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+		if (POST_ROLE_PERMI && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+			List<Map<String, Object>> postList = ListUtils.newArrayList();
+			data.put("postRolePermi", "true");
 			Employee employee = user.getRefObj();
 			for (EmployeePost ep : EmpUtils.getEmployeePostList(employee.getEmpCode())){
 				Post post = ep.getPost();
@@ -490,8 +493,13 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 					postList.add(postMap);
 				}
 			}
+			data.put("postList", postList);
 		}
-		data.put("postList", postList);
+		if (SWITCH_OFFICE && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+			data.put("switchOffice", "true");
+			data.put("officeCode", EmpUtils.getCurrentOfficeCode());
+			data.put("officeName", EmpUtils.getCurrentOfficeName());
+		}
 		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
 		return data;
 	}

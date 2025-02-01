@@ -47,7 +47,7 @@
 		<% }else{ %>
 		<li class="mt10"></li>
 		<% } %>
-		<% if(postList.~size > 0){ %>
+		<% if(toBoolean(postRolePermi!) && postList.~size > 0){ %>
 			<li class="divider"></li>
 			<% var postCode = @ObjectUtils.toStringIgnoreNull(session.postCode, ''); %>
 			<li class="dropdown-header mb5">${text('选择岗位')}：<% if(isNotBlank(postCode)){ %>

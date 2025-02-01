@@ -99,9 +99,12 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
     
-# 日志配置
+# 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
+#  level:
+#    root: warn
+#    com.jeesite: debug
   
 #======================================#
 #========== System settings ===========#
