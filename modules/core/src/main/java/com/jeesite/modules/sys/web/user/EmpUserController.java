@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.DateUtils;
@@ -18,6 +19,7 @@ import com.jeesite.common.shiro.realm.AuthorizingRealm;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.common.web.http.ServletUtils;
 import com.jeesite.modules.sys.entity.*;
 import com.jeesite.modules.sys.service.*;
 import com.jeesite.modules.sys.utils.EmpUtils;
@@ -26,6 +28,7 @@ import com.jeesite.modules.sys.utils.UserUtils;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +43,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 员工用户Controller
@@ -441,41 +445,89 @@ public class EmpUserController extends BaseController {
 	}
 
 	/**
-	 * 获取当前用户附属部门
-	 * @return
+	 * 获取当前用户部门（包括附属部门） v5.10.1
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "officeListData")
 	@ResponseBody
-	public List<EmployeeOffice> officeListData () {
-		Employee employee = EmpUtils.getEmployee();
-		return employeeService.findEmployeeOfficeList(employee);
+	public List<EmployeeOffice> officeListData() {
+		Office office = EmpUtils.getOffice();
+		EmployeeOffice employeeOffice = new EmployeeOffice();
+		employeeOffice.setOfficeCode(office.getOfficeCode());
+		employeeOffice.setViewCode(office.getViewCode());
+		employeeOffice.setOfficeName(office.getOfficeName());
+		employeeOffice.setFullName(office.getFullName());
+		employeeOffice.setTreeNames(office.getTreeNames());
+		List<EmployeeOffice> list = ListUtils.newArrayList(employeeOffice);
+		list.addAll(EmpUtils.getEmployeeOfficeList());
+		return list;
 	}
 
-
 	/**
-	 * 切换当前用户到附属部门
-	 * @param officeCode
-	 * @return
+	 * 切换部门菜单（用户->部门(含附属部门)->岗位->角色）v5.10.1
 	 */
 	@RequiresPermissions("user")
-	@RequestMapping(value = "switchOffice/{officeCode}")
-	@ResponseBody
-	public String switchOffice(@PathVariable String officeCode) {
-		if (StringUtils.equals(officeCode, "default")) {
+	@RequestMapping(value = {"switchOffice","switchOffice/{officeCode}"})
+	public String switchOffice(@PathVariable(required=false) String officeCode, HttpServletRequest request, HttpServletResponse response) {
+		Session session = UserUtils.getSession();
+		Set<String> postCodes = SetUtils.newHashSet();
+		if (StringUtils.isNotBlank(officeCode)){
+			// 查询用户关联的岗位
+			AtomicReference<String> officeCodeRef = new AtomicReference<>();
+			AtomicReference<String> officeNameRef = new AtomicReference<>();
+			// 如果是当前用户主部门
 			Office office = EmpUtils.getOffice();
-			EmpUtils.setCurrentOffice(office.getOfficeCode(), office.getOfficeName());
-			return renderResult(Global.TRUE, text("部门切换成功！"));
-		}
-		List<EmployeeOffice> employeeOfficeList = EmpUtils.getEmployeeOfficeList().stream()
-				.filter(e -> StringUtils.equals(e.getOfficeCode(), officeCode)).collect(Collectors.toList());
-		if (!employeeOfficeList.isEmpty()) {
-			EmployeeOffice office = employeeOfficeList.get(0);
-			EmpUtils.setCurrentOffice(office.getOfficeCode(), office.getOfficeName());
-			return renderResult(Global.TRUE, text("部门切换成功！"));
+			if (StringUtils.equals(officeCode, office.getOfficeCode())) {
+				officeCodeRef.set(office.getOfficeCode());
+				officeNameRef.set(StringUtils.defaultIfBlank(office.getFullName(), office.getOfficeName()));
+				EmpUtils.getEmployeePostList().forEach(ep -> {
+					postCodes.add(ep.getPostCode());
+				});
+			}
+			// 如果是当前用户的附属部门
+			else {
+				EmpUtils.getEmployeeOfficeList().forEach(eo -> {
+					if (StringUtils.equals(officeCode, eo.getOfficeCode())) {
+						officeCodeRef.set(eo.getOfficeCode());
+						officeNameRef.set(StringUtils.defaultIfBlank(eo.getFullName(), eo.getOfficeName()));
+						postCodes.add(eo.getPostCode());
+					}
+				});
+			}
+			// 如果匹配不到，有权限切换的部门，则给于提示
+			if (StringUtils.isAnyBlank(officeCodeRef.get(), officeNameRef.get())) {
+				return renderResult(response, Global.FALSE, text("没有权限切换到该部门"));
+			}
+			EmpUtils.setCurrentOffice(session, officeCodeRef.get(), officeNameRef.get());
 		} else {
-			return renderResult(Global.FALSE, text("部门切换失败，所切换部门不是您的附属部门！"));
+			EmpUtils.removeCurrentOffice(session);
 		}
+		// 开启 user.postRolePermi 参数后，就可以使用岗位关联角色过滤菜单权限
+		if (Global.getConfigToBoolean("user.postRolePermi", "false")) {
+			if (!postCodes.isEmpty()) {
+				// 查询并设置岗位关联的角色
+				PostRole where = new PostRole();
+				where.setPostCode_in(postCodes.toArray(new String[0]));
+				where.sqlMap().loadJoinTableAlias("r");
+				List<String> roleCodes = ListUtils.newArrayList();
+				postService.findPostRoleList(where).forEach(e -> {
+					if (e.getRole() != null && PostRole.STATUS_NORMAL.equals(e.getRole().getStatus())) {
+						roleCodes.add(e.getRoleCode());
+					}
+				});
+				if (roleCodes.isEmpty()){
+					roleCodes.add("__none__");
+				}
+				session.setAttribute("roleCode", StringUtils.joinComma(roleCodes)); // 5.4.0+ 支持多个，逗号隔开
+			} else {
+				session.removeAttribute("roleCode");
+			}
+		}
+		UserUtils.removeCache(UserUtils.CACHE_AUTH_INFO+"_"+session.getId());
+		if (ServletUtils.isAjaxRequest(request)) {
+			return renderResult(response, Global.TRUE, text("部门切换成功"));
+		}
+		return REDIRECT + adminPath + "/index";
 	}
 	
 }

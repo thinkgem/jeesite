@@ -54,7 +54,10 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	public static final String MESSAGE_PARAM = "message"; 						// 登录返回消息
 	public static final String REMEMBER_USERCODE_PARAM = "rememberUserCode"; 	// 记住用户名
 	public static final String EXCEPTION_ATTRIBUTE_NAME = "exception"; 			// 异常类属性名
-    public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
+	public static final String LOGIN_PARAM = "__login";							// 支持GET方式登录的参数
+
+	public static final Boolean POST_ROLE_PERMI = Global.getConfigToBoolean("user.postRolePermi", "false");
+	public static final Boolean SWITCH_OFFICE = Global.getConfigToBoolean("user.switchOffice", "false");
 
 	private static final Logger logger = LoggerFactory.getLogger(FormFilter.class);
 
@@ -75,7 +78,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		rememberUserCodeCookie.setMaxAge(Cookie.ONE_YEAR);
         instance = this;
 	}
-
+	
 	/**
 	 * 创建登录授权令牌
 	 */
@@ -96,7 +99,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);	// 登录附加参数
 		return new FormToken(username, password.toCharArray(), rememberMe, host, captcha, paramMap);
 	}
-
+	
 	/**
 	 * 获取登录用户名
 	 */
@@ -125,7 +128,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return username;
 	}
-
+	
 	/**
 	 * 获取登录密码
 	 */
@@ -148,7 +151,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return password;
 	}
-
+	
 	/**
 	 * 获取记住我
 	 */
@@ -160,7 +163,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return ObjectUtils.toBoolean(isRememberMe);
 	}
-
+	
 	/**
 	 * 获取请求的客户端主机
 	 */
@@ -168,7 +171,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected String getHost(ServletRequest request) {
 		return IpUtils.getRemoteAddr((HttpServletRequest)request);
 	}
-
+	
 	/**
 	 * 获取登录验证码
 	 */
@@ -187,7 +190,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		return captcha;
 	}
-
+	
 	/**
 	 * 多次调用登录接口，允许改变登录身份，无需退出再登录
 	 */
@@ -250,7 +253,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
 		PermissionsFilter.redirectToDefaultPath(request, response);
 	}
-
+	
 	/**
 	 * 执行登录方法
 	 */
@@ -332,20 +335,20 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		ServletUtils.redirectUrl((HttpServletRequest)request, (HttpServletResponse)response, loginFailureUrl);
 		return false;
 	}
-
+	
 	/**
 	 * 获取登录页面数据
 	 * @author ThinkGem
 	 */
 	public static Map<String, Object> getLoginData(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = MapUtils.newHashMap();
-
+		
 		// 获取登录参数
 		Map<String, Object> paramMap = ServletUtils.getExtParams(request);
 		for (Entry<String, Object> entry : paramMap.entrySet()){
 			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
-
+		
 		// 如果已登录，再次访问主页，则退出原账号。
 		if (!Global.TRUE.equals(Global.getConfig("shiro.isAllowRefreshIndex"))){
 			CookieUtils.setCookie(response, "LOGINED", "false");
@@ -366,7 +369,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 	 */
 	public static Map<String, Object> getLoginFailureData(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = MapUtils.newHashMap();
-
+		
 		String username = WebUtils.getCleanParam(request, DEFAULT_USERNAME_PARAM);
 		boolean rememberMe = WebUtils.isTrue(request, DEFAULT_REMEMBER_ME_PARAM);
 		boolean rememberUserCode = WebUtils.isTrue(request, REMEMBER_USERCODE_PARAM);
@@ -377,7 +380,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		if (StringUtils.isNotBlank(secretKey)){
 			username = DesUtils.decode(username, secretKey);
 		}
-
+		
 		data.put(DEFAULT_USERNAME_PARAM, username);
 		data.put(DEFAULT_REMEMBER_ME_PARAM, rememberMe);
 		data.put(REMEMBER_USERCODE_PARAM, rememberUserCode);
@@ -386,7 +389,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			data.put(ServletUtils.EXT_PARAMS_PREFIX + entry.getKey(), entry.getValue());
 		}
 		data.put(MESSAGE_PARAM, message);
-
+		
 		// 非授权异常，登录失败，验证码加 1。
 		if (!(exception instanceof UnauthorizedException)){
 			data.put("isValidCodeLogin", BaseAuthorizingRealm.isValidCodeLogin(username,
@@ -477,9 +480,9 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 			}
 		}
 		data.put("roleList", roleList);
-		List<Map<String, Object>> postList = ListUtils.newArrayList();
-		if (Global.getConfigToBoolean("user.postRolePermi", "false")
-				&& User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+		if (POST_ROLE_PERMI && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+			List<Map<String, Object>> postList = ListUtils.newArrayList();
+			data.put("postRolePermi", "true");
 			Employee employee = user.getRefObj();
 			for (EmployeePost ep : EmpUtils.getEmployeePostList(employee.getEmpCode())){
 				Post post = ep.getPost();
@@ -490,8 +493,13 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 					postList.add(postMap);
 				}
 			}
+			data.put("postList", postList);
 		}
-		data.put("postList", postList);
+		if (SWITCH_OFFICE && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
+			data.put("switchOffice", "true");
+			data.put("officeCode", EmpUtils.getCurrentOfficeCode());
+			data.put("officeName", EmpUtils.getCurrentOfficeName());
+		}
 		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
 		return data;
 	}
