@@ -365,11 +365,11 @@ spring:
 #    username: admin
 #    password: admin123
 
-# 日志配置
-logging:
-  level:
-    root: warn
-    com.codingapi.txlcn: debug
+# 日志配置（fatal、error、warn、info、debug）
+#logging:
+#  level:
+#    root: warn
+#    com.jeesite: debug
 
 # 链路追踪
 management:
