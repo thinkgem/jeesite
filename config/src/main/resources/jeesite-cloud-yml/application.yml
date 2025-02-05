@@ -371,6 +371,15 @@ spring:
 #    root: warn
 #    com.jeesite: debug
 
+# MyBatis 相关
+mybatis:
+
+  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules.**.dao
+
+  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
+  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
+
 # 链路追踪
 management:
   zipkin:
@@ -436,15 +445,6 @@ shiro:
     /inner/api/** = inner
     /api/** = user
     ${adminPath}/** = user
-  
-# MyBatis 相关
-mybatis:
-
-  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
-  scanBasePackage: com.jeesite.modules.**.dao
-
-  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
-  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
   
 # Web 相关
 web:
