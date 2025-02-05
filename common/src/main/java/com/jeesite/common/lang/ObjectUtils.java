@@ -86,14 +86,37 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 	 * 转换为 Long 类型
 	 */
 	public static Long toLong(final Object val) {
-		return toDouble(val).longValue();
+		if (val == null) {
+			return 0L;
+		}
+		try {
+			String str = val.toString();
+			if (StringUtils.isBlank(str)) {
+				return 0L;
+			}
+			if (StringUtils.contains(str, "*")) {
+				Long number = null, d = null;
+				for (String s : StringUtils.split(str, "*")) {
+					d = Long.parseLong(StringUtils.trim(s));
+					if (number == null) {
+						number = d;
+					} else {
+						number *= d;
+					}
+				}
+				return number;
+			}
+			return Long.parseLong(StringUtils.trim(str));
+		} catch (Exception e) {
+			return 0L;
+		}
 	}
 
 	/**
 	 * 转换为 Integer 类型
 	 */
 	public static Integer toInteger(final Object val) {
-		return toDouble(val).intValue();
+		return toLong(val).intValue();
 	}
 
 	/**
