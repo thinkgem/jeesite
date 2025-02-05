@@ -107,6 +107,14 @@ spring:
 # 日志配置
 logging:
   config: classpath:config/logback-spring.xml
+
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: false
   
 # 管理基础路径
 adminPath: /a
@@ -157,12 +165,6 @@ web:
   # 在线API文档工具
   swagger: 
     enabled: false
-
-# Mapper文件刷新线程
-mybatis:
-  mapper:
-    refresh:
-      enabled: false
 
 # 文件上传
 file:

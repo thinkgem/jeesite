@@ -105,6 +105,14 @@ logging:
 #  level:
 #    root: warn
 #    com.jeesite: debug
+
+# MyBatis 相关
+mybatis:
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
   
 #======================================#
 #========== System settings ===========#
@@ -192,14 +200,6 @@ session:
   # 会话唯一标识SessionId在Cookie中的名称。
   sessionIdCookieName: h2db.jeesite.session.id
   sessionIdCookiePath: ${server.servlet.context-path}
-
-# MyBatis 相关
-mybatis:
-  
-  # Mapper文件刷新线程
-  mapper:
-    refresh:
-      enabled: true
   
 # Web 相关
 web:
