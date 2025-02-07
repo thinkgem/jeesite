@@ -212,7 +212,7 @@ export const useUserStore = defineStore({
       this.setSessionTimeout(true);
       this.setUserInfo(null);
       this.setRoleList([]);
-      goLogin && router.push(PageEnum.BASE_LOGIN);
+      goLogin && (await router.replace(PageEnum.BASE_LOGIN));
     },
     /**
      * @description: Confirm before logging out

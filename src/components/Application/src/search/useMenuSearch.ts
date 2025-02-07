@@ -145,7 +145,7 @@ export function useMenuSearch(refs: Ref<HTMLElement[]>, scrollWrap: Ref<ElRef>, 
     const to = result[index];
     handleClose();
     await nextTick();
-    go(to.path);
+    await go(to.path);
   }
 
   // close search modal

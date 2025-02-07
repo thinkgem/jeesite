@@ -64,6 +64,7 @@
   import { useEmitter } from '/@/store/modules/user';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useGo } from '/@/hooks/web/usePage';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
@@ -89,6 +90,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: meta.title || t('数据管理'),
   };
+  const go = useGo();
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 6 },
@@ -477,7 +479,7 @@
   }
 
   function handleFormRoute(record: Recordable) {
-    router.push({
+    go({
       path: '/test/testData/formRoute',
       query: record,
     });
