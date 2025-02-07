@@ -77,8 +77,7 @@ public class EmpUtils {
 	 */
 	public static Employee getByUserCode(String userCode){
 		User user = UserUtils.get(userCode);
-		Employee employee = get(user);
-		return employee;
+		return get(user);
 	}
 	
 	/**
@@ -87,8 +86,7 @@ public class EmpUtils {
 	 */
 	public static Employee getByLoginCode(String loginCode){
 		User user = UserUtils.getByLoginCode(loginCode);
-		Employee employee = get(user);
-		return employee;
+		return get(user);
 	}
 	
 	/**
@@ -145,8 +143,7 @@ public class EmpUtils {
 	 * @author ThinkGem
 	 */
 	public static List<Office> getOfficeAllList(){
-		@SuppressWarnings("unchecked")
-		List<Office> officeList = (List<Office>)CorpUtils.getCache(CACHE_OFFICE_ALL_LIST);
+		List<Office> officeList = CorpUtils.getCache(CACHE_OFFICE_ALL_LIST);
 		if (officeList == null){
 			Office where = new Office();
 			where.setStatus(Office.STATUS_NORMAL);
@@ -166,7 +163,7 @@ public class EmpUtils {
 		getEmployeeOfficeList().forEach(e -> {
 			list.add(e.getOfficeCode());
 		});
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 	
 	/**
@@ -175,25 +172,25 @@ public class EmpUtils {
 	 */
 	public static String[] getOfficeCodesAndChildren(){
 		Set<String> list = SetUtils.newLinkedHashSet();
-		Set<String> parentCodess = SetUtils.newHashSet();
+		Set<String> parentCodesSet = SetUtils.newHashSet();
 		Office currentOffice = getOffice();
 		list.add(currentOffice.getOfficeCode());
-		parentCodess.add(currentOffice.getParentCodes() + currentOffice.getOfficeCode() + ",");
+		parentCodesSet.add(currentOffice.getParentCodes() + currentOffice.getOfficeCode() + ",");
 		// 添加附属机构
 		getEmployeeOfficeList().forEach(e -> {
 			list.add(e.getOfficeCode());
-			parentCodess.add(e.getParentCodes() + e.getOfficeCode() + ",");
+			parentCodesSet.add(e.getParentCodes() + e.getOfficeCode() + ",");
 		});
 		// 查找并添加子机构
 		getOfficeAllList().forEach(e -> {
-			for (String parentCodes : parentCodess) {
+			for (String parentCodes : parentCodesSet) {
 				if (e.getParentCodes().startsWith(parentCodes)) {
 					list.add(e.getOfficeCode());
 					break;
 				}
 			}
 		});
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 
 	/**
@@ -213,16 +210,18 @@ public class EmpUtils {
 		}
 		getEmployeeOfficeList().forEach(e -> {
 			Office office2 = getOffice(e.getOfficeCode());
-			if (type.equals(office2.getOfficeType())){
-				list.add(office2.getOfficeCode());
-			}else{
-				Office parent2 = office2.getParentByType(type);
-				if (parent2 != null){
-					list.add(parent2.getOfficeCode());
+			if (office2 != null){
+				if (type.equals(office2.getOfficeType())){
+					list.add(office2.getOfficeCode());
+				} else {
+					Office parent2 = office2.getParentByType(type);
+					if (parent2 != null){
+						list.add(parent2.getOfficeCode());
+					}
 				}
 			}
 		});
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 
 	/**
@@ -235,7 +234,7 @@ public class EmpUtils {
 		getEmployeeOfficeList().forEach(e -> {
 			list.add(e.getParentCodes());
 		});
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 	
 	/**
@@ -291,12 +290,21 @@ public class EmpUtils {
 	}
 
 	/**
+	 * 获取当前员工所有公司编码（数据权限用）
+	 * @author ThinkGem
+	 */
+	public static String[] getCompanyCodes(){
+		List<String> list = ListUtils.newArrayList();
+		list.add(getCompany().getCompanyCode());
+		return list.toArray(new String[0]);
+	}
+
+	/**
 	 * 获取当前员工所有的公司
 	 * @author ThinkGem
 	 */
 	public static List<Company> getCompanyAllList(){
-		@SuppressWarnings("unchecked")
-		List<Company> companyList = (List<Company>)CorpUtils.getCache(CACHE_COMPANY_ALL_LIST);
+		List<Company> companyList = CorpUtils.getCache(CACHE_COMPANY_ALL_LIST);
 		if (companyList == null){
 			Company where = new Company();
 			where.setStatus(Office.STATUS_NORMAL);
@@ -312,20 +320,30 @@ public class EmpUtils {
 	 */
 	public static String[] getCompanyCodesAndChildren(){
 		Set<String> list = SetUtils.newLinkedHashSet();
-		Set<String> parentCodess = SetUtils.newHashSet();
+		Set<String> parentCodesSet = SetUtils.newHashSet();
 		Company currentCompany = getCompany();
 		list.add(currentCompany.getCompanyCode());
-		parentCodess.add(currentCompany.getParentCodes() + currentCompany.getCompanyCode() + ",");
+		parentCodesSet.add(currentCompany.getParentCodes() + currentCompany.getCompanyCode() + ",");
 		// 查找并添加子公司
 		getCompanyAllList().forEach(e -> {
-			for (String parentCodes : parentCodess) {
+			for (String parentCodes : parentCodesSet) {
 				if (e.getParentCodes().startsWith(parentCodes)) {
 					list.add(e.getCompanyCode());
 					break;
 				}
 			}
 		});
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
+	}
+
+	/**
+	 * 获取当前员工所有上级公司编码（数据权限用）
+	 * @author ThinkGem
+	 */
+	public static String[] getCompanyParentCodess(){
+		List<String> list = ListUtils.newArrayList();
+		list.add(getCompany().getParentCodes());
+		return list.toArray(new String[0]);
 	}
 
 	/**
