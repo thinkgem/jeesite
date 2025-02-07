@@ -300,9 +300,38 @@ spring:
 #        maxPoolSize: 20
 #        keepAliveSeconds: 60
 
-# 日志配置
+# 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
+#  level:
+#    root: warn
+#    com.jeesite: debug
+
+# MyBatis 相关
+mybatis:
+
+  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
+  scanBasePackage: com.jeesite.modules.**.dao
+
+  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
+  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
+
+#  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
+#  scanTypeHandlersPackage: ~
+#
+#  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
+#  jdbcTransaction: false
+#
+#  # 批量插入和更新的分批默认大小（防止库一次性接受不了太大的sql语句）
+#  defaultBatchSize: 500
+
+  # Mapper文件刷新线程
+  mapper:
+    refresh:
+      enabled: true
+#      delaySeconds: 60
+#      sleepSeconds: 3
+#      mappingPath: mappings
   
 #======================================#
 #========== System settings ===========#
@@ -442,8 +471,8 @@ user:
 #        Company: {
 #          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
 #          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-#          ctrlDataAttrName: "company.companyCode",
-#          ctrlDataParentCodesAttrName: "company.parentCodes"
+#          ctrlDataAttrName: "companyCodes",
+#          ctrlDataParentCodesAttrName: "companyParentCodess"
 #        }
 #      },
 #      5: {
@@ -456,8 +485,8 @@ user:
 #        Company: {
 #          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
 #          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-#          ctrlDataAttrName: "company.companyCode",
-#          ctrlDataParentCodesAttrName: "company.parentCodes"
+#          ctrlDataAttrName: "companyCodes",
+#          ctrlDataParentCodesAttrName: "companyParentCodess"
 #        }
 #      }
 #    }
@@ -720,32 +749,6 @@ session:
 #    # active -> 主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除，存储模式需要设置为 generic
 #    # blend -> 两种模式一起运作，对于各个节点缓存准确以及及时性要求高的可以使用，正常用前两种模式中一个就可
 #    cache_clean_mode: passive
-
-# MyBatis 相关
-mybatis:
-  
-  # @MyBatisDao 扫描基础包，如果多个，用“,”分隔
-  scanBasePackage: com.jeesite.modules.**.dao
-
-  # TypeAliases 扫描基础包，如果多个，用“,”分隔 v5.3.1
-  scanTypeAliasesBasePackage: com.jeesite.modules.**.entity
-  
-#  # TypeHandlers 扫描基础包，如果多个，用“,”分隔
-#  scanTypeHandlersPackage: ~
-#  
-#  # 是否开启 JDBC 管理事务，默认 Spring 管理事务 v4.2.3
-#  jdbcTransaction: false
-#
-#  # 批量插入和更新的分批默认大小（防止库一次性接受不了太大的sql语句）
-#  defaultBatchSize: 500
-  
-  # Mapper文件刷新线程
-  mapper:
-    refresh:
-      enabled: true
-#      delaySeconds: 60
-#      sleepSeconds: 3
-#      mappingPath: mappings
   
 # Web 相关
 web:
