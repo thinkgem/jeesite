@@ -18,41 +18,17 @@
     </template>
     <BasicForm @register="registerForm">
       <template #dataScopeTrees>
-        <div class="flex flex-row flex-wrap">
-          <template v-for="item in dataScopes" :key="item.moduleCode">
-            <div
-              class="mb-5 mr-5"
-              v-if="moduleCodes.includes(item.moduleCode) && ['0', '1'].includes(item.ctrlPermi)"
-            >
-              <BasicTree
-                class="bg-gray"
-                style="min-width: 300px"
-                :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
-                :toolbar="true"
-                :checkable="true"
-                :checkStrictly="false"
-                :api="roleCtrlDataTreeData"
-                :params="{ url: item.ctrlDataUrl, ctrlPermi: '2' }"
-                :immediate="immediate"
-                :defaultExpandLevel="2"
-                :ref="setTreeRefs(item.ctrlType)"
-                @tree-data-change="handleTreeDataChange"
-              />
-            </div>
-          </template>
-        </div>
+        <CustomDataScope ref="customDataScopeRef" :api="roleCtrlDataTreeData" />
       </template>
     </BasicForm>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleAuthDataScope">
-  import { ref, unref, nextTick } from 'vue';
+  import { ref, unref } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { useLocaleStore } from '/@/store/modules/locale';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
-  import { BasicTree, TreeActionType } from '/@/components/Tree';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import {
@@ -60,22 +36,19 @@
     roleCtrlDataTreeData,
     roleSaveAuthDataScope,
   } from '/@/api/sys/role';
+  import CustomDataScope from './components/CustomDataScope.vue';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.role');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
-  const localeStore = useLocaleStore();
   const record = ref<Recordable>({});
   const getTitle = {
     icon: meta.icon || 'ant-design:book-outlined',
     value: t('数据权限'),
   };
-  const moduleCodes = ref<Array<string>>([]);
-  const dataScopes = ref<Array<Recordable>>([]);
-  const roleDataScopeList = ref<Array<Recordable>>([]);
-  const immediate = ref(false);
+  const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -135,11 +108,6 @@
     },
   ];
 
-  const treeRefs: Recordable<TreeActionType> = {};
-  const setTreeRefs = (key: string) => (el: any) => {
-    if (el) treeRefs[key] = el;
-  };
-
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     labelWidth: 120,
     schemas: inputFormSchemas,
@@ -151,59 +119,15 @@
     await resetFields();
     const res = await roleFormAuthDataScope(data);
     record.value = (res.role || {}) as Recordable;
-    moduleCodes.value = res.moduleCodes || [];
-    dataScopes.value = res.dataScopes || [];
-    roleDataScopeList.value = res.roleDataScopeList || [];
     setFieldsValue(record.value);
-    await loadTreeDatas();
+    await customDataScopeRef.value?.loadDataScopeList({
+      dataScopes: res.dataScopes || [],
+      dataScopeList: res.roleDataScopeList || [],
+      moduleCodes: res.moduleCodes || [],
+      ctrlPermi: res.ctrlPermi || '2',
+    });
     setDrawerProps({ loading: false });
   });
-
-  let loadTreeDataNum: number;
-  async function loadTreeDatas() {
-    loadTreeDataNum = 0;
-    nextTick(() => {
-      if (immediate.value) {
-        for (const key of Object.keys(treeRefs)) {
-          treeRefs[key].setCheckedKeys([]);
-          treeRefs[key].reload();
-        }
-      } else {
-        immediate.value = true;
-      }
-    });
-  }
-
-  function handleTreeDataChange() {
-    const keys = Object.keys(treeRefs);
-    if (++loadTreeDataNum == keys.length) {
-      let checkedKeys = {};
-      roleDataScopeList.value.forEach((item) => {
-        if (!checkedKeys[item.ctrlType]) {
-          checkedKeys[item.ctrlType] = [];
-        }
-        checkedKeys[item.ctrlType].push(item.ctrlData);
-      });
-      for (const key of keys) {
-        treeRefs[key].setCheckedKeys(checkedKeys[key] || []);
-      }
-    }
-  }
-
-  function getRoleDataScopeListJson() {
-    const keys = Object.keys(treeRefs);
-    let dataScopeData: Array<any> = [];
-    for (const key of keys) {
-      const ks = treeRefs[key].getCheckedKeys();
-      for (const k of ks as Array<any>) {
-        dataScopeData.push({
-          ctrlType: key,
-          ctrlData: k,
-        });
-      }
-    }
-    return JSON.stringify(dataScopeData);
-  }
 
   async function handleSubmit() {
     try {
@@ -213,7 +137,7 @@
         ...data,
         isNewRecord: record.value.isNewRecord,
         roleCode: record.value.roleCode,
-        roleDataScopeListJson: getRoleDataScopeListJson(),
+        roleDataScopeListJson: customDataScopeRef.value?.getDataScopeListJson(),
       };
       // console.log('submit', params, data, record);
       const res = await roleSaveAuthDataScope(params);
