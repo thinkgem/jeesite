@@ -105,6 +105,9 @@ if(table.isTreeEntity){
   import { useGlobSetting } from '/@/hooks/setting';
   import { downloadByUrl } from '/@/utils/file/download';
   <% } %>
+  <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
+  import { useGo } from '/@/hooks/web/usePage';
+  <% } %>
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
@@ -176,6 +179,9 @@ if(table.isTreeEntity){
     icon: meta.icon || 'i-ant-design:book-outlined',
     value: meta.title || t('${functionNameSimple}管理'),
   };
+  <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
+  const go = useGo();
+  <% } %>
   <% if(toBoolean(table.optionMap['isImportExport'])){ %>
   const loading = ref(false);
   <% } %>
@@ -462,7 +468,7 @@ for(c in table.columnList){
     <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
     open${modalOrDrawer}(true, record);
     <% } else { %>
-    router.push({
+    go({
       path: '/${urlPrefix}/formRoute',
       query: record,
     });
