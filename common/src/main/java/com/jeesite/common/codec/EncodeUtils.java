@@ -266,7 +266,7 @@ public class EncodeUtils {
 			"(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|((extractvalue|updatexml|if|mid|database|rand|user)([\\s]*?)\\()"
 			+ "|(\\b(select|update|and|or|delete|insert|trancate|substr|ascii|declare|exec|count|master|into"
 			+ "|drop|execute|case when|sleep|union|load_file)\\b)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern orderByPattern = Pattern.compile("[a-z0-9_\\.\\, ]*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern simplePattern = Pattern.compile("[a-z0-9_\\.\\, ]*", Pattern.CASE_INSENSITIVE);
 
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
@@ -283,8 +283,8 @@ public class EncodeUtils {
 	public static String sqlFilter(String text, String source){
 		if (text != null){
 			String value = text;
-			if ("orderBy".equals(source)) {
-				Matcher matcher = orderByPattern.matcher(value);
+			if ("simple".equals(source) || "orderBy".equals(source)) {
+				Matcher matcher = simplePattern.matcher(value);
 				if (!matcher.matches()) {
 					value = StringUtils.EMPTY;
 				}

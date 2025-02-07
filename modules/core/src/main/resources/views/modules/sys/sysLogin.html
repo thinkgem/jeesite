@@ -56,7 +56,9 @@
 			<% if(@Global.getConfigToBoolean('user.loginCodeCorpUnique', 'false')){ %>
 			<div class="form-group has-feedback">
 				<#form:treeselect id="switchCorpSelect" title="${text('登录租户')}" allowClear="false"
-					name="param_corpCode" url="${ctxAdmin}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
+					name="param_corpCode" value="${@CorpUtils.getCurrentCorpCode()}"
+					labelValue="(${@CorpUtils.getCurrentCorpCode()}) ${@CorpUtils.getCurrentCorpName()}"
+					url="${ctxAdmin}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
 			</div>
 			<% } %>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
