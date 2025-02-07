@@ -474,8 +474,8 @@ user:
 #        Company: {
 #          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
 #          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-#          ctrlDataAttrName: "company.companyCode",
-#          ctrlDataParentCodesAttrName: "company.parentCodes"
+#          ctrlDataAttrName: "companyCodes",
+#          ctrlDataParentCodesAttrName: "companyParentCodess"
 #        }
 #      },
 #      5: {
@@ -488,8 +488,8 @@ user:
 #        Company: {
 #          ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
 #          ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-#          ctrlDataAttrName: "company.companyCode",
-#          ctrlDataParentCodesAttrName: "company.parentCodes"
+#          ctrlDataAttrName: "companyCodes",
+#          ctrlDataParentCodesAttrName: "companyParentCodess"
 #        }
 #      }
 #    }

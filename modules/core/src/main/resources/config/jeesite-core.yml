@@ -102,9 +102,12 @@ spring:
   main:
     bannerMode: "off"
 
-# 日志配置
+# 日志配置（fatal、error、warn、info、debug）
 logging:
   config: classpath:config/logback-spring.xml
+#  level:
+#    root: warn
+#    com.jeesite: debug
 
 # MyBatis 相关
 mybatis:
@@ -301,8 +304,8 @@ role:
         Company: {
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-          ctrlDataAttrName: "company.companyCode",
-          ctrlDataParentCodesAttrName: "company.parentCodes"
+          ctrlDataAttrName: "companyCodes",
+          ctrlDataParentCodesAttrName: "companyParentCodess"
         }
       },
       5: {
@@ -315,8 +318,8 @@ role:
         Company: {
           ctrlTypeClass: "com.jeesite.modules.sys.entity.Company",
           ctrlDataClass: "com.jeesite.modules.sys.utils.EmpUtils",
-          ctrlDataAttrName: "company.companyCode",
-          ctrlDataParentCodesAttrName: "company.parentCodes"
+          ctrlDataAttrName: "companyCodes",
+          ctrlDataParentCodesAttrName: "companyParentCodess"
         }
       }
     }
