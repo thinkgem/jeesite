@@ -393,6 +393,7 @@
     }
 
     .ant-input-number,
+    .ant-input-number-group-wrapper,
     .ant-picker-default {
       width: 100%;
     }
