@@ -90,7 +90,7 @@
       colProps: { md: 24, lg: 24 },
     },
     {
-      field: 'userDataScopeListJson',
+      field: 'userDataScopeList',
       component: 'Input',
       colProps: { md: 24, lg: 24 },
       slot: 'dataScopeTrees',
