@@ -2,6 +2,31 @@
 
 /* Create Tables */
 
+-- 业务分类
+CREATE TABLE ${_prefix}biz_category
+(
+	category_code varchar2(64) NOT NULL,
+	view_code varchar2(500),
+	category_name varchar2(64) NOT NULL,
+	parent_code varchar2(64) NOT NULL,
+	parent_codes varchar2(767) NOT NULL,
+	tree_sort number(10) NOT NULL,
+	tree_sorts varchar2(767) NOT NULL,
+	tree_leaf char(1) NOT NULL,
+	tree_level number(4) NOT NULL,
+	tree_names varchar2(767) NOT NULL,
+	status char(1) DEFAULT '0' NOT NULL,
+	create_by varchar2(64) NOT NULL,
+	create_date timestamp NOT NULL,
+	update_by varchar2(64) NOT NULL,
+	update_date timestamp NOT NULL,
+	remarks nvarchar2(500),
+	corp_code varchar2(64) DEFAULT '0' NOT NULL,
+	corp_name nvarchar2(100) DEFAULT 'JeeSite' NOT NULL,
+	PRIMARY KEY (category_code)
+);
+
+
 -- 代码生成表
 CREATE TABLE ${_prefix}gen_table
 (
@@ -76,31 +101,6 @@ CREATE TABLE ${_prefix}sys_area
 	update_date timestamp NOT NULL,
 	remarks nvarchar2(500),
 	PRIMARY KEY (area_code)
-);
-
-
--- 业务分类
-CREATE TABLE ${_prefix}biz_category
-(
-	category_code varchar2(64) NOT NULL,
-	view_code varchar2(500),
-	category_name varchar2(64) NOT NULL,
-	parent_code varchar2(64) NOT NULL,
-	parent_codes varchar2(767) NOT NULL,
-	tree_sort number(10) NOT NULL,
-	tree_sorts varchar2(767) NOT NULL,
-	tree_leaf char(1) NOT NULL,
-	tree_level number(4) NOT NULL,
-	tree_names varchar2(767) NOT NULL,
-	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar2(64) NOT NULL,
-	create_date timestamp NOT NULL,
-	update_by varchar2(64) NOT NULL,
-	update_date timestamp NOT NULL,
-	remarks nvarchar2(500),
-	corp_code varchar2(64) DEFAULT '0' NOT NULL,
-	corp_name nvarchar2(100) DEFAULT 'JeeSite' NOT NULL,
-	PRIMARY KEY (category_code)
 );
 
 
@@ -492,6 +492,21 @@ CREATE TABLE ${_prefix}sys_menu
 );
 
 
+-- 菜单数据权限
+CREATE TABLE ${_prefix}sys_menu_data_scope
+(
+	id varchar2(64) NOT NULL,
+	role_code varchar2(64) NOT NULL,
+	menu_code varchar2(64) NOT NULL,
+	rule_name varchar2(100),
+	rule_type char(1),
+	rule_config clob,
+	status char(1),
+	remarks nvarchar2(500),
+	PRIMARY KEY (id)
+);
+
+
 -- 模块表
 CREATE TABLE ${_prefix}sys_module
 (
@@ -767,7 +782,8 @@ CREATE TABLE ${_prefix}sys_role_data_scope
 	ctrl_type varchar2(20) NOT NULL,
 	ctrl_data varchar2(64) NOT NULL,
 	ctrl_permi varchar2(64) NOT NULL,
-	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi)
+	menu_code varchar2(64) DEFAULT '0' NOT NULL,
+	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi, menu_code)
 );
 
 
@@ -934,6 +950,8 @@ CREATE INDEX idx_sys_menu_sc ON ${_prefix}sys_menu (sys_code);
 CREATE INDEX idx_sys_menu_is ON ${_prefix}sys_menu (is_show);
 CREATE INDEX idx_sys_menu_mcs ON ${_prefix}sys_menu (module_codes);
 CREATE INDEX idx_sys_menu_wt ON ${_prefix}sys_menu (weight);
+CREATE INDEX idx_sys_menu_ds_mc ON ${_prefix}sys_menu_data_scope (menu_code);
+CREATE INDEX idx_sys_menu_ds_rc ON ${_prefix}sys_menu_data_scope (role_code);
 CREATE INDEX idx_sys_module_status ON ${_prefix}sys_module (status);
 CREATE INDEX idx_sys_msg_inner_cb ON ${_prefix}sys_msg_inner (create_by);
 CREATE INDEX idx_sys_msg_inner_status ON ${_prefix}sys_msg_inner (status);
@@ -999,6 +1017,25 @@ CREATE INDEX idx_sys_user_cc ON ${_prefix}sys_user (corp_code);
 
 /* Comments */
 
+COMMENT ON TABLE ${_prefix}biz_category IS '业务分类';
+COMMENT ON COLUMN ${_prefix}biz_category.category_code IS '流程分类';
+COMMENT ON COLUMN ${_prefix}biz_category.view_code IS '分类代码';
+COMMENT ON COLUMN ${_prefix}biz_category.category_name IS '分类名称';
+COMMENT ON COLUMN ${_prefix}biz_category.parent_code IS '父级编号';
+COMMENT ON COLUMN ${_prefix}biz_category.parent_codes IS '所有父级编号';
+COMMENT ON COLUMN ${_prefix}biz_category.tree_sort IS '排序号（升序）';
+COMMENT ON COLUMN ${_prefix}biz_category.tree_sorts IS '所有排序号';
+COMMENT ON COLUMN ${_prefix}biz_category.tree_leaf IS '是否最末级';
+COMMENT ON COLUMN ${_prefix}biz_category.tree_level IS '层次级别';
+COMMENT ON COLUMN ${_prefix}biz_category.tree_names IS '全节点名';
+COMMENT ON COLUMN ${_prefix}biz_category.status IS '状态（0正常 1删除 2停用）';
+COMMENT ON COLUMN ${_prefix}biz_category.create_by IS '创建者';
+COMMENT ON COLUMN ${_prefix}biz_category.create_date IS '创建时间';
+COMMENT ON COLUMN ${_prefix}biz_category.update_by IS '更新者';
+COMMENT ON COLUMN ${_prefix}biz_category.update_date IS '更新时间';
+COMMENT ON COLUMN ${_prefix}biz_category.remarks IS '备注信息';
+COMMENT ON COLUMN ${_prefix}biz_category.corp_code IS '租户代码';
+COMMENT ON COLUMN ${_prefix}biz_category.corp_name IS '租户名称';
 COMMENT ON TABLE ${_prefix}gen_table IS '代码生成表';
 COMMENT ON COLUMN ${_prefix}gen_table.table_name IS '表名';
 COMMENT ON COLUMN ${_prefix}gen_table.class_name IS '实体类名称';
@@ -1058,25 +1095,6 @@ COMMENT ON COLUMN ${_prefix}sys_area.create_date IS '创建时间';
 COMMENT ON COLUMN ${_prefix}sys_area.update_by IS '更新者';
 COMMENT ON COLUMN ${_prefix}sys_area.update_date IS '更新时间';
 COMMENT ON COLUMN ${_prefix}sys_area.remarks IS '备注信息';
-COMMENT ON TABLE ${_prefix}biz_category IS '业务分类';
-COMMENT ON COLUMN ${_prefix}biz_category.category_code IS '流程分类';
-COMMENT ON COLUMN ${_prefix}biz_category.view_code IS '分类代码';
-COMMENT ON COLUMN ${_prefix}biz_category.category_name IS '分类名称';
-COMMENT ON COLUMN ${_prefix}biz_category.parent_code IS '父级编号';
-COMMENT ON COLUMN ${_prefix}biz_category.parent_codes IS '所有父级编号';
-COMMENT ON COLUMN ${_prefix}biz_category.tree_sort IS '排序号（升序）';
-COMMENT ON COLUMN ${_prefix}biz_category.tree_sorts IS '所有排序号';
-COMMENT ON COLUMN ${_prefix}biz_category.tree_leaf IS '是否最末级';
-COMMENT ON COLUMN ${_prefix}biz_category.tree_level IS '层次级别';
-COMMENT ON COLUMN ${_prefix}biz_category.tree_names IS '全节点名';
-COMMENT ON COLUMN ${_prefix}biz_category.status IS '状态（0正常 1删除 2停用）';
-COMMENT ON COLUMN ${_prefix}biz_category.create_by IS '创建者';
-COMMENT ON COLUMN ${_prefix}biz_category.create_date IS '创建时间';
-COMMENT ON COLUMN ${_prefix}biz_category.update_by IS '更新者';
-COMMENT ON COLUMN ${_prefix}biz_category.update_date IS '更新时间';
-COMMENT ON COLUMN ${_prefix}biz_category.remarks IS '备注信息';
-COMMENT ON COLUMN ${_prefix}biz_category.corp_code IS '租户代码';
-COMMENT ON COLUMN ${_prefix}biz_category.corp_name IS '租户名称';
 COMMENT ON TABLE ${_prefix}sys_company IS '公司表';
 COMMENT ON COLUMN ${_prefix}sys_company.company_code IS '公司编码';
 COMMENT ON COLUMN ${_prefix}sys_company.view_code IS '公司代码';
@@ -1375,6 +1393,15 @@ COMMENT ON COLUMN ${_prefix}sys_menu.extend_d2 IS '扩展 Date 2';
 COMMENT ON COLUMN ${_prefix}sys_menu.extend_d3 IS '扩展 Date 3';
 COMMENT ON COLUMN ${_prefix}sys_menu.extend_d4 IS '扩展 Date 4';
 COMMENT ON COLUMN ${_prefix}sys_menu.extend_json IS '扩展 JSON';
+COMMENT ON TABLE ${_prefix}sys_menu_data_scope IS '菜单数据权限';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.id IS '编号';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.role_code IS '角色编码';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.menu_code IS '菜单编码';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.rule_name IS '规则名称';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.rule_type IS '规则类型（1 角色数据范围 2自定义条件规则 3自定义SQL）';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.rule_config IS '规则配置（JSON）';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.status IS '状态（0正常 1删除 2停用）';
+COMMENT ON COLUMN ${_prefix}sys_menu_data_scope.remarks IS '备注信息';
 COMMENT ON TABLE ${_prefix}sys_module IS '模块表';
 COMMENT ON COLUMN ${_prefix}sys_module.module_code IS '模块编码';
 COMMENT ON COLUMN ${_prefix}sys_module.module_name IS '模块名称';
@@ -1551,7 +1578,7 @@ COMMENT ON COLUMN ${_prefix}sys_role.is_sys IS '系统内置（1是 0否）';
 COMMENT ON COLUMN ${_prefix}sys_role.is_show IS '是否显示';
 COMMENT ON COLUMN ${_prefix}sys_role.user_type IS '用户类型（employee员工 member会员）';
 COMMENT ON COLUMN ${_prefix}sys_role.desktop_url IS '桌面地址（仪表盘地址）';
-COMMENT ON COLUMN ${_prefix}sys_role.data_scope IS '数据范围设置（0未设置  1全部数据 2自定义数据）';
+COMMENT ON COLUMN ${_prefix}sys_role.data_scope IS '数据范围（0未设置 1全部数据 2自定义数据）';
 COMMENT ON COLUMN ${_prefix}sys_role.biz_scope IS '适应业务范围（不同的功能，不同的数据权限支持）';
 COMMENT ON COLUMN ${_prefix}sys_role.sys_codes IS '包含系统（多个用逗号隔开）';
 COMMENT ON COLUMN ${_prefix}sys_role.status IS '状态（0正常 1删除 2停用）';
@@ -1588,6 +1615,7 @@ COMMENT ON COLUMN ${_prefix}sys_role_data_scope.role_code IS '控制角色编码
 COMMENT ON COLUMN ${_prefix}sys_role_data_scope.ctrl_type IS '控制类型';
 COMMENT ON COLUMN ${_prefix}sys_role_data_scope.ctrl_data IS '控制数据';
 COMMENT ON COLUMN ${_prefix}sys_role_data_scope.ctrl_permi IS '控制权限';
+COMMENT ON COLUMN ${_prefix}sys_role_data_scope.menu_code IS '菜单编码';
 COMMENT ON TABLE ${_prefix}sys_role_menu IS '角色与菜单关联表';
 COMMENT ON COLUMN ${_prefix}sys_role_menu.role_code IS '角色编码';
 COMMENT ON COLUMN ${_prefix}sys_role_menu.menu_code IS '菜单编码';

@@ -263,16 +263,58 @@ public class RoleController extends BaseController {
 		return model;
 	}
 
+	/**
+	 * 查询角色的菜单树结构数据
+	 * @param roleCode
+	 * @param sysCode
+	 */
+	@RequiresPermissions("sys:role:view")
+	@RequestMapping(value = "menuTreeDataByRoleCode")
+	@ResponseBody
+	public List<Map<String, Object>> menuTreeDataByRoleCode(String roleCode, String sysCode) {
+		List<Map<String, Object>> mapList = ListUtils.newArrayList();
+		if (StringUtils.isBlank(roleCode)) {
+			return mapList;
+		}
+		Menu menuWhere = new Menu();
+		menuWhere.setRoleCode(roleCode);
+		menuWhere.setSysCode(sysCode);
+		menuWhere.setHasDataScope(true);
+		List<Menu> list = menuService.findByRoleCode(menuWhere);
+		for (Menu menu : list){
+			Map<String, Object> m = MapUtils.newHashMap();
+			m.put("id", menu.getId());
+			m.put("pId", menu.getParentCode());
+			m.put("name", menu.getMenuName() + "<font color=#888> &nbsp; &nbsp; "
+					+ ObjectUtils.toString(menu.getPermission()) + "</font>");
+			m.put("title", menu.getMenuName() + "&nbsp;"
+					+ ObjectUtils.toString(menu.getPermission()));
+			m.put("rawName", menu.getMenuName());
+			m.put("isParent", !menu.getIsTreeLeaf());
+			m.put("permission", menu.getPermission());
+			m.put("hasDataScope", menu.getHasDataScope());
+			mapList.add(m);
+		}
+		return mapList;
+	}
+
 	/** 
 	 * 角色授权数据权限
 	 */
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "formAuthDataScope")
-	public String formAuthDataScope(Role role, String checkbox, Model model, HttpServletRequest request) {
+	public String formAuthDataScope(Role role, Model model, HttpServletRequest request) {
+		// 拥有的角色数据权限
 		RoleDataScope roleDataScope = new RoleDataScope();
 		roleDataScope.setRoleCode(role.getRoleCode());
 		List<RoleDataScope> roleDataScopeList = roleService.findDataScopeList(roleDataScope);
 		model.addAttribute("roleDataScopeList", roleDataScopeList);
+		// 拥有的菜单数据权限
+		MenuDataScope menuDataScope = new MenuDataScope();
+		menuDataScope.setRoleCode(role.getRoleCode());
+		List<MenuDataScope> menuDataScopeList = roleService.findMenuDataScopeList(menuDataScope);
+		model.addAttribute("menuDataScopeList", menuDataScopeList);
+		// 设置其它对象
 		model.addAttribute("role", role);
 		model.addAttribute("moduleCodes", ModuleUtils.getEnableModuleCodes());
 		model.addAttribute("dataScopes", JsonMapper.fromJson(Global.getConfig("user.dataScopes", "[]"), List.class));
