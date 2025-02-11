@@ -443,6 +443,9 @@ user:
 #  # 以方便读取树结构数据权限的表时包含子节点，举例如下：
 #  # ctrlDataAttrName: "officeCodesAndChildren", ctrlDataParentCodesAttrName: ""
 #  dataScopeApiMode: false
+#
+#  # v5.10.1 开始默认关闭 JOIN 模式的数据权限，如有需要可打开此参数
+#  dataScopeJoinMode: false
 
 # 角色管理
 #role:
