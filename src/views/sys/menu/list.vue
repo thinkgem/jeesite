@@ -71,6 +71,16 @@
         component: 'Input',
       },
       {
+        label: t('菜单地址'),
+        field: 'menuHref',
+        component: 'Input',
+      },
+      {
+        label: t('权限标识'),
+        field: 'permission',
+        component: 'Input',
+      },
+      {
         label: t('状态'),
         field: 'status',
         component: 'Select',
