@@ -51,6 +51,7 @@ export const basicProps = {
 
   api: { type: Function as PropType<(arg?: Recordable) => Promise<Recordable>> },
   params: { type: Object as PropType<Recordable> },
+  canSelectParent: propTypes.bool.def(true),
   immediate: { type: Boolean, default: true },
   resultField: propTypes.string.def(''),
   dictType: propTypes.string,
