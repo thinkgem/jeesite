@@ -3,6 +3,31 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Create Tables */
 
+-- 业务分类
+CREATE TABLE ${_prefix}biz_category
+(
+	category_code varchar(64) NOT NULL COMMENT '流程分类',
+	view_code varchar(500) COMMENT '分类代码',
+	category_name varchar(64) NOT NULL COMMENT '分类名称',
+	parent_code varchar(64) NOT NULL COMMENT '父级编号',
+	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
+	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
+	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
+	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
+	tree_level decimal(4) NOT NULL COMMENT '层次级别',
+	tree_names varchar(767) NOT NULL COMMENT '全节点名',
+	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
+	create_by varchar(64) NOT NULL COMMENT '创建者',
+	create_date datetime NOT NULL COMMENT '创建时间',
+	update_by varchar(64) NOT NULL COMMENT '更新者',
+	update_date datetime NOT NULL COMMENT '更新时间',
+	remarks varchar(500) COMMENT '备注信息',
+	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
+	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
+	PRIMARY KEY (category_code)
+) COMMENT = '业务分类';
+
+
 -- 代码生成表
 CREATE TABLE ${_prefix}gen_table
 (
@@ -78,31 +103,6 @@ CREATE TABLE ${_prefix}sys_area
 	remarks varchar(500) COMMENT '备注信息',
 	PRIMARY KEY (area_code)
 ) COMMENT = '行政区划';
-
-
--- 业务分类
-CREATE TABLE ${_prefix}biz_category
-(
-	category_code varchar(64) NOT NULL COMMENT '流程分类',
-	view_code varchar(500) COMMENT '分类代码',
-	category_name varchar(64) NOT NULL COMMENT '分类名称',
-	parent_code varchar(64) NOT NULL COMMENT '父级编号',
-	parent_codes varchar(767) NOT NULL COMMENT '所有父级编号',
-	tree_sort decimal(10) NOT NULL COMMENT '排序号（升序）',
-	tree_sorts varchar(767) NOT NULL COMMENT '所有排序号',
-	tree_leaf char(1) NOT NULL COMMENT '是否最末级',
-	tree_level decimal(4) NOT NULL COMMENT '层次级别',
-	tree_names varchar(767) NOT NULL COMMENT '全节点名',
-	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
-	create_by varchar(64) NOT NULL COMMENT '创建者',
-	create_date datetime NOT NULL COMMENT '创建时间',
-	update_by varchar(64) NOT NULL COMMENT '更新者',
-	update_date datetime NOT NULL COMMENT '更新时间',
-	remarks varchar(500) COMMENT '备注信息',
-	corp_code varchar(64) DEFAULT '0' NOT NULL COMMENT '租户代码',
-	corp_name varchar(100) DEFAULT 'JeeSite' NOT NULL COMMENT '租户名称',
-	PRIMARY KEY (category_code)
-) COMMENT = '业务分类';
 
 
 -- 公司表
@@ -493,6 +493,21 @@ CREATE TABLE ${_prefix}sys_menu
 ) COMMENT = '菜单表';
 
 
+-- 菜单数据权限
+CREATE TABLE ${_prefix}sys_menu_data_scope
+(
+	id varchar(64) NOT NULL COMMENT '编号',
+	role_code varchar(64) NOT NULL COMMENT '角色编码',
+	menu_code varchar(64) NOT NULL COMMENT '菜单编码',
+	rule_name varchar(100) COMMENT '规则名称',
+	rule_type char(1) COMMENT '规则类型（1 角色数据范围 2自定义条件规则 3自定义SQL）',
+	rule_config text COMMENT '规则配置（JSON）',
+	status char(1) COMMENT '状态（0正常 1删除 2停用）',
+	remarks varchar(500) COMMENT '备注信息',
+	PRIMARY KEY (id)
+) COMMENT = '菜单数据权限';
+
+
 -- 模块表
 CREATE TABLE ${_prefix}sys_module
 (
@@ -725,7 +740,7 @@ CREATE TABLE ${_prefix}sys_role
 	is_show char(1) DEFAULT '1' COMMENT '是否显示',
 	user_type varchar(16) COMMENT '用户类型（employee员工 member会员）',
 	desktop_url varchar(255) COMMENT '桌面地址（仪表盘地址）',
-	data_scope char(1) COMMENT '数据范围设置（0未设置  1全部数据 2自定义数据）',
+	data_scope char(1) COMMENT '数据范围（0未设置 1全部数据 2自定义数据）',
 	biz_scope varchar(255) COMMENT '适应业务范围（不同的功能，不同的数据权限支持）',
 	sys_codes varchar(500) COMMENT '包含系统（多个用逗号隔开）',
 	status char(1) DEFAULT '0' NOT NULL COMMENT '状态（0正常 1删除 2停用）',
@@ -768,7 +783,8 @@ CREATE TABLE ${_prefix}sys_role_data_scope
 	ctrl_type varchar(20) NOT NULL COMMENT '控制类型',
 	ctrl_data varchar(64) NOT NULL COMMENT '控制数据',
 	ctrl_permi varchar(64) NOT NULL COMMENT '控制权限',
-	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi)
+	menu_code varchar(64) DEFAULT '0' NOT NULL COMMENT '菜单编码',
+	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi, menu_code)
 ) COMMENT = '角色数据权限表';
 
 
@@ -935,6 +951,8 @@ CREATE INDEX idx_sys_menu_sc ON ${_prefix}sys_menu (sys_code ASC);
 CREATE INDEX idx_sys_menu_is ON ${_prefix}sys_menu (is_show ASC);
 CREATE INDEX idx_sys_menu_mcs ON ${_prefix}sys_menu (module_codes ASC);
 CREATE INDEX idx_sys_menu_wt ON ${_prefix}sys_menu (weight ASC);
+CREATE INDEX idx_sys_menu_ds_mc ON ${_prefix}sys_menu_data_scope (menu_code ASC);
+CREATE INDEX idx_sys_menu_ds_rc ON ${_prefix}sys_menu_data_scope (role_code ASC);
 CREATE INDEX idx_sys_module_status ON ${_prefix}sys_module (status ASC);
 CREATE INDEX idx_sys_msg_inner_cb ON ${_prefix}sys_msg_inner (create_by ASC);
 CREATE INDEX idx_sys_msg_inner_status ON ${_prefix}sys_msg_inner (status ASC);

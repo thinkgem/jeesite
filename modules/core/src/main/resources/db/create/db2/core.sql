@@ -2,6 +2,31 @@
 
 /* Create Tables */
 
+-- 业务分类
+CREATE TABLE ${_prefix}biz_category
+(
+	category_code varchar(64) NOT NULL,
+	view_code varchar(500),
+	category_name varchar(64) NOT NULL,
+	parent_code varchar(64) NOT NULL,
+	parent_codes varchar(767) NOT NULL,
+	tree_sort decimal(10) NOT NULL,
+	tree_sorts varchar(767) NOT NULL,
+	tree_leaf char(1) NOT NULL,
+	tree_level decimal(4) NOT NULL,
+	tree_names varchar(767) NOT NULL,
+	status char(1) DEFAULT '0' NOT NULL,
+	create_by varchar(64) NOT NULL,
+	create_date timestamp NOT NULL,
+	update_by varchar(64) NOT NULL,
+	update_date timestamp NOT NULL,
+	remarks vargraphic(500),
+	corp_code varchar(64) DEFAULT '0' NOT NULL,
+	corp_name vargraphic(100) DEFAULT 'JeeSite' NOT NULL,
+	PRIMARY KEY (category_code)
+);
+
+
 -- 代码生成表
 CREATE TABLE ${_prefix}gen_table
 (
@@ -76,31 +101,6 @@ CREATE TABLE ${_prefix}sys_area
 	update_date timestamp NOT NULL,
 	remarks vargraphic(500),
 	PRIMARY KEY (area_code)
-);
-
-
--- 业务分类
-CREATE TABLE ${_prefix}biz_category
-(
-	category_code varchar(64) NOT NULL,
-	view_code varchar(500),
-	category_name varchar(64) NOT NULL,
-	parent_code varchar(64) NOT NULL,
-	parent_codes varchar(767) NOT NULL,
-	tree_sort decimal(10) NOT NULL,
-	tree_sorts varchar(767) NOT NULL,
-	tree_leaf char(1) NOT NULL,
-	tree_level decimal(4) NOT NULL,
-	tree_names varchar(767) NOT NULL,
-	status char(1) DEFAULT '0' NOT NULL,
-	create_by varchar(64) NOT NULL,
-	create_date timestamp NOT NULL,
-	update_by varchar(64) NOT NULL,
-	update_date timestamp NOT NULL,
-	remarks vargraphic(500),
-	corp_code varchar(64) DEFAULT '0' NOT NULL,
-	corp_name vargraphic(100) DEFAULT 'JeeSite' NOT NULL,
-	PRIMARY KEY (category_code)
 );
 
 
@@ -492,6 +492,21 @@ CREATE TABLE ${_prefix}sys_menu
 );
 
 
+-- 菜单数据权限
+CREATE TABLE ${_prefix}sys_menu_data_scope
+(
+	id varchar(64) NOT NULL,
+	role_code varchar(64) NOT NULL,
+	menu_code varchar(64) NOT NULL,
+	rule_name varchar(100),
+	rule_type char(1),
+	rule_config clob,
+	status char(1),
+	remarks vargraphic(500),
+	PRIMARY KEY (id)
+);
+
+
 -- 模块表
 CREATE TABLE ${_prefix}sys_module
 (
@@ -767,7 +782,8 @@ CREATE TABLE ${_prefix}sys_role_data_scope
 	ctrl_type varchar(20) NOT NULL,
 	ctrl_data varchar(64) NOT NULL,
 	ctrl_permi varchar(64) NOT NULL,
-	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi)
+	menu_code varchar(64) DEFAULT '0' NOT NULL,
+	PRIMARY KEY (role_code, ctrl_type, ctrl_data, ctrl_permi, menu_code)
 );
 
 
@@ -934,6 +950,8 @@ CREATE INDEX idx_sys_menu_sc ON ${_prefix}sys_menu (sys_code);
 CREATE INDEX idx_sys_menu_is ON ${_prefix}sys_menu (is_show);
 CREATE INDEX idx_sys_menu_mcs ON ${_prefix}sys_menu (module_codes);
 CREATE INDEX idx_sys_menu_wt ON ${_prefix}sys_menu (weight);
+CREATE INDEX idx_sys_menu_ds_mc ON ${_prefix}sys_menu_data_scope (menu_code);
+CREATE INDEX idx_sys_menu_ds_rc ON ${_prefix}sys_menu_data_scope (role_code);
 CREATE INDEX idx_sys_module_status ON ${_prefix}sys_module (status);
 CREATE INDEX idx_sys_msg_inner_cb ON ${_prefix}sys_msg_inner (create_by);
 CREATE INDEX idx_sys_msg_inner_status ON ${_prefix}sys_msg_inner (status);
