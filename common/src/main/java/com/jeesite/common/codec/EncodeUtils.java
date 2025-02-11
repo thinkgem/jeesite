@@ -267,6 +267,7 @@ public class EncodeUtils {
 			+ "|(\\b(select|update|and|or|delete|insert|trancate|substr|ascii|declare|exec|count|master|into"
 			+ "|drop|execute|case when|sleep|union|load_file)\\b)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern simplePattern = Pattern.compile("[a-z0-9_\\.\\, ]*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern columnNamePattern = Pattern.compile("[a-z0-9_\\.`\"\\[\\]]*", Pattern.CASE_INSENSITIVE);
 
 	/**
 	 * SQL过滤，防止注入，传入参数输入有select相关代码，替换空。
@@ -283,8 +284,13 @@ public class EncodeUtils {
 	public static String sqlFilter(String text, String source){
 		if (text != null){
 			String value = text;
-			if ("simple".equals(source) || "orderBy".equals(source)) {
+			if (StringUtils.inString(source, "simple", "orderBy")) {
 				Matcher matcher = simplePattern.matcher(value);
+				if (!matcher.matches()) {
+					value = StringUtils.EMPTY;
+				}
+			} else if (StringUtils.inString(source, "columnName")) {
+				Matcher matcher = columnNamePattern.matcher(value);
 				if (!matcher.matches()) {
 					value = StringUtils.EMPTY;
 				}
