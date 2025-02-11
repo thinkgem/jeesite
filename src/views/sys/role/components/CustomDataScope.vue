@@ -16,9 +16,10 @@
           :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
           :toolbar="true"
           :checkable="true"
-          :checkStrictly="checkStrictly"
+          :checkStrictly="!(item.chkboxType?.Y + item.chkboxType?.N).includes('p')"
           :api="api"
-          :params="{ url: item.ctrlDataUrl, ctrlPermi: ctrlPermi }"
+          :params="{ url: item.ctrlDataUrl, ctrlPermi: ctrlPermi, parentAttr: 'disableCheckbox' }"
+          :canSelectParent="!isLoadUser.includes(item.ctrlType)"
           :immediate="immediate"
           :defaultExpandLevel="2"
           :ref="setTreeRefs(item.ctrlType)"
@@ -49,7 +50,9 @@
   const dataScopeList = ref<Array<Recordable>>([]);
   const moduleCodes = ref<Array<string>>([]);
   const ctrlPermi = ref<string>('');
+  const menuCode = ref<string>('');
   const immediate = ref(false);
+  const isLoadUser = ref<Array<string>>([]);
 
   const treeRefs: Recordable<TreeActionType> = {};
   const setTreeRefs = (key: string) => (el: any) => {
@@ -62,6 +65,7 @@
     dataScopeList.value = data.dataScopeList || [];
     moduleCodes.value = data.moduleCodes || [];
     ctrlPermi.value = data.ctrlPermi || '1';
+    menuCode.value = data.menuCode || '0';
     loadTreeDataNum = 0;
     await nextTick(() => {
       if (immediate.value) {
@@ -73,17 +77,23 @@
         immediate.value = true;
       }
     });
+    isLoadUser.value = dataScopes.value
+      .filter((item) => String(item.ctrlDataUrl).includes('isLoadUser=true'))
+      .map((item) => item.ctrlType);
   }
 
   function handleTreeDataChange() {
     const keys = Object.keys(treeRefs);
-    if (++loadTreeDataNum == keys.length) {
+    loadTreeDataNum = loadTreeDataNum + 1;
+    if (loadTreeDataNum == keys.length) {
       let checkedKeys = {};
       dataScopeList.value.forEach((item) => {
         if (!checkedKeys[item.ctrlType]) {
           checkedKeys[item.ctrlType] = [];
         }
-        checkedKeys[item.ctrlType].push(item.ctrlData);
+        checkedKeys[item.ctrlType].push(
+          (isLoadUser.value.includes(item.ctrlType) ? 'u_' : '') + item.ctrlData,
+        );
       });
       for (const key of keys) {
         treeRefs[key].setCheckedKeys(checkedKeys[key] || []);
@@ -91,23 +101,29 @@
     }
   }
 
-  function getDataScopeListJson() {
+  function getDataScopeList() {
     const keys = Object.keys(treeRefs);
     let dataScopeData: Array<any> = [];
     for (const key of keys) {
       const ks = treeRefs[key].getCheckedKeys();
       for (const k of ks as Array<any>) {
         dataScopeData.push({
-          ctrlType: key,
-          ctrlData: k,
+          ctrlType: String(key),
+          ctrlData: String(k).replace(/^u_/g, ''),
+          menuCode: menuCode.value,
         });
       }
     }
-    return JSON.stringify(dataScopeData);
+    return dataScopeData;
+  }
+
+  function getDataScopeListJson() {
+    return JSON.stringify(getDataScopeList());
   }
 
   defineExpose({
     loadDataScopeList,
+    getDataScopeList,
     getDataScopeListJson,
   });
 </script>
