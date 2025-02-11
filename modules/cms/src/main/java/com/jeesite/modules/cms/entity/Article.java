@@ -61,7 +61,7 @@ import java.util.Date;
 				@Column(name = "site_code"),
 				@Column(name = "site_name"),
 			})
-	}, orderBy = "a.update_date DESC", extWhereKeys = "dsfCategory"
+	}, extWhereKeys = "dsfCategory", orderBy = "a.update_date DESC"
 )
 public class Article extends DataEntity<Article> {
 	

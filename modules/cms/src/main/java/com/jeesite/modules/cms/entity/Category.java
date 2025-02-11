@@ -44,7 +44,7 @@ import java.util.List;
 			on = "s.site_code = a.site_code", columns = {
 				@Column(name = "site_name"),
 			})
-	}, orderBy = "a.tree_sorts, a.category_code", extWhereKeys = "dsfCategory"
+	}, extWhereKeys = "dsfCategory", orderBy = "a.tree_sorts, a.category_code"
 )
 public class Category extends TreeEntity<Category> {
 
