@@ -121,7 +121,7 @@
 					<div class="box-body">
 						<% if(isNotBlank(parameter.msg)){ %>
 						<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<button type="button" class="close" data-dismiss="alert">×</button>
 							<p><i class="icon fa fa-info"></i> ${parameter.msg}</p>
 						</div><br/>
 						<% }else{ %>
@@ -171,7 +171,7 @@
 					<div class="box-body">
 						<% if(isBlank(user.pwdQuestion) && isBlank(user.pwdQuestion2) && isBlank(user.pwdQuestion3)){ %>
 						<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<button type="button" class="close" data-dismiss="alert">×</button>
 							<p><i class="icon fa fa-info"></i> ${text('您还未设置过密保问题，您可以根据登录密码设置新的密保问题及答案。')}</p>
 						</div><br/>
 						<div class="row">
