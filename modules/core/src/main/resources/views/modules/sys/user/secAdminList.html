@@ -13,14 +13,13 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<% if(ctrlPermi == '1'){ %>
-			<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<p><i class="icon fa fa-info"></i> 当前二级管理员的控制权限类型为拥有的权限。你可以在用户管理里设置数据权限和角色管理设置数据权限。
-					对应的管理权限功能，如用户管理、机构管理、公司管理，将启用为拥有权限的数据过滤，因此二级管理设置的管理权限将没有意义。
-					若启用该功能，请打开 application.yml 设置为管理的权限：user.adminCtrlPermi=2</p>
+			<div class="alert alert-dismissible callout callout-info ml10 mr10 mt10 hide" id="alert">
+				<button type="button" class="close" data-dismiss="alert" id="alertClose">×</button>
+				<p><i class="icon fa fa-info"></i> 二级管理员是系统管理员的下级管理员，其控制权限类型包括：
+                    （1）拥有的权限：您的上级给您分配什么权限，您就能看什么数据，包括您所属机构及下级数据或其它树形结构数据的本级及下级数据；
+                    （2）管理的权限：您能将某些数据的权限分配给他人，但自己没有该数据的读取权限，一般用于管理者身份的权限控制。
+                    当前控制权限类型为：${ctrlPermi == '1' ? '拥有' : '管理'}的权限，可在后端配置文件修改 user.adminCtrlPermi 参数更改类型。</p>
 			</div>
-			<% } %>
 			<#form:form id="searchForm" model="${user}" action="${ctx}/sys/secAdmin/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
 				<div class="form-group">
@@ -74,6 +73,16 @@
 	checkbox="false" itemCode="userCode" itemName="userName"/></div>
 <% } %>
 <script>
+var days = 1000 * 60 * 60 * 24;
+var lastClosedTime = js.cookie('jeesite-alert-time-sec-admin');
+if (!lastClosedTime || (new Date().getTime() - Number(lastClosedTime)) / days >= 100){
+	$('#alert').removeClass('hide');
+}
+$('#alertClose').click(function(){
+	$('#alert').addClass('hide');
+	js.cookie('jeesite-alert-time-sec-admin', new Date().getTime(), {expires:100});
+	$(window).resize();
+});
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
 	searchForm: $('#searchForm'),
