@@ -304,16 +304,26 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "formAuthDataScope")
 	public String formAuthDataScope(Role role, Model model, HttpServletRequest request) {
-		// 拥有的角色数据权限
-		RoleDataScope roleDataScope = new RoleDataScope();
-		roleDataScope.setRoleCode(role.getRoleCode());
-		List<RoleDataScope> roleDataScopeList = roleService.findDataScopeList(roleDataScope);
-		model.addAttribute("roleDataScopeList", roleDataScopeList);
-		// 拥有的菜单数据权限
-		MenuDataScope menuDataScope = new MenuDataScope();
-		menuDataScope.setRoleCode(role.getRoleCode());
-		List<MenuDataScope> menuDataScopeList = roleService.findMenuDataScopeList(menuDataScope);
-		model.addAttribute("menuDataScopeList", menuDataScopeList);
+		// 查询角色数据权限，包括菜单数据权限
+		if (Global.TRUE.equals(role.getMenuCode())){
+			// 拥有的角色数据权限
+			RoleDataScope roleDataScope = new RoleDataScope();
+			roleDataScope.setRoleCode(role.getRoleCode());
+			List<RoleDataScope> roleDataScopeList = roleService.findDataScopeList(roleDataScope);
+			model.addAttribute("roleDataScopeList", roleDataScopeList);
+			// 拥有的菜单数据权限
+			MenuDataScope menuDataScope = new MenuDataScope();
+			menuDataScope.setRoleCode(role.getRoleCode());
+			List<MenuDataScope> menuDataScopeList = roleService.findMenuDataScopeList(menuDataScope);
+			model.addAttribute("menuDataScopeList", menuDataScopeList);
+		} else {
+			// 拥有的角色数据权限
+			RoleDataScope roleDataScope = new RoleDataScope();
+			roleDataScope.setRoleCode(role.getRoleCode());
+			roleDataScope.setMenuCode(RoleDataScope.DEFAULT_MENU_CODE);
+			List<RoleDataScope> roleDataScopeList = roleService.findDataScopeList(roleDataScope);
+			model.addAttribute("roleDataScopeList", roleDataScopeList);
+		}
 		// 设置其它对象
 		model.addAttribute("role", role);
 		model.addAttribute("moduleCodes", ModuleUtils.getEnableModuleCodes());

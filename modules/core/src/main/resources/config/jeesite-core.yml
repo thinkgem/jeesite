@@ -280,6 +280,9 @@ user:
   # v5.10.1 开始默认关闭 JOIN 模式的数据权限，如有需要可打开此参数
   dataScopeJoinMode: false
 
+  # 菜单数据权限，是否启用自定义 SQL 执行权限 v5.10.1
+  dataScopeRuleSql: false
+
 # 角色管理 
 role: 
   # 扩展数据权限定义：3：本部门；4：本公司；5：本部门和本公司
