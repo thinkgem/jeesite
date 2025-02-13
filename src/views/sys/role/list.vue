@@ -261,6 +261,7 @@
         label: t('分配用户'),
         onClick: handleFormAuthUser.bind(this, { roleCode: record.roleCode }),
         auth: 'sys:role:edit',
+        ifShow: () => record.userType === 'employee',
       },
     ],
   };
