@@ -5,38 +5,49 @@
 -->
 <template>
   <BasicDrawer
+    wrapClassName="jeesite-role-auth-data-scope"
     v-bind="$attrs"
     :showFooter="true"
     :okAuth="'sys:role:edit'"
     @register="registerDrawer"
     @ok="handleSubmit"
-    width="80%"
+    width="90%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <BasicForm @register="registerForm">
-      <template #dataScopeTrees>
-        <CustomDataScope ref="customDataScopeRef" :api="roleCtrlDataTreeData" />
-      </template>
-    </BasicForm>
+    <Tabs class="jeesite-role-auth-data-scope-tabs" v-model:activeKey="activeKey">
+      <Tabs.TabPane key="1" :forceRender="true">
+        <template #tab>
+          <Icon icon="i-ant-design:deployment-unit-outlined" />
+          <span class="pr-1"> {{ t('角色数据权限') }} </span>
+        </template>
+        <RoleDataScope ref="roleDataScopeRef" />
+      </Tabs.TabPane>
+      <Tabs.TabPane key="2" :forceRender="true">
+        <template #tab>
+          <Icon icon="i-ant-design:unordered-list-outlined" />
+          <span class="pr-1"> {{ t('菜单数据权限') }} </span>
+        </template>
+        <MenuDataScope ref="menuDataScopeRef" />
+      </Tabs.TabPane>
+    </Tabs>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleAuthDataScope">
-  import { ref, unref } from 'vue';
+  import { computed, ref, unref } from 'vue';
+  import { Tabs } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { router } from '/@/router';
   import { Icon } from '/@/components/Icon';
-  import { BasicForm, FormSchema, useForm } from '/@/components/Form';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import {
-    roleFormAuthDataScope,
-    roleCtrlDataTreeData,
-    roleSaveAuthDataScope,
-  } from '/@/api/sys/role';
-  import CustomDataScope from './components/CustomDataScope.vue';
+  import { roleFormAuthDataScope, roleSaveAuthDataScope } from '/@/api/sys/role';
+  import { useDict } from '/@/components/Dict';
+  import RoleDataScope from './components/RoleDataScope.vue';
+  import MenuDataScope from './components/MenuDataScope.vue';
+  import { omit } from 'lodash-es';
 
   const emit = defineEmits(['success', 'register']);
 
@@ -44,106 +55,58 @@
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
   const record = ref<Recordable>({});
-  const getTitle = {
-    icon: meta.icon || 'ant-design:book-outlined',
-    value: t('数据权限'),
-  };
-  const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
-
-  const inputFormSchemas: FormSchema[] = [
-    {
-      label: t('角色名称'),
-      field: 'roleName',
-      component: 'Input',
-      componentProps: {
-        disabled: true,
-      },
-    },
-    {
-      label: t('角色编码'),
-      field: 'roleCode',
-      component: 'Input',
-      componentProps: {
-        disabled: true,
-      },
-    },
-    {
-      label: t('数据范围'),
-      field: 'dataScope',
-      helpMessage: t('指定数据权限范围类型，多个角色同时指定，之间为或者关系'),
-      component: 'RadioGroup',
-      componentProps: {
-        dictType: 'sys_role_data_scope',
-        allowClear: true,
-      },
-      colProps: { md: 24, lg: 24 },
-    },
-    {
-      label: t('业务范围'),
-      field: 'bizScope',
-      helpMessage: t(
-        '在 addFilter 权限过滤的时候指定适应的业务范围，不指定代表所有生效，如：有的功能看本部门，有的功能看本公司；新的业务范围从字典 sys_role_biz_scope 类型添加。',
-      ),
-      component: 'Select',
-      componentProps: {
-        dictType: 'sys_role_biz_scope',
-        allowClear: true,
-        mode: 'multiple',
-      },
-      colProps: { md: 24, lg: 24 },
-    },
-    {
-      label: t('授权数据权限'),
-      field: 'authDataScopeInfo',
-      component: 'FormGroup',
-      colProps: { md: 24, lg: 24 },
-      show: ({ values }) => values.dataScope === '2',
-    },
-    {
-      field: 'roleDataScopeListJson',
-      component: 'Input',
-      colProps: { md: 24, lg: 24 },
-      slot: 'dataScopeTrees',
-      show: ({ values }) => values.dataScope === '2',
-    },
-  ];
-
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-    labelWidth: 120,
-    schemas: inputFormSchemas,
-    baseColProps: { md: 24, lg: 12 },
+  const getTitle = computed(() => {
+    const r = record.value;
+    const { getDictLabel } = useDict();
+    return {
+      icon: meta.icon || 'ant-design:book-outlined',
+      value:
+        t('数据权限') +
+        ' (' +
+        r.roleName +
+        '-' +
+        r.viewCode +
+        '-' +
+        getDictLabel('sys_user_type', r.userType, t('未设置')) +
+        ')',
+    };
   });
+
+  const activeKey = ref<string>('1');
+  const roleDataScopeRef = ref<InstanceType<typeof RoleDataScope>>();
+  const menuDataScopeRef = ref<InstanceType<typeof MenuDataScope>>();
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });
-    await resetFields();
+    activeKey.value = '1';
+    data.menuCode = 'true'; // 查询菜单数据权限
     const res = await roleFormAuthDataScope(data);
     record.value = (res.role || {}) as Recordable;
-    setFieldsValue(record.value);
-    await customDataScopeRef.value?.loadDataScopeList({
-      dataScopes: res.dataScopes || [],
-      dataScopeList: res.roleDataScopeList || [],
-      moduleCodes: res.moduleCodes || [],
-      ctrlPermi: res.ctrlPermi || '2',
-    });
+    roleDataScopeRef.value?.loadDataScopeFormData(record.value, res);
+    menuDataScopeRef.value?.loadDataScopeFormData(res);
     setDrawerProps({ loading: false });
   });
 
   async function handleSubmit() {
     try {
-      const data = await validate();
       setDrawerProps({ confirmLoading: true });
+      const roleDataScope = await roleDataScopeRef.value?.getDataScopeFormData();
+      const menuDataScope = await menuDataScopeRef.value?.getDataScopeFormData();
       const params: any = {
-        ...data,
+        ...omit(roleDataScope, ['roleDataScopeList']),
+        roleDataScopeListJson: JSON.stringify(
+          roleDataScope.roleDataScopeList.concat(menuDataScope.roleDataScopeList),
+        ),
+        menuDataScopeListJson: JSON.stringify(menuDataScope.menuDataScopeList),
         isNewRecord: record.value.isNewRecord,
         roleCode: record.value.roleCode,
-        roleDataScopeListJson: customDataScopeRef.value?.getDataScopeListJson(),
+        menuCode: 'true', // 存储菜单数据权限
       };
       // console.log('submit', params, data, record);
       const res = await roleSaveAuthDataScope(params);
       showMessage(res.message);
       setTimeout(closeDrawer);
-      emit('success', data);
+      emit('success', params);
     } catch (error: any) {
       if (error && error.errorFields) {
         showMessage(error.message || t('common.validateError'));
@@ -154,3 +117,26 @@
     }
   }
 </script>
+<style lang="less">
+  .jeesite-role-auth-data-scope {
+    .scroll-container {
+      .scrollbar__wrap {
+        margin: 6px !important;
+        padding-bottom: 0 !important;
+      }
+    }
+
+    &-tabs.ant-tabs {
+      margin-top: 0 !important;
+      padding-right: 5px;
+
+      .ant-tabs-nav {
+        margin-left: 20px;
+      }
+
+      .ant-tabs-tab {
+        padding: 7px 0;
+      }
+    }
+  }
+</style>

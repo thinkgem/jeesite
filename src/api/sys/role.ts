@@ -37,6 +37,9 @@ export const roleForm = (params?: Role | any) =>
 export const roleMenuTreeData = (params?: any) =>
   defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeData', params });
 
+export const menuTreeDataByRoleCode = (params?: any) =>
+  defHttp.get<Recordable>({ url: adminPath + '/sys/role/menuTreeDataByRoleCode', params });
+
 export const roleSave = (params?: any, data?: Role | any) =>
   defHttp.postJson<Role>({ url: adminPath + '/sys/role/save', params, data });
 
