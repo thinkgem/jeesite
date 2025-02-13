@@ -11,6 +11,7 @@
     :model="formModel"
     @keypress.enter="handleEnterPress"
   >
+    <slot name="formTop"></slot>
     <Row v-bind="getRow">
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
@@ -39,6 +40,7 @@
       </FormAction>
       <slot name="formFooter"></slot>
     </Row>
+    <slot name="formBottom"></slot>
   </Form>
 </template>
 <script lang="ts" setup name="BasicForm">
