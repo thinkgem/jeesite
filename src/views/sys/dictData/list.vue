@@ -83,6 +83,7 @@
         component: 'Select',
         componentProps: {
           dictType: 'sys_yes_no',
+          allowClear: true,
         },
       },
       {
