@@ -86,7 +86,7 @@ export default {
     topMenuLayout: '顶部菜单布局',
     menuCollapseButton: '菜单折叠按钮',
     contentMode: '内容区域宽度',
-    expandedMenuWidth: '菜单展开宽度',
+    expandedMenuWidth: '侧边栏宽度',
 
     breadcrumb: '面包屑',
     breadcrumbIcon: '面包屑图标',

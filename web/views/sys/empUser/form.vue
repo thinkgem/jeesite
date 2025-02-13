@@ -318,7 +318,7 @@
       formEmployeeOfficeListRef.value?.setTableData(record.value, ctrlPermi, postListOptions);
     }
     if (op.value === 'add' || op.value === 'auth') {
-      formUserRoleListRef.value?.setTableData(record.value, ctrlPermi);
+      formUserRoleListRef.value?.setTableData(res, ctrlPermi);
     }
     setDrawerProps({ loading: false });
   });

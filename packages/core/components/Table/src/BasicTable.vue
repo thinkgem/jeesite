@@ -539,7 +539,7 @@
         }
 
         .ant-table-column-sorter {
-          margin-left: -5px;
+          margin: 0 -4px 0 -1px;
         }
 
         .ant-table-title {

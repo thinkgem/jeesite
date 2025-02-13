@@ -4,7 +4,7 @@
       <span class="ml-1"><Icon v-if="getIcon" :icon="getIcon" />{{ getTitle }}</span>
     </div>
     <span :class="`${prefixCls}__extra-quick`" v-else @click="handleContext">
-      <Icon icon="i-ion:chevron-down" />
+      <Icon icon="i-ant-design:down-outlined" />
     </span>
   </Dropdown>
 </template>

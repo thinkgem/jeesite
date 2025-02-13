@@ -71,6 +71,16 @@
         component: 'Input',
       },
       {
+        label: t('菜单地址'),
+        field: 'menuHref',
+        component: 'Input',
+      },
+      {
+        label: t('权限标识'),
+        field: 'permission',
+        component: 'Input',
+      },
+      {
         label: t('状态'),
         field: 'status',
         component: 'Select',
@@ -146,7 +156,7 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 160,
+    width: 180,
     actions: (record: Recordable) => [
       {
         icon: 'i-clarity:note-edit-line',

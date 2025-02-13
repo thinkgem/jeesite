@@ -101,6 +101,7 @@
           blockNode: true,
           ...attrs,
           ...props,
+          openAnimation: {}, // fix parent undefined
           expandedKeys: state.expandedKeys,
           selectedKeys: state.selectedKeys,
           checkedKeys: state.checkedKeys,
@@ -282,7 +283,19 @@
         let result;
         try {
           result = await api(props.params);
-          result = listToTree(result);
+          result = listToTree(result, {
+            callback: (parent, _node) => {
+              if (!props.canSelectParent && parent) {
+                if (parent.children && parent.children.length > 0) {
+                  if (props.checkable) {
+                    parent.disableCheckbox = true;
+                  } else {
+                    parent.disabled = true;
+                  }
+                }
+              }
+            },
+          });
         } catch (e) {
           console.error(e);
         } finally {

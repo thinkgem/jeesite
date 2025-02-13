@@ -11,11 +11,42 @@ import { ProjectConfig } from '@jeesite/types/config';
 import { changeTheme } from '@jeesite/core/logics/theme';
 import { updateDarkTheme } from '@jeesite/core/logics/theme/dark';
 import { useRootSetting } from '@jeesite/core/hooks/setting/useRootSetting';
+import { MenuTypeEnum } from '@jeesite/core/enums/menuEnum';
+import {
+  APP_PRESET_COLOR_LIST,
+  HEADER_PRESET_BG_COLOR_LIST,
+  SIDE_BAR_BG_COLOR_LIST,
+} from '@jeesite/core/settings/designSetting';
+import { ThemeEnum } from '@jeesite/core/enums/appEnum';
+import { useMessage } from '@jeesite/core/hooks/web/useMessage';
+import { useI18n } from '@jeesite/core/hooks/web/useI18n';
 
 export function baseHandler(event: HandlerEnum, value: any) {
+  const { getDarkMode } = useRootSetting();
+  if (
+    getDarkMode.value === ThemeEnum.DARK &&
+    (event === HandlerEnum.MENU_THEME ||
+      event === HandlerEnum.HEADER_THEME ||
+      event === HandlerEnum.CHANGE_THEME_COLOR)
+  ) {
+    const { showMessage } = useMessage();
+    const { t } = useI18n();
+    showMessage(t('黑暗模式下不允许更改配色'));
+    return;
+  }
   const appStore = useAppStore();
   const config = handler(event, value);
   appStore.setProjectConfig(config);
+  if (event === HandlerEnum.CHANGE_LAYOUT) {
+    if (value.type === MenuTypeEnum.MIX || value.type === MenuTypeEnum.TOP_MENU) {
+      baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[0]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[0]);
+    } else if (value.type === MenuTypeEnum.SIDEBAR || value.type === MenuTypeEnum.MIX_SIDEBAR) {
+      baseHandler(HandlerEnum.MENU_THEME, SIDE_BAR_BG_COLOR_LIST[1]);
+      baseHandler(HandlerEnum.HEADER_THEME, HEADER_PRESET_BG_COLOR_LIST[3]);
+    }
+    baseHandler(HandlerEnum.CHANGE_THEME_COLOR, APP_PRESET_COLOR_LIST[0]);
+  }
   if (event === HandlerEnum.CHANGE_THEME) {
     updateHeaderBgColor();
     updateSidebarBgColor();
@@ -41,6 +72,7 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
           // ...splitOpt,
           split,
         },
+        headerSetting: { show: true },
       };
 
     case HandlerEnum.CHANGE_THEME_COLOR:

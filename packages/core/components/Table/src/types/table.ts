@@ -439,7 +439,7 @@ export interface BasicTableProps<T = any> {
 
 export type CellFormat =
   | string
-  | ((text: string, record: Recordable, index: number) => string | number)
+  | ((text: string, record: Recordable, index: number, column?: BasicColumn) => string | number)
   | Map<string | number, any>;
 
 // @ts-ignore
@@ -483,6 +483,14 @@ export interface BasicColumn extends ColumnProps<Recordable> {
         index: number;
       }) => Recordable)
     | any;
+  // 自定义修改后显示的内容
+  editRender?: (opt: {
+    text: string | number | boolean | Recordable;
+    record: Recordable;
+    column: BasicColumn;
+    index: number;
+    attrs?: object;
+  }) => VNodeChild | JSX.Element;
   editRule?: boolean | ((text: any, record: Recordable) => Promise<void>);
   // editValueMap?: (value: any) => string;
   onEditRow?: () => void;
@@ -511,15 +519,6 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   // 列表操作列选项
   actions?: (record: Recordable) => ActionItem[];
   dropDownActions?: (record: Recordable) => ActionItem[];
-
-  // 自定义修改后显示的内容
-  editRender?: (opt: {
-    text: string | number | boolean | Recordable;
-    record: Recordable;
-    column: BasicColumn;
-    index: number;
-    attrs?: object;
-  }) => VNodeChild | JSX.Element;
 }
 
 export type ColumnChangeParam = {

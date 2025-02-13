@@ -35,6 +35,7 @@
     "ant-design-vue": "4.2.6",
     "axios": "1.7.9",
     "dayjs": "1.11.13",
+    "lodash-es": "4.17.21",
     "vue": "3.5.13",
     "vue-eslint-parser": "9.4.3",
     "vue-router": "4.5.0",

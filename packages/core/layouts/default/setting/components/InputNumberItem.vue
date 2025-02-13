@@ -51,7 +51,7 @@
     color: @text-color-base;
 
     &-input-number {
-      width: 126px;
+      width: 126px !important;
     }
   }
 </style>

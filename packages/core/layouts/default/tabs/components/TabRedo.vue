@@ -1,17 +1,17 @@
 <template>
   <span :class="`${prefixCls}__extra-redo`" @click="handleRedo">
-    <RedoOutlined :spin="loading" />
+    <Icon icon="i-ant-design:redo-outlined" :spin="loading" />
   </span>
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { RedoOutlined } from '@ant-design/icons-vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useTabs } from '@jeesite/core/hooks/web/useTabs';
+  import { Icon } from '@jeesite/core/components/Icon';
 
   export default defineComponent({
     name: 'TabRedo',
-    components: { RedoOutlined },
+    components: { Icon },
 
     setup() {
       const loading = ref(false);

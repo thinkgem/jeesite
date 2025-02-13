@@ -33,6 +33,7 @@
   import { unref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
+  import { useGo } from '@jeesite/core/hooks/web/usePage';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicTable, BasicColumn, useTable } from '@jeesite/core/components/Table';
@@ -48,6 +49,7 @@
     icon: meta.icon || 'ant-design:book-outlined',
     value: meta.title || t('字典管理'),
   };
+  const go = useGo();
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 4 },
@@ -69,6 +71,7 @@
         component: 'Select',
         componentProps: {
           dictType: 'sys_yes_no',
+          allowClear: true,
         },
       },
       {
@@ -188,7 +191,7 @@
   }
 
   function handleDictData(record: Recordable) {
-    router.push({
+    go({
       path: '/sys/dictData/list',
       query: {
         dictType: record.dictType,

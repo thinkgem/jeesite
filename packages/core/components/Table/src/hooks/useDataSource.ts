@@ -18,7 +18,7 @@ import {
 } from 'vue';
 import { useTimeoutFn } from '@jeesite/core/hooks/core/useTimeout';
 import { buildUUID } from '@jeesite/core/utils/uuid';
-import { isFunction, isBoolean } from '@jeesite/core/utils/is';
+import { isFunction, isBoolean, isArray } from '@jeesite/core/utils/is';
 import { get, cloneDeep, merge } from 'lodash-es';
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const';
 import { useEmitter } from '@jeesite/core/store/modules/user';
@@ -182,39 +182,53 @@ export function useDataSource(
   function deleteTableDataRecord(record: Recordable | Recordable[]): Recordable | undefined {
     if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
 
-    const rowKeyName = unref(getRowKey);
-    if (!rowKeyName) return;
+    function deleteRecord(dataSource: Recordable[]) {
+      const rowKeyName = unref(getRowKey);
+      if (!rowKeyName) return;
 
-    const records = !Array.isArray(record) ? [record] : record;
-    const recordIndex = records
-      .map((item) => {
-        if (typeof rowKeyName === 'function') {
-          return dataSourceRef.value.findIndex(
-            (s) => (rowKeyName(s, undefined) as string) === (rowKeyName(item, undefined) as string),
-          );
-        } else {
-          return dataSourceRef.value.findIndex((s) => s[rowKeyName] === item[rowKeyName]);
-        }
-      }) // 取序号
-      .filter((item) => item !== undefined)
-      .sort((a, b) => b - a); // 从大到小排序
-    for (const index of recordIndex) {
-      unref(delDataSourceRef).push(unref(dataSourceRef)[index]);
-      unref(dataSourceRef).splice(index, 1);
-      unref(propsRef).dataSource?.splice(index, 1);
+      const records = !Array.isArray(record) ? [record] : record;
+      const recordIndex = records
+        .map((item) => {
+          if (typeof rowKeyName === 'function') {
+            return dataSource.findIndex((s) => {
+              const source = rowKeyName(s, undefined) as string;
+              const target = rowKeyName(item, undefined) as string;
+              return source === target;
+            });
+          } else {
+            return dataSource.findIndex((s) => s[rowKeyName] === item[rowKeyName]);
+          }
+        }) // 取序号
+        .filter((item) => item !== undefined)
+        .sort((a, b) => b - a); // 从大到小排序
+
+      for (const index of recordIndex) {
+        if (index == -1) continue;
+        unref(delDataSourceRef).push(dataSource[index]);
+        dataSource.splice(index, 1);
+      }
+
+      if (unref(propsRef).isTreeTable) {
+        const childrenName = unref(propsRef).childrenColumnName || 'children';
+        dataSource.forEach((child) => {
+          console.log(child, child[childrenName], childrenName);
+          if (child[childrenName] && isArray(child[childrenName])) {
+            deleteRecord(child[childrenName]);
+          }
+        });
+      }
     }
-    setPagination({
-      total: unref(propsRef).dataSource?.length,
-    });
-    return unref(propsRef).dataSource;
+    deleteRecord(unref(dataSourceRef));
+
+    setPagination({ total: unref(dataSourceRef).length });
+    return unref(dataSourceRef);
   }
 
   function insertTableDataRecord(record: Recordable, index?: number): Recordable | undefined {
     // if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
     index = index ?? dataSourceRef.value?.length;
     unref(dataSourceRef).splice(index, 0, record);
-    unref(propsRef).dataSource?.splice(index, 0, record);
-    return unref(propsRef).dataSource;
+    return unref(dataSourceRef);
   }
 
   function findTableDataRecord(rowKey: string | number) {

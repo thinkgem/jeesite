@@ -8,6 +8,7 @@ import { useMultipleTabStore } from '@jeesite/core/store/modules/multipleTab';
 import { RouteLocationNormalized, useRouter } from 'vue-router';
 import { useTabs } from '@jeesite/core/hooks/web/useTabs';
 import { useI18n } from '@jeesite/core/hooks/web/useI18n';
+import { useGo } from '@jeesite/core/hooks/web/usePage';
 
 export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: ComputedRef<boolean>) {
   const state = reactive({
@@ -24,7 +25,7 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
     return unref(getIsTabs) ? tabContentProps.tabItem : unref(currentRoute);
   });
 
-  const router = useRouter();
+  const go = useGo();
 
   /**
    * @description: drop-down list
@@ -94,7 +95,7 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
   });
 
   function handleContextMenu(tabItem: RouteLocationNormalized) {
-    return (e: Event) => {
+    return async (e: Event) => {
       if (!tabItem) {
         return;
       }
@@ -102,7 +103,7 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
       const index = tabStore.getTabList.findIndex((tab) => tab.path === tabItem.path);
       state.current = tabItem;
       state.currentIndex = index;
-      router.push(tabItem); // 右键激活页签
+      await go(tabItem); // 右键激活页签
     };
   }
 

@@ -135,7 +135,7 @@ const setting: ProjectConfig = {
     // Whether to show the refresh button
     showRedo: true,
     // Whether to show the collapse button
-    showFold: false,
+    showFold: true,
   },
 
   // Transition Setting

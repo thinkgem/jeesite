@@ -5,221 +5,108 @@
 -->
 <template>
   <BasicDrawer
+    wrapClassName="jeesite-role-auth-data-scope"
     v-bind="$attrs"
     :showFooter="true"
     :okAuth="'sys:role:edit'"
     @register="registerDrawer"
     @ok="handleSubmit"
-    width="80%"
+    width="90%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
       <span> {{ getTitle.value }} </span>
     </template>
-    <BasicForm @register="registerForm">
-      <template #dataScopeTrees>
-        <div class="flex flex-row flex-wrap">
-          <template v-for="item in dataScopes" :key="item.moduleCode">
-            <div
-              class="mb-5 mr-5"
-              v-if="moduleCodes.includes(item.moduleCode) && ['0', '1'].includes(item.ctrlPermi)"
-            >
-              <BasicTree
-                class="bg-gray"
-                style="min-width: 300px"
-                :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
-                :toolbar="true"
-                :checkable="true"
-                :checkStrictly="false"
-                :api="roleCtrlDataTreeData"
-                :params="{ url: item.ctrlDataUrl, ctrlPermi: '2' }"
-                :immediate="immediate"
-                :defaultExpandLevel="2"
-                :ref="setTreeRefs(item.ctrlType)"
-                @tree-data-change="handleTreeDataChange"
-              />
-            </div>
-          </template>
-        </div>
-      </template>
-    </BasicForm>
+    <Tabs class="jeesite-role-auth-data-scope-tabs" v-model:activeKey="activeKey">
+      <Tabs.TabPane key="1" :forceRender="true">
+        <template #tab>
+          <Icon icon="i-ant-design:deployment-unit-outlined" />
+          <span class="pr-1"> {{ t('角色数据权限') }} </span>
+        </template>
+        <RoleDataScope ref="roleDataScopeRef" />
+      </Tabs.TabPane>
+      <Tabs.TabPane key="2" :forceRender="true">
+        <template #tab>
+          <Icon icon="i-ant-design:unordered-list-outlined" />
+          <span class="pr-1"> {{ t('菜单数据权限') }} </span>
+        </template>
+        <MenuDataScope ref="menuDataScopeRef" />
+      </Tabs.TabPane>
+    </Tabs>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysRoleAuthDataScope">
-  import { ref, unref, nextTick } from 'vue';
+  import { computed, ref, unref } from 'vue';
+  import { Tabs } from 'ant-design-vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
-  import { useLocaleStore } from '@jeesite/core/store/modules/locale';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
-  import { BasicTree, TreeActionType } from '@jeesite/core/components/Tree';
-  import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
-  import {
-    roleFormAuthDataScope,
-    roleCtrlDataTreeData,
-    roleSaveAuthDataScope,
-  } from '@jeesite/core/api/sys/role';
+  import { roleFormAuthDataScope, roleSaveAuthDataScope } from '@jeesite/core/api/sys/role';
+  import { useDict } from '@jeesite/core/components/Dict';
+  import RoleDataScope from './components/RoleDataScope.vue';
+  import MenuDataScope from './components/MenuDataScope.vue';
+  import { omit } from 'lodash-es';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.role');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
-  const localeStore = useLocaleStore();
   const record = ref<Recordable>({});
-  const getTitle = {
-    icon: meta.icon || 'ant-design:book-outlined',
-    value: t('数据权限'),
-  };
-  const moduleCodes = ref<Array<string>>([]);
-  const dataScopes = ref<Array<Recordable>>([]);
-  const roleDataScopeList = ref<Array<Recordable>>([]);
-  const immediate = ref(false);
-
-  const inputFormSchemas: FormSchema[] = [
-    {
-      label: t('角色名称'),
-      field: 'roleName',
-      component: 'Input',
-      componentProps: {
-        disabled: true,
-      },
-    },
-    {
-      label: t('角色编码'),
-      field: 'roleCode',
-      component: 'Input',
-      componentProps: {
-        disabled: true,
-      },
-    },
-    {
-      label: t('数据范围'),
-      field: 'dataScope',
-      helpMessage: t('指定数据权限范围类型，多个角色同时指定，之间为或者关系'),
-      component: 'RadioGroup',
-      componentProps: {
-        dictType: 'sys_role_data_scope',
-        allowClear: true,
-      },
-      colProps: { md: 24, lg: 24 },
-    },
-    {
-      label: t('业务范围'),
-      field: 'bizScope',
-      helpMessage: t(
-        '在 addFilter 权限过滤的时候指定适应的业务范围，不指定代表所有生效，如：有的功能看本部门，有的功能看本公司；新的业务范围从字典 sys_role_biz_scope 类型添加。',
-      ),
-      component: 'Select',
-      componentProps: {
-        dictType: 'sys_role_biz_scope',
-        allowClear: true,
-        mode: 'multiple',
-      },
-      colProps: { md: 24, lg: 24 },
-    },
-    {
-      label: t('授权数据权限'),
-      field: 'authDataScopeInfo',
-      component: 'FormGroup',
-      colProps: { md: 24, lg: 24 },
-      show: ({ values }) => values.dataScope === '2',
-    },
-    {
-      field: 'roleDataScopeListJson',
-      component: 'Input',
-      colProps: { md: 24, lg: 24 },
-      slot: 'dataScopeTrees',
-      show: ({ values }) => values.dataScope === '2',
-    },
-  ];
-
-  const treeRefs: Recordable<TreeActionType> = {};
-  const setTreeRefs = (key: string) => (el: any) => {
-    if (el) treeRefs[key] = el;
-  };
-
-  const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-    labelWidth: 120,
-    schemas: inputFormSchemas,
-    baseColProps: { md: 24, lg: 12 },
+  const getTitle = computed(() => {
+    const r = record.value;
+    const { getDictLabel } = useDict();
+    return {
+      icon: meta.icon || 'ant-design:book-outlined',
+      value:
+        t('数据权限') +
+        ' (' +
+        r.roleName +
+        '-' +
+        r.viewCode +
+        '-' +
+        getDictLabel('sys_user_type', r.userType, t('未设置')) +
+        ')',
+    };
   });
+
+  const activeKey = ref<string>('1');
+  const roleDataScopeRef = ref<InstanceType<typeof RoleDataScope>>();
+  const menuDataScopeRef = ref<InstanceType<typeof MenuDataScope>>();
 
   const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
     setDrawerProps({ loading: true });
-    await resetFields();
+    activeKey.value = '1';
+    data.menuCode = 'true'; // 查询菜单数据权限
     const res = await roleFormAuthDataScope(data);
     record.value = (res.role || {}) as Recordable;
-    moduleCodes.value = res.moduleCodes || [];
-    dataScopes.value = res.dataScopes || [];
-    roleDataScopeList.value = res.roleDataScopeList || [];
-    setFieldsValue(record.value);
-    await loadTreeDatas();
+    roleDataScopeRef.value?.loadDataScopeFormData(record.value, res);
+    menuDataScopeRef.value?.loadDataScopeFormData(res);
     setDrawerProps({ loading: false });
   });
 
-  let loadTreeDataNum: number;
-  async function loadTreeDatas() {
-    loadTreeDataNum = 0;
-    nextTick(() => {
-      if (immediate.value) {
-        for (const key of Object.keys(treeRefs)) {
-          treeRefs[key].setCheckedKeys([]);
-          treeRefs[key].reload();
-        }
-      } else {
-        immediate.value = true;
-      }
-    });
-  }
-
-  function handleTreeDataChange() {
-    const keys = Object.keys(treeRefs);
-    if (++loadTreeDataNum == keys.length) {
-      let checkedKeys = {};
-      roleDataScopeList.value.forEach((item) => {
-        if (!checkedKeys[item.ctrlType]) {
-          checkedKeys[item.ctrlType] = [];
-        }
-        checkedKeys[item.ctrlType].push(item.ctrlData);
-      });
-      for (const key of keys) {
-        treeRefs[key].setCheckedKeys(checkedKeys[key] || []);
-      }
-    }
-  }
-
-  function getRoleDataScopeListJson() {
-    const keys = Object.keys(treeRefs);
-    let dataScopeData: Array<any> = [];
-    for (const key of keys) {
-      const ks = treeRefs[key].getCheckedKeys();
-      for (const k of ks as Array<any>) {
-        dataScopeData.push({
-          ctrlType: key,
-          ctrlData: k,
-        });
-      }
-    }
-    return JSON.stringify(dataScopeData);
-  }
-
   async function handleSubmit() {
     try {
-      const data = await validate();
       setDrawerProps({ confirmLoading: true });
+      const roleDataScope = await roleDataScopeRef.value?.getDataScopeFormData();
+      const menuDataScope = await menuDataScopeRef.value?.getDataScopeFormData();
       const params: any = {
-        ...data,
+        ...omit(roleDataScope, ['roleDataScopeList']),
+        roleDataScopeListJson: JSON.stringify(
+          roleDataScope.roleDataScopeList.concat(menuDataScope.roleDataScopeList),
+        ),
+        menuDataScopeListJson: JSON.stringify(menuDataScope.menuDataScopeList),
         isNewRecord: record.value.isNewRecord,
         roleCode: record.value.roleCode,
-        roleDataScopeListJson: getRoleDataScopeListJson(),
+        menuCode: 'true', // 存储菜单数据权限
       };
       // console.log('submit', params, data, record);
       const res = await roleSaveAuthDataScope(params);
       showMessage(res.message);
       setTimeout(closeDrawer);
-      emit('success', data);
+      emit('success', params);
     } catch (error: any) {
       if (error && error.errorFields) {
         showMessage(error.message || t('common.validateError'));
@@ -230,3 +117,26 @@
     }
   }
 </script>
+<style lang="less">
+  .jeesite-role-auth-data-scope {
+    .scroll-container {
+      .scrollbar__wrap {
+        margin: 6px !important;
+        padding-bottom: 0 !important;
+      }
+    }
+
+    &-tabs.ant-tabs {
+      margin-top: 0 !important;
+      padding-right: 5px;
+
+      .ant-tabs-nav {
+        margin-left: 20px;
+      }
+
+      .ant-tabs-tab {
+        padding: 7px 0;
+      }
+    }
+  }
+</style>

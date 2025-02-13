@@ -179,7 +179,13 @@
       return labelValue;
     }
     if (props.column?.format && isDef(value)) {
-      return formatCell(value, props.column.format, props.record as Recordable, props.index);
+      return formatCell(
+        value,
+        props.column.format,
+        props.record as Recordable,
+        props.index,
+        props.column,
+      );
     }
     if (typeof value == 'object') {
       return '\u00A0';
@@ -515,6 +521,18 @@
         padding: 4px 8px 4px 2px;
         color: @error-color !important;
         // border: 1px solid @error-color;
+      }
+    }
+  }
+
+  .jeesite-table-tree-name {
+    .@{prefix-cls} {
+      display: inline-block;
+
+      .ellipsis-cell {
+        .cell-content {
+          overflow: visible;
+        }
       }
     }
   }

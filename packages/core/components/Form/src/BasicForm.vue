@@ -11,6 +11,7 @@
     :model="formModel"
     @keypress.enter="handleEnterPress"
   >
+    <slot name="formTop"></slot>
     <Row v-bind="getRow">
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
@@ -39,6 +40,7 @@
       </FormAction>
       <slot name="formFooter"></slot>
     </Row>
+    <slot name="formBottom"></slot>
   </Form>
 </template>
 <script lang="ts" setup name="BasicForm">
@@ -293,6 +295,8 @@
     padding-right: 20px;
 
     .ant-form-item {
+      margin-bottom: 20px;
+
       &-label {
         line-height: 14px;
 
@@ -301,8 +305,13 @@
         }
       }
 
-      &-with-help {
-        margin-bottom: 0;
+      &-explain {
+        position: absolute;
+
+        &-error {
+          position: absolute;
+          top: -2px;
+        }
       }
 
       &.suffix-item {
@@ -324,10 +333,6 @@
 
       &.no-label {
         margin-left: 20px;
-      }
-
-      &:not(.ant-form-item-with-help) {
-        margin-bottom: 20px;
       }
     }
 
@@ -390,6 +395,7 @@
     }
 
     .ant-input-number,
+    .ant-input-number-group-wrapper,
     .ant-picker-default {
       width: 100%;
     }

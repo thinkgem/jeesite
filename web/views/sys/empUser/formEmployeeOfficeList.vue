@@ -65,7 +65,7 @@
   async function getTableData(data: Recordable): Promise<Recordable> {
     let valid = true;
     let tableList: Recordable[] = tableAction.getDataSource();
-    for (const record of tableAction.getDataSource()) {
+    for (const record of tableList) {
       if (!(await record.onEdit?.(false, true))) {
         valid = false;
       }

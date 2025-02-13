@@ -10,7 +10,7 @@
     :okAuth="'sys:empUser:edit'"
     @register="registerDrawer"
     @ok="handleSubmit"
-    width="75%"
+    width="80%"
   >
     <template #title>
       <Icon :icon="getTitle.icon" class="m-1 pr-1" />
@@ -18,58 +18,38 @@
     </template>
     <BasicForm @register="registerForm">
       <template #dataScopeTrees>
-        <div class="flex flex-row flex-wrap">
-          <div class="mb-5 mr-5" v-for="item in dataScopes" :key="item.moduleCode">
-            <BasicTree
-              v-if="moduleCodes.includes(item.moduleCode) && ['0', '2'].includes(item.ctrlPermi)"
-              class="bg-gray"
-              style="min-width: 300px"
-              :title="t(item['ctrlName_' + localeStore.getLocale] || item.ctrlName)"
-              :toolbar="true"
-              :checkable="true"
-              :api="ctrlDataTreeData"
-              :params="{ url: item.ctrlDataUrl, ctrlPermi }"
-              :immediate="immediate"
-              :defaultExpandLevel="2"
-              :ref="setTreeRefs(item.ctrlType)"
-              @tree-data-change="handleTreeDataChange"
-            />
-          </div>
-        </div>
+        <CustomDataScope
+          ref="customDataScopeRef"
+          :api="ctrlDataTreeData"
+          :ctrlPermis="['0', '2']"
+        />
       </template>
     </BasicForm>
   </BasicDrawer>
 </template>
 <script lang="ts" setup name="ViewsSysEmpUserAuthDataScope">
-  import { ref, unref, nextTick } from 'vue';
+  import { ref, unref } from 'vue';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
-  import { useLocaleStore } from '@jeesite/core/store/modules/locale';
   import { router } from '@jeesite/core/router';
   import { Icon } from '@jeesite/core/components/Icon';
   import { BasicForm, FormSchema, useForm } from '@jeesite/core/components/Form';
   import { BasicDrawer, useDrawerInner } from '@jeesite/core/components/Drawer';
   import { ctrlDataTreeData } from '@jeesite/core/api/sys/empUser';
-  // import { officeTreeData } from '@jeesite/core/api/sys/office';
   import { secAdminForm, secAdminSave } from '@jeesite/web/api/sys/secAdmin';
-  import { BasicTree, TreeActionType } from '@jeesite/core/components/Tree';
+  import CustomDataScope from '../role/components/CustomDataScope.vue';
 
   const emit = defineEmits(['success', 'register']);
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
   const { meta } = unref(router.currentRoute);
-  const localeStore = useLocaleStore();
   const record = ref<Recordable>({});
   const getTitle = {
     icon: meta.icon || 'ant-design:book-outlined',
     value: t('二级管理员'),
   };
-  const ctrlPermi = ref<string>('');
-  const moduleCodes = ref<Array<string>>([]);
-  const dataScopes = ref<Array<Recordable>>([]);
-  const userDataScopeList = ref<Array<Recordable>>([]);
-  const immediate = ref(false);
+  const customDataScopeRef = ref<InstanceType<typeof CustomDataScope>>();
 
   const inputFormSchemas: FormSchema[] = [
     {
@@ -110,17 +90,12 @@
       colProps: { md: 24, lg: 24 },
     },
     {
-      field: 'userDataScopeListJson',
+      field: 'userDataScopeList',
       component: 'Input',
       colProps: { md: 24, lg: 24 },
       slot: 'dataScopeTrees',
     },
   ];
-
-  const treeRefs: Recordable<TreeActionType> = {};
-  const setTreeRefs = (key: string) => (el: any) => {
-    if (el) treeRefs[key] = el;
-  };
 
   const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
     schemas: inputFormSchemas,
@@ -137,59 +112,14 @@
     setDrawerProps({ loading: true });
     const res = await secAdminForm(data);
     record.value = (res.user || {}) as Recordable;
-    ctrlPermi.value = res.ctrlPermi || '2';
-    moduleCodes.value = res.moduleCodes || [];
-    dataScopes.value = res.dataScopes || [];
-    userDataScopeList.value = res.userDataScopeList || [];
     setFieldsValue(record.value);
-    await loadTreeDatas();
-    setDrawerProps({ loading: false });
-  }
-
-  let loadTreeDataNum: number;
-  async function loadTreeDatas() {
-    loadTreeDataNum = 0;
-    nextTick(() => {
-      if (immediate.value) {
-        for (const key of Object.keys(treeRefs)) {
-          treeRefs[key].setCheckedKeys([]);
-          treeRefs[key].reload();
-        }
-      } else {
-        immediate.value = true;
-      }
+    await customDataScopeRef.value?.loadDataScopeList({
+      dataScopes: res.dataScopes || [],
+      dataScopeList: res.userDataScopeList || [],
+      moduleCodes: res.moduleCodes || [],
+      ctrlPermi: res.ctrlPermi || '2',
     });
-  }
-
-  function handleTreeDataChange() {
-    const keys = Object.keys(treeRefs);
-    if (++loadTreeDataNum == keys.length) {
-      let checkedKeys = {};
-      userDataScopeList.value.forEach((item) => {
-        if (!checkedKeys[item.ctrlType]) {
-          checkedKeys[item.ctrlType] = [];
-        }
-        checkedKeys[item.ctrlType].push(item.ctrlData);
-      });
-      for (const key of keys) {
-        treeRefs[key].setCheckedKeys(checkedKeys[key] || []);
-      }
-    }
-  }
-
-  function getUserDataScopeListJson() {
-    const keys = Object.keys(treeRefs);
-    let dataScopeData: Array<any> = [];
-    for (const key of keys) {
-      const ks = treeRefs[key].getCheckedKeys();
-      for (const k of ks as Array<any>) {
-        dataScopeData.push({
-          ctrlType: key,
-          ctrlData: k,
-        });
-      }
-    }
-    return JSON.stringify(dataScopeData);
+    setDrawerProps({ loading: false });
   }
 
   async function handleSubmit() {
@@ -204,7 +134,7 @@
         ...data,
         isNewRecord: record.value.isNewRecord,
         userCode: record.value.userCode,
-        userDataScopeListJson: getUserDataScopeListJson(),
+        userDataScopeListJson: customDataScopeRef.value?.getDataScopeListJson(),
       };
       // console.log('submit', params, data, record);
       const res = await secAdminSave(params);

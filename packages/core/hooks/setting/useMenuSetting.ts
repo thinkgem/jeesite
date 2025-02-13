@@ -16,8 +16,8 @@ export function useMenuSetting() {
 
   const getShowSidebar = computed(() => {
     return (
-      unref(getSplit) ||
-      (unref(getShowMenu) && unref(getMenuMode) !== MenuModeEnum.HORIZONTAL && !unref(fullContent))
+      // unref(getSplit) ||
+      unref(getShowMenu) && unref(getMenuMode) !== MenuModeEnum.HORIZONTAL && !unref(fullContent)
     );
   });
 

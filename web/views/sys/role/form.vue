@@ -19,20 +19,24 @@
     <BasicForm @register="registerForm">
       <template #menuTrees>
         <div class="flex flex-row flex-wrap">
-          <div class="mb-5 mr-5" v-for="item in sysCodeRef" :key="item.id">
-            <BasicTree
+          <template v-for="item in sysCodeRef" :key="item.id">
+            <div
+              class="mb-5 mr-5"
               v-show="sysCodesRef.length == 0 || sysCodesRef.includes(item.value)"
-              class="bg-gray"
-              style="width: 500px"
-              :title="item.name"
-              :toolbar="true"
-              :checkable="true"
-              :checkStrictly="false"
-              :immediate="false"
-              :defaultExpandLevel="2"
-              :ref="setTreeRefs(item.value)"
-            />
-          </div>
+            >
+              <BasicTree
+                class="bg-gray"
+                style="width: 500px"
+                :title="item.name"
+                :toolbar="true"
+                :checkable="true"
+                :checkStrictly="false"
+                :immediate="false"
+                :defaultExpandLevel="2"
+                :ref="setTreeRefs(item.value)"
+              />
+            </div>
+          </template>
         </div>
       </template>
     </BasicForm>
@@ -64,7 +68,11 @@
   const record = ref<Role>({} as Role);
   const getTitle = computed(() => ({
     icon: meta.icon || 'ant-design:book-outlined',
-    value: record.value.isNewRecord ? t('新增角色') : t('编辑角色'),
+    value: record.value.isNewRecord
+      ? t('新增角色')
+      : op.value === 'auth'
+        ? t('授权菜单')
+        : t('编辑角色'),
   }));
   const op = ref<string>('');
   const sysCodeRef = ref<Array<Recordable>>([]);
@@ -188,7 +196,7 @@
         allowClear: true,
         mode: 'multiple',
         onChange: (val) => {
-          sysCodesRef.value = val.split(',');
+          sysCodesRef.value = val ? val.split(',') : [];
         },
       },
       colProps: { md: 24, lg: 24 },
@@ -261,7 +269,7 @@
 
   async function loadSysCode() {
     sysCodeRef.value = await useDict().initGetDictList('sys_menu_sys_code');
-    sysCodesRef.value = record.value.sysCodes?.split(',') || [];
+    sysCodesRef.value = record.value.sysCodes ? record.value.sysCodes?.split(',') : [];
   }
 
   async function loadTreeDatas() {
