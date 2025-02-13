@@ -201,7 +201,7 @@ export function useTableScroll(
   const tableWidthRef = ref();
   function redoTableWidth() {
     const table = unref(tableRef);
-    tableWidthRef.value = table?.$el?.offsetWidth || 600; // 默认宽度不小于，列中指定的宽度总合
+    tableWidthRef.value = table?.$el?.offsetWidth - 50 || 600; // 默认宽度不小于，列中指定的宽度总合
   }
   useResizeObserver(wrapRef, useDebounceFn(redoTableWidth, 20));
 
