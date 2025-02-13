@@ -245,7 +245,7 @@ export function useColumns(
           const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
           if (!customRender && format && !edit && !isDefaultAction) {
             column.customRender = ({ text, record, index }) => {
-              return formatCell(text, format, record, index);
+              return formatCell(text, format, record, index, column);
             };
           }
 
@@ -409,14 +409,20 @@ function sortFixedColumn(columns: BasicColumn[]) {
 }
 
 // format cell
-export function formatCell(text: string, format: CellFormat, record: Recordable, index: number) {
+export function formatCell(
+  text: string,
+  format: CellFormat,
+  record: Recordable,
+  index: number,
+  column: BasicColumn,
+) {
   if (!format) {
     return text;
   }
 
   // custom function
   if (isFunction(format)) {
-    return format(text, record, index);
+    return format(text, record, index, column);
   }
 
   try {
