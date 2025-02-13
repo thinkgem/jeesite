@@ -21,7 +21,7 @@
           :params="{ url: item.ctrlDataUrl, ctrlPermi: ctrlPermi, parentAttr: 'disableCheckbox' }"
           :canSelectParent="!isLoadUser.includes(item.ctrlType)"
           :immediate="immediate"
-          :defaultExpandLevel="2"
+          :defaultExpandLevel="Number(item.expandLevel)"
           :ref="setTreeRefs(item.ctrlType)"
           @tree-data-change="handleTreeDataChange"
         />
