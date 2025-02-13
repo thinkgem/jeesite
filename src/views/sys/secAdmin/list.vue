@@ -20,6 +20,21 @@
           {{ record.loginCode }}
         </a>
       </template>
+      <template #form-formTop>
+        <div class="mx-2 mb-3">
+          <Alert
+            v-if="showAlert"
+            :afterClose="handleAlertClose"
+            :message="`二级管理员是系统管理员的下级管理员，其控制权限类型包括：
+                    （1）拥有的权限：您的上级给您分配什么权限，您就能看什么数据，包括您所属机构及下级数据或其它树形结构数据的本级及下级数据；
+                    （2）管理的权限：您能将某些数据的权限分配给他人，但自己没有该数据的读取权限，一般用于管理者身份的权限控制。
+                    当前控制权限类型为：${ctrlPermi == '1' ? '拥有' : '管理'}的权限，可在后端配置文件修改 user.adminCtrlPermi 参数更改类型。`"
+            type="info"
+            closable
+            banner
+          />
+        </div>
+      </template>
     </BasicTable>
     <InputForm @register="registerDrawer" @success="handleSuccess" />
   </div>
@@ -35,6 +50,7 @@
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
+  import { Alert } from 'ant-design-vue';
 
   const props = defineProps({
     treeCode: String,
@@ -50,6 +66,22 @@
   const ctrlPermi = ref('');
   const postList = ref<Recordable>([]);
   const roleList = ref<Recordable>([]);
+
+  const showAlert = ref<boolean>(false);
+
+  onMounted(async () => {
+    const days = 1000 * 60 * 60 * 24;
+    const lastClosedTime = localStorage.getItem('jeesite-alert-time-sec-admin');
+    if (!lastClosedTime || (new Date().getTime() - Number(lastClosedTime)) / days >= 100) {
+      showAlert.value = true;
+    }
+  });
+
+  function handleAlertClose() {
+    showAlert.value = false;
+    localStorage.setItem('jeesite-alert-time-sec-admin', String(new Date().getTime()));
+    redoHeight();
+  }
 
   const searchForm: FormProps = {
     baseColProps: { md: 8, lg: 6 },
@@ -175,7 +207,7 @@
   };
 
   const [registerDrawer, { openDrawer }] = useDrawer();
-  const [registerTable, { reload, getForm }] = useTable({
+  const [registerTable, { reload, getForm, redoHeight }] = useTable({
     api: secAdminListData,
     beforeFetch: (params) => {
       params.ctrlPermi = ctrlPermi.value;
