@@ -30,8 +30,8 @@
                     （2）管理的权限：您能将某些数据的权限分配给他人，但自己没有该数据的读取权限，一般用于管理者身份的权限控制。
                     当前控制权限类型为：${ctrlPermi == '1' ? '拥有' : '管理'}的权限，可在后端配置文件修改 user.adminCtrlPermi 参数更改类型。`"
             type="info"
-            closable
             banner
+            closable
           />
         </div>
       </template>

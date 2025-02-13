@@ -517,9 +517,11 @@
       }
     }
   }
+
   .jeesite-table-tree-name {
     .@{prefix-cls} {
       display: inline-block;
+
       .ellipsis-cell {
         .cell-content {
           overflow: visible;
