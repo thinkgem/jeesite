@@ -24,6 +24,11 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -140,6 +145,10 @@ public class AccountController extends BaseController{
 		@Parameter(name = "validCode", description = "图片验证码，防止重复机器人", required = true),
 		@Parameter(name = "validType", description = "验证方式（mobile、email）", required = true),
 	})
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "响应对象", content = @Content( schemaProperties = {
+		@SchemaProperty(name = "result", schema = @Schema(description = "结果状态")),
+		@SchemaProperty(name = "message", schema = @Schema(description = "返回消息")),
+	}))})
 	public String getFpValidCode(User user, String validCode, String validType, HttpServletRequest request) {
 		return getValidCode("fp", user.getLoginCode(), validCode, validType, request, "找回密码");
 	}
@@ -155,6 +164,10 @@ public class AccountController extends BaseController{
 		@Parameter(name = "fpValidCode", description = "手机或邮箱接受的验证码", required = true),
 		@Parameter(name = "password", description = "新密码", required = true),
 	})
+	@ApiResponses({ @ApiResponse(responseCode = "200", description = "响应对象", content = @Content( schemaProperties = {
+		@SchemaProperty(name = "result", schema = @Schema(description = "结果状态")),
+		@SchemaProperty(name = "message", schema = @Schema(description = "返回消息")),
+	}))})
 	public String savePwdByValidCode(String password, String fpValidCode, HttpServletRequest request) {
 		String type = "fp";
 		String userCode = UserUtils.getCache(type + "UserCode");
