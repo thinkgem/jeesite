@@ -224,7 +224,7 @@ user:
       ctrlPermi: "0",
       ctrlDataUrl: "/sys/office/treeData",
       chkboxType: {"Y":"ps","N":"ps"},
-      expandLevel: -1,
+      expandLevel: 1,
       remarks: ""
     },{
       moduleCode: "core",
@@ -234,7 +234,7 @@ user:
       ctrlPermi: "0",
       ctrlDataUrl: "/sys/company/treeData",
       chkboxType: {"Y":"ps","N":"ps"},
-      expandLevel: -1,
+      expandLevel: 1,
       remarks: ""
     },{
       moduleCode: "core",
@@ -244,7 +244,7 @@ user:
       ctrlPermi: "3",
       ctrlDataUrl: "/sys/office/treeData?isLoadUser=true",
       chkboxType: {"Y":"s","N":"s"},
-      expandLevel: -1,
+      expandLevel: 1,
       remarks: ""
     },{
       moduleCode: "core",
@@ -254,7 +254,7 @@ user:
       ctrlPermi: "2",
       ctrlDataUrl: "/sys/role/treeData",
       chkboxType: {"Y":"ps","N":"ps"},
-      expandLevel: -1,
+      expandLevel: 1,
       remarks: ""
     },{
       moduleCode: "cms",
@@ -264,7 +264,7 @@ user:
       ctrlPermi: "0",
       ctrlDataUrl: "/cms/category/treeData",
       chkboxType: {"Y":"ps","N":"ps"},
-      expandLevel: -1,
+      expandLevel: 1,
       remarks: ""
     }]
     
