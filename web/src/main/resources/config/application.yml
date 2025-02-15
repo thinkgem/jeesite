@@ -411,7 +411,7 @@ user:
 #      ctrlType: "Office",
 #      ctrlDataUrl: "/sys/office/treeData",
 #      chkboxType: {"Y":"ps","N":"ps"},
-#      expandLevel: -1,
+#      expandLevel: 1,
 #      remarks: ""
 #    },{
 #      moduleCode: "core",
@@ -421,7 +421,7 @@ user:
 #      ctrlPermi: "0",
 #      ctrlDataUrl: "/sys/company/treeData",
 #      chkboxType: {"Y":"ps","N":"ps"},
-#      expandLevel: -1,
+#      expandLevel: 1,
 #      remarks: ""
 #    },{
 #      moduleCode: "core",
@@ -431,7 +431,7 @@ user:
 #      ctrlPermi: "2",
 #      ctrlDataUrl: "/sys/role/treeData",
 #      chkboxType: {"Y":"ps","N":"ps"},
-#      expandLevel: -1,
+#      expandLevel: 1,
 #      remarks: ""
 #    }]
 #
