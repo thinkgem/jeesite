@@ -497,7 +497,7 @@ public class FormFilter extends org.apache.shiro.web.filter.authc.FormAuthentica
 		}
 		if (SWITCH_OFFICE && User.USER_TYPE_EMPLOYEE.equals(user.getUserType())) {
 			data.put("switchOffice", "true");
-			data.put("officeCode", EmpUtils.getCurrentOfficeCode());
+			data.put("officeCode", session.getAttribute("officeCode"));
 			data.put("officeName", EmpUtils.getCurrentOfficeName());
 		}
 		data.put("desktopUrl", desktopUrl != null ? desktopUrl : Global.getConfig("sys.index.desktopUrl"));
