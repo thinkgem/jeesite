@@ -41,15 +41,15 @@
 * 联系我们：<http://s.jeesite.com>
 * 关注微信公众号，了解最新动态：
 
-<p style="padding-left:40px">　　
- <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
+<p style="padding-left:40px">
+　　<img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
 </p>
 
 * QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 微信群：如果二维码过期，请尝试刷新图片，或者添加客服微信 jeesitex 邀请您进群
+* 微信群：如果二维码过期，请尝试点击图片并F5刷新，或者添加客服微信 jeesitex 邀请您进群
 
 <p style="padding-left:40px"><a href="https://jeesite.com/assets/images/wxg_cur.png" target="_blank">
- <img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/></a>
+　　<img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/></a>
 </p>
 
 * 后端源码仓库地址：
