@@ -3,7 +3,7 @@
 <p align="center">
  <img alt="JeeSite" src="https://jeesite.com/assets/images/logo.png" width="120" height="120" style="margin-bottom: 10px;">
 </p>
-<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端框架</h3>
+<h3 align="center" style="margin:30px 0 30px;font-weight:bold;font-size:30px;">JeeSite Vue3 前端源码</h3>
 <p align="center">
  <a href="https://v3.cn.vuejs.org/" target="__blank"><img alt="TypeScript-Vue3" src="https://img.shields.io/badge/TypeScript-Vue3-green.svg"></a>
  <a href="https://www.antdv.com/" target="__blank"><img alt="Ant Design Vue-V4.2" src="https://img.shields.io/badge/Ant Design Vue-V4.2-blue.svg"></a>
@@ -94,7 +94,7 @@
 
 ### 架构特点及安全方面的优势：<https://jeesite.com/docs/feature/>
 
-## 技术选型
+## Vue 前端简介
 
 基于 Vue3、Vite、Ant-Design-Vue、TypeScript、Vue Vben Admin，最先进的技术栈，让初学者能够更快的入门并投入到团队开发中去。包括模块如：组织机构、角色用户、菜单授权、数据权限、系统参数等。强大的组件封装，数据驱动视图。为微小中大型项目的开发，提供现成的开箱解决方案及丰富的示例。
 
@@ -119,7 +119,7 @@
 * 功能权限鉴权改进，并兼容本地路由和后台路由同时使用
 * 等等各种细节改进，体验优化，黑暗布局细节优化
 
-## 前端特点
+## 前端技术特点
 
 定义众多组件，非常贴心的组件属性及小功能，符合 JeeSite 以往的设计思想，列表和表单以数据驱动视图，极大简化了业务功能开发，注释分解详见【[源码解析](https://jeesite.com/docs/vue-crud-view)】
 
