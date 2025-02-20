@@ -7,19 +7,23 @@ package com.jeesite.modules.sys.service.support;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.service.TreeService;
+import com.jeesite.common.utils.PageUtils;
 import com.jeesite.common.utils.excel.ExcelImport;
 import com.jeesite.common.validator.ValidatorUtils;
 import com.jeesite.modules.sys.dao.OfficeDao;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.DataScopeService;
+import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -32,6 +36,8 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 
 	@Autowired
 	private DataScopeService dataScopeService;
+	@Autowired
+	private EmpUserService empUserService;
 	
 	/**
 	 * 获取单条数据
@@ -74,7 +80,7 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 		}
 		super.save(office);
 		// 清理部门相关缓存
-		clearOfficeCache();
+		clearOfficeCache(office);
 	}
 
 	/**
@@ -149,7 +155,7 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 	public void updateStatus(Office office) {
 		super.updateStatus(office);
 		// 清理部门相关缓存
-		clearOfficeCache();
+		clearOfficeCache(office);
 	}
 
 	/**
@@ -161,15 +167,22 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 		office.sqlMap().markIdDelete();
 		super.delete(office);
 		// 清理部门相关缓存
-		clearOfficeCache();
+		clearOfficeCache(office);
 	}
 	
 	/**
 	 * 清理部门相关缓存
 	 */
-	private void clearOfficeCache(){
-//		EmpUtils.removeCache(EmpUtils.CACHE_OFFICE_LIST);
+	private void clearOfficeCache(Office office){
 		EmpUtils.removeCache(EmpUtils.CACHE_OFFICE_ALL_LIST);
+		// 清理组织下的用户缓存
+		EmpUser empUserWhere = new EmpUser();
+		empUserWhere.setCodes(new String[]{ office.getOfficeCode() });
+		PageUtils.findList(empUserWhere, null, e -> {
+			List<EmpUser> empUserList = empUserService.findUserListByOfficeCodes((EmpUser)e);
+			empUserList.forEach(UserUtils::clearCache);
+			return !empUserList.isEmpty();
+		});
 	}
 
 }
