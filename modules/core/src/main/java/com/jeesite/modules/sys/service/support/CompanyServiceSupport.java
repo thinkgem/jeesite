@@ -6,13 +6,17 @@ package com.jeesite.modules.sys.service.support;
 
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.service.TreeService;
+import com.jeesite.common.utils.PageUtils;
 import com.jeesite.modules.sys.dao.CompanyDao;
 import com.jeesite.modules.sys.dao.CompanyOfficeDao;
 import com.jeesite.modules.sys.entity.Company;
 import com.jeesite.modules.sys.entity.CompanyOffice;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.service.CompanyService;
 import com.jeesite.modules.sys.service.DataScopeService;
+import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
+import com.jeesite.modules.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +33,10 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 
 	@Autowired
 	private CompanyOfficeDao companyOfficeDao;
-	
 	@Autowired
 	private DataScopeService dataScopeService;
+	@Autowired
+	private EmpUserService empUserService;
 	
 	/**
 	 * 获取单条数据
@@ -86,7 +91,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 			companyOfficeDao.insertBatch(list, null);
 		}
 		// 清理公司相关缓存
-		clearCompanyCache();
+		clearCompanyCache(company);
 	}
 	
 	/**
@@ -97,7 +102,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	public void delete(Company company) {
 		super.delete(company);
 		// 清理公司相关缓存
-		clearCompanyCache();
+		clearCompanyCache(company);
 	}
 
 	/**
@@ -108,15 +113,22 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	public void updateStatus(Company company) {
 		dao.updateStatus(company);
 		// 清理公司相关缓存
-		clearCompanyCache();
+		clearCompanyCache(company);
 	}
 	
 	/**
 	 * 清理公司相关缓存
 	 */
-	private void clearCompanyCache(){
-//		EmpUtils.removeCache(EmpUtils.CACHE_COMPANY_LIST);
+	private void clearCompanyCache(Company company){
 		EmpUtils.removeCache(EmpUtils.CACHE_COMPANY_ALL_LIST);
+		// 清理公司下的用户缓存
+		EmpUser empUserWhere = new EmpUser();
+		empUserWhere.setCodes(new String[]{ company.getCompanyCode() });
+		PageUtils.findList(empUserWhere, null, e -> {
+			List<EmpUser> empUserList = empUserService.findUserListByCompanyCodes((EmpUser)e);
+			empUserList.forEach(UserUtils::clearCache);
+			return !empUserList.isEmpty();
+		});
 	}
 
 }
