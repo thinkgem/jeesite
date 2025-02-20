@@ -185,7 +185,7 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 160,
+    width: 130,
     actions: (record: Recordable) => [
       {
         icon: 'i-clarity:note-edit-line',
