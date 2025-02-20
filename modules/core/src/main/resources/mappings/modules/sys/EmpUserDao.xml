@@ -8,7 +8,7 @@
 			 typeHandler="com.jeesite.common.mybatis.type.AesTypeHandler"/>
 	</resultMap> -->
 
-    <!-- 查询数据
+	<!-- 查询数据
 	<select id="findList" resultMap="empUserResult">  -->
 	<select id="findList" resultType="EmpUser">
 		SELECT ${sqlMap.column.toSql()}
@@ -54,31 +54,52 @@
 	<!-- 查询全部用户，仅返回基本信息  -->
 	<select id="findUserList" resultType="EmpUser">
 		SELECT 
-		    <include refid="userColumns"/>
+			<include refid="userColumns"/>
 		FROM ${_prefix}sys_user a
 		WHERE a.status = #{STATUS_NORMAL}
 			AND a.user_type = #{USER_TYPE_EMPLOYEE}
 			<if test="global.useCorpModel">
-		    	AND a.corp_code = #{corpCode}
-		    </if>
+				AND a.corp_code = #{corpCode}
+			</if>
 		ORDER BY a.user_code
 	</select>
 	
 	<!-- 根据部门编码查询用户，仅返回基本信息  -->
 	<select id="findUserListByOfficeCodes" resultType="EmpUser">
 		SELECT 
-		    <include refid="userColumns"/>
+			<include refid="userColumns"/>
 		FROM ${_prefix}sys_user a
 		JOIN ${_prefix}sys_employee e ON e.emp_code = a.ref_code
 		JOIN ${_prefix}sys_office o ON o.office_code = e.office_code
 		WHERE a.status = #{STATUS_NORMAL}
 			AND a.user_type = #{USER_TYPE_EMPLOYEE}
 			<if test="global.useCorpModel">
-		    	AND a.corp_code = #{corpCode}
-		    </if>
-		    AND e.status = #{STATUS_NORMAL}
-		    AND o.status = #{STATUS_NORMAL}
+				AND a.corp_code = #{corpCode}
+			</if>
+			AND e.status = #{STATUS_NORMAL}
+			AND o.status = #{STATUS_NORMAL}
 			AND o.office_code IN
+			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
+				#{code}
+			</foreach>
+		ORDER BY a.user_code
+	</select>
+
+	<!-- 根据公司编码查询用户，仅返回基本信息  -->
+	<select id="findUserListByCompanyCodes" resultType="EmpUser">
+		SELECT
+			<include refid="userColumns"/>
+		FROM ${_prefix}sys_user a
+		JOIN ${_prefix}sys_employee e ON e.emp_code = a.ref_code
+		JOIN ${_prefix}sys_company o ON o.company_code = e.company_code
+		WHERE a.status = #{STATUS_NORMAL}
+			AND a.user_type = #{USER_TYPE_EMPLOYEE}
+			<if test="global.useCorpModel">
+				AND a.corp_code = #{corpCode}
+			</if>
+			AND e.status = #{STATUS_NORMAL}
+			AND o.status = #{STATUS_NORMAL}
+			AND o.company_code IN
 			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
 				#{code}
 			</foreach>
@@ -88,16 +109,16 @@
 	<!-- 根据角色编码查询用户，仅返回基本信息  -->
 	<select id="findUserListByRoleCodes" resultType="EmpUser">
 		SELECT 
-		    <include refid="userColumns"/>
+			<include refid="userColumns"/>
 		FROM ${_prefix}sys_user a
 		JOIN ${_prefix}sys_user_role ur2 ON ur2.user_code = a.user_code
 		JOIN ${_prefix}sys_role r ON r.role_code = ur2.role_code
 		WHERE a.status = #{STATUS_NORMAL}
 			AND a.user_type = #{USER_TYPE_EMPLOYEE}
 			<if test="global.useCorpModel">
-		    	AND a.corp_code = #{corpCode}
-		    </if>
-		    AND r.status = #{STATUS_NORMAL}
+				AND a.corp_code = #{corpCode}
+			</if>
+			AND r.status = #{STATUS_NORMAL}
 			AND r.role_code IN
 			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
 				#{code}
@@ -108,7 +129,7 @@
 	<!-- 根据岗位编码查询用户，仅返回基本信息  -->
 	<select id="findUserListByPostCodes" resultType="EmpUser">
 		SELECT 
-		    <include refid="userColumns"/>
+			<include refid="userColumns"/>
 		FROM ${_prefix}sys_user a
 		JOIN ${_prefix}sys_employee e ON e.emp_code = a.ref_code
 		JOIN ${_prefix}sys_employee_post ep ON ep.emp_code = e.emp_code
@@ -116,10 +137,10 @@
 		WHERE a.status = #{STATUS_NORMAL}
 			AND a.user_type = #{USER_TYPE_EMPLOYEE}
 			<if test="global.useCorpModel">
-		    	AND a.corp_code = #{corpCode}
-		    </if>
-		    AND e.status = #{STATUS_NORMAL}
-		    AND p.status = #{STATUS_NORMAL}
+				AND a.corp_code = #{corpCode}
+			</if>
+			AND e.status = #{STATUS_NORMAL}
+			AND p.status = #{STATUS_NORMAL}
 			AND p.post_code IN
 			<foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
 				#{code}
