@@ -47,6 +47,11 @@ public interface EmpUserService extends CrudServiceApi<EmpUser> {
 	 * 根据部门编码查询用户，仅返回基本信息
 	 */
 	List<EmpUser> findUserListByOfficeCodes(EmpUser empUser);
+
+	/**
+	 * 根据公司编码查询用户，仅返回基本信息
+	 */
+	List<EmpUser> findUserListByCompanyCodes(EmpUser empUser);
 	
 	/**
 	 * 根据角色编码查询用户，仅返回基本信息
