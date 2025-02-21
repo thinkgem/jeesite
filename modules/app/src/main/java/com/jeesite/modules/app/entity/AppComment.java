@@ -24,13 +24,14 @@ import java.util.Date;
 		@Column(name="category", attrName="category", label="问题分类"),
 		@Column(name="content", attrName="content", label="问题和意见"),
 		@Column(name="contact", attrName="contact", label="联系方式"),
-		@Column(includeEntity=DataEntity.class),
 		@Column(name="create_by_name", attrName="createByName", label="提问人员姓名", queryType=QueryType.LIKE),
 		@Column(name="device_info", attrName="deviceInfo", label="设备信息"),
 		@Column(name="reply_date", attrName="replyDate", label="回复时间"),
 		@Column(name="reply_content", attrName="replyContent", label="回复意见"),
 		@Column(name="reply_user_code", attrName="replyUserCode", label="回复人员"),
 		@Column(name="reply_user_name", attrName="replyUserName", label="回复人员姓名", queryType=QueryType.LIKE),
+		@Column(name="status", attrName="status", label="状态", isUpdate=true), // save时，允许更新status字段
+		@Column(includeEntity=DataEntity.class),
 	}, orderBy="a.create_date DESC"
 )
 public class AppComment extends DataEntity<AppComment> {
