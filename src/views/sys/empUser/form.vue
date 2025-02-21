@@ -296,7 +296,7 @@
           componentProps: {
             api: officeTreeData,
             params: { ctrlPermi },
-            canSelectParent: false,
+            canSelectParent: true,
           },
         },
         {
@@ -304,7 +304,7 @@
           componentProps: {
             api: companyTreeData,
             params: { ctrlPermi },
-            canSelectParent: false,
+            canSelectParent: true,
           },
         },
         {
