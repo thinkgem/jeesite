@@ -118,6 +118,12 @@ public class EmpUserController extends BaseController {
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		empUser.setPage(new Page<>(request, response));
+//		// 定义字段权限属性名（可根据权限配置库查询出来）排除和包含同时存在时，排除优先级高于包含
+//		Set<String> attrNames = SetUtils.newHashSet("userCode", "employee.office.officeCode");
+//		// 查询 SQL 结果集中，不包含 userCode、employee.office.officeCode 值返回
+//		empUser.sqlMap().getColumn().setExcludeAttrNames(attrNames);
+//		// 查询 SQL 结果集中，仅包含 userCode、employee.office.officeCode 值返回
+//		empUser.sqlMap().getColumn().setIncludeAttrNames(attrNames);
 		Page<EmpUser> page = empUserService.findPage(empUser);
 		return page;
 	}
