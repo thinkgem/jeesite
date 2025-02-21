@@ -69,8 +69,15 @@ public class EmpUserController extends BaseController {
 	private RoleService roleService;
 
 	@ModelAttribute
-	public EmpUser get(String userCode, boolean isNewRecord) {
-		return empUserService.get(userCode, isNewRecord);
+	public EmpUser get(String userCode, boolean isNewRecord, Boolean isAll, String ctrlPermi) {
+		EmpUser empUser = new EmpUser();
+		empUser.setUserCode(userCode);
+		empUser.setIsNewRecord(isNewRecord);
+		// 更严格的权限控制，对单条数据进行数据权限过滤（isAll 是一个开关，正常不需要添加）
+		if (!(isAll != null && isAll) || Global.isStrictMode()){
+			empUserService.addDataScopeFilter(empUser, ctrlPermi);
+		}
+		return empUserService.getAndValid(empUser);
 	}
 
 	@RequiresPermissions("sys:empUser:view")
