@@ -4,11 +4,11 @@
  */
 package com.jeesite.modules.app.web;
 
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.jeesite.common.config.Global;
+import com.jeesite.common.entity.Page;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.app.entity.AppComment;
+import com.jeesite.modules.app.service.AppCommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.entity.Page;
-import com.jeesite.common.web.BaseController;
-import com.jeesite.modules.app.entity.AppComment;
-import com.jeesite.modules.app.service.AppCommentService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * APP意见反馈Controller
@@ -97,7 +95,6 @@ public class AppCommentController extends BaseController {
 			}
 		}
 		appCommentService.save(appComment);
-		appCommentService.updateStatus(appComment);
 		return renderResult(Global.TRUE, text("保存意见成功！"));
 	}
 	
