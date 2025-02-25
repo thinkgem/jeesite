@@ -141,6 +141,7 @@
         }
       }
     },
+    { immediate: true },
   );
 
   onMounted(async () => {
@@ -152,6 +153,8 @@
       isFirstLoad.value = true;
     }
   });
+
+  function selectOneItem() {}
 
   async function fetch() {
     const { api } = props;
