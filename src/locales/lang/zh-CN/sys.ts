@@ -97,6 +97,7 @@ export default {
     policyPlaceholder: '勾选后才能注册',
     diffPwd: '两次输入密码不一致',
     corpPlaceholder: '请选择租户',
+    userPlaceholder: '请选择账号',
 
     userName: '账号',
     password: '密码',

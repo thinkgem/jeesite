@@ -98,6 +98,7 @@ export default {
     policyPlaceholder: 'Register after checking',
     diffPwd: 'The two passwords are inconsistent',
     corpPlaceholder: 'Please selection tenant',
+    userPlaceholder: 'Please selection account',
 
     userName: 'Username',
     password: 'Password',
