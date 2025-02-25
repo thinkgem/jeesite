@@ -8,7 +8,7 @@
         class="enter-x flex justify-center xl:justify-start"
         :width="280"
       />
-      <Divider class="enter-x size">{{ t('请使用微信扫描二维码，点击图片刷新！') }}</Divider>
+      <Divider class="enter-x size">{{ t('专业版支持微信扫描二维码登录！') }}</Divider>
       <Button size="large" block class="enter-x mt-4" @click="handleBackLogin">
         {{ t('sys.login.backSignIn') }}
       </Button>

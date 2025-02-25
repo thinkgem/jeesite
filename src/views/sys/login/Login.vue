@@ -33,11 +33,11 @@
             :class="`${prefixCls}-form`"
             class="enter-x relative mx-auto my-auto w-full rounded-xl px-5 py-8 shadow-md lg:ml-16 lg:w-2/4 lg:w-auto sm:w-3/4 lg:px-10 lg:py-9 sm:px-8"
           >
-            <LoginForm />
-            <ForgetPasswordForm />
-            <RegisterForm />
-            <MobileForm />
-            <QrCodeForm />
+            <LoginForm @demo-mode="demoMode = $event" />
+            <ForgetPasswordForm :demoMode="demoMode" />
+            <RegisterForm :demoMode="demoMode" />
+            <MobileForm :demoMode="demoMode" />
+            <QrCodeForm :demoMode="demoMode" />
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import { AppLogo } from '/@/components/Application';
   import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
@@ -92,6 +92,7 @@
   const localeStore = useLocaleStore();
   const showLocale = localeStore.getShowPicker;
   const title = computed(() => globSetting?.title ?? '');
+  const demoMode = ref(false);
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-login';
