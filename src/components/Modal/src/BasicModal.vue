@@ -416,7 +416,11 @@
     overflow: hidden;
 
     .ant-modal {
-      inset: 0 !important;
+      /* stylelint-disable */
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
       width: 100% !important;
       max-width: calc(100vw - 15px) !important;
 
