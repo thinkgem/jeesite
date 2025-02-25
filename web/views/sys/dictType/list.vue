@@ -93,7 +93,7 @@
       dataIndex: 'dictName',
       key: 'a.dict_name',
       sorter: true,
-      width: 260,
+      width: 240,
       align: 'left',
       slot: 'firstColumn',
     },
@@ -102,7 +102,7 @@
       dataIndex: 'dictType',
       key: 'a.dict_type',
       sorter: true,
-      width: 260,
+      width: 240,
       align: 'left',
       slot: 'dictTypeColumn',
     },
@@ -139,7 +139,7 @@
   ];
 
   const actionColumn: BasicColumn = {
-    width: 130,
+    width: 140,
     actions: (record: Recordable) => [
       {
         icon: 'i-clarity:note-edit-line',

@@ -63,7 +63,7 @@ export default function (expandedParentClass = '', x = false) {
 
       el.style.overflow = 'hidden';
       el.style[sizeProperty] = `${el[offsetProperty]}px`;
-      /* eslint-disable-next-line */
+
       void el.offsetHeight; // force reflow
 
       requestAnimationFrame(() => (el.style[sizeProperty] = '0'));

@@ -112,7 +112,7 @@
     },
     {
       label: t('选项图标'),
-      field: 'menuIcon',
+      field: 'dictIcon',
       component: 'IconPicker',
     },
 

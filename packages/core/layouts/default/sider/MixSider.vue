@@ -154,11 +154,9 @@
       });
 
       const getIsFixed = computed(() => {
-        /* eslint-disable-next-line */
         mixSideHasChildren.value = unref(childrenMenus).length > 0;
         const isFixed = unref(getMixSideFixed) && unref(mixSideHasChildren);
         if (isFixed) {
-          /* eslint-disable-next-line */
           openMenu.value = true;
         }
         return isFixed;

@@ -1,9 +1,4 @@
-import {
-  MenuTypeEnum,
-  MenuModeEnum,
-  TriggerEnum,
-  MixSidebarTriggerEnum,
-} from '@jeesite/core/enums/menuEnum';
+import { MenuTypeEnum, MenuModeEnum, TriggerEnum, MixSidebarTriggerEnum } from '@jeesite/core/enums/menuEnum';
 import {
   ContentEnum,
   PermissionModeEnum,

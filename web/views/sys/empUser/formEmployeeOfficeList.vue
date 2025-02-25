@@ -97,7 +97,7 @@
         editComponentProps: {
           api: officeTreeData,
           params: { ctrlPermi },
-          canSelectParent: false,
+          canSelectParent: true,
         },
         editRule: true,
       },

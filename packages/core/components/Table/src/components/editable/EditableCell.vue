@@ -407,7 +407,6 @@
 
   function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
     if (props.record) {
-      /* eslint-disable  */
       isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle]);
     }
   }
@@ -422,11 +421,11 @@
       //   if (!props.record.editValueRefs) props.record.editValueRefs = {};
       //   props.record.editValueRefs[props.column.dataIndex as any] = currentValueRef;
       // }
-      /* eslint-disable  */
+
       props.record.onCancelEdit = () => {
         isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn) => fn());
       };
-      /* eslint-disable */
+
       props.record.onSubmitEdit = async () => {
         if (isArray(props.record?.submitCbs)) {
           if (!props.record?.onValid?.()) return;
