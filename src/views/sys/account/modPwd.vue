@@ -7,7 +7,7 @@
     <div v-if="getModifyPasswordMsg" class="pl-8 pr-8">
       <Alert :message="getModifyPasswordMsg" type="info" show-icon />
     </div>
-    <div class="flex flex-col items-center justify-center bg-white py-8">
+    <div class="flex flex-col items-center justify-center bg-white py-8 pr-20">
       <BasicForm @register="register" class="w-9/12" />
       <div class="mt-6 flex justify-center">
         <a-button @click="resetFields">
@@ -41,7 +41,7 @@
   const { t } = useI18n();
   const { showMessage, createSuccessModal } = useMessage();
   const getTitle = {
-    icon: 'i-ion:key-outline',
+    icon: 'i-ant-design:key-outlined',
     value: t('sys.account.modifyPwd'),
   };
 

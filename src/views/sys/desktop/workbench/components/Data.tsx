@@ -43,7 +43,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: '权限管理',
-    icon: 'i-ion:key-outline',
+    icon: 'i-ant-design:key-outlined',
     color: '#4daf1bc9',
   },
   {

@@ -65,5 +65,13 @@ export const infoSavePwd = (params?: any) => {
   return defHttp.post<User>({ url: adminPath + '/sys/user/infoSavePwd', params });
 };
 
-export const infoSavePqa = (params?: any) =>
-  defHttp.post<User>({ url: adminPath + '/sys/user/infoSavePqa', params });
+export const infoSavePqa = (params?: any) => {
+  params.validPassword = encryptByBase64(params.validPassword);
+  params.oldPwdQuestionAnswer = encryptByBase64(params.oldPwdQuestionAnswer);
+  params.oldPwdQuestionAnswer2 = encryptByBase64(params.oldPwdQuestionAnswer2);
+  params.oldPwdQuestionAnswer3 = encryptByBase64(params.oldPwdQuestionAnswer3);
+  params.pwdQuestionAnswer = encryptByBase64(params.pwdQuestionAnswer);
+  params.pwdQuestionAnswer2 = encryptByBase64(params.pwdQuestionAnswer2);
+  params.pwdQuestionAnswer3 = encryptByBase64(params.pwdQuestionAnswer3);
+  return defHttp.post<User>({ url: adminPath + '/sys/user/infoSavePqa', params });
+};

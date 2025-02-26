@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer :title="t('账号绑定')" :canExpan="false">
+  <CollapseContainer :title="t('sys.account.bindingTab')" :canExpan="false">
     <List>
       <template v-for="item in accountBindList" :key="item.key">
         <List.Item>

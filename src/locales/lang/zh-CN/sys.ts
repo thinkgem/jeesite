@@ -140,5 +140,11 @@ export default {
     newPasswordInputTip: '请输入新密码',
     newPasswordNotBlank: '密码不能为空',
     newPasswordNotEquals: '两次输入的密码不一致!',
+
+    pwdQuestion: '保密问题',
+    oldPwdQuestion: '旧保密问题',
+    oldPwdQuestionAnswer: '旧保密答案',
+    newPwdQuestion: '新保密问题',
+    newPwdQuestionAnswer: '新保密答案',
   },
 };

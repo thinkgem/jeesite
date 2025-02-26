@@ -141,5 +141,11 @@ export default {
     newPasswordInputTip: 'Please input new password',
     newPasswordNotBlank: 'Password not blank',
     newPasswordNotEquals: 'The two password entries are inconsistent',
+
+    pwdQuestion: 'Security question',
+    oldPwdQuestion: 'Old question',
+    oldPwdQuestionAnswer: 'Old answer',
+    newPwdQuestion: 'New question',
+    newPwdQuestionAnswer: 'New answer',
   },
 };

@@ -31,7 +31,11 @@
           :text="t('sys.account.center')"
           icon="i-ion:person-outline"
         />
-        <MenuItem value="modifyPwd" :text="t('sys.account.modifyPwd')" icon="i-ion:key-outline" />
+        <MenuItem
+          value="modifyPwd"
+          :text="t('sys.account.modifyPwd')"
+          icon="i-ant-design:key-outlined"
+        />
         <MenuDivider />
         <MenuItem
           value="doc"

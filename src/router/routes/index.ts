@@ -41,7 +41,7 @@ const ModPwdRoute: AppRouteModule = {
   name: 'ModPwd',
   component: () => import('/@/views/sys/account/modPwd.vue'),
   meta: {
-    icon: 'i-ion:key-outline',
+    icon: 'i-ant-design:key-outlined',
     title: t('sys.account.modifyPwd'),
   },
 };
