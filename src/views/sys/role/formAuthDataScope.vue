@@ -61,7 +61,7 @@
     return {
       icon: meta.icon || 'ant-design:book-outlined',
       value:
-        t('数据权限') +
+        t('角色分配数据权限') +
         ' (' +
         r.roleName +
         '-' +

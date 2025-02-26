@@ -341,7 +341,7 @@
           icon: 'i-ant-design:delete-outlined',
           color: 'error',
           popConfirm: {
-            title: '是否确认删除',
+            title: t('是否确认删除'),
             confirm: handleTestDataChildDelete.bind(this, record),
           },
           auth: 'test:testData:edit',

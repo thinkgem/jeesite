@@ -28,7 +28,7 @@
           icon: 'i-ant-design:delete-outlined',
           color: 'error',
           popConfirm: {
-            title: '是否确认删除',
+            title: t('是否确认删除'),
             confirm: handleRowDelete.bind(this, record),
           },
           auth: 'sys:empUser:edit',

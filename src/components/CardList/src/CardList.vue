@@ -48,7 +48,7 @@
                       text: '删除',
                       event: '1',
                       popConfirm: {
-                        title: '是否确认删除',
+                        title: t('是否确认删除'),
                         confirm: handleDelete.bind(null, item.id),
                       },
                     },

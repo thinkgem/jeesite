@@ -95,7 +95,7 @@
   const ARow = Row;
   const ACol = Col;
 
-  const { t } = useI18n('sys.menu');
+  const { t } = useI18n('sys.role');
   const record = ref<Recordable>({});
   const menuDataScopes = ref<any>({});
 

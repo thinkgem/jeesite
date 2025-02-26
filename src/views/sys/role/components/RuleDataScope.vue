@@ -90,8 +90,8 @@
         className: 'jeesite-table-tree-name',
         editComponentProps: {
           options: [
-            { label: '并且', value: 'AND' },
-            { label: '或者', value: 'OR' },
+            { label: t('并且'), value: 'AND' },
+            { label: t('或者'), value: 'OR' },
           ],
         },
         format: (text, _record, _index, column) => {
@@ -116,22 +116,22 @@
         editComponent: 'Select',
         editComponentProps: {
           options: [
-            { label: '等于', value: 'EQ' },
-            { label: '不等于', value: 'NE' },
-            { label: '大于', value: 'GT' },
-            { label: '大于等于', value: 'GTE' },
-            { label: '小于', value: 'LT' },
-            { label: '小于等于', value: 'LTE' },
-            { label: '等多值', value: 'IN' },
-            { label: '不等多值', value: 'NOT_IN' },
-            { label: '包含', value: 'LIKE' },
-            { label: '不包含', value: 'NOT_LIKE' },
-            { label: '开始以', value: 'RIGHT_LIKE' },
-            { label: '不开始以', value: 'RIGHT_NOT_LIKE' },
-            { label: '结束以', value: 'LEFT_LIKE' },
-            { label: '不结束以', value: 'LEFT_NOT_LIKE' },
-            { label: '是空', value: 'IS_NULL' },
-            { label: '不是空', value: 'IS_NOT_NULL' },
+            { label: t('等于'), value: 'EQ' },
+            { label: t('不等于'), value: 'NE' },
+            { label: t('大于'), value: 'GT' },
+            { label: t('大于等于'), value: 'GTE' },
+            { label: t('小于'), value: 'LT' },
+            { label: t('小于等于'), value: 'LTE' },
+            { label: t('等多值'), value: 'IN' },
+            { label: t('不等多值'), value: 'NOT_IN' },
+            { label: t('包含'), value: 'LIKE' },
+            { label: t('不包含'), value: 'NOT_LIKE' },
+            { label: t('开始以'), value: 'RIGHT_LIKE' },
+            { label: t('不开始以'), value: 'RIGHT_NOT_LIKE' },
+            { label: t('结束以'), value: 'LEFT_LIKE' },
+            { label: t('不结束以'), value: 'LEFT_NOT_LIKE' },
+            { label: t('是空'), value: 'IS_NULL' },
+            { label: t('不是空'), value: 'IS_NOT_NULL' },
           ],
         },
         format: (text, _record, _index, column) => {
@@ -156,13 +156,13 @@
         editComponent: 'Select',
         editComponentProps: {
           options: [
-            { label: '字符串', value: 'String' },
-            { label: '整型', value: 'Long' },
-            { label: '长整型', value: 'Integer' },
-            { label: '浮点型', value: 'Float' },
-            { label: '双精度', value: 'Double' },
-            { label: '布尔型', value: 'Boolean' },
-            { label: '日期', value: 'Date' },
+            { label: t('字符串'), value: 'String' },
+            { label: t('整型'), value: 'Long' },
+            { label: t('长整型'), value: 'Integer' },
+            { label: t('浮点型'), value: 'Float' },
+            { label: t('双精度'), value: 'Double' },
+            { label: t('布尔型'), value: 'Boolean' },
+            { label: t('日期'), value: 'Date' },
           ],
         },
         format: (text, _record, _index, column) => {
@@ -175,7 +175,7 @@
       actions: (record: Recordable) => [
         {
           icon: 'i-fluent:add-circle-24-regular',
-          title: t('新增下级'),
+          title: t('新增下级规则'),
           onClick: handleRowAdd.bind(this, record),
           auth: 'sys:role:edit',
         },
@@ -183,7 +183,7 @@
           icon: 'i-ant-design:delete-outlined',
           color: 'error',
           popConfirm: {
-            title: '是否确认删除',
+            title: t('是否确认删除'),
             confirm: handleRowDelete.bind(this, record),
           },
           auth: 'sys:role:edit',
