@@ -36,7 +36,7 @@
     name: 'StrengthMeter',
     components: { InputPassword: Input.Password },
     props,
-    emits: ['score-change', 'change'],
+    emits: ['score-change', 'change', 'update:value'],
     setup(props, { emit }) {
       const innerValueRef = ref('');
       const { prefixCls } = useDesign('strength-meter');
@@ -61,6 +61,7 @@
       watch(
         () => unref(innerValueRef),
         (val) => {
+          emit('update:value', val);
           emit('change', val);
         },
       );
