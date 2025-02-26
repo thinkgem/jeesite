@@ -34,7 +34,8 @@
   import { CropperAvatar } from '/@/components/Cropper';
   import headerImg from '/@/assets/images/header.jpg';
   import { useUserStore } from '/@/store/modules/user';
-  import { userInfo, infoSaveBase } from '/@/api/sys/user';
+  import { infoSaveBase } from '/@/api/sys/user';
+  import { userInfoApi } from '/@/api/sys';
   // import { uploadApi } from '/@/api/sys/upload';
 
   const { t } = useI18n();
@@ -106,7 +107,7 @@
       }
       // console.log('submit', data);
       const res = await infoSaveBase(data);
-      const userInfoRes = await userInfo();
+      const userInfoRes = await userInfoApi();
       const user = userInfoRes.user;
       if (avatarBase64.value != '') {
         user.avatarUrl = avatarBase64.value;
