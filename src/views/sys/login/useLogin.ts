@@ -44,6 +44,8 @@ export function useFormRules(formData?: Recordable) {
   const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
   const getSmsFormRule = computed(() => createRule(t('sys.login.smsPlaceholder')));
   const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
+  const getPwdQuestionAnswerFormRule = computed(() => createRule(t('sys.login.pwdQuestionAnswer')));
+  // const getCorpRule = computed(() => createRule(t('sys.login.corpPlaceholder')));
 
   const validatePolicy = async (_: RuleObject, value: boolean) => {
     return !value ? Promise.reject(t('sys.login.policyPlaceholder')) : Promise.resolve();
@@ -66,40 +68,51 @@ export function useFormRules(formData?: Recordable) {
     const passwordFormRule = unref(getPasswordFormRule);
     const smsFormRule = unref(getSmsFormRule);
     const mobileFormRule = unref(getMobileFormRule);
+    const pwdQuestionAnswerFormRule = unref(getPwdQuestionAnswerFormRule);
+    // const corpRule = unref(getCorpRule);
 
-    const mobileRule = {
-      sms: smsFormRule,
-      mobile: mobileFormRule,
-    } as any;
     switch (unref(currentState)) {
       // register form rules
       case LoginStateEnum.REGISTER:
         return {
-          account: accountFormRule,
+          loginCode: accountFormRule,
           password: passwordFormRule,
           confirmPassword: [
             { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
           ],
           policy: [{ validator: validatePolicy, trigger: 'change' }],
-          ...mobileRule,
+          mobile: mobileFormRule,
         } as any;
 
       // reset password form rules
       case LoginStateEnum.RESET_PASSWORD:
         return {
-          account: accountFormRule,
-          ...mobileRule,
+          loginCode: accountFormRule,
+          validCode: smsFormRule,
+          fpValidCode: smsFormRule,
+          password: passwordFormRule,
+          confirmPassword: [
+            { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
+          ],
+          pwdQuestionAnswer: pwdQuestionAnswerFormRule,
+          pwdQuestionAnswer2: pwdQuestionAnswerFormRule,
+          pwdQuestionAnswer3: pwdQuestionAnswerFormRule,
         } as any;
 
       // mobile form rules
       case LoginStateEnum.MOBILE:
-        return mobileRule;
+        return {
+          validCode: smsFormRule,
+          loginValidCode: smsFormRule,
+          mobile: mobileFormRule,
+        } as any;
 
       // login form rules
       default:
         return {
           account: accountFormRule,
           password: passwordFormRule,
+          // corpCode: corpRule,
         } as any;
     }
   });
