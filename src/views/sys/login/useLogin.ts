@@ -44,7 +44,9 @@ export function useFormRules(formData?: Recordable) {
   const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
   const getSmsFormRule = computed(() => createRule(t('sys.login.smsPlaceholder')));
   const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
+  const getEmailFormRule = computed(() => createRule(t('sys.login.emailPlaceholder')));
   const getPwdQuestionAnswerFormRule = computed(() => createRule(t('sys.login.pwdQuestionAnswer')));
+  const getUserNameFormRule = computed(() => createRule(t('sys.login.userNamePlaceholder')));
   // const getCorpRule = computed(() => createRule(t('sys.login.corpPlaceholder')));
 
   const validatePolicy = async (_: RuleObject, value: boolean) => {
@@ -68,7 +70,9 @@ export function useFormRules(formData?: Recordable) {
     const passwordFormRule = unref(getPasswordFormRule);
     const smsFormRule = unref(getSmsFormRule);
     const mobileFormRule = unref(getMobileFormRule);
+    const emailFormRule = unref(getEmailFormRule);
     const pwdQuestionAnswerFormRule = unref(getPwdQuestionAnswerFormRule);
+    const userNameFormRule = unref(getUserNameFormRule);
     // const corpRule = unref(getCorpRule);
 
     switch (unref(currentState)) {
@@ -76,12 +80,16 @@ export function useFormRules(formData?: Recordable) {
       case LoginStateEnum.REGISTER:
         return {
           loginCode: accountFormRule,
+          userName: userNameFormRule,
+          mobile: mobileFormRule,
+          email: emailFormRule,
+          validCode: smsFormRule,
+          regValidCode: smsFormRule,
           password: passwordFormRule,
           confirmPassword: [
             { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
           ],
           policy: [{ validator: validatePolicy, trigger: 'change' }],
-          mobile: mobileFormRule,
         } as any;
 
       // reset password form rules

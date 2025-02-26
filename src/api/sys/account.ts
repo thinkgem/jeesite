@@ -41,3 +41,14 @@ export const savePwdByPwdQuestion = (params?: any) => {
     { errorMessageMode: 'none' },
   );
 };
+
+export const getRegValidCode = (params?: any) =>
+  defHttp.post({ url: '/account/getRegValidCode', params }, { errorMessageMode: 'none' });
+
+export const saveRegByValidCode = (params?: any) => {
+  if (params.password || params.confirmPassword) {
+    params.password = encryptByBase64(params.password);
+    params.confirmPassword = encryptByBase64(params.confirmPassword);
+  }
+  return defHttp.post({ url: '/account/saveRegByValidCode', params }, { errorMessageMode: 'none' });
+};
