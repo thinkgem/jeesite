@@ -34,9 +34,11 @@
   import Icon from '/@/components/Icon';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useGo } from '/@/hooks/web/usePage';
 
   const { t } = useI18n();
   const { showMessage } = useMessage();
+  const go = useGo();
 
   interface ListItem {
     key: string;
@@ -50,32 +52,33 @@
   const accountBindList: ListItem[] = [
     {
       key: '1',
-      title: t('绑定QQ'),
-      description: t('当前未绑定QQ账号'),
+      title: t('绑定 QQ 账号'),
+      description: t('可通过 QQ 账号快速进入本系统'),
       extra: t('绑定'),
-      avatar: 'ant-design:qq-circle-filled',
+      avatar: 'i-ant-design:qq-circle-filled',
       color: '#2eabff',
     },
     {
       key: '2',
-      title: t('绑定微信'),
-      description: t('当前未绑定微信账号'),
+      title: t('绑定 Gitee 账号'),
+      description: t('可通过 Gitee 账号快速进入本系统'),
       extra: t('绑定'),
-      avatar: 'ant-design:wechat-filled',
-      color: '#2aae67',
+      avatar: 'i-ant-design:github-outlined',
+      color: '#3d3d3d',
     },
     {
       key: '3',
-      title: t('绑定钉钉'),
-      description: t('当前未绑定钉钉账号'),
+      title: t('绑定 更多第三方 账号'),
+      description: t('可通过第三方账号快速进入本系统'),
       extra: t('绑定'),
-      avatar: 'ant-design:dingtalk-circle-filled',
-      color: '#1890ff',
+      avatar: 'i-ant-design:ant-design-outlined',
+      color: '#2aae67',
     },
   ];
 
   function handleBind(title: string) {
-    showMessage(title + '，' + t('common.notYetRealized'));
+    // showMessage(title + '，' + t('common.notYetRealized'));
+    go('/oauth2/list');
   }
 </script>
 <style lang="less">

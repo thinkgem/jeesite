@@ -16,17 +16,6 @@
           size="large"
         />
       </FormItem>
-      <FormItem v-if="useCorpModel" name="corpCode_" class="enter-x">
-        <Select
-          showSearch
-          :options="corpOptions"
-          :placeholder="t('sys.login.corpPlaceholder')"
-          v-model:value="formData.corpCode_"
-          v-model:labelValue="formData.corpName_"
-          :labelInValue="true"
-          size="large"
-        />
-      </FormItem>
       <FormItem name="loginCode" class="enter-x">
         <Input
           class="fix-auto-fill"
@@ -132,8 +121,6 @@
 
   const props = defineProps({
     demoMode: { type: Boolean, default: false },
-    useCorpModel: { type: Boolean, default: false },
-    corpOptions: { type: Array as PropType<Recordable[]>, default: () => [] },
   });
 
   const FormItem = Form.Item;
@@ -148,8 +135,6 @@
 
   const formData = reactive({
     validType: '',
-    corpCode_: '',
-    corpName_: '',
     loginCode: '',
     userName: '',
     mobile: '',
@@ -170,8 +155,6 @@
   async function handleSendCodeApi() {
     const data = await getRegValidCode({
       validType: formData.validType,
-      corpCode_: formData.corpCode_,
-      corpName_: formData.corpName_,
       loginCode: formData.loginCode,
       userName: formData.userName,
       email: formData.email,
