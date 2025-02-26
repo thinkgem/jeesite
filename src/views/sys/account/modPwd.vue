@@ -9,7 +9,7 @@
     </div>
     <div class="flex flex-col items-center justify-center bg-white py-8">
       <BasicForm @register="register" class="w-9/12" />
-      <div class="flex justify-center">
+      <div class="mt-6 flex justify-center">
         <a-button @click="resetFields">
           <Icon icon="i-ant-design:undo-outlined" /> {{ t('common.resetText') }}
         </a-button>
