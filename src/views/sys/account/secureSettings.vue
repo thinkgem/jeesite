@@ -4,6 +4,9 @@
       <template v-for="item in secureSettingList" :key="item.key">
         <List.Item>
           <List.Item.Meta>
+            <template #avatar>
+              <Icon v-if="item.avatar" class="avatar" :icon="item.avatar" :color="item.color" />
+            </template>
             <template #title>
               {{ item.title }}
               <a-button
@@ -31,6 +34,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useGo } from '/@/hooks/web/usePage';
+  import Icon from '/@/components/Icon';
 
   const { t } = useI18n();
   const { showMessage } = useMessage();
@@ -49,14 +53,18 @@
     {
       key: '1',
       title: t('sys.account.modifyPwd'),
-      description: '',
+      description: t('修改您的登录账号密码'),
       extra: t('common.modifyText'),
+      avatar: 'i-ant-design:key-outlined',
+      color: '#277eb8',
     },
     {
       key: '3',
       title: t('sys.account.modifyPqa'),
-      description: '',
+      description: t('修改您的登录账号密保问题和答案'),
+      avatar: 'i-ant-design:safety-certificate-outlined',
       extra: t('common.modifyText'),
+      color: '#128846',
     },
   ];
 
@@ -66,7 +74,8 @@
         go('/account/modPwd');
         break;
       default:
-        showMessage(title + '，' + t('common.notYetRealized'));
+        // showMessage(title + '，' + t('common.notYetRealized'));
+        go('/account/modPwdQuestion');
     }
   }
 </script>
