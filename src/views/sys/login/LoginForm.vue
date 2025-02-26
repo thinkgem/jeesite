@@ -13,7 +13,7 @@
       <Input
         size="large"
         v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
+        :placeholder="t('sys.login.account')"
         class="fix-auto-fill"
       />
     </FormItem>
@@ -135,7 +135,6 @@
   const userStore = useUserStore();
 
   const { setLoginState, getLoginState } = useLoginState();
-  const { getFormRules } = useFormRules();
 
   const formRef = ref();
   const loading = ref(false);
@@ -151,6 +150,7 @@
     validCode: '',
   });
 
+  const { getFormRules } = useFormRules(formData);
   const { validForm } = useFormValid(formRef);
 
   //onKeyStroke('Enter', handleLogin);

@@ -69,7 +69,6 @@
   const FormItem = Form.Item;
   const { t } = useI18n();
   const { handleBackLogin, getLoginState } = useLoginState();
-  const { getFormRules } = useFormRules();
   const { showMessage, notification } = useMessage();
   const userStore = useUserStore();
 
@@ -85,6 +84,7 @@
     selectLoginCode: '',
   });
 
+  const { getFormRules } = useFormRules(formData);
   const { validForm } = useFormValid(formRef);
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.MOBILE);
