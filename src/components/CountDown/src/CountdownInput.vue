@@ -1,5 +1,5 @@
 <template>
-  <a-input v-bind="$attrs" :class="prefixCls" :size="size" v-model:value="state">
+  <a-input v-bind="$attrs" :class="prefixCls" :size="size" v-model:value="state" autocomplete="off">
     <template #addonAfter>
       <CountButton
         type="link"

@@ -6,6 +6,7 @@
     :class="prefixCls"
     :size="size"
     :placeholder="t('sys.login.validCode')"
+    autocomplete="off"
   >
     <!-- addonAfter suffix -->
     <template #suffix>
