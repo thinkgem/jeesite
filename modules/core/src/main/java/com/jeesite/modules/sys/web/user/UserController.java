@@ -4,18 +4,6 @@
  */
 package com.jeesite.modules.sys.web.user;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.fastjson.JSONValidator;
 import com.jeesite.common.codec.DesUtils;
 import com.jeesite.common.codec.EncodeUtils;
@@ -28,8 +16,19 @@ import com.jeesite.modules.sys.entity.User;
 import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * 用户Controller
@@ -78,12 +77,18 @@ public class UserController extends BaseController {
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "info")
-	public String info(User user, String op, Model model) {
+	public String info(String op, Model model) {
 		if (StringUtils.isBlank(op)){
 			op = "base";
 		}
+		User u = UserUtils.getUser();
 		model.addAttribute("op", op);
-		model.addAttribute("user", UserUtils.getUser());
+		model.addAttribute("user", u);
+		if (StringUtils.equals(op, "pqa")){
+			model.addAttribute("pwdQuestion", u.getPwdQuestion());
+			model.addAttribute("pwdQuestion2", u.getPwdQuestion2());
+			model.addAttribute("pwdQuestion3", u.getPwdQuestion3());
+		}
 		return "modules/sys/user/userInfo";
 	}
 
@@ -93,7 +98,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions("user")
 	@PostMapping(value = "infoSaveBase")
 	@ResponseBody
-	public String infoSaveBase(User user, HttpServletRequest request) {
+	public String infoSaveBase(User user) {
 		if (StringUtils.isBlank(user.getUserName())){
 			return renderResult(Global.FALSE, text("sys.user.userNameNotBlank"));
 		}
@@ -116,8 +121,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions("user")
 	@PostMapping(value = "infoSavePwd")
 	@ResponseBody
-	public String infoSavePwd(User user, String oldPassword, String newPassword,
-			String confirmNewPassword) {
+	public String infoSavePwd(String oldPassword, String newPassword, String confirmNewPassword) {
 		User currentUser = UserUtils.getUser();
 		// 登录密码解密（解决密码明文传输安全问题）
 		String secretKey = Global.getProperty("shiro.loginSubmit.secretKey");
