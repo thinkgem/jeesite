@@ -1,9 +1,10 @@
-import type { BasicColumn } from '/@/components/Table/src/types/table';
+import type { BasicColumn } from '../../types/table';
+import { useTableContext } from '../../hooks/useTableContext';
 
 import { h, Ref } from 'vue';
 
 import EditableCell from './EditableCell.vue';
-import { isArray } from '/@/utils/is';
+import { isObject } from '/@/utils/is';
 import { get } from 'lodash-es';
 
 interface Params {
@@ -14,40 +15,45 @@ interface Params {
 
 export function renderEditCell(column: BasicColumn) {
   return ({ text: value, record, index }: Params) => {
+    const table = useTableContext();
     record.onValid = async () => {
-      if (isArray(record?.validCbs)) {
-        const validFns = (record?.validCbs || []).map((fn) => fn());
-        const res = await Promise.all(validFns);
-        return res.every((item) => !!item);
-      } else {
-        return false;
+      if (isObject(record.editValidCbs)) {
+        for (const key in record.editValidCbs) {
+          if (!(await record.editValidCbs[key]())) {
+            return false;
+          }
+        }
       }
+      return true;
     };
 
-    record.onEdit = async (edit: boolean, submit = false) => {
-      if (!submit) {
-        record.editable = edit;
-      }
-
-      if (!edit && submit) {
-        if (!(await record.onValid())) return false;
-        const res = await record.onSubmitEdit?.();
-        if (res) {
-          record.editable = false;
-          return true;
+    record.onEdit = async (edit: boolean, submit = false, valid = true) => {
+      if (submit) {
+        if (record.editable && valid && !(await record.onValid())) {
+          return false;
         }
-        return false;
+        if (isObject(record.editSubmitCbs)) {
+          for (const key in record.editSubmitCbs) {
+            await record.editSubmitCbs[key](false, false, edit);
+          }
+          record.editable = edit;
+          !edit && table.emit('edit-row-end');
+        }
+        return true;
       }
-      // cancel
-      if (!edit && !submit) {
-        record.onCancelEdit?.();
+      if (!edit && isObject(record.editCancelCbs)) {
+        for (const key in record.editCancelCbs) {
+          record.editCancelCbs[key]();
+        }
       }
+      record.editable = edit;
       return true;
     };
 
     return h(EditableCell, {
       value,
       labelValue: column.dataLabel && get(record, column.dataLabel),
+      tableInstance: table,
       record,
       column,
       index,
@@ -57,14 +63,12 @@ export function renderEditCell(column: BasicColumn) {
 
 export type EditRecordRow<T = Recordable> = Partial<
   {
-    onEdit: (editable: boolean, submit?: boolean) => Promise<boolean>;
     onValid: () => Promise<boolean>;
+    onEdit: (editable: boolean, submit?: boolean) => Promise<boolean>;
     editable: boolean;
-    onCancel: Fn;
-    onSubmit: Fn;
-    submitCbs: Fn[];
-    cancelCbs: Fn[];
-    validCbs: Fn[];
+    editValidCbs: Fn[];
+    editSubmitCbs: Fn[];
+    editCancelCbs: Fn[];
     editValueRefs: Recordable<Ref>;
   } & T
 >;

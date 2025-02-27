@@ -9,7 +9,7 @@ type Instance = TableActionType & {
   getBindValues: ComputedRef<Recordable>;
 };
 
-type RetInstance = Omit<Instance, 'getBindValues'> & {
+export type TableInstance = Omit<Instance, 'getBindValues'> & {
   getBindValues: ComputedRef<BasicTableProps>;
 };
 
@@ -17,6 +17,6 @@ export function createTableContext(instance: Instance) {
   provide(key, instance);
 }
 
-export function useTableContext(): RetInstance {
-  return inject(key) as RetInstance;
+export function useTableContext(): TableInstance {
+  return inject(key) as TableInstance;
 }
