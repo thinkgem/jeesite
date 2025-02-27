@@ -24,8 +24,8 @@
 <script lang="ts" setup name="AboutPage">
   import { h } from 'vue';
   import { Tag } from 'ant-design-vue';
-  import { PageWrapper } from '@jeesite/core/components/Page';
-  import { Description, DescItem, useDescription } from '@jeesite/core/components/Description';
+  import { PageWrapper } from '/@/components/Page';
+  import { Description, DescItem, useDescription } from '/@/components/Description';
 
   const { pkg, lastBuildTime } = __APP_INFO__;
 

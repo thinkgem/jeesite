@@ -84,11 +84,14 @@
     TableOutlined,
   } from '@ant-design/icons-vue';
   import { List, Card, Image, Typography, Tooltip, Slider, Avatar } from 'ant-design-vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
   import { Dropdown } from '/@/components/Dropdown';
   import { BasicForm, useForm } from '/@/components/Form';
   import { propTypes } from '/@/utils/propTypes';
   import { isFunction } from '/@/utils/is';
   import { useSlider, grid } from './data';
+
+  const { t } = useI18n();
 
   const ListItem = List.Item;
   const CardMeta = Card.Meta;
