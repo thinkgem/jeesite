@@ -139,16 +139,19 @@
   border: 0;
   animation: blink 1.06s steps(1) infinite;
 }
+
 @keyframes blink {
   50% {
     background-color: transparent;
   }
 }
+
 @keyframes blink {
   50% {
     background-color: transparent;
   }
 }
+
 @keyframes blink {
   50% {
     background-color: transparent;
@@ -162,6 +165,7 @@
 
 .CodeMirror-rulers {
   position: absolute;
+  /* stylelint-disable */
   top: -50px;
   right: 0;
   bottom: -20px;
@@ -426,6 +430,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 }
 
 .CodeMirror-linebackground {
+
   position: absolute;
   top: 0;
   right: 0;

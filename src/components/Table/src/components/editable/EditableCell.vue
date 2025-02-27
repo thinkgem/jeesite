@@ -404,7 +404,6 @@
 
   watchEffect(() => {
     const updateEdit = (key: string, callbacksOrRef: Fn | Ref, labelRef?: Ref) => {
-      /* eslint-disable  */
       if (props.record && props.column.dataIndex) {
         let dataIndex = props.column.dataIndex as any;
         if (isArray(dataIndex)) {
