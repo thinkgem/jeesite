@@ -29,8 +29,11 @@
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "useDefineForClassFields": true,
+    "allowImportingTsExtensions": false,
     "lib": ["ESNext", "DOM"],
     "types": [
+      "node",
+      "vue-types",
       "vite/client"
     ],
     "paths": {
@@ -51,7 +54,7 @@
   "exclude": [
     "tests/server/**/*.ts",
     "node_modules",
-    "**/*.js",
+    "vite.config.ts",
     "dist"
   ]
 }
