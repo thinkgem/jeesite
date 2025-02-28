@@ -34,6 +34,14 @@
 			<% }else if(isNotBlank(message!)){ %>
 				<h4 class="login-box-msg text-red">${message}</h4>
 			<% } %>
+			<% if(@Global.getConfigToBoolean('user.loginCodeCorpUnique', 'false')){ %>
+			<div class="form-group has-feedback">
+				<#form:treeselect id="switchCorpSelect" title="${text('登录租户')}" allowClear="false"
+					name="param_corpCode" value="${@CorpUtils.getCurrentCorpCode()}"
+					labelValue="(${@CorpUtils.getCurrentCorpCode()}) ${@CorpUtils.getCurrentCorpName()}"
+					url="${ctxAdmin}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
+			</div>
+			<% } %>
 			<div class="form-group has-feedback tab-pane tab-1 tab-3 active">
 				<span class="icon-user form-control-feedback" title="${text('登录账号')}"></span>
 				<#form:input type="text" name="username" class="form-control required"
@@ -53,14 +61,6 @@
 				<#form:input type="password" name="password" class="form-control required"
 					data-msg-required="${text('请填写登录密码.')}" placeholder="${text('登录密码')}" autocomplete="off"/>
 			</div>
-			<% if(@Global.getConfigToBoolean('user.loginCodeCorpUnique', 'false')){ %>
-			<div class="form-group has-feedback">
-				<#form:treeselect id="switchCorpSelect" title="${text('登录租户')}" allowClear="false"
-					name="param_corpCode" value="${@CorpUtils.getCurrentCorpCode()}"
-					labelValue="(${@CorpUtils.getCurrentCorpCode()}) ${@CorpUtils.getCurrentCorpName()}"
-					url="${ctxAdmin}/sys/corpAdmin/treeData?isShowCode=true" placeholder="${text('登录租户')}"/>
-			</div>
-			<% } %>
 			<div class="form-group has-feedback" id="isValidCodeLogin" style="display:${isValidCodeLogin?'blank':'none'}">
 				<#form:validcode name="validCode" isRequired="true" isRemote="true" isLazy="${!isValidCodeLogin}"/>
 			</div>
