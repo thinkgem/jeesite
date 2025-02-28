@@ -180,7 +180,7 @@ export const useMultipleTabStore = defineStore({
       let toTarget: RouteLocationRaw = {};
 
       const index = this.tabList.findIndex(
-        (item) => (item.fullPath || path) === (fullPath || path),
+        (item) => (item.fullPath || item.path) === (fullPath || path),
       );
 
       // If the current is the leftmost tab
