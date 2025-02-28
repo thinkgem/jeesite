@@ -20,10 +20,7 @@ import com.jeesite.modules.sys.service.UserService;
 import com.jeesite.modules.sys.utils.PwdUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.sys.utils.ValidCodeUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -69,9 +66,10 @@ public class AccountController extends BaseController{
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "mobile", value = "登录手机号", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
+		@ApiImplicitParam(name = "corpCode", value = "所属租户"),
 	})
-	public String getLoginValidCode(String mobile, String validCode, HttpServletRequest request) {
-		return getValidCode("login", mobile, validCode, "mobile", request, "登录验证码");
+	public String getLoginValidCode(String mobile, String validCode, String corpCode, HttpServletRequest request) {
+		return getValidCode("login", mobile, validCode, "mobile", corpCode, request, "登录验证码");
 	}
 	
 	/**
@@ -139,9 +137,10 @@ public class AccountController extends BaseController{
 		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
 		@ApiImplicitParam(name = "validType", value = "验证方式（mobile、email）", required = true),
+		@ApiImplicitParam(name = "corpCode", value = "所属租户"),
 	})
-	public String getFpValidCode(User user, String validCode, String validType, HttpServletRequest request) {
-		return getValidCode("fp", user.getLoginCode(), validCode, validType, request, "找回密码");
+	public String getFpValidCode(User user, String validCode, String validType, String corpCode, HttpServletRequest request) {
+		return getValidCode("fp", user.getLoginCode(), validCode, validType, corpCode, request, "找回密码");
 	}
 	
 	/**
@@ -180,7 +179,7 @@ public class AccountController extends BaseController{
 	 * 获取验证码
 	 * @author ThinkGem
 	 */
-	private String getValidCode(String type, String loginCode, String validCode, String validType, HttpServletRequest request, String msgTitle) {
+	private String getValidCode(String type, String loginCode, String validCode, String validType, String corpCode, HttpServletRequest request, String msgTitle) {
 		// 校验图片验证码，防止重复机器人。
 		if (!ValidCodeUtils.validate(request, validCode)){
 			return renderResult(Global.FALSE, text("图片验证码不正确或已失效，请点击图片刷新！"));
@@ -193,6 +192,7 @@ public class AccountController extends BaseController{
 		if ("login".equals(type)){
 			User where = new User();
 			where.setMobile(loginCode);
+			where.setCorpCode_(corpCode);
 			where.setStatus(User.STATUS_NORMAL);
 			List<User> userList = userService.findListByMobile(where);
 			if (!userList.isEmpty()){
@@ -212,7 +212,7 @@ public class AccountController extends BaseController{
 				return renderResult(Global.FALSE, text("手机号不正确！"));
 			}
 		} else {
-			u = UserUtils.getByLoginCode(loginCode);
+			u = UserUtils.getByLoginCode(loginCode, corpCode);
 			if(u == null){
 				return renderResult(Global.FALSE, text("登录账号不正确！"));
 			}
@@ -287,14 +287,15 @@ public class AccountController extends BaseController{
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "loginCode", value = "登录账号", required = true, paramType="query", type="String"),
 		@ApiImplicitParam(name = "validCode", value = "图片验证码，防止重复机器人", required = true),
+		@ApiImplicitParam(name = "corpCode", value = "所属租户"),
 	})
-	public String getPwdQuestion(String loginCode, String validCode, HttpServletRequest request) {
+	public String getPwdQuestion(String loginCode, String validCode, String corpCode, HttpServletRequest request) {
 		// 校验图片验证码，防止重复机器人。
 		if (!ValidCodeUtils.validate(request, validCode)){
 			return renderResult(Global.FALSE, text("图片验证码不正确或已失效，请点击图片刷新！"));
 		}
 		// 账号是否存在验证
-		User u = UserUtils.getByLoginCode(loginCode);
+		User u = UserUtils.getByLoginCode(loginCode, corpCode);
 		if (u == null){
 			return renderResult(Global.FALSE, text("登录账号不正确！"));
 		}
@@ -340,7 +341,7 @@ public class AccountController extends BaseController{
 	public String savePwdByPwdQuestion(User user, HttpServletRequest request) {
 		String userCode = UserUtils.getCache("fpUserCode");
 		String loginCode = UserUtils.getCache("fpLoginCode");
-		
+
 		// 一同验证保存的用户名和验证码是否正确（如果只校验验证码，不验证用户名，则会有获取验证码后修改用户名的漏洞）
 		if (!(userCode != null && loginCode != null && loginCode.equals(user.getLoginCode()))){
 			return renderResult(Global.FALSE, text("请重新获取保密问题！"));
@@ -355,7 +356,7 @@ public class AccountController extends BaseController{
 		}
 		
 		// 验证三个密保问题是否正确。
-		User u = UserUtils.getByLoginCode(user.getLoginCode());
+		User u = UserUtils.get(userCode);
 		if (!(u != null && loginCode.equals(user.getLoginCode())
 				&& PwdUtils.validatePassword(user.getPwdQuestionAnswer(), u.getPwdQuestionAnswer())
 				&& PwdUtils.validatePassword(user.getPwdQuestionAnswer2(), u.getPwdQuestionAnswer2())

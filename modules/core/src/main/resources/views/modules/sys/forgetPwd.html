@@ -18,6 +18,16 @@
 					<option value="question">使用保密问题找回您的密码</option>
 				</select>
 			</div>
+			<% if(@Global.isUseCorpModel()){ %>
+			<div class="form-group has-feedback">
+				<#form:treeselect id="fa_corp" title="${text('选择租户')}" allowClear="true"
+					name="corpCode" value="${@CorpUtils.getCurrentCorpCode()}" labelName="corpName"
+					labelValue="(${@CorpUtils.getCurrentCorpCode()}) ${@CorpUtils.getCurrentCorpName()}"
+					url="${ctx}/sys/corpAdmin/treeData?isShowCode=true"
+					class="required" data-msg-required="请选择所属租户."
+					placeholder="${text('所属租户')}"/>
+			</div>
+			<% } %>
 			<div class="form-group has-feedback">
 				<span class="fa fa-user form-control-feedback"></span>
 				<input type="text" id="fp_loginCode" name="loginCode" class="form-control required" data-msg-required="请填写登录账号." placeholder="登录账号" />

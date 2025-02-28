@@ -50,7 +50,7 @@ public class JsonMapper extends ObjectMapper {
 	private static final class JsonMapperHolder {
 		private static final JsonMapper INSTANCE = new JsonMapper();
 	}
-
+	
 	public JsonMapper() {
 		// Spring ObjectMapper 初始化配置，支持 @JsonView
 		new Jackson2ObjectMapperBuilder().configure(this);
@@ -182,8 +182,8 @@ public class JsonMapper extends ObjectMapper {
 	 * 反序列化POJO或简单Collection如List<String>.
 	 * 如果JSON字符串为Null或"null"字符串, 返回Null.
 	 * 如果JSON字符串为"[]", 返回空集合.
-	 * 如需反序列化复杂Collection如List<MyBean>, 请使用fromJson(String,JavaType)
-	 * @see #fromJson(String, JavaType)
+	 * 如需反序列化复杂Collection如List<MyBean>, 请使用fromJson(String, Class)
+	 * @see #fromJson(String, Class)
 	 */
 	public <T> T fromJsonString(String jsonString, Class<T> clazz) {
 		if (StringUtils.isEmpty(jsonString) || "<CLOB>".equals(jsonString)) {

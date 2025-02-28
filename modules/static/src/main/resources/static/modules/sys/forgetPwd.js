@@ -46,7 +46,8 @@ $(function(){
 		js.ajaxSubmit(ctxPath + '/account/getFpValidCode', {
 			validType: $('#fp_validType').val(),
 			loginCode : $('#fp_loginCode').val(),
-			validCode : $('#fp_validCode').val()
+			validCode : $('#fp_validCode').val(),
+			corpCode : $('#fp_corpCode').val()
 		}, function(data){
 			js.showMessage(data.message);
 			if (data.result == 'true'){
@@ -61,7 +62,8 @@ $(function(){
 	$('#fp_getQuestion').click(function() {
 		js.ajaxSubmit(ctxPath + '/account/getPwdQuestion', {
 			loginCode : $('#fp_loginCode').val(),
-			validCode : $('#fp_validCode').val()
+			validCode : $('#fp_validCode').val(),
+			corpCode : $('#fp_corpCode').val()
 		}, function(data){
 			js.showMessage(data.message);
 			if (data.result == 'true'){
