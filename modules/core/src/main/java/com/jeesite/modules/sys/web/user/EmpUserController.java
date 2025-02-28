@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.web.user;
 
 import com.alibaba.fastjson.JSONValidator;
+import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -125,6 +126,15 @@ public class EmpUserController extends BaseController {
 //		// 查询 SQL 结果集中，仅包含 userCode、employee.office.officeCode 值返回
 //		empUser.sqlMap().getColumn().setIncludeAttrNames(attrNames);
 		Page<EmpUser> page = empUserService.findPage(empUser);
+
+		Object o = CacheUtils.get("testCache", "abc", null, 20);
+		System.out.println(o);
+		CacheUtils.put("testCache", "abc", "def", 22);
+		o = CacheUtils.get("testCache", "abc", null, 23);
+		System.out.println(o);
+		CacheUtils.get("test2Cache", "abc", null, 20);
+		CacheUtils.put("test2Cache", "abc", "def", 22);
+		CacheUtils.get("test2Cache", "abc", null, 23);
 		return page;
 	}
 

@@ -66,7 +66,8 @@ $(function(){
 			var $this = this;
 			js.ajaxSubmit(ctxPath + '/account/getLoginValidCode', {
 				mobile : $('#mobile').val(),
-				validCode : $('#validCode').val()
+				validCode : $('#validCode').val(),
+				corpCode : $('#switchCorpSelectCode').val()
 			}, function(data){
 				js.showMessage(data.message);
 				if (data.result == 'true'){

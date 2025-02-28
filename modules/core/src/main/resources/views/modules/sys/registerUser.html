@@ -20,7 +20,8 @@
 			<% if(@Global.isUseCorpModel()){ %>
 			<div class="form-group has-feedback">
 				<#form:treeselect id="reg_corp" title="${text('选择租户')}" allowClear="true"
-					name="corpCode" value="0" labelName="corpName" labelValue="JeeSite" 
+					name="corpCode" value="${@CorpUtils.getCurrentCorpCode()}" labelName="corpName"
+					labelValue="(${@CorpUtils.getCurrentCorpCode()}) ${@CorpUtils.getCurrentCorpName()}"
 					url="${ctx}/sys/corpAdmin/treeData?isShowCode=true"
 					class="required" data-msg-required="请选择所属租户."
 					placeholder="${text('所属租户')}"/>
