@@ -4,8 +4,8 @@
 	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 	
 	<logger name="org.springframework.boot.web.embedded" level="INFO" />
-	<logger name="net.oschina.j2cache.caffeine.CaffeineProvider" level="ERROR" />
-	
+	<logger name="org.apache.catalina.core.StandardEngine" level="INFO" />
+	<logger name="ShardingSphere-SQL" level="DEBUG" />
 <!-- 	<logger name="org.apache.ibatis" level="DEBUG" /> -->
 <!-- 	<logger name="org.mybatis.spring" level="DEBUG" /> -->
 <!-- 	<logger name="org.springframework.jdbc" level="DEBUG" /> -->
@@ -17,19 +17,22 @@
 	<logger name="com.atomikos.recovery.xa.XaResourceRecoveryManager" level="ERROR" />
 	<logger name="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator" level="DEBUG" />
 <!-- 	<logger name="org.springframework.transaction.support.TransactionSynchronizationManager" level="TRACE" /> -->
-	
+	<logger name="org.springframework.web.servlet.PageNotFound" level="ERROR" />
+	<logger name="org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker" level="ERROR" />
+
 	<logger name="springfox.documentation.spring.web.readers.parameter.ParameterDataTypeReader" level="ERROR" />
 	<logger name="springfox.documentation.schema.property.CachingModelPropertiesProvider" level="ERROR" />
 <!-- 	<logger name="io.swagger" level="DEBUG" /> -->
 <!-- 	<logger name="springfox" level="DEBUG" /> -->
-	
+
 	<logger name="org.flowable.ui.modeler.domain" level="DEBUG" />
 	<logger name="org.flowable.idm.engine.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.task.service.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.identitylink.service.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.variable.service.impl.persistence" level="DEBUG" />
 	<logger name="org.flowable.engine.impl.persistence" level="DEBUG" />
-	
+	<logger name="com.bstek.ureport" level="DEBUG" />
+
 	<logger name="com.jeesite" level="DEBUG" />
 	<logger name="com.jeesite.common.i18n" level="INFO" />
 	<logger name="com.jeesite.common.shiro" level="INFO" />
@@ -38,6 +41,7 @@
 	<logger name="com.jeesite.common.j2cache" level="INFO" />
 	<logger name="com.jeesite.common.j2cache.cache.support.caffeine" level="ERROR" />
 	<logger name="com.jeesite.common.mybatis" level="INFO" />
+	<logger name="com.jeesite.common.mybatis.type" level="DEBUG" />
 	<logger name="com.jeesite.common.mybatis.mapper" level="DEBUG" />
 	<logger name="com.jeesite.common.reflect.ReflectUtils" level="INFO" />
 	<logger name="com.jeesite.common.io.FileUtils" level="INFO" />
