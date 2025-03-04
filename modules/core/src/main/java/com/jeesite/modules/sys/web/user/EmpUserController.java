@@ -74,7 +74,7 @@ public class EmpUserController extends BaseController {
 		empUser.setUserCode(userCode);
 		empUser.setIsNewRecord(isNewRecord);
 		// 更严格的权限控制，对单条数据进行数据权限过滤（isAll 是一个开关，正常不需要添加）
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (StringUtils.isNotBlank(userCode) && !(isAll != null && isAll) || Global.isStrictMode()) {
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		return empUserService.getAndValid(empUser);
