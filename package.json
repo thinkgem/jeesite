@@ -6,7 +6,7 @@
   "scripts": {
     "bootstrap": "pnpm install",
     "serve": "npm run dev",
-    "dev": "VITE_CJS_IGNORE_WARNING=true vite dev",
+    "dev": "cross-env VITE_CJS_IGNORE_WARNING=true vite dev",
     "build": "vite build --mode production",
     "build:tomcat": "vite build --mode tomcat --emptyOutDir",
     "build:preview": "npm run build && npm run preview:dist",
@@ -18,14 +18,13 @@
     "lint:prettier": "prettier --ignore-unknown --check --cache --write \"./**/*.{vue,tsx,less,scss}\"",
     "lint:stylelint": "stylelint \"./**/*.{vue,less,scss,css}\" --fix --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
-    "uninstall": "rimraf pnpm-lock.yaml node_modules && pnpm store prune && pnpm i --force && pnpm run dev --force",
-    "update:dbm-lib": "pnpm store prune && pnpm rm @jeesite/dbm-lib && pnpm i @jeesite/dbm-lib@5.11.0 -force && pnpm run dev --force",
+    "reinstall": "rimraf pnpm-lock.yaml node_modules && npm run bootstrap",
     "update": "ncu -u -x codemirror,pinia && npm run reinstall"
   },
   "dependencies": {
     "@ant-design/colors": "7.2.0",
     "@ant-design/icons-vue": "7.0.1",
-    "@jeesite/dbm-lib": "5.11.0",
+    "@jeesite/dbm-lib": "5.11.0-rc.1",
     "@unocss/preset-wind3": "66.0.0",
     "@vue/runtime-core": "3.5.13",
     "@vue/shared": "3.5.13",
