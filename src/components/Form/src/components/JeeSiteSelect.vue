@@ -154,8 +154,6 @@
     }
   });
 
-  function selectOneItem() {}
-
   async function fetch() {
     const { api } = props;
     if (!api || !isFunction(api)) return;
