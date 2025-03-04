@@ -76,7 +76,7 @@ public class EmpUserController extends BaseController {
 		empUser.setUserCode(userCode);
 		empUser.setIsNewRecord(isNewRecord);
 		// 更严格的权限控制，对单条数据进行数据权限过滤（isAll 是一个开关，正常不需要添加）
-		if (!(isAll != null && isAll) || Global.isStrictMode()){
+		if (StringUtils.isNotBlank(userCode) && !(isAll != null && isAll) || Global.isStrictMode()) {
 			empUserService.addDataScopeFilter(empUser, ctrlPermi);
 		}
 		return empUserService.getAndValid(empUser);
@@ -126,15 +126,6 @@ public class EmpUserController extends BaseController {
 //		// 查询 SQL 结果集中，仅包含 userCode、employee.office.officeCode 值返回
 //		empUser.sqlMap().getColumn().setIncludeAttrNames(attrNames);
 		Page<EmpUser> page = empUserService.findPage(empUser);
-
-		Object o = CacheUtils.get("testCache", "abc", null, 20);
-		System.out.println(o);
-		CacheUtils.put("testCache", "abc", "def", 22);
-		o = CacheUtils.get("testCache", "abc", null, 23);
-		System.out.println(o);
-		CacheUtils.get("test2Cache", "abc", null, 20);
-		CacheUtils.put("test2Cache", "abc", "def", 22);
-		CacheUtils.get("test2Cache", "abc", null, 23);
 		return page;
 	}
 
