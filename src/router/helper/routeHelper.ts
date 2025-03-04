@@ -47,7 +47,7 @@ let dynamicViewsModules: Record<string, () => Promise<Recordable>>;
 
 export function dynamicImport(component: string) {
   if (!dynamicViewsModules) {
-    dynamicViewsModules = import.meta.glob('../../views/**/*.{vue,tsx}');
+    dynamicViewsModules = import.meta.glob('../../../**/views/**/*.{vue,tsx}');
   }
   const keys = Object.keys(dynamicViewsModules);
   const matchKeys = keys.filter((key) => {
