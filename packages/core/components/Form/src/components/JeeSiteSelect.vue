@@ -141,6 +141,7 @@
         }
       }
     },
+    { immediate: true },
   );
 
   onMounted(async () => {

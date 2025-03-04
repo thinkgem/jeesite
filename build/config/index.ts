@@ -54,7 +54,7 @@ function getEnvConfigFiles() {
  * @param match prefix
  * @param confFiles ext
  */
-export async function getEnvConfig(match = 'VITE_GLOB_', confFiles = getEnvConfigFiles()) {
+export async function getEnvConfig(match = 'VITE_(GLOB|FILE)_', confFiles = getEnvConfigFiles()) {
   let envConfig = {};
   for (const item of confFiles) {
     try {

@@ -48,7 +48,7 @@
                       text: '删除',
                       event: '1',
                       popConfirm: {
-                        title: '是否确认删除',
+                        title: t('是否确认删除'),
                         confirm: handleDelete.bind(null, item.id),
                       },
                     },
@@ -84,11 +84,14 @@
     TableOutlined,
   } from '@ant-design/icons-vue';
   import { List, Card, Image, Typography, Tooltip, Slider, Avatar } from 'ant-design-vue';
+  import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { Dropdown } from '@jeesite/core/components/Dropdown';
   import { BasicForm, useForm } from '@jeesite/core/components/Form';
   import { propTypes } from '@jeesite/core/utils/propTypes';
   import { isFunction } from '@jeesite/core/utils/is';
   import { useSlider, grid } from './data';
+
+  const { t } = useI18n();
 
   const ListItem = List.Item;
   const CardMeta = Card.Meta;

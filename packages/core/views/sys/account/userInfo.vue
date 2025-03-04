@@ -34,7 +34,8 @@
   import { CropperAvatar } from '@jeesite/core/components/Cropper';
   import headerImg from '@jeesite/assets/images/header.jpg';
   import { useUserStore } from '@jeesite/core/store/modules/user';
-  import { userInfo, infoSaveBase } from '@jeesite/core/api/sys/user';
+  import { infoSaveBase } from '@jeesite/core/api/sys/user';
+  import { userInfoApi } from '@jeesite/core/api/sys';
   // import { uploadApi } from '@jeesite/core/api/sys/upload';
 
   const { t } = useI18n();
@@ -106,7 +107,7 @@
       }
       // console.log('submit', data);
       const res = await infoSaveBase(data);
-      const userInfoRes = await userInfo();
+      const userInfoRes = await userInfoApi();
       const user = userInfoRes.user;
       if (avatarBase64.value != '') {
         user.avatarUrl = avatarBase64.value;

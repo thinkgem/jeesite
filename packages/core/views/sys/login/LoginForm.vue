@@ -13,7 +13,7 @@
       <Input
         size="large"
         v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
+        :placeholder="t('sys.login.account')"
         class="fix-auto-fill"
       />
     </FormItem>
@@ -26,23 +26,12 @@
         autocomplete="off"
       />
     </FormItem>
-    <FormItem v-if="isValidCodeLogin" name="validCode" class="enter-x valid-code">
-      <Input
+    <FormItem v-if="validCodeRefreshTime" name="validCode" class="enter-x valid-code">
+      <ValidCode
         size="large"
-        visibilityToggle
         v-model:value="formData.validCode"
-        :placeholder="t('sys.login.validCode')"
-      >
-        <!-- addonAfter suffix -->
-        <template #suffix>
-          <img
-            :src="getValidCodeImg"
-            @click="refreshValidCodeImg"
-            class="cursor-pointer"
-            width="100"
-          />
-        </template>
-      </Input>
+        :refreshTime="validCodeRefreshTime"
+      />
     </FormItem>
 
     <div class="gp" v-if="demoMode">
@@ -133,6 +122,7 @@
   import { useGlobSetting } from '@jeesite/core/hooks/setting';
   import { userInfoApi } from '@jeesite/core/api/sys/login';
   // import { onKeyStroke } from '@vueuse/core';
+  import { ValidCode } from '@jeesite/core/components/ValidCode';
 
   const ACol = Col;
   const ARow = Row;
@@ -145,13 +135,14 @@
   const userStore = useUserStore();
 
   const { setLoginState, getLoginState } = useLoginState();
-  const { getFormRules } = useFormRules();
 
   const formRef = ref();
   const loading = ref(false);
   const rememberMe = ref(false);
-  const isValidCodeLogin = ref(false);
+  const validCodeRefreshTime = ref(0);
   const demoMode = ref(false);
+
+  const emit = defineEmits(['demoMode']);
 
   const formData = reactive({
     account: 'system',
@@ -159,26 +150,12 @@
     validCode: '',
   });
 
+  const { getFormRules } = useFormRules(formData);
   const { validForm } = useFormValid(formRef);
 
   //onKeyStroke('Enter', handleLogin);
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
-
-  const getValidCodeImg = ref('');
-
-  function refreshValidCodeImg() {
-    getValidCodeImg.value =
-      ctxPath + '/validCode' + '?__sid=' + userStore.getToken + '&t=' + new Date().getTime();
-  }
-
-  // is show jee site valid data.
-  function refreshValidCodeStatus(res: Recordable) {
-    isValidCodeLogin.value = res.isValidCodeLogin || false;
-    if (isValidCodeLogin.value) {
-      refreshValidCodeImg();
-    }
-  }
 
   onMounted(async () => {
     setTimeout(() => message.destroy());
@@ -190,8 +167,11 @@
         return;
       }
       userStore.initPageCache(res);
-      refreshValidCodeStatus(res);
       demoMode.value = res.demoMode || false;
+      emit('demoMode', demoMode.value);
+      if (res.isValidCodeLogin) {
+        validCodeRefreshTime.value = new Date().getTime();
+      }
     } catch (error: any) {
       const err: string = error?.toString?.() ?? '';
       if (error?.code === 'ECONNABORTED' && err.indexOf('timeout of') !== -1) {
@@ -218,7 +198,9 @@
           rememberMe: unref(rememberMe.value),
         }),
       );
-      refreshValidCodeStatus(res);
+      if (res.isValidCodeLogin) {
+        validCodeRefreshTime.value = new Date().getTime();
+      }
       if (res.result === 'true') {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),

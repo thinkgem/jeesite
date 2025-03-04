@@ -1,5 +1,5 @@
 <template>
-  <a-input v-bind="$attrs" :class="prefixCls" :size="size" v-model:value="state">
+  <a-input v-bind="$attrs" :class="prefixCls" :size="size" v-model:value="state" autocomplete="off">
     <template #addonAfter>
       <CountButton
         type="link"
@@ -14,35 +14,26 @@
     </template>
   </a-input>
 </template>
-<script lang="ts">
-  import { defineComponent, PropType } from 'vue';
-  import CountButton from './CountButton.vue';
+<script lang="ts" setup name="CountDownInput">
+  import { PropType } from 'vue';
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
   import { useRuleFormItem } from '@jeesite/core/hooks/component/useFormItem';
+  import CountButton from './CountButton.vue';
 
-  const props = {
+  const props = defineProps({
     value: { type: String },
-    size: { type: String, validator: (v) => ['default', 'large', 'small'].includes(v) },
+    size: { type: String, validator: (v: string) => ['default', 'large', 'small'].includes(v) },
     count: { type: Number, default: 60 },
     sendCodeApi: {
       type: Function as PropType<() => Promise<boolean>>,
-      default: null,
-    },
-  };
-
-  export default defineComponent({
-    name: 'CountDownInput',
-    components: { CountButton },
-    inheritAttrs: false,
-    props,
-    emits: ['change', 'update:value'],
-    setup(props) {
-      const { prefixCls } = useDesign('countdown-input');
-      const [state] = useRuleFormItem(props);
-
-      return { prefixCls, state };
+      default: () => {},
     },
   });
+
+  const emit = defineEmits(['change', 'update:value']);
+
+  const { prefixCls } = useDesign('countdown-input');
+  const [state] = useRuleFormItem(props);
 </script>
 <style lang="less">
   @prefix-cls: ~'jeesite-countdown-input';

@@ -4,9 +4,9 @@
  * @author ThinkGem
  */
 import { type PluginOption } from 'vite';
-import UnoCSSPlugin from 'unocss/vite';
+import UnoCSS from 'unocss/vite';
 import UnoCSSConfig from '../../uno.config';
 
 export function configUnoCSSPlugin(): PluginOption {
-  return UnoCSSPlugin(UnoCSSConfig);
+  return UnoCSS(UnoCSSConfig);
 }

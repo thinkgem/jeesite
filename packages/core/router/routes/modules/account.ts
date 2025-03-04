@@ -28,8 +28,17 @@ const account: AppRouteModule = {
       name: 'AccountModPwd',
       component: () => import('@jeesite/core/views/sys/account/modPwd.vue'),
       meta: {
-        icon: 'i-ion:key-outline',
+        icon: 'i-ant-design:key-outlined',
         title: t('sys.account.modifyPwd'),
+      },
+    },
+    {
+      path: 'modPwdQuestion',
+      name: 'AccountModPwdQuestion',
+      component: () => import('@jeesite/core/views/sys/account/modPwdQuestion.vue'),
+      meta: {
+        icon: 'i-ant-design:key-outlined',
+        title: t('sys.account.modifyPqa'),
       },
     },
   ],

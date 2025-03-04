@@ -131,7 +131,7 @@
     dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
     dataMap.value[props.bizType + '__len'] = fileList.value.length;
     emit('update:value', dataMap.value);
-    emit('change', dataMap.value);
+    emit('change', dataMap.value, fileList.value);
   }
 
   // 预览modal保存操作
@@ -140,7 +140,7 @@
     dataMap.value[props.bizType] = fileList.value.map((item) => item.id).join(',');
     dataMap.value[props.bizType + '__len'] = fileList.value.length;
     emit('update:value', dataMap.value);
-    emit('change', dataMap.value);
+    emit('change', dataMap.value, fileList.value);
   }
 
   function handleDelete(record: FileUpload) {
@@ -149,6 +149,6 @@
     dataMap.value[props.bizType + '__len'] = fileList.value.length;
     emit('delete', record);
     emit('update:value', dataMap.value);
-    emit('change', dataMap.value);
+    emit('change', dataMap.value, fileList.value);
   }
 </script>

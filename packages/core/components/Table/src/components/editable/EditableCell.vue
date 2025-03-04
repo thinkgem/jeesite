@@ -52,14 +52,13 @@
   </div>
 </template>
 <script lang="ts" setup name="EditableCell">
-  import type { CSSProperties, PropType } from 'vue';
+  import type { CSSProperties, PropType, Ref } from 'vue';
   import { computed, defineComponent, h, nextTick, ref, toRaw, unref, watchEffect } from 'vue';
   import type { BasicColumn } from '../../types/table';
   import type { EditRecordRow } from './index';
   import { CheckOutlined, CloseOutlined, FormOutlined } from '@ant-design/icons-vue';
 
   import { useDesign } from '@jeesite/core/hooks/web/useDesign';
-  import { useTableContext } from '../../hooks/useTableContext';
   import { formatCell } from '../../hooks/useColumns';
 
   import vClickOutside from '@jeesite/core/directives/clickOutsideSimple';
@@ -79,7 +78,8 @@
   import { Popover, Spin } from 'ant-design-vue';
   import { DictLabel } from '@jeesite/core/components/Dict';
   import { dateUtil } from '@jeesite/core/utils/dateUtil';
-  import { componentMap } from '@jeesite/core/components/Table/src/componentMap';
+  import { componentMap } from '../../componentMap';
+  import { TableInstance } from '../../hooks/useTableContext';
 
   const props = defineProps({
     value: {
@@ -88,6 +88,10 @@
     },
     labelValue: {
       type: [Array, Object, String, Number] as PropType<Array<any> | object | string | number>,
+    },
+    tableInstance: {
+      type: Object as PropType<TableInstance>,
+      default: () => ({}),
     },
     record: {
       type: Object as PropType<EditRecordRow | Recordable>,
@@ -99,7 +103,7 @@
     index: propTypes.number,
   });
 
-  const table = useTableContext();
+  const table = props.tableInstance;
   const isEdit = ref(false);
   const elRef = ref();
   const ruleOpen = ref(false);
@@ -279,10 +283,10 @@
       record: toRaw(props.record),
     });
 
-    handleSubmitRule();
+    handleValid();
   }
 
-  async function handleSubmitRule() {
+  async function handleValid() {
     const { column, record } = props;
     const { editRule } = column;
     const currentValue = unref(currentValueRef);
@@ -311,9 +315,9 @@
     return true;
   }
 
-  async function handleSubmit(needEmit = true, valid = true) {
+  async function handleSubmit(needEmit = true, valid = true, edit = false) {
     if (valid) {
-      const isPass = await handleSubmitRule();
+      const isPass = await handleValid();
       if (!isPass) return false;
     }
 
@@ -362,7 +366,7 @@
 
     //const record = await table.updateTableData(index, dataKey, value);
     needEmit && table.emit('edit-end', { record, index, key, value, labelValue });
-    isEdit.value = false;
+    isEdit.value = edit;
   }
 
   async function handleEnter() {
@@ -405,37 +409,36 @@
     }
   }
 
-  function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
-    if (props.record) {
-      isArray(props.record[cbs]) ? props.record[cbs]?.push(handle) : (props.record[cbs] = [handle]);
-    }
-  }
-
   watchEffect(() => {
-    if (props.record) {
-      initCbs('submitCbs', handleSubmit);
-      initCbs('validCbs', handleSubmitRule);
-      initCbs('cancelCbs', handleCancel);
-
-      // if (props.column.dataIndex) { // 暂时用不到
-      //   if (!props.record.editValueRefs) props.record.editValueRefs = {};
-      //   props.record.editValueRefs[props.column.dataIndex as any] = currentValueRef;
-      // }
-
-      props.record.onCancelEdit = () => {
-        isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn) => fn());
-      };
-
-      props.record.onSubmitEdit = async () => {
-        if (isArray(props.record?.submitCbs)) {
-          if (!props.record?.onValid?.()) return;
-          const submitFns = props.record?.submitCbs || [];
-          submitFns.forEach((fn) => fn(false, false));
-          table.emit('edit-row-end');
-          return true;
+    const updateEdit = (key: string, callbacksOrRef: Fn | Ref, labelRef?: Ref) => {
+      if (props.record && props.column.dataIndex) {
+        let dataIndex = props.column.dataIndex as any;
+        if (isArray(dataIndex)) {
+          dataIndex = dataIndex.join('.');
         }
-      };
-    }
+        if (isEdit.value) {
+          if (!isObject(props.record[key])) {
+            props.record[key] = {};
+          }
+          props.record[key][dataIndex] = callbacksOrRef;
+          if (props.column.dataLabel && labelRef) {
+            props.record[key][dataIndex + '_label'] = labelRef;
+          }
+        } else if (props.record[key]) {
+          delete props.record[key][dataIndex];
+          if (props.column.dataLabel && labelRef) {
+            delete props.record[key][dataIndex + '_label'];
+          }
+          if (Object.keys(props.record[key]).length == 0) {
+            delete props.record[key];
+          }
+        }
+      }
+    };
+    updateEdit('editValidCbs', handleValid);
+    updateEdit('editSubmitCbs', handleSubmit);
+    updateEdit('editCancelCbs', handleCancel);
+    updateEdit('editValueRefs', currentValueRef, currentLabelValueRef);
   });
 
   const getPopoverProps = computed(() => {

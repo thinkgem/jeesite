@@ -18,9 +18,8 @@
     "lint:prettier": "prettier --ignore-unknown --check --cache --write \"./**/*.{vue,tsx,less,scss}\"",
     "lint:stylelint": "stylelint \"./**/*.{vue,less,scss,css}\" --fix --custom-syntax postcss-html --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run bootstrap && npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
-    "uninstall": "turbo uninstall --concurrency 20 && rimraf pnpm-lock.yaml node_modules",
-    "reinstall": "pnpm store prune && pnpm install --force && cd web && pnpm run dev --force",
-    "update": "turbo update --concurrency 20 && ncu -u && npm run uninstall && npm run bootstrap"
+    "reinstall": "turbo uninstall --concurrency 20 && rimraf pnpm-lock.yaml node_modules && npm run bootstrap",
+    "update": "turbo update --concurrency 20 && ncu -u && npm run reinstall"
   },
   "dependencies": {
     "@ant-design/colors": "7.2.0",
@@ -61,7 +60,6 @@
     "eslint-config-prettier": "10.0.1",
     "eslint-plugin-prettier": "5.2.3",
     "eslint-plugin-vue": "9.32.0",
-    "fs-extra": "11.3.0",
     "globals": "16.0.0",
     "less": "4.2.2",
     "npm-check-updates": "17.1.15",
@@ -80,7 +78,6 @@
     "stylelint-config-standard-less": "3.0.1",
     "stylelint-less": "3.0.1",
     "stylelint-prettier": "5.0.3",
-    "ts-node": "10.9.2",
     "turbo": "2.4.2",
     "typescript": "5.7.3",
     "unocss": "66.0.0",

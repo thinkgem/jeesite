@@ -3,7 +3,7 @@
  * No deletion without permission, or be held responsible to law.
  * @author ThinkGem
  */
-import { PluginOption } from 'vite';
+import { type PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';

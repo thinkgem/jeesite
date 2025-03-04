@@ -91,20 +91,28 @@ export default {
 
     // placeholder
     accountPlaceholder: '请输入账号',
+    userNamePlaceholder: '请输入姓名',
     passwordPlaceholder: '请输入密码',
     smsPlaceholder: '请输入验证码',
     mobilePlaceholder: '请输入手机号码',
+    emailPlaceholder: '请输入邮箱',
     policyPlaceholder: '勾选后才能注册',
     diffPwd: '两次输入密码不一致',
     corpPlaceholder: '请选择租户',
+    userPlaceholder: '请选择账号',
 
-    userName: '账号',
+    account: '账号',
+    userName: '姓名',
     password: '密码',
     confirmPassword: '确认密码',
     validCode: '验证码',
+    mobile: '手机号码',
     email: '邮箱',
     smsCode: '短信验证码',
-    mobile: '手机号码',
+    emailCode: '邮箱验证码',
+    getPwdQuestion: '获取保密问题',
+    pwdQuestion: '保密问题',
+    pwdQuestionAnswer: '请输入答案',
   },
   account: {
     center: '个人中心',
@@ -132,5 +140,11 @@ export default {
     newPasswordInputTip: '请输入新密码',
     newPasswordNotBlank: '密码不能为空',
     newPasswordNotEquals: '两次输入的密码不一致!',
+
+    pwdQuestion: '保密问题',
+    oldPwdQuestion: '旧保密问题',
+    oldPwdQuestionAnswer: '旧保密答案',
+    newPwdQuestion: '新保密问题',
+    newPwdQuestionAnswer: '新保密答案',
   },
 };

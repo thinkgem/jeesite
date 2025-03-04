@@ -53,7 +53,7 @@
       // colProps: { lg: 18, md: 24 },
     },
     {
-      label: t('区域编码'),
+      label: t('区域代码'),
       field: 'areaCode',
       component: 'Input',
       componentProps: {

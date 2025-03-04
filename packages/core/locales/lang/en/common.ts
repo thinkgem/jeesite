@@ -27,5 +27,9 @@ export default {
   validateError:
     'The information you have filled in is incorrect, please correct it according to the prompt.',
 
+  settingsSave: 'Your Settings have cached locally',
+  settingsReset: 'Your Settings have been reset',
+
+  comma: ',',
   selectedItems: 'Select {0} items',
 };
