@@ -162,6 +162,7 @@
 
 .CodeMirror-rulers {
   position: absolute;
+  /* stylelint-disable */
   top: -50px;
   right: 0;
   bottom: -20px;
@@ -427,6 +428,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 
 .CodeMirror-linebackground {
   position: absolute;
+  /* stylelint-disable */
   top: 0;
   right: 0;
   bottom: 0;

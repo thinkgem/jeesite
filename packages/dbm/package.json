@@ -1,11 +1,19 @@
 {
-  "name": "@jeesite/assets",
-  "version": "5.11.0.dev",
+  "name": "@jeesite/dbm",
+  "version": "5.11.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
     "uninstall": "rimraf node_modules",
     "update": "ncu -u"
+  },
+  "dependencies": {
+    "@jeesite/dbm-lib": "5.11.0",
+    "qs": "6.14.0"
+  },
+  "devDependencies": {
+    "@types/qs": "6.9.18"
   },
   "homepage": "https://jeesite.com",
   "repository": {

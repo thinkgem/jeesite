@@ -19,19 +19,22 @@ importers:
         version: 7.0.1(vue@3.5.13(typescript@5.7.3))
       '@jeesite/assets':
         specifier: workspace:*
-        version: link:common/assets
+        version: link:packages/assets
       '@jeesite/build':
         specifier: workspace:*
-        version: link:common/build
+        version: link:build
       '@jeesite/core':
         specifier: workspace:*
         version: link:packages/core
+      '@jeesite/dbm':
+        specifier: workspace:*
+        version: link:packages/dbm
       '@jeesite/test':
         specifier: workspace:*
         version: link:packages/test
       '@jeesite/types':
         specifier: workspace:*
-        version: link:common/types
+        version: link:packages/types
       '@jeesite/web':
         specifier: workspace:*
         version: link:web
@@ -64,7 +67,7 @@ importers:
         version: 6.0.0(vue@3.5.13(typescript@5.7.3))
     devDependencies:
       '@babel/eslint-parser':
-        specifier: ^7.26.8
+        specifier: 7.26.8
         version: 7.26.8(@babel/core@7.26.9)(eslint@9.21.0(jiti@2.4.2))
       '@iconify/json':
         specifier: 2.2.310
@@ -73,7 +76,7 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       '@stylistic/stylelint-plugin':
-        specifier: ^3.1.2
+        specifier: 3.1.2
         version: 3.1.2(stylelint@16.14.1(typescript@5.7.3))
       '@types/node':
         specifier: 22.13.5
@@ -87,6 +90,9 @@ importers:
       '@unocss/eslint-config':
         specifier: 66.0.0
         version: 66.0.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
+      '@unocss/preset-wind3':
+        specifier: 66.0.0
+        version: 66.0.0
       '@vue/compiler-sfc':
         specifier: 3.5.13
         version: 3.5.13
@@ -151,7 +157,7 @@ importers:
         specifier: 16.14.1
         version: 16.14.1(typescript@5.7.3)
       stylelint-config-recommended:
-        specifier: ^15.0.0
+        specifier: 15.0.0
         version: 15.0.0(stylelint@16.14.1(typescript@5.7.3))
       stylelint-config-recommended-less:
         specifier: 3.0.1
@@ -163,10 +169,10 @@ importers:
         specifier: 37.0.0
         version: 37.0.0(stylelint@16.14.1(typescript@5.7.3))
       stylelint-config-standard-less:
-        specifier: ^3.0.1
+        specifier: 3.0.1
         version: 3.0.1(postcss@8.5.3)(stylelint@16.14.1(typescript@5.7.3))
       stylelint-less:
-        specifier: ^3.0.1
+        specifier: 3.0.1
         version: 3.0.1(postcss@8.5.3)(stylelint@16.14.1(typescript@5.7.3))
       stylelint-prettier:
         specifier: 5.0.3
@@ -187,9 +193,7 @@ importers:
         specifier: 6.1.1
         version: 6.1.1(@types/node@22.13.5)(jiti@2.4.2)(less@4.2.2)(terser@5.39.0)(yaml@2.7.0)
 
-  common/assets: {}
-
-  common/build:
+  build:
     devDependencies:
       '@types/fs-extra':
         specifier: 11.0.4
@@ -240,7 +244,7 @@ importers:
         specifier: 0.4.0
         version: 0.4.0(vite@6.1.1(@types/node@22.13.5)(jiti@2.4.2)(less@4.2.2)(terser@5.39.0)(yaml@2.7.0))
 
-  common/types: {}
+  packages/assets: {}
 
   packages/core:
     dependencies:
@@ -278,8 +282,8 @@ importers:
         specifier: 8.2.0
         version: 8.2.0
       pinia:
-        specifier: 2.3.0
-        version: 2.3.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+        specifier: 2.3.1
+        version: 2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
       print-js:
         specifier: 1.6.0
         version: 1.6.0
@@ -354,6 +358,19 @@ importers:
         specifier: 1.0.5
         version: 1.0.5(vite@6.1.1(@types/node@22.13.5)(jiti@2.4.2)(less@4.2.2)(terser@5.39.0)(yaml@2.7.0))
 
+  packages/dbm:
+    dependencies:
+      '@jeesite/dbm-lib':
+        specifier: 5.11.0
+        version: 5.11.0(vue@3.5.13(typescript@5.7.3))
+      qs:
+        specifier: 6.14.0
+        version: 6.14.0
+    devDependencies:
+      '@types/qs':
+        specifier: 6.9.18
+        version: 6.9.18
+
   packages/test: {}
 
   packages/tests:
@@ -419,6 +436,8 @@ importers:
       typescript:
         specifier: 5.4.3
         version: 5.4.3
+
+  packages/types: {}
 
   web:
     devDependencies:
@@ -1394,6 +1413,9 @@ packages:
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
+
+  '@jeesite/dbm-lib@5.11.0':
+    resolution: {integrity: sha512-E+IkZJsbgpPajSxgrK10vpPRPQpfeNjombPcw/kfdEhF33JAKI998VJh4KEmlwiygKhBppMZKH4oj4MkeXTSWg==}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -4103,8 +4125,8 @@ packages:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
 
-  pinia@2.3.0:
-    resolution: {integrity: sha512-ohZj3jla0LL0OH5PlLTDMzqKiVw2XARmC1XYLdLWIPBMdhDW/123ZWr4zVAhtJm+aoSkFa13pYXskAvAscIkhQ==}
+  pinia@2.3.1:
+    resolution: {integrity: sha512-khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==}
     peerDependencies:
       typescript: '>=4.4.4'
       vue: ^2.7.0 || ^3.5.11
@@ -6251,6 +6273,14 @@ snapshots:
       strip-ansi-cjs: strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
+
+  '@jeesite/dbm-lib@5.11.0(vue@3.5.13(typescript@5.7.3))':
+    dependencies:
+      qs: 6.14.0
+      vue-i18n: 11.1.1(vue@3.5.13(typescript@5.7.3))
+      vue-types: 6.0.0(vue@3.5.13(typescript@5.7.3))
+    transitivePeerDependencies:
+      - vue
 
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
@@ -9348,7 +9378,7 @@ snapshots:
   pify@4.0.1:
     optional: true
 
-  pinia@2.3.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)):
+  pinia@2.3.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.13(typescript@5.7.3)

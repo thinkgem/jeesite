@@ -6,6 +6,7 @@
 import type { UserConfig, ConfigEnv } from 'vite';
 import { defineConfig, loadEnv } from 'vite';
 import { readPackageJSON } from 'pkg-types';
+import path from 'path';
 import {
   createBuildOptions,
   createCSSOptions,
@@ -14,8 +15,7 @@ import {
   createServerOptions,
   createVitePlugins,
   wrapperEnv,
-} from '../common/build';
-import path from 'path';
+} from '../build';
 
 export default defineConfig(async ({ command, mode }: ConfigEnv) => {
   const root = process.cwd();
@@ -31,11 +31,11 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
     esbuild: createEsBuildOptions(mode),
     build: createBuildOptions(viteEnv),
     css: createCSSOptions(),
-    // resolve: {
-    //   alias: {
-    //     '@jeesite/web': path.resolve(__dirname, './'),
-    //   },
-    // },
+    resolve: {
+      alias: {
+        '@jeesite/web': path.resolve(__dirname, './'),
+      },
+    },
   };
   return config;
 });

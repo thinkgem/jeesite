@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@jeesite/build/*": ["./*"]
+      "@jeesite/dbm/*": ["./*"]
     }
   },
   "include": [
@@ -14,6 +14,7 @@
   "exclude": [
     "node_modules",
     "vite.config.ts",
+    "_lib",
     "dist"
   ]
 }

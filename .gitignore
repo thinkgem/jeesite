@@ -1,8 +1,8 @@
 node_modules
 Thumbs.db
 .DS_Store
-.turbo
 .vercel
+.turbo
 .cache
 dist
 

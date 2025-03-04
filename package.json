@@ -1,6 +1,6 @@
 {
   "name": "@jeesite/root",
-  "version": "5.11.0.dev",
+  "version": "5.11.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -20,8 +20,7 @@
     "lint:all": "npm run bootstrap && npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "uninstall": "turbo uninstall --concurrency 20 && rimraf pnpm-lock.yaml node_modules",
     "reinstall": "pnpm store prune && pnpm install --force && cd web && pnpm run dev --force",
-    "update": "turbo update --concurrency 20 && ncu -u && npm run uninstall && npm run bootstrap",
-    "upgrade": "node --loader=ts-node/esm ./upgrade/index.ts && npm run lint:all"
+    "update": "turbo update --concurrency 20 && ncu -u && npm run uninstall && npm run bootstrap"
   },
   "dependencies": {
     "@ant-design/colors": "7.2.0",
@@ -29,6 +28,7 @@
     "@jeesite/assets": "workspace:*",
     "@jeesite/build": "workspace:*",
     "@jeesite/core": "workspace:*",
+    "@jeesite/dbm": "workspace:*",
     "@jeesite/test": "workspace:*",
     "@jeesite/types": "workspace:*",
     "@jeesite/web": "workspace:*",
@@ -43,14 +43,15 @@
     "vue-types": "6.0.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.26.8",
+    "@babel/eslint-parser": "7.26.8",
     "@iconify/json": "2.2.310",
     "@iconify/utils": "2.3.0",
-    "@stylistic/stylelint-plugin": "^3.1.2",
+    "@stylistic/stylelint-plugin": "3.1.2",
     "@types/node": "22.13.5",
     "@typescript-eslint/eslint-plugin": "8.24.1",
     "@typescript-eslint/parser": "8.24.1",
     "@unocss/eslint-config": "66.0.0",
+    "@unocss/preset-wind3": "66.0.0",
     "@vue/compiler-sfc": "3.5.13",
     "@vue/runtime-core": "3.5.13",
     "@vue/shared": "3.5.13",
@@ -72,12 +73,12 @@
     "prettier-plugin-packagejson": "2.5.8",
     "rimraf": "6.0.1",
     "stylelint": "16.14.1",
-    "stylelint-config-recommended": "^15.0.0",
+    "stylelint-config-recommended": "15.0.0",
     "stylelint-config-recommended-less": "3.0.1",
     "stylelint-config-recommended-vue": "1.6.0",
     "stylelint-config-standard": "37.0.0",
-    "stylelint-config-standard-less": "^3.0.1",
-    "stylelint-less": "^3.0.1",
+    "stylelint-config-standard-less": "3.0.1",
+    "stylelint-less": "3.0.1",
     "stylelint-prettier": "5.0.3",
     "ts-node": "10.9.2",
     "turbo": "2.4.2",

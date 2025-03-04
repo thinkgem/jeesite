@@ -117,9 +117,8 @@
     "*.tsx": "$(capture).test.ts, $(capture).test.tsx, $(capture).spec.ts, $(capture).spec.tsx,$(capture).d.ts",
     "eslint.config.mjs": ".prettierignore,.stylelintignore,.commitlintrc.*,.prettierrc.*,stylelint.config.*,.lintstagedrc.*",
     "Dockerfile": "Dockerfile,.docker*,docker-entrypoint.sh,build-local-docker*,nginx.conf",
-    "pnpm-workspace.yaml": "pnpm-lock.yaml,pnpm-workspace.yaml",
-    "package.json": ".npmrc,.gitattributes,.gitignore,turbo.json",
-    "README.md": "README*,LICENSE*"
+    "package.json": ".npmrc,.gitattributes,.gitignore,turbo.json,pnpm-lock.yaml,pnpm-workspace.yaml",
+    "README.md": "README*,LICENSE*,terms.md"
   },
   "i18n-ally.localesPaths": ["src/locales/lang"],
   "i18n-ally.keystyle": "nested",

@@ -118,7 +118,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json',
+        // project: './tsconfig.json',
         // jsxPragma: 'React',
         ecmaFeatures: {
           jsx: true, // 启用 JSX 支持

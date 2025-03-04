@@ -1,12 +1,9 @@
 {
-  "name": "@jeesite/types",
-  "version": "5.11.0.dev",
+  "name": "@jeesite/assets",
+  "version": "5.11.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "type:check": "vue-tsc --noEmit --skipLibCheck",
-    "lint:eslint": "eslint --cache --max-warnings 0  \"./**/*.{vue,ts,tsx}\" --fix",
-    "lint:all": "npm run type:check && npm run lint:eslint",
     "uninstall": "rimraf node_modules",
     "update": "ncu -u"
   },
