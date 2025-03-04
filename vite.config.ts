@@ -36,6 +36,10 @@ export default defineConfig(async ({ command, mode }: ConfigEnv) => {
       alias: {
         '/@/': pathResolve('src') + '/',
         '/#/': pathResolve('types') + '/',
+        '@jeesite/core/': pathResolve('src') + '/',
+        '@jeesite/assets/': pathResolve('src/assets') + '/',
+        '@jeesite/types/': pathResolve('types') + '/',
+        '@jeesite/': pathResolve('packages') + '/',
       },
     },
   };
