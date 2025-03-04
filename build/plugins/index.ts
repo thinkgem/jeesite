@@ -14,6 +14,7 @@ import { configHtmlPlugin } from './html';
 import { configLegacyPlugin } from './legacy';
 import { configThemePlugin } from '../theme';
 import { configUnoCSSPlugin } from './unocss';
+import { configMonacoEditorPlugin } from './monacoEditor';
 import { configVisualizerPlugin } from './visualizer';
 import { PackageJson } from 'pkg-types';
 
@@ -35,6 +36,9 @@ export function createVitePlugins(isBuild: boolean, viteEnv: ViteEnv, pkg: Packa
 
   // vite-plugin-html
   vitePlugins.push(configHtmlPlugin(isBuild));
+
+  // vite-plugin-monaco-editor
+  vitePlugins.push(configMonacoEditorPlugin());
 
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerPlugin());
@@ -58,5 +62,6 @@ export {
   configLegacyPlugin,
   configThemePlugin,
   configUnoCSSPlugin,
+  configMonacoEditorPlugin,
   configVisualizerPlugin,
 };
