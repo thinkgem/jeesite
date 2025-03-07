@@ -281,9 +281,9 @@
 			<template>module_cloud/web/db/erm.xml</template>
 			<template>module_cloud/web/src/main/java/package.xml</template>
 			<template>module_cloud/web/src/main/java/startClass.xml</template>
-			<template>module_cloud/web/src/main/resources/config/bootstrap.xml</template>
-			<template>module_cloud/web/src/main/resources/config/bootstrap-elk.xml</template>
-			<template>module_cloud/web/src/main/resources/config/bootstrap-prod.xml</template>
+			<template>module_cloud/web/src/main/resources/config/application.xml</template>
+			<template>module_cloud/web/src/main/resources/config/application-elk.xml</template>
+			<template>module_cloud/web/src/main/resources/config/application-prod.xml</template>
 			<template>module_cloud/web/src/main/resources/config/logback-spring.xml</template>
 			<template>module_cloud/web/src/main/resources/config/logback-spring-elk.xml</template>
 			<template>module_cloud/web/src/main/resources/config/logback-spring-prod.xml</template>

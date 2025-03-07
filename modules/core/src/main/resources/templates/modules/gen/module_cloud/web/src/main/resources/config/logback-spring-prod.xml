@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>logback-spring</name>
+	<name>logback-spring-prod</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
 	<fileName>logback-spring-prod.xml</fileName>
 	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>

@@ -2,9 +2,9 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>bootstrap</name>
+	<name>application</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
-	<fileName>bootstrap.yml</fileName>
+	<fileName>application.yml</fileName>
 	<content><![CDATA[
 #======================================#
 #========== Server settings ===========#
@@ -54,9 +54,9 @@ spring:
 #      - 'optional:configserver:'
     import:
       - 'nacos:application.yml'
-      - 'nacos:application-${spring.profiles.active}.yml'
-      - 'nacos:${spring.application.name}.yml'
-      - 'nacos:${spring.application.name}-${spring.profiles.active}.yml'
+      - 'nacos:application-\${spring.profiles.active}.yml'
+      - 'nacos:\${spring.application.name}.yml'
+      - 'nacos:\${spring.application.name}-\${spring.profiles.active}.yml'
     
   # 分布式配置中心
   cloud:

@@ -2,9 +2,9 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>bootstrap</name>
+	<name>application-elk</name>
 	<filePath>${baseDir}/${moduleCode}/${moduleCode}/src/main/resources/config</filePath>
-	<fileName>bootstrap-elk.yml</fileName>
+	<fileName>application-elk.yml</fileName>
 	<content><![CDATA[
 
 # 使用环境配置，只需 JVM 参数里加：-Dspring.profiles.active=prod,elk
