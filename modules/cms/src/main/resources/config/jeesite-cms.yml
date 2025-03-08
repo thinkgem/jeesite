@@ -3,7 +3,7 @@
 cms:
   pageCache:
     # 是否开启页面静态化缓存
-    #enabled: true
+    enabled: false
     # 缓存名称标识
     cacheName: cmsPageCache
     # 拦截的网页地址

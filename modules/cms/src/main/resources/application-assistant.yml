@@ -1,0 +1,12 @@
+
+## 重要提示（Tip）：
+
+## 请勿在该配置文件中添加其它任何配置（添加也不会生效）。
+## 该文件，仅仅是为了让 jeesite-cms.yml 文件，
+## 在 IDEA 中有一个自动完成及帮助提示，并无其它用意。
+## 参数配置请在 jeesite-cms.yml 文件中添加。
+
+spring:
+  config:
+    import:
+      - classpath:config/jeesite-cms.yml

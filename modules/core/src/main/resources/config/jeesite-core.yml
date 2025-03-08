@@ -803,10 +803,6 @@ video:
   # 将mp4视频的元数据信息转到视频第一帧
   qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
 
-# 文件管理是否启用租户模式
-filemanager:
-  useCorpModel: false
-
 #======================================#
 #========== Message settings ==========#
 #======================================#
