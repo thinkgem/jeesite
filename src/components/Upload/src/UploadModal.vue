@@ -161,7 +161,11 @@
   function handleRemove(record: FileItem) {
     const index = fileItemList.value.findIndex((item) => item.id === record.id);
     if (index !== -1) {
-      fileItemList.value.splice(index, 1);
+      const removed = fileItemList.value.splice(index, 1);
+      const item = removed[0] as FileItem;
+      if (item && item.responseData?.fileUpload) {
+        emit('delete', item.responseData?.fileUpload);
+      }
     }
   }
 
