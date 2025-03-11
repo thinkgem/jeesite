@@ -37,7 +37,7 @@
 * QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
 * 微信群：如果二维码过期，请尝试刷新图片，或者添加客服微信 jeesitex 邀请您进群
 
-<p style="padding-left:40px"><a href="https://jeesite.com/assets/images/wxg_cur.png" target="_blank">
+<p style="padding-left:40px"><a href="https://jeesite.com/assets/images/wxg_cur.png" target="_blank">　　
  <img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/></a>
 </p>
 
@@ -246,6 +246,7 @@ docker run --name jeesite-web -p 8980:8980 -d --restart unless-stopped \
 
 ## 技术支持与服务
 
+* 本软件免费，我们也提供了相应的收费服务，因为：
 * 没有资金的支撑就很难得到发展，特别是一个好的产品，如果 JeeSite 帮助了您，请为我们点赞。支持我们，您可以获得更多回馈，我们会把公益事业做的更好，开放更多资源，回报社区和社会。请给我们一些动力吧，在此非常感谢已支持我们的朋友！
 * **联系我们**：请访问技术支持与服务页面：<http://s.jeesite.com> 
 
