@@ -44,6 +44,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 	@Autowired(required = false)
 	private ArticleIndexService articleIndexService;
 	@Autowired(required = false)
+	private ArticleVectorStore articleVectorStore;
+	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
 	private static final ExecutorService updateExpiredWeightThreadPool = new ThreadPoolExecutor(5, 20,
@@ -166,6 +168,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		if (articleIndexService != null && Article.STATUS_NORMAL.equals(article.getStatus())) {
 			articleIndexService.save(article);
 		}
+		// 保存文章到向量数据库
+		if (articleVectorStore != null && Article.STATUS_NORMAL.equals(article.getStatus())) {
+			articleVectorStore.save(article);
+		}
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {
 			pageCacheService.clearCache(article);
@@ -186,6 +192,14 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 				articleIndexService.save(article);
 			} else {
 				articleIndexService.delete(article);
+			}
+		}
+		// 保存文章到向量数据库
+		if (articleVectorStore != null) {
+			if (Article.STATUS_NORMAL.equals(article.getStatus())) {
+				articleVectorStore.save(article);
+			} else {
+				articleVectorStore.delete(article);
 			}
 		}
 		// 清理首页、栏目和文章页面缓存
@@ -220,6 +234,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 		// 保存文章全文检索索引
 		if (articleIndexService != null) {
 			articleIndexService.delete(article);
+		}
+		// 保存文章到向量数据库
+		if (articleVectorStore != null) {
+			articleVectorStore.delete(article);
 		}
 		// 清理首页、栏目和文章页面缓存
 		if (pageCacheService != null) {

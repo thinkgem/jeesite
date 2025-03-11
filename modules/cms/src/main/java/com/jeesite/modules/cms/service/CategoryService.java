@@ -27,6 +27,8 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@Autowired(required = false)
 	private ArticleIndexService articleIndexService;
 	@Autowired(required = false)
+	private ArticleVectorStore articleVectorStore;
+	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
 	/**
@@ -123,6 +125,17 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 			return text("您好，系统未安装全文检索模块");
 		}
 		return articleIndexService.rebuild(new Article(category));
+	}
+
+	/**
+	 * 重建向量数据库
+	 * @author ThinkGem
+	 */
+	public String rebuildVectorStore(Category category) {
+		if (articleVectorStore == null) {
+			return text("您好，系统未安装全文检索模块");
+		}
+		return articleVectorStore.rebuild(new Article(category));
 	}
 
 }

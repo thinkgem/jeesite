@@ -8,12 +8,12 @@ import com.jeesite.common.config.Global;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
-import com.jeesite.common.web.CookieUtils;
 import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.FileTempleteService;
 import com.jeesite.modules.cms.service.SiteService;
-import com.jeesite.modules.sys.utils.CorpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -143,6 +141,17 @@ public class SiteController extends BaseController {
 	@RequestMapping(value = "rebuildIndex")
 	public String rebuildIndex(Site site)  {
 		return renderResult(Global.TRUE, siteService.rebuildIndex(site));
+	}
+
+	/**
+	 * 重建向量数据库
+	 * @author ThinkGem
+	 */
+	@RequiresPermissions("cms:site:rebuildVectorStore")
+	@ResponseBody
+	@RequestMapping(value = "rebuildVectorStore")
+	public String rebuildVectorStore(Site site)  {
+		return renderResult(Global.TRUE, siteService.rebuildVectorStore(site));
 	}
 	
 	/**

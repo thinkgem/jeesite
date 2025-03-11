@@ -27,6 +27,8 @@ public class SiteService extends CrudService<SiteDao, Site> {
 	@Autowired(required = false)
 	private ArticleIndexService articleIndexService;
 	@Autowired(required = false)
+	private ArticleVectorStore articleVectorStore;
+	@Autowired(required = false)
 	private PageCacheService pageCacheService;
 
 	/**
@@ -119,6 +121,17 @@ public class SiteService extends CrudService<SiteDao, Site> {
 			return text("您好，系统未安装全文检索模块");
 		}
 		return articleIndexService.rebuild(new Article(new Category(site)));
+	}
+
+	/**
+	 * 重建向量数据库
+	 * @author ThinkGem
+	 */
+	public String rebuildVectorStore(Site site) {
+		if (articleVectorStore == null) {
+			return text("您好，系统未安装内容管理AI模块");
+		}
+		return articleVectorStore.rebuild(new Article(new Category(site)));
 	}
 	
 }

@@ -257,6 +257,17 @@ public class CategoryController extends BaseController {
 	}
 
 	/**
+	 * 重建向量数据库
+	 * @author ThinkGem
+	 */
+	@RequiresPermissions("cms:category:rebuildVectorStore")
+	@ResponseBody
+	@RequestMapping(value = "rebuildVectorStore")
+	public String rebuildVectorStore(Category category)  {
+		return renderResult(Global.TRUE, categoryService.rebuildVectorStore(category));
+	}
+
+	/**
 	 * 获取树结构数据
 	 * @param excludeCode 排除的Code
 	 * @param isShowCode 是否显示编码（true or 1：显示在左侧；2：显示在右侧；false or null：不显示）

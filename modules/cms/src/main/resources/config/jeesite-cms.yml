@@ -20,5 +20,7 @@ j2cache:
 #spring:
 #  elasticsearch:
 #    enabled: true
-#    uris: http://Win11:9200
+#    uris: http://127.0.0.1:9200
 #    connection-timeout: 120s
+#    username: elastic
+#    password: elastic
