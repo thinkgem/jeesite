@@ -174,7 +174,7 @@ public class PropertiesUtils {
 	private static final Pattern p1 = Pattern.compile("\\$\\{.*?\\}");
 
 	/**
-	 * 获取属性值，取不到从System.getProperty()获取，都取不到返回null
+	 * 获取属性值，取不到从System.getProperty和System.getenv获取，都取不到返回null
 	 */
 	public String getProperty(String key) {
 		if (environment != null){
@@ -196,9 +196,10 @@ public class PropertiesUtils {
 	    	String systemProperty = System.getProperty(key);
 			if (systemProperty != null) {
 				return systemProperty;
+			}else{
+				return System.getenv(key);
 			}
 	    }
-		return null;
 	}
 
 	/**
