@@ -56,7 +56,7 @@ if(table.isTreeEntity){
           ( {{ record.${table.treeViewCodeAttrName} }} )
         </span>
     <% } %>
-        <a @click="handleForm({ ${idParam} })">
+        <a @click="handleForm({ ${idParam} })" :title="record.${table.treeViewNameAttrName}">
           {{ record.${table.treeViewNameAttrName} }}
         </a>
 <%
@@ -71,7 +71,7 @@ if(table.isTreeEntity){
         continue;
       }
 %>
-        <a @click="handleForm({ ${idParam} })">
+        <a @click="handleForm({ ${idParam} })" :title="record.${c.attrName}">
           {{ record.${c.attrName} }}
         </a>
 <%
