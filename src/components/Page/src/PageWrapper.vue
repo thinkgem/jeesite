@@ -29,7 +29,7 @@
       </template>
     </PageHeader>
     <div :class="getContentClass" :style="getContentStyle" ref="contentRef">
-      <Layout v-if="sidebar || sidebarRight">
+      <Layout v-if="sidebar || sidebarRight" :style="getSidebarContentStyle">
         <Layout.Sider
           v-if="sidebar"
           class="sidebar"
@@ -253,6 +253,11 @@
 
   // 自适应侧边栏高度 by think gem
   function calcSidebarContentHeight() {
+    if (props.contentFullHeight && contentHeight.value) {
+      const height = contentHeight.value - 14;
+      getSidebarContentHeight.value = height < 300 ? 300 : height;
+      return;
+    }
     let height = 0;
     const el = unref(contentRef) as any;
     if (!el || el.clientHeight <= 0) return;
@@ -396,13 +401,15 @@
       .sidebar {
         background-color: @content-bg;
         transition: none;
-        min-height: 400px;
+        //min-height: 400px;
 
         &-content {
           // margin: 15px 0 0 15px;
           // margin-right: 15px;
-          height: calc(100% - 29px);
+          //height: calc(100% - 14px);
+          height: 100%;
           overflow: hidden;
+          border-radius: 4px;
 
           .jeesite-basic-tree-header {
             padding: 10px 6px;
