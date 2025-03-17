@@ -338,6 +338,7 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setConcurrent(Global.NO);
 		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
 		job.setStatus(JobEntity.STATUS_PAUSED);
+		job.setRemarks("实时推送和设定计划推送时间的定时推送消息。");
 		jobDao.insert(job);
 		job = new JobEntity(MsgLocalMergePushTask.class.getSimpleName(), "SYSTEM");
 		job.setDescription("消息推送服务 (合并推送)");
@@ -346,6 +347,19 @@ public class InitCoreData extends BaseInitDataTests {
 		job.setConcurrent(Global.NO);
 		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
 		job.setStatus(JobEntity.STATUS_PAUSED);
+		job.setRemarks("不重要的通知进行汇总，30分钟或更长执行一次，将多条消息合并为一条消息延迟推送给用户。");
+		jobDao.insert(job);
+		job = new JobEntity("DeleteLogBefore", "SYSTEM");
+		job.setDescription("清理访问日志 (3个月前)");
+		job.setInvokeTarget("logService.deleteLogBefore(0, 3, 0)");
+		job.setCronExpression("0 0 0 1 1/1 ? *");
+		job.setConcurrent(Global.NO);
+		job.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
+		job.setStatus(JobEntity.STATUS_PAUSED);
+		job.setRemarks("1、清理1年前的所有日志：logService.deleteLogBefore(1, 0, 0)\n" +
+				"2、清理6个月前的所有日志：logService.deleteLogBefore(0, 6, 0)\n" +
+				"3、清理7天前的所有日志：logService.deleteLogBefore(0, 0, 7)\n" +
+				"4、清理1年6个月前的所有日志：logService.deleteLogBefore(1, 6, 0)");
 		jobDao.insert(job);
 	}
 
