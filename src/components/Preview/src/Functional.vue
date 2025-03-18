@@ -427,11 +427,10 @@
 <style lang="less">
   .img-preview {
     position: fixed;
-    /* stylelint-disable */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0 !important; /* stylelint-disable-line */
+    right: 0 !important; /* stylelint-disable-line */
+    bottom: 0 !important; /* stylelint-disable-line */
+    left: 0 !important; /* stylelint-disable-line */
     z-index: @preview-comp-z-index;
     background: rgb(0 0 0 / 50%);
     user-select: none;
