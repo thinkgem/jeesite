@@ -51,7 +51,7 @@
     "./**/*.vue"
   ],
   "exclude": [
-    "tests/server/**/*.ts",
+    "packages/tests",
     "node_modules",
     "vite.config.ts",
     "dist"
