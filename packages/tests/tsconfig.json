@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "commonjs",
     "declaration": false,
     "removeComments": true,
@@ -8,8 +9,7 @@
     "target": "es6",
     "sourceMap": false,
     "esModuleInterop": true,
-    "outDir": "./dist",
-    "baseUrl": "./"
+    "outDir": "./dist"
   },
   "exclude": ["node_modules"]
 }
