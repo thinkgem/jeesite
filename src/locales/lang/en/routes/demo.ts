@@ -95,10 +95,6 @@ export default {
     breadcrumbChildren: 'Level mode',
     breadcrumbChildrenDetail: 'Level mode detail',
   },
-  flow: {
-    name: 'Graphics editor',
-    flowChart: 'FlowChart',
-  },
   form: {
     form: 'Form',
     basic: 'Basic',

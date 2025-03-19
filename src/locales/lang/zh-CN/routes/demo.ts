@@ -91,10 +91,6 @@ export default {
     breadcrumbChildren: '层级模式',
     breadcrumbChildrenDetail: '层级详情',
   },
-  flow: {
-    name: '图形编辑器',
-    flowChart: '流程图',
-  },
   form: {
     form: 'Form',
     basic: '基础表单',
