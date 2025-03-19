@@ -352,7 +352,7 @@
     .ant-select-disabled .ant-select-selector,
     .ant-select-disabled .ant-select-selection-item {
       color: fade(@text-color-base, 75) !important;
-      background: rgba(0, 0, 0, 0.02) !important;
+      background: rgb(0 0 0 / 2%) !important;
     }
 
     &--compact {
