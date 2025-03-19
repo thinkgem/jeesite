@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
   import { computed, defineComponent, unref } from 'vue';
-  import FramePage from '/@/views/sys/iframe/index.vue';
+  import FramePage from '/@/layouts/iframe/FramePage.vue';
   import { useFrameKeepAlive } from '/@/layouts/iframe/useFrameKeepAlive';
 
   export default defineComponent({
