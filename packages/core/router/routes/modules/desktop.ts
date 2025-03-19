@@ -17,7 +17,7 @@ const desktop: AppRouteModule = {
     {
       path: 'analysis',
       name: 'Analysis',
-      component: () => import('@jeesite/core/views/sys/desktop/analysis/index.vue'),
+      component: () => import('@jeesite/core/layouts/views/desktop/analysis/index.vue'),
       meta: {
         // affix: true,
         icon: 'i-ant-design:home-outlined',
@@ -28,7 +28,7 @@ const desktop: AppRouteModule = {
     {
       path: 'workbench',
       name: 'Workbench',
-      component: () => import('@jeesite/core/views/sys/desktop/workbench/index.vue'),
+      component: () => import('@jeesite/core/layouts/views/desktop/workbench/index.vue'),
       meta: {
         icon: 'i-ant-design:read-outlined',
         title: t('routes.dashboard.workbench'),
@@ -37,7 +37,7 @@ const desktop: AppRouteModule = {
     {
       path: 'about',
       name: 'AboutPage',
-      component: () => import('@jeesite/core/views/sys/desktop/about/index.vue'),
+      component: () => import('@jeesite/core/layouts/views/desktop/about/index.vue'),
       meta: {
         title: t('routes.dashboard.about'),
         icon: 'i-ant-design:tag-outlined',

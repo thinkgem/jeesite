@@ -165,11 +165,10 @@
 
 .CodeMirror-rulers {
   position: absolute;
-  /* stylelint-disable */
-  top: -50px;
-  right: 0;
-  bottom: -20px;
-  left: 0;
+  top: -50px; /* stylelint-disable-line */
+  right: 0; /* stylelint-disable-line */
+  bottom: -20px; /* stylelint-disable-line */
+  left: 0; /* stylelint-disable-line */
   overflow: hidden;
 }
 
@@ -345,15 +344,13 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror-vscrollbar {
   top: 0;
   right: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden scroll;
 }
 
 .CodeMirror-hscrollbar {
   bottom: 0;
   left: 0;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: scroll hidden;
 }
 
 .CodeMirror-scrollbar-filler {
@@ -430,12 +427,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 }
 
 .CodeMirror-linebackground {
-
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  top: 0; /* stylelint-disable-line */
+  right: 0; /* stylelint-disable-line */
+  bottom: 0; /* stylelint-disable-line */
+  left: 0; /* stylelint-disable-line */
   z-index: 0;
 }
 

@@ -346,6 +346,15 @@
       font-size: 14px;
     }
 
+    .ant-input-disabled,
+    .ant-input-number-disabled,
+    .ant-radio-wrapper-disabled,
+    .ant-select-disabled .ant-select-selector,
+    .ant-select-disabled .ant-select-selection-item {
+      color: fade(@text-color-base, 75) !important;
+      background: rgb(0 0 0 / 2%) !important;
+    }
+
     &--compact {
       .ant-form-item {
         margin-bottom: 7px !important;

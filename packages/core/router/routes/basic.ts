@@ -44,7 +44,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
     {
       path: '/redirect/:path(.*)',
       name: REDIRECT_NAME,
-      component: () => import('@jeesite/core/views/sys/redirect/index.vue'),
+      component: () => import('@jeesite/core/layouts/views/redirect/index.vue'),
       meta: {
         title: '',
         hideBreadcrumb: true,
@@ -54,10 +54,10 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
 };
 
 export const ERROR_LOG_ROUTE: AppRouteRecordRaw = {
-  path: '/error-log',
+  path: '/errorLog',
   name: 'ErrorLog',
   component: LAYOUT,
-  redirect: '/error-log/list',
+  redirect: '/errorLog/list',
   meta: {
     title: 'ErrorLog',
     hideBreadcrumb: true,
@@ -67,11 +67,11 @@ export const ERROR_LOG_ROUTE: AppRouteRecordRaw = {
     {
       path: 'list',
       name: 'ErrorLogList',
-      component: () => import('@jeesite/core/views/sys/error-log/index.vue'),
+      component: () => import('@jeesite/core/layouts/views/errorLog/index.vue'),
       meta: {
         title: t('routes.basic.errorLogList'),
         hideBreadcrumb: true,
-        currentActiveMenu: '/error-log',
+        currentActiveMenu: '/errorLog',
       },
     },
   ],

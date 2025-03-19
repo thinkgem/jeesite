@@ -3,77 +3,69 @@
     <slot></slot>
   </Scrollbar>
 </template>
-
-<script lang="ts">
-  import { defineComponent, ref, unref, nextTick } from 'vue';
+<script lang="ts" setup name="ScrollContainer">
+  import { ref, unref, nextTick } from 'vue';
   import { Scrollbar, ScrollbarType } from '@jeesite/core/components/Scrollbar';
   import { useScrollTo } from '@jeesite/core/hooks/event/useScrollTo';
 
-  export default defineComponent({
-    name: 'ScrollContainer',
-    components: { Scrollbar },
-    setup() {
-      const scrollbarRef = ref<Nullable<ScrollbarType>>(null);
+  const scrollbarRef = ref<Nullable<ScrollbarType>>(null);
 
-      /**
-       * Scroll to the specified position
-       */
-      function scrollTo(to: number, duration = 500) {
-        const scrollbar = unref(scrollbarRef);
-        if (!scrollbar) {
-          return;
-        }
-        nextTick(() => {
-          const wrap = unref(scrollbar.wrap);
-          if (!wrap) {
-            return;
-          }
-          const { start } = useScrollTo({
-            el: wrap,
-            to,
-            duration,
-          });
-          start();
-        });
+  /**
+   * Scroll to the specified position
+   */
+  function scrollTo(to: number, duration = 500) {
+    const scrollbar = unref(scrollbarRef);
+    if (!scrollbar) {
+      return;
+    }
+    nextTick(() => {
+      const wrap = unref(scrollbar.wrap);
+      if (!wrap) {
+        return;
       }
+      const { start } = useScrollTo({
+        el: wrap,
+        to,
+        duration,
+      });
+      start();
+    });
+  }
 
-      function getScrollWrap() {
-        const scrollbar = unref(scrollbarRef);
-        if (!scrollbar) {
-          return null;
-        }
-        return scrollbar.wrap;
+  /**
+   * Scroll to the bottom
+   */
+  function scrollBottom() {
+    const scrollbar = unref(scrollbarRef);
+    if (!scrollbar) {
+      return;
+    }
+    nextTick(() => {
+      const wrap = unref(scrollbar.wrap) as any;
+      if (!wrap) {
+        return;
       }
+      const scrollHeight = wrap.scrollHeight as number;
+      const { start } = useScrollTo({
+        el: wrap,
+        to: scrollHeight,
+      });
+      start();
+    });
+  }
 
-      /**
-       * Scroll to the bottom
-       */
-      function scrollBottom() {
-        const scrollbar = unref(scrollbarRef);
-        if (!scrollbar) {
-          return;
-        }
-        nextTick(() => {
-          const wrap = unref(scrollbar.wrap) as any;
-          if (!wrap) {
-            return;
-          }
-          const scrollHeight = wrap.scrollHeight as number;
-          const { start } = useScrollTo({
-            el: wrap,
-            to: scrollHeight,
-          });
-          start();
-        });
-      }
+  function getScrollWrap() {
+    const scrollbar = unref(scrollbarRef);
+    if (!scrollbar) {
+      return null;
+    }
+    return scrollbar.wrap;
+  }
 
-      return {
-        scrollbarRef,
-        scrollTo,
-        scrollBottom,
-        getScrollWrap,
-      };
-    },
+  defineExpose({
+    scrollTo,
+    scrollBottom,
+    getScrollWrap,
   });
 </script>
 <style lang="less">
@@ -88,6 +80,7 @@
 
     .scrollbar__view {
       box-sizing: border-box;
+      height: 100%;
     }
   }
 </style>

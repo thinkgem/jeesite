@@ -34,5 +34,8 @@
 
   .@{prefix-cls} {
     width: 100%;
+    //border: 1px solid #ddd;
+    //padding: 4px 8px;
+    //border-radius: 5px;
   }
 </style>

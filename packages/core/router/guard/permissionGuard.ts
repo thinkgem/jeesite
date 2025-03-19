@@ -91,7 +91,8 @@ export function createPermissionGuard(router: Router) {
       to.name === PAGE_NOT_FOUND_ROUTE.name &&
       to.fullPath !== (userStore.getUserInfo.homePath || HOME_PATH)
     ) {
-      next(userStore.getUserInfo.homePath || HOME_PATH);
+      // 如果用户定义的 desktopUrl 是非法路径，就跳转到 404，防止无法进入系统
+      next('/404/' + (userStore.getUserInfo.homePath || HOME_PATH));
       return;
     }
 
