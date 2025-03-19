@@ -6,7 +6,7 @@
           <a href="https://jeesite.com" target="_blank">JeeSite</a>
           快速开发平台，不仅仅是一个后台开发框架，它是一个企业级快速开发解决方案，有平台来封装技术细节，
           让开发者更专注业务，降低软件的开发难度。平台基于经典组合 Spring Boot、Apache MyBatis，
-          前端采用：Vue3、Vite、Ant-Design-Vue、TypeScript、
+          前端采用：Vue3、Vite、Monorepo、Ant-Design-Vue、TypeScript、
           <a href="https://github.com/anncwb/vue-vben-admin" target="_blank">Vue Vben Admin</a>，
           最先进的技术栈，让初学者能够更快的入门并投入到团队开发中去。
           提供在线代码生成功能，包括模块如：组织机构、角色用户、菜单及按钮授权、数据权限、系统参数、内容管理、工作流等。
