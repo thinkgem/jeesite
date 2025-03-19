@@ -10,21 +10,23 @@
   import { SettingButtonPositionEnum } from '/@/enums/appEnum';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  import SessionTimeoutLogin from '/@/views/sys/login/SessionTimeoutLogin.vue';
+  import SessionTimeoutLogin from '/@/layouts/views/login/SessionTimeoutLogin.vue';
+  import { useFullContent } from '/@/hooks/web/useFullContent';
   export default defineComponent({
     name: 'LayoutFeatures',
     components: {
       ABackTop: FloatButton.BackTop,
-      LayoutLockPage: createAsyncComponent(() => import('/@/views/sys/lock/index.vue')),
+      LayoutLockPage: createAsyncComponent(() => import('/@/layouts/views/lock/index.vue')),
       SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue')),
       SessionTimeoutLogin,
     },
     setup() {
-      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition, getFullContent } =
+      const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition } =
         useRootSetting();
       const userStore = useUserStoreWithOut();
       const { prefixCls } = useDesign('setting-drawer-fearure');
       const { getShowHeader } = useHeaderSetting();
+      const { getFullContent } = useFullContent();
 
       const getIsSessionTimeout = computed(() => userStore.getSessionTimeout);
 

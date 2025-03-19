@@ -6,9 +6,9 @@ export const PAGE_NOT_FOUND_NAME = 'PageNotFound';
  * @description: default layout
  */
 export const LAYOUT = () => import('/@/layouts/default/index.vue');
-export const IFRAME_BLANK = () => import('/@/views/sys/iframe/FrameBlank.vue');
-export const IFRAME_SIMPLE = () => import('/@/views/sys/iframe/FrameSimple.vue');
-export const EXCEPTION_COMPONENT = () => import('/@/views/sys/exception/Exception.vue');
+export const IFRAME_BLANK = () => import('/@/layouts/iframe/FrameBlank.vue');
+export const IFRAME_SIMPLE = () => import('/@/layouts/iframe/FrameSimple.vue');
+export const EXCEPTION_COMPONENT = () => import('/@/layouts/views/exception/Exception.vue');
 
 /**
  * @description: parent-layout

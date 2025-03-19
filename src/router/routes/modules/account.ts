@@ -17,7 +17,7 @@ const account: AppRouteModule = {
     {
       path: 'center',
       name: 'AccountCenter',
-      component: () => import('/@/views/sys/account/center.vue'),
+      component: () => import('/@/layouts/views/account/center.vue'),
       meta: {
         icon: 'i-ion:person-outline',
         title: t('sys.account.center'),
@@ -26,7 +26,7 @@ const account: AppRouteModule = {
     {
       path: 'modPwd',
       name: 'AccountModPwd',
-      component: () => import('/@/views/sys/account/modPwd.vue'),
+      component: () => import('/@/layouts/views/account/modPwd.vue'),
       meta: {
         icon: 'i-ant-design:key-outlined',
         title: t('sys.account.modifyPwd'),
@@ -35,7 +35,7 @@ const account: AppRouteModule = {
     {
       path: 'modPwdQuestion',
       name: 'AccountModPwdQuestion',
-      component: () => import('/@/views/sys/account/modPwdQuestion.vue'),
+      component: () => import('/@/layouts/views/account/modPwdQuestion.vue'),
       meta: {
         icon: 'i-ant-design:key-outlined',
         title: t('sys.account.modifyPqa'),
