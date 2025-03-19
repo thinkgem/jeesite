@@ -16,6 +16,7 @@
 		<module>core</module>
 		<module>app</module>
 		<module>cms</module>
+		<module>cms-ai</module>
 		<module>static</module>
 		<module>test</module>
 	</modules>

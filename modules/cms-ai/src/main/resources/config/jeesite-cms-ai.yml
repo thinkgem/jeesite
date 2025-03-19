@@ -1,0 +1,125 @@
+# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
+
+spring:
+  ai:
+
+    # 云上大模型（使用该模型，请开启 enabled 参数）
+    openai:
+      base-url: https://api.siliconflow.cn
+      api-key: ${SFLOW_APP_KEY}
+      #base-url: https://ai.gitee.com
+      #api-key: ${GITEE_APP_KEY}
+      # 聊天对话模型
+      chat:
+        enabled: true
+        options:
+          model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+          #model: DeepSeek-R1-Distill-Qwen-14B
+          max-tokens: 1024
+          temperature: 0.6
+          top-p: 0.7
+          frequency-penalty: 0
+          logprobs: true
+      # 向量库知识库模型（注意：不同的模型维度不同）
+      embedding:
+        enabled: true
+        options:
+          model: BAAI/bge-m3
+          #model: bge-large-zh-v1.5
+          dimensions: 512
+
+    # 本地大模型配置（使用该模型，请开启 enabled 参数）
+    ollama:
+      base-url: http://localhost:11434
+      # 聊天对话模型
+      chat:
+        enabled: false
+        options:
+          #model: qwen2.5
+          model: deepseek-r1:7b
+          max-tokens: 1024
+          temperature: 0.6
+          top-p: 0.7
+          frequency-penalty: 0
+      # 向量库知识库模型（注意：不同的模型维度不同）
+      embedding:
+        enabled: false
+        # 维度 dimensions 设置为 384
+        #model: all-minilm:33m
+        # 维度 dimensions 设置为 768
+        #model: nomic-embed-text
+        # 维度 dimensions 设置为 1024
+        model: bge-m3
+
+    # 向量数据库配置
+    vectorstore:
+
+      # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）
+      pgvector:
+        initialize-schema: false
+        id-type: TEXT
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        #table-name: vector_store_384
+        #dimensions: 384
+        #table-name: vector_store_786
+        #dimensions: 768
+        table-name: vector_store_1024
+        dimensions: 1024
+        batching-strategy: TOKEN_COUNT
+        max-document-batch-size: 10000
+
+#      # ES 向量数据库（ES 连接配置，见下文）
+#      elasticsearch:
+#        initialize-schema: true
+#        index-name: vector-index
+#        dimensions: 1024
+#        similarity: cosine
+#        batching-strategy: TOKEN_COUNT
+
+#      # Milvus 向量数据库（字符串长度不超过65535）
+#      milvus:
+#        initialize-schema: true
+#        client:
+#          host: "localhost"
+#          port: 19530
+#          username: "root"
+#          password: "milvus"
+#        database-name: "default2"
+#        collection-name: "vector_store2"
+#        embedding-dimension: 384
+#        index-type: HNSW
+#        metric-type: COSINE
+
+# ========= Postgresql 向量数据库数据源 =========
+
+jdbc:
+  ds_pgvector:
+    type: postgresql
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5433/jeesite-ai
+    username: postgres
+    password: postgres
+    testSql: SELECT 1
+
+# ========= ES 向量数据库连接配置 =========
+
+spring.elasticsearch:
+    enabled: true
+    socket-timeout: 120s
+    connection-timeout: 120s
+    uris: http://127.0.0.1:9200
+    username: elastic
+    password: elastic
+
+# 对话消息存缓存，可自定义存数据库
+j2cache:
+  caffeine:
+    region:
+      # 对话消息的超期时间，默认 30天，根据需要可以设置更久。
+      cmsChatCache: 100000, 30d
+      cmsChatMsgCache: 100000, 30d
+
+#logging:
+#  level:
+#    org.springframework: debug
