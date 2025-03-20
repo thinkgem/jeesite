@@ -18,8 +18,8 @@ import java.util.UUID;
  */
 public class IdGen {
 
-	private static SecureRandom random = new SecureRandom();
-	private static IdWorker idWorker = new IdWorker(-1, -1);
+	private static final SecureRandom random = new SecureRandom();
+	private static final IdWorker idWorker = new IdWorker(-1, -1);
 	
 	/**
 	 * 生成UUID, 中间无-分割.
