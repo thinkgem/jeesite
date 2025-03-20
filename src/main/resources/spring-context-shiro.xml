@@ -21,6 +21,7 @@
 				${adminPath}/logout = logout
 				${adminPath}/** = user
 				/act/editor/** = user
+				/act/service/** = user
 				/ReportServer/** = user
 			</value>
 		</constructor-arg>
