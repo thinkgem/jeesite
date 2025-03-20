@@ -54,37 +54,45 @@ spring:
     # 向量数据库配置
     vectorstore:
 
-      # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）
-      pgvector:
-        initialize-schema: false
-        id-type: TEXT
-        index-type: HNSW
-        distance-type: COSINE_DISTANCE
-        #table-name: vector_store_384
-        #dimensions: 384
-        #table-name: vector_store_786
-        #dimensions: 768
-        table-name: vector_store_1024
-        dimensions: 1024
-        batching-strategy: TOKEN_COUNT
-        max-document-batch-size: 10000
+      # Chroma 向量数据库
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+        initialize-schema: true
+        collection-name: vector_store
+
+#      # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）
+#      pgvector:
+#        id-type: TEXT
+#        index-type: HNSW
+#        distance-type: COSINE_DISTANCE
+#        initialize-schema: false
+#        #table-name: vector_store_384
+#        #dimensions: 384
+#        #table-name: vector_store_786
+#        #dimensions: 768
+#        table-name: vector_store_1024
+#        dimensions: 1024
+#        batching-strategy: TOKEN_COUNT
+#        max-document-batch-size: 10000
 
 #      # ES 向量数据库（ES 连接配置，见下文）
 #      elasticsearch:
-#        initialize-schema: true
 #        index-name: vector-index
+#        initialize-schema: true
 #        dimensions: 1024
 #        similarity: cosine
 #        batching-strategy: TOKEN_COUNT
 
 #      # Milvus 向量数据库（字符串长度不超过65535）
 #      milvus:
-#        initialize-schema: true
 #        client:
 #          host: "localhost"
 #          port: 19530
 #          username: "root"
 #          password: "milvus"
+#        initialize-schema: true
 #        database-name: "default2"
 #        collection-name: "vector_store2"
 #        embedding-dimension: 384
@@ -93,24 +101,24 @@ spring:
 
 # ========= Postgresql 向量数据库数据源 =========
 
-jdbc:
-  ds_pgvector:
-    type: postgresql
-    driver: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5433/jeesite-ai
-    username: postgres
-    password: postgres
-    testSql: SELECT 1
+#jdbc:
+#  ds_pgvector:
+#    type: postgresql
+#    driver: org.postgresql.Driver
+#    url: jdbc:postgresql://127.0.0.1:5433/jeesite-ai
+#    username: postgres
+#    password: postgres
+#    testSql: SELECT 1
 
 # ========= ES 向量数据库连接配置 =========
 
-spring.elasticsearch:
-    enabled: true
-    socket-timeout: 120s
-    connection-timeout: 120s
-    uris: http://127.0.0.1:9200
-    username: elastic
-    password: elastic
+#spring.elasticsearch:
+#    enabled: true
+#    socket-timeout: 120s
+#    connection-timeout: 120s
+#    uris: http://127.0.0.1:9200
+#    username: elastic
+#    password: elastic
 
 # 对话消息存缓存，可自定义存数据库
 j2cache:

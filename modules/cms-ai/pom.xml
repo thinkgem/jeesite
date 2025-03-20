@@ -49,11 +49,17 @@
 		   <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
 		</dependency>
 
-		<!-- PG 向量数据库 -->
+		<!-- Chroma 向量数据库 -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-chroma-store-spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- PG 向量数据库
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
-        </dependency>
+        </dependency> -->
 
 		<!-- ES 向量数据库
 		<dependency>

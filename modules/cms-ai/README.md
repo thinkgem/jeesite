@@ -43,7 +43,7 @@
 特别适合处理复杂的企业知识库。
 
 此外该模块，支持云上大模型和本地部署的大模型，如：DeepSeek、通义千问，理论上支持所有 OpenAPI 标准接口的 AI 提供商。
-并能无缝集成多种嵌入式 AI 模型的向量数据库，如 PGVector、Elasticsearch、Milvus 等，实现高效的数据存储、检索及分析。
+并能无缝集成多种嵌入式 AI 模型的向量数据库，如 Chroma、PGVector、Elasticsearch、Milvus 等，实现高效的数据存储、检索及分析。
 无论是大规模数据集还是高度专业化的领域知识，JeeSite CMS + RAG + AI 都能提供定制化解决方案，满足企业多样化的业务需求和技术要求。
 企业可以轻松管理和访问复杂的信息资源，促进内部知识共享和创新，从而在竞争激烈的市场环境中保持领先地位。
 
@@ -65,6 +65,7 @@
 
 支持的向量库列表：<https://docs.spring.io/spring-ai/reference/1.0/api/vectordbs.html>
 
+* Chroma
 * PGVector
 * Elasticsearch
 * Milvus
