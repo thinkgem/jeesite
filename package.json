@@ -25,7 +25,7 @@
   "dependencies": {
     "@ant-design/colors": "7.2.0",
     "@ant-design/icons-vue": "7.0.1",
-    "@jeesite/cms-lib": "5.11.0-rc.1",
+    "@jeesite/cms-lib": "5.11.0-rc.2",
     "@jeesite/dbm-lib": "5.11.0-rc.1",
     "@unocss/preset-wind3": "66.0.0",
     "@vue/runtime-core": "3.5.13",
