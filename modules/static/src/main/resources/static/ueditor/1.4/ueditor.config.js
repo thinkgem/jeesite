@@ -34,7 +34,7 @@
 
         // 工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
         , toolbars: [[
-          'fullscreen', /*'source', '|', */'undo', 'redo', '|',
+          'fullscreen', 'undo', 'redo', '|',
           'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|',
           'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', /*'cleardoc', */'|',
           'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
@@ -45,7 +45,7 @@
           /*'simpleupload', */'insertimage', 'emotion', 'scrawl', 'insertvideo', /*'music', */'attachment', 'map',/* 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', */'template', 'background', '|',
           'horizontal', 'date', 'time', 'spechars', /*'snapscreen', */'wordimage', '|',
           'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', /*'charts', */'|',
-          'print', 'preview', 'searchreplace', 'drafts', 'help'
+          'print', 'preview', 'searchreplace', 'drafts', 'source', 'help',
         ]]
 
         // 简单的工具栏
