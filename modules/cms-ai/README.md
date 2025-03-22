@@ -73,9 +73,34 @@
 
 具体配置项详见 `jeesite-cms-ai.yml` 文件，有注释。
 
-### PGVector 建表语句
+## 安装 Chroma
+
+```sh
+docker run --name chroma -p 8000:8000 ghcr.io/chroma-core/chroma:0.5.20
+```
+
+## 安装 PGVector
+
+```sh
+docker run -d --name pgvector -p 5433:5432 -e POSTGRES_USER=postgres \
+              -e POSTGRES_PASSWORD=postgres pgvector/pgvector:pg17
+```
+
+* 进入容器
 
 ```sql
+docker exec -it pgvector psql -U postgres
+```
+
+* 建库语句
+
+```sql
+CREATE DATABASE "jeesite-ai2";
+
+-- 激活数据库
+\connect "jeesite-ai2";
+
+-- 建立数据表和索引
 CREATE EXTENSION IF NOT EXISTS vector;
 CREATE EXTENSION IF NOT EXISTS hstore;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -110,6 +135,11 @@ CREATE TABLE IF NOT EXISTS vector_store_1024 (
 );
 CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 ```
+
+## 创建菜单
+
+* 菜单名称：AI 助手
+* 菜单地址：/cms/chat/index
 
 ## 授权协议声明
 
