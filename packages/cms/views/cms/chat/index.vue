@@ -53,7 +53,7 @@
         <template #header>
           <div
             v-if="messages.length == 0"
-            class="h-full flex justify-center items-center c-gray-4 text-xl"
+            class="h-[90%] flex justify-center items-center c-gray-4 text-xl"
           >
             {{ t('我是你的 AI 助手，我可以帮你解答一些问题') }}
           </div>
