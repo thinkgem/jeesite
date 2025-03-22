@@ -1,0 +1,31 @@
+{
+  "name": "@jeesite/cms",
+  "version": "5.11.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "uninstall": "rimraf node_modules",
+    "update": "ncu -u"
+  },
+  "dependencies": {
+    "@jeesite/cms-lib": "5.11.0-rc.2",
+    "qs": "6.14.0"
+  },
+  "devDependencies": {
+    "@types/qs": "6.9.18"
+  },
+  "homepage": "https://jeesite.com",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/thinkgem/jeesite-vue.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/thinkgem/jeesite-vue/issues"
+  },
+  "author": {
+    "name": "ThinkGem",
+    "email": "thinkgem@163.com",
+    "url": "https://gitee.com/thinkgem"
+  }
+}

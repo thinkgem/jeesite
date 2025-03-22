@@ -12,7 +12,7 @@ export default defineConfig({
   inspector: false,
   content: {
     pipeline: {
-      include: ['**/*.vue', '**/*.tsx', '**/*.ts', '**/@jeesite/**/*.js'],
+      include: ['**/*.vue', '**/*.tsx', '**/*.ts', '**/*-lib/**/*.mjs'],
       exclude: ['.git', '.idea', '.turbo', 'node_modules', 'public'],
     },
   },

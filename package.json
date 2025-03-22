@@ -18,6 +18,7 @@
     "lint:prettier": "prettier --ignore-unknown --check --cache --write \"./**/*.{vue,tsx,less,scss}\"",
     "lint:stylelint": "stylelint \"./**/*.{vue,less,scss,css}\" --fix --custom-syntax postcss-html --cache --cache-location node_modules/.cache/stylelint/",
     "lint:all": "npm run bootstrap && npm run type:check && npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
+    "reinstall:force": "rimraf pnpm-lock.yaml node_modules && pnpm store prune && pnpm i --force && pnpm run dev --force",
     "reinstall": "turbo uninstall --concurrency 20 && rimraf pnpm-lock.yaml node_modules && npm run bootstrap",
     "update": "turbo update --concurrency 20 && ncu -u && npm run reinstall"
   },
@@ -26,6 +27,7 @@
     "@ant-design/icons-vue": "7.0.1",
     "@jeesite/assets": "workspace:*",
     "@jeesite/build": "workspace:*",
+    "@jeesite/cms": "workspace:*",
     "@jeesite/core": "workspace:*",
     "@jeesite/dbm": "workspace:*",
     "@jeesite/test": "workspace:*",
