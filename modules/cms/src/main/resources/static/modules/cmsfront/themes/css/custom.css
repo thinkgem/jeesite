@@ -4,6 +4,10 @@ body>.navbar{-webkit-transition:background-color .3s ease-in;transition:backgrou
 	body>.navbar-transparent{background-color:transparent}
 	body>.navbar-transparent .navbar-nav>.open>a{background-color:transparent!important}
 }
+h1,.h1{font-size:26px}
+h2,.h2{font-size:24px}
+h3,.h3{font-size:22px}
+p{margin:5px 0 10px;line-height:1.75;}
 #home{padding-top:0}
 #home .navbar-brand{padding:13.5px 15px 12.5px}
 #home .navbar-brand>img{display:inline;margin:0 10px;height:100%}
@@ -80,7 +84,7 @@ footer p{clear:left;margin-bottom:0}
 .article-title {color:#333;font-size:30px;text-align:center;border-bottom:1px solid #ddd;padding:15px 20px 20px 20px;margin-bottom:30px;}
 .article-info {border-top:1px solid #ddd;padding:10px;margin:30px 0 0;}
 .article-desc {padding:8px 10px 8px;margin:10px 20px 20px 35px;font-size:14px;}
-.article-content {padding-top:20px;}
+.article-content {padding-top:10px;}
 
 .pagination {margin:8px 0;display:block;/* text-align:center; */font-size:13px;} /* .pagination .controls a{border:0;} */
 .pagination>li>a, .pagination>li>span {min-width:37px;text-align:center;padding:6px;border:1px solid #ddd;background:transparent;/* border-radius:3px; */}
