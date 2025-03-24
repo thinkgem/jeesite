@@ -13,7 +13,9 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.utils.excel.ExcelExport;
 import com.jeesite.common.utils.excel.annotation.ExcelField.Type;
 import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
+import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.web.user.EmpUserController;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,7 +48,8 @@ public class OfficeController extends BaseController {
 
 	@Autowired
 	private OfficeService officeService;
-	
+	@Autowired
+	private EmpUserService empUserService;
 	@Autowired
 	private EmpUserController empUserController;
 
@@ -260,6 +263,14 @@ public class OfficeController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(Office office) {
+		if (Global.getConfigToBoolean("sys.office.notAllowDeleteIfUserExists", "false")) {
+			EmpUser empUserWhere = new EmpUser();
+			empUserWhere.getEmployee().getOffice().setIsQueryChildren(true);
+			empUserWhere.getEmployee().getOffice().setOfficeCode(office.getOfficeCode());
+			if (empUserService.findCount(empUserWhere) > 0) {
+				return renderResult(Global.FALSE, text("不允许删除包含用户的机构"));
+			}
+		}
 		officeService.delete(office);
 		return renderResult(Global.TRUE, text("删除机构''{0}''成功", office.getOfficeName()));
 	}

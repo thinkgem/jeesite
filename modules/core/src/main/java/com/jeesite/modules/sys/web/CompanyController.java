@@ -11,8 +11,10 @@ import com.jeesite.common.idgen.IdGen;
 import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.entity.Company;
+import com.jeesite.modules.sys.entity.EmpUser;
 import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.service.CompanyService;
+import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,9 +45,10 @@ public class CompanyController extends BaseController {
 
 	@Autowired
 	private CompanyService companyService;
-	
 	@Autowired
 	private OfficeService officeService;
+	@Autowired
+	private EmpUserService empUserService;
 
 	/**
 	 * 获取公司
@@ -208,6 +211,14 @@ public class CompanyController extends BaseController {
 	@RequestMapping(value = "delete")
 	@ResponseBody
 	public String delete(Company company) {
+		if (Global.getConfigToBoolean("sys.company.notAllowDeleteIfUserExists", "false")) {
+			EmpUser empUserWhere = new EmpUser();
+			empUserWhere.getEmployee().getCompany().setIsQueryChildren(true);
+			empUserWhere.getEmployee().getCompany().setCompanyCode(company.getCompanyCode());
+			if (empUserService.findCount(empUserWhere) > 0) {
+				return renderResult(Global.FALSE, text("不允许删除包含用户的公司"));
+			}
+		}
 		companyService.delete(company);
 		return renderResult(Global.TRUE, text("删除公司''{0}''成功", company.getCompanyName()));
 	}
