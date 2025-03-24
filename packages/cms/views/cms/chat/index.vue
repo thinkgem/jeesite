@@ -90,7 +90,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsCmsChatIndex">
-  import { onMounted, ref } from 'vue';
+  import { nextTick, onMounted, ref } from 'vue';
   import { Menu, Popconfirm } from 'ant-design-vue';
   import { Icon } from '@jeesite/core/components/Icon';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
@@ -124,7 +124,9 @@
       const res = await cmsChatSave();
       chatList.value.unshift(res);
     }
-    await handleSelect(chatList.value[0]);
+    await nextTick(async () => {
+      await handleSelect(chatList.value[0]);
+    });
   });
 
   async function handleAdd() {
