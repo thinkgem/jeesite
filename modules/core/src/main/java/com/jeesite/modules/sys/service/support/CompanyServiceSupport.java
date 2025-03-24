@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.service.support;
 
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.common.utils.PageUtils;
 import com.jeesite.modules.sys.dao.CompanyDao;
@@ -17,7 +18,6 @@ import com.jeesite.modules.sys.service.DataScopeService;
 import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.utils.EmpUtils;
 import com.jeesite.modules.sys.utils.UserUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,6 +100,7 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	@Override
 	@Transactional
 	public void delete(Company company) {
+		company.sqlMap().markIdDelete();
 		super.delete(company);
 		// 清理公司相关缓存
 		clearCompanyCache(company);
@@ -121,9 +122,24 @@ public class CompanyServiceSupport extends TreeService<CompanyDao, Company>
 	 */
 	private void clearCompanyCache(Company company){
 		EmpUtils.removeCache(EmpUtils.CACHE_COMPANY_ALL_LIST);
-		// 清理公司下的用户缓存
+		// 清理公司下的用户缓存，包含子公司
+		if (company == null || StringUtils.isBlank(company.getCompanyCode())){
+			return;
+		}
+		if (StringUtils.isBlank(company.getParentCode())){
+			company = get(company);
+			if (company == null){
+				return;
+			}
+		}
+		Company where = new Company();
+		where.setStatus(Company.STATUS_NORMAL);
+		where.setParentCodes(company.getParentCodes() + company.getCompanyCode() + ",%");
 		EmpUser empUserWhere = new EmpUser();
-		empUserWhere.setCodes(new String[]{ company.getCompanyCode() });
+		empUserWhere.setCodes(this.findByParentCodesLike(where).stream().map(Company::getCompanyCode).toArray(String[]::new));
+		if (empUserWhere.getCodes().length == 0) {
+			return;
+		}
 		PageUtils.findList(empUserWhere, null, e -> {
 			List<EmpUser> empUserList = empUserService.findUserListByCompanyCodes((EmpUser)e);
 			empUserList.forEach(UserUtils::clearCache);
