@@ -13,7 +13,7 @@
 	<artifactId>jeesite-module-cms-ai</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>JeeSite Module CMS+RAG+AI 向量数据库及人工智能对话知识库</name>
+	<name>JeeSite Module CMS+RAG+AI</name>
 	<url>http://jeesite.com</url>
 	<inceptionYear>2013-Now</inceptionYear>
 
