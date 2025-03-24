@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.service.support;
 
 import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.service.ServiceException;
 import com.jeesite.common.service.TreeService;
 import com.jeesite.common.utils.PageUtils;
@@ -175,9 +176,24 @@ public class OfficeServiceSupport extends TreeService<OfficeDao, Office>
 	 */
 	private void clearOfficeCache(Office office){
 		EmpUtils.removeCache(EmpUtils.CACHE_OFFICE_ALL_LIST);
-		// 清理组织下的用户缓存
+		// 清理组织下的用户缓存，包含子机构
+		if (office == null || StringUtils.isBlank(office.getOfficeCode())){
+			return;
+		}
+		if (StringUtils.isBlank(office.getParentCode())){
+			office = get(office);
+			if (office == null){
+				return;
+			}
+		}
+		Office where = new Office();
+		where.setStatus(Office.STATUS_NORMAL);
+		where.setParentCodes(office.getParentCodes() + office.getOfficeCode() + ",%");
 		EmpUser empUserWhere = new EmpUser();
-		empUserWhere.setCodes(new String[]{ office.getOfficeCode() });
+		empUserWhere.setCodes(this.findByParentCodesLike(where).stream().map(Office::getOfficeCode).toArray(String[]::new));
+		if (empUserWhere.getCodes().length == 0) {
+			return;
+		}
 		PageUtils.findList(empUserWhere, null, e -> {
 			List<EmpUser> empUserList = empUserService.findUserListByOfficeCodes((EmpUser)e);
 			empUserList.forEach(UserUtils::clearCache);
