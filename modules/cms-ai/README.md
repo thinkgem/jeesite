@@ -66,10 +66,10 @@ docker exec -it pgvector psql -U postgres
 * 建库语句
 
 ```sql
-CREATE DATABASE "jeesite-ai2";
+CREATE DATABASE "jeesite-ai";
 
 -- 激活数据库
-\connect "jeesite-ai2";
+\connect "jeesite-ai";
 
 -- 建立数据表和索引
 CREATE EXTENSION IF NOT EXISTS vector;
