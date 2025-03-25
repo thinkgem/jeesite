@@ -1,37 +1,4 @@
 
-## 技术交流
-
-* 官方网站：<https://jeesite.com>
-* 使用文档：<https://jeesite.com/docs>
-* 问题反馈：<http://jeesite.net> [【新手必读】](https://gitee.com/thinkgem/jeesite5/issues/I18ARR)
-* 需求收集：<https://gitee.com/thinkgem/jeesite5/issues/new>
-* 联系我们：<http://s.jeesite.com>
-* 关注微信公众号，了解最新动态：
-
-<p style="padding-left:40px">　　
- <img alt="JeeSite微信公众号" src="https://jeesite.com/assets/images/mp.png" width="200">
-</p>
-
-* QQ 群：`127515876`、`209330483`、`223507718`、`709534275`、`730390092`、`1373527`、`183903863(外包)`
-* 微信群：如果二维码过期，请尝试刷新图片，或者添加客服微信 jeesitex 邀请您进群
-
-<p style="padding-left:40px"><a href="https://jeesite.com/assets/images/wxg_cur.png" target="_blank">　　
- <img alt="JeeSite微信群" src="https://jeesite.com/assets/images/wxg_cur.png" width="200"/></a>
-</p>
-
-* 源码仓库地址：
-  [Gitee](https://gitee.com/thinkgem/jeesite5)、
-  [GitCode](https://gitcode.com/thinkgem/jeesite5)、
-  [GitHub](https://github.com/thinkgem/jeesite5)
-* 分离版源码仓库地址：
-  [Gitee](https://gitee.com/thinkgem/jeesite-vue)、
-  [GitCode](https://gitcode.com/thinkgem/jeesite-vue)、
-  [GitHub](https://github.com/thinkgem/jeesite-vue)
-* 源码合集仓库地址：
-  [GVP](https://gitee.com/thinkgem/jeesite/tree/v5.springboot3)、
-  [G-Star](https://gitcode.com/thinkgem/jeesite/overview?ref=v5.springboot3)、
-  [GitHub](https://github.com/thinkgem/jeesite/tree/v5.springboot3)
-
 ## 模块简介
 
 本模块基于 Spring AI 和 JeeSite 内容管理系统（CMS）并结合了检索增强生成（Retrieval-Augmented Generation, RAG）技术
@@ -48,6 +15,10 @@
 企业可以轻松管理和访问复杂的信息资源，促进内部知识共享和创新，从而在竞争激烈的市场环境中保持领先地位。
 
 优势：本模块结构清晰，代码简洁易懂，不管是正式项目、或是学习 AI 技术、都能轻松应对读懂源代码。
+
+## 在线演示
+
+<https://vue.jeesite.com/cms/chat/index>
 
 ## AI 模型配置
 
@@ -136,7 +107,9 @@ CREATE TABLE IF NOT EXISTS vector_store_1024 (
 CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 ```
 
-## 创建菜单
+## 创建 AI 菜单
+
+系统管理 -> 系统设置 -> 菜单管理 -> 新增
 
 * 菜单名称：AI 助手
 * 菜单地址：/cms/chat/index

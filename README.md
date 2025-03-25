@@ -119,6 +119,7 @@
 
 ## 生态系统
 
+* AI 模块：<https://gitee.com/thinkgem/jeesite5/blob/v5.springboot3/modules/cms-ai>
 * 分布式微服务（Spring Cloud）：<https://gitee.com/thinkgem/jeesite-cloud>
 * Flowable业务流程引擎（BPM）：<http://jeesite.com/docs/bpm/>
 * 多站点内容管理模块（CMS）：<https://jeesite.com/docs/cms/>
@@ -135,8 +136,8 @@
 
 ### 在线演示
 
-1. 全栈版地址：<http://demo.jeesite.com>
-2. Vue3分离版地址：<http://vue.jeesite.com>
+1. Vue3版地址：<https://vue.jeesite.com>
+2. 全栈版地址：<https://demo.jeesite.com>
 
 ### 本地运行
 
