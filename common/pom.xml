@@ -87,13 +87,6 @@
 			<version>${snakeyaml.version}</version>
 		</dependency>
 		
-		<!-- Apache HTTP -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>${httpclient.version}</version>
-		</dependency>
-		
 		<!-- Email -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

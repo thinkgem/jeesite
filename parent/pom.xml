@@ -31,7 +31,6 @@
 		<fastjson.version>2.0.51</fastjson.version>
 		<snakeyaml.version>2.2</snakeyaml.version>
 		<glassfish-jaxb.version>2.3.9</glassfish-jaxb.version>
-		<httpclient.version>4.5.14</httpclient.version>
 		<UserAgentUtils.version>1.21</UserAgentUtils.version>
 
 		<metadata-extractor.version>2.19.0</metadata-extractor.version>

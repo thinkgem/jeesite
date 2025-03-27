@@ -4,7 +4,11 @@
  */
 package com.jeesite.test.web.http;
 
+import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.web.http.HttpClientUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * HTTP客户端测试工具类（支持HTTPS）
@@ -14,8 +18,15 @@ import com.jeesite.common.web.http.HttpClientUtils;
 public class HttpClientUtilsTest {
 
 	public static void main(String[] args) {
-		String content = HttpClientUtils.get("https://jeesite.com");
-		System.out.println(content);
+		String url = "https://vue.jeesite.com/js/a/sys/corpAdmin/treeData";
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("isShowCode", "true");
+		dataMap.put("param1", "你好");
+		System.out.println(HttpClientUtils.get(url, dataMap));
+		System.out.println(HttpClientUtils.ajaxGet(url, dataMap));
+		System.out.println(HttpClientUtils.post(url, dataMap));
+		System.out.println(HttpClientUtils.ajaxPost(url, dataMap));
+		System.out.println(HttpClientUtils.ajaxPostJson(url, JsonMapper.toJson(dataMap)));
 	}
 
 }

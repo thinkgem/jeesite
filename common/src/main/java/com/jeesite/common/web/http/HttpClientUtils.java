@@ -4,218 +4,225 @@
  */
 package com.jeesite.common.web.http;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
-import java.security.cert.CertificateException;
+import com.jeesite.common.codec.EncodeUtils;
+import com.jeesite.common.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509ExtendedTrustManager;
+import java.net.Socket;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
 import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.util.EntityUtils;
-
-import com.jeesite.common.codec.EncodeUtils;
-
 /**
- * HTTP客户端工具类（支持HTTPS）
+ * HTTP 客户端工具类（支持HTTPS）
  * @author ThinkGem
- * @version 2017-3-27
+ * @version 2025-03-26
  */
 public class HttpClientUtils {
-	
+
+	private final static Logger logger = LoggerFactory.getLogger(HttpClientUtils.class);
+	private static final HttpClient client = createHttpClient(60);
+
 	/**
-	 * http的get请求
-	 * @param url
+	 * HTTP 的 GET 请求
 	 */
 	public static String get(String url) {
-		return get(url, EncodeUtils.UTF_8);
-	}
-	
-	/**
-	 * http的get请求
-	 * @param url
-	 */
-	public static String get(String url, String charset) {
-		HttpGet httpGet = new HttpGet(url);
-		return executeRequest(httpGet, charset);
-	}
-	
-	/**
-	 * http的get请求，增加异步请求头参数
-	 * @param url
-	 */
-	public static String ajaxGet(String url) {
-		return ajaxGet(url, EncodeUtils.UTF_8);
-	}
-	
-	/**
-	 * http的get请求，增加异步请求头参数
-	 * @param url
-	 */
-	public static String ajaxGet(String url, String charset) {
-		HttpGet httpGet = new HttpGet(url);
-		httpGet.setHeader("X-Requested-With", "XMLHttpRequest");
-		return executeRequest(httpGet, charset);
+		return get(url, null, null);
 	}
 
 	/**
-	 * http的post请求，传递map格式参数
+	 * HTTP 的 GET 请求，传递 Map 格式参数
+	 */
+	public static String get(String url, Map<String, String> dataMap) {
+        return get(url, dataMap, EncodeUtils.UTF_8);
+	}
+	
+	/**
+	 * HTTP 的 GET 请求，传递 Map 格式参数，支持指定编码
+	 */
+	public static String get(String url, Map<String, String> dataMap, String charset) {
+		HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(buildUrl(url, dataMap, charset)))
+                .GET()
+                .build();
+        return executeRequest(request);
+	}
+	
+	/**
+	 * HTTP 的 GET 请求，增加 ajax 请求头
+	 */
+	public static String ajaxGet(String url) {
+		return ajaxGet(url, null, null);
+	}
+
+	/**
+	 * HTTP 的 GET 请求，增加 ajax 请求头，传递 Map 格式参数
+	 */
+	public static String ajaxGet(String url, Map<String, String> dataMap) {
+        return ajaxGet(url, dataMap, EncodeUtils.UTF_8);
+	}
+
+	/**
+	 * HTTP 的 GET 请求，增加 ajax 请求头，传递 Map 格式参数，支持指定编码
+	 */
+	public static String ajaxGet(String url, Map<String, String> dataMap, String charset) {
+		HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(buildUrl(url, dataMap, charset)))
+                .header("X-Requested-With", "XMLHttpRequest")
+                .GET()
+                .build();
+        return executeRequest(request);
+	}
+
+	/**
+	 * 构建表单数据，Map 转换 params，支持指定编码
+	 */
+	private static String buildUrl(String url, Map<String, String> dataMap, String charset) {
+		if (dataMap == null) {
+			return url;
+		}
+		StringBuilder sb = new StringBuilder(url);
+        if (!url.contains("?")) {
+            sb.append("?");
+        } else if (!url.endsWith("&")) {
+            sb.append("&");
+        }
+		return sb + buildFormData(dataMap, charset);
+	}
+
+	/**
+	 * HTTP 的 POST 请求，传递 Map 格式参数
 	 */
 	public static String post(String url, Map<String, String> dataMap) {
 		return post(url, dataMap, EncodeUtils.UTF_8);
 	}
 
 	/**
-	 * http的post请求，传递map格式参数
+	 * HTTP 的 POST 请求，传递 Map 格式参数，支持指定编码
 	 */
 	public static String post(String url, Map<String, String> dataMap, String charset) {
-		HttpPost httpPost = new HttpPost(url);
-		try {
-			if (dataMap != null){
-				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-				}
-				UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(nvps, charset);
-				formEntity.setContentEncoding(charset);
-				httpPost.setEntity(formEntity);
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return executeRequest(httpPost, charset);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(buildFormData(dataMap, charset)))
+                .build();
+        return executeRequest(request);
 	}
 
 	/**
-	 * http的post请求，增加异步请求头参数，传递map格式参数
+	 * HTTP 的 POST 请求，增加 ajax 请求头，传递 Map 格式参数
 	 */
 	public static String ajaxPost(String url, Map<String, String> dataMap) {
 		return ajaxPost(url, dataMap, EncodeUtils.UTF_8);
 	}
 
 	/**
-	 * http的post请求，增加异步请求头参数，传递map格式参数
+	 * HTTP 的 POST 请求，增加 ajax 请求头，传递 Map 格式参数，支持指定编码
 	 */
 	public static String ajaxPost(String url, Map<String, String> dataMap, String charset) {
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
-		try {
-			if (dataMap != null){
-				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-				}
-				UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(nvps, charset);
-				formEntity.setContentEncoding(charset);
-				httpPost.setEntity(formEntity);
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return executeRequest(httpPost, charset);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("X-Requested-With", "XMLHttpRequest")
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(buildFormData(dataMap, charset)))
+                .build();
+        return executeRequest(request);
 	}
 
 	/**
-	 * http的post请求，增加异步请求头参数，传递json格式参数
+	 * 构建表单数据，Map 转换 params，支持指定编码
+	 */
+	private static String buildFormData(Map<String, String> dataMap, String charset) {
+		return dataMap.entrySet().stream()
+                .map(entry -> entry.getKey() + "="
+						+ EncodeUtils.encodeUrl(entry.getValue(), charset))
+                .reduce((a, b) -> a + "&" + b)
+                .orElse(StringUtils.EMPTY);
+	}
+
+	/**
+	 * HTTP 的 POST 请求，使用 json 请求头，传递 json 格式参数
 	 */
 	public static String ajaxPostJson(String url, String jsonString) {
 		return ajaxPostJson(url, jsonString, EncodeUtils.UTF_8);
 	}
 
 	/**
-	 * http的post请求，增加异步请求头参数，传递json格式参数
+	 * HTTP 的 POST 请求，使用 json 请求头，传递 json 格式参数，支持指定编码
 	 */
 	public static String ajaxPostJson(String url, String jsonString, String charset) {
-		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
-//		try {
-			StringEntity stringEntity = new StringEntity(jsonString, charset);// 解决中文乱码问题
-			stringEntity.setContentEncoding(charset);
-			stringEntity.setContentType("application/json");
-			httpPost.setEntity(stringEntity);
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-		return executeRequest(httpPost, charset);
+		HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("X-Requested-With", "XMLHttpRequest")
+                .header("Content-Type", "application/json; charset="
+						+ (StringUtils.isNotBlank(charset) ? charset : EncodeUtils.UTF_8))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+		return executeRequest(request);
 	}
 
 	/**
-	 * 执行一个http请求，传递HttpGet或HttpPost参数
+	 * 执行一个 http 请求，传递 HttpRequest 参数
 	 */
-	public static String executeRequest(HttpUriRequest httpRequest) {
-		return executeRequest(httpRequest, EncodeUtils.UTF_8);
+	public static String executeRequest(HttpRequest request) {
+		try {
+			return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 	}
 
-	/**
-	 * 执行一个http请求，传递HttpGet或HttpPost参数
-	 */
-	public static String executeRequest(HttpUriRequest httpRequest, String charset) {
-		CloseableHttpClient httpclient;
-		if ("https".equals(httpRequest.getURI().getScheme())){
-			httpclient = createSSLInsecureClient();
-		}else{
-			httpclient = HttpClients.createDefault();
-		}
-		String result = "";
+	public static HttpClient createHttpClient(long seconds) {
+		HttpClient client;
 		try {
-			try {
-				CloseableHttpResponse response = httpclient.execute(httpRequest);
-				HttpEntity entity = null;
-				try {
-					entity = response.getEntity();
-					result = EntityUtils.toString(entity, charset);
-				} finally {
-					EntityUtils.consume(entity);
-					response.close();
-				}
-			} finally {
-				httpclient.close();
-			}
-		}catch(IOException ex){
-			ex.printStackTrace();
+			SSLContext sslContext = SSLContext.getInstance("TLS");
+			sslContext.init(null, new TrustManager[]{new UnsafeX509ExtendedTrustManager()}, new SecureRandom());
+			client = HttpClient.newBuilder()
+					.sslContext(sslContext)
+					.connectTimeout(Duration.ofSeconds(seconds))
+					.build();
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			client = HttpClient.newHttpClient();
 		}
-		return result;
+		return client;
 	}
-	
-	/**
-	 * 创建 SSL连接
-	 */
-	public static CloseableHttpClient createSSLInsecureClient() {
-		try {
-			SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(new TrustStrategy() {
-				@Override
-				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-					return true;
-				}
-			}).build();
-			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, new HostnameVerifier() {
-				@Override
-				public boolean verify(String hostname, SSLSession session) {
-					return true;
-				}
-			});
-			return HttpClients.custom().setSSLSocketFactory(sslsf).build();
-		} catch (GeneralSecurityException ex) {
-			throw new RuntimeException(ex);
+
+	private static final class UnsafeX509ExtendedTrustManager extends X509ExtendedTrustManager {
+
+		private static final X509Certificate[] EMPTY_CERTIFICATES = new X509Certificate[0];
+
+		@Override
+		public void checkClientTrusted(X509Certificate[] certificates, String authType) {
+		}
+		@Override
+		public void checkClientTrusted(X509Certificate[] certificates, String authType, Socket socket) {
+		}
+		@Override
+		public void checkClientTrusted(X509Certificate[] certificates, String authType, SSLEngine sslEngine) {
+		}
+		@Override
+		public void checkServerTrusted(X509Certificate[] certificates, String authType) {
+		}
+		@Override
+		public void checkServerTrusted(X509Certificate[] certificates, String authType, Socket socket) {
+		}
+		@Override
+		public void checkServerTrusted(X509Certificate[] certificates, String authType, SSLEngine sslEngine) {
+		}
+		@Override
+		public X509Certificate[] getAcceptedIssuers() {
+			return EMPTY_CERTIFICATES;
 		}
 	}
 	
