@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jeesite</groupId>
 		<artifactId>jeesite-parent</artifactId>
-		<version>5.11.0-SNAPSHOT</version>
+		<version>5.11.1-SNAPSHOT</version>
 		<!--<relativePath>../../jeesite/parent/pom.xml</relativePath>-->
 		<relativePath />
 	</parent>
