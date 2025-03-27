@@ -154,7 +154,7 @@ public class EncodeUtils {
 			return null;
 		}
 		try {
-			return URLEncoder.encode(part, encoding);
+			return URLEncoder.encode(part, StringUtils.isNotBlank(encoding) ? encoding : EncodeUtils.UTF_8);
 		} catch (UnsupportedEncodingException e) {
 			throw ExceptionUtils.unchecked(e);
 		}
@@ -175,7 +175,7 @@ public class EncodeUtils {
 			return null;
 		}
 		try {
-			return URLDecoder.decode(part, encoding);
+			return URLDecoder.decode(part, StringUtils.isNotBlank(encoding) ? encoding : EncodeUtils.UTF_8);
 		} catch (UnsupportedEncodingException e) {
 			throw ExceptionUtils.unchecked(e);
 		}
