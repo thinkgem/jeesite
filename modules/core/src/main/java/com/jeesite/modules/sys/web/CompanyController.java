@@ -93,6 +93,7 @@ public class CompanyController extends BaseController {
 			company.setParentCode(Company.ROOT_CODE);
 		}
 		if (StringUtils.isNotBlank(company.getViewCode())
+				|| StringUtils.isNotBlank(company.getViewCode_like())
 				|| StringUtils.isNotBlank(company.getCompanyName())
 				|| StringUtils.isNotBlank(company.getFullName())){
 			company.setParentCode(null);
