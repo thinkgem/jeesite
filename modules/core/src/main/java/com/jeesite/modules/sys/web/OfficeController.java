@@ -96,6 +96,7 @@ public class OfficeController extends BaseController {
 			office.setParentCode(Office.ROOT_CODE);
 		}
 		if (StringUtils.isNotBlank(office.getViewCode())
+				|| StringUtils.isNotBlank(office.getViewCode_like())
 				|| StringUtils.isNotBlank(office.getOfficeName())
 				|| StringUtils.isNotBlank(office.getFullName())){
 			office.setParentCode(null);
