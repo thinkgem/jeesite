@@ -45,13 +45,16 @@
   import { menuDelete, menuDisable, menuEnable, menuListData } from '/@/api/sys/menu';
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
+  import { isEmpty } from '/@/utils/is';
   import InputForm from './form.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
     sysCode: String,
     isLeaf: Boolean,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.menu');
   const { showMessage } = useMessage();
@@ -91,6 +94,9 @@
         },
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -213,7 +219,7 @@
     api: menuListData,
     beforeFetch: (params) => {
       params.sysCode = props.sysCode || 'default';
-      params.menuCode = props.treeCode;
+      params.menuCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -226,15 +232,17 @@
     canResize: true,
   });
 
-  watch([() => props.treeCode, () => props.sysCode], () => {
-    reload();
+  watch([() => props.treeCodes, () => props.sysCode], () => {
+    if (!isEmpty(props.treeCodes) && props.sysCode) {
+      reload();
+    }
     // if (props.isLeaf) {
     //   handleForm({ menuCode: props.treeCode });
     // }
   });
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

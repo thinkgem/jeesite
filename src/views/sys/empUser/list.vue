@@ -62,6 +62,7 @@
   import { useDrawer } from '/@/components/Drawer';
   import { useModal } from '/@/components/Modal';
   import { FormProps } from '/@/components/Form';
+  import { isEmpty } from '/@/utils/is';
   import InputForm from './form.vue';
   import FormAuthDataScope from './formAuthDataScope.vue';
   import FormImport from './formImport.vue';
@@ -69,9 +70,11 @@
   import { LOCALE } from '/@/settings/localeSetting';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
     treeName: String,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.empUser');
   const { showMessage } = useMessage();
@@ -171,6 +174,9 @@
         },
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -358,13 +364,15 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     async () => {
-      await getForm().setFieldsValue({
-        'employee.office.officeCode': props.treeCode,
-        'employee.office.officeName': props.treeName,
-      });
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        await getForm().setFieldsValue({
+          'employee.office.officeCode': props.treeCodes[0],
+          'employee.office.officeName': props.treeName,
+        });
+        await reload();
+      }
     },
   );
 

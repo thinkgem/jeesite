@@ -54,12 +54,15 @@
   import { useDrawer } from '/@/components/Drawer';
   import { useModal } from '/@/components/Modal';
   import { FormProps } from '/@/components/Form';
+  import { isEmpty } from '/@/utils/is';
   import InputForm from './form.vue';
   import FormImport from './formImport.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.office');
   const { showMessage } = useMessage();
@@ -119,6 +122,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -256,7 +262,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse, getForm }] = useTable({
     api: officeListData,
     beforeFetch: (params) => {
-      params.officeCode = props.treeCode;
+      params.officeCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -270,14 +276,16 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     () => {
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

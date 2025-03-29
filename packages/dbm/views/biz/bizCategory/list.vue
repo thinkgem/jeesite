@@ -45,10 +45,13 @@
   import { useModal } from '/@/components/Modal';
   import { FormProps } from '/@/components/Form';
   import InputForm from './form.vue';
+  import { isEmpty } from '/@/utils/is';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('biz.bizCategory');
   const { showMessage } = useMessage();
@@ -89,6 +92,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -183,6 +189,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse, getForm }] = useTable({
     api: bizCategoryListData,
     beforeFetch: (params) => {
+      params.categoryCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -196,17 +203,19 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     async () => {
-      await getForm().setFieldsValue({
-        categoryCode: props.treeCode,
-      });
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        await getForm().setFieldsValue({
+          categoryCode: props.treeCodes[0],
+        });
+        await reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }

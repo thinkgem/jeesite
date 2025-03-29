@@ -13,10 +13,10 @@
         :showIcon="true"
         :api="companyTreeData"
         :defaultExpandLevel="2"
-        @select="handleSelect"
+        v-model:selectedKeys="treeCodes"
       />
     </template>
-    <ListView :treeCode="treeCode" />
+    <ListView v-model:treeCodes="treeCodes" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsSysCompanyIndex">
@@ -27,10 +27,6 @@
   import { companyTreeData } from '/@/api/sys/company';
   import ListView from './list.vue';
 
-  const { t } = useI18n('sys.menu');
-  const treeCode = ref<string>('');
-
-  function handleSelect(keys: string[]) {
-    treeCode.value = keys[0];
-  }
+  const { t } = useI18n('sys.company');
+  const treeCodes = ref<string[]>([]);
 </script>

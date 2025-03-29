@@ -14,6 +14,7 @@
         :params="apiParams"
         :defaultExpandLevel="1"
         @select="handleSelect"
+        v-model:selectedKeys="treeCodes"
       >
         <template #headerTitle>
           <Dropdown class="cursor-pointer" :trigger="['hover']" :dropMenuList="dropMenuList">
@@ -22,7 +23,7 @@
         </template>
       </BasicTree>
     </template>
-    <ListView :treeCode="treeCode" :sysCode="sysCode" />
+    <ListView v-model:treeCodes="treeCodes" :sysCode="sysCode" :isLeaf="isLeaf" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsSysMenuIndex">
@@ -37,7 +38,8 @@
   import ListView from './list.vue';
 
   const { t } = useI18n('sys.menu');
-  const treeCode = ref<string>('');
+  const treeCodes = ref<string[]>([]);
+  const isLeaf = ref<boolean>(false);
   const apiParams = ref<Recordable>({ sysCode: 'default' });
 
   const dropMenuList = ref<Array<DropMenu>>([]);
@@ -48,7 +50,7 @@
     const res = await menuIndex();
     const menu = (res.menu || {}) as Menu;
     sysCode.value = menu.sysCode || 'default';
-    loadSysCode();
+    await loadSysCode();
   });
 
   async function loadSysCode() {
@@ -69,7 +71,7 @@
     });
   }
 
-  function handleSelect(keys: string[]) {
-    treeCode.value = keys[0];
+  function handleSelect(keys: string[], obj: any) {
+    isLeaf.value = !!obj?.node?.isLeaf;
   }
 </script>

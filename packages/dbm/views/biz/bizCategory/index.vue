@@ -10,12 +10,13 @@
         :title="t('分类')"
         :search="true"
         :toolbar="true"
+        :showIcon="true"
         :api="bizCategoryTreeData"
         :defaultExpandLevel="2"
-        @select="handleSelect"
+        v-model:selectedKeys="treeCodes"
       />
     </template>
-    <ListView :treeCode="treeCode" />
+    <ListView v-model:treeCodes="treeCodes" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsBizCategoryIndex">
@@ -27,9 +28,5 @@
   import ListView from './list.vue';
 
   const { t } = useI18n('biz.bizCategory');
-  const treeCode = ref<string>('');
-
-  function handleSelect(keys: string[]) {
-    treeCode.value = keys[0];
-  }
+  const treeCodes = ref<string[]>([]);
 </script>

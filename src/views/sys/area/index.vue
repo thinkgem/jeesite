@@ -15,10 +15,10 @@
         :treeData="treeData"
         :loadData="onLoadData"
         :treeDataSimpleMode="false"
-        @select="handleSelect"
+        v-model:selectedKeys="treeCodes"
       />
     </template>
-    <ListView :treeCode="treeCode" />
+    <ListView v-model:treeCodes="treeCodes" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsSysAreaIndex">
@@ -32,11 +32,7 @@
   //import { uniq } from 'lodash-es';
 
   const { t } = useI18n('sys.area');
-  const treeCode = ref<string>('');
-
-  function handleSelect(keys: string[]) {
-    treeCode.value = keys[0];
-  }
+  const treeCodes = ref<string[]>([]);
 
   const treeRef = ref<Nullable<TreeActionType>>(null);
   const treeData = ref<TreeItem['treeData']>([]);

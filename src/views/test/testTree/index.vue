@@ -10,12 +10,13 @@
         :title="t('数据')"
         :search="true"
         :toolbar="true"
+        :showIcon="true"
         :api="testTreeTreeData"
         :defaultExpandLevel="2"
-        @select="handleSelect"
+        v-model:selectedKeys="treeCodes"
       />
     </template>
-    <ListView :treeCode="treeCode" />
+    <ListView v-model:treeCodes="treeCodes" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="ViewsTestTestTreeIndex">
@@ -26,10 +27,6 @@
   import { testTreeTreeData } from '/@/api/test/testTree';
   import ListView from './list.vue';
 
-  const { t } = useI18n('sys.menu');
-  const treeCode = ref<string>('');
-
-  function handleSelect(keys: string[]) {
-    treeCode.value = keys[0];
-  }
+  const { t } = useI18n('sys.testTree');
+  const treeCodes = ref<string[]>([]);
 </script>

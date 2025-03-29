@@ -44,11 +44,14 @@
   import { companyDisable, companyEnable } from '/@/api/sys/company';
   import { useDrawer } from '/@/components/Drawer';
   import { FormProps } from '/@/components/Form';
+  import { isEmpty } from '/@/utils/is';
   import InputForm from './form.vue';
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
 
   const { t } = useI18n('sys.company');
   const { showMessage } = useMessage();
@@ -88,6 +91,9 @@
         component: 'Input',
       },
     ],
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
   };
 
   const tableColumns: BasicColumn[] = [
@@ -194,7 +200,7 @@
   const [registerTable, { reload, expandAll, collapseAll, expandCollapse }] = useTable({
     api: companyListData,
     beforeFetch: (params) => {
-      params.companyCode = props.treeCode;
+      params.companyCode = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
       return params;
     },
     columns: tableColumns,
@@ -208,14 +214,16 @@
   });
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     () => {
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        reload();
+      }
     },
   );
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }
