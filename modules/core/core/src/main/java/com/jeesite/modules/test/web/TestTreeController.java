@@ -24,7 +24,7 @@ public class TestTreeController extends BaseController {
 	 * 查询列表
 	 */
 	@RequiresPermissions("test:testTree:view")
-	@RequestMapping(value = {"list", ""})
+	@RequestMapping(value = {"index", "list", ""})
 	public String list(Model model) {
 		return REDIRECT + adminPath + "/test2/testTree";
 	}
