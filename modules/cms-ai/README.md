@@ -114,6 +114,12 @@ CREATE INDEX ON vector_store_1024 USING HNSW (embedding vector_cosine_ops);
 * 菜单名称：AI 助手
 * 菜单地址：/cms/chat/index
 
+## 工具调用 Tool Calling
+
+工具调用 Tool Calling（也称 Function Calling）是人工智能应用程序中的常见模式，允许模型与一组 API 或工具交互，从而增强其功能。
+
+实例代码，详见 `CmsAiTools.java` 让 AI 调用你的 java 实现你的业务联动。
+
 ## 授权协议声明
 
 1. 基于 Apache License Version 2.0 协议发布，可用于商业项目，但必须遵守以下补充条款。
