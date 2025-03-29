@@ -19,12 +19,13 @@
         :title="t('${functionNameSimple}')"
         :search="true"
         :toolbar="true"
+        :showIcon="true"
         :api="${className}TreeData"
         :defaultExpandLevel="2"
-        @select="handleSelect"
+        v-model:selectedKeys="treeCodes"
       />
     </template>
-    <ListView :treeCode="treeCode" />
+    <ListView v-model:treeCodes="treeCodes" />
   </PageWrapper>
 </template>
 <script lang="ts" setup name="${compNamePrefix}Index">
@@ -36,11 +37,7 @@
   import ListView from './list.vue';
 
   const { t } = useI18n('${moduleName}${isNotEmpty(subModuleName)?'.'+subModuleName:''}.${className}');
-  const treeCode = ref<string>('');
-
-  function handleSelect(keys: string[]) {
-    treeCode.value = keys[0];
-  }
+  const treeCodes = ref<string[]>([]);
 </script>
 <% } %>
 <% %>
