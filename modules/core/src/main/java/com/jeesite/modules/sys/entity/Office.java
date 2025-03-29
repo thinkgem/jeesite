@@ -68,7 +68,7 @@ public class Office extends TreeEntity<Office> {
 	@ExcelFields({
 		@ExcelField(title="上级编码", attrName="parentCode", align=Align.LEFT, sort=10),
 		@ExcelField(title="机构编码", attrName="officeCode", align=Align.LEFT, sort=20),
-		@ExcelField(title="显示编码", attrName="viewCode", align = Align.LEFT, sort=30),
+		@ExcelField(title="机构代码", attrName="viewCode", align = Align.LEFT, sort=30),
 		@ExcelField(title="机构名称", attrName="officeName", align=Align.LEFT, sort=40),
 		@ExcelField(title="机构全称", attrName="fullName", align=Align.LEFT, sort=50),
 		@ExcelField(title="机构类型", attrName="officeType", align=Align.CENTER, sort=60, dictType="sys_office_type"),
