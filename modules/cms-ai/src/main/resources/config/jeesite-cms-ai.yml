@@ -9,12 +9,15 @@ spring:
       api-key: ${SFLOW_APP_KEY}
       #base-url: https://ai.gitee.com
       #api-key: ${GITEE_APP_KEY}
+      #base-url: https://dashscope.aliyuncs.com/compatible-mode
+      #api-key: ${BAILIAN_APP_KEY}
       # 聊天对话模型
       chat:
-        enabled: true
+        enabled: false
         options:
           model: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
           #model: DeepSeek-R1-Distill-Qwen-14B
+          #model: deepseek-r1-distill-llama-8b
           max-tokens: 1024
           temperature: 0.6
           top-p: 0.7
@@ -22,28 +25,30 @@ spring:
           logprobs: true
       # 向量库知识库模型（注意：不同的模型维度不同）
       embedding:
-        enabled: true
+        enabled: false
         options:
           model: BAAI/bge-m3
           #model: bge-large-zh-v1.5
           dimensions: 512
+          #model: text-embedding-v3
+          #dimensions: 1024
 
     # 本地大模型配置（使用该模型，请开启 enabled 参数）
     ollama:
       base-url: http://localhost:11434
       # 聊天对话模型
       chat:
-        enabled: false
+        enabled: true
         options:
-          #model: qwen2.5
-          model: deepseek-r1:7b
+          model: qwen2.5
+          #model: deepseek-r1:7b
           max-tokens: 1024
           temperature: 0.6
           top-p: 0.7
           frequency-penalty: 0
       # 向量库知识库模型（注意：不同的模型维度不同）
       embedding:
-        enabled: false
+        enabled: true
         # 维度 dimensions 设置为 384
         #model: all-minilm:33m
         # 维度 dimensions 设置为 768
@@ -57,10 +62,11 @@ spring:
       # Chroma 向量数据库
       chroma:
         client:
-          host: http://localhost
+          host: http://testserver
           port: 8000
         initialize-schema: true
-        collection-name: vector_store
+        #collection-name: vector_store
+        collection-name: vector_store_1024
 
 #      # Postgresql 向量数据库（PG 连接配置，见下文，需要手动建表）
 #      pgvector:
