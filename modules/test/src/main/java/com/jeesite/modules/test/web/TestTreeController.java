@@ -44,7 +44,17 @@ public class TestTreeController extends BaseController {
 	public TestTree get(String treeCode, boolean isNewRecord) {
 		return testTreeService.get(treeCode, isNewRecord);
 	}
-	
+
+	/**
+	 * 管理主页
+	 */
+	@RequiresPermissions("test:testTree:view")
+	@RequestMapping(value = "index")
+	public String index(TestTree testTree, Model model) {
+		model.addAttribute("testTree", testTree);
+		return "modules/test/testTreeIndex";
+	}
+
 	/**
 	 * 查询列表
 	 */

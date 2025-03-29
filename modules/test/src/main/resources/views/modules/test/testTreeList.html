@@ -19,6 +19,7 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${testTree}" action="${ctx}/test/testTree/listData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<#form:hidden path="treeCode"/>
 				<div class="form-group">
 					<label class="control-label">${text('节点名称')}：</label>
 					<div class="control-inline">
@@ -79,10 +80,13 @@ $('#dataGrid').dataGrid({
 	],
 	treeGrid: true,			// 启用树结构表格
 	defaultExpandLevel: 0,	// 默认展开的层次
-	expandNodeClearPostData: 'treeName,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
+	expandNodeClearPostData: 'treeCode,treeName,remarks,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）
 	//# // 加载成功后执行事件
 	ajaxSuccess: function(data){
-		
+		if ($('#treeCode').val() != ''){
+			$('#treeCode').val('');
+			$('#btnExpandTreeNode').click();
+		}
 	}
 });
 
