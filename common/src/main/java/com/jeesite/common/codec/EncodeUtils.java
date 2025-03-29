@@ -309,4 +309,27 @@ public class EncodeUtils {
 		return null;
 	}
 
+	// 对邮箱和手机号进行安全处理
+	private static final Pattern emailPattern = Pattern.compile("([\\w\\W]?)([\\w\\W]+)([\\w\\W])(@[\\w\\W]+)");
+	private static final Pattern mobilePattern = Pattern.compile("(\\d{3})(\\d+)(\\d{3})");
+
+	/**
+	 * 手机号码进行掩码处理
+	 */
+	public static String mobileMask(String mobile){
+		if (StringUtils.isBlank(mobile)){
+			return mobile;
+		}
+		return mobilePattern.matcher(mobile).replaceAll("$1****$3");
+	}
+
+	/**
+	 * 对电子邮箱进行掩码处理
+	 */
+	public static String emailMask(String email){
+		if (StringUtils.isBlank(email)){
+			return email;
+		}
+		return emailPattern.matcher(email).replaceAll("$1****$3$4");
+	}
 }
