@@ -5,6 +5,7 @@
 package com.jeesite.modules.sys.web;
 
 import com.jeesite.common.codec.DesUtils;
+import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
@@ -565,39 +566,39 @@ public class AccountController extends BaseController{
 	 * 发送邮件验证码
 	 */
 	private String sendEmailValidCode(User user, String code, String title, Map<String, Object> data){
-		String account = user.getEmail();
+		String email = user.getEmail();
 		try {
 			title = text("{0}（{1}）{2}验证码", user.getUserName(), user.getLoginCode(), title);
 			String content = text("尊敬的用户，您好!\n\n您的验证码是：{0}（请勿透露给其他人）\n\n"
 					+ "请复制后，填写在你的验证码窗口完成验证。\n\n本邮件由系统自动发出，请勿回复。\n\n感谢您的使用！", code);
-//			String receiveUserCode = "[CODE]"+account;
+//			String receiveUserCode = "[CODE]"+email;
 //			MsgPushUtils.push(MsgPush.TYPE_EMAIL, title, content, null, null, receiveUserCode);
-			EmailUtils.send(account, title, content);
+			EmailUtils.send(email, title, content);
 		} catch (Exception e) {
 			logger.error(title + "发送邮件错误。", e);
 			return renderResult(Global.FALSE, text("系统出现了点问题，错误信息：{0}", e.getMessage()));
 		}
-		account = account.replaceAll("([\\w\\W]?)([\\w\\W]+)([\\w\\W])(@[\\w\\W]+)", "$1****$3$4");
-		return renderResult(Global.TRUE, text("验证码已发送到“{0}”邮箱账号，请尽快查收！", account), data);
+		email = EncodeUtils.emailMask(email);
+		return renderResult(Global.TRUE, text("验证码已发送到“{0}”邮箱账号，请尽快查收！", email), data);
 	}
 	
 	/**
 	 * 发送短信验证码
 	 */
 	private String sendSmsValidCode(User user, String code, String title, Map<String, Object> data){
-		String account = user.getMobile();
+		String mobile = user.getMobile();
 		try {
 			title = text("{0}（{1}）{2}验证码", user.getUserName(), user.getLoginCode(), title);
 			String content = text("您好，您的验证码是：{0}（请勿透露给其他人）感谢您的使用。", code);
-//			String receiveUserCode = "[CODE]"+account;
+//			String receiveUserCode = "[CODE]"+mobile;
 //			MsgPushUtils.push(MsgPush.TYPE_SMS, title, content, null, null, receiveUserCode);
-			SmsUtils.send(content, account);
+			SmsUtils.send(content, mobile);
 		} catch (Exception e) {
 			logger.error(title + "发送短信错误。", e);
 			return renderResult(Global.FALSE, text("系统出现了点问题，错误信息：{0}", e.getMessage()));
 		}
-		account = account.replaceAll("(\\d{3})(\\d+)(\\d{3})","$1****$3");
-		return renderResult(Global.TRUE, text("验证码已发送到“{0}”的手机号码，请尽快查收！", account), data);
+		mobile = EncodeUtils.mobileMask(mobile);
+		return renderResult(Global.TRUE, text("验证码已发送到“{0}”的手机号码，请尽快查收！", mobile), data);
 	}
 	
 }
