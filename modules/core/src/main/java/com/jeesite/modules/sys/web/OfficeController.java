@@ -98,7 +98,9 @@ public class OfficeController extends BaseController {
 		if (StringUtils.isNotBlank(office.getViewCode())
 				|| StringUtils.isNotBlank(office.getViewCode_like())
 				|| StringUtils.isNotBlank(office.getOfficeName())
-				|| StringUtils.isNotBlank(office.getFullName())){
+				|| StringUtils.isNotBlank(office.getFullName())
+				|| StringUtils.isNotBlank(office.getLeader())
+				|| StringUtils.isNotBlank(office.getPhone())){
 			office.setParentCode(null);
 		}
 		officeService.addDataScopeFilter(office, ctrlPermi);
