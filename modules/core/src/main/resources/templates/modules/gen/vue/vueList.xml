@@ -56,7 +56,7 @@ if(table.isTreeEntity){
           ( {{ record.${table.treeViewCodeAttrName} }} )
         </span>
     <% } %>
-        <a @click="handleForm({ ${idParam} })">
+        <a @click="handleForm({ ${idParam} })" :title="record.${table.treeViewNameAttrName}">
           {{ record.${table.treeViewNameAttrName} }}
         </a>
 <%
@@ -71,7 +71,7 @@ if(table.isTreeEntity){
         continue;
       }
 %>
-        <a @click="handleForm({ ${idParam} })">
+        <a @click="handleForm({ ${idParam} })" :title="record.${c.attrName}">
           {{ record.${c.attrName} }}
         </a>
 <%
@@ -154,6 +154,9 @@ if(table.isTreeEntity){
   import { BpmRuntimeTrace } from '/@/components/Bpm';
   <% } %>
   import { FormProps } from '/@/components/Form';
+  <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
+  import { isEmpty } from '/@/utils/is';
+  <% } %>
   <% if(!@StringUtils.contains(table.tplCategory, '_route')) { %>
   import InputForm from './form.vue';
   <% } %>
@@ -163,8 +166,10 @@ if(table.isTreeEntity){
   <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
 
   const props = defineProps({
-    treeCode: String,
+    treeCodes: Array as PropType<String[]>,
   });
+
+  const emit = defineEmits(['update:treeCodes']);
   <% } %>
   <% if(@StringUtils.contains(table.tplCategory, '_route')) { %>
 
@@ -273,6 +278,11 @@ if(table.isTreeEntity){
   <% } %>
 <% } %>
     ],
+  <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
+    resetFunc: async () => {
+      emit('update:treeCodes', []);
+    },
+  <% } %>
   };
 
   const tableColumns: BasicColumn[] = [
@@ -420,6 +430,11 @@ for(c in table.columnList){
   		    || toBoolean(table.optionMap['isImportExport'])){ %>, getForm<% } %> }] = useTable({
     api: ${className}ListData,
     beforeFetch: (params) => {
+      <% if(table.isTreeEntity){ %>
+        <% for(pk in table.pkList){ %>
+      params.${pk.attrName} = !isEmpty(props.treeCodes) ? props.treeCodes[0] : '';
+        <% } %>
+      <% } %>
       return params;
     },
     columns: tableColumns,
@@ -440,25 +455,23 @@ for(c in table.columnList){
   <% if(table.isTreeEntity || isNotBlank(table.optionMap['leftTreeRightTableFk'])){ %>
 
   watch(
-    () => props.treeCode,
+    () => props.treeCodes,
     async () => {
-      await getForm().setFieldsValue({
-    <% if (isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
-        '${table.optionMap['leftTreeRightTableFk']}': props.treeCode,
-    <% }else if(table.isTreeEntity){ %>
-      <% for(pk in table.pkList){ %>
-        '${pk.attrName}': props.treeCode,
-      <% } %>
-    <% } %>
-      });
-      reload();
+      if (!isEmpty(props.treeCodes)) {
+        <% if (isNotBlank(table.optionMap['leftTreeRightTableFk'])) { %>
+        await getForm().setFieldsValue({
+          '${table.optionMap['leftTreeRightTableFk']}': props.treeCodes[0],
+        });
+        <% } %>
+        reload();
+      }
     },
   );
   <% } %>
   <% if(table.isTreeEntity){ %>
 
   function fetchSuccess() {
-    if (props.treeCode) {
+    if (!isEmpty(props.treeCodes)) {
       nextTick(expandAll);
     }
   }
