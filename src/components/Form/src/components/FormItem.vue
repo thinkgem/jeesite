@@ -390,11 +390,11 @@
               name={field}
               colon={false}
               class={{ 'suffix-item': showSuffix, 'no-label': isEmpty(label) }}
-              {...(itemProps as Recordable)}
               label={renderLabelHelpMessage(true)}
               rules={handleRules()}
               labelCol={labelCol}
               wrapperCol={wrapperCol}
+              {...(itemProps as Recordable)}
             >
               {showSuffix ? (
                 <div style="display: flex">
