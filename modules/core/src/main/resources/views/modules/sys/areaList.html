@@ -19,16 +19,17 @@
 		<div class="box-body">
 			<#form:form id="searchForm" model="${area}" action="${ctx}/sys/area/listPageData" method="post" class="form-inline "
 					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<#form:hidden path="areaCode"/>
 				<div class="form-group">
 					<label class="control-label">${text('区域代码')}：</label>
 					<div class="control-inline">
-						<#form:input path="areaCode" maxlength="100" class="form-control"/>
+						<#form:input path="areaCode_like" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('区域名称')}：</label>
 					<div class="control-inline">
-						<#form:input path="areaName" maxlength="100" class="form-control"/>
+						<#form:input path="areaName" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">

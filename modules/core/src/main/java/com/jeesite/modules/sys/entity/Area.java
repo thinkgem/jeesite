@@ -59,6 +59,14 @@ public class Area extends TreeEntity<Area> {
 		this.areaCode = areaCode;
 	}
 
+	public String getAreaCode_like() {
+		return sqlMap().getWhere().getValue("area_code", QueryType.LIKE);
+	}
+
+	public void setAreaCode_like(String areaCode) {
+		sqlMap().getWhere().and("area_code", QueryType.LIKE, areaCode);
+	}
+
 	@NotBlank(message="名称不能为空")
 	@Size(min=0, max=100, message="名称长度不能超过 100 个字符")
 	public String getAreaName() {

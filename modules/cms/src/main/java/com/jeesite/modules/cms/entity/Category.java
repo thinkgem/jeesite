@@ -28,16 +28,21 @@ import java.util.List;
 		@Column(name = "category_code", attrName = "categoryCode", label = "栏目编码", isPK = true),
 		@Column(name = "category_name", attrName = "categoryName", label = "栏目名称", queryType = QueryType.LIKE, isTreeName = true),
 		@Column(name = "site_code", attrName = "site.siteCode", label = "站点编码", queryType = QueryType.EQ),
-		@Column(name = "module_type", attrName = "moduleType", label = "模块类型"), @Column(name = "image", attrName = "image", label = "栏目图片"),
-		@Column(name = "href", attrName = "href", label = "链接"), @Column(name = "target", attrName = "target", label = "目标"),
-		@Column(name = "keywords", attrName = "keywords", label = "关键字"), @Column(name = "description", attrName = "description", label = "描述"),
-		@Column(name = "in_menu", attrName = "inMenu", label = "是否在导航中显示"), @Column(name = "in_list", attrName = "inList", label = "是否在分类页中显示列表"),
+		@Column(name = "module_type", attrName = "moduleType", label = "模块类型"),
+		@Column(name = "image", attrName = "image", label = "栏目图片"),
+		@Column(name = "href", attrName = "href", label = "链接"),
+		@Column(name = "target", attrName = "target", label = "目标"),
+		@Column(name = "keywords", attrName = "keywords", label = "关键字"),
+		@Column(name = "description", attrName = "description", label = "描述"),
+		@Column(name = "in_menu", attrName = "inMenu", label = "是否在导航中显示"),
+		@Column(name = "in_list", attrName = "inList", label = "是否在分类页中显示列表"),
 		@Column(name = "show_modes", attrName = "showModes", label = "展现模式"),
 		@Column(name = "is_need_audit", attrName = "isNeedAudit", label = "是否需要审核"),
 		@Column(name = "is_can_comment", attrName = "isCanComment", label = "是否允许评论"),
 		@Column(name = "custom_list_view", attrName = "customListView", label = "自定义列表视图"),
 		@Column(name = "custom_content_view", attrName = "customContentView", label = "自定义内容视图"),
-		@Column(name = "view_config", attrName = "viewConfig", label = "视图配置"), @Column(includeEntity = DataEntity.class),
+		@Column(name = "view_config", attrName = "viewConfig", label = "视图配置"),
+		@Column(includeEntity = DataEntity.class),
 		@Column(includeEntity = Extend.class, attrName = "extend"),
 	}, joinTable = {
 		@JoinTable(entity = Site.class, alias = "s",
@@ -107,6 +112,14 @@ public class Category extends TreeEntity<Category> {
 
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
+	}
+
+	public String getCategoryCode_like() {
+		return sqlMap().getWhere().getValue("category_code", QueryType.LIKE);
+	}
+
+	public void setCategoryCode_like(String categoryCode) {
+		sqlMap().getWhere().and("category_code", QueryType.LIKE, categoryCode);
 	}
 
 	@NotBlank(message = "栏目名称不能为空")

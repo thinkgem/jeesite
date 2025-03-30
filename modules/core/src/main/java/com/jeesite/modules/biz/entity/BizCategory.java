@@ -71,6 +71,14 @@ public class BizCategory extends TreeEntity<BizCategory> {
 		this.viewCode = viewCode;
 	}
 
+	public String getViewCode_like() {
+		return sqlMap().getWhere().getValue("view_code", QueryType.LIKE);
+	}
+
+	public void setViewCode_like(String viewCode) {
+		sqlMap().getWhere().and("view_code", QueryType.LIKE, viewCode);
+	}
+
 	@NotBlank(message="分类名称不能为空")
 	@Size(min=0, max=64, message="分类名称长度不能超过 64 个字符")
 	public String getCategoryName() {

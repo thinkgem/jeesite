@@ -57,6 +57,16 @@ public class CategoryController extends BaseController {
 	}
 
 	/**
+	 * 管理主页
+	 */
+	@RequiresPermissions("cms:category:view")
+	@RequestMapping(value = "index")
+	public String index(Category category, Model model) {
+		model.addAttribute("category", category);
+		return "modules/cms/categoryIndex";
+	}
+
+	/**
 	 * 查询列表
 	 */
 	@RequiresPermissions("cms:category:view")
@@ -83,12 +93,12 @@ public class CategoryController extends BaseController {
 		if (StringUtils.isBlank(category.getSite().getSiteCode())) {
 			category.setSite(new Site(Site.getCurrentSiteCode()));
 		}
-		List<Category> list = null;
-		if (StringUtils.isNotBlank(category.getCategoryCode())) {
-			list = ListUtils.newArrayList(get(category.getCategoryCode(), false));
-		} else {
-			list = categoryService.findList(category);
+		if (StringUtils.isNotBlank(category.getCategoryCode_like())
+				|| StringUtils.isNotBlank(category.getCategoryName())
+				|| StringUtils.isNotBlank(category.getRemarks())) {
+			category.setParentCode(null);
 		}
+		List<Category> list = categoryService.findList(category);
 		return list;
 	}
 
