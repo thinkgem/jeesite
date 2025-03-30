@@ -79,7 +79,7 @@
     schemas: [
       {
         label: t('机构代码'),
-        field: 'viewCode',
+        field: 'viewCode_like',
         component: 'Input',
       },
       {

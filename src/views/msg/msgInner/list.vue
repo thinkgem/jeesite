@@ -62,6 +62,7 @@
         component: 'Select',
         componentProps: {
           dictType: 'msg_inner_content_level',
+          allowClear: true,
         },
       },
       {
@@ -70,6 +71,7 @@
         component: 'Select',
         componentProps: {
           dictType: 'msg_inner_content_type',
+          allowClear: true,
         },
       },
       {

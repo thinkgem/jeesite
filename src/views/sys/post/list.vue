@@ -56,7 +56,7 @@
       },
       {
         label: t('岗位代码'),
-        field: 'viewCode',
+        field: 'viewCode_like',
         component: 'Input',
       },
       {

@@ -66,13 +66,13 @@
     labelWidth: 90,
     schemas: [
       {
-        label: t('区域名称'),
-        field: 'areaName',
+        label: t('区域代码'),
+        field: 'areaCode_like',
         component: 'Input',
       },
       {
-        label: t('区域代码'),
-        field: 'areaCode',
+        label: t('区域名称'),
+        field: 'areaName',
         component: 'Input',
       },
       {

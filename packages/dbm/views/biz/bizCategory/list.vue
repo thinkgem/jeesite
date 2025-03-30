@@ -68,7 +68,7 @@
     schemas: [
       {
         label: t('分类代码'),
-        field: 'viewCode',
+        field: 'viewCode_like',
         component: 'Input',
       },
       {
