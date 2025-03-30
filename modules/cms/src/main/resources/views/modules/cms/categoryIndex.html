@@ -1,12 +1,15 @@
-<% layout('/layouts/default.html', {title: '分类管理', libs: ['layout','zTree']}){ %>
+<% layout('/layouts/default.html', {title: '栏目管理', libs: ['layout','zTree']}){ %>
 <div class="ui-layout-west">
 	<div class="main-content">
 		<div class="box box-main">
 			<div class="box-header">
 				<div class="box-title">
-					<i class="fa icon-grid"></i> ${text('分类管理')}
+					<i class="fa icon-grid"></i> ${text('栏目管理')}
 				</div>
 				<div class="box-tools pull-right">
+					<% if(hasPermi('bpm:bpmCategory:edit')){ %>
+						<button type="button" class="btn btn-box-tool addTabPage" data-href="${ctx}/cms/category/list" title="${text('栏目管理')}"><i class="fa fa-edit"></i></button>
+					<% } %>
 					<button type="button" class="btn btn-box-tool" id="btnExpand" title="${text('展开')}" style="display:none;"><i class="fa fa-chevron-up"></i></button>
 					<button type="button" class="btn btn-box-tool" id="btnCollapse" title="${text('折叠')}"><i class="fa fa-chevron-down"></i></button>
 					<button type="button" class="btn btn-box-tool" id="btnRefresh" title="${text('刷新')}"><i class="fa fa-refresh"></i></button>
@@ -20,7 +23,7 @@
 </div>
 <div class="ui-layout-center">
 	<iframe id="mainFrame" name="mainFrame" class="ui-layout-content p0"
-		src="${ctx}/biz/bizCategory/list"></iframe>
+		src="${ctx}/cms/category/list"></iframe>
 </div>
 <% } %>
 <script>
@@ -33,7 +36,7 @@ $('body').layout({
 var win = $("#mainFrame")[0].contentWindow;
 //# // 树结构初始化加载
 var setting = {view:{selectedMulti:false},data:{key:{title:"title"},simpleData:{enable:true}},
-	async:{enable:true,autoParam:["id=parentCode"],url:"${ctx}/biz/bizCategory/treeData"},
+	async:{enable:true,autoParam:["id=parentCode"],url:"${ctx}/cms/category/treeData"},
 	callback:{onClick:function(event, treeId, treeNode){
 		tree.expandNode(treeNode);
 		//win.$('button[type=reset]').click();
@@ -68,7 +71,7 @@ $('#btnCollapse').click(function(){
 $('#btnRefresh').click(function(){
 	loadTree();
 });
-//# // 调用子页分页函数
+//调用子页分页函数
 function page(){
 	win.page();
 }

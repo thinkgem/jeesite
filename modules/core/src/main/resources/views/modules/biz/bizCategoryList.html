@@ -23,25 +23,25 @@
 			<div class="form-group">
 				<label class="control-label">${text('分类代码')}：</label>
 				<div class="control-inline">
-					<#form:input path="viewCode" maxlength="64" class="form-control width-120"/>
+					<#form:input path="viewCode_like" maxlength="64" class="form-control width-90"/>
 				</div>
 			</div>
 			<div class="form-group">
 					<label class="control-label">${text('分类名称')}：</label>
 					<div class="control-inline">
-						<#form:input path="categoryName" maxlength="64" class="form-control width-120"/>
+						<#form:input path="categoryName" maxlength="64" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('状态')}：</label>
-					<div class="control-inline width-120">
+					<div class="control-inline width-90">
 						<#form:select path="status" dictType="sys_search_status" blankOption="true" class="form-control isQuick"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('备注信息')}：</label>
 					<div class="control-inline">
-						<#form:input path="remarks" maxlength="500" class="form-control width-120"/>
+						<#form:input path="remarks" maxlength="500" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">

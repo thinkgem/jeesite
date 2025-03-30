@@ -22,19 +22,19 @@
 				<div class="form-group">
 					<label class="control-label">${text('字典标签')}：</label>
 					<div class="control-inline">
-						<#form:input path="dictLabelRaw" maxlength="100" class="form-control"/>
+						<#form:input path="dictLabelRaw" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label">${text('字典键值')}：</label>
 					<div class="control-inline">
-						<#form:input path="dictValue" maxlength="500" class="form-control"/>
+						<#form:input path="dictValue" maxlength="500" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group hide">
 					<label class="control-label">${text('字典类型')}：</label>
 					<div class="control-inline">
-						<#form:input path="dictType" maxlength="100" class="form-control"/>
+						<#form:input path="dictType" maxlength="100" class="form-control width-90"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -62,7 +62,7 @@
 <script>
 //# // 初始化DataGrid对象
 $('#dataGrid').dataGrid({
-	searchForm: $("#searchForm"),
+	searchForm: $('#searchForm'),
 	columnModel: [
 		{header:'${text("字典标签")}', name:'dictLabelRaw', index:'a.dict_label', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
 			var icon = row.dictIcon, iconHtml = '';
@@ -80,7 +80,7 @@ $('#dataGrid').dataGrid({
 		}},
 		{header:'${text("字典键值")}', name:'dictValue', index:'a.dict_value', width:200, align:"left"},
 		{header:'${text("排序号")}', name:'treeSort', width:63, align:"center", fixed:true},
-		{header:'${text("系统内置")}', name:'isSys', index:'a.is_sys', width:80, align:"center", formatter: function(val, obj, row, act){
+		{header:'${text("系统内置")}', name:'isSys', index:'a.is_sys', width:90, align:"center", formatter: function(val, obj, row, act){
 			return js.getDictLabel("#{@DictUtils.getDictListJson('sys_yes_no')}", val, '未知', true);
 		}},
 		{header:'${text("CSS类名")}', name:'cssClass', index:'a.css_class', width:100, align:"left"},

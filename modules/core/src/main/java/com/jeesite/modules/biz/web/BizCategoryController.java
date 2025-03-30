@@ -77,13 +77,10 @@ public class BizCategoryController extends BaseController {
 		if (StringUtils.isBlank(bizCategory.getParentCode())) {
 			bizCategory.setParentCode(BizCategory.ROOT_CODE);
 		}
-		if (StringUtils.isNotBlank(bizCategory.getViewCode())) {
-			bizCategory.setParentCode(null);
-		}
-		if (StringUtils.isNotBlank(bizCategory.getCategoryName())){
-			bizCategory.setParentCode(null);
-		}
-		if (StringUtils.isNotBlank(bizCategory.getRemarks())){
+		if (StringUtils.isNotBlank(bizCategory.getViewCode())
+				|| StringUtils.isNotBlank(bizCategory.getViewCode_like())
+				|| StringUtils.isNotBlank(bizCategory.getCategoryName())
+				|| StringUtils.isNotBlank(bizCategory.getRemarks())){
 			bizCategory.setParentCode(null);
 		}
 		List<BizCategory> list = bizCategoryService.findList(bizCategory);

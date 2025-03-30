@@ -4,14 +4,14 @@
  */
 package com.jeesite.modules.sys.entity;
 
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+
 import com.jeesite.common.entity.DataEntity;
 import com.jeesite.common.entity.TreeEntity;
 import com.jeesite.common.mybatis.annotation.Column;
 import com.jeesite.common.mybatis.annotation.Table;
 import com.jeesite.common.mybatis.mapper.query.QueryType;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
  * 行政区划Entity
@@ -57,6 +57,14 @@ public class Area extends TreeEntity<Area> {
 
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
+	}
+
+	public String getAreaCode_like() {
+		return sqlMap().getWhere().getValue("area_code", QueryType.LIKE);
+	}
+
+	public void setAreaCode_like(String areaCode) {
+		sqlMap().getWhere().and("area_code", QueryType.LIKE, areaCode);
 	}
 
 	@NotBlank(message="名称不能为空")
