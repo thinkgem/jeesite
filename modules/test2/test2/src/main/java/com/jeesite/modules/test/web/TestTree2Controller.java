@@ -13,6 +13,7 @@ import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.test.entity.TestTree;
 import com.jeesite.modules.test.service.TestTreeService;
 import io.seata.spring.annotation.GlobalTransactional;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,10 @@ public class TestTree2Controller extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public TestTree get(String treeCode, boolean isNewRecord) {
+	public TestTree get(String treeCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new TestTree();
+		}
 		return testTreeService.get(treeCode, isNewRecord);
 	}
 	
@@ -66,10 +70,9 @@ public class TestTree2Controller extends BaseController {
 		if (StringUtils.isBlank(testTree.getParentCode())) {
 			testTree.setParentCode(TestTree.ROOT_CODE);
 		}
-		if (StringUtils.isNotBlank(testTree.getTreeName())){
-			testTree.setParentCode(null);
-		}
-		if (StringUtils.isNotBlank(testTree.getRemarks())){
+		if (StringUtils.isNotBlank(testTree.getTreeCode())
+				|| StringUtils.isNotBlank(testTree.getTreeName())
+				|| StringUtils.isNotBlank(testTree.getRemarks())){
 			testTree.setParentCode(null);
 		}
 		List<TestTree> list = testTreeService.findList(testTree);
@@ -138,7 +141,7 @@ public class TestTree2Controller extends BaseController {
 	public String disable(TestTree testTree) {
 		TestTree where = new TestTree();
 		where.setStatus(TestTree.STATUS_NORMAL);
-		where.setParentCodes("," + testTree.getId() + ",");
+		where.setParentCodes_rightLike(testTree.getParentCodes() + testTree.getId() + ",");
 		long count = testTreeService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该数据包含未停用的子数据！"));
