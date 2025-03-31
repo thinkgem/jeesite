@@ -16,7 +16,6 @@ import com.jeesite.modules.cms.entity.Site;
 import com.jeesite.modules.cms.service.CategoryService;
 import com.jeesite.modules.cms.service.FileTempleteService;
 import com.jeesite.modules.cms.utils.CmsUtils;
-import com.jeesite.modules.sys.entity.Office;
 import com.jeesite.modules.sys.utils.DictUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +52,10 @@ public class CategoryController extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public Category get(String categoryCode, boolean isNewRecord) {
+	public Category get(String categoryCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new Category();
+		}
 		return categoryService.get(categoryCode, isNewRecord);
 	}
 
@@ -88,12 +91,13 @@ public class CategoryController extends BaseController {
 	@ResponseBody
 	public List<Category> listData(Category category) {
 		if (StringUtils.isBlank(category.getParentCode())) {
-			category.setParentCode(Office.ROOT_CODE);
+			category.setParentCode(Category.ROOT_CODE);
 		}
 		if (StringUtils.isBlank(category.getSite().getSiteCode())) {
 			category.setSite(new Site(Site.getCurrentSiteCode()));
 		}
-		if (StringUtils.isNotBlank(category.getCategoryCode_like())
+		if (StringUtils.isNotBlank(category.getCategoryCode())
+				|| StringUtils.isNotBlank(category.getCategoryCode_like())
 				|| StringUtils.isNotBlank(category.getCategoryName())
 				|| StringUtils.isNotBlank(category.getRemarks())) {
 			category.setParentCode(null);
@@ -222,7 +226,7 @@ public class CategoryController extends BaseController {
 	public String disable(Category category) {
 		Category where = new Category();
 		where.setStatus(Category.STATUS_NORMAL);
-		where.setParentCodes("," + category.getId() + ",");
+		where.setParentCodes_rightLike(category.getParentCodes() + category.getId() + ",");
 		long count = categoryService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该栏目表包含未停用的子栏目表！"));

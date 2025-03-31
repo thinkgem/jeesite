@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * 字典管理Controller
  * @author ThinkGem
@@ -51,7 +52,10 @@ public class DictDataController extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public DictData get(String dictCode, boolean isNewRecord) {
+	public DictData get(String dictCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new DictData();
+		}
 		return dictDataService.get(dictCode, isNewRecord);
 	}
 	
@@ -185,7 +189,7 @@ public class DictDataController extends BaseController {
 		}
 //		DictData where = new DictData();
 //		where.setStatus(DictData.STATUS_NORMAL);
-//		where.setParentCodes("," + dictData.getId() + ",");
+//		where.setParentCodes_rightLike(dictData.getParentCodes() + dictData.getId() + ",");
 //		long count = dictDataService.findCount(where);
 //		if (count > 0) {
 //			return renderResult(Global.FALSE, text("该字典包含未停用的子字典！"));

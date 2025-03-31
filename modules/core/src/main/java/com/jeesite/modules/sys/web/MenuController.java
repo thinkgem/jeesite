@@ -48,7 +48,10 @@ public class MenuController extends BaseController {
 	private ModuleService moduleService;
 
 	@ModelAttribute
-	public Menu get(String menuCode, boolean isNewRecord) {
+	public Menu get(String menuCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new Menu();
+		}
 		return menuService.get(menuCode, isNewRecord);
 	}
 	
@@ -79,13 +82,10 @@ public class MenuController extends BaseController {
 		if (StringUtils.isBlank(menu.getParentCode())) {
 			menu.setParentCode(Menu.ROOT_CODE);
 		}
-		if (StringUtils.isNotBlank(menu.getMenuNameRaw())){
-			menu.setParentCode(null);
-		}
-		if (StringUtils.isNotBlank(menu.getMenuHref())){
-			menu.setParentCode(null);
-		}
-		if (StringUtils.isNotBlank(menu.getPermission())){
+		if (StringUtils.isNotBlank(menu.getMenuCode())
+				|| StringUtils.isNotBlank(menu.getMenuNameRaw())
+				|| StringUtils.isNotBlank(menu.getMenuHref())
+				|| StringUtils.isNotBlank(menu.getPermission())){
 			menu.setParentCode(null);
 		}
 		List<Menu> list = menuService.findList(menu);

@@ -54,7 +54,10 @@ public class CompanyController extends BaseController {
 	 * 获取公司
 	 */
 	@ModelAttribute
-	public Company get(String companyCode, boolean isNewRecord) {
+	public Company get(String companyCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new Company();
+		}
 		return companyService.get(companyCode, isNewRecord);
 	}
 	
@@ -92,7 +95,8 @@ public class CompanyController extends BaseController {
 		if (StringUtils.isBlank(company.getParentCode())) {
 			company.setParentCode(Company.ROOT_CODE);
 		}
-		if (StringUtils.isNotBlank(company.getViewCode())
+		if (StringUtils.isNotBlank(company.getCompanyCode())
+				|| StringUtils.isNotBlank(company.getViewCode())
 				|| StringUtils.isNotBlank(company.getViewCode_like())
 				|| StringUtils.isNotBlank(company.getCompanyName())
 				|| StringUtils.isNotBlank(company.getFullName())){
@@ -181,7 +185,7 @@ public class CompanyController extends BaseController {
 	public String disable(Company company) {
 		Company where = new Company();
 		where.setStatus(Company.STATUS_NORMAL);
-		where.setParentCodes("," + company.getId() + ",");
+		where.setParentCodes_rightLike(company.getParentCodes() + company.getId() + ",");
 		long count = companyService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该公司包含未停用的子公司！"));
