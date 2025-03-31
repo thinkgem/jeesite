@@ -8,7 +8,7 @@
     <template #sidebar>
       <BasicTree
         ref="treeRef"
-        :title="t('区域管理')"
+        :title="t('区域')"
         :search="true"
         :toolbar="true"
         :showIcon="true"
