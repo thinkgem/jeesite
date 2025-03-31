@@ -49,7 +49,10 @@ public class AreaController extends BaseController {
 	 * 获取区域
 	 */
 	@ModelAttribute
-	public Area get(String areaCode, boolean isNewRecord) {
+	public Area get(String areaCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWithAny(request.getRequestURI(), "listData", "listPageData")) {
+			return new Area();
+		}
 		return areaService.get(areaCode, isNewRecord);
 	}
 	
@@ -173,7 +176,7 @@ public class AreaController extends BaseController {
 	public String disable(Area area) {
 		Area where = new Area();
 		where.setStatus(Area.STATUS_NORMAL);
-		where.setParentCodes("," + area.getId() + ",");
+		where.setParentCodes_rightLike(area.getParentCodes() + area.getId() + ",");
 		long count = areaService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该区域包含未停用的子区域！"));

@@ -2,7 +2,7 @@
 <!-- Copyright (c) 2013-Now http://jeesite.com All rights reserved.
      No deletion without permission, or be held responsible to law. -->
 <template>
-	<name>controller</name>
+	<name>api</name>
 	<filePath>${baseDir}/${moduleName}-client/src/main/java/${packagePath}/${moduleName}/api/${subModuleName}</filePath>
 	<fileName>${ClassName}ServiceApi.java</fileName>
 	<content><![CDATA[

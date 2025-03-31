@@ -19,6 +19,7 @@ import com.jeesite.modules.sys.service.EmpUserService;
 import com.jeesite.modules.sys.service.OfficeService;
 import com.jeesite.modules.sys.web.user.EmpUserController;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,10 @@ public class OfficeController extends BaseController {
 	 * 获取机构
 	 */
 	@ModelAttribute
-	public Office get(String officeCode, boolean isNewRecord) {
+	public Office get(String officeCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new Office();
+		}
 		return officeService.get(officeCode, isNewRecord);
 	}
 
@@ -95,7 +99,8 @@ public class OfficeController extends BaseController {
 		if (StringUtils.isBlank(office.getParentCode())){
 			office.setParentCode(Office.ROOT_CODE);
 		}
-		if (StringUtils.isNotBlank(office.getViewCode())
+		if (StringUtils.isNotBlank(office.getOfficeCode())
+				|| StringUtils.isNotBlank(office.getViewCode())
 				|| StringUtils.isNotBlank(office.getViewCode_like())
 				|| StringUtils.isNotBlank(office.getOfficeName())
 				|| StringUtils.isNotBlank(office.getFullName())
@@ -235,7 +240,7 @@ public class OfficeController extends BaseController {
 	public String disable(Office office) {
 		Office where = new Office();
 		where.setStatus(Office.STATUS_NORMAL);
-		where.setParentCodes("," + office.getId() + ",");
+		where.setParentCodes_rightLike(office.getParentCodes() + office.getId() + ",");
 		long count = officeService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该机构包含未停用的子机构！"));

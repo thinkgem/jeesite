@@ -12,7 +12,9 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.biz.entity.BizCategory;
 import com.jeesite.modules.biz.service.BizCategoryService;
+import com.jeesite.modules.sys.entity.Office;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +45,10 @@ public class BizCategoryController extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public BizCategory get(String categoryCode, boolean isNewRecord) {
+	public BizCategory get(String categoryCode, boolean isNewRecord, HttpServletRequest request) {
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new BizCategory();
+		}
 		return bizCategoryService.get(categoryCode, isNewRecord);
 	}
 
@@ -77,7 +82,8 @@ public class BizCategoryController extends BaseController {
 		if (StringUtils.isBlank(bizCategory.getParentCode())) {
 			bizCategory.setParentCode(BizCategory.ROOT_CODE);
 		}
-		if (StringUtils.isNotBlank(bizCategory.getViewCode())
+		if (StringUtils.isNotBlank(bizCategory.getCategoryCode())
+				|| StringUtils.isNotBlank(bizCategory.getViewCode())
 				|| StringUtils.isNotBlank(bizCategory.getViewCode_like())
 				|| StringUtils.isNotBlank(bizCategory.getCategoryName())
 				|| StringUtils.isNotBlank(bizCategory.getRemarks())){
@@ -148,7 +154,7 @@ public class BizCategoryController extends BaseController {
 	public String disable(BizCategory bizCategory) {
 		BizCategory where = new BizCategory();
 		where.setStatus(BizCategory.STATUS_NORMAL);
-		where.setParentCodes("," + bizCategory.getId() + ",");
+		where.setParentCodes_rightLike(bizCategory.getParentCodes() + bizCategory.getId() + ",");
 		long count = bizCategoryService.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该业务分类包含未停用的子业务分类！"));

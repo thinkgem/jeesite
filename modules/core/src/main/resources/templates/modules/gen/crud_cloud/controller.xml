@@ -11,9 +11,11 @@ package ${packageName}.${moduleName}.web${isNotEmpty(subModuleName)?'.'+subModul
 <% if (table.isTreeEntity){ %>
 import java.util.Map;
 <% } %>
+<% if (table.isTreeEntity || toBoolean(table.optionMap['isImportExport'])){ %>
 import java.util.List;
-<% if (!table.isTreeEntity || toBoolean(table.optionMap['isImportExport'])){ %>
+<% } %>
 import jakarta.servlet.http.HttpServletRequest;
+<% if (!table.isTreeEntity || toBoolean(table.optionMap['isImportExport'])){ %>
 import jakarta.servlet.http.HttpServletResponse;
 <% } %>
 
@@ -73,7 +75,12 @@ public class ${ClassName}Controller extends BaseController {
 	 * 获取数据
 	 */
 	@ModelAttribute
-	public ${ClassName} get(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType} ${pk.simpleAttrName}<% } %>, boolean isNewRecord) {
+	public ${ClassName} get(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrType} ${pk.simpleAttrName}<% } %>, boolean isNewRecord<% if (table.isTreeEntity){ %>, HttpServletRequest request<% } %>) {
+		<% if (table.isTreeEntity){ %>
+		if (StringUtils.endsWith(request.getRequestURI(), "listData")) {
+			return new ${ClassName}();
+		}
+		<% } %>
 		<% if (table.pkList.~size == 1){ %>
 		return ${className}Service.get(<% for(pk in table.pkList){ %>${pkLP.index!=1?', ':''}${pk.simpleAttrName}<% } %>, isNewRecord);
 		<% }else{ %>
@@ -119,19 +126,23 @@ public class ${ClassName}Controller extends BaseController {
 		if (StringUtils.isBlank(${className}.getParentCode())) {
 			${className}.setParentCode(${ClassName}.ROOT_CODE);
 		}
-		<% for(c in table.columnList){ %>
-			<% if(c.isQuery == "1" && !c.isTreeEntityColumn && c.attrName != 'status'){ %>
-				<% if(c.attrType == 'String'){ %>
-		if (StringUtils.isNotBlank(${className}.${c.attrNameForGetMethod})){
+	<% var where = {
+	  for(c in table.columnList){
+		if(c.isPk == "1" || (c.isQuery == "1" && !c.isTreeEntityColumn && c.attrName != 'status')){
+			if(c.attrType == 'String'){ %>
+				 || StringUtils.isNotBlank(${className}.${c.attrNameForGetMethod})
+				 <% }else{ %>
+				 || ${className}.${c.attrNameForGetMethod} != null
+			<% }
+		}
+	  }
+	};
+	where = @StringUtils.trim(@ObjectUtils.toString(where));
+	if (isNotBlank(where)){ %>
+		if (${@StringUtils.substring(where, 3)}){
 			${className}.setParentCode(null);
 		}
-				<% }else{ %>
-		if (${className}.${c.attrNameForGetMethod} != null){
-			${className}.setParentCode(null);
-		}
-				<% } %>
-			<% } %>
-		<% } %>
+	<% } %>
 		List<${ClassName}> list = ${className}Service.findList(${className});
 		return list;
 	}
@@ -273,7 +284,7 @@ public class ${ClassName}Controller extends BaseController {
 		<% if(table.isTreeEntity){ %>
 		${ClassName} where = new ${ClassName}();
 		where.setStatus(${ClassName}.STATUS_NORMAL);
-		where.setParentCodes("," + ${className}.getId() + ",");
+		where.setParentCodes_rightLike(${className}.getParentCodes() + ${className}.getId() + ",");
 		long count = ${className}Service.findCount(where);
 		if (count > 0) {
 			return renderResult(Global.FALSE, text("该${functionNameSimple}包含未停用的子${functionNameSimple}！"));
@@ -307,6 +318,11 @@ public class ${ClassName}Controller extends BaseController {
 	@ResponseBody
 	@GlobalTransactional
 	public String delete(${ClassName} ${className}) {
+		<% if(toBoolean(table.optionMap['isBpmForm'])){ %>
+		if (!${ClassName}.STATUS_DRAFT.equals(${className}.getStatus())){
+			return renderResult(Global.FALSE, text("只能删除草稿状态的数据！"));
+		}
+		<% } %>
 		${className}Service.delete(${className});
 		return renderResult(Global.TRUE, text("删除${functionNameSimple}成功！"));
 	}
