@@ -24,5 +24,25 @@
 		</where>
 		ORDER BY ${sqlMap.order.toSql()}
 	</select>
+
+	<!-- 重写 Dao 中的 insert 查询方法 v5.11.1
+	<insert id="insert">
+		INSERT INTO ${sqlMap.insert.toTableSql()}
+			(${sqlMap.insert.toColumnSql()})
+		VALUES (${sqlMap.insert.toValuesSql()})
+	</insert> -->
+
+	<!-- 重写 Dao 中的 update 查询方法 v5.11.1
+	<update id="update">
+		UPDATE ${sqlMap.update.toTableSql()}
+		SET ${sqlMap.update.toColumnSql()}
+		WHERE ${sqlMap.update.toWhereSql()}
+	</update> -->
+
+	<!-- 重写 Dao 中的 phyDelete 查询方法 v5.11.1
+	<delete id="phyDelete">
+		DELETE FROM ${sqlMap.update.toTableSql()}
+		WHERE ${sqlMap.update.toWhereSql()}
+	</delete> -->
 	
 </mapper>
