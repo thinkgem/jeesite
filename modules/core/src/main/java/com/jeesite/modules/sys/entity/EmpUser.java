@@ -81,9 +81,6 @@ import javax.validation.Valid;
 //				@Column(name="user_name", attrName="createByName", label="用户名称", isQuery=false),
 //		}),
 	},
-//	extFromKeys="dsfOfficeFrom, dsfCompanyFrom",
-//	extWhereKeys="dsfOfficeWhere, dsfCompanyWhere",
-	extWhereKeys="dsfOffice, dsfCompany",
 	orderBy="a.user_weight DESC, a.update_date DESC"
 )
 public class EmpUser extends User {

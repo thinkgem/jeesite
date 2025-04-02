@@ -45,7 +45,7 @@ import java.util.List;
 				@Column(name="area_type", label="区域类型"),
 				@Column(name="tree_names", label="区域全称"),
 			}),
-	}, extWhereKeys="dsf", orderBy="a.tree_sorts, a.company_code"
+	}, orderBy="a.tree_sorts, a.company_code"
 )
 public class Company extends TreeEntity<Company> {
 
