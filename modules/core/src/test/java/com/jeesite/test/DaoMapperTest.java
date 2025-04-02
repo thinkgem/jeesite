@@ -5,6 +5,7 @@
 package com.jeesite.test;
 
 import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.SetUtils;
 import com.jeesite.common.entity.DataScope;
 import com.jeesite.common.entity.Page;
 import com.jeesite.common.idgen.IdGen;
@@ -56,9 +57,8 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			post1.setPostType("1");
 			post1.setPostSort(1);
 			long postInsertNum = postDao.insert(post1);
-			Assert.assertEquals("postDao.insert", postInsertNum , 1);
-			Post postInsertRes = postDao.get(post1);
-			Assert.assertEquals("postDao.insert result", postInsertRes.getId() , "1");
+			Assert.assertEquals("postDao.insert", 1, postInsertNum);
+			Assert.assertEquals("postDao.insert result", "1", postDao.get(post1).getId());
 
 			System.out.println("============ 批量插入测试 ============");
 			Post post2 = (Post)post1.clone();
@@ -68,21 +68,21 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			post3.setId("3");
 			post3.setPostName("test3");
 			long postInsertBatchNum = postDao.insertBatch(ListUtils.newArrayList(post2, post3));
-			Assert.assertEquals("postDao.insertBatch", postInsertBatchNum , 2);
-			Post postInsertBatchRes2 = postDao.get(post2);
-			Assert.assertEquals("postDao.insertBatch result", postInsertBatchRes2.getId() , "2");
-			Post postInsertBatchRes3 = postDao.get(post3);
-			Assert.assertEquals("postDao.insertBatch result", postInsertBatchRes3.getId() , "3");
+			Assert.assertEquals("postDao.insertBatch", 2, postInsertBatchNum);
+			Assert.assertEquals("postDao.insertBatch result", "2", postDao.get(post2).getId());
+			Assert.assertEquals("postDao.insertBatch result", "3", postDao.get(post3).getId());
 
 			System.out.println("============ 按主键更新测试 ============");
 			Post post4 = new Post("2");
 			post4.setPostName("test4");
 			long postUpdateNum = postDao.update(post4);
-			Assert.assertEquals("postDao.update", postUpdateNum , 1);
+			Assert.assertEquals("postDao.update", 1, postUpdateNum);
+			Assert.assertEquals("postDao.update result", "test4", postDao.get(post2).getPostName());
 
 			System.out.println("============ 按主键删除测试 ============");
 			long postDeleteNum = postDao.phyDelete(post4);
-			Assert.assertEquals("postDao.delete", postDeleteNum , 1);
+			Assert.assertEquals("postDao.delete", 1, postDeleteNum);
+			Assert.assertNull("postDao.delete result", postDao.get(post4));
 
 			System.out.println("============ 按树表更新测试 ============");
 			Area area = new Area();
@@ -105,55 +105,61 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			Area area5 = (Area) area.clone();
 			area5.setAreaCode("5");
 			long areaInsertNum = areaDao.insertBatch(ListUtils.newArrayList(area, area2, area3, area4, area5));
-			Assert.assertEquals("areaDao.insert", areaInsertNum , 5);
+			Assert.assertEquals("areaDao.insert", 5, areaInsertNum);
+			Assert.assertEquals("areaDao.insertBatch result", "12345", areaDao
+					.get(area).getAreaCode()+areaDao.get(area2).getAreaCode()+areaDao.get(area3).getAreaCode()
+					+areaDao.get(area4).getAreaCode()+areaDao.get(area5).getAreaCode());
 			area.setAreaName("你好2");
 			long areaUpdateNum = areaDao.update(area);
-			Assert.assertEquals("areaDao.update", areaUpdateNum , 1);
-			Area areaUpdateRes = areaDao.get(area);
-			Assert.assertEquals("areaDao.update result", areaUpdateRes.getAreaName() , "你好2");
+			Assert.assertEquals("areaDao.update", 1, areaUpdateNum);
+			Assert.assertEquals("areaDao.update result", "你好2", areaDao.get(area).getAreaName());
 
 			System.out.println("============ 按树表批量更新测试 ============");
 			long areaUpdateBatchNum = areaDao.updateBatch(ListUtils.newArrayList(area2, area3));
-			Assert.assertEquals("areaDao.update", areaUpdateBatchNum , 2);
+			Assert.assertEquals("areaDao.updateBatch", 2, areaUpdateBatchNum);
+			Assert.assertEquals("areaDao.updateBatch result", "23",
+					areaDao.get(area2).getAreaCode()+areaDao.get(area3).getAreaCode());
 
 			System.out.println("============ 自定义更新条件测试 ============");
 			Area where = new Area();
-			where.setId(areaUpdateRes.getId());
-			where.setId_in(new String[]{areaUpdateRes.getId()});
-			where.setAreaName(areaUpdateRes.getAreaName());
-			where.setStatus(areaUpdateRes.getStatus());
+			where.setId_in(new String[]{area.getId(), area2.getId()});
+			where.setAreaName(area.getAreaName());
+			where.setStatus(area.getStatus());
+			area.setAreaName("你好3");
 			long areaUpdateByEntityNum = areaDao.updateByEntity(area, where);
-			Assert.assertEquals("areaDao.updateByEntity", areaUpdateByEntityNum , 1);
+			Assert.assertEquals("areaDao.updateByEntity", 1, areaUpdateByEntityNum);
+			Assert.assertEquals("areaDao.updateByEntity result", "你好3", areaDao.get(area).getAreaName());
 
 			System.out.println("============ 更新数据状态测试 ============");
 			long areaStatusNum = areaDao.updateStatus(area);
-			Assert.assertEquals("areaDao.updateStatus", areaStatusNum , 1);
+			Assert.assertEquals("areaDao.updateStatus", 1, areaStatusNum);
+			where.setAreaName(area.getAreaName());
 			long areaStatusByEntityNum = areaDao.updateStatusByEntity(area, where);
-			Assert.assertEquals("areaDao.updateStatusByEntity", areaStatusByEntityNum , 1);
+			Assert.assertEquals("areaDao.updateStatusByEntity", 1, areaStatusByEntityNum);
 
 			System.out.println("============ 逻辑删除测试 ============");
 			long areaDeleteNum = areaDao.delete(area);
-			Assert.assertEquals("areaDao.delete", areaDeleteNum , 1);
+			Assert.assertEquals("areaDao.delete", 1, areaDeleteNum);
 			where.setId(area2.getId());
 			where.setId_in(new String[]{area2.getId()});
 			where.setAreaName(area2.getAreaName());
 			where.setStatus(area2.getStatus());
 			long areaDeleteByEntityNum = areaDao.deleteByEntity(where);
-			Assert.assertEquals("areaDao.deleteByEntity", areaDeleteByEntityNum , 1);
+			Assert.assertEquals("areaDao.deleteByEntity", 1, areaDeleteByEntityNum);
 
 			System.out.println("============ 物理删除测试 ============");
 			long areaPhyDeleteNum = areaDao.phyDelete(area3);
-			Assert.assertEquals("areaDao.phyDelete", areaPhyDeleteNum , 1);
+			Assert.assertEquals("areaDao.phyDelete", 1, areaPhyDeleteNum);
 			long areaPhyDeleteByEntityNum = areaDao.phyDeleteByEntity(area4);
-			Assert.assertEquals("areaDao.phyDeleteByEntity", areaPhyDeleteByEntityNum , 1);
+			Assert.assertEquals("areaDao.phyDeleteByEntity", 1, areaPhyDeleteByEntityNum);
 
 			System.out.println("============ 基本查询测试 ============");
 			List<Area> areaList = areaDao.findList(area5);
-			Assert.assertEquals("areaDao.findList", areaList.size() , 1);
+			Assert.assertEquals("areaDao.findList", 1, areaList.size());
 			User user = new User();
-			user.setUserType(User.USER_TYPE_NONE);
+			user.setUserType(User.USER_TYPE_EMPLOYEE);
 			List<User> userList = userDao.findList(user);
-			Assert.assertTrue("userDao.findList", userList.size() > 0);
+			Assert.assertFalse("userDao.findList", userList.isEmpty());
 
 			System.out.println("============ 条件嵌套，日期范围，自定义sqlMap测试 ============");
 			Company company = new Company("1");
@@ -182,12 +188,12 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company3.setCompanyCode("13");
 			company3.setCompanyName("b");
 			long companyInsertNum = companyDao.insertBatch(ListUtils.newArrayList(company, company2, company3));
-			Assert.assertEquals("advanced query init", companyInsertNum , 3);
+			Assert.assertEquals("advanced query init", 3, companyInsertNum);
 			Company companyWhere = (Company) company.clone();
 			companyWhere.setCompanyCode(null);
 			companyWhere.setParentCode(null);
 			long companyFindCount = companyDao.findCount(companyWhere);
-			Assert.assertEquals("advanced query list", companyFindCount , 2);
+			Assert.assertEquals("advanced query list", 2, companyFindCount);
 
 			System.out.println("============ 分页测试，查询子节点 ============");
 			Company company4 = new Company("1");
@@ -195,37 +201,40 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			company4.setPage(new Page<>(1, 2));
 			company4.setIsQueryChildren(true);
 			List<Company> companyListPage = companyDao.findList(company4);
-			Assert.assertEquals("find page list size", companyListPage.size(), 2);
+			Assert.assertEquals("find page list size", 2, companyListPage.size());
 			Assert.assertEquals("find page list get(1)", companyListPage.get(1).getCompanyCode(), company2.getCompanyCode());
-			Assert.assertEquals("find page count", company4.getPage().getCount(), 3);
+			Assert.assertEquals("find page count", 3, company4.getPage().getCount());
 
 			System.out.println("============ 扩展条件语句前带AND容错测试 ============");
 			Company company5 = new Company();
 			company5.sqlMap().getWhere().disableAutoAddStatusWhere();
 			company5.sqlMap().getDataScope().addFilter("dsf",
 					"Company", "a.`company_code`", DataScope.CTRL_PERMI_HAVE);
+			// 随意给权限过滤 sqlWhere 增加 and or 的容错（结果：相同key进行addFilter使用or，不同使用and）
+			company5.sqlMap().getDataScope().addFilter("dsf", "a.area_code = '123'");
+			company5.sqlMap().getDataScope().addFilter("dsf2", "and a.area_code = '456'");
+			company5.sqlMap().getDataScope().addFilter("dsf3", "or a.area_code = '789'");
 			List<Company> companyList = companyDao.findList(company5);
-			System.out.println(companyList);
-			Assert.assertEquals("companyDao.findList extWhere", companyList.size(), 0);
+			Assert.assertEquals("companyDao.findList extWhere", 0, companyList.size());
 
 			System.out.println("============ 联合查询未设定columns和attrName为this时测试 ============");
 			FileUpload fileUpload = new FileUpload();
-			fileUpload.sqlMap().getWhere().and("u.`user_name`", QueryType.EQ, "user1");
+			fileUpload.sqlMap().getWhere().and("u.`user_code`", QueryType.EQ, "system123456");
 			List<FileUpload> fileUploadList = fileUploadDao.findList(fileUpload);
 			System.out.println(fileUploadList);
-			Assert.assertEquals("fileUploadDao.findList attrName this", fileUploadList.size(), 0);
+			Assert.assertEquals("fileUploadDao.findList attrName this", 0, fileUploadList.size());
 
 			System.out.println("============ 树结构基本查询测试 ============");
 			Area area6 = new Area();
 			area6.setParentCodes("0,370000,%");
 			List<Area> area6List = areaDao.findByParentCodesLike(area6);
 			System.out.println(area6List);
-			Assert.assertTrue("areaDao.findByParentCodesLike", !area6List.isEmpty());
+			Assert.assertFalse("areaDao.findByParentCodesLike", area6List.isEmpty());
 			Area area7 = new Area();
 			area7.setParentCodes_rightLike("0,370000,");
 			List<Area> area7List2 = areaDao.findList(area7);
 			System.out.println(area7List2);
-			Assert.assertTrue("areaDao.findByParentCodesRightLike", area6List.size() == area7List2.size());
+			Assert.assertEquals("areaDao.findByParentCodesRightLike", area6List.size(), area7List2.size());
 
 			System.out.println("============ 分页情况下foreach测试 ============");
 			EmpUser empUser = new EmpUser();
@@ -233,7 +242,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 			empUser.setPage(new Page<>(1, 3));
 			List<EmpUser> empUserList = empUserDao.findUserListByOfficeCodes(empUser);
 			System.out.println(empUserList);
-			Assert.assertTrue("empUserDao.findUserListByOfficeCodes", !empUserList.isEmpty());
+			Assert.assertFalse("empUserDao.findUserListByOfficeCodes", empUserList.isEmpty());
 
 			System.out.println("\n===========================================\n");
 
@@ -246,49 +255,28 @@ public class DaoMapperTest extends BaseSpringContextTests {
 	}
 
 	public static void main(String[] args) {
-		String a = null, b = null;
-		System.out.println("============ 插入测试 ============");
-		Post insertPost = new Post("1");
-		insertPost.setPostName("这是岗位名称");
-		insertPost.currentUser(new User("system"));
-		a = insertPost.sqlMap().getInsert().toTableSql();
-		a += insertPost.sqlMap().getInsert().toColumnSql();
-		a += insertPost.sqlMap().getInsert().toValuesSql();
-		b = "`js_sys_post``status`, `create_by`, `create_date`, `update_by`, `update_date`, `post_code`, `post_name`" +
-				"#{status}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{postCode}, #{postName}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
-
-		System.out.println("============ 更新测试 ============");
-		Post updatePost = new Post("1");
-		updatePost.setPostName("这是岗位名称");
-		updatePost.currentUser(new User("system"));
-		a = updatePost.sqlMap().getUpdate().toTableSql();
-		a += updatePost.sqlMap().getUpdate().toColumnSql();
-		a += updatePost.sqlMap().getUpdate().toWhereSql();
-		b = "`js_sys_post``update_by` = #{updateBy}, `update_date` = #{updateDate}, `post_name` = #{postName}" +
-				"`post_code` = #{postCode}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		String a, b;
 
 		System.out.println("============ 查询测试 ============");
 		a = new Post("1").sqlMap()
 				.getWhere().and("name", QueryType.EQ, "abc").toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND a.name = #{sqlMap.where.name#EQ1.val}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post("1").sqlMap().getWhere()
 				.and("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND a.name IN ( #{sqlMap.where.name#IN1.val[0]}, #{sqlMap.where.name#IN1.val[1]}," +
 				" #{sqlMap.where.name#IN1.val[2]} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post("1").sqlMap().getWhere()
 				.or("name", QueryType.IN, new String[]{"1", "2", "3"}).toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" OR a.name IN ( #{sqlMap.where.name#IN1.val[0]}, #{sqlMap.where.name#IN1.val[1]}," +
 				" #{sqlMap.where.name#IN1.val[2]} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 重复赋值测试 ============");
 		a = new Post("1").sqlMap().getWhere()
@@ -296,7 +284,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				.and("name", QueryType.LIKE, "def").toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND a.name LIKE #{sqlMap.where.name#LIKE1.val}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ IN、NOT IN 测试 ============");
 		a = new Post("1").sqlMap().getWhere()
@@ -305,14 +293,14 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND a.name IN ( #{sqlMap.where.name#IN1.val[0]}, #{sqlMap.where.name#IN1.val[1]} )" +
 				" AND a.name2 NOT IN ( #{sqlMap.where.name2#NOT_IN1.val[0]}, #{sqlMap.where.name2#NOT_IN1.val[1]} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post("1").sqlMap().getWhere()
 				.and("name", QueryType.IN, null)
 				.and("name2", QueryType.IN, new String[]{})
 				.and("name3", QueryType.NOT_IN, ListUtils.newArrayList()).toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 带括号测试 ============");
 		a = new Post("1").sqlMap().getWhere()
@@ -322,7 +310,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND ( a.name = #{sqlMap.where.name#EQ1.val} OR a.name = #{sqlMap.where.name#EQ2.val}" +
 				" OR a.name = #{sqlMap.where.name#EQ3.val} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post().sqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "val1", 1)
@@ -336,7 +324,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				" AND ( a.name = #{sqlMap.where.name#EQ1.val} AND a.name != #{sqlMap.where.name#NE11.val} )" +
 				" OR ( a.name != #{sqlMap.where.name#NE2.val} AND a.name != #{sqlMap.where.name#NE22.val} )" +
 				" OR ( a.name != #{sqlMap.where.name#NE3.val} AND a.name = #{sqlMap.where.name#EQ33.val} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 带括号部分空值测试 ============");
 		a = new Post("1").sqlMap().getWhere()
@@ -345,7 +333,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND ( a.name = #{sqlMap.where.name#EQ2.val} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post("1").sqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "abc", 1)
@@ -353,7 +341,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND ( a.name = #{sqlMap.where.name#EQ1.val} OR a.name = #{sqlMap.where.name#EQ2.val} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post("1").sqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1)
@@ -361,7 +349,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 					.or("name", QueryType.EQ, "ghi", 3).endBracket().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1}" +
 				" AND ( a.name = #{sqlMap.where.name#EQ2.val} OR a.name = #{sqlMap.where.name#EQ3.val} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 带括号全部空值测试 ============");
 		a = new Post("1").sqlMap().getWhere()
@@ -369,14 +357,14 @@ public class DaoMapperTest extends BaseSpringContextTests {
 					.or("name", QueryType.EQ, "", 2)
 					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1} ";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		a = new Post().sqlMap().getWhere()
 				.andBracket("name", QueryType.EQ, "", 1)
 					.or("name", QueryType.EQ, "", 2)
 					.or("name", QueryType.EQ, "", 3).endBracket().toSql();
 		b = "a.`status` != #{STATUS_DELETE} ";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 实体嵌套测试 ============");
 		Company company = new Company("1");
@@ -395,12 +383,12 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				+ " AND b.`area_code` = #{area.sqlMap.where#area_code#EQ1}"
 				+ " AND b.create_date >= #{area.sqlMap.where.create_date#GTE1.val}"
 				+ " AND b.create_date <= #{area.sqlMap.where.create_date#LTE1.val}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 联合查询，属性名支持指定别名 ============");
 		a = new FileUpload().sqlMap().getWhere().and("u.`user_name`", QueryType.EQ, "user1").toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND u.`user_name` = #{sqlMap.where.u#_user_name_#EQ1.val}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 联合查询，返回到当前实体测试 ============");
 		FileUpload fileUpload = new FileUpload();
@@ -408,7 +396,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		a = fileUpload.sqlMap().getWhere().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
 				+ " #{sqlMap.where.create_by#IN1.val[1]} )";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 联合查询，属性为this时也可作为查询条件 ============");
 		FileUpload fileUpload2 = new FileUpload();
@@ -417,7 +405,7 @@ public class DaoMapperTest extends BaseSpringContextTests {
 		a = fileUpload2.sqlMap().getWhere().toSql();
 		b = "a.`status` != #{STATUS_DELETE} AND a.create_by IN ( #{sqlMap.where.create_by#IN1.val[0]},"
 				+ " #{sqlMap.where.create_by#IN1.val[1]} ) AND u.`user_name` LIKE #{sqlMap.where#user_name#LIKE1}";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.out.println("============ 条件嵌套查询，可替代 andBracket、orBracket、endBracket v5.2.1+ ============");
 		a = new Post("1").sqlMap().getWhere()
@@ -438,7 +426,59 @@ public class DaoMapperTest extends BaseSpringContextTests {
 				" AND (a.name = #{sqlMap.where.n#[0].name#EQ2.val} OR a.name = #{sqlMap.where.n#[0].name#EQ3.val})" +
 				" AND ((a.name = #{sqlMap.where.n#[1].n#[0].name#EQ4.val} AND a.name = #{sqlMap.where.n#[1].n#[0].name#EQ_FORCE6.val})" +
 				" OR (a.name = #{sqlMap.where.n#[1].n#[1].name#EQ7.val} AND a.name = #{sqlMap.where.n#[1].n#[1].name#EQ8.val}))";
-		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(a, b);
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
+
+		System.out.println("============ 插入测试，字段权限过滤 v5.11.1 ============");
+		Post insertPost = new Post("1");
+		insertPost.setPostName("这是岗位名称");
+		insertPost.currentUser(new User("system"));
+		insertPost.sqlMap().getInsert().setExcludeAttrNames(SetUtils.newHashSet("postName"));
+		insertPost.sqlMap().getInsert().setIncludeAttrNames(SetUtils.newHashSet("postCode"));
+		a = "INSERT INTO " + insertPost.sqlMap().getInsert().toTableSql();
+		a += " (" + insertPost.sqlMap().getInsert().toColumnSql() + ")";
+		a += " VALUES (" + insertPost.sqlMap().getInsert().toValuesSql() + ")";
+		b = "INSERT INTO `js_sys_post`" +
+				" (`status`, `create_by`, `create_date`, `update_by`, `update_date`, `post_code`)" +
+				" VALUES (#{status}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{postCode})";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
+
+		System.out.println("============ 更新测试，字段权限过滤，扩展列，扩展条件 v5.11.1 ============");
+		Post updatePost = new Post("1");
+		updatePost.setPostName("这是岗位名称");
+		updatePost.setPostType("ceo");
+		updatePost.setPostSort(1);
+		updatePost.currentUser(new User("system"));
+		updatePost.sqlMap().getUpdate().setExcludeAttrNames(SetUtils.newHashSet("updateBy", "updateDate"));
+		updatePost.sqlMap().getUpdate().setIncludeAttrNames(SetUtils.newHashSet("postName", "postType"));
+		updatePost.sqlMap().getUpdate().addExtColumnSql("s1", "hot1 = hot1 + 1");
+		updatePost.sqlMap().getUpdate().addExtWhereSql("w1", "name1 = '123'");
+		a = "UPDATE " + updatePost.sqlMap().getUpdate().toTableSql();
+		a += " SET " + updatePost.sqlMap().getUpdate().toColumnSql();
+		a += " WHERE " + updatePost.sqlMap().getUpdate().toWhereSql();
+		b = "UPDATE `js_sys_post`" +
+				" SET `post_name` = #{postName}, `post_type` = #{postType}, hot1 = hot1 + 1" +
+				" WHERE `post_code` = #{postCode} AND name1 = '123'";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
+
+		System.out.println("============ 查询操作，字段权限过滤，扩展列，扩展表，扩展条件 v5.11.1 ============");
+		Post queryPost = new Post("1");
+		queryPost.currentUser(new User("system"));
+		queryPost.setPostType("ceo");
+		queryPost.sqlMap().getColumn().setExcludeAttrNames(SetUtils.newHashSet("postType"));
+		queryPost.sqlMap().getColumn().setIncludeAttrNames(SetUtils.newHashSet("postName"));
+		queryPost.sqlMap().getColumn().addExtSql("c1", "column1 AS \"column1\"");
+		queryPost.sqlMap().getTable().addExtSql("t1", "JOIN test1 b.post_code = a.post_code");
+		queryPost.sqlMap().getWhere().addExtSql("w1", "AND a.name1 = '123'");
+		a = "SELECT " + queryPost.sqlMap().getColumn().toSql();
+		a += " FROM " + queryPost.sqlMap().getTable().toSql();
+		a += " WHERE " + queryPost.sqlMap().getWhere().toSql();
+		b = "SELECT a.`corp_code` AS \"corpCode\", a.`corp_name` AS \"corpName\", a.`status` AS \"status\", " +
+				"a.`create_by` AS \"createBy\", a.`create_date` AS \"createDate\", a.`update_by` AS \"updateBy\", " +
+				"a.`update_date` AS \"updateDate\", a.`post_name` AS \"postName\", column1 AS \"column1\" " +
+			"FROM `js_sys_post` aJOIN test1 b.post_code = a.post_code " +
+			"WHERE a.`status` != #{STATUS_DELETE} AND a.`post_code` = #{sqlMap.where#post_code#EQ1} " +
+			"AND a.`post_type` = #{sqlMap.where#post_type#EQ1} AND a.name1 = '123'";
+		System.out.println("a >> "+a);System.out.println("b >> "+b);Assert.assertEquals(b, a);
 
 		System.exit(0);
 	}

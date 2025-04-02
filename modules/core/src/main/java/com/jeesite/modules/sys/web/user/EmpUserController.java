@@ -5,7 +5,6 @@
 package com.jeesite.modules.sys.web.user;
 
 import com.alibaba.fastjson.JSONValidator;
-import com.jeesite.common.cache.CacheUtils;
 import com.jeesite.common.codec.EncodeUtils;
 import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
@@ -196,7 +195,9 @@ public class EmpUserController extends BaseController {
 		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_EDIT) && subject.isPermitted("sys:empUser:edit")){
 			empUserService.save(empUser);
 		}
-		if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH) && subject.isPermitted("sys:empUser:authRole")){
+		/*if (StringUtils.inString(op, Global.OP_AUTH) && Global.getConfigToBoolean("user.postRolePermi", "false")) {
+			return renderResult(Global.FALSE, text("启用岗位角色后，将不允许单独对用户修改角色", empUser.getUserName()));
+		} else */if (StringUtils.inString(op, Global.OP_ADD, Global.OP_AUTH) && subject.isPermitted("sys:empUser:authRole")){
 			userService.saveAuth(empUser);
 		}
 		return renderResult(Global.TRUE, text("保存用户''{0}''成功", empUser.getUserName()));

@@ -42,7 +42,7 @@ import jakarta.validation.constraints.Size;
 		@Column(name="zip_code", 	attrName="zipCode", 	label="邮政编码", queryType=QueryType.LIKE),
 		@Column(name="email", 		attrName="email", 		label="邮箱", queryType=QueryType.LIKE),
 		@Column(includeEntity=Extend.class, attrName="extend"),
-	}, extWhereKeys="dsf", orderBy="a.tree_sorts, a.office_code"
+	}, orderBy="a.tree_sorts, a.office_code"
 )
 @Schema
 public class Office extends TreeEntity<Office> {
