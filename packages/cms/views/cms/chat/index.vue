@@ -39,6 +39,17 @@
       </ScrollContainer>
     </template>
     <div class="h-full rounded-2 flex flex-col overflow-hidden">
+      <div v-if="messages.length == 0" class="h-[90%] flex justify-center items-center text-center">
+        <div class="text-xl c-gray-4">
+          {{ t('我是你的 AI 助手，我可以帮你解答一些问题') }}
+          <div v-if="userStore.getPageCacheByKey('demoMode')" class="text-sm mt-20 line-height-loose">
+            提示：当前对接的是 DeepSeek 蒸馏过的 7B 超小模型，仅作为演示使用，AI 回答结果可能不够理想，<br />
+            可在自己本地部署，或对接其它大模型。此外当前向量库中只含了几篇关于 jeesite 的文章，<br />
+            知识库文章来源，可进入菜单查看：扩展功能 -> 内容管理 -> 内容发布<br />
+            提问举例：jeesite 简介、jeesite 优势、jeesite 技术栈，体验一下。
+          </div>
+        </div>
+      </div>
       <ChatMessage
         ref="messageRef"
         v-model:value="messages"
@@ -46,21 +57,7 @@
         :conversationId="conversationIds[0]"
         :inputMessage="inputMessageRef?.value"
         v-model:loading="loading"
-      >
-        <template v-if="messages.length == 0" #header>
-          <div class="h-[90%] flex justify-center items-center text-center">
-            <div class="text-xl c-gray-4">
-              {{ t('我是你的 AI 助手，我可以帮你解答一些问题') }}
-              <div v-if="userStore.getPageCacheByKey('demoMode')" class="text-sm mt-20 line-height-loose">
-                提示：当前对接的是 DeepSeek 蒸馏过的 7B 超小模型，仅作为演示使用，AI 回答结果可能不够理想，<br />
-                可在自己本地部署，或对接其它大模型。此外当前向量库中只含了几篇关于 jeesite 的文章，<br />
-                知识库文章来源，可进入菜单查看：扩展功能 -> 内容管理 -> 内容发布<br />
-                提问举例：jeesite 简介、jeesite 优势、jeesite 技术栈，体验一下。
-              </div>
-            </div>
-          </div>
-        </template>
-      </ChatMessage>
+      />
       <div class="pl-14 pr-16 w-full flex justify-end mt-3">
         <div class="flex-1 rounded-2 p-3 pb-1 bg-white text-[15px] leading-7">
           <textarea
@@ -93,11 +90,11 @@
   import { Icon } from '@jeesite/core/components/Icon';
   import { useI18n } from '@jeesite/core/hooks/web/useI18n';
   import { useMessage } from '@jeesite/core/hooks/web/useMessage';
+  import { useUserStore } from '/@/store/modules/user';
   import { PageWrapper } from '@jeesite/core/components/Page';
   import { ScrollContainer } from '@jeesite/core/components/Container';
   import { cmsChatDelete, cmsChatList, cmsChatMessage, cmsChatSave, cmsChatStream } from '@jeesite/cms/api/cms/chat';
   import { ChatMessage } from '@jeesite/cms';
-  import { useUserStore } from '/@/store/modules/user';
 
   const { t } = useI18n('cms.chat');
   const { showMessage } = useMessage();
